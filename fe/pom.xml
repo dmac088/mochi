@@ -3,6 +3,7 @@
   <artifactId>fe</artifactId>
   <version>0.0.1</version>
   <name>Mochi front end application</name>
+  <packaging>jar</packaging>
 
  <parent>
     <groupId>io.javabrains.springbootquickstart</groupId>
@@ -38,11 +39,11 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>com.stormpath.spring</groupId>
             <artifactId>stormpath-default-spring-boot-starter</artifactId>
-            <version>1.1.2</version>
-        </dependency>
+            <version>1.5.5</version>
+        </dependency>-->
     </dependencies>
  
   <build>

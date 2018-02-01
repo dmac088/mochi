@@ -67,6 +67,11 @@
 		<artifactId>spring-boot-starter-test</artifactId>
 		<scope>test</scope>
 	</dependency>
+	<dependency>
+      <groupId>io.javabrains.springbootquickstart</groupId>
+      <artifactId>fe</artifactId>
+      <version>0.0.1</version>
+    </dependency>
   </dependencies>
   <properties>
   	<java.version>1.8</java.version>
