@@ -16,8 +16,8 @@
   	</parent> 
 
     <modules>
-    	<module>be</module>
-    	<module>fe</module>	
+    	<module>fe</module>
+    	<module>be</module>	
     </modules>
    
 </project>
