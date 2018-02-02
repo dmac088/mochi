@@ -12,16 +12,15 @@ import javax.sql.DataSource;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-	
+	 
 	@Autowired
 	DataSource dataSource;
-	
 	
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .antMatchers("/","/index","/home","/Party","/PartyType","/Person","/Customer","/signup", "/signin").permitAll()
+                .antMatchers("/","/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 
