@@ -3,6 +3,7 @@
   <artifactId>be</artifactId>
   <version>0.0.1</version>
   <name>Mochi back end application</name>
+  
     
    <!-- dans comment --> 
   <parent>
