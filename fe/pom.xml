@@ -5,12 +5,24 @@
   <name>Mochi front end application</name>
   <packaging>jar</packaging>
 
-  <parent>
+<!-- dans comment -->
+ <parent>
     <groupId>io.javabrains.springbootquickstart</groupId>
     <artifactId>mochi</artifactId>
     <version>0.1.0</version>
   </parent>
  
+ <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
  
   <build>
     <plugins>
@@ -30,6 +42,15 @@
               <npmVersion>5.6.0</npmVersion>
             </configuration>
           </execution>
+       	  <execution>
+			<id>npm install</id>
+			<goals>
+				<goal>npm</goal>
+			</goals>
+			<configuration>
+				<arguments>install</arguments>
+			</configuration>
+		  </execution>
 		  <execution>
             <id>npm run build</id>
             <goals>
