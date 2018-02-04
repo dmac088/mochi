@@ -1,4 +1,4 @@
-package io.javabrains.springbootstarter.hello;
+package io.javabrains.springbootstarter.login;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
