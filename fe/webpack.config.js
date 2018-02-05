@@ -1,3 +1,4 @@
+/*
 var packageJSON = require('./package.json');
 var path = require('path');
 var webpack = require('webpack');
@@ -14,4 +15,31 @@ module.exports = {
     publicPath: '/assets/',
     filename: 'app-bundle.js'
   }
+};
+*/
+
+var path = require('path');
+var webpack = require('webpack');
+module.exports = {
+	entry: './app/index.js',
+    output: {
+    	/*path: PATHS.build,*/
+    	publicPath: '/assets/',
+        filename: 'app-bundle.js'
+    },
+    module: {
+        loaders: [
+            {
+                test: /\.js$/,
+                loader: 'babel-loader',
+                query: {
+                    presets: ['es2015']
+                }
+            }
+        ]
+    },
+    stats: {
+        colors: true
+    },
+    devtool: 'source-map'
 };
