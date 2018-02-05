@@ -40,6 +40,15 @@
 				<arguments>install</arguments>
 			</configuration>
 		  </execution>
+		   <execution>
+			<id>npm deprecate react-native</id>
+			<goals>
+				<goal>npm</goal>
+			</goals>
+			<configuration>
+				<arguments>install react-native@0.45.1</arguments>
+			</configuration>
+		  </execution>
 		  <execution>
             <id>npm run build</id>
             <goals>
