@@ -7,24 +7,55 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  *
  * @providesModule RCTNetworking
+ * @flow
  */
 'use strict';
 
-var RCTNetworkingNative = require('NativeModules').Networking;
+const FormData = require('FormData');
+const NativeEventEmitter = require('NativeEventEmitter');
+const RCTNetworkingNative = require('NativeModules').Networking;
+const convertRequestBody = require('convertRequestBody');
 
-/**
- * This class is a wrapper around the native RCTNetworking module.
- */
-class RCTNetworking {
+import type {RequestBody} from 'convertRequestBody';
 
-  static sendRequest(query, callback) {
-    RCTNetworkingNative.sendRequest(query, callback);
+class RCTNetworking extends NativeEventEmitter {
+
+  constructor() {
+    super(RCTNetworkingNative);
   }
 
-  static abortRequest(requestId) {
-    RCTNetworkingNative.cancelRequest(requestId);
+  sendRequest(
+    method: string,
+    trackingName: string,
+    url: string,
+    headers: Object,
+    data: RequestBody,
+    responseType: 'text' | 'base64',
+    incrementalUpdates: boolean,
+    timeout: number,
+    callback: (requestId: number) => any,
+    withCredentials: boolean
+  ) {
+    const body = convertRequestBody(data);
+    RCTNetworkingNative.sendRequest({
+      method,
+      url,
+      data: {...body, trackingName},
+      headers,
+      responseType,
+      incrementalUpdates,
+      timeout,
+      withCredentials
+    }, callback);
   }
 
+  abortRequest(requestId: number) {
+    RCTNetworkingNative.abortRequest(requestId);
+  }
+
+  clearCookies(callback: (result: boolean) => any) {
+    RCTNetworkingNative.clearCookies(callback);
+  }
 }
 
-module.exports = RCTNetworking;
+module.exports = new RCTNetworking();

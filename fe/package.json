@@ -27,7 +27,7 @@
   "homepage": "https://github.com/7s4r/react-native-webpack-starter-kit#readme",
   "dependencies": {
     "babel-preset-react": "^6.24.1",
-    "react-native": "^0.21.0"
+    "react-native": "^0.45.1"
   },
   "devDependencies": {
     "babel-core": "^6.7.2",
