@@ -7,9 +7,8 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-#import <React/RCTViewManager.h>
-
-@class ARTNode;
+#import "ARTNode.h"
+#import "RCTViewManager.h"
 
 @interface ARTNodeManager : RCTViewManager
 

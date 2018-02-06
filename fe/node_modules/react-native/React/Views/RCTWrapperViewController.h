@@ -9,7 +9,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import <React/RCTViewControllerProtocol.h>
+#import "RCTViewControllerProtocol.h"
 
 @class RCTNavItem;
 @class RCTWrapperViewController;

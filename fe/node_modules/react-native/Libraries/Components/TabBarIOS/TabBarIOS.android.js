@@ -7,29 +7,25 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  *
  * @providesModule TabBarIOS
- * @flow
  */
 
 'use strict';
 
-const React = require('React');
-const StyleSheet = require('StyleSheet');
-const TabBarItemIOS = require('TabBarItemIOS');
-const View = require('View');
+var React = require('React');
+var View = require('View');
+var StyleSheet = require('StyleSheet');
 
-class DummyTabBarIOS extends React.Component {
-  static Item = TabBarItemIOS;
-
-  render() {
+var DummyTabBarIOS = React.createClass({
+  render: function() {
     return (
       <View style={[this.props.style, styles.tabGroup]}>
         {this.props.children}
       </View>
     );
   }
-}
+});
 
-const styles = StyleSheet.create({
+var styles = StyleSheet.create({
   tabGroup: {
     flex: 1,
   }

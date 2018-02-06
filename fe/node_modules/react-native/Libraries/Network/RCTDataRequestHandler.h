@@ -7,8 +7,8 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-#import <React/RCTInvalidating.h>
-#import <React/RCTURLRequestHandler.h>
+#import "RCTURLRequestHandler.h"
+#import "RCTInvalidating.h"
 
 /**
  * This is the default RCTURLRequestHandler implementation for data URL requests.

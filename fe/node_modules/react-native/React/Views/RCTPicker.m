@@ -86,9 +86,7 @@ numberOfRowsInComponent:(__unused NSInteger)component
   }
 
   label.font = _font;
-
-  label.textColor = [RCTConvert UIColor:_items[row][@"textColor"]] ?: _color;
-
+  label.textColor = _color;
   label.textAlignment = _textAlign;
   label.text = [self pickerView:pickerView titleForRow:row forComponent:component];
   return label;
@@ -98,7 +96,7 @@ numberOfRowsInComponent:(__unused NSInteger)component
       didSelectRow:(NSInteger)row inComponent:(__unused NSInteger)component
 {
   _selectedIndex = row;
-  if (_onChange && _items.count > (NSUInteger)row) {
+  if (_onChange) {
     _onChange(@{
       @"newIndex": @(row),
       @"newValue": RCTNullIfNil(_items[row][@"value"]),

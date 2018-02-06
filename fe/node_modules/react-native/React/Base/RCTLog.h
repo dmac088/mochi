@@ -9,9 +9,8 @@
 
 #import <Foundation/Foundation.h>
 
-#import <React/RCTAssert.h>
-#import <React/RCTDefines.h>
-#import <React/RCTUtils.h>
+#import "RCTAssert.h"
+#import "RCTDefines.h"
 
 #ifndef RCTLOG_ENABLED
 #define RCTLOG_ENABLED 1
@@ -32,7 +31,6 @@
 #define RCTLog(...) _RCTLog(RCTLogLevelInfo, __VA_ARGS__)
 #define RCTLogTrace(...) _RCTLog(RCTLogLevelTrace, __VA_ARGS__)
 #define RCTLogInfo(...) _RCTLog(RCTLogLevelInfo, __VA_ARGS__)
-#define RCTLogAdvice(string, ...) RCTLogWarn([@"(ADVICE) " stringByAppendingString:(NSString *)string], __VA_ARGS__)
 #define RCTLogWarn(...) _RCTLog(RCTLogLevelWarning, __VA_ARGS__)
 #define RCTLogError(...) _RCTLog(RCTLogLevelError, __VA_ARGS__)
 
@@ -126,7 +124,7 @@ RCT_EXTERN void RCTPerformBlockWithLogPrefix(void (^block)(void), NSString *pref
  * Private logging function - ignore this.
  */
 #if RCTLOG_ENABLED
-#define _RCTLog(lvl, ...) _RCTLogNativeInternal(lvl, __FILE__, __LINE__, __VA_ARGS__)
+#define _RCTLog(lvl, ...) _RCTLogNativeInternal(lvl, __FILE__, __LINE__, __VA_ARGS__);
 #else
 #define _RCTLog(lvl, ...) do { } while (0)
 #endif

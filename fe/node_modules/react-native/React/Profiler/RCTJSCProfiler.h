@@ -9,7 +9,7 @@
 
 #import <JavaScriptCore/JavaScriptCore.h>
 
-#import <React/RCTDefines.h>
+#import "RCTDefines.h"
 
 /** The API is not thread-safe. */
 

@@ -10,11 +10,18 @@
  */
 'use strict';
 
+var ScrollViewConsts = require('UIManager').RCTScrollView.Constants;
+
 function processDecelerationRate(decelerationRate) {
-  if (decelerationRate === 'normal') {
-    decelerationRate = 0.998;
-  } else if (decelerationRate === 'fast') {
-    decelerationRate = 0.99;
+  var ScrollViewDecelerationRateNormal = ScrollViewConsts && ScrollViewConsts.DecelerationRate.normal;
+  var ScrollViewDecelerationRateFast = ScrollViewConsts && ScrollViewConsts.DecelerationRate.fast;
+
+  if (typeof decelerationRate === 'string') {
+    if (decelerationRate === 'fast') {
+      return ScrollViewDecelerationRateFast;
+    } else if (decelerationRate === 'normal') {
+      return ScrollViewDecelerationRateNormal;
+    }
   }
   return decelerationRate;
 }

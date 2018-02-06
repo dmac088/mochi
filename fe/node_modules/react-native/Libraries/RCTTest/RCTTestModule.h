@@ -9,8 +9,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import <React/RCTBridgeModule.h>
-#import <React/RCTDefines.h>
+#import "RCTBridgeModule.h"
+#import "RCTDefines.h"
 
 typedef NS_ENUM(NSInteger, RCTTestStatus) {
   RCTTestStatusPending = 0,
@@ -41,7 +41,5 @@ typedef NS_ENUM(NSInteger, RCTTestStatus) {
  * This is polled while running the runloop until true.
  */
 @property (nonatomic, readonly) RCTTestStatus status;
-
-@property (nonatomic, copy) NSString *testSuffix;
 
 @end

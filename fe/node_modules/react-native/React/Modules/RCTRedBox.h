@@ -9,17 +9,14 @@
 
 #import <UIKit/UIKit.h>
 
-#import <React/RCTBridge.h>
-#import <React/RCTBridgeModule.h>
-#import <React/RCTErrorCustomizer.h>
+#import "RCTBridge.h"
+#import "RCTBridgeModule.h"
 
 @interface RCTRedBox : NSObject <RCTBridgeModule>
 
-- (void)registerErrorCustomizer:(id<RCTErrorCustomizer>)errorCustomizer;
 - (void)showError:(NSError *)error;
 - (void)showErrorMessage:(NSString *)message;
 - (void)showErrorMessage:(NSString *)message withDetails:(NSString *)details;
-- (void)showErrorMessage:(NSString *)message withRawStack:(NSString *)rawStack;
 - (void)showErrorMessage:(NSString *)message withStack:(NSArray<NSDictionary *> *)stack;
 - (void)updateErrorMessage:(NSString *)message withStack:(NSArray<NSDictionary *> *)stack;
 

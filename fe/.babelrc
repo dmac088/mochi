@@ -1,6 +1,4 @@
 {
-  "presets": [
-    ["es2016"],
-    "react"
-  ]
+  "presets": ["react-native"],
+  "plugins": []
 }

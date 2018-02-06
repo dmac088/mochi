@@ -7,10 +7,11 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-#import <React/RCTDefines.h>
-#import <React/RCTJavaScriptExecutor.h>
+#import "RCTDefines.h"
 
 #if RCT_DEV // Debug executors are only supported in dev mode
+
+#import "RCTJavaScriptExecutor.h"
 
 @interface RCTWebSocketExecutor : NSObject <RCTJavaScriptExecutor>
 

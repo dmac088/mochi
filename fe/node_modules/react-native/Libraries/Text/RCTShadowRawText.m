@@ -9,7 +9,7 @@
 
 #import "RCTShadowRawText.h"
 
-#import <React/RCTUIManager.h>
+#import "RCTUIManager.h"
 
 @implementation RCTShadowRawText
 
@@ -31,6 +31,7 @@
 
 - (void)contentSizeMultiplierDidChange:(NSNotification *)note
 {
+  [self dirtyLayout];
   [self dirtyText];
 }
 
@@ -38,6 +39,7 @@
 {
   if (_text != text && ![_text isEqualToString:text]) {
     _text = [text copy];
+    [self dirtyLayout];
     [self dirtyText];
   }
 }

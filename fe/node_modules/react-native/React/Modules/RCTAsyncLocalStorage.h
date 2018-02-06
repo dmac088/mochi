@@ -7,8 +7,8 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-#import <React/RCTBridgeModule.h>
-#import <React/RCTInvalidating.h>
+#import "RCTBridgeModule.h"
+#import "RCTInvalidating.h"
 
 /**
  * A simple, asynchronous, persistent, key-value storage system designed as a

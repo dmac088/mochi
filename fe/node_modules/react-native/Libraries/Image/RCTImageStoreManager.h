@@ -2,8 +2,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import <React/RCTBridge.h>
-#import <React/RCTURLRequestHandler.h>
+#import "RCTBridge.h"
+#import "RCTURLRequestHandler.h"
 
 @interface RCTImageStoreManager : NSObject <RCTURLRequestHandler>
 

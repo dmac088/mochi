@@ -9,7 +9,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import <React/RCTComponent.h>
+#import "RCTComponent.h"
 
 @interface RCTRefreshControl : UIRefreshControl
 

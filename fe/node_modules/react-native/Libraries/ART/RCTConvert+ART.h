@@ -9,11 +9,10 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-#import <React/RCTConvert.h>
-
 #import "ARTBrush.h"
 #import "ARTCGFloatArray.h"
 #import "ARTTextFrame.h"
+#import "RCTConvert.h"
 
 @interface RCTConvert (ART)
 

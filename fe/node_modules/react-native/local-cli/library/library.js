@@ -11,15 +11,30 @@
 const copyAndReplace = require('../util/copyAndReplace');
 const fs = require('fs');
 const isValidPackageName = require('../util/isValidPackageName');
+const parseCommandLine = require('../util/parseCommandLine');
 const path = require('path');
+const Promise = require('promise');
 const walk = require('../util/walk');
 
 /**
  * Creates a new native library with the given name
  */
-function library(argv, config, args) {
+function library(argv, config) {
+  return new Promise((resolve, reject) => {
+    _library(argv, config, resolve, reject);
+  });
+}
+
+function _library(argv, config, resolve, reject) {
+  const args = parseCommandLine([{
+    command: 'name',
+    description: 'Library name',
+    type: 'string',
+    required: true,
+  }], argv);
+
   if (!isValidPackageName(args.name)) {
-    return Promise.reject(
+    reject(
       args.name + ' is not a valid name for a project. Please use a valid ' +
       'identifier name (alphanumeric).'
     );
@@ -35,7 +50,7 @@ function library(argv, config, args) {
   }
 
   if (fs.existsSync(libraryDest)) {
-    return Promise.reject(`Library already exists in ${libraryDest}`);
+    reject('Library already exists in', libraryDest);
   }
 
   walk(source).forEach(f => {
@@ -55,19 +70,8 @@ function library(argv, config, args) {
   console.log('Created library in', libraryDest);
   console.log('Next Steps:');
   console.log('   Link your library in Xcode:');
-  console.log(
-    '   https://facebook.github.io/react-native/docs/' +
-    'linking-libraries-ios.html#content\n'
-  );
+  console.log('   https://facebook.github.io/react-native/docs/linking-libraries-ios.html#content\n');
+  resolve();
 }
 
-module.exports = {
-  name: 'new-library',
-  func: library,
-  description: 'generates a native library bridge',
-  options: [{
-    command: '--name <string>',
-    description: 'name of the library to generate',
-    default: null,
-  }],
-};
+module.exports = library;

@@ -1,26 +1,28 @@
 /**
- * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
+ * @generated SignedSource<<1fe20877e83ba5d4d0ea68ab240df21c>>
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ * !! This file is a check-in of a static_upstream project!      !!
+ * !!                                                            !!
+ * !! You should not modify this file directly. Instead:         !!
+ * !! 1) Use `fjs use-upstream` to temporarily replace this with !!
+ * !!    the latest version from upstream.                       !!
+ * !! 2) Make your changes, test them, etc.                      !!
+ * !! 3) Use `fjs push-upstream` to copy your changes back to    !!
+ * !!    static_upstream.                                        !!
+ * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  *
+ * Copyright 2013-2014 Facebook, Inc.
  * @providesModule Set
  * @preventMunge
  * @typechecks
  */
 
-/* eslint-disable no-extend-native */
-
-'use strict';
-
 var Map = require('Map');
-
-var _shouldPolyfillES6Collection = require('_shouldPolyfillES6Collection');
 var toIterator = require('toIterator');
+var _shouldPolyfillES6Collection = require('_shouldPolyfillES6Collection');
 
-module.exports = (function(global) {
+module.exports = (function(global, undefined) {
   // Since our implementation is spec-compliant for the most part we can safely
   // delegate to a built-in version if exists and is implemented correctly.
   // Firefox had gotten a few implementation details wrong across different
@@ -196,4 +198,4 @@ module.exports = (function(global) {
   }
 
   return Set;
-})(Function('return this')()); // eslint-disable-line no-new-func
+})(/* jslint evil: true */ Function('return this')());

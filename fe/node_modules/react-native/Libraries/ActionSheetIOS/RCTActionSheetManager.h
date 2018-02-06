@@ -9,7 +9,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import <React/RCTBridge.h>
+#import "RCTBridge.h"
 
 @interface RCTActionSheetManager : NSObject <RCTBridgeModule>
 

@@ -1,45 +1,47 @@
-/*
-var packageJSON = require('./package.json');
-var path = require('path');
-var webpack = require('webpack');
+(function() {
+  'use strict'
 
-const PATHS = {
-  build: path.join(__dirname, 'target', 'classes', 'META-INF', 'resources', 'webjars', packageJSON.name, packageJSON.version)
-};
+  var path = require('path')
+  var webpack = require('webpack')
 
-module.exports = {
-  entry: './app/index.js',
-
-  output: {
-    path: PATHS.build,
+  module.exports = {
+    debug: true,
+    devtool: 'source-map',
+    entry: './app/index.js',
     publicPath: '/assets/',
-    filename: 'app-bundle.js'
-  }
-};
-*/
-
-var path = require('path');
-var webpack = require('webpack');
-module.exports = {
-	entry: './app/index.js',
     output: {
-    	/*path: PATHS.build,*/
-    	publicPath: '/assets/',
-        filename: 'app-bundle.js'
+      path: path.resolve(__dirname, 'build'),
+      filename: 'app-bundle.js',
     },
     module: {
-        loaders: [
-            {
-                test: /\.js$/,
-                loader: 'babel-loader',
-                query: {
-                    presets: ['es2015']
-                }
-            }
-        ]
-    },
-    stats: {
-        colors: true
-    },
-    devtool: 'source-map'
-};
+      preLoaders: [
+        {
+          test: /\.(js|jsx|es6)$/,
+          include: path.resolve(__dirname, 'src'),
+          loader: 'eslint-loader',
+        }
+      ],
+      loaders: [
+        {
+          test: /\.js$/,
+          include: /node_modules\/react-native/,
+          loader: 'babel',
+          query: {
+            cacheDirectory: true,
+            presets: ['es2015', 'stage-1', 'react']
+          }
+        },
+        {
+          test: /\.(js|jsx|es6)$/,
+          exclude: /node_modules/,
+          loader: 'babel',
+          query: {
+            cacheDirectory: true,
+            presets: ['es2015', 'stage-1', 'react']
+          }
+        }
+      ]
+    }
+  }
+}())
+

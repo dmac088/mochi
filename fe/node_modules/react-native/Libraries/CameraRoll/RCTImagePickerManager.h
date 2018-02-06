@@ -8,7 +8,7 @@
  *
  */
 
-#import <React/RCTBridgeModule.h>
+#import "RCTBridgeModule.h"
 
 @interface RCTImagePickerManager : NSObject <RCTBridgeModule>
 

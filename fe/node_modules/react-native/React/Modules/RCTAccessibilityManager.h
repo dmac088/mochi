@@ -9,8 +9,8 @@
 
 #import <Foundation/Foundation.h>
 
-#import <React/RCTBridge.h>
-#import <React/RCTBridgeModule.h>
+#import "RCTBridgeModule.h"
+#import "RCTBridge.h"
 
 extern NSString *const RCTAccessibilityManagerDidUpdateMultiplierNotification; // posted when multiplier is changed
 

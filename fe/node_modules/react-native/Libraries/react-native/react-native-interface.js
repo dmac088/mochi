@@ -7,9 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  *
  * @flow
- * @providesModule react-native-interface
  */
-'use strict';
 
 // see also react-native.js
 

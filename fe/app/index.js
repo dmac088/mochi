@@ -1,38 +1,49 @@
+'use strict'
+import React, {
+  AppRegistry,
+  Component,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native'
 
-
-import React, { Component } from 'react';
-import { AppRegistry, Text } from 'react-native';
-
-export default class HelloWorldApp extends Component {
+class App extends Component {
   render() {
     return (
-      <Text>Hello world!</Text>
-    );
+      <View style={styles.container}>
+        <Text style={styles.welcome}>
+          Welcome to React Native!
+        </Text>
+        <Text style={styles.instructions}>
+          To get started, edit index.ios.js
+        </Text>
+        <Text style={styles.instructions}>
+          Press Cmd+R to reload,{'\n'}
+          Cmd+D or shake for dev menu
+        </Text>
+      </View>
+    )
   }
 }
 
-// skip this line if using Create React Native App
-AppRegistry.registerComponent('AwesomeProject', () => HelloWorldApp);
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+  },
+  instructions: {
+    textAlign: 'center',
+    color: '#333333',
+    marginBottom: 5,
+  },
+})
 
-/*
-var greeter = require('./greeter');
+AppRegistry.registerComponent('App', () => App)
 
-var greeting = greeter.greet();
-
-if (typeof document !== 'undefined') {
-  var apiEndpoint = 'http://localhost:8090/api/greetings';
-  var el = document.createElement('h1');
-
-  fetch(apiEndpoint + '/webpack').then(function(response) {
-    return response.json();
-  }).then(function(obj) {
-    el.innerHTML = greeting + '<br>' + obj.content + '<br>At ' + obj.time;
-    document.body.appendChild(el);
-  }).catch(function(err) {
-    el.innerHTML = 'oh no…';
-    document.body.appendChild(el);
-  });
-} else {
-  console.log(greeting);
-}
-*/

@@ -11,11 +11,11 @@
 
 #import <JavaScriptCore/JavaScriptCore.h>
 
-#import <React/RCTBridgeModule.h>
-#import <React/RCTInvalidating.h>
+#import "RCTBridgeModule.h"
+#import "RCTInvalidating.h"
 
 typedef void (^RCTJavaScriptCompleteBlock)(NSError *error);
-typedef void (^RCTJavaScriptCallback)(id result, NSError *error);
+typedef void (^RCTJavaScriptCallback)(id json, NSError *error);
 
 /**
  * Abstracts away a JavaScript execution context - we may be running code in a
@@ -76,11 +76,19 @@ typedef void (^RCTJavaScriptCallback)(id result, NSError *error);
  */
 - (void)executeBlockOnJavaScriptQueue:(dispatch_block_t)block;
 
+@optional
+
 /**
  * Special case for Timers + ContextExecutor - instead of the default
  *   if jsthread then call else dispatch call on jsthread
  * ensure the call is made async on the jsthread
  */
 - (void)executeAsyncBlockOnJavaScriptQueue:(dispatch_block_t)block;
+
+/**
+ * For executors that support it, this method can be used to add a synchronous
+ * callback function for communicating with the javascript context.
+ */
+- (void)addSynchronousHookWithName:(NSString *)name usingBlock:(id)block;
 
 @end
