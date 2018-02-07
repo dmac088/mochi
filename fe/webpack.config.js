@@ -6,17 +6,26 @@
   'use strict'
 
   var path = require('path')
-
+  var packageJSON = require('./package.json')
+  
+  
+  const PATHS = {
+	  build: path.join(__dirname, 'target', 'classes', 'META-INF', 'resources', 'webjars', packageJSON.name, packageJSON.version),
+  };
+ 
+  console.log('path to JAR file = ' + PATHS.build);
+ 
   module.exports = {
     debug: true,
-    devtool: 'source-map',
+    /*devtool: 'source-map',*/
     entry: {
-      'index.ios': ['./src/main.ios.js'],
-      'index.android': ['./src/main.android.js'],
+      'index.ios': ['./src/ios/main.ios.js'],
+      'index.android': ['./src/android/main.android.js'],
     },
     output: {
-      path: path.resolve(__dirname, 'build'),
-      filename: '[name].js',
+      path: PATHS.build,	
+      publicPath: '/assets/',
+      filename: '[name].bundle.js',
     },
     module: {
       preLoaders: [
@@ -33,7 +42,7 @@
           loader: 'babel',
           query: {
             cacheDirectory: true,
-            presets: ['es2015', 'stage-1', 'react']
+            presets: ['es2015', 'stage-1', 'react'],
           }
         },
         {
@@ -42,7 +51,7 @@
           loader: 'babel',
           query: {
             cacheDirectory: true,
-            presets: ['es2015', 'stage-1', 'react']
+            presets: ['es2015', 'stage-1', 'react'],
           }
         }
       ]

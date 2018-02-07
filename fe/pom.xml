@@ -40,13 +40,14 @@
 				<arguments>i</arguments>
 			</configuration>
 			</execution>
+		  	
 		  <execution>
-            <id>npm run build</id>
+            <id>npm run bundle</id>
             <goals>
               <goal>npm</goal>
             </goals>
             <configuration>
-              <arguments>build</arguments>
+              <arguments>run bundle</arguments>
             </configuration>
           </execution>
 		 

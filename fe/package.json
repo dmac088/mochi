@@ -1,7 +1,8 @@
 {
-  "name": "react-native-webpack-starter-kit",
-  "version": "0.1.0",
-  "description": "Build your React Native with Webpack and Babel.",
+  "name": "fe",
+  "version": "0.0.1-SNAPSHOT",
+  "description": "Mochi packaging",
+  "main": "./src",
   "author": "Josh Habdas <jhabdas@gmail.com> (http://habd.as)",
   "license": "MIT",
   "keywords": [
@@ -16,7 +17,7 @@
   ],
   "scripts": {
     "android-setup-port": "adb reverse tcp:8081 tcp:8080",
-    "bundle": "rnws bundle",
+    "bundle": "rnws bundle -I ./src/ios/main.ios -A ./src/android/main.android --iosBundlePath ./target/classes/META-INF/resources/webjars/fe/0.0.1-SNAPSHOT/main.ios.bundle.js --androidBundlePath ./target/classes/META-INF/resources/webjars/fe/0.0.1-SNAPSHOT/main.android.bundle.js",
     "test": "snyk test && npm run lint && npm run snyk-protect",
     "lint": "eslint src",
     "start": "rnws start",

@@ -4,9 +4,9 @@
  */
 import React from 'react'
 import { AppRegistry } from 'react-native'
-import App from './components/App'
+import App from '../components/App'
 
-const instructions = 'Shake or press menu button for dev menu'
+const instructions = 'Press Cmd+R to reload,\nCmd+D or shake for dev menu'
 
 function Root() {
   return (
