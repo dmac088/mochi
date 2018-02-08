@@ -7,7 +7,7 @@
 
   var path = require('path')
   var packageJSON = require('./package.json')
-  
+  var webpack = require('webpack')
   
   const PATHS = {
 	  build: path.join(__dirname, 'target', 'classes', 'META-INF', 'resources', 'webjars', packageJSON.name, packageJSON.version),
@@ -17,7 +17,7 @@
  
   module.exports = {
     debug: true,
-    /*devtool: 'source-map',*/
+    devtool: 'source-map',
     entry: {
       'index.ios': ['./src/ios/main.ios.js'],
       'index.android': ['./src/android/main.android.js'],
