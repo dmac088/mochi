@@ -17,7 +17,7 @@
   ],
   "scripts": {
     "android-setup-port": "adb reverse tcp:8081 tcp:8080",
-    "bundle": "rnws bundle -I ./src/ios/main.ios -A ./src/android/main.android --androidBundlePath ./android/app/src/main/assets/index.android.bundle --iosBundlePath ./android/app/src/main/assets/index.ios.bundle",
+    "bundle": "rnws bundle -I ./src/ios/main.ios -A ./src/android/main.android --iosBundlePath ./target/classes/META-INF/resources/webjars/fe/0.0.1-SNAPSHOT/main.ios.bundle.js --androidBundlePath ./target/classes/META-INF/resources/webjars/fe/0.0.1-SNAPSHOT/main.android.bundle.js",
     "test": "snyk test && npm run lint && npm run snyk-protect",
     "lint": "eslint src",
     "start": "rnws start",
