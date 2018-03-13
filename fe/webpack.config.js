@@ -1,14 +1,23 @@
+
+var packageJSON = require('./package.json');
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+
+
+
+const PATHS = {
+  build: path.join(__dirname, 'target', 'classes', 'META-INF', 'resources', 'webjars', packageJSON.name, packageJSON.version)
+};
+
 module.exports = {
-  watch: true,
+  watch: false,
   context: path.resolve(__dirname, './src'),
   entry: {
     app: './index.js',
   },
   output: {
-    path: path.resolve(__dirname, './dist'),
+    path: PATHS.build,
     filename: '[name].bundle.js',
   },
   devtool: 'source-map',
