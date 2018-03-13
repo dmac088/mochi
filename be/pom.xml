@@ -67,7 +67,7 @@
 	<dependency>
       <groupId>io.javabrains.springbootquickstart</groupId>
       <artifactId>fe</artifactId>
-      <version>0.0.1</version>
+      <version>0.0.1-SNAPSHOT</version>
     </dependency>
   </dependencies>
   <properties>
