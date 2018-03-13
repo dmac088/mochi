@@ -47,7 +47,7 @@ public class Product {
 		return ProductDesc;
 	}
 
-	public void setProductName(String productName) {
-		ProductName = productName;
+	public void setProductDesc(String productDesc) {
+		ProductDesc = productDesc;
 	}
 }
