@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "product")
@@ -19,27 +20,31 @@ public class Product {
 	@Column(name="product_id")
 	private Long ProductID;
 	
+	@Transient
 	private double rrp;
-	private String ProductName;
+	
+	private String ProductDesc;
 
 	public Product (){
 		
 	}
 
 	public Product (int id){
-		//super(id);
+	
 	}
 	
+	/*
 	public double getRrp() {
 		return this.rrp;
 	}
 	
 	public void setRrp(double rrp) {
 		this.rrp = rrp;
-	}
+	}*/
 
-	public String getProductName() {
-		return ProductName;
+	@Column(name="product_desc")
+	public String getProductDesc() {
+		return ProductDesc;
 	}
 
 	public void setProductName(String productName) {
