@@ -1,11 +1,10 @@
 {
-  "name": "fe",
-  "version": "0.0.1-SNAPSHOT",
+  "name": "react-shopping-cart",
+  "version": "0.0.1",
   "description": "simple react shopping cart without using redux",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack -p"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "reactjs",
@@ -20,8 +19,7 @@
     "react": "^16.0.0",
     "react-custom-scrollbars": "^4.1.1",
     "react-dom": "^16.0.0",
-    "react-transition-group": "^1.1.2",
-    "webpack-dev-server": "^3.1.1"
+    "react-transition-group": "^1.1.2"
   },
   "devDependencies": {
     "babel-core": "^6.10.4",
