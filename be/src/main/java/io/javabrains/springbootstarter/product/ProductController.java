@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.view.RedirectView;
 
 
 @Controller
@@ -27,8 +28,19 @@ public class ProductController {
 	
 	@ResponseBody
 	@RequestMapping("/Product/{id}")
-	public Product getProduct(@PathVariable String id) {
+	public Product getProduct(@PathVariable Long id) {
 		System.out.println("calling getProduct");
 		return productService.getProduct(id);
 	}
+	
+	@ResponseBody
+	@RequestMapping("/Product/images/{id}")
+	public RedirectView getImage(@PathVariable Long id) {
+		System.out.println("calling getImage");
+		RedirectView redirectView = new RedirectView();
+		redirectView.setUrl("http://localhost:8090/" + productService.getProductImage(id));
+		return redirectView;
+	}
+	
+	
 }

@@ -21,7 +21,7 @@ public class CustomerService {
 		return c1;
 	}
 	
-	public Customer getCustomer(String id) {
+	public Customer getCustomer(Long id) {
 		return customerRepository.findOne(id);
 	}
 	
@@ -29,11 +29,11 @@ public class CustomerService {
 		customerRepository.save(customer);
 	}
 	
-	public void updateCustomer(String id, Customer customer) {
+	public void updateCustomer(Long id, Customer customer) {
 		customerRepository.save(customer);
 	}
 	
-	public void deleteCustomer(String id) {
+	public void deleteCustomer(Long id) {
 		customerRepository.delete(id);
 	}
 	

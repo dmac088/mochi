@@ -3,7 +3,7 @@ package io.javabrains.springbootstarter.customer;
 import org.springframework.data.repository.CrudRepository;
 
 
-public interface CustomerRepository extends CrudRepository<Customer, String> {
+public interface CustomerRepository extends CrudRepository<Customer, Long> {
 
 	//List<Customer> getAllCustomers();
 	//Customer getCustomer(int id);

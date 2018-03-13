@@ -45,7 +45,7 @@ public class CustomerController {
 	
 	@ResponseBody
 	@RequestMapping("/Customer/{id}")
-	public Customer getCustomer(@PathVariable String id) {
+	public Customer getCustomer(@PathVariable Long id) {
 		System.out.println("calling getCustomer");
 		return customerService.getCustomer(id);
 	}
@@ -64,14 +64,14 @@ public class CustomerController {
 	
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.PUT, value="/Customer/{id}")
-	public void updateCustomer(@RequestBody Customer Customer, @PathVariable String id) {
+	public void updateCustomer(@RequestBody Customer Customer, @PathVariable Long id) {
 		System.out.println("calling updateCustomer");
 		customerService.updateCustomer(id, Customer);
 	}
 
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.DELETE,value="/Customer/{id}")
-	public void deleteCustomer(@PathVariable String id) {
+	public void deleteCustomer(@PathVariable Long id) {
 		System.out.println("calling deleteCustomer");
 		customerService.deleteCustomer(id);
 	}

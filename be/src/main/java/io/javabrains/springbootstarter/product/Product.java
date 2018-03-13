@@ -25,12 +25,15 @@ public class Product {
 
 	@Column(name="prd_desc")
 	private String ProductDesc;
-
+	
+	@Column(name="prd_img_pth")
+	private String ProductImage;
+	
 	public Product (){
 		
 	}
 
-	public Product (int id){
+	public Product (Long id){
 	
 	}
 	
@@ -51,4 +54,14 @@ public class Product {
 	public void setProductDesc(String productDesc) {
 		ProductDesc = productDesc;
 	}
+	
+
+	public String getProductImage() {
+		return ProductImage;
+	}
+
+	public void setProductImage(String productImage) {
+		ProductImage = productImage;
+	}
+
 }

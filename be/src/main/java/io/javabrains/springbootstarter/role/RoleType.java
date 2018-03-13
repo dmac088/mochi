@@ -14,10 +14,10 @@ public class RoleType {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="role_typ_id")
+	@Column(name="rle_typ_id")
 	private Long roleTypeID;
 	
-	@Column(name="role_typ_desc")
+	@Column(name="rle_typ_desc")
 	private String roleTypeDesc;
 	
 	public RoleType() {

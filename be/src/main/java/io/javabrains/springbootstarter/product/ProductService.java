@@ -21,9 +21,14 @@ public class ProductService {
 		return Products;
 	}
 	
-	public Product getProduct(String id) {
+	public Product getProduct(Long id) {
 		Product p = productRepository.findOne(id);
 		return p;
+	}
+	
+	public String getProductImage(Long id) {
+		Product p = productRepository.findOne(id);
+		return p.getProductImage();
 	}
 	
 }
