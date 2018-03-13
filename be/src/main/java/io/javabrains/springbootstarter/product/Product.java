@@ -11,18 +11,19 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "product")
-@PrimaryKeyJoinColumn(name = "product_id")
+@PrimaryKeyJoinColumn(name = "prd_id")
 public class Product {
 	
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="product_id")
+	@Column(name="prd_id")
 	private Long ProductID;
 	
-	@Transient
+	@Column(name="prd_rrp")
 	private double rrp;
-	
+
+	@Column(name="prd_desc")
 	private String ProductDesc;
 
 	public Product (){
@@ -33,16 +34,16 @@ public class Product {
 	
 	}
 	
-	/*
+	
 	public double getRrp() {
 		return this.rrp;
 	}
 	
 	public void setRrp(double rrp) {
 		this.rrp = rrp;
-	}*/
+	}
 
-	@Column(name="product_desc")
+	
 	public String getProductDesc() {
 		return ProductDesc;
 	}

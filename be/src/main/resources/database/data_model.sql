@@ -1,5 +1,4 @@
 
-
 /* Drop Indexes */
 
 DROP INDEX IF EXISTS role_role_typ_id_role_start_dttm_party_id_key;
@@ -42,7 +41,9 @@ DROP SEQUENCE IF EXISTS mochi.thing_id_seq;
 /* Create Sequences */
 
 CREATE SEQUENCE mochi.hibernate_sequence INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 232 CACHE 1;
+CREATE SEQUENCE mochi.party_party_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 1 CACHE 1;
 CREATE SEQUENCE mochi.person_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 6 CACHE 1;
+CREATE SEQUENCE mochi.role_type_role_typ_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 1 CACHE 1;
 CREATE SEQUENCE mochi.thing_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 9 CACHE 1;
 
 
@@ -51,9 +52,9 @@ CREATE SEQUENCE mochi.thing_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854
 
 CREATE TABLE mochi.customer
 (
-	role_id bigint NOT NULL,
-	customer_id char(10) UNIQUE,
-	CONSTRAINT customer_pkey PRIMARY KEY (role_id)
+	rle_id bigint NOT NULL,
+	cst_id char(10) UNIQUE,
+	CONSTRAINT customer_pkey PRIMARY KEY (rle_id)
 ) WITHOUT OIDS;
 
 
@@ -75,28 +76,28 @@ CREATE TABLE mochi.object_type
 
 CREATE TABLE mochi.orders
 (
-	order_id bigint NOT NULL,
-	party_id bigint NOT NULL UNIQUE,
-	CONSTRAINT orders_pkey PRIMARY KEY (order_id)
+	ord_id bigint NOT NULL,
+	pty_id bigint NOT NULL UNIQUE,
+	CONSTRAINT orders_pkey PRIMARY KEY (ord_id)
 ) WITHOUT OIDS;
 
 
 CREATE TABLE mochi.order_line
 (
-	order_id bigint NOT NULL UNIQUE,
-	product_id bigint NOT NULL UNIQUE,
-	line_no bigint NOT NULL,
-	CONSTRAINT order_line_pkey PRIMARY KEY (order_id, product_id, line_no)
+	ord_id bigint NOT NULL UNIQUE,
+	prd_id bigint NOT NULL UNIQUE,
+	ord_lne_no bigint NOT NULL,
+	CONSTRAINT order_line_pkey PRIMARY KEY (ord_id, prd_id, ord_lne_no)
 ) WITHOUT OIDS;
 
 
 CREATE TABLE mochi.party
 (
-	party_id bigserial NOT NULL,
+	pty_id bigserial NOT NULL,
 	pty_typ_id bigint NOT NULL,
 	pty_usr_nm text NOT NULL UNIQUE,
 	pty_pwd text NOT NULL,
-	CONSTRAINT party_pkey PRIMARY KEY (party_id)
+	CONSTRAINT party_pkey PRIMARY KEY (pty_id)
 ) WITHOUT OIDS;
 
 
@@ -110,11 +111,11 @@ CREATE TABLE mochi.party_type
 
 CREATE TABLE mochi.person
 (
-	person_id bigint NOT NULL UNIQUE,
+	psn_id bigint NOT NULL UNIQUE,
 	psn_gvn_nm_en varchar,
 	psn_fml_nm_en varchar,
 	psn_nm_cn varchar,
-	enabled boolean
+	enb boolean
 ) WITHOUT OIDS;
 
 
@@ -139,27 +140,29 @@ CREATE TABLE mochi.point_of_interest
 
 CREATE TABLE mochi.product
 (
-	product_id bigint NOT NULL,
-	product_desc varchar(100),
-	CONSTRAINT product_pkey PRIMARY KEY (product_id)
+	prd_id bigint NOT NULL,
+	prd_desc varchar(100),
+	prd_img_pth varchar(100),
+	prd_rrp numeric,
+	CONSTRAINT product_pkey PRIMARY KEY (prd_id)
 ) WITHOUT OIDS;
 
 
 CREATE TABLE mochi.role
 (
-	role_id bigint NOT NULL,
-	role_typ_id bigint NOT NULL,
-	role_start_dttm date NOT NULL,
-	party_id bigint NOT NULL UNIQUE,
-	CONSTRAINT role_pkey PRIMARY KEY (role_id)
+	rle_id bigint NOT NULL,
+	rle_typ_id bigint NOT NULL,
+	rle_start_dttm date NOT NULL,
+	pty_id bigint NOT NULL UNIQUE,
+	CONSTRAINT role_pkey PRIMARY KEY (rle_id)
 ) WITHOUT OIDS;
 
 
 CREATE TABLE mochi.role_type
 (
-	role_typ_id bigserial NOT NULL,
-	role_typ_desc varchar NOT NULL UNIQUE,
-	CONSTRAINT role_type_pkey PRIMARY KEY (role_typ_id)
+	rle_typ_id bigserial NOT NULL,
+	rle_typ_desc varchar NOT NULL UNIQUE,
+	CONSTRAINT role_type_pkey PRIMARY KEY (rle_typ_id)
 ) WITHOUT OIDS;
 
 
@@ -203,32 +206,32 @@ ALTER TABLE mochi.obj
 
 
 ALTER TABLE mochi.order_line
-	ADD CONSTRAINT order_line_order_id_fkey FOREIGN KEY (order_id)
-	REFERENCES mochi.orders (order_id)
+	ADD CONSTRAINT order_line_order_id_fkey FOREIGN KEY (ord_id)
+	REFERENCES mochi.orders (ord_id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
 
 
 ALTER TABLE mochi.orders
-	ADD CONSTRAINT orders_party_id_fkey FOREIGN KEY (party_id)
-	REFERENCES mochi.party (party_id)
+	ADD CONSTRAINT orders_party_id_fkey FOREIGN KEY (pty_id)
+	REFERENCES mochi.party (pty_id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
 
 
 ALTER TABLE mochi.person
-	ADD CONSTRAINT person_person_id_fkey FOREIGN KEY (person_id)
-	REFERENCES mochi.party (party_id)
+	ADD CONSTRAINT person_person_id_fkey FOREIGN KEY (psn_id)
+	REFERENCES mochi.party (pty_id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
 
 
 ALTER TABLE mochi.role
-	ADD CONSTRAINT role_party_id_fkey FOREIGN KEY (party_id)
-	REFERENCES mochi.party (party_id)
+	ADD CONSTRAINT role_party_id_fkey FOREIGN KEY (pty_id)
+	REFERENCES mochi.party (pty_id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
@@ -243,24 +246,24 @@ ALTER TABLE mochi.party
 
 
 ALTER TABLE mochi.order_line
-	ADD CONSTRAINT order_line_product_id_fkey FOREIGN KEY (product_id)
-	REFERENCES mochi.product (product_id)
+	ADD CONSTRAINT order_line_product_id_fkey FOREIGN KEY (prd_id)
+	REFERENCES mochi.product (prd_id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
 
 
 ALTER TABLE mochi.customer
-	ADD CONSTRAINT customer_role_id_fkey FOREIGN KEY (role_id)
-	REFERENCES mochi.role (role_id)
+	ADD CONSTRAINT customer_role_id_fkey FOREIGN KEY (rle_id)
+	REFERENCES mochi.role (rle_id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
 
 
 ALTER TABLE mochi.role
-	ADD CONSTRAINT role_role_typ_id_fkey FOREIGN KEY (role_typ_id)
-	REFERENCES mochi.role_type (role_typ_id)
+	ADD CONSTRAINT role_role_typ_id_fkey FOREIGN KEY (rle_typ_id)
+	REFERENCES mochi.role_type (rle_typ_id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
@@ -277,7 +280,7 @@ ALTER TABLE mochi.spring_session_attributes
 
 /* Create Indexes */
 
-CREATE UNIQUE INDEX role_role_typ_id_role_start_dttm_party_id_key ON mochi.role USING BTREE (role_typ_id, role_start_dttm, party_id);
+CREATE UNIQUE INDEX role_role_typ_id_role_start_dttm_party_id_key ON mochi.role USING BTREE (rle_typ_id, rle_start_dttm, pty_id);
 CREATE INDEX spring_session_ix1 ON mochi.spring_session USING BTREE (last_access_time);
 
 

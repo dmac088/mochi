@@ -32,7 +32,7 @@ public abstract class Party {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="party_id")
+	@Column(name="pty_id")
 	private Long PartyId;
 	
 	@Column(name="pty_usr_nm")

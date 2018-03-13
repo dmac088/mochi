@@ -29,19 +29,19 @@ public class Role {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)	
-	@Column(name="role_id")
+	@Column(name="rle_id")
 	private Long roleId;
 	
-	@Column(name="role_start_dttm")
+	@Column(name="rle_start_dttm")
 	private Date RoleStart; 
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="role_typ_id")
+	@JoinColumn(name="rle_typ_id")
 	private RoleType roleType;
 	
 	@JsonBackReference
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="party_id")
+	@JoinColumn(name="pty_id")
 	private Party roleParty;
 	
 

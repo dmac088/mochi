@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Person")
-@PrimaryKeyJoinColumn(name = "person_id")
+@PrimaryKeyJoinColumn(name = "psn_id")
 public class Person extends Party {
 	
 	@Column(name="psn_gvn_nm_en")

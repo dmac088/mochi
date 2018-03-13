@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Customer")
-@PrimaryKeyJoinColumn(name = "role_id")
+@PrimaryKeyJoinColumn(name = "rle_id")
 public class Customer extends Role {
 
 	public Customer() {
