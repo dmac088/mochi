@@ -41,7 +41,7 @@ public class ProductController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("/Product/images/{id}")
+	@RequestMapping("/Product/{id}/image")
 	public RedirectView getImage(@PathVariable Long id) {
 		
 		System.out.println("calling getImage");
