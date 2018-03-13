@@ -51,9 +51,5 @@ public class Person extends Party {
 	public void setNameCn(String NameCn) {
 		this.NameCn = NameCn;
 	}
-
-	
-	
-	
 	
 }

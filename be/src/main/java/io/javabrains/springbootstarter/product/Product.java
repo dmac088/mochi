@@ -1,14 +1,29 @@
 package io.javabrains.springbootstarter.product;
 
-import io.javabrains.springbootstarter.thing.Thing;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
-public class Product /*extends Thing*/ {
+@Entity
+@Table(name = "product")
+@PrimaryKeyJoinColumn(name = "product_id")
+public class Product {
+	
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="product_id")
+	private Long ProductID;
 	
 	private double rrp;
 	private String ProductName;
 
 	public Product (){
-		super();
+		
 	}
 
 	public Product (int id){
