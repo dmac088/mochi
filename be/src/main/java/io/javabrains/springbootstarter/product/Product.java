@@ -29,6 +29,17 @@ public class Product {
 	@Column(name="prd_img_pth")
 	private String ProductImage;
 	
+	@Column(name="prd_cat_desc")
+	private String ProductCategory;
+	
+	public String getcategory() {
+		return ProductCategory;
+	}
+
+	public void setcategory(String productCategory) {
+		ProductCategory = productCategory;
+	}
+
 	public Product (){
 		
 	}
@@ -37,30 +48,35 @@ public class Product {
 	
 	}
 	
-	
-	public double getRrp() {
+	public double getprice() {
 		return this.rrp;
 	}
 	
-	public void setRrp(double rrp) {
+	public void setprice(double rrp) {
 		this.rrp = rrp;
 	}
 
-	
-	public String getProductDesc() {
-		return ProductDesc;
+	public String getname() {
+		return this.ProductDesc;
 	}
 
-	public void setProductDesc(String productDesc) {
-		ProductDesc = productDesc;
+	public void setname(String productDesc) {
+		this.ProductDesc = productDesc;
 	}
 	
+	public Long getid() {
+		return ProductID;
+	}
 
-	public String getProductImage() {
+	public void setid(Long productID) {
+		ProductID = productID;
+	}
+
+	public String getimage() {
 		return ProductImage;
 	}
 
-	public void setProductImage(String productImage) {
+	public void setimage(String productImage) {
 		ProductImage = productImage;
 	}
 

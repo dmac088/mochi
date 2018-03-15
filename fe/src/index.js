@@ -38,8 +38,10 @@ class App extends Component{
 	// Fetch Initial Set of Products from external API
 	getProducts(){
 		//For Localhost use the below url
-		const url = "products.json";
-
+		//const url = "products.json";
+		const url = "http://localhost:8090/Product";
+		
+		
 		// For Production use the below url
 		//const url="https://quarkbackend.com/getfile/sivadass/products";
 

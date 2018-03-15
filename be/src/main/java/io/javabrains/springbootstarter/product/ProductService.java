@@ -3,6 +3,7 @@ package io.javabrains.springbootstarter.product;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,18 @@ public class ProductService {
 	public String getProductImage(Long id) {
 		Product p = productRepository.findOne(id);
 		return p.getProductImage();
+	}
+	
+	public void addProduct(Product product) {
+		productRepository.save(product);
+	}
+	
+	public void updateProduct(Long id, Product product) {
+		productRepository.save(product);
+	}
+	
+	public void deleteProduct(Long id) {
+		productRepository.delete(id);
 	}
 	
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -43,12 +44,23 @@ public class ProductController {
 	@ResponseBody
 	@RequestMapping("/Product/{id}/image")
 	public RedirectView getImage(@PathVariable Long id) {
-		
-		System.out.println("calling getImage");
 		RedirectView redirectView = new RedirectView();
 		redirectView.setUrl(serverHost + ":" + serverPort + "/" + productService.getProductImage(id));
 		return redirectView;
 	}
 	
+	@ResponseBody
+	@RequestMapping(method=RequestMethod.POST, value="/Product")
+	public void addProduct(Product product) {	
+		System.out.println("calling addProductr");
+		productService.addProduct(product);
+	}
+	
+	@ResponseBody
+	@RequestMapping(method=RequestMethod.PUT, value="/Product/{id}")
+	public void updateProduct(@RequestBody Product Product, @PathVariable Long id) {
+		System.out.println("calling updateProduct");
+		productService.updateProduct(id, Product);
+	}
 	
 }

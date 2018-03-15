@@ -52,14 +52,13 @@ public class CustomerController {
 
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.POST, value="/Customer")
-	public String addCustomer(Person person, Customer customer) {	
+	public void addCustomer(Person person, Customer customer) {	
 		System.out.println("calling addCustomer");
 		person.setPartyType(partyTypeService.getPartyType("Person"));
 		customer.setRoleType(roleTypeService.getRoleType("Customer"));
 		customer.setRoleParty(person);
 		personService.addPerson(person);
 		customerService.addCustomer(customer);
-		return "home";
 	}
 	
 	@ResponseBody

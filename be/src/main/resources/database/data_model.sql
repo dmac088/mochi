@@ -144,6 +144,7 @@ CREATE TABLE mochi.product
 	prd_desc varchar(100),
 	prd_img_pth varchar(100),
 	prd_rrp numeric,
+	prd_cat_desc varchar(100),
 	CONSTRAINT product_pkey PRIMARY KEY (prd_id)
 ) WITHOUT OIDS;
 
