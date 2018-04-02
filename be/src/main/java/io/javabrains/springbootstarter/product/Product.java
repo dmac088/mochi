@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -18,25 +19,24 @@ public class Product {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@JsonProperty(value="id")
 	@Column(name="prd_id")
-	private Long ProductID;
+	private Long ProductId;
 	
 	@Column(name="prd_rrp")
-	@JsonProperty(value="price")
-	private double rrp;
+	private double ProductRrp;
 
 	@Column(name="prd_desc")
-	@JsonProperty(value="name")
 	private String ProductDesc;
 	
 	@Column(name="prd_img_pth")
-	@JsonProperty(value="image")
 	private String ProductImage;
 	
 	@Column(name="prd_cat_desc")
 	private String ProductCategory;
 	
+	@Transient
+	private String ProductQty;
+
 	public String getcategory() {
 		return ProductCategory;
 	}
@@ -46,20 +46,20 @@ public class Product {
 	}
 
 	public Product (){
-		
+		this.ProductQty = "0";
 	}
 
 	public Product (Long id){
-	
+		this.ProductQty = "0";
 	}
 	
-	public double getRrp() {
-		return this.rrp;
+	public double getProductRrp() {
+		return this.ProductRrp;
 	}
 	
 	
-	public void setRrp(double rrp) {
-		this.rrp = rrp;
+	public void setProductRrp(double rrp) {
+		this.ProductRrp = rrp;
 	}
 
 	public String getProductDesc() {
@@ -70,12 +70,12 @@ public class Product {
 		this.ProductDesc = productDesc;
 	}
 	
-	public Long getProductID() {
-		return ProductID;
+	public Long getProductId() {
+		return ProductId;
 	}
 
-	public void setProductID(Long productID) {
-		ProductID = productID;
+	public void setProductID(Long productId) {
+		ProductId = productId;
 	}
 
 	public String getProductImage() {
@@ -86,4 +86,12 @@ public class Product {
 		ProductImage = productImage;
 	}
 
+	public String getProductQty() {
+		return ProductQty;
+	}
+
+	public void setProductQty(String productQty) {
+		ProductQty = productQty;
+	}
+	
 }

@@ -15,12 +15,21 @@ class Products extends Component{
 		
 		function searchingFor(term){
 			return function(x){
-				return x.name.toLowerCase().includes(term.toLowerCase()) || !term;
+				return x.productDesc.toLowerCase().includes(term.toLowerCase()) || !term;
 			}
 		}
 		productsData = this.props.productsList.filter(searchingFor(term)).map(product =>{
 			return(
-						<Product key={product.id} price={product.price} name={product.name} image={product.image} id={product.id} addToCart={this.props.addToCart} productQuantity={this.props.productQuantity} updateQuantity={this.props.updateQuantity} openModal={this.props.openModal}/>
+						<Product key={product.productId} 
+								 price={product.productRrp} 
+								 name={product.productDesc} 
+								 image={product.productImage} 
+								 id={product.productId} 
+								 addToCart={this.props.addToCart} 
+								 productQuantity={this.props.productQuantity} 
+								 updateQuantity={this.props.updateQuantity} 
+								 openModal={this.props.openModal}
+						/>
 				)
 			}
 		);
