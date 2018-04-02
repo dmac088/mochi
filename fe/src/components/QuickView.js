@@ -18,11 +18,11 @@ class QuickView extends Component{
 		if (!domNode || !domNode.contains(event.target)) {
 			this.props.closeModal();
 		}
-  }
+	}
 
-  handleClose(){
-    this.props.closeModal();
-  }
+	handleClose(){
+	    this.props.closeModal();
+	}
   
   render(){
     return(

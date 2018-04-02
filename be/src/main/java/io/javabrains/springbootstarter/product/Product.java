@@ -7,7 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "product")
@@ -17,16 +18,20 @@ public class Product {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@JsonProperty(value="id")
 	@Column(name="prd_id")
 	private Long ProductID;
 	
 	@Column(name="prd_rrp")
+	@JsonProperty(value="price")
 	private double rrp;
 
 	@Column(name="prd_desc")
+	@JsonProperty(value="name")
 	private String ProductDesc;
 	
 	@Column(name="prd_img_pth")
+	@JsonProperty(value="image")
 	private String ProductImage;
 	
 	@Column(name="prd_cat_desc")
@@ -48,35 +53,36 @@ public class Product {
 	
 	}
 	
-	public double getprice() {
+	public double getRrp() {
 		return this.rrp;
 	}
 	
-	public void setprice(double rrp) {
+	
+	public void setRrp(double rrp) {
 		this.rrp = rrp;
 	}
 
-	public String getname() {
+	public String getProductDesc() {
 		return this.ProductDesc;
 	}
 
-	public void setname(String productDesc) {
+	public void setProductDesc(String productDesc) {
 		this.ProductDesc = productDesc;
 	}
 	
-	public Long getid() {
+	public Long getProductID() {
 		return ProductID;
 	}
 
-	public void setid(Long productID) {
+	public void setProductID(Long productID) {
 		ProductID = productID;
 	}
 
-	public String getimage() {
+	public String getProductImage() {
 		return ProductImage;
 	}
 
-	public void setimage(String productImage) {
+	public void setProductImage(String productImage) {
 		ProductImage = productImage;
 	}
 
