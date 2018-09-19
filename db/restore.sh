@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-psql -h localhost mochidb <  mochidb.backup
+psql -h localhost -U mochidb_owner mochidb <  mochidb.backup
