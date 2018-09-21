@@ -15,7 +15,7 @@ class App extends Component{
 			products: [],
 			cart: [],
 			totalItems: 0,
-			totalAmount: 0, 
+			totalAmount: 0,
 			term: '',
 			category: '',
 			cartBounce: false,
@@ -40,8 +40,8 @@ class App extends Component{
 		//For Localhost use the below url
 		//const url = "products.json";
 		const url = "http://localhost:8090/Product";
-		
-		
+
+
 		// For Production use the below url
 		//const url="https://quarkbackend.com/getfile/sivadass/products";
 
@@ -95,7 +95,7 @@ class App extends Component{
 			});
 			console.log(this.state.quantity);
 			console.log(this.state.cart);
-    }.bind(this),1000);  
+    }.bind(this),1000);
 		this.sumTotalItems(this.state.cart);
 		this.sumTotalAmount(this.state.cart);
 	}
@@ -114,7 +114,7 @@ class App extends Component{
 		let cart = this.state.cart;
 		return cart.some(function(item) {
 			return item.id === productID;
-		}); 
+		});
 	}
 	sumTotalItems(){
         let total = 0;
@@ -155,7 +155,7 @@ class App extends Component{
 			modalActive: false
 		})
 	}
-	
+
 	render(){
 		return(
 			<div className="container">
@@ -172,6 +172,7 @@ class App extends Component{
 					updateQuantity={this.updateQuantity}
 					productQuantity={this.state.moq}
 				/>
+
 				<Products
 					productsList={this.state.products}
 					searchTerm={this.state.term}
