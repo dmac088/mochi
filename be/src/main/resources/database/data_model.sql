@@ -9,7 +9,6 @@ DROP INDEX IF EXISTS spring_session_ix1;
 /* Drop Tables */
 
 DROP TABLE IF EXISTS mochi.customer;
-DROP TABLE IF EXISTS mochi.point_of_interest;
 DROP TABLE IF EXISTS mochi.obj;
 DROP TABLE IF EXISTS mochi.object_type;
 DROP TABLE IF EXISTS mochi.order_line;
@@ -19,6 +18,7 @@ DROP TABLE IF EXISTS mochi.role;
 DROP TABLE IF EXISTS mochi.party;
 DROP TABLE IF EXISTS mochi.party_type;
 DROP TABLE IF EXISTS mochi.person_role;
+DROP TABLE IF EXISTS mochi.product_attr_lcl;
 DROP TABLE IF EXISTS mochi.product;
 DROP TABLE IF EXISTS mochi.role_type;
 DROP TABLE IF EXISTS mochi.spring_session_attributes;
@@ -127,25 +127,26 @@ CREATE TABLE mochi.person_role
 ) WITHOUT OIDS;
 
 
-CREATE TABLE mochi.point_of_interest
-(
-	point_of_interest_id bigint NOT NULL,
-	lat float,
-	lng float,
-	name varchar(255),
-	type varchar(255),
-	CONSTRAINT poi_pkey PRIMARY KEY (point_of_interest_id)
-) WITHOUT OIDS;
-
-
 CREATE TABLE mochi.product
 (
 	prd_id bigint NOT NULL,
+	upc_cd char(12),
+	prd_crtd_dt date,
+	CONSTRAINT product_pkey PRIMARY KEY (prd_id)
+) WITHOUT OIDS;
+
+
+CREATE TABLE mochi.product_attr_lcl
+(
+	prd_lcl_id bigint NOT NULL,
+	prd_id bigint NOT NULL,
 	prd_desc varchar(100),
 	prd_img_pth varchar(100),
-	prd_rrp numeric,
+	prd_rrp decimal,
 	prd_cat_desc varchar(100),
-	CONSTRAINT product_pkey PRIMARY KEY (prd_id)
+	lcl_cd char(3) NOT NULL,
+	PRIMARY KEY (prd_lcl_id),
+	CONSTRAINT uc_prd_lcl_1 UNIQUE (prd_id, lcl_cd)
 ) WITHOUT OIDS;
 
 
@@ -189,14 +190,6 @@ CREATE TABLE mochi.spring_session_attributes
 
 
 /* Create Foreign Keys */
-
-ALTER TABLE mochi.point_of_interest
-	ADD CONSTRAINT fk_object_point_of_interest FOREIGN KEY (point_of_interest_id)
-	REFERENCES mochi.obj (object_id)
-	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
-;
-
 
 ALTER TABLE mochi.obj
 	ADD CONSTRAINT obj_object_type_id_fkey FOREIGN KEY (object_type_id)
@@ -248,6 +241,14 @@ ALTER TABLE mochi.party
 
 ALTER TABLE mochi.order_line
 	ADD CONSTRAINT order_line_product_id_fkey FOREIGN KEY (prd_id)
+	REFERENCES mochi.product (prd_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+ALTER TABLE mochi.product_attr_lcl
+	ADD FOREIGN KEY (prd_id)
 	REFERENCES mochi.product (prd_id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT

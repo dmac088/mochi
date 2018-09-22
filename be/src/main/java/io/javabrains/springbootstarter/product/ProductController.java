@@ -1,5 +1,6 @@
 package io.javabrains.springbootstarter.product;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -41,13 +42,6 @@ public class ProductController {
 		return productService.getProduct(id);
 	}
 	
-	@ResponseBody
-	@RequestMapping("/Product/{id}/image")
-	public RedirectView getImage(@PathVariable Long id) {
-		RedirectView redirectView = new RedirectView();
-		redirectView.setUrl(serverHost + ":" + serverPort + "/" + productService.getProductImage(id));
-		return redirectView;
-	}
 	
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.POST, value="/Product")

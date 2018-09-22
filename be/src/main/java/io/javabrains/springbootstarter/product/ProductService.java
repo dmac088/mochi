@@ -27,11 +27,6 @@ public class ProductService {
 		return p;
 	}
 	
-	public String getProductImage(Long id) {
-		Product p = productRepository.findOne(id);
-		return p.getProductImage();
-	}
-	
 	public void addProduct(Product product) {
 		productRepository.save(product);
 	}
