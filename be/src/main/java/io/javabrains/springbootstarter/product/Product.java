@@ -1,14 +1,24 @@
 package io.javabrains.springbootstarter.product;
 
+import io.javabrains.springbootstarter.product_lcl.ProductLcl;
+import io.javabrains.springbootstarter.role.Role;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
@@ -20,78 +30,30 @@ public class Product {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="prd_id")
-	private Long ProductId;
+	private Long productId;
 	
-	@Column(name="prd_rrp")
-	private double ProductRrp;
-
-	@Column(name="prd_desc")
-	private String ProductDesc;
 	
-	@Column(name="prd_img_pth")
-	private String ProductImage;
+	@OneToMany(fetch = FetchType.LAZY,
+            mappedBy = "product")
+	private List<ProductLcl> lclAttr = new ArrayList<ProductLcl>();
 	
-	@Column(name="prd_cat_desc")
-	private String ProductCategory;
 	
-	@Transient
-	private String ProductQty;
-
-	public String getcategory() {
-		return ProductCategory;
+	public List<ProductLcl> getLclAttr() {
+		return lclAttr;
 	}
 
-	public void setcategory(String productCategory) {
-		ProductCategory = productCategory;
+	public void setLclAttr(List<ProductLcl> lclAttr) {
+		this.lclAttr = lclAttr;
 	}
 
-	public Product (){
-		this.ProductQty = "0";
-	}
-
-	public Product (Long id){
-		this.ProductQty = "0";
-	}
-	
-	public double getProductRrp() {
-		return this.ProductRrp;
-	}
-	
-	
-	public void setProductRrp(double rrp) {
-		this.ProductRrp = rrp;
-	}
-
-	public String getProductDesc() {
-		return this.ProductDesc;
-	}
-
-	public void setProductDesc(String productDesc) {
-		this.ProductDesc = productDesc;
-	}
-	
 	public Long getProductId() {
-		return ProductId;
+		return productId;
 	}
 
-	public void setProductID(Long productId) {
-		ProductId = productId;
+	public void setProductId(Long productId) {
+		this.productId = productId;
 	}
-
-	public String getProductImage() {
-		return ProductImage;
-	}
-
-	public void setProductImage(String productImage) {
-		ProductImage = productImage;
-	}
-
-	public String getProductQty() {
-		return ProductQty;
-	}
-
-	public void setProductQty(String productQty) {
-		ProductQty = productQty;
-	}
+	
+	
 	
 }
