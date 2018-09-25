@@ -29,10 +29,10 @@ public class ProductController {
 	private ProductService productService;	
 	
 	@ResponseBody
-	@RequestMapping(method=RequestMethod.GET, value="/Product")
-    public List<Product> getAllProducts(HttpSession session) {
-		System.out.println("calling getAllProducts");
-        return productService.getAllProducts();	
+	@RequestMapping(method=RequestMethod.GET, value="/Product/{lcl}")
+    public List<Product> getAllProducts(HttpSession session, @PathVariable String lcl) {
+		System.out.println("calling getAllProductsForLcl");
+        return productService.getAllProducts(lcl);	
     }	
 	
 	@ResponseBody

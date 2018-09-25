@@ -14,8 +14,9 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -25,6 +26,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Entity
 @Table(name = "role")
 @Inheritance(strategy = InheritanceType.JOINED)
+@SecondaryTable(name = "role_type", pkJoinColumns = @PrimaryKeyJoinColumn(name = "rle_typ_id"))
 public class Role {
 
 	@Id
@@ -35,12 +37,11 @@ public class Role {
 	@Column(name="rle_start_dttm")
 	private Date RoleStart; 
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="rle_typ_id")
-	private RoleType roleType;
+	@Column(name="rle_typ_desc", table = "role_type")
+	private String roleTypeDesc;
 	
 	@JsonBackReference
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER, optional=false)
 	@JoinColumn(name="pty_id")
 	private Party roleParty;
 	
@@ -50,7 +51,6 @@ public class Role {
 	}
 	
 	public Role(String roleTypeDesc) {
-		this.roleType = new RoleType(roleTypeDesc);
 		this.RoleStart = new Date();
 	}
 	
@@ -64,7 +64,6 @@ public class Role {
 
 	public Role(Long id, String roleTypeDesc) {
 		this.roleId = id;
-		this.roleType = new RoleType(roleTypeDesc);
 		this.RoleStart = new Date();
 	}
 	
@@ -83,13 +82,13 @@ public class Role {
 	public void setRoleStart(Date roleStart) {
 		RoleStart = roleStart;
 	}
-
-	public RoleType getRoleType() {
-		return roleType;
+	
+	public String getRoleTypeDesc() {
+		return roleTypeDesc;
 	}
 
-	public void setRoleType(RoleType roleType) {
-		this.roleType = roleType;
+	public void setRoleTypeDesc(String roleTypeDesc) {
+		this.roleTypeDesc = roleTypeDesc;
 	}
 	
 }

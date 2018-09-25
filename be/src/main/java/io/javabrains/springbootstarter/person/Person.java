@@ -2,8 +2,6 @@ package io.javabrains.springbootstarter.person;
 
 
 import io.javabrains.springbootstarter.party.Party;
-import io.javabrains.springbootstarter.party.PartyType;
-import io.javabrains.springbootstarter.role.RoleType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
