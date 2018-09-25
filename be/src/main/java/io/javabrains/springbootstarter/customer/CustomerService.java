@@ -1,4 +1,5 @@
 package io.javabrains.springbootstarter.customer;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -21,8 +22,8 @@ public class CustomerService {
 		return c1;
 	}
 	
-	public Customer getCustomer(Long id) {
-		return customerRepository.findOne(id);
+	public Customer getCustomer(String CustomerId) {
+		return customerRepository.findOne(CustomerSpecs.byCustomerID(CustomerId));
 	}
 	
 	public void addCustomer(Customer customer) {
@@ -31,10 +32,6 @@ public class CustomerService {
 	
 	public void updateCustomer(Long id, Customer customer) {
 		customerRepository.save(customer);
-	}
-	
-	public void deleteCustomer(Long id) {
-		customerRepository.delete(id);
 	}
 	
 }

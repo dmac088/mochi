@@ -12,8 +12,6 @@ public class RoleService {
 	@Autowired
 	private RoleRepository RoleRepository; 
 	
-	@Autowired
-	private RoleTypeRepository RoleTypeRepository; 
 	
 	public List<Role> getAllRoles() {
 		List<Role> Roles = new ArrayList<>();
@@ -24,14 +22,16 @@ public class RoleService {
 		return Roles;
 	}
 
+	/*
 	public List<Role> getAllRoles(Long roleTypeId) {
 		List<Role> Roles = new ArrayList<>();
-		Iterator<Role> i = RoleTypeRepository.findByRoleTypeID(roleTypeId).iterator();
+		Iterator<Role> i = RoleRepository.findByRoleTypeID(roleTypeId).iterator();
 		while(i.hasNext()) {
 			Roles.add(i.next());
 		}
 		return Roles;
 	}
+	*/
 	
 	public Role getRole(Long id) {
 		Role p = RoleRepository.findOne(id);

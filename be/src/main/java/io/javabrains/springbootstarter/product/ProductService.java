@@ -22,6 +22,15 @@ public class ProductService {
 		return Products;
 	}
 	
+	public List<Product> getAllProducts(String lcl) {
+		List<Product> Products = new ArrayList<>();
+		Iterator<Product> i = productRepository.findByLclCd(lcl).iterator();
+		while(i.hasNext()) {
+			  Products.add(i.next());
+		}
+		return Products;
+	}
+	
 	public Product getProduct(Long id) {
 		Product p = productRepository.findOne(id);
 		return p;

@@ -16,7 +16,7 @@ public class PartyService {
 		List<Party> Partys = new ArrayList<>();
 		Iterator<Party> i = PartyRepository.findAll().iterator();
 		while(i.hasNext()) {
-			System.out.println("Party Type ID: " + i.next().getPartyType().getPartyTypeDesc());
+			System.out.println("Party Type ID: " + i.next().getPartyTypeDesc());
 			Partys.add(i.next());
 		}
 		return Partys;

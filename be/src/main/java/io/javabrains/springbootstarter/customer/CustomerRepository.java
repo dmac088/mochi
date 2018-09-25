@@ -1,13 +1,14 @@
 package io.javabrains.springbootstarter.customer;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.domain.Specification;
+import io.javabrains.springbootstarter.role.RoleBaseRepository;
 
+public interface CustomerRepository extends RoleBaseRepository<Customer> {
 
-public interface CustomerRepository extends CrudRepository<Customer, Long> {
-
-	//List<Customer> getAllCustomers();
-	//Customer getCustomer(int id);
-	//void updateCustomer(int id);
-	//void deleteCustomer(int id);
-
+	//@Override
+	Customer findOne(Long Id);
+	
+	//Customer findOneByCustomerId(String Id);
+	
+	Customer findOne(Specification<Customer> spec);
 }

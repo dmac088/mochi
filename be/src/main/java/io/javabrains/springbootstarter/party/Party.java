@@ -16,9 +16,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -26,8 +26,9 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
-@Table(name = "Party")
+@Table(name = "party")
 @Inheritance(strategy = InheritanceType.JOINED)
+@SecondaryTable(name = "party_type", pkJoinColumns = @PrimaryKeyJoinColumn(name = "pty_typ_id"))
 public abstract class Party {
 
 	@Id
@@ -41,9 +42,8 @@ public abstract class Party {
 	@Column(name="pty_pwd")
 	private String Password;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="pty_typ_id")
-	private PartyType partyType;
+	@Column(name="pty_typ_desc", table="party_type")
+	private String partyTypeDesc;
 
 	@OneToMany(mappedBy="roleParty", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JsonManagedReference
@@ -65,15 +65,7 @@ public abstract class Party {
 	public void setPartyId(Long partyId) {
 		this.PartyId = partyId;
 	}
-	
-	public PartyType getPartyType() {
-		return this.partyType;
-	}
-	
-	public void setPartyType(PartyType partyType) {
-		this.partyType = partyType;
-	}
-	
+		
 	public void setUserName(String userName) {
 		UserName = userName;
 	}
@@ -100,5 +92,13 @@ public abstract class Party {
 	
 	public void addRole(Role role) {
 		this.partyRole.add(role);
+	}
+	
+	public String getPartyTypeDesc() {
+		return partyTypeDesc;
+	}
+	
+	public void setPartyTypeDesc(String partyTypeDesc) {
+		this.partyTypeDesc = partyTypeDesc;
 	}
 }
