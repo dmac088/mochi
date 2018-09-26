@@ -1,9 +1,6 @@
 package io.javabrains.springbootstarter.customer;
 
-import io.javabrains.springbootstarter.party.Party;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +12,8 @@ public class CustomerService {
 	@Autowired
 	private CustomerRepository customerRepository; 
 
-	public ArrayList<Party> getAllCustomers() {
-		Iterator<Customer> i = customerRepository.findAll().iterator();
-		ArrayList<Party> c1 = new ArrayList<>();
-		while(i.hasNext()) {
-			c1.add(i.next().getRoleParty());
-		}
-		return c1;
+	public List<Customer> getAllCustomers() {
+		return customerRepository.findAll();
 	}
 	
 	public Customer getCustomer(String CustomerId) {

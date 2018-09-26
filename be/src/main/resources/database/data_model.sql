@@ -11,6 +11,7 @@ DROP INDEX IF EXISTS spring_session_ix1;
 DROP TABLE IF EXISTS mochi.customer;
 DROP TABLE IF EXISTS mochi.order_line;
 DROP TABLE IF EXISTS mochi.orders;
+DROP TABLE IF EXISTS mochi.organisation;
 DROP TABLE IF EXISTS mochi.person;
 DROP TABLE IF EXISTS mochi.role;
 DROP TABLE IF EXISTS mochi.party;
@@ -73,6 +74,14 @@ CREATE TABLE mochi.order_line
 ) WITHOUT OIDS;
 
 
+CREATE TABLE mochi.organisation
+(
+	pty_id bigint NOT NULL UNIQUE,
+	org_nme varchar(100) NOT NULL,
+	org_reg_no varchar(50) NOT NULL
+) WITHOUT OIDS;
+
+
 CREATE TABLE mochi.party
 (
 	pty_id bigserial NOT NULL,
@@ -93,7 +102,7 @@ CREATE TABLE mochi.party_type
 
 CREATE TABLE mochi.person
 (
-	pty_id bigint NOT NULL UNIQUE,
+	psn_id bigint NOT NULL UNIQUE,
 	psn_gvn_nm_en varchar,
 	psn_fml_nm_en varchar,
 	psn_nm_cn varchar,
@@ -189,8 +198,16 @@ ALTER TABLE mochi.orders
 ;
 
 
+ALTER TABLE mochi.organisation
+	ADD FOREIGN KEY (pty_id)
+	REFERENCES mochi.party (pty_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
 ALTER TABLE mochi.person
-	ADD CONSTRAINT person_person_id_fkey FOREIGN KEY (pty_id)
+	ADD CONSTRAINT person_person_id_fkey FOREIGN KEY (psn_id)
 	REFERENCES mochi.party (pty_id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
