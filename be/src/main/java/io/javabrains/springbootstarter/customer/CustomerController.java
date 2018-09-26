@@ -38,19 +38,19 @@ public class CustomerController {
 		return pl;
 	}	
 	
-//	@ResponseBody
-//	@RequestMapping("/Customer/{id}")
-//	public Party getCustomer(@PathVariable Long id) {
-//		System.out.println("calling getCustomer");
-//		return customerService.getCustomer(id).getRoleParty();
-//	}
-	
 	@ResponseBody
+	@RequestMapping("/Customer/{id}")
+	public Party getCustomer(@PathVariable Long id) {
+		System.out.println("calling getCustomer");
+		return customerService.getCustomer(id).getRoleParty();
+	}
+	
+	/*@ResponseBody
 	@RequestMapping("/Customer/{id}")
 	public Party getCustomer(@PathVariable String id) {
 		System.out.println("calling getCustomer");
 		return customerService.getCustomer(id).getRoleParty();
-	}
+	}*/
 
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.POST, value="/Customer")
