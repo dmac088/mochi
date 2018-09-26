@@ -1,4 +1,4 @@
-delete from mochi.customer;
+﻿delete from mochi.customer;
 
 delete from mochi.role;
 delete from mochi.role_type;
@@ -21,11 +21,13 @@ INSERT INTO mochi.party_type(
 
 INSERT INTO mochi.party(
 	pty_id, pty_typ_id, pty_usr_nm, pty_pwd)
-	VALUES (1, 2, 'dmac088', 'password');
+	VALUES (1, 1, 'dmac088', 'password');
 
 INSERT INTO mochi.person(
 	pty_id, psn_gvn_nm_en, psn_fml_nm_en, psn_nm_cn, enb)
 	VALUES (1, 'Daniel', 'Mackie', '丹尼爾麥基', '1');
+
+
 
 insert into mochi.product(prd_id, upc_cd, prd_crtd_dt)
 values (1, '12345678', now());
