@@ -9,8 +9,6 @@ DROP INDEX IF EXISTS spring_session_ix1;
 /* Drop Tables */
 
 DROP TABLE IF EXISTS mochi.customer;
-DROP TABLE IF EXISTS mochi.obj;
-DROP TABLE IF EXISTS mochi.object_type;
 DROP TABLE IF EXISTS mochi.order_line;
 DROP TABLE IF EXISTS mochi.orders;
 DROP TABLE IF EXISTS mochi.person;
@@ -58,22 +56,6 @@ CREATE TABLE mochi.customer
 ) WITHOUT OIDS;
 
 
-CREATE TABLE mochi.obj
-(
-	object_id bigint NOT NULL,
-	object_type_id bigint NOT NULL UNIQUE,
-	CONSTRAINT object_pkey PRIMARY KEY (object_id)
-) WITHOUT OIDS;
-
-
-CREATE TABLE mochi.object_type
-(
-	object_type_id bigint NOT NULL,
-	object_type_desc varchar(100) NOT NULL UNIQUE,
-	CONSTRAINT object_type_pkey PRIMARY KEY (object_type_id)
-) WITHOUT OIDS;
-
-
 CREATE TABLE mochi.orders
 (
 	ord_id bigint NOT NULL,
@@ -111,7 +93,7 @@ CREATE TABLE mochi.party_type
 
 CREATE TABLE mochi.person
 (
-	psn_id bigint NOT NULL UNIQUE,
+	pty_id bigint NOT NULL UNIQUE,
 	psn_gvn_nm_en varchar,
 	psn_fml_nm_en varchar,
 	psn_nm_cn varchar,
@@ -191,14 +173,6 @@ CREATE TABLE mochi.spring_session_attributes
 
 /* Create Foreign Keys */
 
-ALTER TABLE mochi.obj
-	ADD CONSTRAINT obj_object_type_id_fkey FOREIGN KEY (object_type_id)
-	REFERENCES mochi.object_type (object_type_id)
-	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
-;
-
-
 ALTER TABLE mochi.order_line
 	ADD CONSTRAINT order_line_order_id_fkey FOREIGN KEY (ord_id)
 	REFERENCES mochi.orders (ord_id)
@@ -216,7 +190,7 @@ ALTER TABLE mochi.orders
 
 
 ALTER TABLE mochi.person
-	ADD CONSTRAINT person_person_id_fkey FOREIGN KEY (psn_id)
+	ADD CONSTRAINT person_person_id_fkey FOREIGN KEY (pty_id)
 	REFERENCES mochi.party (pty_id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT

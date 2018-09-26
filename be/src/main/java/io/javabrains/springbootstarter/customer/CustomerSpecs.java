@@ -13,9 +13,8 @@ public class CustomerSpecs {
 
 	  public static Specification<Customer> byCustomerID(String customerId) {
 		    return new Specification<Customer>() {
-		      public Predicate toPredicate(Root<Customer> root, CriteriaQuery<?> query,
-		            CriteriaBuilder builder) {
-		    	 // return builder.equal(root.get("productUPC"), "12345678");
+		      public Predicate toPredicate(Root<Customer> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
+		    	
 		    	  return builder.equal(root.get("CustomerId"), customerId);
 		    	 
 		      }
