@@ -1,6 +1,7 @@
 package io.javabrains.springbootstarter.role;
 
 import io.javabrains.springbootstarter.party.Party;
+import io.javabrains.springbootstarter.party.PartyType;
 
 import java.util.Date;
 
@@ -26,7 +27,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Entity
 @Table(name = "role")
 @Inheritance(strategy = InheritanceType.JOINED)
-@SecondaryTable(name = "role_type", pkJoinColumns = @PrimaryKeyJoinColumn(name = "rle_typ_id"))
 public class Role {
 
 	@Id
@@ -36,10 +36,11 @@ public class Role {
 	
 	@Column(name="rle_start_dttm")
 	private Date RoleStart; 
-
-	@Column(name="rle_typ_desc", table = "role_type")
-	private String roleTypeDesc;
 	
+	@ManyToOne
+	@JoinColumn(name="rle_typ_id", nullable=false)
+	private RoleType roleType;
+
 	@JsonBackReference
 	@ManyToOne(fetch = FetchType.EAGER, optional=false)
 	@JoinColumn(name="pty_id")
@@ -53,6 +54,11 @@ public class Role {
 	public Role(String roleTypeDesc) {
 		this.RoleStart = new Date();
 	}
+
+	public Role(Long id, String roleTypeDesc) {
+		this.roleId = id;
+		this.RoleStart = new Date();
+	}
 	
 	public Long getRoleId() {
 		return roleId;
@@ -61,10 +67,13 @@ public class Role {
 	public void setRoleId(Long roleId) {
 		this.roleId = roleId;
 	}
+	
+	public RoleType getRoleType() {
+		return roleType;
+	}
 
-	public Role(Long id, String roleTypeDesc) {
-		this.roleId = id;
-		this.RoleStart = new Date();
+	public void setRoleType(RoleType roleType) {
+		this.roleType = roleType;
 	}
 	
 	public Party getRoleParty() {
@@ -81,14 +90,6 @@ public class Role {
 
 	public void setRoleStart(Date roleStart) {
 		RoleStart = roleStart;
-	}
-	
-	public String getRoleTypeDesc() {
-		return roleTypeDesc;
-	}
-
-	public void setRoleTypeDesc(String roleTypeDesc) {
-		this.roleTypeDesc = roleTypeDesc;
 	}
 	
 }

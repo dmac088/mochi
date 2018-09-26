@@ -19,8 +19,6 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -30,7 +28,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Entity
 @Table(name = "party")
 @Inheritance(strategy = InheritanceType.JOINED)
-@SecondaryTable(name = "party_type", pkJoinColumns = {@PrimaryKeyJoinColumn(name = "pty_typ_id")})
 public abstract class Party {
 
 	@Id
