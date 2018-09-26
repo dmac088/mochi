@@ -1,5 +1,7 @@
 package io.javabrains.springbootstarter.customer;
 
+import io.javabrains.springbootstarter.party.Party;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -13,11 +15,11 @@ public class CustomerService {
 	@Autowired
 	private CustomerRepository customerRepository; 
 
-	public List<Customer> getAllCustomers() {
+	public ArrayList<Party> getAllCustomers() {
 		Iterator<Customer> i = customerRepository.findAll().iterator();
-		List<Customer> c1 = new ArrayList<>();
+		ArrayList<Party> c1 = new ArrayList<>();
 		while(i.hasNext()) {
-			c1.add(i.next());
+			c1.add(i.next().getRoleParty());
 		}
 		return c1;
 	}

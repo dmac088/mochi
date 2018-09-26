@@ -31,13 +31,8 @@ public class CustomerController {
 	@RequestMapping(method=RequestMethod.GET, value="/Customer")
     public ArrayList<Party> getAllCustomers(HttpSession session) {
 		System.out.println("calling getAllCustomers");
-		List<Customer> cl = customerService.getAllCustomers();
-		ArrayList<Party> pl = new ArrayList<Party>();
-		for (Customer c : cl) {
-			System.out.println(c.getRoleParty().getPartyTypeDesc());
-			pl.add(c.getRoleParty());
-		}
-        return pl;
+		ArrayList<Party> cl = customerService.getAllCustomers();
+        return cl;
     }	
 	
 //	@ResponseBody
