@@ -28,7 +28,7 @@ public class PersonController {
 	
 	@ResponseBody
 	@RequestMapping("/Person/{id}")
-	public Person getPerson(@PathVariable String id) {
+	public Person getPerson(@PathVariable Long id) {
 		System.out.println("calling getPerson");
 		return personService.getPerson(id);
 	}
@@ -50,14 +50,14 @@ public class PersonController {
 	
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.PUT, value="/Person/{id}")
-	public void updatePerson(@RequestBody Person person, @PathVariable String id) {
+	public void updatePerson(@RequestBody Person person, @PathVariable Long id) {
 		System.out.println("calling updatePerson");
 		personService.updatePerson(id, person);
 	}
 
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.DELETE,value="/Person/{id}")
-	public void deletePerson(@PathVariable String id) {
+	public void deletePerson(@PathVariable Long id) {
 		System.out.println("calling deletePerson");
 		personService.deletePerson(id);
 	}

@@ -1,7 +1,6 @@
 package io.javabrains.springbootstarter.role;
 
 import io.javabrains.springbootstarter.party.Party;
-import io.javabrains.springbootstarter.party.PartyType;
 
 import java.util.Date;
 
@@ -15,8 +14,6 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -42,7 +39,7 @@ public class Role {
 	private RoleType roleType;
 
 	@JsonBackReference
-	@ManyToOne(fetch = FetchType.EAGER, optional=false)
+	@ManyToOne(fetch = FetchType.LAZY, optional=false)
 	@JoinColumn(name="pty_id")
 	private Party roleParty;
 	

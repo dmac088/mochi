@@ -17,13 +17,13 @@ public class Customer extends Role {
 	}
 	
 	@Column(name="cst_id")
-	private String CustomerId;
+	private Long CustomerId;
 
-	public String getCustomerId() {
+	public Long getCustomerId() {
 		return CustomerId;
 	}
 
-	public void setCustomerId(String customerId) {
+	public void setCustomerId(Long customerId) {
 		CustomerId = customerId;
 	}
 }

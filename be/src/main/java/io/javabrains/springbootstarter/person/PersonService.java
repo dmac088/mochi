@@ -21,7 +21,7 @@ public class PersonService {
 		return Persons;
 	}
 	
-	public Person getPerson(String id) {
+	public Person getPerson(Long id) {
 		Person p = personRepository.findOne(id);
 		return p;
 	}
@@ -30,11 +30,11 @@ public class PersonService {
 		personRepository.save(person);
 	}
 	
-	public void updatePerson(String id, Person person) {
+	public void updatePerson(Long id, Person person) {
 		personRepository.save(person);
 	}
 	
-	public void deletePerson(String id) {
+	public void deletePerson(Long id) {
 		personRepository.delete(id);
 	}
 	

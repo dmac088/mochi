@@ -1,13 +1,14 @@
 package io.javabrains.springbootstarter.customer;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.data.jpa.domain.Specification;
 import io.javabrains.springbootstarter.role.RoleBaseRepository;
 
 public interface CustomerRepository extends RoleBaseRepository<Customer> {
 
-	ArrayList<Customer> findAll();
+	
+	List<Customer> findAll();
 	
 	//@Override
 	Customer findOne(Long Id);
