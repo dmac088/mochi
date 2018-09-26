@@ -76,7 +76,7 @@ CREATE TABLE mochi.order_line
 
 CREATE TABLE mochi.organisation
 (
-	pty_id bigint NOT NULL UNIQUE,
+	org_id bigint NOT NULL UNIQUE,
 	org_nme varchar(100) NOT NULL,
 	org_reg_no varchar(50) NOT NULL
 ) WITHOUT OIDS;
@@ -199,7 +199,7 @@ ALTER TABLE mochi.orders
 
 
 ALTER TABLE mochi.organisation
-	ADD FOREIGN KEY (pty_id)
+	ADD FOREIGN KEY (org_id)
 	REFERENCES mochi.party (pty_id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
