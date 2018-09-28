@@ -8,8 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 
-@Entity
-@Table(name = "customer")
+@Entity(name = "customer")
 public class Customer extends Role {
  
 	public Customer() {

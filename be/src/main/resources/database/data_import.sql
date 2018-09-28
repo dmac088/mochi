@@ -1,4 +1,4 @@
-
+﻿
 delete from mochi.customer;
 
 delete from mochi.role;
@@ -21,6 +21,15 @@ INSERT INTO mochi.party_type(
 INSERT INTO mochi.party_type(
 	pty_typ_id, pty_typ_desc)
 	VALUES (2, 'Organisation');    
+
+
+INSERT INTO mochi.role_type(
+	rle_typ_id, rle_typ_desc)
+	VALUES (1, 'Customer');
+
+INSERT INTO mochi.role_type(
+	rle_typ_id, rle_typ_desc)
+	VALUES (2, 'Supplier');
 
 INSERT INTO mochi.party(
 	pty_id, pty_typ_id, pty_usr_nm, pty_pwd)
@@ -57,13 +66,6 @@ values (3, 2, 'orange', 'images/orange.jpg', 8.99, 'fruit', 'ENG');
 insert into  mochi.product_attr_lcl(prd_lcl_id, prd_id, prd_desc, prd_img_pth, prd_rrp, prd_cat_desc, lcl_cd)
 values (4, 2, '橙子', 'images/orange.jpg', 8.99, '水果', 'HKG');
 
-INSERT INTO mochi.role_type(
-	rle_typ_id, rle_typ_desc)
-	VALUES (1, 'Customer');
-
-INSERT INTO mochi.role_type(
-	rle_typ_id, rle_typ_desc)
-	VALUES (2, 'Supplier');
 
 INSERT INTO mochi.role(
 	rle_id, rle_typ_id, rle_start_dttm, pty_id)
