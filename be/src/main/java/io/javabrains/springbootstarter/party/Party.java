@@ -42,7 +42,7 @@ public abstract class Party {
 	private String Password;
 	
 	@ManyToOne
-	@JoinColumn(name="pty_typ_id", nullable=false)
+	@JoinColumn(name="pty_typ_id", nullable=false, updatable = false, insertable = true)
 	private PartyType partyType;
 
 	@OneToMany(mappedBy="roleParty", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
