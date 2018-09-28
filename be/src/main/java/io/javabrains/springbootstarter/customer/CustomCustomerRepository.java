@@ -21,6 +21,7 @@ public class CustomCustomerRepository implements CustomerRepository {
     //	System.out.println("Party ID = " + entity.getRoleParty().getPartyId());
     	//System.out.println("Party Type ID = " + entity.getRoleParty().getPartyType().getPartyTypeId());
     	System.out.println("Customer ID = " + entity.getCustomerId());
+    	
     	customerRepository.save(entity);
     	//System.out.println("Role Role Start = " + entity.getRoleStart());
     	return entity;
