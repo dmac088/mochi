@@ -1,0 +1,11 @@
+
+        {
+            "roleId": 1,
+            "roleType": {
+                "roleTypeDesc": "Customer",
+                "roleTypeId": 1
+            },
+            "customerId": "0123456789",
+            "roleStart": 1537977600000
+        }
+    
