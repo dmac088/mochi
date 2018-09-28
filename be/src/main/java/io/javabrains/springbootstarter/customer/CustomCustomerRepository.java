@@ -14,11 +14,16 @@ public class CustomCustomerRepository implements CustomerRepository {
     @Qualifier("customerRepository") // inject Spring implementation here
     private CustomerRepository customerRepository;
 
-    @SuppressWarnings("unchecked")
 	public Customer save(Customer entity) {
     	// Your custom code goes here
-    	return customerRepository.save(entity);
-        
+    	System.out.println("calling CustomCustomerRepository.save()");
+    //	System.out.println(entity.getRoleParty().getPartyType());
+    //	System.out.println("Party ID = " + entity.getRoleParty().getPartyId());
+    	//System.out.println("Party Type ID = " + entity.getRoleParty().getPartyType().getPartyTypeId());
+    	System.out.println("Customer ID = " + entity.getCustomerId());
+    	customerRepository.save(entity);
+    	//System.out.println("Role Role Start = " + entity.getRoleStart());
+    	return entity;
     }
 
     // Delegate other methods here ...

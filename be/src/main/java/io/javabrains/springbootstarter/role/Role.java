@@ -45,18 +45,9 @@ public class Role {
 	
 
 	public Role() {
-		this.RoleStart = new Date();
+		
 	}
-	
-	public Role(String roleTypeDesc) {
-		this.RoleStart = new Date();
-	}
-
-	public Role(Long id, String roleTypeDesc) {
-		this.roleId = id;
-		this.RoleStart = new Date();
-	}
-	
+		
 	public Long getRoleId() {
 		return roleId;
 	}

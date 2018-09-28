@@ -15,15 +15,10 @@ public class CustomerService {
 	public List<Customer> getAllCustomers() {
 		return customerRepository.findAll();
 	}
-	
 
 	public Customer getCustomer(Long CustomerId) {
 		return customerRepository.findOne(CustomerId);
 	}
-	
-	//public Customer getCustomer(String CustomerId) {
-	//	return customerRepository.findOne(CustomerSpecs.byCustomerID(CustomerId));
-	//}
 	
 	public void addCustomer(Customer customer) {
 		customerRepository.save(customer);
