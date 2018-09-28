@@ -27,7 +27,7 @@ public class PersonController {
     }	
 	
 	@ResponseBody
-	@RequestMapping("/Person/{id}")
+	@RequestMapping(method=RequestMethod.GET, value="/Person/{id}")
 	public Person getPerson(@PathVariable Long id) {
 		System.out.println("calling getPerson");
 		return personService.getPerson(id);
