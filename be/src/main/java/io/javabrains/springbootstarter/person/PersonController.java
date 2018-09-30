@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import io.javabrains.springbootstarter.customer.Customer;
+
 
 @Controller
 public class PersonController {
@@ -40,13 +42,13 @@ public class PersonController {
 		Personservice.addPerson(person);
 	}*/
 	
-	
+	@ResponseBody
 	@RequestMapping(method=RequestMethod.POST, value="/Person")
-	public String addPerson( Person person) {
+	public void addPerson(@RequestBody Person person) {
 		System.out.println("calling addPerson");
 		personService.addPerson(person);
-		return "login";
 	}
+	
 	
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.PUT, value="/Person/{id}")

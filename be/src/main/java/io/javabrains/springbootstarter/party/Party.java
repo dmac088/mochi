@@ -45,25 +45,16 @@ public abstract class Party {
 	@JoinColumn(name="pty_typ_id", nullable=false, updatable = false, insertable = true)
 	private PartyType partyType;
 
-	@OneToMany(mappedBy="roleParty", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="roleParty", fetch = FetchType.EAGER)
 	@JsonManagedReference
 	private List<Role> partyRole;
 
 	public Party() {
-		this.partyRole = new ArrayList<Role>();
+		
 	}
 	
 	public Party(Long id) {
-		this.PartyId = id;
-		this.partyRole = new ArrayList<Role>();
-	}
-	
-	public Long getPartyId() {
-		return this.PartyId;
-	}
-
-	public void setPartyId(Long partyId) {
-		this.PartyId = partyId;
+		
 	}
 	
 	public PartyType getPartyType() {
