@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.javabrains.springbootstarter.party.Party;
+import io.javabrains.springbootstarter.party.PartyService;
 import io.javabrains.springbootstarter.person.*;
 
 import javax.servlet.http.HttpSession;
@@ -26,7 +27,7 @@ public class CustomerController {
 	private CustomerService customerService;
 	
 	@Autowired
-	private PersonService personService;
+	private PartyService partyService;
 	
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.GET, value="/Customer")
