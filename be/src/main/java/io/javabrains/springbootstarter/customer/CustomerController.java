@@ -47,7 +47,7 @@ public class CustomerController {
 	@RequestMapping(method=RequestMethod.POST, value="/Customer")
 	public ResponseEntity<Person> addCustomer(@RequestBody Person person) {
 		personService.addPerson(person);
-		 return new ResponseEntity<Person>(person, HttpStatus.OK);
+		return new ResponseEntity<Person>(person, HttpStatus.OK);
 	}
 	
 	@ResponseBody

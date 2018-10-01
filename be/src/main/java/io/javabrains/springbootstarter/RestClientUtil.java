@@ -24,7 +24,7 @@ public class RestClientUtil {
 	 HttpHeaders headers = new HttpHeaders();
 	 headers.setContentType(MediaType.APPLICATION_JSON);
 	 RestTemplate restTemplate = new RestTemplate();
-	 String url = "http://localhost:8090/Person";
+	 String url = "http://localhost:8090/Customer";
 	 Person objPerson = new Person();
 	 Customer objCustomer = new Customer();
 	 PartyType objPartyType = new PartyType();
@@ -36,15 +36,15 @@ public class RestClientUtil {
 	 objPerson.setFamilyNameEn("Mackie");
 	 objPerson.setNameCn("丹尼爾麥基");
 	 objPerson.setPassword("password");
-	 objPerson.setUserName("dmac0103");
+	 objPerson.setUserName("dmac0111");
 	 objPerson.setPartyRole(new ArrayList<Role>());
 	 objCustomer.setCustomerId("0123456789");
 	 objCustomer.setRoleStart(new Date());
 	 objCustomer.setRoleType(objRoleType);
 	 objPerson.addRole(objCustomer); 
 	 HttpEntity<Person> requestEntity = new HttpEntity<Person>(objPerson, headers);
-	 URI uri = restTemplate.postForLocation(url, requestEntity);
-	 //System.out.println(uri.getPath());
+     ResponseEntity<Person> uri = restTemplate.exchange(url, HttpMethod.POST, requestEntity, Person.class);
+     System.out.println(uri.getBody());    	
  }
  
  
