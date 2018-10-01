@@ -1,6 +1,5 @@
 package io.javabrains.springbootstarter;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -36,7 +35,7 @@ public class RestClientUtil {
 	 objPerson.setFamilyNameEn("Mackie");
 	 objPerson.setNameCn("丹尼爾麥基");
 	 objPerson.setPassword("password");
-	 objPerson.setUserName("dmac0111");
+	 objPerson.setUserName("dmac0112");
 	 objPerson.setPartyRole(new ArrayList<Role>());
 	 objCustomer.setCustomerId("0123456789");
 	 objCustomer.setRoleStart(new Date());
@@ -46,6 +45,11 @@ public class RestClientUtil {
      ResponseEntity<Person> uri = restTemplate.exchange(url, HttpMethod.POST, requestEntity, Person.class);
      System.out.println(uri.getBody());    	
  }
+ 
+ public static void main(String args[]) {
+ 	RestClientUtil util = new RestClientUtil();
+ 	util.addPersonCustomer();
+ }    
  
  
 }
