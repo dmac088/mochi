@@ -17,6 +17,10 @@ public class RoleType {
 	@Column(name="rle_typ_desc")
 	private String roleTypeDesc;
 	
+	public RoleType() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public Long getRoleTypeId() {
 		return RoleTypeId;
 	}
