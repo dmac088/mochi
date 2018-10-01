@@ -37,7 +37,7 @@ public abstract class Party {
 	
 	@Column(name="pty_usr_nm")
 	private String UserName;
-	
+
 	@Column(name="pty_pwd")
 	private String Password;
 	
@@ -45,12 +45,20 @@ public abstract class Party {
 	@JoinColumn(name="pty_typ_id", nullable=false, updatable = false, insertable = true)
 	private PartyType partyType;
 
-	@OneToMany(mappedBy="roleParty", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy="roleParty", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JsonManagedReference
 	private List<Role> partyRole;
 
 	public Party() {
 		
+	}
+	
+	public Long getPartyId() {
+		return PartyId;
+	}
+
+	public void setPartyId(Long partyId) {
+		PartyId = partyId;
 	}
 	
 	public Party(Long id) {

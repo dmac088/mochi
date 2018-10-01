@@ -34,13 +34,13 @@ public class Role {
 	@Column(name="rle_start_dttm")
 	private Date RoleStart; 
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER,  optional=false)
 	@JoinColumn(name="rle_typ_id", nullable=false)
 	private RoleType roleType;
 
 	@JsonBackReference
-	@ManyToOne(fetch = FetchType.EAGER, optional=false)
-	@JoinColumn(name="pty_id")
+	@ManyToOne(fetch = FetchType.EAGER,  optional=false)
+	@JoinColumn(name = "pty_id", nullable=false)
 	private Party roleParty;
 	
 
