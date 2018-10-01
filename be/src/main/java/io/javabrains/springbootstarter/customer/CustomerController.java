@@ -7,6 +7,7 @@ import java.util.List;
 import io.javabrains.springbootstarter.party.Party;
 import io.javabrains.springbootstarter.party.PartyService;
 import io.javabrains.springbootstarter.person.*;
+import io.javabrains.springbootstarter.role.Role;
 
 import javax.servlet.http.HttpSession;
 
@@ -27,17 +28,13 @@ public class CustomerController {
 	private CustomerService customerService;
 	
 	@Autowired
-	private PartyService partyService;
+	private PersonService personService;
 	
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.GET, value="/Customer")
-    public List<Party> getAllCustomers(HttpSession session) {
+    public List<Customer> getAllCustomers(HttpSession session) {
 		System.out.println("calling getAllCustomers");
-		List<Party> pl = new ArrayList<Party>(); 
-		for(Customer c : customerService.getAllCustomers()) {
-			pl.add(c.getRoleParty());
-		};
-		return pl;
+		return customerService.getAllCustomers();
 	}	
 	
 	@ResponseBody
@@ -56,9 +53,22 @@ public class CustomerController {
 
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.POST, value="/Customer")
-	public void addCustomer(@RequestBody Customer customer) {	
+	public void addCustomer(@RequestBody Person person) {
+		personService.addPerson(person);
+		/*
 		System.out.println("calling addCustomer");
-		customerService.addCustomer(customer);
+		System.out.println(" role class is = " + person.getPartyRole().getClass());
+		personService.addPerson(person);
+		for (Role r : person.getPartyRole()) {
+			if (r instanceof Customer) {
+				customerService.addCustomer((Customer)r);
+			
+			} else {
+				System.out.println("Not a Customer");
+			}
+		}
+		*/
+		
 	}
 	
 	@ResponseBody

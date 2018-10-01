@@ -35,20 +35,12 @@ public class PersonController {
 		return personService.getPerson(id);
 	}
 	
-	//map the post request to this particular method
-	/*@ResponseBody
-	@RequestMapping(method=RequestMethod.POST, value="/Persons")
-	public void addPerson(@RequestBody Person person) {
-		Personservice.addPerson(person);
-	}*/
-	
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.POST, value="/Person")
 	public void addPerson(@RequestBody Person person) {
 		System.out.println("calling addPerson");
 		personService.addPerson(person);
 	}
-	
 	
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.PUT, value="/Person/{id}")
