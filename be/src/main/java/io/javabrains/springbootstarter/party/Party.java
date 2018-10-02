@@ -1,12 +1,8 @@
 package io.javabrains.springbootstarter.party;
 
 
-
-import java.util.ArrayList;
 import java.util.List;
-
 import io.javabrains.springbootstarter.role.Role;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,7 +17,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
