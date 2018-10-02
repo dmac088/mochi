@@ -35,7 +35,7 @@ public class RestClientUtil {
 	 objPerson.setFamilyNameEn("Mackie");
 	 objPerson.setNameCn("丹尼爾麥基");
 	 objPerson.setPassword("password");
-	 objPerson.setUserName("dmac0112");
+	 objPerson.setUserName("dmac0115");
 	 objPerson.setPartyRole(new ArrayList<Role>());
 	 objCustomer.setCustomerId("0123456789");
 	 objCustomer.setRoleStart(new Date());
@@ -50,6 +50,7 @@ public class RestClientUtil {
  public static void main(String args[]) {
  	RestClientUtil util = new RestClientUtil();
  	util.addPersonCustomer();
+ 	System.out.println("Run tests complete!");
  }    
  
  
