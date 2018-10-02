@@ -46,6 +46,7 @@ public class RestClientUtil {
      System.out.println(uri.getBody());    	
  }
  
+ 
  public static void main(String args[]) {
  	RestClientUtil util = new RestClientUtil();
  	util.addPersonCustomer();
