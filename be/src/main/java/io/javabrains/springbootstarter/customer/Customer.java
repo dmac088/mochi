@@ -2,11 +2,9 @@ package io.javabrains.springbootstarter.customer;
 
 
 import io.javabrains.springbootstarter.role.Role;
-import io.javabrains.springbootstarter.role.RoleType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Table;
 
 
 @Entity(name = "customer")
