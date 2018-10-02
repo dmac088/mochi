@@ -33,14 +33,6 @@ public class PartyController {
 		return PartyService.getParty(id);
 	}
 	
-	//map the post request to this particular method
-	/*@ResponseBody
-	@RequestMapping(method=RequestMethod.POST, value="/Partys")
-	public void addParty(@RequestBody Party Party) {
-		Partyservice.addParty(Party);
-	}*/
-	
-	
 	@RequestMapping(method=RequestMethod.POST, value="/Party")
 	public String addParty( Party Party) {
 		System.out.println("calling addParty");
