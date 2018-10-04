@@ -1,2 +1,2 @@
-SET PATH=%PATH%;%USERPROFILE%\Documents\mochi\fe\node
+call setEnv.bat
 npm install --global --production windows-build-tools
