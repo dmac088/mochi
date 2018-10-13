@@ -20,7 +20,7 @@ class GroupList extends Component {
   componentDidMount() {
     this.setState({isLoading: true});
 
-    fetch('api/groups', {credentials: 'include'})
+    fetch('api/Customer', {credentials: 'include'})
       .then(response => response.json())
       .then(data => this.setState({groups: data, isLoading: false}))
       .catch(() => this.props.history.push('/'))

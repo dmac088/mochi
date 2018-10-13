@@ -15,15 +15,17 @@ class Home extends Component {
   constructor(props) {
     super(props);
     const {cookies} = props;
-    this.state.csrfToken = cookies.get('XSRF-TOKEN');
+    /*this.state.csrfToken = cookies.get('XSRF-TOKEN');
     this.login = this.login.bind(this);
-    this.logout = this.logout.bind(this);
-  }
+    this.logout = this.logout.bind(this);*/
+  } 
 
   async componentDidMount() {
-    const response = await fetch('/api/Customer', {credentials: 'include'});
+	console.log('mounting component...');
+    const response = await fetch('/api/Person', {credentials: 'include'});
     const body = await response.text();
-    if (body === '') {
+    console.log(JSON.parse(body));
+	if (body === '') {
       this.setState(({isAuthenticated: false}))
     } else {
       this.setState({isAuthenticated: true, user: JSON.parse(body)})
@@ -46,6 +48,7 @@ class Home extends Component {
         window.location.href = response.logoutUrl + "?id_token_hint=" +
           response.idToken + "&post_logout_redirect_uri=" + window.location.origin;
       });
+	  
   }
 
   render() {
