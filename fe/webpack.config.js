@@ -25,8 +25,9 @@ module.exports = {
   resolve: {
     alias: {
       moment: 'moment/src/moment'
-    },
+    }
   },
+   
   module: {
     rules: [
       {
@@ -42,6 +43,13 @@ module.exports = {
           use: 'css-loader!sass-loader'
         })
       },
+	   {
+        test: /\.css?$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: 'css-loader'
+        })
+      },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
         use: "file-loader"
@@ -49,6 +57,6 @@ module.exports = {
     ]
   },
   plugins: [
-    new ExtractTextPlugin('style.css'),
+    new ExtractTextPlugin('style.css')
   ]
 };
