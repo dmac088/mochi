@@ -29,9 +29,9 @@ class App extends Component {
           <h1 className="App-title">Welcome to React</h1>
         </header>
         <div className="App-intro">
-          <h2>JUG List</h2>
+          <h2>Customer List</h2>
           {customers.map(customer =>
-            <div key={customer.partyId}>
+            <div id={customer.partyId}> 
               {customer.givenNameEn}
             </div>
           )}
