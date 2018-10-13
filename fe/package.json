@@ -4,38 +4,56 @@
   "description": "simple react shopping cart without using redux",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "./node_modules/.bin/webpack-dev-server --content-base=src --inline --hot",
-    "build": "webpack"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
   },
   "keywords": [
     "reactjs",
     "shopping",
     "cart"
   ],
-  "author": "Sivadass",
+  "author": "Dan",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.16.1",
     "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.5",
+    "babel-loader": "^8.0.4",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.11.1",
+    "babel-preset-stage-0": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
+    "bootstrap": "^4.1.3",
+    "cors": "^2.8.4",
     "css-loader": "^0.28.7",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "file-loader": "^0.11.2",
     "node-sass": "^4.9.3",
     "prop-types": "^15.5.10",
-    "react": "^16.0.0",
+    "react": "^16.4.1",
+    "react-cookie": "^3.0.4",
     "react-custom-scrollbars": "^4.1.1",
-    "react-dom": "^16.0.0",
+    "react-dom": "^16.4.1",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "^2.0.4",
     "react-transition-group": "^1.1.2",
+    "reactstrap": "^6.5.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.0",
     "webpack": "^4.19.1",
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.9"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "proxy": "http://localhost:8090",
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
