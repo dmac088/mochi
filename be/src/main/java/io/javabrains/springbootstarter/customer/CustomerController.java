@@ -7,19 +7,21 @@ import io.javabrains.springbootstarter.party.Party;
 import io.javabrains.springbootstarter.person.*;
 
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 
-@Controller
+@RestController
+@RequestMapping("/api")
 public class CustomerController {
 	
 	@Autowired
@@ -28,37 +30,32 @@ public class CustomerController {
 	@Autowired
 	private PersonService personService;
 	
-	@ResponseBody
-	@RequestMapping(method=RequestMethod.GET, value="/Customer")
+	@GetMapping("/Customer")
     public List<Customer> getAllCustomers(HttpSession session) {
 		System.out.println("calling getAllCustomers");
 		return customerService.getAllCustomers();
 	}	
 	
-	@ResponseBody
-	@RequestMapping("/Customer/{id}")
+	@GetMapping("/Customer/{id}")
 	public Party getCustomer(@PathVariable Long id) {
 		System.out.println("calling getCustomer");
 		return customerService.getCustomer(id).getRoleParty();
 	}
 	
 
-	@ResponseBody
-	@RequestMapping(method=RequestMethod.POST, value="/Customer")
+	@PostMapping("/Customer")
 	public ResponseEntity<Person> addCustomer(@RequestBody Person person) {
 		personService.addPerson(person);
 		return new ResponseEntity<Person>(person, HttpStatus.OK);
 	}
 	
-	@ResponseBody
-	@RequestMapping(method=RequestMethod.PUT, value="/Customer/{id}")
+	@PutMapping("/Customer/{id}")
 	public void updateCustomer(@RequestBody Customer Customer, @PathVariable Long id) {
 		System.out.println("calling updateCustomer");
 		customerService.updateCustomer(id, Customer);
 	}
 
-	@ResponseBody
-	@RequestMapping(method=RequestMethod.DELETE,value="/Customer/{id}")
+	@DeleteMapping("/Customer/{id}")
 	public void deleteCustomer(@PathVariable Long id) {
 		System.out.println("calling deleteCustomer");
 		//customerService.deleteCustomer(id);

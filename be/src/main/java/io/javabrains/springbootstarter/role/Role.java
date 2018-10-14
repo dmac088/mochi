@@ -4,6 +4,7 @@ import io.javabrains.springbootstarter.party.Party;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -34,12 +35,12 @@ public class Role {
 	@Column(name="rle_start_dttm")
 	private Date RoleStart; 
 	
-	@ManyToOne(fetch = FetchType.EAGER,  optional=false)
+	@ManyToOne(fetch = FetchType.EAGER, optional=false)
 	@JoinColumn(name="rle_typ_id", nullable=false)
 	private RoleType roleType;
 
 	@JsonBackReference
-	@ManyToOne(fetch = FetchType.EAGER,  optional=false)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional=false)
 	@JoinColumn(name = "pty_id", nullable=false)
 	private Party roleParty;
 	
