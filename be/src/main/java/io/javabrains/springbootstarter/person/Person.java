@@ -5,9 +5,11 @@ import io.javabrains.springbootstarter.party.Party;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
 
-@Entity(name = "Person")
+@Entity
+@Table(name = "person", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "psn_id")
 public class Person extends Party {
 

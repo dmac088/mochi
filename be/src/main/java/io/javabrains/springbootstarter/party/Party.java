@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
-@Table(name = "party")
+@Table(name = "party", schema = "mochi")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Party {
 
