@@ -1,4 +1,4 @@
-package io.javabrains.springbootstarter;
+package io.javabrains.springbootstarter.test;
 
 import java.util.ArrayList;
 import java.util.Date;

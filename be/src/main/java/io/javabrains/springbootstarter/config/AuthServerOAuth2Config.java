@@ -1,14 +1,18 @@
-package io.javabrains.springbootstarter;
+package io.javabrains.springbootstarter.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.env.Environment;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.config.annotation.builders.JdbcClientDetailsServiceBuilder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -23,24 +27,33 @@ import javax.sql.DataSource;
 @EnableAuthorizationServer
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @Import(AuthorizationServerSecurityConfigurer.class)
+
 public class AuthServerOAuth2Config extends AuthorizationServerConfigurerAdapter {
+
     @Autowired
     @Qualifier("dataSource")
     private DataSource dataSource;
+    
     @Autowired
     private AuthenticationManager authenticationManager;
+    
     @Autowired
     private UserDetailsService userDetailsService;
+    
     @Autowired
     private PasswordEncoder oauthClientPasswordEncoder;
-    @Bean
+    
+    
+	@Bean
     public TokenStore tokenStore() {
-        return new JdbcTokenStore(dataSource);
+    	return new JdbcTokenStore(dataSource);
     }
+	
     @Bean
     public OAuth2AccessDeniedHandler oauthAccessDeniedHandler() {
         return new OAuth2AccessDeniedHandler();
     }
+    
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
         oauthServer.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()").passwordEncoder(oauthClientPasswordEncoder);
@@ -50,8 +63,11 @@ public class AuthServerOAuth2Config extends AuthorizationServerConfigurerAdapter
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.jdbc(dataSource);
     }
+    
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints.tokenStore(tokenStore()).authenticationManager(authenticationManager).userDetailsService(userDetailsService);
-    }
+        
+    }   
+    
 }

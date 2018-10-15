@@ -26,7 +26,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "user_", schema="security", uniqueConstraints = { @UniqueConstraint(columnNames = { "USER_NAME" }) })
+@Table(name = "user_", schema="oauth", uniqueConstraints = { @UniqueConstraint(columnNames = { "USER_NAME" }) })
 @Getter
 @Setter
 @EqualsAndHashCode(of = "id")
@@ -56,7 +56,7 @@ public class User implements UserDetails, Serializable {
     private boolean enabled;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "USERS_AUTHORITIES", joinColumns = @JoinColumn(name = "USER_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "ID"))
+    @JoinTable(name = "USERS_AUTHORITIES", schema="oauth", joinColumns = @JoinColumn(name = "USER_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "ID"))
     @OrderBy
     @JsonIgnore
     private Collection<Authority> authorities;
