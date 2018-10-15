@@ -3,11 +3,12 @@ package io.javabrains.springbootstarter.organization;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
 import io.javabrains.springbootstarter.party.Party;
 
-
-@Entity(name = "organisation")
+@Entity
+@Table(name = "organisation", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "org_id")
 public class Organization extends Party {
 	

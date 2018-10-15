@@ -15,7 +15,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "AUTHORITY", uniqueConstraints = {@UniqueConstraint(columnNames = {"NAME"})})
+@Table(name = "AUTHORITY", schema="security", uniqueConstraints = {@UniqueConstraint(columnNames = {"NAME"})})
 @Getter
 @Setter
 @EqualsAndHashCode(of = "id")

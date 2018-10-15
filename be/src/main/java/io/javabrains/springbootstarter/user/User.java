@@ -26,7 +26,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "USER_", uniqueConstraints = { @UniqueConstraint(columnNames = { "USER_NAME" }) })
+@Table(name = "user_", schema="security", uniqueConstraints = { @UniqueConstraint(columnNames = { "USER_NAME" }) })
 @Getter
 @Setter
 @EqualsAndHashCode(of = "id")

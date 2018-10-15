@@ -6,9 +6,11 @@ import io.javabrains.springbootstarter.role.Role;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
 
-@Entity(name = "customer")
+@Entity
+@Table(name = "customer", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "rle_id")
 public class Customer extends Role {
  

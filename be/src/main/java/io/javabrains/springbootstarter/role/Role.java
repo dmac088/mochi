@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
 @Entity
-@Table(name = "role")
+@Table(name = "role", schema = "mochi")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Role {
 

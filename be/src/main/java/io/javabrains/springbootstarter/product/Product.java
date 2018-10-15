@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
-@Table(name = "product")
+@Table(name = "product", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "prd_id")
 @SecondaryTable(name = "product_attr_lcl", pkJoinColumns = @PrimaryKeyJoinColumn(name = "prd_id"))
 public class Product {
