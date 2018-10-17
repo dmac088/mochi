@@ -13,7 +13,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@ComponentScan("io.javabrains.springbootstarter.config.db.mochi")
+@ComponentScan("io.javabrains.springbootstarter.config.db")
 public class App {
 
 	 private static final Logger LOG = LoggerFactory.getLogger(App.class);

@@ -31,7 +31,7 @@ import javax.sql.DataSource;
 public class AuthServerOAuth2Config extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
-    @Qualifier("mochiDataSource")
+    @Qualifier("oauthDataSource")
     private DataSource dataSource;
     
     @Autowired
@@ -66,7 +66,7 @@ public class AuthServerOAuth2Config extends AuthorizationServerConfigurerAdapter
     
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
-      //  endpoints.tokenStore(tokenStore()).authenticationManager(authenticationManager).userDetailsService(userDetailsService);
+        endpoints.tokenStore(tokenStore()).authenticationManager(authenticationManager).userDetailsService(userDetailsService);
         
     }   
     
