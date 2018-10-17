@@ -11,11 +11,8 @@ import org.springframework.context.event.ContextRefreshedEvent;
 
 
 @SpringBootApplication
-@ComponentScan({
-				"io.javabrains.springbootstarter.customer",
-				"io.javabrains.springbootstarter.person"//,
-				//"io.javabrains.springbootstarter"
-				})
+@ComponentScan({"io.javabrains.springbootstarter.domain",
+				"io.javabrains.springbootstarter.user"})
 public class App {
 	
 	 private static final Logger LOG = LoggerFactory.getLogger(App.class);
