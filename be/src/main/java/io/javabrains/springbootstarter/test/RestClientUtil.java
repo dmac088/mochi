@@ -10,11 +10,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import io.javabrains.springbootstarter.customer.Customer;
-import io.javabrains.springbootstarter.customer.Person;
-import io.javabrains.springbootstarter.party.PartyType;
-import io.javabrains.springbootstarter.role.Role;
-import io.javabrains.springbootstarter.role.RoleType;
+import io.javabrains.springbootstarter.domain.Customer;
+import io.javabrains.springbootstarter.domain.PartyType;
+import io.javabrains.springbootstarter.domain.Person;
+import io.javabrains.springbootstarter.domain.Role;
+import io.javabrains.springbootstarter.domain.RoleType;
 
 public class RestClientUtil {
 	

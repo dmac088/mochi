@@ -31,7 +31,7 @@ import javax.sql.DataSource;
 public class AuthServerOAuth2Config extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
-    @Qualifier("oauthDataSource")
+    @Qualifier("secutiryDataSource")
     private DataSource dataSource;
     
     @Autowired
