@@ -1,4 +1,4 @@
-package io.javabrains.springbootstarter;
+package io.javabrains.springbootstarter.user;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

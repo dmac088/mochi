@@ -1,4 +1,4 @@
-package io.javabrains.springbootstarter;
+package io.javabrains.springbootstarter.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
