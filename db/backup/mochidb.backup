@@ -23,6 +23,38 @@ CREATE SCHEMA mochi;
 
 ALTER SCHEMA mochi OWNER TO mochidb_owner;
 
+--
+-- Name: secuirty; Type: SCHEMA; Schema: -; Owner: mochidb_owner
+--
+
+CREATE SCHEMA secuirty;
+
+
+ALTER SCHEMA secuirty OWNER TO mochidb_owner;
+
+--
+-- Name: security; Type: SCHEMA; Schema: -; Owner: security_owner
+--
+
+CREATE SCHEMA security;
+
+
+ALTER SCHEMA security OWNER TO security_owner;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -387,6 +419,216 @@ CREATE SEQUENCE mochi.thing_id_seq
 ALTER TABLE mochi.thing_id_seq OWNER TO mochidb_owner;
 
 --
+-- Name: users_authorities; Type: TABLE; Schema: secuirty; Owner: mochidb_owner
+--
+
+CREATE TABLE secuirty.users_authorities (
+    user_id bigint NOT NULL,
+    authority_id bigint NOT NULL
+);
+
+
+ALTER TABLE secuirty.users_authorities OWNER TO mochidb_owner;
+
+--
+-- Name: authority; Type: TABLE; Schema: security; Owner: security_owner
+--
+
+CREATE TABLE security.authority (
+    id bigint NOT NULL,
+    name character varying(255)
+);
+
+
+ALTER TABLE security.authority OWNER TO security_owner;
+
+--
+-- Name: authority_id_seq; Type: SEQUENCE; Schema: security; Owner: security_owner
+--
+
+CREATE SEQUENCE security.authority_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE security.authority_id_seq OWNER TO security_owner;
+
+--
+-- Name: authority_id_seq; Type: SEQUENCE OWNED BY; Schema: security; Owner: security_owner
+--
+
+ALTER SEQUENCE security.authority_id_seq OWNED BY security.authority.id;
+
+
+--
+-- Name: clientdetails; Type: TABLE; Schema: security; Owner: security_owner
+--
+
+CREATE TABLE security.clientdetails (
+    appid character varying(256) NOT NULL,
+    resourceids character varying(256),
+    appsecret character varying(256),
+    scope character varying(256),
+    granttypes character varying(256),
+    redirecturl character varying(256),
+    authorities character varying(256),
+    access_token_validity integer,
+    refresh_token_validity integer,
+    additionalinformation character varying(4096),
+    autoapprovescopes character varying(256)
+);
+
+
+ALTER TABLE security.clientdetails OWNER TO security_owner;
+
+--
+-- Name: oauth_access_token; Type: TABLE; Schema: security; Owner: security_owner
+--
+
+CREATE TABLE security.oauth_access_token (
+    token_id character varying(256),
+    token bytea,
+    authentication_id character varying(256) NOT NULL,
+    user_name character varying(256),
+    client_id character varying(256),
+    authentication bytea,
+    refresh_token character varying(256)
+);
+
+
+ALTER TABLE security.oauth_access_token OWNER TO security_owner;
+
+--
+-- Name: oauth_approvals; Type: TABLE; Schema: security; Owner: security_owner
+--
+
+CREATE TABLE security.oauth_approvals (
+    userid character varying(256),
+    clientid character varying(256),
+    scope character varying(256),
+    status character varying(10),
+    expiresat timestamp without time zone,
+    lastmodifiedat timestamp without time zone
+);
+
+
+ALTER TABLE security.oauth_approvals OWNER TO security_owner;
+
+--
+-- Name: oauth_client_details; Type: TABLE; Schema: security; Owner: security_owner
+--
+
+CREATE TABLE security.oauth_client_details (
+    client_id character varying(256) NOT NULL,
+    resource_ids character varying(256),
+    client_secret character varying(256),
+    scope character varying(256),
+    authorized_grant_types character varying(256),
+    web_server_redirect_uri character varying(256),
+    authorities character varying(256),
+    access_token_validity integer,
+    refresh_token_validity integer,
+    additional_information character varying(4096),
+    autoapprove character varying(256)
+);
+
+
+ALTER TABLE security.oauth_client_details OWNER TO security_owner;
+
+--
+-- Name: oauth_client_token; Type: TABLE; Schema: security; Owner: security_owner
+--
+
+CREATE TABLE security.oauth_client_token (
+    token_id character varying(256),
+    token bytea,
+    authentication_id character varying(256) NOT NULL,
+    user_name character varying(256),
+    client_id character varying(256)
+);
+
+
+ALTER TABLE security.oauth_client_token OWNER TO security_owner;
+
+--
+-- Name: oauth_code; Type: TABLE; Schema: security; Owner: security_owner
+--
+
+CREATE TABLE security.oauth_code (
+    code character varying(256),
+    authentication bytea
+);
+
+
+ALTER TABLE security.oauth_code OWNER TO security_owner;
+
+--
+-- Name: oauth_refresh_token; Type: TABLE; Schema: security; Owner: security_owner
+--
+
+CREATE TABLE security.oauth_refresh_token (
+    token_id character varying(256),
+    token bytea,
+    authentication bytea
+);
+
+
+ALTER TABLE security.oauth_refresh_token OWNER TO security_owner;
+
+--
+-- Name: user_; Type: TABLE; Schema: security; Owner: security_owner
+--
+
+CREATE TABLE security.user_ (
+    id bigint NOT NULL,
+    account_expired boolean,
+    account_locked boolean,
+    credentials_expired boolean,
+    enabled boolean,
+    password character varying(255),
+    user_name character varying(255)
+);
+
+
+ALTER TABLE security.user_ OWNER TO security_owner;
+
+--
+-- Name: user__id_seq; Type: SEQUENCE; Schema: security; Owner: security_owner
+--
+
+CREATE SEQUENCE security.user__id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE security.user__id_seq OWNER TO security_owner;
+
+--
+-- Name: user__id_seq; Type: SEQUENCE OWNED BY; Schema: security; Owner: security_owner
+--
+
+ALTER SEQUENCE security.user__id_seq OWNED BY security.user_.id;
+
+
+--
+-- Name: users_authorities; Type: TABLE; Schema: security; Owner: security_owner
+--
+
+CREATE TABLE security.users_authorities (
+    user_id bigint NOT NULL,
+    authority_id bigint NOT NULL
+);
+
+
+ALTER TABLE security.users_authorities OWNER TO security_owner;
+
+--
 -- Name: pty_id; Type: DEFAULT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -405,6 +647,20 @@ ALTER TABLE ONLY mochi.party_type ALTER COLUMN pty_typ_id SET DEFAULT nextval('m
 --
 
 ALTER TABLE ONLY mochi.role_type ALTER COLUMN rle_typ_id SET DEFAULT nextval('mochi.role_type_rle_typ_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: security; Owner: security_owner
+--
+
+ALTER TABLE ONLY security.authority ALTER COLUMN id SET DEFAULT nextval('security.authority_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: security; Owner: security_owner
+--
+
+ALTER TABLE ONLY security.user_ ALTER COLUMN id SET DEFAULT nextval('security.user__id_seq'::regclass);
 
 
 --
@@ -615,6 +871,137 @@ COPY mochi.spring_session_attributes (session_id, attribute_name, attribute_byte
 --
 
 SELECT pg_catalog.setval('mochi.thing_id_seq', 9, false);
+
+
+--
+-- Data for Name: users_authorities; Type: TABLE DATA; Schema: secuirty; Owner: mochidb_owner
+--
+
+COPY secuirty.users_authorities (user_id, authority_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: authority; Type: TABLE DATA; Schema: security; Owner: security_owner
+--
+
+COPY security.authority (id, name) FROM stdin;
+1	COMPANY_CREATE
+2	COMPANY_READ
+3	COMPANY_UPDATE
+4	COMPANY_DELETE
+5	DEPARTMENT_CREATE
+6	DEPARTMENT_READ
+7	DEPARTMENT_UPDATE
+8	DEPARTMENT_DELETE
+9	ROLE_COMPANY_READER
+\.
+
+
+--
+-- Name: authority_id_seq; Type: SEQUENCE SET; Schema: security; Owner: security_owner
+--
+
+SELECT pg_catalog.setval('security.authority_id_seq', 1, false);
+
+
+--
+-- Data for Name: clientdetails; Type: TABLE DATA; Schema: security; Owner: security_owner
+--
+
+COPY security.clientdetails (appid, resourceids, appsecret, scope, granttypes, redirecturl, authorities, access_token_validity, refresh_token_validity, additionalinformation, autoapprovescopes) FROM stdin;
+\.
+
+
+--
+-- Data for Name: oauth_access_token; Type: TABLE DATA; Schema: security; Owner: security_owner
+--
+
+COPY security.oauth_access_token (token_id, token, authentication_id, user_name, client_id, authentication, refresh_token) FROM stdin;
+\.
+
+
+--
+-- Data for Name: oauth_approvals; Type: TABLE DATA; Schema: security; Owner: security_owner
+--
+
+COPY security.oauth_approvals (userid, clientid, scope, status, expiresat, lastmodifiedat) FROM stdin;
+\.
+
+
+--
+-- Data for Name: oauth_client_details; Type: TABLE DATA; Schema: security; Owner: security_owner
+--
+
+COPY security.oauth_client_details (client_id, resource_ids, client_secret, scope, authorized_grant_types, web_server_redirect_uri, authorities, access_token_validity, refresh_token_validity, additional_information, autoapprove) FROM stdin;
+spring-security-oauth2-read-client	resource-server-rest-api	$2a$04$WGq2P9egiOYoOFemBRfsiO9qTcyJtNRnPKNBl5tokP7IP.eZn93km	read	password,authorization_code,refresh_token,implicit	\N	USER	10800	2592000	\N	\N
+spring-security-oauth2-read-write-client	resource-server-rest-api	$2a$04$soeOR.QFmClXeFIrhJVLWOQxfHjsJLSpWrU1iGxcMGdu.a5hvfY4W	read,write	password,authorization_code,refresh_token,implicit	\N	USER	10800	2592000	\N	\N
+\.
+
+
+--
+-- Data for Name: oauth_client_token; Type: TABLE DATA; Schema: security; Owner: security_owner
+--
+
+COPY security.oauth_client_token (token_id, token, authentication_id, user_name, client_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: oauth_code; Type: TABLE DATA; Schema: security; Owner: security_owner
+--
+
+COPY security.oauth_code (code, authentication) FROM stdin;
+\.
+
+
+--
+-- Data for Name: oauth_refresh_token; Type: TABLE DATA; Schema: security; Owner: security_owner
+--
+
+COPY security.oauth_refresh_token (token_id, token, authentication) FROM stdin;
+\.
+
+
+--
+-- Data for Name: user_; Type: TABLE DATA; Schema: security; Owner: security_owner
+--
+
+COPY security.user_ (id, account_expired, account_locked, credentials_expired, enabled, password, user_name) FROM stdin;
+1	f	f	f	t	$2a$08$qvrzQZ7jJ7oy2p/msL4M0.l83Cd0jNsX6AJUitbgRXGzge4j035ha	admin
+2	f	f	f	t	$2a$08$dwYz8O.qtUXboGosJFsS4u19LHKW7aCQ0LXXuNlRfjjGKwj5NfKSe	reader
+3	f	f	f	t	$2a$08$kPjzxewXRGNRiIuL4FtQH.mhMn7ZAFBYKB3ROz.J24IX8vDAcThsG	modifier
+4	f	f	f	t	$2a$08$vVXqh6S8TqfHMs1SlNTu/.J25iUCrpGBpyGExA.9yI.IlDRadR6Ea	reader2
+\.
+
+
+--
+-- Name: user__id_seq; Type: SEQUENCE SET; Schema: security; Owner: security_owner
+--
+
+SELECT pg_catalog.setval('security.user__id_seq', 1, false);
+
+
+--
+-- Data for Name: users_authorities; Type: TABLE DATA; Schema: security; Owner: security_owner
+--
+
+COPY security.users_authorities (user_id, authority_id) FROM stdin;
+1	1
+1	2
+1	3
+1	4
+1	5
+1	6
+1	7
+1	8
+1	9
+2	2
+2	6
+3	3
+3	7
+4	9
+\.
 
 
 --
@@ -850,6 +1237,94 @@ ALTER TABLE ONLY mochi.product_attr_lcl
 
 
 --
+-- Name: authority_name; Type: CONSTRAINT; Schema: security; Owner: security_owner
+--
+
+ALTER TABLE ONLY security.authority
+    ADD CONSTRAINT authority_name UNIQUE (name);
+
+
+--
+-- Name: authority_pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
+--
+
+ALTER TABLE ONLY security.authority
+    ADD CONSTRAINT authority_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: clientdetails_pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
+--
+
+ALTER TABLE ONLY security.clientdetails
+    ADD CONSTRAINT clientdetails_pkey PRIMARY KEY (appid);
+
+
+--
+-- Name: oauth_access_token_pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
+--
+
+ALTER TABLE ONLY security.oauth_access_token
+    ADD CONSTRAINT oauth_access_token_pkey PRIMARY KEY (authentication_id);
+
+
+--
+-- Name: oauth_client_details_pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
+--
+
+ALTER TABLE ONLY security.oauth_client_details
+    ADD CONSTRAINT oauth_client_details_pkey PRIMARY KEY (client_id);
+
+
+--
+-- Name: oauth_client_token_pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
+--
+
+ALTER TABLE ONLY security.oauth_client_token
+    ADD CONSTRAINT oauth_client_token_pkey PRIMARY KEY (authentication_id);
+
+
+--
+-- Name: ukana6i0racv9b9d5dx3mlwho9p; Type: CONSTRAINT; Schema: security; Owner: security_owner
+--
+
+ALTER TABLE ONLY security.authority
+    ADD CONSTRAINT ukana6i0racv9b9d5dx3mlwho9p UNIQUE (name);
+
+
+--
+-- Name: ukcfu5mc57wynm82447fk7rs4dw; Type: CONSTRAINT; Schema: security; Owner: security_owner
+--
+
+ALTER TABLE ONLY security.user_
+    ADD CONSTRAINT ukcfu5mc57wynm82447fk7rs4dw UNIQUE (user_name);
+
+
+--
+-- Name: user__pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
+--
+
+ALTER TABLE ONLY security.user_
+    ADD CONSTRAINT user__pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_user_name; Type: CONSTRAINT; Schema: security; Owner: security_owner
+--
+
+ALTER TABLE ONLY security.user_
+    ADD CONSTRAINT user_user_name UNIQUE (user_name);
+
+
+--
+-- Name: users_authorities_pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
+--
+
+ALTER TABLE ONLY security.users_authorities
+    ADD CONSTRAINT users_authorities_pkey PRIMARY KEY (user_id, authority_id);
+
+
+--
 -- Name: role_role_typ_id_role_start_dttm_party_id_key; Type: INDEX; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -1024,6 +1499,62 @@ ALTER TABLE ONLY mochi.spring_session_attributes
 
 
 --
+-- Name: fk5dnl183qsxsmiybiy9iwn7mxs; Type: FK CONSTRAINT; Schema: security; Owner: security_owner
+--
+
+ALTER TABLE ONLY security.users_authorities
+    ADD CONSTRAINT fk5dnl183qsxsmiybiy9iwn7mxs FOREIGN KEY (user_id) REFERENCES security.user_(id);
+
+
+--
+-- Name: fkn5enf4m16krdrfo2lygs0et1h; Type: FK CONSTRAINT; Schema: security; Owner: security_owner
+--
+
+ALTER TABLE ONLY security.users_authorities
+    ADD CONSTRAINT fkn5enf4m16krdrfo2lygs0et1h FOREIGN KEY (authority_id) REFERENCES security.authority(id);
+
+
+--
+-- Name: test_constraint; Type: FK CONSTRAINT; Schema: security; Owner: security_owner
+--
+
+ALTER TABLE ONLY security.users_authorities
+    ADD CONSTRAINT test_constraint FOREIGN KEY (authority_id) REFERENCES security.authority(id);
+
+
+--
+-- Name: users_authorities_authority; Type: FK CONSTRAINT; Schema: security; Owner: security_owner
+--
+
+ALTER TABLE ONLY security.users_authorities
+    ADD CONSTRAINT users_authorities_authority FOREIGN KEY (authority_id) REFERENCES security.authority(id);
+
+
+--
+-- Name: users_authorities_authority_1; Type: FK CONSTRAINT; Schema: security; Owner: security_owner
+--
+
+ALTER TABLE ONLY security.users_authorities
+    ADD CONSTRAINT users_authorities_authority_1 FOREIGN KEY (authority_id) REFERENCES security.authority(id);
+
+
+--
+-- Name: users_authorities_user_; Type: FK CONSTRAINT; Schema: security; Owner: security_owner
+--
+
+ALTER TABLE ONLY security.users_authorities
+    ADD CONSTRAINT users_authorities_user_ FOREIGN KEY (user_id) REFERENCES security.user_(id);
+
+
+--
+-- Name: users_authorities_user_1; Type: FK CONSTRAINT; Schema: security; Owner: security_owner
+--
+
+ALTER TABLE ONLY security.users_authorities
+    ADD CONSTRAINT users_authorities_user_1 FOREIGN KEY (user_id) REFERENCES security.user_(id);
+
+
+--
 -- Name: SCHEMA mochi; Type: ACL; Schema: -; Owner: mochidb_owner
 --
 
@@ -1031,6 +1562,25 @@ REVOKE ALL ON SCHEMA mochi FROM PUBLIC;
 REVOKE ALL ON SCHEMA mochi FROM mochidb_owner;
 GRANT ALL ON SCHEMA mochi TO mochidb_owner;
 GRANT USAGE ON SCHEMA mochi TO mochi_app;
+
+
+--
+-- Name: SCHEMA public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- Name: SCHEMA security; Type: ACL; Schema: -; Owner: security_owner
+--
+
+REVOKE ALL ON SCHEMA security FROM PUBLIC;
+REVOKE ALL ON SCHEMA security FROM security_owner;
+GRANT ALL ON SCHEMA security TO security_owner;
 
 
 --
@@ -1201,6 +1751,69 @@ REVOKE ALL ON TABLE mochi.spring_session_attributes FROM PUBLIC;
 REVOKE ALL ON TABLE mochi.spring_session_attributes FROM mochidb_owner;
 GRANT ALL ON TABLE mochi.spring_session_attributes TO mochidb_owner;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.spring_session_attributes TO mochi_app;
+
+
+--
+-- Name: TABLE clientdetails; Type: ACL; Schema: security; Owner: security_owner
+--
+
+REVOKE ALL ON TABLE security.clientdetails FROM PUBLIC;
+REVOKE ALL ON TABLE security.clientdetails FROM security_owner;
+GRANT ALL ON TABLE security.clientdetails TO security_owner;
+
+
+--
+-- Name: TABLE oauth_access_token; Type: ACL; Schema: security; Owner: security_owner
+--
+
+REVOKE ALL ON TABLE security.oauth_access_token FROM PUBLIC;
+REVOKE ALL ON TABLE security.oauth_access_token FROM security_owner;
+GRANT ALL ON TABLE security.oauth_access_token TO security_owner;
+
+
+--
+-- Name: TABLE oauth_approvals; Type: ACL; Schema: security; Owner: security_owner
+--
+
+REVOKE ALL ON TABLE security.oauth_approvals FROM PUBLIC;
+REVOKE ALL ON TABLE security.oauth_approvals FROM security_owner;
+GRANT ALL ON TABLE security.oauth_approvals TO security_owner;
+
+
+--
+-- Name: TABLE oauth_client_details; Type: ACL; Schema: security; Owner: security_owner
+--
+
+REVOKE ALL ON TABLE security.oauth_client_details FROM PUBLIC;
+REVOKE ALL ON TABLE security.oauth_client_details FROM security_owner;
+GRANT ALL ON TABLE security.oauth_client_details TO security_owner;
+
+
+--
+-- Name: TABLE oauth_client_token; Type: ACL; Schema: security; Owner: security_owner
+--
+
+REVOKE ALL ON TABLE security.oauth_client_token FROM PUBLIC;
+REVOKE ALL ON TABLE security.oauth_client_token FROM security_owner;
+GRANT ALL ON TABLE security.oauth_client_token TO security_owner;
+
+
+--
+-- Name: TABLE oauth_code; Type: ACL; Schema: security; Owner: security_owner
+--
+
+REVOKE ALL ON TABLE security.oauth_code FROM PUBLIC;
+REVOKE ALL ON TABLE security.oauth_code FROM security_owner;
+GRANT ALL ON TABLE security.oauth_code TO security_owner;
+
+
+--
+-- Name: TABLE oauth_refresh_token; Type: ACL; Schema: security; Owner: security_owner
+--
+
+REVOKE ALL ON TABLE security.oauth_refresh_token FROM PUBLIC;
+REVOKE ALL ON TABLE security.oauth_refresh_token FROM security_owner;
+GRANT ALL ON TABLE security.oauth_refresh_token TO security_owner;
 
 
 --
