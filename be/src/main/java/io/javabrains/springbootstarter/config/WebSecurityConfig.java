@@ -59,10 +59,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	        .anyRequest().authenticated();
     }
     
-    @Autowired
-	public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-		auth.jdbcAuthentication().dataSource(dataSource)
-				.usersByUsernameQuery("select pty_usr_nm, pty_pwd, true from mochi.party where pty_usr_nm=?")
-				.authoritiesByUsernameQuery("select pty_usr_nm, 'default' as role from mochi.party where pty_usr_nm=?");
-	}
+  //  @Autowired
+//	public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+//		auth.jdbcAuthentication().dataSource(dataSource)
+//				.usersByUsernameQuery("select pty_usr_nm, pty_pwd, true from mochi.party where pty_usr_nm=?")
+//				.authoritiesByUsernameQuery("select pty_usr_nm, 'default' as role from mochi.party where pty_usr_nm=?");
+//	}
 }
