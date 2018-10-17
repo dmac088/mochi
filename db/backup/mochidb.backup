@@ -1,0 +1,1209 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.5.14
+-- Dumped by pg_dump version 9.5.14
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: mochi; Type: SCHEMA; Schema: -; Owner: mochidb_owner
+--
+
+CREATE SCHEMA mochi;
+
+
+ALTER SCHEMA mochi OWNER TO mochidb_owner;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: customer; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE mochi.customer (
+    rle_id bigint NOT NULL,
+    cst_id character(10)
+);
+
+
+ALTER TABLE mochi.customer OWNER TO mochidb_owner;
+
+--
+-- Name: hibernate_sequence; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE SEQUENCE mochi.hibernate_sequence
+    START WITH 232
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE mochi.hibernate_sequence OWNER TO mochidb_owner;
+
+--
+-- Name: obj; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE mochi.obj (
+    object_id bigint NOT NULL,
+    object_type_id bigint NOT NULL
+);
+
+
+ALTER TABLE mochi.obj OWNER TO mochidb_owner;
+
+--
+-- Name: object_type; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE mochi.object_type (
+    object_type_id bigint NOT NULL,
+    object_type_desc character varying(100) NOT NULL
+);
+
+
+ALTER TABLE mochi.object_type OWNER TO mochidb_owner;
+
+--
+-- Name: order_line; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE mochi.order_line (
+    ord_id bigint NOT NULL,
+    prd_id bigint NOT NULL,
+    ord_lne_no bigint NOT NULL
+);
+
+
+ALTER TABLE mochi.order_line OWNER TO mochidb_owner;
+
+--
+-- Name: orders; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE mochi.orders (
+    ord_id bigint NOT NULL,
+    pty_id bigint NOT NULL
+);
+
+
+ALTER TABLE mochi.orders OWNER TO mochidb_owner;
+
+--
+-- Name: organisation; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE mochi.organisation (
+    org_id bigint NOT NULL,
+    org_nme character varying(100) NOT NULL,
+    org_reg_no character varying(50) NOT NULL
+);
+
+
+ALTER TABLE mochi.organisation OWNER TO mochidb_owner;
+
+--
+-- Name: party; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE mochi.party (
+    pty_id bigint NOT NULL,
+    pty_typ_id bigint NOT NULL,
+    pty_usr_nm text NOT NULL,
+    pty_pwd text NOT NULL
+);
+
+
+ALTER TABLE mochi.party OWNER TO mochidb_owner;
+
+--
+-- Name: party_party_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE SEQUENCE mochi.party_party_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE mochi.party_party_id_seq OWNER TO mochidb_owner;
+
+--
+-- Name: party_pty_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE SEQUENCE mochi.party_pty_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE mochi.party_pty_id_seq OWNER TO mochidb_owner;
+
+--
+-- Name: party_pty_id_seq; Type: SEQUENCE OWNED BY; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER SEQUENCE mochi.party_pty_id_seq OWNED BY mochi.party.pty_id;
+
+
+--
+-- Name: party_type; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE mochi.party_type (
+    pty_typ_id bigint NOT NULL,
+    pty_typ_desc character varying NOT NULL
+);
+
+
+ALTER TABLE mochi.party_type OWNER TO mochidb_owner;
+
+--
+-- Name: party_type_pty_typ_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE SEQUENCE mochi.party_type_pty_typ_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE mochi.party_type_pty_typ_id_seq OWNER TO mochidb_owner;
+
+--
+-- Name: party_type_pty_typ_id_seq; Type: SEQUENCE OWNED BY; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER SEQUENCE mochi.party_type_pty_typ_id_seq OWNED BY mochi.party_type.pty_typ_id;
+
+
+--
+-- Name: person; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE mochi.person (
+    psn_id bigint NOT NULL,
+    psn_gvn_nm_en character varying,
+    psn_fml_nm_en character varying,
+    psn_nm_cn character varying,
+    enb boolean
+);
+
+
+ALTER TABLE mochi.person OWNER TO mochidb_owner;
+
+--
+-- Name: person_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE SEQUENCE mochi.person_id_seq
+    START WITH 6
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE mochi.person_id_seq OWNER TO mochidb_owner;
+
+--
+-- Name: person_role; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE mochi.person_role (
+    person_role_id bigint NOT NULL,
+    person_role_desc character varying(100) NOT NULL
+);
+
+
+ALTER TABLE mochi.person_role OWNER TO mochidb_owner;
+
+--
+-- Name: point_of_interest; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE mochi.point_of_interest (
+    point_of_interest_id bigint NOT NULL,
+    lat double precision,
+    lng double precision,
+    name character varying(255),
+    type character varying(255)
+);
+
+
+ALTER TABLE mochi.point_of_interest OWNER TO mochidb_owner;
+
+--
+-- Name: product; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE mochi.product (
+    prd_id bigint NOT NULL,
+    upc_cd character(12),
+    prd_crtd_dt date
+);
+
+
+ALTER TABLE mochi.product OWNER TO mochidb_owner;
+
+--
+-- Name: product_attr_lcl; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE mochi.product_attr_lcl (
+    prd_lcl_id bigint NOT NULL,
+    prd_id bigint NOT NULL,
+    prd_desc character varying(100),
+    prd_img_pth character varying(100),
+    prd_rrp numeric,
+    prd_cat_desc character varying(100),
+    lcl_cd character(3) NOT NULL
+);
+
+
+ALTER TABLE mochi.product_attr_lcl OWNER TO mochidb_owner;
+
+--
+-- Name: role; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE mochi.role (
+    rle_id bigint NOT NULL,
+    rle_typ_id bigint NOT NULL,
+    rle_start_dttm date NOT NULL,
+    pty_id bigint NOT NULL
+);
+
+
+ALTER TABLE mochi.role OWNER TO mochidb_owner;
+
+--
+-- Name: role_type; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE mochi.role_type (
+    rle_typ_id bigint NOT NULL,
+    rle_typ_desc character varying NOT NULL
+);
+
+
+ALTER TABLE mochi.role_type OWNER TO mochidb_owner;
+
+--
+-- Name: role_type_rle_typ_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE SEQUENCE mochi.role_type_rle_typ_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE mochi.role_type_rle_typ_id_seq OWNER TO mochidb_owner;
+
+--
+-- Name: role_type_rle_typ_id_seq; Type: SEQUENCE OWNED BY; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER SEQUENCE mochi.role_type_rle_typ_id_seq OWNED BY mochi.role_type.rle_typ_id;
+
+
+--
+-- Name: role_type_role_typ_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE SEQUENCE mochi.role_type_role_typ_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE mochi.role_type_role_typ_id_seq OWNER TO mochidb_owner;
+
+--
+-- Name: spring_session; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE mochi.spring_session (
+    session_id character(36) NOT NULL,
+    creation_time bigint NOT NULL,
+    last_access_time bigint NOT NULL,
+    max_inactive_interval integer NOT NULL,
+    principal_name character varying(100)
+);
+
+
+ALTER TABLE mochi.spring_session OWNER TO mochidb_owner;
+
+--
+-- Name: spring_session_attributes; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE mochi.spring_session_attributes (
+    session_id character(36) NOT NULL,
+    attribute_name character varying(200) NOT NULL,
+    attribute_bytes bytea
+);
+
+
+ALTER TABLE mochi.spring_session_attributes OWNER TO mochidb_owner;
+
+--
+-- Name: thing_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE SEQUENCE mochi.thing_id_seq
+    START WITH 9
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE mochi.thing_id_seq OWNER TO mochidb_owner;
+
+--
+-- Name: pty_id; Type: DEFAULT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.party ALTER COLUMN pty_id SET DEFAULT nextval('mochi.party_pty_id_seq'::regclass);
+
+
+--
+-- Name: pty_typ_id; Type: DEFAULT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.party_type ALTER COLUMN pty_typ_id SET DEFAULT nextval('mochi.party_type_pty_typ_id_seq'::regclass);
+
+
+--
+-- Name: rle_typ_id; Type: DEFAULT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.role_type ALTER COLUMN rle_typ_id SET DEFAULT nextval('mochi.role_type_rle_typ_id_seq'::regclass);
+
+
+--
+-- Data for Name: customer; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+COPY mochi.customer (rle_id, cst_id) FROM stdin;
+1	0123456789
+2	9876543210
+\.
+
+
+--
+-- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
+--
+
+SELECT pg_catalog.setval('mochi.hibernate_sequence', 520, true);
+
+
+--
+-- Data for Name: obj; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+COPY mochi.obj (object_id, object_type_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: object_type; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+COPY mochi.object_type (object_type_id, object_type_desc) FROM stdin;
+\.
+
+
+--
+-- Data for Name: order_line; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+COPY mochi.order_line (ord_id, prd_id, ord_lne_no) FROM stdin;
+\.
+
+
+--
+-- Data for Name: orders; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+COPY mochi.orders (ord_id, pty_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: organisation; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+COPY mochi.organisation (org_id, org_nme, org_reg_no) FROM stdin;
+2	Big Balloons LTD	1234567
+\.
+
+
+--
+-- Data for Name: party; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+COPY mochi.party (pty_id, pty_typ_id, pty_usr_nm, pty_pwd) FROM stdin;
+1	1	dmac088	password
+2	2	bigball	password
+\.
+
+
+--
+-- Name: party_party_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
+--
+
+SELECT pg_catalog.setval('mochi.party_party_id_seq', 1, false);
+
+
+--
+-- Name: party_pty_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
+--
+
+SELECT pg_catalog.setval('mochi.party_pty_id_seq', 1, false);
+
+
+--
+-- Data for Name: party_type; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+COPY mochi.party_type (pty_typ_id, pty_typ_desc) FROM stdin;
+1	Person
+2	Organisation
+\.
+
+
+--
+-- Name: party_type_pty_typ_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
+--
+
+SELECT pg_catalog.setval('mochi.party_type_pty_typ_id_seq', 1, false);
+
+
+--
+-- Data for Name: person; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+COPY mochi.person (psn_id, psn_gvn_nm_en, psn_fml_nm_en, psn_nm_cn, enb) FROM stdin;
+1	Daniel	Mackie	丹尼爾麥基	t
+\.
+
+
+--
+-- Name: person_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
+--
+
+SELECT pg_catalog.setval('mochi.person_id_seq', 6, false);
+
+
+--
+-- Data for Name: person_role; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+COPY mochi.person_role (person_role_id, person_role_desc) FROM stdin;
+\.
+
+
+--
+-- Data for Name: point_of_interest; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+COPY mochi.point_of_interest (point_of_interest_id, lat, lng, name, type) FROM stdin;
+\.
+
+
+--
+-- Data for Name: product; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+COPY mochi.product (prd_id, upc_cd, prd_crtd_dt) FROM stdin;
+1	12345678    	2018-10-13
+2	23456789    	2018-10-13
+\.
+
+
+--
+-- Data for Name: product_attr_lcl; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+COPY mochi.product_attr_lcl (prd_lcl_id, prd_id, prd_desc, prd_img_pth, prd_rrp, prd_cat_desc, lcl_cd) FROM stdin;
+1	1	mango	images/mango.jpg	5.99	fruit	ENG
+2	1	芒果	images/mango.jpg	5.99	水果	HKG
+3	2	orange	images/orange.jpg	8.99	fruit	ENG
+4	2	橙子	images/orange.jpg	8.99	水果	HKG
+\.
+
+
+--
+-- Data for Name: role; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+COPY mochi.role (rle_id, rle_typ_id, rle_start_dttm, pty_id) FROM stdin;
+1	1	2018-10-13	1
+2	1	2018-10-13	2
+\.
+
+
+--
+-- Data for Name: role_type; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+COPY mochi.role_type (rle_typ_id, rle_typ_desc) FROM stdin;
+1	Customer
+2	Supplier
+\.
+
+
+--
+-- Name: role_type_rle_typ_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
+--
+
+SELECT pg_catalog.setval('mochi.role_type_rle_typ_id_seq', 1, false);
+
+
+--
+-- Name: role_type_role_typ_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
+--
+
+SELECT pg_catalog.setval('mochi.role_type_role_typ_id_seq', 1, false);
+
+
+--
+-- Data for Name: spring_session; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+COPY mochi.spring_session (session_id, creation_time, last_access_time, max_inactive_interval, principal_name) FROM stdin;
+\.
+
+
+--
+-- Data for Name: spring_session_attributes; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+COPY mochi.spring_session_attributes (session_id, attribute_name, attribute_bytes) FROM stdin;
+\.
+
+
+--
+-- Name: thing_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
+--
+
+SELECT pg_catalog.setval('mochi.thing_id_seq', 9, false);
+
+
+--
+-- Name: customer_cst_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.customer
+    ADD CONSTRAINT customer_cst_id_key UNIQUE (cst_id);
+
+
+--
+-- Name: customer_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.customer
+    ADD CONSTRAINT customer_pkey PRIMARY KEY (rle_id);
+
+
+--
+-- Name: obj_object_type_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.obj
+    ADD CONSTRAINT obj_object_type_id_key UNIQUE (object_type_id);
+
+
+--
+-- Name: object_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.obj
+    ADD CONSTRAINT object_pkey PRIMARY KEY (object_id);
+
+
+--
+-- Name: object_type_object_type_desc_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.object_type
+    ADD CONSTRAINT object_type_object_type_desc_key UNIQUE (object_type_desc);
+
+
+--
+-- Name: object_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.object_type
+    ADD CONSTRAINT object_type_pkey PRIMARY KEY (object_type_id);
+
+
+--
+-- Name: order_line_ord_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.order_line
+    ADD CONSTRAINT order_line_ord_id_key UNIQUE (ord_id);
+
+
+--
+-- Name: order_line_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.order_line
+    ADD CONSTRAINT order_line_pkey PRIMARY KEY (ord_id, prd_id, ord_lne_no);
+
+
+--
+-- Name: order_line_prd_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.order_line
+    ADD CONSTRAINT order_line_prd_id_key UNIQUE (prd_id);
+
+
+--
+-- Name: orders_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.orders
+    ADD CONSTRAINT orders_pkey PRIMARY KEY (ord_id);
+
+
+--
+-- Name: orders_pty_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.orders
+    ADD CONSTRAINT orders_pty_id_key UNIQUE (pty_id);
+
+
+--
+-- Name: organisation_org_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.organisation
+    ADD CONSTRAINT organisation_org_id_key UNIQUE (org_id);
+
+
+--
+-- Name: party_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.party
+    ADD CONSTRAINT party_pkey PRIMARY KEY (pty_id);
+
+
+--
+-- Name: party_pty_usr_nm_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.party
+    ADD CONSTRAINT party_pty_usr_nm_key UNIQUE (pty_usr_nm);
+
+
+--
+-- Name: party_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.party_type
+    ADD CONSTRAINT party_type_pkey PRIMARY KEY (pty_typ_id);
+
+
+--
+-- Name: party_type_pty_typ_desc_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.party_type
+    ADD CONSTRAINT party_type_pty_typ_desc_key UNIQUE (pty_typ_desc);
+
+
+--
+-- Name: person_psn_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.person
+    ADD CONSTRAINT person_psn_id_key UNIQUE (psn_id);
+
+
+--
+-- Name: person_role_person_role_desc_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.person_role
+    ADD CONSTRAINT person_role_person_role_desc_key UNIQUE (person_role_desc);
+
+
+--
+-- Name: person_role_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.person_role
+    ADD CONSTRAINT person_role_pkey PRIMARY KEY (person_role_id);
+
+
+--
+-- Name: poi_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.point_of_interest
+    ADD CONSTRAINT poi_pkey PRIMARY KEY (point_of_interest_id);
+
+
+--
+-- Name: product_attr_lcl_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.product_attr_lcl
+    ADD CONSTRAINT product_attr_lcl_pkey PRIMARY KEY (prd_lcl_id);
+
+
+--
+-- Name: product_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.product
+    ADD CONSTRAINT product_pkey PRIMARY KEY (prd_id);
+
+
+--
+-- Name: role_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.role
+    ADD CONSTRAINT role_pkey PRIMARY KEY (rle_id);
+
+
+--
+-- Name: role_pty_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.role
+    ADD CONSTRAINT role_pty_id_key UNIQUE (pty_id);
+
+
+--
+-- Name: role_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.role_type
+    ADD CONSTRAINT role_type_pkey PRIMARY KEY (rle_typ_id);
+
+
+--
+-- Name: role_type_rle_typ_desc_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.role_type
+    ADD CONSTRAINT role_type_rle_typ_desc_key UNIQUE (rle_typ_desc);
+
+
+--
+-- Name: spring_session_attributes_pk; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.spring_session_attributes
+    ADD CONSTRAINT spring_session_attributes_pk PRIMARY KEY (session_id, attribute_name);
+
+
+--
+-- Name: spring_session_pk; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.spring_session
+    ADD CONSTRAINT spring_session_pk PRIMARY KEY (session_id);
+
+
+--
+-- Name: uc_prd_lcl_1; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.product_attr_lcl
+    ADD CONSTRAINT uc_prd_lcl_1 UNIQUE (prd_id, lcl_cd);
+
+
+--
+-- Name: role_role_typ_id_role_start_dttm_party_id_key; Type: INDEX; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE UNIQUE INDEX role_role_typ_id_role_start_dttm_party_id_key ON mochi.role USING btree (rle_typ_id, rle_start_dttm, pty_id);
+
+
+--
+-- Name: spring_session_ix1; Type: INDEX; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE INDEX spring_session_ix1 ON mochi.spring_session USING btree (last_access_time);
+
+
+--
+-- Name: customer_role_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.customer
+    ADD CONSTRAINT customer_role_id_fkey FOREIGN KEY (rle_id) REFERENCES mochi.role(rle_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: fk16beha00cy8eptif4sbu2clqo; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.party
+    ADD CONSTRAINT fk16beha00cy8eptif4sbu2clqo FOREIGN KEY (pty_typ_id) REFERENCES mochi.party_type(pty_typ_id);
+
+
+--
+-- Name: fk3nb2g56ldyj9w6yhjvvbg6jds; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.person
+    ADD CONSTRAINT fk3nb2g56ldyj9w6yhjvvbg6jds FOREIGN KEY (psn_id) REFERENCES mochi.party(pty_id);
+
+
+--
+-- Name: fk41hhsex81t9v5r824kj6iswte; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.role
+    ADD CONSTRAINT fk41hhsex81t9v5r824kj6iswte FOREIGN KEY (rle_typ_id) REFERENCES mochi.role_type(rle_typ_id);
+
+
+--
+-- Name: fk6san5a9inopp7pc11bg0bknfp; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.customer
+    ADD CONSTRAINT fk6san5a9inopp7pc11bg0bknfp FOREIGN KEY (rle_id) REFERENCES mochi.role(rle_id);
+
+
+--
+-- Name: fk8faf5gx3756ce2glbocanqrn; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.role
+    ADD CONSTRAINT fk8faf5gx3756ce2glbocanqrn FOREIGN KEY (pty_id) REFERENCES mochi.party(pty_id);
+
+
+--
+-- Name: fk8xaoek9akfog0i1bof7tp5foy; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.product_attr_lcl
+    ADD CONSTRAINT fk8xaoek9akfog0i1bof7tp5foy FOREIGN KEY (prd_id) REFERENCES mochi.product(prd_id);
+
+
+--
+-- Name: fk_object_point_of_interest; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.point_of_interest
+    ADD CONSTRAINT fk_object_point_of_interest FOREIGN KEY (point_of_interest_id) REFERENCES mochi.obj(object_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: fkkgqjo83pceeu7xt1g5l73p09u; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.organisation
+    ADD CONSTRAINT fkkgqjo83pceeu7xt1g5l73p09u FOREIGN KEY (org_id) REFERENCES mochi.party(pty_id);
+
+
+--
+-- Name: obj_object_type_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.obj
+    ADD CONSTRAINT obj_object_type_id_fkey FOREIGN KEY (object_type_id) REFERENCES mochi.object_type(object_type_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: order_line_order_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.order_line
+    ADD CONSTRAINT order_line_order_id_fkey FOREIGN KEY (ord_id) REFERENCES mochi.orders(ord_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: order_line_product_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.order_line
+    ADD CONSTRAINT order_line_product_id_fkey FOREIGN KEY (prd_id) REFERENCES mochi.product(prd_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: orders_party_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.orders
+    ADD CONSTRAINT orders_party_id_fkey FOREIGN KEY (pty_id) REFERENCES mochi.party(pty_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: organisation_org_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.organisation
+    ADD CONSTRAINT organisation_org_id_fkey FOREIGN KEY (org_id) REFERENCES mochi.party(pty_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: party_pty_typ_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.party
+    ADD CONSTRAINT party_pty_typ_id_fkey FOREIGN KEY (pty_typ_id) REFERENCES mochi.party_type(pty_typ_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: person_person_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.person
+    ADD CONSTRAINT person_person_id_fkey FOREIGN KEY (psn_id) REFERENCES mochi.party(pty_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: product_attr_lcl_prd_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.product_attr_lcl
+    ADD CONSTRAINT product_attr_lcl_prd_id_fkey FOREIGN KEY (prd_id) REFERENCES mochi.product(prd_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: role_party_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.role
+    ADD CONSTRAINT role_party_id_fkey FOREIGN KEY (pty_id) REFERENCES mochi.party(pty_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: role_role_typ_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.role
+    ADD CONSTRAINT role_role_typ_id_fkey FOREIGN KEY (rle_typ_id) REFERENCES mochi.role_type(rle_typ_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: spring_session_attributes_fk; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.spring_session_attributes
+    ADD CONSTRAINT spring_session_attributes_fk FOREIGN KEY (session_id) REFERENCES mochi.spring_session(session_id) ON DELETE CASCADE;
+
+
+--
+-- Name: SCHEMA mochi; Type: ACL; Schema: -; Owner: mochidb_owner
+--
+
+REVOKE ALL ON SCHEMA mochi FROM PUBLIC;
+REVOKE ALL ON SCHEMA mochi FROM mochidb_owner;
+GRANT ALL ON SCHEMA mochi TO mochidb_owner;
+GRANT USAGE ON SCHEMA mochi TO mochi_app;
+
+
+--
+-- Name: TABLE customer; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+REVOKE ALL ON TABLE mochi.customer FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.customer FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.customer TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.customer TO mochi_app;
+
+
+--
+-- Name: TABLE obj; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+REVOKE ALL ON TABLE mochi.obj FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.obj FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.obj TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.obj TO mochi_app;
+
+
+--
+-- Name: TABLE object_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+REVOKE ALL ON TABLE mochi.object_type FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.object_type FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.object_type TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.object_type TO mochi_app;
+
+
+--
+-- Name: TABLE order_line; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+REVOKE ALL ON TABLE mochi.order_line FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.order_line FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.order_line TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.order_line TO mochi_app;
+
+
+--
+-- Name: TABLE orders; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+REVOKE ALL ON TABLE mochi.orders FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.orders FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.orders TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.orders TO mochi_app;
+
+
+--
+-- Name: TABLE organisation; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+REVOKE ALL ON TABLE mochi.organisation FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.organisation FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.organisation TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.organisation TO mochi_app;
+
+
+--
+-- Name: TABLE party; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+REVOKE ALL ON TABLE mochi.party FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.party FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.party TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.party TO mochi_app;
+
+
+--
+-- Name: TABLE party_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+REVOKE ALL ON TABLE mochi.party_type FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.party_type FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.party_type TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.party_type TO mochi_app;
+
+
+--
+-- Name: TABLE person; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+REVOKE ALL ON TABLE mochi.person FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.person FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.person TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.person TO mochi_app;
+
+
+--
+-- Name: TABLE person_role; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+REVOKE ALL ON TABLE mochi.person_role FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.person_role FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.person_role TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.person_role TO mochi_app;
+
+
+--
+-- Name: TABLE point_of_interest; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+REVOKE ALL ON TABLE mochi.point_of_interest FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.point_of_interest FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.point_of_interest TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.point_of_interest TO mochi_app;
+
+
+--
+-- Name: TABLE product; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+REVOKE ALL ON TABLE mochi.product FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.product FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.product TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.product TO mochi_app;
+
+
+--
+-- Name: TABLE product_attr_lcl; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+REVOKE ALL ON TABLE mochi.product_attr_lcl FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.product_attr_lcl FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.product_attr_lcl TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.product_attr_lcl TO mochi_app;
+
+
+--
+-- Name: TABLE role; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+REVOKE ALL ON TABLE mochi.role FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.role FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.role TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.role TO mochi_app;
+
+
+--
+-- Name: TABLE role_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+REVOKE ALL ON TABLE mochi.role_type FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.role_type FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.role_type TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.role_type TO mochi_app;
+
+
+--
+-- Name: TABLE spring_session; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+REVOKE ALL ON TABLE mochi.spring_session FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.spring_session FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.spring_session TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.spring_session TO mochi_app;
+
+
+--
+-- Name: TABLE spring_session_attributes; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+REVOKE ALL ON TABLE mochi.spring_session_attributes FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.spring_session_attributes FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.spring_session_attributes TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.spring_session_attributes TO mochi_app;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
