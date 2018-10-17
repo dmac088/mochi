@@ -1,4 +1,4 @@
-package io.javabrains.springbootstarter;
+package io.javabrains.springbootstarter.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -23,7 +23,7 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import javax.sql.DataSource;
 
-@Configuration
+//@Configuration
 @EnableAuthorizationServer
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @Import(AuthorizationServerSecurityConfigurer.class)
@@ -31,7 +31,7 @@ import javax.sql.DataSource;
 public class AuthServerOAuth2Config extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
-    @Qualifier("secutiryDataSource")
+    @Qualifier("securityDataSource")
     private DataSource dataSource;
     
     @Autowired
