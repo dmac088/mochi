@@ -1,4 +1,4 @@
-package io.javabrains.springbootstarter.config.db;
+package io.javabrains.springbootstarter;
 
 
 

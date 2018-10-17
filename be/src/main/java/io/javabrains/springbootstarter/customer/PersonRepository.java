@@ -1,4 +1,4 @@
-package io.javabrains.springbootstarter.person;
+package io.javabrains.springbootstarter.customer;
 
 import org.springframework.data.repository.CrudRepository;
 
