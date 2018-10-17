@@ -1,14 +1,14 @@
-﻿DROP TABLE IF EXISTS oauth.oauth_client_details;
-DROP TABLE IF EXISTS oauth.oauth_client_token;
-DROP TABLE IF EXISTS oauth.oauth_access_token;
-DROP TABLE IF EXISTS oauth.oauth_refresh_token;
-DROP TABLE IF EXISTS oauth.oauth_code;
-DROP TABLE IF EXISTS oauth.oauth_approvals;
-DROP TABLE IF EXISTS oauth.ClientDetails;
+﻿DROP TABLE IF EXISTS security.oauth_client_details;
+DROP TABLE IF EXISTS security.oauth_client_token;
+DROP TABLE IF EXISTS security.oauth_access_token;
+DROP TABLE IF EXISTS security.oauth_refresh_token;
+DROP TABLE IF EXISTS security.oauth_code;
+DROP TABLE IF EXISTS security.oauth_approvals;
+DROP TABLE IF EXISTS security.ClientDetails;
 
 
 -- used in tests that use HSQL
-create table oauth.oauth_client_details (
+create table security.oauth_client_details (
   client_id VARCHAR(256) PRIMARY KEY,
   resource_ids VARCHAR(256),
   client_secret VARCHAR(256),
@@ -22,7 +22,7 @@ create table oauth.oauth_client_details (
   autoapprove VARCHAR(256)
 );
 
-create table oauth.oauth_client_token (
+create table security.oauth_client_token (
   token_id VARCHAR(256),
   token BYTEA,
   authentication_id VARCHAR(256) PRIMARY KEY,
@@ -30,7 +30,7 @@ create table oauth.oauth_client_token (
   client_id VARCHAR(256)
 );
 
-create table oauth.oauth_access_token (
+create table security.oauth_access_token (
   token_id VARCHAR(256),
   token BYTEA,
   authentication_id VARCHAR(256) PRIMARY KEY,
@@ -40,17 +40,17 @@ create table oauth.oauth_access_token (
   refresh_token VARCHAR(256)
 );
 
-create table oauth.oauth_refresh_token (
+create table security.oauth_refresh_token (
   token_id VARCHAR(256),
   token BYTEA,
   authentication BYTEA
 );
 
-create table oauth.oauth_code (
+create table security.oauth_code (
   code VARCHAR(256), authentication BYTEA
 );
 
-create table oauth.oauth_approvals (
+create table security.oauth_approvals (
 	userId VARCHAR(256),
 	clientId VARCHAR(256),
 	scope VARCHAR(256),
@@ -61,7 +61,7 @@ create table oauth.oauth_approvals (
 
 
 -- customized oauth_client_details table
-create table oauth.ClientDetails (
+create table security.ClientDetails (
   appId VARCHAR(256) PRIMARY KEY,
   resourceIds VARCHAR(256),
   appSecret VARCHAR(256),
