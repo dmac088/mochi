@@ -1,4 +1,4 @@
-package io.javabrains.springbootstarter.config.db;
+package io.javabrains.springbootstarter.customer;
 
 
 
@@ -61,7 +61,7 @@ public class DataSourceBeanMochi {
        LocalContainerEntityManagerFactoryBean em 
          = new LocalContainerEntityManagerFactoryBean();
        em.setDataSource(this.dataSource());
-       em.setPackagesToScan(new String[] { "io.javabrains.springbootstarter.customer","io.javabrains.springbootstarter.party","io.javabrains.springbootstarter.role", "io.javabrains.springbootstarter.user"});
+       em.setPackagesToScan(new String[] {"io.javabrains.springbootstarter.customer","io.javabrains.springbootstarter.party", "io.javabrains.springbootstarter.organisation", "io.javabrains.springbootstarter.role", "io.javabrains.springbootstarter.user"});
        JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
        em.setJpaVendorAdapter(vendorAdapter);
        em.setJpaProperties(additionalJpaProperties());

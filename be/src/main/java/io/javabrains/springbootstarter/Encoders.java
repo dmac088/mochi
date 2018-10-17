@@ -1,4 +1,4 @@
-package io.javabrains.springbootstarter.config;
+package io.javabrains.springbootstarter;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

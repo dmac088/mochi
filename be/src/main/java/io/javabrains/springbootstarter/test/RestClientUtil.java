@@ -11,8 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import io.javabrains.springbootstarter.customer.Customer;
+import io.javabrains.springbootstarter.customer.Person;
 import io.javabrains.springbootstarter.party.PartyType;
-import io.javabrains.springbootstarter.person.Person;
 import io.javabrains.springbootstarter.role.Role;
 import io.javabrains.springbootstarter.role.RoleType;
 
