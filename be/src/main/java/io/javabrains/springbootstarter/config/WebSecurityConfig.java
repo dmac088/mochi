@@ -1,6 +1,7 @@
 package io.javabrains.springbootstarter.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +25,7 @@ import javax.sql.DataSource;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	 
 	@Autowired
+	@Qualifier("mochiDataSource")
 	DataSource dataSource;
 	
 	@Autowired

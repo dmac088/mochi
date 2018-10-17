@@ -1,4 +1,4 @@
-package io.javabrains.springbootstarter.config;
+/*package io.javabrains.springbootstarter.config;
 
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,3 +30,4 @@ public class DataSourceBean {
                 .build();
     }
 }
+*/
