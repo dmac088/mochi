@@ -1,4 +1,4 @@
-package io.javabrains.springbootstarter.user;
+package io.javabrains.springbootstarter.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

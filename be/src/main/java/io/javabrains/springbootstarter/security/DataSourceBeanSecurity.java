@@ -1,4 +1,4 @@
-package io.javabrains.springbootstarter.user;
+package io.javabrains.springbootstarter.security;
 
 
 
@@ -59,7 +59,7 @@ public class DataSourceBeanSecurity {
        LocalContainerEntityManagerFactoryBean em 
          = new LocalContainerEntityManagerFactoryBean();
        em.setDataSource(this.dataSource());
-       em.setPackagesToScan(new String[] {"io.javabrains.springbootstarter.user"});
+       em.setPackagesToScan(new String[] {"io.javabrains.springbootstarter.security"});
        JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
        em.setJpaVendorAdapter(vendorAdapter);
        em.setJpaProperties(additionalJpaProperties());

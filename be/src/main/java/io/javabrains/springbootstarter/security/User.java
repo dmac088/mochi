@@ -1,4 +1,4 @@
-package io.javabrains.springbootstarter.user;
+package io.javabrains.springbootstarter.security;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
