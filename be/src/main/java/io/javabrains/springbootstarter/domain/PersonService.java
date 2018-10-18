@@ -14,9 +14,7 @@ public class PersonService {
 	@Autowired
 	private PersonRepository personRepository; 
 	
-	
 	@Transactional(readOnly = true)
-	@PreAuthorize("hasAuthority('COMPANY_READ') and hasAuthority('DEPARTMENT_READ')")
 	public List<Person> getAllPersons() {
 		List<Person> Persons = new ArrayList<>();
 		Iterator<Person> i = personRepository.findAll().iterator();
@@ -30,7 +28,7 @@ public class PersonService {
 		Person p = personRepository.findOne(id);
 		return p;
 	}
-	
+
 	public void addPerson(Person person) {
 		personRepository.save(person);
 	}
