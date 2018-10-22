@@ -1295,59 +1295,11 @@ ALTER TABLE ONLY mochi.customer
 
 
 --
--- Name: fk3nb2g56ldyj9w6yhjvvbg6jds; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY mochi.person
-    ADD CONSTRAINT fk3nb2g56ldyj9w6yhjvvbg6jds FOREIGN KEY (psn_id) REFERENCES mochi.party(pty_id);
-
-
---
--- Name: fk41hhsex81t9v5r824kj6iswte; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY mochi.role
-    ADD CONSTRAINT fk41hhsex81t9v5r824kj6iswte FOREIGN KEY (rle_typ_id) REFERENCES mochi.role_type(rle_typ_id);
-
-
---
--- Name: fk6san5a9inopp7pc11bg0bknfp; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY mochi.customer
-    ADD CONSTRAINT fk6san5a9inopp7pc11bg0bknfp FOREIGN KEY (rle_id) REFERENCES mochi.role(rle_id);
-
-
---
--- Name: fk8faf5gx3756ce2glbocanqrn; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY mochi.role
-    ADD CONSTRAINT fk8faf5gx3756ce2glbocanqrn FOREIGN KEY (pty_id) REFERENCES mochi.party(pty_id);
-
-
---
--- Name: fk8xaoek9akfog0i1bof7tp5foy; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY mochi.product_attr_lcl
-    ADD CONSTRAINT fk8xaoek9akfog0i1bof7tp5foy FOREIGN KEY (prd_id) REFERENCES mochi.product(prd_id);
-
-
---
 -- Name: fk_object_point_of_interest; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
 ALTER TABLE ONLY mochi.point_of_interest
     ADD CONSTRAINT fk_object_point_of_interest FOREIGN KEY (point_of_interest_id) REFERENCES mochi.obj(object_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
-
-
---
--- Name: fkkgqjo83pceeu7xt1g5l73p09u; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY mochi.organisation
-    ADD CONSTRAINT fkkgqjo83pceeu7xt1g5l73p09u FOREIGN KEY (org_id) REFERENCES mochi.party(pty_id);
 
 
 --
@@ -1404,14 +1356,6 @@ ALTER TABLE ONLY mochi.party
 
 ALTER TABLE ONLY mochi.person
     ADD CONSTRAINT person_person_id_fkey FOREIGN KEY (psn_id) REFERENCES mochi.party(pty_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
-
-
---
--- Name: product_attr_lcl_prd_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY mochi.product_attr_lcl
-    ADD CONSTRAINT product_attr_lcl_prd_id_fkey FOREIGN KEY (prd_id) REFERENCES mochi.product(prd_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
