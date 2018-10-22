@@ -1,6 +1,7 @@
 package io.javabrains.springbootstarter.security;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.javabrains.springbootstarter.domain.Party;
@@ -65,6 +66,7 @@ public class User implements UserDetails, Serializable {
     @JsonIgnore
     private Collection<Authority> authorities;
 
+    @JsonBackReference
 	@OneToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "pty_id", nullable = false)
     private Party userParty;
@@ -107,7 +109,7 @@ public class User implements UserDetails, Serializable {
 		return this.enabled;
 	}
 	
-		public Party getUserParty() {
+	public Party getUserParty() {
 			return userParty;
 	}
 
