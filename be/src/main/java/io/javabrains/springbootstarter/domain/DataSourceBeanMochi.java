@@ -49,7 +49,7 @@ public class DataSourceBeanMochi {
 	
 	private Properties additionalJpaProperties(){
 		Properties properties = new Properties();
-		properties.setProperty("hibernate.hbm2ddl.auto", "update");
+		//properties.setProperty("hibernate.hbm2ddl.auto", "update");
 		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
 		properties.setProperty("hibernate.show_sql", "true");
 		
@@ -63,7 +63,8 @@ public class DataSourceBeanMochi {
          = new LocalContainerEntityManagerFactoryBean();
        em.setDataSource(this.dataSource());
        em.setPackagesToScan(new String[] 
-    		   {"io.javabrains.springbootstarter.domain"}
+    		   {"io.javabrains.springbootstarter.domain",
+    		    "io.javabrains.springbootstarter.security"}
         );
        JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
        em.setJpaVendorAdapter(vendorAdapter);

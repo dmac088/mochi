@@ -3,6 +3,8 @@ package io.javabrains.springbootstarter.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.javabrains.springbootstarter.domain.Party;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -18,6 +20,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -62,6 +65,10 @@ public class User implements UserDetails, Serializable {
     @JsonIgnore
     private Collection<Authority> authorities;
 
+	@OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "pty_id", nullable = false)
+    private Party userParty;
+	
     @Override
     public boolean isAccountNonExpired() {
         return !accountExpired;
@@ -98,6 +105,14 @@ public class User implements UserDetails, Serializable {
 	@Override
 	public boolean isEnabled() {
 		return this.enabled;
+	}
+	
+		public Party getUserParty() {
+			return userParty;
+	}
+
+	public void setUserParty(Party userParty) {
+		this.userParty = userParty;
 	}
 
 }

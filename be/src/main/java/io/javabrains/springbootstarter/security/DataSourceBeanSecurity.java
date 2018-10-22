@@ -1,16 +1,11 @@
 package io.javabrains.springbootstarter.security;
 
-
-
 import java.util.Properties;
-
 import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -47,19 +42,22 @@ public class DataSourceBeanSecurity {
 	
 	private Properties additionalJpaProperties(){
 		Properties properties = new Properties();
-		properties.setProperty("hibernate.hbm2ddl.auto", "update");
+		//properties.setProperty("hibernate.hbm2ddl.auto", "update");
 		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
 		properties.setProperty("hibernate.show_sql", "true");
 		
 		return properties;
-	}
+	} 
      
 	@Bean(name = "securityEntityManagerFactory") 
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
        LocalContainerEntityManagerFactoryBean em 
          = new LocalContainerEntityManagerFactoryBean();
        em.setDataSource(this.dataSource());
-       em.setPackagesToScan(new String[] {"io.javabrains.springbootstarter.security"});
+       em.setPackagesToScan(new String[] {
+    		   								"io.javabrains.springbootstarter.security",
+    		   								"io.javabrains.springbootstarter.domain"
+    		   							 });
        JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
        em.setJpaVendorAdapter(vendorAdapter);
        em.setJpaProperties(additionalJpaProperties());
