@@ -602,8 +602,7 @@ ALTER SEQUENCE security.user__id_seq OWNED BY security.user_.id;
 
 CREATE TABLE security.users_authorities (
     user_id bigint NOT NULL,
-    authority_id bigint NOT NULL,
-    authorities_id bigint NOT NULL
+    authority_id bigint NOT NULL
 );
 
 
@@ -964,7 +963,21 @@ SELECT pg_catalog.setval('security.user__id_seq', 1, false);
 -- Data for Name: users_authorities; Type: TABLE DATA; Schema: security; Owner: security_owner
 --
 
-COPY security.users_authorities (user_id, authority_id, authorities_id) FROM stdin;
+COPY security.users_authorities (user_id, authority_id) FROM stdin;
+1	1
+1	2
+1	3
+1	4
+1	5
+1	6
+1	7
+1	8
+1	9
+2	2
+2	6
+3	3
+3	7
+4	9
 \.
 
 
