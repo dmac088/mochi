@@ -31,12 +31,6 @@ public abstract class Party {
 	@Column(name="pty_id")
 	private Long PartyId;
 	
-	@Column(name="pty_usr_nm")
-	private String UserName;
-
-	@Column(name="pty_pwd")
-	private String Password;
-	
 	@ManyToOne
 	@JoinColumn(name="pty_typ_id", nullable=false, updatable = false, insertable = true)
 	private PartyType partyType;
@@ -73,22 +67,6 @@ public abstract class Party {
 
 	public void setPartyType(PartyType partyType) {
 		this.partyType = partyType;
-	}
-		
-	public void setUserName(String userName) {
-		UserName = userName;
-	}
-	
-	public String getUserName() {
-		return UserName;
-	}
-
-	public String getPassword() {
-		return Password;
-	}
-	
-	public void setPassword(String password) {
-		Password = password;
 	}
 	
 	public List<Role> getPartyRole() {
