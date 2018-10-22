@@ -8,7 +8,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-@Table(name = "party_type")
+@Table(name = "party_type", schema = "mochi")
 public class PartyType {
 
 	@Id

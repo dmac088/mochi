@@ -36,9 +36,9 @@ import lombok.Setter;
 @EqualsAndHashCode(of = "id")
 public class User implements UserDetails, Serializable {
 
-    @Id
+    @Id 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "pty_id")
     private Long id;
 
     @Column(name = "USER_NAME")
@@ -60,7 +60,7 @@ public class User implements UserDetails, Serializable {
     private boolean enabled;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "USERS_AUTHORITIES", schema="security", joinColumns = @JoinColumn(name = "USER_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "ID"))
+    @JoinTable(name = "USERS_AUTHORITIES", schema="security", joinColumns = @JoinColumn(name = "USER_ID", referencedColumnName = "pty_id"), inverseJoinColumns = @JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "ID"))
     @OrderBy
     @JsonIgnore
     private Collection<Authority> authorities;

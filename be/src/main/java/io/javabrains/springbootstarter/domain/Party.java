@@ -18,8 +18,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "party", schema = "mochi")
@@ -45,7 +45,9 @@ public abstract class Party {
 	@JsonManagedReference
 	private List<Role> partyRole;
 	
+	
 	@OneToOne(fetch = FetchType.EAGER, optional = false)
+	@JsonIgnore
     @JoinColumn(name = "pty_id", nullable = false)
     private Party partyUser;
 

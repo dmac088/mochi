@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "role_type")
+@Table(name = "role_type", schema = "mochi")
 public class RoleType {
 
 

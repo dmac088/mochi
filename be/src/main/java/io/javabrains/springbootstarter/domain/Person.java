@@ -1,6 +1,8 @@
 package io.javabrains.springbootstarter.domain;
 
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -10,7 +12,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "person", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "psn_id")
-public class Person extends Party {
+public class Person extends Party implements Serializable {
 
 	@Column(name="psn_gvn_nm_en")
 	private String GivenNameEn;
@@ -26,7 +28,7 @@ public class Person extends Party {
 	}
 	
 	public String getGivenNameEn() {
-		return GivenNameEn;
+		return GivenNameEn; 
 	}	
 	
 	public void setGivenNameEn(String givenNameEn) {
