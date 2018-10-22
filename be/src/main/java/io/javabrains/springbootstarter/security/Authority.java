@@ -30,7 +30,7 @@ public class Authority implements GrantedAuthority {
     private String name;
 
     @Override
-    public String getAuthority() {
+    public String getAuthority() { 
         return this.name;
     }
 }
