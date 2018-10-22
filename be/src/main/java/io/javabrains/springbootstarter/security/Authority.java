@@ -15,7 +15,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "AUTHORITY", schema="security", uniqueConstraints = {@UniqueConstraint(columnNames = {"NAME"})})
+@Table(name = "AUTHORITY", schema="security")
 @Getter
 @Setter
 @EqualsAndHashCode(of = "id")
@@ -33,6 +33,4 @@ public class Authority implements GrantedAuthority {
     public String getAuthority() {
         return this.name;
     }
-    
-    
 }

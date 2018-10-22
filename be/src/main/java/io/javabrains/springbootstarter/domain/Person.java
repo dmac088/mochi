@@ -27,7 +27,7 @@ public class Person extends Party {
 	
 	public String getGivenNameEn() {
 		return GivenNameEn;
-	}
+	}	
 	
 	public void setGivenNameEn(String givenNameEn) {
 		GivenNameEn = givenNameEn;
