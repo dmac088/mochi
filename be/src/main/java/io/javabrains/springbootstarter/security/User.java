@@ -65,7 +65,7 @@ public class User implements UserDetails, Serializable {
     @JsonIgnore
     private Collection<Authority> authorities;
 
-	@OneToOne(fetch = FetchType.LAZY, optional = false)
+	@OneToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "pty_id", nullable = false)
     private Party userParty;
 	

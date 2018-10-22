@@ -45,7 +45,7 @@ public abstract class Party {
 	@JsonManagedReference
 	private List<Role> partyRole;
 	
-	@OneToOne(fetch = FetchType.LAZY, optional = false)
+	@OneToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "pty_id", nullable = false)
     private Party partyUser;
 
