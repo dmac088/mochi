@@ -15,6 +15,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
 
@@ -23,6 +24,7 @@ import io.javabrains.springbootstarter.domain.PartyType;
 import io.javabrains.springbootstarter.domain.Person;
 import io.javabrains.springbootstarter.domain.Role;
 import io.javabrains.springbootstarter.domain.RoleType;
+import io.javabrains.springbootstarter.security.User;
 
 /*
 
@@ -37,6 +39,9 @@ https://www.baeldung.com/spring-data-rest-relationships
 @SpringBootTest(classes = SpringApplication.class, 
  webEnvironment=WebEnvironment.DEFINED_PORT)
 public class RestClientUtil {
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
     @Autowired
     private Template template;
@@ -56,6 +61,7 @@ public class RestClientUtil {
 		 headers.setContentType(MediaType.APPLICATION_JSON);
 		 RestTemplate restTemplate = new RestTemplate();
 		 Person objPerson = new Person();
+		 User objUser = new User();
 		 Customer objCustomer = new Customer();
 		 PartyType objPartyType = new PartyType();
 		 RoleType objRoleType = new RoleType();
@@ -65,8 +71,9 @@ public class RestClientUtil {
 		 objPerson.setGivenNameEn(this.CUSTOMER_GIVEN_NAME_EN);
 		 objPerson.setFamilyNameEn(this.CUSTOMER_FAMILY_NAME_EN);
 		 objPerson.setNameCn(this.CUSTOMER_NAME_CN);
-		 //objPerson.setPassword("password");
-		 //objPerson.setUserName("dmac0115");
+		 
+		 objUser.setPassword(passwordEncoder.encode("password"));
+		 objUser.setUsername("dmac088");
 		 objPerson.setPartyRole(new ArrayList<Role>());
 		 objCustomer.setCustomerId(this.CUSTOMER_ID);
 		 objCustomer.setRoleStart(this.CUSTOMER_START_DATE);

@@ -1,18 +1,13 @@
 package io.javabrains.springbootstarter.security;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import io.javabrains.springbootstarter.domain.Party;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.io.Serializable;
 import java.util.Collection;
-
-import javax.annotation.Resource;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -22,11 +17,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -97,12 +90,24 @@ public class User implements UserDetails, Serializable {
 		// TODO Auto-generated method stub
 		return this.password;
 	}
-
+	
+	public void setUsername(String username) {
+		// TODO Auto-generated method stub
+		this.username = username;
+	}
+	
 	@Override
 	public String getUsername() {
 		// TODO Auto-generated method stub
 		return this.username;
 	}
+
+	public void setPassword(String password) {
+		// TODO Auto-generated method stub
+		this.password = password;
+	}
+	
+	
 
 	@Override
 	public boolean isEnabled() {
