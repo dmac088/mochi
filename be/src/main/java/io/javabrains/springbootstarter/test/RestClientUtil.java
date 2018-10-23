@@ -3,14 +3,18 @@ package io.javabrains.springbootstarter.test;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.jdbc.JdbcProperties.Template;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
 
 import io.javabrains.springbootstarter.domain.Customer;
@@ -19,9 +23,9 @@ import io.javabrains.springbootstarter.domain.Person;
 import io.javabrains.springbootstarter.domain.Role;
 import io.javabrains.springbootstarter.domain.RoleType;
 
-//@RunWith(SpringRunner.class)
-//@SpringBootTest(classes = SpringApplication.class, 
-//  webEnvironment = WebEnvironment.DEFINED_PORT)
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = SpringApplication.class, 
+ webEnvironment=WebEnvironment.DEFINED_PORT)
 public class RestClientUtil {
 	
     @Autowired
