@@ -3,6 +3,7 @@ package io.javabrains.springbootstarter.test;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -23,6 +24,15 @@ import io.javabrains.springbootstarter.domain.Person;
 import io.javabrains.springbootstarter.domain.Role;
 import io.javabrains.springbootstarter.domain.RoleType;
 
+/*
+
+Use the following class to configure unit tests as per the following link:
+
+https://www.baeldung.com/spring-data-rest-relationships
+ 
+*/
+ 
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = SpringApplication.class, 
  webEnvironment=WebEnvironment.DEFINED_PORT)
@@ -31,47 +41,48 @@ public class RestClientUtil {
     @Autowired
     private Template template;
  
-    private static String BOOK_ENDPOINT = "http://localhost:8080/books/";
-    private static String AUTHOR_ENDPOINT = "http://localhost:8080/authors/";
-    private static String ADDRESS_ENDPOINT = "http://localhost:8080/addresses/";
-    private static String LIBRARY_ENDPOINT = "http://localhost:8080/libraries/";
+    private static String PERSON_ENDPOINT = "http://localhost:8090/Person";
+    private static String CUSTOMER_ENDPOINT = "http://localhost:8090/Customer";
  
-    private static String LIBRARY_NAME = "My Library";
-    private static String AUTHOR_NAME = "George Orwell";
-	
- public void addPersonCustomer() {
-	 HttpHeaders headers = new HttpHeaders();
-	 headers.setContentType(MediaType.APPLICATION_JSON);
-	 RestTemplate restTemplate = new RestTemplate();
-	 String url = "http://localhost:8090/Customer";
-	 Person objPerson = new Person();
-	 Customer objCustomer = new Customer();
-	 PartyType objPartyType = new PartyType();
-	 RoleType objRoleType = new RoleType();
-	 objRoleType.setRoleTypeId((long)1);
-	 objPartyType.setPartyTypeId((long) 1);
-	 objPerson.setPartyType(objPartyType);
-	 objPerson.setGivenNameEn("Daniel");
-	 objPerson.setFamilyNameEn("Mackie");
-	 objPerson.setNameCn("丹尼爾麥基");
-	 //objPerson.setPassword("password");
-	 //objPerson.setUserName("dmac0115");
-	 objPerson.setPartyRole(new ArrayList<Role>());
-	 objCustomer.setCustomerId("0123456789");
-	 objCustomer.setRoleStart(new Date());
-	 objCustomer.setRoleType(objRoleType);
-	 objPerson.addRole(objCustomer); 
-	 HttpEntity<Person> requestEntity = new HttpEntity<Person>(objPerson, headers);
-     ResponseEntity<Person> uri = restTemplate.exchange(url, HttpMethod.POST, requestEntity, Person.class);
-     System.out.println(uri.getBody());    	
- }
+    private static String CUSTOMER_GIVEN_NAME_EN = "Daniel";
+    private static String CUSTOMER_FAMILY_NAME_EN = "Mackie";
+    private static String CUSTOMER_NAME_CN = "丹尼爾麥基";
+    private static String CUSTOMER_ID = "0123456789";
+    private static Date CUSTOMER_START_DATE = new Date();
+
+	@Test
+	public void addPersonCustomer() {
+		 HttpHeaders headers = new HttpHeaders();
+		 headers.setContentType(MediaType.APPLICATION_JSON);
+		 RestTemplate restTemplate = new RestTemplate();
+		 Person objPerson = new Person();
+		 Customer objCustomer = new Customer();
+		 PartyType objPartyType = new PartyType();
+		 RoleType objRoleType = new RoleType();
+		 objRoleType.setRoleTypeId((long)1);
+		 objPartyType.setPartyTypeId((long) 1);
+		 objPerson.setPartyType(objPartyType);
+		 objPerson.setGivenNameEn(this.CUSTOMER_GIVEN_NAME_EN);
+		 objPerson.setFamilyNameEn(this.CUSTOMER_FAMILY_NAME_EN);
+		 objPerson.setNameCn(this.CUSTOMER_NAME_CN);
+		 //objPerson.setPassword("password");
+		 //objPerson.setUserName("dmac0115");
+		 objPerson.setPartyRole(new ArrayList<Role>());
+		 objCustomer.setCustomerId(this.CUSTOMER_ID);
+		 objCustomer.setRoleStart(this.CUSTOMER_START_DATE);
+		 objCustomer.setRoleType(objRoleType);
+		 objPerson.addRole(objCustomer); 
+		 HttpEntity<Person> requestEntity = new HttpEntity<Person>(objPerson, headers);
+	     ResponseEntity<Person> uri = restTemplate.exchange(this.CUSTOMER_ENDPOINT, HttpMethod.POST, requestEntity, Person.class);
+	     System.out.println(uri.getBody());    	
+	}
  
  
- public static void main(String args[]) {
- 	RestClientUtil util = new RestClientUtil();
- 	util.addPersonCustomer();
- 	System.out.println("Run tests complete!");
- }    
+	public static void main(String args[]) {
+	 	RestClientUtil util = new RestClientUtil();
+	 	util.addPersonCustomer();
+	 	System.out.println("Run tests complete!");
+	}    
  
  
 }
