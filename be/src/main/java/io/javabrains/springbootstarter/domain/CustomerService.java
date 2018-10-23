@@ -2,6 +2,7 @@ package io.javabrains.springbootstarter.domain;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,8 +20,8 @@ public class CustomerService {
 	}
 
 	@PreAuthorize("hasAuthority('CUSTOMER_READ')")
-	public Customer getCustomer(Long CustomerId) {
-		return customerRepository.findOne(CustomerId);
+	public Optional<Customer> getCustomer(Long CustomerId) {
+		return customerRepository.findById(CustomerId);
 	}
 	
 	@PreAuthorize("hasAuthority('CUSTOMER_CREATE')")
@@ -35,7 +36,7 @@ public class CustomerService {
 	
 	@PreAuthorize("hasAuthority('CUSTOMER_DELETE')")
 	public void deleteCustomer(Long id) {
-		customerRepository.delete(id);
+		customerRepository.deleteById(id);
 	}
 	
 	

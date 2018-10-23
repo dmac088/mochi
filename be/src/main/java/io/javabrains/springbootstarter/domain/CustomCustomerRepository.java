@@ -1,6 +1,7 @@
 package io.javabrains.springbootstarter.domain;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -25,8 +26,8 @@ public class CustomCustomerRepository implements CustomerRepository {
     // Delegate other methods here ...
 
     @Override
-    public Customer findOne(Long id) {
-        return customerRepository.findOne(id);
+    public Optional<Customer> findById(Long id) {
+        return customerRepository.findById(id);
     }
     
     @Override
@@ -41,27 +42,9 @@ public class CustomCustomerRepository implements CustomerRepository {
 	}
 
 	@Override
-	public Customer findByroleId(Long Id) {
+	public Customer findByRoleId(Long Id) {
 		// TODO Auto-generated method stub
-		return customerRepository.findByroleId(Id);
-	}
-
-	@Override
-	public <S extends Customer> Iterable<S> save(Iterable<S> entities) {
-		// TODO Auto-generated method stub
-		return customerRepository.save(entities);
-	}
-
-	@Override
-	public boolean exists(Long id) {
-		// TODO Auto-generated method stub
-		return customerRepository.exists(id);
-	}
-
-	@Override
-	public Iterable<Customer> findAll(Iterable<Long> ids) {
-		// TODO Auto-generated method stub
-		return customerRepository.findAll(ids);
+		return customerRepository.findByRoleId(Id);
 	}
 
 	@Override
@@ -71,24 +54,43 @@ public class CustomCustomerRepository implements CustomerRepository {
 	}
 
 	@Override
-	public void delete(Long id) {
-		customerRepository.delete(id);
-		
-	}
-
-	@Override
 	public void delete(Customer entity) {
 		customerRepository.delete(entity);
 	}
 
 	@Override
-	public void delete(Iterable<? extends Customer> entities) {
-		customerRepository.delete(entities);
+	public void deleteAll() {
+		customerRepository.deleteAll();
+		
 	}
 
 	@Override
-	public void deleteAll() {
-		customerRepository.deleteAll();
+	public <S extends Customer> Iterable<S> saveAll(Iterable<S> entities) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean existsById(Long id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Iterable<Customer> findAllById(Iterable<Long> ids) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteById(Long id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteAll(Iterable<? extends Customer> entities) {
+		// TODO Auto-generated method stub
 		
 	};
     

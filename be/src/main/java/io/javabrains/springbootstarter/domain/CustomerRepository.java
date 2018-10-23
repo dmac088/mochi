@@ -12,7 +12,7 @@ public interface CustomerRepository extends RoleBaseRepository<Customer> {
 	List<Customer> findAll();
 	
 	//@Override
-	Customer findOne(Long Id);
+	Customer findByRoleId(Long Id);
 	
 	//Customer findOneByCustomerId(String Id);
 	//need to use specification since findByCustomerId causes an exception

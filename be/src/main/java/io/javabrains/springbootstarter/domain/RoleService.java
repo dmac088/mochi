@@ -3,6 +3,8 @@ package io.javabrains.springbootstarter.domain;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,8 +35,8 @@ public class RoleService {
 	}
 	*/
 	
-	public Role getRole(Long id) {
-		Role p = RoleRepository.findOne(id);
+	public Optional<Role> getRole(Long id) {
+		Optional<Role> p = RoleRepository.findById(id);
 		return p;
 	}
 	
@@ -47,7 +49,7 @@ public class RoleService {
 	}
 	
 	public void deleteRole(Long id) {
-		RoleRepository.delete(id);
+		RoleRepository.deleteById(id);
 	}
 	
 }

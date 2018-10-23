@@ -1,6 +1,7 @@
 package io.javabrains.springbootstarter.domain;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
@@ -28,7 +29,7 @@ public class PartyController {
 	
 	@ResponseBody
 	@RequestMapping("/Party/{id}")
-	public Party getParty(@PathVariable Long id) {
+	public Optional<Party> getParty(@PathVariable Long id) {
 		System.out.println("calling getParty");
 		return PartyService.getParty(id);
 	}
