@@ -18,8 +18,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.springframework.data.rest.core.annotation.RestResource;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import io.javabrains.springbootstarter.security.User;
 
 @Entity
 @Table(name = "party", schema = "mochi")
@@ -40,10 +44,10 @@ public abstract class Party {
 	private List<Role> partyRole;
 	
 	 
-	@OneToOne(fetch = FetchType.EAGER, optional = false)
-	@JsonIgnore
-    @JoinColumn(name = "pty_id", nullable = false)
-    private Party partyUser;
+	
+	@OneToOne
+	@JoinColumn(name = "pty_id")
+    private User partyUser;
 
 	public Party() {
 		
@@ -81,12 +85,12 @@ public abstract class Party {
 		this.partyRole.add(role);
 	}
 	
-	public Party getPartyUser() {
+	public User getPartyUser() {
 		return partyUser;
 	}
 
-	public void setPartyUser(Party partyUser) {
+	public void setPartyUser(User partyUser) {
 		this.partyUser = partyUser;
 	}
 	
-}
+} 
