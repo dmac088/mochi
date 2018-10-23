@@ -40,7 +40,7 @@ https://www.baeldung.com/spring-data-rest-relationships
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {Encoders.class, UnitTestConfig.class})
-@ActiveProfiles("dev")
+//@ActiveProfiles("dev")
 public class RestClientUtil {
 	
 	@Autowired
@@ -51,8 +51,8 @@ public class RestClientUtil {
     @Qualifier("unitTestTemplate")
     private RestTemplate template;
  
-    private static String PERSON_ENDPOINT = "http://localhost:8090/Person";
-    private static String CUSTOMER_ENDPOINT = "http://localhost:8090/Customer";
+    private static String PERSON_ENDPOINT = "http://localhost:8090/api/Person";
+    private static String CUSTOMER_ENDPOINT = "http://localhost:8090/api/Customer";
  
     private static String CUSTOMER_GIVEN_NAME_EN = "Daniel";
     private static String CUSTOMER_FAMILY_NAME_EN = "Mackie";
@@ -89,17 +89,9 @@ public class RestClientUtil {
 		 objCustomer.setRoleStart(this.CUSTOMER_START_DATE);
 		 objCustomer.setRoleType(objRoleType);
 		 objPerson.addRole(objCustomer); 
-		 HttpEntity<Person> requestEntity = new HttpEntity<Person>(objPerson, headers);
-	     ResponseEntity<Person> uri = restTemplate.exchange(this.CUSTOMER_ENDPOINT, HttpMethod.POST, requestEntity, Person.class);
+		 System.out.println(objUser.getPassword());
+		 HttpEntity<Customer> requestEntity = new HttpEntity<Customer>(objCustomer, headers);
+	     ResponseEntity<Customer> uri = restTemplate.exchange(this.CUSTOMER_ENDPOINT, HttpMethod.POST, requestEntity, Customer.class);
 	     System.out.println(uri.getBody());    	
 	}
- 
- 
-	//public static void main(String args[]) {
-	// 	RestClientUtil util = new RestClientUtil();
-	// 	util.addPersonCustomer();
-	// 	System.out.println("Run tests complete!");
-	//}    
- 
- 
 }
