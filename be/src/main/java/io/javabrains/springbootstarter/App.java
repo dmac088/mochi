@@ -9,10 +9,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.event.ContextRefreshedEvent;
 
+import io.javabrains.springbootstarter.test.RestClientUtil;
+
 
 @SpringBootApplication
 @ComponentScan({"io.javabrains.springbootstarter.domain",
-				"io.javabrains.springbootstarter.security"})
+				"io.javabrains.springbootstarter.security",
+				"io.javabrains.springbootstarter.test"})
 public class App {
 	
 	 private static final Logger LOG = LoggerFactory.getLogger(App.class);

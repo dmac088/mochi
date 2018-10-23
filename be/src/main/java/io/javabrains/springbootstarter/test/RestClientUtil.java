@@ -1,22 +1,24 @@
 package io.javabrains.springbootstarter.test;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.util.ArrayList;
 import java.util.Date;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.jdbc.JdbcProperties.Template;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
 
 import io.javabrains.springbootstarter.domain.Customer;
@@ -24,6 +26,7 @@ import io.javabrains.springbootstarter.domain.PartyType;
 import io.javabrains.springbootstarter.domain.Person;
 import io.javabrains.springbootstarter.domain.Role;
 import io.javabrains.springbootstarter.domain.RoleType;
+import io.javabrains.springbootstarter.security.Encoders;
 import io.javabrains.springbootstarter.security.User;
 
 /*
@@ -35,16 +38,18 @@ https://www.baeldung.com/spring-data-rest-relationships
 */
  
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = SpringApplication.class, 
- webEnvironment=WebEnvironment.DEFINED_PORT)
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {Encoders.class, UnitTestConfig.class})
+@ActiveProfiles("dev")
 public class RestClientUtil {
 	
 	@Autowired
+	@Qualifier("userPasswordEncoder")
 	private PasswordEncoder passwordEncoder;
 	
     @Autowired
-    private Template template;
+    @Qualifier("unitTestTemplate")
+    private RestTemplate template;
  
     private static String PERSON_ENDPOINT = "http://localhost:8090/Person";
     private static String CUSTOMER_ENDPOINT = "http://localhost:8090/Customer";
@@ -53,8 +58,14 @@ public class RestClientUtil {
     private static String CUSTOMER_FAMILY_NAME_EN = "Mackie";
     private static String CUSTOMER_NAME_CN = "丹尼爾麥基";
     private static String CUSTOMER_ID = "0123456789";
-    private static Date CUSTOMER_START_DATE = new Date();
+    private static Date   CUSTOMER_START_DATE = new Date();
 
+    @Test
+    public void verifyBeansConfigured() {
+        assertNotNull(passwordEncoder);
+        assertNotNull(template);
+    }
+    
 	@Test
 	public void addPersonCustomer() {
 		 HttpHeaders headers = new HttpHeaders();
@@ -71,7 +82,6 @@ public class RestClientUtil {
 		 objPerson.setGivenNameEn(this.CUSTOMER_GIVEN_NAME_EN);
 		 objPerson.setFamilyNameEn(this.CUSTOMER_FAMILY_NAME_EN);
 		 objPerson.setNameCn(this.CUSTOMER_NAME_CN);
-		 
 		 objUser.setPassword(passwordEncoder.encode("password"));
 		 objUser.setUsername("dmac088");
 		 objPerson.setPartyRole(new ArrayList<Role>());
@@ -85,11 +95,11 @@ public class RestClientUtil {
 	}
  
  
-	public static void main(String args[]) {
-	 	RestClientUtil util = new RestClientUtil();
-	 	util.addPersonCustomer();
-	 	System.out.println("Run tests complete!");
-	}    
+	//public static void main(String args[]) {
+	// 	RestClientUtil util = new RestClientUtil();
+	// 	util.addPersonCustomer();
+	// 	System.out.println("Run tests complete!");
+	//}    
  
  
 }
