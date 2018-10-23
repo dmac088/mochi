@@ -20,7 +20,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
-@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
+@Order(SecurityProperties.BASIC_AUTH_ORDER)
 @Import(Encoders.class)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	 

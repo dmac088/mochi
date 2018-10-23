@@ -28,7 +28,7 @@ public abstract class Party {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="pty_id")
-	private Long PartyId;
+	private Long partyId;
 	
 	@ManyToOne
 	@JoinColumn(name="pty_typ_id", nullable=false, updatable = false, insertable = true)
@@ -39,7 +39,6 @@ public abstract class Party {
 	private List<Role> partyRole;
 	
 	 
-	
 	@OneToOne
 	@JoinColumn(name = "pty_id")
     private User partyUser;
@@ -49,11 +48,11 @@ public abstract class Party {
 	}
 	
 	public Long getPartyId() {
-		return PartyId;
+		return partyId;
 	}
 
 	public void setPartyId(Long partyId) {
-		PartyId = partyId;
+		partyId = partyId;
 	}
 	
 	public Party(Long id) {

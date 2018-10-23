@@ -3,6 +3,7 @@ package io.javabrains.springbootstarter.domain;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,8 +32,8 @@ public class ProductService {
 		return Products;
 	}
 	
-	public Product getProduct(Long id) {
-		Product p = productRepository.findOne(id);
+	public Optional<Product> getProduct(Long id) {
+		Optional<Product> p = productRepository.findById(id);
 		return p;
 	}
 	
@@ -45,7 +46,7 @@ public class ProductService {
 	}
 	
 	public void deleteProduct(Long id) {
-		productRepository.delete(id);
+		productRepository.deleteById(id);
 	}
 	
 }

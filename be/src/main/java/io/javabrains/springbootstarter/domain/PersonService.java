@@ -25,7 +25,7 @@ public class PersonService {
 	}
 	
 	public Person getPerson(Long id) {
-		Person p = personRepository.findOne(id);
+		Person p = personRepository.findByPartyId(id);
 		return p;
 	}
 
@@ -38,7 +38,7 @@ public class PersonService {
 	}
 	
 	public void deletePerson(Long id) {
-		personRepository.delete(id);
+		personRepository.deleteById(id);
 	}
 	
 }

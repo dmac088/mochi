@@ -3,6 +3,9 @@ package io.javabrains.springbootstarter.test;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.jdbc.JdbcProperties.Template;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -16,8 +19,21 @@ import io.javabrains.springbootstarter.domain.Person;
 import io.javabrains.springbootstarter.domain.Role;
 import io.javabrains.springbootstarter.domain.RoleType;
 
+//@RunWith(SpringRunner.class)
+//@SpringBootTest(classes = SpringApplication.class, 
+//  webEnvironment = WebEnvironment.DEFINED_PORT)
 public class RestClientUtil {
 	
+    @Autowired
+    private Template template;
+ 
+    private static String BOOK_ENDPOINT = "http://localhost:8080/books/";
+    private static String AUTHOR_ENDPOINT = "http://localhost:8080/authors/";
+    private static String ADDRESS_ENDPOINT = "http://localhost:8080/addresses/";
+    private static String LIBRARY_ENDPOINT = "http://localhost:8080/libraries/";
+ 
+    private static String LIBRARY_NAME = "My Library";
+    private static String AUTHOR_NAME = "George Orwell";
 	
  public void addPersonCustomer() {
 	 HttpHeaders headers = new HttpHeaders();

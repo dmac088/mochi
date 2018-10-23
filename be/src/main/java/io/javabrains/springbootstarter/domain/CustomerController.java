@@ -35,7 +35,7 @@ public class CustomerController {
 	@GetMapping("/Customer/{id}")
 	public Party getCustomer(@PathVariable Long id) {
 		System.out.println("calling getCustomer");
-		return customerService.getCustomer(id).getRoleParty();
+		return customerService.getCustomer(id).get().getRoleParty();
 	}
 	
 

@@ -1,8 +1,9 @@
 package io.javabrains.springbootstarter.domain;
 
+import java.util.Optional;
 
 public interface RoleRepository extends RoleBaseRepository<Role>  {
 	
-	Role findOne(Long id);
+	Optional<Role> findById(Long id);
 
 }

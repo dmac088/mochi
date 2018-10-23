@@ -1,6 +1,7 @@
 package io.javabrains.springbootstarter.domain;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
@@ -35,7 +36,7 @@ public class ProductController {
 	
 	@ResponseBody
 	@RequestMapping("/Product/{id}")
-	public Product getProduct(@PathVariable Long id) {
+	public Optional<Product> getProduct(@PathVariable Long id) {
 		System.out.println("calling getProduct");
 		return productService.getProduct(id);
 	}

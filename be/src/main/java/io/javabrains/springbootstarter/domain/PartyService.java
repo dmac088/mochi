@@ -3,6 +3,8 @@ package io.javabrains.springbootstarter.domain;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +24,8 @@ public class PartyService {
 		return Partys;
 	}
 	
-	public Party getParty(Long id) {
-		Party p = PartyRepository.findOne(id);
+	public Optional<Party> getParty(Long id) {
+		Optional<Party> p = PartyRepository.findById(id);
 		return p;
 	}
 	
@@ -36,7 +38,7 @@ public class PartyService {
 	}
 	
 	public void deleteParty(Long id) {
-		PartyRepository.delete(id);
+		PartyRepository.deleteById(id);
 	}
 	
 }
