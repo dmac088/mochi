@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.io.Serializable;
 import java.util.Collection;
 
+import javax.annotation.Resource;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -66,10 +67,9 @@ public class User implements UserDetails, Serializable {
     @JsonIgnore
     private Collection<Authority> authorities;
 
-    @JsonBackReference
-	@OneToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "pty_id", nullable = false)
-    private Party userParty;
+    
+	//@OneToOne(mappedBy = "partyUser")
+    //private Party party;
 	
     @Override
     public boolean isAccountNonExpired() {
@@ -107,14 +107,6 @@ public class User implements UserDetails, Serializable {
 	@Override
 	public boolean isEnabled() {
 		return this.enabled;
-	}
-	
-	public Party getUserParty() {
-			return userParty;
-	}
-
-	public void setUserParty(Party userParty) {
-		this.userParty = userParty;
 	}
 
 }
