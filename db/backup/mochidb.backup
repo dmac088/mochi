@@ -543,33 +543,11 @@ CREATE TABLE security.user_ (
     credentials_expired boolean,
     enabled boolean,
     password character varying(255),
-    user_name character varying(255),
-    id bigint NOT NULL
+    user_name character varying(255)
 );
 
 
 ALTER TABLE security.user_ OWNER TO security_owner;
-
---
--- Name: user__id_seq; Type: SEQUENCE; Schema: security; Owner: security_owner
---
-
-CREATE SEQUENCE security.user__id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE security.user__id_seq OWNER TO security_owner;
-
---
--- Name: user__id_seq; Type: SEQUENCE OWNED BY; Schema: security; Owner: security_owner
---
-
-ALTER SEQUENCE security.user__id_seq OWNED BY security.user_.id;
-
 
 --
 -- Name: users_authorities; Type: TABLE; Schema: security; Owner: security_owner
@@ -612,13 +590,6 @@ ALTER TABLE ONLY security.authority ALTER COLUMN id SET DEFAULT nextval('securit
 
 
 --
--- Name: id; Type: DEFAULT; Schema: security; Owner: security_owner
---
-
-ALTER TABLE ONLY security.user_ ALTER COLUMN id SET DEFAULT nextval('security.user__id_seq'::regclass);
-
-
---
 -- Data for Name: customer; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -632,7 +603,7 @@ COPY mochi.customer (rle_id, cst_id) FROM stdin;
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('mochi.hibernate_sequence', 664, true);
+SELECT pg_catalog.setval('mochi.hibernate_sequence', 675, true);
 
 
 --
@@ -666,8 +637,12 @@ COPY mochi.organisation (org_id, org_nme, org_reg_no) FROM stdin;
 
 COPY mochi.party (pty_id, pty_typ_id) FROM stdin;
 663	1
+667	1
+671	1
+673	1
 1	1
 2	2
+675	1
 568	1
 638	1
 639	1
@@ -713,6 +688,9 @@ SELECT pg_catalog.setval('mochi.party_type_pty_typ_id_seq', 1, false);
 --
 
 COPY mochi.person (psn_id, psn_gvn_nm_en, psn_fml_nm_en, psn_nm_cn, enb) FROM stdin;
+671	Daniel	Mackie	丹尼爾麥基	\N
+673	Daniel	Mackie	丹尼爾麥基	\N
+675	Daniel	Mackie	丹尼爾麥基	\N
 1	Daniel	Mackie	丹尼爾麥基	t
 568	Daniel	Mackie	丹尼爾麥基	\N
 638	Daniel	Mackie	丹尼爾麥基	\N
@@ -721,6 +699,7 @@ COPY mochi.person (psn_id, psn_gvn_nm_en, psn_fml_nm_en, psn_nm_cn, enb) FROM st
 641	Daniel	Mackie	丹尼爾麥基	\N
 642	Daniel	Mackie	丹尼爾麥基	\N
 663	Daniel	Mackie	丹尼爾麥基	\N
+667	Daniel	Mackie	丹尼爾麥基	\N
 \.
 
 
@@ -937,18 +916,15 @@ cdc1afc70bac5fe356a573bab73e2202	\\xaced00057372004c6f72672e737072696e676672616d
 -- Data for Name: user_; Type: TABLE DATA; Schema: security; Owner: security_owner
 --
 
-COPY security.user_ (pty_id, account_expired, account_locked, credentials_expired, enabled, password, user_name, id) FROM stdin;
-1	f	f	f	t	$2a$08$qvrzQZ7jJ7oy2p/msL4M0.l83Cd0jNsX6AJUitbgRXGzge4j035ha	admin	1
-2	f	f	f	t	$2a$08$dwYz8O.qtUXboGosJFsS4u19LHKW7aCQ0LXXuNlRfjjGKwj5NfKSe	reader	2
-663	f	f	f	t	$2a$08$qvrzQZ7jJ7oy2p/msL4M0.l83Cd0jNsX65AJUitbgRXGzge4j035ha	asdef	664
+COPY security.user_ (pty_id, account_expired, account_locked, credentials_expired, enabled, password, user_name) FROM stdin;
+1	f	f	f	t	$2a$08$qvrzQZ7jJ7oy2p/msL4M0.l83Cd0jNsX6AJUitbgRXGzge4j035ha	admin
+2	f	f	f	t	$2a$08$dwYz8O.qtUXboGosJFsS4u19LHKW7aCQ0LXXuNlRfjjGKwj5NfKSe	reader
+663	f	f	f	t	$2a$08$qvrzQZ7jJ7oy2p/msL4M0.l83Cd0jNsX65AJUitbgRXGzge4j035ha	asdef
+667	f	f	f	t	$2a$08$qvrzQZ7jJ7oy2p/msL4M0.l83Cd0jNsX65AJUitbgRXGzge4j035ha	asdefg
+671	f	f	f	t	$2a$08$qvrzQZ7jJ7oy2p/msL4M0.l83Cd0jNsX65AJUitbgRXGzge4j035ha	asdedfg
+673	f	f	f	t	$2a$08$qvrzQZ7jJ7oy2p/msL4M0.l83Cd0jNsX65AJUitbgRXGzge4j035ha	asde43dfg
+675	f	f	f	t	$2a$08$qvrzQZ7jJ7oy2p/msL4M0.l83Cd0jNsX65AJUitbgRXGzge4j035ha	asde433dfg
 \.
-
-
---
--- Name: user__id_seq; Type: SEQUENCE SET; Schema: security; Owner: security_owner
---
-
-SELECT pg_catalog.setval('security.user__id_seq', 2, true);
 
 
 --
@@ -1211,11 +1187,11 @@ ALTER TABLE ONLY security.oauth_client_token
 
 
 --
--- Name: user__pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
+-- Name: user___pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
 --
 
 ALTER TABLE ONLY security.user_
-    ADD CONSTRAINT user__pkey PRIMARY KEY (id);
+    ADD CONSTRAINT user___pkey PRIMARY KEY (pty_id);
 
 
 --
@@ -1333,7 +1309,7 @@ ALTER TABLE ONLY mochi.spring_session_attributes
 --
 
 ALTER TABLE ONLY security.users_authorities
-    ADD CONSTRAINT user__users_authorities FOREIGN KEY (user_id) REFERENCES security.user_(id);
+    ADD CONSTRAINT user__users_authorities FOREIGN KEY (user_id) REFERENCES security.user_(pty_id);
 
 
 --
