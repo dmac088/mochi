@@ -4,6 +4,8 @@ import static org.junit.Assert.assertNotNull;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +15,17 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.BufferingClientHttpRequestFactory;
+import org.springframework.http.client.ClientHttpRequestInterceptor;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import io.javabrains.springbootstarter.domain.Customer;
 import io.javabrains.springbootstarter.domain.PartyType;
@@ -98,11 +105,13 @@ public class RestClientUtil {
     
 	@Test
 	public void addPersonCustomer() {
-	     RestTemplate restTemplate = new RestTemplate();
-	     
-	     //create the headers for a Customer post
+		
+	     RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
+	     List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();
+		 interceptors.add(new LoggingRequestInterceptor());
+		 restTemplate.setInterceptors(interceptors);
 	     HttpHeaders headers = new HttpHeaders();
-	     headers.setContentType(MediaType.APPLICATION_JSON);
+	     headers.add("Content-Type", MediaType.APPLICATION_JSON_VALUE);
 	     headers.add("authorization", "Bearer " + getToken());
 	     headers.add("cache-control", "no-cache");
 		 
@@ -136,9 +145,11 @@ public class RestClientUtil {
 		 objCustomer.setRoleParty(objPerson);
 		
 		 HttpEntity<Customer> requestEntity = new HttpEntity<Customer>(objCustomer, headers);
-		 System.out.println(requestEntity.getBody().getRoleStart());
-	     ResponseEntity<Customer> uri = restTemplate.exchange(this.CUSTOMER_ENDPOINT, HttpMethod.POST, requestEntity, Customer.class);
-	    // System.out.println(uri.getBody());
+		 System.out.println(requestEntity.getBody().toString());
+		 System.out.println("Below is the body");
+	     ResponseEntity<Customer> uri = restTemplate.postForEntity(this.CUSTOMER_ENDPOINT, requestEntity, Customer.class);
+	     
+	     System.out.println(uri.getBody());
 	    // System.out.println("Hello World!");    	
 	}
 }
