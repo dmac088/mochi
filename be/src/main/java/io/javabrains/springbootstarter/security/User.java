@@ -98,6 +98,15 @@ public class User implements UserDetails, Serializable {
 		return this.password;
 	}
 	
+	public void setPassword(String password) {
+		// TODO Auto-generated method stub
+		this.password = password;
+	}
+	
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
 	public void setUsername(String username) {
 		// TODO Auto-generated method stub
 		this.username = username;
@@ -107,11 +116,6 @@ public class User implements UserDetails, Serializable {
 	public String getUsername() {
 		// TODO Auto-generated method stub
 		return this.username;
-	}
-
-	public void setPassword(String password) {
-		// TODO Auto-generated method stub
-		this.password = password;
 	}
 
 	@Override
