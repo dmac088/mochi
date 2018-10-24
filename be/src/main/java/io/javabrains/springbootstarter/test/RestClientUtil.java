@@ -136,7 +136,7 @@ public class RestClientUtil {
 		 //Create the user
 		 User objUser = new User();
 		 objUser.setPassword(passwordEncoder.encode("password"));
-		 objUser.setUsername("dmac089");
+		 objUser.setUsername("dmac090");
 		 
 		 //add the user to the person
 		 objPerson.addUser(objUser);
@@ -144,10 +144,10 @@ public class RestClientUtil {
 		 //add the person to the role
 		 objCustomer.setRoleParty(objPerson);
 		
-		 HttpEntity<Customer> requestEntity = new HttpEntity<Customer>(objCustomer, headers);
+		 HttpEntity<Person> requestEntity = new HttpEntity<Person>(objPerson, headers);
 		 System.out.println(requestEntity.getBody().toString());
 		 System.out.println("Below is the body");
-	     ResponseEntity<Customer> uri = restTemplate.postForEntity(this.CUSTOMER_ENDPOINT, requestEntity, Customer.class);
+	     ResponseEntity<Person> uri = restTemplate.postForEntity(this.CUSTOMER_ENDPOINT, requestEntity, Person.class);
 	     
 	     System.out.println(uri.getBody());
 	    // System.out.println("Hello World!");    	
