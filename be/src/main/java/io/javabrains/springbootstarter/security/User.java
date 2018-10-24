@@ -35,12 +35,10 @@ import lombok.Setter;
 @Table(name = "user_", schema="security", uniqueConstraints = { @UniqueConstraint(columnNames = { "USER_NAME" }) })
 @Getter 
 @Setter
-@EqualsAndHashCode(of = "id")
 public class User implements UserDetails, Serializable {
 
-    @Id 
-    @GeneratedValue(strategy=GenerationType.AUTO)	
-    @Column(name = "id")
+    @Id
+    @Column(name = "pty_id")
     private Long Id;
     
 	@Column(name = "USER_NAME")
@@ -63,11 +61,12 @@ public class User implements UserDetails, Serializable {
 
     @OneToOne
     @JsonBackReference
-    @JoinColumn(name = "pty_id")
+    @MapsId
+    @JoinColumn(name="pty_id")
     private Party userParty;
     
 	@ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "USERS_AUTHORITIES", schema="security", joinColumns = @JoinColumn(name = "USER_ID", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "ID"))
+    @JoinTable(name = "USERS_AUTHORITIES", schema="security", joinColumns = @JoinColumn(name = "USER_ID", referencedColumnName = "pty_id"), inverseJoinColumns = @JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "ID"))
     @OrderBy
     @JsonIgnore
     private Collection<Authority> authorities;
