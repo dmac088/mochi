@@ -138,7 +138,7 @@ public class RestClientUtil {
 		 //Create the user
 		 User objUser = new User();
 		 objUser.setPassword(passwordEncoder.encode("password"));
-		 objUser.setUsername("dmac093");
+		 objUser.setUsername("dmac094");
 		 objUser.setEnabled(true);
 		 
 		 //add the user to the person
