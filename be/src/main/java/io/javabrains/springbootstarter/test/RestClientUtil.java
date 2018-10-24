@@ -11,18 +11,16 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
-
+import org.json.JSONObject;
+import org.junit.Assert; 
 import io.javabrains.springbootstarter.domain.Customer;
 import io.javabrains.springbootstarter.domain.PartyType;
 import io.javabrains.springbootstarter.domain.Person;
@@ -54,39 +52,44 @@ public class RestClientUtil {
     private RestTemplate template;
  
     private static String TOKEN_ENDPOINT = "http://localhost:8090/oauth/token";
-    private static String OAUTH_TYPE = "Basic Auth";
-    private static String OAUTH_CLIENT_USERNAME = "spring-security-oauth2-read-write-client";
-    private static String OAUTH_CLIENT_PASSWORD = "spring-security-oauth2-read-write-client-password1234";
+    private static String OAUTH_AUTHORIZATION = "Basic c3ByaW5nLXNlY3VyaXR5LW9hdXRoMi1yZWFkLXdyaXRlLWNsaWVudDpzcHJpbmctc2VjdXJpdHktb2F1dGgyLXJlYWQtd3JpdGUtY2xpZW50LXBhc3N3b3JkMTIzNA==";
+    private static String OAUTH_CACHE_CONTROL = "no-cache";
     private static String OAUTH_TOKEN_USERNAME = "admin";
     private static String OAUTH_TOKEN_PASSWORD = "admin1234";
     private static String OAUTH_TOKEN_CLIENTID = "spring-security-oauth2-read-write-client";
     private static String OAUTH_TOKEN_GRANT_TYPE = "password";
     
-    private static String PERSON_ENDPOINT = "http://localhost:8090/api/Person";
     private static String CUSTOMER_ENDPOINT = "http://localhost:8090/api/Customer";
- 
     private static String CUSTOMER_GIVEN_NAME_EN = "Daniel";
     private static String CUSTOMER_FAMILY_NAME_EN = "Mackie";
     private static String CUSTOMER_NAME_CN = "丹尼爾麥基";
     private static String CUSTOMER_ID = "0123456789";
     private static Date   CUSTOMER_START_DATE = new Date();
 
-    @Test
-    public void getToken() throws Exception {
-    	OkHttpClient client = new OkHttpClient();
 
-    	MediaType mediaType = MediaType.parse("multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW");
-    	RequestBody body = RequestBody.create(mediaType, "------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"username\"\r\n\r\nadmin\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"password\"\r\n\r\nadmin1234\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"client_id\"\r\n\r\nspring-security-oauth2-read-client\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"grant_type\"\r\n\r\npassword\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW--");
-    	Request request = new Request.Builder()
-    	  .url(TOKEN_ENDPOINT)
-    	  .post(body)
-    	  .addHeader("content-type", "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW")
-    	  .addHeader("authorization", "Basic c3ByaW5nLXNlY3VyaXR5LW9hdXRoMi1yZWFkLWNsaWVudDpzcHJpbmctc2VjdXJpdHktb2F1dGgyLXJlYWQtY2xpZW50LXBhc3N3b3JkMTIzNA==")
-    	  .addHeader("cache-control", "no-cache")
-    	  .build();
-
-    	Response response = client.newCall(request).execute();
-    	System.out.println(response.body());
+    private HttpHeaders getHeaders() {
+    	HttpHeaders headers = new HttpHeaders();
+    	headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+    	headers.add("authorization", OAUTH_AUTHORIZATION);
+    	headers.add("cache-control", OAUTH_CACHE_CONTROL);
+    	return headers;
+    }
+    
+    private MultiValueMap<String, String> getMap() {
+    	MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
+    	map.add("client_id", OAUTH_TOKEN_CLIENTID);
+    	map.add("username", OAUTH_TOKEN_USERNAME);
+    	map.add("password", OAUTH_TOKEN_PASSWORD);
+    	map.add("grant_type", OAUTH_TOKEN_GRANT_TYPE);
+    	return map;
+    }
+    
+    public String getToken() {
+    	HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(getMap(), getHeaders());
+    	RestTemplate restTemplate = new RestTemplate();
+    	ResponseEntity<String> response = restTemplate.postForEntity(TOKEN_ENDPOINT, request , String.class );
+    	JSONObject jObj = new JSONObject(response.getBody());
+    	return jObj.getString("access_token");
     }
     
     @Test
@@ -97,9 +100,10 @@ public class RestClientUtil {
     
 	@Test
 	public void addPersonCustomer() {
-		 HttpHeaders headers = new HttpHeaders();
-		// headers.setContentType(MediaType.APPLICATION_JSON);
-		 RestTemplate restTemplate = new RestTemplate();
+	     RestTemplate restTemplate = new RestTemplate();
+	     HttpHeaders headers = new HttpHeaders();
+	     headers.setContentType(MediaType.APPLICATION_JSON);
+	     headers.add("authorization", "Bearer " + getToken());
 		 Person objPerson = new Person();
 		 User objUser = new User();
 		 Customer objCustomer = new Customer();
@@ -113,6 +117,7 @@ public class RestClientUtil {
 		 objPerson.setNameCn(this.CUSTOMER_NAME_CN);
 		 objUser.setPassword(passwordEncoder.encode("password"));
 		 objUser.setUsername("dmac089");
+		 
 		 objPerson.setPartyRole(new ArrayList<Role>());
 		 objCustomer.setCustomerId(this.CUSTOMER_ID);
 		 objCustomer.setRoleStart(this.CUSTOMER_START_DATE);
@@ -121,6 +126,7 @@ public class RestClientUtil {
 		 System.out.println(objUser.getPassword());
 		 HttpEntity<Customer> requestEntity = new HttpEntity<Customer>(objCustomer, headers);
 	     ResponseEntity<Customer> uri = restTemplate.exchange(this.CUSTOMER_ENDPOINT, HttpMethod.POST, requestEntity, Customer.class);
-	     System.out.println(uri.getBody());    	
+	     System.out.println(uri.getBody());
+	     System.out.println("Hello World!");    	
 	}
 }
