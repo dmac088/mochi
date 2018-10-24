@@ -65,6 +65,7 @@ public class RestClientUtil {
     private static String OAUTH_TOKEN_GRANT_TYPE = "password";
     
     private static String CUSTOMER_ENDPOINT = "http://localhost:8090/api/Customer";
+    private static String PERSON_ENDPOINT = "http://localhost:8090/api/Person";
     private static String CUSTOMER_GIVEN_NAME_EN = "Daniel";
     private static String CUSTOMER_FAMILY_NAME_EN = "Mackie";
     private static String CUSTOMER_NAME_CN = "丹尼爾麥基";
@@ -136,20 +137,21 @@ public class RestClientUtil {
 		 //Create the user
 		 User objUser = new User();
 		 objUser.setPassword(passwordEncoder.encode("password"));
-		 objUser.setUsername("dmac090");
+		 objUser.setUsername("dmac092");
 		 
 		 //add the user to the person
 		 objPerson.addUser(objUser);
 		 
-		 //add the person to the role
-		 objCustomer.setRoleParty(objPerson);
+		 //add role to person
+		 List<Role> r = new ArrayList<Role>();
+		 r.add(objCustomer);
+		 objPerson.setPartyRole(r);
 		
 		 HttpEntity<Person> requestEntity = new HttpEntity<Person>(objPerson, headers);
 		 System.out.println(requestEntity.getBody().toString());
 		 System.out.println("Below is the body");
 	     ResponseEntity<Person> uri = restTemplate.postForEntity(this.CUSTOMER_ENDPOINT, requestEntity, Person.class);
 	     
-	     System.out.println(uri.getBody());
-	    // System.out.println("Hello World!");    	
+	     System.out.println(uri.getBody());	
 	}
 }
