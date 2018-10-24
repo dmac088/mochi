@@ -14,6 +14,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -38,9 +39,8 @@ public abstract class Party {
 	@JsonManagedReference
 	private List<Role> partyRole;
 	
-	 
-	@OneToOne
-	@JoinColumn(name = "pty_id")
+	@OneToOne(mappedBy="userParty", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JsonManagedReference
     private User partyUser;
 
 	public Party() {
@@ -52,9 +52,17 @@ public abstract class Party {
 	}
 
 	public void setPartyId(Long partyId) {
-		partyId = partyId;
+		this.partyId = partyId;
 	}
 	
+	public User getPartyUser() {
+		return partyUser;
+	}
+
+	public void setPartyUser(User partyUser) {
+		this.partyUser = partyUser;
+	}
+
 	public Party(Long id) {
 		
 	}
@@ -79,12 +87,5 @@ public abstract class Party {
 		this.partyRole.add(role);
 	}
 	
-	public User getPartyUser() {
-		return partyUser;
-	}
-
-	public void setPartyUser(User partyUser) {
-		this.partyUser = partyUser;
-	}
 	
 } 
