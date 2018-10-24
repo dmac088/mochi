@@ -118,21 +118,4 @@ public class User implements UserDetails, Serializable {
 	public boolean isEnabled() {
 		return this.enabled;
 	}
-
-	public Long getId() {
-		return Id;
-	}
-
-	public void setId(Long Id) {
-		this.Id = Id;
-	}
-	
-    public Party getUserParty() {
-		return userParty;
-	}
-
-	public void setUserParty(Party userParty) {
-		this.userParty = userParty;
-	}
-
 }
