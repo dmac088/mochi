@@ -20,7 +20,6 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.json.JSONObject;
-import org.junit.Assert; 
 import io.javabrains.springbootstarter.domain.Customer;
 import io.javabrains.springbootstarter.domain.PartyType;
 import io.javabrains.springbootstarter.domain.Person;
@@ -40,7 +39,6 @@ https://www.baeldung.com/spring-data-rest-relationships
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {Encoders.class, UnitTestConfig.class})
-//@ActiveProfiles("dev")
 public class RestClientUtil {
 	
 	@Autowired
@@ -101,32 +99,46 @@ public class RestClientUtil {
 	@Test
 	public void addPersonCustomer() {
 	     RestTemplate restTemplate = new RestTemplate();
+	     
+	     //create the headers for a Customer post
 	     HttpHeaders headers = new HttpHeaders();
 	     headers.setContentType(MediaType.APPLICATION_JSON);
 	     headers.add("authorization", "Bearer " + getToken());
-		 Person objPerson = new Person();
-		 User objUser = new User();
+	     headers.add("cache-control", "no-cache");
+		 
+	     
+	     //Create the customer
+	     RoleType objRoleType = new RoleType();
+	     objRoleType.setRoleTypeId((long)1);
 		 Customer objCustomer = new Customer();
+		 objCustomer.setCustomerId(this.CUSTOMER_ID);
+		 objCustomer.setRoleStart(this.CUSTOMER_START_DATE);
+		 objCustomer.setRoleType(objRoleType);
+		 
+		 //Create the person
 		 PartyType objPartyType = new PartyType();
-		 RoleType objRoleType = new RoleType();
-		 objRoleType.setRoleTypeId((long)1);
-		 objPartyType.setPartyTypeId((long) 1);
+		 objPartyType.setPartyTypeId((long)1);
+		 Person objPerson = new Person();
 		 objPerson.setPartyType(objPartyType);
 		 objPerson.setGivenNameEn(this.CUSTOMER_GIVEN_NAME_EN);
 		 objPerson.setFamilyNameEn(this.CUSTOMER_FAMILY_NAME_EN);
 		 objPerson.setNameCn(this.CUSTOMER_NAME_CN);
+		 
+		 //Create the user
+		 User objUser = new User();
 		 objUser.setPassword(passwordEncoder.encode("password"));
 		 objUser.setUsername("dmac089");
 		 
-		 objPerson.setPartyRole(new ArrayList<Role>());
-		 objCustomer.setCustomerId(this.CUSTOMER_ID);
-		 objCustomer.setRoleStart(this.CUSTOMER_START_DATE);
-		 objCustomer.setRoleType(objRoleType);
-		 objPerson.addRole(objCustomer); 
-		 System.out.println(objUser.getPassword());
+		 //add the user to the person
+		 objPerson.addUser(objUser);
+		 
+		 //add the person to the role
+		 objCustomer.setRoleParty(objPerson);
+		
 		 HttpEntity<Customer> requestEntity = new HttpEntity<Customer>(objCustomer, headers);
+		 System.out.println(requestEntity.getBody().getRoleStart());
 	     ResponseEntity<Customer> uri = restTemplate.exchange(this.CUSTOMER_ENDPOINT, HttpMethod.POST, requestEntity, Customer.class);
-	     System.out.println(uri.getBody());
-	     System.out.println("Hello World!");    	
+	    // System.out.println(uri.getBody());
+	    // System.out.println("Hello World!");    	
 	}
 }
