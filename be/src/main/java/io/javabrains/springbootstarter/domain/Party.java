@@ -86,4 +86,8 @@ public abstract class Party {
 	public void addRole(Role role) {
 		this.partyRole.add(role);
 	}
+	
+	public void addUser(User user) {
+		this.partyUser = user;
+	}
 } 
