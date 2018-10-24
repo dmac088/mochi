@@ -133,11 +133,13 @@ public class RestClientUtil {
 		 objPerson.setGivenNameEn(this.CUSTOMER_GIVEN_NAME_EN);
 		 objPerson.setFamilyNameEn(this.CUSTOMER_FAMILY_NAME_EN);
 		 objPerson.setNameCn(this.CUSTOMER_NAME_CN);
+		
 		 
 		 //Create the user
 		 User objUser = new User();
 		 objUser.setPassword(passwordEncoder.encode("password"));
-		 objUser.setUsername("dmac092");
+		 objUser.setUsername("dmac093");
+		 objUser.setEnabled(true);
 		 
 		 //add the user to the person
 		 objPerson.addUser(objUser);
@@ -149,7 +151,6 @@ public class RestClientUtil {
 		
 		 HttpEntity<Person> requestEntity = new HttpEntity<Person>(objPerson, headers);
 		 System.out.println(requestEntity.getBody().toString());
-		 System.out.println("Below is the body");
 	     ResponseEntity<Person> uri = restTemplate.postForEntity(this.CUSTOMER_ENDPOINT, requestEntity, Person.class);
 	     
 	     System.out.println(uri.getBody());	
