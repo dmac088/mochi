@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +57,7 @@ public class RestClientUtil {
     @Qualifier("unitTestTemplate")
     private RestTemplate template;
  
-    private static String TOKEN_ENDPOINT = "http://localhost:8090/oauth/token";
+    private static String TOKEN_ENDPOINT = "https://localhost:8090/oauth/token";
     private static String OAUTH_AUTHORIZATION = "Basic c3ByaW5nLXNlY3VyaXR5LW9hdXRoMi1yZWFkLXdyaXRlLWNsaWVudDpzcHJpbmctc2VjdXJpdHktb2F1dGgyLXJlYWQtd3JpdGUtY2xpZW50LXBhc3N3b3JkMTIzNA==";
     private static String OAUTH_CACHE_CONTROL = "no-cache";
     private static String OAUTH_TOKEN_USERNAME = "admin";
@@ -64,8 +65,8 @@ public class RestClientUtil {
     private static String OAUTH_TOKEN_CLIENTID = "spring-security-oauth2-read-write-client";
     private static String OAUTH_TOKEN_GRANT_TYPE = "password";
     
-    private static String CUSTOMER_ENDPOINT = "http://localhost:8090/api/Customer";
-    private static String PERSON_ENDPOINT = "http://localhost:8090/api/Person";
+    private static String CUSTOMER_ENDPOINT = "https://localhost:8090/api/Customer";
+    private static String PERSON_ENDPOINT = "https://localhost:8090/api/Person";
     private static String CUSTOMER_GIVEN_NAME_EN = "Daniel";
     private static String CUSTOMER_FAMILY_NAME_EN = "Mackie";
     private static String CUSTOMER_NAME_CN = "丹尼爾麥基";
@@ -98,10 +99,19 @@ public class RestClientUtil {
     	return jObj.getString("access_token");
     }
     
+    
+    
     @Test
     public void verifyBeansConfigured() {
         assertNotNull(passwordEncoder);
         assertNotNull(template);
+    }
+    
+    @Test
+    public void retrieveToken() {
+    	System.out.println(getToken().length());
+    	System.out.println("baa0bbbd-742b-4225-ad5e-dfc74f38571b".length());
+    	Assert.assertTrue(getToken().length()=="baa0bbbd-742b-4225-ad5e-dfc74f38571b".length());
     }
     
 	@Test

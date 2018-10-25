@@ -1,0 +1,2 @@
+"%JAVA_HOME%\jre\bin\keytool" -delete -alias mochi -keystore "%JAVA_HOME%\jre\lib\security\cacerts"
+"%JAVA_HOME%\..\jre1.8.0_181\bin\keytool" -delete -alias mochi -keystore "%JAVA_HOME%\..\jre1.8.0_181\lib\security\cacerts"
