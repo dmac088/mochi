@@ -148,7 +148,7 @@ public class RestClientUtil {
 		 //Create the user
 		 User objUser = new User();
 		 objUser.setPassword(passwordEncoder.encode("password"));
-		 objUser.setUsername("dmac099");
+		 objUser.setUsername("dmac104");
 		 objUser.setEnabled(true);
 		 
 		 //add the user to the person
@@ -160,11 +160,11 @@ public class RestClientUtil {
 		 objPerson.setPartyRole(r);
 		
 		 HttpEntity<Person> requestEntity = new HttpEntity<Person>(objPerson, headers);
-		 System.out.println(requestEntity.getBody().toString());
 	     ResponseEntity<Person> uri = restTemplate.postForEntity(this.CUSTOMER_ENDPOINT, requestEntity, Person.class);
-	     
-	     //Assert.assertTrue(EqualsBuilder.reflectionEquals(objPerson,(Person)uri.getBody()));
-
+	     System.out.println(objPerson.getPartyType().getPartyTypeDesc());
+	     Assert.assertTrue(objPerson.getPartyUser().getUsername().equals(uri.getBody().getPartyUser().getUsername()));
+	     //Assert.assertTrue(objPerson.getPartyType().getPartyTypeDesc().equals(uri.getBody().getPartyType().getPartyTypeDesc()));
+	     //Assert.assertTrue(objPerson.getPartyRole().size()==(uri.getBody().getPartyRole().size()));
 	     	
 	}
 }
