@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.BufferingClientHttpRequestFactory;
@@ -25,6 +24,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -148,7 +148,7 @@ public class RestClientUtil {
 		 //Create the user
 		 User objUser = new User();
 		 objUser.setPassword(passwordEncoder.encode("password"));
-		 objUser.setUsername("dmac094");
+		 objUser.setUsername("dmac099");
 		 objUser.setEnabled(true);
 		 
 		 //add the user to the person
@@ -163,6 +163,8 @@ public class RestClientUtil {
 		 System.out.println(requestEntity.getBody().toString());
 	     ResponseEntity<Person> uri = restTemplate.postForEntity(this.CUSTOMER_ENDPOINT, requestEntity, Person.class);
 	     
-	     System.out.println(uri.getBody());	
+	     //Assert.assertTrue(EqualsBuilder.reflectionEquals(objPerson,(Person)uri.getBody()));
+
+	     	
 	}
 }
