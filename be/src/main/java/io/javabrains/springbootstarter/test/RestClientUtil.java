@@ -57,14 +57,16 @@ public class RestClientUtil {
     @Qualifier("unitTestTemplate")
     private RestTemplate template;
  
-    private static String TOKEN_ENDPOINT = "https://localhost:8090/oauth/token";
-    private static String OAUTH_AUTHORIZATION = "Basic c3ByaW5nLXNlY3VyaXR5LW9hdXRoMi1yZWFkLXdyaXRlLWNsaWVudDpzcHJpbmctc2VjdXJpdHktb2F1dGgyLXJlYWQtd3JpdGUtY2xpZW50LXBhc3N3b3JkMTIzNA==";
-    private static String OAUTH_CACHE_CONTROL = "no-cache";
-    private static String OAUTH_TOKEN_USERNAME = "admin";
-    private static String OAUTH_TOKEN_PASSWORD = "admin1234";
-    private static String OAUTH_TOKEN_CLIENTID = "spring-security-oauth2-read-write-client";
-    private static String OAUTH_TOKEN_GRANT_TYPE = "password";
+    private static String TOKEN_ENDPOINT 			= "https://localhost:8090/oauth/token";
+    private static String OAUTH_AUTHORIZATION 		= "Basic c3ByaW5nLXNlY3VyaXR5LW9hdXRoMi1yZWFkLXdyaXRlLWNsaWVudDpzcHJpbmctc2VjdXJpdHktb2F1dGgyLXJlYWQtd3JpdGUtY2xpZW50LXBhc3N3b3JkMTIzNA==";
+    private static String OAUTH_CACHE_CONTROL 		= "no-cache";
+    private static String OAUTH_TOKEN_USERNAME 		= "admin";
+    private static String OAUTH_TOKEN_PASSWORD 		= "admin1234";
+    private static String OAUTH_TOKEN_CLIENTID 		= "spring-security-oauth2-read-write-client";
+    private static String OAUTH_TOKEN_GRANT_TYPE 	= "password";
     
+    private static Long   PARTY_TYPE_ID = (long)1;
+    private static Long   ROLE_TYPE_ID = (long)1;
     private static String CUSTOMER_ENDPOINT = "https://localhost:8090/api/Customer";
     private static String PERSON_ENDPOINT = "https://localhost:8090/api/Person";
     private static String CUSTOMER_GIVEN_NAME_EN = "Daniel";
@@ -72,7 +74,9 @@ public class RestClientUtil {
     private static String CUSTOMER_NAME_CN = "丹尼爾麥基";
     private static String CUSTOMER_ID = "0123456789";
     private static Date   CUSTOMER_START_DATE = new Date();
-
+    
+    private static String CUSTOMER_USERNAME = "dmac120";
+    private static String CUSTOMER_PASSWORD = "password";
 
     private HttpHeaders getHeaders() {
     	HttpHeaders headers = new HttpHeaders();
@@ -109,8 +113,6 @@ public class RestClientUtil {
     
     @Test
     public void retrieveToken() {
-    	System.out.println(getToken().length());
-    	System.out.println("baa0bbbd-742b-4225-ad5e-dfc74f38571b".length());
     	Assert.assertTrue(getToken().length()=="baa0bbbd-742b-4225-ad5e-dfc74f38571b".length());
     }
     
@@ -129,7 +131,7 @@ public class RestClientUtil {
 	     
 	     //Create the customer
 	     RoleType objRoleType = new RoleType();
-	     objRoleType.setRoleTypeId((long)1);
+	     objRoleType.setRoleTypeId(ROLE_TYPE_ID);
 		 Customer objCustomer = new Customer();
 		 objCustomer.setCustomerId(this.CUSTOMER_ID);
 		 objCustomer.setRoleStart(this.CUSTOMER_START_DATE);
@@ -137,7 +139,7 @@ public class RestClientUtil {
 		 
 		 //Create the person
 		 PartyType objPartyType = new PartyType();
-		 objPartyType.setPartyTypeId((long)1);
+		 objPartyType.setPartyTypeId(PARTY_TYPE_ID);
 		 Person objPerson = new Person();
 		 objPerson.setPartyType(objPartyType);
 		 objPerson.setGivenNameEn(this.CUSTOMER_GIVEN_NAME_EN);
@@ -147,8 +149,8 @@ public class RestClientUtil {
 		 
 		 //Create the user
 		 User objUser = new User();
-		 objUser.setPassword(passwordEncoder.encode("password"));
-		 objUser.setUsername("dmac104");
+		 objUser.setPassword(passwordEncoder.encode(CUSTOMER_PASSWORD));
+		 objUser.setUsername(CUSTOMER_USERNAME);
 		 objUser.setEnabled(true);
 		 
 		 //add the user to the person
@@ -161,10 +163,8 @@ public class RestClientUtil {
 		
 		 HttpEntity<Person> requestEntity = new HttpEntity<Person>(objPerson, headers);
 	     ResponseEntity<Person> uri = restTemplate.postForEntity(this.CUSTOMER_ENDPOINT, requestEntity, Person.class);
-	     System.out.println(objPerson.getPartyType().getPartyTypeDesc());
-	     Assert.assertTrue(objPerson.getPartyUser().getUsername().equals(uri.getBody().getPartyUser().getUsername()));
-	     //Assert.assertTrue(objPerson.getPartyType().getPartyTypeDesc().equals(uri.getBody().getPartyType().getPartyTypeDesc()));
-	     //Assert.assertTrue(objPerson.getPartyRole().size()==(uri.getBody().getPartyRole().size()));
-	     	
+	     Assert.assertTrue(uri.getBody().getPartyType().getPartyTypeId().equals(PARTY_TYPE_ID));
+	     Assert.assertTrue(uri.getBody().getGivenNameEn().equals(CUSTOMER_GIVEN_NAME_EN));
+	     Assert.assertTrue(uri.getBody().getPartyUser().getUsername().equals(CUSTOMER_USERNAME));     	
 	}
 }
