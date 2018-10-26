@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.BufferingClientHttpRequestFactory;
@@ -24,14 +25,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.http.util.EntityUtils;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import io.javabrains.springbootstarter.domain.Customer;
 import io.javabrains.springbootstarter.domain.PartyType;
 import io.javabrains.springbootstarter.domain.Person;
-import io.javabrains.springbootstarter.domain.Role;
 import io.javabrains.springbootstarter.domain.RoleType;
 import io.javabrains.springbootstarter.security.Encoders;
 import io.javabrains.springbootstarter.security.User;
@@ -57,26 +54,27 @@ public class RestClientUtil {
     @Qualifier("unitTestTemplate")
     private RestTemplate template;
  
-    private static String TOKEN_ENDPOINT 			= "https://localhost:8090/oauth/token";
-    private static String OAUTH_AUTHORIZATION 		= "Basic c3ByaW5nLXNlY3VyaXR5LW9hdXRoMi1yZWFkLXdyaXRlLWNsaWVudDpzcHJpbmctc2VjdXJpdHktb2F1dGgyLXJlYWQtd3JpdGUtY2xpZW50LXBhc3N3b3JkMTIzNA==";
-    private static String OAUTH_CACHE_CONTROL 		= "no-cache";
-    private static String OAUTH_TOKEN_USERNAME 		= "admin";
-    private static String OAUTH_TOKEN_PASSWORD 		= "admin1234";
-    private static String OAUTH_TOKEN_CLIENTID 		= "spring-security-oauth2-read-write-client";
-    private static String OAUTH_TOKEN_GRANT_TYPE 	= "password";
+    private static String TOKEN_ENDPOINT 					= "https://localhost:8090/oauth/token";
+    private static String OAUTH_AUTHORIZATION 				= "Basic c3ByaW5nLXNlY3VyaXR5LW9hdXRoMi1yZWFkLXdyaXRlLWNsaWVudDpzcHJpbmctc2VjdXJpdHktb2F1dGgyLXJlYWQtd3JpdGUtY2xpZW50LXBhc3N3b3JkMTIzNA==";
+    private static String OAUTH_CACHE_CONTROL 				= "no-cache";
+    private static String OAUTH_TOKEN_USERNAME 				= "admin";
+    private static String OAUTH_TOKEN_PASSWORD 				= "admin1234";
+    private static String OAUTH_TOKEN_CLIENTID 				= "spring-security-oauth2-read-write-client";
+    private static String OAUTH_TOKEN_GRANT_TYPE 			= "password";
     
     private static Long   PARTY_TYPE_ID = (long)1;
     private static Long   ROLE_TYPE_ID = (long)1;
-    private static String CUSTOMER_ENDPOINT = "https://localhost:8090/api/Customer";
-    private static String PERSON_ENDPOINT = "https://localhost:8090/api/Person";
-    private static String CUSTOMER_GIVEN_NAME_EN = "Daniel";
-    private static String CUSTOMER_FAMILY_NAME_EN = "Mackie";
-    private static String CUSTOMER_NAME_CN = "丹尼爾麥基";
-    private static String CUSTOMER_ID = "0123456789";
-    private static Date   CUSTOMER_START_DATE = new Date();
+    private static String CUSTOMER_ENDPOINT 				= "https://localhost:8090/api/Customer";
+    private static String PERSON_ENDPOINT 					= "https://localhost:8090/api/Person";
+    private static String CUSTOMER_GIVEN_NAME_EN 			= "Daniel";
+    private static String CUSTOMER_FAMILY_NAME_EN 			= "Mackie";
+    private static String CUSTOMER_NAME_CN 					= "丹尼爾麥基";
+    private static String CUSTOMER_ID 						= "0123765489";
+    private static Date   CUSTOMER_START_DATE 				= new Date();
+    private static String CUSTOMER_ROLE_TYPE 				= "Customer";
     
-    private static String CUSTOMER_USERNAME = "dmac120";
-    private static String CUSTOMER_PASSWORD = "password";
+    private static String CUSTOMER_USERNAME 				= "dmac198";
+    private static String CUSTOMER_PASSWORD 				= "password";
 
     private HttpHeaders getHeaders() {
     	HttpHeaders headers = new HttpHeaders();
@@ -136,6 +134,7 @@ public class RestClientUtil {
 		 objCustomer.setCustomerId(this.CUSTOMER_ID);
 		 objCustomer.setRoleStart(this.CUSTOMER_START_DATE);
 		 objCustomer.setRoleType(objRoleType);
+		 objCustomer.getRoleType().setRoleTypeDesc(CUSTOMER_ROLE_TYPE);
 		 
 		 //Create the person
 		 PartyType objPartyType = new PartyType();
@@ -155,16 +154,25 @@ public class RestClientUtil {
 		 
 		 //add the user to the person
 		 objPerson.addUser(objUser);
-		 
-		 //add role to person
-		 List<Role> r = new ArrayList<Role>();
-		 r.add(objCustomer);
-		 objPerson.setPartyRole(r);
 		
-		 HttpEntity<Person> requestEntity = new HttpEntity<Person>(objPerson, headers);
-	     ResponseEntity<Person> uri = restTemplate.postForEntity(this.CUSTOMER_ENDPOINT, requestEntity, Person.class);
-	     Assert.assertTrue(uri.getBody().getPartyType().getPartyTypeId().equals(PARTY_TYPE_ID));
-	     Assert.assertTrue(uri.getBody().getGivenNameEn().equals(CUSTOMER_GIVEN_NAME_EN));
-	     Assert.assertTrue(uri.getBody().getPartyUser().getUsername().equals(CUSTOMER_USERNAME));     	
+		 //add role to person
+		 objPerson.addRole(objCustomer);
+		 objCustomer.setRoleParty(objPerson);
+		 
+		 HttpEntity<Person> personEntity = new HttpEntity<Person>(objPerson, headers);
+		 ResponseEntity<Person> Puri = restTemplate.exchange(this.PERSON_ENDPOINT, HttpMethod.POST, personEntity, Person.class);
+		 
+		 //objCustomer.getRoleParty().getPartyId();
+		 
+		// HttpEntity<Customer> customerEntity = new HttpEntity<Customer>(objCustomer, headers);
+		// ResponseEntity<Customer> Curi = restTemplate.exchange(this.CUSTOMER_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
+		 //System.out.println(uri.getBody());  		 
+	    // System.out.println("PartyTypeId = " + uri.getBody().getPartyType().getPartyTypeId());
+	    // System.out.println("Username = " + uri.getBody().getPartyUser().getUsername());
+	     //System.out.println("GivenNameEn = " + uri.getBody().getGivenNameEn());
+	     //Assert.assertTrue(uri.getBody().getPartyType().getPartyTypeId().equals(PARTY_TYPE_ID));
+	     //Assert.assertTrue(uri.getBody().getPartyUser().getUsername().equals(CUSTOMER_USERNAME));  
+	     //uri.getBody().getPartyRole(CUSTOMER_ROLE_TYPE)
+	     //Assert.assertTrue(uri.getBody().getGivenNameEn().equals(CUSTOMER_GIVEN_NAME_EN));
 	}
 }

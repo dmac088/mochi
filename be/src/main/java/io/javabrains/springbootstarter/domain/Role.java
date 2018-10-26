@@ -16,13 +16,17 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 
 @Entity
 @Table(name = "role", schema = "mochi")
 @Inheritance(strategy = InheritanceType.JOINED)
+@JsonTypeInfo(
+	    use = JsonTypeInfo.Id.MINIMAL_CLASS,
+	    include = JsonTypeInfo.As.PROPERTY,
+	    property = "@class")
 public class Role {
 
 	@Id
@@ -39,7 +43,7 @@ public class Role {
 
 	@JsonBackReference
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional=false)
-	@JoinColumn(name = "pty_id", nullable=false)
+	@JoinColumn(name="pty_id", nullable=false)
 	private Party roleParty;
 	
 

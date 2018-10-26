@@ -23,8 +23,6 @@ public class CustomerController {
 	@Autowired
 	private CustomerService customerService;
 	
-	@Autowired
-	private PersonService personService;
 	
 	@GetMapping("/Customer")
     public List<Customer> getAllCustomers(HttpSession session) {
@@ -38,11 +36,10 @@ public class CustomerController {
 		return customerService.getCustomer(id).get().getRoleParty();
 	}
 	
-
 	@PostMapping("/Customer")
-	public ResponseEntity<Person> addCustomer(@RequestBody Person person) {
-		personService.addPerson(person);
-		return new ResponseEntity<Person>(person, HttpStatus.OK);
+	public ResponseEntity<Customer> addCustomer(@RequestBody Customer customer) {
+		customerService.addCustomer(customer);
+		return new ResponseEntity<Customer>(customer, HttpStatus.OK);
 	}
 	
 	@PutMapping("/Customer/{id}")
