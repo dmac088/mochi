@@ -161,18 +161,5 @@ public class RestClientUtil {
 		 
 		 HttpEntity<Person> personEntity = new HttpEntity<Person>(objPerson, headers);
 		 ResponseEntity<Person> Puri = restTemplate.exchange(this.PERSON_ENDPOINT, HttpMethod.POST, personEntity, Person.class);
-		 
-		 //objCustomer.getRoleParty().getPartyId();
-		 
-		// HttpEntity<Customer> customerEntity = new HttpEntity<Customer>(objCustomer, headers);
-		// ResponseEntity<Customer> Curi = restTemplate.exchange(this.CUSTOMER_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
-		 //System.out.println(uri.getBody());  		 
-	    // System.out.println("PartyTypeId = " + uri.getBody().getPartyType().getPartyTypeId());
-	    // System.out.println("Username = " + uri.getBody().getPartyUser().getUsername());
-	     //System.out.println("GivenNameEn = " + uri.getBody().getGivenNameEn());
-	     //Assert.assertTrue(uri.getBody().getPartyType().getPartyTypeId().equals(PARTY_TYPE_ID));
-	     //Assert.assertTrue(uri.getBody().getPartyUser().getUsername().equals(CUSTOMER_USERNAME));  
-	     //uri.getBody().getPartyRole(CUSTOMER_ROLE_TYPE)
-	     //Assert.assertTrue(uri.getBody().getGivenNameEn().equals(CUSTOMER_GIVEN_NAME_EN));
 	}
 }
