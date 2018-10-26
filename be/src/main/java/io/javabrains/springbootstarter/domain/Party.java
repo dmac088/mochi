@@ -1,6 +1,7 @@
 package io.javabrains.springbootstarter.domain;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -14,16 +15,22 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import io.javabrains.springbootstarter.security.User;
 
 @Entity
 @Table(name = "party", schema = "mochi")
 @Inheritance(strategy = InheritanceType.JOINED)
+@JsonTypeInfo(
+	    use = JsonTypeInfo.Id.MINIMAL_CLASS,
+	    include = JsonTypeInfo.As.PROPERTY,
+	    property = "@class")
 public abstract class Party {
 
 	@Id
@@ -37,7 +44,7 @@ public abstract class Party {
 
 	@OneToMany(mappedBy="roleParty", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JsonManagedReference
-	private List<Role> partyRole;
+	private List<Role> partyRoles = new ArrayList<Role>();
 	
 	@OneToOne(mappedBy="userParty", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JsonManagedReference
@@ -75,16 +82,36 @@ public abstract class Party {
 		this.partyType = partyType;
 	}
 	
-	public List<Role> getPartyRole() {
-		return this.partyRole;
+	public List<Role> getPartyRoles() {
+		return this.partyRoles;
 	}
 
-	public void setPartyRole(List<Role> partyRole) {
-		this.partyRole = partyRole;
+	public void setPartyRoles(List<Role> partyRole) {
+		this.partyRoles = partyRole;
 	}
 	
 	public void addRole(Role role) {
-		this.partyRole.add(role);
+		this.partyRoles.add(role);
+	}
+	
+	public Role getPartyRole(Long roleId) {
+		Role retRole = null;
+		for(Role r : partyRoles) {
+			if (r.getRoleId().equals(roleId)) {
+				retRole = r;
+			}
+		}
+		return retRole;
+	}
+	
+	public Role getPartyRole(String roleTypeDesc) {
+		Role retRole = null;
+		for(Role r : partyRoles) {
+			if (r.getRoleType().getRoleTypeDesc().equals(roleTypeDesc)) {
+				retRole = r;
+			}
+		}
+		return retRole;
 	}
 	
 	public void addUser(User user) {
