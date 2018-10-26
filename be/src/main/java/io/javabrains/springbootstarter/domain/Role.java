@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 
 @Entity
-@Table(name = "role", schema = "mochi")
+@Table(name = "role", schema = "mochi") 
 @Inheritance(strategy = InheritanceType.JOINED)
 @JsonTypeInfo(
 	    use = JsonTypeInfo.Id.MINIMAL_CLASS,
