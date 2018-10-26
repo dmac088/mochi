@@ -160,6 +160,9 @@ public class RestClientUtil {
 		 objCustomer.setRoleParty(objPerson);
 		 
 		 HttpEntity<Person> personEntity = new HttpEntity<Person>(objPerson, headers);
-		 ResponseEntity<Person> Puri = restTemplate.exchange(this.PERSON_ENDPOINT, HttpMethod.POST, personEntity, Person.class);
+		 ResponseEntity<Person> uri = restTemplate.exchange(this.PERSON_ENDPOINT, HttpMethod.POST, personEntity, Person.class);
+		 Assert.assertTrue(CUSTOMER_USERNAME.equals(uri.getBody().getPartyUser().getUsername()));
+		 Assert.assertTrue(CUSTOMER_GIVEN_NAME_EN.equals(uri.getBody().getGivenNameEn()));
+		 Assert.assertTrue(CUSTOMER_ID.equals(((Customer) uri.getBody().getPartyRole(CUSTOMER_ROLE_TYPE)).getCustomerId()));
 	}
 }
