@@ -628,6 +628,7 @@ COPY mochi.orders (ord_id, pty_id) FROM stdin;
 
 COPY mochi.organisation (org_id, org_nme, org_reg_no) FROM stdin;
 2	Big Balloons LTD	1234567
+4	Hop Lun LTD	3216547
 \.
 
 
@@ -636,30 +637,10 @@ COPY mochi.organisation (org_id, org_nme, org_reg_no) FROM stdin;
 --
 
 COPY mochi.party (pty_id, pty_typ_id) FROM stdin;
-663	1
-667	1
-671	1
-673	1
 1	1
 2	2
-675	1
-676	1
-679	1
-680	1
-681	1
-696	1
-733	1
-735	1
-744	1
-748	1
-752	1
-568	1
-754	1
-638	1
-639	1
-640	1
-641	1
-642	1
+3	1
+4	2
 \.
 
 
@@ -699,29 +680,8 @@ SELECT pg_catalog.setval('mochi.party_type_pty_typ_id_seq', 1, false);
 --
 
 COPY mochi.person (psn_id, psn_gvn_nm_en, psn_fml_nm_en, psn_nm_cn, enb) FROM stdin;
-671	Daniel	Mackie	丹尼爾麥基	\N
-673	Daniel	Mackie	丹尼爾麥基	\N
-675	Daniel	Mackie	丹尼爾麥基	\N
 1	Daniel	Mackie	丹尼爾麥基	t
-676	Daniel	Mackie	丹尼爾麥基	\N
-679	Daniel	Mackie	丹尼爾麥基	\N
-680	Daniel	Mackie	丹尼爾麥基	\N
-681	Daniel	Mackie	丹尼爾麥基	\N
-696	Daniel	Mackie	丹尼爾麥基	\N
-733	Daniel	Mackie	丹尼爾麥基	\N
-735	Daniel	Mackie	丹尼爾麥基	\N
-744	Daniel	Mackie	丹尼爾麥基	\N
-748	Daniel	Mackie	丹尼爾麥基	\N
-752	Daniel	Mackie	丹尼爾麥基	\N
-754	Daniel	Mackie	丹尼爾麥基	\N
-568	Daniel	Mackie	丹尼爾麥基	\N
-638	Daniel	Mackie	丹尼爾麥基	\N
-639	Daniel	Mackie	丹尼爾麥基	\N
-640	Daniel	Mackie	丹尼爾麥基	\N
-641	Daniel	Mackie	丹尼爾麥基	\N
-642	Daniel	Mackie	丹尼爾麥基	\N
-663	Daniel	Mackie	丹尼爾麥基	\N
-667	Daniel	Mackie	丹尼爾麥基	\N
+3	Purple	Wong	丹尼爾麥基	t
 \.
 
 
@@ -753,8 +713,8 @@ COPY mochi.point_of_interest (point_of_interest_id, lat, lng, name, type) FROM s
 --
 
 COPY mochi.product (prd_id, upc_cd, prd_crtd_dt) FROM stdin;
-1	12345678    	2018-10-13
-2	23456789    	2018-10-13
+1	12345678    	2018-10-26
+2	23456789    	2018-10-26
 \.
 
 
@@ -775,14 +735,8 @@ COPY mochi.product_attr_lcl (prd_lcl_id, prd_id, prd_desc, prd_img_pth, prd_rrp,
 --
 
 COPY mochi.role (rle_id, rle_typ_id, rle_start_dttm, pty_id) FROM stdin;
-682	1	2018-10-13	681
-697	1	2018-10-13	696
-745	1	2018-10-24	744
-749	1	2018-10-24	748
-753	1	2018-10-24	752
-755	1	2018-10-24	754
-1	1	2018-10-13	1
-2	1	2018-10-13	2
+1	1	2018-10-26	1
+2	1	2018-10-26	2
 \.
 
 
@@ -952,15 +906,8 @@ e2a696502a5a704f33d897f80510a47a	\\xaced00057372004c6f72672e737072696e676672616d
 COPY security.user_ (pty_id, account_expired, account_locked, credentials_expired, enabled, password, user_name) FROM stdin;
 1	f	f	f	t	$2a$08$qvrzQZ7jJ7oy2p/msL4M0.l83Cd0jNsX6AJUitbgRXGzge4j035ha	admin
 2	f	f	f	t	$2a$08$dwYz8O.qtUXboGosJFsS4u19LHKW7aCQ0LXXuNlRfjjGKwj5NfKSe	reader
-680	f	f	f	t	$2a$08$qvrzQZ7jJ7oy2p/msL4M0.l83Cd0jNsX65AJUitbgRXGzge4j035ha	asfsde4das33dfg
-681	f	f	f	t	$2a$08$qvrzQZ7jJ7oy2p/msL4M0.l83Cd0jNsX6AJUitbgRXGzge4j035ha	admin12
-696	f	f	f	t	$2a$08$qvrzQZ7jJ7oy2p/msL4M0.l83Cd0jNsX6AJUitbgRXGzge4j035ha	admin13
-733	f	f	f	f	$2a$08$aOnm35ZYucjaiSBoCCChqO3n7OJrbrHnJ7L99WJCqojgGR/pBF7CO	dmac089
-735	f	f	f	f	$2a$08$H5JH/VrqulUzQRbAWErYte15x7kjNZzThzc3gXKk.oV4CUtnRuP1C	dmac090
-744	f	f	f	f	$2a$08$fKmuyKxcpWAo89s1vtqbV.cuVhOPdbeoY0RLUbz5t/XQrbUikTgGi	dmac091
-748	f	f	f	f	$2a$08$4Rb5vws5UO0ZIAGwmCbYVuvNVJrOICBVluJ.eozc9wFKIxVNKhzCK	dmac092
-752	f	f	f	t	$2a$08$9ml5Dn0PjQsCSkZ6YYbGvu/fcMYNcukeKNRko05js9PsLgW1GgLk2	dmac093
-754	f	f	f	t	$2a$08$i0mMojJc83aCPst7s6fTYe6wOA.Pdrdo/BCi6C8PZkQD6Os/34evS	dmac094
+3	f	f	f	t	$2a$08$kPjzxewXRGNRiIuL4FtQH.mhMn7ZAFBYKB3ROz.J24IX8vDAcThsG	modifier
+4	f	f	f	t	$2a$08$vVXqh6S8TqfHMs1SlNTu/.J25iUCrpGBpyGExA.9yI.IlDRadR6Ea	reader2
 \.
 
 
@@ -980,6 +927,9 @@ COPY security.users_authorities (user_id, authority_id) FROM stdin;
 1	9
 2	2
 2	6
+3	3
+3	7
+4	9
 \.
 
 

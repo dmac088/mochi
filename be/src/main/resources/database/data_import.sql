@@ -1,16 +1,16 @@
 ﻿
-delete from mochi.customer;
+truncate table mochi.customer cascade;
 
-delete from mochi.role;
-delete from mochi.role_type;
+truncate table mochi.role cascade;
+truncate table mochi.role_type cascade;
 
-delete from mochi.organisation;
-delete from mochi.person;
-delete from mochi.party;
-delete from mochi.party_type;
+truncate table mochi.organisation cascade;
+truncate table mochi.person cascade;
+truncate table mochi.party cascade;
+truncate table mochi.party_type cascade;
 
-delete from mochi.product_attr_lcl;
-delete from mochi.product;
+truncate table mochi.product_attr_lcl cascade;
+truncate table mochi.product cascade;
 
 
 
@@ -32,12 +32,20 @@ INSERT INTO mochi.role_type(
 	VALUES (2, 'Supplier');
 
 INSERT INTO mochi.party(
-	pty_id, pty_typ_id, pty_usr_nm, pty_pwd)
-	VALUES (1, 1, 'dmac088', 'password');
+	pty_id, pty_typ_id)
+	VALUES (1, 1);
 
 INSERT INTO mochi.party(
-	pty_id, pty_typ_id, pty_usr_nm, pty_pwd)
-	VALUES (2, 2, 'bigball', 'password');
+	pty_id, pty_typ_id)
+	VALUES (2, 2);
+
+INSERT INTO mochi.party(
+	pty_id, pty_typ_id)
+	VALUES (3, 1);
+
+INSERT INTO mochi.party(
+	pty_id, pty_typ_id)
+	VALUES (4, 2);
 
 INSERT INTO mochi.person(
 	psn_id, psn_gvn_nm_en, psn_fml_nm_en, psn_nm_cn, enb)
@@ -46,6 +54,14 @@ INSERT INTO mochi.person(
 INSERT INTO mochi.organisation(
 	org_id, org_nme, org_reg_no)
 	VALUES (2, 'Big Balloons LTD', '1234567');    
+
+INSERT INTO mochi.person(
+	psn_id, psn_gvn_nm_en, psn_fml_nm_en, psn_nm_cn, enb)
+	VALUES (3, 'Purple', 'Wong', '丹尼爾麥基', '1');
+    
+INSERT INTO mochi.organisation(
+	org_id, org_nme, org_reg_no)
+	VALUES (4, 'Hop Lun LTD', '3216547');    
 
 insert into mochi.product(prd_id, upc_cd, prd_crtd_dt)
 values (1, '12345678', now());
