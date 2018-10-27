@@ -3,18 +3,57 @@ TRUNCATE TABLE security.USER_ CASCADE;
 TRUNCATE TABLE security.AUTHORITY CASCADE;
 TRUNCATE TABLE security.USERS_AUTHORITIES;
 
-INSERT INTO security.AUTHORITY(ID, NAME) VALUES (1, 'PERSON_CREATE');
-INSERT INTO security.AUTHORITY(ID, NAME) VALUES (2, 'PERSON_READ');
-INSERT INTO security.AUTHORITY(ID, NAME) VALUES (3, 'PERSON_UPDATE');
-INSERT INTO security.AUTHORITY(ID, NAME) VALUES (4, 'PERSON_DELETE');
+/*----------------------Party CRUD start-----------------------------*/
+INSERT INTO security.AUTHORITY(ID, NAME) VALUES (1, 'PARTY_CREATE');
+INSERT INTO security.AUTHORITY(ID, NAME) VALUES (2, 'PARTY_READ');
+INSERT INTO security.AUTHORITY(ID, NAME) VALUES (3, 'PARTY_UPDATE');
+INSERT INTO security.AUTHORITY(ID, NAME) VALUES (4, 'PARTY_DELETE');
+/*----------------------Party CRUD end-----------------------------*/
 
-INSERT INTO security.AUTHORITY(ID, NAME) VALUES (5, 'PRODUCT_CREATE');
-INSERT INTO security.AUTHORITY(ID, NAME) VALUES (6, 'PRODUCT_READ');
-INSERT INTO security.AUTHORITY(ID, NAME) VALUES (7, 'PRODUCT_UPDATE');
-INSERT INTO security.AUTHORITY(ID, NAME) VALUES (8, 'PRODUCT_DELETE');
+/*----------------------Person CRUD start-----------------------------*/
+INSERT INTO security.AUTHORITY(ID, NAME) VALUES (5, 'PERSON_CREATE');
+INSERT INTO security.AUTHORITY(ID, NAME) VALUES (6, 'PERSON_READ');
+INSERT INTO security.AUTHORITY(ID, NAME) VALUES (7, 'PERSON_UPDATE');
+INSERT INTO security.AUTHORITY(ID, NAME) VALUES (8, 'PERSON_DELETE');
+/*----------------------Person CRUD end-----------------------------*/
 
-INSERT INTO security.AUTHORITY(ID, NAME) VALUES (9, 'ROLE_PRODUCT_READER');
-INSERT INTO security.AUTHORITY(ID, NAME) VALUES (10, 'ROLE_PERSON_READER');
+/*----------------------Organisation CRUD start-----------------------------*/
+INSERT INTO security.AUTHORITY(ID, NAME) VALUES (9, 'ORGANISATION_CREATE');
+INSERT INTO security.AUTHORITY(ID, NAME) VALUES (10, 'ORGANISATION_READ');
+INSERT INTO security.AUTHORITY(ID, NAME) VALUES (11, 'ORGANISATION_UPDATE');
+INSERT INTO security.AUTHORITY(ID, NAME) VALUES (12, 'ORGANISATION_DELETE');
+/*----------------------Organisation CRUD end-----------------------------*/
+
+/*----------------------Role CRUD start-----------------------------*/
+INSERT INTO security.AUTHORITY(ID, NAME) VALUES (13, 'ROLE_CREATE');
+INSERT INTO security.AUTHORITY(ID, NAME) VALUES (14, 'ROLE_READ');
+INSERT INTO security.AUTHORITY(ID, NAME) VALUES (15, 'ROLE_UPDATE');
+INSERT INTO security.AUTHORITY(ID, NAME) VALUES (16, 'ROLE_DELETE');
+/*----------------------Role CRUD end-----------------------------*/
+
+/*----------------------Customer CRUD start-----------------------------*/
+INSERT INTO security.AUTHORITY(ID, NAME) VALUES (17, 'CUSTOMER_CREATE');
+INSERT INTO security.AUTHORITY(ID, NAME) VALUES (18, 'CUSTOMER_READ');
+INSERT INTO security.AUTHORITY(ID, NAME) VALUES (19, 'CUSTOMER_UPDATE');
+INSERT INTO security.AUTHORITY(ID, NAME) VALUES (20, 'CUSTOMER_DELETE');
+/*----------------------Customer CRUD end-----------------------------*/
+
+/*----------------------Supplier CRUD start-----------------------------*/
+INSERT INTO security.AUTHORITY(ID, NAME) VALUES (21, 'SUPPLIER_CREATE');
+INSERT INTO security.AUTHORITY(ID, NAME) VALUES (22, 'SUPPLIER_READ');
+INSERT INTO security.AUTHORITY(ID, NAME) VALUES (23, 'SUPPLIER_UPDATE');
+INSERT INTO security.AUTHORITY(ID, NAME) VALUES (24, 'SUPPLIER_DELETE');
+/*----------------------Supplier CRUD end-----------------------------*/
+
+/*----------------------Product CRUD start-----------------------------*/
+INSERT INTO security.AUTHORITY(ID, NAME) VALUES (25, 'PRODUCT_CREATE');
+INSERT INTO security.AUTHORITY(ID, NAME) VALUES (26, 'PRODUCT_READ');
+INSERT INTO security.AUTHORITY(ID, NAME) VALUES (27, 'PRODUCT_UPDATE');
+INSERT INTO security.AUTHORITY(ID, NAME) VALUES (28, 'PRODUCT_DELETE');
+/*----------------------Product CRUD end-----------------------------*/
+
+
+INSERT INTO security.AUTHORITY(ID, NAME) VALUES (29, 'ROLE_PRODUCT_READER');
 
 
 INSERT INTO security.USER_(PTY_ID, USER_NAME, PASSWORD, ACCOUNT_EXPIRED, ACCOUNT_LOCKED, CREDENTIALS_EXPIRED, ENABLED)
@@ -29,23 +68,31 @@ INSERT INTO security.USER_(PTY_ID, USER_NAME, PASSWORD, ACCOUNT_EXPIRED, ACCOUNT
 INSERT INTO security.USER_(PTY_ID, USER_NAME, PASSWORD, ACCOUNT_EXPIRED, ACCOUNT_LOCKED, CREDENTIALS_EXPIRED, ENABLED)
   VALUES (4, 'reader2', /*reader1234*/'$2a$08$vVXqh6S8TqfHMs1SlNTu/.J25iUCrpGBpyGExA.9yI.IlDRadR6Ea', FALSE, FALSE, FALSE, TRUE);
 
-INSERT INTO security.USERS_AUTHORITIES(USER_ID, AUTHORITY_ID) VALUES (1, 1);
-INSERT INTO security.USERS_AUTHORITIES(USER_ID, AUTHORITY_ID) VALUES (1, 2);
-INSERT INTO security.USERS_AUTHORITIES(USER_ID, AUTHORITY_ID) VALUES (1, 3);
-INSERT INTO security.USERS_AUTHORITIES(USER_ID, AUTHORITY_ID) VALUES (1, 4);
-INSERT INTO security.USERS_AUTHORITIES(USER_ID, AUTHORITY_ID) VALUES (1, 5);
-INSERT INTO security.USERS_AUTHORITIES(USER_ID, AUTHORITY_ID) VALUES (1, 6);
-INSERT INTO security.USERS_AUTHORITIES(USER_ID, AUTHORITY_ID) VALUES (1, 7);
-INSERT INTO security.USERS_AUTHORITIES(USER_ID, AUTHORITY_ID) VALUES (1, 8);
-INSERT INTO security.USERS_AUTHORITIES(USER_ID, AUTHORITY_ID) VALUES (1, 9);
+/*----------------------admin user start-----------------------------*/
+INSERT INTO security.USERS_AUTHORITIES(USER_ID, AUTHORITY_ID)
+SELECT (SELECT pty_id FROM security.USER_ WHERE user_name = 'admin') as USER_ID,
+       id as AUTHORITY_ID
+FROM security.AUTHORITY;
+/*----------------------admin user end-----------------------------*/
 
-INSERT INTO security.USERS_AUTHORITIES(USER_ID, AUTHORITY_ID) VALUES (2, 2);
-INSERT INTO security.USERS_AUTHORITIES(USER_ID, AUTHORITY_ID) VALUES (2, 6);
+/*----------------------reader user start-----------------------------*/
+INSERT INTO security.USERS_AUTHORITIES(USER_ID, AUTHORITY_ID)
+SELECT (SELECT pty_id FROM security.USER_ WHERE user_name = 'reader') as USER_ID,
+       id as AUTHORITY_ID
+FROM security.AUTHORITY
+WHERE NAME like '%READ';
+/*----------------------reader user end-----------------------------*/
 
-INSERT INTO security.USERS_AUTHORITIES(USER_ID, AUTHORITY_ID) VALUES (3, 3);
-INSERT INTO security.USERS_AUTHORITIES(USER_ID, AUTHORITY_ID) VALUES (3, 7);
 
-INSERT INTO security.USERS_AUTHORITIES(USER_ID, AUTHORITY_ID) VALUES (4, 9);
+/*----------------------modifier user start-----------------------------*/
+INSERT INTO security.USERS_AUTHORITIES(USER_ID, AUTHORITY_ID)
+SELECT (SELECT pty_id FROM security.USER_ WHERE user_name = 'modifier') as USER_ID,
+       id as AUTHORITY_ID
+FROM security.AUTHORITY
+WHERE NAME like '%CREATE'
+OR NAME like '%UPDATE'
+OR NAME like '%DELETE';
+/*----------------------modifier user end-----------------------------*/
 
 END
 
