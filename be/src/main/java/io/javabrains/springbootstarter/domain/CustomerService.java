@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CustomerService {
@@ -15,26 +16,32 @@ public class CustomerService {
 	private CustomCustomerRepository customerRepository; 
 
 	
+	@PreAuthorize("hasAuthority('CUSTOMER_READER')")
+	@Transactional(readOnly = true)
 	public List<Customer> getAllCustomers() {
 		return customerRepository.findAll();
 	}
 
 	@PreAuthorize("hasAuthority('CUSTOMER_READ')")
+	@Transactional(readOnly = true)
 	public Optional<Customer> getCustomer(Long CustomerId) {
 		return customerRepository.findById(CustomerId);
 	}
 	
 	@PreAuthorize("hasAuthority('CUSTOMER_CREATE')")
+	@Transactional
 	public void addCustomer(Customer customer) {
 		customerRepository.save(customer);
 	}
 	
 	@PreAuthorize("hasAuthority('CUSTOMER_UPDATE')")
+	@Transactional
 	public void updateCustomer(Long id, Customer customer) {
 		customerRepository.save(customer);
 	}
 	
 	@PreAuthorize("hasAuthority('CUSTOMER_DELETE')")
+	@Transactional
 	public void deleteCustomer(Long id) {
 		customerRepository.deleteById(id);
 	}
