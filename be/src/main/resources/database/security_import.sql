@@ -55,7 +55,13 @@ INSERT INTO security.AUTHORITY(ID, NAME) VALUES (28, 'PRODUCT_DELETE');
 
 INSERT INTO security.AUTHORITY(ID, NAME) VALUES (29, 'ROLE_PRODUCT_READER');
 
+--password salt = $2a$08$
 
+
+/*----------------------user accounts start (not clients)-----------------------------*/
+/*
+These use BCryptPasswordEncoder(8)
+*/
 INSERT INTO security.USER_(PTY_ID, USER_NAME, PASSWORD, ACCOUNT_EXPIRED, ACCOUNT_LOCKED, CREDENTIALS_EXPIRED, ENABLED)
   VALUES (1, 'admin', /*admin1234*/'$2a$08$qvrzQZ7jJ7oy2p/msL4M0.l83Cd0jNsX6AJUitbgRXGzge4j035ha', FALSE, FALSE, FALSE, TRUE);
 
@@ -67,6 +73,13 @@ INSERT INTO security.USER_(PTY_ID, USER_NAME, PASSWORD, ACCOUNT_EXPIRED, ACCOUNT
 
 INSERT INTO security.USER_(PTY_ID, USER_NAME, PASSWORD, ACCOUNT_EXPIRED, ACCOUNT_LOCKED, CREDENTIALS_EXPIRED, ENABLED)
   VALUES (4, 'reader2', /*reader1234*/'$2a$08$vVXqh6S8TqfHMs1SlNTu/.J25iUCrpGBpyGExA.9yI.IlDRadR6Ea', FALSE, FALSE, FALSE, TRUE);
+
+
+--is it worth creating this account?
+ INSERT INTO security.USER_(PTY_ID, USER_NAME, PASSWORD, ACCOUNT_EXPIRED, ACCOUNT_LOCKED, CREDENTIALS_EXPIRED, ENABLED)
+  VALUES (1, 'account-creator', /*admin1234*/'$2a$08$qvrzQZ7jJ7oy2p/msL4M0.l83Cd0jNsX6AJUitbgRXGzge4j035ha', FALSE, FALSE, FALSE, TRUE);
+/*----------------------user accounts end (not clients)-----------------------------*/
+
 
 /*----------------------admin user start-----------------------------*/
 INSERT INTO security.USERS_AUTHORITIES(USER_ID, AUTHORITY_ID)
