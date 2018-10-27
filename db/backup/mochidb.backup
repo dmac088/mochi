@@ -569,7 +569,7 @@ ALTER TABLE ONLY security.authority ALTER COLUMN id SET DEFAULT nextval('securit
 COPY mochi.customer (rle_id, cst_id) FROM stdin;
 1	0123456789
 2	9876543210
-757	0123765489
+761	0123765489
 \.
 
 
@@ -577,7 +577,7 @@ COPY mochi.customer (rle_id, cst_id) FROM stdin;
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('mochi.hibernate_sequence', 757, true);
+SELECT pg_catalog.setval('mochi.hibernate_sequence', 761, true);
 
 
 --
@@ -615,7 +615,7 @@ COPY mochi.party (pty_id, pty_typ_id) FROM stdin;
 2	2
 3	1
 4	2
-756	1
+760	1
 \.
 
 
@@ -657,7 +657,7 @@ SELECT pg_catalog.setval('mochi.party_type_pty_typ_id_seq', 1, false);
 COPY mochi.person (psn_id, psn_gvn_nm_en, psn_fml_nm_en, psn_nm_cn, enb) FROM stdin;
 1	Daniel	Mackie	丹尼爾麥基	t
 3	Purple	Wong	丹尼爾麥基	t
-756	Daniel	Mackie	丹尼爾麥基	\N
+760	Daniel	Mackie	丹尼爾麥基	\N
 \.
 
 
@@ -697,7 +697,7 @@ COPY mochi.product_attr_lcl (prd_lcl_id, prd_id, prd_desc, prd_img_pth, prd_rrp,
 COPY mochi.role (rle_id, rle_typ_id, rle_start_dttm, pty_id) FROM stdin;
 1	1	2018-10-26	1
 2	1	2018-10-26	2
-757	1	2018-10-26	756
+761	1	2018-10-26	760
 \.
 
 
@@ -753,15 +753,16 @@ SELECT pg_catalog.setval('mochi.thing_id_seq', 9, false);
 --
 
 COPY security.authority (id, name) FROM stdin;
-1	CUSTOMER_CREATE
-2	CUSTOMER_READ
-3	CUSTOMER_UPDATE
-4	CUSTOMER_DELETE
+1	PERSON_CREATE
+2	PERSON_READ
+3	PERSON_UPDATE
+4	PERSON_DELETE
 5	PRODUCT_CREATE
 6	PRODUCT_READ
 7	PRODUCT_UPDATE
 8	PRODUCT_DELETE
 9	ROLE_PRODUCT_READER
+10	ROLE_PERSON_READER
 \.
 
 
@@ -869,7 +870,6 @@ COPY security.user_ (pty_id, account_expired, account_locked, credentials_expire
 2	f	f	f	t	$2a$08$dwYz8O.qtUXboGosJFsS4u19LHKW7aCQ0LXXuNlRfjjGKwj5NfKSe	reader
 3	f	f	f	t	$2a$08$kPjzxewXRGNRiIuL4FtQH.mhMn7ZAFBYKB3ROz.J24IX8vDAcThsG	modifier
 4	f	f	f	t	$2a$08$vVXqh6S8TqfHMs1SlNTu/.J25iUCrpGBpyGExA.9yI.IlDRadR6Ea	reader2
-756	f	f	f	t	$2a$08$oKjuabPX/XHATZwtU2ZZ7udloRNSuYSBAlo3f6dL7DO00uCFtfLOy	dmac198
 \.
 
 
