@@ -325,7 +325,7 @@ CREATE TABLE mochi.spring_session (
     max_inactive_interval integer NOT NULL,
     principal_name character varying(100),
     expiry_time bigint NOT NULL,
-    primary_id character(36)
+    primary_id character(36) NOT NULL
 );
 
 
@@ -573,6 +573,7 @@ COPY mochi.customer (rle_id, cst_id) FROM stdin;
 2	9876543210
 761	0123765489
 763	0112456789
+769	0123456999
 \.
 
 
@@ -580,7 +581,7 @@ COPY mochi.customer (rle_id, cst_id) FROM stdin;
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('mochi.hibernate_sequence', 763, true);
+SELECT pg_catalog.setval('mochi.hibernate_sequence', 771, true);
 
 
 --
@@ -620,6 +621,7 @@ COPY mochi.party (pty_id, pty_typ_id) FROM stdin;
 4	2
 760	1
 762	1
+768	1
 \.
 
 
@@ -663,6 +665,7 @@ COPY mochi.person (psn_id, psn_gvn_nm_en, psn_fml_nm_en, psn_nm_cn, enb) FROM st
 3	Purple	Wong	丹尼爾麥基	t
 760	Daniel	Mackie	丹尼爾麥基	\N
 762	Daniel	Mackie	丹尼爾麥基	\N
+768	Daniel	Mackie	丹尼爾麥基	\N
 \.
 
 
@@ -704,6 +707,7 @@ COPY mochi.role (rle_id, rle_typ_id, rle_start_dttm, pty_id) FROM stdin;
 2	1	2018-10-26	2
 761	1	2018-10-26	760
 763	1	2018-10-26	762
+769	1	2018-10-26	768
 \.
 
 
@@ -736,7 +740,7 @@ SELECT pg_catalog.setval('mochi.role_type_role_typ_id_seq', 1, false);
 --
 
 COPY mochi.spring_session (session_id, creation_time, last_access_time, max_inactive_interval, principal_name, expiry_time, primary_id) FROM stdin;
-93e6b37f-6e20-41c6-9eb4-4d06688f37e9	1540706483910	1540707251507	1800	\N	1540709051507	b2e1aa0d-9a44-406b-97a2-4678ac343b74
+acddf6be-f93a-4dc7-960c-41be39acfde1	1540706483910	1540707999768	1800	\N	1540709799768	b2e1aa0d-9a44-406b-97a2-4678ac343b74
 \.
 
 
@@ -902,6 +906,7 @@ COPY security.user_ (pty_id, account_expired, account_locked, credentials_expire
 2	f	f	f	t	$2a$08$dwYz8O.qtUXboGosJFsS4u19LHKW7aCQ0LXXuNlRfjjGKwj5NfKSe	reader
 3	f	f	f	t	$2a$08$kPjzxewXRGNRiIuL4FtQH.mhMn7ZAFBYKB3ROz.J24IX8vDAcThsG	modifier
 4	f	f	f	t	$2a$08$vVXqh6S8TqfHMs1SlNTu/.J25iUCrpGBpyGExA.9yI.IlDRadR6Ea	reader2
+768	f	f	f	t	$2a$08$qvrzQZ7jJ7oy2p/msL4M0.l83Cd0jNsX6AJUitbgRXGzge4j035ha	bob
 \.
 
 
@@ -1125,7 +1130,7 @@ ALTER TABLE ONLY mochi.role_type
 --
 
 ALTER TABLE ONLY mochi.spring_session_attributes
-    ADD CONSTRAINT spring_session_attributes_pk PRIMARY KEY (session_id, attribute_name);
+    ADD CONSTRAINT spring_session_attributes_pk PRIMARY KEY (session_primary_id, attribute_name);
 
 
 --
@@ -1133,7 +1138,7 @@ ALTER TABLE ONLY mochi.spring_session_attributes
 --
 
 ALTER TABLE ONLY mochi.spring_session
-    ADD CONSTRAINT spring_session_pk PRIMARY KEY (session_id);
+    ADD CONSTRAINT spring_session_pk PRIMARY KEY (primary_id);
 
 
 --
@@ -1307,7 +1312,7 @@ ALTER TABLE ONLY mochi.role
 --
 
 ALTER TABLE ONLY mochi.spring_session_attributes
-    ADD CONSTRAINT spring_session_attributes_fk FOREIGN KEY (session_id) REFERENCES mochi.spring_session(session_id) ON DELETE CASCADE;
+    ADD CONSTRAINT spring_session_attributes_fk FOREIGN KEY (session_primary_id) REFERENCES mochi.spring_session(primary_id) ON DELETE CASCADE;
 
 
 --
