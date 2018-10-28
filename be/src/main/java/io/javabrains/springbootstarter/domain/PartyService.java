@@ -16,7 +16,7 @@ public class PartyService {
 	@Autowired
 	private PartyRepository PartyRepository; 
 	
-	@PreAuthorize("hasAuthority('PARTY_READER')")
+	@PreAuthorize("hasRole('PARTY_READER')")
 	@Transactional(readOnly = true)
 	public List<Party> getAllPartys() {
 		List<Party> Partys = new ArrayList<>();
@@ -28,7 +28,7 @@ public class PartyService {
 		return Partys;
 	}
 	
-	@PreAuthorize("hasAuthority('PARTY_READER')")
+	@PreAuthorize("hasAuthority('PARTY_READ')")
 	@Transactional(readOnly = true)
 	public Optional<Party> getParty(Long id) {
 		Optional<Party> p = PartyRepository.findById(id);

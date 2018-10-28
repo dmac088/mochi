@@ -16,7 +16,7 @@ public class RoleService {
 	@Autowired
 	private RoleRepository RoleRepository; 
 	
-	@PreAuthorize("hasAuthority('ROLE_READER')")
+	@PreAuthorize("hasRole('ROLE_READER')")
 	@Transactional(readOnly = true)
 	public List<Role> getAllRoles() {
 		List<Role> Roles = new ArrayList<>();
@@ -27,7 +27,7 @@ public class RoleService {
 		return Roles;
 	}
 
-	@PreAuthorize("hasAuthority('ROLE_READER')")
+	@PreAuthorize("hasAuthority('ROLE_READ')")
 	@Transactional(readOnly = true)
 	public Optional<Role> getRole(Long id) {
 		Optional<Role> p = RoleRepository.findById(id);
