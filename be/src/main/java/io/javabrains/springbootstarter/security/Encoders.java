@@ -1,4 +1,4 @@
-package io.javabrains.springbootstarter.security;
+	package io.javabrains.springbootstarter.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,4 +16,4 @@ public class Encoders {
     public PasswordEncoder userPasswordEncoder() {
         return new BCryptPasswordEncoder(8);
     }
-}
+}  

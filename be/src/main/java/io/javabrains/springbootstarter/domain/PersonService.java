@@ -15,7 +15,7 @@ public class PersonService {
 	private PersonRepository personRepository; 
 	
 	
-	@PreAuthorize("hasAuthority('PERSON_READER')")
+	@PreAuthorize("hasRole('PERSON_READER')")
 	@Transactional(readOnly = true)
 	public List<Person> getAllPersons() {
 		List<Person> Persons = new ArrayList<>();
