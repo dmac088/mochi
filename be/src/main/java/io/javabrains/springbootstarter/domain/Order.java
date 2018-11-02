@@ -8,7 +8,6 @@ public final class Order {
 	private ArrayList<OrderLine> orderlines; 
 	
 	public Order() {
-		super();
 	}
 	
 	public ArrayList<OrderLine> getOrderLines() {

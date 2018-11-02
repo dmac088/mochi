@@ -35,7 +35,7 @@ class Home extends Component {
   login() {
     let port = (window.location.port ? ':' + window.location.port : '');
     if (port === ':3000') {
-      port = ':3000';
+      port = ':8090';
     }
     window.location.href = '//' + window.location.hostname + port + '/private';
   }
