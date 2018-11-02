@@ -9,10 +9,29 @@ class App extends Component {
   };
 
   async componentDidMount() {
-    const response = await fetch('/api/Person');
-    const body = await response.json();
-	console.log(body);
-    this.setState({ customers: body, isLoading: false });
+    const response = await 
+	fetch(
+		'https://localhost:8090/oauth/token', {
+	    crossDomain: true,			
+		method: 'POST', 
+		headers: new Headers({
+		 'Authorization': 						'Basic c3ByaW5nLXNlY3VyaXR5LW9hdXRoMi1yZWFkLXdyaXRlLWNsaWVudDpzcHJpbmctc2VjdXJpdHktb2F1dGgyLXJlYWQtd3JpdGUtY2xpZW50LXBhc3N3b3JkMTIzNA==', 
+		 'cache-control': 						'no-cache',
+		 'content-type':  						'multipart/form-data',
+		 'Access-Control-Allow-Credentials': 	'true', 
+		 'Access-Control-Allow-Origin' : 		'*',
+		 'Access-Control-Request-Method': 		'POST'
+		}),
+		 body: JSON.stringify({
+			'client_id': 	'spring-security-oauth2-read-write-client', 
+			'username': 	'admin',
+			'password': 	'admin1234',
+			'grant_type':	'password'
+		})
+	});
+    
+	console.log(response);
+    //this.setState({ customers: body, isLoading: false });
   }
 
   render() {

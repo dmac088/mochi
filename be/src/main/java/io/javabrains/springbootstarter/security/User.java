@@ -93,6 +93,14 @@ public class User implements UserDetails, Serializable {
 		return this.password;
 	}
 	
+	public Party getUserParty() {
+		return userParty;
+	}
+
+	public void setUserParty(Party userParty) {
+		this.userParty = userParty;
+	}
+
 	public void setPassword(String password) {
 		// TODO Auto-generated method stub
 		this.password = password;
