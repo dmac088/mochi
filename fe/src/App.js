@@ -15,8 +15,9 @@ class App extends Component {
 	    crossDomain: true,			
 		method: 'POST', 
 		headers: new Headers({
-		 'Authorization': 	'Basic c3ByaW5nLXNlY3VyaXR5LW9hdXRoMi1yZWFkLXdyaXRlLWNsaWVudDpzcHJpbmctc2VjdXJpdHktb2F1dGgyLXJlYWQtd3JpdGUtY2xpZW50LXBhc3N3b3JkMTIzNA==',
-		 'Content-Type':    'application/x-www-form-urlencoded' 
+			'Authorization':   'Basic c3ByaW5nLXNlY3VyaXR5LW9hdXRoMi1yZWFkLXdyaXRlLWNsaWVudDpzcHJpbmctc2VjdXJpdHktb2F1dGgyLXJlYWQtd3JpdGUtY2xpZW50LXBhc3N3b3JkMTIzNA==',
+			'Content-Type':    'multipart/form-data',
+			'Cache-Control':   'no-cache'
 		}),
 		 body: JSON.stringify({
 			'client_id': 	'spring-security-oauth2-read-write-client', 
