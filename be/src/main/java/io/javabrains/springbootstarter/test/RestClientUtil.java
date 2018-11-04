@@ -69,11 +69,11 @@ public class RestClientUtil {
     private static String CUSTOMER_GIVEN_NAME_EN 			= "Daniel";
     private static String CUSTOMER_FAMILY_NAME_EN 			= "Mackie";
     private static String CUSTOMER_NAME_CN 					= "丹尼爾麥基";
-    private static String CUSTOMER_ID 						= "0123765489";
+    private static String CUSTOMER_ID 						= "0123765429";
     private static Date   CUSTOMER_START_DATE 				= new Date();
     private static String CUSTOMER_ROLE_TYPE 				= "Customer";
     
-    private static String CUSTOMER_USERNAME 				= "dmac198";
+    private static String CUSTOMER_USERNAME 				= "dmac199";
     private static String CUSTOMER_PASSWORD 				= "password";
 
     private HttpHeaders getHeaders() {
