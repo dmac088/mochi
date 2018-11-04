@@ -131,7 +131,7 @@ public class RestClientUtil {
 	     RoleType objRoleType = new RoleType();
 	     objRoleType.setRoleTypeId(ROLE_TYPE_ID);
 		 Customer objCustomer = new Customer();
-		 objCustomer.setCustomerId(this.CUSTOMER_ID);
+		 objCustomer.setCustomerNumber(this.CUSTOMER_ID);
 		 objCustomer.setRoleStart(this.CUSTOMER_START_DATE);
 		 objCustomer.setRoleType(objRoleType);
 		 objCustomer.getRoleType().setRoleTypeDesc(CUSTOMER_ROLE_TYPE);
@@ -163,6 +163,6 @@ public class RestClientUtil {
 		 ResponseEntity<Person> uri = restTemplate.exchange(this.PERSON_ENDPOINT, HttpMethod.POST, personEntity, Person.class);
 		 Assert.assertTrue(CUSTOMER_USERNAME.equals(uri.getBody().getPartyUser().getUsername()));
 		 Assert.assertTrue(CUSTOMER_GIVEN_NAME_EN.equals(uri.getBody().getGivenNameEn()));
-		 Assert.assertTrue(CUSTOMER_ID.equals(((Customer) uri.getBody().getPartyRole(CUSTOMER_ROLE_TYPE)).getCustomerId()));
+		 Assert.assertTrue(CUSTOMER_ID.equals(((Customer) uri.getBody().getPartyRole(CUSTOMER_ROLE_TYPE)).getCustomerNumber()));
 	}
 }

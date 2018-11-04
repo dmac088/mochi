@@ -9,11 +9,10 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface ProductRepository extends CrudRepository<Product, Long> {
 
-	ArrayList<Product> findByProductId(Long productId);
 	
 	ArrayList<Product> findByLclCd(String lng);
 	
 	ArrayList<Product> findAll(Specification<Product> spec);
 
-	Optional<Product> findById(Long id);
+	Optional<Product> findByProductId(Long id);
 }

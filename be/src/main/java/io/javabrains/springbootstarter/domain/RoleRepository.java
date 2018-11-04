@@ -4,6 +4,6 @@ import java.util.Optional;
 
 public interface RoleRepository extends RoleBaseRepository<Role>  {
 	
-	Optional<Role> findById(Long id);
+	Optional<Role> findByRoleId(Long id);
 
 }

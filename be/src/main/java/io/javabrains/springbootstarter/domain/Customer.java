@@ -17,13 +17,13 @@ public class Customer extends Role {
 	}
 	
 	@Column(name="cst_id")
-	private String CustomerId;
+	private String CustomerNumber;
 
-	public String getCustomerId() {
-		return CustomerId;
+	public String getCustomerNumber() {
+		return CustomerNumber;
 	}
 
-	public void setCustomerId(String customerId) {
-		CustomerId = customerId;
+	public void setCustomerNumber(String CustomerNumber) {
+		this.CustomerNumber = CustomerNumber;
 	}
 }
