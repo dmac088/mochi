@@ -40,12 +40,11 @@ class App extends Component {
     const body = await response.text();
     console.log(JSON.parse(body).access_token);
     this.setState({ access_token: JSON.parse(body).access_token, isLoading: false });
-  }
-  
-  async fetchCustomers() {
-	const response = await 
+	
+	
+	const response2 = await 
 	fetch(
-		"https://localhost:8090/Customer", {
+		"https://localhost:8090/api/Customer", {
 		crossDomain: true,
 		method: "GET", 
 		headers: new Headers({
@@ -54,10 +53,11 @@ class App extends Component {
 		})
 	});  
 	
-	const body = await response.text();
-	this.setState({ customers: JSON.parse(body), isLoading: false });
-	return body;
+	const body2 = await response2.text();
+	this.setState({ customers: JSON.parse(body2), isLoading: false })
   }
+  
+  
 
   render() {
     const {customers, isLoading} = this.state;
@@ -76,7 +76,7 @@ class App extends Component {
           <h2>Customer List</h2>
           {customers.map(customer =>
             <div id={customer.partyId}> 
-              {customer.givenNameEn}
+              {customer.customerId}
             </div>
           )}
         </div>
