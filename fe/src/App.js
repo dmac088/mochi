@@ -12,9 +12,9 @@ class App extends Component {
   async componentDidMount() {
     let details = {
         "client_id": "spring-security-oauth2-read-write-client",
-		"username": "admin",
-		"password": "admin1234",
-		"grant_type": "password"
+    		"username": "admin",
+    		"password": "admin1234",
+    		"grant_type": "password"
     };
 
 	let formBody = [];
@@ -25,7 +25,7 @@ class App extends Component {
     }
     formBody = formBody.join("&");
 
-    const response = await
+  const tokenresponse = await
 	fetch(
 		"https://localhost:8090/oauth/token", {
 		crossDomain: true,
@@ -37,29 +37,28 @@ class App extends Component {
 		}),
 		 body: formBody
 	});
-    const body = await response.text();
-    console.log(JSON.parse(body).access_token);
-    this.setState({ access_token: JSON.parse(body).access_token, isLoading: false });
 
+  const tokenbody = await tokenresponse.text();
+  let access_token = JSON.parse(tokenbody).access_token
+  console.log(access_token);
 
-	const response2 = await
-	fetch(
-		"https://localhost:8090/api/Customer", {
-		crossDomain: true,
-		method: "GET",
-		headers: new Headers({
-			"Authorization": 	"Bearer "+this.state.access_token,
-			"Content-Type": 	"application/json"
-		})
-	});
-
-	const body2 = await response2.text();
-	this.setState({ customers: JSON.parse(body2), isLoading: false })
+  const customerResponse = await
+  fetch(
+      "https://localhost:8090/api/Customer", {
+      crossDomain: true,
+      method: "GET",
+      headers: new Headers({
+        "Authorization": 	"Bearer "+access_token,
+        "Content-Type": 	"application/json"
+      })
+  });
+  const customerBody = await customerResponse.text();
+  this.setState({ customers: JSON.parse(customerBody), isLoading: false });
   }
 
 
 
-  render() {
+   render() {
     const {customers, isLoading} = this.state;
     console.log(this.state.customers);
     if (isLoading) {
