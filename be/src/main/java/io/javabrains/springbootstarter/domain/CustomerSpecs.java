@@ -11,11 +11,11 @@ import org.springframework.data.jpa.domain.Specification;
 public class CustomerSpecs {
 
 
-	  public static Specification<Customer> byCustomerID(String customerId) {
+	  public static Specification<Customer> byCustomerNumber(String customerId) {
 		    return new Specification<Customer>() {
 		      public Predicate toPredicate(Root<Customer> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
 		    	
-		    	  return builder.equal(root.get("CustomerId"), customerId);
+		    	  return builder.equal(root.get("CustomerNumber"), customerId);
 		    	 
 		      }
 		    };

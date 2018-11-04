@@ -2,7 +2,6 @@ package io.javabrains.springbootstarter.domain;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.jpa.domain.Specification;
@@ -18,7 +17,7 @@ public class CustomCustomerRepository implements CustomerRepository {
 	@SuppressWarnings("unchecked")
 	public Customer save(Customer entity) {
     	System.out.println("calling CustomCustomerRepository.save()");
-    	System.out.println("Customer ID = " + entity.getCustomerId());
+    	System.out.println("Customer Number = " + entity.getCustomerNumber());
     	customerRepository.save(entity);
     	return entity;
     }
@@ -39,12 +38,6 @@ public class CustomCustomerRepository implements CustomerRepository {
 	public List<Customer> findAll() {
 		// TODO Auto-generated method stub
 		return customerRepository.findAll();
-	}
-
-	@Override
-	public Customer findByRoleId(Long Id) {
-		// TODO Auto-generated method stub
-		return customerRepository.findByRoleId(Id);
 	}
 
 	@Override
@@ -92,6 +85,14 @@ public class CustomCustomerRepository implements CustomerRepository {
 	public void deleteAll(Iterable<? extends Customer> entities) {
 		// TODO Auto-generated method stub
 		
-	};
+	}
+
+	@Override
+	public Optional<Role> findByRoleId(Long Id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
     
 }

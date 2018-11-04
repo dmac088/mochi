@@ -1,6 +1,7 @@
 package io.javabrains.springbootstarter.domain;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
@@ -12,7 +13,7 @@ public interface CustomerRepository extends RoleBaseRepository<Customer> {
 	List<Customer> findAll();
 	
 	//@Override
-	Customer findByRoleId(Long Id);
+	Optional<Role> findByRoleId(Long CustomerId);
 	
 	//Customer findOneByCustomerId(String Id);
 	//need to use specification since findByCustomerId causes an exception
