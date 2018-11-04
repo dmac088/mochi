@@ -1,6 +1,5 @@
 package io.javabrains.springbootstarter.security;
 
-import org.apache.catalina.filters.CorsFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
@@ -55,7 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-        .cors().and()
+     
         .csrf()
         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
         .and()
@@ -64,7 +63,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	        .antMatchers("/**/*.{js,html,css}").permitAll()
 	        
 	        /*api permits*/
-	        .antMatchers("/", "/api/**").permitAll()
+	        .antMatchers("/", "/api/**", "/oauth/token").permitAll()
 	        
 	        .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
 	        
