@@ -6,7 +6,7 @@ class App extends Component {
   state = {
     isLoading: true,
     customers: [],
-	access_token: ''
+	  access_token: ''
   };
 
   async componentDidMount() {
@@ -25,7 +25,7 @@ class App extends Component {
     }
     formBody = formBody.join("&");
 
-  const tokenresponse = await
+  const response = await
 	fetch(
 		"https://localhost:8090/oauth/token", {
 		crossDomain: true,
@@ -38,27 +38,31 @@ class App extends Component {
 		 body: formBody
 	});
 
-  const tokenbody = await tokenresponse.text();
-  let access_token = JSON.parse(tokenbody).access_token
-  console.log(access_token);
+  const body = await response.text();
+  this.setState({ isLoading: false});
+  this.fetchData(JSON.parse(body).access_token);
 
-  const customerResponse = await
-  fetch(
-      "https://localhost:8090/api/Customer", {
-      crossDomain: true,
-      method: "GET",
-      headers: new Headers({
-        "Authorization": 	"Bearer "+access_token,
-        "Content-Type": 	"application/json"
-      })
-  });
-  const customerBody = await customerResponse.text();
-  this.setState({ customers: JSON.parse(customerBody), isLoading: false });
   }
 
 
+  async fetchData(token) {
+    await
+    fetch(
+        "https://localhost:8090/api/Customer", {
+        crossDomain: true,
+        method: "GET",
+        headers: new Headers({
+          "Authorization": 	"Bearer "+token,
+          "Content-Type": 	"application/json"
+        })
+    })
+     .then((response) => response.json())
+     .then((json) => {this.setState({customers: json})
+  })
+}
 
-   render() {
+
+  render() {
     const {customers, isLoading} = this.state;
     console.log(this.state.customers);
     if (isLoading) {
