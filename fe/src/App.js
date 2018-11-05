@@ -6,7 +6,7 @@ import apiConfig from './config';
 class App extends Component {
   state = {
     isLoading: true,
-    customers: [],
+    customer: '',
 	  access_token: ''
   };
 
@@ -48,7 +48,7 @@ class App extends Component {
   async fetchData(token) {
     await
     fetch(
-        "https://localhost:8090/api/Customer", {
+        apiConfig.url+"/api/Customer/1", {
         crossDomain: true,
         method: "GET",
         headers: new Headers({
@@ -57,14 +57,14 @@ class App extends Component {
         })
     })
      .then((response) => response.json())
-     .then((json) => {this.setState({customers: json})
+     .then((json) => {this.setState({customer: json})
    })
   }
 
 
   render() {
-    const {customers, isLoading} = this.state;
-    console.log(this.state.customers);
+    const {customer, isLoading} = this.state;
+    console.log(this.state.customer);
     if (isLoading) {
       return <p>Loading...</p>;
     }
@@ -77,11 +77,11 @@ class App extends Component {
         </header>
         <div className="App-intro">
           <h2>Customer List</h2>
-          {customers.map(customer =>
-            <div id={customer.customerNumber} key={customer.roleId}>
-              {customer.customerNumber}
+
+            <div id={customer.partyId} key={customer.partyId}>
+              {customer.givenNameEn}
             </div>
-          )}
+
         </div>
       </div>
     );

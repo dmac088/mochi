@@ -23,5 +23,4 @@ public class Organization extends Party implements Serializable  {
 		this.OrganizationName = OrganizationName;
 	}
 	
-	
 }
