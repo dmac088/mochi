@@ -7,17 +7,17 @@
     <artifactId>mochi</artifactId>
     <version>0.1.0</version>
     <packaging>pom</packaging>
-     
+
     <parent>
 	  	<groupId>org.springframework.boot</groupId>
 	  	<artifactId>spring-boot-starter-parent</artifactId>
 	 	<version>2.0.5.RELEASE</version>
 	 	<relativePath/>
-  	</parent> 
+  	</parent>
 
     <modules>
     	<module>fe</module>
-    	<module>be</module>	
+    	<module>be</module>
     </modules>
-   
+
 </project>
