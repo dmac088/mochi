@@ -49,6 +49,10 @@ INSERT INTO mochi.party(
 	pty_id, pty_typ_id)
 	VALUES (4, 2);
 
+INSERT INTO mochi.organisation(
+            org_id, org_nme, org_reg_no)
+    VALUES (0, 'dummy', '12345679');
+
 INSERT INTO mochi.person(
 	psn_id, psn_gvn_nm_en, psn_fml_nm_en, psn_nm_cn, enb)
 	VALUES (1, 'Daniel', 'Mackie', '丹尼爾麥基', '1');
