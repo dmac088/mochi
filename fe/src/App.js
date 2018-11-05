@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import apiConfig from './config';
 
 class App extends Component {
   state = {
@@ -11,8 +12,7 @@ class App extends Component {
 
   async componentDidMount() {
     let details = {
-        "client_id": "spring-security-oauth2-read-write-client",
-    		"username": "admin",
+    		"username": "account-creator",
     		"password": "admin1234",
     		"grant_type": "password"
     };
@@ -27,11 +27,11 @@ class App extends Component {
 
   const response = await
 	fetch(
-		"https://localhost:8090/oauth/token", {
+		apiConfig.url+"/oauth/token", {
 		crossDomain: true,
 		method: "POST",
 		headers: new Headers({
-			"Authorization": "Basic "+btoa('spring-security-oauth2-read-write-client:spring-security-oauth2-read-write-client-password1234'),
+			"Authorization": "Basic "+apiConfig.clientId,
 			"Content-Type": "application/x-www-form-urlencoded",
 			"Cache-Control": "no-cache"
 		}),
@@ -58,8 +58,8 @@ class App extends Component {
     })
      .then((response) => response.json())
      .then((json) => {this.setState({customers: json})
-  })
-}
+   })
+  }
 
 
   render() {
@@ -69,7 +69,7 @@ class App extends Component {
       return <p>Loading...</p>;
     }
 
-    return (
+  return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />

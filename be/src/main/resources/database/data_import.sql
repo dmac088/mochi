@@ -13,7 +13,6 @@ truncate table mochi.product_attr_lcl cascade;
 truncate table mochi.product cascade;
 
 
-
 INSERT INTO mochi.party_type(
 	pty_typ_id, pty_typ_desc)
 	VALUES (1, 'Person');
@@ -22,7 +21,6 @@ INSERT INTO mochi.party_type(
 	pty_typ_id, pty_typ_desc)
 	VALUES (2, 'Organisation');    
 
-
 INSERT INTO mochi.role_type(
 	rle_typ_id, rle_typ_desc)
 	VALUES (1, 'Customer');
@@ -30,6 +28,10 @@ INSERT INTO mochi.role_type(
 INSERT INTO mochi.role_type(
 	rle_typ_id, rle_typ_desc)
 	VALUES (2, 'Supplier');
+
+INSERT INTO mochi.party(
+	pty_id, pty_typ_id)
+	VALUES (0, 2);
 
 INSERT INTO mochi.party(
 	pty_id, pty_typ_id)
