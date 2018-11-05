@@ -91,6 +91,9 @@ SELECT (SELECT pty_id FROM security.USER_ WHERE user_name = 'account-creator') a
        id as AUTHORITY_ID
 FROM security.AUTHORITY
 WHERE
+--0=0;
+--AND 
+
 (
 NAME like '%CREATE'
 OR NAME like '%UPDATE'
@@ -106,6 +109,8 @@ OR NAME like 'CUSTOMER%'
 OR NAME like 'SUPPLIER%'
 OR NAME like 'USER%'
 );
+
+
 /*----------------------account-creator user end-----------------------------*/
 
 

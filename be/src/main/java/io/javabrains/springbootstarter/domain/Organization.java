@@ -1,5 +1,7 @@
 package io.javabrains.springbootstarter.domain;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -8,7 +10,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "organisation", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "org_id")
-public class Organization extends Party {
+public class Organization extends Party implements Serializable  {
 	
 	@Column(name="org_nme")
 	private String OrganizationName;
