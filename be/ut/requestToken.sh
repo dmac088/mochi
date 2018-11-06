@@ -1,0 +1,11 @@
+curl --cacert '../src/main/resources/myCertificate.crt' \
+  --request POST \
+  --url https://localhost:8090/oauth/token \
+  --header 'authorization: Basic c3ByaW5nLXNlY3VyaXR5LW9hdXRoMi1yZWFkLXdyaXRlLWNsaWVudDpzcHJpbmctc2VjdXJpdHktb2F1dGgyLXJlYWQtd3JpdGUtY2xpZW50LXBhc3N3b3JkMTIzNA==' \
+  --header 'cache-control: no-cache' \
+  --header 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' \
+  --header 'postman-token: 9089c2e6-faf3-fce4-65d2-9c8c93831d1f' \
+  --form username=account-creator \
+  --form password=admin1234 \
+  --form client_id=spring-security-oauth2-read-write-client \
+  --form grant_type=password
