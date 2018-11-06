@@ -2,9 +2,6 @@ package io.javabrains.springbootstarter.domain;
 
 import java.util.List;
 import java.util.Optional;
-
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,7 +19,7 @@ public class PartyController {
 	
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.GET, value="/Party")
-    public List<Party> getAllPartys(HttpSession session) {
+    public List<Party> getAllPartys() {
 		System.out.println("calling getAllPartys");
         return PartyService.getAllPartys();
     }	

@@ -2,9 +2,6 @@ package io.javabrains.springbootstarter.domain;
 
 import java.util.List;
 import java.util.Optional;
-
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -29,7 +26,7 @@ public class ProductController {
 	
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.GET, value="/Product/{lcl}")
-    public List<Product> getAllProducts(HttpSession session, @PathVariable String lcl) {
+    public List<Product> getAllProducts(@PathVariable String lcl) {
 		System.out.println("calling getAllProductsForLcl");
         return productService.getAllProducts(lcl);	
     }	
