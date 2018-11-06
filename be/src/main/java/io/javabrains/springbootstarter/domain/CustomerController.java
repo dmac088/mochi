@@ -2,7 +2,6 @@ package io.javabrains.springbootstarter.domain;
 
 
 import java.util.List;
-import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +24,7 @@ public class CustomerController {
 	
 	
 	@GetMapping("/Customer")
-    public List<Customer> getAllCustomers(HttpSession session) {
+    public List<Customer> getAllCustomers() {
 		System.out.println("calling getAllCustomers");
 		return customerService.getAllCustomers();
 	}	

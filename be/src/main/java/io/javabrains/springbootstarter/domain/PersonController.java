@@ -1,9 +1,6 @@
 package io.javabrains.springbootstarter.domain;
 
 import java.util.List;
-
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +24,7 @@ public class PersonController {
 	
 
 	@GetMapping("/Person")
-    public List<Person> getAllPersons(HttpSession session) {
+    public List<Person> getAllPersons() {
 		System.out.println("calling getAllPersons");
         return personService.getAllPersons();
     }	

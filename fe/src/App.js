@@ -79,7 +79,7 @@ class App extends Component {
           <h2>Customer List</h2>
 
             <div id={customer.partyId} key={customer.partyId}>
-              {customer.givenNameEn}
+              {customer.givenNameEn} {customer.familyNameEn}
             </div>
 
         </div>
