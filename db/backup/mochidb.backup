@@ -315,36 +315,6 @@ CREATE SEQUENCE mochi.role_type_role_typ_id_seq
 ALTER TABLE mochi.role_type_role_typ_id_seq OWNER TO mochidb_owner;
 
 --
--- Name: spring_session; Type: TABLE; Schema: mochi; Owner: postgres
---
-
-CREATE TABLE mochi.spring_session (
-    primary_id character(36) NOT NULL,
-    session_id character(36) NOT NULL,
-    creation_time bigint NOT NULL,
-    last_access_time bigint NOT NULL,
-    max_inactive_interval integer NOT NULL,
-    expiry_time bigint NOT NULL,
-    principal_name character varying(100)
-);
-
-
-ALTER TABLE mochi.spring_session OWNER TO postgres;
-
---
--- Name: spring_session_attributes; Type: TABLE; Schema: mochi; Owner: postgres
---
-
-CREATE TABLE mochi.spring_session_attributes (
-    session_primary_id character(36) NOT NULL,
-    attribute_name character varying(200) NOT NULL,
-    attribute_bytes bytea NOT NULL
-);
-
-
-ALTER TABLE mochi.spring_session_attributes OWNER TO postgres;
-
---
 -- Name: thing_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -726,22 +696,6 @@ SELECT pg_catalog.setval('mochi.role_type_rle_typ_id_seq', 1, false);
 --
 
 SELECT pg_catalog.setval('mochi.role_type_role_typ_id_seq', 1, false);
-
-
---
--- Data for Name: spring_session; Type: TABLE DATA; Schema: mochi; Owner: postgres
---
-
-COPY mochi.spring_session (primary_id, session_id, creation_time, last_access_time, max_inactive_interval, expiry_time, principal_name) FROM stdin;
-\.
-
-
---
--- Data for Name: spring_session_attributes; Type: TABLE DATA; Schema: mochi; Owner: postgres
---
-
-COPY mochi.spring_session_attributes (session_primary_id, attribute_name, attribute_bytes) FROM stdin;
-\.
 
 
 --
@@ -1137,22 +1091,6 @@ ALTER TABLE ONLY mochi.role_type
 
 ALTER TABLE ONLY mochi.role_type
     ADD CONSTRAINT role_type_rle_typ_desc_key UNIQUE (rle_typ_desc);
-
-
---
--- Name: spring_session_attributes_pk; Type: CONSTRAINT; Schema: mochi; Owner: postgres
---
-
-ALTER TABLE ONLY mochi.spring_session_attributes
-    ADD CONSTRAINT spring_session_attributes_pk PRIMARY KEY (session_primary_id, attribute_name);
-
-
---
--- Name: spring_session_pk; Type: CONSTRAINT; Schema: mochi; Owner: postgres
---
-
-ALTER TABLE ONLY mochi.spring_session
-    ADD CONSTRAINT spring_session_pk PRIMARY KEY (primary_id);
 
 
 --
