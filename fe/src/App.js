@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import apiConfig from './config';
+import Greeting from './components/Greeting'
 
 class App extends Component {
   constructor(props) {
@@ -114,9 +115,8 @@ class App extends Component {
           Password: <input type='password' onChange={(event) => this.updatePasswordValue(event)} /><br/>
           <button onClick={(event) => this.loginClick(event)} className='btn btn-primary'>Login</button>
           <button onClick={(event) => this.logoutClick(event)} className='btn btn-primary'>Logout</button>
+          <Greeting isLoggedIn={this.state.isLoggedIn} givenNameEn={this.state.customer.givenNameEn}/>
 
-          <p>Welcome {this.state.customer.givenNameEn}</p>
-          <p>{ (this.state.isLoggedIn) ? 'You are logged in!' : ''}</p>
         </div>
     );
   }
