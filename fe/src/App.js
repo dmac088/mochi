@@ -10,6 +10,7 @@ class App extends Component {
       userName: 'admin',
       password: 'admin1234',
       isLoading: true,
+      isLoggedIn: false,
       customer: '',
   	  access_token: ''
     };
@@ -49,8 +50,17 @@ class App extends Component {
 
     const body = await response.text();
     const token = JSON.parse(body).access_token;
+
+    if(token !== undefined) {
+      console.log('Token is not undefined!');
+      if(token.length !== 36) {
+        console.log('Token is not 36 characters!');
+        return;
+      }
+    }
     this.setState({ isLoading: false,
-                    access_token: token
+                    access_token: token,
+                    isLoggedIn: true
                   });
 
     await
@@ -101,11 +111,12 @@ class App extends Component {
           </header>
 
           Username: <input onChange={(event) => this.updateUsernameValue(event)} /><br/>
-          Password: <input onChange={(event) => this.updatePasswordValue(event)} /><br/>
+          Password: <input type='password' onChange={(event) => this.updatePasswordValue(event)} /><br/>
           <button onClick={(event) => this.loginClick(event)} className='btn btn-primary'>Login</button>
           <button onClick={(event) => this.logoutClick(event)} className='btn btn-primary'>Logout</button>
 
           <p>Welcome {this.state.customer.givenNameEn}</p>
+          <p>{ (this.state.isLoggedIn) ? 'You are logged in!' : ''}</p>
         </div>
     );
   }
