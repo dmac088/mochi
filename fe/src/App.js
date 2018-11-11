@@ -4,55 +4,62 @@ import './App.css';
 import apiConfig from './config';
 
 class App extends Component {
-  state = {
-    isLoading: true,
-    customer: '',
-	  access_token: ''
-  };
-
-  async componentDidMount() {
-    let details = {
-    		"username": "account-creator",
-    		"password": "admin1234",
-    		"grant_type": "password"
+  constructor(props) {
+    super(props);
+    this.state = {
+      userName: 'admin',
+      password: 'admin1234',
+      isLoading: true,
+      customer: '',
+  	  access_token: ''
     };
-
-	let formBody = [];
-    for (let property in details) {
-        let encodedKey = encodeURIComponent(property);
-        let encodedValue = encodeURIComponent(details[property]);
-        formBody.push(encodedKey + "=" + encodedValue);
-    }
-    formBody = formBody.join("&");
-
-  const response = await
-	fetch(
-		apiConfig.url+"/oauth/token", {
-		crossDomain: true,
-		method: "POST",
-		headers: new Headers({
-			"Authorization": "Basic "+apiConfig.clientId,
-			"Content-Type": "application/x-www-form-urlencoded",
-			"Cache-Control": "no-cache"
-		}),
-		 body: formBody
-	});
-
-  const body = await response.text();
-  this.setState({ isLoading: false});
-  this.fetchData(JSON.parse(body).access_token);
-
   }
 
+  async componentDidMount()  {
+    console.log('Component Mounted')
+  }
 
-  async fetchData(token) {
+  async fetchData() {
+    let details = {
+        "username": this.state.userName,
+        "password": this.state.password,
+        "grant_type": "password"
+    };
+
+    let formBody = [];
+      for (let property in details) {
+          let encodedKey = encodeURIComponent(property);
+          let encodedValue = encodeURIComponent(details[property]);
+          formBody.push(encodedKey + "=" + encodedValue);
+      }
+      formBody = formBody.join("&");
+
+    const response = await
+    fetch(
+      apiConfig.url+"/oauth/token", {
+      crossDomain: true,
+      method: "POST",
+      headers: new Headers({
+        "Authorization": "Basic "+apiConfig.clientId,
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Cache-Control": "no-cache"
+      }),
+       body: formBody
+    });
+
+    const body = await response.text();
+    const token = JSON.parse(body).access_token;
+    this.setState({ isLoading: false,
+                    access_token: token
+                  });
+
     await
     fetch(
         apiConfig.url+"/api/Customer/1", {
         crossDomain: true,
         method: "GET",
-        headers: new Headers({
-          "Authorization": 	"Bearer "+token,
+        headers:  new Headers({
+          "Authorization": 	"Bearer "+this.state.access_token,
           "Content-Type": 	"application/json"
         })
     })
@@ -61,29 +68,45 @@ class App extends Component {
    })
   }
 
+  loginClick() {
+    console.log('Login clicked');
+    this.fetchData();
+  }
+
+  logoutClick() {
+    console.log('Logout clicked');
+  }
+
+  updateUsernameValue(event) {
+    this.setState({
+      userName: event.target.value
+    });
+  }
+
+  updatePasswordValue(event) {
+    this.setState({
+      password: event.target.value
+    });
+  }
+
 
   render() {
     const {customer, isLoading} = this.state;
-    console.log(this.state.customer);
-    if (isLoading) {
-      return <p>Loading...</p>;
-    }
 
-  return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <div className="App-intro">
-          <h2>Customer List</h2>
+    return (
+        <div className="App">
+          <header className="App-header">
+            <img src={logo} className="App-logo" alt="logo" />
+            <h1 className="App-title">Welcome to React</h1>
+          </header>
 
-            <div id={customer.partyId} key={customer.partyId}>
-              {customer.givenNameEn} {customer.familyNameEn}
-            </div>
+          Username: <input onChange={(event) => this.updateUsernameValue(event)} /><br/>
+          Password: <input onChange={(event) => this.updatePasswordValue(event)} /><br/>
+          <button onClick={(event) => this.loginClick(event)} className='btn btn-primary'>Login</button>
+          <button onClick={(event) => this.logoutClick(event)} className='btn btn-primary'>Logout</button>
 
+          <p>Welcome {this.state.customer.givenNameEn}</p>
         </div>
-      </div>
     );
   }
 }
