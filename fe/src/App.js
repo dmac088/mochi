@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import './scss/style.css';
 import apiConfig from './config';
-
 import Header from './components/Header';
 import Login from './components/Login';
+import Signup from './components/Signup';
 
 class App extends Component {
   constructor(props) {
@@ -177,6 +176,7 @@ class App extends Component {
                   renderLoginButton={this.renderLoginButton}
                   customer={this.state.customer}
           />
+        <Signup/>
         </div>
     );
   }
