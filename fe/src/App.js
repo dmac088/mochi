@@ -55,6 +55,7 @@ class App extends Component {
       if(response.status === 400) {
           this.setState({
             errorResponse: 'Invalid username or password',
+            authenticated: false
           });
           console.log(this.state.errorResponse);
           return;
@@ -125,7 +126,7 @@ class App extends Component {
      button = <button onClick={(event) => this.logoutClick(event)} className='btn btn-primary'>
         Logout
      </button>;
-   } 
+   }
    return button;
  }
 
