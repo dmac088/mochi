@@ -95,13 +95,13 @@ class App extends Component {
    })
   }
 
-  async loginClick() {
+  loginClick = async () => {
     console.log('Login clicked');
     await this.fetchToken();
     await this.fetchData();
   }
 
-  logoutClick() {
+  logoutClick = () => {
     console.log('Logout clicked');
     this.setState({
       authenticated: false,
@@ -109,34 +109,34 @@ class App extends Component {
     });
   }
 
-  updateUsernameValue(event) {
+  updateUsernameValue = (event) =>  {
     this.setState({
       userName: event.target.value
     });
   }
 
-  updatePasswordValue(event) {
+  updatePasswordValue = (event) => {
     this.setState({
       password: event.target.value
     });
   }
 
-  renderLogoutButton() {
+  renderLogoutButton = () => {
     console.log('render logout button');
    let button;
    if(this.state.authenticated) {
-     button = <button onClick={(event) => this.logoutClick(event)} className='button'>
+     button = <button onClick={this.logoutClick.bind(this)} className='button'>
         Logout
      </button>;
    }
    return button;
   }
 
-  renderLoginButton() {
-    console.log('render login button');
+  renderLoginButton = () => {
+   console.log('render login button');
    let button;
    if(!this.state.authenticated) {
-     button = <button onClick={(event) => this.loginClick(event)} className='button'>
+     button = <button onClick={this.loginClick.bind(this)} className='button'>
       Login
     </button>;
    }
@@ -150,9 +150,9 @@ class App extends Component {
     return (
         <div className="App">
           <Header cartItems={this.state.cartItems}/>
-      
-          Username: <input onChange={(event) => this.updateUsernameValue(event)} /><br/>
-          Password: <input type='password' onChange={(event) => this.updatePasswordValue(event)} /><br/>
+
+          Username: <input onChange={this.updateUsernameValue.bind(this)} /><br/>
+          Password: <input type='password' onChange={this.updatePasswordValue.bind(this)} /><br/>
 
           {this.renderLogoutButton()}
           {this.renderLoginButton()}
