@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './scss/style.css';
 import apiConfig from './config';
-import Greeting from './components/Greeting';
+
 import Header from './components/Header';
+import Login from './components/Login';
 
 class App extends Component {
   constructor(props) {
@@ -25,8 +26,8 @@ class App extends Component {
   }
 
 
-  async fetchToken() {
-    console.log('called fetchToken');
+  async authUser() {
+    console.log('called authUser');
     let details = {
         'username': this.state.userName,
         'password': this.state.password,
@@ -97,7 +98,7 @@ class App extends Component {
 
   loginClick = async () => {
     console.log('Login clicked');
-    await this.fetchToken();
+    await this.authUser();
     await this.fetchData();
   }
 
@@ -105,7 +106,10 @@ class App extends Component {
     console.log('Logout clicked');
     this.setState({
       authenticated: false,
-      customer: ''
+      customer: '',
+      userName: '',
+      password: '',
+      access_token: ''
     });
   }
 
@@ -161,21 +165,18 @@ class App extends Component {
    return passwordField;
   }
 
-
   render() {
     const {customer, isLoading} = this.state;
-
     return (
         <div className="App">
-          <Header cartItems={this.state.cartItems}/>
-
-          {(!this.state.authenticated) ? 'Username:' : '' } {this.renderUserNameField()}<br/>
-          {(!this.state.authenticated) ? 'Password:' : '' } {this.renderPasswordField()}<br/>
-
-          {this.renderLogoutButton()}
-          {this.renderLoginButton()}
-          <Greeting isLoggedIn={this.state.isLoggedIn} givenNameEn={this.state.customer.givenNameEn} auth={this.state.authenticated} />
-
+          <Header loginBttn={this.renderLogoutButton} cartItems={this.state.cartItems}/>
+          <Login  authenticated={(this.state.authenticated)}
+                  renderUserNameField={this.renderUserNameField}
+                  renderPasswordField={this.renderPasswordField}
+                  renderLogoutButton={this.renderLogoutButton}
+                  renderLoginButton={this.renderLoginButton}
+                  customer={this.state.customer}
+          />
         </div>
     );
   }

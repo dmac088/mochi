@@ -5,7 +5,7 @@ const Greeting = (props) =>{
     return(
       <div>
         <p></p>
-        <p>{ (props.auth) ? 'Welcome ' + props.givenNameEn + ' you are logged in!' : 'you are currently logged out!'}</p>
+        <p>{ (props.authenticated) ? 'Welcome ' + props.givenNameEn + ' you are logged in!' : 'you are currently logged out!'}</p>
       </div>
     )
 };
