@@ -4,8 +4,8 @@ const Greeting = (props) =>{
   console.log('Render Greeting');
     return(
       <div>
-        <p>Welcome {props.givenNameEn}</p>
-        <p>{ (props.isLoggedIn) ? 'You are logged in!' : ''}</p>
+        <p></p>
+        <p>{ (props.auth) ? 'Welcome ' + props.givenNameEn + ' you are logged in!' : 'you are currently logged out!'}</p>
       </div>
     )
 };

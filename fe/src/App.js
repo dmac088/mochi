@@ -13,7 +13,8 @@ class App extends Component {
       isLoading: true,
       customer: '',
   	  access_token: '',
-      authenticated: false
+      authenticated: false,
+      errorResponse: ''
     };
   }
 
@@ -51,8 +52,11 @@ class App extends Component {
        body: formBody
     })
     .then(async (response) => {
-      if(response.status == 400) {
-          console.log('could not authentiate user');
+      if(response.status === 400) {
+          this.setState({
+            errorResponse: 'Invalid username or password',
+          });
+          console.log(this.state.errorResponse);
           return;
       }
       const body = await response.text();
@@ -114,6 +118,17 @@ class App extends Component {
     });
   }
 
+  renderLogoutButton() {
+    console.log('render logout button');
+   let button;
+   if(this.state.authenticated) {
+     button = <button onClick={(event) => this.logoutClick(event)} className='btn btn-primary'>
+        Logout
+     </button>;
+   } 
+   return button;
+ }
+
 
   render() {
     const {customer, isLoading} = this.state;
@@ -128,8 +143,8 @@ class App extends Component {
           Username: <input onChange={(event) => this.updateUsernameValue(event)} /><br/>
           Password: <input type='password' onChange={(event) => this.updatePasswordValue(event)} /><br/>
           <button onClick={(event) => this.loginClick(event)} className='btn btn-primary'>Login</button>
-          <button onClick={(event) => this.logoutClick(event)} className='btn btn-primary'>Logout</button>
-          <Greeting isLoggedIn={this.state.isLoggedIn} givenNameEn={this.state.customer.givenNameEn}/>
+          {this.renderLogoutButton()}
+          <Greeting isLoggedIn={this.state.isLoggedIn} givenNameEn={this.state.customer.givenNameEn} auth={this.state.authenticated} />
 
         </div>
     );
