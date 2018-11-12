@@ -122,7 +122,7 @@ class App extends Component {
   }
 
   renderLogoutButton = () => {
-    console.log('render logout button');
+   console.log('render logout button');
    let button;
    if(this.state.authenticated) {
      button = <button onClick={this.logoutClick.bind(this)} className='button'>
@@ -143,6 +143,24 @@ class App extends Component {
    return button;
   }
 
+  renderUserNameField = () => {
+   console.log('render username field');
+   let userNameField;
+   if(!this.state.authenticated) {
+     userNameField =  <input onChange={this.updateUsernameValue.bind(this)} />;
+   }
+   return userNameField;
+  }
+
+  renderPasswordField = () => {
+   console.log('render password field');
+   let passwordField;
+   if(!this.state.authenticated) {
+     passwordField = <input type='password' onChange={this.updatePasswordValue.bind(this)} />;
+   }
+   return passwordField;
+  }
+
 
   render() {
     const {customer, isLoading} = this.state;
@@ -151,8 +169,8 @@ class App extends Component {
         <div className="App">
           <Header cartItems={this.state.cartItems}/>
 
-          Username: <input onChange={this.updateUsernameValue.bind(this)} /><br/>
-          Password: <input type='password' onChange={this.updatePasswordValue.bind(this)} /><br/>
+          {(!this.state.authenticated) ? 'Username:' : '' } {this.renderUserNameField()}<br/>
+          {(!this.state.authenticated) ? 'Password:' : '' } {this.renderPasswordField()}<br/>
 
           {this.renderLogoutButton()}
           {this.renderLoginButton()}
