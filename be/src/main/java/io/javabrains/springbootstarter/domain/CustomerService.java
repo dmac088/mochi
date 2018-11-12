@@ -24,8 +24,8 @@ public class CustomerService {
 
 	@PreAuthorize("hasAuthority('CUSTOMER_READ')")
 	@Transactional(readOnly = true)
-	public Optional<Customer> getCustomer(Long CustomerId) {
-		return customerRepository.findById(CustomerId);
+	public Optional<Role> getCustomer(String userName) {
+		return customerRepository.findByRolePartyPartyUserUsername(userName);
 	}
 	
 	@PreAuthorize("hasAuthority('CUSTOMER_CREATE')")
