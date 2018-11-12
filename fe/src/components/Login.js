@@ -1,4 +1,5 @@
 import React from 'react';
+import '../scss/style.css';
 import Greeting from './Greeting';
 
 const Login = (props) => {

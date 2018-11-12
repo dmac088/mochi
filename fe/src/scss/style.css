@@ -92,14 +92,18 @@ header {
   top: 0;
   width: 100%;
   z-index: 100;
-  animation: slideUp 300ms linear; }
-  header .container {
+  animation: slideUp 300ms linear;
+}
+
+header .container {
     display: flex;
     display: -webkit-flex;
     max-width: 960px;
     margin: 0 auto;
-    padding: 0 32px; }
-  @media (max-width: 991px) {
+    padding: 0 32px;
+}
+
+@media (max-width: 991px) {
     header {
       padding: 16px; }
       header .container {
