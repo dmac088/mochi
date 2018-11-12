@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import './App.css';
+import './scss/style.css';
 import apiConfig from './config';
-import Greeting from './components/Greeting'
+import Greeting from './components/Greeting';
+import Header from './components/Header';
 
 class App extends Component {
   constructor(props) {
@@ -14,7 +15,8 @@ class App extends Component {
       customer: '',
   	  access_token: '',
       authenticated: false,
-      errorResponse: ''
+      errorResponse: '',
+      cartItems: []
     };
   }
 
@@ -123,12 +125,23 @@ class App extends Component {
     console.log('render logout button');
    let button;
    if(this.state.authenticated) {
-     button = <button onClick={(event) => this.logoutClick(event)} className='btn btn-primary'>
+     button = <button onClick={(event) => this.logoutClick(event)} className='button'>
         Logout
      </button>;
    }
    return button;
- }
+  }
+
+  renderLoginButton() {
+    console.log('render login button');
+   let button;
+   if(!this.state.authenticated) {
+     button = <button onClick={(event) => this.loginClick(event)} className='button'>
+      Login
+    </button>;
+   }
+   return button;
+  }
 
 
   render() {
@@ -136,15 +149,18 @@ class App extends Component {
 
     return (
         <div className="App">
-          <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
-            <h1 className="App-title">Welcome to React</h1>
-          </header>
-
+          <Header cartItems={this.state.cartItems}/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
           Username: <input onChange={(event) => this.updateUsernameValue(event)} /><br/>
           Password: <input type='password' onChange={(event) => this.updatePasswordValue(event)} /><br/>
-          <button onClick={(event) => this.loginClick(event)} className='btn btn-primary'>Login</button>
+
           {this.renderLogoutButton()}
+          {this.renderLoginButton()}
           <Greeting isLoggedIn={this.state.isLoggedIn} givenNameEn={this.state.customer.givenNameEn} auth={this.state.authenticated} />
 
         </div>
