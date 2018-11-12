@@ -18,14 +18,16 @@ class App extends Component {
   }
 
   async componentDidMount()  {
-    console.log('Component Mounted')
+    console.log('Component Mounted');
   }
 
-  async fetchData() {
+
+  async fetchToken() {
+    console.log('called fetchToken');
     let details = {
-        "username": this.state.userName,
-        "password": this.state.password,
-        "grant_type": "password"
+        'username': this.state.userName,
+        'password': this.state.password,
+        'grant_type': 'password'
     };
 
     let formBody = [];
@@ -47,23 +49,26 @@ class App extends Component {
         "Cache-Control": "no-cache"
       }),
        body: formBody
+    })
+    .then(async (response) => {
+      const body = await response.text();
+      this.setState({
+        access_token: JSON.parse(body).access_token,
+        isLoading: false,
+        isLoggedIn: true
+      });
+    })
+    .catch((error) => {
+      console.log('error');
+    })
+    .finally(() => {
+      console.log('finally');
     });
+  }
 
-    const body = await response.text();
-    const token = JSON.parse(body).access_token;
-
-    if(token !== undefined) {
-      console.log('Token is not undefined!');
-      if(token.length !== 36) {
-        console.log('Token is not 36 characters!');
-        return;
-      }
-    }
-    this.setState({ isLoading: false,
-                    access_token: token,
-                    isLoggedIn: true
-                  });
-
+  async fetchData() {
+    console.log('called fetchData');
+    console.log('the token length is ' + this.state.access_token.length);
     await
     fetch(
         apiConfig.url+"/api/Customer/1", {
@@ -74,14 +79,15 @@ class App extends Component {
           "Content-Type": 	"application/json"
         })
     })
-     .then((response) => response.json())
+     .then(async (response) => await response.json())
      .then((json) => {this.setState({customer: json})
    })
   }
 
-  loginClick() {
+  async loginClick() {
     console.log('Login clicked');
-    this.fetchData();
+    await this.fetchToken();
+    await this.fetchData();
   }
 
   logoutClick() {
