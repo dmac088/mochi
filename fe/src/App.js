@@ -8,12 +8,12 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userName: 'admin',
-      password: 'admin1234',
+      userName: '',
+      password: '',
       isLoading: true,
-      isLoggedIn: false,
       customer: '',
-  	  access_token: ''
+  	  access_token: '',
+      authenticated: false
     };
   }
 
@@ -51,11 +51,15 @@ class App extends Component {
        body: formBody
     })
     .then(async (response) => {
+      if(response.status == 400) {
+          console.log('could not authentiate user');
+          return;
+      }
       const body = await response.text();
       this.setState({
         access_token: JSON.parse(body).access_token,
         isLoading: false,
-        isLoggedIn: true
+        authenticated: true
       });
     })
     .catch((error) => {
@@ -68,7 +72,7 @@ class App extends Component {
 
   async fetchData() {
     console.log('called fetchData');
-    console.log('the token length is ' + this.state.access_token.length);
+    if(!this.state.authenticated) {return;}
     await
     fetch(
         apiConfig.url+"/api/Customer/1", {
@@ -92,6 +96,10 @@ class App extends Component {
 
   logoutClick() {
     console.log('Logout clicked');
+    this.setState({
+      authenticated: false,
+      customer: ''
+    });
   }
 
   updateUsernameValue(event) {
