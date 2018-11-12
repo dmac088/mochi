@@ -23,7 +23,7 @@ class QuickView extends Component{
 	handleClose(){
 	    this.props.closeModal();
 	}
-  
+
   render(){
     return(
       <div className={this.props.openModal ? "modal-wrapper active" : "modal-wrapper"}>

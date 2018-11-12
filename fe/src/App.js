@@ -150,12 +150,7 @@ class App extends Component {
     return (
         <div className="App">
           <Header cartItems={this.state.cartItems}/>
-          <br/>
-          <br/>
-          <br/>
-          <br/>
-          <br/>
-          <br/>
+      
           Username: <input onChange={(event) => this.updateUsernameValue(event)} /><br/>
           Password: <input type='password' onChange={(event) => this.updatePasswordValue(event)} /><br/>
 
