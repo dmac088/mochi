@@ -29,10 +29,10 @@ public class CustomerController {
 		return customerService.getAllCustomers();
 	}	
 	
-	@GetMapping("/Customer/{id}")
-	public Party getCustomer(@PathVariable Long id) {
+	@GetMapping("/Customer/{userName}")
+	public Party getCustomer(@PathVariable String userName) {
 		System.out.println("calling getCustomer");
-		return customerService.getCustomer(id).get().getRoleParty();
+		return customerService.getCustomer(userName).get().getRoleParty();
 	}
 	
 	@PostMapping("/Customer")

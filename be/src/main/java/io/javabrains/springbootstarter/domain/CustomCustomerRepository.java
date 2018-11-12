@@ -93,6 +93,12 @@ public class CustomCustomerRepository implements CustomerRepository {
 		return null;
 	}
 
+	@Override
+	public Optional<Role> findByRolePartyPartyUserUsername(String userName) {
+		// TODO Auto-generated method stub
+		return customerRepository.findByRolePartyPartyUserUsername(userName);
+	}
+
 	
     
 }

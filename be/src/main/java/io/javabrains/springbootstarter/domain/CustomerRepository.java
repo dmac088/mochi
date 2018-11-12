@@ -15,6 +15,8 @@ public interface CustomerRepository extends RoleBaseRepository<Customer> {
 	//@Override
 	Optional<Role> findByRoleId(Long CustomerId);
 	
+	Optional<Role> findByRolePartyPartyUserUsername(String userName);
+	
 	//Customer findOneByCustomerId(String Id);
 	//need to use specification since findByCustomerId causes an exception
 	Customer findOne(Specification<Customer> spec);
