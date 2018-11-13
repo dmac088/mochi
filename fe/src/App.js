@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import apiConfig from './config';
 import Header from './components/Header';
 import Login from './components/Login';
-import signup from './components/Signup';
+import Signup from './components/Signup';
 
 class App extends Component {
   constructor(props) {
@@ -148,7 +148,7 @@ class App extends Component {
                   updatePasswordValue={this.updatePasswordValue.bind(this)}
                   customer={this.state.customer}
           />
-        <signup/>
+        <Signup/>
         </div>
     );
   }
