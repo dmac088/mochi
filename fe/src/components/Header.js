@@ -1,18 +1,24 @@
 
 import React, {Component} from 'react';
 import Login from './Login';
+import Greeting from './Greeting';
 
 const Header = (props) => {
       return(
       <nav className="navbar navbar-light bg-light justify-content-between">
         <a className="navbar-brand">Navbar</a>
         <div className="form-inline">
+            <Greeting
+                authenticated={(props.authenticated)}
+                givenNameEn={props.customer.givenNameEn}
+            />
             <Login  authenticated={(props.authenticated)}
                     loginClick={props.loginClick}
                     logoutClick={props.logoutClick}
                     updateUsernameValue={props.updateUsernameValue}
                     updatePasswordValue={props.updatePasswordValue}
                     customer={props.customer}/>
+
         </div>
       </nav>
     );
