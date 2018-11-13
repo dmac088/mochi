@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Greeting from './Greeting';
+
 
 class Login extends Component {
     constructor(props){
