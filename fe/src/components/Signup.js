@@ -2,7 +2,9 @@ import React from 'react';
 
 const Signup = (props) => {
       return(
-        <div classname="row">
+
+       <div className="container">
+        <div className="row justify-content-center">
         <div className="col-md-6 order-md-1">
           <h4 className="mb-3">
 Sign Up
@@ -79,6 +81,7 @@ Submit
           </form>
         </div>
       </div>
+    </div>
       );
   }
 export default Signup;
