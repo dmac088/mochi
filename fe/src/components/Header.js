@@ -1,12 +1,12 @@
 
-import React, {Component} from 'react';
+import React from 'react';
 import Login from './Login';
 import Greeting from './Greeting';
 
 const Header = (props) => {
       return(
       <nav className="navbar navbar-light bg-light justify-content-between">
-        <a className="navbar-brand">Navbar</a>
+        <div className="navbar-brand">Navbar</div>
         <div className="form-inline">
             <Greeting
                 authenticated={(props.authenticated)}

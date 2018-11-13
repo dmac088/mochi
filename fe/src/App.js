@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import apiConfig from './config';
+import apiConfig from './config/config';
 import Header from './components/Header';
-import Login from './components/Login';
 import Signup from './components/Signup';
 
 class App extends Component {
@@ -11,7 +9,6 @@ class App extends Component {
     this.state = {
       userName: '',
       password: '',
-      isLoading: true,
       customer: '',
   	  access_token: '',
       authenticated: false,
