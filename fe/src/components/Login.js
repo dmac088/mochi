@@ -2,11 +2,7 @@ import React, {Component} from 'react';
 
 
 class Login extends Component {
-    constructor(props){
-        super(props);
-
-    }
-
+  
     renderLogoutButton = () => {
      console.log('render logout button');
      let button;
