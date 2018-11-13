@@ -95,13 +95,13 @@ class App extends Component {
    })
   }
 
-  loginClick = async () => {
+  loginClick = async (event) => {
     console.log('Login clicked');
     await this.authUser();
     await this.fetchData();
   }
 
-  logoutClick = () => {
+  logoutClick = (event) => {
     console.log('Logout clicked');
     this.setState({
       authenticated: false,
@@ -124,56 +124,16 @@ class App extends Component {
     });
   }
 
-  renderLogoutButton = () => {
-   console.log('render logout button');
-   let button;
-   if(this.state.authenticated) {
-     button = <button onClick={this.logoutClick.bind(this)} className='button'>
-        Logout
-     </button>;
-   }
-   return button;
-  }
-
-  renderLoginButton = () => {
-   console.log('render login button');
-   let button;
-   if(!this.state.authenticated) {
-     button = <button onClick={this.loginClick.bind(this)} className='button'>
-      Login
-    </button>;
-   }
-   return button;
-  }
-
-  renderUserNameField = () => {
-   console.log('render username field');
-   let userNameField;
-   if(!this.state.authenticated) {
-     userNameField =  <input onChange={this.updateUsernameValue.bind(this)} />;
-   }
-   return userNameField;
-  }
-
-  renderPasswordField = () => {
-   console.log('render password field');
-   let passwordField;
-   if(!this.state.authenticated) {
-     passwordField = <input type='password' onChange={this.updatePasswordValue.bind(this)} />;
-   }
-   return passwordField;
-  }
-
   render() {
     const {customer, isLoading} = this.state;
     return (
         <div className="App">
-          <Header loginBttn={this.renderLogoutButton} cartItems={this.state.cartItems}/>
-          <Login  authenticated={(this.state.authenticated)}
-                  renderUserNameField={this.renderUserNameField}
-                  renderPasswordField={this.renderPasswordField}
-                  renderLogoutButton={this.renderLogoutButton}
-                  renderLoginButton={this.renderLoginButton}
+          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossOrigin="anonymous" />
+          <Header  authenticated={(this.state.authenticated)}
+                  loginClick={this.loginClick.bind(this)}
+                  logoutClick={this.logoutClick.bind(this)}
+                  updateUsernameValue={this.updateUsernameValue.bind(this)}
+                  updatePasswordValue={this.updatePasswordValue.bind(this)}
                   customer={this.state.customer}
           />
         <Signup/>

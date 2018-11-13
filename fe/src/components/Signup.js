@@ -1,5 +1,4 @@
 import React from 'react';
-import '../scss/components/signup.css';
 
 const Signup = (props) => {
       return(
