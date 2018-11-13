@@ -3,9 +3,9 @@ import React from 'react';
 const Signup = (props) => {
       return(
         <div className="row">
-          <div className="col-md-2 order-md-1">
+          <div className="col-md-3 order-md-1">
           </div>
-        <div className="col-md-8 order-md-2">
+        <div className="col-md-6 order-md-2">
           <h4 className="mb-3">
 Sign Up
 </h4>
@@ -20,7 +20,6 @@ type="text"
 className="form-control"
 id="firstName"
 placeholder="First Name"
-defaultValue="First Name"
 required />
                 <div className="invalid-feedback">
                   Valid first name is required.
@@ -35,7 +34,6 @@ type="text"
 className="form-control"
 id="lastName"
 placeholder="Last Name"
-defaultValue="Last Name"
 required />
                 <div className="invalid-feedback">
                   Valid last name is required.
@@ -79,7 +77,7 @@ Submit
 </button>
 </div>
         </div>
-        <div className="col-md-2 order-md-3">
+        <div className="col-md-3 order-md-3">
         </div>
       </div>
       );
