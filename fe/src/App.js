@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import apiConfig from './config';
 import Header from './components/Header';
 import Login from './components/Login';
-import Signup from './components/Signup';
+import signup from './components/Signup';
 
 class App extends Component {
   constructor(props) {
@@ -112,6 +112,17 @@ class App extends Component {
     });
   }
 
+  signupClick = (event) => {
+    console.log('signup clicked');
+    this.setState({
+      authenticated: false,
+      customer: '',
+      userName: '',
+      password: '',
+      access_token: ''
+    });
+  }
+
   updateUsernameValue = (event) =>  {
     this.setState({
       userName: event.target.value
@@ -132,11 +143,12 @@ class App extends Component {
           <Header authenticated={(this.state.authenticated)}
                   loginClick={this.loginClick.bind(this)}
                   logoutClick={this.logoutClick.bind(this)}
+                  signupClick={this.signupClick.bind(this)}
                   updateUsernameValue={this.updateUsernameValue.bind(this)}
                   updatePasswordValue={this.updatePasswordValue.bind(this)}
                   customer={this.state.customer}
           />
-        <Signup/>
+        <signup/>
         </div>
     );
   }

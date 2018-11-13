@@ -15,6 +15,7 @@ const Header = (props) => {
             <Login  authenticated={(props.authenticated)}
                     loginClick={props.loginClick}
                     logoutClick={props.logoutClick}
+                    signupClick={props.signupClick}
                     updateUsernameValue={props.updateUsernameValue}
                     updatePasswordValue={props.updatePasswordValue}
                     customer={props.customer}/>
