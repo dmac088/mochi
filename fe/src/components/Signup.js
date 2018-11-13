@@ -9,7 +9,7 @@ const Signup = (props) => {
           <h4 className="mb-3">
 Sign Up
 </h4>
-          <form className="needs-validation" noValidate>
+          <div className="needs-validation" noValidate>
             <div className="row">
               <div className="col-md-6 mb-3">
                 <label htmlFor="firstName">
@@ -74,11 +74,10 @@ placeholder="Password" />
             <hr className="mb-4" />
 
             <button
-className="btn btn-primary btn-lg btn-block"
-type="submit">
+className="btn btn-primary btn-lg btn-block">
 Submit
 </button>
-          </form>
+</div>
         </div>
         <div className="col-md-2 order-md-3">
         </div>
