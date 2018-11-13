@@ -27,9 +27,24 @@ class Login extends Component {
        button =
        <button
            onClick={this.props.loginClick}
-           className="btn btn-outline-success mr-sm-5 my-2 my-sm-0"
+           className="btn btn-outline-success mr-sm-2 my-2 my-sm-0"
            type="submit">
           Login
+      </button>;
+     }
+     return button;
+    }
+
+    rendersignupButton = () => {
+     console.log('render signup button');
+     let button;
+     if(!this.props.authenticated) {
+       button =
+       <button
+           onClick={this.props.signupClick}
+           className="btn btn-outline-success mr-sm-5 my-2 my-sm-0"
+           type="submit">
+          SignUp
       </button>;
      }
      return button;
@@ -64,6 +79,8 @@ class Login extends Component {
      return passwordField;
     }
 
+
+
   render() {
       return(
         <div>
@@ -71,6 +88,7 @@ class Login extends Component {
           {this.renderPasswordField()}
           {this.renderLoginButton()}
           {this.renderLogoutButton()}
+          {this.rendersignupButton()}
         </div>
       );
     }
