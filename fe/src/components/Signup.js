@@ -9,7 +9,7 @@ const Signup = (props) => {
           <h4 className="mb-3">
 Sign Up
 </h4>
-          <form className="needs-validation" novalidate>
+          <form className="needs-validation" noValidate>
             <div className="row">
               <div className="col-md-6 mb-3">
                 <label htmlFor="firstName">
@@ -19,8 +19,8 @@ First name
 type="text"
 className="form-control"
 id="firstName"
-placeholder
-defaultValue
+placeholder="First Name"
+defaultValue="First Name"
 required />
                 <div className="invalid-feedback">
                   Valid first name is required.
@@ -34,8 +34,8 @@ Last name
 type="text"
 className="form-control"
 id="lastName"
-placeholder
-defaultValue
+placeholder="Last Name"
+defaultValue="Last Name"
 required />
                 <div className="invalid-feedback">
                   Valid last name is required.
