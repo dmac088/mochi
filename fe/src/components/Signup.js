@@ -21,7 +21,6 @@ const Signup = (props) => {
                   id="firstName"
                   onChange={props.updateFisrtNameValue}
                   placeholder="First Name"
-                  defaultValue="First Name"
                   required />
                 <div className="invalid-feedback">
                   Valid first name is required.
@@ -37,7 +36,6 @@ const Signup = (props) => {
                   id="lastName"
                   onChange={props.updateLastNameValue}
                   placeholder="Last Name"
-                  defaultValue="Last Name"
                   required />
                 <div className="invalid-feedback">
                   Valid last name is required.
