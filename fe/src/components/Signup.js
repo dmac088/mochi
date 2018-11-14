@@ -2,13 +2,13 @@ import React from 'react';
 
 const Signup = (props) => {
       return(
-
-       <div className="container">
-        <div className="row justify-content-center">
-        <div className="col-md-6 order-md-1">
+        <div className="row">
+          <div className="col-md-3 order-md-1">
+          </div>
+        <div className="col-md-6 order-md-2">
           <h4 className="mb-3">
-          Sign Up
-          </h4>
+Sign Up
+</h4>
           <div className="needs-validation" noValidate>
             <div className="row">
               <div className="col-md-6 mb-3">
@@ -19,7 +19,7 @@ const Signup = (props) => {
                   type="text"
                   className="form-control"
                   id="firstName"
-                  onChange={props.updateFisrtNameValue}
+                  onChange={props.updateSignupFisrtNameValue}
                   placeholder="First Name"
                   required />
                 <div className="invalid-feedback">
@@ -34,7 +34,7 @@ const Signup = (props) => {
                   type="text"
                   className="form-control"
                   id="lastName"
-                  onChange={props.updateLastNameValue}
+                  onChange={props.updateSignupLastNameValue}
                   placeholder="Last Name"
                   required />
                 <div className="invalid-feedback">
@@ -49,6 +49,7 @@ const Signup = (props) => {
                   type="text"
                   className="form-control"
                   id="username"
+                  onChange={props.updateSignupUserNameValue}
                   placeholder="you@placeholder.com"
                   required />
                                   <div
@@ -66,6 +67,7 @@ const Signup = (props) => {
                 type="password"
                 className="form-control"
                 id="password"
+                onChange={props.updateSignupPasswordValue}
                 placeholder="Password" />
             </div>
 
@@ -74,65 +76,14 @@ const Signup = (props) => {
             <hr className="mb-4" />
 
             <button
-className="btn btn-primary btn-lg btn-block"
-type="submit">
-Submit
-</button>
-          </div>
+            className="btn btn-primary btn-lg btn-block">
+            Submit
+            </button>
+        </div>
+        <div className="col-md-3 order-md-3">
         </div>
       </div>
     </div>
       );
   }
 export default Signup;
-
-//
-// <div className="container">
-//  <h1>
-//  Sign Up
-//  </h1>
-//  <p>
-//  Please fill in this form to create an account.
-//  </p>
-//  <hr />
-//  <label htmlFor="email">
-//    <b>Email</b>
-//  </label>
-//  <input
-//    type="text"
-//    placeholder="Enter Email"
-//    name="email"
-//    required />
-//  <label htmlFor="psw">
-// <b>Password</b>
-//  </label>
-//  <input
-//    type="password"
-//    placeholder="Enter Password"
-//    name="psw"
-//    required />
-//  <label htmlFor="psw-repeat">
-//    <b>
-//    Repeat Password
-//    </b>
-//  </label>
-//  <input
-//      type="password"
-//      placeholder="Repeat Password"
-//      name="psw-repeat"
-//      required />
-//  <label>
-//    <input
-//      type="checkbox"
-//      defaultChecked="checked"
-//      name="remember"
-//      style={{marginBottom: 15}} /> Remember me
-//  </label>
-//  <p>By creating an account you agree to our <a href="#" style={{color: 'dodgerblue'}}>Terms &amp; Privacy</a>.</p>
-//  <div className="clearfix">
-//    <button type="button" className="cancelbtn">Cancel</button>
-//    <button type="submit" className="signupbtn">
-//    Sign Up
-//    </button>
-//  </div>
-// </div>
