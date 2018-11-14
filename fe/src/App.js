@@ -39,7 +39,7 @@ class App extends Component {
           let encodedValue = encodeURIComponent(details[property]);
           formBody.push(encodedKey + "=" + encodedValue);
       }
-      formBody = formBody.join("&");
+    formBody = formBody.join("&");
 
     const response = await
     fetch(
@@ -77,8 +77,8 @@ class App extends Component {
     });
   }
 
-  async fetchData() {
-    console.log('called fetchData');
+  async fetchCustomer() {
+    console.log('called fetchCustomer');
     if(!this.state.authenticated) {return;}
     await
     fetch(
@@ -95,10 +95,55 @@ class App extends Component {
    })
   }
 
+  async registerCustomer() {
+    console.log('called registerCustomer');
+    let details = {
+        'firstName': this.state.userName,
+        'lastName': this.state.password
+    };
+
+    let formBody = [];
+      for (let property in details) {
+          let encodedKey = encodeURIComponent(property);
+          let encodedValue = encodeURIComponent(details[property]);
+          formBody.push(encodedKey + "=" + encodedValue);
+      }
+    formBody = formBody.join("&");
+
+    const response = await
+    fetch(
+      apiConfig.url+"/api/Person", {
+      crossDomain: true,
+      method: "POST",
+      headers: new Headers({
+        "Authorization": "Basic "+apiConfig.clientId,
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Cache-Control": "no-cache"
+      }),
+       body: formBody
+    })
+    .then(async (response) => {
+      if(response.status === 400) {
+          this.setState({
+            errorResponse: 'Could not register, something went wrong'
+          });
+          console.log(this.state.errorResponse);
+          return;
+      }
+    })
+    .catch((error) => {
+      console.log('error');
+    })
+    .finally(() => {
+      console.log('finally');
+    });
+
+  }
+
   loginClick = async (event) => {
     console.log('Login clicked');
     await this.authUser();
-    await this.fetchData();
+    await this.fetchCustomer();
   }
 
   logoutClick = (event) => {
@@ -135,6 +180,18 @@ class App extends Component {
     });
   }
 
+  updateFisrtNameValue = (event) => {
+    this.setState({
+      firstName: event.target.value
+    });
+  }
+
+  updateLastNameValue = (event) => {
+    this.setState({
+      lastName: event.target.value
+    });
+  }
+
   render() {
     const {customer, isLoading} = this.state;
     return (
@@ -148,7 +205,10 @@ class App extends Component {
                   updatePasswordValue={this.updatePasswordValue.bind(this)}
                   customer={this.state.customer}
           />
-        <Signup/>
+        <Signup
+                  updateFisrtNameValue={this.updateFisrtNameValue.bind(this)}
+                  updateLastNameValue={this.updateLastNameValue.bind(this)}
+        />
         </div>
     );
   }

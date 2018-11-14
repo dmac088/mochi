@@ -7,36 +7,38 @@ const Signup = (props) => {
         <div className="row justify-content-center">
         <div className="col-md-6 order-md-1">
           <h4 className="mb-3">
-Sign Up
-</h4>
+          Sign Up
+          </h4>
           <div className="needs-validation" noValidate>
             <div className="row">
               <div className="col-md-6 mb-3">
                 <label htmlFor="firstName">
-First name
-</label>
+                First name
+                </label>
                 <input
-type="text"
-className="form-control"
-id="firstName"
-placeholder="First Name"
-defaultValue="First Name"
-required />
+                  type="text"
+                  className="form-control"
+                  id="firstName"
+                  onChange={props.updateFisrtNameValue}
+                  placeholder="First Name"
+                  defaultValue="First Name"
+                  required />
                 <div className="invalid-feedback">
                   Valid first name is required.
                 </div>
               </div>
               <div className="col-md-6 mb-3">
                 <label htmlFor="lastName">
-Last name
-</label>
+                Last name
+                </label>
                 <input
-type="text"
-className="form-control"
-id="lastName"
-placeholder="Last Name"
-defaultValue="Last Name"
-required />
+                  type="text"
+                  className="form-control"
+                  id="lastName"
+                  onChange={props.updateLastNameValue}
+                  placeholder="Last Name"
+                  defaultValue="Last Name"
+                  required />
                 <div className="invalid-feedback">
                   Valid last name is required.
                 </div>
@@ -46,27 +48,27 @@ required />
               <label htmlFor="username">Username</label>
               <div className="input-group">
                 <input
-type="text"
-className="form-control"
-id="username"
-placeholder="you@placeholder.com"
-required />
-                <div
-className="invalid-feedback"
-style={{width: '100%'}}>
+                  type="text"
+                  className="form-control"
+                  id="username"
+                  placeholder="you@placeholder.com"
+                  required />
+                                  <div
+                  className="invalid-feedback"
+                  style={{width: '100%'}}>
                   Your username is required.
                 </div>
               </div>
             </div>
             <div className="mb-3">
               <label htmlFor="passwordField">
-Password <span className="text-muted"/>
-</label>
+                Password <span className="text-muted"/>
+              </label>
               <input
-type="password"
-className="form-control"
-id="password"
-placeholder="Password" />
+                type="password"
+                className="form-control"
+                id="password"
+                placeholder="Password" />
             </div>
 
 
