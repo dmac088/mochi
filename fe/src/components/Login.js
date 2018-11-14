@@ -2,9 +2,6 @@ import React, {Component} from 'react';
 
 
 class Login extends Component {
-    constructor(props){
-        super(props);
-    }
 
     renderLogoutButton = () => {
      console.log('render logout button');
@@ -56,7 +53,7 @@ class Login extends Component {
        userNameField =  <input
          className="form-control mr-sm-2"
          type="input"
-         onChange={this.props.updateUsernameValue}
+         onChange={this.props.updateLoginUsernameValue}
          placeholder="Username"
          aria-label="Username" />;
      }
@@ -71,7 +68,7 @@ class Login extends Component {
        <input
            className="form-control mr-sm-2"
            type="password"
-           onChange={this.props.updatePasswordValue}
+           onChange={this.props.updateLoginPasswordValue}
            placeholder="Password"
            aria-label="Password" />;
      }

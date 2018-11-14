@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import apiConfig from './config';
+import apiConfig from './config/config';
 import Header from './components/Header';
-import Login from './components/Login';
 import Signup from './components/Signup';
 
 class App extends Component {
@@ -11,7 +9,6 @@ class App extends Component {
     this.state = {
       userName: '',
       password: '',
-      isLoading: true,
       customer: '',
   	  access_token: '',
       authenticated: false,
@@ -168,27 +165,39 @@ class App extends Component {
     });
   }
 
-  updateUsernameValue = (event) =>  {
+  updateLoginUsernameValue = (event) =>  {
     this.setState({
       userName: event.target.value
     });
   }
 
-  updatePasswordValue = (event) => {
+  updateLoginPasswordValue = (event) => {
     this.setState({
       password: event.target.value
     });
   }
 
-  updateFisrtNameValue = (event) => {
+  updateSignupFisrtNameValue = (event) => {
     this.setState({
       firstName: event.target.value
     });
   }
 
-  updateLastNameValue = (event) => {
+  updateSignupLastNameValue = (event) => {
     this.setState({
       lastName: event.target.value
+    });
+  }
+
+  updateSignupUserNameValue = (event) => {
+    this.setState({
+      userName: event.target.value
+    });
+  }
+
+  updateSignupPasswordValue = (event) => {
+    this.setState({
+      password: event.target.value
     });
   }
 
@@ -201,13 +210,15 @@ class App extends Component {
                   loginClick={this.loginClick.bind(this)}
                   logoutClick={this.logoutClick.bind(this)}
                   signupClick={this.signupClick.bind(this)}
-                  updateUsernameValue={this.updateUsernameValue.bind(this)}
-                  updatePasswordValue={this.updatePasswordValue.bind(this)}
+                  updateLoginUsernameValue={this.updateLoginUsernameValue.bind(this)}
+                  updateLoginPasswordValue={this.updateLoginPasswordValue.bind(this)}
                   customer={this.state.customer}
           />
         <Signup
-                  updateFisrtNameValue={this.updateFisrtNameValue.bind(this)}
-                  updateLastNameValue={this.updateLastNameValue.bind(this)}
+                  updateSignupFisrtNameValue={this.updateSignupFisrtNameValue.bind(this)}
+                  updateSignupLastNameValue={this.updateSignupLastNameValue.bind(this)}
+                  updateSignupUserNameValue={this.updateSignupUserNameValue.bind(this)}
+                  updateSignupPasswordValue={this.updateSignupPasswordValue.bind(this)}
         />
         </div>
     );
