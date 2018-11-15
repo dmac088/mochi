@@ -168,11 +168,37 @@ class App extends Component {
 
   resetState = (event) => {
     console.log('resetting customer state');
-    this.setState({
-      authenticated: false,
-      customer: {},
-      access_token: ''
-    });
+    this.setState({customer: {
+                            "@class": ".Person",
+                            "partyId": "",
+                            "nameCn": "",
+                            "familyNameEn": "",
+                            "givenNameEn": "",
+                            "partyType": {
+                              "partyTypeDesc": "Person",
+
+                            },
+                            "partyRoles": [
+                              {
+                                "@class": ".Customer",
+                                "roleId": null,
+                                "roleType": {
+                                  "roleTypeDesc": "Customer",
+                                },
+                                "customerId": null,
+                                "roleStart": null
+                              }
+                            ],
+                            "partyUser": {
+                              "username": "",
+                              "password": ""
+                            }
+                          },
+                access_token: '',
+                authenticated: false,
+                errorResponse: '',
+                cartItems: []
+              });
   }
 
   updateCustomerState = (event) =>  {
