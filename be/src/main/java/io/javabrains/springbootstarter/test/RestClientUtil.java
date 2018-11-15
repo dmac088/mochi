@@ -67,11 +67,10 @@ public class RestClientUtil {
     private static String CUSTOMER_GIVEN_NAME_EN 			= "Daniel";
     private static String CUSTOMER_FAMILY_NAME_EN 			= "Mackie";
     private static String CUSTOMER_NAME_CN 					= "丹尼爾麥基";
-    private static String CUSTOMER_ID 						= "0123765429";
     private static Date   CUSTOMER_START_DATE 				= new Date();
     private static String CUSTOMER_ROLE_TYPE 				= "Customer";
     
-    private static String CUSTOMER_USERNAME 				= "dmac213";
+    private static String CUSTOMER_USERNAME 				= "dmac219";
     private static String CUSTOMER_PASSWORD 				= "password";
 
     private HttpHeaders getHeaders() {
@@ -156,6 +155,5 @@ public class RestClientUtil {
 		 ResponseEntity<Person> uri = restTemplate.exchange(this.PERSON_ENDPOINT, HttpMethod.POST, personEntity, Person.class);
 		 Assert.assertTrue(CUSTOMER_USERNAME.equals(uri.getBody().getPartyUser().getUsername()));
 		 Assert.assertTrue(CUSTOMER_GIVEN_NAME_EN.equals(uri.getBody().getGivenNameEn()));
-		 Assert.assertTrue(CUSTOMER_ID.equals(((Customer) uri.getBody().getPartyRole(CUSTOMER_ROLE_TYPE)).getCustomerNumber()));
 	}
 }
