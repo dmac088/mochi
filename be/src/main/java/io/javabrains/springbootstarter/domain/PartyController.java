@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Controller
+@RequestMapping("/api")
 public class PartyController {
 	
 	@Autowired
@@ -26,7 +27,7 @@ public class PartyController {
 	
 	@ResponseBody
 	@RequestMapping("/Party/{id}")
-	public Optional<Party> getParty(@PathVariable Long id) {
+	public Optional<Party> getParty(@PathVariable String id) {
 		System.out.println("calling getParty");
 		return PartyService.getParty(id);
 	}

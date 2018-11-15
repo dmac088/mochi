@@ -103,7 +103,7 @@ class App extends Component {
     if(!this.state.authenticated) {return;}
     await
     fetch(
-        apiConfig.url+'/api/Customer/'+this.state.customer.partyUser.username, {
+        apiConfig.url+'/api/Party/'+this.state.customer.partyUser.username, {
         crossDomain: true,
         method: "GET",
         headers:  new Headers({
