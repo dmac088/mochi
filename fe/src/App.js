@@ -176,12 +176,10 @@ class App extends Component {
                             "givenNameEn": "",
                             "partyType": {
                               "partyTypeDesc": "Person",
-
                             },
                             "partyRoles": [
                               {
                                 "@class": ".Customer",
-                                "roleId": null,
                                 "roleType": {
                                   "roleTypeDesc": "Customer",
                                 },

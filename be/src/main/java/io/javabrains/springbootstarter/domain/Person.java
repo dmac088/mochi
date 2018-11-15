@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 
 @Entity
@@ -14,6 +15,9 @@ import javax.persistence.Table;
 @PrimaryKeyJoinColumn(name = "psn_id")
 public class Person extends Party implements Serializable {
 
+	@Transient
+	private Long partyTypeId = (long) 1;
+	
 	@Column(name="psn_gvn_nm_en")
 	private String GivenNameEn;
 	
@@ -25,6 +29,7 @@ public class Person extends Party implements Serializable {
 	
 	public Person() {
 		super();
+		this.setPartyType(new PartyType(partyTypeId));
 	}
 	
 	public String getGivenNameEn() {

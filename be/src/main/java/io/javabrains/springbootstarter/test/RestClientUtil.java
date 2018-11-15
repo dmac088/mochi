@@ -62,8 +62,6 @@ public class RestClientUtil {
     private static String OAUTH_TOKEN_CLIENTID 				= "spring-security-oauth2-read-write-client";
     private static String OAUTH_TOKEN_GRANT_TYPE 			= "password";
     
-    private static Long   PARTY_TYPE_ID = (long)1;
-    private static Long   ROLE_TYPE_ID = (long)1;
     private static String CUSTOMER_ENDPOINT 				= "https://localhost:8090/api/Customer";
     private static String PERSON_ENDPOINT 					= "https://localhost:8090/api/Person";
     private static String CUSTOMER_GIVEN_NAME_EN 			= "Daniel";
@@ -73,7 +71,7 @@ public class RestClientUtil {
     private static Date   CUSTOMER_START_DATE 				= new Date();
     private static String CUSTOMER_ROLE_TYPE 				= "Customer";
     
-    private static String CUSTOMER_USERNAME 				= "dmac199";
+    private static String CUSTOMER_USERNAME 				= "dmac213";
     private static String CUSTOMER_PASSWORD 				= "password";
 
     private HttpHeaders getHeaders() {
@@ -128,19 +126,14 @@ public class RestClientUtil {
 		 
 	     
 	     //Create the customer
-	     RoleType objRoleType = new RoleType();
-	     objRoleType.setRoleTypeId(ROLE_TYPE_ID);
+
 		 Customer objCustomer = new Customer();
-		 objCustomer.setCustomerNumber(this.CUSTOMER_ID);
 		 objCustomer.setRoleStart(this.CUSTOMER_START_DATE);
-		 objCustomer.setRoleType(objRoleType);
 		 objCustomer.getRoleType().setRoleTypeDesc(CUSTOMER_ROLE_TYPE);
 		 
 		 //Create the person
-		 PartyType objPartyType = new PartyType();
-		 objPartyType.setPartyTypeId(PARTY_TYPE_ID);
+		
 		 Person objPerson = new Person();
-		 objPerson.setPartyType(objPartyType);
 		 objPerson.setGivenNameEn(this.CUSTOMER_GIVEN_NAME_EN);
 		 objPerson.setFamilyNameEn(this.CUSTOMER_FAMILY_NAME_EN);
 		 objPerson.setNameCn(this.CUSTOMER_NAME_CN);
