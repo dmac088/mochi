@@ -98,9 +98,9 @@ INSERT INTO mochi.role(
 	VALUES (2, 1, now(), 2);
 
 INSERT INTO mochi.customer(
-	rle_id, cst_id)
-	VALUES (1, '0123456789');
+	rle_id)
+	VALUES (1);
 
 INSERT INTO mochi.customer(
-	rle_id, cst_id)
-	VALUES (2, '9876543210');
+	rle_id)
+	VALUES (2);

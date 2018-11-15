@@ -26,11 +26,26 @@ public class PartyController {
     }	
 	
 	@ResponseBody
-	@RequestMapping("/Party/{id}")
-	public Optional<Party> getParty(@PathVariable String id) {
+	@RequestMapping(method=RequestMethod.GET, value="/Party/Role/{roleTypeDesc}")
+    public List<Party> getAllPartys(@PathVariable String roleTypeDesc) {
+		System.out.println("calling getAllPartys");
+        return PartyService.getAllPartys(roleTypeDesc);
+    }	
+	
+	@ResponseBody
+	@RequestMapping("/Party/Id/{id}")
+	public Optional<Party> getParty(@PathVariable Long id) {
 		System.out.println("calling getParty");
 		return PartyService.getParty(id);
 	}
+	
+	@ResponseBody
+	@RequestMapping("/Party/UserName/{userName}")
+	public Optional<Party> getParty(@PathVariable String userName) {
+		System.out.println("calling getParty");
+		return PartyService.getParty(userName);
+	}
+	
 	
 	@RequestMapping(method=RequestMethod.POST, value="/Party")
 	public String addParty( Party Party) {

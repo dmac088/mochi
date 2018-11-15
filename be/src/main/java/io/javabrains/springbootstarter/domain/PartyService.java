@@ -27,10 +27,29 @@ public class PartyService {
 		return Partys;
 	}
 	
+	@PreAuthorize("hasRole('PARTY_READER')")
+	@Transactional(readOnly = true)
+	public List<Party> getAllPartys(String roleTypeDesc) {
+		List<Party> Partys = new ArrayList<>();
+		Iterator<Party> i = PartyRepository.findByPartyRolesRoleTypeRoleTypeDesc(roleTypeDesc).iterator();
+		while(i.hasNext()) {
+			System.out.println("Party ID: " + i.next().getPartyId());
+			Partys.add(i.next());
+		}
+		return Partys;
+	}
+	
 	@PreAuthorize("hasAuthority('PARTY_READ')")
 	@Transactional(readOnly = true)
-	public Optional<Party> getParty(String id) {
-		Optional<Party> p = PartyRepository.findByPartyUserUsername(id);
+	public Optional<Party> getParty(Long id) {
+		Optional<Party> p = PartyRepository.findById(id);
+		return p;
+	}
+	
+	@PreAuthorize("hasAuthority('PARTY_READ')")
+	@Transactional(readOnly = true)
+	public Optional<Party> getParty(String userName) {
+		Optional<Party> p = PartyRepository.findByPartyUserUsername(userName);
 		return p;
 	}
 	
