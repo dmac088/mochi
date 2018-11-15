@@ -47,10 +47,10 @@ class App extends Component {
 
 
   async authUser() {
-    console.log('authorizing user');
+    console.log('authorizing user: ' + this.state.customer.partyUser.username + ' password: ' + this.state.customer.partyUser.password);
     let details = {
-        'username': this.state.userName,
-        'password': this.state.password,
+        'username': this.state.customer.partyUser.username,
+        'password': this.state.customer.partyUser.password,
         'grant_type': 'password'
     };
 
@@ -103,7 +103,7 @@ class App extends Component {
     if(!this.state.authenticated) {return;}
     await
     fetch(
-        apiConfig.url+'/api/Customer/'+this.state.userName, {
+        apiConfig.url+'/api/Customer/'+this.state.customer.partyUser.username, {
         crossDomain: true,
         method: "GET",
         headers:  new Headers({
