@@ -21,6 +21,11 @@ public class RoleType {
 		// TODO Auto-generated constructor stub
 	}
 
+	public RoleType(long roleTypeId) {
+		this.RoleTypeId = roleTypeId;
+		// TODO Auto-generated constructor stub
+	}
+
 	public Long getRoleTypeId() {
 		return RoleTypeId;
 	}

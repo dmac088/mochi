@@ -17,7 +17,13 @@ public class PartyType {
 	@Column(name="pty_typ_desc")
 	private String partyTypeDesc;
 
+	public PartyType() {
+	}
 	
+	public PartyType(Long partyTypeId) {
+		this.PartyTypeId = partyTypeId;
+	}
+
 	public Long getPartyTypeId() {
 		return PartyTypeId;
 	}
