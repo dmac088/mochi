@@ -7,9 +7,33 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userName: '',
-      password: '',
-      customer: '',
+              customer: {
+                      "@class": ".Person",
+                      "partyId": null,
+                      "nameCn": "",
+                      "familyNameEn": "",
+                      "givenNameEn": "initial",
+                      "partyType": {
+                        "partyTypeDesc": "Person",
+                        "partyTypeId": 1
+                      },
+                      "partyRoles": [
+                        {
+                          "@class": ".Customer",
+                          "roleId": null,
+                          "roleType": {
+                            "roleTypeDesc": "Customer",
+                            "roleTypeId": 1
+                          },
+                          "customerId": null,
+                          "roleStart": null
+                        }
+                      ],
+                      "partyUser": {
+                        "username": "",
+                        "password": null
+                      }
+                    },
   	  access_token: '',
       authenticated: false,
       errorResponse: '',
@@ -23,7 +47,7 @@ class App extends Component {
 
 
   async authUser() {
-    console.log('called authUser');
+    console.log('authorizing user');
     let details = {
         'username': this.state.userName,
         'password': this.state.password,
@@ -95,8 +119,7 @@ class App extends Component {
   async registerCustomer() {
     console.log('called registerCustomer');
     let details = {
-        'firstName': this.state.userName,
-        'lastName': this.state.password
+        'customer': this.state.customer
     };
 
     let formBody = [];
@@ -143,61 +166,21 @@ class App extends Component {
     await this.fetchCustomer();
   }
 
-  logoutClick = (event) => {
-    console.log('Logout clicked');
+  resetState = (event) => {
+    console.log('resetting customer state');
     this.setState({
       authenticated: false,
-      customer: '',
-      userName: '',
-      password: '',
+      customer: {},
       access_token: ''
     });
   }
 
-  signupClick = (event) => {
-    console.log('signup clicked');
+  updateCustomerState = (event) =>  {
+    console.log('updating customer attribute ' + '`${event.target.id}`' + ' with value = ' + `${event.target.value}`);
+    let newcustomer = {...this.state.customer};
+    eval('newcustomer.'+ event.target.id + ' = "' + event.target.value +'";');
     this.setState({
-      authenticated: false,
-      customer: '',
-      userName: '',
-      password: '',
-      access_token: ''
-    });
-  }
-
-  updateLoginUsernameValue = (event) =>  {
-    this.setState({
-      userName: event.target.value
-    });
-  }
-
-  updateLoginPasswordValue = (event) => {
-    this.setState({
-      password: event.target.value
-    });
-  }
-
-  updateSignupFisrtNameValue = (event) => {
-    this.setState({
-      firstName: event.target.value
-    });
-  }
-
-  updateSignupLastNameValue = (event) => {
-    this.setState({
-      lastName: event.target.value
-    });
-  }
-
-  updateSignupUserNameValue = (event) => {
-    this.setState({
-      userName: event.target.value
-    });
-  }
-
-  updateSignupPasswordValue = (event) => {
-    this.setState({
-      password: event.target.value
+      'customer': newcustomer
     });
   }
 
@@ -208,17 +191,12 @@ class App extends Component {
           <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossOrigin="anonymous" />
           <Header authenticated={(this.state.authenticated)}
                   loginClick={this.loginClick.bind(this)}
-                  logoutClick={this.logoutClick.bind(this)}
-                  signupClick={this.signupClick.bind(this)}
-                  updateLoginUsernameValue={this.updateLoginUsernameValue.bind(this)}
-                  updateLoginPasswordValue={this.updateLoginPasswordValue.bind(this)}
+                  resetState={this.resetState.bind(this)}
+                  updateCustomerState={this.updateCustomerState.bind(this)}
                   customer={this.state.customer}
           />
         <Signup
-                  updateSignupFisrtNameValue={this.updateSignupFisrtNameValue.bind(this)}
-                  updateSignupLastNameValue={this.updateSignupLastNameValue.bind(this)}
-                  updateSignupUserNameValue={this.updateSignupUserNameValue.bind(this)}
-                  updateSignupPasswordValue={this.updateSignupPasswordValue.bind(this)}
+                  updateCustomerState={this.updateCustomerState.bind(this)}
         />
         </div>
     );
