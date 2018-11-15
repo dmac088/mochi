@@ -12,8 +12,9 @@ public interface CustomerRepository extends RoleBaseRepository<Customer> {
 	
 	List<Customer> findAll();
 	
-	//@Override
+	
 	Optional<Role> findByRoleId(Long CustomerId);
+	
 	
 	Optional<Role> findByRolePartyPartyUserUsername(String userName);
 	
