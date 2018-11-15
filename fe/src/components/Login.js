@@ -8,7 +8,7 @@ class Login extends Component {
      let button;
      if(this.props.authenticated) {
        button = <button
-            onClick={this.props.logoutClick}
+            onClick={this.props.resetState}
             className="btn btn-outline-success mr-sm-5 my-2 my-sm-0">
           Logout
        </button>;
