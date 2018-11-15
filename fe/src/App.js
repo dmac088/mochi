@@ -180,8 +180,9 @@ class App extends Component {
     let newcustomer = {...this.state.customer};
     eval('newcustomer.'+ event.target.id + ' = "' + event.target.value +'";');
     this.setState({
-      'customer': newcustomer
+      customer : newcustomer
     });
+    console.log('state is set to ' + this.state.customer[event.target.id]);
   }
 
   render() {
