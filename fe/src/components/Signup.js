@@ -18,8 +18,8 @@ Sign Up
                 <input
                   type="text"
                   className="form-control"
-                  id="firstName"
-                  onChange={props.updateSignupFisrtNameValue}
+                  id="givenNameEn"
+                  onChange={props.updateCustomerState}
                   placeholder="First Name"
                   required />
                 <div className="invalid-feedback">
@@ -33,8 +33,8 @@ Sign Up
                 <input
                   type="text"
                   className="form-control"
-                  id="lastName"
-                  onChange={props.updateSignupLastNameValue}
+                  id="familyNameEn"
+                  onChange={props.updateCustomerState}
                   placeholder="Last Name"
                   required />
                 <div className="invalid-feedback">
@@ -48,8 +48,8 @@ Sign Up
                 <input
                   type="text"
                   className="form-control"
-                  id="username"
-                  onChange={props.updateSignupUserNameValue}
+                  id="partyUser.username"
+                  onChange={props.updateCustomerState}
                   placeholder="you@placeholder.com"
                   required />
                                   <div
@@ -64,10 +64,10 @@ Sign Up
                 Password <span className="text-muted"/>
               </label>
               <input
-                type="password"
+                type="partyUser.password"
                 className="form-control"
                 id="password"
-                onChange={props.updateSignupPasswordValue}
+                onChange={props.updateCustomerState}
                 placeholder="Password" />
             </div>
 

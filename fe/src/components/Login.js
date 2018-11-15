@@ -50,10 +50,11 @@ class Login extends Component {
      console.log('render username field');
      let userNameField;
      if(!this.props.authenticated) {
-       userNameField =  <input
+       userNameField =
+       <input
          className="form-control mr-sm-2"
          type="input"
-         onChange={this.props.updateLoginUsernameValue}
+         onChange={this.props.updateCustomerState}
          placeholder="Username"
          aria-label="Username" />;
      }
@@ -67,8 +68,9 @@ class Login extends Component {
        passwordField =
        <input
            className="form-control mr-sm-2"
+           id=""
            type="password"
-           onChange={this.props.updateLoginPasswordValue}
+           onChange={this.props.updateCustomerState}
            placeholder="Password"
            aria-label="Password" />;
      }
