@@ -29,8 +29,8 @@ public class PartyService {
 	
 	@PreAuthorize("hasAuthority('PARTY_READ')")
 	@Transactional(readOnly = true)
-	public Optional<Party> getParty(Long id) {
-		Optional<Party> p = PartyRepository.findById(id);
+	public Optional<Party> getParty(String id) {
+		Optional<Party> p = PartyRepository.findByPartyUserUsername(id);
 		return p;
 	}
 	

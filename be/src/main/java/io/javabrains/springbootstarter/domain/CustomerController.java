@@ -30,9 +30,9 @@ public class CustomerController {
 	}	
 	
 	@GetMapping("/Customer/{userName}")
-	public Party getCustomer(@PathVariable String userName) {
+	public Customer getCustomer(@PathVariable String userName) {
 		System.out.println("calling getCustomer");
-		return customerService.getCustomer(userName).get().getRoleParty();
+		return (Customer) customerService.getCustomer(userName).get();
 	}
 	
 	@PostMapping("/Customer")

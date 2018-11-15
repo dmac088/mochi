@@ -6,5 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 public interface PartyRepository extends CrudRepository<Party, Long> {
 
 	Optional<Party> findByPartyId(Long id);
+	
+	Optional<Party> findByPartyUserUsername(String userName);
 
 }
