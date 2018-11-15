@@ -31,7 +31,7 @@ class App extends Component {
                       ],
                       "partyUser": {
                         "username": "",
-                        "password": null
+                        "password": ""
                       }
                     },
   	  access_token: '',
@@ -176,13 +176,13 @@ class App extends Component {
   }
 
   updateCustomerState = (event) =>  {
-    console.log('updating customer attribute ' + '`${event.target.id}`' + ' with value = ' + `${event.target.value}`);
+    console.log('updating customer attribute ' + event.target.id + ' with value = ' + event.target.value);
     let newcustomer = {...this.state.customer};
     eval('newcustomer.'+ event.target.id + ' = "' + event.target.value +'";');
     this.setState({
-      customer : newcustomer
+      'customer' : newcustomer
     });
-    console.log('state is set to ' + this.state.customer[event.target.id]);
+    console.log('state is set to ' + eval('this.state.customer.' + event.target.id)) ;
   }
 
   render() {
