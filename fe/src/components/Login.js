@@ -54,6 +54,7 @@ class Login extends Component {
        <input
          className="form-control mr-sm-2"
          type="input"
+         id="partyUser.username"
          onChange={this.props.updateCustomerState}
          placeholder="Username"
          aria-label="Username" />;
@@ -68,7 +69,7 @@ class Login extends Component {
        passwordField =
        <input
            className="form-control mr-sm-2"
-           id=""
+           id="partyUser.password"
            type="password"
            onChange={this.props.updateCustomerState}
            placeholder="Password"
