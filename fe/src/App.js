@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import apiConfig from './config/config';
-import Header from './components/ui/Header';
-import Signup from './components/ui/Signup';
+import Header from './components/Header';
+import Signup from './components/Signup';
 import t from 'typy';
 
 class App extends Component {
