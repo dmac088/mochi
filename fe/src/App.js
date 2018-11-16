@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import apiConfig from './config/config';
 import Header from './components/Header';
 import Signup from './components/Signup';
+import t from 'typy';
 
 class App extends Component {
   constructor(props) {
@@ -199,14 +200,24 @@ class App extends Component {
               });
   }
 
+
+  deepValue(obj, path, value) {
+          var parts = path.split('.');
+          var curr = obj;
+          for(var i=0;i<parts.length-1;i++)
+              curr = curr[parts[i]] || {};
+          curr[parts[parts.length-1]] = value;
+  }
+
   updateCustomerState = (event) =>  {
-    console.log('updating customer attribute ' + event.target.id + ' with value = ' + event.target.value);
     let newcustomer = {...this.state.customer};
-    eval('newcustomer.'+ event.target.id + ' = "' + event.target.value +'";');
+    console.log(event.target.id + ' is defined = ' + t(newcustomer, event.target.id).safeObject);
+    console.log('Updating ' + event.target.id + ' with value = ' + event.target.value);
+    this.deepValue(newcustomer, event.target.id, event.target.value);
     this.setState({
-      'customer' : newcustomer
+     'customer' : newcustomer
     });
-    console.log('state is set to ' + eval('this.state.customer.' + event.target.id)) ;
+    console.log('The state is set to ' + t(newcustomer, event.target.id).safeObject) ;
   }
 
   render() {
