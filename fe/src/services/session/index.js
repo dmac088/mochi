@@ -25,6 +25,8 @@ const clearSession = () => {
 const  onRequestSuccess = async (response) => {
 	const body = await response.text();
 	console.log(JSON.parse(body).access_token);
+	
+
 
 	const tokens = response.tokens.reduce((prev, item) => ({
 		...prev,

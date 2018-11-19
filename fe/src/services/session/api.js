@@ -16,7 +16,7 @@ export const authenticate = (email, password) => fetchApi(
 																									password: password,
 																									grant_type: 'password'
 																								},
-																								'post',
+																								'POST',
 																								{
 																										Authorization: 'Basic ' + apiConfig.clientId,
 																										'Content-Type': 'application/x-www-form-urlencoded',
