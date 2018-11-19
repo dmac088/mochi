@@ -1,46 +1,34 @@
 import React, { Component } from 'react';
 import apiConfig from './config/config';
+import store from './store';
 import Header from './components/Header';
 import Signup from './components/Signup';
+import * as session from './services/session';
+import * as api from './services/api';
 import t from 'typy';
+
+/*
+  const routeStack = [
+  	{ name: 'Main', component: Main },
+  	{ name: 'Login', component: Login },
+  	{ name: 'Register', component: Register },
+  	{ name: 'Users', component: Users },
+  ];
+*/
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-              customer: {
-                      "@class": ".Person",
-                      "partyId": null,
-                      "nameCn": "",
-                      "familyNameEn": "",
-                      "givenNameEn": "initial",
-                      "partyType": {
-                        "partyTypeDesc": "Person",
-                        "partyTypeId": 1
-                      },
-                      "partyRoles": [
-                        {
-                          "@class": ".Customer",
-                          "roleId": null,
-                          "roleType": {
-                            "roleTypeDesc": "Customer",
-                            "roleTypeId": 1
-                          },
-                          "customerId": null,
-                          "roleStart": null
-                        }
-                      ],
-                      "partyUser": {
-                        "username": "",
-                        "password": ""
-                      }
-                    },
-  	  access_token: '',
-      authenticated: false,
-      errorResponse: '',
-      cartItems: []
+
+    this.initialState = {
+      isLoading: false,
+      error: null,
+      email: 'admin',
+      password: 'admin1234',
     };
+    this.state = this.initialState;
   }
+
 
   async componentDidMount()  {
     console.log('Component Mounted');
@@ -161,45 +149,52 @@ class App extends Component {
 
   }
 
+
+  componentDidMount() {
+		// Waits for the redux store to be populated with the previously saved state,
+		// then it will try to auto-login the user.
+		const unsubscribe = store.subscribe(() => {
+			if (store.getState().services.persist.isHydrated) {
+				unsubscribe();
+				this.autoLogin();
+			}
+		});
+	}
+
+	autoLogin() {
+		session.refreshToken().then(() => {
+		//	this.setState({ initialRoute: routeStack[3] });
+		}).catch(() => {
+		//	this.setState({ initialRoute: routeStack[0] });
+		});
+	}
+
   loginClick = async (event) => {
-    console.log('Login clicked');
-    await this.authUser();
-    await this.fetchCustomer();
-  }
+    this.setState({
+			isLoading: true,
+			error: '',
+		});
 
-  resetState = (event) => {
-    console.log('resetting customer state');
-    this.setState({customer: {
-                            "@class": ".Person",
-                            "partyId": "",
-                            "nameCn": "",
-                            "familyNameEn": "",
-                            "givenNameEn": "",
-                            "partyType": {
-                              "partyTypeDesc": "Person",
-                            },
-                            "partyRoles": [
-                              {
-                                "@class": ".Customer",
-                                "roleType": {
-                                  "roleTypeDesc": "Customer",
-                                },
-                                "customerId": null,
-                                "roleStart": null
-                              }
-                            ],
-                            "partyUser": {
-                              "username": "",
-                              "password": ""
-                            }
-                          },
-                access_token: '',
-                authenticated: false,
-                errorResponse: '',
-                cartItems: []
-              });
-  }
+		session.authenticate(this.state.email, this.state.password)
+		.then(() => {
+			this.setState(this.initialState);
+			const routeStack = this.props.navigator.getCurrentRoutes();
+			this.props.navigator.jumpTo(routeStack[3]);
+		})
+		.catch((exception) => {
+			// Displays only the first error message
+			const error = api.exceptionExtractError(exception);
+			this.setState({
+				isLoading: false,
+				...(error ? { error } : {}),
+			});
 
+			if (!error) {
+				throw exception;
+			}
+		});
+
+  }
 
   deepValue(obj, path, value) {
           var parts = path.split('.');
@@ -227,9 +222,9 @@ class App extends Component {
           <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossOrigin="anonymous" />
           <Header authenticated={(this.state.authenticated)}
                   loginClick={this.loginClick.bind(this)}
-                  resetState={this.resetState.bind(this)}
                   updateCustomerState={this.updateCustomerState.bind(this)}
-                  customer={this.state.customer}
+                  email={this.state.email}
+                  password={this.state.password}
           />
         <Signup
                   updateCustomerState={this.updateCustomerState.bind(this)}

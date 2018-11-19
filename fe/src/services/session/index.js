@@ -1,4 +1,4 @@
-import store from 'MobileApp/src/store';
+import store from '../../store';
 
 import * as api from './api';
 import * as selectors from './selectors';
@@ -22,7 +22,12 @@ const clearSession = () => {
 	store.dispatch(actionCreators.update(initialState));
 };
 
-const onRequestSuccess = (response) => {
+const  onRequestSuccess = async (response) => {
+	console.log(response);
+	console.log(response.text);
+	const body = await response.text();
+	console.log(JSON.parse(body).access_token);
+
 	const tokens = response.tokens.reduce((prev, item) => ({
 		...prev,
 		[item.type]: item,

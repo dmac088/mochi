@@ -1,16 +1,26 @@
 import { Buffer } from 'buffer';
-import { fetchApi } from 'MobileApp/src/services/api';
-import apiConfig from 'MobileApp/src/services/api/config';
+import { fetchApi } from '../../services/api';
+import apiConfig from '../../services/api/config';
 
 const endPoints = {
-	authenticate: '/users/auth',
-	revoke: '/users/auth/revoke',
-	refresh: '/users/auth/refresh',
+	authenticate: '/oauth/token',
+	revoke: '/oauth/token',
+	refresh: '/oauth/token',
 };
 
-export const authenticate = (email, password) => fetchApi(endPoints.authenticate, {}, 'post', {
-	Authorization: `Basic ${new Buffer(`${email}:${password}`).toString('base64')}`,
-});
+export const authenticate = (email, password) => fetchApi(
+																								endPoints.authenticate,
+																								{
+																										username: email,
+																										password: password,
+																										grant_type: 'password'
+																								},
+																								'post',
+																								{
+																									Authorization: `Basic ${new Buffer('spring-security-oauth2-read-write-client:spring-security-oauth2-read-write-client-password1234').toString('base64')}`,
+																									'Content-Type': 'application/x-www-form-urlencoded',
+																									'Cache-Control': 'no-cache'
+																								});
 
 export const refresh = (token, user) => fetchApi(endPoints.refresh, { token, user }, 'post', {
 	'Client-ID': apiConfig.clientId,
