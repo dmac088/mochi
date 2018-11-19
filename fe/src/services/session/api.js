@@ -17,7 +17,7 @@ export const authenticate = (email, password) => fetchApi(
 																								},
 																								'post',
 																								{
-																									Authorization: `Basic ${new Buffer('spring-security-oauth2-read-write-client:spring-security-oauth2-read-write-client-password1234').toString('base64')}`,
+																									Authorization: 'Basic ' + apiConfig.clientId,
 																									'Content-Type': 'application/x-www-form-urlencoded',
 																									'Cache-Control': 'no-cache'
 																								});
