@@ -178,8 +178,8 @@ class App extends Component {
 		session.authenticate(this.state.email, this.state.password)
 		.then(() => {
 			this.setState(this.initialState);
-			const routeStack = this.props.navigator.getCurrentRoutes();
-			this.props.navigator.jumpTo(routeStack[3]);
+			//const routeStack = this.props.navigator.getCurrentRoutes();
+			//this.props.navigator.jumpTo(routeStack[3]);
 		})
 		.catch((exception) => {
 			// Displays only the first error message
