@@ -18,13 +18,13 @@ export const exceptionExtractError = (exception) => {
 
 
 
-export const fetchApi = (endPoint, payload = {}, method = 'get', headers = {}) => {
+export const fetchApi = (endPoint, payload = {}, formData = {}, method = 'get', headers = {}) => {
 	const accessToken = sessionSelectors.get().tokens.access.value;
 
 	let formBody = [];
-		for (let property in payload) {
+		for (let property in formData) {
 				let encodedKey = encodeURIComponent(property);
-				let encodedValue = encodeURIComponent(payload[property]);
+				let encodedValue = encodeURIComponent(formData[property]);
 				formBody.push(encodedKey + "=" + encodedValue);
 		}
 	formBody = formBody.join("&");
