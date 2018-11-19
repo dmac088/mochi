@@ -3,7 +3,7 @@
 import fetchival from 'fetchival';
 import _ from 'lodash';
 
-import * as sessionSelectors from 'MobileApp/src/services/session/selectors';
+import * as sessionSelectors from '../../services/session/selectors';
 import apiConfig from './config';
 
 export const exceptionExtractError = (exception) => {
@@ -16,19 +16,25 @@ export const exceptionExtractError = (exception) => {
 	return error;
 };
 
+
+
 export const fetchApi = (endPoint, payload = {}, method = 'get', headers = {}) => {
 	const accessToken = sessionSelectors.get().tokens.access.value;
-	return fetchival(`${apiConfig.url}${endPoint}`, {
-		headers: _.pickBy({
-			...(accessToken ? {
-				Authorization: `Bearer ${accessToken}`,
-			} : {
-				'Client-ID': apiConfig.clientId,
-			}),
-			...headers,
-		}, item => !_.isEmpty(item)),
-	})[method.toLowerCase()](payload)
-	.catch((e) => {
+
+	let formBody = [];
+		for (let property in payload) {
+				let encodedKey = encodeURIComponent(property);
+				let encodedValue = encodeURIComponent(payload[property]);
+				formBody.push(encodedKey + "=" + encodedValue);
+		}
+	formBody = formBody.join("&");
+
+	return fetch(apiConfig.url+endPoint, {
+		crossDomain: true,
+		method: method,
+	  headers: headers,
+	  body: formBody
+	}).catch((e) => {
 		if (e.response && e.response.json) {
 			e.response.json().then((json) => {
 				if (json) throw json;
@@ -38,4 +44,4 @@ export const fetchApi = (endPoint, payload = {}, method = 'get', headers = {}) =
 			throw e;
 		}
 	});
-};
+}

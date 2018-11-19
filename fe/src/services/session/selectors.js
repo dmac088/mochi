@@ -1,3 +1,3 @@
-import store from 'MobileApp/src/store';
+import store from '../../store';
 
 export const get = () => store.getState().services.session;
