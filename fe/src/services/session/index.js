@@ -22,18 +22,37 @@ const clearSession = () => {
 	store.dispatch(actionCreators.update(initialState));
 };
 
+
+const formatTokenResponse = (accessToken, refreshToken, user, expires_in) => ({
+	tokens: [{
+		type: 'access',
+		value: accessToken,
+		expiresIn: expires_in,
+	},
+	{
+		type: 'refresh',
+		value: refreshToken,
+	}],
+	user: {
+		id: user,
+	},
+});
+
+
 const  onRequestSuccess = async (response) => {
 	const body = await response.text();
-	console.log(JSON.parse(body).access_token);
-	
 
-
-	const tokens = response.tokens.reduce((prev, item) => ({
-		...prev,
-		[item.type]: item,
-	}), {});
-	store.dispatch(actionCreators.update({ tokens, user: response.user }));
-	setSessionTimeout(tokens.access.expiresIn);
+	 const tokens = 				formatTokenResponse(
+												 			JSON.parse(body).access_token,
+												 			JSON.parse(body).refresh_token,
+												 			JSON.parse(body).username,
+												 			JSON.parse(body).expires_in
+												 	).reduce((prev, item) => ({
+													 	...prev,
+													 	[item.type]: item,
+													 }), {});
+		store.dispatch(actionCreators.update({ tokens, user: response.user }));
+		setSessionTimeout(tokens.access.expiresIn);
 };
 
 const onRequestFailed = (exception) => {
