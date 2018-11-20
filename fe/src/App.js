@@ -35,59 +35,6 @@ class App extends Component {
     console.log('Component Mounted');
   }
 
-
-  async authUser() {
-    console.log('authorizing user: ' + this.state.customer.partyUser.username + ' password: ' + this.state.customer.partyUser.password);
-    let details = {
-        'username': this.state.customer.partyUser.username,
-        'password': this.state.customer.partyUser.password,
-        'grant_type': 'password'
-    };
-
-    let formBody = [];
-      for (let property in details) {
-          let encodedKey = encodeURIComponent(property);
-          let encodedValue = encodeURIComponent(details[property]);
-          formBody.push(encodedKey + "=" + encodedValue);
-      }
-    formBody = formBody.join("&");
-
-    const response = await
-    fetch(
-      apiConfig.url+"/oauth/token", {
-      crossDomain: true,
-      method: "POST",
-      headers: new Headers({
-        "Authorization": "Basic "+apiConfig.clientId,
-        "Content-Type": "application/x-www-form-urlencoded",
-        "Cache-Control": "no-cache"
-      }),
-       body: formBody
-    })
-    .then(async (response) => {
-      if(response.status === 400) {
-          this.setState({
-            errorResponse: 'Invalid username or password',
-            authenticated: false
-          });
-          console.log(this.state.errorResponse);
-          return;
-      }
-      const body = await response.text();
-      this.setState({
-        access_token: JSON.parse(body).access_token,
-        isLoading: false,
-        authenticated: true
-      });
-    })
-    .catch((error) => {
-      console.log('error');
-    })
-    .finally(() => {
-      console.log('finally');
-    });
-  }
-
   async fetchCustomer() {
     console.log('called fetchCustomer');
     if(!this.state.authenticated) {return;}
@@ -213,14 +160,11 @@ class App extends Component {
     console.log('id = ' + event.target.id + ' : value = ' + event.target.value);
     let newstate = {...this.state};
     this.deepValue(newstate, event.target.id, event.target.value);
-
-
-     this.setState({
+    this.setState({
        'email': newstate.email,
        'password': newstate.password
-     });
-
-     console.log(this.state);
+    });
+    console.log(this.state);
     // let newcustomer = {...this.state.customer};
     // console.log(event.target.id + ' is defined = ' + t(newcustomer, event.target.id).safeObject);
     // console.log('Updating ' + event.target.id + ' with value = ' + event.target.value);
