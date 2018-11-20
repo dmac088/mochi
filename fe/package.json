@@ -48,7 +48,7 @@
     "redux-persist": "^3.4.0",
     "redux-persist-transform-filter": "0.0.4",
     "remote-redux-devtools": "0.5.2",
-    "redux-thunk": "^2.3.0",
+    "redux-thunk": "^2.1.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.0",
     "typy": "^2.0.1",

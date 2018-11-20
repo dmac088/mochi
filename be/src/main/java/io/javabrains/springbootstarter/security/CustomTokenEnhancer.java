@@ -1,5 +1,6 @@
 package io.javabrains.springbootstarter.security;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,8 +19,9 @@ public class CustomTokenEnhancer implements TokenEnhancer {
         additionalInfo.put("username", user.getUsername());
        // additionalInfo.put("authorities", user.getAuthorities());
 
+        
         ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
-
+        
         return accessToken;
     }
 

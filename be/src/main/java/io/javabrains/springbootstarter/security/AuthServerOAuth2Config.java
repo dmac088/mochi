@@ -63,6 +63,7 @@ public class AuthServerOAuth2Config extends AuthorizationServerConfigurerAdapter
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.jdbc(dataSource);
+        
     }
     
     @Bean
@@ -74,6 +75,7 @@ public class AuthServerOAuth2Config extends AuthorizationServerConfigurerAdapter
     public DefaultAccessTokenConverter accessTokenConverter() {
         return new DefaultAccessTokenConverter();
     }
+    
    
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {

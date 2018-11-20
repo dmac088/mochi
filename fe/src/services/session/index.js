@@ -40,18 +40,22 @@ const formatTokenResponse = (accessToken, refreshToken, user, expires_in) => ({
 
 
 const  onRequestSuccess = async (response) => {
-	const body = await response.text();
+	 const body = await response.text();
 
-	 const tokens = 				formatTokenResponse(
+	 const reformTokens = formatTokenResponse(
 												 			JSON.parse(body).access_token,
 												 			JSON.parse(body).refresh_token,
 												 			JSON.parse(body).username,
 												 			JSON.parse(body).expires_in
-												 	).tokens.reduce((prev, item) => ({
+												 	);
+
+	console.log(reformTokens);
+
+	 const tokens = 				reformTokens.tokens.reduce((prev, item) => ({
 													 	...prev,
 													 	[item.type]: item,
 													 }), {});
-		store.dispatch(actionCreators.update({ tokens, user: JSON.parse(body).username }));
+		store.dispatch(actionCreators.update({ tokens, user: reformTokens.user }));
 		setSessionTimeout(tokens.access.expiresIn);
 };
 
@@ -61,7 +65,11 @@ const onRequestFailed = (exception) => {
 };
 
 export const refreshToken = () => {
+	console.log("called refresh token");
 	const session = selectors.get();
+
+	console.log(session.tokens.refresh.value);
+	console.log(session.user.id);
 
 	if (!session.tokens.refresh.value || !session.user.id) {
 		return Promise.reject();
