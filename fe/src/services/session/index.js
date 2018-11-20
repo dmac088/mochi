@@ -47,11 +47,11 @@ const  onRequestSuccess = async (response) => {
 												 			JSON.parse(body).refresh_token,
 												 			JSON.parse(body).username,
 												 			JSON.parse(body).expires_in
-												 	).reduce((prev, item) => ({
+												 	).tokens.reduce((prev, item) => ({
 													 	...prev,
 													 	[item.type]: item,
 													 }), {});
-		store.dispatch(actionCreators.update({ tokens, user: response.user }));
+		store.dispatch(actionCreators.update({ tokens, user: JSON.parse(body).username }));
 		setSessionTimeout(tokens.access.expiresIn);
 };
 
