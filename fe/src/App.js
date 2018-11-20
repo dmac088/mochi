@@ -30,11 +30,6 @@ class App extends Component {
     this.state = this.initialState;
   }
 
-
-  async componentDidMount()  {
-    console.log('Component Mounted');
-  }
-
   async fetchCustomer() {
     console.log('called fetchCustomer');
     if(!this.state.authenticated) {return;}
@@ -118,10 +113,6 @@ class App extends Component {
 	}
 
   loginClick = async (event) => {
-    // this.setState({
-		// 	isLoading: true,
-		// 	error: '',
-		// });
 
 		session.authenticate(this.state.email, this.state.password)
 		.then(() => {
@@ -130,6 +121,7 @@ class App extends Component {
       })
 			//this.setState(this.initialState);
       console.log(this.state);
+      session.refreshToken();
 			//const routeStack = this.props.navigator.getCurrentRoutes();
 			//this.props.navigator.jumpTo(routeStack[3]);
 		})

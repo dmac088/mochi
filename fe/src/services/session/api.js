@@ -9,23 +9,35 @@ const endPoints = {
 };
 
 export const authenticate = (email, password) => fetchApi(
-																								endPoints.authenticate,
-																								{},
-																								{
-																									username: email,
-																									password: password,
-																									grant_type: 'password'
-																								},
-																								'POST',
-																								{
-																										Authorization: 'Basic ' + apiConfig.clientId,
-																										'Content-Type': 'application/x-www-form-urlencoded',
-																										'Cache-Control': 'no-cache'
-																								});
+																													endPoints.authenticate,
+																													{},
+																													{
+																														username: email,
+																														password: password,
+																														grant_type: 'password'
+																													},
+																													'POST',
+																													{
+																															Authorization: 'Basic ' + apiConfig.clientId,
+																															'Content-Type': 'application/x-www-form-urlencoded',
+																															'Cache-Control': 'no-cache'
+																													}
+																								);
 
-export const refresh = (token, user) => fetchApi(endPoints.refresh, {},{ token, user }, 'post', {
-	'Client-ID': apiConfig.clientId,
-	Authorization: null,
-});
+export const refresh = (token, user) 					=> fetchApi(
+																													endPoints.refresh,
+																													{},
+																													{ token, user },
+																													'post',
+																													{
+																														'Client-ID': apiConfig.clientId,
+																														Authorization: null,
+																													}
+																									);
 
-export const revoke = tokens => fetchApi(endPoints.revoke, {}, { tokens }, 'post');
+export const revoke = tokens 									=> fetchApi(
+																													endPoints.revoke,
+																													{},
+																													{ tokens },
+																													'post'
+																									);

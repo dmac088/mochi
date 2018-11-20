@@ -9,6 +9,7 @@ import { reducer as dataReducer } from './data/reducer';
 import { reducer as servicesReducer } from './services/reducer';
 import * as persistActionCreators from './services/persist/actions';
 
+
 const appReducer = combineReducers({
 	services: servicesReducer,
 	data: dataReducer,
@@ -21,10 +22,11 @@ const enhancer = compose(
 	devTools()
 );
 
+
 const store = createStore(
-	appReducer,
-	enhancer,
-//	autoRehydrate()
+ 	appReducer,
+ 	enhancer
+
 );
 
 const saveAndLoadSessionFilter = createFilter(
