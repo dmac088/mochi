@@ -23,6 +23,7 @@ class App extends Component {
     this.initialState = {
         isLoading: false,
         error: null,
+        authenticated: null,
         email: '',
         password: ''
     };
@@ -177,7 +178,10 @@ class App extends Component {
 
 		session.authenticate(this.state.email, this.state.password)
 		.then(() => {
-			this.setState(this.initialState);
+      this.setState({
+        authenticated: true
+      })
+			//this.setState(this.initialState);
       console.log(this.state);
 			//const routeStack = this.props.navigator.getCurrentRoutes();
 			//this.props.navigator.jumpTo(routeStack[3]);
