@@ -21,10 +21,10 @@ class App extends Component {
     super(props);
 
     this.initialState = {
-      isLoading: false,
-      error: null,
-      email: '',
-      password: '',
+        isLoading: false,
+        error: null,
+        email: '',
+        password: ''
     };
     this.state = this.initialState;
   }
@@ -170,10 +170,10 @@ class App extends Component {
 	}
 
   loginClick = async (event) => {
-    this.setState({
-			isLoading: true,
-			error: '',
-		});
+    // this.setState({
+		// 	isLoading: true,
+		// 	error: '',
+		// });
 
 		session.authenticate(this.state.email, this.state.password)
 		.then(() => {
@@ -206,21 +206,36 @@ class App extends Component {
   }
 
   updateCustomerState = (event) =>  {
-    let newcustomer = {...this.state.customer};
-    console.log(event.target.id + ' is defined = ' + t(newcustomer, event.target.id).safeObject);
-    console.log('Updating ' + event.target.id + ' with value = ' + event.target.value);
-    this.deepValue(newcustomer, event.target.id, event.target.value);
-    this.setState({
-     'customer' : newcustomer
-    });
-    console.log('The state is set to ' + t(newcustomer, event.target.id).safeObject) ;
+    console.log('id = ' + event.target.id + ' : value = ' + event.target.value);
+    let newstate = {...this.state};
+    this.deepValue(newstate, event.target.id, event.target.value);
+
+
+     this.setState({
+       'email': newstate.email,
+       'password': newstate.password
+     });
+
+     console.log(this.state);
+    // let newcustomer = {...this.state.customer};
+    // console.log(event.target.id + ' is defined = ' + t(newcustomer, event.target.id).safeObject);
+    // console.log('Updating ' + event.target.id + ' with value = ' + event.target.value);
+    // this.deepValue(newcustomer, event.target.id, event.target.value);
+    // this.setState({
+    //  'customer' : newcustomer
+    // });
+    // console.log('The state is set to ' + t(newcustomer, event.target.id).safeObject) ;
   }
 
   render() {
     const {customer, isLoading} = this.state;
     return (
         <div className="App">
-          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossOrigin="anonymous" />
+          <link rel="stylesheet"
+                href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+                integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+                crossOrigin="anonymous"
+          />
           <Header authenticated={(this.state.authenticated)}
                   loginClick={this.loginClick.bind(this)}
                   updateCustomerState={this.updateCustomerState.bind(this)}
