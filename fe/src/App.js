@@ -21,10 +21,11 @@ class App extends Component {
     super(props);
 
     this.initialState = {
-      isLoading: false,
-      error: null,
-      email: 'admin',
-      password: 'admin1234',
+        isLoading: false,
+        error: null,
+        authenticated: null,
+        email: '',
+        password: ''
     };
     this.state = this.initialState;
   }
@@ -32,59 +33,6 @@ class App extends Component {
 
   async componentDidMount()  {
     console.log('Component Mounted');
-  }
-
-
-  async authUser() {
-    console.log('authorizing user: ' + this.state.customer.partyUser.username + ' password: ' + this.state.customer.partyUser.password);
-    let details = {
-        'username': this.state.customer.partyUser.username,
-        'password': this.state.customer.partyUser.password,
-        'grant_type': 'password'
-    };
-
-    let formBody = [];
-      for (let property in details) {
-          let encodedKey = encodeURIComponent(property);
-          let encodedValue = encodeURIComponent(details[property]);
-          formBody.push(encodedKey + "=" + encodedValue);
-      }
-    formBody = formBody.join("&");
-
-    const response = await
-    fetch(
-      apiConfig.url+"/oauth/token", {
-      crossDomain: true,
-      method: "POST",
-      headers: new Headers({
-        "Authorization": "Basic "+apiConfig.clientId,
-        "Content-Type": "application/x-www-form-urlencoded",
-        "Cache-Control": "no-cache"
-      }),
-       body: formBody
-    })
-    .then(async (response) => {
-      if(response.status === 400) {
-          this.setState({
-            errorResponse: 'Invalid username or password',
-            authenticated: false
-          });
-          console.log(this.state.errorResponse);
-          return;
-      }
-      const body = await response.text();
-      this.setState({
-        access_token: JSON.parse(body).access_token,
-        isLoading: false,
-        authenticated: true
-      });
-    })
-    .catch((error) => {
-      console.log('error');
-    })
-    .finally(() => {
-      console.log('finally');
-    });
   }
 
   async fetchCustomer() {
@@ -170,14 +118,18 @@ class App extends Component {
 	}
 
   loginClick = async (event) => {
-    this.setState({
-			isLoading: true,
-			error: '',
-		});
+    // this.setState({
+		// 	isLoading: true,
+		// 	error: '',
+		// });
 
 		session.authenticate(this.state.email, this.state.password)
 		.then(() => {
-			this.setState(this.initialState);
+      this.setState({
+        authenticated: true
+      })
+			//this.setState(this.initialState);
+      console.log(this.state);
 			//const routeStack = this.props.navigator.getCurrentRoutes();
 			//this.props.navigator.jumpTo(routeStack[3]);
 		})
@@ -205,21 +157,33 @@ class App extends Component {
   }
 
   updateCustomerState = (event) =>  {
-    let newcustomer = {...this.state.customer};
-    console.log(event.target.id + ' is defined = ' + t(newcustomer, event.target.id).safeObject);
-    console.log('Updating ' + event.target.id + ' with value = ' + event.target.value);
-    this.deepValue(newcustomer, event.target.id, event.target.value);
+    console.log('id = ' + event.target.id + ' : value = ' + event.target.value);
+    let newstate = {...this.state};
+    this.deepValue(newstate, event.target.id, event.target.value);
     this.setState({
-     'customer' : newcustomer
+       'email': newstate.email,
+       'password': newstate.password
     });
-    console.log('The state is set to ' + t(newcustomer, event.target.id).safeObject) ;
+    console.log(this.state);
+    // let newcustomer = {...this.state.customer};
+    // console.log(event.target.id + ' is defined = ' + t(newcustomer, event.target.id).safeObject);
+    // console.log('Updating ' + event.target.id + ' with value = ' + event.target.value);
+    // this.deepValue(newcustomer, event.target.id, event.target.value);
+    // this.setState({
+    //  'customer' : newcustomer
+    // });
+    // console.log('The state is set to ' + t(newcustomer, event.target.id).safeObject) ;
   }
 
   render() {
     const {customer, isLoading} = this.state;
     return (
         <div className="App">
-          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossOrigin="anonymous" />
+          <link rel="stylesheet"
+                href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+                integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+                crossOrigin="anonymous"
+          />
           <Header authenticated={(this.state.authenticated)}
                   loginClick={this.loginClick.bind(this)}
                   updateCustomerState={this.updateCustomerState.bind(this)}
