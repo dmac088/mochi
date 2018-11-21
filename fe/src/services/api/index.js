@@ -18,8 +18,8 @@ export const exceptionExtractError = (exception) => {
 
 
 
-export const fetchApi = (endPoint, payload = {}, formData = {}, method = 'get', headers = {}) => {
-	const accessToken = sessionSelectors.get().tokens.access.value;
+export const fetchApi = async (endPoint, payload = {}, formData = {}, method = 'get', headers = {}) => {
+
 
 	let formBody = [];
 		for (let property in formData) {
@@ -29,7 +29,7 @@ export const fetchApi = (endPoint, payload = {}, formData = {}, method = 'get', 
 		}
 	formBody = formBody.join("&");
 
-	return fetch(apiConfig.url+endPoint, {
+	return await  fetch(apiConfig.url+endPoint, {
 		crossDomain: true,
 		method: method,
 	  headers: headers,
