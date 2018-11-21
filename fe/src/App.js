@@ -44,8 +44,8 @@ class App extends Component {
         })
     })
      .then(async (response) => await response.json())
-     .then((json) => {this.setState({customer: json})
-   })
+    // .then((json) => {this.setState({customer: json})
+  // })
   }
 
   async registerCustomer() {
@@ -104,6 +104,9 @@ class App extends Component {
 		});
 	}
 
+
+
+
 	autoLogin() {
 		session.refreshToken().then(() => {
 		//	this.setState({ initialRoute: routeStack[3] });
@@ -112,6 +115,14 @@ class App extends Component {
 		});
 	}
 
+  wait(ms){
+     var start = new Date().getTime();
+     var end = start;
+     while(end < start + ms) {
+       end = new Date().getTime();
+    }
+  }
+
   loginClick = async (event) => {
 
 		session.authenticate(this.state.email, this.state.password)
@@ -119,11 +130,12 @@ class App extends Component {
       this.setState({
         authenticated: true
       })
-			//this.setState(this.initialState);
-      console.log(this.state);
+
+      //always gets a new access toke by using the current refresh toke stored in state
       session.refreshToken();
-			//const routeStack = this.props.navigator.getCurrentRoutes();
-			//this.props.navigator.jumpTo(routeStack[3]);
+
+      this.fetchCustomer();
+
 		})
 		.catch((exception) => {
 			// Displays only the first error message
