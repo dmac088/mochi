@@ -104,22 +104,12 @@ class App extends Component {
   }
 
   updateCustomerState = (event) =>  {
-    //console.log('id = ' + event.target.id + ' : value = ' + event.target.value);
     let newstate = {...this.state};
     this.deepValue(newstate, event.target.id, event.target.value);
     this.setState({
        'email': newstate.email,
        'password': newstate.password
     });
-    //console.log(this.state);
-    // let newcustomer = {...this.state.customer};
-    // console.log(event.target.id + ' is defined = ' + t(newcustomer, event.target.id).safeObject);
-    // console.log('Updating ' + event.target.id + ' with value = ' + event.target.value);
-    // this.deepValue(newcustomer, event.target.id, event.target.value);
-    // this.setState({
-    //  'customer' : newcustomer
-    // });
-    // console.log('The state is set to ' + t(newcustomer, event.target.id).safeObject) ;
   }
 
   render() {
@@ -146,3 +136,66 @@ class App extends Component {
 }
 
 export default App;
+
+//
+// async fetchCustomer() {
+//   console.log('called fetchCustomer');
+//   if(!this.state.authenticated) {return;}
+//   await
+//   fetch(
+//       apiConfig.url+'/api/Party/UserName/'+this.state.email, {
+//       crossDomain: true,
+//       method: "GET",
+//       headers:  new Headers({
+//         "Authorization": 	"Bearer "+this.state.access_token,
+//         "Content-Type": 	"application/json"
+//       })
+//   })
+//    .then(async (response) => await response.json())
+//   // .then((json) => {this.setState({customer: json})
+// // })
+// }
+//
+// async registerCustomer() {
+//   console.log('called registerCustomer');
+//   let details = {
+//       'customer': this.state.customer
+//   };
+//
+//   let formBody = [];
+//     for (let property in details) {
+//         let encodedKey = encodeURIComponent(property);
+//         let encodedValue = encodeURIComponent(details[property]);
+//         formBody.push(encodedKey + "=" + encodedValue);
+//     }
+//   formBody = formBody.join("&");
+//
+//   const response = await
+//   fetch(
+//     apiConfig.url+"/api/Person", {
+//     crossDomain: true,
+//     method: "POST",
+//     headers: new Headers({
+//       "Authorization": "Basic "+apiConfig.clientId,
+//       "Content-Type": "application/x-www-form-urlencoded",
+//       "Cache-Control": "no-cache"
+//     }),
+//      body: formBody
+//   })
+//   .then(async (response) => {
+//     if(response.status === 400) {
+//         this.setState({
+//           errorResponse: 'Could not register, something went wrong'
+//         });
+//         console.log(this.state.errorResponse);
+//         return;
+//     }
+//   })
+//   .catch((error) => {
+//     console.log('error');
+//   })
+//   .finally(() => {
+//     console.log('finally');
+//   });
+//
+// }
