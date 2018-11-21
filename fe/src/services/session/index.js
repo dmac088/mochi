@@ -52,9 +52,6 @@ const  onRequestSuccess = async (response) => {
 												 			JSON.parse(body).expires_in
 												 	);
 
-	//console.log(reformTokens);
-
-
 	//copy previous state (immutable) and overwrite the tokens, don't confuce with reducer
 	//this is simply javascript array.reduce() with two parameters
 	//item will overwrite previous state
@@ -64,9 +61,7 @@ const  onRequestSuccess = async (response) => {
 																												 	[item.type]: item,
 													 												 		}),
 																								{});
-
-	console.log(tokens);
-
+																								
 	//update state using dispatch function and passing in new copy of state
 	//for both tokens array and user object
 	store.dispatch(actionCreators.update({ tokens, user: reformTokens.user }));
