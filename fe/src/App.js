@@ -149,14 +149,14 @@ class App extends Component {
   }
 
   updateCustomerState = (event) =>  {
-    console.log('id = ' + event.target.id + ' : value = ' + event.target.value);
+    //console.log('id = ' + event.target.id + ' : value = ' + event.target.value);
     let newstate = {...this.state};
     this.deepValue(newstate, event.target.id, event.target.value);
     this.setState({
        'email': newstate.email,
        'password': newstate.password
     });
-    console.log(this.state);
+    //console.log(this.state);
     // let newcustomer = {...this.state.customer};
     // console.log(event.target.id + ' is defined = ' + t(newcustomer, event.target.id).safeObject);
     // console.log('Updating ' + event.target.id + ' with value = ' + event.target.value);

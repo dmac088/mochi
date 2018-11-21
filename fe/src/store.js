@@ -26,7 +26,6 @@ const enhancer = compose(
 const store = createStore(
  	appReducer,
  	enhancer
-
 );
 
 const saveAndLoadSessionFilter = createFilter(

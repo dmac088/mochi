@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 class Login extends Component {
 
     renderLogoutButton = () => {
-     console.log('render logout button');
+    // console.log('render logout button');
      let button;
      if(this.props.authenticated) {
        button = <button
@@ -17,7 +17,7 @@ class Login extends Component {
     }
 
     renderLoginButton = () => {
-     console.log('render login button');
+    // console.log('render login button');
      let button;
      if(!this.props.authenticated) {
        button =
@@ -32,7 +32,7 @@ class Login extends Component {
     }
 
     rendersignupButton = () => {
-     console.log('render signup button');
+    // console.log('render signup button');
      let button;
      if(!this.props.authenticated) {
        button =
@@ -47,7 +47,7 @@ class Login extends Component {
     }
 
     renderUserNameField = () => {
-     console.log('render username field');
+  //   console.log('render username field');
      let userNameField;
      if(!this.props.authenticated) {
        userNameField =
@@ -63,7 +63,7 @@ class Login extends Component {
     }
 
     renderPasswordField = () => {
-     console.log('render password field');
+    // console.log('render password field');
      let passwordField;
      if(!this.props.authenticated) {
        passwordField =
