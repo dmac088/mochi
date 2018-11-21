@@ -19,6 +19,8 @@ const setSessionTimeout = (duration) => {
 
 const clearSession = () => {
 	clearTimeout(sessionTimeout);
+
+	//set the state back to initial state
 	store.dispatch(actionCreators.update(initialState));
 };
 
@@ -50,17 +52,29 @@ const  onRequestSuccess = async (response) => {
 												 			JSON.parse(body).expires_in
 												 	);
 
-	console.log(reformTokens);
+	//console.log(reformTokens);
 
-	const tokens = 				reformTokens.tokens.reduce((prev, item) => ({
-													 	...prev,
-													 	[item.type]: item,
-													 }), {});
+
+	//copy previous state (immutable) and overwrite the tokens, don't confuce with reducer
+	//this is simply javascript array.reduce() with two parameters
+	//item will overwrite previous state
+	const tokens = 				reformTokens.tokens.reduce(
+																											(prev, item) => ({
+																												 	...prev,
+																												 	[item.type]: item,
+													 												 		}),
+																								{});
+
+	console.log(tokens);
+
+	//update state using dispatch function and passing in new copy of state
+	//for both tokens array and user object
 	store.dispatch(actionCreators.update({ tokens, user: reformTokens.user }));
 
+	//get the current state (singleton)
 	const session = selectors.get();
-	console.log('the session state has set the refresh token to = ' + session.tokens.refresh.value);
-	console.log('the session state has set the access token to = ' + session.tokens.access.value);
+	//console.log('the session state has set the refresh token to = ' + session.tokens.refresh.value);
+	//console.log('the session state has set the access token to = ' + session.tokens.access.value);
 	setSessionTimeout(tokens.access.expiresIn);
 };
 
