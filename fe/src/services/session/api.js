@@ -34,8 +34,8 @@ export const refresh = (token) 									=> fetchApi(
 																													'POST',
 																													{
 																														Authorization: 'Basic ' + apiConfig.clientId,
-																														'Cache-Control': 'no-cache',
 																														'Content-Type': 'application/x-www-form-urlencoded',
+																														'Cache-Control': 'no-cache'
 																													}
 																									);
 
