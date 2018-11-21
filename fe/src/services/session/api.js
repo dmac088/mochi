@@ -24,14 +24,18 @@ export const authenticate = (email, password) => fetchApi(
 																													}
 																								);
 
-export const refresh = (token, user) 					=> fetchApi(
+export const refresh = (token) 									=> fetchApi(
 																													endPoints.refresh,
 																													{},
-																													{ token, user },
-																													'post',
 																													{
-																														'Client-ID': apiConfig.clientId,
-																														Authorization: null,
+																														grant_type: 'refresh_token',
+																														refresh_token: token.value
+																													},
+																													'POST',
+																													{
+																														Authorization: 'Basic ' + apiConfig.clientId,
+																														'Cache-Control': 'no-cache',
+																														'Content-Type': 'application/x-www-form-urlencoded',
 																													}
 																									);
 
