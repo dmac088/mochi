@@ -41,10 +41,12 @@ const formatTokenResponse = (accessToken, refreshToken, user, expires_in) => ({
 });
 
 
-const  onRequestSuccess = async (response) => {
+const  onRequestSuccess = (response) => {
 	 console.log('onRequestSuccess');
-	 const body = await response.text();
+	 const body = response;
 
+	 console.log(body);
+	 return;
 	 const reformTokens = formatTokenResponse(
 												 			JSON.parse(body).access_token,
 												 			JSON.parse(body).refresh_token,
@@ -61,7 +63,7 @@ const  onRequestSuccess = async (response) => {
 																												 	[item.type]: item,
 													 												 		}),
 																								{});
-																								
+
 	//update state using dispatch function and passing in new copy of state
 	//for both tokens array and user object
 	store.dispatch(actionCreators.update({ tokens, user: reformTokens.user }));
