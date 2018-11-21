@@ -30,87 +30,37 @@ class App extends Component {
     this.state = this.initialState;
   }
 
-  async fetchCustomer() {
-    console.log('called fetchCustomer');
-    if(!this.state.authenticated) {return;}
-    await
-    fetch(
-        apiConfig.url+'/api/Party/UserName/'+this.state.customer.partyUser.username, {
-        crossDomain: true,
-        method: "GET",
-        headers:  new Headers({
-          "Authorization": 	"Bearer "+this.state.access_token,
-          "Content-Type": 	"application/json"
-        })
-    })
-     .then(async (response) => await response.json())
-    // .then((json) => {this.setState({customer: json})
-  // })
-  }
-
-  async registerCustomer() {
-    console.log('called registerCustomer');
-    let details = {
-        'customer': this.state.customer
-    };
-
-    let formBody = [];
-      for (let property in details) {
-          let encodedKey = encodeURIComponent(property);
-          let encodedValue = encodeURIComponent(details[property]);
-          formBody.push(encodedKey + "=" + encodedValue);
-      }
-    formBody = formBody.join("&");
-
-    const response = await
-    fetch(
-      apiConfig.url+"/api/Person", {
-      crossDomain: true,
-      method: "POST",
-      headers: new Headers({
-        "Authorization": "Basic "+apiConfig.clientId,
-        "Content-Type": "application/x-www-form-urlencoded",
-        "Cache-Control": "no-cache"
-      }),
-       body: formBody
-    })
-    .then(async (response) => {
-      if(response.status === 400) {
-          this.setState({
-            errorResponse: 'Could not register, something went wrong'
-          });
-          console.log(this.state.errorResponse);
-          return;
-      }
-    })
-    .catch((error) => {
-      console.log('error');
-    })
-    .finally(() => {
-      console.log('finally');
-    });
-
-  }
 
 
   componentDidMount() {
+    console.log('componentDidMount');
 		// Waits for the redux store to be populated with the previously saved state,
 		// then it will try to auto-login the user.
-		const unsubscribe = store.subscribe(() => {
-			if (store.getState().services.persist.isHydrated) {
-				unsubscribe();
-				this.autoLogin();
-			}
-		});
+		const unsubscribe = store.subscribe(
+                                      //this is a function that the store is subscribing to
+                                      //any state changes will trigger this function
+                                      //this function is only subscribed on mount
+                                      () => {
+                                          console.log('subscribed function triggered');
+                                    			if (store.getState().services.persist.isHydrated) {
+                                            console.log('store is hydrated');
+                                    				unsubscribe();
+                                            console.log('autoLogin');
+                                    				this.autoLogin();
+                                    			}
+                                          console.log('store is not hydrated');
+                                    	});
 	}
 
 
 
-
+  //Will I ever need this? Or should I
 	autoLogin() {
 		session.refreshToken().then(() => {
+      console.log('the token has been refreshed');
 		//	this.setState({ initialRoute: routeStack[3] });
 		}).catch(() => {
+      console.log('the token has not been refreshed');
 		//	this.setState({ initialRoute: routeStack[0] });
 		});
 	}
@@ -123,19 +73,12 @@ class App extends Component {
     }
   }
 
-  loginClick = async (event) => {
-
+  loginClick = (event) => {
 		session.authenticate(this.state.email, this.state.password)
 		.then(() => {
       this.setState({
         authenticated: true
-      })
-
-      //always gets a new access toke by using the current refresh toke stored in state
-      session.refreshToken();
-
-      this.fetchCustomer();
-
+      });
 		})
 		.catch((exception) => {
 			// Displays only the first error message
