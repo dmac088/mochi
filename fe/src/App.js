@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import apiConfig from './config/config';
 import store from './store';
 import Header from './components/Header';
@@ -15,6 +16,7 @@ import t from 'typy';
   	{ name: 'Users', component: Users },
   ];
 */
+
 
 class App extends Component {
   constructor(props) {
