@@ -37,7 +37,7 @@ class App extends Component {
     console.log('subscribed function triggered');
     if (store.getState().services.persist.isHydrated) {
       console.log('store is hydrated');
-      console.log('id = ' + store.getState().services.session.user.id);
+      console.log('username = ' + store.getState().services.session.user.username);
       console.log('authenticated = ' + store.getState().services.session.user.authenticated);
     }
   }
