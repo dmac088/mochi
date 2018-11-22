@@ -113,7 +113,6 @@ const  persistTokens = (body) => {
 	setSessionTimeout(tokens.access.expiresIn);
 }
 
-
 const onRequestFailed = (exception) => {
 	clearSession();
 	throw exception;
