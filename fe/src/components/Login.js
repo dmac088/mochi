@@ -54,7 +54,7 @@ class Login extends Component {
        <input
          className="form-control mr-sm-2"
          type="input"
-         id="email"
+         id="username"
          onChange={this.props.updateCustomerState}
 
          placeholder="Username"

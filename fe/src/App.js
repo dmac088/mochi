@@ -25,7 +25,7 @@ class App extends Component {
         isLoading: false,
         error: null,
         authenticated: null,
-        email: '',
+        username: '',
         password: ''
     };
     this.state = this.initialState;
@@ -74,7 +74,7 @@ class App extends Component {
   }
 
   loginClick = (event) => {
-		session.authenticate(this.state.email, this.state.password)
+		session.authenticate(this.state.username, this.state.password)
 		.then(() => {
       this.setState({
         authenticated: true
@@ -107,7 +107,7 @@ class App extends Component {
     let newstate = {...this.state};
     this.deepValue(newstate, event.target.id, event.target.value);
     this.setState({
-       'email': newstate.email,
+       'username': newstate.username,
        'password': newstate.password
     });
   }
@@ -124,7 +124,7 @@ class App extends Component {
         <Header authenticated={(this.props.user.authenticated)}
                   loginClick={this.loginClick.bind(this)}
                   updateCustomerState={this.updateCustomerState.bind(this)}
-                  email={this.props.user.id}
+                  username={this.props.user.username}
                   password={this.state.password}
           />
         <Signup
@@ -165,7 +165,7 @@ export default connect(mapStateToProps,mapDispatchToProps)(App);
 //   if(!this.state.authenticated) {return;}
 //   await
 //   fetch(
-//       apiConfig.url+'/api/Party/UserName/'+this.state.email, {
+//       apiConfig.url+'/api/Party/UserName/'+this.state.username, {
 //       crossDomain: true,
 //       method: "GET",
 //       headers:  new Headers({
