@@ -46,6 +46,47 @@ export const authenticate = (email, password) =>
 	.then(onRequestSuccess)
 	.catch(onRequestFailed);
 
+
+	const  onRequestSuccess = (response) => {
+		 //we capture our response errors here and act accordingly
+		 console.log('onRequestSuccess');
+		 if (response.status === 400) {
+			 console.log('Invalid username or password');
+			 clearSession();
+			 return;
+		 };
+
+		 //response is an object of type promise
+		 //we call the text function to execute the promise
+		 response.text().then((responseText) => {
+			 //execute fetch to retrieve the text
+		 	 return responseText;
+		 }).then(persistTokens);
+	};
+
+	const  persistTokens = (body) => {
+		const reformTokens = formatTokenResponse(
+															JSON.parse(body).access_token,
+															JSON.parse(body).refresh_token,
+															JSON.parse(body).username,
+															JSON.parse(body).expires_in
+													);
+
+		//create a new token object
+		const tokens = 				reformTokens.tokens.reduce(
+																												(prev, item) => ({
+																														...prev,
+																														[item.type]: item,
+																												}),
+																									{});
+
+		//trigger a store update
+		store.dispatch(actionCreators.update({ tokens, user: reformTokens.user }));
+
+		//set the token timeout
+		setSessionTimeout(tokens.access.expiresIn);
+	}
+
 export const revoke = () => {
 	const session = selectors.get();
 	return api.revoke(Object.keys(session.tokens).map(tokenKey => ({
@@ -73,45 +114,6 @@ const formatTokenResponse = (accessToken, refreshToken, user, expires_in) => ({
 });
 
 
-const  onRequestSuccess = (response) => {
-	 //we capture our response errors here and act accordingly
-	 console.log('onRequestSuccess');
-	 if (response.status === 400) {
-		 console.log('Invalid username or password');
-		 clearSession();
-		 return;
-	 };
-
-	 //response is an object of type promise
-	 //we call the text function to execute the promise
-	 response.text().then((responseText) => {
-		 //execute fetch to retrieve the text
-	 	 return responseText;
-	 }).then(persistTokens);
-};
-
-const  persistTokens = (body) => {
-	const reformTokens = formatTokenResponse(
-														JSON.parse(body).access_token,
-														JSON.parse(body).refresh_token,
-														JSON.parse(body).username,
-														JSON.parse(body).expires_in
-												);
-
-	//create a new token object
-	const tokens = 				reformTokens.tokens.reduce(
-																											(prev, item) => ({
-																													...prev,
-																													[item.type]: item,
-																											}),
-																								{});
-
-	//trigger a store update
-	store.dispatch(actionCreators.update({ tokens, user: reformTokens.user }));
-
-	//set the token timeout
-	setSessionTimeout(tokens.access.expiresIn);
-}
 
 const onRequestFailed = (exception) => {
 	clearSession();
