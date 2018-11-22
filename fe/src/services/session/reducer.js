@@ -14,6 +14,7 @@ export const initialState = {
 	},
 	user: {
 		id: null,
+		authenticated: false
 	},
 };
 

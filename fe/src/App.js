@@ -24,8 +24,8 @@ class App extends Component {
         isLoading: false,
         error: null,
         authenticated: null,
-        email: '',
-        password: ''
+        email: 'admin',
+        password: 'admin1234'
     };
     this.state = this.initialState;
   }
