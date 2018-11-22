@@ -17,7 +17,6 @@ import t from 'typy';
   ];
 */
 
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -129,10 +128,10 @@ class App extends Component {
                 integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
                 crossOrigin="anonymous"
           />
-          <Header authenticated={(this.state.authenticated)}
+        <Header authenticated={(this.props.user.authenticated)}
                   loginClick={this.loginClick.bind(this)}
                   updateCustomerState={this.updateCustomerState.bind(this)}
-                  email={this.state.email}
+                  email={this.props.user.id}
                   password={this.state.password}
           />
         <Signup
@@ -143,7 +142,29 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    //take value from reducer, alias used in combinReducers in ./data/reducer.js
+    user: state.services.session.user
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    //take value from reducer, alias used in combinReducers in ./data/reducer.js
+    setAuthenticated: (auth) => {
+      dispatch({
+        type: "SET_AUTH",
+        payload: auth
+      })
+    }
+  };
+};
+
+//connect the component to the store
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(App);
 
 //
 // async fetchCustomer() {
