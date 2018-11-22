@@ -19,15 +19,10 @@ import t from 'typy';
 
 class App extends Component {
 
-
-
-
   constructor(props) {
     super(props);
     this.state = initialState;
   }
-
-
 
   componentDidMount() {
     console.log('componentDidMount');
@@ -72,9 +67,7 @@ class App extends Component {
   loginClick = (event) => {
 		session.authenticate(this.state.username, this.state.password)
 		.then(() => {
-      this.setState({
-        authenticated: true
-      });
+      console.log('user successfully authenticated');
 		})
 		.catch((exception) => {
 			// Displays only the first error message
@@ -163,7 +156,6 @@ const initialState = () => {
   return        {
                       isLoading: false,
                       error: null,
-                      authenticated: null,
                       username: '',
                       password: ''
                 };
