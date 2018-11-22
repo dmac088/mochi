@@ -58,10 +58,14 @@ export const authenticate = (email, password) =>
 
 		 //response is an object of type promise
 		 //we call the text function to execute the promise
-		 response.text().then((responseText) => {
-			 //execute fetch to retrieve the text
+		 response.text()
+		 .then((responseText) => {
 		 	 return responseText;
-		 }).then(persistTokens);
+		 })
+		 .then(persistTokens)
+		 .catch((e) => {
+	 	 			console.log(e);
+	   });
 	};
 
 	const  persistTokens = (body) => {
