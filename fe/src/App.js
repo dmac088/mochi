@@ -45,7 +45,11 @@ class App extends Component {
     console.log('subscribed function triggered');
     if (store.getState().services.persist.isHydrated) {
       console.log('store is hydrated');
-      console.log(store.getState());
+      console.log('id = ' + store.getState().services.session.user.id);
+      console.log('authenticated = ' + store.getState().services.session.user.authenticated);
+      //this.setState({
+      //    'authenticated':
+      //})
       //this.reduxSubscribedFunction();
       //console.log('autoLogin');
       //this.autoLogin();
