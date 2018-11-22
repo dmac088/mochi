@@ -19,6 +19,7 @@ export const initialState = {
 };
 
 export const reducer = (state = initialState, action) => {
+	console.log('session reducer was fired!');
 	switch (action.type) {
 		case actionTypes.UPDATE:
 			return {

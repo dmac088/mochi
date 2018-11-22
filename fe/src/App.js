@@ -36,26 +36,28 @@ class App extends Component {
     console.log('componentDidMount');
 		// Waits for the redux store to be populated with the previously saved state,
 		// then it will try to auto-login the user.
-		const unsubscribe = store.subscribe(
-                                      //this is a function that the store is subscribing to
-                                      //any state changes will trigger this function
-                                      //this function is only subscribed on mount
-                                      () => {
-                                          console.log('subscribed function triggered');
-                                    			if (store.getState().services.persist.isHydrated) {
-                                            console.log('store is hydrated');
-                                    				unsubscribe();
-                                            console.log('autoLogin');
-                                    				this.autoLogin();
-                                    			}
-                                          console.log('store is not hydrated');
-                                    	});
+		const unsubscribe = store.subscribe(this.reduxSubscribedFunction);
+
 	}
+
+
+  reduxSubscribedFunction = () => {
+    console.log('subscribed function triggered');
+    if (store.getState().services.persist.isHydrated) {
+      console.log('store is hydrated');
+      console.log(store.getState());
+      //this.reduxSubscribedFunction();
+      //console.log('autoLogin');
+      //this.autoLogin();
+    }
+    //console.log('store is not hydrated');
+  }
 
 
 
   //Will I ever need this? Or should I
 	autoLogin() {
+    console.log('autoLogin');
 		session.refreshToken().then(() => {
       console.log('the token has been refreshed');
 		//	this.setState({ initialRoute: routeStack[3] });
