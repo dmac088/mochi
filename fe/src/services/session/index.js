@@ -115,7 +115,7 @@ const formatTokenResponse = (accessToken, refreshToken, user, authenticated, exp
 		value: refreshToken,
 	}],
 	user: {
-		id: user,
+		username: user,
 		authenticated: authenticated,
 	},
 });

@@ -10,13 +10,13 @@ const Header = (props) => {
         <div className="form-inline">
             <Greeting
                 authenticated={(props.authenticated)}
-                email={props.email}
+                username={props.username}
             />
             <Login  authenticated={(props.authenticated)}
                     loginClick={props.loginClick}
                     resetState={props.resetState}
                     updateCustomerState={props.updateCustomerState}
-                    email={props.email}
+                    username={props.username}
                     password={props.password}/>
 
         </div>
