@@ -1,4 +1,3 @@
-import { Buffer } from 'buffer';
 import { fetchApi } from '../../services/api';
 import apiConfig from '../../services/api/config';
 
