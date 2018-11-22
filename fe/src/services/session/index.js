@@ -21,6 +21,7 @@ const clearSession = () => {
 	clearTimeout(sessionTimeout);
 
 	//set the state back to initial state
+	console.log('dispatching event to redux store');
 	store.dispatch(actionCreators.update(initialState));
 };
 
@@ -73,6 +74,7 @@ export const authenticate = (email, password) =>
 															JSON.parse(body).access_token,
 															JSON.parse(body).refresh_token,
 															JSON.parse(body).username,
+															true,
 															JSON.parse(body).expires_in
 													);
 
@@ -102,7 +104,7 @@ export const revoke = () => {
 };
 
 
-const formatTokenResponse = (accessToken, refreshToken, user, expires_in) => ({
+const formatTokenResponse = (accessToken, refreshToken, user, authenticated, expires_in) => ({
 	tokens: [{
 		type: 'access',
 		value: accessToken,
@@ -114,6 +116,7 @@ const formatTokenResponse = (accessToken, refreshToken, user, expires_in) => ({
 	}],
 	user: {
 		id: user,
+		authenticated: authenticated,
 	},
 });
 
