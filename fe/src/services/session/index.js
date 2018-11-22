@@ -72,7 +72,7 @@ export const authenticate = (email, password) =>
 															JSON.parse(body).expires_in
 													);
 
-		//create a new token object
+		//transfrom flat structure to a nested one
 		const tokens = 				reformTokens.tokens.reduce(
 																												(prev, item) => ({
 																														...prev,
