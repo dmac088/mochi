@@ -85,8 +85,8 @@ const  onRequestSuccess = (response) => {
 	 //response is an object of type promise
 	 //we call the text function to execute the promise
 	 response.text().then((responseText) => {
-			 //execute fetch to retrieve the text
-			 return responseText;
+		 //execute fetch to retrieve the text
+	 	 return responseText;
 	 }).then(persistTokens);
 };
 
