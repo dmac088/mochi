@@ -42,9 +42,6 @@ class App extends Component {
     }
   }
 
-
-
-  //Will I ever need this? Or should I
 	autoLogin() {
     console.log('autoLogin');
 		session.refreshToken().then(() => {
