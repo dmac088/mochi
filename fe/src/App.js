@@ -18,17 +18,13 @@ import t from 'typy';
 */
 
 class App extends Component {
+
+
+
+
   constructor(props) {
     super(props);
-
-    this.initialState = {
-        isLoading: false,
-        error: null,
-        authenticated: null,
-        username: '',
-        password: ''
-    };
-    this.state = this.initialState;
+    this.state = initialState;
   }
 
 
@@ -92,7 +88,14 @@ class App extends Component {
 				throw exception;
 			}
 		});
+  }
 
+  logoutClick = (event) => {
+		session.clearSession();
+
+    this.setState({
+      initialState
+    });
   }
 
   deepValue(obj, path, value) {
@@ -123,6 +126,7 @@ class App extends Component {
           />
         <Header authenticated={(this.props.user.authenticated)}
                   loginClick={this.loginClick.bind(this)}
+                  logoutClick={this.logoutClick.bind(this)}
                   updateCustomerState={this.updateCustomerState.bind(this)}
                   username={this.props.user.username}
                   password={this.state.password}
@@ -154,7 +158,16 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-//connect the component to the store
+
+const initialState = () => {
+  return        {
+                      isLoading: false,
+                      error: null,
+                      authenticated: null,
+                      username: '',
+                      password: ''
+                };
+};
 
 
 export default connect(mapStateToProps,mapDispatchToProps)(App);
