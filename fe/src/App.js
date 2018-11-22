@@ -36,7 +36,7 @@ class App extends Component {
     console.log('componentDidMount');
 		// Waits for the redux store to be populated with the previously saved state,
 		// then it will try to auto-login the user.
-		const unsubscribe = store.subscribe(this.reduxSubscribedFunction);
+		store.subscribe(this.reduxSubscribedFunction);
 
 	}
 
