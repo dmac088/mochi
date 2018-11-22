@@ -1,8 +1,6 @@
 /* global fetch */
 
-import fetchival from 'fetchival';
 import _ from 'lodash';
-
 import * as sessionSelectors from '../../services/session/selectors';
 import apiConfig from './config';
 
