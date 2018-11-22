@@ -42,5 +42,5 @@ export const revoke = tokens 									=> fetchApi(
 																													endPoints.revoke,
 																													{},
 																													{ tokens },
-																													'post'
+																													'POST'
 																									);
