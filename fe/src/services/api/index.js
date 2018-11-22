@@ -18,7 +18,7 @@ export const exceptionExtractError = (exception) => {
 
 
 
-export const fetchApi = async (endPoint, payload = {}, formData = {}, method = 'get', headers = {}) => {
+export const fetchApi = (endPoint, payload = {}, formData = {}, method = 'get', headers = {}) => {
 
 
 	let formBody = [];
@@ -29,19 +29,12 @@ export const fetchApi = async (endPoint, payload = {}, formData = {}, method = '
 		}
 	formBody = formBody.join("&");
 
-	return await  fetch(apiConfig.url+endPoint, {
+	return fetch(apiConfig.url+endPoint, {
 		crossDomain: true,
 		method: method,
 	  headers: headers,
 	  body: formBody
-	}).catch((e) => {
-		if (e.response && e.response.json) {
-			e.response.json().then((json) => {
-				if (json) throw json;
-				throw e;
-			});
-		} else {
-			throw e;
-		}
+	}).catch((err) => {
+		console.log(err);
 	});
 }
