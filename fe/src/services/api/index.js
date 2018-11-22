@@ -32,9 +32,5 @@ export const fetchApi = (endPoint, payload = {}, formData = {}, method = 'get', 
 		method: method,
 	  headers: headers,
 	  body: formBody
-
-		//we only catch network errors here
-	}).catch((err) => {
-		console.log(err);
 	});
 }
