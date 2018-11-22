@@ -10,7 +10,8 @@ export const empty = () => ({
 	type: actionTypes.EMPTY,
 });
 
-export const get = payload =>
-	dispatch =>
+export const get = payload => dispatch =>
 		api.get(payload)
-		.then(response => dispatch(update(response.users)));
+		.then(response =>
+					dispatch(update(response.users))
+				 );
