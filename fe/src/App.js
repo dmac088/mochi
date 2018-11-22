@@ -48,14 +48,7 @@ class App extends Component {
       console.log('store is hydrated');
       console.log('id = ' + store.getState().services.session.user.id);
       console.log('authenticated = ' + store.getState().services.session.user.authenticated);
-      //this.setState({
-      //    'authenticated':
-      //})
-      //this.reduxSubscribedFunction();
-      //console.log('autoLogin');
-      //this.autoLogin();
     }
-    //console.log('store is not hydrated');
   }
 
 
