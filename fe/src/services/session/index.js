@@ -43,10 +43,15 @@ const formatTokenResponse = (accessToken, refreshToken, user, expires_in) => ({
 
 const  onRequestSuccess = (response) => {
 	 console.log('onRequestSuccess');
+	 if (response.status === 400) {
+		 console.log('Invalid username or password');
+		 return;
+	 };
+
 	 const body = response;
 
-	 console.log(body);
-	 return;
+
+
 	 const reformTokens = formatTokenResponse(
 												 			JSON.parse(body).access_token,
 												 			JSON.parse(body).refresh_token,
