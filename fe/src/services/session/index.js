@@ -17,7 +17,7 @@ const setSessionTimeout = (duration) => {
 	);
 };
 
-const clearSession = () => {
+export const clearSession = () => {
 	clearTimeout(sessionTimeout);
 
 	//set the state back to initial state
