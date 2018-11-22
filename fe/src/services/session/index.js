@@ -25,6 +25,38 @@ const clearSession = () => {
 };
 
 
+
+export const refreshToken = () => {
+	console.log("called refresh token");
+	const session = selectors.get();
+
+	if (!session.tokens.refresh.value || !session.user.id) {
+		return Promise.reject();
+	}
+
+	return api.refresh(session.tokens.refresh)
+	.then(onRequestSuccess)
+	.catch(onRequestFailed);
+};
+
+export const authenticate = (email, password) =>
+	api.authenticate(email, password)
+	//injection of a function reference means the function behaves
+	//as if it were nested within the parentheses
+	.then(onRequestSuccess)
+	.catch(onRequestFailed);
+
+export const revoke = () => {
+	const session = selectors.get();
+	return api.revoke(Object.keys(session.tokens).map(tokenKey => ({
+		type: session.tokens[tokenKey].type,
+		value: session.tokens[tokenKey].value,
+	})))
+	.then(clearSession())
+	.catch(() => {});
+};
+
+
 const formatTokenResponse = (accessToken, refreshToken, user, expires_in) => ({
 	tokens: [{
 		type: 'access',
@@ -42,72 +74,47 @@ const formatTokenResponse = (accessToken, refreshToken, user, expires_in) => ({
 
 
 const  onRequestSuccess = (response) => {
+	 //we capture our response errors here and act accordingly
 	 console.log('onRequestSuccess');
 	 if (response.status === 400) {
 		 console.log('Invalid username or password');
+		 clearSession();
 		 return;
 	 };
 
-	 const body = response;
+	 //response is an object of type promise
+	 //we call the text function to execute the promise
+	 response.text().then((responseText) => {
+			 //execute fetch to retrieve the text
+			 return responseText;
+	 }).then(persistTokens);
+};
 
+const  persistTokens = (body) => {
+	const reformTokens = formatTokenResponse(
+														JSON.parse(body).access_token,
+														JSON.parse(body).refresh_token,
+														JSON.parse(body).username,
+														JSON.parse(body).expires_in
+												);
 
-
-	 const reformTokens = formatTokenResponse(
-												 			JSON.parse(body).access_token,
-												 			JSON.parse(body).refresh_token,
-												 			JSON.parse(body).username,
-												 			JSON.parse(body).expires_in
-												 	);
-
-	//copy previous state (immutable) and overwrite the tokens, don't confuce with reducer
-	//this is simply javascript array.reduce() with two parameters
-	//item will overwrite previous state
+	//create a new token object
 	const tokens = 				reformTokens.tokens.reduce(
 																											(prev, item) => ({
-																												 	...prev,
-																												 	[item.type]: item,
-													 												 		}),
+																													...prev,
+																													[item.type]: item,
+																											}),
 																								{});
 
-	//update state using dispatch function and passing in new copy of state
-	//for both tokens array and user object
+	//trigger a store update
 	store.dispatch(actionCreators.update({ tokens, user: reformTokens.user }));
 
-	//get the current state (singleton)
-	const session = selectors.get();
-	//console.log('the session state has set the refresh token to = ' + session.tokens.refresh.value);
-	//console.log('the session state has set the access token to = ' + session.tokens.access.value);
+	//set the token timeout
 	setSessionTimeout(tokens.access.expiresIn);
-};
+}
+
 
 const onRequestFailed = (exception) => {
 	clearSession();
 	throw exception;
-};
-
-export const refreshToken = () => {
-	console.log("called refresh token");
-	const session = selectors.get();
-
-	if (!session.tokens.refresh.value || !session.user.id) {
-		return Promise.reject();
-	}
-	return api.refresh(session.tokens.refresh)
-	.then(onRequestSuccess)
-	.catch(onRequestFailed);
-};
-
-export const authenticate = (email, password) =>
-	api.authenticate(email, password)
-	.then(onRequestSuccess)
-	.catch(onRequestFailed);
-
-export const revoke = () => {
-	const session = selectors.get();
-	return api.revoke(Object.keys(session.tokens).map(tokenKey => ({
-		type: session.tokens[tokenKey].type,
-		value: session.tokens[tokenKey].value,
-	})))
-	.then(clearSession())
-	.catch(() => {});
 };

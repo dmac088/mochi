@@ -56,6 +56,7 @@ class Login extends Component {
          type="input"
          id="email"
          onChange={this.props.updateCustomerState}
+
          placeholder="Username"
          aria-label="Username" />;
      }
@@ -72,6 +73,7 @@ class Login extends Component {
            id="password"
            type="password"
            onChange={this.props.updateCustomerState}
+
            placeholder="Password"
            aria-label="Password" />;
      }
