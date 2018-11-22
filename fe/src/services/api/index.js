@@ -17,8 +17,6 @@ export const exceptionExtractError = (exception) => {
 
 
 export const fetchApi = (endPoint, payload = {}, formData = {}, method = 'get', headers = {}) => {
-
-
 	let formBody = [];
 		for (let property in formData) {
 				let encodedKey = encodeURIComponent(property);
