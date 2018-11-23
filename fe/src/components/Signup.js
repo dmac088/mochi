@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as session from '../services/session';
 import * as api from '../services/api';
-import * as usersApi from '../data/users/api';
+import * as customersApi from '../data/customers/api';
 import store from '../store';
 import { deepValue } from '../services/api';
 //signup should have it's own local state and not be bound to App.js
@@ -41,7 +41,7 @@ class Signup extends Component {
     console.log(this.state.password);
 
     const { firstName, username, password } = this.state;
-    usersApi.create({ firstName, username, password })
+    customersApi.create({ firstName, username, password })
     .then(() => {
       session.authenticate(username, password)
       .then(() => {

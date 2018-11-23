@@ -1,4 +1,4 @@
-import { fetchApi } from 'MobileApp/src/services/api';
+import { fetchApi } from '../../services/api';
 
 const endPoints = {
 	create: '/api/Party',
