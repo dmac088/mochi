@@ -22,7 +22,6 @@ const enhancer = compose(
 	devTools()
 );
 
-
 const store = createStore(
  	appReducer,
  	enhancer
