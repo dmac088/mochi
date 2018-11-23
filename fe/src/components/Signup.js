@@ -18,7 +18,7 @@ Sign Up
                 <input
                   type="text"
                   className="form-control"
-                  id="givenNameEn"
+                  id="firstName"
                   onChange={props.updateCustomerState}
                   placeholder="First Name"
                   required />
@@ -48,7 +48,7 @@ Sign Up
                 <input
                   type="text"
                   className="form-control"
-                  id="partyUser.username"
+                  id="username"
                   onChange={props.updateCustomerState}
                   placeholder="you@placeholder.com"
                   required />
@@ -64,7 +64,7 @@ Sign Up
                 Password <span className="text-muted"/>
               </label>
               <input
-                type="partyUser.password"
+                type="password"
                 className="form-control"
                 id="password"
                 onChange={props.updateCustomerState}
@@ -76,6 +76,7 @@ Sign Up
             <hr className="mb-4" />
 
             <button
+              onClick={props.signupClick}
             className="btn btn-primary btn-lg btn-block">
             Submit
             </button>
