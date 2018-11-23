@@ -88,6 +88,7 @@ public class User implements UserDetails, Serializable {
 	}
 
 	@Override
+	@JsonIgnore
 	public String getPassword() {
 		// TODO Auto-generated method stub
 		return this.password;
