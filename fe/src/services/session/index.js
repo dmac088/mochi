@@ -24,8 +24,6 @@ export const clearSession = () => {
 	store.dispatch(actionCreators.update(initialState));
 };
 
-
-
 export const refreshToken = () => {
 	console.log("called refresh token");
 	const session = selectors.get();
@@ -102,7 +100,6 @@ export const revoke = () => {
 	.catch(() => {});
 };
 
-
 const formatTokenResponse = (accessToken, refreshToken, user, authenticated, expires_in) => ({
 	tokens: [{
 		type: 'access',
@@ -118,8 +115,6 @@ const formatTokenResponse = (accessToken, refreshToken, user, authenticated, exp
 		authenticated: authenticated,
 	},
 });
-
-
 
 const onRequestFailed = (exception) => {
 	clearSession();
