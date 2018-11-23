@@ -1,5 +1,8 @@
 import React from 'react';
 
+//signup should have it's own local state and not be bound to App.js
+
+
 const Signup = (props) => {
       return(
         <div className="row">
@@ -70,8 +73,6 @@ Sign Up
                 onChange={props.updateCustomerState}
                 placeholder="Password" />
             </div>
-
-
 
             <hr className="mb-4" />
 

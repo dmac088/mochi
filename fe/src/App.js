@@ -65,7 +65,7 @@ class App extends Component {
   loginClick = (event) => {
 		session.authenticate(this.state.username, this.state.password)
 		.then(() => {
-      console.log('user successfully authenticated');
+      console.log('user authentication complete');
 		})
 		.catch((exception) => {
 			// Displays only the first error message
