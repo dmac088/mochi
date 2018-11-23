@@ -6,6 +6,7 @@ import Header from './components/Header';
 import Signup from './components/Signup';
 import * as session from './services/session';
 import * as api from './services/api';
+import * as usersApi from './data/users/api';
 import t from 'typy';
 
 /*
@@ -88,6 +89,40 @@ class App extends Component {
     });
   }
 
+  signupClick = (event) => {
+    console.log("signup click");
+		this.setState({
+			isLoading: true,
+			error: '',
+		});
+
+    console.log(this.state.firstName);
+    console.log(this.state.username);
+    console.log(this.state.password);
+
+		const { firstName, username, password } = this.state;
+		usersApi.create({ firstName, username, password })
+		.then(() => {
+			session.authenticate(username, password)
+			.then(() => {
+        //the following is fine since child component props are listening to the redux state
+        //therefore there is no problem with overriding local state
+				this.setState(this.initialState);
+				//const routeStack = this.props.navigator.getCurrentRoutes();
+				//this.props.navigator.jumpTo(routeStack[3]);
+			});
+		})
+		.catch((exception) => {
+			// Displays only the first error message
+			const error = api.exceptionExtractError(exception);
+			const newState = {
+				isLoading: false,
+				...(error ? { error } : {}),
+  		};
+  			this.setState(newState);
+  	});
+	}
+
   deepValue(obj, path, value) {
           var parts = path.split('.');
           var curr = obj;
@@ -101,7 +136,8 @@ class App extends Component {
     this.deepValue(newstate, event.target.id, event.target.value);
     this.setState({
        'username': newstate.username,
-       'password': newstate.password
+       'password': newstate.password,
+       'firstName': newstate.firstName,
     });
   }
 
@@ -123,6 +159,7 @@ class App extends Component {
           />
         <Signup
                   updateCustomerState={this.updateCustomerState.bind(this)}
+                  signupClick={this.signupClick.bind(this)}
         />
         </div>
     );
@@ -154,7 +191,8 @@ const initialState = () => {
                       isLoading: false,
                       error: null,
                       username: '',
-                      password: ''
+                      password: '',
+                      firstName: ''
                 };
 };
 

@@ -1,9 +1,9 @@
-import { fetchApi } from 'MobileApp/src/services/api';
+import { fetchApi } from '../../services/api';
 
 const endPoints = {
 	create: '/users',
 	get: '/users',
-};
+}; 
 
 export const create = payload => fetchApi(endPoints.create, payload, 'post');
 
