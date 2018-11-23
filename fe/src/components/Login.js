@@ -4,7 +4,7 @@ import * as session from '../services/session';
 import * as api from '../services/api';
 import * as usersApi from '../data/users/api';
 import store from '../store';
-
+import { deepValue } from '../services/api';
 
 class Login extends Component {
 
@@ -16,6 +16,17 @@ class Login extends Component {
 
   reduxSubscribedFunction = () => {
     console.log('subscribed function triggered');
+  }
+
+  updateCustomerState = (event) =>  {
+    console.log('customer state changed');
+    let newstate = {...this.state};
+    deepValue(newstate, event.target.id, event.target.value);
+    this.setState({
+       'username': newstate.username,
+       'password': newstate.password,
+       'firstName': newstate.firstName,
+    });
   }
 
   loginClick = (event) => {
@@ -159,7 +170,7 @@ const mapDispatchToProps = (dispatch) => {
 
 
 const initialStateLogin = () => {
-  return  JSON.parse('{"isLoading": false,  "error": null,"username": "","password": "","firstName": ""}');
+  return  JSON.parse('{"isLoading": false, "error": null, "username": "", "password": "", "firstName": ""}');
 };
 
 

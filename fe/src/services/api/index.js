@@ -14,7 +14,13 @@ export const exceptionExtractError = (exception) => {
 	return error;
 };
 
-
+export const deepValue = (obj, path, value)  => {
+				var parts = path.split('.');
+				var curr = obj;
+				for(var i=0;i<parts.length-1;i++)
+						curr = curr[parts[i]] || {};
+				curr[parts[parts.length-1]] = value;
+}
 
 export const fetchApi = (endPoint, payload = {}, formData = {}, method = 'get', headers = {}) => {
 	let formBody = [];
