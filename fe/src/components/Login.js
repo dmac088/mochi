@@ -61,7 +61,6 @@ class Login extends Component {
 
   logoutClick = (event) => {
     session.clearSession();
-
     this.setState({
       initialStateLogin
     });
