@@ -77,7 +77,7 @@ class Login extends Component {
        </button>;
      }
      return button;
-    }
+  }
 
   renderLoginButton = () => {
     // console.log('render login button');
@@ -92,7 +92,7 @@ class Login extends Component {
       </button>;
      }
      return button;
-    }
+  }
 
   rendersignupButton = () => {
     // console.log('render signup button');
