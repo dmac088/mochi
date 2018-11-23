@@ -18,6 +18,17 @@ class Login extends Component {
     console.log('subscribed function triggered');
   }
 
+  autoLogin() {
+    console.log('autoLogin');
+    session.refreshToken().then(() => {
+      console.log('the token has been refreshed');
+    //	this.setState({ initialRoute: routeStack[3] });
+    }).catch(() => {
+      console.log('the token has not been refreshed');
+    //	this.setState({ initialRoute: routeStack[0] });
+    });
+  }
+
   updateCustomerState = (event) =>  {
     console.log('customer state changed');
     let newstate = {...this.state};
