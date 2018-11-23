@@ -1,17 +1,78 @@
-import React from 'react';
-
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as session from '../services/session';
+import * as api from '../services/api';
+import * as usersApi from '../data/users/api';
 //signup should have it's own local state and not be bound to App.js
 
+class Signup extends Component {
 
-const Signup = (props) => {
+  constructor(props) {
+    super(props);
+    this.state = initialStateSignup;
+  }
+
+  deepValue(obj, path, value) {
+          var parts = path.split('.');
+          var curr = obj;
+          for(var i=0;i<parts.length-1;i++)
+              curr = curr[parts[i]] || {};
+          curr[parts[parts.length-1]] = value;
+  }
+
+  updateCustomerState = (event) =>  {
+    let newstate = {...this.state};
+    this.deepValue(newstate, event.target.id, event.target.value);
+    this.setState({
+       'username': newstate.username,
+       'password': newstate.password,
+       'firstName': newstate.firstName,
+    });
+  }
+
+  signupClick = (event) => {
+    console.log("signup click");
+    this.setState({
+      isLoading: true,
+      error: '',
+    });
+
+    console.log(this.state.firstName);
+    console.log(this.state.username);
+    console.log(this.state.password);
+
+    const { firstName, username, password } = this.state;
+    usersApi.create({ firstName, username, password })
+    .then(() => {
+      session.authenticate(username, password)
+      .then(() => {
+        //the following is fine since child component props are listening to the redux state
+        //therefore there is no problem with overriding local state
+        this.setState(this.initialStateSignup);
+        //const routeStack = this.props.navigator.getCurrentRoutes();
+        //this.props.navigator.jumpTo(routeStack[3]);
+      });
+    })
+    .catch((exception) => {
+      // Displays only the first error message
+      const error = api.exceptionExtractError(exception);
+      const newState = {
+        isLoading: false,
+        ...(error ? { error } : {}),
+      };
+        this.setState(newState);
+    });
+  }
+
+  render() {
       return(
         <div className="row">
           <div className="col-md-3 order-md-1">
           </div>
         <div className="col-md-6 order-md-2">
           <h4 className="mb-3">
-Sign Up
-</h4>
+          Sign Up
+          </h4>
           <div className="needs-validation" noValidate>
             <div className="row">
               <div className="col-md-6 mb-3">
@@ -22,7 +83,7 @@ Sign Up
                   type="text"
                   className="form-control"
                   id="firstName"
-                  onChange={props.updateCustomerState}
+                  onChange={this.updateCustomerState}
                   placeholder="First Name"
                   required />
                 <div className="invalid-feedback">
@@ -37,7 +98,7 @@ Sign Up
                   type="text"
                   className="form-control"
                   id="familyNameEn"
-                  onChange={props.updateCustomerState}
+                  onChange={this.updateCustomerState}
                   placeholder="Last Name"
                   required />
                 <div className="invalid-feedback">
@@ -52,7 +113,7 @@ Sign Up
                   type="text"
                   className="form-control"
                   id="username"
-                  onChange={props.updateCustomerState}
+                  onChange={this.updateCustomerState}
                   placeholder="you@placeholder.com"
                   required />
                                   <div
@@ -70,14 +131,14 @@ Sign Up
                 type="password"
                 className="form-control"
                 id="password"
-                onChange={props.updateCustomerState}
+                onChange={this.updateCustomerState}
                 placeholder="Password" />
             </div>
 
             <hr className="mb-4" />
 
             <button
-              onClick={props.signupClick}
+              onClick={this.signupClick}
             className="btn btn-primary btn-lg btn-block">
             Submit
             </button>
@@ -88,4 +149,39 @@ Sign Up
     </div>
       );
   }
-export default Signup;
+}
+
+
+const initialStateSignup = () => {
+  return        {
+                      isLoading: false,
+                      error: null,
+                      username: '',
+                      password: '',
+                      firstName: ''
+                };
+};
+
+
+const mapStateToProps = (state) => {
+  return {
+    //take value from reducer, alias used in combinReducers in ./data/reducer.js
+    user: state.services.session.user
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    //take value from reducer, alias used in combinReducers in ./data/reducer.js
+    setAuthenticated: (auth) => {
+      dispatch({
+        type: "SET_AUTH",
+        payload: auth
+      })
+    }
+  };
+};
+
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(Signup);

@@ -22,7 +22,7 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    this.state = initialState;
+    this.state = initialStateApp;
   }
 
   componentDidMount() {
@@ -85,59 +85,7 @@ class App extends Component {
 		session.clearSession();
 
     this.setState({
-      initialState
-    });
-  }
-
-  signupClick = (event) => {
-    console.log("signup click");
-		this.setState({
-			isLoading: true,
-			error: '',
-		});
-
-    console.log(this.state.firstName);
-    console.log(this.state.username);
-    console.log(this.state.password);
-
-		const { firstName, username, password } = this.state;
-		usersApi.create({ firstName, username, password })
-		.then(() => {
-			session.authenticate(username, password)
-			.then(() => {
-        //the following is fine since child component props are listening to the redux state
-        //therefore there is no problem with overriding local state
-				this.setState(this.initialState);
-				//const routeStack = this.props.navigator.getCurrentRoutes();
-				//this.props.navigator.jumpTo(routeStack[3]);
-			});
-		})
-		.catch((exception) => {
-			// Displays only the first error message
-			const error = api.exceptionExtractError(exception);
-			const newState = {
-				isLoading: false,
-				...(error ? { error } : {}),
-  		};
-  			this.setState(newState);
-  	});
-	}
-
-  deepValue(obj, path, value) {
-          var parts = path.split('.');
-          var curr = obj;
-          for(var i=0;i<parts.length-1;i++)
-              curr = curr[parts[i]] || {};
-          curr[parts[parts.length-1]] = value;
-  }
-
-  updateCustomerState = (event) =>  {
-    let newstate = {...this.state};
-    this.deepValue(newstate, event.target.id, event.target.value);
-    this.setState({
-       'username': newstate.username,
-       'password': newstate.password,
-       'firstName': newstate.firstName,
+      initialStateApp
     });
   }
 
@@ -186,7 +134,7 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 
-const initialState = () => {
+const initialStateApp = () => {
   return        {
                       isLoading: false,
                       error: null,
