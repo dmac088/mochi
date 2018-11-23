@@ -9,15 +9,9 @@ const Header = (props) => {
         <div className="navbar-brand">Navbar</div>
         <div className="form-inline">
             <Greeting
-                authenticated={(props.authenticated)}
-                username={props.username}
+                user={props.user}
             />
-            <Login  authenticated={(props.authenticated)}
-                    loginClick={props.loginClick}
-                    logoutClick={props.logoutClick}
-                    updateCustomerState={props.updateCustomerState}
-                    username={props.username}
-                    password={props.password}/>
+            <Login/>
 
         </div>
       </nav>
