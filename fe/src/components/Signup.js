@@ -4,6 +4,7 @@ import * as session from '../services/session';
 import * as api from '../services/api';
 import * as usersApi from '../data/users/api';
 import store from '../store';
+import { deepValue } from '../services/api';
 //signup should have it's own local state and not be bound to App.js
 
 class Signup extends Component {
@@ -18,17 +19,9 @@ class Signup extends Component {
     console.log('subscribed function triggered');
   }
 
-  deepValue(obj, path, value) {
-          var parts = path.split('.');
-          var curr = obj;
-          for(var i=0;i<parts.length-1;i++)
-              curr = curr[parts[i]] || {};
-          curr[parts[parts.length-1]] = value;
-  }
-
   updateCustomerState = (event) =>  {
     let newstate = {...this.state};
-    this.deepValue(newstate, event.target.id, event.target.value);
+    deepValue(newstate, event.target.id, event.target.value);
     this.setState({
        'username': newstate.username,
        'password': newstate.password,
