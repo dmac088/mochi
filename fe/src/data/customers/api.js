@@ -5,6 +5,7 @@ const endPoints = {
 	get: '/api/Party/UserName',
 };
 
-export const create = payload => fetchApi(endPoints.create, payload, 'post');
+export const create = payload => fetchApi(endPoints.create, payload, {},'POST',{});
 
-export const get = payload => fetchApi(endPoints.get, payload, 'get');
+
+export const get = payload => fetchApi(endPoints.get, payload, {}, 'GET', {});

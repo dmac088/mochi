@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import * as customersApi from '../data/customers/api';
 import * as session from '../services/session';
 import * as api from '../services/api';
-import * as customersApi from '../data/customers/api';
 import store from '../store';
 import { deepValue } from '../services/api';
 //signup should have it's own local state and not be bound to App.js
@@ -23,9 +23,10 @@ class Signup extends Component {
     let newstate = {...this.state};
     deepValue(newstate, event.target.id, event.target.value);
     this.setState({
+       'givenNameEn': newstate.givenNameEn,
+       'familyNameEn': newstate.familyNameEn,
        'username': newstate.username,
-       'password': newstate.password,
-       'firstName': newstate.firstName,
+       'password': newstate.password
     });
   }
 
@@ -36,14 +37,18 @@ class Signup extends Component {
       error: '',
     });
 
-    console.log(this.state.firstName);
+    console.log(this.state.givenNameEn);
+    console.log(this.state.familyNameEn);
     console.log(this.state.username);
     console.log(this.state.password);
 
-    const { firstName, username, password } = this.state;
-    customersApi.create({ firstName, username, password })
+    const { givenNameEn, familyNameEn, username, password } = this.state;
+    console.log(customersApi.create({givenNameEn, familyNameEn, username, password}));
+    return;
+    customersApi.create({givenNameEn, familyNameEn, username, password})
     .then(() => {
-      session.authenticate(username, password)
+    //  session.authenticate(username, password)
+    console.log('authenticate')
       .then(() => {
         //the following is fine since child component props are listening to the redux state
         //therefore there is no problem with overriding local state
@@ -81,7 +86,7 @@ class Signup extends Component {
                 <input
                   type="text"
                   className="form-control"
-                  id="firstName"
+                  id="givenNameEn"
                   onChange={this.updateCustomerState}
                   placeholder="First Name"
                   required />
@@ -152,7 +157,7 @@ class Signup extends Component {
 
 
 const initialStateSignup = () => {
-  return  JSON.parse('{"isLoading": false,  "error": null,"username": "","password": "","firstName": ""}');
+  return  JSON.parse('{"isLoading": false,  "error": null,"username": "","password": "","givenNameEn": "", "familyNameEn": ""}');
 };
 
 

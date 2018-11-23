@@ -4,6 +4,7 @@ import _ from 'lodash';
 import * as sessionSelectors from '../../services/session/selectors';
 import apiConfig from './config';
 
+
 export const exceptionExtractError = (exception) => {
 	if (!exception.Errors) return false;
 	let error = false;
@@ -23,12 +24,17 @@ export const deepValue = (obj, path, value)  => {
 }
 
 export const fetchApi = (endPoint, payload = {}, formData = {}, method = 'get', headers = {}) => {
+	console.log('fetch api called: ' + apiConfig.url+endPoint);
 	let formBody = [];
 		for (let property in formData) {
 				let encodedKey = encodeURIComponent(property);
 				let encodedValue = encodeURIComponent(formData[property]);
 				formBody.push(encodedKey + "=" + encodedValue);
 		}
+	console.log(method.toLowerCase());
+	if(method.toLowerCase() === 'post') {
+		formBody.push(JSON.stringify(payload));
+	}
 	formBody = formBody.join("&");
 
 	return fetch(apiConfig.url+endPoint, {
