@@ -22,25 +22,19 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    this.state = initialStateApp;
+    this.state = initialStateApp();
   }
 
   componentDidMount() {
     console.log('componentDidMount');
+    console.log(this.state);
 		// Waits for the redux store to be populated with the previously saved state,
 		// then it will try to auto-login the user.
 		store.subscribe(this.reduxSubscribedFunction);
-
 	}
-
 
   reduxSubscribedFunction = () => {
     console.log('subscribed function triggered');
-    if (store.getState().services.persist.isHydrated) {
-      console.log('store is hydrated');
-      console.log('username = ' + store.getState().services.session.user.username);
-      console.log('authenticated = ' + store.getState().services.session.user.authenticated);
-    }
   }
 
 	autoLogin() {
@@ -62,35 +56,10 @@ class App extends Component {
     }
   }
 
-  loginClick = (event) => {
-		session.authenticate(this.state.username, this.state.password)
-		.then(() => {
-      console.log('user authentication complete');
-		})
-		.catch((exception) => {
-			// Displays only the first error message
-			const error = api.exceptionExtractError(exception);
-			this.setState({
-				isLoading: false,
-				...(error ? { error } : {}),
-			});
 
-			if (!error) {
-				throw exception;
-			}
-		});
-  }
-
-  logoutClick = (event) => {
-		session.clearSession();
-
-    this.setState({
-      initialStateApp
-    });
-  }
 
   render() {
-    const {customer, isLoading} = this.state;
+    //const {isLoading} = this.state;
     return (
         <div className="App">
           <link rel="stylesheet"
@@ -99,16 +68,9 @@ class App extends Component {
                 crossOrigin="anonymous"
           />
         <Header authenticated={(this.props.user.authenticated)}
-                  loginClick={this.loginClick.bind(this)}
-                  logoutClick={this.logoutClick.bind(this)}
-                  updateCustomerState={this.updateCustomerState.bind(this)}
-                  username={this.props.user.username}
-                  password={this.state.password}
+                username={this.props.user.username}
           />
-        <Signup
-                  updateCustomerState={this.updateCustomerState.bind(this)}
-                  signupClick={this.signupClick.bind(this)}
-        />
+        <Signup/>
         </div>
     );
   }
@@ -135,13 +97,7 @@ const mapDispatchToProps = (dispatch) => {
 
 
 const initialStateApp = () => {
-  return        {
-                      isLoading: false,
-                      error: null,
-                      username: '',
-                      password: '',
-                      firstName: ''
-                };
+  return  JSON.parse('{"isLoading": false,  "error": null,"username": "","password": "","firstName": ""}');
 };
 
 

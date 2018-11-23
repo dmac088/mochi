@@ -1,14 +1,56 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as session from '../services/session';
+import * as api from '../services/api';
+import * as usersApi from '../data/users/api';
+import store from '../store';
 
 
 class Login extends Component {
 
-    renderLogoutButton = () => {
+  constructor(props) {
+    super(props);
+    this.state = this.initialStateLogin;
+    store.subscribe(this.reduxSubscribedFunction);
+  }
+
+  reduxSubscribedFunction = () => {
+    console.log('subscribed function triggered');
+  }
+
+  loginClick = (event) => {
+    session.authenticate(this.state.username, this.state.password)
+    .then(() => {
+      console.log('user authentication complete');
+    })
+    .catch((exception) => {
+      // Displays only the first error message
+      const error = api.exceptionExtractError(exception);
+      this.setState({
+        isLoading: false,
+        ...(error ? { error } : {}),
+      });
+
+      if (!error) {
+        throw exception;
+      }
+    });
+  }
+
+  logoutClick = (event) => {
+    session.clearSession();
+
+    this.setState({
+      initialStateLogin
+    });
+  }
+
+  renderLogoutButton = () => {
     // console.log('render logout button');
      let button;
      if(this.props.authenticated) {
        button = <button
-            onClick={this.props.logoutClick}
+            onClick={this.logoutClick}
             className="btn btn-outline-success mr-sm-5 my-2 my-sm-0">
           Logout
        </button>;
@@ -16,13 +58,13 @@ class Login extends Component {
      return button;
     }
 
-    renderLoginButton = () => {
+  renderLoginButton = () => {
     // console.log('render login button');
      let button;
      if(!this.props.authenticated) {
        button =
        <button
-           onClick={this.props.loginClick}
+           onClick={this.loginClick}
            className="btn btn-outline-success mr-sm-2 my-2 my-sm-0"
            type="submit">
           Login
@@ -31,13 +73,13 @@ class Login extends Component {
      return button;
     }
 
-    rendersignupButton = () => {
+  rendersignupButton = () => {
     // console.log('render signup button');
      let button;
      if(!this.props.authenticated) {
        button =
        <button
-           onClick={this.props.signupClick}
+           onClick={this.signupClick}
            className="btn btn-outline-success mr-sm-5 my-2 my-sm-0"
            type="submit">
           SignUp
@@ -55,7 +97,7 @@ class Login extends Component {
          className="form-control mr-sm-2"
          type="input"
          id="username"
-         onChange={this.props.updateCustomerState}
+         onChange={this.updateCustomerState}
 
          placeholder="Username"
          aria-label="Username" />;
@@ -72,7 +114,7 @@ class Login extends Component {
            className="form-control mr-sm-2"
            id="password"
            type="password"
-           onChange={this.props.updateCustomerState}
+           onChange={this.updateCustomerState}
 
            placeholder="Password"
            aria-label="Password" />;
@@ -95,7 +137,33 @@ class Login extends Component {
     }
 }
 
-export default Login;
+
+const mapStateToProps = (state) => {
+  return {
+    //take value from reducer, alias used in combinReducers in ./data/reducer.js
+    user: state.services.session.user
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    //take value from reducer, alias used in combinReducers in ./data/reducer.js
+    setAuthenticated: (auth) => {
+      dispatch({
+        type: "SET_AUTH",
+        payload: auth
+      })
+    }
+  };
+};
+
+
+const initialStateLogin = () => {
+  return  JSON.parse('{"isLoading": false,  "error": null,"username": "","password": "","firstName": ""}');
+};
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(Login);
 
 // {(!props.authenticated) ? 'Username:' : '' } {props.renderUserNameField()}<br/>
 // {(!props.authenticated) ? 'Password:' : '' } {props.renderPasswordField()}<br/>

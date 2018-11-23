@@ -3,13 +3,19 @@ import { connect } from 'react-redux';
 import * as session from '../services/session';
 import * as api from '../services/api';
 import * as usersApi from '../data/users/api';
+import store from '../store';
 //signup should have it's own local state and not be bound to App.js
 
 class Signup extends Component {
 
   constructor(props) {
     super(props);
-    this.state = initialStateSignup;
+    this.state = initialStateSignup();
+    store.subscribe(this.reduxSubscribedFunction);
+  }
+
+  reduxSubscribedFunction = () => {
+    console.log('subscribed function triggered');
   }
 
   deepValue(obj, path, value) {
@@ -153,13 +159,7 @@ class Signup extends Component {
 
 
 const initialStateSignup = () => {
-  return        {
-                      isLoading: false,
-                      error: null,
-                      username: '',
-                      password: '',
-                      firstName: ''
-                };
+  return  JSON.parse('{"isLoading": false,  "error": null,"username": "","password": "","firstName": ""}');
 };
 
 
@@ -181,7 +181,5 @@ const mapDispatchToProps = (dispatch) => {
     }
   };
 };
-
-
 
 export default connect(mapStateToProps,mapDispatchToProps)(Signup);
