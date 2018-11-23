@@ -18,7 +18,7 @@ class Login extends Component {
     console.log('subscribed function triggered');
   }
 
-  autoLogin() {
+  autoLogin = () =>  {
     console.log('autoLogin');
     session.refreshToken().then(() => {
       console.log('the token has been refreshed');
@@ -69,7 +69,7 @@ class Login extends Component {
   renderLogoutButton = () => {
     // console.log('render logout button');
      let button;
-     if(this.props.authenticated) {
+     if(this.props.user.authenticated) {
        button = <button
             onClick={this.logoutClick}
             className="btn btn-outline-success mr-sm-5 my-2 my-sm-0">
@@ -82,7 +82,7 @@ class Login extends Component {
   renderLoginButton = () => {
     // console.log('render login button');
      let button;
-     if(!this.props.authenticated) {
+     if(!this.props.user.authenticated) {
        button =
        <button
            onClick={this.loginClick}
@@ -97,7 +97,7 @@ class Login extends Component {
   rendersignupButton = () => {
     // console.log('render signup button');
      let button;
-     if(!this.props.authenticated) {
+     if(!this.props.user.authenticated) {
        button =
        <button
            onClick={this.signupClick}
@@ -112,7 +112,7 @@ class Login extends Component {
     renderUserNameField = () => {
   //   console.log('render username field');
      let userNameField;
-     if(!this.props.authenticated) {
+     if(!this.props.user.authenticated) {
        userNameField =
        <input
          className="form-control mr-sm-2"
@@ -129,7 +129,7 @@ class Login extends Component {
     renderPasswordField = () => {
     // console.log('render password field');
      let passwordField;
-     if(!this.props.authenticated) {
+     if(!this.props.user.authenticated) {
        passwordField =
        <input
            className="form-control mr-sm-2"
@@ -168,7 +168,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    //take value from reducer, alias used in combinReducers in ./data/reducer.js
+    //take value from reducer, alias used in combineReducers in ./data/reducer.js
     setAuthenticated: (auth) => {
       dispatch({
         type: "SET_AUTH",

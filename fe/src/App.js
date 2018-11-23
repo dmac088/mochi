@@ -56,9 +56,7 @@ class App extends Component {
                 integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
                 crossOrigin="anonymous"
           />
-        <Header authenticated={(this.props.user.authenticated)}
-                username={this.props.user.username}
-          />
+        <Header user={this.props.user}/>
         <Signup/>
         </div>
     );
