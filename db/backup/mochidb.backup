@@ -563,7 +563,6 @@ SET search_path = mochi, pg_catalog;
 
 COPY customer (rle_id, cst_id) FROM stdin;
 1	1000000011
-2	1000000012
 232153	1000000013
 232157	1000000014
 232161	1000000015
@@ -574,6 +573,7 @@ COPY customer (rle_id, cst_id) FROM stdin;
 232181	1000000020
 232185	1000000021
 232193	1000000023
+232197	\N
 \.
 
 
@@ -588,7 +588,7 @@ SELECT pg_catalog.setval('customer_cst_id_seq', 1000000023, true);
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 232195, true);
+SELECT pg_catalog.setval('hibernate_sequence', 232197, true);
 
 
 --
@@ -612,7 +612,6 @@ COPY orders (ord_id, pty_id) FROM stdin;
 --
 
 COPY organisation (org_id, org_nme, org_reg_no) FROM stdin;
-2	Big Balloons LTD	1234567
 \.
 
 
@@ -621,11 +620,7 @@ COPY organisation (org_id, org_nme, org_reg_no) FROM stdin;
 --
 
 COPY party (pty_id, pty_typ_id) FROM stdin;
-0	2
 1	1
-2	2
-3	1
-4	2
 232152	1
 232156	1
 232160	1
@@ -636,6 +631,7 @@ COPY party (pty_id, pty_typ_id) FROM stdin;
 232180	1
 232184	1
 232192	1
+232196	1
 \.
 
 
@@ -686,6 +682,7 @@ COPY person (psn_id, psn_gvn_nm_en, psn_fml_nm_en, psn_nm_cn, enb) FROM stdin;
 232180	Daniel	Mackie	丹尼爾麥基	\N
 232184	Milap	Gohil	丹尼爾麥基	\N
 232192	Milap	Gohil	丹尼爾麥基	\N
+232196	Jane	Foster	丹尼爾麥基	\N
 \.
 
 
@@ -724,7 +721,6 @@ COPY product_attr_lcl (prd_lcl_id, prd_id, prd_desc, prd_img_pth, prd_rrp, prd_c
 
 COPY role (rle_id, rle_typ_id, rle_start_dttm, pty_id) FROM stdin;
 1	1	2018-11-15	1
-2	1	2018-11-15	2
 232153	1	2018-11-15	232152
 232157	1	2018-11-15	232156
 232161	1	2018-11-15	232160
@@ -735,6 +731,7 @@ COPY role (rle_id, rle_typ_id, rle_start_dttm, pty_id) FROM stdin;
 232181	1	2018-11-04	232180
 232185	1	2018-11-04	232184
 232193	1	2018-11-04	232192
+232197	1	2018-11-15	232196
 \.
 
 
@@ -923,7 +920,6 @@ d95fc66f08abfb375b8080e884efe62d	\\xaced00057372004c6f72672e737072696e676672616d
 
 COPY user_ (pty_id, account_expired, account_locked, credentials_expired, enabled, password, user_name) FROM stdin;
 1	f	f	f	t	$2a$08$qvrzQZ7jJ7oy2p/msL4M0.l83Cd0jNsX6AJUitbgRXGzge4j035ha	admin
-2	f	f	f	t	$2a$08$dwYz8O.qtUXboGosJFsS4u19LHKW7aCQ0LXXuNlRfjjGKwj5NfKSe	reader
 232156	f	f	f	t	$2a$08$V5TAyAWOscZZZ1QtURlldOpKzufHQ4m.CehmJbbLMeFCv.laPvBFa	dmac209
 232160	f	f	f	t	$2a$08$V5TAyAWOscZZZ1QtURlldOpKzufHQ4m.CehmJbbLMeFCv.laPvBFa	dmac210
 232164	f	f	f	t	$2a$08$V5TAyAWOscZZZ1QtURlldOpKzufHQ4m.CehmJbbLMeFCv.laPvBFa	dmac211
@@ -933,6 +929,7 @@ COPY user_ (pty_id, account_expired, account_locked, credentials_expired, enable
 232180	f	f	f	t	\N	dmac7fddf9
 232184	f	f	f	t	\N	mil4235234
 232192	f	f	f	t	\N	mil4245234
+232196	f	f	f	t	\N	jane001
 \.
 
 
@@ -976,13 +973,6 @@ COPY users_authorities (user_id, authority_id) FROM stdin;
 1	33
 1	34
 1	35
-2	2
-2	6
-2	10
-2	14
-2	18
-2	22
-2	26
 \.
 
 
