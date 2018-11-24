@@ -1,11 +1,7 @@
 package io.javabrains.springbootstarter.security;
 
 
-
-import io.javabrains.springbootstarter.domain.Person;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
