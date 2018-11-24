@@ -33,7 +33,6 @@ public class PersonService {
 		return p;
 	}
 
-	@PreAuthorize("hasAuthority('PERSON_CREATE')")
 	@Transactional
 	public void addPerson(Person person) {
 		personRepository.save(person);
