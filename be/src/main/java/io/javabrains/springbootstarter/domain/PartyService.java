@@ -21,7 +21,6 @@ public class PartyService {
 		List<Party> Partys = new ArrayList<>();
 		Iterator<Party> i = PartyRepository.findAll().iterator();
 		while(i.hasNext()) {
-			System.out.println("Party Type ID: " + i.next().getPartyType().getPartyTypeDesc());
 			Partys.add(i.next());
 		}
 		return Partys;
@@ -33,7 +32,6 @@ public class PartyService {
 		List<Party> Partys = new ArrayList<>();
 		Iterator<Party> i = PartyRepository.findByPartyRolesRoleTypeRoleTypeDesc(roleTypeDesc).iterator();
 		while(i.hasNext()) {
-			System.out.println("Party ID: " + i.next().getPartyId());
 			Partys.add(i.next());
 		}
 		return Partys;
