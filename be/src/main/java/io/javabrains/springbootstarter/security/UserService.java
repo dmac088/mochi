@@ -2,7 +2,10 @@ package io.javabrains.springbootstarter.security;
 
 
 
+import io.javabrains.springbootstarter.domain.Person;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -26,4 +29,10 @@ public class UserService implements UserDetailsService {
 
         throw new UsernameNotFoundException(username);
     }
+    
+    
+	@Transactional
+	public void addUser(User user) {
+		userRepository.save(user);
+	}
 }
