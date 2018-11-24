@@ -27,9 +27,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.json.JSONObject;
 import io.javabrains.springbootstarter.domain.Customer;
-import io.javabrains.springbootstarter.domain.PartyType;
 import io.javabrains.springbootstarter.domain.Person;
-import io.javabrains.springbootstarter.domain.RoleType;
 import io.javabrains.springbootstarter.security.Encoders;
 import io.javabrains.springbootstarter.security.User;
 

@@ -7,13 +7,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class Encoders {
+	
+	public final static int userRounds = 8;
+	public final static int clientRounds = 4;
+	
     @Bean
     public PasswordEncoder oauthClientPasswordEncoder() {
-        return new BCryptPasswordEncoder(4);
+        return new BCryptPasswordEncoder(clientRounds);
     }
     
     @Bean
     public PasswordEncoder userPasswordEncoder() {
-        return new BCryptPasswordEncoder(8);
+        return new BCryptPasswordEncoder(userRounds);
     }
 }  

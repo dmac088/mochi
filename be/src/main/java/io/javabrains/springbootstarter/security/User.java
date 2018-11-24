@@ -3,11 +3,15 @@ package io.javabrains.springbootstarter.security;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import io.javabrains.springbootstarter.domain.Party;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import java.io.Serializable;
 import java.util.Collection;
 
@@ -22,7 +26,9 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,6 +38,7 @@ import lombok.Setter;
 @Setter
 public class User implements UserDetails, Serializable {
 
+	
     @Id
     @Column(name = "pty_id")
     private Long Id;
@@ -40,6 +47,7 @@ public class User implements UserDetails, Serializable {
     private String username;
 
     @Column(name = "PASSWORD")
+    @JsonProperty(access = Access.WRITE_ONLY)
     private String password;
 
     @Column(name = "ACCOUNT_EXPIRED")
@@ -88,7 +96,6 @@ public class User implements UserDetails, Serializable {
 	}
 
 	@Override
-	@JsonIgnore
 	public String getPassword() {
 		// TODO Auto-generated method stub
 		return this.password;
@@ -104,7 +111,8 @@ public class User implements UserDetails, Serializable {
 
 	public void setPassword(String password) {
 		// TODO Auto-generated method stub
-		this.password = password;
+		BCryptPasswordEncoder pe = new BCryptPasswordEncoder(Encoders.userRounds);
+		this.password  = pe.encode(password);
 	}
 	
 	public void setEnabled(boolean enabled) {
