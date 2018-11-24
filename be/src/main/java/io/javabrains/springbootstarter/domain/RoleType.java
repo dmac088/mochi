@@ -27,15 +27,15 @@ public class RoleType {
 	}
 
 	public Long getRoleTypeId() {
-		return RoleTypeId;
+		return this.RoleTypeId;
 	}
 
 	public void setRoleTypeId(Long roleTypeId) {
-		RoleTypeId = roleTypeId;
+		this.RoleTypeId = roleTypeId;
 	}
 
 	public String getRoleTypeDesc() {
-		return roleTypeDesc;
+		return this.roleTypeDesc;
 	}
 
 	public void setRoleTypeDesc(String roleTypeDesc) {
