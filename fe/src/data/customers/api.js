@@ -7,7 +7,7 @@ const endPoints = {
 
 export const create = payload => fetchApi(endPoints.create,
 																					payload, {
-																										'Content-Type': 'application/json'
+																						'Content-Type': 'application/json'
 																					},
 																					'POST',
 																					{}
