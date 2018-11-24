@@ -2,14 +2,14 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.5.14
--- Dumped by pg_dump version 9.5.14
+-- Dumped from database version 9.6.5
+-- Dumped by pg_dump version 9.6.5
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 SET row_security = off;
@@ -46,11 +46,13 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
+SET search_path = mochi, pg_catalog;
+
 --
 -- Name: customer_cst_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE mochi.customer_cst_id_seq
+CREATE SEQUENCE customer_cst_id_seq
     START WITH 1000000001
     INCREMENT BY 1
     NO MINVALUE
@@ -58,7 +60,7 @@ CREATE SEQUENCE mochi.customer_cst_id_seq
     CACHE 1;
 
 
-ALTER TABLE mochi.customer_cst_id_seq OWNER TO mochidb_owner;
+ALTER TABLE customer_cst_id_seq OWNER TO mochidb_owner;
 
 SET default_tablespace = '';
 
@@ -68,19 +70,19 @@ SET default_with_oids = false;
 -- Name: customer; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE mochi.customer (
+CREATE TABLE customer (
     rle_id bigint NOT NULL,
-    cst_id character(10) DEFAULT nextval('mochi.customer_cst_id_seq'::regclass)
+    cst_id character(10) DEFAULT nextval('customer_cst_id_seq'::regclass)
 );
 
 
-ALTER TABLE mochi.customer OWNER TO mochidb_owner;
+ALTER TABLE customer OWNER TO mochidb_owner;
 
 --
 -- Name: hibernate_sequence; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE mochi.hibernate_sequence
+CREATE SEQUENCE hibernate_sequence
     START WITH 232134
     INCREMENT BY 1
     NO MINVALUE
@@ -88,63 +90,63 @@ CREATE SEQUENCE mochi.hibernate_sequence
     CACHE 1;
 
 
-ALTER TABLE mochi.hibernate_sequence OWNER TO mochidb_owner;
+ALTER TABLE hibernate_sequence OWNER TO mochidb_owner;
 
 --
 -- Name: order_line; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE mochi.order_line (
+CREATE TABLE order_line (
     ord_id bigint NOT NULL,
     prd_id bigint NOT NULL,
     ord_lne_no bigint NOT NULL
 );
 
 
-ALTER TABLE mochi.order_line OWNER TO mochidb_owner;
+ALTER TABLE order_line OWNER TO mochidb_owner;
 
 --
 -- Name: orders; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE mochi.orders (
+CREATE TABLE orders (
     ord_id bigint NOT NULL,
     pty_id bigint NOT NULL
 );
 
 
-ALTER TABLE mochi.orders OWNER TO mochidb_owner;
+ALTER TABLE orders OWNER TO mochidb_owner;
 
 --
 -- Name: organisation; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE mochi.organisation (
+CREATE TABLE organisation (
     org_id bigint NOT NULL,
     org_nme character varying(100) NOT NULL,
     org_reg_no character varying(50) NOT NULL
 );
 
 
-ALTER TABLE mochi.organisation OWNER TO mochidb_owner;
+ALTER TABLE organisation OWNER TO mochidb_owner;
 
 --
 -- Name: party; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE mochi.party (
+CREATE TABLE party (
     pty_id bigint NOT NULL,
     pty_typ_id bigint NOT NULL
 );
 
 
-ALTER TABLE mochi.party OWNER TO mochidb_owner;
+ALTER TABLE party OWNER TO mochidb_owner;
 
 --
 -- Name: party_party_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE mochi.party_party_id_seq
+CREATE SEQUENCE party_party_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -152,13 +154,13 @@ CREATE SEQUENCE mochi.party_party_id_seq
     CACHE 1;
 
 
-ALTER TABLE mochi.party_party_id_seq OWNER TO mochidb_owner;
+ALTER TABLE party_party_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: party_pty_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE mochi.party_pty_id_seq
+CREATE SEQUENCE party_pty_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -166,32 +168,32 @@ CREATE SEQUENCE mochi.party_pty_id_seq
     CACHE 1;
 
 
-ALTER TABLE mochi.party_pty_id_seq OWNER TO mochidb_owner;
+ALTER TABLE party_pty_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: party_pty_id_seq; Type: SEQUENCE OWNED BY; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER SEQUENCE mochi.party_pty_id_seq OWNED BY mochi.party.pty_id;
+ALTER SEQUENCE party_pty_id_seq OWNED BY party.pty_id;
 
 
 --
 -- Name: party_type; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE mochi.party_type (
+CREATE TABLE party_type (
     pty_typ_id bigint NOT NULL,
     pty_typ_desc character varying NOT NULL
 );
 
 
-ALTER TABLE mochi.party_type OWNER TO mochidb_owner;
+ALTER TABLE party_type OWNER TO mochidb_owner;
 
 --
 -- Name: party_type_pty_typ_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE mochi.party_type_pty_typ_id_seq
+CREATE SEQUENCE party_type_pty_typ_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -199,20 +201,20 @@ CREATE SEQUENCE mochi.party_type_pty_typ_id_seq
     CACHE 1;
 
 
-ALTER TABLE mochi.party_type_pty_typ_id_seq OWNER TO mochidb_owner;
+ALTER TABLE party_type_pty_typ_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: party_type_pty_typ_id_seq; Type: SEQUENCE OWNED BY; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER SEQUENCE mochi.party_type_pty_typ_id_seq OWNED BY mochi.party_type.pty_typ_id;
+ALTER SEQUENCE party_type_pty_typ_id_seq OWNED BY party_type.pty_typ_id;
 
 
 --
 -- Name: person; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE mochi.person (
+CREATE TABLE person (
     psn_id bigint NOT NULL,
     psn_gvn_nm_en character varying,
     psn_fml_nm_en character varying,
@@ -221,13 +223,13 @@ CREATE TABLE mochi.person (
 );
 
 
-ALTER TABLE mochi.person OWNER TO mochidb_owner;
+ALTER TABLE person OWNER TO mochidb_owner;
 
 --
 -- Name: person_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE mochi.person_id_seq
+CREATE SEQUENCE person_id_seq
     START WITH 6
     INCREMENT BY 1
     NO MINVALUE
@@ -235,26 +237,26 @@ CREATE SEQUENCE mochi.person_id_seq
     CACHE 1;
 
 
-ALTER TABLE mochi.person_id_seq OWNER TO mochidb_owner;
+ALTER TABLE person_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: product; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE mochi.product (
+CREATE TABLE product (
     prd_id bigint NOT NULL,
     upc_cd character(12),
     prd_crtd_dt date
 );
 
 
-ALTER TABLE mochi.product OWNER TO mochidb_owner;
+ALTER TABLE product OWNER TO mochidb_owner;
 
 --
 -- Name: product_attr_lcl; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE mochi.product_attr_lcl (
+CREATE TABLE product_attr_lcl (
     prd_lcl_id bigint NOT NULL,
     prd_id bigint NOT NULL,
     prd_desc character varying(100),
@@ -265,13 +267,13 @@ CREATE TABLE mochi.product_attr_lcl (
 );
 
 
-ALTER TABLE mochi.product_attr_lcl OWNER TO mochidb_owner;
+ALTER TABLE product_attr_lcl OWNER TO mochidb_owner;
 
 --
 -- Name: role_rle_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE mochi.role_rle_id_seq
+CREATE SEQUENCE role_rle_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -279,39 +281,39 @@ CREATE SEQUENCE mochi.role_rle_id_seq
     CACHE 1;
 
 
-ALTER TABLE mochi.role_rle_id_seq OWNER TO mochidb_owner;
+ALTER TABLE role_rle_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: role; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE mochi.role (
-    rle_id bigint DEFAULT nextval('mochi.role_rle_id_seq'::regclass) NOT NULL,
+CREATE TABLE role (
+    rle_id bigint DEFAULT nextval('role_rle_id_seq'::regclass) NOT NULL,
     rle_typ_id bigint NOT NULL,
     rle_start_dttm date DEFAULT now() NOT NULL,
     pty_id bigint NOT NULL
 );
 
 
-ALTER TABLE mochi.role OWNER TO mochidb_owner;
+ALTER TABLE role OWNER TO mochidb_owner;
 
 --
 -- Name: role_type; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE mochi.role_type (
+CREATE TABLE role_type (
     rle_typ_id bigint NOT NULL,
     rle_typ_desc character varying NOT NULL
 );
 
 
-ALTER TABLE mochi.role_type OWNER TO mochidb_owner;
+ALTER TABLE role_type OWNER TO mochidb_owner;
 
 --
 -- Name: role_type_rle_typ_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE mochi.role_type_rle_typ_id_seq
+CREATE SEQUENCE role_type_rle_typ_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -319,20 +321,20 @@ CREATE SEQUENCE mochi.role_type_rle_typ_id_seq
     CACHE 1;
 
 
-ALTER TABLE mochi.role_type_rle_typ_id_seq OWNER TO mochidb_owner;
+ALTER TABLE role_type_rle_typ_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: role_type_rle_typ_id_seq; Type: SEQUENCE OWNED BY; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER SEQUENCE mochi.role_type_rle_typ_id_seq OWNED BY mochi.role_type.rle_typ_id;
+ALTER SEQUENCE role_type_rle_typ_id_seq OWNED BY role_type.rle_typ_id;
 
 
 --
 -- Name: role_type_role_typ_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE mochi.role_type_role_typ_id_seq
+CREATE SEQUENCE role_type_role_typ_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -340,25 +342,27 @@ CREATE SEQUENCE mochi.role_type_role_typ_id_seq
     CACHE 1;
 
 
-ALTER TABLE mochi.role_type_role_typ_id_seq OWNER TO mochidb_owner;
+ALTER TABLE role_type_role_typ_id_seq OWNER TO mochidb_owner;
+
+SET search_path = security, pg_catalog;
 
 --
 -- Name: authority; Type: TABLE; Schema: security; Owner: security_owner
 --
 
-CREATE TABLE security.authority (
+CREATE TABLE authority (
     id bigint NOT NULL,
     name character varying(255)
 );
 
 
-ALTER TABLE security.authority OWNER TO security_owner;
+ALTER TABLE authority OWNER TO security_owner;
 
 --
 -- Name: authority_id_seq; Type: SEQUENCE; Schema: security; Owner: security_owner
 --
 
-CREATE SEQUENCE security.authority_id_seq
+CREATE SEQUENCE authority_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -366,20 +370,20 @@ CREATE SEQUENCE security.authority_id_seq
     CACHE 1;
 
 
-ALTER TABLE security.authority_id_seq OWNER TO security_owner;
+ALTER TABLE authority_id_seq OWNER TO security_owner;
 
 --
 -- Name: authority_id_seq; Type: SEQUENCE OWNED BY; Schema: security; Owner: security_owner
 --
 
-ALTER SEQUENCE security.authority_id_seq OWNED BY security.authority.id;
+ALTER SEQUENCE authority_id_seq OWNED BY authority.id;
 
 
 --
 -- Name: clientdetails; Type: TABLE; Schema: security; Owner: security_owner
 --
 
-CREATE TABLE security.clientdetails (
+CREATE TABLE clientdetails (
     appid character varying(256) NOT NULL,
     resourceids character varying(256),
     appsecret character varying(256),
@@ -394,13 +398,13 @@ CREATE TABLE security.clientdetails (
 );
 
 
-ALTER TABLE security.clientdetails OWNER TO security_owner;
+ALTER TABLE clientdetails OWNER TO security_owner;
 
 --
 -- Name: oauth_access_token; Type: TABLE; Schema: security; Owner: security_owner
 --
 
-CREATE TABLE security.oauth_access_token (
+CREATE TABLE oauth_access_token (
     token_id character varying(256),
     token bytea,
     authentication_id character varying(256) NOT NULL,
@@ -411,13 +415,13 @@ CREATE TABLE security.oauth_access_token (
 );
 
 
-ALTER TABLE security.oauth_access_token OWNER TO security_owner;
+ALTER TABLE oauth_access_token OWNER TO security_owner;
 
 --
 -- Name: oauth_approvals; Type: TABLE; Schema: security; Owner: security_owner
 --
 
-CREATE TABLE security.oauth_approvals (
+CREATE TABLE oauth_approvals (
     userid character varying(256),
     clientid character varying(256),
     scope character varying(256),
@@ -427,13 +431,13 @@ CREATE TABLE security.oauth_approvals (
 );
 
 
-ALTER TABLE security.oauth_approvals OWNER TO security_owner;
+ALTER TABLE oauth_approvals OWNER TO security_owner;
 
 --
 -- Name: oauth_client_details; Type: TABLE; Schema: security; Owner: security_owner
 --
 
-CREATE TABLE security.oauth_client_details (
+CREATE TABLE oauth_client_details (
     client_id character varying(256) NOT NULL,
     resource_ids character varying(256),
     client_secret character varying(256),
@@ -448,13 +452,13 @@ CREATE TABLE security.oauth_client_details (
 );
 
 
-ALTER TABLE security.oauth_client_details OWNER TO security_owner;
+ALTER TABLE oauth_client_details OWNER TO security_owner;
 
 --
 -- Name: oauth_client_token; Type: TABLE; Schema: security; Owner: security_owner
 --
 
-CREATE TABLE security.oauth_client_token (
+CREATE TABLE oauth_client_token (
     token_id character varying(256),
     token bytea,
     authentication_id character varying(256) NOT NULL,
@@ -463,38 +467,38 @@ CREATE TABLE security.oauth_client_token (
 );
 
 
-ALTER TABLE security.oauth_client_token OWNER TO security_owner;
+ALTER TABLE oauth_client_token OWNER TO security_owner;
 
 --
 -- Name: oauth_code; Type: TABLE; Schema: security; Owner: security_owner
 --
 
-CREATE TABLE security.oauth_code (
+CREATE TABLE oauth_code (
     code character varying(256),
     authentication bytea
 );
 
 
-ALTER TABLE security.oauth_code OWNER TO security_owner;
+ALTER TABLE oauth_code OWNER TO security_owner;
 
 --
 -- Name: oauth_refresh_token; Type: TABLE; Schema: security; Owner: security_owner
 --
 
-CREATE TABLE security.oauth_refresh_token (
+CREATE TABLE oauth_refresh_token (
     token_id character varying(256),
     token bytea,
     authentication bytea
 );
 
 
-ALTER TABLE security.oauth_refresh_token OWNER TO security_owner;
+ALTER TABLE oauth_refresh_token OWNER TO security_owner;
 
 --
 -- Name: user_; Type: TABLE; Schema: security; Owner: security_owner
 --
 
-CREATE TABLE security.user_ (
+CREATE TABLE user_ (
     pty_id bigint NOT NULL,
     account_expired boolean,
     account_locked boolean,
@@ -505,59 +509,71 @@ CREATE TABLE security.user_ (
 );
 
 
-ALTER TABLE security.user_ OWNER TO security_owner;
+ALTER TABLE user_ OWNER TO security_owner;
 
 --
 -- Name: users_authorities; Type: TABLE; Schema: security; Owner: security_owner
 --
 
-CREATE TABLE security.users_authorities (
+CREATE TABLE users_authorities (
     user_id bigint NOT NULL,
     authority_id bigint NOT NULL
 );
 
 
-ALTER TABLE security.users_authorities OWNER TO security_owner;
+ALTER TABLE users_authorities OWNER TO security_owner;
+
+SET search_path = mochi, pg_catalog;
 
 --
--- Name: pty_id; Type: DEFAULT; Schema: mochi; Owner: mochidb_owner
+-- Name: party pty_id; Type: DEFAULT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY mochi.party ALTER COLUMN pty_id SET DEFAULT nextval('mochi.party_pty_id_seq'::regclass);
-
-
---
--- Name: pty_typ_id; Type: DEFAULT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY mochi.party_type ALTER COLUMN pty_typ_id SET DEFAULT nextval('mochi.party_type_pty_typ_id_seq'::regclass);
+ALTER TABLE ONLY party ALTER COLUMN pty_id SET DEFAULT nextval('party_pty_id_seq'::regclass);
 
 
 --
--- Name: rle_typ_id; Type: DEFAULT; Schema: mochi; Owner: mochidb_owner
+-- Name: party_type pty_typ_id; Type: DEFAULT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY mochi.role_type ALTER COLUMN rle_typ_id SET DEFAULT nextval('mochi.role_type_rle_typ_id_seq'::regclass);
+ALTER TABLE ONLY party_type ALTER COLUMN pty_typ_id SET DEFAULT nextval('party_type_pty_typ_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: security; Owner: security_owner
+-- Name: role_type rle_typ_id; Type: DEFAULT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY security.authority ALTER COLUMN id SET DEFAULT nextval('security.authority_id_seq'::regclass);
+ALTER TABLE ONLY role_type ALTER COLUMN rle_typ_id SET DEFAULT nextval('role_type_rle_typ_id_seq'::regclass);
 
+
+SET search_path = security, pg_catalog;
+
+--
+-- Name: authority id; Type: DEFAULT; Schema: security; Owner: security_owner
+--
+
+ALTER TABLE ONLY authority ALTER COLUMN id SET DEFAULT nextval('authority_id_seq'::regclass);
+
+
+SET search_path = mochi, pg_catalog;
 
 --
 -- Data for Name: customer; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY mochi.customer (rle_id, cst_id) FROM stdin;
-1	1000000007
-2	1000000008
-232153	\N
-232157	\N
-232161	\N
-232165	\N
+COPY customer (rle_id, cst_id) FROM stdin;
+1	1000000011
+2	1000000012
+232153	1000000013
+232157	1000000014
+232161	1000000015
+232165	1000000016
+232167	1000000017
+232169	1000000018
+232175	1000000019
+232181	1000000020
+232185	1000000021
+232193	1000000023
 \.
 
 
@@ -565,21 +581,21 @@ COPY mochi.customer (rle_id, cst_id) FROM stdin;
 -- Name: customer_cst_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('mochi.customer_cst_id_seq', 1000000008, true);
+SELECT pg_catalog.setval('customer_cst_id_seq', 1000000023, true);
 
 
 --
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('mochi.hibernate_sequence', 232165, true);
+SELECT pg_catalog.setval('hibernate_sequence', 232195, true);
 
 
 --
 -- Data for Name: order_line; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY mochi.order_line (ord_id, prd_id, ord_lne_no) FROM stdin;
+COPY order_line (ord_id, prd_id, ord_lne_no) FROM stdin;
 \.
 
 
@@ -587,7 +603,7 @@ COPY mochi.order_line (ord_id, prd_id, ord_lne_no) FROM stdin;
 -- Data for Name: orders; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY mochi.orders (ord_id, pty_id) FROM stdin;
+COPY orders (ord_id, pty_id) FROM stdin;
 \.
 
 
@@ -595,10 +611,8 @@ COPY mochi.orders (ord_id, pty_id) FROM stdin;
 -- Data for Name: organisation; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY mochi.organisation (org_id, org_nme, org_reg_no) FROM stdin;
-0	dummy	12345679
+COPY organisation (org_id, org_nme, org_reg_no) FROM stdin;
 2	Big Balloons LTD	1234567
-4	Hop Lun LTD	3216547
 \.
 
 
@@ -606,7 +620,7 @@ COPY mochi.organisation (org_id, org_nme, org_reg_no) FROM stdin;
 -- Data for Name: party; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY mochi.party (pty_id, pty_typ_id) FROM stdin;
+COPY party (pty_id, pty_typ_id) FROM stdin;
 0	2
 1	1
 2	2
@@ -616,6 +630,12 @@ COPY mochi.party (pty_id, pty_typ_id) FROM stdin;
 232156	1
 232160	1
 232164	1
+232166	1
+232168	1
+232174	1
+232180	1
+232184	1
+232192	1
 \.
 
 
@@ -623,21 +643,21 @@ COPY mochi.party (pty_id, pty_typ_id) FROM stdin;
 -- Name: party_party_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('mochi.party_party_id_seq', 1, false);
+SELECT pg_catalog.setval('party_party_id_seq', 1, false);
 
 
 --
 -- Name: party_pty_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('mochi.party_pty_id_seq', 1, false);
+SELECT pg_catalog.setval('party_pty_id_seq', 1, false);
 
 
 --
 -- Data for Name: party_type; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY mochi.party_type (pty_typ_id, pty_typ_desc) FROM stdin;
+COPY party_type (pty_typ_id, pty_typ_desc) FROM stdin;
 1	Person
 2	Organisation
 \.
@@ -647,20 +667,25 @@ COPY mochi.party_type (pty_typ_id, pty_typ_desc) FROM stdin;
 -- Name: party_type_pty_typ_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('mochi.party_type_pty_typ_id_seq', 1, false);
+SELECT pg_catalog.setval('party_type_pty_typ_id_seq', 1, false);
 
 
 --
 -- Data for Name: person; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY mochi.person (psn_id, psn_gvn_nm_en, psn_fml_nm_en, psn_nm_cn, enb) FROM stdin;
+COPY person (psn_id, psn_gvn_nm_en, psn_fml_nm_en, psn_nm_cn, enb) FROM stdin;
 1	Daniel	Mackie	丹尼爾麥基	t
-3	Purple	Wong	丹尼爾麥基	t
 232152	Daniel	Mackie	丹尼爾麥基	\N
 232156	Daniel	Mackie	丹尼爾麥基	\N
 232160	Daniel	Mackie	丹尼爾麥基	\N
 232164	Daniel	Mackie	丹尼爾麥基	\N
+232166	Daniel	Mackie	丹尼爾麥基	\N
+232168	Daniel	Mackie	丹尼爾麥基	\N
+232174	Daniel	Mackie	丹尼爾麥基	\N
+232180	Daniel	Mackie	丹尼爾麥基	\N
+232184	Milap	Gohil	丹尼爾麥基	\N
+232192	Milap	Gohil	丹尼爾麥基	\N
 \.
 
 
@@ -668,14 +693,14 @@ COPY mochi.person (psn_id, psn_gvn_nm_en, psn_fml_nm_en, psn_nm_cn, enb) FROM st
 -- Name: person_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('mochi.person_id_seq', 6, false);
+SELECT pg_catalog.setval('person_id_seq', 6, false);
 
 
 --
 -- Data for Name: product; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY mochi.product (prd_id, upc_cd, prd_crtd_dt) FROM stdin;
+COPY product (prd_id, upc_cd, prd_crtd_dt) FROM stdin;
 1	12345678    	2018-11-15
 2	23456789    	2018-11-15
 \.
@@ -685,7 +710,7 @@ COPY mochi.product (prd_id, upc_cd, prd_crtd_dt) FROM stdin;
 -- Data for Name: product_attr_lcl; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY mochi.product_attr_lcl (prd_lcl_id, prd_id, prd_desc, prd_img_pth, prd_rrp, prd_cat_desc, lcl_cd) FROM stdin;
+COPY product_attr_lcl (prd_lcl_id, prd_id, prd_desc, prd_img_pth, prd_rrp, prd_cat_desc, lcl_cd) FROM stdin;
 1	1	mango	images/mango.jpg	5.99	fruit	ENG
 2	1	芒果	images/mango.jpg	5.99	水果	HKG
 3	2	orange	images/orange.jpg	8.99	fruit	ENG
@@ -697,13 +722,19 @@ COPY mochi.product_attr_lcl (prd_lcl_id, prd_id, prd_desc, prd_img_pth, prd_rrp,
 -- Data for Name: role; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY mochi.role (rle_id, rle_typ_id, rle_start_dttm, pty_id) FROM stdin;
+COPY role (rle_id, rle_typ_id, rle_start_dttm, pty_id) FROM stdin;
 1	1	2018-11-15	1
 2	1	2018-11-15	2
 232153	1	2018-11-15	232152
 232157	1	2018-11-15	232156
 232161	1	2018-11-15	232160
 232165	1	2018-11-15	232164
+232167	1	2018-11-04	232166
+232169	1	2018-10-26	232168
+232175	1	2018-11-04	232174
+232181	1	2018-11-04	232180
+232185	1	2018-11-04	232184
+232193	1	2018-11-04	232192
 \.
 
 
@@ -711,14 +742,14 @@ COPY mochi.role (rle_id, rle_typ_id, rle_start_dttm, pty_id) FROM stdin;
 -- Name: role_rle_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('mochi.role_rle_id_seq', 1, false);
+SELECT pg_catalog.setval('role_rle_id_seq', 1, false);
 
 
 --
 -- Data for Name: role_type; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY mochi.role_type (rle_typ_id, rle_typ_desc) FROM stdin;
+COPY role_type (rle_typ_id, rle_typ_desc) FROM stdin;
 1	Customer
 2	Supplier
 \.
@@ -728,21 +759,23 @@ COPY mochi.role_type (rle_typ_id, rle_typ_desc) FROM stdin;
 -- Name: role_type_rle_typ_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('mochi.role_type_rle_typ_id_seq', 1, false);
+SELECT pg_catalog.setval('role_type_rle_typ_id_seq', 1, false);
 
 
 --
 -- Name: role_type_role_typ_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('mochi.role_type_role_typ_id_seq', 1, false);
+SELECT pg_catalog.setval('role_type_role_typ_id_seq', 1, false);
 
+
+SET search_path = security, pg_catalog;
 
 --
 -- Data for Name: authority; Type: TABLE DATA; Schema: security; Owner: security_owner
 --
 
-COPY security.authority (id, name) FROM stdin;
+COPY authority (id, name) FROM stdin;
 1	PARTY_CREATE
 2	PARTY_READ
 3	PARTY_UPDATE
@@ -785,14 +818,14 @@ COPY security.authority (id, name) FROM stdin;
 -- Name: authority_id_seq; Type: SEQUENCE SET; Schema: security; Owner: security_owner
 --
 
-SELECT pg_catalog.setval('security.authority_id_seq', 1, false);
+SELECT pg_catalog.setval('authority_id_seq', 1, false);
 
 
 --
 -- Data for Name: clientdetails; Type: TABLE DATA; Schema: security; Owner: security_owner
 --
 
-COPY security.clientdetails (appid, resourceids, appsecret, scope, granttypes, redirecturl, authorities, access_token_validity, refresh_token_validity, additionalinformation, autoapprovescopes) FROM stdin;
+COPY clientdetails (appid, resourceids, appsecret, scope, granttypes, redirecturl, authorities, access_token_validity, refresh_token_validity, additionalinformation, autoapprovescopes) FROM stdin;
 \.
 
 
@@ -800,10 +833,9 @@ COPY security.clientdetails (appid, resourceids, appsecret, scope, granttypes, r
 -- Data for Name: oauth_access_token; Type: TABLE DATA; Schema: security; Owner: security_owner
 --
 
-COPY security.oauth_access_token (token_id, token, authentication_id, user_name, client_id, authentication, refresh_token) FROM stdin;
+COPY oauth_access_token (token_id, token, authentication_id, user_name, client_id, authentication, refresh_token) FROM stdin;
 e813b689e46101328d3f9b0b2427d9cb	\\xaced0005737200436f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744f4175746832416363657373546f6b656e0cb29e361b24face0200064c00156164646974696f6e616c496e666f726d6174696f6e74000f4c6a6176612f7574696c2f4d61703b4c000a65787069726174696f6e7400104c6a6176612f7574696c2f446174653b4c000c72656672657368546f6b656e74003f4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f636f6d6d6f6e2f4f417574683252656672657368546f6b656e3b4c000573636f706574000f4c6a6176612f7574696c2f5365743b4c0009746f6b656e547970657400124c6a6176612f6c616e672f537472696e673b4c000576616c756571007e000578707372001e6a6176612e7574696c2e436f6c6c656374696f6e7324456d7074794d6170593614855adce7d002000078707372000e6a6176612e7574696c2e44617465686a81014b5974190300007870770800000166a53212c0787372004c6f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744578706972696e674f417574683252656672657368546f6b656e2fdf47639dd0c9b70200014c000a65787069726174696f6e71007e0002787200446f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744f417574683252656672657368546f6b656e73e10e0a6354d45e0200014c000576616c756571007e0005787074002461373638363233322d306262332d346533622d613266322d3930353135333433343434367371007e00097708000001673f0c0f3e78737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65536574801d92d18f9b80550200007872002c6a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65436f6c6c656374696f6e19420080cb5ef71e0200014c0001637400164c6a6176612f7574696c2f436f6c6c656374696f6e3b7870737200176a6176612e7574696c2e4c696e6b656448617368536574d86cd75a95dd2a1e020000787200116a6176612e7574696c2e48617368536574ba44859596b8b7340300007870770c000000023f40000000000001740004726561647874000662656172657274002465383234323665622d636238612d343963642d613832322d663937393731346237636162	04eb1c0fab5d2d4a5221032a9cbc3d08	admin	spring-security-oauth2-read-client	\\xaced0005737200416f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e4f417574683241757468656e7469636174696f6ebd400b02166252130200024c000d73746f7265645265717565737474003c4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f70726f76696465722f4f4175746832526571756573743b4c00127573657241757468656e7469636174696f6e7400324c6f72672f737072696e676672616d65776f726b2f73656375726974792f636f72652f41757468656e7469636174696f6e3b787200476f72672e737072696e676672616d65776f726b2e73656375726974792e61757468656e7469636174696f6e2e416273747261637441757468656e7469636174696f6e546f6b656ed3aa287e6e47640e0200035a000d61757468656e746963617465644c000b617574686f7269746965737400164c6a6176612f7574696c2f436f6c6c656374696f6e3b4c000764657461696c737400124c6a6176612f6c616e672f4f626a6563743b787000737200266a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c654c697374fc0f2531b5ec8e100200014c00046c6973747400104c6a6176612f7574696c2f4c6973743b7872002c6a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65436f6c6c656374696f6e19420080cb5ef71e0200014c00016371007e00047870737200136a6176612e7574696c2e41727261794c6973747881d21d99c7619d03000149000473697a6578700000000977040000000973720032696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e417574686f726974794952ec0f5e493da00200024c000269647400104c6a6176612f6c616e672f4c6f6e673b4c00046e616d657400124c6a6176612f6c616e672f537472696e673b78707372000e6a6176612e6c616e672e4c6f6e673b8be490cc8f23df0200014a000576616c7565787200106a6176612e6c616e672e4e756d62657286ac951d0b94e08b0200007870000000000000000174000f435553544f4d45525f4352454154457371007e000d7371007e0011000000000000000274000d435553544f4d45525f524541447371007e000d7371007e0011000000000000000374000f435553544f4d45525f5550444154457371007e000d7371007e0011000000000000000474000f435553544f4d45525f44454c4554457371007e000d7371007e0011000000000000000574000e50524f445543545f4352454154457371007e000d7371007e0011000000000000000674000c50524f445543545f524541447371007e000d7371007e0011000000000000000774000e50524f445543545f5550444154457371007e000d7371007e0011000000000000000874000e50524f445543545f44454c4554457371007e000d7371007e00110000000000000009740013524f4c455f50524f445543545f5245414445527871007e000c707372003a6f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e4f41757468325265717565737400000000000000010200075a0008617070726f7665644c000b617574686f72697469657371007e00044c000a657874656e73696f6e7374000f4c6a6176612f7574696c2f4d61703b4c000b726564697265637455726971007e000f4c00077265667265736874003b4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f70726f76696465722f546f6b656e526571756573743b4c000b7265736f7572636549647374000f4c6a6176612f7574696c2f5365743b4c000d726573706f6e7365547970657371007e0030787200386f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e426173655265717565737436287a3ea37169bd0200034c0008636c69656e74496471007e000f4c001172657175657374506172616d657465727371007e002e4c000573636f706571007e00307870740022737072696e672d73656375726974792d6f61757468322d726561642d636c69656e74737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c654d6170f1a5a8fe74f507420200014c00016d71007e002e7870737200116a6176612e7574696c2e486173684d61700507dac1c31660d103000246000a6c6f6164466163746f724900097468726573686f6c6478703f400000000000067708000000080000000374000a6772616e745f7479706574000870617373776f7264740009636c69656e745f6964740022737072696e672d73656375726974792d6f61757468322d726561642d636c69656e74740008757365726e616d6574000561646d696e78737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65536574801d92d18f9b80550200007871007e0009737200176a6176612e7574696c2e4c696e6b656448617368536574d86cd75a95dd2a1e020000787200116a6176612e7574696c2e48617368536574ba44859596b8b7340300007870770c000000103f400000000000017400047265616478017371007e0041770c000000103f40000000000001737200426f72672e737072696e676672616d65776f726b2e73656375726974792e636f72652e617574686f726974792e53696d706c654772616e746564417574686f7269747900000000000001f40200014c0004726f6c6571007e000f787074000455534552787371007e00363f40000000000000770800000010000000007870707371007e0041770c000000103f400000000000017400187265736f757263652d7365727665722d726573742d617069787371007e0041770c000000103f40000000000000787372004f6f72672e737072696e676672616d65776f726b2e73656375726974792e61757468656e7469636174696f6e2e557365726e616d6550617373776f726441757468656e7469636174696f6e546f6b656e00000000000001f40200024c000b63726564656e7469616c7371007e00054c00097072696e636970616c71007e00057871007e0003017371007e00077371007e000b0000000977040000000971007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a7871007e004f737200176a6176612e7574696c2e4c696e6b6564486173684d617034c04e5c106cc0fb0200015a000b6163636573734f726465727871007e00363f400000000000067708000000080000000371007e003871007e003971007e003a71007e003b71007e003c71007e003d7800707372002d696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e55736572429c90cd9f67f3dd0200095a000e6163636f756e74457870697265645a000d6163636f756e744c6f636b65645a001263726564656e7469616c73457870697265645a0007656e61626c65644c0002496471007e000e4c000b617574686f72697469657371007e00044c000870617373776f726471007e000f4c000975736572506172747974002e4c696f2f6a617661627261696e732f737072696e67626f6f74737461727465722f646f6d61696e2f50617274793b4c0008757365726e616d6571007e000f78700000000171007e00137372002f6f72672e68696265726e6174652e636f6c6c656374696f6e2e696e7465726e616c2e50657273697374656e744261676563fd3f2082000c0200014c000362616771007e00087872003e6f72672e68696265726e6174652e636f6c6c656374696f6e2e696e7465726e616c2e416273747261637450657273697374656e74436f6c6c656374696f6ee9d3dc4da9113ba502000a5a001b616c6c6f774c6f61644f7574736964655472616e73616374696f6e49000a63616368656453697a655a000564697274795a000b696e697469616c697a65645a000d697354656d7053657373696f6e4c00036b65797400164c6a6176612f696f2f53657269616c697a61626c653b4c00056f776e657271007e00054c0004726f6c6571007e000f4c001273657373696f6e466163746f72795575696471007e000f4c000e73746f726564536e617073686f7471007e0057787000ffffffff00010071007e001371007e0054740039696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e557365722e617574686f726974696573707371007e000b0000000977040000000971007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a787371007e000b0000000977040000000971007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a7874003c243261243038247176727a515a376a4a376f7932702f6d734c344d302e6c38334364306a4e735836414a55697462675258477a6765346a30333568617372002d696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e646f6d61696e2e506572736f6e275dc007fb1e22180200034c000c46616d696c794e616d65456e71007e000f4c000b476976656e4e616d65456e71007e000f4c00064e616d65436e71007e000f78707400064d61636b696574000644616e69656c74000fe4b8b9e5b0bce788bee9baa5e59fba74000561646d696e	b99e8debf60f2fd025e583143320892e
-7d4d5b58cf8bc989cd3c6919be9a5c1e	\\xaced0005737200436f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744f4175746832416363657373546f6b656e0cb29e361b24face0200064c00156164646974696f6e616c496e666f726d6174696f6e74000f4c6a6176612f7574696c2f4d61703b4c000a65787069726174696f6e7400104c6a6176612f7574696c2f446174653b4c000c72656672657368546f6b656e74003f4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f636f6d6d6f6e2f4f417574683252656672657368546f6b656e3b4c000573636f706574000f4c6a6176612f7574696c2f5365743b4c0009746f6b656e547970657400124c6a6176612f6c616e672f537472696e673b4c000576616c756571007e000578707372001e6a6176612e7574696c2e436f6c6c656374696f6e7324456d7074794d6170593614855adce7d002000078707372000e6a6176612e7574696c2e44617465686a81014b597419030000787077080000016716e88fae787372004c6f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744578706972696e674f417574683252656672657368546f6b656e2fdf47639dd0c9b70200014c000a65787069726174696f6e71007e0002787200446f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744f417574683252656672657368546f6b656e73e10e0a6354d45e0200014c000576616c756571007e0005787074002434636430306334622d356534382d343364652d393937302d3137623733666237343739667371007e0009770800000167aa97019678737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65536574801d92d18f9b80550200007872002c6a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65436f6c6c656374696f6e19420080cb5ef71e0200014c0001637400164c6a6176612f7574696c2f436f6c6c656374696f6e3b7870737200176a6176612e7574696c2e4c696e6b656448617368536574d86cd75a95dd2a1e020000787200116a6176612e7574696c2e48617368536574ba44859596b8b7340300007870770c000000043f400000000000027400047265616474000577726974657874000662656172657274002462653364643739392d333439662d343065652d383235372d666236363665323366313366	ed10fa20779cf50f70ab6183d653eb5e	account-creator	spring-security-oauth2-read-write-client	\\xaced0005737200416f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e4f417574683241757468656e7469636174696f6ebd400b02166252130200024c000d73746f7265645265717565737474003c4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f70726f76696465722f4f4175746832526571756573743b4c00127573657241757468656e7469636174696f6e7400324c6f72672f737072696e676672616d65776f726b2f73656375726974792f636f72652f41757468656e7469636174696f6e3b787200476f72672e737072696e676672616d65776f726b2e73656375726974792e61757468656e7469636174696f6e2e416273747261637441757468656e7469636174696f6e546f6b656ed3aa287e6e47640e0200035a000d61757468656e746963617465644c000b617574686f7269746965737400164c6a6176612f7574696c2f436f6c6c656374696f6e3b4c000764657461696c737400124c6a6176612f6c616e672f4f626a6563743b787000737200266a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c654c697374fc0f2531b5ec8e100200014c00046c6973747400104c6a6176612f7574696c2f4c6973743b7872002c6a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65436f6c6c656374696f6e19420080cb5ef71e0200014c00016371007e00047870737200136a6176612e7574696c2e41727261794c6973747881d21d99c7619d03000149000473697a6578700000001277040000001273720032696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e417574686f726974794952ec0f5e493da00200024c000269647400104c6a6176612f6c616e672f4c6f6e673b4c00046e616d657400124c6a6176612f6c616e672f537472696e673b78707372000e6a6176612e6c616e672e4c6f6e673b8be490cc8f23df0200014a000576616c7565787200106a6176612e6c616e672e4e756d62657286ac951d0b94e08b0200007870000000000000000174000c50415254595f4352454154457371007e000d7371007e0011000000000000000274000a50415254595f524541447371007e000d7371007e0011000000000000000374000c50415254595f5550444154457371007e000d7371007e0011000000000000000574000d504552534f4e5f4352454154457371007e000d7371007e0011000000000000000674000b504552534f4e5f524541447371007e000d7371007e0011000000000000000774000d504552534f4e5f5550444154457371007e000d7371007e001100000000000000097400134f5247414e49534154494f4e5f4352454154457371007e000d7371007e0011000000000000000a7400114f5247414e49534154494f4e5f524541447371007e000d7371007e0011000000000000000b7400134f5247414e49534154494f4e5f5550444154457371007e000d7371007e0011000000000000000d74000b524f4c455f4352454154457371007e000d7371007e0011000000000000000e740009524f4c455f524541447371007e000d7371007e0011000000000000000f74000b524f4c455f5550444154457371007e000d7371007e0011000000000000001174000f435553544f4d45525f4352454154457371007e000d7371007e0011000000000000001274000d435553544f4d45525f524541447371007e000d7371007e0011000000000000001374000f435553544f4d45525f5550444154457371007e000d7371007e0011000000000000001574000f535550504c4945525f4352454154457371007e000d7371007e0011000000000000001674000d535550504c4945525f524541447371007e000d7371007e0011000000000000001774000f535550504c4945525f5550444154457871007e000c707372003a6f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e4f41757468325265717565737400000000000000010200075a0008617070726f7665644c000b617574686f72697469657371007e00044c000a657874656e73696f6e7374000f4c6a6176612f7574696c2f4d61703b4c000b726564697265637455726971007e000f4c00077265667265736874003b4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f70726f76696465722f546f6b656e526571756573743b4c000b7265736f7572636549647374000f4c6a6176612f7574696c2f5365743b4c000d726573706f6e7365547970657371007e004b787200386f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e426173655265717565737436287a3ea37169bd0200034c0008636c69656e74496471007e000f4c001172657175657374506172616d657465727371007e00494c000573636f706571007e004b7870740028737072696e672d73656375726974792d6f61757468322d726561642d77726974652d636c69656e74737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c654d6170f1a5a8fe74f507420200014c00016d71007e00497870737200116a6176612e7574696c2e486173684d61700507dac1c31660d103000246000a6c6f6164466163746f724900097468726573686f6c6478703f400000000000067708000000080000000374000a6772616e745f7479706574000870617373776f7264740009636c69656e745f6964740028737072696e672d73656375726974792d6f61757468322d726561642d77726974652d636c69656e74740008757365726e616d6574000f6163636f756e742d63726561746f7278737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65536574801d92d18f9b80550200007871007e0009737200176a6176612e7574696c2e4c696e6b656448617368536574d86cd75a95dd2a1e020000787200116a6176612e7574696c2e48617368536574ba44859596b8b7340300007870770c000000103f4000000000000274000472656164740005777269746578017371007e005c770c000000103f40000000000001737200426f72672e737072696e676672616d65776f726b2e73656375726974792e636f72652e617574686f726974792e53696d706c654772616e746564417574686f7269747900000000000001f40200014c0004726f6c6571007e000f787074000455534552787371007e00513f40000000000000770800000010000000007870707371007e005c770c000000103f400000000000017400187265736f757263652d7365727665722d726573742d617069787371007e005c770c000000103f40000000000000787372004f6f72672e737072696e676672616d65776f726b2e73656375726974792e61757468656e7469636174696f6e2e557365726e616d6550617373776f726441757468656e7469636174696f6e546f6b656e00000000000001f40200024c000b63726564656e7469616c7371007e00054c00097072696e636970616c71007e00057871007e0003017371007e00077371007e000b0000001277040000001271007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a71007e002d71007e003071007e003371007e003671007e003971007e003c71007e003f71007e004271007e00457871007e006b737200176a6176612e7574696c2e4c696e6b6564486173684d617034c04e5c106cc0fb0200015a000b6163636573734f726465727871007e00513f400000000000067708000000080000000371007e005371007e005471007e005571007e005671007e005771007e00587800707372002d696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e557365729bb111802dbd23e40200095a000e6163636f756e74457870697265645a000d6163636f756e744c6f636b65645a001263726564656e7469616c73457870697265645a0007656e61626c65644c0002496471007e000e4c000b617574686f72697469657371007e00044c000870617373776f726471007e000f4c000975736572506172747974002e4c696f2f6a617661627261696e732f737072696e67626f6f74737461727465722f646f6d61696e2f50617274793b4c0008757365726e616d6571007e000f7870000000017371007e001100000000000000007372002f6f72672e68696265726e6174652e636f6c6c656374696f6e2e696e7465726e616c2e50657273697374656e744261676563fd3f2082000c0200014c000362616771007e00087872003e6f72672e68696265726e6174652e636f6c6c656374696f6e2e696e7465726e616c2e416273747261637450657273697374656e74436f6c6c656374696f6ee9d3dc4da9113ba502000a5a001b616c6c6f774c6f61644f7574736964655472616e73616374696f6e49000a63616368656453697a655a000564697274795a000b696e697469616c697a65645a000d697354656d7053657373696f6e4c00036b65797400164c6a6176612f696f2f53657269616c697a61626c653b4c00056f776e657271007e00054c0004726f6c6571007e000f4c001273657373696f6e466163746f72795575696471007e000f4c000e73746f726564536e617073686f7471007e0074787000ffffffff00010071007e007171007e0070740039696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e557365722e617574686f726974696573707371007e000b0000001277040000001271007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a71007e002d71007e003071007e003371007e003671007e003971007e003c71007e003f71007e004271007e0045787371007e000b0000001277040000001271007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a71007e002d71007e003071007e003371007e003671007e003971007e003c71007e003f71007e004271007e00457874003c243261243038247176727a515a376a4a376f7932702f6d734c344d302e6c38334364306a4e735836414a55697462675258477a6765346a303335686173720033696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e646f6d61696e2e4f7267616e697a6174696f6ef204adbd10c2d9fc0200014c00104f7267616e697a6174696f6e4e616d6571007e000f787074000564756d6d7974000f6163636f756e742d63726561746f72	8d60b98b87bb3ea2c960faf7d69d9e59
-54324284d5250303614f19c9be58d560	\\xaced0005737200436f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744f4175746832416363657373546f6b656e0cb29e361b24face0200064c00156164646974696f6e616c496e666f726d6174696f6e74000f4c6a6176612f7574696c2f4d61703b4c000a65787069726174696f6e7400104c6a6176612f7574696c2f446174653b4c000c72656672657368546f6b656e74003f4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f636f6d6d6f6e2f4f417574683252656672657368546f6b656e3b4c000573636f706574000f4c6a6176612f7574696c2f5365743b4c0009746f6b656e547970657400124c6a6176612f6c616e672f537472696e673b4c000576616c756571007e000578707372001e6a6176612e7574696c2e436f6c6c656374696f6e7324456d7074794d6170593614855adce7d002000078707372000e6a6176612e7574696c2e44617465686a81014b5974190300007870770800000167178a6be2787372004c6f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744578706972696e674f417574683252656672657368546f6b656e2fdf47639dd0c9b70200014c000a65787069726174696f6e71007e0002787200446f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744f417574683252656672657368546f6b656e73e10e0a6354d45e0200014c000576616c756571007e0005787074002434363037303265342d383061642d343863352d396462662d6631336631356532313466657371007e0009770800000167b164686178737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65536574801d92d18f9b80550200007872002c6a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65436f6c6c656374696f6e19420080cb5ef71e0200014c0001637400164c6a6176612f7574696c2f436f6c6c656374696f6e3b7870737200176a6176612e7574696c2e4c696e6b656448617368536574d86cd75a95dd2a1e020000787200116a6176612e7574696c2e48617368536574ba44859596b8b7340300007870770c000000043f400000000000027400047265616474000577726974657874000662656172657274002464373730313430322d623537662d343365322d616633302d613034393730376561386164	d557e74143287f87984f133c7409755d	admin	spring-security-oauth2-read-write-client	\\xaced0005737200416f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e4f417574683241757468656e7469636174696f6ebd400b02166252130200024c000d73746f7265645265717565737474003c4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f70726f76696465722f4f4175746832526571756573743b4c00127573657241757468656e7469636174696f6e7400324c6f72672f737072696e676672616d65776f726b2f73656375726974792f636f72652f41757468656e7469636174696f6e3b787200476f72672e737072696e676672616d65776f726b2e73656375726974792e61757468656e7469636174696f6e2e416273747261637441757468656e7469636174696f6e546f6b656ed3aa287e6e47640e0200035a000d61757468656e746963617465644c000b617574686f7269746965737400164c6a6176612f7574696c2f436f6c6c656374696f6e3b4c000764657461696c737400124c6a6176612f6c616e672f4f626a6563743b787000737200266a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c654c697374fc0f2531b5ec8e100200014c00046c6973747400104c6a6176612f7574696c2f4c6973743b7872002c6a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65436f6c6c656374696f6e19420080cb5ef71e0200014c00016371007e00047870737200136a6176612e7574696c2e41727261794c6973747881d21d99c7619d03000149000473697a6578700000002377040000002373720032696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e417574686f726974794952ec0f5e493da00200024c000269647400104c6a6176612f6c616e672f4c6f6e673b4c00046e616d657400124c6a6176612f6c616e672f537472696e673b78707372000e6a6176612e6c616e672e4c6f6e673b8be490cc8f23df0200014a000576616c7565787200106a6176612e6c616e672e4e756d62657286ac951d0b94e08b0200007870000000000000000174000c50415254595f4352454154457371007e000d7371007e0011000000000000000274000a50415254595f524541447371007e000d7371007e0011000000000000000374000c50415254595f5550444154457371007e000d7371007e0011000000000000000474000c50415254595f44454c4554457371007e000d7371007e0011000000000000000574000d504552534f4e5f4352454154457371007e000d7371007e0011000000000000000674000b504552534f4e5f524541447371007e000d7371007e0011000000000000000774000d504552534f4e5f5550444154457371007e000d7371007e0011000000000000000874000d504552534f4e5f44454c4554457371007e000d7371007e001100000000000000097400134f5247414e49534154494f4e5f4352454154457371007e000d7371007e0011000000000000000a7400114f5247414e49534154494f4e5f524541447371007e000d7371007e0011000000000000000b7400134f5247414e49534154494f4e5f5550444154457371007e000d7371007e0011000000000000000c7400134f5247414e49534154494f4e5f44454c4554457371007e000d7371007e0011000000000000000d74000b524f4c455f4352454154457371007e000d7371007e0011000000000000000e740009524f4c455f524541447371007e000d7371007e0011000000000000000f74000b524f4c455f5550444154457371007e000d7371007e0011000000000000001074000b524f4c455f44454c4554457371007e000d7371007e0011000000000000001174000f435553544f4d45525f4352454154457371007e000d7371007e0011000000000000001274000d435553544f4d45525f524541447371007e000d7371007e0011000000000000001374000f435553544f4d45525f5550444154457371007e000d7371007e0011000000000000001474000f435553544f4d45525f44454c4554457371007e000d7371007e0011000000000000001574000f535550504c4945525f4352454154457371007e000d7371007e0011000000000000001674000d535550504c4945525f524541447371007e000d7371007e0011000000000000001774000f535550504c4945525f5550444154457371007e000d7371007e0011000000000000001874000f535550504c4945525f44454c4554457371007e000d7371007e0011000000000000001974000e50524f445543545f4352454154457371007e000d7371007e0011000000000000001a74000c50524f445543545f524541447371007e000d7371007e0011000000000000001b74000e50524f445543545f5550444154457371007e000d7371007e0011000000000000001c74000e50524f445543545f44454c4554457371007e000d7371007e0011000000000000001d740013524f4c455f50524f445543545f5245414445527371007e000d7371007e0011000000000000001e740011524f4c455f50415254595f5245414445527371007e000d7371007e0011000000000000001f740010524f4c455f524f4c455f5245414445527371007e000d7371007e00110000000000000020740012524f4c455f504552534f4e5f5245414445527371007e000d7371007e00110000000000000021740018524f4c455f4f5247414e49534154494f4e5f5245414445527371007e000d7371007e00110000000000000022740014524f4c455f435553544f4d45525f5245414445527371007e000d7371007e00110000000000000023740014524f4c455f535550504c4945525f5245414445527871007e000c707372003a6f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e4f41757468325265717565737400000000000000010200075a0008617070726f7665644c000b617574686f72697469657371007e00044c000a657874656e73696f6e7374000f4c6a6176612f7574696c2f4d61703b4c000b726564697265637455726971007e000f4c00077265667265736874003b4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f70726f76696465722f546f6b656e526571756573743b4c000b7265736f7572636549647374000f4c6a6176612f7574696c2f5365743b4c000d726573706f6e7365547970657371007e007e787200386f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e426173655265717565737436287a3ea37169bd0200034c0008636c69656e74496471007e000f4c001172657175657374506172616d657465727371007e007c4c000573636f706571007e007e7870740028737072696e672d73656375726974792d6f61757468322d726561642d77726974652d636c69656e74737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c654d6170f1a5a8fe74f507420200014c00016d71007e007c7870737200116a6176612e7574696c2e486173684d61700507dac1c31660d103000246000a6c6f6164466163746f724900097468726573686f6c6478703f400000000000067708000000080000000374000a6772616e745f7479706574000870617373776f7264740009636c69656e745f6964740028737072696e672d73656375726974792d6f61757468322d726561642d77726974652d636c69656e74740008757365726e616d6574000561646d696e78737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65536574801d92d18f9b80550200007871007e0009737200176a6176612e7574696c2e4c696e6b656448617368536574d86cd75a95dd2a1e020000787200116a6176612e7574696c2e48617368536574ba44859596b8b7340300007870770c000000103f4000000000000274000472656164740005777269746578017371007e008f770c000000103f40000000000001737200426f72672e737072696e676672616d65776f726b2e73656375726974792e636f72652e617574686f726974792e53696d706c654772616e746564417574686f7269747900000000000001f40200014c0004726f6c6571007e000f787074000455534552787371007e00843f40000000000000770800000010000000007870707371007e008f770c000000103f400000000000017400187265736f757263652d7365727665722d726573742d617069787371007e008f770c000000103f40000000000000787372004f6f72672e737072696e676672616d65776f726b2e73656375726974792e61757468656e7469636174696f6e2e557365726e616d6550617373776f726441757468656e7469636174696f6e546f6b656e00000000000001f40200024c000b63726564656e7469616c7371007e00054c00097072696e636970616c71007e00057871007e0003017371007e00077371007e000b0000002377040000002371007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a71007e002d71007e003071007e003371007e003671007e003971007e003c71007e003f71007e004271007e004571007e004871007e004b71007e004e71007e005171007e005471007e005771007e005a71007e005d71007e006071007e006371007e006671007e006971007e006c71007e006f71007e007271007e007571007e00787871007e009e737200176a6176612e7574696c2e4c696e6b6564486173684d617034c04e5c106cc0fb0200015a000b6163636573734f726465727871007e00843f400000000000067708000000080000000371007e008671007e008771007e008871007e008971007e008a71007e008b7800707372002d696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e557365729bb111802dbd23e40200095a000e6163636f756e74457870697265645a000d6163636f756e744c6f636b65645a001263726564656e7469616c73457870697265645a0007656e61626c65644c0002496471007e000e4c000b617574686f72697469657371007e00044c000870617373776f726471007e000f4c000975736572506172747974002e4c696f2f6a617661627261696e732f737072696e67626f6f74737461727465722f646f6d61696e2f50617274793b4c0008757365726e616d6571007e000f78700000000171007e00137372002f6f72672e68696265726e6174652e636f6c6c656374696f6e2e696e7465726e616c2e50657273697374656e744261676563fd3f2082000c0200014c000362616771007e00087872003e6f72672e68696265726e6174652e636f6c6c656374696f6e2e696e7465726e616c2e416273747261637450657273697374656e74436f6c6c656374696f6ee9d3dc4da9113ba502000a5a001b616c6c6f774c6f61644f7574736964655472616e73616374696f6e49000a63616368656453697a655a000564697274795a000b696e697469616c697a65645a000d697354656d7053657373696f6e4c00036b65797400164c6a6176612f696f2f53657269616c697a61626c653b4c00056f776e657271007e00054c0004726f6c6571007e000f4c001273657373696f6e466163746f72795575696471007e000f4c000e73746f726564536e617073686f7471007e00a6787000ffffffff00010071007e001371007e00a3740039696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e557365722e617574686f726974696573707371007e000b0000002377040000002371007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a71007e002d71007e003071007e003371007e003671007e003971007e003c71007e003f71007e004271007e004571007e004871007e004b71007e004e71007e005171007e005471007e005771007e005a71007e005d71007e006071007e006371007e006671007e006971007e006c71007e006f71007e007271007e007571007e0078787371007e000b0000002377040000002371007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a71007e002d71007e003071007e003371007e003671007e003971007e003c71007e003f71007e004271007e004571007e004871007e004b71007e004e71007e005171007e005471007e005771007e005a71007e005d71007e006071007e006371007e006671007e006971007e006c71007e006f71007e007271007e007571007e00787874003c243261243038247176727a515a376a4a376f7932702f6d734c344d302e6c38334364306a4e735836414a55697462675258477a6765346a30333568617372002d696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e646f6d61696e2e506572736f6ed92c0eb5a8196b9b0200044c000c46616d696c794e616d65456e71007e000f4c000b476976656e4e616d65456e71007e000f4c00064e616d65436e71007e000f4c000b706172747954797065496471007e000e78707400064d61636b696574000644616e69656c74000fe4b8b9e5b0bce788bee9baa5e59fba71007e001374000561646d696e	04a43af937506f677a6107fe84a43df1
+23404b71d47ab9ad25473cabc0bee22c	\\xaced0005737200436f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744f4175746832416363657373546f6b656e0cb29e361b24face0200064c00156164646974696f6e616c496e666f726d6174696f6e74000f4c6a6176612f7574696c2f4d61703b4c000a65787069726174696f6e7400104c6a6176612f7574696c2f446174653b4c000c72656672657368546f6b656e74003f4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f636f6d6d6f6e2f4f417574683252656672657368546f6b656e3b4c000573636f706574000f4c6a6176612f7574696c2f5365743b4c0009746f6b656e547970657400124c6a6176612f6c616e672f537472696e673b4c000576616c756571007e00057870737200176a6176612e7574696c2e4c696e6b6564486173684d617034c04e5c106cc0fb0200015a000b6163636573734f72646572787200116a6176612e7574696c2e486173684d61700507dac1c31660d103000246000a6c6f6164466163746f724900097468726573686f6c6478703f4000000000000c77080000001000000001740008757365726e616d6574000561646d696e78007372000e6a6176612e7574696c2e44617465686a81014b597419030000787077080000016745979a81787372004c6f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744578706972696e674f417574683252656672657368546f6b656e2fdf47639dd0c9b70200014c000a65787069726174696f6e71007e0002787200446f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744f417574683252656672657368546f6b656e73e10e0a6354d45e0200014c000576616c756571007e0005787074002438326233373833372d623537342d343530632d386162652d3234383432366364393132617371007e000c770800000167deafaeaa78737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65536574801d92d18f9b80550200007872002c6a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65436f6c6c656374696f6e19420080cb5ef71e0200014c0001637400164c6a6176612f7574696c2f436f6c6c656374696f6e3b7870737200176a6176612e7574696c2e4c696e6b656448617368536574d86cd75a95dd2a1e020000787200116a6176612e7574696c2e48617368536574ba44859596b8b7340300007870770c000000043f400000000000027400047265616474000577726974657874000662656172657274002465363165376163632d376161612d343232322d616531662d653835366464633963313531	d557e74143287f87984f133c7409755d	admin	spring-security-oauth2-read-write-client	\\xaced0005737200416f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e4f417574683241757468656e7469636174696f6ebd400b02166252130200024c000d73746f7265645265717565737474003c4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f70726f76696465722f4f4175746832526571756573743b4c00127573657241757468656e7469636174696f6e7400324c6f72672f737072696e676672616d65776f726b2f73656375726974792f636f72652f41757468656e7469636174696f6e3b787200476f72672e737072696e676672616d65776f726b2e73656375726974792e61757468656e7469636174696f6e2e416273747261637441757468656e7469636174696f6e546f6b656ed3aa287e6e47640e0200035a000d61757468656e746963617465644c000b617574686f7269746965737400164c6a6176612f7574696c2f436f6c6c656374696f6e3b4c000764657461696c737400124c6a6176612f6c616e672f4f626a6563743b787000737200266a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c654c697374fc0f2531b5ec8e100200014c00046c6973747400104c6a6176612f7574696c2f4c6973743b7872002c6a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65436f6c6c656374696f6e19420080cb5ef71e0200014c00016371007e00047870737200136a6176612e7574696c2e41727261794c6973747881d21d99c7619d03000149000473697a6578700000002377040000002373720032696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e417574686f726974794952ec0f5e493da00200024c000269647400104c6a6176612f6c616e672f4c6f6e673b4c00046e616d657400124c6a6176612f6c616e672f537472696e673b78707372000e6a6176612e6c616e672e4c6f6e673b8be490cc8f23df0200014a000576616c7565787200106a6176612e6c616e672e4e756d62657286ac951d0b94e08b0200007870000000000000000174000c50415254595f4352454154457371007e000d7371007e0011000000000000000274000a50415254595f524541447371007e000d7371007e0011000000000000000374000c50415254595f5550444154457371007e000d7371007e0011000000000000000474000c50415254595f44454c4554457371007e000d7371007e0011000000000000000574000d504552534f4e5f4352454154457371007e000d7371007e0011000000000000000674000b504552534f4e5f524541447371007e000d7371007e0011000000000000000774000d504552534f4e5f5550444154457371007e000d7371007e0011000000000000000874000d504552534f4e5f44454c4554457371007e000d7371007e001100000000000000097400134f5247414e49534154494f4e5f4352454154457371007e000d7371007e0011000000000000000a7400114f5247414e49534154494f4e5f524541447371007e000d7371007e0011000000000000000b7400134f5247414e49534154494f4e5f5550444154457371007e000d7371007e0011000000000000000c7400134f5247414e49534154494f4e5f44454c4554457371007e000d7371007e0011000000000000000d74000b524f4c455f4352454154457371007e000d7371007e0011000000000000000e740009524f4c455f524541447371007e000d7371007e0011000000000000000f74000b524f4c455f5550444154457371007e000d7371007e0011000000000000001074000b524f4c455f44454c4554457371007e000d7371007e0011000000000000001174000f435553544f4d45525f4352454154457371007e000d7371007e0011000000000000001274000d435553544f4d45525f524541447371007e000d7371007e0011000000000000001374000f435553544f4d45525f5550444154457371007e000d7371007e0011000000000000001474000f435553544f4d45525f44454c4554457371007e000d7371007e0011000000000000001574000f535550504c4945525f4352454154457371007e000d7371007e0011000000000000001674000d535550504c4945525f524541447371007e000d7371007e0011000000000000001774000f535550504c4945525f5550444154457371007e000d7371007e0011000000000000001874000f535550504c4945525f44454c4554457371007e000d7371007e0011000000000000001974000e50524f445543545f4352454154457371007e000d7371007e0011000000000000001a74000c50524f445543545f524541447371007e000d7371007e0011000000000000001b74000e50524f445543545f5550444154457371007e000d7371007e0011000000000000001c74000e50524f445543545f44454c4554457371007e000d7371007e0011000000000000001d740013524f4c455f50524f445543545f5245414445527371007e000d7371007e0011000000000000001e740011524f4c455f50415254595f5245414445527371007e000d7371007e0011000000000000001f740010524f4c455f524f4c455f5245414445527371007e000d7371007e00110000000000000020740012524f4c455f504552534f4e5f5245414445527371007e000d7371007e00110000000000000021740018524f4c455f4f5247414e49534154494f4e5f5245414445527371007e000d7371007e00110000000000000022740014524f4c455f435553544f4d45525f5245414445527371007e000d7371007e00110000000000000023740014524f4c455f535550504c4945525f5245414445527871007e000c707372003a6f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e4f41757468325265717565737400000000000000010200075a0008617070726f7665644c000b617574686f72697469657371007e00044c000a657874656e73696f6e7374000f4c6a6176612f7574696c2f4d61703b4c000b726564697265637455726971007e000f4c00077265667265736874003b4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f70726f76696465722f546f6b656e526571756573743b4c000b7265736f7572636549647374000f4c6a6176612f7574696c2f5365743b4c000d726573706f6e7365547970657371007e007e787200386f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e426173655265717565737436287a3ea37169bd0200034c0008636c69656e74496471007e000f4c001172657175657374506172616d657465727371007e007c4c000573636f706571007e007e7870740028737072696e672d73656375726974792d6f61757468322d726561642d77726974652d636c69656e74737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c654d6170f1a5a8fe74f507420200014c00016d71007e007c7870737200116a6176612e7574696c2e486173684d61700507dac1c31660d103000246000a6c6f6164466163746f724900097468726573686f6c6478703f400000000000067708000000080000000374000a6772616e745f7479706574000870617373776f7264740009636c69656e745f6964740028737072696e672d73656375726974792d6f61757468322d726561642d77726974652d636c69656e74740008757365726e616d6574000561646d696e78737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65536574801d92d18f9b80550200007871007e0009737200176a6176612e7574696c2e4c696e6b656448617368536574d86cd75a95dd2a1e020000787200116a6176612e7574696c2e48617368536574ba44859596b8b7340300007870770c000000103f4000000000000274000472656164740005777269746578017371007e008f770c000000103f40000000000001737200426f72672e737072696e676672616d65776f726b2e73656375726974792e636f72652e617574686f726974792e53696d706c654772616e746564417574686f7269747900000000000001f40200014c0004726f6c6571007e000f787074000455534552787371007e00843f40000000000000770800000010000000007870707371007e008f770c000000103f400000000000017400187265736f757263652d7365727665722d726573742d617069787371007e008f770c000000103f40000000000000787372004f6f72672e737072696e676672616d65776f726b2e73656375726974792e61757468656e7469636174696f6e2e557365726e616d6550617373776f726441757468656e7469636174696f6e546f6b656e00000000000001f40200024c000b63726564656e7469616c7371007e00054c00097072696e636970616c71007e00057871007e0003017371007e00077371007e000b0000002377040000002371007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a71007e002d71007e003071007e003371007e003671007e003971007e003c71007e003f71007e004271007e004571007e004871007e004b71007e004e71007e005171007e005471007e005771007e005a71007e005d71007e006071007e006371007e006671007e006971007e006c71007e006f71007e007271007e007571007e00787871007e009e737200176a6176612e7574696c2e4c696e6b6564486173684d617034c04e5c106cc0fb0200015a000b6163636573734f726465727871007e00843f400000000000067708000000080000000371007e008671007e008771007e008871007e008971007e008a71007e008b7800707372002d696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e557365729bb111802dbd23e40200095a000e6163636f756e74457870697265645a000d6163636f756e744c6f636b65645a001263726564656e7469616c73457870697265645a0007656e61626c65644c0002496471007e000e4c000b617574686f72697469657371007e00044c000870617373776f726471007e000f4c000975736572506172747974002e4c696f2f6a617661627261696e732f737072696e67626f6f74737461727465722f646f6d61696e2f50617274793b4c0008757365726e616d6571007e000f78700000000171007e00137372002f6f72672e68696265726e6174652e636f6c6c656374696f6e2e696e7465726e616c2e50657273697374656e744261676563fd3f2082000c0200014c000362616771007e00087872003e6f72672e68696265726e6174652e636f6c6c656374696f6e2e696e7465726e616c2e416273747261637450657273697374656e74436f6c6c656374696f6ee9d3dc4da9113ba502000a5a001b616c6c6f774c6f61644f7574736964655472616e73616374696f6e49000a63616368656453697a655a000564697274795a000b696e697469616c697a65645a000d697354656d7053657373696f6e4c00036b65797400164c6a6176612f696f2f53657269616c697a61626c653b4c00056f776e657271007e00054c0004726f6c6571007e000f4c001273657373696f6e466163746f72795575696471007e000f4c000e73746f726564536e617073686f7471007e00a6787000ffffffff00010071007e001371007e00a3740039696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e557365722e617574686f726974696573707371007e000b0000002377040000002371007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a71007e002d71007e003071007e003371007e003671007e003971007e003c71007e003f71007e004271007e004571007e004871007e004b71007e004e71007e005171007e005471007e005771007e005a71007e005d71007e006071007e006371007e006671007e006971007e006c71007e006f71007e007271007e007571007e0078787371007e000b0000002377040000002371007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a71007e002d71007e003071007e003371007e003671007e003971007e003c71007e003f71007e004271007e004571007e004871007e004b71007e004e71007e005171007e005471007e005771007e005a71007e005d71007e006071007e006371007e006671007e006971007e006c71007e006f71007e007271007e007571007e00787874003c243261243038247176727a515a376a4a376f7932702f6d734c344d302e6c38334364306a4e735836414a55697462675258477a6765346a30333568617372002d696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e646f6d61696e2e506572736f6ed92c0eb5a8196b9b0200044c000c46616d696c794e616d65456e71007e000f4c000b476976656e4e616d65456e71007e000f4c00064e616d65436e71007e000f4c000b706172747954797065496471007e000e78707400064d61636b696574000644616e69656c74000fe4b8b9e5b0bce788bee9baa5e59fba71007e001374000561646d696e	d95fc66f08abfb375b8080e884efe62d
 \.
 
 
@@ -811,7 +843,7 @@ e813b689e46101328d3f9b0b2427d9cb	\\xaced0005737200436f72672e737072696e676672616d
 -- Data for Name: oauth_approvals; Type: TABLE DATA; Schema: security; Owner: security_owner
 --
 
-COPY security.oauth_approvals (userid, clientid, scope, status, expiresat, lastmodifiedat) FROM stdin;
+COPY oauth_approvals (userid, clientid, scope, status, expiresat, lastmodifiedat) FROM stdin;
 \.
 
 
@@ -819,9 +851,11 @@ COPY security.oauth_approvals (userid, clientid, scope, status, expiresat, lastm
 -- Data for Name: oauth_client_details; Type: TABLE DATA; Schema: security; Owner: security_owner
 --
 
-COPY security.oauth_client_details (client_id, resource_ids, client_secret, scope, authorized_grant_types, web_server_redirect_uri, authorities, access_token_validity, refresh_token_validity, additional_information, autoapprove) FROM stdin;
+COPY oauth_client_details (client_id, resource_ids, client_secret, scope, authorized_grant_types, web_server_redirect_uri, authorities, access_token_validity, refresh_token_validity, additional_information, autoapprove) FROM stdin;
 spring-security-oauth2-read-client	resource-server-rest-api	$2a$04$WGq2P9egiOYoOFemBRfsiO9qTcyJtNRnPKNBl5tokP7IP.eZn93km	read	password,authorization_code,refresh_token,implicit	\N	USER	10800	2592000	\N	\N
 spring-security-oauth2-read-write-client	resource-server-rest-api	$2a$04$soeOR.QFmClXeFIrhJVLWOQxfHjsJLSpWrU1iGxcMGdu.a5hvfY4W	read,write	password,authorization_code,refresh_token,implicit	\N	USER	10800	2592000	\N	\N
+client		\N					30	\N	{}	
+my-client-with-password	oauth2-resource	\N	read	password		ROLE_CLIENT	30	\N	{}	
 \.
 
 
@@ -829,7 +863,7 @@ spring-security-oauth2-read-write-client	resource-server-rest-api	$2a$04$soeOR.Q
 -- Data for Name: oauth_client_token; Type: TABLE DATA; Schema: security; Owner: security_owner
 --
 
-COPY security.oauth_client_token (token_id, token, authentication_id, user_name, client_id) FROM stdin;
+COPY oauth_client_token (token_id, token, authentication_id, user_name, client_id) FROM stdin;
 \.
 
 
@@ -837,7 +871,7 @@ COPY security.oauth_client_token (token_id, token, authentication_id, user_name,
 -- Data for Name: oauth_code; Type: TABLE DATA; Schema: security; Owner: security_owner
 --
 
-COPY security.oauth_code (code, authentication) FROM stdin;
+COPY oauth_code (code, authentication) FROM stdin;
 \.
 
 
@@ -845,7 +879,7 @@ COPY security.oauth_code (code, authentication) FROM stdin;
 -- Data for Name: oauth_refresh_token; Type: TABLE DATA; Schema: security; Owner: security_owner
 --
 
-COPY security.oauth_refresh_token (token_id, token, authentication) FROM stdin;
+COPY oauth_refresh_token (token_id, token, authentication) FROM stdin;
 98b0c15e8eaa4d20197a7b20025ad7d3	\\xaced00057372004c6f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744578706972696e674f417574683252656672657368546f6b656e2fdf47639dd0c9b70200014c000a65787069726174696f6e7400104c6a6176612f7574696c2f446174653b787200446f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744f417574683252656672657368546f6b656e73e10e0a6354d45e0200014c000576616c75657400124c6a6176612f6c616e672f537472696e673b787074002465663739373032362d643531322d343231392d386632362d3030333939326430333064617372000e6a6176612e7574696c2e44617465686a81014b59741903000078707708000001671f8b6f5578	\\xaced0005737200416f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e4f417574683241757468656e7469636174696f6ebd400b02166252130200024c000d73746f7265645265717565737474003c4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f70726f76696465722f4f4175746832526571756573743b4c00127573657241757468656e7469636174696f6e7400324c6f72672f737072696e676672616d65776f726b2f73656375726974792f636f72652f41757468656e7469636174696f6e3b787200476f72672e737072696e676672616d65776f726b2e73656375726974792e61757468656e7469636174696f6e2e416273747261637441757468656e7469636174696f6e546f6b656ed3aa287e6e47640e0200035a000d61757468656e746963617465644c000b617574686f7269746965737400164c6a6176612f7574696c2f436f6c6c656374696f6e3b4c000764657461696c737400124c6a6176612f6c616e672f4f626a6563743b787000737200266a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c654c697374fc0f2531b5ec8e100200014c00046c6973747400104c6a6176612f7574696c2f4c6973743b7872002c6a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65436f6c6c656374696f6e19420080cb5ef71e0200014c00016371007e00047870737200136a6176612e7574696c2e41727261794c6973747881d21d99c7619d03000149000473697a657870000000097704000000097372002e696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e757365722e417574686f726974799655eedc2f1cc8e70200024c000269647400104c6a6176612f6c616e672f4c6f6e673b4c00046e616d657400124c6a6176612f6c616e672f537472696e673b78707372000e6a6176612e6c616e672e4c6f6e673b8be490cc8f23df0200014a000576616c7565787200106a6176612e6c616e672e4e756d62657286ac951d0b94e08b0200007870000000000000000174000e434f4d50414e595f4352454154457371007e000d7371007e0011000000000000000274000c434f4d50414e595f524541447371007e000d7371007e0011000000000000000374000e434f4d50414e595f5550444154457371007e000d7371007e0011000000000000000474000e434f4d50414e595f44454c4554457371007e000d7371007e001100000000000000057400114445504152544d454e545f4352454154457371007e000d7371007e0011000000000000000674000f4445504152544d454e545f524541447371007e000d7371007e001100000000000000077400114445504152544d454e545f5550444154457371007e000d7371007e001100000000000000087400114445504152544d454e545f44454c4554457371007e000d7371007e00110000000000000009740013524f4c455f434f4d50414e595f5245414445527871007e000c707372003a6f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e4f41757468325265717565737400000000000000010200075a0008617070726f7665644c000b617574686f72697469657371007e00044c000a657874656e73696f6e7374000f4c6a6176612f7574696c2f4d61703b4c000b726564697265637455726971007e000f4c00077265667265736874003b4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f70726f76696465722f546f6b656e526571756573743b4c000b7265736f7572636549647374000f4c6a6176612f7574696c2f5365743b4c000d726573706f6e7365547970657371007e0030787200386f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e426173655265717565737436287a3ea37169bd0200034c0008636c69656e74496471007e000f4c001172657175657374506172616d657465727371007e002e4c000573636f706571007e00307870740028737072696e672d73656375726974792d6f61757468322d726561642d77726974652d636c69656e74737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c654d6170f1a5a8fe74f507420200014c00016d71007e002e7870737200116a6176612e7574696c2e486173684d61700507dac1c31660d103000246000a6c6f6164466163746f724900097468726573686f6c6478703f400000000000067708000000080000000374000a6772616e745f7479706574000870617373776f7264740009636c69656e745f6964740028737072696e672d73656375726974792d6f61757468322d726561642d77726974652d636c69656e74740008757365726e616d6574000561646d696e78737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65536574801d92d18f9b80550200007871007e0009737200176a6176612e7574696c2e4c696e6b656448617368536574d86cd75a95dd2a1e020000787200116a6176612e7574696c2e48617368536574ba44859596b8b7340300007870770c000000103f4000000000000274000472656164740005777269746578017371007e0041770c000000103f40000000000001737200426f72672e737072696e676672616d65776f726b2e73656375726974792e636f72652e617574686f726974792e53696d706c654772616e746564417574686f72697479000000000000019a0200014c0004726f6c6571007e000f787074000455534552787371007e00363f40000000000000770800000010000000007870707371007e0041770c000000103f400000000000017400187265736f757263652d7365727665722d726573742d617069787371007e0041770c000000103f40000000000000787372004f6f72672e737072696e676672616d65776f726b2e73656375726974792e61757468656e7469636174696f6e2e557365726e616d6550617373776f726441757468656e7469636174696f6e546f6b656e000000000000019a0200024c000b63726564656e7469616c7371007e00054c00097072696e636970616c71007e00057871007e0003017371007e00077371007e000b0000000977040000000971007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a7871007e0050737200176a6176612e7574696c2e4c696e6b6564486173684d617034c04e5c106cc0fb0200015a000b6163636573734f726465727871007e00363f400000000000067708000000080000000371007e003871007e003971007e003a71007e003b71007e003c71007e003d78007073720029696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e757365722e55736572b50960df68f89e140200085a000e6163636f756e74457870697265645a000d6163636f756e744c6f636b65645a001263726564656e7469616c73457870697265645a0007656e61626c65644c000b617574686f72697469657371007e00044c0002696471007e000e4c000870617373776f726471007e000f4c0008757365726e616d6571007e000f7870000000017372002f6f72672e68696265726e6174652e636f6c6c656374696f6e2e696e7465726e616c2e50657273697374656e74426167464a645c192e1ec40200014c000362616771007e00087872003e6f72672e68696265726e6174652e636f6c6c656374696f6e2e696e7465726e616c2e416273747261637450657273697374656e74436f6c6c656374696f6e627400d05f55733c02000a5a001b616c6c6f774c6f61644f7574736964655472616e73616374696f6e49000a63616368656453697a655a000564697274795a000b696e697469616c697a65645a000d697354656d7053657373696f6e4c00036b65797400164c6a6176612f696f2f53657269616c697a61626c653b4c00056f776e657271007e00054c0004726f6c6571007e000f4c001273657373696f6e466163746f72795575696471007e000f4c000e73746f726564536e617073686f7471007e0057787000ffffffff00010071007e001371007e0054740035696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e757365722e557365722e617574686f726974696573707371007e000b0000000977040000000971007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a787371007e000b0000000977040000000971007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a7871007e001374003c243261243038247176727a515a376a4a376f7932702f6d734c344d302e6c38334364306a4e735836414a55697462675258477a6765346a303335686174000561646d696e
 ffef8e233d582247424b29ec0414df35	\\xaced00057372004c6f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744578706972696e674f417574683252656672657368546f6b656e2fdf47639dd0c9b70200014c000a65787069726174696f6e7400104c6a6176612f7574696c2f446174653b787200446f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744f417574683252656672657368546f6b656e73e10e0a6354d45e0200014c000576616c75657400124c6a6176612f6c616e672f537472696e673b787074002462323739653635392d343763652d346538302d393433662d6336373965303638666265387372000e6a6176612e7574696c2e44617465686a81014b59741903000078707708000001671f8ddb1c78	\\xaced0005737200416f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e4f417574683241757468656e7469636174696f6ebd400b02166252130200024c000d73746f7265645265717565737474003c4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f70726f76696465722f4f4175746832526571756573743b4c00127573657241757468656e7469636174696f6e7400324c6f72672f737072696e676672616d65776f726b2f73656375726974792f636f72652f41757468656e7469636174696f6e3b787200476f72672e737072696e676672616d65776f726b2e73656375726974792e61757468656e7469636174696f6e2e416273747261637441757468656e7469636174696f6e546f6b656ed3aa287e6e47640e0200035a000d61757468656e746963617465644c000b617574686f7269746965737400164c6a6176612f7574696c2f436f6c6c656374696f6e3b4c000764657461696c737400124c6a6176612f6c616e672f4f626a6563743b787000737200266a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c654c697374fc0f2531b5ec8e100200014c00046c6973747400104c6a6176612f7574696c2f4c6973743b7872002c6a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65436f6c6c656374696f6e19420080cb5ef71e0200014c00016371007e00047870737200136a6176612e7574696c2e41727261794c6973747881d21d99c7619d03000149000473697a6578700000000977040000000973720032696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e417574686f726974794952ec0f5e493da00200024c000269647400104c6a6176612f6c616e672f4c6f6e673b4c00046e616d657400124c6a6176612f6c616e672f537472696e673b78707372000e6a6176612e6c616e672e4c6f6e673b8be490cc8f23df0200014a000576616c7565787200106a6176612e6c616e672e4e756d62657286ac951d0b94e08b0200007870000000000000000174000f435553544f4d45525f4352454154457371007e000d7371007e0011000000000000000274000d435553544f4d45525f524541447371007e000d7371007e0011000000000000000374000f435553544f4d45525f5550444154457371007e000d7371007e0011000000000000000474000f435553544f4d45525f44454c4554457371007e000d7371007e0011000000000000000574000e50524f445543545f4352454154457371007e000d7371007e0011000000000000000674000c50524f445543545f524541447371007e000d7371007e0011000000000000000774000e50524f445543545f5550444154457371007e000d7371007e0011000000000000000874000e50524f445543545f44454c4554457371007e000d7371007e00110000000000000009740013524f4c455f50524f445543545f5245414445527871007e000c707372003a6f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e4f41757468325265717565737400000000000000010200075a0008617070726f7665644c000b617574686f72697469657371007e00044c000a657874656e73696f6e7374000f4c6a6176612f7574696c2f4d61703b4c000b726564697265637455726971007e000f4c00077265667265736874003b4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f70726f76696465722f546f6b656e526571756573743b4c000b7265736f7572636549647374000f4c6a6176612f7574696c2f5365743b4c000d726573706f6e7365547970657371007e0030787200386f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e426173655265717565737436287a3ea37169bd0200034c0008636c69656e74496471007e000f4c001172657175657374506172616d657465727371007e002e4c000573636f706571007e00307870740028737072696e672d73656375726974792d6f61757468322d726561642d77726974652d636c69656e74737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c654d6170f1a5a8fe74f507420200014c00016d71007e002e7870737200116a6176612e7574696c2e486173684d61700507dac1c31660d103000246000a6c6f6164466163746f724900097468726573686f6c6478703f400000000000067708000000080000000374000a6772616e745f7479706574000870617373776f7264740009636c69656e745f6964740028737072696e672d73656375726974792d6f61757468322d726561642d77726974652d636c69656e74740008757365726e616d6574000561646d696e78737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65536574801d92d18f9b80550200007871007e0009737200176a6176612e7574696c2e4c696e6b656448617368536574d86cd75a95dd2a1e020000787200116a6176612e7574696c2e48617368536574ba44859596b8b7340300007870770c000000103f4000000000000274000472656164740005777269746578017371007e0041770c000000103f40000000000001737200426f72672e737072696e676672616d65776f726b2e73656375726974792e636f72652e617574686f726974792e53696d706c654772616e746564417574686f72697479000000000000019a0200014c0004726f6c6571007e000f787074000455534552787371007e00363f40000000000000770800000010000000007870707371007e0041770c000000103f400000000000017400187265736f757263652d7365727665722d726573742d617069787371007e0041770c000000103f40000000000000787372004f6f72672e737072696e676672616d65776f726b2e73656375726974792e61757468656e7469636174696f6e2e557365726e616d6550617373776f726441757468656e7469636174696f6e546f6b656e000000000000019a0200024c000b63726564656e7469616c7371007e00054c00097072696e636970616c71007e00057871007e0003017371007e00077371007e000b0000000977040000000971007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a7871007e0050737200176a6176612e7574696c2e4c696e6b6564486173684d617034c04e5c106cc0fb0200015a000b6163636573734f726465727871007e00363f400000000000067708000000080000000371007e003871007e003971007e003a71007e003b71007e003c71007e003d7800707372002d696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e55736572a579540c8b8e43430200085a000e6163636f756e74457870697265645a000d6163636f756e744c6f636b65645a001263726564656e7469616c73457870697265645a0007656e61626c65644c000b617574686f72697469657371007e00044c0002696471007e000e4c000870617373776f726471007e000f4c0008757365726e616d6571007e000f7870000000017372002f6f72672e68696265726e6174652e636f6c6c656374696f6e2e696e7465726e616c2e50657273697374656e74426167464a645c192e1ec40200014c000362616771007e00087872003e6f72672e68696265726e6174652e636f6c6c656374696f6e2e696e7465726e616c2e416273747261637450657273697374656e74436f6c6c656374696f6e627400d05f55733c02000a5a001b616c6c6f774c6f61644f7574736964655472616e73616374696f6e49000a63616368656453697a655a000564697274795a000b696e697469616c697a65645a000d697354656d7053657373696f6e4c00036b65797400164c6a6176612f696f2f53657269616c697a61626c653b4c00056f776e657271007e00054c0004726f6c6571007e000f4c001273657373696f6e466163746f72795575696471007e000f4c000e73746f726564536e617073686f7471007e0057787000ffffffff00010071007e001371007e0054740039696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e557365722e617574686f726974696573707371007e000b0000000977040000000971007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a787371007e000b0000000977040000000971007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a7871007e001374003c243261243038247176727a515a376a4a376f7932702f6d734c344d302e6c38334364306a4e735836414a55697462675258477a6765346a303335686174000561646d696e
 6b1aa181f5d152c5b1944349309332e4	\\xaced00057372004c6f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744578706972696e674f417574683252656672657368546f6b656e2fdf47639dd0c9b70200014c000a65787069726174696f6e7400104c6a6176612f7574696c2f446174653b787200446f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744f417574683252656672657368546f6b656e73e10e0a6354d45e0200014c000576616c75657400124c6a6176612f6c616e672f537472696e673b787074002432613033616535342d626161632d343330312d393430652d6630373463386633353961657372000e6a6176612e7574696c2e44617465686a81014b59741903000078707708000001672137e08b78	\\xaced0005737200416f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e4f417574683241757468656e7469636174696f6ebd400b02166252130200024c000d73746f7265645265717565737474003c4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f70726f76696465722f4f4175746832526571756573743b4c00127573657241757468656e7469636174696f6e7400324c6f72672f737072696e676672616d65776f726b2f73656375726974792f636f72652f41757468656e7469636174696f6e3b787200476f72672e737072696e676672616d65776f726b2e73656375726974792e61757468656e7469636174696f6e2e416273747261637441757468656e7469636174696f6e546f6b656ed3aa287e6e47640e0200035a000d61757468656e746963617465644c000b617574686f7269746965737400164c6a6176612f7574696c2f436f6c6c656374696f6e3b4c000764657461696c737400124c6a6176612f6c616e672f4f626a6563743b787000737200266a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c654c697374fc0f2531b5ec8e100200014c00046c6973747400104c6a6176612f7574696c2f4c6973743b7872002c6a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65436f6c6c656374696f6e19420080cb5ef71e0200014c00016371007e00047870737200136a6176612e7574696c2e41727261794c6973747881d21d99c7619d03000149000473697a6578700000000977040000000973720032696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e417574686f726974794952ec0f5e493da00200024c000269647400104c6a6176612f6c616e672f4c6f6e673b4c00046e616d657400124c6a6176612f6c616e672f537472696e673b78707372000e6a6176612e6c616e672e4c6f6e673b8be490cc8f23df0200014a000576616c7565787200106a6176612e6c616e672e4e756d62657286ac951d0b94e08b0200007870000000000000000174000f435553544f4d45525f4352454154457371007e000d7371007e0011000000000000000274000d435553544f4d45525f524541447371007e000d7371007e0011000000000000000374000f435553544f4d45525f5550444154457371007e000d7371007e0011000000000000000474000f435553544f4d45525f44454c4554457371007e000d7371007e0011000000000000000574000e50524f445543545f4352454154457371007e000d7371007e0011000000000000000674000c50524f445543545f524541447371007e000d7371007e0011000000000000000774000e50524f445543545f5550444154457371007e000d7371007e0011000000000000000874000e50524f445543545f44454c4554457371007e000d7371007e00110000000000000009740013524f4c455f50524f445543545f5245414445527871007e000c707372003a6f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e4f41757468325265717565737400000000000000010200075a0008617070726f7665644c000b617574686f72697469657371007e00044c000a657874656e73696f6e7374000f4c6a6176612f7574696c2f4d61703b4c000b726564697265637455726971007e000f4c00077265667265736874003b4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f70726f76696465722f546f6b656e526571756573743b4c000b7265736f7572636549647374000f4c6a6176612f7574696c2f5365743b4c000d726573706f6e7365547970657371007e0030787200386f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e426173655265717565737436287a3ea37169bd0200034c0008636c69656e74496471007e000f4c001172657175657374506172616d657465727371007e002e4c000573636f706571007e00307870740022737072696e672d73656375726974792d6f61757468322d726561642d636c69656e74737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c654d6170f1a5a8fe74f507420200014c00016d71007e002e7870737200116a6176612e7574696c2e486173684d61700507dac1c31660d103000246000a6c6f6164466163746f724900097468726573686f6c6478703f400000000000067708000000080000000374000a6772616e745f7479706574000870617373776f7264740009636c69656e745f6964740022737072696e672d73656375726974792d6f61757468322d726561642d636c69656e74740008757365726e616d6574000561646d696e78737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65536574801d92d18f9b80550200007871007e0009737200176a6176612e7574696c2e4c696e6b656448617368536574d86cd75a95dd2a1e020000787200116a6176612e7574696c2e48617368536574ba44859596b8b7340300007870770c000000103f400000000000017400047265616478017371007e0041770c000000103f40000000000001737200426f72672e737072696e676672616d65776f726b2e73656375726974792e636f72652e617574686f726974792e53696d706c654772616e746564417574686f72697479000000000000019a0200014c0004726f6c6571007e000f787074000455534552787371007e00363f40000000000000770800000010000000007870707371007e0041770c000000103f400000000000017400187265736f757263652d7365727665722d726573742d617069787371007e0041770c000000103f40000000000000787372004f6f72672e737072696e676672616d65776f726b2e73656375726974792e61757468656e7469636174696f6e2e557365726e616d6550617373776f726441757468656e7469636174696f6e546f6b656e000000000000019a0200024c000b63726564656e7469616c7371007e00054c00097072696e636970616c71007e00057871007e0003017371007e00077371007e000b0000000977040000000971007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a7871007e004f737200176a6176612e7574696c2e4c696e6b6564486173684d617034c04e5c106cc0fb0200015a000b6163636573734f726465727871007e00363f400000000000067708000000080000000371007e003871007e003971007e003a71007e003b71007e003c71007e003d7800707372002d696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e55736572a579540c8b8e43430200085a000e6163636f756e74457870697265645a000d6163636f756e744c6f636b65645a001263726564656e7469616c73457870697265645a0007656e61626c65644c000b617574686f72697469657371007e00044c0002696471007e000e4c000870617373776f726471007e000f4c0008757365726e616d6571007e000f7870000000017372002f6f72672e68696265726e6174652e636f6c6c656374696f6e2e696e7465726e616c2e50657273697374656e74426167464a645c192e1ec40200014c000362616771007e00087872003e6f72672e68696265726e6174652e636f6c6c656374696f6e2e696e7465726e616c2e416273747261637450657273697374656e74436f6c6c656374696f6e627400d05f55733c02000a5a001b616c6c6f774c6f61644f7574736964655472616e73616374696f6e49000a63616368656453697a655a000564697274795a000b696e697469616c697a65645a000d697354656d7053657373696f6e4c00036b65797400164c6a6176612f696f2f53657269616c697a61626c653b4c00056f776e657271007e00054c0004726f6c6571007e000f4c001273657373696f6e466163746f72795575696471007e000f4c000e73746f726564536e617073686f7471007e0056787000ffffffff00010071007e001371007e0053740039696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e557365722e617574686f726974696573707371007e000b0000000977040000000971007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a787371007e000b0000000977040000000971007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a7871007e001374003c243261243038247176727a515a376a4a376f7932702f6d734c344d302e6c38334364306a4e735836414a55697462675258477a6765346a303335686174000561646d696e
@@ -877,8 +911,9 @@ e2a696502a5a704f33d897f80510a47a	\\xaced00057372004c6f72672e737072696e676672616d
 d5dfee54ca87d129a7d164fb61ece0f4	\\xaced00057372004c6f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744578706972696e674f417574683252656672657368546f6b656e2fdf47639dd0c9b70200014c000a65787069726174696f6e7400104c6a6176612f7574696c2f446174653b787200446f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744f417574683252656672657368546f6b656e73e10e0a6354d45e0200014c000576616c75657400124c6a6176612f6c616e672f537472696e673b787074002433636362643661652d343331622d343866322d396633662d3937613162326139313162317372000e6a6176612e7574696c2e44617465686a81014b59741903000078707708000001677daffb2478	\\xaced0005737200416f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e4f417574683241757468656e7469636174696f6ebd400b02166252130200024c000d73746f7265645265717565737474003c4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f70726f76696465722f4f4175746832526571756573743b4c00127573657241757468656e7469636174696f6e7400324c6f72672f737072696e676672616d65776f726b2f73656375726974792f636f72652f41757468656e7469636174696f6e3b787200476f72672e737072696e676672616d65776f726b2e73656375726974792e61757468656e7469636174696f6e2e416273747261637441757468656e7469636174696f6e546f6b656ed3aa287e6e47640e0200035a000d61757468656e746963617465644c000b617574686f7269746965737400164c6a6176612f7574696c2f436f6c6c656374696f6e3b4c000764657461696c737400124c6a6176612f6c616e672f4f626a6563743b787000737200266a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c654c697374fc0f2531b5ec8e100200014c00046c6973747400104c6a6176612f7574696c2f4c6973743b7872002c6a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65436f6c6c656374696f6e19420080cb5ef71e0200014c00016371007e00047870737200136a6176612e7574696c2e41727261794c6973747881d21d99c7619d03000149000473697a6578700000001277040000001273720032696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e417574686f726974794952ec0f5e493da00200024c000269647400104c6a6176612f6c616e672f4c6f6e673b4c00046e616d657400124c6a6176612f6c616e672f537472696e673b78707372000e6a6176612e6c616e672e4c6f6e673b8be490cc8f23df0200014a000576616c7565787200106a6176612e6c616e672e4e756d62657286ac951d0b94e08b0200007870000000000000000174000c50415254595f4352454154457371007e000d7371007e0011000000000000000274000a50415254595f524541447371007e000d7371007e0011000000000000000374000c50415254595f5550444154457371007e000d7371007e0011000000000000000574000d504552534f4e5f4352454154457371007e000d7371007e0011000000000000000674000b504552534f4e5f524541447371007e000d7371007e0011000000000000000774000d504552534f4e5f5550444154457371007e000d7371007e001100000000000000097400134f5247414e49534154494f4e5f4352454154457371007e000d7371007e0011000000000000000a7400114f5247414e49534154494f4e5f524541447371007e000d7371007e0011000000000000000b7400134f5247414e49534154494f4e5f5550444154457371007e000d7371007e0011000000000000000d74000b524f4c455f4352454154457371007e000d7371007e0011000000000000000e740009524f4c455f524541447371007e000d7371007e0011000000000000000f74000b524f4c455f5550444154457371007e000d7371007e0011000000000000001174000f435553544f4d45525f4352454154457371007e000d7371007e0011000000000000001274000d435553544f4d45525f524541447371007e000d7371007e0011000000000000001374000f435553544f4d45525f5550444154457371007e000d7371007e0011000000000000001574000f535550504c4945525f4352454154457371007e000d7371007e0011000000000000001674000d535550504c4945525f524541447371007e000d7371007e0011000000000000001774000f535550504c4945525f5550444154457871007e000c707372003a6f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e4f41757468325265717565737400000000000000010200075a0008617070726f7665644c000b617574686f72697469657371007e00044c000a657874656e73696f6e7374000f4c6a6176612f7574696c2f4d61703b4c000b726564697265637455726971007e000f4c00077265667265736874003b4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f70726f76696465722f546f6b656e526571756573743b4c000b7265736f7572636549647374000f4c6a6176612f7574696c2f5365743b4c000d726573706f6e7365547970657371007e004b787200386f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e426173655265717565737436287a3ea37169bd0200034c0008636c69656e74496471007e000f4c001172657175657374506172616d657465727371007e00494c000573636f706571007e004b7870740028737072696e672d73656375726974792d6f61757468322d726561642d77726974652d636c69656e74737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c654d6170f1a5a8fe74f507420200014c00016d71007e00497870737200116a6176612e7574696c2e486173684d61700507dac1c31660d103000246000a6c6f6164466163746f724900097468726573686f6c6478703f400000000000037708000000040000000274000a6772616e745f7479706574000870617373776f7264740008757365726e616d6574000f6163636f756e742d63726561746f7278737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65536574801d92d18f9b80550200007871007e0009737200176a6176612e7574696c2e4c696e6b656448617368536574d86cd75a95dd2a1e020000787200116a6176612e7574696c2e48617368536574ba44859596b8b7340300007870770c000000103f4000000000000274000472656164740005777269746578017371007e005a770c000000103f40000000000001737200426f72672e737072696e676672616d65776f726b2e73656375726974792e636f72652e617574686f726974792e53696d706c654772616e746564417574686f7269747900000000000001f40200014c0004726f6c6571007e000f787074000455534552787371007e00513f40000000000000770800000010000000007870707371007e005a770c000000103f400000000000017400187265736f757263652d7365727665722d726573742d617069787371007e005a770c000000103f40000000000000787372004f6f72672e737072696e676672616d65776f726b2e73656375726974792e61757468656e7469636174696f6e2e557365726e616d6550617373776f726441757468656e7469636174696f6e546f6b656e00000000000001f40200024c000b63726564656e7469616c7371007e00054c00097072696e636970616c71007e00057871007e0003017371007e00077371007e000b0000001277040000001271007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a71007e002d71007e003071007e003371007e003671007e003971007e003c71007e003f71007e004271007e00457871007e0069737200176a6176612e7574696c2e4c696e6b6564486173684d617034c04e5c106cc0fb0200015a000b6163636573734f726465727871007e00513f400000000000067708000000080000000271007e005371007e005471007e005571007e00567800707372002d696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e557365729bb111802dbd23e40200095a000e6163636f756e74457870697265645a000d6163636f756e744c6f636b65645a001263726564656e7469616c73457870697265645a0007656e61626c65644c0002496471007e000e4c000b617574686f72697469657371007e00044c000870617373776f726471007e000f4c000975736572506172747974002e4c696f2f6a617661627261696e732f737072696e67626f6f74737461727465722f646f6d61696e2f50617274793b4c0008757365726e616d6571007e000f7870000000017371007e001100000000000000007372002f6f72672e68696265726e6174652e636f6c6c656374696f6e2e696e7465726e616c2e50657273697374656e744261676563fd3f2082000c0200014c000362616771007e00087872003e6f72672e68696265726e6174652e636f6c6c656374696f6e2e696e7465726e616c2e416273747261637450657273697374656e74436f6c6c656374696f6ee9d3dc4da9113ba502000a5a001b616c6c6f774c6f61644f7574736964655472616e73616374696f6e49000a63616368656453697a655a000564697274795a000b696e697469616c697a65645a000d697354656d7053657373696f6e4c00036b65797400164c6a6176612f696f2f53657269616c697a61626c653b4c00056f776e657271007e00054c0004726f6c6571007e000f4c001273657373696f6e466163746f72795575696471007e000f4c000e73746f726564536e617073686f7471007e0072787000ffffffff00010071007e006f71007e006e740039696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e557365722e617574686f726974696573707371007e000b0000001277040000001271007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a71007e002d71007e003071007e003371007e003671007e003971007e003c71007e003f71007e004271007e0045787371007e000b0000001277040000001271007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a71007e002d71007e003071007e003371007e003671007e003971007e003c71007e003f71007e004271007e00457874003c243261243038247176727a515a376a4a376f7932702f6d734c344d302e6c38334364306a4e735836414a55697462675258477a6765346a303335686173720033696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e646f6d61696e2e4f7267616e697a6174696f6ef204adbd10c2d9fc0200014c00104f7267616e697a6174696f6e4e616d6571007e000f787074000564756d6d7974000f6163636f756e742d63726561746f72
 532122f1231b363a892a03ea555462a6	\\xaced00057372004c6f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744578706972696e674f417574683252656672657368546f6b656e2fdf47639dd0c9b70200014c000a65787069726174696f6e7400104c6a6176612f7574696c2f446174653b787200446f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744f417574683252656672657368546f6b656e73e10e0a6354d45e0200014c000576616c75657400124c6a6176612f6c616e672f537472696e673b787074002435336338353063332d393163632d343731382d626463662d3364663862633339323939307372000e6a6176612e7574696c2e44617465686a81014b59741903000078707708000001676ce1ff0278	\\xaced0005737200416f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e4f417574683241757468656e7469636174696f6ebd400b02166252130200024c000d73746f7265645265717565737474003c4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f70726f76696465722f4f4175746832526571756573743b4c00127573657241757468656e7469636174696f6e7400324c6f72672f737072696e676672616d65776f726b2f73656375726974792f636f72652f41757468656e7469636174696f6e3b787200476f72672e737072696e676672616d65776f726b2e73656375726974792e61757468656e7469636174696f6e2e416273747261637441757468656e7469636174696f6e546f6b656ed3aa287e6e47640e0200035a000d61757468656e746963617465644c000b617574686f7269746965737400164c6a6176612f7574696c2f436f6c6c656374696f6e3b4c000764657461696c737400124c6a6176612f6c616e672f4f626a6563743b787000737200266a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c654c697374fc0f2531b5ec8e100200014c00046c6973747400104c6a6176612f7574696c2f4c6973743b7872002c6a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65436f6c6c656374696f6e19420080cb5ef71e0200014c00016371007e00047870737200136a6176612e7574696c2e41727261794c6973747881d21d99c7619d03000149000473697a6578700000002377040000002373720032696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e417574686f726974794952ec0f5e493da00200024c000269647400104c6a6176612f6c616e672f4c6f6e673b4c00046e616d657400124c6a6176612f6c616e672f537472696e673b78707372000e6a6176612e6c616e672e4c6f6e673b8be490cc8f23df0200014a000576616c7565787200106a6176612e6c616e672e4e756d62657286ac951d0b94e08b0200007870000000000000000174000c50415254595f4352454154457371007e000d7371007e0011000000000000000274000a50415254595f524541447371007e000d7371007e0011000000000000000374000c50415254595f5550444154457371007e000d7371007e0011000000000000000474000c50415254595f44454c4554457371007e000d7371007e0011000000000000000574000d504552534f4e5f4352454154457371007e000d7371007e0011000000000000000674000b504552534f4e5f524541447371007e000d7371007e0011000000000000000774000d504552534f4e5f5550444154457371007e000d7371007e0011000000000000000874000d504552534f4e5f44454c4554457371007e000d7371007e001100000000000000097400134f5247414e49534154494f4e5f4352454154457371007e000d7371007e0011000000000000000a7400114f5247414e49534154494f4e5f524541447371007e000d7371007e0011000000000000000b7400134f5247414e49534154494f4e5f5550444154457371007e000d7371007e0011000000000000000c7400134f5247414e49534154494f4e5f44454c4554457371007e000d7371007e0011000000000000000d74000b524f4c455f4352454154457371007e000d7371007e0011000000000000000e740009524f4c455f524541447371007e000d7371007e0011000000000000000f74000b524f4c455f5550444154457371007e000d7371007e0011000000000000001074000b524f4c455f44454c4554457371007e000d7371007e0011000000000000001174000f435553544f4d45525f4352454154457371007e000d7371007e0011000000000000001274000d435553544f4d45525f524541447371007e000d7371007e0011000000000000001374000f435553544f4d45525f5550444154457371007e000d7371007e0011000000000000001474000f435553544f4d45525f44454c4554457371007e000d7371007e0011000000000000001574000f535550504c4945525f4352454154457371007e000d7371007e0011000000000000001674000d535550504c4945525f524541447371007e000d7371007e0011000000000000001774000f535550504c4945525f5550444154457371007e000d7371007e0011000000000000001874000f535550504c4945525f44454c4554457371007e000d7371007e0011000000000000001974000e50524f445543545f4352454154457371007e000d7371007e0011000000000000001a74000c50524f445543545f524541447371007e000d7371007e0011000000000000001b74000e50524f445543545f5550444154457371007e000d7371007e0011000000000000001c74000e50524f445543545f44454c4554457371007e000d7371007e0011000000000000001d740013524f4c455f50524f445543545f5245414445527371007e000d7371007e0011000000000000001e740011524f4c455f50415254595f5245414445527371007e000d7371007e0011000000000000001f740010524f4c455f524f4c455f5245414445527371007e000d7371007e00110000000000000020740012524f4c455f504552534f4e5f5245414445527371007e000d7371007e00110000000000000021740018524f4c455f4f5247414e49534154494f4e5f5245414445527371007e000d7371007e00110000000000000022740014524f4c455f435553544f4d45525f5245414445527371007e000d7371007e00110000000000000023740014524f4c455f535550504c4945525f5245414445527871007e000c707372003a6f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e4f41757468325265717565737400000000000000010200075a0008617070726f7665644c000b617574686f72697469657371007e00044c000a657874656e73696f6e7374000f4c6a6176612f7574696c2f4d61703b4c000b726564697265637455726971007e000f4c00077265667265736874003b4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f70726f76696465722f546f6b656e526571756573743b4c000b7265736f7572636549647374000f4c6a6176612f7574696c2f5365743b4c000d726573706f6e7365547970657371007e007e787200386f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e426173655265717565737436287a3ea37169bd0200034c0008636c69656e74496471007e000f4c001172657175657374506172616d657465727371007e007c4c000573636f706571007e007e7870740028737072696e672d73656375726974792d6f61757468322d726561642d77726974652d636c69656e74737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c654d6170f1a5a8fe74f507420200014c00016d71007e007c7870737200116a6176612e7574696c2e486173684d61700507dac1c31660d103000246000a6c6f6164466163746f724900097468726573686f6c6478703f400000000000037708000000040000000274000a6772616e745f7479706574000870617373776f7264740008757365726e616d6574000561646d696e78737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65536574801d92d18f9b80550200007871007e0009737200176a6176612e7574696c2e4c696e6b656448617368536574d86cd75a95dd2a1e020000787200116a6176612e7574696c2e48617368536574ba44859596b8b7340300007870770c000000103f4000000000000274000472656164740005777269746578017371007e008d770c000000103f40000000000001737200426f72672e737072696e676672616d65776f726b2e73656375726974792e636f72652e617574686f726974792e53696d706c654772616e746564417574686f7269747900000000000001f40200014c0004726f6c6571007e000f787074000455534552787371007e00843f40000000000000770800000010000000007870707371007e008d770c000000103f400000000000017400187265736f757263652d7365727665722d726573742d617069787371007e008d770c000000103f40000000000000787372004f6f72672e737072696e676672616d65776f726b2e73656375726974792e61757468656e7469636174696f6e2e557365726e616d6550617373776f726441757468656e7469636174696f6e546f6b656e00000000000001f40200024c000b63726564656e7469616c7371007e00054c00097072696e636970616c71007e00057871007e0003017371007e00077371007e000b0000002377040000002371007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a71007e002d71007e003071007e003371007e003671007e003971007e003c71007e003f71007e004271007e004571007e004871007e004b71007e004e71007e005171007e005471007e005771007e005a71007e005d71007e006071007e006371007e006671007e006971007e006c71007e006f71007e007271007e007571007e00787871007e009c737200176a6176612e7574696c2e4c696e6b6564486173684d617034c04e5c106cc0fb0200015a000b6163636573734f726465727871007e00843f400000000000067708000000080000000271007e008671007e008771007e008871007e00897800707372002d696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e557365729bb111802dbd23e40200095a000e6163636f756e74457870697265645a000d6163636f756e744c6f636b65645a001263726564656e7469616c73457870697265645a0007656e61626c65644c0002496471007e000e4c000b617574686f72697469657371007e00044c000870617373776f726471007e000f4c000975736572506172747974002e4c696f2f6a617661627261696e732f737072696e67626f6f74737461727465722f646f6d61696e2f50617274793b4c0008757365726e616d6571007e000f78700000000171007e00137372002f6f72672e68696265726e6174652e636f6c6c656374696f6e2e696e7465726e616c2e50657273697374656e744261676563fd3f2082000c0200014c000362616771007e00087872003e6f72672e68696265726e6174652e636f6c6c656374696f6e2e696e7465726e616c2e416273747261637450657273697374656e74436f6c6c656374696f6ee9d3dc4da9113ba502000a5a001b616c6c6f774c6f61644f7574736964655472616e73616374696f6e49000a63616368656453697a655a000564697274795a000b696e697469616c697a65645a000d697354656d7053657373696f6e4c00036b65797400164c6a6176612f696f2f53657269616c697a61626c653b4c00056f776e657271007e00054c0004726f6c6571007e000f4c001273657373696f6e466163746f72795575696471007e000f4c000e73746f726564536e617073686f7471007e00a4787000ffffffff00010071007e001371007e00a1740039696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e557365722e617574686f726974696573707371007e000b0000002377040000002371007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a71007e002d71007e003071007e003371007e003671007e003971007e003c71007e003f71007e004271007e004571007e004871007e004b71007e004e71007e005171007e005471007e005771007e005a71007e005d71007e006071007e006371007e006671007e006971007e006c71007e006f71007e007271007e007571007e0078787371007e000b0000002377040000002371007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a71007e002d71007e003071007e003371007e003671007e003971007e003c71007e003f71007e004271007e004571007e004871007e004b71007e004e71007e005171007e005471007e005771007e005a71007e005d71007e006071007e006371007e006671007e006971007e006c71007e006f71007e007271007e007571007e00787874003c243261243038247176727a515a376a4a376f7932702f6d734c344d302e6c38334364306a4e735836414a55697462675258477a6765346a30333568617372002d696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e646f6d61696e2e506572736f6e275dc007fb1e22180200034c000c46616d696c794e616d65456e71007e000f4c000b476976656e4e616d65456e71007e000f4c00064e616d65436e71007e000f78707400064d61636b696574000644616e69656c74000fe4b8b9e5b0bce788bee9baa5e59fba74000561646d696e
 c4197b8f7e430e5eaec33ccdbdc5bc1d	\\xaced00057372004c6f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744578706972696e674f417574683252656672657368546f6b656e2fdf47639dd0c9b70200014c000a65787069726174696f6e7400104c6a6176612f7574696c2f446174653b787200446f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744f417574683252656672657368546f6b656e73e10e0a6354d45e0200014c000576616c75657400124c6a6176612f6c616e672f537472696e673b787074002438366131663264642d666664632d343332332d616134322d6265386630363963653765327372000e6a6176612e7574696c2e44617465686a81014b5974190300007870770800000167b0bf5b5978	\\xaced0005737200416f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e4f417574683241757468656e7469636174696f6ebd400b02166252130200024c000d73746f7265645265717565737474003c4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f70726f76696465722f4f4175746832526571756573743b4c00127573657241757468656e7469636174696f6e7400324c6f72672f737072696e676672616d65776f726b2f73656375726974792f636f72652f41757468656e7469636174696f6e3b787200476f72672e737072696e676672616d65776f726b2e73656375726974792e61757468656e7469636174696f6e2e416273747261637441757468656e7469636174696f6e546f6b656ed3aa287e6e47640e0200035a000d61757468656e746963617465644c000b617574686f7269746965737400164c6a6176612f7574696c2f436f6c6c656374696f6e3b4c000764657461696c737400124c6a6176612f6c616e672f4f626a6563743b787000737200266a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c654c697374fc0f2531b5ec8e100200014c00046c6973747400104c6a6176612f7574696c2f4c6973743b7872002c6a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65436f6c6c656374696f6e19420080cb5ef71e0200014c00016371007e00047870737200136a6176612e7574696c2e41727261794c6973747881d21d99c7619d03000149000473697a6578700000002377040000002373720032696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e417574686f726974794952ec0f5e493da00200024c000269647400104c6a6176612f6c616e672f4c6f6e673b4c00046e616d657400124c6a6176612f6c616e672f537472696e673b78707372000e6a6176612e6c616e672e4c6f6e673b8be490cc8f23df0200014a000576616c7565787200106a6176612e6c616e672e4e756d62657286ac951d0b94e08b0200007870000000000000000174000c50415254595f4352454154457371007e000d7371007e0011000000000000000274000a50415254595f524541447371007e000d7371007e0011000000000000000374000c50415254595f5550444154457371007e000d7371007e0011000000000000000474000c50415254595f44454c4554457371007e000d7371007e0011000000000000000574000d504552534f4e5f4352454154457371007e000d7371007e0011000000000000000674000b504552534f4e5f524541447371007e000d7371007e0011000000000000000774000d504552534f4e5f5550444154457371007e000d7371007e0011000000000000000874000d504552534f4e5f44454c4554457371007e000d7371007e001100000000000000097400134f5247414e49534154494f4e5f4352454154457371007e000d7371007e0011000000000000000a7400114f5247414e49534154494f4e5f524541447371007e000d7371007e0011000000000000000b7400134f5247414e49534154494f4e5f5550444154457371007e000d7371007e0011000000000000000c7400134f5247414e49534154494f4e5f44454c4554457371007e000d7371007e0011000000000000000d74000b524f4c455f4352454154457371007e000d7371007e0011000000000000000e740009524f4c455f524541447371007e000d7371007e0011000000000000000f74000b524f4c455f5550444154457371007e000d7371007e0011000000000000001074000b524f4c455f44454c4554457371007e000d7371007e0011000000000000001174000f435553544f4d45525f4352454154457371007e000d7371007e0011000000000000001274000d435553544f4d45525f524541447371007e000d7371007e0011000000000000001374000f435553544f4d45525f5550444154457371007e000d7371007e0011000000000000001474000f435553544f4d45525f44454c4554457371007e000d7371007e0011000000000000001574000f535550504c4945525f4352454154457371007e000d7371007e0011000000000000001674000d535550504c4945525f524541447371007e000d7371007e0011000000000000001774000f535550504c4945525f5550444154457371007e000d7371007e0011000000000000001874000f535550504c4945525f44454c4554457371007e000d7371007e0011000000000000001974000e50524f445543545f4352454154457371007e000d7371007e0011000000000000001a74000c50524f445543545f524541447371007e000d7371007e0011000000000000001b74000e50524f445543545f5550444154457371007e000d7371007e0011000000000000001c74000e50524f445543545f44454c4554457371007e000d7371007e0011000000000000001d740013524f4c455f50524f445543545f5245414445527371007e000d7371007e0011000000000000001e740011524f4c455f50415254595f5245414445527371007e000d7371007e0011000000000000001f740010524f4c455f524f4c455f5245414445527371007e000d7371007e00110000000000000020740012524f4c455f504552534f4e5f5245414445527371007e000d7371007e00110000000000000021740018524f4c455f4f5247414e49534154494f4e5f5245414445527371007e000d7371007e00110000000000000022740014524f4c455f435553544f4d45525f5245414445527371007e000d7371007e00110000000000000023740014524f4c455f535550504c4945525f5245414445527871007e000c707372003a6f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e4f41757468325265717565737400000000000000010200075a0008617070726f7665644c000b617574686f72697469657371007e00044c000a657874656e73696f6e7374000f4c6a6176612f7574696c2f4d61703b4c000b726564697265637455726971007e000f4c00077265667265736874003b4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f70726f76696465722f546f6b656e526571756573743b4c000b7265736f7572636549647374000f4c6a6176612f7574696c2f5365743b4c000d726573706f6e7365547970657371007e007e787200386f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e426173655265717565737436287a3ea37169bd0200034c0008636c69656e74496471007e000f4c001172657175657374506172616d657465727371007e007c4c000573636f706571007e007e7870740028737072696e672d73656375726974792d6f61757468322d726561642d77726974652d636c69656e74737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c654d6170f1a5a8fe74f507420200014c00016d71007e007c7870737200116a6176612e7574696c2e486173684d61700507dac1c31660d103000246000a6c6f6164466163746f724900097468726573686f6c6478703f400000000000067708000000080000000374000a6772616e745f7479706574000870617373776f7264740009636c69656e745f6964740028737072696e672d73656375726974792d6f61757468322d726561642d77726974652d636c69656e74740008757365726e616d6574000561646d696e78737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65536574801d92d18f9b80550200007871007e0009737200176a6176612e7574696c2e4c696e6b656448617368536574d86cd75a95dd2a1e020000787200116a6176612e7574696c2e48617368536574ba44859596b8b7340300007870770c000000103f4000000000000274000472656164740005777269746578017371007e008f770c000000103f40000000000001737200426f72672e737072696e676672616d65776f726b2e73656375726974792e636f72652e617574686f726974792e53696d706c654772616e746564417574686f7269747900000000000001f40200014c0004726f6c6571007e000f787074000455534552787371007e00843f40000000000000770800000010000000007870707371007e008f770c000000103f400000000000017400187265736f757263652d7365727665722d726573742d617069787371007e008f770c000000103f40000000000000787372004f6f72672e737072696e676672616d65776f726b2e73656375726974792e61757468656e7469636174696f6e2e557365726e616d6550617373776f726441757468656e7469636174696f6e546f6b656e00000000000001f40200024c000b63726564656e7469616c7371007e00054c00097072696e636970616c71007e00057871007e0003017371007e00077371007e000b0000002377040000002371007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a71007e002d71007e003071007e003371007e003671007e003971007e003c71007e003f71007e004271007e004571007e004871007e004b71007e004e71007e005171007e005471007e005771007e005a71007e005d71007e006071007e006371007e006671007e006971007e006c71007e006f71007e007271007e007571007e00787871007e009e737200176a6176612e7574696c2e4c696e6b6564486173684d617034c04e5c106cc0fb0200015a000b6163636573734f726465727871007e00843f400000000000067708000000080000000371007e008671007e008771007e008871007e008971007e008a71007e008b7800707372002d696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e557365729bb111802dbd23e40200095a000e6163636f756e74457870697265645a000d6163636f756e744c6f636b65645a001263726564656e7469616c73457870697265645a0007656e61626c65644c0002496471007e000e4c000b617574686f72697469657371007e00044c000870617373776f726471007e000f4c000975736572506172747974002e4c696f2f6a617661627261696e732f737072696e67626f6f74737461727465722f646f6d61696e2f50617274793b4c0008757365726e616d6571007e000f78700000000171007e00137372002f6f72672e68696265726e6174652e636f6c6c656374696f6e2e696e7465726e616c2e50657273697374656e744261676563fd3f2082000c0200014c000362616771007e00087872003e6f72672e68696265726e6174652e636f6c6c656374696f6e2e696e7465726e616c2e416273747261637450657273697374656e74436f6c6c656374696f6ee9d3dc4da9113ba502000a5a001b616c6c6f774c6f61644f7574736964655472616e73616374696f6e49000a63616368656453697a655a000564697274795a000b696e697469616c697a65645a000d697354656d7053657373696f6e4c00036b65797400164c6a6176612f696f2f53657269616c697a61626c653b4c00056f776e657271007e00054c0004726f6c6571007e000f4c001273657373696f6e466163746f72795575696471007e000f4c000e73746f726564536e617073686f7471007e00a6787000ffffffff00010071007e001371007e00a3740039696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e557365722e617574686f726974696573707371007e000b0000002377040000002371007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a71007e002d71007e003071007e003371007e003671007e003971007e003c71007e003f71007e004271007e004571007e004871007e004b71007e004e71007e005171007e005471007e005771007e005a71007e005d71007e006071007e006371007e006671007e006971007e006c71007e006f71007e007271007e007571007e0078787371007e000b0000002377040000002371007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a71007e002d71007e003071007e003371007e003671007e003971007e003c71007e003f71007e004271007e004571007e004871007e004b71007e004e71007e005171007e005471007e005771007e005a71007e005d71007e006071007e006371007e006671007e006971007e006c71007e006f71007e007271007e007571007e00787874003c243261243038247176727a515a376a4a376f7932702f6d734c344d302e6c38334364306a4e735836414a55697462675258477a6765346a30333568617372002d696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e646f6d61696e2e506572736f6ed92c0eb5a8196b9b0200044c000c46616d696c794e616d65456e71007e000f4c000b476976656e4e616d65456e71007e000f4c00064e616d65436e71007e000f4c000b706172747954797065496471007e000e78707400064d61636b696574000644616e69656c74000fe4b8b9e5b0bce788bee9baa5e59fba71007e001374000561646d696e
-8d60b98b87bb3ea2c960faf7d69d9e59	\\xaced00057372004c6f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744578706972696e674f417574683252656672657368546f6b656e2fdf47639dd0c9b70200014c000a65787069726174696f6e7400104c6a6176612f7574696c2f446174653b787200446f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744f417574683252656672657368546f6b656e73e10e0a6354d45e0200014c000576616c75657400124c6a6176612f6c616e672f537472696e673b787074002434636430306334622d356534382d343364652d393937302d3137623733666237343739667372000e6a6176612e7574696c2e44617465686a81014b5974190300007870770800000167aa97019678	\\xaced0005737200416f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e4f417574683241757468656e7469636174696f6ebd400b02166252130200024c000d73746f7265645265717565737474003c4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f70726f76696465722f4f4175746832526571756573743b4c00127573657241757468656e7469636174696f6e7400324c6f72672f737072696e676672616d65776f726b2f73656375726974792f636f72652f41757468656e7469636174696f6e3b787200476f72672e737072696e676672616d65776f726b2e73656375726974792e61757468656e7469636174696f6e2e416273747261637441757468656e7469636174696f6e546f6b656ed3aa287e6e47640e0200035a000d61757468656e746963617465644c000b617574686f7269746965737400164c6a6176612f7574696c2f436f6c6c656374696f6e3b4c000764657461696c737400124c6a6176612f6c616e672f4f626a6563743b787000737200266a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c654c697374fc0f2531b5ec8e100200014c00046c6973747400104c6a6176612f7574696c2f4c6973743b7872002c6a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65436f6c6c656374696f6e19420080cb5ef71e0200014c00016371007e00047870737200136a6176612e7574696c2e41727261794c6973747881d21d99c7619d03000149000473697a6578700000001277040000001273720032696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e417574686f726974794952ec0f5e493da00200024c000269647400104c6a6176612f6c616e672f4c6f6e673b4c00046e616d657400124c6a6176612f6c616e672f537472696e673b78707372000e6a6176612e6c616e672e4c6f6e673b8be490cc8f23df0200014a000576616c7565787200106a6176612e6c616e672e4e756d62657286ac951d0b94e08b0200007870000000000000000174000c50415254595f4352454154457371007e000d7371007e0011000000000000000274000a50415254595f524541447371007e000d7371007e0011000000000000000374000c50415254595f5550444154457371007e000d7371007e0011000000000000000574000d504552534f4e5f4352454154457371007e000d7371007e0011000000000000000674000b504552534f4e5f524541447371007e000d7371007e0011000000000000000774000d504552534f4e5f5550444154457371007e000d7371007e001100000000000000097400134f5247414e49534154494f4e5f4352454154457371007e000d7371007e0011000000000000000a7400114f5247414e49534154494f4e5f524541447371007e000d7371007e0011000000000000000b7400134f5247414e49534154494f4e5f5550444154457371007e000d7371007e0011000000000000000d74000b524f4c455f4352454154457371007e000d7371007e0011000000000000000e740009524f4c455f524541447371007e000d7371007e0011000000000000000f74000b524f4c455f5550444154457371007e000d7371007e0011000000000000001174000f435553544f4d45525f4352454154457371007e000d7371007e0011000000000000001274000d435553544f4d45525f524541447371007e000d7371007e0011000000000000001374000f435553544f4d45525f5550444154457371007e000d7371007e0011000000000000001574000f535550504c4945525f4352454154457371007e000d7371007e0011000000000000001674000d535550504c4945525f524541447371007e000d7371007e0011000000000000001774000f535550504c4945525f5550444154457871007e000c707372003a6f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e4f41757468325265717565737400000000000000010200075a0008617070726f7665644c000b617574686f72697469657371007e00044c000a657874656e73696f6e7374000f4c6a6176612f7574696c2f4d61703b4c000b726564697265637455726971007e000f4c00077265667265736874003b4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f70726f76696465722f546f6b656e526571756573743b4c000b7265736f7572636549647374000f4c6a6176612f7574696c2f5365743b4c000d726573706f6e7365547970657371007e004b787200386f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e426173655265717565737436287a3ea37169bd0200034c0008636c69656e74496471007e000f4c001172657175657374506172616d657465727371007e00494c000573636f706571007e004b7870740028737072696e672d73656375726974792d6f61757468322d726561642d77726974652d636c69656e74737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c654d6170f1a5a8fe74f507420200014c00016d71007e00497870737200116a6176612e7574696c2e486173684d61700507dac1c31660d103000246000a6c6f6164466163746f724900097468726573686f6c6478703f400000000000067708000000080000000374000a6772616e745f7479706574000870617373776f7264740009636c69656e745f6964740028737072696e672d73656375726974792d6f61757468322d726561642d77726974652d636c69656e74740008757365726e616d6574000f6163636f756e742d63726561746f7278737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65536574801d92d18f9b80550200007871007e0009737200176a6176612e7574696c2e4c696e6b656448617368536574d86cd75a95dd2a1e020000787200116a6176612e7574696c2e48617368536574ba44859596b8b7340300007870770c000000103f4000000000000274000472656164740005777269746578017371007e005c770c000000103f40000000000001737200426f72672e737072696e676672616d65776f726b2e73656375726974792e636f72652e617574686f726974792e53696d706c654772616e746564417574686f7269747900000000000001f40200014c0004726f6c6571007e000f787074000455534552787371007e00513f40000000000000770800000010000000007870707371007e005c770c000000103f400000000000017400187265736f757263652d7365727665722d726573742d617069787371007e005c770c000000103f40000000000000787372004f6f72672e737072696e676672616d65776f726b2e73656375726974792e61757468656e7469636174696f6e2e557365726e616d6550617373776f726441757468656e7469636174696f6e546f6b656e00000000000001f40200024c000b63726564656e7469616c7371007e00054c00097072696e636970616c71007e00057871007e0003017371007e00077371007e000b0000001277040000001271007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a71007e002d71007e003071007e003371007e003671007e003971007e003c71007e003f71007e004271007e00457871007e006b737200176a6176612e7574696c2e4c696e6b6564486173684d617034c04e5c106cc0fb0200015a000b6163636573734f726465727871007e00513f400000000000067708000000080000000371007e005371007e005471007e005571007e005671007e005771007e00587800707372002d696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e557365729bb111802dbd23e40200095a000e6163636f756e74457870697265645a000d6163636f756e744c6f636b65645a001263726564656e7469616c73457870697265645a0007656e61626c65644c0002496471007e000e4c000b617574686f72697469657371007e00044c000870617373776f726471007e000f4c000975736572506172747974002e4c696f2f6a617661627261696e732f737072696e67626f6f74737461727465722f646f6d61696e2f50617274793b4c0008757365726e616d6571007e000f7870000000017371007e001100000000000000007372002f6f72672e68696265726e6174652e636f6c6c656374696f6e2e696e7465726e616c2e50657273697374656e744261676563fd3f2082000c0200014c000362616771007e00087872003e6f72672e68696265726e6174652e636f6c6c656374696f6e2e696e7465726e616c2e416273747261637450657273697374656e74436f6c6c656374696f6ee9d3dc4da9113ba502000a5a001b616c6c6f774c6f61644f7574736964655472616e73616374696f6e49000a63616368656453697a655a000564697274795a000b696e697469616c697a65645a000d697354656d7053657373696f6e4c00036b65797400164c6a6176612f696f2f53657269616c697a61626c653b4c00056f776e657271007e00054c0004726f6c6571007e000f4c001273657373696f6e466163746f72795575696471007e000f4c000e73746f726564536e617073686f7471007e0074787000ffffffff00010071007e007171007e0070740039696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e557365722e617574686f726974696573707371007e000b0000001277040000001271007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a71007e002d71007e003071007e003371007e003671007e003971007e003c71007e003f71007e004271007e0045787371007e000b0000001277040000001271007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a71007e002d71007e003071007e003371007e003671007e003971007e003c71007e003f71007e004271007e00457874003c243261243038247176727a515a376a4a376f7932702f6d734c344d302e6c38334364306a4e735836414a55697462675258477a6765346a303335686173720033696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e646f6d61696e2e4f7267616e697a6174696f6ef204adbd10c2d9fc0200014c00104f7267616e697a6174696f6e4e616d6571007e000f787074000564756d6d7974000f6163636f756e742d63726561746f72
 04a43af937506f677a6107fe84a43df1	\\xaced00057372004c6f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744578706972696e674f417574683252656672657368546f6b656e2fdf47639dd0c9b70200014c000a65787069726174696f6e7400104c6a6176612f7574696c2f446174653b787200446f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744f417574683252656672657368546f6b656e73e10e0a6354d45e0200014c000576616c75657400124c6a6176612f6c616e672f537472696e673b787074002434363037303265342d383061642d343863352d396462662d6631336631356532313466657372000e6a6176612e7574696c2e44617465686a81014b5974190300007870770800000167b164686178	\\xaced0005737200416f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e4f417574683241757468656e7469636174696f6ebd400b02166252130200024c000d73746f7265645265717565737474003c4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f70726f76696465722f4f4175746832526571756573743b4c00127573657241757468656e7469636174696f6e7400324c6f72672f737072696e676672616d65776f726b2f73656375726974792f636f72652f41757468656e7469636174696f6e3b787200476f72672e737072696e676672616d65776f726b2e73656375726974792e61757468656e7469636174696f6e2e416273747261637441757468656e7469636174696f6e546f6b656ed3aa287e6e47640e0200035a000d61757468656e746963617465644c000b617574686f7269746965737400164c6a6176612f7574696c2f436f6c6c656374696f6e3b4c000764657461696c737400124c6a6176612f6c616e672f4f626a6563743b787000737200266a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c654c697374fc0f2531b5ec8e100200014c00046c6973747400104c6a6176612f7574696c2f4c6973743b7872002c6a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65436f6c6c656374696f6e19420080cb5ef71e0200014c00016371007e00047870737200136a6176612e7574696c2e41727261794c6973747881d21d99c7619d03000149000473697a6578700000002377040000002373720032696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e417574686f726974794952ec0f5e493da00200024c000269647400104c6a6176612f6c616e672f4c6f6e673b4c00046e616d657400124c6a6176612f6c616e672f537472696e673b78707372000e6a6176612e6c616e672e4c6f6e673b8be490cc8f23df0200014a000576616c7565787200106a6176612e6c616e672e4e756d62657286ac951d0b94e08b0200007870000000000000000174000c50415254595f4352454154457371007e000d7371007e0011000000000000000274000a50415254595f524541447371007e000d7371007e0011000000000000000374000c50415254595f5550444154457371007e000d7371007e0011000000000000000474000c50415254595f44454c4554457371007e000d7371007e0011000000000000000574000d504552534f4e5f4352454154457371007e000d7371007e0011000000000000000674000b504552534f4e5f524541447371007e000d7371007e0011000000000000000774000d504552534f4e5f5550444154457371007e000d7371007e0011000000000000000874000d504552534f4e5f44454c4554457371007e000d7371007e001100000000000000097400134f5247414e49534154494f4e5f4352454154457371007e000d7371007e0011000000000000000a7400114f5247414e49534154494f4e5f524541447371007e000d7371007e0011000000000000000b7400134f5247414e49534154494f4e5f5550444154457371007e000d7371007e0011000000000000000c7400134f5247414e49534154494f4e5f44454c4554457371007e000d7371007e0011000000000000000d74000b524f4c455f4352454154457371007e000d7371007e0011000000000000000e740009524f4c455f524541447371007e000d7371007e0011000000000000000f74000b524f4c455f5550444154457371007e000d7371007e0011000000000000001074000b524f4c455f44454c4554457371007e000d7371007e0011000000000000001174000f435553544f4d45525f4352454154457371007e000d7371007e0011000000000000001274000d435553544f4d45525f524541447371007e000d7371007e0011000000000000001374000f435553544f4d45525f5550444154457371007e000d7371007e0011000000000000001474000f435553544f4d45525f44454c4554457371007e000d7371007e0011000000000000001574000f535550504c4945525f4352454154457371007e000d7371007e0011000000000000001674000d535550504c4945525f524541447371007e000d7371007e0011000000000000001774000f535550504c4945525f5550444154457371007e000d7371007e0011000000000000001874000f535550504c4945525f44454c4554457371007e000d7371007e0011000000000000001974000e50524f445543545f4352454154457371007e000d7371007e0011000000000000001a74000c50524f445543545f524541447371007e000d7371007e0011000000000000001b74000e50524f445543545f5550444154457371007e000d7371007e0011000000000000001c74000e50524f445543545f44454c4554457371007e000d7371007e0011000000000000001d740013524f4c455f50524f445543545f5245414445527371007e000d7371007e0011000000000000001e740011524f4c455f50415254595f5245414445527371007e000d7371007e0011000000000000001f740010524f4c455f524f4c455f5245414445527371007e000d7371007e00110000000000000020740012524f4c455f504552534f4e5f5245414445527371007e000d7371007e00110000000000000021740018524f4c455f4f5247414e49534154494f4e5f5245414445527371007e000d7371007e00110000000000000022740014524f4c455f435553544f4d45525f5245414445527371007e000d7371007e00110000000000000023740014524f4c455f535550504c4945525f5245414445527871007e000c707372003a6f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e4f41757468325265717565737400000000000000010200075a0008617070726f7665644c000b617574686f72697469657371007e00044c000a657874656e73696f6e7374000f4c6a6176612f7574696c2f4d61703b4c000b726564697265637455726971007e000f4c00077265667265736874003b4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f70726f76696465722f546f6b656e526571756573743b4c000b7265736f7572636549647374000f4c6a6176612f7574696c2f5365743b4c000d726573706f6e7365547970657371007e007e787200386f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e426173655265717565737436287a3ea37169bd0200034c0008636c69656e74496471007e000f4c001172657175657374506172616d657465727371007e007c4c000573636f706571007e007e7870740028737072696e672d73656375726974792d6f61757468322d726561642d77726974652d636c69656e74737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c654d6170f1a5a8fe74f507420200014c00016d71007e007c7870737200116a6176612e7574696c2e486173684d61700507dac1c31660d103000246000a6c6f6164466163746f724900097468726573686f6c6478703f400000000000067708000000080000000374000a6772616e745f7479706574000870617373776f7264740009636c69656e745f6964740028737072696e672d73656375726974792d6f61757468322d726561642d77726974652d636c69656e74740008757365726e616d6574000561646d696e78737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65536574801d92d18f9b80550200007871007e0009737200176a6176612e7574696c2e4c696e6b656448617368536574d86cd75a95dd2a1e020000787200116a6176612e7574696c2e48617368536574ba44859596b8b7340300007870770c000000103f4000000000000274000472656164740005777269746578017371007e008f770c000000103f40000000000001737200426f72672e737072696e676672616d65776f726b2e73656375726974792e636f72652e617574686f726974792e53696d706c654772616e746564417574686f7269747900000000000001f40200014c0004726f6c6571007e000f787074000455534552787371007e00843f40000000000000770800000010000000007870707371007e008f770c000000103f400000000000017400187265736f757263652d7365727665722d726573742d617069787371007e008f770c000000103f40000000000000787372004f6f72672e737072696e676672616d65776f726b2e73656375726974792e61757468656e7469636174696f6e2e557365726e616d6550617373776f726441757468656e7469636174696f6e546f6b656e00000000000001f40200024c000b63726564656e7469616c7371007e00054c00097072696e636970616c71007e00057871007e0003017371007e00077371007e000b0000002377040000002371007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a71007e002d71007e003071007e003371007e003671007e003971007e003c71007e003f71007e004271007e004571007e004871007e004b71007e004e71007e005171007e005471007e005771007e005a71007e005d71007e006071007e006371007e006671007e006971007e006c71007e006f71007e007271007e007571007e00787871007e009e737200176a6176612e7574696c2e4c696e6b6564486173684d617034c04e5c106cc0fb0200015a000b6163636573734f726465727871007e00843f400000000000067708000000080000000371007e008671007e008771007e008871007e008971007e008a71007e008b7800707372002d696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e557365729bb111802dbd23e40200095a000e6163636f756e74457870697265645a000d6163636f756e744c6f636b65645a001263726564656e7469616c73457870697265645a0007656e61626c65644c0002496471007e000e4c000b617574686f72697469657371007e00044c000870617373776f726471007e000f4c000975736572506172747974002e4c696f2f6a617661627261696e732f737072696e67626f6f74737461727465722f646f6d61696e2f50617274793b4c0008757365726e616d6571007e000f78700000000171007e00137372002f6f72672e68696265726e6174652e636f6c6c656374696f6e2e696e7465726e616c2e50657273697374656e744261676563fd3f2082000c0200014c000362616771007e00087872003e6f72672e68696265726e6174652e636f6c6c656374696f6e2e696e7465726e616c2e416273747261637450657273697374656e74436f6c6c656374696f6ee9d3dc4da9113ba502000a5a001b616c6c6f774c6f61644f7574736964655472616e73616374696f6e49000a63616368656453697a655a000564697274795a000b696e697469616c697a65645a000d697354656d7053657373696f6e4c00036b65797400164c6a6176612f696f2f53657269616c697a61626c653b4c00056f776e657271007e00054c0004726f6c6571007e000f4c001273657373696f6e466163746f72795575696471007e000f4c000e73746f726564536e617073686f7471007e00a6787000ffffffff00010071007e001371007e00a3740039696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e557365722e617574686f726974696573707371007e000b0000002377040000002371007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a71007e002d71007e003071007e003371007e003671007e003971007e003c71007e003f71007e004271007e004571007e004871007e004b71007e004e71007e005171007e005471007e005771007e005a71007e005d71007e006071007e006371007e006671007e006971007e006c71007e006f71007e007271007e007571007e0078787371007e000b0000002377040000002371007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a71007e002d71007e003071007e003371007e003671007e003971007e003c71007e003f71007e004271007e004571007e004871007e004b71007e004e71007e005171007e005471007e005771007e005a71007e005d71007e006071007e006371007e006671007e006971007e006c71007e006f71007e007271007e007571007e00787874003c243261243038247176727a515a376a4a376f7932702f6d734c344d302e6c38334364306a4e735836414a55697462675258477a6765346a30333568617372002d696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e646f6d61696e2e506572736f6ed92c0eb5a8196b9b0200044c000c46616d696c794e616d65456e71007e000f4c000b476976656e4e616d65456e71007e000f4c00064e616d65436e71007e000f4c000b706172747954797065496471007e000e78707400064d61636b696574000644616e69656c74000fe4b8b9e5b0bce788bee9baa5e59fba71007e001374000561646d696e
+ec69e6a0bb4ee22a1ce79cf107efe1a4	\\xaced00057372004c6f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744578706972696e674f417574683252656672657368546f6b656e2fdf47639dd0c9b70200014c000a65787069726174696f6e7400104c6a6176612f7574696c2f446174653b787200446f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744f417574683252656672657368546f6b656e73e10e0a6354d45e0200014c000576616c75657400124c6a6176612f6c616e672f537472696e673b787074002433613336323430302d623036312d343235302d393433302d6261313266356339393239327372000e6a6176612e7574696c2e44617465686a81014b5974190300007870770800000167c8f92b7278	\\xaced0005737200416f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e4f417574683241757468656e7469636174696f6ebd400b02166252130200024c000d73746f7265645265717565737474003c4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f70726f76696465722f4f4175746832526571756573743b4c00127573657241757468656e7469636174696f6e7400324c6f72672f737072696e676672616d65776f726b2f73656375726974792f636f72652f41757468656e7469636174696f6e3b787200476f72672e737072696e676672616d65776f726b2e73656375726974792e61757468656e7469636174696f6e2e416273747261637441757468656e7469636174696f6e546f6b656ed3aa287e6e47640e0200035a000d61757468656e746963617465644c000b617574686f7269746965737400164c6a6176612f7574696c2f436f6c6c656374696f6e3b4c000764657461696c737400124c6a6176612f6c616e672f4f626a6563743b787000737200266a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c654c697374fc0f2531b5ec8e100200014c00046c6973747400104c6a6176612f7574696c2f4c6973743b7872002c6a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65436f6c6c656374696f6e19420080cb5ef71e0200014c00016371007e00047870737200136a6176612e7574696c2e41727261794c6973747881d21d99c7619d03000149000473697a6578700000002377040000002373720032696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e417574686f726974794952ec0f5e493da00200024c000269647400104c6a6176612f6c616e672f4c6f6e673b4c00046e616d657400124c6a6176612f6c616e672f537472696e673b78707372000e6a6176612e6c616e672e4c6f6e673b8be490cc8f23df0200014a000576616c7565787200106a6176612e6c616e672e4e756d62657286ac951d0b94e08b0200007870000000000000000174000c50415254595f4352454154457371007e000d7371007e0011000000000000000274000a50415254595f524541447371007e000d7371007e0011000000000000000374000c50415254595f5550444154457371007e000d7371007e0011000000000000000474000c50415254595f44454c4554457371007e000d7371007e0011000000000000000574000d504552534f4e5f4352454154457371007e000d7371007e0011000000000000000674000b504552534f4e5f524541447371007e000d7371007e0011000000000000000774000d504552534f4e5f5550444154457371007e000d7371007e0011000000000000000874000d504552534f4e5f44454c4554457371007e000d7371007e001100000000000000097400134f5247414e49534154494f4e5f4352454154457371007e000d7371007e0011000000000000000a7400114f5247414e49534154494f4e5f524541447371007e000d7371007e0011000000000000000b7400134f5247414e49534154494f4e5f5550444154457371007e000d7371007e0011000000000000000c7400134f5247414e49534154494f4e5f44454c4554457371007e000d7371007e0011000000000000000d74000b524f4c455f4352454154457371007e000d7371007e0011000000000000000e740009524f4c455f524541447371007e000d7371007e0011000000000000000f74000b524f4c455f5550444154457371007e000d7371007e0011000000000000001074000b524f4c455f44454c4554457371007e000d7371007e0011000000000000001174000f435553544f4d45525f4352454154457371007e000d7371007e0011000000000000001274000d435553544f4d45525f524541447371007e000d7371007e0011000000000000001374000f435553544f4d45525f5550444154457371007e000d7371007e0011000000000000001474000f435553544f4d45525f44454c4554457371007e000d7371007e0011000000000000001574000f535550504c4945525f4352454154457371007e000d7371007e0011000000000000001674000d535550504c4945525f524541447371007e000d7371007e0011000000000000001774000f535550504c4945525f5550444154457371007e000d7371007e0011000000000000001874000f535550504c4945525f44454c4554457371007e000d7371007e0011000000000000001974000e50524f445543545f4352454154457371007e000d7371007e0011000000000000001a74000c50524f445543545f524541447371007e000d7371007e0011000000000000001b74000e50524f445543545f5550444154457371007e000d7371007e0011000000000000001c74000e50524f445543545f44454c4554457371007e000d7371007e0011000000000000001d740013524f4c455f50524f445543545f5245414445527371007e000d7371007e0011000000000000001e740011524f4c455f50415254595f5245414445527371007e000d7371007e0011000000000000001f740010524f4c455f524f4c455f5245414445527371007e000d7371007e00110000000000000020740012524f4c455f504552534f4e5f5245414445527371007e000d7371007e00110000000000000021740018524f4c455f4f5247414e49534154494f4e5f5245414445527371007e000d7371007e00110000000000000022740014524f4c455f435553544f4d45525f5245414445527371007e000d7371007e00110000000000000023740014524f4c455f535550504c4945525f5245414445527871007e000c707372003a6f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e4f41757468325265717565737400000000000000010200075a0008617070726f7665644c000b617574686f72697469657371007e00044c000a657874656e73696f6e7374000f4c6a6176612f7574696c2f4d61703b4c000b726564697265637455726971007e000f4c00077265667265736874003b4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f70726f76696465722f546f6b656e526571756573743b4c000b7265736f7572636549647374000f4c6a6176612f7574696c2f5365743b4c000d726573706f6e7365547970657371007e007e787200386f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e426173655265717565737436287a3ea37169bd0200034c0008636c69656e74496471007e000f4c001172657175657374506172616d657465727371007e007c4c000573636f706571007e007e7870740028737072696e672d73656375726974792d6f61757468322d726561642d77726974652d636c69656e74737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c654d6170f1a5a8fe74f507420200014c00016d71007e007c7870737200116a6176612e7574696c2e486173684d61700507dac1c31660d103000246000a6c6f6164466163746f724900097468726573686f6c6478703f400000000000067708000000080000000374000a6772616e745f7479706574000870617373776f7264740009636c69656e745f6964740028737072696e672d73656375726974792d6f61757468322d726561642d77726974652d636c69656e74740008757365726e616d6574000561646d696e78737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65536574801d92d18f9b80550200007871007e0009737200176a6176612e7574696c2e4c696e6b656448617368536574d86cd75a95dd2a1e020000787200116a6176612e7574696c2e48617368536574ba44859596b8b7340300007870770c000000103f4000000000000274000472656164740005777269746578017371007e008f770c000000103f40000000000001737200426f72672e737072696e676672616d65776f726b2e73656375726974792e636f72652e617574686f726974792e53696d706c654772616e746564417574686f7269747900000000000001f40200014c0004726f6c6571007e000f787074000455534552787371007e00843f40000000000000770800000010000000007870707371007e008f770c000000103f400000000000017400187265736f757263652d7365727665722d726573742d617069787371007e008f770c000000103f40000000000000787372004f6f72672e737072696e676672616d65776f726b2e73656375726974792e61757468656e7469636174696f6e2e557365726e616d6550617373776f726441757468656e7469636174696f6e546f6b656e00000000000001f40200024c000b63726564656e7469616c7371007e00054c00097072696e636970616c71007e00057871007e0003017371007e00077371007e000b0000002377040000002371007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a71007e002d71007e003071007e003371007e003671007e003971007e003c71007e003f71007e004271007e004571007e004871007e004b71007e004e71007e005171007e005471007e005771007e005a71007e005d71007e006071007e006371007e006671007e006971007e006c71007e006f71007e007271007e007571007e00787871007e009e737200176a6176612e7574696c2e4c696e6b6564486173684d617034c04e5c106cc0fb0200015a000b6163636573734f726465727871007e00843f400000000000067708000000080000000371007e008671007e008771007e008871007e008971007e008a71007e008b7800707372002d696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e557365729bb111802dbd23e40200095a000e6163636f756e74457870697265645a000d6163636f756e744c6f636b65645a001263726564656e7469616c73457870697265645a0007656e61626c65644c0002496471007e000e4c000b617574686f72697469657371007e00044c000870617373776f726471007e000f4c000975736572506172747974002e4c696f2f6a617661627261696e732f737072696e67626f6f74737461727465722f646f6d61696e2f50617274793b4c0008757365726e616d6571007e000f78700000000171007e00137372002f6f72672e68696265726e6174652e636f6c6c656374696f6e2e696e7465726e616c2e50657273697374656e744261676563fd3f2082000c0200014c000362616771007e00087872003e6f72672e68696265726e6174652e636f6c6c656374696f6e2e696e7465726e616c2e416273747261637450657273697374656e74436f6c6c656374696f6ee9d3dc4da9113ba502000a5a001b616c6c6f774c6f61644f7574736964655472616e73616374696f6e49000a63616368656453697a655a000564697274795a000b696e697469616c697a65645a000d697354656d7053657373696f6e4c00036b65797400164c6a6176612f696f2f53657269616c697a61626c653b4c00056f776e657271007e00054c0004726f6c6571007e000f4c001273657373696f6e466163746f72795575696471007e000f4c000e73746f726564536e617073686f7471007e00a6787000ffffffff00010071007e001371007e00a3740039696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e557365722e617574686f726974696573707371007e000b0000002377040000002371007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a71007e002d71007e003071007e003371007e003671007e003971007e003c71007e003f71007e004271007e004571007e004871007e004b71007e004e71007e005171007e005471007e005771007e005a71007e005d71007e006071007e006371007e006671007e006971007e006c71007e006f71007e007271007e007571007e0078787371007e000b0000002377040000002371007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a71007e002d71007e003071007e003371007e003671007e003971007e003c71007e003f71007e004271007e004571007e004871007e004b71007e004e71007e005171007e005471007e005771007e005a71007e005d71007e006071007e006371007e006671007e006971007e006c71007e006f71007e007271007e007571007e00787874003c243261243038247176727a515a376a4a376f7932702f6d734c344d302e6c38334364306a4e735836414a55697462675258477a6765346a30333568617372002d696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e646f6d61696e2e506572736f6ed92c0eb5a8196b9b0200044c000c46616d696c794e616d65456e71007e000f4c000b476976656e4e616d65456e71007e000f4c00064e616d65436e71007e000f4c000b706172747954797065496471007e000e78707400064d61636b696574000644616e69656c74000fe4b8b9e5b0bce788bee9baa5e59fba71007e001374000561646d696e
+d95fc66f08abfb375b8080e884efe62d	\\xaced00057372004c6f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744578706972696e674f417574683252656672657368546f6b656e2fdf47639dd0c9b70200014c000a65787069726174696f6e7400104c6a6176612f7574696c2f446174653b787200446f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744f417574683252656672657368546f6b656e73e10e0a6354d45e0200014c000576616c75657400124c6a6176612f6c616e672f537472696e673b787074002438326233373833372d623537342d343530632d386162652d3234383432366364393132617372000e6a6176612e7574696c2e44617465686a81014b5974190300007870770800000167deafaeaa78	\\xaced0005737200416f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e4f417574683241757468656e7469636174696f6ebd400b02166252130200024c000d73746f7265645265717565737474003c4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f70726f76696465722f4f4175746832526571756573743b4c00127573657241757468656e7469636174696f6e7400324c6f72672f737072696e676672616d65776f726b2f73656375726974792f636f72652f41757468656e7469636174696f6e3b787200476f72672e737072696e676672616d65776f726b2e73656375726974792e61757468656e7469636174696f6e2e416273747261637441757468656e7469636174696f6e546f6b656ed3aa287e6e47640e0200035a000d61757468656e746963617465644c000b617574686f7269746965737400164c6a6176612f7574696c2f436f6c6c656374696f6e3b4c000764657461696c737400124c6a6176612f6c616e672f4f626a6563743b787000737200266a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c654c697374fc0f2531b5ec8e100200014c00046c6973747400104c6a6176612f7574696c2f4c6973743b7872002c6a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65436f6c6c656374696f6e19420080cb5ef71e0200014c00016371007e00047870737200136a6176612e7574696c2e41727261794c6973747881d21d99c7619d03000149000473697a6578700000002377040000002373720032696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e417574686f726974794952ec0f5e493da00200024c000269647400104c6a6176612f6c616e672f4c6f6e673b4c00046e616d657400124c6a6176612f6c616e672f537472696e673b78707372000e6a6176612e6c616e672e4c6f6e673b8be490cc8f23df0200014a000576616c7565787200106a6176612e6c616e672e4e756d62657286ac951d0b94e08b0200007870000000000000000174000c50415254595f4352454154457371007e000d7371007e0011000000000000000274000a50415254595f524541447371007e000d7371007e0011000000000000000374000c50415254595f5550444154457371007e000d7371007e0011000000000000000474000c50415254595f44454c4554457371007e000d7371007e0011000000000000000574000d504552534f4e5f4352454154457371007e000d7371007e0011000000000000000674000b504552534f4e5f524541447371007e000d7371007e0011000000000000000774000d504552534f4e5f5550444154457371007e000d7371007e0011000000000000000874000d504552534f4e5f44454c4554457371007e000d7371007e001100000000000000097400134f5247414e49534154494f4e5f4352454154457371007e000d7371007e0011000000000000000a7400114f5247414e49534154494f4e5f524541447371007e000d7371007e0011000000000000000b7400134f5247414e49534154494f4e5f5550444154457371007e000d7371007e0011000000000000000c7400134f5247414e49534154494f4e5f44454c4554457371007e000d7371007e0011000000000000000d74000b524f4c455f4352454154457371007e000d7371007e0011000000000000000e740009524f4c455f524541447371007e000d7371007e0011000000000000000f74000b524f4c455f5550444154457371007e000d7371007e0011000000000000001074000b524f4c455f44454c4554457371007e000d7371007e0011000000000000001174000f435553544f4d45525f4352454154457371007e000d7371007e0011000000000000001274000d435553544f4d45525f524541447371007e000d7371007e0011000000000000001374000f435553544f4d45525f5550444154457371007e000d7371007e0011000000000000001474000f435553544f4d45525f44454c4554457371007e000d7371007e0011000000000000001574000f535550504c4945525f4352454154457371007e000d7371007e0011000000000000001674000d535550504c4945525f524541447371007e000d7371007e0011000000000000001774000f535550504c4945525f5550444154457371007e000d7371007e0011000000000000001874000f535550504c4945525f44454c4554457371007e000d7371007e0011000000000000001974000e50524f445543545f4352454154457371007e000d7371007e0011000000000000001a74000c50524f445543545f524541447371007e000d7371007e0011000000000000001b74000e50524f445543545f5550444154457371007e000d7371007e0011000000000000001c74000e50524f445543545f44454c4554457371007e000d7371007e0011000000000000001d740013524f4c455f50524f445543545f5245414445527371007e000d7371007e0011000000000000001e740011524f4c455f50415254595f5245414445527371007e000d7371007e0011000000000000001f740010524f4c455f524f4c455f5245414445527371007e000d7371007e00110000000000000020740012524f4c455f504552534f4e5f5245414445527371007e000d7371007e00110000000000000021740018524f4c455f4f5247414e49534154494f4e5f5245414445527371007e000d7371007e00110000000000000022740014524f4c455f435553544f4d45525f5245414445527371007e000d7371007e00110000000000000023740014524f4c455f535550504c4945525f5245414445527871007e000c707372003a6f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e4f41757468325265717565737400000000000000010200075a0008617070726f7665644c000b617574686f72697469657371007e00044c000a657874656e73696f6e7374000f4c6a6176612f7574696c2f4d61703b4c000b726564697265637455726971007e000f4c00077265667265736874003b4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f70726f76696465722f546f6b656e526571756573743b4c000b7265736f7572636549647374000f4c6a6176612f7574696c2f5365743b4c000d726573706f6e7365547970657371007e007e787200386f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e426173655265717565737436287a3ea37169bd0200034c0008636c69656e74496471007e000f4c001172657175657374506172616d657465727371007e007c4c000573636f706571007e007e7870740028737072696e672d73656375726974792d6f61757468322d726561642d77726974652d636c69656e74737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c654d6170f1a5a8fe74f507420200014c00016d71007e007c7870737200116a6176612e7574696c2e486173684d61700507dac1c31660d103000246000a6c6f6164466163746f724900097468726573686f6c6478703f400000000000067708000000080000000374000a6772616e745f7479706574000870617373776f7264740009636c69656e745f6964740028737072696e672d73656375726974792d6f61757468322d726561642d77726974652d636c69656e74740008757365726e616d6574000561646d696e78737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65536574801d92d18f9b80550200007871007e0009737200176a6176612e7574696c2e4c696e6b656448617368536574d86cd75a95dd2a1e020000787200116a6176612e7574696c2e48617368536574ba44859596b8b7340300007870770c000000103f4000000000000274000472656164740005777269746578017371007e008f770c000000103f40000000000001737200426f72672e737072696e676672616d65776f726b2e73656375726974792e636f72652e617574686f726974792e53696d706c654772616e746564417574686f7269747900000000000001f40200014c0004726f6c6571007e000f787074000455534552787371007e00843f40000000000000770800000010000000007870707371007e008f770c000000103f400000000000017400187265736f757263652d7365727665722d726573742d617069787371007e008f770c000000103f40000000000000787372004f6f72672e737072696e676672616d65776f726b2e73656375726974792e61757468656e7469636174696f6e2e557365726e616d6550617373776f726441757468656e7469636174696f6e546f6b656e00000000000001f40200024c000b63726564656e7469616c7371007e00054c00097072696e636970616c71007e00057871007e0003017371007e00077371007e000b0000002377040000002371007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a71007e002d71007e003071007e003371007e003671007e003971007e003c71007e003f71007e004271007e004571007e004871007e004b71007e004e71007e005171007e005471007e005771007e005a71007e005d71007e006071007e006371007e006671007e006971007e006c71007e006f71007e007271007e007571007e00787871007e009e737200176a6176612e7574696c2e4c696e6b6564486173684d617034c04e5c106cc0fb0200015a000b6163636573734f726465727871007e00843f400000000000067708000000080000000371007e008671007e008771007e008871007e008971007e008a71007e008b7800707372002d696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e557365729bb111802dbd23e40200095a000e6163636f756e74457870697265645a000d6163636f756e744c6f636b65645a001263726564656e7469616c73457870697265645a0007656e61626c65644c0002496471007e000e4c000b617574686f72697469657371007e00044c000870617373776f726471007e000f4c000975736572506172747974002e4c696f2f6a617661627261696e732f737072696e67626f6f74737461727465722f646f6d61696e2f50617274793b4c0008757365726e616d6571007e000f78700000000171007e00137372002f6f72672e68696265726e6174652e636f6c6c656374696f6e2e696e7465726e616c2e50657273697374656e744261676563fd3f2082000c0200014c000362616771007e00087872003e6f72672e68696265726e6174652e636f6c6c656374696f6e2e696e7465726e616c2e416273747261637450657273697374656e74436f6c6c656374696f6ee9d3dc4da9113ba502000a5a001b616c6c6f774c6f61644f7574736964655472616e73616374696f6e49000a63616368656453697a655a000564697274795a000b696e697469616c697a65645a000d697354656d7053657373696f6e4c00036b65797400164c6a6176612f696f2f53657269616c697a61626c653b4c00056f776e657271007e00054c0004726f6c6571007e000f4c001273657373696f6e466163746f72795575696471007e000f4c000e73746f726564536e617073686f7471007e00a6787000ffffffff00010071007e001371007e00a3740039696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e557365722e617574686f726974696573707371007e000b0000002377040000002371007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a71007e002d71007e003071007e003371007e003671007e003971007e003c71007e003f71007e004271007e004571007e004871007e004b71007e004e71007e005171007e005471007e005771007e005a71007e005d71007e006071007e006371007e006671007e006971007e006c71007e006f71007e007271007e007571007e0078787371007e000b0000002377040000002371007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a71007e002d71007e003071007e003371007e003671007e003971007e003c71007e003f71007e004271007e004571007e004871007e004b71007e004e71007e005171007e005471007e005771007e005a71007e005d71007e006071007e006371007e006671007e006971007e006c71007e006f71007e007271007e007571007e00787874003c243261243038247176727a515a376a4a376f7932702f6d734c344d302e6c38334364306a4e735836414a55697462675258477a6765346a30333568617372002d696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e646f6d61696e2e506572736f6ed92c0eb5a8196b9b0200044c000c46616d696c794e616d65456e71007e000f4c000b476976656e4e616d65456e71007e000f4c00064e616d65436e71007e000f4c000b706172747954797065496471007e000e78707400064d61636b696574000644616e69656c74000fe4b8b9e5b0bce788bee9baa5e59fba71007e001374000561646d696e
 \.
 
 
@@ -886,15 +921,18 @@ c4197b8f7e430e5eaec33ccdbdc5bc1d	\\xaced00057372004c6f72672e737072696e676672616d
 -- Data for Name: user_; Type: TABLE DATA; Schema: security; Owner: security_owner
 --
 
-COPY security.user_ (pty_id, account_expired, account_locked, credentials_expired, enabled, password, user_name) FROM stdin;
-0	f	f	f	t	$2a$08$qvrzQZ7jJ7oy2p/msL4M0.l83Cd0jNsX6AJUitbgRXGzge4j035ha	account-creator
+COPY user_ (pty_id, account_expired, account_locked, credentials_expired, enabled, password, user_name) FROM stdin;
 1	f	f	f	t	$2a$08$qvrzQZ7jJ7oy2p/msL4M0.l83Cd0jNsX6AJUitbgRXGzge4j035ha	admin
 2	f	f	f	t	$2a$08$dwYz8O.qtUXboGosJFsS4u19LHKW7aCQ0LXXuNlRfjjGKwj5NfKSe	reader
-3	f	f	f	t	$2a$08$kPjzxewXRGNRiIuL4FtQH.mhMn7ZAFBYKB3ROz.J24IX8vDAcThsG	modifier
-4	f	f	f	t	$2a$08$vVXqh6S8TqfHMs1SlNTu/.J25iUCrpGBpyGExA.9yI.IlDRadR6Ea	reader2
 232156	f	f	f	t	$2a$08$V5TAyAWOscZZZ1QtURlldOpKzufHQ4m.CehmJbbLMeFCv.laPvBFa	dmac209
 232160	f	f	f	t	$2a$08$V5TAyAWOscZZZ1QtURlldOpKzufHQ4m.CehmJbbLMeFCv.laPvBFa	dmac210
 232164	f	f	f	t	$2a$08$V5TAyAWOscZZZ1QtURlldOpKzufHQ4m.CehmJbbLMeFCv.laPvBFa	dmac211
+232166	f	f	f	t	\N	dmac198
+232168	f	f	f	t	\N	dmac196
+232174	f	f	f	t	\N	dmac789
+232180	f	f	f	t	\N	dmac7fddf9
+232184	f	f	f	t	\N	mil4235234
+232192	f	f	f	t	\N	mil4245234
 \.
 
 
@@ -902,25 +940,7 @@ COPY security.user_ (pty_id, account_expired, account_locked, credentials_expire
 -- Data for Name: users_authorities; Type: TABLE DATA; Schema: security; Owner: security_owner
 --
 
-COPY security.users_authorities (user_id, authority_id) FROM stdin;
-0	1
-0	2
-0	3
-0	5
-0	6
-0	7
-0	9
-0	10
-0	11
-0	13
-0	14
-0	15
-0	17
-0	18
-0	19
-0	21
-0	22
-0	23
+COPY users_authorities (user_id, authority_id) FROM stdin;
 1	1
 1	2
 1	3
@@ -963,706 +983,595 @@ COPY security.users_authorities (user_id, authority_id) FROM stdin;
 2	18
 2	22
 2	26
-3	1
-3	3
-3	4
-3	5
-3	7
-3	8
-3	9
-3	11
-3	12
-3	13
-3	15
-3	16
-3	17
-3	19
-3	20
-3	21
-3	23
-3	24
-3	25
-3	27
-3	28
 \.
 
 
+SET search_path = mochi, pg_catalog;
+
 --
--- Name: customer_cst_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: customer customer_cst_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY mochi.customer
+ALTER TABLE ONLY customer
     ADD CONSTRAINT customer_cst_id_key UNIQUE (cst_id);
 
 
 --
--- Name: customer_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: customer customer_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY mochi.customer
+ALTER TABLE ONLY customer
     ADD CONSTRAINT customer_pkey PRIMARY KEY (rle_id);
 
 
 --
--- Name: order_line_ord_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: order_line order_line_ord_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY mochi.order_line
+ALTER TABLE ONLY order_line
     ADD CONSTRAINT order_line_ord_id_key UNIQUE (ord_id);
 
 
 --
--- Name: order_line_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: order_line order_line_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY mochi.order_line
+ALTER TABLE ONLY order_line
     ADD CONSTRAINT order_line_pkey PRIMARY KEY (ord_id, prd_id, ord_lne_no);
 
 
 --
--- Name: order_line_prd_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: order_line order_line_prd_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY mochi.order_line
+ALTER TABLE ONLY order_line
     ADD CONSTRAINT order_line_prd_id_key UNIQUE (prd_id);
 
 
 --
--- Name: orders_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: orders orders_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY mochi.orders
+ALTER TABLE ONLY orders
     ADD CONSTRAINT orders_pkey PRIMARY KEY (ord_id);
 
 
 --
--- Name: orders_pty_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: orders orders_pty_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY mochi.orders
+ALTER TABLE ONLY orders
     ADD CONSTRAINT orders_pty_id_key UNIQUE (pty_id);
 
 
 --
--- Name: organisation_org_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: organisation organisation_org_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY mochi.organisation
+ALTER TABLE ONLY organisation
     ADD CONSTRAINT organisation_org_id_key UNIQUE (org_id);
 
 
 --
--- Name: party_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: party party_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY mochi.party
+ALTER TABLE ONLY party
     ADD CONSTRAINT party_pkey PRIMARY KEY (pty_id);
 
 
 --
--- Name: party_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: party_type party_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY mochi.party_type
+ALTER TABLE ONLY party_type
     ADD CONSTRAINT party_type_pkey PRIMARY KEY (pty_typ_id);
 
 
 --
--- Name: party_type_pty_typ_desc_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: party_type party_type_pty_typ_desc_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY mochi.party_type
+ALTER TABLE ONLY party_type
     ADD CONSTRAINT party_type_pty_typ_desc_key UNIQUE (pty_typ_desc);
 
 
 --
--- Name: person_psn_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: person person_psn_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY mochi.person
+ALTER TABLE ONLY person
     ADD CONSTRAINT person_psn_id_key UNIQUE (psn_id);
 
 
 --
--- Name: product_attr_lcl_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: product_attr_lcl product_attr_lcl_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY mochi.product_attr_lcl
+ALTER TABLE ONLY product_attr_lcl
     ADD CONSTRAINT product_attr_lcl_pkey PRIMARY KEY (prd_lcl_id);
 
 
 --
--- Name: product_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: product product_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY mochi.product
+ALTER TABLE ONLY product
     ADD CONSTRAINT product_pkey PRIMARY KEY (prd_id);
 
 
 --
--- Name: role_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: role role_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY mochi.role
+ALTER TABLE ONLY role
     ADD CONSTRAINT role_pkey PRIMARY KEY (rle_id);
 
 
 --
--- Name: role_pty_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: role role_pty_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY mochi.role
+ALTER TABLE ONLY role
     ADD CONSTRAINT role_pty_id_key UNIQUE (pty_id);
 
 
 --
--- Name: role_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: role_type role_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY mochi.role_type
+ALTER TABLE ONLY role_type
     ADD CONSTRAINT role_type_pkey PRIMARY KEY (rle_typ_id);
 
 
 --
--- Name: role_type_rle_typ_desc_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: role_type role_type_rle_typ_desc_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY mochi.role_type
+ALTER TABLE ONLY role_type
     ADD CONSTRAINT role_type_rle_typ_desc_key UNIQUE (rle_typ_desc);
 
 
 --
--- Name: uc_prd_lcl_1; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: product_attr_lcl uc_prd_lcl_1; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY mochi.product_attr_lcl
+ALTER TABLE ONLY product_attr_lcl
     ADD CONSTRAINT uc_prd_lcl_1 UNIQUE (prd_id, lcl_cd);
 
 
+SET search_path = security, pg_catalog;
+
 --
--- Name: authority_name; Type: CONSTRAINT; Schema: security; Owner: security_owner
+-- Name: authority authority_name; Type: CONSTRAINT; Schema: security; Owner: security_owner
 --
 
-ALTER TABLE ONLY security.authority
+ALTER TABLE ONLY authority
     ADD CONSTRAINT authority_name UNIQUE (name);
 
 
 --
--- Name: authority_pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
+-- Name: authority authority_pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
 --
 
-ALTER TABLE ONLY security.authority
+ALTER TABLE ONLY authority
     ADD CONSTRAINT authority_pkey PRIMARY KEY (id);
 
 
 --
--- Name: clientdetails_pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
+-- Name: clientdetails clientdetails_pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
 --
 
-ALTER TABLE ONLY security.clientdetails
+ALTER TABLE ONLY clientdetails
     ADD CONSTRAINT clientdetails_pkey PRIMARY KEY (appid);
 
 
 --
--- Name: oauth_access_token_pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
+-- Name: oauth_access_token oauth_access_token_pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
 --
 
-ALTER TABLE ONLY security.oauth_access_token
+ALTER TABLE ONLY oauth_access_token
     ADD CONSTRAINT oauth_access_token_pkey PRIMARY KEY (authentication_id);
 
 
 --
--- Name: oauth_client_details_pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
+-- Name: oauth_client_details oauth_client_details_pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
 --
 
-ALTER TABLE ONLY security.oauth_client_details
+ALTER TABLE ONLY oauth_client_details
     ADD CONSTRAINT oauth_client_details_pkey PRIMARY KEY (client_id);
 
 
 --
--- Name: oauth_client_token_pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
+-- Name: oauth_client_token oauth_client_token_pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
 --
 
-ALTER TABLE ONLY security.oauth_client_token
+ALTER TABLE ONLY oauth_client_token
     ADD CONSTRAINT oauth_client_token_pkey PRIMARY KEY (authentication_id);
 
 
 --
--- Name: user___pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
+-- Name: user_ user___pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
 --
 
-ALTER TABLE ONLY security.user_
+ALTER TABLE ONLY user_
     ADD CONSTRAINT user___pkey PRIMARY KEY (pty_id);
 
 
 --
--- Name: user_user_name; Type: CONSTRAINT; Schema: security; Owner: security_owner
+-- Name: user_ user_user_name; Type: CONSTRAINT; Schema: security; Owner: security_owner
 --
 
-ALTER TABLE ONLY security.user_
+ALTER TABLE ONLY user_
     ADD CONSTRAINT user_user_name UNIQUE (user_name);
 
 
 --
--- Name: users_authorities_pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
+-- Name: users_authorities users_authorities_pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
 --
 
-ALTER TABLE ONLY security.users_authorities
+ALTER TABLE ONLY users_authorities
     ADD CONSTRAINT users_authorities_pkey PRIMARY KEY (user_id, authority_id);
 
+
+SET search_path = mochi, pg_catalog;
 
 --
 -- Name: role_role_typ_id_role_start_dttm_party_id_key; Type: INDEX; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE UNIQUE INDEX role_role_typ_id_role_start_dttm_party_id_key ON mochi.role USING btree (rle_typ_id, rle_start_dttm, pty_id);
+CREATE UNIQUE INDEX role_role_typ_id_role_start_dttm_party_id_key ON role USING btree (rle_typ_id, rle_start_dttm, pty_id);
 
 
 --
--- Name: customer_role_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: customer customer_role_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY mochi.customer
-    ADD CONSTRAINT customer_role_id_fkey FOREIGN KEY (rle_id) REFERENCES mochi.role(rle_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
-
-
---
--- Name: order_line_order_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY mochi.order_line
-    ADD CONSTRAINT order_line_order_id_fkey FOREIGN KEY (ord_id) REFERENCES mochi.orders(ord_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY customer
+    ADD CONSTRAINT customer_role_id_fkey FOREIGN KEY (rle_id) REFERENCES role(rle_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: order_line_product_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: order_line order_line_order_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY mochi.order_line
-    ADD CONSTRAINT order_line_product_id_fkey FOREIGN KEY (prd_id) REFERENCES mochi.product(prd_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
-
-
---
--- Name: orders_party_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY mochi.orders
-    ADD CONSTRAINT orders_party_id_fkey FOREIGN KEY (pty_id) REFERENCES mochi.party(pty_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY order_line
+    ADD CONSTRAINT order_line_order_id_fkey FOREIGN KEY (ord_id) REFERENCES orders(ord_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: organisation_org_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: order_line order_line_product_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY mochi.organisation
-    ADD CONSTRAINT organisation_org_id_fkey FOREIGN KEY (org_id) REFERENCES mochi.party(pty_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
-
-
---
--- Name: party_pty_typ_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY mochi.party
-    ADD CONSTRAINT party_pty_typ_id_fkey FOREIGN KEY (pty_typ_id) REFERENCES mochi.party_type(pty_typ_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY order_line
+    ADD CONSTRAINT order_line_product_id_fkey FOREIGN KEY (prd_id) REFERENCES product(prd_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: person_person_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: orders orders_party_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY mochi.person
-    ADD CONSTRAINT person_person_id_fkey FOREIGN KEY (psn_id) REFERENCES mochi.party(pty_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
-
-
---
--- Name: role_party_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY mochi.role
-    ADD CONSTRAINT role_party_id_fkey FOREIGN KEY (pty_id) REFERENCES mochi.party(pty_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY orders
+    ADD CONSTRAINT orders_party_id_fkey FOREIGN KEY (pty_id) REFERENCES party(pty_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: role_role_typ_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: organisation organisation_org_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY mochi.role
-    ADD CONSTRAINT role_role_typ_id_fkey FOREIGN KEY (rle_typ_id) REFERENCES mochi.role_type(rle_typ_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
-
-
---
--- Name: user__users_authorities; Type: FK CONSTRAINT; Schema: security; Owner: security_owner
---
-
-ALTER TABLE ONLY security.users_authorities
-    ADD CONSTRAINT user__users_authorities FOREIGN KEY (user_id) REFERENCES security.user_(pty_id);
+ALTER TABLE ONLY organisation
+    ADD CONSTRAINT organisation_org_id_fkey FOREIGN KEY (org_id) REFERENCES party(pty_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: users__party; Type: FK CONSTRAINT; Schema: security; Owner: security_owner
+-- Name: party party_pty_typ_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY security.user_
+ALTER TABLE ONLY party
+    ADD CONSTRAINT party_pty_typ_id_fkey FOREIGN KEY (pty_typ_id) REFERENCES party_type(pty_typ_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: person person_person_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY person
+    ADD CONSTRAINT person_person_id_fkey FOREIGN KEY (psn_id) REFERENCES party(pty_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: role role_party_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY role
+    ADD CONSTRAINT role_party_id_fkey FOREIGN KEY (pty_id) REFERENCES party(pty_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: role role_role_typ_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY role
+    ADD CONSTRAINT role_role_typ_id_fkey FOREIGN KEY (rle_typ_id) REFERENCES role_type(rle_typ_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+SET search_path = security, pg_catalog;
+
+--
+-- Name: users_authorities user__users_authorities; Type: FK CONSTRAINT; Schema: security; Owner: security_owner
+--
+
+ALTER TABLE ONLY users_authorities
+    ADD CONSTRAINT user__users_authorities FOREIGN KEY (user_id) REFERENCES user_(pty_id);
+
+
+--
+-- Name: user_ users__party; Type: FK CONSTRAINT; Schema: security; Owner: security_owner
+--
+
+ALTER TABLE ONLY user_
     ADD CONSTRAINT users__party FOREIGN KEY (pty_id) REFERENCES mochi.party(pty_id);
 
 
 --
--- Name: users_authorities_authority; Type: FK CONSTRAINT; Schema: security; Owner: security_owner
+-- Name: users_authorities users_authorities_authority; Type: FK CONSTRAINT; Schema: security; Owner: security_owner
 --
 
-ALTER TABLE ONLY security.users_authorities
-    ADD CONSTRAINT users_authorities_authority FOREIGN KEY (authority_id) REFERENCES security.authority(id);
+ALTER TABLE ONLY users_authorities
+    ADD CONSTRAINT users_authorities_authority FOREIGN KEY (authority_id) REFERENCES authority(id);
 
 
 --
--- Name: SCHEMA mochi; Type: ACL; Schema: -; Owner: mochidb_owner
+-- Name: mochi; Type: ACL; Schema: -; Owner: mochidb_owner
 --
 
-REVOKE ALL ON SCHEMA mochi FROM PUBLIC;
-REVOKE ALL ON SCHEMA mochi FROM mochidb_owner;
-GRANT ALL ON SCHEMA mochi TO mochidb_owner;
 GRANT USAGE ON SCHEMA mochi TO mochi_app;
 GRANT ALL ON SCHEMA mochi TO security_owner;
 GRANT USAGE ON SCHEMA mochi TO security_app;
 
 
 --
--- Name: SCHEMA public; Type: ACL; Schema: -; Owner: postgres
+-- Name: public; Type: ACL; Schema: -; Owner: danielmackie
 --
 
-REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM postgres;
 GRANT ALL ON SCHEMA public TO postgres;
-GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
 --
--- Name: SCHEMA security; Type: ACL; Schema: -; Owner: security_owner
+-- Name: security; Type: ACL; Schema: -; Owner: security_owner
 --
 
-REVOKE ALL ON SCHEMA security FROM PUBLIC;
-REVOKE ALL ON SCHEMA security FROM security_owner;
-GRANT ALL ON SCHEMA security TO security_owner;
-GRANT USAGE ON SCHEMA security TO security_app;
 GRANT USAGE ON SCHEMA security TO mochi_app;
+GRANT USAGE ON SCHEMA security TO security_app;
+
+
+SET search_path = mochi, pg_catalog;
+
+--
+-- Name: customer_cst_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT,USAGE ON SEQUENCE customer_cst_id_seq TO mochi_app;
 
 
 --
--- Name: SEQUENCE customer_cst_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: customer; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-REVOKE ALL ON SEQUENCE mochi.customer_cst_id_seq FROM PUBLIC;
-REVOKE ALL ON SEQUENCE mochi.customer_cst_id_seq FROM mochidb_owner;
-GRANT ALL ON SEQUENCE mochi.customer_cst_id_seq TO mochidb_owner;
-GRANT SELECT,USAGE ON SEQUENCE mochi.customer_cst_id_seq TO mochi_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE customer TO mochi_app;
+GRANT SELECT ON TABLE customer TO security_app;
 
 
 --
--- Name: TABLE customer; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: hibernate_sequence; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-REVOKE ALL ON TABLE mochi.customer FROM PUBLIC;
-REVOKE ALL ON TABLE mochi.customer FROM mochidb_owner;
-GRANT ALL ON TABLE mochi.customer TO mochidb_owner;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.customer TO mochi_app;
-GRANT SELECT ON TABLE mochi.customer TO security_app;
+GRANT SELECT,USAGE ON SEQUENCE hibernate_sequence TO mochi_app;
 
 
 --
--- Name: SEQUENCE hibernate_sequence; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: order_line; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-REVOKE ALL ON SEQUENCE mochi.hibernate_sequence FROM PUBLIC;
-REVOKE ALL ON SEQUENCE mochi.hibernate_sequence FROM mochidb_owner;
-GRANT ALL ON SEQUENCE mochi.hibernate_sequence TO mochidb_owner;
-GRANT SELECT,USAGE ON SEQUENCE mochi.hibernate_sequence TO mochi_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE order_line TO mochi_app;
 
 
 --
--- Name: TABLE order_line; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: orders; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-REVOKE ALL ON TABLE mochi.order_line FROM PUBLIC;
-REVOKE ALL ON TABLE mochi.order_line FROM mochidb_owner;
-GRANT ALL ON TABLE mochi.order_line TO mochidb_owner;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.order_line TO mochi_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE orders TO mochi_app;
 
 
 --
--- Name: TABLE orders; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: organisation; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-REVOKE ALL ON TABLE mochi.orders FROM PUBLIC;
-REVOKE ALL ON TABLE mochi.orders FROM mochidb_owner;
-GRANT ALL ON TABLE mochi.orders TO mochidb_owner;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.orders TO mochi_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE organisation TO mochi_app;
+GRANT SELECT ON TABLE organisation TO security_app;
 
 
 --
--- Name: TABLE organisation; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: party; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-REVOKE ALL ON TABLE mochi.organisation FROM PUBLIC;
-REVOKE ALL ON TABLE mochi.organisation FROM mochidb_owner;
-GRANT ALL ON TABLE mochi.organisation TO mochidb_owner;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.organisation TO mochi_app;
-GRANT SELECT ON TABLE mochi.organisation TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE party TO mochi_app;
+GRANT SELECT ON TABLE party TO security_app;
 
 
 --
--- Name: TABLE party; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: party_party_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-REVOKE ALL ON TABLE mochi.party FROM PUBLIC;
-REVOKE ALL ON TABLE mochi.party FROM mochidb_owner;
-GRANT ALL ON TABLE mochi.party TO mochidb_owner;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.party TO mochi_app;
-GRANT SELECT ON TABLE mochi.party TO security_app;
+GRANT SELECT,USAGE ON SEQUENCE party_party_id_seq TO mochi_app;
 
 
 --
--- Name: SEQUENCE party_party_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: party_pty_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-REVOKE ALL ON SEQUENCE mochi.party_party_id_seq FROM PUBLIC;
-REVOKE ALL ON SEQUENCE mochi.party_party_id_seq FROM mochidb_owner;
-GRANT ALL ON SEQUENCE mochi.party_party_id_seq TO mochidb_owner;
-GRANT SELECT,USAGE ON SEQUENCE mochi.party_party_id_seq TO mochi_app;
+GRANT SELECT,USAGE ON SEQUENCE party_pty_id_seq TO mochi_app;
 
 
 --
--- Name: SEQUENCE party_pty_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: party_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-REVOKE ALL ON SEQUENCE mochi.party_pty_id_seq FROM PUBLIC;
-REVOKE ALL ON SEQUENCE mochi.party_pty_id_seq FROM mochidb_owner;
-GRANT ALL ON SEQUENCE mochi.party_pty_id_seq TO mochidb_owner;
-GRANT SELECT,USAGE ON SEQUENCE mochi.party_pty_id_seq TO mochi_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE party_type TO mochi_app;
+GRANT SELECT ON TABLE party_type TO security_app;
 
 
 --
--- Name: TABLE party_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: party_type_pty_typ_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-REVOKE ALL ON TABLE mochi.party_type FROM PUBLIC;
-REVOKE ALL ON TABLE mochi.party_type FROM mochidb_owner;
-GRANT ALL ON TABLE mochi.party_type TO mochidb_owner;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.party_type TO mochi_app;
-GRANT SELECT ON TABLE mochi.party_type TO security_app;
+GRANT SELECT,USAGE ON SEQUENCE party_type_pty_typ_id_seq TO mochi_app;
 
 
 --
--- Name: SEQUENCE party_type_pty_typ_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: person; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-REVOKE ALL ON SEQUENCE mochi.party_type_pty_typ_id_seq FROM PUBLIC;
-REVOKE ALL ON SEQUENCE mochi.party_type_pty_typ_id_seq FROM mochidb_owner;
-GRANT ALL ON SEQUENCE mochi.party_type_pty_typ_id_seq TO mochidb_owner;
-GRANT SELECT,USAGE ON SEQUENCE mochi.party_type_pty_typ_id_seq TO mochi_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE person TO mochi_app;
+GRANT SELECT ON TABLE person TO security_app;
 
 
 --
--- Name: TABLE person; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: person_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-REVOKE ALL ON TABLE mochi.person FROM PUBLIC;
-REVOKE ALL ON TABLE mochi.person FROM mochidb_owner;
-GRANT ALL ON TABLE mochi.person TO mochidb_owner;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.person TO mochi_app;
-GRANT SELECT ON TABLE mochi.person TO security_app;
+GRANT SELECT,USAGE ON SEQUENCE person_id_seq TO mochi_app;
 
 
 --
--- Name: SEQUENCE person_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: product; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-REVOKE ALL ON SEQUENCE mochi.person_id_seq FROM PUBLIC;
-REVOKE ALL ON SEQUENCE mochi.person_id_seq FROM mochidb_owner;
-GRANT ALL ON SEQUENCE mochi.person_id_seq TO mochidb_owner;
-GRANT SELECT,USAGE ON SEQUENCE mochi.person_id_seq TO mochi_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE product TO mochi_app;
 
 
 --
--- Name: TABLE product; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: product_attr_lcl; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-REVOKE ALL ON TABLE mochi.product FROM PUBLIC;
-REVOKE ALL ON TABLE mochi.product FROM mochidb_owner;
-GRANT ALL ON TABLE mochi.product TO mochidb_owner;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.product TO mochi_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE product_attr_lcl TO mochi_app;
 
 
 --
--- Name: TABLE product_attr_lcl; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: role_rle_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-REVOKE ALL ON TABLE mochi.product_attr_lcl FROM PUBLIC;
-REVOKE ALL ON TABLE mochi.product_attr_lcl FROM mochidb_owner;
-GRANT ALL ON TABLE mochi.product_attr_lcl TO mochidb_owner;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.product_attr_lcl TO mochi_app;
+GRANT SELECT,USAGE ON SEQUENCE role_rle_id_seq TO mochi_app;
 
 
 --
--- Name: SEQUENCE role_rle_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: role; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-REVOKE ALL ON SEQUENCE mochi.role_rle_id_seq FROM PUBLIC;
-REVOKE ALL ON SEQUENCE mochi.role_rle_id_seq FROM mochidb_owner;
-GRANT ALL ON SEQUENCE mochi.role_rle_id_seq TO mochidb_owner;
-GRANT SELECT,USAGE ON SEQUENCE mochi.role_rle_id_seq TO mochi_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role TO mochi_app;
+GRANT SELECT ON TABLE role TO security_app;
 
 
 --
--- Name: TABLE role; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: role_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-REVOKE ALL ON TABLE mochi.role FROM PUBLIC;
-REVOKE ALL ON TABLE mochi.role FROM mochidb_owner;
-GRANT ALL ON TABLE mochi.role TO mochidb_owner;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.role TO mochi_app;
-GRANT SELECT ON TABLE mochi.role TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role_type TO mochi_app;
+GRANT SELECT ON TABLE role_type TO security_app;
 
 
 --
--- Name: TABLE role_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: role_type_rle_typ_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-REVOKE ALL ON TABLE mochi.role_type FROM PUBLIC;
-REVOKE ALL ON TABLE mochi.role_type FROM mochidb_owner;
-GRANT ALL ON TABLE mochi.role_type TO mochidb_owner;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.role_type TO mochi_app;
-GRANT SELECT ON TABLE mochi.role_type TO security_app;
+GRANT SELECT,USAGE ON SEQUENCE role_type_rle_typ_id_seq TO mochi_app;
 
 
 --
--- Name: SEQUENCE role_type_rle_typ_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: role_type_role_typ_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-REVOKE ALL ON SEQUENCE mochi.role_type_rle_typ_id_seq FROM PUBLIC;
-REVOKE ALL ON SEQUENCE mochi.role_type_rle_typ_id_seq FROM mochidb_owner;
-GRANT ALL ON SEQUENCE mochi.role_type_rle_typ_id_seq TO mochidb_owner;
-GRANT SELECT,USAGE ON SEQUENCE mochi.role_type_rle_typ_id_seq TO mochi_app;
+GRANT SELECT,USAGE ON SEQUENCE role_type_role_typ_id_seq TO mochi_app;
 
+
+SET search_path = security, pg_catalog;
 
 --
--- Name: SEQUENCE role_type_role_typ_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: authority; Type: ACL; Schema: security; Owner: security_owner
 --
 
-REVOKE ALL ON SEQUENCE mochi.role_type_role_typ_id_seq FROM PUBLIC;
-REVOKE ALL ON SEQUENCE mochi.role_type_role_typ_id_seq FROM mochidb_owner;
-GRANT ALL ON SEQUENCE mochi.role_type_role_typ_id_seq TO mochidb_owner;
-GRANT SELECT,USAGE ON SEQUENCE mochi.role_type_role_typ_id_seq TO mochi_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE authority TO security_app;
 
 
 --
--- Name: TABLE authority; Type: ACL; Schema: security; Owner: security_owner
+-- Name: authority_id_seq; Type: ACL; Schema: security; Owner: security_owner
 --
 
-REVOKE ALL ON TABLE security.authority FROM PUBLIC;
-REVOKE ALL ON TABLE security.authority FROM security_owner;
-GRANT ALL ON TABLE security.authority TO security_owner;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE security.authority TO security_app;
+GRANT SELECT,USAGE ON SEQUENCE authority_id_seq TO mochi_app;
 
 
 --
--- Name: SEQUENCE authority_id_seq; Type: ACL; Schema: security; Owner: security_owner
+-- Name: clientdetails; Type: ACL; Schema: security; Owner: security_owner
 --
 
-REVOKE ALL ON SEQUENCE security.authority_id_seq FROM PUBLIC;
-REVOKE ALL ON SEQUENCE security.authority_id_seq FROM security_owner;
-GRANT ALL ON SEQUENCE security.authority_id_seq TO security_owner;
-GRANT SELECT,USAGE ON SEQUENCE security.authority_id_seq TO mochi_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE clientdetails TO security_app;
 
 
 --
--- Name: TABLE clientdetails; Type: ACL; Schema: security; Owner: security_owner
+-- Name: oauth_access_token; Type: ACL; Schema: security; Owner: security_owner
 --
 
-REVOKE ALL ON TABLE security.clientdetails FROM PUBLIC;
-REVOKE ALL ON TABLE security.clientdetails FROM security_owner;
-GRANT ALL ON TABLE security.clientdetails TO security_owner;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE security.clientdetails TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_access_token TO security_app;
 
 
 --
--- Name: TABLE oauth_access_token; Type: ACL; Schema: security; Owner: security_owner
+-- Name: oauth_approvals; Type: ACL; Schema: security; Owner: security_owner
 --
 
-REVOKE ALL ON TABLE security.oauth_access_token FROM PUBLIC;
-REVOKE ALL ON TABLE security.oauth_access_token FROM security_owner;
-GRANT ALL ON TABLE security.oauth_access_token TO security_owner;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE security.oauth_access_token TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_approvals TO security_app;
 
 
 --
--- Name: TABLE oauth_approvals; Type: ACL; Schema: security; Owner: security_owner
+-- Name: oauth_client_details; Type: ACL; Schema: security; Owner: security_owner
 --
 
-REVOKE ALL ON TABLE security.oauth_approvals FROM PUBLIC;
-REVOKE ALL ON TABLE security.oauth_approvals FROM security_owner;
-GRANT ALL ON TABLE security.oauth_approvals TO security_owner;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE security.oauth_approvals TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_client_details TO security_app;
 
 
 --
--- Name: TABLE oauth_client_details; Type: ACL; Schema: security; Owner: security_owner
+-- Name: oauth_client_token; Type: ACL; Schema: security; Owner: security_owner
 --
 
-REVOKE ALL ON TABLE security.oauth_client_details FROM PUBLIC;
-REVOKE ALL ON TABLE security.oauth_client_details FROM security_owner;
-GRANT ALL ON TABLE security.oauth_client_details TO security_owner;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE security.oauth_client_details TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_client_token TO security_app;
 
 
 --
--- Name: TABLE oauth_client_token; Type: ACL; Schema: security; Owner: security_owner
+-- Name: oauth_code; Type: ACL; Schema: security; Owner: security_owner
 --
 
-REVOKE ALL ON TABLE security.oauth_client_token FROM PUBLIC;
-REVOKE ALL ON TABLE security.oauth_client_token FROM security_owner;
-GRANT ALL ON TABLE security.oauth_client_token TO security_owner;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE security.oauth_client_token TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_code TO security_app;
 
 
 --
--- Name: TABLE oauth_code; Type: ACL; Schema: security; Owner: security_owner
+-- Name: oauth_refresh_token; Type: ACL; Schema: security; Owner: security_owner
 --
 
-REVOKE ALL ON TABLE security.oauth_code FROM PUBLIC;
-REVOKE ALL ON TABLE security.oauth_code FROM security_owner;
-GRANT ALL ON TABLE security.oauth_code TO security_owner;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE security.oauth_code TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_refresh_token TO security_app;
 
 
 --
--- Name: TABLE oauth_refresh_token; Type: ACL; Schema: security; Owner: security_owner
+-- Name: user_; Type: ACL; Schema: security; Owner: security_owner
 --
 
-REVOKE ALL ON TABLE security.oauth_refresh_token FROM PUBLIC;
-REVOKE ALL ON TABLE security.oauth_refresh_token FROM security_owner;
-GRANT ALL ON TABLE security.oauth_refresh_token TO security_owner;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE security.oauth_refresh_token TO security_app;
+GRANT SELECT,INSERT,UPDATE ON TABLE user_ TO mochi_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_ TO security_app;
 
 
 --
--- Name: TABLE user_; Type: ACL; Schema: security; Owner: security_owner
+-- Name: users_authorities; Type: ACL; Schema: security; Owner: security_owner
 --
 
-REVOKE ALL ON TABLE security.user_ FROM PUBLIC;
-REVOKE ALL ON TABLE security.user_ FROM security_owner;
-GRANT ALL ON TABLE security.user_ TO security_owner;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE security.user_ TO security_app;
-GRANT SELECT,INSERT,UPDATE ON TABLE security.user_ TO mochi_app;
-
-
---
--- Name: TABLE users_authorities; Type: ACL; Schema: security; Owner: security_owner
---
-
-REVOKE ALL ON TABLE security.users_authorities FROM PUBLIC;
-REVOKE ALL ON TABLE security.users_authorities FROM security_owner;
-GRANT ALL ON TABLE security.users_authorities TO security_owner;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE security.users_authorities TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE users_authorities TO security_app;
 
 
 --
