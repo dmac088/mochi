@@ -22,13 +22,11 @@ public class PersonController {
 	@Autowired
 	private PersonService personService;	
 	
-
 	@GetMapping("/Person")
     public List<Person> getAllPersons() {
 		System.out.println("calling getAllPersons");
         return personService.getAllPersons();
     }	
-	
 	
 	@GetMapping("/Person/{id}")
 	public Person getPerson(@PathVariable Long id) {

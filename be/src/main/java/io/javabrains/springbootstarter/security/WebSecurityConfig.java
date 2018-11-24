@@ -26,7 +26,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
-@Order(SecurityProperties.BASIC_AUTH_ORDER)
+@Order(SecurityProperties.BASIC_AUTH_ORDER-2)
 @Import(Encoders.class)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	 
@@ -51,24 +51,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(userPasswordEncoder);
     }
 	
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-     
-        .csrf()
-        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-        .and()
-	    .authorizeRequests()
-	    	/*access to any files with certain expensions*/
-	        .antMatchers("/**/*.{js,html,css}").permitAll()
-	        
-	        /*api permits*/
-	        .antMatchers("/", "/api/**", "/oauth/token").permitAll()
-	        
-	        .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
-	        
-	        .anyRequest().authenticated();
-    }
     
     // During development, webpack server runs on localhost:8080
     // Make the browser happy by returning CORS headers in this case
