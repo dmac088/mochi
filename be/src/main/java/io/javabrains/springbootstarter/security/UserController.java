@@ -29,12 +29,12 @@ public class UserController {
 		return userService.loadUserByUsername(username);
 	}
 	
-	
-	@PostMapping("/User")
-	public ResponseEntity<User> addUser(@RequestBody User user) {
-		System.out.println("calling addPuser");
-		userService.addUser(user);
-		return new ResponseEntity<User>(user, HttpStatus.OK);
-	}
-	
+//	
+//	@PostMapping("/User")
+//	public ResponseEntity<User> addUser(@RequestBody User user) {
+//		System.out.println("calling addPuser");
+//		userService.addUser(user);
+//		return new ResponseEntity<User>(user, HttpStatus.OK);
+//	}
+//	
 }
