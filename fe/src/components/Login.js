@@ -10,12 +10,12 @@ class Login extends Component {
 
   constructor(props) {
     super(props);
-    this.state = this.initialStateLogin;
+    this.state = initialStateLogin();
     store.subscribe(this.reduxSubscribedFunction);
   }
 
   reduxSubscribedFunction = () => {
-    console.log('subscribed function triggered');
+    console.log('login subscribed function triggered');
   }
 
   autoLogin = () =>  {
@@ -153,6 +153,7 @@ class Login extends Component {
           {this.renderLoginButton()}
           {this.renderLogoutButton()}
           {this.rendersignupButton()}
+          
         </div>
       );
     }

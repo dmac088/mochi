@@ -41,11 +41,11 @@ public abstract class Party {
 	@JoinColumn(name="pty_typ_id", nullable=false, updatable = false, insertable = true)
 	private PartyType partyType;
 
-	@OneToMany(mappedBy="roleParty", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="roleParty", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonManagedReference
 	private List<Role> partyRoles = new ArrayList<Role>();
 	
-	@OneToOne(mappedBy="userParty", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToOne(mappedBy="userParty", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonManagedReference
     private User partyUser;
 

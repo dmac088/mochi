@@ -16,18 +16,14 @@ class Signup extends Component {
   }
 
   reduxSubscribedFunction = () => {
-    console.log('subscribed function triggered');
+    console.log('signup subscribed function triggered');
   }
 
   updateCustomerState = (event) =>  {
     let newstate = {...this.state};
     deepValue(newstate, event.target.id, event.target.value);
-    this.setState({
-       'givenNameEn': newstate.givenNameEn,
-       'familyNameEn': newstate.familyNameEn,
-       'username': newstate.username,
-       'password': newstate.password
-    });
+    this.setState(newstate);
+    console.log(this.state.customer);
   }
 
   signupClick = (event) => {
@@ -37,26 +33,21 @@ class Signup extends Component {
       error: '',
     });
 
-    console.log(this.state.givenNameEn);
-    console.log(this.state.familyNameEn);
-    console.log(this.state.username);
-    console.log(this.state.password);
+    //const { givenNameEn, familyNameEn, username, password } = this.state;
+    customersApi.create(this.state.customer)
+      .then((response) => {
+            return response.text();
+      }).then((responseText) => {
+            console.log(responseText);
+            console.log('authenticate');
+      }).then(() => {
 
-    const { givenNameEn, familyNameEn, username, password } = this.state;
-    console.log(customersApi.create({givenNameEn, familyNameEn, username, password}));
-    return;
-    customersApi.create({givenNameEn, familyNameEn, username, password})
-    .then(() => {
-    //  session.authenticate(username, password)
-    console.log('authenticate')
-      .then(() => {
         //the following is fine since child component props are listening to the redux state
         //therefore there is no problem with overriding local state
         this.setState(this.initialStateSignup);
         //const routeStack = this.props.navigator.getCurrentRoutes();
         //this.props.navigator.jumpTo(routeStack[3]);
-      });
-    })
+      })
     .catch((exception) => {
       // Displays only the first error message
       const error = api.exceptionExtractError(exception);
@@ -86,7 +77,7 @@ class Signup extends Component {
                 <input
                   type="text"
                   className="form-control"
-                  id="givenNameEn"
+                  id="customer.givenNameEn"
                   onChange={this.updateCustomerState}
                   placeholder="First Name"
                   required />
@@ -101,7 +92,7 @@ class Signup extends Component {
                 <input
                   type="text"
                   className="form-control"
-                  id="familyNameEn"
+                  id="customer.familyNameEn"
                   onChange={this.updateCustomerState}
                   placeholder="Last Name"
                   required />
@@ -116,7 +107,7 @@ class Signup extends Component {
                 <input
                   type="text"
                   className="form-control"
-                  id="username"
+                  id="customer.partyUser.username"
                   onChange={this.updateCustomerState}
                   placeholder="you@placeholder.com"
                   required />
@@ -134,7 +125,7 @@ class Signup extends Component {
               <input
                 type="password"
                 className="form-control"
-                id="password"
+                id="customer.partyUser.password"
                 onChange={this.updateCustomerState}
                 placeholder="Password" />
             </div>
@@ -150,6 +141,7 @@ class Signup extends Component {
         <div className="col-md-3 order-md-3">
         </div>
       </div>
+      <p>{'test = ' + this.props.user.authenticated}</p>
     </div>
       );
   }
@@ -157,14 +149,36 @@ class Signup extends Component {
 
 
 const initialStateSignup = () => {
-  return  JSON.parse('{"isLoading": false,  "error": null,"username": "","password": "","givenNameEn": "", "familyNameEn": ""}');
+  return  JSON.parse('{"customer": {\
+                          "@class": ".Person",\
+                          "partyRoles": [\
+                              {\
+                                  "@class": ".Customer",\
+                                  "customerNumber": "",\
+                                  "roleStart": "2018-11-14T16:00:00.000+0000"\
+                              }\
+                          ],\
+                          "partyUser": {\
+                              "username": "",\
+                              "password": "",\
+                              "enabled": true,\
+                              "accountNonExpired": true,\
+                              "accountNonLocked": true,\
+                              "credentialsNonExpired": true\
+                          },\
+                          "givenNameEn": "",\
+                          "familyNameEn": "",\
+                          "nameCn": ""\
+                      }}');
 };
 
 
 const mapStateToProps = (state) => {
   return {
-    //take value from reducer, alias used in combinReducers in ./data/reducer.js
-    user: state.services.session.user
+    //take value from reducer, alias used in combineReducers in ./data/reducer.js
+    //state is not local state it is the parameter (state)
+    user: state.services.session.user,
+    customer: state.customer
   };
 };
 
