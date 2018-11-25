@@ -31,7 +31,7 @@ export const fetchApi = (endPoint, payload = {}, formData = {}, method = 'get', 
 				let encodedValue = encodeURIComponent(formData[property]);
 				formBody.push(encodedKey + "=" + encodedValue);
 		}
-		
+
 	if(method.toLowerCase() === 'post') {
 		formBody.push(JSON.stringify(payload));
 	}
