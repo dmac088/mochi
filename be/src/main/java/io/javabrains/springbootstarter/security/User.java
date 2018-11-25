@@ -5,12 +5,18 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import com.google.common.collect.Iterables;
+
 import io.javabrains.springbootstarter.domain.Party;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -23,6 +29,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -62,11 +69,16 @@ public class User implements UserDetails, Serializable {
     @JoinColumn(name="pty_id")
     private Party userParty;
     
-	@ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "USERS_AUTHORITIES", schema="security", joinColumns = @JoinColumn(name = "USER_ID", referencedColumnName = "pty_id"), inverseJoinColumns = @JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "ID"))
+    
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "USER_ROLE", schema="security", 
+    		   joinColumns 			= @JoinColumn(name = "pty_id"/*, referencedColumnName = "pty_id"*/), 
+    		   inverseJoinColumns 	= @JoinColumn(name = "role_id"/*, referencedColumnName = "role_id"*/))
     @OrderBy
     @JsonIgnore
-    private Collection<Authority> authorities;
+    private Collection<UserRole> roles;
+    
+ 
 
     @Override
     public boolean isAccountNonExpired() {
@@ -86,7 +98,13 @@ public class User implements UserDetails, Serializable {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
-		return this.authorities;
+		//create a new array and return it
+		Collection<GrantedAuthority> colNewAuth = new ArrayList<GrantedAuthority>();
+		
+		 for(UserRole ur : roles) {
+	            colNewAuth.addAll(ur.getAuthorities());
+	     }
+		return colNewAuth;
 	}
 
 	@Override

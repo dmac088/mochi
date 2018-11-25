@@ -12,7 +12,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "AUTHORITY", schema="security")
+@Table(name = "PERMISSION", schema="security")
 @Getter
 @Setter
 @EqualsAndHashCode(of = "id")
