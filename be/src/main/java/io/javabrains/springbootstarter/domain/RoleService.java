@@ -16,7 +16,7 @@ public class RoleService {
 	@Autowired
 	private RoleRepository RoleRepository; 
 	
-	@PreAuthorize("hasRole('ROLE_READER')")
+	@PreAuthorize("hasAuthority('ROLE_READER')")
 	@Transactional(readOnly = true)
 	public List<Role> getAllRoles() {
 		List<Role> Roles = new ArrayList<>();

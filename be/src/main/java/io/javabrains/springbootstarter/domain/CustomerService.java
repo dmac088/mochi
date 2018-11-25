@@ -16,7 +16,7 @@ public class CustomerService {
 	private CustomCustomerRepository customerRepository; 
 
 	
-	@PreAuthorize("hasRole('CUSTOMER_READER')")
+	@PreAuthorize("hasAuthority('CUSTOMER_READER')")
 	@Transactional(readOnly = true)
 	public List<Customer> getAllCustomers() {
 		return customerRepository.findAll();

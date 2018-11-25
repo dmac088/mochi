@@ -15,7 +15,7 @@ public class PartyService {
 	@Autowired
 	private PartyRepository PartyRepository; 
 	
-	@PreAuthorize("hasRole('PARTY_READER')")
+	@PreAuthorize("hasAuthority('PARTY_READER')")
 	@Transactional(readOnly = true)
 	public List<Party> getAllPartys() {
 		List<Party> Partys = new ArrayList<>();
@@ -26,7 +26,7 @@ public class PartyService {
 		return Partys;
 	}
 	
-	@PreAuthorize("hasRole('PARTY_READER')")
+	@PreAuthorize("hasAuthority('PARTY_READER')")
 	@Transactional(readOnly = true)
 	public List<Party> getAllPartys(String roleTypeDesc) {
 		List<Party> Partys = new ArrayList<>();
