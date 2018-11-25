@@ -38,6 +38,10 @@ public class UserRole implements Serializable {
     @JsonIgnore
     private Collection<Authority> authorities;
 
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	@ManyToMany(mappedBy = "roles")
     private Collection<User> Users;
 	

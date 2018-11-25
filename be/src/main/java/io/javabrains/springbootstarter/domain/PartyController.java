@@ -48,10 +48,9 @@ public class PartyController {
 	
 	
 	@RequestMapping(method=RequestMethod.POST, value="/Party")
-	public String addParty( Party Party) {
+	public void addParty( Party Party) {
 		System.out.println("calling addParty");
 		PartyService.addParty(Party);
-		return "login";
 	}
 	
 	@ResponseBody
