@@ -33,11 +33,7 @@ class Login extends Component {
     console.log('customer state changed');
     let newstate = {...this.state};
     deepValue(newstate, event.target.id, event.target.value);
-    this.setState({
-       'username': newstate.username,
-       'password': newstate.password,
-       'firstName': newstate.firstName,
-    });
+    this.setState(newstate);
   }
 
   loginClick = (event) => {
@@ -153,7 +149,7 @@ class Login extends Component {
           {this.renderLoginButton()}
           {this.renderLogoutButton()}
           {this.rendersignupButton()}
-          
+
         </div>
       );
     }
@@ -170,10 +166,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     //take value from reducer, alias used in combineReducers in ./data/reducer.js
-    setAuthenticated: (auth) => {
+    setAuthenticated: (customer) => {
       dispatch({
-        type: "SET_AUTH",
-        payload: auth
+        type: "SET_CUSTOMER",
+        payload: customer
       })
     }
   };

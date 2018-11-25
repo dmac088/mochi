@@ -36,6 +36,11 @@ class Signup extends Component {
     //const { givenNameEn, familyNameEn, username, password } = this.state;
     customersApi.create(this.state.customer)
       .then((response) => {
+            //accroding to the article there is no need to update teh store with the
+            //but I still want to do it but make no sense to do it here
+            //we could leverage the session class and put a create method there which sets the redux store state (customer)
+            //or create an independent service folder with classes ??? i.e. /project/services/customer/
+            //store.dispatch(actionCreators.update({ tokens, user: reformTokens.user }));
             return response.text();
       }).then((responseText) => {
             console.log(responseText);
@@ -142,6 +147,8 @@ class Signup extends Component {
         </div>
       </div>
       <p>{'test = ' + this.props.user.authenticated}</p>
+      <p>{'username = ' + this.props.user.username}</p>
+
     </div>
       );
   }
@@ -174,11 +181,14 @@ const initialStateSignup = () => {
 
 
 const mapStateToProps = (state) => {
+  console.log("the state is .....");
+  console.log(state);
   return {
+
     //take value from reducer, alias used in combineReducers in ./data/reducer.js
     //state is not local state it is the parameter (state)
     user: state.services.session.user,
-    customer: state.customer
+    customer: state.data.customers
   };
 };
 
