@@ -3,8 +3,8 @@ import { fetchApi } from '../../services/api';
 const endPoints = {
 	create: '/users',
 	get: '/users',
-}; 
+};
 
-export const create = payload => fetchApi(endPoints.create, payload, 'post');
+export const create = payload => fetchApi(endPoints.create, payload, {}, 'post');
 
-export const get = payload => fetchApi(endPoints.get, payload, 'get');
+export const get = payload => fetchApi(endPoints.get, payload, {}, 'get');
