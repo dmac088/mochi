@@ -17,6 +17,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -70,17 +71,19 @@ public class User implements UserDetails, Serializable {
     private Party userParty;
     
     
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinTable(name = "USER_ROLE", schema="security", 
     		   joinColumns 			= @JoinColumn(name = "pty_id"/*, referencedColumnName = "pty_id"*/), 
     		   inverseJoinColumns 	= @JoinColumn(name = "role_id"/*, referencedColumnName = "role_id"*/))
     @OrderBy
-    @JsonIgnore
+    //@JsonIgnore
     private Collection<UserRole> roles;
     
- 
+    public Collection<UserRole> getRoles() {
+		return roles;
+	}
 
-    @Override
+	@Override
     public boolean isAccountNonExpired() {
         return !accountExpired;
     } 
@@ -96,6 +99,7 @@ public class User implements UserDetails, Serializable {
     }
 
 	@Override
+	@JsonIgnore
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
 		//create a new array and return it
