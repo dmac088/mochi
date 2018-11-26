@@ -42,8 +42,10 @@ public class PersonController {
 	}
 	
 
+	
 	@PostMapping("/Customer/Signup")
 	public ResponseEntity<Person> addPerson(@RequestBody Person person) {
+		//should this go into an existing service class or a new one?
 		person.getPartyUser().setUserRoles(new ArrayList<UserRole>());
 		person.getPartyUser().addUserRole(userRoleService.loadUserRoleByRoleName("CUSTOMER"));
 		personService.addPerson(person);
