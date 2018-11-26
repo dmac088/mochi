@@ -42,7 +42,7 @@ public class PersonController {
 	}
 	
 
-	@PostMapping("/Customer/Registration")
+	@PostMapping("/Customer/Signup")
 	public ResponseEntity<Person> addPerson(@RequestBody Person person) {
 		person.getPartyUser().setUserRoles(new ArrayList<UserRole>());
 		person.getPartyUser().addUserRole(userRoleService.loadUserRoleByRoleName("CUSTOMER"));
