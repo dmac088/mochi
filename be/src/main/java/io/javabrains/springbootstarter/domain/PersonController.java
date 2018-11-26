@@ -47,16 +47,27 @@ public class PersonController {
 	
 	@PostMapping("/Customer/Signup")
 	public ResponseEntity<Person> addPerson(@RequestBody Person person) {
-		//should this go into an existing service class or a new one?
-		//System.out.println(person.getPartyRoles() == null);
+		//Should this go into an existing service class or a new one?
+				
+		//create the role object
 		person.setPartyRoles(new ArrayList<Role>());
 		Customer c1 = new Customer();
 		c1.setRoleStart(new Date());
+		
+		//add the role to person
 		person.addRole(c1);
+		
+		//add the person to role
 		c1.setRoleParty(person);
+		
+		//add the user object
 		person.getPartyUser().setUserRoles(new ArrayList<UserRole>());
 		person.getPartyUser().addUserRole(userRoleService.loadUserRoleByRoleName("CUSTOMER"));
+		
+		//persist the parent
 		personService.addPerson(person);
+		
+		//return the response entity
 		return new ResponseEntity<Person>(person, HttpStatus.OK);
 	}
 	
