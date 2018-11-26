@@ -48,7 +48,7 @@ public class Role {
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional=false)
 	@JoinColumn(name="pty_id", nullable=false)
 	private Party roleParty;
-	
+
 
 	public Role() {
 		
@@ -84,6 +84,10 @@ public class Role {
 
 	public void setRoleStart(Date roleStart) {
 		RoleStart = roleStart;
+	}
+	
+	public String getClassName() {
+		return this.getClass().toString();
 	}
 	
 }
