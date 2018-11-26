@@ -9,6 +9,7 @@ import com.google.common.collect.Iterables;
 
 import io.javabrains.springbootstarter.domain.Party;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -71,7 +72,7 @@ public class User implements UserDetails, Serializable {
     private Party userParty;
     
     
-    @ManyToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "USER_ROLE", schema="security", 
     		   joinColumns 			= @JoinColumn(name = "pty_id"), 
     		   inverseJoinColumns 	= @JoinColumn(name = "role_id"))
@@ -80,7 +81,7 @@ public class User implements UserDetails, Serializable {
     private Collection<UserRole> roles;
     
     public Collection<UserRole> getRoles() {
-		return roles;
+		return this.roles;
 	}
 
 	@Override

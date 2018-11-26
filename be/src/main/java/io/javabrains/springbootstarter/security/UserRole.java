@@ -2,7 +2,6 @@ package io.javabrains.springbootstarter.security;
 
 import java.io.Serializable;
 import java.util.Collection;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,9 +13,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,24 +25,17 @@ import lombok.Setter;
 @EqualsAndHashCode(of = "id")
 public class UserRole implements Serializable {
 	
-
 	@ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(						//the table that manages the many to many relationship
     								name = "ROLE_PERMISSION", schema="security", 
     								joinColumns 		= @JoinColumn(name = "role_id"), 
     								inverseJoinColumns 	= @JoinColumn(name = "permission_id"))
-    
 	@OrderBy
     @JsonIgnore
     private Collection<Authority> authorities;
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	@ManyToMany(mappedBy = "roles")
     private Collection<User> Users;
-	
 	
     public Collection<Authority> getAuthorities() {
 		return authorities;
@@ -59,6 +49,10 @@ public class UserRole implements Serializable {
     @Column(name = "NAME")
     private String name;
     
+    public UserRole() {
+    	
+    }
+    
 	public Long getId() {
 		return Id;
 	}
@@ -67,4 +61,11 @@ public class UserRole implements Serializable {
 		Id = id;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 }
