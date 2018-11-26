@@ -18,6 +18,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserService implements UserDetailsService {
 
+  @Autowired 
+  Encoders passwordEncoder;
+	
   @Autowired
   private UserRoleRepository userRoleRepository;
 	
@@ -34,7 +37,7 @@ public class UserService implements UserDetailsService {
             " ", " ", true, true, true, true, 
             getAuthorities(Arrays.asList(userRoleRepository.findByName("CUSTOMER"))));
       }
-
+      
       return new org.springframework.security.core.userdetails.User(
         user.getUsername(), user.getPassword(), user.isEnabled(), true, true, 
         true, getAuthorities(user.getUserRoles()));
@@ -65,25 +68,6 @@ public class UserService implements UserDetailsService {
 	  return privileges;
 	}
 	
-	
-
-//    @Override 
-//    @Transactional(readOnly = true)
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        User user = userRepository.findByUsername(username);
-//
-//        if (user != null) {
-//            return user;
-//        }
-//
-//        throw new UsernameNotFoundException(username);
-//    }
-    
-    
-	@Transactional
-	public void addUser(User user) {
-		userRepository.save(user);
-	}
 }
 
 //package io.javabrains.springbootstarter.security;

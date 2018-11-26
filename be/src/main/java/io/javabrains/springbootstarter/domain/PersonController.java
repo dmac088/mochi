@@ -1,5 +1,6 @@
 package io.javabrains.springbootstarter.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.javabrains.springbootstarter.security.UserRole;
+import io.javabrains.springbootstarter.security.UserRoleService;
+
 
 
 @RestController
@@ -21,6 +25,9 @@ public class PersonController {
 	
 	@Autowired
 	private PersonService personService;	
+	
+	@Autowired
+	private UserRoleService userRoleService;
 	
 	@GetMapping("/Person")
     public List<Person> getAllPersons() {
@@ -34,9 +41,11 @@ public class PersonController {
 		return personService.getPerson(id);
 	}
 	
-	@PostMapping("/Person")
+
+	@PostMapping("/Customer/Registration")
 	public ResponseEntity<Person> addPerson(@RequestBody Person person) {
-		System.out.println("calling addPerson");
+		person.getPartyUser().setUserRoles(new ArrayList<UserRole>());
+		person.getPartyUser().addUserRole(userRoleService.loadUserRoleByRoleName("CUSTOMER"));
 		personService.addPerson(person);
 		return new ResponseEntity<Person>(person, HttpStatus.OK);
 	}
@@ -48,7 +57,7 @@ public class PersonController {
 	}
 
 	@DeleteMapping("/Person/{id}")
-	public void deletePerson(@PathVariable Long id) {
+	public void deletePerson(@PathVariable Long id) { 
 		System.out.println("calling deletePerson");
 		personService.deletePerson(id);
 	}
