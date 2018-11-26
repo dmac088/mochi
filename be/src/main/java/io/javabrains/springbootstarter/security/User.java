@@ -149,6 +149,7 @@ public class User implements UserDetails, Serializable {
 		this.roles.add(ur);
 	}
 	
+	@JsonIgnore
 	public Collection<UserRole> getUserRoles() {
 		return roles;
 	}
