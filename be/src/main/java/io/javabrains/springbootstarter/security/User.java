@@ -73,8 +73,8 @@ public class User implements UserDetails, Serializable {
     
     @ManyToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinTable(name = "USER_ROLE", schema="security", 
-    		   joinColumns 			= @JoinColumn(name = "pty_id"/*, referencedColumnName = "pty_id"*/), 
-    		   inverseJoinColumns 	= @JoinColumn(name = "role_id"/*, referencedColumnName = "role_id"*/))
+    		   joinColumns 			= @JoinColumn(name = "pty_id"), 
+    		   inverseJoinColumns 	= @JoinColumn(name = "role_id"))
     @OrderBy
     //@JsonIgnore
     private Collection<UserRole> roles;
