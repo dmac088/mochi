@@ -28,6 +28,7 @@ import lombok.Setter;
 @EqualsAndHashCode(of = "id")
 public class UserRole implements Serializable {
 	
+
 	@ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(						//the table that manages the many to many relationship
     								name = "ROLE_PERMISSION", schema="security", 
@@ -52,10 +53,18 @@ public class UserRole implements Serializable {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
-    private Long id;
+    @Column(name = "id")
+    private Long Id;
 
     @Column(name = "NAME")
     private String name;
+    
+	public Long getId() {
+		return Id;
+	}
+
+	public void setId(Long id) {
+		Id = id;
+	}
 
 }
