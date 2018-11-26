@@ -5,20 +5,15 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
-import com.google.common.collect.Iterables;
-
 import io.javabrains.springbootstarter.domain.Party;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -30,6 +25,7 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import lombok.Getter;
@@ -40,9 +36,8 @@ import lombok.Setter;
 @Getter 
 @Setter
 public class User implements UserDetails, Serializable {
-
 	
-    @Id
+	@Id
     @Column(name = "pty_id")
     private Long Id;
     
@@ -77,13 +72,11 @@ public class User implements UserDetails, Serializable {
     		   joinColumns 			= @JoinColumn(name = "pty_id"), 
     		   inverseJoinColumns 	= @JoinColumn(name = "role_id"))
     @OrderBy
-    //@JsonIgnore
+    @JsonIgnore
     private Collection<UserRole> roles;
     
-    public Collection<UserRole> getRoles() {
-		return this.roles;
-	}
 
+    
 	@Override
     public boolean isAccountNonExpired() {
         return !accountExpired;
@@ -150,5 +143,17 @@ public class User implements UserDetails, Serializable {
 	@Override
 	public boolean isEnabled() {
 		return this.enabled;
+	}
+	
+	public void addUserRole(UserRole ur) {
+		this.roles.add(ur);
+	}
+	
+	public Collection<UserRole> getUserRoles() {
+		return roles;
+	}
+
+	public void setUserRoles(Collection<UserRole> roles) {
+		this.roles = roles;
 	}
 }

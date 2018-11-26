@@ -29,6 +29,7 @@ import io.javabrains.springbootstarter.domain.Customer;
 import io.javabrains.springbootstarter.domain.Person;
 import io.javabrains.springbootstarter.security.Encoders;
 import io.javabrains.springbootstarter.security.User;
+import io.javabrains.springbootstarter.security.UserRoleService;
 
 /*
 
@@ -46,6 +47,9 @@ public class RestClientUtil {
 	@Autowired
 	@Qualifier("userPasswordEncoder")
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	UserRoleService userRoleService;
 	
     @Autowired
     @Qualifier("unitTestTemplate")
@@ -69,6 +73,7 @@ public class RestClientUtil {
     
     private static String CUSTOMER_USERNAME 				= "dmac219";
     private static String CUSTOMER_PASSWORD 				= "password";
+    private static String USER_ROLE							= "CUSTOMER";
 
     private HttpHeaders getHeaders() {
     	HttpHeaders headers = new HttpHeaders();
@@ -140,9 +145,11 @@ public class RestClientUtil {
 		 objUser.setPassword(passwordEncoder.encode(CUSTOMER_PASSWORD));
 		 objUser.setUsername(CUSTOMER_USERNAME);
 		 objUser.setEnabled(true);
+		 objUser.addUserRole(userRoleService.loadUserRoleByRoleName(USER_ROLE));
 		 
 		 //add the user to the person
 		 objPerson.addUser(objUser);
+		 
 		
 		 //add role to person
 		 objPerson.addRole(objCustomer);
