@@ -1,7 +1,9 @@
 package io.javabrains.springbootstarter.domain;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,6 +48,12 @@ public class PersonController {
 	@PostMapping("/Customer/Signup")
 	public ResponseEntity<Person> addPerson(@RequestBody Person person) {
 		//should this go into an existing service class or a new one?
+		//System.out.println(person.getPartyRoles() == null);
+		person.setPartyRoles(new ArrayList<Role>());
+		Customer c1 = new Customer();
+		c1.setRoleStart(new Date());
+		person.addRole(c1);
+		c1.setRoleParty(person);
 		person.getPartyUser().setUserRoles(new ArrayList<UserRole>());
 		person.getPartyUser().addUserRole(userRoleService.loadUserRoleByRoleName("CUSTOMER"));
 		personService.addPerson(person);

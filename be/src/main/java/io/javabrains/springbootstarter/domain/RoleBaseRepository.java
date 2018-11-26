@@ -9,7 +9,6 @@ import org.springframework.data.repository.CrudRepository;
 public interface RoleBaseRepository<R extends Role> extends CrudRepository<R, Long> { 
 	public Optional<Role> findByRoleId(Long Id);
 
-
 }
 
 
