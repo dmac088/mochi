@@ -1,7 +1,7 @@
 import { fetchApi } from '../../services/api';
 
 const endPoints = {
-	create: '/api/Person',
+	create: '/api/Customer/Signup',
 	get: '/api/Person/UserName',
 };
 
