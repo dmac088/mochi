@@ -9,6 +9,5 @@ import store from 'MobileApp/src/store';
 // };
 
 export const get = () => {
-	const { item } = store.getState().data.customer;
-	return item;
+	return store.getState().data.customer;
 };
