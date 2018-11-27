@@ -58,9 +58,9 @@ export const authenticate = (userName, password) =>
 		 //we call the text function to execute the promise
 		 response.text()
 		 .then((responseText) => {
+			 console.log(responseText);
 		 	 return responseText;
-		 })
-		 .then(persistTokens)
+		 }).then(persistTokens)
 		 .catch((e) => {
 	 	 			console.log(e);
 	   });
