@@ -64,6 +64,8 @@ public class PersonController {
 		person.getPartyUser().setUserRoles(new ArrayList<UserRole>());
 		person.getPartyUser().addUserRole(userRoleService.loadUserRoleByRoleName("CUSTOMER"));
 		
+		person.getPartyUser().setEnabled(true);
+		
 		//persist the parent
 		personService.addPerson(person);
 		
