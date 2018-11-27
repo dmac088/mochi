@@ -37,23 +37,21 @@ class Signup extends Component {
     //const { givenNameEn, familyNameEn, username, password } = this.state;
     //create is a CRUD operation therefore we don't need to use the service class
     customersApi.create(this.state.customer)
-      .then((response) => {
+      .then(() => {
         session.authenticate(this.state.customer.partyUser.username,
                              this.state.customer.partyUser.password);
-        return response.text();
-      }).then((responseText) => {
+      }).then(() => {
         //we are using local state here since
         //our input text boxes write to local state and then
-        //persist directly to database, not to redux
+        //persist directly to database to create a new customer, not to redux (yet)
         //we poplulare reduct by making another call to the api
         //either using the username in local state or returned party id in responseText
         //for this we use the /services/customer/index.js which must be imported
-
+        console.log(customerService.findByUserName(this.state.customer.partyUser.username,
+                                                   this.state.customer.partyUser.password));
 
       }).then(() => {
-
-        //the following is fine since child component props are listening to the redux state
-        //therefore there is no problem with overriding local state
+        //we can reset local state, no impact to global redux state
         this.setState(this.initialStateSignup);
         //const routeStack = this.props.navigator.getCurrentRoutes();
         //this.props.navigator.jumpTo(routeStack[3]);
