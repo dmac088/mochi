@@ -196,7 +196,7 @@ const mapStateToProps = (state) => {
     //state is not local state it is the parameter (state)
     tokens: state.services.session.tokens,
     user: state.services.session.user,
-    customer: state.data.customers
+    customer: state.services.session.customer
   };
 };
 
