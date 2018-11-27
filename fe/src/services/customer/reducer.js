@@ -1,7 +1,6 @@
 import * as actionTypes from './actionTypes';
 
-export const initialState =
-const initialStateSignup = () => {
+export const initialState = {
 															"customer": {
 																		"@class": ".Person",
 																		"partyUser": {
@@ -12,8 +11,7 @@ const initialStateSignup = () => {
 																		"nameCn": "",
 																		"givenNameEn": ""
 															}
-												}
-};;
+														};
 
 export const reducer = (state = initialState, action) => {
 	console.log('customer reducer was fired!');
