@@ -5,6 +5,7 @@ import * as session from '../services/session';
 import * as customerService from '../services/customer';
 import * as api from '../services/api';
 import store from '../store';
+import * as selectors from '../services/customer/selectors';
 import { deepValue } from '../services/api';
 //signup should have it's own local state and not be bound to App.js
 
@@ -47,8 +48,17 @@ class Signup extends Component {
         //we poplulare reduct by making another call to the api
         //either using the username in local state or returned party id in responseText
         //for this we use the /services/customer/index.js which must be imported
-        console.log(customerService.findByUserName(this.state.customer.partyUser.username,
-                                                   this.state.customer.partyUser.password));
+        //we need the access token from the redux store to make the subsequen API calls
+        //this can be gotten by
+
+      console.log(store.getState());
+      console.log(this.props);
+    //  console.log(this.props.user);
+    //  console.log(this.props.customer);
+    //  console.log(this.props.tokens);
+
+      //console.log(customerService.findByUserName(this.state.customer.partyUser.username,
+      //                                             this.state.customer.partyUser.password));
 
       }).then(() => {
         //we can reset local state, no impact to global redux state
@@ -174,19 +184,22 @@ const initialStateSignup = () => {
 
 
 const mapStateToProps = (state) => {
-  console.log("the state is .....");
-  console.log(state);
+//  console.log("the state is .....");
+//  console.log(state);
   return {
 
     //take value from reducer, alias used in combineReducers in ./data/reducer.js
     //state is not local state it is the parameter (state)
+    tokens: state.services.session.tokens,
     user: state.services.session.user,
     customer: state.data.customers
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
+  console.log(dispatch);
   return {
+
     //take value from reducer, alias used in combinReducers in ./data/reducer.js
     setAuthenticated: (auth) => {
       dispatch({
