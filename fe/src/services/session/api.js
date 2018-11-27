@@ -7,11 +7,11 @@ const endPoints = {
 	refresh: '/oauth/token',
 };
 
-export const authenticate = (email, password) => fetchApi(
+export const authenticate = (userName, password) => fetchApi(
 																													endPoints.authenticate,
 																													{},
 																													{
-																														username: email,
+																														username: userName,
 																														password: password,
 																														grant_type: 'password'
 																													},

@@ -37,8 +37,8 @@ export const refreshToken = () => {
 	.catch(onRequestFailed);
 };
 
-export const authenticate = (email, password) =>
-	api.authenticate(email, password)
+export const authenticate = (userName, password) =>
+	api.authenticate(userName, password)
 	//injection of a function reference means the function behaves
 	//as if it were nested within the parentheses
 	.then(onRequestSuccess)
