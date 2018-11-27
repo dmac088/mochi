@@ -75,6 +75,9 @@ class Signup extends Component {
       };
         this.setState(newState);
     });
+    console.log(store.getState());
+    console.log(this.props);
+
   }
 
   render() {
@@ -159,9 +162,10 @@ class Signup extends Component {
         <div className="col-md-3 order-md-3">
         </div>
       </div>
-      <p>{'test = ' + this.props.user.authenticated}</p>
-      <p>{'username = ' + this.props.user.username}</p>
-
+      <p>{'authenticated = ' + this.props.user.authenticated + ' '} </p>
+      <br/>
+      <p>{' username = ' + this.props.user.username + ' '} </p>
+      <p>{' access toke = ' + this.props.tokens.access.value + ' '} </p>
     </div>
       );
   }
