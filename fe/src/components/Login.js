@@ -173,12 +173,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-
-
 export default connect(mapStateToProps,mapDispatchToProps)(Login);
-
-// {(!props.authenticated) ? 'Username:' : '' } {props.renderUserNameField()}<br/>
-// {(!props.authenticated) ? 'Password:' : '' } {props.renderPasswordField()}<br/>
-// {props.renderLogoutButton()}
-// {props.renderLoginButton()}
-// <Greeting authenticated={props.authenticated} givenNameEn={props.customer.givenNameEn}/>
