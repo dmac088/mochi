@@ -6,11 +6,11 @@ const endPoints = {
 	other: ''
 };
 
-export const findByUserName = (userName) => fetchApi(
+export const findByUserName = (userName, password) => fetchApi(
 																													endPoints.get + userName,
 																													{},
 																													{
-																														username: email,
+																														username: userName,
 																														password: password,
 																														grant_type: 'password'
 																													},

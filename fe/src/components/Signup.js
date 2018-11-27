@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as customersApi from '../data/customers/api';
 import * as session from '../services/session';
+import * as customerService from '../services/customer';
 import * as api from '../services/api';
 import store from '../store';
 import { deepValue } from '../services/api';
@@ -37,12 +38,18 @@ class Signup extends Component {
     //create is a CRUD operation therefore we don't need to use the service class
     customersApi.create(this.state.customer)
       .then((response) => {
-            return response.text();
+        session.authenticate(this.state.customer.partyUser.username,
+                             this.state.customer.partyUser.password);
+        return response.text();
       }).then((responseText) => {
-            //we are using local state here not redux this.state.
-            //reason is because we dont need it there
-            session.authenticate(this.state.customer.partyUser.username,
-                                 this.state.customer.partyUser.password);
+        //we are using local state here since
+        //our input text boxes write to local state and then
+        //persist directly to database, not to redux
+        //we poplulare reduct by making another call to the api
+        //either using the username in local state or returned party id in responseText
+        //for this we use the /services/customer/index.js which must be imported
+
+
       }).then(() => {
 
         //the following is fine since child component props are listening to the redux state
