@@ -11,7 +11,7 @@ class Signup extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {initialStateSignup()};
+    this.state = initialStateSignup();
     store.subscribe(this.reduxSubscribedFunction);
   }
 
@@ -37,11 +37,12 @@ class Signup extends Component {
     //create is a CRUD operation therefore we don't need to use the service class
     customersApi.create(this.state.customer)
       .then((response) => {
-
             return response.text();
       }).then((responseText) => {
-            console.log(responseText);
-            console.log('authenticate');
+            //we are using local state here not redux this.state.
+            //reason is because we dont need it there
+            session.authenticate(this.state.customer.partyUser.username,
+                                 this.state.customer.partyUser.password);
       }).then(() => {
 
         //the following is fine since child component props are listening to the redux state
