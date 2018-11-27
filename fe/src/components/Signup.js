@@ -13,7 +13,7 @@ class Signup extends Component {
 
   constructor(props) {
     super(props);
-    this.state = initialStateSignup();
+    this.state = {};
     store.subscribe(this.reduxSubscribedFunction);
   }
 
@@ -170,22 +170,6 @@ class Signup extends Component {
       );
   }
 }
-
-
-const initialStateSignup = () => {
-  return  JSON.parse('{"customer": {\
-                          "@class": ".Person",\
-                          "partyUser": {\
-                              "username": "",\
-                              "password": ""\
-                          },\
-                          "familyNameEn": "",\
-                          "nameCn": "",\
-                          "givenNameEn": ""\
-                      }\
-                    }');
-};
-
 
 const mapStateToProps = (state) => {
 //  console.log("the state is .....");
