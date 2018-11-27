@@ -37,6 +37,9 @@ class Signup extends Component {
 
     //const { givenNameEn, familyNameEn, username, password } = this.state;
     //create is a CRUD operation therefore we don't need to use the service class
+
+    //craete is not taking the initialstate from redux customerServicei
+    //instead this is local state, which is not what we want
     customersApi.create(this.state.customer)
       .then(() => {
           return session.authenticate(this.state.customer.partyUser.username,
