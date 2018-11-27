@@ -10,7 +10,7 @@ class Login extends Component {
 
   constructor(props) {
     super(props);
-    this.state = initialStateLogin();
+    this.state = {};
     store.subscribe(this.reduxSubscribedFunction);
   }
 
@@ -57,9 +57,7 @@ class Login extends Component {
 
   logoutClick = (event) => {
     session.clearSession();
-    this.setState({
-      initialStateLogin
-    });
+    this.setState(null);
   }
 
   renderLogoutButton = () => {
@@ -166,19 +164,15 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     //take value from reducer, alias used in combineReducers in ./data/reducer.js
-    setAuthenticated: (customer) => {
+    setAuthenticated: (user) => {
       dispatch({
-        type: "SET_CUSTOMER",
-        payload: customer
+        type: "UPDATE",
+        payload: user
       })
     }
   };
 };
 
-
-const initialStateLogin = () => {
-  return  JSON.parse('{"isLoading": false, "error": null, "username": "", "password": "", "firstName": ""}');
-};
 
 
 export default connect(mapStateToProps,mapDispatchToProps)(Login);
