@@ -39,9 +39,12 @@ class Signup extends Component {
     //create is a CRUD operation therefore we don't need to use the service class
     customersApi.create(this.state.customer)
       .then(() => {
-        session.authenticate(this.state.customer.partyUser.username,
+          return session.authenticate(this.state.customer.partyUser.username,
                              this.state.customer.partyUser.password);
-      }).then(() => {
+      }).then((response) => {
+        console.log(response);
+        console.log(store.getState());
+        console.log(this.props);
         //we are using local state here since
         //our input text boxes write to local state and then
         //persist directly to database to create a new customer, not to redux (yet)
@@ -51,8 +54,6 @@ class Signup extends Component {
         //we need the access token from the redux store to make the subsequen API calls
         //this can be gotten by
 
-      console.log(store.getState());
-      console.log(this.props);
     //  console.log(this.props.user);
     //  console.log(this.props.customer);
     //  console.log(this.props.tokens);
@@ -61,11 +62,13 @@ class Signup extends Component {
       //                                             this.state.customer.partyUser.password));
 
       }).then(() => {
+
         //we can reset local state, no impact to global redux state
         this.setState(this.initialStateSignup);
         //const routeStack = this.props.navigator.getCurrentRoutes();
         //this.props.navigator.jumpTo(routeStack[3]);
-      })
+
+    })
     .catch((exception) => {
       // Displays only the first error message
       const error = api.exceptionExtractError(exception);
@@ -75,9 +78,6 @@ class Signup extends Component {
       };
         this.setState(newState);
     });
-    console.log(store.getState());
-    console.log(this.props);
-
   }
 
   render() {
