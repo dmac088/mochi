@@ -11,7 +11,7 @@ class Signup extends Component {
 
   constructor(props) {
     super(props);
-    this.state = initialStateSignup();
+    this.state = {initialStateSignup()};
     store.subscribe(this.reduxSubscribedFunction);
   }
 
@@ -34,13 +34,10 @@ class Signup extends Component {
     });
 
     //const { givenNameEn, familyNameEn, username, password } = this.state;
+    //create is a CRUD operation therefore we don't need to use the service class
     customersApi.create(this.state.customer)
       .then((response) => {
-            //accroding to the article there is no need to update teh store with the
-            //but I still want to do it but make no sense to do it here
-            //we could leverage the session class and put a create method there which sets the redux store state (customer)
-            //or create an independent service folder with classes ??? i.e. /project/services/customer/
-            //store.dispatch(actionCreators.update({ tokens, user: reformTokens.user }));
+
             return response.text();
       }).then((responseText) => {
             console.log(responseText);
@@ -158,25 +155,15 @@ class Signup extends Component {
 const initialStateSignup = () => {
   return  JSON.parse('{"customer": {\
                           "@class": ".Person",\
-                          "partyRoles": [\
-                              {\
-                                  "@class": ".Customer",\
-                                  "customerNumber": "",\
-                                  "roleStart": "2018-11-14T16:00:00.000+0000"\
-                              }\
-                          ],\
                           "partyUser": {\
                               "username": "",\
-                              "password": "",\
-                              "enabled": true,\
-                              "accountNonExpired": true,\
-                              "accountNonLocked": true,\
-                              "credentialsNonExpired": true\
+                              "password": ""\
                           },\
-                          "givenNameEn": "",\
                           "familyNameEn": "",\
-                          "nameCn": ""\
-                      }}');
+                          "nameCn": "",\
+                          "givenNameEn": ""\
+                      }\
+                    }');
 };
 
 
