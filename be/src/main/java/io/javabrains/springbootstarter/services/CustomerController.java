@@ -25,11 +25,11 @@ public class CustomerController {
 
     //Registration
     @PostMapping("/Customer/Signup")
-    public GenericResponse registerNewPersonCustomer(@RequestBody final PartyPerson person) {
-        LOGGER.debug("Registering user account with information: {}", person);
+    public GenericResponse registerNewPersonCustomer(@RequestBody final CustomerDTO customer) {
+        LOGGER.debug("Registering user account with information: {}", customer);
         
         try {
-			customerService.registerNewPersonCustomer(person);
+			customerService.registerNewCustomer(customer);
 		} catch (CustomerAlreadyExistException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
