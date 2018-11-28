@@ -101,7 +101,7 @@ class Signup extends Component {
                 <input
                   type="text"
                   className="form-control"
-                  id="customer.givenNameEn"
+                  id="customer.firstName"
                   onChange={this.updateCustomerState}
                   placeholder="First Name"
                   required />
@@ -116,7 +116,7 @@ class Signup extends Component {
                 <input
                   type="text"
                   className="form-control"
-                  id="customer.familyNameEn"
+                  id="customer.lastName"
                   onChange={this.updateCustomerState}
                   placeholder="Last Name"
                   required />
@@ -131,7 +131,7 @@ class Signup extends Component {
                 <input
                   type="text"
                   className="form-control"
-                  id="customer.partyUser.username"
+                  id="customer.username"
                   onChange={this.updateCustomerState}
                   placeholder="you@placeholder.com"
                   required />
@@ -149,7 +149,7 @@ class Signup extends Component {
               <input
                 type="password"
                 className="form-control"
-                id="customer.partyUser.password"
+                id="customer.password"
                 onChange={this.updateCustomerState}
                 placeholder="Password" />
             </div>
