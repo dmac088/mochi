@@ -4,7 +4,7 @@ const Greeting = (props) =>{
   console.log('Render Greeting');
     return(
       <div className="mr-sm-2">
-        {(props.user.authenticated) ? 'Welcome ' + props.user.username + ' you are logged in!' : ''}
+        {(props.tokens.authenticated) ? 'Welcome ' + props.tokens.username + ' you are logged in!' : ''}
       </div>
     );
 }

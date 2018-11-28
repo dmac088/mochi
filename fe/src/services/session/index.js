@@ -27,22 +27,23 @@ export const clearSession = () => {
 export const refreshToken = () => {
 	console.log("called refresh token");
 	const session = selectors.get();
+	console.log("refres_token = " + JSON.parse(session.tokens).refresh_token);
 
-	if (!session.tokens.refresh.value || !session.user.id) {
+	if (!session.tokens.refresh_token || !session.username) {
 		return Promise.reject();
 	}
 
-	return api.refresh(session.tokens.refresh)
+	return api.refresh(session.tokens.refresh_token)
 	.then(onRequestSuccess)
 	.catch(onRequestFailed);
 };
 
-export const authenticate = (userName, password) =>
-	api.authenticate(userName, password)
-	//injection of a function reference means the function behaves
-	//as if it were nested within the parentheses
-	.then(onRequestSuccess)
-	.catch(onRequestFailed);
+	export const authenticate = (userName, password) =>
+		api.authenticate(userName, password)
+		//injection of a function reference means the function behaves
+		//as if it were nested within the parentheses
+		.then(onRequestSuccess)
+		.catch(onRequestFailed);
 
 
 	const  onRequestSuccess = (response) => {
@@ -54,40 +55,36 @@ export const authenticate = (userName, password) =>
 			 return;
 		 };
 
+
 		 //response is an object of type promise
 		 //we call the text function to execute the promise
 		 response.text()
 		 .then((responseText) => {
 			// console.log(responseText);
-		 	 return responseText;
-		 }).then(persistTokens)
+		 	 return JSON.parse(responseText);
+		 })
+		 .then((responseJSON) => {
+			 	responseJSON.authenticated = true;
+				return responseJSON;
+		 })
+		 .then(persistTokens)
 		 .catch((e) => {
 	 	 			console.log(e);
 	   });
 	};
 
-	const  persistTokens = (body) => {
-		const reformTokens = formatTokenResponse(
-															JSON.parse(body).access_token,
-															JSON.parse(body).refresh_token,
-															JSON.parse(body).username,
-															true,
-															JSON.parse(body).expires_in
-													);
-
-		//transfrom flat structure to a nested one
-		const tokens = 				reformTokens.tokens.reduce(
-																												(prev, item) => ({
-																														...prev,
-																														[item.type]: item,
-																												}),
-																									{});
-
+	const  persistTokens = (tokens) => {
+		console.log("tokens....");
+		console.log(tokens);
 		//trigger a store update
-		store.dispatch(actionCreators.update({ tokens, user: reformTokens.user }));
+
+		store.dispatch(actionCreators.update({ tokens, "tokens": tokens }));
 
 		//set the token timeout
-		setSessionTimeout(tokens.access.expiresIn);
+		setSessionTimeout(tokens.expires_in);
+
+		const session = selectors.get();
+		console.log("session = " + session.tokens.authenticated);
 	}
 
 export const revoke = () => {
@@ -100,21 +97,7 @@ export const revoke = () => {
 	.catch(() => {});
 };
 
-const formatTokenResponse = (accessToken, refreshToken, user, authenticated, expires_in) => ({
-	tokens: [{
-		type: 'access',
-		value: accessToken,
-		expiresIn: expires_in,
-	},
-	{
-		type: 'refresh',
-		value: refreshToken,
-	}],
-	user: {
-		username: user,
-		authenticated: authenticated,
-	},
-});
+
 
 const onRequestFailed = (exception) => {
 	clearSession();
