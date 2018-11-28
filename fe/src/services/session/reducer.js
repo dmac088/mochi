@@ -1,21 +1,15 @@
 import * as actionTypes from './actionTypes';
 
 export const initialState = {
-	tokens: {
-		access: {
-			type: null,
-			value: null,
-			expiresIn: null,
-		},
-		refresh: {
-			type: null,
-			value: null,
-		},
-	},
-	user: {
-		username: null,
-		authenticated: false
-	},
+  tokens: {
+    access_token: null,
+    token_type: null,
+    refresh_token: null,
+    expires_in: null,
+    scope: null,
+    username: null,
+		authenticated: false,
+  }
 };
 
 export const reducer = (state = initialState, action) => {

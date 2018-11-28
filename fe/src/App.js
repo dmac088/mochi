@@ -37,16 +37,6 @@ class App extends Component {
     console.log('subscribed function triggered');
   }
 
-
-
-  wait(ms){
-     var start = new Date().getTime();
-     var end = start;
-     while(end < start + ms) {
-       end = new Date().getTime();
-    }
-  }
-
   render() {
     //const {isLoading} = this.state;
     return (
@@ -56,7 +46,7 @@ class App extends Component {
                 integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
                 crossOrigin="anonymous"
           />
-        <Header user={this.props.user}/>
+        <Header tokens={this.props.tokens}/>
         <Signup/>
         </div>
     );
@@ -66,7 +56,7 @@ class App extends Component {
 const mapStateToProps = (state) => {
   return {
     //take value from reducer, alias used in combinReducers in ./data/reducer.js
-    user: state.services.session.user
+    tokens: state.services.session.tokens
   };
 };
 
