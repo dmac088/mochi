@@ -25,8 +25,8 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.json.JSONObject;
-import io.javabrains.springbootstarter.domain.Customer;
-import io.javabrains.springbootstarter.domain.Person;
+import io.javabrains.springbootstarter.domain.RoleCustomer;
+import io.javabrains.springbootstarter.domain.PartyPerson;
 import io.javabrains.springbootstarter.security.Encoders;
 import io.javabrains.springbootstarter.security.User;
 import io.javabrains.springbootstarter.security.UserRoleService;
@@ -128,13 +128,13 @@ public class RestClientUtil {
 	     
 	     //Create the customer
 
-		 Customer objCustomer = new Customer();
+		 RoleCustomer objCustomer = new RoleCustomer();
 		 objCustomer.setRoleStart(this.CUSTOMER_START_DATE);
 		 objCustomer.getRoleType().setRoleTypeDesc(CUSTOMER_ROLE_TYPE);
 		 
 		 //Create the person
 		
-		 Person objPerson = new Person();
+		 PartyPerson objPerson = new PartyPerson();
 		 objPerson.setGivenNameEn(this.CUSTOMER_GIVEN_NAME_EN);
 		 objPerson.setFamilyNameEn(this.CUSTOMER_FAMILY_NAME_EN);
 		 objPerson.setNameCn(this.CUSTOMER_NAME_CN);
@@ -155,8 +155,8 @@ public class RestClientUtil {
 		 objPerson.addRole(objCustomer);
 		 objCustomer.setRoleParty(objPerson);
 		 
-		 HttpEntity<Person> personEntity = new HttpEntity<Person>(objPerson, headers);
-		 ResponseEntity<Person> uri = restTemplate.exchange(this.PERSON_ENDPOINT, HttpMethod.POST, personEntity, Person.class);
+		 HttpEntity<PartyPerson> personEntity = new HttpEntity<PartyPerson>(objPerson, headers);
+		 ResponseEntity<PartyPerson> uri = restTemplate.exchange(this.PERSON_ENDPOINT, HttpMethod.POST, personEntity, PartyPerson.class);
 		 Assert.assertTrue(CUSTOMER_USERNAME.equals(uri.getBody().getPartyUser().getUsername()));
 		 Assert.assertTrue(CUSTOMER_GIVEN_NAME_EN.equals(uri.getBody().getGivenNameEn()));
 	}

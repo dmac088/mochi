@@ -56,7 +56,8 @@ public class DataSourceBeanSecurity {
        em.setDataSource(this.dataSource());
        em.setPackagesToScan(new String[] {
     		   								"io.javabrains.springbootstarter.security",
-    		   								"io.javabrains.springbootstarter.domain"
+    		   								"io.javabrains.springbootstarter.domain",
+    		   								"io.javabrains.springbootstarter.services"
     		   							 });
        JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
        em.setJpaVendorAdapter(vendorAdapter);
