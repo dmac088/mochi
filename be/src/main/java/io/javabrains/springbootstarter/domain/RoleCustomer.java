@@ -16,12 +16,12 @@ import com.fasterxml.jackson.annotation.JsonProperty.Access;
 @Entity
 @Table(name = "customer", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "rle_id")
-public class Customer extends Role {
+public class RoleCustomer extends Role {
  
 	@Transient
 	private Long roleTypeId = (long) 1;
 	
-	public Customer() {
+	public RoleCustomer() {
 		super();
 		this.setRoleType(new RoleType(roleTypeId));
 	}
