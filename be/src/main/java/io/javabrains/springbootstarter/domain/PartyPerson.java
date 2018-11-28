@@ -12,7 +12,7 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "person", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "psn_id")
-public class Person extends Party implements Serializable {
+public class PartyPerson extends Party implements Serializable {
 
 	@Transient
 	private Long partyTypeId = (long) 1;
@@ -26,7 +26,7 @@ public class Person extends Party implements Serializable {
 	@Column(name="psn_nm_cn")
 	private String NameCn;
 	
-	public Person() {
+	public PartyPerson() {
 		super();
 		this.setPartyType(new PartyType(partyTypeId));
 	}
