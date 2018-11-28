@@ -42,8 +42,8 @@ class Signup extends Component {
     //instead this is local state, which is not what we want
     customersApi.create(this.state.customer)
       .then(() => {
-          return session.authenticate(this.state.customer.partyUser.username,
-                             this.state.customer.partyUser.password);
+          return session.authenticate(this.state.customer.username,
+                             this.state.customer.password);
       }).then((response) => {
         console.log(response);
         console.log(store.getState());
@@ -67,7 +67,6 @@ class Signup extends Component {
       }).then(() => {
 
         //we can reset local state, no impact to global redux state
-        this.setState(this.initialStateSignup);
         //const routeStack = this.props.navigator.getCurrentRoutes();
         //this.props.navigator.jumpTo(routeStack[3]);
 
