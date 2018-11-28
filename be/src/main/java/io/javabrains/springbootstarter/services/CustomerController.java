@@ -26,8 +26,6 @@ public class CustomerController {
     //Registration
     @PostMapping("/Customer/Signup")
     public GenericResponse registerNewPersonCustomer(@RequestBody final PartyPerson person) {
-    	System.out.println("called registerNewPersonCustomer");
-    	System.out.println(person.getGivenNameEn());
         LOGGER.debug("Registering user account with information: {}", person);
         
         try {
