@@ -13,7 +13,14 @@ class Signup extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+                    customer: {
+                          userName: null,
+                          password: null,
+                          firstName: null,
+                          lastName: null
+                        }
+                };
     store.subscribe(this.reduxSubscribedFunction);
   }
 
@@ -35,14 +42,14 @@ class Signup extends Component {
       error: '',
     });
 
-    //const { givenNameEn, familyNameEn, username, password } = this.state;
+    //const { givenNameEn, familyNameEn, userName, password } = this.state;
     //create is a CRUD operation therefore we don't need to use the service class
 
     //craete is not taking the initialstate from redux customerServicei
     //instead this is local state, which is not what we want
     customersApi.create(this.state.customer)
       .then(() => {
-          return session.authenticate(this.state.customer.username,
+          return session.authenticate(this.state.customer.userName,
                              this.state.customer.password);
       }).then((response) => {
         console.log(response);
@@ -52,7 +59,7 @@ class Signup extends Component {
         //our input text boxes write to local state and then
         //persist directly to database to create a new customer, not to redux (yet)
         //we poplulare reduct by making another call to the api
-        //either using the username in local state or returned party id in responseText
+        //either using the userName in local state or returned party id in responseText
         //for this we use the /services/customer/index.js which must be imported
         //we need the access token from the redux store to make the subsequen API calls
         //this can be gotten by
@@ -61,7 +68,7 @@ class Signup extends Component {
     //  console.log(this.props.customer);
     //  console.log(this.props.tokens);
 
-      //console.log(customerService.findByUserName(this.state.customer.partyUser.username,
+      //console.log(customerService.findByuserName(this.state.customer.partyUser.userName,
       //                                             this.state.customer.partyUser.password));
 
       }).then(() => {
@@ -125,19 +132,19 @@ class Signup extends Component {
               </div>
             </div>
             <div className="mb-3">
-              <label htmlFor="username">Username</label>
+              <label htmlFor="userName">userName</label>
               <div className="input-group">
                 <input
                   type="text"
                   className="form-control"
-                  id="customer.username"
+                  id="customer.userName"
                   onChange={this.updateCustomerState}
                   placeholder="you@placeholder.com"
                   required />
                                   <div
                   className="invalid-feedback"
                   style={{width: '100%'}}>
-                  Your username is required.
+                  Your userName is required.
                 </div>
               </div>
             </div>
@@ -166,7 +173,7 @@ class Signup extends Component {
       </div>
       <p>{'authenticated = ' + this.props.tokens.authenticated + ' '} </p>
       <br/>
-      <p>{' username = ' + this.props.tokens.username + ' '} </p>
+      <p>{' userName = ' + this.props.tokens.userName + ' '} </p>
       <p>{' access token = ' + this.props.tokens.access_token + ' '} </p>
     </div>
       );
