@@ -9,17 +9,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class PersonService {
+public class PartyPersonService {
 
 	@Autowired
-	private PersonRepository personRepository; 
+	private PartyPersonRepository personRepository; 
 	
 	
 	@PreAuthorize("hasAuthority('PERSON_READER')")
 	@Transactional(readOnly = true)
-	public List<Person> getAllPersons() {
-		List<Person> Persons = new ArrayList<>();
-		Iterator<Person> i = personRepository.findAll().iterator();
+	public List<PartyPerson> getAllPersons() {
+		List<PartyPerson> Persons = new ArrayList<>();
+		Iterator<PartyPerson> i = personRepository.findAll().iterator();
 		while(i.hasNext()) {
 			  Persons.add(i.next());
 		}
@@ -28,19 +28,19 @@ public class PersonService {
 	
 	@PreAuthorize("hasAuthority('PERSON_READ')")
 	@Transactional(readOnly = true)
-	public Person getPerson(Long id) {
-		Person p = personRepository.findByPartyId(id);
+	public PartyPerson getPerson(Long id) {
+		PartyPerson p = personRepository.findByPartyId(id);
 		return p;
 	}
 
 	@Transactional
-	public void addPerson(Person person) {
+	public void addPerson(PartyPerson person) {
 		personRepository.save(person);
 	}
 	
 	@PreAuthorize("hasAuthority('PERSON_UPDATE')")
 	@Transactional
-	public void updatePerson(Long id, Person person) {
+	public void updatePerson(Long id, PartyPerson person) {
 		personRepository.save(person);
 	}
 	

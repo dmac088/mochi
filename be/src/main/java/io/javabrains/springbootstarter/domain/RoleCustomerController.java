@@ -17,32 +17,32 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
-public class CustomerController {
+public class RoleCustomerController {
 	
 	@Autowired
-	private CustomerService customerService;
+	private RoleCustomerService customerService;
 	
 	
 	@GetMapping("/Customer")
-    public List<Customer> getAllCustomers() {
+    public List<RoleCustomer> getAllCustomers() {
 		System.out.println("calling getAllCustomers");
 		return customerService.getAllCustomers();
 	}	
 	
 	@GetMapping("/Customer/{userName}")
-	public Customer getCustomer(@PathVariable String userName) {
+	public RoleCustomer getCustomer(@PathVariable String userName) {
 		System.out.println("calling getCustomer");
-		return (Customer) customerService.getCustomer(userName).get();
+		return (RoleCustomer) customerService.getCustomer(userName).get();
 	}
 	
 	@PostMapping("/Customer")
-	public ResponseEntity<Customer> addCustomer(@RequestBody Customer customer) {
+	public ResponseEntity<RoleCustomer> addCustomer(@RequestBody RoleCustomer customer) {
 		customerService.addCustomer(customer);
-		return new ResponseEntity<Customer>(customer, HttpStatus.OK);
+		return new ResponseEntity<RoleCustomer>(customer, HttpStatus.OK);
 	}
 	
 	@PutMapping("/Customer/{id}")
-	public void updateCustomer(@RequestBody Customer Customer, @PathVariable Long id) {
+	public void updateCustomer(@RequestBody RoleCustomer Customer, @PathVariable Long id) {
 		System.out.println("calling updateCustomer");
 		customerService.updateCustomer(id, Customer);
 	}

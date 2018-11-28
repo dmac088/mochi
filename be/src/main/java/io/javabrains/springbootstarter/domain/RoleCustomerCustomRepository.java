@@ -8,14 +8,14 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 
 @Repository("CustomCustomerRepository")
-public class CustomCustomerRepository implements CustomerRepository {
+public class RoleCustomerCustomRepository implements RoleCustomerRepository {
 
     @Autowired
     @Qualifier("customerRepository") // inject Spring implementation here
-    private CustomerRepository customerRepository;
+    private RoleCustomerRepository customerRepository;
 
 	@SuppressWarnings("unchecked")
-	public Customer save(Customer entity) {
+	public RoleCustomer save(RoleCustomer entity) {
     	System.out.println("calling CustomCustomerRepository.save()");
     	System.out.println("Customer Number = " + entity.getCustomerNumber());
     	customerRepository.save(entity);
@@ -25,17 +25,17 @@ public class CustomCustomerRepository implements CustomerRepository {
     // Delegate other methods here ...
 
     @Override
-    public Optional<Customer> findById(Long id) {
+    public Optional<RoleCustomer> findById(Long id) {
         return customerRepository.findById(id);
     }
     
     @Override
-	public Customer findOne(Specification<Customer> spec) {
+	public RoleCustomer findOne(Specification<RoleCustomer> spec) {
     	return customerRepository.findOne(spec);
     }
 
 	@Override
-	public List<Customer> findAll() {
+	public List<RoleCustomer> findAll() {
 		// TODO Auto-generated method stub
 		return customerRepository.findAll();
 	}
@@ -47,7 +47,7 @@ public class CustomCustomerRepository implements CustomerRepository {
 	}
 
 	@Override
-	public void delete(Customer entity) {
+	public void delete(RoleCustomer entity) {
 		customerRepository.delete(entity);
 	}
 
@@ -58,7 +58,7 @@ public class CustomCustomerRepository implements CustomerRepository {
 	}
 
 	@Override
-	public <S extends Customer> Iterable<S> saveAll(Iterable<S> entities) {
+	public <S extends RoleCustomer> Iterable<S> saveAll(Iterable<S> entities) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -70,7 +70,7 @@ public class CustomCustomerRepository implements CustomerRepository {
 	}
 
 	@Override
-	public Iterable<Customer> findAllById(Iterable<Long> ids) {
+	public Iterable<RoleCustomer> findAllById(Iterable<Long> ids) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -82,7 +82,7 @@ public class CustomCustomerRepository implements CustomerRepository {
 	}
 
 	@Override
-	public void deleteAll(Iterable<? extends Customer> entities) {
+	public void deleteAll(Iterable<? extends RoleCustomer> entities) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -10,15 +10,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class CustomerService {
+public class RoleCustomerService {
 
 	@Autowired
-	private CustomCustomerRepository customerRepository; 
+	private RoleCustomerCustomRepository customerRepository; 
 
 	
 	@PreAuthorize("hasAuthority('CUSTOMER_READER')")
 	@Transactional(readOnly = true)
-	public List<Customer> getAllCustomers() {
+	public List<RoleCustomer> getAllCustomers() {
 		return customerRepository.findAll();
 	}
 
@@ -30,13 +30,13 @@ public class CustomerService {
 	
 	@PreAuthorize("hasAuthority('CUSTOMER_CREATE')")
 	@Transactional
-	public void addCustomer(Customer customer) {
+	public void addCustomer(RoleCustomer customer) {
 		customerRepository.save(customer);
 	}
 	
 	@PreAuthorize("hasAuthority('CUSTOMER_UPDATE')")
 	@Transactional
-	public void updateCustomer(Long id, Customer customer) {
+	public void updateCustomer(Long id, RoleCustomer customer) {
 		customerRepository.save(customer);
 	}
 	

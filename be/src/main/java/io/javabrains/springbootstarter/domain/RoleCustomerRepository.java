@@ -7,10 +7,10 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 
 @Repository("customerRepository")
-public interface CustomerRepository extends RoleBaseRepository<Customer> {
+public interface RoleCustomerRepository extends RoleBaseRepository<RoleCustomer> {
 
 	
-	List<Customer> findAll();
+	List<RoleCustomer> findAll();
 	
 	
 	Optional<Role> findByRoleId(Long CustomerId);
@@ -20,7 +20,7 @@ public interface CustomerRepository extends RoleBaseRepository<Customer> {
 	
 	//Customer findOneByCustomerId(String Id);
 	//need to use specification since findByCustomerId causes an exception
-	Customer findOne(Specification<Customer> spec);
+	RoleCustomer findOne(Specification<RoleCustomer> spec);
 	
 
 }
