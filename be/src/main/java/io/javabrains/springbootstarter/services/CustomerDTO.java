@@ -3,6 +3,17 @@ package io.javabrains.springbootstarter.services;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+//this is the grand daddy DTO
+/*---------------------------testing DTO JSON---------------------------
+{
+	"userName":"dmac654331",
+	"password":"magic7653",
+	"enabled":true,
+	"firstName":"Ronald",
+	"lastName":"McDonald"
+}
+*/
+//
 public class CustomerDTO {
     @NotNull
     @Size(min = 1, message = "{Size.userDto.firstName}")
@@ -12,34 +23,26 @@ public class CustomerDTO {
     @Size(min = 1, message = "{Size.userDto.lastName}")
     private String lastName;
 
-    //@ValidPassword
-    private String password;
-
-    @NotNull
-    @Size(min = 1)
-    private String matchingPassword;
-
     //@ValidEmail
     @NotNull
     @Size(min = 1, message = "{Size.userDto.email}")
-    private String username;
+    private String userName;
+    
+    //@ValidPassword
+    private String password;
+    
+    //@NotNull
+    //@Size(min = 1)
+    private String matchingPassword;
+    
+    private boolean enabled;
 
-    public String getUserName() {
-        return username;
+	public String getUserName() {
+        return userName;
     }
 
-    public void setEmail(final String username) {
-        this.username = username;
-    }
-
-    private Integer role;
-
-    public Integer getRole() {
-        return role;
-    }
-
-    public void setRole(final Integer role) {
-        this.role = role;
+    public void setUserName(final String username) {
+        this.userName = username;
     }
 
     public String getFirstName() {
@@ -74,11 +77,19 @@ public class CustomerDTO {
         this.matchingPassword = matchingPassword;
     }
     
+    public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+    
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("UserDto [firstName=").append(firstName).append(", lastName=").append(lastName).append(", password=").append(password).append(", matchingPassword=").append(matchingPassword).append(", username=").append(username)
-                .append(", role=").append(role).append("]");
+        builder.append("UserDto [firstName=").append(firstName).append(", lastName=").append(lastName).append(", password=").append(password).append(", matchingPassword=").append(matchingPassword).append(", username=").append(userName)
+                .append(", role=").append("]");
         return builder.toString();
     }
 
