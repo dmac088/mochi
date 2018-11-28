@@ -30,6 +30,11 @@ public class CustomerService implements ICustomerService {
     
     
     // API
+    //This method should accept a DTO and return a DTO
+    //The DTO is coarse grained and contains a flat structure of properties
+    //if we did not use a DTO we would have JSON nesting as per the domain model structure, which is hard to manage in our client views
+    //The DTO is simple and dumb, it is the service layer that manages the translation between DTO and domain objects
+    
     @Override
 	@Transactional
     public Party registerNewPersonCustomer(final PartyPerson person) {
