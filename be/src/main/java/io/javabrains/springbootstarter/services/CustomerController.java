@@ -3,6 +3,7 @@ package io.javabrains.springbootstarter.services;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +24,7 @@ public class CustomerController {
     }
 
     //Registration
-    @PostMapping("/user/registration")
+    @PostMapping("/Customer/Signup")
     public GenericResponse registerNewPersonCustomer(@RequestBody final PartyPerson person) {
     	System.out.println("called registerNewPersonCustomer");
     	System.out.println(person.getGivenNameEn());
@@ -35,8 +36,15 @@ public class CustomerController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        
-        //eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), getAppUrl(request)));
+      
+         //eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), getAppUrl(request)));
+        return new GenericResponse("success");
+    }
+    
+    //Registration
+    @GetMapping("/user/registration")
+    public GenericResponse test() {
+    	System.out.println("called test");
         return new GenericResponse("success");
     }
 }

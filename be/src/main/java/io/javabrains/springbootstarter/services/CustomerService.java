@@ -4,13 +4,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
-
 import io.javabrains.springbootstarter.domain.Party;
 import io.javabrains.springbootstarter.domain.PartyPerson;
 import io.javabrains.springbootstarter.domain.PartyPersonRepository;
-import io.javabrains.springbootstarter.domain.PartyPersonService;
 import io.javabrains.springbootstarter.domain.PartyRepository;
 import io.javabrains.springbootstarter.domain.Role;
 import io.javabrains.springbootstarter.domain.RoleCustomer;
@@ -36,10 +33,9 @@ public class CustomerService implements ICustomerService {
     @Override
 	@Transactional
     public Party registerNewPersonCustomer(final PartyPerson person) {
-    	System.out.println("called registerNewPersonCustomer");
-//        if (customerExist(person.getPartyUser().getUsername())) {
-//            throw new CustomerAlreadyExistException("There is an account with that username: " + person.getPartyUser().getUsername());
-//        }
+        if (customerExist(person.getPartyUser().getUsername())) {
+            throw new CustomerAlreadyExistException("There is an account with that username: " + person.getPartyUser().getUsername());
+        }
         
 		//create the role object
 		person.setPartyRoles(new ArrayList<Role>());
@@ -63,7 +59,8 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public boolean customerExist(final String username) {
-        return partyRepository.findByPartyUserUsername(username) != null;
+        return partyRepository.findByPartyUserUsername(username).isPresent();
+        
     }
 
     
