@@ -1,16 +1,13 @@
 import * as actionTypes from './actionTypes';
 
 export const initialState = {
-															"customer": {
-																		"@class": ".Person",
-																		"partyUser": {
-																				"username": "",
-																				"password": ""
-																		},
-																		"familyNameEn": "",
-																		"nameCn": "",
-																		"givenNameEn": ""
-															}
+															customer: {
+																					userName: null,
+																					password: null,
+																					enabled: null,
+																					firstName: null,
+																					lastName: null
+																				}
 														};
 
 export const reducer = (state = initialState, action) => {
