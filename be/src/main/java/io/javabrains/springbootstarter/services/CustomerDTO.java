@@ -3,6 +3,8 @@ package io.javabrains.springbootstarter.services;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
 //this is the grand daddy DTO
 /*---------------------------testing DTO JSON---------------------------
@@ -15,7 +17,9 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 }
 */
 //
-@JsonRootName(value = "customer")
+//@JsonRootName(value = "customer")
+@JsonTypeName(value = "customer")
+@JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.NAME)
 public class CustomerDTO {
     @NotNull
     @Size(min = 1, message = "{Size.userDto.firstName}")
