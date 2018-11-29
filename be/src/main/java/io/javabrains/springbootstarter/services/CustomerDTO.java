@@ -2,6 +2,7 @@ package io.javabrains.springbootstarter.services;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import com.fasterxml.jackson.annotation.JsonRootName;
 
 //this is the grand daddy DTO
 /*---------------------------testing DTO JSON---------------------------
@@ -14,6 +15,7 @@ import javax.validation.constraints.Size;
 }
 */
 //
+@JsonRootName(value = "customer")
 public class CustomerDTO {
     @NotNull
     @Size(min = 1, message = "{Size.userDto.firstName}")
@@ -31,12 +33,25 @@ public class CustomerDTO {
     //@ValidPassword
     private String password;
     
+	@NotNull
+    private String CustomerID;
+    
     //@NotNull
     //@Size(min = 1)
     private String matchingPassword;
     
     private boolean enabled;
+    
+    
+    public String getCustomerID() {
+		return CustomerID;
+	}
 
+	public void setCustomerID(String customerID) {
+		CustomerID = customerID;
+	}
+
+	
 	public String getUserName() {
         return userName;
     }

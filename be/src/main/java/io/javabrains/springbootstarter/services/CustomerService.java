@@ -2,6 +2,9 @@ package io.javabrains.springbootstarter.services;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -35,7 +38,8 @@ public class CustomerService implements ICustomerService {
 	@Qualifier("userPasswordEncoder")
 	private PasswordEncoder passwordEncoder;
 	
-	private final String USER_ROLE_NAME	= "CUSTOMER";
+	private final String USER_ROLE_NAME		= "CUSTOMER";
+	private final String PARTY_ROLE_NAME	= "Customer";
     
     // API
     //This method should accept a DTO and return a DTO
@@ -43,9 +47,31 @@ public class CustomerService implements ICustomerService {
     //if we did not use a DTO we would have JSON nesting as per the domain model structure, which is hard to manage in our client views
     //The DTO is simple and dumb, it is the service layer that manages the translation between DTO and domain objects
     
+	@Override
+	@Transactional
+	public List<CustomerDTO> getCustomers() {
+		
+		
+		return null;
+	}
+	
+	
+	@Override
+	@Transactional
+	public CustomerDTO getCustomer(String userName) {
+		Optional<Party> pr1 = partyRepository.findByPartyUserUsername(userName);
+		CustomerDTO c1 = new CustomerDTO();
+		c1.setFirstName(((PartyPerson)pr1.get()).getGivenNameEn());
+		c1.setLastName(((PartyPerson)pr1.get()).getFamilyNameEn());
+		c1.setUserName(((PartyPerson)pr1.get()).getPartyUser().getUsername());
+		c1.setCustomerID(((RoleCustomer)((PartyPerson)pr1.get()).getPartyRole(PARTY_ROLE_NAME)).getCustomerNumber());
+		return c1;
+	}
+	
+	
     @Override
 	@Transactional
-    public Party registerNewCustomer(final CustomerDTO customer) {
+    public void registerNewCustomer(final CustomerDTO customer) {
         if (customerExist(customer.getUserName())) {
             throw new CustomerAlreadyExistException("There is an account with that username: " + customer.getUserName());
         }
@@ -85,7 +111,7 @@ public class CustomerService implements ICustomerService {
 		c1.setRoleParty(p1);
 		
 		//persist the parent
-		return personRepository.save(p1);
+		personRepository.save(p1);
     }
 
     @Override
