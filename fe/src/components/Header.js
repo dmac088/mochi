@@ -9,7 +9,7 @@ const Header = (props) => {
         <div className="navbar-brand">Navbar</div>
         <div className="form-inline">
             <Greeting
-                user={props.user}
+                tokens={props.tokens}
             />
             <Login/>
 
