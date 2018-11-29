@@ -13,7 +13,14 @@ class Signup extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+                    customer: {
+                          userName: null,
+                          password: null,
+                          firstName: null,
+                          lastName: null
+                        }
+                };
     store.subscribe(this.reduxSubscribedFunction);
   }
 
@@ -35,12 +42,15 @@ class Signup extends Component {
       error: '',
     });
 
-    //const { givenNameEn, familyNameEn, username, password } = this.state;
+    //const { givenNameEn, familyNameEn, userName, password } = this.state;
     //create is a CRUD operation therefore we don't need to use the service class
+
+    //craete is not taking the initialstate from redux customerServicei
+    //instead this is local state, which is not what we want
     customersApi.create(this.state.customer)
       .then(() => {
-          return session.authenticate(this.state.customer.partyUser.username,
-                             this.state.customer.partyUser.password);
+          return session.authenticate(this.state.customer.userName,
+                             this.state.customer.password);
       }).then((response) => {
         console.log(response);
         console.log(store.getState());
@@ -49,7 +59,7 @@ class Signup extends Component {
         //our input text boxes write to local state and then
         //persist directly to database to create a new customer, not to redux (yet)
         //we poplulare reduct by making another call to the api
-        //either using the username in local state or returned party id in responseText
+        //either using the userName in local state or returned party id in responseText
         //for this we use the /services/customer/index.js which must be imported
         //we need the access token from the redux store to make the subsequen API calls
         //this can be gotten by
@@ -58,13 +68,12 @@ class Signup extends Component {
     //  console.log(this.props.customer);
     //  console.log(this.props.tokens);
 
-      //console.log(customerService.findByUserName(this.state.customer.partyUser.username,
+      //console.log(customerService.findByuserName(this.state.customer.partyUser.userName,
       //                                             this.state.customer.partyUser.password));
 
       }).then(() => {
 
         //we can reset local state, no impact to global redux state
-        this.setState(this.initialStateSignup);
         //const routeStack = this.props.navigator.getCurrentRoutes();
         //this.props.navigator.jumpTo(routeStack[3]);
 
@@ -98,7 +107,7 @@ class Signup extends Component {
                 <input
                   type="text"
                   className="form-control"
-                  id="customer.givenNameEn"
+                  id="customer.firstName"
                   onChange={this.updateCustomerState}
                   placeholder="First Name"
                   required />
@@ -113,7 +122,7 @@ class Signup extends Component {
                 <input
                   type="text"
                   className="form-control"
-                  id="customer.familyNameEn"
+                  id="customer.lastName"
                   onChange={this.updateCustomerState}
                   placeholder="Last Name"
                   required />
@@ -123,19 +132,19 @@ class Signup extends Component {
               </div>
             </div>
             <div className="mb-3">
-              <label htmlFor="username">Username</label>
+              <label htmlFor="userName">userName</label>
               <div className="input-group">
                 <input
                   type="text"
                   className="form-control"
-                  id="customer.partyUser.username"
+                  id="customer.userName"
                   onChange={this.updateCustomerState}
                   placeholder="you@placeholder.com"
                   required />
                                   <div
                   className="invalid-feedback"
                   style={{width: '100%'}}>
-                  Your username is required.
+                  Your userName is required.
                 </div>
               </div>
             </div>
@@ -146,7 +155,7 @@ class Signup extends Component {
               <input
                 type="password"
                 className="form-control"
-                id="customer.partyUser.password"
+                id="customer.password"
                 onChange={this.updateCustomerState}
                 placeholder="Password" />
             </div>
@@ -162,10 +171,10 @@ class Signup extends Component {
         <div className="col-md-3 order-md-3">
         </div>
       </div>
-      <p>{'authenticated = ' + this.props.user.authenticated + ' '} </p>
+      <p>{'authenticated = ' + this.props.tokens.authenticated + ' '} </p>
       <br/>
-      <p>{' username = ' + this.props.user.username + ' '} </p>
-      <p>{' access toke = ' + this.props.tokens.access.value + ' '} </p>
+      <p>{' userName = ' + this.props.tokens.userName + ' '} </p>
+      <p>{' access token = ' + this.props.tokens.access_token + ' '} </p>
     </div>
       );
   }
