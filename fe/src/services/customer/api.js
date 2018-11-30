@@ -2,8 +2,8 @@ import { fetchApi } from '../../services/api';
 import apiConfig from '../../services/api/config';
 
 const endPoints = {
-	get: '/Customer/UserName/',
-	other: ''
+	get: '/api/Customer/UserName/',
+	signup: '/api/Customer/Signup'
 };
 
 export const findByUserName = (userName, password) => fetchApi(
@@ -22,8 +22,8 @@ export const findByUserName = (userName, password) => fetchApi(
 																																}
 																															);
 
-export const createNewCustomer = (userName, password, customer, token) => fetchApi(
-																															endPoints.get + userName,
+export const createNewCustomer = (userName, password, customer) => fetchApi(
+																															endPoints.signup,
 																															{},
 																															{
 																															},
