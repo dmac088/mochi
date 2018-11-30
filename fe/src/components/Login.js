@@ -34,10 +34,11 @@ class Login extends Component {
     let newstate = {...this.state};
     deepValue(newstate, event.target.id, event.target.value);
     this.setState(newstate);
+    console.log(this.state);
   }
 
   loginClick = (event) => {
-    session.authenticate(this.state.username, this.state.password)
+    session.authenticate(this.state.userName, this.state.password)
     .then(() => {
       console.log('user authentication complete');
     })
@@ -103,19 +104,19 @@ class Login extends Component {
      return button;
     }
 
-    renderUserNameField = () => {
-  //   console.log('render username field');
+    renderuserNameField = () => {
+  //   console.log('render userName field');
      let userNameField;
      if(!this.props.tokens.authenticated) {
        userNameField =
        <input
          className="form-control mr-sm-2"
          type="input"
-         id="username"
+         id="userName"
          onChange={this.updateCustomerState}
 
-         placeholder="Username"
-         aria-label="Username" />;
+         placeholder="userName"
+         aria-label="userName" />;
      }
      return userNameField;
     }
@@ -142,7 +143,7 @@ class Login extends Component {
   render() {
       return(
         <div>
-          {this.renderUserNameField()}
+          {this.renderuserNameField()}
           {this.renderPasswordField()}
           {this.renderLoginButton()}
           {this.renderLogoutButton()}

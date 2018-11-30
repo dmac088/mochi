@@ -7,7 +7,7 @@ export const initialState = {
     refresh_token: null,
     expires_in: null,
     scope: null,
-    username: null,
+    userName: null,
 		authenticated: false,
   }
 };

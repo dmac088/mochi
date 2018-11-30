@@ -25,7 +25,7 @@ export const authenticate = (userName, password) => fetchApi(
 
 export const refresh = (token) 									=> fetchApi(
 																													endPoints.refresh,
-																													{},
+																													null,
 																													{
 																														grant_type: 'refresh_token',
 																														refresh_token: token.value

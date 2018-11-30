@@ -29,7 +29,7 @@ export const refreshToken = () => {
 	const session = selectors.get();
 	console.log("refres_token = " + JSON.parse(session.tokens).refresh_token);
 
-	if (!session.tokens.refresh_token || !session.username) {
+	if (!session.tokens.refresh_token || !session.userName) {
 		return Promise.reject();
 	}
 

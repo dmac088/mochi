@@ -172,9 +172,10 @@ class Signup extends Component {
         <div className="col-md-3 order-md-3">
         </div>
       </div>
+      <p>{console.log(this.props.tokens)}</p>
       <p>{'authenticated = ' + this.props.tokens.authenticated + ' '} </p>
       <br/>
-      <p>{' userName = ' + this.props.tokens.userName + ' '} </p>
+      <p>{' userName = ' + this.props.tokens.username + ' '} </p>
       <p>{' access token = ' + this.props.tokens.access_token + ' '} </p>
     </div>
       );
@@ -189,7 +190,6 @@ const mapStateToProps = (state) => {
     //take value from reducer, alias used in combineReducers in ./data/reducer.js
     //state is not local state it is the parameter (state)
     tokens: state.services.session.tokens,
-    user: state.services.session.user,
     customer: state.services.session.customer
   };
 };
