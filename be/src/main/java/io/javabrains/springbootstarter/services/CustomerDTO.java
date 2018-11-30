@@ -81,7 +81,7 @@ public class CustomerDTO {
         this.userName = username;
     }
 
-    @JsonIgnore
+    
     public String getPassword() {
         return password;
     }
@@ -90,7 +90,6 @@ public class CustomerDTO {
         this.password = password;
     }
 
-    @JsonIgnore
     public String getMatchingPassword() {
         return matchingPassword;
     }
