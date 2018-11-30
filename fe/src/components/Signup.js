@@ -47,10 +47,13 @@ class Signup extends Component {
     //instead this is local state, which is not what we want
     //customersApi.create(this.state.customer)
       customerService.createNewCustomer(this.state.customer)
-        .then(() => {
+        .then((response) => {
+
+            return response.body;
             //return session.authenticate(this.state.customer.userName,
-              //                 this.state.customer.password);
-        }).then((response) => {
+
+        }).then((responsebody) => {
+            return responsebody.text();
           //we are using local state here since
           //our input text boxes write to local state and then
           //persist directly to database to create a new customer, not to redux (yet)
@@ -67,11 +70,16 @@ class Signup extends Component {
           //console.log(customerService.findByuserName(this.state.customer.partyUser.userName,
           //this.state.customer.partyUser.password));
 
-        }).then(() => {
+
 
           //we can reset local state, no impact to global redux state
           //const routeStack = this.props.navigator.getCurrentRoutes();
           //this.props.navigator.jumpTo(routeStack[3]);
+
+      }).then((responseText) => {
+          console.log(responseText);
+          return JSON.parse(responseText);
+
 
       })
       .catch((exception) => {
