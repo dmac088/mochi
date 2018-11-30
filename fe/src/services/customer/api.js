@@ -16,7 +16,7 @@ export const findByUserName = (userName, password) => fetchApi(
 																																},
 																																'GET',
 																																{
-																																	Authorization: 'Basic ' + apiConfig.clientId,
+																																	Authorization: 'Basic ' + apiConfig.ClientId,
 																																	'Content-Type': 'application/x-www-form-urlencoded',
 																																	'Cache-Control': 'no-cache'
 																																}

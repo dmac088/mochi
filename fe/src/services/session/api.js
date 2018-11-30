@@ -9,7 +9,7 @@ const endPoints = {
 
 export const authenticate = (userName, password) => fetchApi(
 																													endPoints.authenticate,
-																													{},
+																													null,
 																													{
 																														username: userName,
 																														password: password,
@@ -17,7 +17,7 @@ export const authenticate = (userName, password) => fetchApi(
 																													},
 																													'POST',
 																													{
-																														 Authorization: 'Basic ' + apiConfig.clientId,
+																														 Authorization: 'Basic ' + apiConfig.ClientId,
 																														'Content-Type': apiConfig.ContentType,
 																														'Cache-Control': apiConfig.CacheControl
 																													}
