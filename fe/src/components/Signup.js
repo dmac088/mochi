@@ -49,11 +49,8 @@ class Signup extends Component {
       customerService.createNewCustomer(this.state.customer)
         .then((response) => {
 
-            return response.body;
-            //return session.authenticate(this.state.customer.userName,
-
-        }).then((responsebody) => {
-            return responsebody.text();
+            return response.text();
+          //return session.authenticate(this.state.customer.userName,
           //we are using local state here since
           //our input text boxes write to local state and then
           //persist directly to database to create a new customer, not to redux (yet)
