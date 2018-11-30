@@ -214,9 +214,8 @@ ALTER SEQUENCE mochi.party_type_pty_typ_id_seq OWNED BY mochi.party_type.pty_typ
 
 CREATE TABLE mochi.person (
     psn_id bigint NOT NULL,
-    psn_gvn_nm_en character varying,
-    psn_fml_nm_en character varying,
-    psn_nm_cn character varying,
+    psn_gvn_nm character varying,
+    psn_fml_nm character varying,
     enb boolean
 );
 
@@ -744,27 +743,27 @@ SELECT pg_catalog.setval('mochi.party_type_pty_typ_id_seq', 1, false);
 -- Data for Name: person; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY mochi.person (psn_id, psn_gvn_nm_en, psn_fml_nm_en, psn_nm_cn, enb) FROM stdin;
-1	Daniel	Mackie	丹尼爾麥基	t
-232152	Daniel	Mackie	丹尼爾麥基	\N
-232156	Daniel	Mackie	丹尼爾麥基	\N
-232160	Daniel	Mackie	丹尼爾麥基	\N
-232164	Daniel	Mackie	丹尼爾麥基	\N
-232166	Daniel	Mackie	丹尼爾麥基	\N
-232168	Daniel	Mackie	丹尼爾麥基	\N
-232174	Daniel	Mackie	丹尼爾麥基	\N
-232180	Daniel	Mackie	丹尼爾麥基	\N
-232184	Milap	Gohil	丹尼爾麥基	\N
-232192	Milap	Gohil	丹尼爾麥基	\N
-232196	Jane	Foster	丹尼爾麥基	\N
-232216				\N
-232218	test	test		\N
-232220				\N
-232224	Will	Parkhouse		\N
-232226	Will	Parkhouse		\N
-232228	Will	Parkhouse		\N
-232230	Will	Parkhouse		\N
-232232	Will	Parkhouse		\N
+COPY mochi.person (psn_id, psn_gvn_nm, psn_fml_nm, enb) FROM stdin;
+1	Daniel	Mackie	t
+232152	Daniel	Mackie	\N
+232156	Daniel	Mackie	\N
+232160	Daniel	Mackie	\N
+232164	Daniel	Mackie	\N
+232166	Daniel	Mackie	\N
+232168	Daniel	Mackie	\N
+232174	Daniel	Mackie	\N
+232180	Daniel	Mackie	\N
+232184	Milap	Gohil	\N
+232192	Milap	Gohil	\N
+232196	Jane	Foster	\N
+232216			\N
+232218	test	test	\N
+232220			\N
+232224	Will	Parkhouse	\N
+232226	Will	Parkhouse	\N
+232228	Will	Parkhouse	\N
+232230	Will	Parkhouse	\N
+232232	Will	Parkhouse	\N
 \.
 
 
