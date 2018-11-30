@@ -2,6 +2,8 @@ package io.javabrains.springbootstarter.services;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
@@ -79,6 +81,7 @@ public class CustomerDTO {
         this.userName = username;
     }
 
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
@@ -87,6 +90,7 @@ public class CustomerDTO {
         this.password = password;
     }
 
+    @JsonIgnore
     public String getMatchingPassword() {
         return matchingPassword;
     }
