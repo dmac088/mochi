@@ -30,4 +30,4 @@ export const createNewCustomer = (customer) => fetchApi(
 																															{
 																															'Content-Type': 'application/json'
 																															}
-																															);
+																											 );
