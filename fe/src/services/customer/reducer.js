@@ -5,8 +5,8 @@ export const initialState = {
 																					userName: null,
 																					password: null,
 																					enabled: null,
-																					firstName: null,
-																					lastName: null
+																					givenName: null,
+																					familyName: null
 																				}
 														};
 
