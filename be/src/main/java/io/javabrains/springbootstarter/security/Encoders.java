@@ -16,7 +16,7 @@ public class Encoders {
         return new BCryptPasswordEncoder(clientRounds);
     }
     
-    @Bean
+    @Bean(name = "userPasswordEncoder")
     public PasswordEncoder userPasswordEncoder() {
         return new BCryptPasswordEncoder(userRounds);
     }

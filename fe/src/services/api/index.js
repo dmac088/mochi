@@ -28,11 +28,13 @@ export const fetchApi = (endPoint, payload = {}, formData = {}, method = 'get', 
 	console.log('payload.....');
 	console.log(payload);
 
-	console.log('formData.... ');
+	console.log('formData....');
 	console.log(formData);
 
-	console.log('headers = ');
+	console.log('headers....');
 	console.log(headers);
+
+	console.log('method = ' + method);
 	let formBody = [];
 		for (let property in formData) {
 				let encodedKey = encodeURIComponent(property);
@@ -41,6 +43,8 @@ export const fetchApi = (endPoint, payload = {}, formData = {}, method = 'get', 
 		}
 
 	if(method.toLowerCase() === 'post') {
+		console.log('This is a post request');
+		console.log(JSON.stringify(payload));
 		formBody.push(JSON.stringify(payload));
 	}
 	formBody = formBody.join("&");
