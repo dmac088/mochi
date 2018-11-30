@@ -14,7 +14,6 @@ import { initialState } from './reducer';
 
 
 	export const createNewCustomer = (customer) => {
-		console.log(customer);
 		return api.createNewCustomer(customer);
 	};
 
