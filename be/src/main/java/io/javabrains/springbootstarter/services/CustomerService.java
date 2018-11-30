@@ -98,7 +98,7 @@ public class CustomerService implements ICustomerService {
 		u1.setEnabled(true);
 		u1.setUserRoles(new ArrayList<UserRole>());
 		u1.addUserRole(userRoleService.loadUserRoleByRoleName(USER_ROLE_NAME));
-		u1.setPassword(passwordEncoder.encode(customer.getPassword()));
+		//u1.setPassword(passwordEncoder.encode(customer.getPassword()));
 		
 		//add user to person 
 		p1.addUser(u1);
