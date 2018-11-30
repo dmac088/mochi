@@ -23,11 +23,11 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 public class CustomerDTO {
     @NotNull
     @Size(min = 1, message = "{Size.userDto.firstName}")
-    private String firstName;
+    private String givenName;
 
     @NotNull
     @Size(min = 1, message = "{Size.userDto.lastName}")
-    private String lastName;
+    private String familyName;
 
     //@ValidEmail
     @NotNull
@@ -65,19 +65,19 @@ public class CustomerDTO {
     }
 
     public String getFirstName() {
-        return firstName;
+        return givenName;
     }
 
     public void setFirstName(final String firstName) {
-        this.firstName = firstName;
+        this.givenName = firstName;
     }
 
     public String getLastName() {
-        return lastName;
+        return familyName;
     }
 
     public void setLastName(final String lastName) {
-        this.lastName = lastName;
+        this.familyName = lastName;
     }
 
     public String getPassword() {
@@ -107,7 +107,7 @@ public class CustomerDTO {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("UserDto [firstName=").append(firstName).append(", lastName=").append(lastName).append(", password=").append(password).append(", matchingPassword=").append(matchingPassword).append(", username=").append(userName)
+        builder.append("UserDto [firstName=").append(givenName).append(", lastName=").append(familyName).append(", password=").append(password).append(", matchingPassword=").append(matchingPassword).append(", username=").append(userName)
                 .append(", role=").append("]");
         return builder.toString();
     }

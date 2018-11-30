@@ -17,42 +17,32 @@ public class PartyPerson extends Party implements Serializable {
 	@Transient
 	private Long partyTypeId = (long) 1;
 	
-	@Column(name="psn_gvn_nm_en")
-	private String GivenNameEn;
+	@Column(name="psn_gvn_nm")
+	private String GivenName;
 	
-	@Column(name="psn_fml_nm_en")
-	private String FamilyNameEn;
-	
-	@Column(name="psn_nm_cn")
-	private String NameCn;
+	@Column(name="psn_fml_nm")
+	private String FamilyName;
 	
 	public PartyPerson() {
 		super();
 		this.setPartyType(new PartyType(partyTypeId));
 	}
 	
-	public String getGivenNameEn() {
-		return GivenNameEn; 
+	public String getGivenName() {
+		return GivenName; 
 	}	
 	
-	public void setGivenNameEn(String givenNameEn) {
-		GivenNameEn = givenNameEn;
+	public void setGivenName(String givenName) {
+		GivenName = givenName;
 	}
 
-	public String getFamilyNameEn() {
-		return FamilyNameEn;
+	public String getFamilyName() {
+		return FamilyName;
 	}
 
-	public void setFamilyNameEn(String familyNameEn) {
-		FamilyNameEn = familyNameEn;
+	public void setFamilyName(String familyName) {
+		FamilyName = familyName;
 	}
 
-	public String getNameCn() {
-		return NameCn;
-	}
-
-	public void setNameCn(String NameCn) {
-		this.NameCn = NameCn;
-	}
 	
 }
