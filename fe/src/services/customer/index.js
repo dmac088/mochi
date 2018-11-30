@@ -1,21 +1,25 @@
 import store from '../../store';
 import * as api from './api';
+import * as customersApi from '../../data/customers/api';
 import * as selectors from './selectors';
 import * as actionCreators from './actions';
 import { initialState } from './reducer';
 
 
-export const findByUserName = (userName) =>
-	api.findByUserName(userName)
-	//injection of a function reference means the function behaves
-	//as if it were nested within the parentheses
-	.then(onRequestSuccess)
-	.catch(onRequestFailed);
+	export const findByUserName = (userName) =>
+		api.findByUserName(userName)
+		//injection of a function reference means the function behaves
+		//as if it were nested within the parentheses
+		.then(onRequestSuccess)
+		.catch(onRequestFailed);
 
 
+	export const createNewCustomer = (customer) => {
+		return customersApi.create(customer);
+	};
 
 
-	const  onRequestSuccess = (response) => {
+	const onRequestSuccess = (response) => {
 		 //we capture our response errors here and act accordingly
 		 console.log('onRequestSuccess');
 		 // if (response.status === 400) {
@@ -31,6 +35,8 @@ export const findByUserName = (userName) =>
 		 	 return responseText.JSON;
 		 })
 		 .then((responseJSON) => {
+			 console.log(responseJSON);
+			 console.log(actionCreators.update({ responseJSON, customer: responseJSON }));
 			 store.dispatch(actionCreators.update({ responseJSON, customer: responseJSON }));
 		 })
 		 .catch((e) => {
