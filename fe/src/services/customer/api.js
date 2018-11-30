@@ -22,11 +22,10 @@ export const findByUserName = (userName, password) => fetchApi(
 																																}
 																															);
 
-export const createNewCustomer = (userName, password, customer) => fetchApi(
+export const createNewCustomer = (customer) => fetchApi(
 																															endPoints.signup,
+																															customer,
 																															{},
-																															{
-																															},
 																															'POST',
 																															{
 																															'Content-Type': 'application/json'
