@@ -18,10 +18,9 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 	"lastName":"McDonald"
 }
 */
-//
-//@JsonRootName(value = "customer")
-@JsonTypeName(value = "customer")
-@JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.NAME)
+
+//@JsonTypeName(value = "customer")
+//@JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.NAME)
 public class CustomerDTO {
     @NotNull
     @Size(min = 1, message = "{Size.userDto.firstName}")

@@ -16,10 +16,8 @@ class Signup extends Component {
                         givenName: null,
                         familyName: null
                     },
-                    component: {
-                        isLoading: null,
-                        error: null
-                    }
+                    isLoading: null,
+                    error: null
                 };
     store.subscribe(this.reduxSubscribedFunction);
   }
@@ -48,7 +46,7 @@ class Signup extends Component {
     //craete is not taking the initialstate from redux customerServicei
     //instead this is local state, which is not what we want
     //customersApi.create(this.state.customer)
-      customerService.createNewCustomer(this.state)
+      customerService.createNewCustomer(this.state.customer)
         .then(() => {
             //return session.authenticate(this.state.customer.userName,
               //                 this.state.customer.password);
