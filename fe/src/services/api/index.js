@@ -25,6 +25,14 @@ export const deepValue = (obj, path, value)  => {
 
 export const fetchApi = (endPoint, payload = {}, formData = {}, method = 'get', headers = {}) => {
 	console.log('fetch api called: ' + apiConfig.url+endPoint);
+	console.log('payload.....');
+	console.log(payload);
+
+	console.log('formData.... ');
+	console.log(formData);
+
+	console.log('headers = ');
+	console.log(headers);
 	let formBody = [];
 		for (let property in formData) {
 				let encodedKey = encodeURIComponent(property);

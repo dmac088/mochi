@@ -48,9 +48,17 @@ public class CustomerService implements ICustomerService {
 	@Override
 	@Transactional
 	public List<CustomerDTO> getCustomers() {
-		
-		
-		return null;
+		List<CustomerDTO> cl = new ArrayList<CustomerDTO>();
+		List<Party> pl = partyRepository.findAll();
+		for(Party p : pl) {
+			CustomerDTO c = new CustomerDTO();
+			c.setCustomerID(((RoleCustomer)p.getPartyRole(PARTY_ROLE_NAME)).getCustomerNumber());
+			c.setGivenName(((PartyPerson)p).getGivenName());
+			c.setFamilyName(((PartyPerson)p).getFamilyName());
+			c.setUserName(p.getPartyUser().getUsername());
+			cl.add(c);
+		}
+		return cl;
 	}
 	
 	

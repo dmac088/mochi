@@ -15,6 +15,7 @@ import { initialState } from './reducer';
 
 
 	export const createNewCustomer = (customer) => {
+		console.log(customer);
 		return customersApi.create(customer);
 	};
 
@@ -35,8 +36,8 @@ import { initialState } from './reducer';
 		 	 return responseText.JSON;
 		 })
 		 .then((responseJSON) => {
-			 console.log(responseJSON);
-			 console.log(actionCreators.update({ responseJSON, customer: responseJSON }));
+		//	 console.log(responseJSON);
+		//	 console.log(actionCreators.update({ responseJSON, customer: responseJSON }));
 			 store.dispatch(actionCreators.update({ responseJSON, customer: responseJSON }));
 		 })
 		 .catch((e) => {

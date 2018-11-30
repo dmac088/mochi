@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as customersApi from '../data/customers/api';
-import * as session from '../services/session';
 import * as customerService from '../services/customer';
 import * as api from '../services/api';
 import store from '../store';
-import * as selectors from '../services/customer/selectors';
 import { deepValue } from '../services/api';
-//signup should have it's own local state and not be bound to App.js
 
 class Signup extends Component {
 
@@ -15,11 +11,15 @@ class Signup extends Component {
     super(props);
     this.state = {
                     customer: {
-                          userName: null,
-                          password: null,
-                          givenName: null,
-                          familyName: null
-                        }
+                        userName: null,
+                        password: null,
+                        givenName: null,
+                        familyName: null
+                    },
+                    component: {
+                        isLoading: null,
+                        error: null
+                    }
                 };
     store.subscribe(this.reduxSubscribedFunction);
   }
@@ -32,15 +32,15 @@ class Signup extends Component {
     let newstate = {...this.state};
     deepValue(newstate, event.target.id, event.target.value);
     this.setState(newstate);
-    console.log(this.state.customer);
+    console.log(this.state);
   }
 
   signupClick = (event) => {
-    console.log("signup click");
-    this.setState({
-      isLoading: true,
-      error: '',
-    });
+      console.log("signup click");
+      this.setState({
+        isLoading: true,
+        error: '',
+      });
 
     //const { givenNameEn, familyNameEn, userName, password } = this.state;
     //create is a CRUD operation therefore we don't need to use the service class
@@ -48,43 +48,43 @@ class Signup extends Component {
     //craete is not taking the initialstate from redux customerServicei
     //instead this is local state, which is not what we want
     //customersApi.create(this.state.customer)
-    customerService.createNewCustomer(this.state.customer)
-      .then(() => {
-          //return session.authenticate(this.state.customer.userName,
-            //                 this.state.customer.password);
-      }).then((response) => {
-        //we are using local state here since
-        //our input text boxes write to local state and then
-        //persist directly to database to create a new customer, not to redux (yet)
-        //we poplulare reduct by making another call to the api
-        //either using the userName in local state or returned party id in responseText
-        //for this we use the /services/customer/index.js which must be imported
-        //we need the access token from the redux store to make the subsequen API calls
-        //this can be gotten by
+      customerService.createNewCustomer(this.state)
+        .then(() => {
+            //return session.authenticate(this.state.customer.userName,
+              //                 this.state.customer.password);
+        }).then((response) => {
+          //we are using local state here since
+          //our input text boxes write to local state and then
+          //persist directly to database to create a new customer, not to redux (yet)
+          //we poplulare reduct by making another call to the api
+          //either using the userName in local state or returned party id in responseText
+          //for this we use the /services/customer/index.js which must be imported
+          //we need the access token from the redux store to make the subsequen API calls
+          //this can be gotten by
 
-    //  console.log(this.props.user);
-    //  console.log(this.props.customer);
-    //  console.log(this.props.tokens);
+          //  console.log(this.props.user);
+          //  console.log(this.props.customer);
+          //  console.log(this.props.tokens);
 
-      //console.log(customerService.findByuserName(this.state.customer.partyUser.userName,
-      //                                             this.state.customer.partyUser.password));
+          //console.log(customerService.findByuserName(this.state.customer.partyUser.userName,
+          //this.state.customer.partyUser.password));
 
-      }).then(() => {
+        }).then(() => {
 
-        //we can reset local state, no impact to global redux state
-        //const routeStack = this.props.navigator.getCurrentRoutes();
-        //this.props.navigator.jumpTo(routeStack[3]);
+          //we can reset local state, no impact to global redux state
+          //const routeStack = this.props.navigator.getCurrentRoutes();
+          //this.props.navigator.jumpTo(routeStack[3]);
 
-    })
-    .catch((exception) => {
-      // Displays only the first error message
-      const error = api.exceptionExtractError(exception);
-      const newState = {
-        isLoading: false,
-        ...(error ? { error } : {}),
-      };
-        this.setState(newState);
-    });
+      })
+      .catch((exception) => {
+        // Displays only the first error message
+        const error = api.exceptionExtractError(exception);
+        const newState = {
+          isLoading: false,
+          ...(error ? { error } : {}),
+        };
+          this.setState(newState);
+      });
   }
 
   render() {

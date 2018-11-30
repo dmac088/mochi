@@ -17,4 +17,11 @@ export const create = payload => fetchApi(endPoints.create,
 																				);
 
 
-export const get = payload => fetchApi(endPoints.get, payload, {}, 'GET', {});
+export const get = payload => 	fetchApi(endPoints.get,
+																				 payload,
+																				 {},
+																				 'GET',
+																				 {
+
+																				 }
+																			 );
