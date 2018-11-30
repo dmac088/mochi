@@ -101,13 +101,13 @@ class Signup extends Component {
           <div className="needs-validation" noValidate>
             <div className="row">
               <div className="col-md-6 mb-3">
-                <label htmlFor="firstName">
+                <label htmlFor="givenName">
                 First name
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  id="customer.firstName"
+                  id="customer.givenName"
                   onChange={this.updateCustomerState}
                   placeholder="First Name"
                   required />
@@ -116,13 +116,13 @@ class Signup extends Component {
                 </div>
               </div>
               <div className="col-md-6 mb-3">
-                <label htmlFor="lastName">
+                <label htmlFor="familyName">
                 Last name
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  id="customer.lastName"
+                  id="customer.familyName"
                   onChange={this.updateCustomerState}
                   placeholder="Last Name"
                   required />
