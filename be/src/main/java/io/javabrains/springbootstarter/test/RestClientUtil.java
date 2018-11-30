@@ -135,9 +135,8 @@ public class RestClientUtil {
 		 //Create the person
 		
 		 PartyPerson objPerson = new PartyPerson();
-		 objPerson.setGivenNameEn(this.CUSTOMER_GIVEN_NAME_EN);
-		 objPerson.setFamilyNameEn(this.CUSTOMER_FAMILY_NAME_EN);
-		 objPerson.setNameCn(this.CUSTOMER_NAME_CN);
+		 objPerson.setGivenName(this.CUSTOMER_GIVEN_NAME_EN);
+		 objPerson.setFamilyName(this.CUSTOMER_FAMILY_NAME_EN);
 		
 		 
 		 //Create the user
@@ -158,6 +157,6 @@ public class RestClientUtil {
 		 HttpEntity<PartyPerson> personEntity = new HttpEntity<PartyPerson>(objPerson, headers);
 		 ResponseEntity<PartyPerson> uri = restTemplate.exchange(this.PERSON_ENDPOINT, HttpMethod.POST, personEntity, PartyPerson.class);
 		 Assert.assertTrue(CUSTOMER_USERNAME.equals(uri.getBody().getPartyUser().getUsername()));
-		 Assert.assertTrue(CUSTOMER_GIVEN_NAME_EN.equals(uri.getBody().getGivenNameEn()));
+		 Assert.assertTrue(CUSTOMER_GIVEN_NAME_EN.equals(uri.getBody().getGivenName()));
 	}
 }
