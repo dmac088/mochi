@@ -35,6 +35,10 @@ export const fetchApi = (endPoint, payload = {}, formData = {}, method = 'get', 
 	console.log(headers);
 
 	console.log('method = ' + method);
+
+//need to add the following to every API call
+//Authorization: 'Basic ' + apiConfig.clientId,
+
 	let formBody = [];
 		for (let property in formData) {
 				let encodedKey = encodeURIComponent(property);

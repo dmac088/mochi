@@ -21,3 +21,19 @@ export const findByUserName = (userName, password) => fetchApi(
 																																	'Cache-Control': 'no-cache'
 																																}
 																															);
+
+export const createNewCustomer = (userName, password, customer) => fetchApi(
+																															endPoints.get + userName,
+																															{},
+																															{
+																															username: userName,
+																															password: password,
+																															grant_type: 'password'
+																															},
+																															'GET',
+																															{
+																															Authorization: 'Basic ' + apiConfig.clientId,
+																															'Content-Type': 'application/x-www-form-urlencoded',
+																															'Cache-Control': 'no-cache'
+																															}
+																															);

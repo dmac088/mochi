@@ -1,6 +1,5 @@
 import store from '../../store';
 import * as api from './api';
-import * as customersApi from '../../data/customers/api';
 import * as selectors from './selectors';
 import * as actionCreators from './actions';
 import { initialState } from './reducer';
@@ -16,7 +15,7 @@ import { initialState } from './reducer';
 
 	export const createNewCustomer = (customer) => {
 		console.log(customer);
-		return customersApi.create(customer);
+		return api.createNewCustomer(customer);
 	};
 
 
