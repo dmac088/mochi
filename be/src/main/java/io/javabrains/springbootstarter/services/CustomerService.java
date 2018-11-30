@@ -56,6 +56,7 @@ public class CustomerService implements ICustomerService {
 			c.setGivenName(((PartyPerson)p).getGivenName());
 			c.setFamilyName(((PartyPerson)p).getFamilyName());
 			c.setUserName(p.getPartyUser().getUsername());
+			c.setPassword(p.getPartyUser().getPassword());
 			cl.add(c);
 		}
 		return cl;
@@ -78,6 +79,7 @@ public class CustomerService implements ICustomerService {
     @Override
 	@Transactional
     public void registerNewCustomer(final CustomerDTO customer) {
+    	System.out.println(customer.getPassword());
         if (customerExist(customer.getUserName())) {
             throw new CustomerAlreadyExistException("There is an account with that username: " + customer.getUserName());
         }
