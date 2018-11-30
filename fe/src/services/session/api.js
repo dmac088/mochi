@@ -17,9 +17,9 @@ export const authenticate = (userName, password) => fetchApi(
 																													},
 																													'POST',
 																													{
-																															Authorization: 'Basic ' + apiConfig.clientId,
-																															'Content-Type': 'application/x-www-form-urlencoded',
-																															'Cache-Control': 'no-cache'
+																														Authorization: 'Basic ' + apiConfig.clientId,
+																														'Content-Type': 'application/x-www-form-urlencoded',
+																														'Cache-Control': 'no-cache'
 																													}
 																								);
 

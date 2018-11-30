@@ -17,8 +17,8 @@ class Signup extends Component {
                     customer: {
                           userName: null,
                           password: null,
-                          firstName: null,
-                          lastName: null
+                          givenName: null,
+                          familyName: null
                         }
                 };
     store.subscribe(this.reduxSubscribedFunction);
@@ -47,14 +47,12 @@ class Signup extends Component {
 
     //craete is not taking the initialstate from redux customerServicei
     //instead this is local state, which is not what we want
-    customersApi.create(this.state.customer)
+    //customersApi.create(this.state.customer)
+    customerService.createNewCustomer(this.state.customer)
       .then(() => {
-          return session.authenticate(this.state.customer.userName,
-                             this.state.customer.password);
+          //return session.authenticate(this.state.customer.userName,
+            //                 this.state.customer.password);
       }).then((response) => {
-        console.log(response);
-        console.log(store.getState());
-        console.log(this.props);
         //we are using local state here since
         //our input text boxes write to local state and then
         //persist directly to database to create a new customer, not to redux (yet)
