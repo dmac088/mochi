@@ -61,8 +61,8 @@ public class CustomerService implements ICustomerService {
 	public CustomerDTO getCustomer(String userName) {
 		Optional<Party> pr1 = partyRepository.findByPartyUserUsername(userName);
 		CustomerDTO c1 = new CustomerDTO();
-		c1.setFirstName(((PartyPerson)pr1.get()).getGivenName());
-		c1.setLastName(((PartyPerson)pr1.get()).getFamilyName());
+		c1.setGivenName(((PartyPerson)pr1.get()).getGivenName());
+		c1.setFamilyName(((PartyPerson)pr1.get()).getFamilyName());
 		c1.setUserName(((PartyPerson)pr1.get()).getPartyUser().getUsername());
 		c1.setCustomerID(((RoleCustomer)((PartyPerson)pr1.get()).getPartyRole(PARTY_ROLE_NAME)).getCustomerNumber());
 		return c1;
@@ -77,8 +77,8 @@ public class CustomerService implements ICustomerService {
         }
         
         PartyPerson p1 = new PartyPerson();
-        p1.setGivenName(customer.getFirstName());
-        p1.setFamilyName(customer.getLastName());
+        p1.setGivenName(customer.getGivenName());
+        p1.setFamilyName(customer.getFamilyName());
         
         
 		//create the role object

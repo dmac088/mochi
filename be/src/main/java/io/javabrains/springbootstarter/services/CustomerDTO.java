@@ -25,11 +25,11 @@ public class CustomerDTO {
     @Size(min = 1, message = "{Size.userDto.firstName}")
     private String givenName;
 
-    @NotNull
+	@NotNull
     @Size(min = 1, message = "{Size.userDto.lastName}")
     private String familyName;
 
-    //@ValidEmail
+	//@ValidEmail
     @NotNull
     @Size(min = 1, message = "{Size.userDto.email}")
     private String userName;
@@ -54,7 +54,22 @@ public class CustomerDTO {
 	public void setCustomerID(String customerID) {
 		CustomerID = customerID;
 	}
+	
+    public String getGivenName() {
+		return givenName;
+	}
 
+	public void setGivenName(String givenName) {
+		this.givenName = givenName;
+	}
+
+    public String getFamilyName() {
+		return familyName;
+	}
+
+	public void setFamilyName(String familyName) {
+		this.familyName = familyName;
+	}
 	
 	public String getUserName() {
         return userName;
@@ -62,22 +77,6 @@ public class CustomerDTO {
 
     public void setUserName(final String username) {
         this.userName = username;
-    }
-
-    public String getFirstName() {
-        return givenName;
-    }
-
-    public void setFirstName(final String firstName) {
-        this.givenName = firstName;
-    }
-
-    public String getLastName() {
-        return familyName;
-    }
-
-    public void setLastName(final String lastName) {
-        this.familyName = lastName;
     }
 
     public String getPassword() {
