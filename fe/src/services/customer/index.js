@@ -17,16 +17,17 @@ import { initialState } from './reducer';
 		console.log('creating a new customer');
 		 customerApi.createNewCustomer(customer)
 		.then((response) => {
-			  if(response.status === 500) {
-					throw response.text();
-				};
 				return response.text()
 		 })
 		 .then((responseText) => {
 			 	return JSON.parse(responseText)
 		 })
 		 .then((responseJSON) => {
-			 	console.log('customer creation status = ' + responseJSON.message)
+			 if(responseJSON.status === 500) {
+				 console.log(responseJSON.message);
+				 throw responseJSON.message
+			 }
+			 console.log('customer creation status = ' + responseJSON.message)
 		 })
 		.then(() => {
 				session.authenticate(customer)
@@ -44,6 +45,7 @@ import { initialState } from './reducer';
 	};
 
 const onRequestFailed = (exception) => {
+	console.log('request failed!');
 	session.clearSession();
-	throw exception;
+	//throw exception;
 };
