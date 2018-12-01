@@ -33,10 +33,10 @@ export const authenticate = (customer) => {
 		.then((responseJSON) => {
 			//console.log(responseJSON);
 			//dispatch to update the state
-			const storeTokens = selectors.get();
+			const tokens = selectors.get();
 			//authenticated resides in tokens objct, probably should be moved to customer
-		   store.dispatch(actionCreators.update({ storeTokens, "tokens": responseJSON }));
-
+		   store.dispatch(actionCreators.update({"tokens": responseJSON}));
+			 console.log(store.getState());
 		})
 		.then(onRequestSuccess)
 		.catch(onRequestFailed);

@@ -6,8 +6,7 @@ export const initialState = {
     token_type: null,
     refresh_token: null,
     expires_in: null,
-    scope: null,
-		authenticated: false,
+    scope: null
   }
 };
 
