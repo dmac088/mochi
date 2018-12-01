@@ -103,32 +103,32 @@ class Signup extends Component {
             <div className="row">
               <div className="col-md-6 mb-3">
                 <label htmlFor="givenName">
-                First name
+                Given Name
                 </label>
                 <input
                   type="text"
                   className="form-control"
                   id="customer.givenName"
                   onChange={this.updateCustomerState}
-                  placeholder="First Name"
+                  placeholder="Given Name"
                   required />
                 <div className="invalid-feedback">
-                  Valid first name is required.
+                  Valid given name is required.
                 </div>
               </div>
               <div className="col-md-6 mb-3">
                 <label htmlFor="familyName">
-                Last name
+                Family name
                 </label>
                 <input
                   type="text"
                   className="form-control"
                   id="customer.familyName"
                   onChange={this.updateCustomerState}
-                  placeholder="Last Name"
+                  placeholder="Family Name"
                   required />
                 <div className="invalid-feedback">
-                  Valid last name is required.
+                  Valid family name is required.
                 </div>
               </div>
             </div>
