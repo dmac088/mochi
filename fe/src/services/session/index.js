@@ -1,5 +1,6 @@
 import store from '../../store';
 import * as api from './api';
+import * as customerApi from '../customer/api';
 import * as selectors from './selectors';
 import * as actionCreators from './actions';
 import { initialState } from './reducer';
@@ -33,10 +34,15 @@ export const authenticate = (customer) => {
 		.then((responseJSON) => {
 			//console.log(responseJSON);
 			//dispatch to update the state
-			const tokens = selectors.get();
+			store.dispatch(actionCreators.update({"tokens": responseJSON}));
+			//console.log(store.getState().services.session.tokens.access_token);
 			//authenticated resides in tokens objct, probably should be moved to customer
-		   store.dispatch(actionCreators.update({"tokens": responseJSON}));
-			 console.log(store.getState());
+			//io think i should call the following from service rather than API
+		  //customerApi.findByUserName(store.getState().services.session.tokens.access_token,customer.userName)
+		})
+		.then((response) => {
+			console.log('pop');
+			 console.log(response);
 		})
 		.then(onRequestSuccess)
 		.catch(onRequestFailed);
