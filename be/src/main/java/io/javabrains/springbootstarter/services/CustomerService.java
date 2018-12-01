@@ -31,10 +31,6 @@ public class CustomerService implements ICustomerService {
     
     @Autowired
     private UserRoleService userRoleService;
-    
-	@Autowired
-	@Qualifier("userPasswordEncoder")
-	private PasswordEncoder passwordEncoder;
 	
 	private final String USER_ROLE_NAME		= "CUSTOMER";
 	private final String PARTY_ROLE_NAME	= "Customer";
@@ -100,7 +96,7 @@ public class CustomerService implements ICustomerService {
 		u1.setEnabled(true);
 		u1.setUserRoles(new ArrayList<UserRole>());
 		u1.addUserRole(userRoleService.loadUserRoleByRoleName(USER_ROLE_NAME));
-		u1.setPassword(passwordEncoder.encode(customer.getPassword()));
+		u1.setPassword(customer.getPassword());
 		
 		//add user to person 
 		p1.addUser(u1);
