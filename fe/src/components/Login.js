@@ -15,11 +15,10 @@ class Login extends Component {
   }
 
   reduxSubscribedFunction = () => {
-    console.log('login subscribed function triggered');
+    //console.log('login subscribed function triggered');
   }
 
   autoLogin = () =>  {
-    console.log('autoLogin');
     session.refreshToken().then(() => {
       console.log('the token has been refreshed');
     //	this.setState({ initialRoute: routeStack[3] });
@@ -30,18 +29,13 @@ class Login extends Component {
   }
 
   updateCustomerState = (event) =>  {
-    console.log('customer state changed');
     let newstate = {...this.state};
     deepValue(newstate, event.target.id, event.target.value);
     this.setState(newstate);
-    console.log(this.state);
   }
 
   loginClick = (event) => {
     session.authenticate(this.state.userName, this.state.password)
-    .then(() => {
-      console.log('user authentication complete');
-    })
     .catch((exception) => {
       // Displays only the first error message
       const error = api.exceptionExtractError(exception);
@@ -62,7 +56,6 @@ class Login extends Component {
   }
 
   renderLogoutButton = () => {
-    // console.log('render logout button');
      let button;
      if(this.props.tokens.authenticated) {
        button = <button
@@ -75,7 +68,6 @@ class Login extends Component {
   }
 
   renderLoginButton = () => {
-    // console.log('render login button');
      let button;
      if(!this.props.tokens.authenticated) {
        button =
@@ -90,7 +82,6 @@ class Login extends Component {
   }
 
   rendersignupButton = () => {
-    // console.log('render signup button');
      let button;
      if(!this.props.tokens.authenticated) {
        button =
@@ -105,7 +96,6 @@ class Login extends Component {
     }
 
     renderuserNameField = () => {
-  //   console.log('render userName field');
      let userNameField;
      if(!this.props.tokens.authenticated) {
        userNameField =
@@ -122,7 +112,6 @@ class Login extends Component {
     }
 
     renderPasswordField = () => {
-    // console.log('render password field');
      let passwordField;
      if(!this.props.tokens.authenticated) {
        passwordField =
