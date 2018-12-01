@@ -1,11 +1,13 @@
 import * as actionTypes from './actionTypes';
 
 export const initialState = {
+														customer: {
 																userName: null,
 																password: null,
 																enabled: null,
 																givenName: null,
 																familyName: null
+															}
 														};
 
 export const reducer = (state = initialState, action) => {

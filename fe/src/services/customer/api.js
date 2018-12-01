@@ -6,17 +6,13 @@ const endPoints = {
 	signup: '/api/Customer/Signup'
 };
 
-export const findByUserName = (userName, password) => fetchApi(
+export const findByUserName = (token, userName) => fetchApi(
 																																endPoints.get + userName,
 																																{},
-																																{
-																																	username: userName,
-																																	password: password,
-																																	grant_type: 'password'
-																																},
+																																{},
 																																'GET',
 																																{
-																																	Authorization: 'Basic ' + apiConfig.ClientId,
+																																	Authorization: 'Bearer ' + token.value,
 																																	'Content-Type': 'application/x-www-form-urlencoded',
 																																	'Cache-Control': 'no-cache'
 																																}
