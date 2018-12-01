@@ -3,10 +3,6 @@ package io.javabrains.springbootstarter.services;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonRootName;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeName;
 
 //this is the grand daddy DTO
 /*---------------------------testing DTO JSON---------------------------

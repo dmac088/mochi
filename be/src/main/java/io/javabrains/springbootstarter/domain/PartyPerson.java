@@ -14,6 +14,11 @@ import javax.persistence.Transient;
 @PrimaryKeyJoinColumn(name = "psn_id")
 public class PartyPerson extends Party implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5851002761066421365L;
+
 	@Transient
 	private Long partyTypeId = (long) 1;
 	
