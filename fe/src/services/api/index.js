@@ -24,17 +24,17 @@ export const deepValue = (obj, path, value)  => {
 }
 
 export const fetchApi = (endPoint, payload = {}, formData = {}, method = 'get', headers = {}) => {
-	console.log('fetch api called: ' + apiConfig.url+endPoint);
-	console.log('payload.....');
-	console.log(payload);
-
-	console.log('formData....');
-	console.log(formData);
-
-	console.log('headers....');
-	console.log(headers);
-
-	console.log('method = ' + method);
+	// console.log('fetch api called: ' + apiConfig.url+endPoint);
+	// console.log('payload.....');
+	// console.log(payload);
+	//
+	// console.log('formData....');
+	// console.log(formData);
+	//
+	// console.log('headers....');
+	// console.log(headers);
+	//
+	// console.log('method = ' + method);
 
 //need to add the following to every API call
 //Authorization: 'Basic ' + apiConfig.clientId,
@@ -47,8 +47,6 @@ export const fetchApi = (endPoint, payload = {}, formData = {}, method = 'get', 
 		}
 
 	if(method.toLowerCase() === 'post') {
-		console.log('This is a post request');
-		console.log(JSON.stringify(payload));
 		formBody.push(JSON.stringify(payload));
 	}
 	formBody = formBody.join("&");

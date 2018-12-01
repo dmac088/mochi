@@ -24,14 +24,12 @@ class Signup extends Component {
   }
 
   reduxSubscribedFunction = () => {
-    console.log('signup subscribed function triggered');
   }
 
   updateCustomerState = (event) =>  {
     let newstate = {...this.state};
     deepValue(newstate, event.target.id, event.target.value);
     this.setState(newstate);
-    console.log(this.state);
   }
 
   signupClick = (event) => {
@@ -40,15 +38,9 @@ class Signup extends Component {
         isLoading: true,
         error: '',
       });
-
-    //const { givenNameEn, familyNameEn, userName, password } = this.state;
-    //create is a CRUD operation therefore we don't need to use the service class
-
-    //craete is not taking the initialstate from redux customerServicei
-    //instead this is local state, which is not what we want
-    //customersApi.create(this.state.customer)
       customerService.createNewCustomer(this.state.customer);
-      sessionService.authenticate(this.state.customer.userName, this.state.customer.password);
+      //sessionService is not waiting for new customer creation
+      //sessionService.authenticate(this.state.customer.userName, this.state.customer.password);
 
   }
 
@@ -141,19 +133,13 @@ class Signup extends Component {
 }
 
 const mapStateToProps = (state) => {
-//  console.log("the state is .....");
-//  console.log(state);
   return {
-
-    //take value from reducer, alias used in combineReducers in ./data/reducer.js
-    //state is not local state it is the parameter (state)
     tokens: state.services.session.tokens,
     customer: state.services.session.customer
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  console.log(dispatch);
   return {
 
     //take value from reducer, alias used in combinReducers in ./data/reducer.js

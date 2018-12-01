@@ -18,16 +18,11 @@ const setSessionTimeout = (duration) => {
 
 export const clearSession = () => {
 	clearTimeout(sessionTimeout);
-
-	//set the state back to initial state
-	console.log('dispatching event to redux store');
 	store.dispatch(actionCreators.update(initialState));
 };
 
 export const refreshToken = () => {
-	console.log("called refresh token");
 	const session = selectors.get();
-	console.log("refres_token = " + JSON.parse(session.tokens).refresh_token);
 
 	if (!session.tokens.refresh_token || !session.userName) {
 		return Promise.reject();
@@ -38,17 +33,16 @@ export const refreshToken = () => {
 	.catch(onRequestFailed);
 };
 
-	export const authenticate = (userName, password) =>
-		api.authenticate(userName, password)
+	export const authenticate = (userName, password) => {
+		console.log('authenticating');
+		return api.authenticate(userName, password)
 		//injection of a function reference means the function behaves
 		//as if it were nested within the parentheses
 		.then(onRequestSuccess)
 		.catch(onRequestFailed);
-
+	}
 
 	const  onRequestSuccess = (response) => {
-		 //we capture our response errors here and act accordingly
-		 console.log('onRequestSuccess');
 		 if (response.status === 400) {
 			 console.log('Invalid username or password');
 			 clearSession();
@@ -60,7 +54,6 @@ export const refreshToken = () => {
 		 //we call the text function to execute the promise
 		 response.text()
 		 .then((responseText) => {
-			// console.log(responseText);
 		 	 return JSON.parse(responseText);
 		 })
 		 .then((responseJSON) => {
@@ -74,17 +67,12 @@ export const refreshToken = () => {
 	};
 
 	const  persistTokens = (tokens) => {
-		console.log("tokens....");
-		console.log(tokens);
-		//trigger a store update
-
 		store.dispatch(actionCreators.update({ tokens, "tokens": tokens }));
 
 		//set the token timeout
 		setSessionTimeout(tokens.expires_in);
 
 		const session = selectors.get();
-		console.log("session = " + session.tokens.authenticated);
 	}
 
 export const revoke = () => {
