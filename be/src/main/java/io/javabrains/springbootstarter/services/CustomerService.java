@@ -30,7 +30,7 @@ public class CustomerService implements ICustomerService {
     @Autowired
     private UserRoleService userRoleService;
 	
-	private final String USER_ROLE_NAME		= "CUSTOMER";
+	private final String USER_ROLE_NAME		= "Customer";
 	private final String PARTY_ROLE_NAME	= "Customer";
     
     // API
