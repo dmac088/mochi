@@ -172,11 +172,7 @@ class Signup extends Component {
         <div className="col-md-3 order-md-3">
         </div>
       </div>
-      <p>{console.log(this.props.tokens)}</p>
-      <p>{'authenticated = ' + this.props.tokens.authenticated + ' '} </p>
-      <br/>
-      <p>{' userName = ' + this.props.tokens.userName + ' '} </p>
-      <p>{' access token = ' + this.props.tokens.access_token + ' '} </p>
+
     </div>
       );
   }
