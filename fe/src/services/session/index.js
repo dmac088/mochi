@@ -18,20 +18,25 @@ const setSessionTimeout = (duration) => {
 
 
 export const authenticate = (customer) => {
-		return api.authenticate(customer.userName, customer.password)
+		 api.authenticate(customer.userName, customer.password)
 		.then((response) => {
+			if(response.status === 400) {
+				console.log('Invalid username or password')
+				throw 'error'
+			};
 			return response.text()
 		})
 		.then((responseText) => {
+			//console.log(responseText);
 			return JSON.parse(responseText);
 		})
 		.then((responseJSON) => {
-			if(responseJSON.authenticated) {
-				//dispatch to update the state
-				const storeTokens = selectors.get();
-				//authenticated resides in tokens objct, probably shouldbe moved to customer
-		    store.dispatch(actionCreators.update({ storeTokens, "tokens": responseJSON }));
-			}
+			//console.log(responseJSON);
+			//dispatch to update the state
+			const storeTokens = selectors.get();
+			//authenticated resides in tokens objct, probably shouldbe moved to customer
+		   store.dispatch(actionCreators.update({ storeTokens, "tokens": responseJSON }));
+
 		})
 		.then(onRequestSuccess)
 		.catch(onRequestFailed);
@@ -77,5 +82,4 @@ export const refreshToken = () => {
 
 const onRequestFailed = (exception) => {
 	clearSession();
-	throw exception;
 };
