@@ -9,5 +9,5 @@ import store from 'MobileApp/src/store';
 // };
 
 export const get = () => {
-	return store.getState().data.customer;
+	return store.getState().data.customers;
 };

@@ -1,15 +1,17 @@
 import * as actionTypes from './actionTypes';
 //we get the individual customer record from https://localhost:8090/api/Party/UserName/{UserName}
 
-const initialState = {};
+const initialState = {
+		customers: null
+};
 
 export const reducer = (state = initialState, action) => {
 	switch (action.type) {
 		case actionTypes.UPDATE:
 			return {
-				customer: {
-					...state.customer,
-					...action.customer.reduce((prev, curr) => ({
+				customers: {
+					...state.customers,
+					...action.customers.reduce((prev, curr) => ({
 						...prev,
 						[curr.id]: curr,
 					}), {}),
@@ -18,7 +20,7 @@ export const reducer = (state = initialState, action) => {
 		case actionTypes.EMPTY:
 			//empty the object i.e. when we clear the session
 			return {
-				customer: {},
+				customers: {},
 			};
 		default:
 			return state;
