@@ -34,7 +34,7 @@ export const authenticate = (customer) => {
 			//console.log(responseJSON);
 			//dispatch to update the state
 			const storeTokens = selectors.get();
-			//authenticated resides in tokens objct, probably shouldbe moved to customer
+			//authenticated resides in tokens objct, probably should be moved to customer
 		   store.dispatch(actionCreators.update({ storeTokens, "tokens": responseJSON }));
 
 		})
