@@ -26,9 +26,9 @@ import { initialState } from './reducer';
 		 .then((responseJSON) => {
 			 	console.log('customer creation status = ' + responseJSON.message)
 		 })
-		.then(
-				session.authenticate(customer.userName, customer.password)
-		)
+		.then(() => {
+				session.authenticate(customer)
+		})
 		.then(onRequestSuccess)
 		.catch(onRequestFailed);
 	};
