@@ -9,7 +9,7 @@ const endPoints = {
 
 export const authenticate = (userName, password) => fetchApi(
 																													endPoints.authenticate,
-																													null,
+																													{},
 																													{
 																														username: userName,
 																														password: password,
@@ -25,7 +25,7 @@ export const authenticate = (userName, password) => fetchApi(
 
 export const refresh = (token) 									=> fetchApi(
 																													endPoints.refresh,
-																													null,
+																													{},
 																													{
 																														grant_type: 'refresh_token',
 																														refresh_token: token.value
