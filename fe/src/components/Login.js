@@ -115,7 +115,7 @@ class Login extends Component {
          id="userName"
          onChange={this.updateCustomerState}
 
-         placeholder="userName"
+         placeholder="User Name"
          aria-label="userName" />;
      }
      return userNameField;
