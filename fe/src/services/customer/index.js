@@ -1,11 +1,6 @@
-import store from '../../store';
+
 import * as session from '../session';
 import * as customerApi from './api';
-import * as api from '../api';
-import * as selectors from './selectors';
-import * as actionCreators from './actions';
-import { initialState } from './reducer';
-
 
 
 	export const findByUserName = (userName) =>

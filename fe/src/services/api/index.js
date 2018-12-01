@@ -1,7 +1,6 @@
 /* global fetch */
 
 import _ from 'lodash';
-import * as sessionSelectors from '../../services/session/selectors';
 import apiConfig from './config';
 
 
@@ -36,8 +35,8 @@ export const fetchApi = (endPoint, payload = {}, formData = {}, method = 'get', 
 	//
 	// console.log('method = ' + method);
 
-//need to add the following to every API call
-//Authorization: 'Basic ' + apiConfig.clientId,
+	//need to add the following to every API call
+	//Authorization: 'Basic ' + apiConfig.clientId,
 
 	let formBody = [];
 		for (let property in formData) {
