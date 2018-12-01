@@ -175,7 +175,7 @@ class Signup extends Component {
       <p>{console.log(this.props.tokens)}</p>
       <p>{'authenticated = ' + this.props.tokens.authenticated + ' '} </p>
       <br/>
-      <p>{' userName = ' + this.props.tokens.username + ' '} </p>
+      <p>{' userName = ' + this.props.tokens.userName + ' '} </p>
       <p>{' access token = ' + this.props.tokens.access_token + ' '} </p>
     </div>
       );
