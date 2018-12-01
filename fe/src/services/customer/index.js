@@ -17,6 +17,9 @@ import { initialState } from './reducer';
 		console.log('creating a new customer');
 		 customerApi.createNewCustomer(customer)
 		.then((response) => {
+			  if(response.status === 500) {
+					throw response.text();
+				};
 				return response.text()
 		 })
 		 .then((responseText) => {

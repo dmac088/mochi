@@ -29,7 +29,6 @@ export const authenticate = (customer) => {
 			if(responseJSON.authenticated) {
 				//dispatch to update the state
 				const storeTokens = selectors.get();
-
 				//authenticated resides in tokens objct, probably shouldbe moved to customer
 		    store.dispatch(actionCreators.update({ storeTokens, "tokens": responseJSON }));
 			}
