@@ -32,17 +32,13 @@ export const authenticate = (customer) => {
 			return JSON.parse(responseText);
 		})
 		.then((responseJSON) => {
-			//console.log(responseJSON);
-			//dispatch to update the state
+			//update the store by dispatching tokens update
 			store.dispatch(actionCreators.update({"tokens": responseJSON}));
-			//console.log(store.getState().services.session.tokens.access_token);
-			//authenticated resides in tokens objct, probably should be moved to customer
-			//io think i should call the following from service rather than API
-		  //customerApi.findByUserName(store.getState().services.session.tokens.access_token,customer.userName)
 		})
-		.then((response) => {
-			console.log('pop');
-			 console.log(response);
+		.then(() => {
+			return 'good'
+			//next to fix error with the following function
+			//customerApi.findByUserName(store.getState().services.session.tokens.access_token,customer.userName);
 		})
 		.then(onRequestSuccess)
 		.catch(onRequestFailed);
