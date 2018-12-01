@@ -16,6 +16,50 @@ const setSessionTimeout = (duration) => {
 	);
 };
 
+
+export const authenticate = (customer) => {
+		return api.authenticate(customer.userName, customer.password)
+		.then((response) => {
+			return response.text()
+		})
+		.then((responseText) => {
+			return JSON.parse(responseText);
+		})
+		.then((responseJSON) => {
+			if(responseJSON.authenticated) {
+				//dispatch to update the state
+				const tokens = selectors.get();
+
+				//authenticated resides in tokens objct, probably shouldbe moved to customer
+		    store.dispatch(actionCreators.update({ tokens, "tokens": responseJSON }));
+			}
+		})
+		.then(onRequestSuccess)
+		.catch(onRequestFailed);
+	}
+
+	const  onRequestSuccess = (response) => {
+		console.log('the request was successful');
+		console.log(response);
+	};
+
+	const  persistTokens = (tokens) => {
+		store.dispatch(actionCreators.update({ tokens, "tokens": tokens }));
+		setSessionTimeout(tokens.expires_in);
+		const session = selectors.get();
+	}
+
+export const revoke = () => {
+	const session = selectors.get();
+	return api.revoke(Object.keys(session.tokens).map(tokenKey => ({
+		type: session.tokens[tokenKey].type,
+		value: session.tokens[tokenKey].value,
+	})))
+	.then(clearSession())
+	.catch(() => {});
+};
+
+
 export const clearSession = () => {
 	clearTimeout(sessionTimeout);
 	store.dispatch(actionCreators.update(initialState));
@@ -32,60 +76,6 @@ export const refreshToken = () => {
 	.then(onRequestSuccess)
 	.catch(onRequestFailed);
 };
-
-	export const authenticate = (userName, password) => {
-		console.log('authenticating');
-		return api.authenticate(userName, password)
-		//injection of a function reference means the function behaves
-		//as if it were nested within the parentheses
-		.then(onRequestSuccess)
-		.catch(onRequestFailed);
-	}
-
-	const  onRequestSuccess = (response) => {
-		 if (response.status === 400) {
-			 console.log('Invalid username or password');
-			 clearSession();
-			 return;
-		 };
-
-
-		 //response is an object of type promise
-		 //we call the text function to execute the promise
-		 response.text()
-		 .then((responseText) => {
-		 	 return JSON.parse(responseText);
-		 })
-		 .then((responseJSON) => {
-			 	responseJSON.authenticated = true;
-				return responseJSON;
-		 })
-		 .then(persistTokens)
-		 .catch((e) => {
-	 	 			console.log(e);
-	   });
-	};
-
-	const  persistTokens = (tokens) => {
-		store.dispatch(actionCreators.update({ tokens, "tokens": tokens }));
-
-		//set the token timeout
-		setSessionTimeout(tokens.expires_in);
-
-		const session = selectors.get();
-	}
-
-export const revoke = () => {
-	const session = selectors.get();
-	return api.revoke(Object.keys(session.tokens).map(tokenKey => ({
-		type: session.tokens[tokenKey].type,
-		value: session.tokens[tokenKey].value,
-	})))
-	.then(clearSession())
-	.catch(() => {});
-};
-
-
 
 const onRequestFailed = (exception) => {
 	clearSession();

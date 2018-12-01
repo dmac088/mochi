@@ -39,9 +39,6 @@ class Signup extends Component {
         error: '',
       });
       customerService.createNewCustomer(this.state.customer);
-      //sessionService is not waiting for new customer creation
-      //sessionService.authenticate(this.state.customer.userName, this.state.customer.password);
-
   }
 
   render() {

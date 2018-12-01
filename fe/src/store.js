@@ -4,7 +4,6 @@ import thunk from 'redux-thunk';
 import devTools from 'remote-redux-devtools';
 import { persistStore, autoRehydrate } from 'redux-persist';
 import createFilter from 'redux-persist-transform-filter';
-
 import { reducer as dataReducer } from './data/reducer';
 import { reducer as servicesReducer } from './services/reducer';
 import * as persistActionCreators from './services/persist/actions';

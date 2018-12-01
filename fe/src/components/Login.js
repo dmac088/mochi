@@ -10,7 +10,14 @@ class Login extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      customer: {
+          userName: null,
+          password: null,
+          givenName: null,
+          familyName: null
+        }
+    };
     store.subscribe(this.reduxSubscribedFunction);
   }
 
@@ -35,19 +42,8 @@ class Login extends Component {
   }
 
   loginClick = (event) => {
-    session.authenticate(this.state.userName, this.state.password)
-    .catch((exception) => {
-      // Displays only the first error message
-      const error = api.exceptionExtractError(exception);
-      this.setState({
-        isLoading: false,
-        ...(error ? { error } : {}),
-      });
+    session.authenticate(this.state.customer);
 
-      if (!error) {
-        throw exception;
-      }
-    });
   }
 
   logoutClick = (event) => {
@@ -102,7 +98,7 @@ class Login extends Component {
        <input
          className="form-control mr-sm-2"
          type="input"
-         id="userName"
+         id="customer.userName"
          onChange={this.updateCustomerState}
 
          placeholder="User Name"
@@ -117,7 +113,7 @@ class Login extends Component {
        passwordField =
        <input
            className="form-control mr-sm-2"
-           id="password"
+           id="customer.password"
            type="password"
            onChange={this.updateCustomerState}
 
