@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as customerService from '../services/customer';
-import * as sessionService from '../services/session';
-import * as api from '../services/api';
 import store from '../store';
 import { deepValue } from '../services/api';
 

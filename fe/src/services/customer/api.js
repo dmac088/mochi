@@ -1,5 +1,4 @@
 import { fetchApi } from '../../services/api';
-import apiConfig from '../../services/api/config';
 
 const endPoints = {
 	get: '/api/Customer/UserName/',

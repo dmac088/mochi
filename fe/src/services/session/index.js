@@ -28,10 +28,10 @@ export const authenticate = (customer) => {
 		.then((responseJSON) => {
 			if(responseJSON.authenticated) {
 				//dispatch to update the state
-				const tokens = selectors.get();
+				const storeTokens = selectors.get();
 
 				//authenticated resides in tokens objct, probably shouldbe moved to customer
-		    store.dispatch(actionCreators.update({ tokens, "tokens": responseJSON }));
+		    store.dispatch(actionCreators.update({ storeTokens, "tokens": responseJSON }));
 			}
 		})
 		.then(onRequestSuccess)
@@ -43,11 +43,10 @@ export const authenticate = (customer) => {
 		console.log(response);
 	};
 
-	const  persistTokens = (tokens) => {
-		store.dispatch(actionCreators.update({ tokens, "tokens": tokens }));
-		setSessionTimeout(tokens.expires_in);
-		const session = selectors.get();
-	}
+	// const  persistTokens = (tokens) => {
+	// 	store.dispatch(actionCreators.update({ tokens, "tokens": tokens }));
+	// 	setSessionTimeout(tokens.expires_in);
+	// }
 
 export const revoke = () => {
 	const session = selectors.get();
