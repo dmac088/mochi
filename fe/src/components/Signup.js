@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as customerService from '../services/customer';
+import * as sessionService from '../services/session';
 import * as api from '../services/api';
 import store from '../store';
 import { deepValue } from '../services/api';
@@ -46,48 +47,9 @@ class Signup extends Component {
     //craete is not taking the initialstate from redux customerServicei
     //instead this is local state, which is not what we want
     //customersApi.create(this.state.customer)
-      customerService.createNewCustomer(this.state.customer)
-        .then((response) => {
+      customerService.createNewCustomer(this.state.customer);
+      sessionService.authenticate(this.state.customer.userName, this.state.customer.password);
 
-            return response.text();
-          //return session.authenticate(this.state.customer.userName,
-          //we are using local state here since
-          //our input text boxes write to local state and then
-          //persist directly to database to create a new customer, not to redux (yet)
-          //we poplulare reduct by making another call to the api
-          //either using the userName in local state or returned party id in responseText
-          //for this we use the /services/customer/index.js which must be imported
-          //we need the access token from the redux store to make the subsequen API calls
-          //this can be gotten by
-
-          //  console.log(this.props.user);
-          //  console.log(this.props.customer);
-          //  console.log(this.props.tokens);
-
-          //console.log(customerService.findByuserName(this.state.customer.partyUser.userName,
-          //this.state.customer.partyUser.password));
-
-
-
-          //we can reset local state, no impact to global redux state
-          //const routeStack = this.props.navigator.getCurrentRoutes();
-          //this.props.navigator.jumpTo(routeStack[3]);
-
-      }).then((responseText) => {
-          console.log(responseText);
-          return JSON.parse(responseText);
-
-
-      })
-      .catch((exception) => {
-        // Displays only the first error message
-        const error = api.exceptionExtractError(exception);
-        const newState = {
-          isLoading: false,
-          ...(error ? { error } : {}),
-        };
-          this.setState(newState);
-      });
   }
 
   render() {

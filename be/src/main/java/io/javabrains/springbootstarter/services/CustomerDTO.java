@@ -10,8 +10,8 @@ import javax.validation.constraints.Size;
 	"userName":"dmac654331",
 	"password":"magic7653",
 	"enabled":true,
-	"firstName":"Ronald",
-	"lastName":"McDonald"
+	"givenName":"Ronald",
+	"familyName":"McDonald"
 }
 */
 
