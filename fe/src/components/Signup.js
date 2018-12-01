@@ -3,21 +3,13 @@ import { connect } from 'react-redux';
 import * as customerService from '../services/customer';
 import store from '../store';
 import { deepValue } from '../services/api';
+import { initialState } from '../services/customer/reducer';
 
 class Signup extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-                    customer: {
-                        userName: null,
-                        password: null,
-                        givenName: null,
-                        familyName: null
-                    },
-                    isLoading: null,
-                    error: null
-                };
+    this.state = initialState;
     store.subscribe(this.reduxSubscribedFunction);
   }
 
@@ -138,10 +130,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
 
     //take value from reducer, alias used in combinReducers in ./data/reducer.js
-    setAuthenticated: (auth) => {
+    customer: (customer) => {
       dispatch({
-        type: "SET_AUTH",
-        payload: auth
+        type: "UPDATE",
+        payload: customer
       })
     }
   };
