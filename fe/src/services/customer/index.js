@@ -1,6 +1,10 @@
 
+import store from '../../store';
 import * as session from '../session';
 import * as customerApi from './api';
+import * as actionCreators from './actions';
+import { initialState } from './reducer';
+
 
 
 	export const findByUserName = (userName) =>
@@ -28,6 +32,9 @@ import * as customerApi from './api';
 		.catch(onRequestFailed);
 	};
 
+	export const clearCustomer = () => {
+		store.dispatch(actionCreators.update(initialState));
+	};
 
 	const onRequestSuccess = (response) => {
 		console.log('request successfully completed!');
