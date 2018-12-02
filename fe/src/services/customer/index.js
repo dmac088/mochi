@@ -16,24 +16,11 @@ import { initialState } from './reducer';
 	export const createNewCustomer = (customer) => {
 		console.log('creating a new customer');
 		 api.createNewCustomer(customer)
-		.then((response) => {
-				return response.text()
-		 })
-		 .then((responseText) => {
-			 	return JSON.parse(responseText)
-		 })
-		 .then((responseJSON) => {
-			 if(responseJSON.status === 500) {
-				 console.log(responseJSON.message);
-				 throw responseJSON.message
-			 }
-			 console.log('customer creation status = ' + responseJSON.message)
-		 })
-		.then(() => {
-				session.authenticate(customer)
-		})
-		.then(onRequestSuccess)
-		.catch(onRequestFailed);
+			.then(() => {
+					session.authenticate(customer)
+			})
+			.then(onRequestSuccess)
+			.catch(onRequestFailed);;
 	};
 
 	export const clearCustomer = () => {
@@ -47,5 +34,5 @@ import { initialState } from './reducer';
 const onRequestFailed = (exception) => {
 	console.log('request failed!');
 	session.clearSession();
-	//throw exception;
+	throw exception;
 };
