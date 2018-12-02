@@ -1,1 +1,1 @@
-export const UPDATE = 'session/UPDATE';
+export const UPDATE= 'session/UPDATE';
