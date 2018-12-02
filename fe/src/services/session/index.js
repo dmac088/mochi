@@ -54,7 +54,7 @@ export const authenticate = (customer) => {
 			})
 			.then((responseJSON) => {
 				console.log(responseJSON);
-				store.dispatch(customerActionCreators.update({"customerTest": responseJSON}));
+				store.dispatch(customerActionCreators.update({"customer": responseJSON}));
 				console.log(store.getState());
 					//console.log(store.getState());
 			})
