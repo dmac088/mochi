@@ -28,17 +28,13 @@ export const authenticate = (customer) => {
 			return response.text()
 		})
 		.then((responseText) => {
-			//console.log(responseText);
 			return JSON.parse(responseText);
 		})
 		.then((responseJSON) => {
-			//update the store by dispatching tokens update
 			store.dispatch(actionCreators.update({"tokens": responseJSON}));
 		})
 		.then(() => {
-			return 'good'
-			//next to fix error with the following function
-			//customerApi.findByUserName(store.getState().services.session.tokens.access_token,customer.userName);
+			return 'success'
 		})
 		.then(onRequestSuccess)
 		.catch(onRequestFailed);
@@ -84,4 +80,5 @@ export const refreshToken = () => {
 
 const onRequestFailed = (exception) => {
 	clearSession();
+	console.log(exception);
 };
