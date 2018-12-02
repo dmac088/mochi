@@ -39,8 +39,8 @@ export const authenticate = (customer) => {
 			store.dispatch(tokenActionCreators.update({"tokens": responseJSON}));
 			return responseJSON.access_token
 		})
-		.then((token) => {
-			customerApi.findByUserName(token, customer.userName)
+		.then(() => {
+			customerApi.findByUserName(customer.userName)
 			.then((response) => {
 				return response.text();
 			})
