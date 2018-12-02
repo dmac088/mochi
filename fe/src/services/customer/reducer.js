@@ -11,7 +11,10 @@ export const initialState = {
 														};
 
 export const reducer = (state = initialState, action) => {
-	console.log('customer reducer was fired!');
+//	console.log('customer reducer was fired!');
+//	console.log(state);
+///	console.log(action);
+
 	switch (action.type) {
 		case actionTypes.UPDATE:
 			return {
