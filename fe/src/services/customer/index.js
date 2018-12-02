@@ -20,7 +20,7 @@ import { initialState } from './reducer';
 					session.authenticate(customer)
 			})
 			.then(onRequestSuccess)
-			.catch(onRequestFailed);;
+			.catch(onRequestFailed);
 	};
 
 	export const clearCustomer = () => {
