@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import * as session from '../services/session';
 import store from '../store';
 import { deepValue } from '../services/api';
 import { initialState } from '../services/customer/reducer';
+import * as tokensActionCreators from '../services/session/actions';
 
 class Login extends Component {
 
@@ -131,24 +133,12 @@ class Login extends Component {
     }
 }
 
-
-const mapStateToProps = (state) => {
-  return {
-    //take value from reducer, alias used in combinReducers in ./data/reducer.js
-    tokens: state.services.session.tokens
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    //take value from reducer, alias used in combineReducers in ./data/reducer.js
-    setAuthenticated: (tokens) => {
-      dispatch({
-        type: "UPDATE",
-        payload: tokens
-      })
-    }
-  };
-};
-
-export default connect(mapStateToProps,mapDispatchToProps)(Login);
+export default connect(state => ({
+    tokens: state.services.session.tokens,
+		//routeHistory: state.services.routeHistory,
+}), dispatch => ({
+	actions: {
+		tokens: bindActionCreators(tokensActionCreators, dispatch),
+  //  customer: bindActionCreators(actionCreators, dispatch),
+	},
+}))(Login);
