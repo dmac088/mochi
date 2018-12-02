@@ -1,7 +1,7 @@
 import * as actionTypes from './actionTypes';
 
 export const initialState = {
-														customer: {
+														customerTest: {
 																userName: null,
 																password: null,
 																enabled: null,
