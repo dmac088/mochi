@@ -3,19 +3,13 @@ import { connect } from 'react-redux';
 import * as session from '../services/session';
 import store from '../store';
 import { deepValue } from '../services/api';
+import { initialState } from '../services/customer/reducer';
 
 class Login extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      customer: {
-          userName: null,
-          password: null,
-          givenName: null,
-          familyName: null
-        }
-    };
+    this.state = initialState;
     store.subscribe(this.reduxSubscribedFunction);
   }
 
