@@ -1,7 +1,7 @@
 import store from '../../store';
 import * as api from './api';
 import * as customerApi from '../customer/api';
-import * as selectors from './selectors';
+import * as sessionSelectors from './selectors';
 import * as tokenActionCreators from './actions';
 import * as customerActionCreators from '../customer/actions';
 import * as customerSelectors from '../customer/selectors';
@@ -21,6 +21,8 @@ const setSessionTimeout = (duration) => {
 
 
 export const authenticate = (customer) => {
+		const sessionState = sessionSelectors.get();
+		const customerState = customerSelectors.get();
 		 api.authenticate(customer.userName, customer.password)
 		.then((response) => {
 			if(response.status === 400) {
@@ -37,7 +39,7 @@ export const authenticate = (customer) => {
 		})
 		.then((responseJSON) => {
 			store.dispatch(tokenActionCreators.update({"tokens": responseJSON}));
-			return responseJSON.access_token
+			return responseJSON
 		})
 		.then(() => {
 			customerApi.findByUserName(customer.userName)
@@ -70,7 +72,8 @@ export const authenticate = (customer) => {
 	// }
 
 export const revoke = () => {
-	const session = selectors.get();
+	const session = sessionSelectors.get();
+	const customer = customerSelectors.get();
 	return api.revoke(Object.keys(session.tokens).map(tokenKey => ({
 		type: session.tokens[tokenKey].type,
 		value: session.tokens[tokenKey].value,
@@ -86,7 +89,7 @@ export const clearSession = () => {
 };
 
 export const refreshToken = () => {
-	const session = selectors.get();
+	const session = sessionSelectors.get();
 
 	if (!session.tokens.refresh_token || !session.userName) {
 		return Promise.reject();
