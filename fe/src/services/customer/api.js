@@ -11,9 +11,7 @@ export const findByUserName = (token, userName) => fetchApi(
 																																{},
 																																'GET',
 																																{
-																																	Authorization: 'Bearer ' + token.value,
-																																	'Content-Type': 'application/x-www-form-urlencoded',
-																																	'Cache-Control': 'no-cache'
+																																'Content-Type': 'application/json'
 																																}
 																															);
 
