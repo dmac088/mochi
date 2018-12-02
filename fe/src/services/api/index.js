@@ -49,7 +49,6 @@ export const fetchApi = (endPoint, payload = {}, formData = {}, method = 'get', 
 													}, item => !_.isEmpty(item)),
 	 };
 
-
 	Object.assign(params, (method.toLowerCase() === 'post') && { body: formBody })
 
 	return fetch(apiConfig.url+endPoint, params);
