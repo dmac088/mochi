@@ -38,6 +38,7 @@ export const authenticate = (customer) => {
 			return JSON.parse(responseText);
 		})
 		.then((responseJSON) => {
+			console.log(store.getState());
 			store.dispatch(tokenActionCreators.update({"tokens": responseJSON}));
 			return responseJSON
 		})
