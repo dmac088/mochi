@@ -1,6 +1,6 @@
 import * as actionTypes from './actionTypes';
 
-export const update = session => ({
+export const update = customer => ({
 	type: actionTypes.UPDATE,
-	session,
+	customer,
 });
