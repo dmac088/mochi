@@ -2,7 +2,9 @@ import store from '../../store';
 import * as api from './api';
 import * as customerApi from '../customer/api';
 import * as selectors from './selectors';
-import * as actionCreators from './actions';
+import * as tokenActionCreators from './actions';
+import * as customerActionCreators from '../customer/actions';
+import * as customerSelectors from '../customer/selectors';
 import { initialState } from './reducer';
 
 const SESSION_TIMEOUT_THRESHOLD = 300; // Will refresh the access token 5 minutes before it expires
@@ -34,15 +36,20 @@ export const authenticate = (customer) => {
 			return JSON.parse(responseText);
 		})
 		.then((responseJSON) => {
-			store.dispatch(actionCreators.update({"tokens": responseJSON}));
+			store.dispatch(tokenActionCreators.update({"tokens": responseJSON}));
 			return responseJSON.access_token
 		})
 		.then((token) => {
-			console.log('access token = ' + token)
-			console.log(token);
 			customerApi.findByUserName(token, customer.userName)
 			.then((response) => {
-				console.log(response);
+				return response.text();
+			})
+			.then((responseText) => {
+				return JSON.parse(responseText);
+			})
+			.then((responseJSON) => {
+				store.dispatch(customerActionCreators.update({"customer": responseJSON}));
+				console.log(store.getState());
 			})
 		})
 		.then(() => {
@@ -75,7 +82,7 @@ export const revoke = () => {
 
 export const clearSession = () => {
 	clearTimeout(sessionTimeout);
-	store.dispatch(actionCreators.update(initialState));
+	store.dispatch(tokenActionCreators.update(initialState));
 };
 
 export const refreshToken = () => {
