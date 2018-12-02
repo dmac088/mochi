@@ -6,7 +6,6 @@ import * as actionCreators from './actions';
 import { initialState } from './reducer';
 
 
-
 	export const findByUserName = (userName) =>
 		api.findByUserName(userName)
 		.then(onRequestSuccess)

@@ -23,6 +23,9 @@ export const authenticate = (customer) => {
 		.then((response) => {
 			if(response.status === 400) {
 				console.log('Invalid username or password')
+
+				//we force the catch when the username or password are invalid
+				//but the message could/should come from the server
 				throw 'error'
 			};
 			return response.text()
@@ -32,6 +35,15 @@ export const authenticate = (customer) => {
 		})
 		.then((responseJSON) => {
 			store.dispatch(actionCreators.update({"tokens": responseJSON}));
+			return responseJSON.access_token
+		})
+		.then((token) => {
+			console.log('access token = ' + token)
+			console.log(token);
+			customerApi.findByUserName(token, customer.userName)
+			.then((response) => {
+				console.log(response);
+			})
 		})
 		.then(() => {
 			return 'success'

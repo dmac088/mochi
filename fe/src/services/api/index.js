@@ -2,6 +2,7 @@
 
 import _ from 'lodash';
 import apiConfig from './config';
+import * as sessionSelectors from '../session/selectors'
 
 
 export const exceptionExtractError = (exception) => {
@@ -23,21 +24,7 @@ export const deepValue = (obj, path, value)  => {
 }
 
 export const fetchApi = (endPoint, payload = {}, formData = {}, method = 'get', headers = {}) => {
-	// console.log('fetch api called: ' + apiConfig.url+endPoint);
-	// console.log('payload.....');
-	// console.log(payload);
-	//
-	// console.log('formData....');
-	// console.log(formData);
-	//
-	// console.log('headers....');
-	// console.log(headers);
-	//
-	// console.log('method = ' + method);
-
-	//need to add the following to every API call
-	//Authorization: 'Basic ' + apiConfig.clientId,
-
+	const accessToken = sessionSelectors.get().tokens.access_token;
 	let formBody = [];
 		for (let property in formData) {
 				let encodedKey = encodeURIComponent(property);
@@ -45,15 +32,25 @@ export const fetchApi = (endPoint, payload = {}, formData = {}, method = 'get', 
 				formBody.push(encodedKey + "=" + encodedValue);
 		}
 
-	if(method.toLowerCase() === 'post') {
-		formBody.push(JSON.stringify(payload));
-	}
+	(method.toLowerCase() === 'post') ? formBody.push(JSON.stringify(payload)) : formBody.push(null);
+
 	formBody = formBody.join("&");
 
-	return fetch(apiConfig.url+endPoint, {
+	let params = {
 		crossDomain: true,
 		method: method,
-	  headers: headers,
-	  body: formBody
-	});
+	  headers:  _.pickBy({
+														...(accessToken ? {
+															Authorization: `Bearer ${accessToken}`,
+														} : {
+															'Client-ID': apiConfig.clientId,
+														}),
+														...headers,
+													}, item => !_.isEmpty(item)),
+	 };
+
+
+	Object.assign(params, (method.toLowerCase() === 'post') && { body: formBody })
+
+	return fetch(apiConfig.url+endPoint, params);
 }
