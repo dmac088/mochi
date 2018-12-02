@@ -21,8 +21,7 @@ const setSessionTimeout = (duration) => {
 
 
 export const authenticate = (customer) => {
-		const sessionState = sessionSelectors.get();
-		const customerState = customerSelectors.get();
+		console.log(store.getState());
 		 api.authenticate(customer.userName, customer.password)
 		.then((response) => {
 			if(response.status === 400) {
@@ -38,21 +37,26 @@ export const authenticate = (customer) => {
 			return JSON.parse(responseText);
 		})
 		.then((responseJSON) => {
-			console.log(store.getState());
+			console.log(responseJSON);
 			store.dispatch(tokenActionCreators.update({"tokens": responseJSON}));
+			console.log(store.getState());
 			return responseJSON
 		})
 		.then(() => {
 			customerApi.findByUserName(customer.userName)
 			.then((response) => {
+				console.log(store.getState());
 				return response.text();
 			})
 			.then((responseText) => {
+				console.log(store.getState());
 				return JSON.parse(responseText);
 			})
 			.then((responseJSON) => {
-				store.dispatch(customerActionCreators.update({"customer": responseJSON}));
+				console.log(responseJSON);
+				store.dispatch(customerActionCreators.update({"customerTest": responseJSON}));
 				console.log(store.getState());
+					//console.log(store.getState());
 			})
 		})
 		.then(() => {

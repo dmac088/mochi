@@ -37,7 +37,7 @@ class Login extends Component {
   }
 
   loginClick = (event) => {
-    session.authenticate(this.state.customer);
+    session.authenticate(this.state.customerTest);
 
   }
 
@@ -93,7 +93,7 @@ class Login extends Component {
        <input
          className="form-control mr-sm-2"
          type="input"
-         id="customer.userName"
+         id="customerTest.userName"
          onChange={this.updateCustomerState}
 
          placeholder="User Name"
@@ -108,7 +108,7 @@ class Login extends Component {
        passwordField =
        <input
            className="form-control mr-sm-2"
-           id="customer.password"
+           id="customerTest.password"
            type="password"
            onChange={this.updateCustomerState}
 
