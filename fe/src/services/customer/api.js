@@ -5,7 +5,7 @@ const endPoints = {
 	signup: '/api/Customer/Signup'
 };
 
-export const findByUserName = (token, userName) => fetchApi(
+export const findByUserName = (userName) => fetchApi(
 																																endPoints.get + userName,
 																																{},
 																																{},

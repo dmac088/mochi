@@ -6,6 +6,7 @@ import store from '../store';
 import { deepValue } from '../services/api';
 import { initialState } from '../services/customer/reducer';
 import * as tokensActionCreators from '../services/session/actions';
+import * as customerActionCreators from '../services/customer/actions';
 
 class Login extends Component {
 
@@ -139,6 +140,6 @@ export default connect(state => ({
 }), dispatch => ({
 	actions: {
 		tokens: bindActionCreators(tokensActionCreators, dispatch),
-  //  customer: bindActionCreators(actionCreators, dispatch),
+    customer: bindActionCreators(customerActionCreators, dispatch),
 	},
 }))(Login);
