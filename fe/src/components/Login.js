@@ -48,7 +48,7 @@ class Login extends Component {
 
   renderLogoutButton = () => {
      let button;
-     if(this.props.tokens.authenticated) {
+     if(this.props.tokens.authenticated) { 
        button = <button
             onClick={this.logoutClick}
             className="btn btn-outline-success mr-sm-5 my-2 my-sm-0">
