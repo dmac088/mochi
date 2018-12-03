@@ -86,7 +86,8 @@ export const clearSession = () => {
 
 export const refreshToken = () => {
 	const session = sessionSelectors.get();
-	console.log(store.getState());
+	const customer = customerSelectors.get();
+
 	if (!session.tokens.refresh_token || !session.userName) {
 		return Promise.reject();
 	}
