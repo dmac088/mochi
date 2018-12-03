@@ -23,7 +23,8 @@ const enhancer = compose(
 
 const store = createStore(
  	appReducer,
- 	enhancer
+ 	enhancer,
+	autoRehydrate(),
 );
 
 const saveAndLoadSessionFilter = createFilter(
