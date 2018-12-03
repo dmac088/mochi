@@ -32,7 +32,9 @@ class App extends Component {
                 integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
                 crossOrigin="anonymous"
           />
-        <Header tokens={this.props.tokens}/>
+        <Header tokens={this.props.tokens}
+                customer={this.props.customer}
+                />
         <Signup/>
         </div>
     );
@@ -42,7 +44,8 @@ class App extends Component {
 const mapStateToProps = (state) => {
   return {
     //take value from reducer, alias used in combinReducers in ./data/reducer.js
-    tokens: state.services.session.tokens
+    tokens: state.services.session.tokens,
+    customer: state.services.customer.customer
   };
 };
 

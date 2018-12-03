@@ -10,6 +10,7 @@ const Header = (props) => {
         <div className="form-inline">
             <Greeting
                 tokens={props.tokens}
+                customer={props.customer}
             />
             <Login/>
 
