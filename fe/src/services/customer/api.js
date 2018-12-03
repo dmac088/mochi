@@ -10,9 +10,7 @@ export const findByUserName = (userName) => fetchApi(
 																																{},
 																																{},
 																																'GET',
-																																{
-																																'Content-Type': 'application/json'
-																																}
+																																{}
 																															);
 
 export const createNewCustomer = (customer) => fetchApi(
@@ -20,7 +18,5 @@ export const createNewCustomer = (customer) => fetchApi(
 																															customer,
 																															{},
 																															'POST',
-																															{
-																															'Content-Type': 'application/json'
-																															}
+																															{"Content-Type": "application/json"}
 																											 );
