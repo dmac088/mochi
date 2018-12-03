@@ -37,13 +37,12 @@ export const fetchApi = (endPoint, payload = {}, formData = {}, method = 'get', 
 	formBody = formBody.join("&");
 
 	let params = {
-		crossDomain: true,
 		method: method,
 	  headers:  _.pickBy({
 														...(accessToken ? {
 															Authorization: `Bearer ${accessToken}`,
 														} : {
-															'Client-ID': apiConfig.clientId,
+
 														}),
 														...headers,
 													}, item => !_.isEmpty(item)),
