@@ -4,7 +4,6 @@ import * as customerApi from '../customer/api';
 import * as sessionSelectors from './selectors';
 import * as tokenActionCreators from './actions';
 import * as customerActionCreators from '../customer/actions';
-import * as customerSelectors from '../customer/selectors';
 import { initialState } from './reducer';
 
 const SESSION_TIMEOUT_THRESHOLD = 300; // Will refresh the access token 5 minutes before it expires
@@ -28,7 +27,7 @@ export const authenticate = (customer) => {
 
 				//we force the catch when the username or password are invalid
 				//but the message could/should come from the server
-				throw 'error'
+				throw response
 			};
 			return response.text()
 		})
@@ -63,13 +62,12 @@ export const authenticate = (customer) => {
 	};
 
 	const  persistTokens = (tokens) => {
-	 	store.dispatch(tokenActionCreators.update({ tokens, "tokens": tokens }));
+	 	store.dispatch(tokenActionCreators.update({"tokens": tokens }));
 	 	setSessionTimeout(tokens.expires_in);
 	}
 
 export const revoke = () => {
 	const session = sessionSelectors.get();
-	const customer = customerSelectors.get();
 	return api.revoke(Object.keys(session.tokens).map(tokenKey => ({
 		type: session.tokens[tokenKey].type,
 		value: session.tokens[tokenKey].value,
@@ -86,7 +84,6 @@ export const clearSession = () => {
 
 export const refreshToken = () => {
 	const session = sessionSelectors.get();
-	const customer = customerSelectors.get();
 
 	if (!session.tokens.refresh_token || !session.userName) {
 		return Promise.reject();
