@@ -29,8 +29,8 @@ const store = createStore(
 
 const saveAndLoadSessionFilter = createFilter(
   'services',
-  ['session'],
-  ['session']
+  // ['session'],
+  // ['session']
 );
 
 export const persist = persistStore(store, {

@@ -14,9 +14,6 @@ class App extends Component {
     this.state = {};
   }
 
-
-
-
   autoLogin = () =>  {
     session.refreshToken().then(() => {
       console.log('the token has been refreshed');
@@ -41,6 +38,7 @@ class App extends Component {
 
 		});
 		store.subscribe(this.reduxSubscribedFunction);
+
 	}
 
   reduxSubscribedFunction = () => {
@@ -89,8 +87,5 @@ const mapDispatchToProps = (dispatch) => {
     }
   };
 };
-
-
-
 
 export default connect(mapStateToProps,mapDispatchToProps)(App);

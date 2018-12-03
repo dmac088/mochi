@@ -21,7 +21,6 @@ const setSessionTimeout = (duration) => {
 
 
 export const authenticate = (customer) => {
-		console.log(store.getState());
 		 api.authenticate(customer.userName, customer.password)
 		.then((response) => {
 			if(response.status === 400) {
@@ -50,7 +49,6 @@ export const authenticate = (customer) => {
 			})
 			.then((responseJSON) => {
 				store.dispatch(customerActionCreators.update({"customer": responseJSON}));
-				console.log(store.getState());
 			})
 		})
 		.then(() => {
@@ -88,7 +86,9 @@ export const clearSession = () => {
 
 export const refreshToken = () => {
 	const session = sessionSelectors.get();
+	const customer = customerSelectors.get()
 	console.log(session);
+	console.log(customer);
 	if (!session.tokens.refresh_token || !session.userName) {
 		return Promise.reject();
 	}
