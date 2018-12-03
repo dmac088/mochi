@@ -37,26 +37,20 @@ export const authenticate = (customer) => {
 			return JSON.parse(responseText);
 		})
 		.then((responseJSON) => {
-			console.log(responseJSON);
-			store.dispatch(tokenActionCreators.update({"tokens": responseJSON}));
-			console.log(store.getState());
+			persistTokens(responseJSON);
 			return responseJSON
 		})
 		.then(() => {
 			customerApi.findByUserName(customer.userName)
 			.then((response) => {
-				console.log(store.getState());
 				return response.text();
 			})
 			.then((responseText) => {
-				console.log(store.getState());
 				return JSON.parse(responseText);
 			})
 			.then((responseJSON) => {
-				console.log(responseJSON);
 				store.dispatch(customerActionCreators.update({"customer": responseJSON}));
 				console.log(store.getState());
-					//console.log(store.getState());
 			})
 		})
 		.then(() => {
@@ -68,13 +62,12 @@ export const authenticate = (customer) => {
 
 	const  onRequestSuccess = (response) => {
 		console.log('the request was successful');
-		console.log(response);
 	};
 
-	// const  persistTokens = (tokens) => {
-	// 	store.dispatch(actionCreators.update({ tokens, "tokens": tokens }));
-	// 	setSessionTimeout(tokens.expires_in);
-	// }
+	const  persistTokens = (tokens) => {
+	 	store.dispatch(tokenActionCreators.update({ tokens, "tokens": tokens }));
+	 	setSessionTimeout(tokens.expires_in);
+	}
 
 export const revoke = () => {
 	const session = sessionSelectors.get();
@@ -95,11 +88,12 @@ export const clearSession = () => {
 
 export const refreshToken = () => {
 	const session = sessionSelectors.get();
-
+	console.log(session);
 	if (!session.tokens.refresh_token || !session.userName) {
 		return Promise.reject();
 	}
 
+	console.log('refresh token = ' + session.tokens.refresh_token);
 	return api.refresh(session.tokens.refresh_token)
 	.then(onRequestSuccess)
 	.catch(onRequestFailed);

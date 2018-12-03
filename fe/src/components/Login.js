@@ -20,16 +20,6 @@ class Login extends Component {
     //console.log('login subscribed function triggered');
   }
 
-  autoLogin = () =>  {
-    session.refreshToken().then(() => {
-      console.log('the token has been refreshed');
-    //	this.setState({ initialRoute: routeStack[3] });
-    }).catch(() => {
-      console.log('the token has not been refreshed');
-    //	this.setState({ initialRoute: routeStack[0] });
-    });
-  }
-
   updateCustomerState = (event) =>  {
     let newstate = {...this.state};
     deepValue(newstate, event.target.id, event.target.value);
@@ -48,7 +38,7 @@ class Login extends Component {
 
   renderLogoutButton = () => {
      let button;
-     if(this.props.tokens.authenticated) { 
+     if(this.props.tokens.authenticated) {
        button = <button
             onClick={this.logoutClick}
             className="btn btn-outline-success mr-sm-5 my-2 my-sm-0">
