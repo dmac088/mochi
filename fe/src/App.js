@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import store from './store';
 import Header from './components/Header';
 import Signup from './components/Signup';
+import * as session from './services/session';
 
 
 
@@ -13,9 +14,32 @@ class App extends Component {
     this.state = {};
   }
 
+
+
+
+  autoLogin = () =>  {
+    session.refreshToken().then(() => {
+      console.log('the token has been refreshed');
+    //	this.setState({ initialRoute: routeStack[3] });
+    }).catch(() => {
+      console.log('the token has not been refreshed');
+    //	this.setState({ initialRoute: routeStack[0] });
+    });
+  }
+
   componentDidMount() {
-    console.log('componentDidMount');
-    console.log(this.state);
+    // Waits for the redux store to be populated with the previously saved state,
+		// then it will try to auto-login the user.
+		const unsubscribe = store.subscribe(() => {
+			if (store.getState().services.persist.isHydrated) {
+        console.log('The store is hydrated!')
+				unsubscribe();
+				this.autoLogin();
+			} else {
+          console.log('The store is not hydrated!')
+      }
+
+		});
 		store.subscribe(this.reduxSubscribedFunction);
 	}
 
@@ -49,6 +73,10 @@ const mapStateToProps = (state) => {
   };
 };
 
+// const routeStack = [
+//   { name: 'Signup', component: Signup },
+//   { name: 'Welcome', component: Welcome },
+// ];
 //on a dispatch call from anywhere in the application
 //this function will fire and update authenticated
 const mapDispatchToProps = (dispatch) => {
