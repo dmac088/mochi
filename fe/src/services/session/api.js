@@ -21,26 +21,25 @@ export const authenticate = (userName, password) => fetchApi(
 																														'Content-Type': apiConfig.ContentType,
 																														'Cache-Control': apiConfig.CacheControl
 																													}
-																								);
+																												);
 
 export const refresh = (token) 									=> fetchApi(
 																													endPoints.refresh,
 																													{},
 																													{
+																														refresh_token: token,
 																														grant_type: 'refresh_token',
-																														refresh_token: token.value
 																													},
 																													'POST',
 																													{
-																														Authorization: 'Basic ' + apiConfig.ClientId,
-																														'Content-Type': apiConfig.ContentType,
-																														'Cache-Control': apiConfig.CacheControl
+																														 Authorization: 'Basic ' + apiConfig.ClientId,
+																														 'Content-Type': apiConfig.ContentType,
 																													}
-																									);
+																												);
 
 export const revoke = tokens 									=> fetchApi(
 																													endPoints.revoke,
 																													{},
 																													{ tokens },
 																													'POST'
-																									);
+																												);
