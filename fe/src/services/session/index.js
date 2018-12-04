@@ -97,7 +97,9 @@ export const refreshToken = () => {
 		 return JSON.parse(responseText);
 	}).
 	then ((responseJSON) => {
-		store.dispatch(tokenActionCreators.update({"access_token": responseJSON.access_token}));
+		let newstate = {...session.tokens};
+		newstate['access_token'] =  responseJSON.access_token;
+		store.dispatch(tokenActionCreators.update({"tokens": newstate }));
 	})
 	.then(onRequestSuccess)
 	.catch(onRequestFailed);

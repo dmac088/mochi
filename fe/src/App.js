@@ -29,8 +29,7 @@ class App extends Component {
 		// then it will try to auto-login the user.
 		const unsubscribe = store.subscribe(() => {
 			if (store.getState().services.persist.isHydrated) {
-        console.log('The store is hydrated!')
-        console.log(store.getState());
+        console.log('The store is hydrated!');
 				unsubscribe();
 				this.autoLogin();
 			} else {
