@@ -15,6 +15,7 @@ class App extends Component {
   }
 
   autoLogin = () =>  {
+    console.log('autoLogin');
     session.refreshToken().then(() => {
       console.log('the token has been refreshed');
     //	this.setState({ initialRoute: routeStack[3] });
@@ -28,15 +29,13 @@ class App extends Component {
     // Waits for the redux store to be populated with the previously saved state,
 		// then it will try to auto-login the user.
 		const unsubscribe = store.subscribe(() => {
-			if (store.getState().services.persist.isHydrated) {
-        console.log('The store is hydrated!');
-				unsubscribe();
-				this.autoLogin();
-			} else {
-          console.log('The store is not hydrated!')
-      }
+                                              			if (store.getState().services.persist.isHydrated) {
+                                                      console.log('The store is hydrated!');
+                                              				unsubscribe(); //call unsubscribe again! wait! what!?
+                                              				this.autoLogin();
+                                              			}
 
-		});
+		                                          });
 		store.subscribe(this.reduxSubscribedFunction);
 
 	}
