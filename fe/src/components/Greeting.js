@@ -1,6 +1,7 @@
 import React from 'react';
 
 const Greeting = (props) =>{
+  //console.log(props);
     return(
       <div className="mr-sm-2">
         {(props.tokens.authenticated) ? 'Welcome ' + props.customer.givenName + ' you are logged in!' : ''}
