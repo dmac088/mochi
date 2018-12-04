@@ -30,6 +30,7 @@ class App extends Component {
 		const unsubscribe = store.subscribe(() => {
 			if (store.getState().services.persist.isHydrated) {
         console.log('The store is hydrated!')
+        console.log(store.getState());
 				unsubscribe();
 				this.autoLogin();
 			} else {

@@ -85,12 +85,20 @@ export const clearSession = () => {
 export const refreshToken = () => {
 	const session = sessionSelectors.get();
 
-	if (!session.tokens.refresh_token || !session.userName) {
+	if (!session.tokens.refresh_token || !session.tokens.userName) {
 		return Promise.reject();
 	}
 
-	console.log('refresh token = ' + session.tokens.refresh_token);
 	return api.refresh(session.tokens.refresh_token)
+	.then((response) => {
+		return response.text()
+	})
+	.then((responseText) => {
+		 return JSON.parse(responseText);
+	}).
+	then ((responseJSON) => {
+		store.dispatch(tokenActionCreators.update({"access_token": responseJSON.access_token}));
+	})
 	.then(onRequestSuccess)
 	.catch(onRequestFailed);
 };
