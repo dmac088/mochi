@@ -36,18 +36,6 @@ class Login extends Component {
     this.setState(null);
   }
 
-  renderLogoutButton = () => {
-     let button;
-     if(this.props.tokens.authenticated) {
-       button = <button
-            onClick={this.logoutClick}
-            className="btn btn-outline-success mr-sm-5 my-2 my-sm-0">
-          Logout
-       </button>;
-     }
-     return button;
-  }
-
   renderLoginButton = () => {
      let button;
      if(!this.props.tokens.authenticated) {
@@ -56,25 +44,12 @@ class Login extends Component {
            onClick={this.loginClick}
            className="btn btn-outline-success mr-sm-2 my-2 my-sm-0"
            type="submit">
-          Login
+          Go
       </button>;
      }
      return button;
   }
 
-  rendersignupButton = () => {
-     let button;
-     if(!this.props.tokens.authenticated) {
-       button =
-       <button
-           onClick={this.signupClick}
-           className="btn btn-outline-success mr-sm-5 my-2 my-sm-0"
-           type="submit">
-          SignUp
-      </button>;
-     }
-     return button;
-    }
 
     renderuserNameField = () => {
      let userNameField;
@@ -116,8 +91,6 @@ class Login extends Component {
           {this.renderuserNameField()}
           {this.renderPasswordField()}
           {this.renderLoginButton()}
-          {this.renderLogoutButton()}
-          {this.rendersignupButton()}
 
         </div>
       );

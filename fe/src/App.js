@@ -62,7 +62,7 @@ class App extends Component {
           <div>
             <ul>
               <li>
-                <Link to="/">Home</Link>
+                <Link to="/Landing">Home</Link>
               </li>
               <li>
                 <Link to="/Login">Login</Link>
@@ -71,7 +71,7 @@ class App extends Component {
                 <Link to="/Signup">Signup</Link>
               </li>
             </ul>
-            <Route path="/" component={Landing} />
+            <Route path="/Landing" component={Landing} />
             <Route path="/Login" component={Login} />
             <Route path="/Signup" component={Signup} />
           </div>
