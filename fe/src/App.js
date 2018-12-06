@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
 import store from './store';
 import Header from './components/Header';
 import Signup from './components/Signup';
 import * as session from './services/session';
-
+import Landing from './components/Landing';
+import Login from './components/Login';
 
 
 class App extends Component {
@@ -55,8 +57,25 @@ class App extends Component {
           />
         <Header tokens={this.props.tokens}
                 customer={this.props.customer}
-                />
-        <Signup/>
+        />
+        <Router>
+          <div>
+            <ul>
+              <li>
+                <Link to="/">Home</Link>
+              </li>
+              <li>
+                <Link to="/Login">Login</Link>
+              </li>
+              <li>
+                <Link to="/Signup">Signup</Link>
+              </li>
+            </ul>
+            <Route path="/" component={Landing} />
+            <Route path="/Login" component={Login} />
+            <Route path="/Signup" component={Signup} />
+          </div>
+        </Router>
         </div>
     );
   }

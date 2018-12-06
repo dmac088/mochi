@@ -1,7 +1,7 @@
 
 import React from 'react';
-import Login from './Login';
 import Greeting from './Greeting';
+import Selector from './Selector';
 
 const Header = (props) => {
   //console.log(props);
@@ -9,11 +9,11 @@ const Header = (props) => {
       <nav className="navbar navbar-light bg-light justify-content-between">
         <div className="navbar-brand">Navbar</div>
         <div className="form-inline">
-            <Greeting
+            <Selector>
                 tokens={props.tokens}
                 customer={props.customer}
-            />
-            <Login/>
+
+            </Selector>
 
         </div>
       </nav>
