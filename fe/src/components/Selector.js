@@ -7,6 +7,7 @@ import { deepValue } from '../services/api';
 import { initialState } from '../services/customer/reducer';
 import * as tokensActionCreators from '../services/session/actions';
 import * as customerActionCreators from '../services/customer/actions';
+//import { browserHistory } from 'react-router';
 
 class Selector extends Component {
 
@@ -75,6 +76,11 @@ class Selector extends Component {
      }
      return button;
     }
+
+ signupClick = () => {
+   console.log(this.props);
+  // browserHistory.push('/Signup')
+ }
 
   render() {
       return(
