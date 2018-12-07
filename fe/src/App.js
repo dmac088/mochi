@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
+import {
+  Route,
+  Link,
+  BrowserRouter as Router,
+  Switch,
+} from 'react-router-dom';
 import store from './store';
 import Header from './components/Header';
 import Signup from './components/Signup';
@@ -20,10 +25,10 @@ class App extends Component {
     console.log('autoLogin');
     session.refreshToken().then(() => {
       console.log('the token has been refreshed');
-    //	this.setState({ initialRoute: routeStack[3] });
+      this.setState({ initialRoute: routeStack[0] });
     }).catch(() => {
       console.log('the token has not been refreshed');
-    //	this.setState({ initialRoute: routeStack[0] });
+      //this.setState({ initialRoute: routeStack[0] });
     });
   }
 
@@ -55,11 +60,13 @@ class App extends Component {
                 integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
                 crossOrigin="anonymous"
           />
-        <Header tokens={this.props.tokens}
-                customer={this.props.customer}
-        />
+          <Header tokens={this.props.tokens}
+                  customer={this.props.customer}
+          />
         <Router>
           <div>
+
+
             <ul>
               <li>
                 <Link to="/Landing">Home</Link>
@@ -89,10 +96,11 @@ const mapStateToProps = (state) => {
   };
 };
 
-// const routeStack = [
-//   { name: 'Signup', component: Signup },
-//   { name: 'Welcome', component: Welcome },
-// ];
+const routeStack = [
+   { name: 'Landing', component: Landing },
+   { name: 'Login',   component: Login },
+   { name: 'Signup',  component: Signup },
+ ];
 //on a dispatch call from anywhere in the application
 //this function will fire and update authenticated
 const mapDispatchToProps = (dispatch) => {
