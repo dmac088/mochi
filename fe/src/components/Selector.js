@@ -7,7 +7,9 @@ import { deepValue } from '../services/api';
 import { initialState } from '../services/customer/reducer';
 import * as tokensActionCreators from '../services/session/actions';
 import * as customerActionCreators from '../services/customer/actions';
+import ButtonToNavigate from './ButtonToNavigate';
 //import { browserHistory } from 'react-router';
+
 
 class Selector extends Component {
 
@@ -87,7 +89,7 @@ class Selector extends Component {
         <div>
           {this.renderLoginButton()}
           {this.renderLogoutButton()}
-          {this.rendersignupButton()}
+          <ButtonToNavigate />
         </div>
       );
     }
