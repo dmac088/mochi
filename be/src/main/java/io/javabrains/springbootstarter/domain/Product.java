@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "product", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "prd_id")
-@SecondaryTable(name = "product_attr_lcl", pkJoinColumns = @PrimaryKeyJoinColumn(name = "prd_id"))
+@SecondaryTable(schema = "mochi", name = "product_attr_lcl", pkJoinColumns = @PrimaryKeyJoinColumn(name = "prd_id"))
 public class Product {
 	
 	@Id

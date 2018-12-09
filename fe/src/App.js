@@ -41,6 +41,7 @@ class App extends Component {
   getProducts() {
     productService.findAll('HKG')
     .then((response) => {
+      console.log(response);
       return response.text();
     })
     .then((responseText)=> {
@@ -57,11 +58,9 @@ class App extends Component {
     console.log(this.state.products);
   }
 
-  componentWillMount() {
-    this.getProducts();
-  }
 
   componentDidMount() {
+    this.getProducts();
     // Waits for the redux store to be populated with the previously saved state,
 		// then it will try to auto-login the user.
 		const unsubscribe = store.subscribe(() => {
