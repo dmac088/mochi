@@ -9,11 +9,14 @@ import {
 import store from './store';
 import Header from './components/Header';
 import Signup from './components/Signup';
-import * as session from './services/session';
+import * as sessionService from './services/session';
+import * as productService from './services/product';
 import Landing from './components/Landing';
 import Login from './components/Login';
 import Footer from './components/Footer';
 import Products from  './components/Products';
+import * as sessionSelectors from './services/session/selectors';
+
 
 
 class App extends Component {
@@ -25,7 +28,7 @@ class App extends Component {
 
   autoLogin = () =>  {
     console.log('autoLogin');
-    session.refreshToken().then(() => {
+    sessionService.refreshToken().then(() => {
       console.log('the token has been refreshed');
       this.setState({ initialRoute: routeStack[0] });
     }).catch(() => {
@@ -36,13 +39,24 @@ class App extends Component {
 
   // Fetch Initial Set of Products from external API
   getProducts() {
-    let url =
-      "https://res.cloudinary.com/sivadass/raw/upload/v1535817394/json/products.json";
-    axios.get(url).then(response => {
+    console.log(sessionSelectors.get());
+    if(!sessionSelectors.get().tokens.authenticated) { return; }
+    productService.findAll('HKG')
+    .then((response) => {
+      return response.text();
+    })
+    .then((responseText)=> {
+      return JSON.parse(responseText);
+    })
+    .then((responseJSON)=> {
       this.setState({
-        products: response.data
+        products: responseJSON
       });
+    })
+    .catch((err) => {
+      console.log(err);
     });
+    console.log(this.state.products);
   }
 
   componentWillMount() {
@@ -89,14 +103,7 @@ class App extends Component {
             <Route path="/Signup" component={Signup} />
           </div>
         </Router>
-        <Products
-          productsList={this.state.products}
-          searchTerm={this.state.term}
-          addToCart={this.handleAddToCart}
-          productQuantity={this.state.quantity}
-          updateQuantity={this.updateQuantity}
-          openModal={this.openModal}
-        />
+      
         <Footer/>
         </div>
     );

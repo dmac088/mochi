@@ -6,24 +6,10 @@ import * as actionCreators from './actions';
 import { initialState } from './reducer';
 
 
-	export const findByUserName = (userName) =>
-		api.findByUserName(userName)
+	export const findAll = (locale) =>
+		api.findAll(locale)
 		.then(onRequestSuccess)
 		.catch(onRequestFailed);
-
-	export const createNewCustomer = (customer) => {
-		console.log('creating a new customer');
-		 api.createNewCustomer(customer)
-			.then(() => {
-					session.authenticate(customer)
-			})
-			.then(onRequestSuccess)
-			.catch(onRequestFailed);
-	};
-
-	export const clearCustomer = () => {
-		store.dispatch(actionCreators.update(initialState));
-	};
 
 	const onRequestSuccess = (response) => {
 		console.log('request successfully completed!');

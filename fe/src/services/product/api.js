@@ -5,9 +5,9 @@ const endPoints = {
 };
 
 export const findAll = (locale) => fetchApi(
-																																endPoints.get + locale,
-																																{},
-																																{},
-																																'GET',
-																																{}
-																															);
+																						endPoints.get + locale,
+																						{},
+																						{},
+																						'GET',
+																						{}
+																					 );
