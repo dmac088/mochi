@@ -12,6 +12,8 @@ import Signup from './components/Signup';
 import * as session from './services/session';
 import Landing from './components/Landing';
 import Login from './components/Login';
+import Footer from './components/Footer';
+import Products from  './components/Products';
 
 
 class App extends Component {
@@ -30,6 +32,21 @@ class App extends Component {
       console.log('the token has not been refreshed');
       //this.setState({ initialRoute: routeStack[0] });
     });
+  }
+
+  // Fetch Initial Set of Products from external API
+  getProducts() {
+    let url =
+      "https://res.cloudinary.com/sivadass/raw/upload/v1535817394/json/products.json";
+    axios.get(url).then(response => {
+      this.setState({
+        products: response.data
+      });
+    });
+  }
+
+  componentWillMount() {
+    this.getProducts();
   }
 
   componentDidMount() {
@@ -72,7 +89,15 @@ class App extends Component {
             <Route path="/Signup" component={Signup} />
           </div>
         </Router>
-
+        <Products
+          productsList={this.state.products}
+          searchTerm={this.state.term}
+          addToCart={this.handleAddToCart}
+          productQuantity={this.state.quantity}
+          updateQuantity={this.updateQuantity}
+          openModal={this.openModal}
+        />
+        <Footer/>
         </div>
     );
   }
