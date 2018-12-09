@@ -100,14 +100,7 @@ class App extends Component {
             <Route path="/Signup" component={Signup} />
           </div>
         </Router>
-        <Products
-          productsList={this.state.products}
-          searchTerm={this.state.term}
-          addToCart={this.handleAddToCart}
-          productQuantity={this.state.quantity}
-          updateQuantity={this.updateQuantity}
-          openModal={this.openModal}
-        />
+    
         <Footer/>
         </div>
     );
