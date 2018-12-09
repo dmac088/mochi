@@ -41,13 +41,11 @@ export const fetchApi = (endPoint, payload = {}, formData = {}, method = 'get', 
 	  headers:  _.pickBy({
 														...(accessToken ? {
 															Authorization: `Bearer ${accessToken}`,
-														} : {
-
-														}),
+														} : {}),
 														...headers,
 													}, item => !_.isEmpty(item)),
 	 };
-
+	 console.log(formBody);
 	Object.assign(params, (method.toLowerCase() === 'post') && { body: formBody })
 
 	return fetch(apiConfig.url+endPoint, params);
