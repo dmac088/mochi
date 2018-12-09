@@ -4,10 +4,11 @@ import { withRouter } from 'react-router-dom'
 
 const ButtonToNavigate = ({ history }) => (
   <button
-    type="button"
+    className="btn btn-outline-success mr-sm-2 my-2 my-sm-0"
+    type="submit"
     onClick={() => history.push('/Signup')}
   >
-    Navigate
+    Signup
   </button>
 );
 
