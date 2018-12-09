@@ -7,9 +7,8 @@ import { deepValue } from '../services/api';
 import { initialState } from '../services/customer/reducer';
 import * as tokensActionCreators from '../services/session/actions';
 import * as customerActionCreators from '../services/customer/actions';
-import ButtonToNavigate from './ButtonToNavigate';
+import { Link } from 'react-router-dom';
 //import { browserHistory } from 'react-router';
-
 
 class Selector extends Component {
 
@@ -42,7 +41,8 @@ class Selector extends Component {
   renderLogoutButton = () => {
      let button;
      if(this.props.tokens.authenticated) {
-       button = <button
+       button =
+       <button
             onClick={this.logoutClick}
             className="btn btn-outline-success mr-sm-5 my-2 my-sm-0">
           Logout
@@ -55,12 +55,14 @@ class Selector extends Component {
      let button;
      if(!this.props.tokens.authenticated) {
        button =
+       <Link to="/Login">
        <button
            onClick={this.loginClick}
            className="btn btn-outline-success mr-sm-2 my-2 my-sm-0"
            type="submit">
           Login
-      </button>;
+      </button>
+      </Link>;
      }
      return button;
   }
@@ -69,12 +71,14 @@ class Selector extends Component {
      let button;
      if(!this.props.tokens.authenticated) {
        button =
+       <Link to="/Signup">
        <button
            onClick={this.signupClick}
            className="btn btn-outline-success mr-sm-5 my-2 my-sm-0"
            type="submit">
           SignUp
-      </button>;
+      </button>
+    </Link>;
      }
      return button;
     }
@@ -89,7 +93,7 @@ class Selector extends Component {
         <div>
           {this.renderLoginButton()}
           {this.renderLogoutButton()}
-          <ButtonToNavigate />
+          {this.rendersignupButton()}
         </div>
       );
     }

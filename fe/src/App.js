@@ -51,15 +51,6 @@ class App extends Component {
     console.log('subscribed function triggered');
   }
 
-  routeToPage = (event) => {
-    console.log(event.target.id);
-    this.setState({
-      currentPage: event.target.id
-    })
-    console.log(this.state);
-
-  }
-
   render() {
     //const {isLoading} = this.state;
     return (
@@ -69,29 +60,13 @@ class App extends Component {
                 integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
                 crossOrigin="anonymous"
           />
-          <Header tokens={this.props.tokens}
-                  customer={this.props.customer}
-          />
+
 
         <Router>
           <div>
-            <ul>
-              <Link to="/Landing"><button id='Landing' onClick={this.routeToPage}>Landing</button></Link>
-                <br/>
-                <Link to="/Login"><button id='Login' onClick={this.routeToPage}>Login</button></Link>
-                <br/>
-                <Link to="/Signup"><button id='Signup' onClick={this.routeToPage}>Signup</button></Link>
-                <br/>
-              <li>
-                <Link to="/Landing">Home</Link>
-              </li>
-              <li>
-                <Link to="/Login">Login</Link>
-              </li>
-              <li>
-                <Link to="/Signup">Signup</Link>
-              </li>
-            </ul>
+            <Header tokens={this.props.tokens}
+                    customer={this.props.customer}
+            />
             <Route path="/Landing" component={Landing} />
             <Route path="/Login" component={Login} />
             <Route path="/Signup" component={Signup} />
