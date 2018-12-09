@@ -39,8 +39,6 @@ class App extends Component {
 
   // Fetch Initial Set of Products from external API
   getProducts() {
-    console.log(sessionSelectors.get());
-    if(!sessionSelectors.get().tokens.authenticated) { return; }
     productService.findAll('HKG')
     .then((response) => {
       return response.text();
@@ -103,7 +101,14 @@ class App extends Component {
             <Route path="/Signup" component={Signup} />
           </div>
         </Router>
-      
+        <Products
+          productsList={this.state.products}
+          searchTerm={this.state.term}
+          addToCart={this.handleAddToCart}
+          productQuantity={this.state.quantity}
+          updateQuantity={this.updateQuantity}
+          openModal={this.openModal}
+        />
         <Footer/>
         </div>
     );
