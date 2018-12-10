@@ -46,7 +46,8 @@ class Products extends Component{
 		} else if(productsData.length <= 0 && term){
 			view = <NoResults />
 		} else{
-			view = <CSSTransitionGroup
+			view =
+			<CSSTransitionGroup
 				transitionName="fadeIn"
 				transitionEnterTimeout={500}
 				transitionLeaveTimeout={300}
