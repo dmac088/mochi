@@ -12,7 +12,6 @@ import { initialState } from './reducer';
 		.catch(onRequestFailed);
 
 	export const createNewCustomer = (customer) => {
-		console.log('creating a new customer');
 		 api.createNewCustomer(customer)
 			.then(() => {
 					session.authenticate(customer)
@@ -26,11 +25,9 @@ import { initialState } from './reducer';
 	};
 
 	const onRequestSuccess = (response) => {
-		console.log('request successfully completed!');
 	};
 
 	const onRequestFailed = (exception) => {
-		console.log('request failed!');
 		session.clearSession();
 		throw exception;
 	};

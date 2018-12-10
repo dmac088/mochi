@@ -29,12 +29,9 @@ class App extends Component {
   }
 
   autoLogin = () =>  {
-    console.log('autoLogin');
     sessionService.refreshToken().then(() => {
-      console.log('the token has been refreshed');
       this.setState({ initialRoute: routeStack[0] });
     }).catch(() => {
-      console.log('the token has not been refreshed');
       //this.setState({ initialRoute: routeStack[0] });
     });
   }
@@ -54,7 +51,6 @@ class App extends Component {
 		// then it will try to auto-login the user.
 		const unsubscribe = store.subscribe(() => {
                                               			if (store.getState().services.persist.isHydrated) {
-                                                      console.log('The store is hydrated!');
                                               				unsubscribe(); //call unsubscribe again! wait! what!?
                                               				this.autoLogin();
                                               			}
@@ -65,11 +61,9 @@ class App extends Component {
 	}
 
   reduxSubscribedFunction = () => {
-    console.log('subscribed function triggered');
   }
 
   render() {
-    console.log(this.props);
     return (
         <div className="App">
           <link rel="stylesheet"

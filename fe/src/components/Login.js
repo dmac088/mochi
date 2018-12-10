@@ -17,7 +17,6 @@ class Login extends Component {
   }
 
   reduxSubscribedFunction = () => {
-    //console.log('login subscribed function triggered');
   }
 
   updateCustomerState = (event) =>  {

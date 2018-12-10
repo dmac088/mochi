@@ -19,7 +19,6 @@ class Selector extends Component {
   }
 
   reduxSubscribedFunction = () => {
-    //console.log('login subscribed function triggered');
   }
 
   updateCustomerState = (event) =>  {
@@ -84,8 +83,6 @@ class Selector extends Component {
     }
 
  signupClick = () => {
-   //console.log(this.props);
-  // browserHistory.push('/Signup')
  }
 
   render() {
