@@ -14,6 +14,7 @@ import Landing from './components/Landing';
 import Login from './components/Login';
 import Footer from './components/Footer';
 import * as productSelectors from './services/product/selectors';
+import './scss/style.scss';
 
 
 class App extends Component {
