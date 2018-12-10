@@ -7,6 +7,7 @@ import { deepValue } from '../services/api';
 import { initialState } from '../services/customer/reducer';
 import * as tokensActionCreators from '../services/session/actions';
 import * as customerActionCreators from '../services/customer/actions';
+import { Link } from 'react-router-dom';
 
 class Login extends Component {
 
@@ -39,12 +40,14 @@ class Login extends Component {
      let button;
      if(!this.props.tokens.authenticated) {
        button =
+      <Link to="/Landing">
        <button
            onClick={this.loginClick}
            className="btn btn-outline-success mr-sm-2 my-2 my-sm-0"
            type="submit">
           Go
-      </button>;
+      </button>
+    </Link>;
      }
      return button;
   }
