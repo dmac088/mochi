@@ -2,14 +2,14 @@ import * as actionTypes from './actionTypes';
 
 export const initialState = 					{	items: [
 																					{
-																				        "productId": null,
-																				        "productUPC": null,
-																				        "productCreateDt": null,
-																				        "lclCd": null,
-																				        "productRrp": null,
-																				        "productDesc": null,
-																				        "productImage": null,
-																				        "productCategory": null
+																				        "productId": '',
+																				        "productUPC": '',
+																				        "productCreateDt": '',
+																				        "lclCd": '',
+																				        "productRrp": '',
+																				        "productDesc": '',
+																				        "productImage": '',
+																				        "productCategory": ''
 																				    }
 																				]
 																			};
