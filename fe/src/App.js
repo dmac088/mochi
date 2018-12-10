@@ -40,22 +40,8 @@ class App extends Component {
   // Fetch Initial Set of Products from external API
   getProducts() {
     productService.findAll('HKG')
-    .then((response) => {
-      console.log(response);
-      return response.text();
-    })
-    .then((responseText)=> {
-      return JSON.parse(responseText);
-    })
-    .then((responseJSON)=> {
-      this.setState({
-        products: responseJSON
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-    console.log(this.state.products);
+    console.log('rendering store state.....')
+    console.log(store.getState());
   }
 
 
@@ -100,7 +86,7 @@ class App extends Component {
             <Route path="/Signup" component={Signup} />
           </div>
         </Router>
-    
+
         <Footer/>
         </div>
     );
