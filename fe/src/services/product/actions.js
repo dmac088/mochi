@@ -1,6 +1,6 @@
 import * as actionTypes from './actionTypes';
 
-export const update = products => ({
+export const update = product => ({
 	type: actionTypes.UPDATE,
-	products,
+	product,
 });

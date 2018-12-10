@@ -16,7 +16,7 @@ import { initialState } from './reducer';
       return JSON.parse(responseText);
     })
     .then((responseJSON)=> {
-      store.dispatch(productActionCreators.update({"products": responseJSON}));
+      store.dispatch(productActionCreators.update({"product": responseJSON}));
     })
     .catch((err) => {
       console.log(err);
