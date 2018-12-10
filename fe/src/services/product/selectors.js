@@ -1,3 +1,3 @@
 import store from '../../store';
 
-export const get = () => store.getState().services.products;
+export const get = () => store.getState().services.product;

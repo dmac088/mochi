@@ -1,17 +1,18 @@
 import * as actionTypes from './actionTypes';
 
-export const initialState = [
-															{
-														        "productId": null,
-														        "productUPC": null,
-														        "productCreateDt": null,
-														        "lclCd": null,
-														        "productRrp": null,
-														        "productDesc": null,
-														        "productImage": null,
-														        "productCategory": null
-														    }
-														];
+export const initialState = 					{	products: [
+																					{
+																				        "productId": null,
+																				        "productUPC": null,
+																				        "productCreateDt": null,
+																				        "lclCd": null,
+																				        "productRrp": null,
+																				        "productDesc": null,
+																				        "productImage": null,
+																				        "productCategory": null
+																				    }
+																				]
+																			};
 
 export const reducer = (state = initialState, action) => {
 	console.log('product reducer was fired!');
@@ -19,7 +20,7 @@ export const reducer = (state = initialState, action) => {
 	switch (action.type) {
 		case actionTypes.UPDATE:
 			return {
-				...action.product,
+				...action.products,
 			};
 		default:
 			return state;

@@ -84,7 +84,7 @@ class Selector extends Component {
     }
 
  signupClick = () => {
-   console.log(this.props);
+   //console.log(this.props);
   // browserHistory.push('/Signup')
  }
 
