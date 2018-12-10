@@ -15,15 +15,17 @@ import Landing from './components/Landing';
 import Login from './components/Login';
 import Footer from './components/Footer';
 import Products from  './components/Products';
-import * as sessionSelectors from './services/session/selectors';
-
+import * as productSelectors from './services/product/selectors';
 
 
 class App extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+        term: '',
+        quantity: 0
+    };
   }
 
   autoLogin = () =>  {
@@ -42,9 +44,12 @@ class App extends Component {
     productService.findAll('HKG');
   }
 
+  componentWillMount() {
+    this.getProducts();
+  }
 
   componentDidMount() {
-    this.getProducts();
+
     // Waits for the redux store to be populated with the previously saved state,
 		// then it will try to auto-login the user.
 		const unsubscribe = store.subscribe(() => {
@@ -64,7 +69,7 @@ class App extends Component {
   }
 
   render() {
-    console.log(store.getState());
+    console.log(productSelectors.get().product);
     //const {isLoading} = this.state;
     return (
         <div className="App">
@@ -85,7 +90,7 @@ class App extends Component {
             <Route path="/Signup" component={Signup} />
           </div>
         </Router>
-
+        
         <Footer/>
         </div>
     );
