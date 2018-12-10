@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import * as productService from '../services/product';
 import * as tokenActionCreators from '../services/session/actions';
 import * as customerActionCreators from '../services/customer/actions';
+import * as productActionCreators from '../services/product/actions';
+import Products from  './Products';
 
 class Landing extends Component {
 
@@ -10,10 +13,26 @@ class Landing extends Component {
     super(props);
   }
 
+  // Fetch Initial Set of Products from external API
+  getProducts() {
+    productService.findAll('HKG');
+  }
+
+  componentWillMount() {
+    this.getProducts();
+  }
+
   render() {
     return(
         <div>
-          <p>Landing Page</p>
+          <Products
+            productsList={this.props.products}
+            searchTerm=''
+            addToCart=''
+            productQuantity=''
+            updateQuantity=''
+            openModal=''
+          />
         </div>
     );
   }
@@ -21,10 +40,11 @@ class Landing extends Component {
 
 export default connect(state => ({
     tokens: state.services.session.tokens,
-		//routeHistory: state.services.routeHistory,
+		products: state.services.product.items,
 }), dispatch => ({
 	actions: {
 		tokens: bindActionCreators(tokenActionCreators, dispatch),
     customer: bindActionCreators(customerActionCreators, dispatch),
+    product: bindActionCreators(productActionCreators, dispatch),
 	},
 }))(Landing);
