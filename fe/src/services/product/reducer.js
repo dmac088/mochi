@@ -1,6 +1,6 @@
 import * as actionTypes from './actionTypes';
 
-export const initialState = 					{	products: [
+export const initialState = 					{	product: [
 																					{
 																				        "productId": null,
 																				        "productUPC": null,
@@ -20,7 +20,7 @@ export const reducer = (state = initialState, action) => {
 	switch (action.type) {
 		case actionTypes.UPDATE:
 			return {
-				...action.products,
+				...action.product,
 			};
 		default:
 			return state;

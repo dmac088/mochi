@@ -97,7 +97,7 @@ const mapStateToProps = (state) => {
     //take value from reducer, alias used in combinReducers in ./data/reducer.js
     tokens: state.services.session.tokens,
     customer: state.services.customer.customer,
-    products: state.services.product.products
+    products: state.services.product.product
   };
 };
 
