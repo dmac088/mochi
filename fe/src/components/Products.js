@@ -9,6 +9,7 @@ class Products extends Component{
 		super();
 	}
   	render(){
+			console.log(this.props.productsList);
     	let productsData;
     	let term = this.props.searchTerm;
     	let x;
