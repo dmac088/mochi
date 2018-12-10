@@ -23,7 +23,6 @@ class Signup extends Component {
   }
 
   signupClick = (event) => {
-      console.log("signup click");
       this.setState({
         isLoading: true,
         error: '',

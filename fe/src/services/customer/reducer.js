@@ -11,8 +11,6 @@ export const initialState = {
 														};
 
 export const reducer = (state = initialState, action) => {
-	console.log('customer reducer was fired!');
-
 	switch (action.type) {
 		case actionTypes.UPDATE:
 			return {
