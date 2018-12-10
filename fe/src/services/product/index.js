@@ -9,7 +9,7 @@ import { initialState } from './reducer';
 	export const findAll = (locale) =>
 		api.findAll(locale)
 		.then((response) => {
-      console.log(response);
+
       return response.text();
     })
     .then((responseText)=> {

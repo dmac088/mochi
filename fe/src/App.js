@@ -39,9 +39,7 @@ class App extends Component {
 
   // Fetch Initial Set of Products from external API
   getProducts() {
-    productService.findAll('HKG')
-    console.log('rendering store state.....')
-    console.log(store.getState());
+    productService.findAll('HKG');
   }
 
 
@@ -66,6 +64,7 @@ class App extends Component {
   }
 
   render() {
+    console.log(store.getState());
     //const {isLoading} = this.state;
     return (
         <div className="App">
@@ -97,7 +96,8 @@ const mapStateToProps = (state) => {
   return {
     //take value from reducer, alias used in combinReducers in ./data/reducer.js
     tokens: state.services.session.tokens,
-    customer: state.services.customer.customer
+    customer: state.services.customer.customer,
+    products: state.services.product.products
   };
 };
 
