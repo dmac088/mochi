@@ -35,9 +35,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-
-    // Waits for the redux store to be populated with the previously saved state,
-		// then it will try to auto-login the user.
 		const unsubscribe = store.subscribe(() => {
                                               			if (store.getState().services.persist.isHydrated) {
                                               				unsubscribe(); //call unsubscribe again! wait! what!?
@@ -46,7 +43,6 @@ class App extends Component {
 
 		                                    });
 		store.subscribe(this.reduxSubscribedFunction);
-
 	}
 
   reduxSubscribedFunction = () => {
