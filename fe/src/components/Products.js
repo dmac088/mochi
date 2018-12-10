@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import config from '../config/config';
 import Product from './Product';
 import LoadingProducts from '../loaders/Products';
 import NoResults from "../empty-states/NoResults";
@@ -14,28 +15,28 @@ class Products extends Component{
     	let term = this.props.searchTerm;
     	let x;
 
-		function searchingFor(term){
-			return function(x){
-				//console.log(x);
-				return x.productDesc.toLowerCase().includes(term.toLowerCase()) || !term;
+			function searchingFor(term){
+				return function(x){
+					//console.log(x);
+					return x.productDesc.toLowerCase().includes(term.toLowerCase()) || !term;
+				}
 			}
-		}
 
-		
-		productsData = this.props.productsList.filter(searchingFor(term)).map(product =>{
-			return(
-						<Product key={product.productId}
-								 price={product.productRrp}
-								 name={product.productDesc}
-								 image={product.productImage}
-								 id={product.productId}
-								 addToCart={this.props.addToCart}
-								 productQuantity={this.props.productQuantity}
-								 updateQuantity={this.props.updateQuantity}
-								 openModal={this.props.openModal}
-						/>
-				)
-			}
+			console.log()
+			productsData = this.props.productsList.filter(searchingFor(term)).map(product =>{
+				return(
+							<Product key={product.productId}
+									 price={product.productRrp}
+									 name={product.productDesc}
+									 image={config.url + '/' + product.productImage}
+									 id={product.productId}
+									 addToCart={this.props.addToCart}
+									 productQuantity={this.props.productQuantity}
+									 updateQuantity={this.props.updateQuantity}
+									 openModal={this.props.openModal}
+							/>
+					)
+				}
 		);
 
 		// Empty and Loading States

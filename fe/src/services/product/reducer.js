@@ -1,6 +1,7 @@
 import * as actionTypes from './actionTypes';
 
-export const initialState = 					{	items: [
+export const initialState = 					{
+																				items: [
 																					{
 																				        "productId": '',
 																				        "productUPC": '',
