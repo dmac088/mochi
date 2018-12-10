@@ -69,8 +69,7 @@ class App extends Component {
   }
 
   render() {
-    console.log(productSelectors.get().product);
-    //const {isLoading} = this.state;
+    console.log(this.props);
     return (
         <div className="App">
           <link rel="stylesheet"
@@ -90,7 +89,14 @@ class App extends Component {
             <Route path="/Signup" component={Signup} />
           </div>
         </Router>
-        
+        <Products
+          productsList={this.props.products}
+          searchTerm={this.state.term}
+          addToCart={this.handleAddToCart}
+          productQuantity={this.state.quantity}
+          updateQuantity={this.updateQuantity}
+          openModal={this.openModal}
+        />
         <Footer/>
         </div>
     );
@@ -102,7 +108,7 @@ const mapStateToProps = (state) => {
     //take value from reducer, alias used in combinReducers in ./data/reducer.js
     tokens: state.services.session.tokens,
     customer: state.services.customer.customer,
-    products: state.services.product.product
+    products: state.services.product.items
   };
 };
 
