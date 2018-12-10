@@ -10,11 +10,9 @@ import store from './store';
 import Header from './components/Header';
 import Signup from './components/Signup';
 import * as sessionService from './services/session';
-import * as productService from './services/product';
 import Landing from './components/Landing';
 import Login from './components/Login';
 import Footer from './components/Footer';
-import Products from  './components/Products';
 import * as productSelectors from './services/product/selectors';
 
 
@@ -36,15 +34,6 @@ class App extends Component {
     });
   }
 
-  // Fetch Initial Set of Products from external API
-  getProducts() {
-    productService.findAll('HKG');
-  }
-
-  componentWillMount() {
-    this.getProducts();
-  }
-
   componentDidMount() {
 
     // Waits for the redux store to be populated with the previously saved state,
@@ -55,7 +44,7 @@ class App extends Component {
                                               				this.autoLogin();
                                               			}
 
-		                                          });
+		                                    });
 		store.subscribe(this.reduxSubscribedFunction);
 
 	}
@@ -71,26 +60,18 @@ class App extends Component {
                 integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
                 crossOrigin="anonymous"
           />
-
-
         <Router>
           <div>
             <Header tokens={this.props.tokens}
                     customer={this.props.customer}
             />
+            <Route path="/" exact component={Landing} />
             <Route path="/Landing" component={Landing} />
             <Route path="/Login" component={Login} />
             <Route path="/Signup" component={Signup} />
+
           </div>
         </Router>
-        <Products
-          productsList={this.props.products}
-          searchTerm={this.state.term}
-          addToCart={this.handleAddToCart}
-          productQuantity={this.state.quantity}
-          updateQuantity={this.updateQuantity}
-          openModal={this.openModal}
-        />
         <Footer/>
         </div>
     );
