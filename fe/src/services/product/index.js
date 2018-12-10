@@ -3,11 +3,24 @@ import store from '../../store';
 import * as session from '../session';
 import * as api from './api';
 import * as actionCreators from './actions';
+import * as productActionCreators from '../product/actions';
 import { initialState } from './reducer';
-
 
 	export const findAll = (locale) =>
 		api.findAll(locale)
+		.then((response) => {
+      console.log(response);
+      return response.text();
+    })
+    .then((responseText)=> {
+      return JSON.parse(responseText);
+    })
+    .then((responseJSON)=> {
+      store.dispatch(productActionCreators.update({"products": responseJSON}));
+    })
+    .catch((err) => {
+      console.log(err);
+    })
 		.then(onRequestSuccess)
 		.catch(onRequestFailed);
 
