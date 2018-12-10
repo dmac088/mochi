@@ -27,7 +27,7 @@ module.exports = {
       moment: 'moment/src/moment'
     }
   },
-   
+
   module: {
     rules: [
       {
@@ -57,6 +57,6 @@ module.exports = {
     ]
   },
   plugins: [
-    new ExtractTextPlugin('style.css')
+    new ExtractTextPlugin('style.scss')
   ]
 };
