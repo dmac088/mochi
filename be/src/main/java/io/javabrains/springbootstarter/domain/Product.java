@@ -51,7 +51,6 @@ public class Product {
 		this.productId = productId;
 	}
 
-
 	public String getProductUPC() {
 		return productUPC;
 	}
@@ -67,7 +66,6 @@ public class Product {
 	public void setProductCreateDt(Date productCreateDt) {
 		this.productCreateDt = productCreateDt;
 	}
-
 
 	public double getProductRrp() {
 		return ProductRrp;

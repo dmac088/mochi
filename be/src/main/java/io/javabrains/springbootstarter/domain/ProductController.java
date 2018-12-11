@@ -43,7 +43,7 @@ public class ProductController {
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.POST, value="/Product")
 	public void addProduct(Product product) {	
-		System.out.println("calling addProductr");
+		System.out.println("calling addProduct");
 		productService.addProduct(product);
 	}
 	
