@@ -28,11 +28,13 @@ const Selector = (props) => {
      let button;
      if(props.tokens.authenticated) {
        button =
-       <button
-            onClick={logoutClick}
-            className="btn btn-outline-success mr-sm-5 my-2 my-sm-0">
-          Logout
-       </button>;
+       <Link to="/Landing">
+         <button
+              onClick={logoutClick}
+              className="btn btn-outline-success mr-sm-5 my-2 my-sm-0">
+            Logout
+         </button>
+       </Link>;
      }
      return button;
   }
