@@ -33,17 +33,10 @@ class App extends Component {
   getProducts() {
     productService.findAll('HKG')
     .then((response) => {
-      console.log('this is the reponse from the promise...')
-      console.log(response);
       this.setState({
         items: response
       });
-    })
-    .then(() => {
-      console.log('this is the state....');
-      console.log(this.state);
     });
-
   }
 
   componentWillMount() {
@@ -75,7 +68,6 @@ class App extends Component {
 
   // Search by Keyword
   handleSearch = (event) => {
-    //console.log(event.target.value);
     this.setState({ term: event.target.value });
   }
 

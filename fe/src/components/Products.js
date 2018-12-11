@@ -10,14 +10,12 @@ class Products extends Component{
 		super();
 	}
   	render(){
-			console.log(this.props.productsList);
     	let productsData;
     	let term = this.props.searchTerm;
     	let x;
 
 			function searchingFor(term){
 				return function(x){
-					//console.log(x);
 					return x.productDesc.toLowerCase().includes(term.toLowerCase()) || !term;
 				}
 			}
