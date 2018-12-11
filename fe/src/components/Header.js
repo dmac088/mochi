@@ -5,6 +5,7 @@ import Selector from './Selector';
 import Search from './Search';
 
 const Header = (props) => {
+  //console.log(props.tokens);
       return(
       <nav className="navbar navbar-light bg-light justify-content-between">
         <div className="navbar-brand">Navbar</div>
@@ -15,11 +16,11 @@ const Header = (props) => {
             <Greeting
               tokens={props.tokens}
               customer={props.customer}
-            ></Greeting>
-            <Selector>
-                tokens={props.tokens}
-                customer={props.customer}
-            </Selector>
+            />
+            <Selector
+              tokens={props.tokens}
+              customer={props.customer}
+            />
 
         </div>
       </nav>
