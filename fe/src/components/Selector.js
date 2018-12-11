@@ -27,14 +27,10 @@ class Selector extends Component {
     this.setState(newstate);
   }
 
-  loginClick = (event) => {
-    session.authenticate(this.state.customer);
-
-  }
-
   logoutClick = (event) => {
     session.clearSession();
-    this.setState(null);
+    this.state = initialState.customer;
+    console.log(this.state);
   }
 
   renderLogoutButton = () => {
@@ -56,7 +52,6 @@ class Selector extends Component {
        button =
        <Link to="/Login">
        <button
-           onClick={this.loginClick}
            className="btn btn-outline-success mr-sm-2 my-2 my-sm-0"
            type="submit">
           Login
@@ -98,6 +93,7 @@ class Selector extends Component {
 
 export default connect(state => ({
     tokens: state.services.session.tokens,
+    customer: state.services.customer.customer
 		//routeHistory: state.services.routeHistory,
 }), dispatch => ({
 	actions: {
