@@ -29,7 +29,7 @@ class App extends Component {
 
   autoLogin = () =>  {
     sessionService.refreshToken().then(() => {
-      this.setState({ initialRoute: routeStack[0] });
+      //this.setState({ initialRoute: routeStack[0] });
     }).catch(() => {
       //this.setState({ initialRoute: routeStack[0] });
     });
@@ -49,6 +49,12 @@ class App extends Component {
   reduxSubscribedFunction = () => {
   }
 
+  // Search by Keyword
+  handleSearch = (event) => {
+    console.log(event.target.value);
+    this.setState({ term: event.target.value });
+  }
+
   render() {
     return (
         <div className="App">
@@ -61,12 +67,12 @@ class App extends Component {
           <div>
             <Header tokens={this.props.tokens}
                     customer={this.props.customer}
+                    handleSearch={this.handleSearch}
             />
             <Route path="/" exact component={Landing} />
             <Route path="/Landing" component={Landing} />
             <Route path="/Login" component={Login} />
             <Route path="/Signup" component={Signup} />
-
           </div>
         </Router>
         <Footer/>
@@ -84,11 +90,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-const routeStack = [
-   { name: 'Landing', component: Landing },
-   { name: 'Login',   component: Login },
-   { name: 'Signup',  component: Signup },
- ];
 //on a dispatch call from anywhere in the application
 //this function will fire and update authenticated
 const mapDispatchToProps = (dispatch) => {
