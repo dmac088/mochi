@@ -29,8 +29,6 @@ class Selector extends Component {
 
   logoutClick = (event) => {
     session.clearSession();
-    this.state = initialState.customer;
-    console.log(this.state);
   }
 
   renderLogoutButton = () => {
