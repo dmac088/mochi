@@ -3,11 +3,15 @@ import React from 'react';
 import Greeting from './Greeting';
 import Selector from './Selector';
 import Search from './Search';
+import { Link } from 'react-router-dom';
+
 
 const Header = (props) => {
       return(
       <nav className="navbar navbar-light bg-light justify-content-between">
-        <div className="navbar-brand">Navbar</div>
+        <div className="navbar-brand">
+            <Link to="/">HOME</Link>
+        </div>
         <div className="form-inline">
             <Search
               handleSearch={props.handleSearch}
@@ -20,7 +24,6 @@ const Header = (props) => {
               tokens={props.tokens}
               customer={props.customer}
             />
-
         </div>
       </nav>
     );
