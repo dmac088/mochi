@@ -28,7 +28,7 @@ const Selector = (props) => {
      let button;
      if(props.tokens.authenticated) {
        button =
-       <Link to="/Landing">
+       <Link to="/">
          <button
               onClick={logoutClick}
               className="btn btn-outline-success mr-sm-5 my-2 my-sm-0">
