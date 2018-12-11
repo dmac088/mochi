@@ -28,7 +28,6 @@ class Login extends Component {
 
   loginClick = (event) => {
     session.authenticate(this.state.customer);
-
   }
 
   logoutClick = (event) => {

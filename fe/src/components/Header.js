@@ -9,7 +9,11 @@ const Header = (props) => {
       <nav className="navbar navbar-light bg-light justify-content-between">
         <div className="navbar-brand">Navbar</div>
         <div className="form-inline">
-            <Search/>
+            <Search
+              handleSearch={props.handleSearch}
+            />
+
+
             <Greeting
               tokens={props.tokens}
               customer={props.customer}
