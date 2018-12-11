@@ -12,13 +12,10 @@ const Header = (props) => {
             <Search
               handleSearch={props.handleSearch}
             />
-
-
             <Greeting
               tokens={props.tokens}
               customer={props.customer}
             ></Greeting>
-
             <Selector>
                 tokens={props.tokens}
                 customer={props.customer}

@@ -4,7 +4,8 @@ import * as customerApi from '../customer/api';
 import * as sessionSelectors from './selectors';
 import * as tokenActionCreators from './actions';
 import * as customerActionCreators from '../customer/actions';
-import { initialState } from './reducer';
+import * as tokenReducer from './reducer';
+import * as customerReducer from '../customer/reducer';
 
 const SESSION_TIMEOUT_THRESHOLD = 300; // Will refresh the access token 5 minutes before it expires
 
@@ -79,7 +80,9 @@ export const revoke = () => {
 
 export const clearSession = () => {
 	clearTimeout(sessionTimeout);
-	store.dispatch(tokenActionCreators.update(initialState));
+	store.dispatch(tokenActionCreators.update(tokenReducer.initialState));
+	store.dispatch(customerActionCreators.update(customerReducer.initialState));
+	console.log(store.getState());
 };
 
 export const refreshToken = () => {
