@@ -78,7 +78,6 @@ class Login extends Component {
            id="customer.password"
            type="password"
            onChange={this.updateCustomerState}
-
            placeholder="Password"
            aria-label="Password" />;
      }
@@ -89,11 +88,16 @@ class Login extends Component {
 
   render() {
       return(
-        <div>
-          {this.renderuserNameField()}
-          {this.renderPasswordField()}
-          {this.renderLoginButton()}
-
+        <div className="row">
+          <div className="col-md-3 order-md-1">
+          </div>
+          <div className="col-md-6 order-md-2">
+            {this.renderuserNameField()}
+            {this.renderPasswordField()}
+            {this.renderLoginButton()}
+          </div>
+          <div className="col-md-3 order-md-3">
+          </div>
         </div>
       );
     }
