@@ -39,7 +39,6 @@ const Selector = (props) => {
 
   const renderLoginButton = (props) => {
      let button;
-     console.log(props);
      if(!props.tokens.authenticated) {
         button =
         <Link to="/Login">
