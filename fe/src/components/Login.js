@@ -39,7 +39,7 @@ class Login extends Component {
      let button;
      if(!this.props.tokens.authenticated) {
        button =
-      <Link to="/Landing">
+      <Link to="/">
        <button
            onClick={this.loginClick}
            className="btn btn-outline-success mr-sm-2 my-2 my-sm-0"

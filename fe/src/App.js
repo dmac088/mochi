@@ -89,7 +89,7 @@ class App extends Component {
                     customer={this.props.customer}
                     handleSearch={this.handleSearch}
             />
-          <Route path="/Landing" exact component={(routeProps) => (
+          <Route path="/" exact component={(routeProps) => (
                                               <Landing {...routeProps} {...this.state} />
                                             )} />
             <Route path="/Login" component={Login} />
