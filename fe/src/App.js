@@ -27,7 +27,7 @@ class App extends Component {
     super(props);
     this.state = {
         items: [],
-        term: '',
+        searchTerm: '',
         quantity: 0
     };
   }
@@ -71,7 +71,8 @@ class App extends Component {
 
   // Search by Keyword
   handleSearch = (event) => {
-    this.setState({ term: event.target.value });
+    this.setState({ searchTerm: event.target.value });
+    console.log(this.state);
   }
 
   render() {
@@ -105,7 +106,7 @@ class App extends Component {
 //on a dispatch call from anywhere in the application
 //this function will fire and update authenticated
 export default connect(state => ({
-  tokens: state.services.session.tokens,
+  tokens:   state.services.session.tokens,
   customer: state.services.customer.customer
 		//routeHistory: state.services.routeHistory,
 }), dispatch => ({
