@@ -106,8 +106,7 @@ class App extends Component {
 //this function will fire and update authenticated
 export default connect(state => ({
   tokens: state.services.session.tokens,
-  customer: state.services.customer.customer,
-  products: state.services.product.items
+  customer: state.services.customer.customer
 		//routeHistory: state.services.routeHistory,
 }), dispatch => ({
 	actions: {

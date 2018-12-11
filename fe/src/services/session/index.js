@@ -82,7 +82,6 @@ export const clearSession = () => {
 	clearTimeout(sessionTimeout);
 	store.dispatch(tokenActionCreators.update(tokenReducer.initialState));
 	store.dispatch(customerActionCreators.update(customerReducer.initialState));
-	console.log(store.getState());
 };
 
 export const refreshToken = () => {
