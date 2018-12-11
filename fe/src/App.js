@@ -83,20 +83,20 @@ class App extends Component {
                 integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
                 crossOrigin="anonymous"
           />
-        <Router>
-          <div>
-            <Header tokens={this.props.tokens}
-                    customer={this.props.customer}
-                    handleSearch={this.handleSearch}
-            />
-          <Route path="/" exact component={(routeProps) => (
-                                              <Landing {...routeProps} {...this.state} />
-                                            )} />
-            <Route path="/Login" component={Login} />
-            <Route path="/Signup" component={Signup} />
-          </div>
-        </Router>
-        <Footer/>
+          <Router>
+            <div>
+              <Header tokens={this.props.tokens}
+                      customer={this.props.customer}
+                      handleSearch={this.handleSearch}
+              />
+              <Route path="/" exact component=  {(routeProps) => (
+                                                <Landing {...routeProps} {...this.state} />
+                                              )} />
+              <Route path="/Login" component={Login} />
+              <Route path="/Signup" component={Signup} />
+            </div>
+          </Router>
+          <Footer/>
         </div>
     );
   }
