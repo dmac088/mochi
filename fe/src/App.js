@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import {
   Route,
   Link,
@@ -9,6 +10,8 @@ import {
 import store from './store';
 import Header from './components/Header';
 import Signup from './components/Signup';
+import * as tokensActionCreators from './services/session/actions';
+import * as customerActionCreators from './services/customer/actions';
 import * as sessionService from './services/session';
 import * as productService from './services/product';
 import Landing from './components/Landing';
@@ -85,10 +88,9 @@ class App extends Component {
                     customer={this.props.customer}
                     handleSearch={this.handleSearch}
             />
-            <Route path="/" exact component={(routeProps) => (
+          <Route path="/Landing" exact component={(routeProps) => (
                                               <Landing {...routeProps} {...this.state} />
                                             )} />
-            <Route path="/Landing" component={Landing} />
             <Route path="/Login" component={Login} />
             <Route path="/Signup" component={Signup} />
           </div>
@@ -99,26 +101,17 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    //take value from reducer, alias used in combinReducers in ./data/reducer.js
-    tokens: state.services.session.tokens,
-    customer: state.services.customer.customer,
-    products: state.services.product.items
-  };
-};
 
 //on a dispatch call from anywhere in the application
 //this function will fire and update authenticated
-const mapDispatchToProps = (dispatch) => {
-  return {
-    authenticated: (value) => {
-      dispatch({
-        type: "UPDATE",
-        payload: value
-      })
-    }
-  };
-};
-
-export default connect(mapStateToProps,mapDispatchToProps)(App);
+export default connect(state => ({
+  tokens: state.services.session.tokens,
+  customer: state.services.customer.customer,
+  products: state.services.product.items
+		//routeHistory: state.services.routeHistory,
+}), dispatch => ({
+	actions: {
+		tokens: bindActionCreators(tokensActionCreators, dispatch),
+    customer: bindActionCreators(customerActionCreators, dispatch),
+	},
+}))(App);

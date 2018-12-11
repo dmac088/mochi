@@ -32,7 +32,7 @@ class Login extends Component {
 
   logoutClick = (event) => {
     session.clearSession();
-    this.setState(null);
+    this.setState(initialState);
   }
 
   renderLoginButton = () => {
