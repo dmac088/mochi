@@ -8,35 +8,28 @@ import { initialState } from '../services/customer/reducer';
 import * as tokensActionCreators from '../services/session/actions';
 import * as customerActionCreators from '../services/customer/actions';
 import { Link } from 'react-router-dom';
-//import { browserHistory } from 'react-router';
 
-class Selector extends Component {
+const Selector = (props) => {
 
-  constructor(props) {
-    super(props);
-    this.state = initialState;
-    store.subscribe(this.reduxSubscribedFunction);
+  const reduxSubscribedFunction = () => {
   }
 
-  reduxSubscribedFunction = () => {
-  }
-
-  updateCustomerState = (event) =>  {
+  const updateCustomerState = (event) =>  {
     let newstate = {...this.state};
     deepValue(newstate, event.target.id, event.target.value);
     this.setState(newstate);
   }
 
-  logoutClick = (event) => {
+  const logoutClick = (event) => {
     session.clearSession();
   }
 
-  renderLogoutButton = () => {
+  const renderLogoutButton = () => {
      let button;
-     if(this.props.tokens.authenticated) {
+     if(props.tokens.authenticated) {
        button =
        <button
-            onClick={this.logoutClick}
+            onClick={logoutClick}
             className="btn btn-outline-success mr-sm-5 my-2 my-sm-0">
           Logout
        </button>;
@@ -44,58 +37,45 @@ class Selector extends Component {
      return button;
   }
 
-  renderLoginButton = () => {
+  const renderLoginButton = (props) => {
      let button;
-     if(!this.props.tokens.authenticated) {
-       button =
-       <Link to="/Login">
-       <button
-           className="btn btn-outline-success mr-sm-2 my-2 my-sm-0"
-           type="submit">
-          Login
-      </button>
-      </Link>;
-     }
-     return button;
+     console.log(props);
+     if(!props.tokens.authenticated) {
+        button =
+        <Link to="/Login">
+        <button
+            className="btn btn-outline-success mr-sm-2 my-2 my-sm-0"
+            type="submit">
+           Login
+       </button>
+       </Link>;
+      }
+      return button;
   }
 
-  rendersignupButton = () => {
+  const rendersignupButton = () => {
      let button;
-     if(!this.props.tokens.authenticated) {
+     if(!props.tokens.authenticated) {
        button =
        <Link to="/Signup">
        <button
-           onClick={this.signupClick}
            className="btn btn-outline-success mr-sm-5 my-2 my-sm-0"
            type="submit">
           SignUp
-      </button>
-    </Link>;
+        </button>
+      </Link>;
      }
      return button;
     }
 
- signupClick = () => {
- }
-
-  render() {
-      return(
+    return(
         <div>
-          {this.renderLoginButton()}
-          {this.renderLogoutButton()}
-          {this.rendersignupButton()}
+          {renderLoginButton(props)}
+          {renderLogoutButton(props)}
+          {rendersignupButton(props)}
         </div>
-      );
-    }
+    );
 }
 
-export default connect(state => ({
-    tokens: state.services.session.tokens,
-    customer: state.services.customer.customer
-		//routeHistory: state.services.routeHistory,
-}), dispatch => ({
-	actions: {
-		tokens: bindActionCreators(tokensActionCreators, dispatch),
-    customer: bindActionCreators(customerActionCreators, dispatch),
-	},
-}))(Selector);
+
+export default Selector;
