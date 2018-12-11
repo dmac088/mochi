@@ -10,6 +10,7 @@ import store from './store';
 import Header from './components/Header';
 import Signup from './components/Signup';
 import * as sessionService from './services/session';
+import * as productService from './services/product';
 import Landing from './components/Landing';
 import Login from './components/Login';
 import Footer from './components/Footer';
@@ -22,15 +23,38 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+        items: [],
         term: '',
         quantity: 0
     };
+  }
+
+  // Fetch Initial Set of Products from external API
+  getProducts() {
+    productService.findAll('HKG')
+    .then((response) => {
+      console.log('this is the reponse from the promise...')
+      console.log(response);
+      this.setState({
+        items: response
+      });
+    })
+    .then(() => {
+      console.log('this is the state....');
+      console.log(this.state);
+    });
+
+  }
+
+  componentWillMount() {
+    this.getProducts();
   }
 
   autoLogin = () =>  {
     sessionService.refreshToken().then(() => {
       //this.setState({ initialRoute: routeStack[0] });
     }).catch(() => {
+      //move to error
       //this.setState({ initialRoute: routeStack[0] });
     });
   }
@@ -51,7 +75,7 @@ class App extends Component {
 
   // Search by Keyword
   handleSearch = (event) => {
-    console.log(event.target.value);
+    //console.log(event.target.value);
     this.setState({ term: event.target.value });
   }
 
@@ -69,7 +93,9 @@ class App extends Component {
                     customer={this.props.customer}
                     handleSearch={this.handleSearch}
             />
-            <Route path="/" exact component={Landing} />
+            <Route path="/" exact component={(routeProps) => (
+                                              <Landing {...routeProps} {...this.state} />
+                                            )} />
             <Route path="/Landing" component={Landing} />
             <Route path="/Login" component={Login} />
             <Route path="/Signup" component={Signup} />

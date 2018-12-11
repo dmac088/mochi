@@ -9,23 +9,22 @@ import { initialState } from './reducer';
 	export const findAll = (locale) =>
 		api.findAll(locale)
 		.then((response) => {
-
       return response.text();
     })
     .then((responseText)=> {
       return JSON.parse(responseText);
     })
     .then((responseJSON)=> {
-      store.dispatch(productActionCreators.update({"items": responseJSON}));
-    })
-    .catch((err) => {
-      console.log(err);
+			//we dont want to commit the product list to redux
+      //store.dispatch(productActionCreators.update({"items": responseJSON}));
+			return responseJSON;
     })
 		.then(onRequestSuccess)
 		.catch(onRequestFailed);
 
 	const onRequestSuccess = (response) => {
 		console.log('request successfully completed!');
+		return response;
 	};
 
 	const onRequestFailed = (exception) => {
