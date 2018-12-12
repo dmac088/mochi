@@ -6,6 +6,7 @@ import * as tokenActionCreators from './actions';
 import * as customerActionCreators from '../customer/actions';
 import * as tokenReducer from './reducer';
 import * as customerReducer from '../customer/reducer';
+import * as customerService from '../customer';
 
 const SESSION_TIMEOUT_THRESHOLD = 300; // Will refresh the access token 5 minutes before it expires
 
@@ -48,7 +49,7 @@ export const authenticate = (customer) => {
 				return JSON.parse(responseText);
 			})
 			.then((responseJSON) => {
-				store.dispatch(customerActionCreators.update({"customer": responseJSON}));
+				customerService.persistCustomer(responseJSON);
 			})
 		})
 		.then(() => {
@@ -62,7 +63,7 @@ export const authenticate = (customer) => {
 		console.log('the request was successful');
 	};
 
-	const  persistTokens = (tokens) => {
+	export const  persistTokens = (tokens) => {
 	 	store.dispatch(tokenActionCreators.update({"tokens": tokens }));
 	 	setSessionTimeout(tokens.expires_in);
 	}

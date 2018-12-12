@@ -24,6 +24,10 @@ import { initialState } from './reducer';
 		store.dispatch(actionCreators.update(initialState));
 	};
 
+	export const persistCustomer = (customer) => {
+	 	store.dispatch(actionCreators.update({"customer": customer }));
+	}
+
 	const onRequestSuccess = (response) => {
 	};
 
