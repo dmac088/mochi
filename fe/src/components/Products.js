@@ -10,7 +10,6 @@ class Products extends Component{
 		super();
 	}
   	render(){
-			console.log(this.props);
     	let productsData;
     	let term = this.props.searchTerm;
     	let x;
@@ -21,9 +20,8 @@ class Products extends Component{
 				}
 			}
 
-			console.log()
 			productsData = this.props.productsList.filter(searchingFor(term)).map(product =>{
-				console.log(this.props);
+		
 				return(
 							<Product key={product.productId}
 									 price={product.productRrp}
