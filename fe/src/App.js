@@ -19,6 +19,7 @@ import Landing from './components/Landing';
 import Login from './components/Login';
 import Footer from './components/Footer';
 import * as productSelectors from './services/product/selectors';
+import * as cartSelectors from './services/cart/selectors';
 import './scss/style.scss';
 
 
