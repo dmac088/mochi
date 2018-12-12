@@ -29,7 +29,7 @@ class App extends Component {
         items: [],
         cart: [],
         searchTerm: '',
-        quantity: 0
+        quantity: 0,
     };
   }
 
@@ -78,38 +78,39 @@ class App extends Component {
 
 
   // Add to Cart
-handleAddToCart(selectedProducts) {
-  let cartItem = this.state.cart;
-  let productID = selectedProducts.id;
-  let productQty = selectedProducts.quantity;
-  if (this.checkProduct(productID)) {
-    console.log("hi");
-    let index = cartItem.findIndex(x => x.id == productID);
-    cartItem[index].quantity =
-      Number(cartItem[index].quantity) + Number(productQty);
-    this.setState({
-      cart: cartItem
-    });
-  } else {
-    cartItem.push(selectedProducts);
-  }
-  this.setState({
-    cart: cartItem,
-    cartBounce: true
-  });
-  setTimeout(
-    function() {
-      this.setState({
-        cartBounce: false,
-        quantity: 1
-      });
-      console.log(this.state.quantity);
-      console.log(this.state.cart);
-    }.bind(this),
-    1000
-  );
-  this.sumTotalItems(this.state.cart);
-  this.sumTotalAmount(this.state.cart);
+handleAddToCart = (selectedProducts) => {
+  console.log('handleAddToCart');
+  // let cartItem = this.state.cart;
+  // let productID = selectedProducts.id;
+  // let productQty = selectedProducts.quantity;
+  // if (this.checkProduct(productID)) {
+  //   console.log("hi");
+  //   let index = cartItem.findIndex(x => x.id == productID);
+  //   cartItem[index].quantity =
+  //     Number(cartItem[index].quantity) + Number(productQty);
+  //   this.setState({
+  //     cart: cartItem
+  //   });
+  // } else {
+  //   cartItem.push(selectedProducts);
+  // }
+  // this.setState({
+  //   cart: cartItem,
+  //   cartBounce: true
+  // });
+  // setTimeout(
+  //   function() {
+  //     this.setState({
+  //       cartBounce: false,
+  //       quantity: 1
+  //     });
+  //     console.log(this.state.quantity);
+  //     console.log(this.state.cart);
+  //   }.bind(this),
+  //   1000
+  // );
+  // this.sumTotalItems(this.state.cart);
+  // this.sumTotalAmount(this.state.cart);
   }
 
   render() {
@@ -126,8 +127,12 @@ handleAddToCart(selectedProducts) {
                       customer={this.props.customer}
                       handleSearch={this.handleSearch}
               />
-              <Route path="/" exact component=  {(routeProps) => (
-                                                <Landing {...routeProps} {...this.state} />
+            <Route path="/" exact component=  {(routeProps) => (
+                                                <Landing  {...routeProps}
+                                                          {...this.state}
+                                                          addToCart={this.handleAddToCart}
+
+                                                />
                                               )} />
               <Route path="/Login" component={Login} />
               <Route path="/Signup" component={Signup} />

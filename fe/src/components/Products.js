@@ -23,6 +23,7 @@ class Products extends Component{
 
 			console.log()
 			productsData = this.props.productsList.filter(searchingFor(term)).map(product =>{
+				console.log(this.props);
 				return(
 							<Product key={product.productId}
 									 price={product.productRrp}
