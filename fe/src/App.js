@@ -12,6 +12,7 @@ import Header from './components/Header';
 import Signup from './components/Signup';
 import * as tokensActionCreators from './services/session/actions';
 import * as customerActionCreators from './services/customer/actions';
+import * as cartActionCreators from './services/cart/actions';
 import * as sessionService from './services/session';
 import * as productService from './services/product';
 import Landing from './components/Landing';
@@ -110,7 +111,7 @@ class App extends Component {
   let productID = selectedProducts.id;
   let productQty = selectedProducts.quantity;
   if (this.checkProduct(productID)) {
-    console.log("hi");
+    //console.log("hi");
     let index = cartItem.findIndex(x => x.id == productID);
     cartItem[index].quantity =
       Number(cartItem[index].quantity) + Number(productQty);
@@ -167,13 +168,13 @@ class App extends Component {
                       customer={this.props.customer}
                       handleSearch={this.handleSearch}
               />
-              <Route path="/" exact component=  {(routeProps) => (
-                                                <Landing  {...routeProps}
-                                                          {...this.state}
-                                                          addToCart={this.handleAddToCart}
-                                                          openModal={this.openModal}
-                                                />
-                                              )} />
+              <Route path="/" exact component =  {(routeProps) => (
+                                                  <Landing  {...routeProps}
+                                                            {...this.state}
+                                                            addToCart={this.handleAddToCart}
+                                                            openModal={this.openModal}
+                                                  />
+                                                )} />
               <Route path="/Login" component={Login} />
               <Route path="/Signup" component={Signup} />
             </div>
@@ -189,11 +190,13 @@ class App extends Component {
 //this function will fire and update authenticated
 export default connect(state => ({
   tokens:   state.services.session.tokens,
-  customer: state.services.customer.customer
+  customer: state.services.customer.customer,
+  cart:     state.services.cart.cart,
 		//routeHistory: state.services.routeHistory,
 }), dispatch => ({
 	actions: {
 		tokens: bindActionCreators(tokensActionCreators, dispatch),
     customer: bindActionCreators(customerActionCreators, dispatch),
+    cart: bindActionCreators(cartActionCreators, dispatch),
 	},
 }))(App);
