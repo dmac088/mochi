@@ -136,13 +136,21 @@ class App extends Component {
         cartBounce: false,
         quantity: 1
       });
-      // console.log(this.state.quantity);
+      console.log(this.state.quantity);
       // console.log(this.state.cart);
     }.bind(this),
     1000
   );
   this.sumTotalItems(this.state.cart);
   this.sumTotalAmount(this.state.cart);
+  }
+
+  //Reset Quantity
+  updateQuantity = (qty) => {
+    console.log("quantity added...");
+    this.setState({
+      quantity: qty
+    });
   }
 
   // Open Modal
@@ -152,6 +160,8 @@ class App extends Component {
        modalActive: true
      });
    }
+
+
    // Close Modal
    closeModal = () => {
      this.setState({
@@ -178,6 +188,7 @@ class App extends Component {
                                                             {...this.state}
                                                             addToCart={this.handleAddToCart}
                                                             openModal={this.openModal}
+                                                            updateQuantity={this.updateQuantity}
                                                   />
                                                 )} />
               <Route path="/Login" component={Login} />
