@@ -77,41 +77,70 @@ class App extends Component {
   }
 
 
+  checkProduct = (productID) => {
+     let cart = this.state.cart;
+     return cart.some(function(item) {
+       return item.id === productID;
+     });
+   }
+
+   sumTotalItems = () => {
+     let total = 0;
+     let cart = this.state.cart;
+     total = cart.length;
+     this.setState({
+       totalItems: total
+     });
+   }
+
+   sumTotalAmount = () => {
+   let total = 0;
+   let cart = this.state.cart;
+   for (var i = 0; i < cart.length; i++) {
+     total += cart[i].price * parseInt(cart[i].quantity);
+   }
+   this.setState({
+     totalAmount: total
+   });
+ }
+
   // Add to Cart
-handleAddToCart = (selectedProducts) => {
+ handleAddToCart = (selectedProducts) => {
   console.log('handleAddToCart');
-  // let cartItem = this.state.cart;
-  // let productID = selectedProducts.id;
-  // let productQty = selectedProducts.quantity;
-  // if (this.checkProduct(productID)) {
-  //   console.log("hi");
-  //   let index = cartItem.findIndex(x => x.id == productID);
-  //   cartItem[index].quantity =
-  //     Number(cartItem[index].quantity) + Number(productQty);
-  //   this.setState({
-  //     cart: cartItem
-  //   });
-  // } else {
-  //   cartItem.push(selectedProducts);
-  // }
-  // this.setState({
-  //   cart: cartItem,
-  //   cartBounce: true
-  // });
-  // setTimeout(
-  //   function() {
-  //     this.setState({
-  //       cartBounce: false,
-  //       quantity: 1
-  //     });
-  //     console.log(this.state.quantity);
-  //     console.log(this.state.cart);
-  //   }.bind(this),
-  //   1000
-  // );
-  // this.sumTotalItems(this.state.cart);
-  // this.sumTotalAmount(this.state.cart);
+  let cartItem = this.state.cart;
+  let productID = selectedProducts.id;
+  let productQty = selectedProducts.quantity;
+  if (this.checkProduct(productID)) {
+    console.log("hi");
+    let index = cartItem.findIndex(x => x.id == productID);
+    cartItem[index].quantity =
+      Number(cartItem[index].quantity) + Number(productQty);
+    this.setState({
+      cart: cartItem
+    });
+  } else {
+    cartItem.push(selectedProducts);
   }
+  this.setState({
+    cart: cartItem,
+    cartBounce: true
+  });
+  setTimeout(
+    function() {
+      this.setState({
+        cartBounce: false,
+        quantity: 1
+      });
+      console.log(this.state.quantity);
+      console.log(this.state.cart);
+    }.bind(this),
+    1000
+  );
+  this.sumTotalItems(this.state.cart);
+  this.sumTotalAmount(this.state.cart);
+  }
+
+
 
   render() {
     return (
