@@ -73,7 +73,6 @@ class App extends Component {
   // Search by Keyword
   handleSearch = (event) => {
     this.setState({ searchTerm: event.target.value });
-    console.log(this.state);
   }
 
 
