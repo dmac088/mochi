@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Products from  './Products';
 
 const Landing = (props) =>  {
+  console.log(props);
     return(
         <div>
           <Products
@@ -10,7 +11,7 @@ const Landing = (props) =>  {
             addToCart={props.addToCart}
             productQuantity=''
             updateQuantity=''
-            openModal=''
+            openModal={props.openModal}
           />
         </div>
     );
