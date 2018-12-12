@@ -15,11 +15,11 @@ import * as customerActionCreators from './services/customer/actions';
 import * as cartActionCreators from './services/cart/actions';
 import * as sessionService from './services/session';
 import * as productService from './services/product';
+import * as cartService from './services/cart';
 import Landing from './components/Landing';
 import Login from './components/Login';
 import Footer from './components/Footer';
-import * as productSelectors from './services/product/selectors';
-import * as cartSelectors from './services/cart/selectors';
+import * as cartSelector from './services/cart/selectors';
 import './scss/style.scss';
 
 
@@ -79,16 +79,16 @@ class App extends Component {
   }
 
   checkProduct = (productID) => {
-     let cart = this.state.cart;
-     return cart.some(function(item) {
+     let cart = cartSelector.get();
+     return cart.items.some(function(item) {
        return item.id === productID;
      });
    }
 
    sumTotalItems = () => {
      let total = 0;
-     let cart = this.state.cart;
-     total = cart.length;
+     let cart = cartSelector.get();
+     total = cart.items.length;
      this.setState({
        totalItems: total
      });
@@ -96,9 +96,9 @@ class App extends Component {
 
    sumTotalAmount = () => {
    let total = 0;
-   let cart = this.state.cart;
-   for (var i = 0; i < cart.length; i++) {
-     total += cart[i].price * parseInt(cart[i].quantity);
+   let cart = cartSelector.get();
+   for (var i = 0; i < cart.items.length; i++) {
+     total += cart.items[i].price * parseInt(cart.items[i].quantity);
    }
    this.setState({
      totalAmount: total
@@ -108,22 +108,26 @@ class App extends Component {
   // Add to Cart
  handleAddToCart = (selectedProducts) => {
   console.log('handleAddToCart');
-  let cartItem = this.state.cart;
+
+  let cart = cartSelector.get();
   let productID = selectedProducts.id;
   let productQty = selectedProducts.quantity;
   if (this.checkProduct(productID)) {
-    //console.log("hi");
-    let index = cartItem.findIndex(x => x.id == productID);
-    cartItem[index].quantity =
-      Number(cartItem[index].quantity) + Number(productQty);
+    console.log("hi");
+    let index = cart.items.findIndex(x => x.id == productID);
+    cart.items[index].quantity =
+    Number(cart.items[index].quantity) + Number(productQty);
+    cartService.persistCart(cart);
     this.setState({
-      cart: cartItem
+      cartBounce: true
     });
   } else {
-    cartItem.push(selectedProducts);
+    console.log('adding to cart....');
+    cart.items.push(selectedProducts);
+    console.log(cart);
   }
+  cartService.persistCart(cart);
   this.setState({
-    cart: cartItem,
     cartBounce: true
   });
   setTimeout(
@@ -132,8 +136,8 @@ class App extends Component {
         cartBounce: false,
         quantity: 1
       });
-      console.log(this.state.quantity);
-      console.log(this.state.cart);
+      // console.log(this.state.quantity);
+      // console.log(this.state.cart);
     }.bind(this),
     1000
   );

@@ -68,47 +68,47 @@ export const authenticate = (customer) => {
 	 	setSessionTimeout(tokens.expires_in);
 	}
 
-export const revoke = () => {
-	const session = sessionSelectors.get();
-	return api.revoke(Object.keys(session.tokens).map(tokenKey => ({
-		type: session.tokens[tokenKey].type,
-		value: session.tokens[tokenKey].value,
-	})))
-	.then(clearSession())
-	.catch(() => {});
-};
+	export const revoke = () => {
+		const session = sessionSelectors.get();
+		return api.revoke(Object.keys(session.tokens).map(tokenKey => ({
+			type: session.tokens[tokenKey].type,
+			value: session.tokens[tokenKey].value,
+		})))
+		.then(clearSession())
+		.catch(() => {});
+	};
 
 
-export const clearSession = () => {
-	clearTimeout(sessionTimeout);
-	store.dispatch(tokenActionCreators.update(tokenReducer.initialState));
-	store.dispatch(customerActionCreators.update(customerReducer.initialState));
-};
+	export const clearSession = () => {
+		clearTimeout(sessionTimeout);
+		store.dispatch(tokenActionCreators.update(tokenReducer.initialState));
+		store.dispatch(customerActionCreators.update(customerReducer.initialState));
+	};
 
-export const refreshToken = () => {
-	const session = sessionSelectors.get();
+	export const refreshToken = () => {
+		const session = sessionSelectors.get();
 
-	if (!session.tokens.refresh_token || !session.tokens.userName) {
-		return Promise.reject();
-	}
+		if (!session.tokens.refresh_token || !session.tokens.userName) {
+			return Promise.reject();
+		}
 
-	return api.refresh(session.tokens.refresh_token)
-	.then((response) => {
-		return response.text()
-	})
-	.then((responseText) => {
-		 return JSON.parse(responseText);
-	})
-	.then ((responseJSON) => {
-		let newstate = {...session.tokens};
-		newstate['access_token'] =  responseJSON.access_token;
-		persistTokens(newstate);
-	})
-	.then(onRequestSuccess)
-	.catch(onRequestFailed);
-};
+		return api.refresh(session.tokens.refresh_token)
+		.then((response) => {
+			return response.text()
+		})
+		.then((responseText) => {
+			 return JSON.parse(responseText);
+		})
+		.then ((responseJSON) => {
+			let newstate = {...session.tokens};
+			newstate['access_token'] =  responseJSON.access_token;
+			persistTokens(newstate);
+		})
+		.then(onRequestSuccess)
+		.catch(onRequestFailed);
+	};
 
-const onRequestFailed = (exception) => {
-	clearSession();
-	console.log(exception);
-};
+	const onRequestFailed = (exception) => {
+		clearSession();
+		console.log(exception);
+	};

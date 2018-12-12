@@ -16,3 +16,7 @@ import { initialState } from './reducer';
 	const onRequestFailed = (exception) => {
 		throw exception;
 	};
+
+	export const  persistCart = (cart) => {
+	 	store.dispatch(actionCreators.update({"cart": cart }));
+	}
