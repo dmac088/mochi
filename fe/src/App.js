@@ -30,6 +30,7 @@ class App extends Component {
         cart: [],
         searchTerm: '',
         quantity: 0,
+        modalActive: false,
     };
   }
 
@@ -74,7 +75,6 @@ class App extends Component {
   handleSearch = (event) => {
     this.setState({ searchTerm: event.target.value });
   }
-
 
   checkProduct = (productID) => {
      let cart = this.state.cart;
@@ -139,7 +139,19 @@ class App extends Component {
   this.sumTotalAmount(this.state.cart);
   }
 
-
+  // Open Modal
+   openModal = (product) => {
+     this.setState({
+       quickViewProduct: product,
+       modalActive: true
+     });
+   }
+   // Close Modal
+   closeModal = () => {
+     this.setState({
+       modalActive: false
+     });
+   }
 
   render() {
     return (
@@ -155,11 +167,11 @@ class App extends Component {
                       customer={this.props.customer}
                       handleSearch={this.handleSearch}
               />
-            <Route path="/" exact component=  {(routeProps) => (
+              <Route path="/" exact component=  {(routeProps) => (
                                                 <Landing  {...routeProps}
                                                           {...this.state}
                                                           addToCart={this.handleAddToCart}
-
+                                                          openModal={this.openModal}
                                                 />
                                               )} />
               <Route path="/Login" component={Login} />
