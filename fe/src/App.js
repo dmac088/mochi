@@ -20,6 +20,7 @@ import Landing from './components/Landing';
 import Login from './components/Login';
 import Footer from './components/Footer';
 import * as cartSelector from './services/cart/selectors';
+import { initialState } from './services/cart/reducer';
 import './scss/style.scss';
 
 
@@ -28,8 +29,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        items: [],
-        cart: [],
+        productList: [],
+        cart: initialState.cart,
         searchTerm: '',
         quantity: 1,
         modalActive: false,
@@ -41,7 +42,7 @@ class App extends Component {
     productService.findAll('HKG')
     .then((response) => {
       this.setState({
-        items: response
+        productList: response
       });
     });
   }
@@ -60,6 +61,10 @@ class App extends Component {
   }
 
   componentDidMount() {
+    cartService.persistCart(initialState);
+    console.log(cartSelector.get());
+
+
 		const unsubscribe = store.subscribe(() => {
                                               			if (store.getState().services.persist.isHydrated) {
                                               				unsubscribe(); //call unsubscribe again! wait! what!?
@@ -79,7 +84,7 @@ class App extends Component {
   }
 
   checkProduct = (productID) => {
-     let cart = cartSelector.get();
+     let cart = this.state.cart;
      return cart.items.some(function(item) {
        return item.id === productID;
      });
@@ -108,12 +113,14 @@ class App extends Component {
   // Add to Cart
  handleAddToCart = (selectedProducts) => {
   console.log('handleAddToCart');
-  console.log(selectedProducts);
-  let cart = cartSelector.get();
+  console.log(this.state);
+
+  let cart = this.state.cart;
   let productID = selectedProducts.id;
   let productQty = selectedProducts.quantity;
   if (this.checkProduct(productID)) {
-    console.log("hi");
+    //increment the quantity of the product in the cart
+    console.log("incrementing product quantity");
     let index = cart.items.findIndex(x => x.id == productID);
     cart.items[index].quantity =
     Number(cart.items[index].quantity) + Number(productQty);
@@ -122,9 +129,9 @@ class App extends Component {
       cartBounce: true
     });
   } else {
+    //add the product to the cart
     console.log('adding to cart....');
     cart.items.push(selectedProducts);
-    console.log(cart);
   }
   cartService.persistCart(cart);
   this.setState({
@@ -137,12 +144,12 @@ class App extends Component {
         quantity: 1
       });
       console.log(this.state.quantity);
-      // console.log(this.state.cart);
+      console.log(this.state.cart);
     }.bind(this),
     1000
   );
-  // this.sumTotalItems(this.state.cart);
-  // this.sumTotalAmount(this.state.cart);
+  this.sumTotalItems(this.state.cart);
+  this.sumTotalAmount(this.state.cart);
   }
 
 
