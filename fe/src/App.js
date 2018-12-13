@@ -135,8 +135,6 @@ class App extends Component {
         cartBounce: false,
         quantity: 1
       });
-    //  console.log(this.state.quantity);
-    //  console.log(this.state.cart);
     }.bind(this),
     1000
   );
