@@ -17,9 +17,13 @@ class Product extends Component{
 				quantity: qty
 			});
 		}
-    resetQuantity(){
 
+    resetQuantity(){
+			this.setState({
+				quantity: 1
+			});
     }
+
     addToCart(image, name, price, id, quantity){
         this.setState({
             selectedProduct: {
