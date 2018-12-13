@@ -29,11 +29,13 @@ class App extends Component {
   constructor(props) {
     super(props);
       this.state = {
+       cart: initialState.cart,
        productList: [],
        searchTerm: '',
        quantity: 1,
        modalActive: false,
     };
+    console.log(this.state);
   }
 
   // Fetch Initial Set of Products from external API
@@ -141,8 +143,9 @@ class App extends Component {
   }
 
   emptyCart = () => {
-    console.log(initialState.cart);
-    cartService.persistCart(initialState.cart);
+    console.log('emptyCart....')
+    console.log(this.state.cart);
+    cartService.persistCart(this.state.cart);
   }
 
   // Open Modal
