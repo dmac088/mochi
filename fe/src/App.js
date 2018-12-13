@@ -61,10 +61,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-    cartService.persistCart(initialState);
-    console.log(cartSelector.get());
-
-
 		const unsubscribe = store.subscribe(() => {
                                               			if (store.getState().services.persist.isHydrated) {
                                               				unsubscribe(); //call unsubscribe again! wait! what!?
@@ -84,16 +80,15 @@ class App extends Component {
   }
 
   checkProduct = (productID) => {
-     let cart = this.state.cart;
-     return cart.items.some(function(item) {
+    console.log(this.props);
+     return this.props.cart.items.some(function(item) {
        return item.id === productID;
      });
    }
 
    sumTotalItems = () => {
      let total = 0;
-     let cart = cartSelector.get();
-     total = cart.items.length;
+     total = this.props.cart.items.length;
      this.setState({
        totalItems: total
      });
@@ -101,9 +96,8 @@ class App extends Component {
 
    sumTotalAmount = () => {
    let total = 0;
-   let cart = cartSelector.get();
-   for (var i = 0; i < cart.items.length; i++) {
-     total += cart.items[i].price * parseInt(cart.items[i].quantity);
+   for (var i = 0; i < this.props.cart.items.length; i++) {
+     total += this.props.cart.items[i].price * parseInt(this.props.cart.items[i].quantity);
    }
    this.setState({
      totalAmount: total
@@ -113,9 +107,8 @@ class App extends Component {
   // Add to Cart
  handleAddToCart = (selectedProducts) => {
   console.log('handleAddToCart');
-  console.log(this.state);
-
-  let cart = this.state.cart;
+  console.log(selectedProducts);
+  let cart = {...this.props.cart};
   let productID = selectedProducts.id;
   let productQty = selectedProducts.quantity;
   if (this.checkProduct(productID)) {
@@ -124,7 +117,6 @@ class App extends Component {
     let index = cart.items.findIndex(x => x.id == productID);
     cart.items[index].quantity =
     Number(cart.items[index].quantity) + Number(productQty);
-    cartService.persistCart(cart);
     this.setState({
       cartBounce: true
     });
@@ -132,7 +124,7 @@ class App extends Component {
     //add the product to the cart
     console.log('adding to cart....');
     cart.items.push(selectedProducts);
-  }
+  };
   cartService.persistCart(cart);
   this.setState({
     cartBounce: true
@@ -143,8 +135,8 @@ class App extends Component {
         cartBounce: false,
         quantity: 1
       });
-      console.log(this.state.quantity);
-      console.log(this.state.cart);
+    //  console.log(this.state.quantity);
+    //  console.log(this.state.cart);
     }.bind(this),
     1000
   );
@@ -168,6 +160,14 @@ class App extends Component {
      });
    }
 
+   printState = () => {
+     console.log(store.getState());
+   }
+
+   printProps = () => {
+     console.log(this.props);
+   }
+
   render() {
     return (
         <div className="App">
@@ -176,6 +176,7 @@ class App extends Component {
                 integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
                 crossOrigin="anonymous"
           />
+
           <Router>
             <div>
               <Header tokens={this.props.tokens}
@@ -197,6 +198,8 @@ class App extends Component {
             </div>
           </Router>
           <Footer/>
+              <button onClick={this.printState}>Print Redux State</button>
+              <button onClick={this.printProps}>Print Props</button>
         </div>
     );
   }
