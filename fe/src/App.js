@@ -31,7 +31,7 @@ class App extends Component {
         items: [],
         cart: [],
         searchTerm: '',
-        quantity: 0,
+        quantity: 1,
         modalActive: false,
     };
   }
@@ -108,7 +108,7 @@ class App extends Component {
   // Add to Cart
  handleAddToCart = (selectedProducts) => {
   console.log('handleAddToCart');
-
+  console.log(selectedProducts);
   let cart = cartSelector.get();
   let productID = selectedProducts.id;
   let productQty = selectedProducts.quantity;
@@ -141,17 +141,10 @@ class App extends Component {
     }.bind(this),
     1000
   );
-  this.sumTotalItems(this.state.cart);
-  this.sumTotalAmount(this.state.cart);
+  // this.sumTotalItems(this.state.cart);
+  // this.sumTotalAmount(this.state.cart);
   }
 
-  //Reset Quantity
-  updateQuantity = (qty) => {
-    console.log("quantity added...");
-    this.setState({
-      quantity: qty
-    });
-  }
 
   // Open Modal
    openModal = (product) => {
@@ -160,7 +153,6 @@ class App extends Component {
        modalActive: true
      });
    }
-
 
    // Close Modal
    closeModal = () => {
@@ -182,6 +174,7 @@ class App extends Component {
               <Header tokens={this.props.tokens}
                       customer={this.props.customer}
                       handleSearch={this.handleSearch}
+
               />
               <Route path="/" exact component =  {(routeProps) => (
                                                   <Landing  {...routeProps}
@@ -189,6 +182,7 @@ class App extends Component {
                                                             addToCart={this.handleAddToCart}
                                                             openModal={this.openModal}
                                                             updateQuantity={this.updateQuantity}
+                                                            productQuantity={this.state.quantity}
                                                   />
                                                 )} />
               <Route path="/Login" component={Login} />
