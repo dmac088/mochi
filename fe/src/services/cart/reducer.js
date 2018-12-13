@@ -1,8 +1,8 @@
 import * as actionTypes from './actionTypes';
 
 export const initialState = {
-														cart: {
-																items: []
+															cart: {
+																	items: []
 															}
 														};
 

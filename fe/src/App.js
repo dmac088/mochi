@@ -28,12 +28,11 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-        productList: [],
-        cart: initialState.cart,
-        searchTerm: '',
-        quantity: 1,
-        modalActive: false,
+      this.state = {
+       productList: [],
+       searchTerm: '',
+       quantity: 1,
+       modalActive: false,
     };
   }
 
@@ -41,9 +40,9 @@ class App extends Component {
   getProducts() {
     productService.findAll('HKG')
     .then((response) => {
-      this.setState({
-        productList: response
-      });
+       this.setState({
+       productList: response
+       });
     });
   }
 
@@ -53,21 +52,21 @@ class App extends Component {
 
   autoLogin = () =>  {
     sessionService.refreshToken().then(() => {
-      //this.setState({ initialRoute: routeStack[0] });
-    }).catch(() => {
-      //move to error
-      //this.setState({ initialRoute: routeStack[0] });
-    });
+   //this.setState({ initialRoute: routeStack[0] });
+  }).catch(() => {
+   //move to error
+   //this.setState({ initialRoute: routeStack[0] });
+  });
   }
 
   componentDidMount() {
 		const unsubscribe = store.subscribe(() => {
-                                              			if (store.getState().services.persist.isHydrated) {
-                                              				unsubscribe(); //call unsubscribe again! wait! what!?
-                                              				this.autoLogin();
-                                              			}
+                			if (store.getState().services.persist.isHydrated) {
+                				unsubscribe(); //call unsubscribe again! wait! what!?
+                				this.autoLogin();
+                			}
 
-		                                    });
+		            });
 		store.subscribe(this.reduxSubscribedFunction);
 	}
 
@@ -76,31 +75,31 @@ class App extends Component {
 
   // Search by Keyword
   handleSearch = (event) => {
-    this.setState({ searchTerm: event.target.value });
+   this.setState({ searchTerm: event.target.value });
   }
 
   checkProduct = (productID) => {
-     return this.props.cart.items.some(function(item) {
-       return item.id === productID;
-     });
-   }
+  return this.props.cart.items.some(function(item) {
+    return item.id === productID;
+  });
+  }
 
-   sumTotalItems = () => {
-     let total = 0;
-     total = this.props.cart.items.length;
-     this.setState({
-       totalItems: total
-     });
-   }
+  sumTotalItems = () => {
+  let total = 0;
+  total = this.props.cart.items.length;
+  this.setState({
+    totalItems: total
+  });
+  }
 
-   sumTotalAmount = () => {
-   let total = 0;
-   for (var i = 0; i < this.props.cart.items.length; i++) {
-     total += this.props.cart.items[i].price * parseInt(this.props.cart.items[i].quantity);
-   }
-   this.setState({
-     totalAmount: total
-   });
+  sumTotalAmount = () => {
+  let total = 0;
+  for (var i = 0; i < this.props.cart.items.length; i++) {
+  total += this.props.cart.items[i].price * parseInt(this.props.cart.items[i].quantity);
+  }
+  this.setState({
+  totalAmount: total
+  });
  }
 
   // Add to Cart
@@ -111,13 +110,13 @@ class App extends Component {
   let productID = selectedProducts.id;
   let productQty = selectedProducts.quantity;
   if (this.checkProduct(productID)) {
-    //increment the quantity of the product in the cart
+  //increment the quantity of the product in the cart
     console.log("incrementing product quantity");
     let index = cart.items.findIndex(x => x.id == productID);
     cart.items[index].quantity =
     Number(cart.items[index].quantity) + Number(productQty);
     this.setState({
-      cartBounce: true
+     cartBounce: true
     });
   } else {
     //add the product to the cart
@@ -130,75 +129,80 @@ class App extends Component {
   });
   setTimeout(
     function() {
-      this.setState({
-        cartBounce: false,
-        quantity: 1
-      });
+     this.setState({
+       cartBounce: false,
+       quantity: 1
+     });
     }.bind(this),
-    1000
+  1000
   );
   this.sumTotalItems(this.state.cart);
   this.sumTotalAmount(this.state.cart);
   }
 
+  emptyCart = () => {
+    console.log(initialState.cart);
+    cartService.persistCart(initialState.cart);
+  }
 
   // Open Modal
-   openModal = (product) => {
-     this.setState({
-       quickViewProduct: product,
-       modalActive: true
-     });
-   }
+  openModal = (product) => {
+  this.setState({
+    quickViewProduct: product,
+    modalActive: true
+  });
+  }
 
-   // Close Modal
-   closeModal = () => {
-     this.setState({
-       modalActive: false
-     });
-   }
+  // Close Modal
+  closeModal = () => {
+  this.setState({
+    modalActive: false
+  });
+  }
 
-   printState = () => {
-     console.log(store.getState());
-   }
+  printState = () => {
+  console.log(store.getState());
+  }
 
-   printProps = () => {
-     console.log(this.props);
-   }
+  printProps = () => {
+  console.log(this.props);
+  }
 
   render() {
-    return (
-        <div className="App">
-          <link rel="stylesheet"
-                href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-                integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-                crossOrigin="anonymous"
-          />
+  return (
+   <div className="App">
+    <link rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossOrigin="anonymous"
+    />
 
-          <Router>
-            <div>
-              <Header tokens={this.props.tokens}
-                      customer={this.props.customer}
-                      handleSearch={this.handleSearch}
+    <Router>
+    <div>
+      <Header tokens={this.props.tokens}
+        customer={this.props.customer}
+        handleSearch={this.handleSearch}
 
-              />
-              <Route path="/" exact component =  {(routeProps) => (
-                                                  <Landing  {...routeProps}
-                                                            {...this.state}
-                                                            addToCart={this.handleAddToCart}
-                                                            openModal={this.openModal}
-                                                            updateQuantity={this.updateQuantity}
-                                                            productQuantity={this.state.quantity}
-                                                  />
-                                                )} />
-              <Route path="/Login" component={Login} />
-              <Route path="/Signup" component={Signup} />
-            </div>
-          </Router>
-          <Footer/>
-              <button onClick={this.printState}>Print Redux State</button>
-              <button onClick={this.printProps}>Print Props</button>
-        </div>
-    );
+      />
+      <Route path="/" exact component =  {(routeProps) => (
+                  <Landing  {...routeProps}
+                    {...this.state}
+                    addToCart={this.handleAddToCart}
+                    openModal={this.openModal}
+                    updateQuantity={this.updateQuantity}
+                    productQuantity={this.state.quantity}
+                  />
+                )} />
+      <Route path="/Login" component={Login} />
+      <Route path="/Signup" component={Signup} />
+    </div>
+    </Router>
+    <Footer/>
+      <button onClick={this.printState}>Print Redux State</button>
+      <button onClick={this.printProps}>Print Props</button>
+      <button onClick={this.emptyCart}>Empty Cart</button>
+   </div>
+  );
   }
 }
 
@@ -206,9 +210,9 @@ class App extends Component {
 //on a dispatch call from anywhere in the application
 //this function will fire and update authenticated
 export default connect(state => ({
-  tokens:   state.services.session.tokens,
+  tokens:  state.services.session.tokens,
   customer: state.services.customer.customer,
-  cart:     state.services.cart.cart,
+  cart:  state.services.cart.cart,
 		//routeHistory: state.services.routeHistory,
 }), dispatch => ({
 	actions: {
