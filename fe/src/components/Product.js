@@ -10,6 +10,13 @@ class Product extends Component{
             isAdded: false
         }
     }
+		//Reset Quantity
+		updateQuantity = (qty) => {
+			console.log("quantity added...");
+			this.setState({
+				quantity: qty
+			});
+		}
     resetQuantity(){
 
     }
@@ -31,7 +38,7 @@ class Product extends Component{
             setTimeout(() => {
                 this.setState({
                     isAdded: false,
-                    selectedProduct: {} 
+                    selectedProduct: {}
                 });
             }, 3500);
         });
@@ -61,7 +68,7 @@ class Product extends Component{
                 </div>
                 <h4 className="product-name">{this.props.name}</h4>
                 <p className="product-price">{this.props.price}</p>
-                <Counter productQuantity={quantity} updateQuantity={this.props.updateQuantity} resetQuantity={this.resetQuantity}/>
+                <Counter productQuantity={quantity} updateQuantity={this.updateQuantity} resetQuantity={this.resetQuantity}/>
                 <div className="product-action">
                     <button className={!this.state.isAdded ? "" : "added"} type="button" onClick={this.addToCart.bind(this, image, name, price, id, quantity)}>{!this.state.isAdded ? "ADD TO CART" : "✔ ADDED"}</button>
                 </div>
