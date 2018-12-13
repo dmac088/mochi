@@ -7,7 +7,8 @@ class Product extends Component{
         this.state = {
             selectedProduct: {},
             quickViewProdcut: {},
-            isAdded: false
+            isAdded: false,
+						quantity: 1
         }
     }
 		//Reset Quantity
@@ -18,7 +19,7 @@ class Product extends Component{
 			});
 		}
 
-    resetQuantity(){
+    resetQuantity = () => {
 			this.setState({
 				quantity: 1
 			});
