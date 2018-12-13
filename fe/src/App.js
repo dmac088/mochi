@@ -80,7 +80,6 @@ class App extends Component {
   }
 
   checkProduct = (productID) => {
-    console.log(this.props);
      return this.props.cart.items.some(function(item) {
        return item.id === productID;
      });
