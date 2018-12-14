@@ -43,3 +43,17 @@ import { initialState } from './reducer';
 	  };
 	  persistCart(cart);
 	}
+
+	export const sumTotalItems = (cart) => {
+	  let total = 0;
+	  total = cart.items.length;
+	  return total;
+  }
+
+  export const sumTotalAmount = (cart) => {
+	  let total = 0;
+	  for (var i = 0; i < cart.items.length; i++) {
+	  total += cart.items[i].price * parseInt(cart.items[i].quantity);
+	  }
+	  return total;
+ }
