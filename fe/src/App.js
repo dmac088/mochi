@@ -79,26 +79,6 @@ class App extends Component {
    this.setState({ searchTerm: event.target.value });
   }
 
-
-
-  sumTotalItems = () => {
-  let total = 0;
-  total = this.props.cart.items.length;
-  this.setState({
-    totalItems: total
-  });
-  }
-
-  sumTotalAmount = () => {
-  let total = 0;
-  for (var i = 0; i < this.props.cart.items.length; i++) {
-  total += this.props.cart.items[i].price * parseInt(this.props.cart.items[i].quantity);
-  }
-  this.setState({
-  totalAmount: total
-  });
- }
-
   // Add to Cart
  handleAddToCart = (selectedProducts) => {
   console.log('handleAddToCart');
@@ -115,9 +95,11 @@ class App extends Component {
     }.bind(this),
   1000
   );
-  this.sumTotalItems(this.props.cart);
-  this.sumTotalAmount(this.props.cart);
-  }
+  this.setState({
+    totalItems: cartService.sumTotalItems(this.props.cart),
+    totalAmount: cartService.sumTotalAmount(this.props.cart)
+  });
+}
 
   emptyCart = () => {
     console.log('emptyCart....');
