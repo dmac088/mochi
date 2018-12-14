@@ -16,7 +16,6 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = initialState;
-    console.log(this.state);
   }
 
   updateCustomerState = (event) =>  {
@@ -26,21 +25,25 @@ class Login extends Component {
   }
 
   loginClick = () => {
-    session.authenticate(customerSelector.get());
+    session.authenticate(customerSelector.get(),
+      (props = this.props) => {
+        props.history.push('/');
+      },
+      (props = this.props) => {
+        props.history.push('/Login');
+      });
   }
 
   renderLoginButton = () => {
      let button;
      if(!this.props.tokens.authenticated) {
        button =
-       <Link to="/">
        <button
            onClick={this.loginClick}
            className="btn btn-outline-success mr-sm-2 my-2 my-sm-0"
            type="submit">
           Go
       </button>
-      </Link>
      }
      return button;
   }

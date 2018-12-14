@@ -35,7 +35,6 @@ class App extends Component {
        totalItems: 0,
        totalAmount: 0,
     };
-    console.log(this.state);
   }
 
   // Fetch Initial Set of Products from external API
@@ -105,25 +104,25 @@ class App extends Component {
 
   // Open Modal
   openModal = (product) => {
-  this.setState({
-    quickViewProduct: product,
-    modalActive: true
-  });
+    this.setState({
+      quickViewProduct: product,
+      modalActive: true
+    });
   }
 
   // Close Modal
   closeModal = () => {
-  this.setState({
-    modalActive: false
-  });
+    this.setState({
+      modalActive: false
+    });
   }
 
   printState = () => {
-  console.log(store.getState());
+    console.log(store.getState());
   }
 
   printProps = () => {
-  console.log(this.props);
+    console.log(this.props);
   }
 
   render() {
@@ -145,7 +144,7 @@ class App extends Component {
 
       />
       <Route path="/" exact component =  {(routeProps) => (
-                  <Landing  {...routeProps}
+                  <Landing {...routeProps}
                     {...this.state}
                     addToCart={this.handleAddToCart}
                     openModal={this.openModal}
@@ -153,7 +152,10 @@ class App extends Component {
                     productQuantity={this.state.quantity}
                   />
                 )} />
-      <Route path="/Login" component={Login} />
+      <Route path="/Login" component =  {(routeProps) => (
+                <Login {...routeProps}
+                />
+      )}/>
       <Route path="/Signup" component={Signup} />
     </div>
     </Router>

@@ -21,7 +21,7 @@ const setSessionTimeout = (duration) => {
 };
 
 
-export const authenticate = (customer) => {
+export const authenticate = (customer, routeLanding, routeLogin) => {
 		 api.authenticate(customer.userName, customer.password)
 		.then((response) => {
 			if(response.status === 400) {
@@ -29,6 +29,7 @@ export const authenticate = (customer) => {
 
 				//we force the catch when the username or password are invalid
 				//but the message could/should come from the server
+				routeLogin();
 				throw response
 			};
 			return response.text()
@@ -53,6 +54,7 @@ export const authenticate = (customer) => {
 			})
 		})
 		.then(() => {
+			routeLanding();
 			return 'success'
 		})
 		.then(onRequestSuccess)
