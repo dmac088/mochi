@@ -12,22 +12,20 @@ class Product extends Component{
         }
     }
 
-
-		updateQuantity = (qty) =>  {
+		updateQuantity = (qty) => {
 			console.log("quantity added..." + qty);
 			this.setState({
 				quantity: qty
 			});
 		}
 
-
-     resetQuantity = () => {
+    resetQuantity = () => {
 		 	this.setState({
 		 		quantity: 1
 		 	});
    	}
 
-    addToCart(image, name, price, id, quantity){
+    addToCart = (image, name, price, id, quantity) => {
         this.setState({
             selectedProduct: {
                 image: image,
@@ -54,6 +52,7 @@ class Product extends Component{
         	}
 			);
     }
+
     quickView(image, name, price, id){
         this.setState({
             quickViewProdcut: {
@@ -81,7 +80,10 @@ class Product extends Component{
                 <p className="product-price">{this.props.price}</p>
                 <Counter productQuantity={quantity} updateQuantity={this.updateQuantity} resetQuantity={this.resetQuantity}/>
                 <div className="product-action">
-                    <button className={!this.state.isAdded ? "" : "added"} type="button" onClick={this.addToCart.bind(this, image, name, price, id, quantity)}>{!this.state.isAdded ? "ADD TO CART" : "✔ ADDED"}</button>
+                    <button className={!this.state.isAdded ? "" : "added"}
+														type="button"
+														onClick={this.addToCart.bind(this, image, name, price, id, quantity)}>{!this.state.isAdded ? "ADD TO CART" : "✔ ADDED"}
+										</button>
                 </div>
             </div>
         )

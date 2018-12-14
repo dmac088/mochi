@@ -38,11 +38,11 @@ const Header = (props) => {
                         </div>
 
             <Greeting
-              tokens={props.tokens}
+              authenticated={props.authenticated}
               customer={props.customer}
             />
             <Selector
-              tokens={props.tokens}
+              authenticated={props.authenticated}
               customer={props.customer}
             />
         </div>

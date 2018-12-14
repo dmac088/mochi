@@ -8,8 +8,6 @@ const Landing = (props) =>  {
             productsList={props.productList}
             searchTerm={props.searchTerm}
             addToCart={props.addToCart}
-            productQuantity={props.productQuantity}
-            updateQuantity={props.updateQuantity}
             openModal={props.openModal}
           />
         </div>
