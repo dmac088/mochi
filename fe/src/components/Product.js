@@ -36,19 +36,23 @@ class Product extends Component{
                 id: id,
                 quantity: quantity
             }
-        }, function(){
-            this.props.addToCart(this.state.selectedProduct);
-        })
+        }, () => {
+            					this.props.addToCart(this.state.selectedProduct);
+        				 })
+
         this.setState({
             isAdded: true
-        }, function(){
+        },
+
+					() => {
             setTimeout(() => {
                 this.setState({
                     isAdded: false,
                     selectedProduct: {}
                 });
             }, 3500);
-        });
+        	}
+			);
     }
     quickView(image, name, price, id){
         this.setState({

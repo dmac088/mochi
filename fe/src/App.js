@@ -63,12 +63,11 @@ class App extends Component {
 
   componentDidMount() {
 		const unsubscribe = store.subscribe(() => {
-                			if (store.getState().services.persist.isHydrated) {
-                				unsubscribe(); //call unsubscribe again! wait! what!?
-                				this.autoLogin();
-                			}
-
-		            });
+                        			if (store.getState().services.persist.isHydrated) {
+                        				unsubscribe(); //call unsubscribe again! wait! what!?
+                        				this.autoLogin();
+                        			}
+		                    });
 		store.subscribe(this.reduxSubscribedFunction);
 	}
 
@@ -87,13 +86,12 @@ class App extends Component {
   this.setState({
     cartBounce: true
   });
-  setTimeout(
-    function() {
-     this.setState({
-       cartBounce: false,
-       quantity: 1
-     });
-    }.bind(this),
+  setTimeout(() => {
+                     this.setState({
+                       cartBounce: false,
+                       quantity: 1
+                     });
+                   },
   1000
   );
   this.setState({
