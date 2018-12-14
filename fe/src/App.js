@@ -79,11 +79,7 @@ class App extends Component {
    this.setState({ searchTerm: event.target.value });
   }
 
-  checkProduct = (productID) => {
-  return this.props.cart.items.some(function(item) {
-    return item.id === productID;
-  });
-  }
+
 
   sumTotalItems = () => {
   let total = 0;
@@ -106,25 +102,7 @@ class App extends Component {
   // Add to Cart
  handleAddToCart = (selectedProducts) => {
   console.log('handleAddToCart');
-  console.log(selectedProducts);
-  let cart = {...this.props.cart};
-  let productID = selectedProducts.id;
-  let productQty = selectedProducts.quantity;
-  if (this.checkProduct(productID)) {
-  //increment the quantity of the product in the cart
-    console.log("incrementing product quantity");
-    let index = cart.items.findIndex(x => x.id == productID);
-    cart.items[index].quantity =
-    Number(cart.items[index].quantity) + Number(productQty);
-    this.setState({
-     cartBounce: true
-    });
-  } else {
-    //add the product to the cart
-    console.log('adding to cart....');
-    cart.items.push(selectedProducts);
-  };
-  cartService.persistCart(cart);
+  cartService.addToCart(this.props.cart, selectedProducts);
   this.setState({
     cartBounce: true
   });
