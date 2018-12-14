@@ -44,6 +44,13 @@ import { initialState } from './reducer';
 	  persistCart(cart);
 	}
 
+	export const updateQuantity = (cart, selectedProduct, qty) => {
+		let index = cart.items.findIndex(x => x.id == selectedProduct.id);
+		cart.items[index].quantity =
+		Number(cart.items[index].quantity) + Number(qty);
+		persistCart(cart);
+	}
+
 	export const sumTotalItems = (cart) => {
 	  let total = 0;
 	  total = cart.items.length;
@@ -56,4 +63,9 @@ import { initialState } from './reducer';
 	  total += cart.items[i].price * parseInt(cart.items[i].quantity);
 	  }
 	  return total;
- }
+ 	}
+
+	export const emptyCart = () => {
+		console.log('emptyCart....');
+		persistCart({items:[]});
+	}
