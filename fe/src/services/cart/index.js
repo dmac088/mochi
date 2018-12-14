@@ -18,6 +18,5 @@ import { initialState } from './reducer';
 	};
 
 	export const  persistCart = (cart) => {
-		//console.log(cart);
 	 	store.dispatch(actionCreators.update({"cart": cart }));
 	}

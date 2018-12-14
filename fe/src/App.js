@@ -29,7 +29,6 @@ class App extends Component {
   constructor(props) {
     super(props);
       this.state = {
-       cart: initialState.cart,
        productList: [],
        searchTerm: '',
        quantity: 1,
@@ -138,14 +137,13 @@ class App extends Component {
     }.bind(this),
   1000
   );
-  this.sumTotalItems(this.state.cart);
-  this.sumTotalAmount(this.state.cart);
+  this.sumTotalItems(this.props.cart);
+  this.sumTotalAmount(this.props.cart);
   }
 
   emptyCart = () => {
-    console.log('emptyCart....')
-    console.log(this.state.cart);
-    cartService.persistCart(this.state.cart);
+    console.log('emptyCart....');
+    cartService.persistCart({items:[]});
   }
 
   // Open Modal
