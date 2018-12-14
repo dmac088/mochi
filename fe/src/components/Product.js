@@ -4,7 +4,7 @@ import Counter from './Counter';
 class Product extends Component{
 
 	constructor(props){
-		console.log('Product...');
+		//console.log('Product...');
 		super(props);
         this.state = {
             selectedProduct: {},

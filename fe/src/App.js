@@ -80,7 +80,7 @@ class App extends Component {
 
   // Add to Cart
  handleAddToCart = (selectedProducts) => {
-  console.log('handleAddToCart');
+  //console.log('handleAddToCart');
   cartService.addToCart(this.props.cart, selectedProducts);
   setTimeout(() => {
                       this.setState({
@@ -126,7 +126,7 @@ class App extends Component {
   }
 
   render() {
-    console.log('rendering app!')
+  //console.log('rendering app!')
   return (
    <div className="App">
     <link rel="stylesheet"
