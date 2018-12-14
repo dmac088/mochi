@@ -7,6 +7,7 @@ import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 class Products extends Component{
 	constructor(){
+		console.log('Products...');
 		super();
 	}
   	render(){

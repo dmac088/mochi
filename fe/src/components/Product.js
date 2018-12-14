@@ -2,7 +2,9 @@ import React, {Component} from 'react';
 import Counter from './Counter';
 
 class Product extends Component{
+
 	constructor(props){
+		console.log('Product...');
 		super(props);
         this.state = {
             selectedProduct: {},
@@ -53,7 +55,7 @@ class Product extends Component{
 			);
     }
 
-    quickView(image, name, price, id){
+    quickView = (image, name, price, id) => {
         this.setState({
             quickViewProdcut: {
                 image: image,
@@ -61,10 +63,12 @@ class Product extends Component{
                 price: price,
                 id: id
             }
-        }, function(){
+        }, () => {
             this.props.openModal(this.state.quickViewProdcut);
-        })
+        	})
     }
+
+
     render(){
         let image = this.props.image;
         let name = this.props.name;
