@@ -32,6 +32,8 @@ class App extends Component {
        productList: [],
        searchTerm: '',
        modalActive: false,
+       totalItems: 0,
+       totalAmount: 0,
     };
     console.log(this.state);
   }
@@ -102,6 +104,10 @@ class App extends Component {
 
   emptyCart = () => {
     cartService.emptyCart();
+    this.setState({
+      totalItems: 0,
+      totalAmount: 0,
+    });
   }
 
   // Open Modal
@@ -141,6 +147,8 @@ class App extends Component {
       <Header tokens={this.props.tokens}
         customer={this.props.customer}
         handleSearch={this.handleSearch}
+        totalItems={this.state.totalItems}
+        total={this.state.totalAmount}
 
       />
       <Route path="/" exact component =  {(routeProps) => (
