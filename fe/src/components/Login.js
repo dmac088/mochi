@@ -7,6 +7,7 @@ import { deepValue } from '../services/api';
 import { initialState } from '../services/customer/reducer';
 import * as tokensActionCreators from '../services/session/actions';
 import * as customerActionCreators from '../services/customer/actions';
+import * as customerSelector from '../services/customer/selectors';
 import { Link } from 'react-router-dom';
 
 class Login extends Component {
@@ -14,39 +15,31 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = initialState;
-    store.subscribe(this.reduxSubscribedFunction);
-  }
-
-  reduxSubscribedFunction = () => {
+    console.log(this.state);
   }
 
   updateCustomerState = (event) =>  {
     let newstate = {...this.state};
     deepValue(newstate, event.target.id, event.target.value);
-    this.setState(newstate);
+		store.dispatch(customerActionCreators.update(newstate));
   }
 
-  loginClick = (event) => {
-    session.authenticate(this.state.customer);
-  }
-
-  logoutClick = (event) => {
-    session.clearSession();
-    this.setState(initialState);
+  loginClick = () => {
+    session.authenticate(customerSelector.get());
   }
 
   renderLoginButton = () => {
      let button;
      if(!this.props.tokens.authenticated) {
        button =
-      <Link to="/">
+       <Link to="/">
        <button
            onClick={this.loginClick}
            className="btn btn-outline-success mr-sm-2 my-2 my-sm-0"
            type="submit">
           Go
       </button>
-    </Link>;
+      </Link>
      }
      return button;
   }

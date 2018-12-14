@@ -13,12 +13,6 @@ const Selector = (props) => {
   const reduxSubscribedFunction = () => {
   }
 
-  const updateCustomerState = (event) =>  {
-    let newstate = {...this.state};
-    deepValue(newstate, event.target.id, event.target.value);
-    this.setState(newstate);
-  }
-
   const logoutClick = (event) => {
     session.clearSession();
   }

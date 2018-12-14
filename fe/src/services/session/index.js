@@ -81,8 +81,8 @@ export const authenticate = (customer) => {
 
 	export const clearSession = () => {
 		clearTimeout(sessionTimeout);
-		store.dispatch(tokenActionCreators.update(tokenReducer.initialState));
-		store.dispatch(customerActionCreators.update(customerReducer.initialState));
+		store.dispatch(tokenActionCreators.update({tokens: {}}));
+		store.dispatch(customerActionCreators.update({customer: {}}));
 	};
 
 	export const refreshToken = () => {
