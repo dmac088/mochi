@@ -83,21 +83,16 @@ class App extends Component {
  handleAddToCart = (selectedProducts) => {
   console.log('handleAddToCart');
   cartService.addToCart(this.props.cart, selectedProducts);
-  this.setState({
-    cartBounce: true
-  });
   setTimeout(() => {
-                     this.setState({
+                      this.setState({
                        cartBounce: false,
-                       quantity: 1
+                       quantity: 1,
+                       totalItems: cartService.sumTotalItems(this.props.cart),
+                       totalAmount: cartService.sumTotalAmount(this.props.cart),
                      });
                    },
   1000
   );
-  this.setState({
-    totalItems: cartService.sumTotalItems(this.props.cart),
-    totalAmount: cartService.sumTotalAmount(this.props.cart)
-  });
 }
 
   emptyCart = () => {
