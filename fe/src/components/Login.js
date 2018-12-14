@@ -104,7 +104,6 @@ class Login extends Component {
 
 export default connect(state => ({
     tokens: state.services.session.tokens,
-		//routeHistory: state.services.routeHistory,
 }), dispatch => ({
 	actions: {
 		tokens: bindActionCreators(tokensActionCreators, dispatch),

@@ -132,6 +132,7 @@ class App extends Component {
   }
 
   render() {
+    console.log('rendering app!')
   return (
    <div className="App">
     <link rel="stylesheet"
@@ -142,7 +143,7 @@ class App extends Component {
 
     <Router>
     <div>
-      <Header tokens={this.props.tokens}
+      <Header authenticated={this.props.tokens.authenticated}
         customer={this.props.customer}
         handleSearch={this.handleSearch}
         totalItems={this.state.totalItems}
@@ -178,7 +179,6 @@ export default connect(state => ({
   tokens:  state.services.session.tokens,
   customer: state.services.customer.customer,
   cart:  state.services.cart.cart,
-		//routeHistory: state.services.routeHistory,
 }), dispatch => ({
 	actions: {
 		tokens: bindActionCreators(tokensActionCreators, dispatch),

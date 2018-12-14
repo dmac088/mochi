@@ -5,7 +5,6 @@ import * as session from '../services/session';
 import store from '../store';
 import { deepValue } from '../services/api';
 import { initialState } from '../services/customer/reducer';
-import * as tokensActionCreators from '../services/session/actions';
 import * as customerActionCreators from '../services/customer/actions';
 import { Link } from 'react-router-dom';
 
@@ -26,7 +25,7 @@ const Selector = (props) => {
 
   const renderLogoutButton = () => {
      let button;
-     if(props.tokens.authenticated) {
+     if(props.authenticated) {
        button =
        <Link to="/">
          <button
@@ -41,7 +40,7 @@ const Selector = (props) => {
 
   const renderLoginButton = (props) => {
      let button;
-     if(!props.tokens.authenticated) {
+     if(!props.authenticated) {
         button =
         <Link to="/Login">
         <button
@@ -56,7 +55,7 @@ const Selector = (props) => {
 
   const rendersignupButton = () => {
      let button;
-     if(!props.tokens.authenticated) {
+     if(!props.authenticated) {
        button =
        <Link to="/Signup">
        <button
