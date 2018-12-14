@@ -31,7 +31,6 @@ class App extends Component {
       this.state = {
        productList: [],
        searchTerm: '',
-       quantity: 1,
        modalActive: false,
     };
     console.log(this.state);
@@ -102,8 +101,7 @@ class App extends Component {
 }
 
   emptyCart = () => {
-    console.log('emptyCart....');
-    cartService.persistCart({items:[]});
+    cartService.emptyCart();
   }
 
   // Open Modal

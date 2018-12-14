@@ -11,19 +11,27 @@ class Product extends Component{
 						quantity: 1
         }
     }
-		//Reset Quantity
-		updateQuantity = (qty) => {
-			console.log("quantity added...");
+
+
+		updateQuantity = (qty) =>  {
+			console.log("quantity added..." + qty);
 			this.setState({
 				quantity: qty
 			});
 		}
-
-    resetQuantity = () => {
-			this.setState({
-				quantity: 1
-			});
-    }
+		//Reset Quantity
+		// updateQuantity = (qty) => {
+		// 	console.log("quantity added...");
+		// 	this.setState({
+		// 		quantity: qty
+		// 	});
+		// }
+		//
+    // resetQuantity = () => {
+		// 	this.setState({
+		// 		quantity: 1
+		// 	});
+    // }
 
     addToCart(image, name, price, id, quantity){
         this.setState({
@@ -65,7 +73,7 @@ class Product extends Component{
         let name = this.props.name;
         let price = this.props.price;
         let id = this.props.id;
-        let quantity = this.props.productQuantity;
+        let quantity = this.state.quantity;
         return(
             <div className="product">
                 <div className="product-image">
