@@ -16,6 +16,27 @@ const Header = (props) => {
             <Search
               handleSearch={props.handleSearch}
             />
+                        <div className="cart-info">
+                          <table>
+                            <tbody>
+                              <tr>
+                                <td>No. of items</td>
+                                <td>:</td>
+                                <td>
+                                  <strong>{props.totalItems}</strong>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>Sub Total</td>
+                                <td>:</td>
+                                <td>
+                                  <strong>{props.total}</strong>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+
             <Greeting
               tokens={props.tokens}
               customer={props.customer}
