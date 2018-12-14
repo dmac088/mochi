@@ -19,19 +19,13 @@ class Product extends Component{
 				quantity: qty
 			});
 		}
-		//Reset Quantity
-		// updateQuantity = (qty) => {
-		// 	console.log("quantity added...");
-		// 	this.setState({
-		// 		quantity: qty
-		// 	});
-		// }
-		//
-    // resetQuantity = () => {
-		// 	this.setState({
-		// 		quantity: 1
-		// 	});
-    // }
+
+
+     resetQuantity = () => {
+		 	this.setState({
+		 		quantity: 1
+		 	});
+   	}
 
     addToCart(image, name, price, id, quantity){
         this.setState({
