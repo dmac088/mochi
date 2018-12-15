@@ -24,7 +24,7 @@ const Selector = (props) => {
        <Link to="/">
          <button
               onClick={logoutClick}
-              className="btn btn-outline-success mr-sm-5 my-2 my-sm-0">
+              className="btn btn-outline-success ml-sm-3 mr-sm-3 my-2 my-sm-0">
             Logout
          </button>
        </Link>;
@@ -38,7 +38,7 @@ const Selector = (props) => {
         button =
         <Link to="/Login">
         <button
-            className="btn btn-outline-success mr-sm-2 my-2 my-sm-0"
+            className="btn btn-outline-success ml-sm-3 mr-sm-2 my-2 my-sm-0"
             type="submit">
            Login
        </button>
@@ -53,7 +53,7 @@ const Selector = (props) => {
        button =
        <Link to="/Signup">
        <button
-           className="btn btn-outline-success mr-sm-5 my-2 my-sm-0"
+           className="btn btn-outline-success ml-sm-3 mr-sm-3 my-2 my-sm-0"
            type="submit">
           SignUp
         </button>

@@ -7,12 +7,17 @@ import { Link } from 'react-router-dom';
 
 
 const Header = (props) => {
+
       return(
       <nav className="navbar navbar-light bg-light justify-content-between">
         <div className="navbar-brand">
             <Link to="/">HOME</Link>
         </div>
         <div className="form-inline">
+          <Greeting
+            authenticated={props.authenticated}
+            customer={props.customer}
+          />
             <Search
               handleSearch={props.handleSearch}
             />
@@ -36,11 +41,25 @@ const Header = (props) => {
                             </tbody>
                           </table>
                         </div>
+                        <a
+                          className="cart-icon"
+                          href="#"
 
-            <Greeting
-              authenticated={props.authenticated}
-              customer={props.customer}
-            />
+                        >
+                          <img
+                            className={props.cartBounce ? "tada" : " "}
+                            src="https://res.cloudinary.com/sivadass/image/upload/v1493548928/icons/bag.png"
+                            alt="Cart"
+                          />
+                          {props.totalItems ? (
+                            <span className="cart-count">{props.totalItems}</span>
+                          ) : (
+                            ""
+                          )}
+                        </a>
+
+
+
             <Selector
               authenticated={props.authenticated}
               customer={props.customer}
