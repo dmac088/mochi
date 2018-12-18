@@ -24,14 +24,18 @@ class Login extends Component {
 		store.dispatch(customerActionCreators.update(newstate));
   }
 
+  routeLanding = (props = this.props) => {
+    props.history.push('/');
+  }
+
+  routeLogin = (props = this.props) => {
+    props.history.push('/Login');
+  }
+
   loginClick = () => {
     session.authenticate(customerSelector.get(),
-      (props = this.props) => {
-        props.history.push('/');
-      },
-      (props = this.props) => {
-        props.history.push('/Login');
-      });
+      this.routeLanding,
+      this.routeLogin);
   }
 
   renderLoginButton = () => {

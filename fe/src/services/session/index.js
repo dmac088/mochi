@@ -53,10 +53,7 @@ export const authenticate = (customer, routeLanding, routeLogin) => {
 				customerService.persistCustomer(responseJSON);
 			})
 		})
-		.then(() => {
-			routeLanding();
-			return 'success'
-		})
+		.then(routeLanding)
 		.then(onRequestSuccess)
 		.catch(onRequestFailed);
 	}
