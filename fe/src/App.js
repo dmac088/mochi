@@ -10,6 +10,7 @@ import {
 import store from './store';
 import Header from './components/Header';
 import Signup from './components/Signup';
+import ManageBasket from './components/ManageBasket';
 import * as tokensActionCreators from './services/session/actions';
 import * as customerActionCreators from './services/customer/actions';
 import * as cartActionCreators from './services/cart/actions';
@@ -54,10 +55,10 @@ class App extends Component {
   autoLogin = () =>  {
     sessionService.refreshToken().then(() => {
    //this.setState({ initialRoute: routeStack[0] });
-  }).catch(() => {
+    }).catch(() => {
    //move to error
    //this.setState({ initialRoute: routeStack[0] });
-  });
+    });
   }
 
   componentDidMount() {
@@ -159,11 +160,12 @@ class App extends Component {
       <Route path="/Signup" component={Signup} />
     </div>
     </Router>
+    <ManageBasket/>
     <Footer/>
       <button onClick={this.printState}>Print Redux State</button>
-      <button onClick={this.printProps}>Print Props</button>    
+      <button onClick={this.printProps}>Print Props</button>
       <button onClick={this.emptyCart}>Empty Cart</button>
-      <button onClick={this.reviewCart}>Checkout</button>
+      <button onClick={this.reviewCart}>Manage Basket</button>
    </div>
   );
   }
