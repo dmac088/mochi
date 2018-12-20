@@ -12,6 +12,11 @@ class ManageBasket extends Component {
     super(props);
   }
 
+  removeItem = (event) => {
+    console.log('removeItem');
+    console.log(event.target.id);
+  }
+
 
   render() {
         console.log(this.props);
@@ -20,10 +25,13 @@ class ManageBasket extends Component {
         basketItems = this.props.cart.items.map(product => {
           console.log(product);
             return(
+
               <tr>
                 <td>
                   <figure className="media">
-                    <div className="img-wrap"><img src="" className="img-thumbnail img-sm" /></div>
+                    <div className="img-wrap">
+                      <img className="img-thumbnail img-sm" src={product.image} />
+                    </div>
                     <figcaption className="media-body">
                       <h6 className="title text-truncate">{product.name}</h6>
                       <dl className="param param-inline small">
@@ -53,7 +61,12 @@ class ManageBasket extends Component {
                 </td>
                 <td className="text-right">
                   <a title href className="btn btn-outline-success" data-toggle="tooltip" data-original-title="Save to Wishlist"> <i className="fa fa-heart" /></a>
-                  <a href className="btn btn-outline-danger"> × Remove</a>
+                  <button
+                    id={product.id}
+                    className="btn btn-outline-danger"
+                    onClick={this.removeItem}>
+                      × Remove
+                  </button>
                 </td>
               </tr>
             )
@@ -63,7 +76,7 @@ class ManageBasket extends Component {
 
         return(
           <div className="container">
-            <br />  <p className="text-center">More bootstrap 4 components on <a href="http://bootstrap-ecommerce.com/" target="_blank"> Bootstrap-ecommerce.com</a></p>
+            <br />
             <hr />
             <div className="card">
               <table className="table table-hover shopping-cart-wrap">
@@ -81,6 +94,7 @@ class ManageBasket extends Component {
               </table>
             </div>
             </div>
+
         )
     }
 }
