@@ -6,9 +6,9 @@ import NoResults from "../empty-states/NoResults";
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 class Products extends Component{
-	constructor(){
+	constructor(props){
 		//console.log('Products...');
-		super();
+		super(props);
 	}
   	render(){
     	let productsData;

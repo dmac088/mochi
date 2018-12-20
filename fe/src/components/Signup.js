@@ -124,7 +124,7 @@ class Signup extends Component {
 
 export default connect(state => ({
     tokens: state.services.session.tokens,
-    customer: state.services.session.customer
+    customer: state.services.session.customer,
 }), dispatch => ({
 	actions: {
 		tokens: bindActionCreators(tokensActionCreators, dispatch),
