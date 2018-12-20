@@ -161,8 +161,9 @@ class App extends Component {
     </Router>
     <Footer/>
       <button onClick={this.printState}>Print Redux State</button>
-      <button onClick={this.printProps}>Print Props</button>
+      <button onClick={this.printProps}>Print Props</button>    
       <button onClick={this.emptyCart}>Empty Cart</button>
+      <button onClick={this.reviewCart}>Checkout</button>
    </div>
   );
   }

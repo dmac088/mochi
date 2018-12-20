@@ -4,6 +4,9 @@ import * as customerService from '../services/customer';
 import store from '../store';
 import { deepValue } from '../services/api';
 import { initialState } from '../services/customer/reducer';
+import { bindActionCreators } from 'redux';
+import * as tokensActionCreators from '../services/session/actions';
+import * as customerActionCreators from '../services/customer/actions';
 
 class Signup extends Component {
 
@@ -118,24 +121,13 @@ class Signup extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
+
+export default connect(state => ({
     tokens: state.services.session.tokens,
     customer: state.services.session.customer
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-
-    //take value from reducer, alias used in combinReducers in ./data/reducer.js
-    customer: (customer) => {
-      dispatch({
-        type: "UPDATE",
-        payload: customer
-      })
-    }
-  };
-};
-
-export default connect(mapStateToProps,mapDispatchToProps)(Signup);
+}), dispatch => ({
+	actions: {
+		tokens: bindActionCreators(tokensActionCreators, dispatch),
+    customer: bindActionCreators(customerActionCreators, dispatch),
+	},
+}))(Signup);
