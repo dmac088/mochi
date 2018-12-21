@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as tokensActionCreators from '../services/session/actions';
 import * as customerActionCreators from '../services/customer/actions';
+import * as cartActionCreators from '../services/cart/actions';
+import * as cartService from '../services/cart';
 import config from '../config/config';
 
 class ManageBasket extends Component {
@@ -15,6 +17,10 @@ class ManageBasket extends Component {
   removeItem = (event) => {
     console.log('removeItem');
     console.log(event.target.id);
+    console.log(this.props.cart);
+    //console.log(this.props.cart.items[1].id === Number(event.target.id));
+    cartService.removeFromCart(this.props.cart, Number(event.target.id));
+
   }
 
 
