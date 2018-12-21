@@ -1812,7 +1812,7 @@ GRANT SELECT ON TABLE mochi.product TO mochi_app;
 REVOKE ALL ON TABLE mochi.product_attr_lcl FROM PUBLIC;
 REVOKE ALL ON TABLE mochi.product_attr_lcl FROM mochidb_owner;
 GRANT ALL ON TABLE mochi.product_attr_lcl TO mochidb_owner;
-GRANT INSERT,DELETE,UPDATE ON TABLE mochi.product_attr_lcl TO mochi_app;
+GRANT SELECT ON TABLE mochi.product_attr_lcl TO mochi_app;
 
 
 --
