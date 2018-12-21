@@ -44,6 +44,16 @@ import { initialState } from './reducer';
 	  persistCart(cart);
 	}
 
+	export const removeFromCart = (cart, productId) => {
+			if (checkProduct(cart, productId)) {
+				console.log('removing item from cart....');
+				var filtered = cart.items.filter(function(value, index, arr){
+																			return value.id !== productId;
+																		});
+			}
+		  persistCart({items:filtered});
+	}
+
 	export const updateQuantity = (cart, selectedProduct, qty) => {
 		let index = cart.items.findIndex(x => x.id == selectedProduct.id);
 		cart.items[index].quantity =
