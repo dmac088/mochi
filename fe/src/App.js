@@ -33,8 +33,6 @@ class App extends Component {
        productList: [],
        searchTerm: '',
        modalActive: false,
-       totalItems: 0,
-       totalAmount: 0,
     };
   }
 
@@ -87,9 +85,8 @@ class App extends Component {
                       this.setState({
                        cartBounce: false,
                        quantity: 1,
-                       totalItems: cartService.sumTotalItems(this.props.cart),
-                       totalAmount: cartService.sumTotalAmount(this.props.cart),
                      });
+
                    },
   1000
   );
@@ -140,8 +137,8 @@ class App extends Component {
       <Header authenticated={this.props.tokens.authenticated}
         customer={this.props.customer}
         handleSearch={this.handleSearch}
-        totalItems={this.state.totalItems}
-        total={this.state.totalAmount}
+        totalItems={this.props.cart.totalItems}
+        total={this.props.cart.totalAmount}
 
       />
       <Route path="/" exact component =  {(routeProps) => (
