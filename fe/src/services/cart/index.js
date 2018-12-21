@@ -54,7 +54,11 @@ import { initialState } from './reducer';
 																			return value.id !== productId;
 																		});
 			}
-		  persistCart({items:filtered});
+			let cartCopy = {...cart}
+			cartCopy.items = filtered;
+			cartCopy.totalItems = sumTotalItems(cartCopy);
+			cartCopy.totalAmount = sumTotalAmount(cartCopy);
+		  persistCart(cartCopy);
 	}
 
 	export const updateQuantity = (cart, selectedProduct, qty) => {
