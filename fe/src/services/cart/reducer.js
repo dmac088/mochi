@@ -2,7 +2,9 @@ import * as actionTypes from './actionTypes';
 
 export const initialState = {
 															cart: {
-																	items: []
+																	items: [],
+																	totalItems: 0,
+																	totalAmount: 0,
 															}
 														};
 

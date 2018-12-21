@@ -41,6 +41,9 @@ import { initialState } from './reducer';
 	    console.log('adding to cart....');
 	    cart.items.push(selectedProducts);
 	  };
+
+		cart.totalItems = sumTotalItems(cart);
+		cart.totalAmount = sumTotalAmount(cart);
 	  persistCart(cart);
 	}
 
