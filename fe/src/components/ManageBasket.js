@@ -113,5 +113,6 @@ export default connect(state => ({
 	actions: {
 		tokens: bindActionCreators(tokensActionCreators, dispatch),
     customer: bindActionCreators(customerActionCreators, dispatch),
+    cart: bindActionCreators(cartActionCreators, dispatch),
 	},
 }))(ManageBasket);
