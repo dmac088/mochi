@@ -157,7 +157,7 @@ class App extends Component {
       <Route path="/Signup" component={Signup} />
     </div>
     </Router>
-    <ManageCart cart={this.props.cart}/>
+    <ManageCart cart={this.props}/>
     <Footer/>
       <button onClick={this.printState}>Print Redux State</button>
       <button onClick={this.printProps}>Print Props</button>
