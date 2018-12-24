@@ -44,15 +44,15 @@ import Counter from './Counter';
 
 
     const renderCartItems = (cart) => {
-      console.log(cart)
+  
           let cartItems;
           return cartItems = cart.items.map(product => {
               return(
                 <tr key={product.id}>
                   <td>
                     <figure className="media">
-                      <div className="img-wrap">
-                        <img className="img-thumbnail img-sm" src={product.image} />
+                      <div className="product">
+                        <img className="product-image" src={product.image} />
                       </div>
                       <figcaption className="media-body">
                         <h6 className="title text-truncate">{product.name}</h6>
@@ -72,8 +72,8 @@ import Counter from './Counter';
                   </td>
                   <td>
                     <div className="price-wrap">
-                      <var className="price">USD 145</var>
-                      <small className="text-muted">(USD5 each)</small>
+                      <p className="product-price">{product.price}</p>
+                      <small className="text-muted"></small>
                     </div> {/* price-wrap .// */}
                   </td>
                   <td className="text-right">
