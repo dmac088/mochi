@@ -10,7 +10,7 @@ import {
 import store from './store';
 import Header from './components/Header';
 import Signup from './components/Signup';
-import ManageBasket from './components/ManageBasket';
+import ManageCart from './components/ManageCart';
 import * as tokensActionCreators from './services/session/actions';
 import * as customerActionCreators from './services/customer/actions';
 import * as cartActionCreators from './services/cart/actions';
@@ -157,12 +157,13 @@ class App extends Component {
       <Route path="/Signup" component={Signup} />
     </div>
     </Router>
-    <ManageBasket/>
+    <ManageCart
+      cart={this.props.cart}
+    />
     <Footer/>
       <button onClick={this.printState}>Print Redux State</button>
       <button onClick={this.printProps}>Print Props</button>
       <button onClick={this.emptyCart}>Empty Cart</button>
-      <button onClick={this.reviewCart}>Manage Basket</button>
    </div>
   );
   }
@@ -172,13 +173,13 @@ class App extends Component {
 //on a dispatch call from anywhere in the application
 //this function will fire and update authenticated
 export default connect(state => ({
-  tokens:  state.services.session.tokens,
+  tokens:   state.services.session.tokens,
   customer: state.services.customer.customer,
-  cart:  state.services.cart.cart,
+  cart:     state.services.cart.cart,
 }), dispatch => ({
 	actions: {
-		tokens: bindActionCreators(tokensActionCreators, dispatch),
+		tokens:   bindActionCreators(tokensActionCreators, dispatch),
     customer: bindActionCreators(customerActionCreators, dispatch),
-    cart: bindActionCreators(cartActionCreators, dispatch),
+    cart:     bindActionCreators(cartActionCreators, dispatch),
 	},
 }))(App);
