@@ -4,16 +4,18 @@ import { bindActionCreators } from 'redux';
 import * as tokensActionCreators from '../services/session/actions';
 import * as customerActionCreators from '../services/customer/actions';
 import * as cartActionCreators from '../services/cart/actions';
+import * as cartSelector from '../services/cart/selectors';
 import * as cartService from '../services/cart';
 import config from '../config/config';
 import Counter from './Counter';
 
-  const removeItem = (event, cart) => {
+  const removeItem = (event) => {
+    let cart = cartSelector.get();
     cartService.removeFromCart(cart, Number(event.target.id));
   }
 
-  const ManageCart = (cart) => {
-    return renderCart(cart.cart);
+  const ManageCart = (props) => {
+    return renderCart(props.cart.cart);
   }
 
   const renderCart = (cart) => {
@@ -42,6 +44,7 @@ import Counter from './Counter';
 
 
     const renderCartItems = (cart) => {
+      console.log(cart)
           let cartItems;
           return cartItems = cart.items.map(product => {
               return(
