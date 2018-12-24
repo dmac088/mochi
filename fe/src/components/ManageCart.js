@@ -43,7 +43,7 @@ import Counter from './Counter';
 
     const renderCartItems = (cart) => {
           let cartItems;
-          cartItems = cart.items.map(product => {
+          return cartItems = cart.items.map(product => {
               return(
                 <tr key={product.id}>
                   <td>
