@@ -13,7 +13,7 @@ import Counter from './Counter';
   }
 
   const ManageCart = (cart) => {
-    renderCart(cart);
+    return renderCart(cart.cart);
   }
 
   const renderCart = (cart) => {
@@ -42,8 +42,8 @@ import Counter from './Counter';
 
 
     const renderCartItems = (cart) => {
-          let basketItems;
-          basketItems = cart.items.map(product => {
+          let cartItems;
+          cartItems = cart.items.map(product => {
               return(
                 <tr key={product.id}>
                   <td>
@@ -78,13 +78,13 @@ import Counter from './Counter';
                     <button
                       id={product.id}
                       className="btn btn-outline-danger"
-                      onClick={this.removeItem}>
+                      onClick={removeItem}>
                         × Remove
                     </button>
                   </td>
                 </tr>
               )
-          })
+          });
     }
 
 export default ManageCart;
