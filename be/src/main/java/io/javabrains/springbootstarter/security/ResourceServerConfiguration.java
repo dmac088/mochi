@@ -27,6 +27,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
         		.anonymous().and().authorizeRequests()
         		.antMatchers(HttpMethod.POST,"/api/Customer/Signup").permitAll()
         		.antMatchers(HttpMethod.GET,"/api/Product/**").permitAll()
+        		.antMatchers(HttpMethod.GET,"/api/ProductCategory/**").permitAll()
         		.antMatchers(HttpMethod.GET,"/images/**").permitAll()
         		.and().requestMatchers()
                 .antMatchers(SECURED_PATTERN).and().authorizeRequests()

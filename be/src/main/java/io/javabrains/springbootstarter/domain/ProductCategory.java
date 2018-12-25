@@ -17,7 +17,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "cateogry", schema = "mochi")
+@Table(name = "category", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "cat_id")
 public class ProductCategory {
 
@@ -27,7 +27,6 @@ public class ProductCategory {
     								joinColumns 		= @JoinColumn(name = "cat_id"), 
     								inverseJoinColumns 	= @JoinColumn(name = "prd_id"))
 	@OrderBy
-    @JsonIgnore
     private Collection<Product> products;
 	
 
@@ -40,7 +39,7 @@ public class ProductCategory {
 	private String categoryCode;
 	
 	@Column(name="cat_sht_desc")
-	private Date categoryDesc;
+	private String categoryDesc;
 	
 	public Long getCategoryId() {
 		return categoryId;
@@ -58,11 +57,11 @@ public class ProductCategory {
 		this.categoryCode = categoryCode;
 	}
 
-	public Date getCategoryDesc() {
+	public String getCategoryDesc() {
 		return categoryDesc;
 	}
 
-	public void setCategoryDesc(Date categoryDesc) {
+	public void setCategoryDesc(String categoryDesc) {
 		this.categoryDesc = categoryDesc;
 	}
 }
