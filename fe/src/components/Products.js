@@ -5,6 +5,7 @@ import LoadingProducts from '../loaders/Products';
 import NoResults from "../empty-states/NoResults";
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
+
 class Products extends Component{
 	constructor(props){
 		//console.log('Products...');
