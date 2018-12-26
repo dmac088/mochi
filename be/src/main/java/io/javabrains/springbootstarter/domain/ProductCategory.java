@@ -14,6 +14,8 @@ import javax.persistence.OrderBy;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(name = "category", schema = "mochi")
@@ -25,6 +27,7 @@ public class ProductCategory {
     		   joinColumns 			= @JoinColumn(name = "cat_id"), 
     		   inverseJoinColumns 	= @JoinColumn(name = "prd_id"))
     @OrderBy
+    @JsonIgnore
     private Collection<Product> products;
 	
 
