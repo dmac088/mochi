@@ -42,6 +42,13 @@ public class ProductCategory {
 	@Column(name="cat_sht_desc")
 	private String categoryDesc;
 	
+	@Column(name="cat_prnt_id")
+	private Long parentCategoryId;
+	
+	public Long getParentCategoryId() {
+		return parentCategoryId;
+	}
+
 	public Long getCategoryId() {
 		return categoryId;
 	}
