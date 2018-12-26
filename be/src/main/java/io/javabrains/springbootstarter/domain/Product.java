@@ -1,15 +1,21 @@
 package io.javabrains.springbootstarter.domain;
 
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
+import org.codehaus.jackson.annotate.JsonBackReference;
 
 @Entity
 @Table(name = "product", schema = "mochi")
@@ -36,15 +42,26 @@ public class Product {
 	
 	@Column(name="prd_img_pth", table="product_attr_lcl")
 	private String ProductImage;
-	
+
 	@Column(name="prd_cat_desc", table="product_attr_lcl")
 	private String ProductCategory;
 	
 	@Column(name="lcl_cd", table="product_attr_lcl")	
 	private String lclCd;
+	
+	@ManyToMany(mappedBy = "products")
+	private Collection<ProductCategory> categories;
 
 	public Long getProductId() {
 		return productId;
+	}
+	
+	public Collection<ProductCategory> getCategories() {
+		return this.categories;
+	}
+
+	public void setCategories(Collection<ProductCategory> categories) {
+		this.categories = categories;
 	}
 
 	public void setProductId(Long productId) {

@@ -39,7 +39,6 @@ public class ProductCategoryController {
 		return productCategoryService.getProductCategory(id);
 	}
 	
-	
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.POST, value="/ProductCategory")
 	public void addProductCategory(ProductCategory productCategory) {	

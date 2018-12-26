@@ -1,7 +1,6 @@
 package io.javabrains.springbootstarter.domain;
 
 import java.util.Collection;
-import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,6 +13,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -21,12 +21,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @PrimaryKeyJoinColumn(name = "cat_id")
 public class ProductCategory {
 
-	@ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(						//the table that manages the many to many relationship
-    								name = "product_category", schema="mochi", 
-    								joinColumns 		= @JoinColumn(name = "cat_id"), 
-    								inverseJoinColumns 	= @JoinColumn(name = "prd_id"))
-	@OrderBy
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "product_category", schema="mochi", 
+    		   joinColumns 			= @JoinColumn(name = "cat_id"), 
+    		   inverseJoinColumns 	= @JoinColumn(name = "prd_id"))
+    @OrderBy
+    @JsonIgnore
     private Collection<Product> products;
 	
 
