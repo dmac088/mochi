@@ -12,7 +12,11 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 	
 	ArrayList<Product> findByLclCd(String lng);
 	
+	ArrayList<Product> findByLclCdAndCategoriesCategoryDesc(String lng, String categoryDesc);
+	
 	ArrayList<Product> findAll(Specification<Product> spec);
+	
+	ArrayList<Product> findByCategoriesCategoryDesc(String categoryDesc);
 
 	Optional<Product> findByProductId(Long id);
 }

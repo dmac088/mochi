@@ -32,13 +32,20 @@ public class ProductController {
         return productService.getAllProducts(lcl);	
     }	
 	
+	
 	@ResponseBody
-	@RequestMapping("/Product/{id}")
+	@RequestMapping(method=RequestMethod.GET, value="/Product/{lcl}/{cat}")
+    public List<Product> getAllProducts(@PathVariable String lcl, @PathVariable String cat) {
+		System.out.println("calling getAllProductsForLcl"); 	
+        return productService.getAllProducts(lcl, cat);	
+    }	
+	
+	@ResponseBody
+	@RequestMapping("/Product/id/{id}")
 	public Optional<Product> getProduct(@PathVariable Long id) {
 		System.out.println("calling getProduct");
 		return productService.getProduct(id);
 	}
-	
 	
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.POST, value="/Product")
