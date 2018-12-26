@@ -17,6 +17,8 @@ import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
 import org.codehaus.jackson.annotate.JsonBackReference;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "product", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "prd_id")
@@ -50,6 +52,7 @@ public class Product {
 	private String lclCd;
 	
 	@ManyToMany(mappedBy = "products")
+	@JsonIgnore
 	private Collection<ProductCategory> categories;
 
 	public Long getProductId() {
