@@ -14,6 +14,8 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 	
 	ArrayList<Product> findByLclCdAndCategoriesCategoryDesc(String lng, String categoryDesc);
 	
+	ArrayList<Product> findByLclCdAndCategoriesCategoryId(String lng, Long categoryId);
+	
 	ArrayList<Product> findAll(Specification<Product> spec);
 	
 	ArrayList<Product> findByCategoriesCategoryDesc(String categoryDesc);

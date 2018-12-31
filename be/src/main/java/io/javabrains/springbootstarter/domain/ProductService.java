@@ -32,9 +32,9 @@ public class ProductService {
 		return Products;
 	}
 	
-	public List<Product> getAllProducts(String lcl, String productCategory) {
+	public List<Product> getAllProducts(String lcl, Long productCategoryId) {
 		List<Product> Products = new ArrayList<>();
-		Iterator<Product> i = productRepository.findByLclCdAndCategoriesCategoryDesc(lcl, productCategory).iterator();
+		Iterator<Product> i = productRepository.findByLclCdAndCategoriesCategoryId(lcl, productCategoryId).iterator();
 		while(i.hasNext()) {
 			  Products.add(i.next());
 		}
