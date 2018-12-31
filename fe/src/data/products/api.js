@@ -1,10 +1,10 @@
 import { fetchApi } from '../../services/api';
 
 const endPoints = {
-	get: '/api/Product/HKG',
+	get: '/api/Product/',
 };
 
-export const get = payload => 	fetchApi(endPoints.get,
+export const get = (locale) => 	fetchApi(endPoints.get,
 																				 payload,
 																				 {},
 																				 'GET',
@@ -12,3 +12,11 @@ export const get = payload => 	fetchApi(endPoints.get,
 
 																				 }
 																			 );
+
+export const findByCategory = (locale, categoryId) => fetchApi(
+																				endPoints.get + locale + '/' + categoryId,
+																				{},
+																				{},
+																				'GET',
+																				{}
+																				);
