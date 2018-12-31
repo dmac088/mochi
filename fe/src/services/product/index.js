@@ -22,6 +22,22 @@ import { initialState } from './reducer';
 		.then(onRequestSuccess)
 		.catch(onRequestFailed);
 
+	export const findByCategory = (locale, categoryId) =>
+		api.findByCategory(locale, categoryId)
+		.then((response) => {
+			return response.text();
+		})
+		.then((responseText)=> {
+			return JSON.parse(responseText);
+		})
+		.then((responseJSON)=> {
+			//we dont want to commit the product list to redux
+			//store.dispatch(productActionCreators.update({"items": responseJSON}));
+			return responseJSON;
+		})
+		.then(onRequestSuccess)
+		.catch(onRequestFailed);
+
 	const onRequestSuccess = (response) => {
 		console.log('request successfully completed!');
 		return response;
