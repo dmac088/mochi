@@ -17,6 +17,7 @@ import * as cartActionCreators from './services/cart/actions';
 import * as sessionService from './services/session';
 import * as productService from './services/product';
 import * as cartService from './services/cart';
+import * as categoryApi from './data/categories/api';
 import Landing from './components/Landing';
 import Login from './components/Login';
 import Footer from './components/Footer';
@@ -32,16 +33,17 @@ class App extends Component {
     super(props);
       this.state = {
        productList: [],
+       categoryList: [],
        searchTerm: '',
        modalActive: false,
     };
   }
 
   getCategories() {
-    categoryService.findAll('HKG')
+    categoryApi .findAll('HKG')
     .then((response) => {
        this.setState({
-       productList: response
+       categoryList: response
        });
     });
   }
@@ -50,6 +52,7 @@ class App extends Component {
   getProducts() {
     productService.findAll('HKG')
     .then((response) => {
+      console.log(response);
        this.setState({
        productList: response
        });
@@ -57,7 +60,9 @@ class App extends Component {
   }
 
   componentWillMount() {
+    this.getCategories();
     this.getProducts();
+    console.log(this.state.categoryList);
   }
 
   autoLogin = () =>  {

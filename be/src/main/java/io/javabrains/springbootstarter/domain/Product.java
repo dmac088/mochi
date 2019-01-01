@@ -40,9 +40,6 @@ public class Product {
 	
 	@Column(name="prd_img_pth", table="product_attr_lcl")
 	private String ProductImage;
-
-	@Column(name="prd_cat_desc", table="product_attr_lcl")
-	private String ProductCategory;
 	
 	@Column(name="lcl_cd", table="product_attr_lcl")	
 	private String lclCd;
@@ -105,14 +102,6 @@ public class Product {
 
 	public void setProductImage(String productImage) {
 		ProductImage = productImage;
-	}
-
-	public String getProductCategory() {
-		return ProductCategory;
-	}
-
-	public void setProductCategory(String productCategory) {
-		ProductCategory = productCategory;
 	}
 
 	public String getLclCd() {
