@@ -40,7 +40,7 @@ class App extends Component {
   }
 
   getCategories() {
-    categoryApi .findAll('HKG')
+    categoryApi.findAll('ENG')
     .then((response) => {
       return response.text();
     })
@@ -62,7 +62,7 @@ class App extends Component {
     productService.findAll('HKG')
     .then((response) => {
        this.setState({
-       productList: response
+         productList: response
        });
     });
   }

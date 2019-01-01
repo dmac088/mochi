@@ -1,13 +1,21 @@
 import React, {Component} from 'react';
 
+const renderCategoryListItems = (categoryList) => {
+  return categoryList = categoryList.map(category => {
+      return(
+        <li key={category.categoryId}>{category.categoryDesc}</li>
+      )
+    });
+}
+
+
 const CategoryNavigator = (props) => {
-  console.log(props.categoryList[0]);
   return (
     <ul>
-      <li>Put a list of categories here!</li>
-
+      {renderCategoryListItems(props.categoryList)}
     </ul>
-  )
+  );
 }
+
 
 export default CategoryNavigator;
