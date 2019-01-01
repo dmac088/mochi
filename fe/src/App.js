@@ -23,6 +23,7 @@ import Footer from './components/Footer';
 import * as cartSelector from './services/cart/selectors';
 import { initialState } from './services/cart/reducer';
 import './scss/style.scss';
+import CategoryNavigator from './components/CategoryNavigator'
 
 
 class App extends Component {
@@ -132,6 +133,7 @@ class App extends Component {
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
       crossOrigin="anonymous"
     />
+
   <Router>
     <div>
       <Header authenticated={this.props.tokens.authenticated}
@@ -141,6 +143,7 @@ class App extends Component {
         total={this.props.cart.totalAmount}
 
       />
+      <CategoryNavigator/>
       <Route path="/" exact component =  {(routeProps) => (
                   <Landing {...routeProps}
                     {...this.state}
