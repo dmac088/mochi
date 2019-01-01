@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
+import * as productService from '../services/product';
 
-const renderCategoryListItems = (categoryList) => {
+const renderCategoryListItems = (categoryList, categoryClick) => {
   return categoryList = categoryList.map(category => {
       return(
         <button id={category.categoryId} onClick={categoryClick}>{category.categoryDesc}</button>
@@ -8,14 +9,10 @@ const renderCategoryListItems = (categoryList) => {
     });
 }
 
-const categoryClick = (event) => {
-  console.log('category ' + event.target.id + ' clicked!');
-}
-
 const CategoryNavigator = (props) => {
   return (
     <ul>
-      {renderCategoryListItems(props.categoryList)}
+      {renderCategoryListItems(props.categoryList, props.categoryClick)}
     </ul>
   );
 }
