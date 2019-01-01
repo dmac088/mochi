@@ -58,8 +58,8 @@ class App extends Component {
   }
 
   // Fetch Initial Set of Products from external API
-  getProducts() {
-    productService.findAll('HKG')
+  getProducts = (locale, categoryId) => {
+    productService.findByCategory(locale, categoryId)
     .then((response) => {
        this.setState({
          productList: response
@@ -67,9 +67,14 @@ class App extends Component {
     });
   }
 
+  categoryClick = (event) => {
+    console.log('category ' + event.target.id + ' clicked!');
+    this.getProducts('HKG', event.target.id);
+  }
+
   componentWillMount() {
     this.getCategories();
-    this.getProducts();
+    this.getProducts('HKG', 2);
   }
 
   autoLogin = () =>  {
@@ -163,7 +168,10 @@ class App extends Component {
         totalItems={this.props.cart.totalItems}
         total={this.props.cart.totalAmount}
       />
-    <CategoryNavigator categoryList={this.state.categoryList}/>
+    <CategoryNavigator
+        categoryList={this.state.categoryList}
+        categoryClick={this.categoryClick}
+    />
       <Route path="/" exact component =  {(routeProps) => (
                   <Landing {...routeProps}
                     {...this.state}
