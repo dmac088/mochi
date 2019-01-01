@@ -14,23 +14,16 @@ public class ProductCategoryService {
 	@Autowired
 	private ProductCategoryRepository productCategoryRepository; 
 	
-	public List<ProductCategory> getAllProductCategories() {
-		List<ProductCategory> Categories = new ArrayList<>();
-		Iterator<ProductCategory> i = productCategoryRepository.findAll().iterator();
+	public List<ProductCategory> getAllProductCategories(String lcl) {
+		List<ProductCategory> categories = new ArrayList<>();
+		Iterator<ProductCategory> i = productCategoryRepository.findByLclCd(lcl).iterator();
 		while(i.hasNext()) {
-			Categories.add(i.next());
+			categories.add(i.next());
 		}
-		return Categories;
+		return categories;
 	}
 	
-//	public List<Product> getAllProducts(String lcl) {
-//		List<Product> Products = new ArrayList<>();
-//		Iterator<Product> i = productRepository.findByLclCd(lcl).iterator();
-//		while(i.hasNext()) {
-//			  Products.add(i.next());
-//		}
-//		return Products;
-//	}
+
 	
 	public Optional<ProductCategory> getProductCategory(Long id) {
 		Optional<ProductCategory> p = productCategoryRepository.findById(id);

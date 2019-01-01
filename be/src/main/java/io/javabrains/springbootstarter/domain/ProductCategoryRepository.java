@@ -8,6 +8,10 @@ import org.springframework.data.repository.CrudRepository;
 public interface ProductCategoryRepository extends CrudRepository<ProductCategory, Long> {
 
 	ArrayList<ProductCategory> findAll();
+	
+	ArrayList<ProductCategory> findByLclCd(String lcl);
 
 	Optional<ProductCategory> findByCategoryId(Long id);
+	
+	
 }

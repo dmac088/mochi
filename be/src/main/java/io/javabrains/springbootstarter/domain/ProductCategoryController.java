@@ -26,10 +26,9 @@ public class ProductCategoryController {
 	private ProductCategoryService productCategoryService;	
 	
 	@ResponseBody
-	@RequestMapping(method=RequestMethod.GET, value="/ProductCategory")
-    public List<ProductCategory> getAllProductCategories() {
-		System.out.println("calling getAllProductsForLcl");
-        return productCategoryService.getAllProductCategories();	
+	@RequestMapping(method=RequestMethod.GET, value="/ProductCategory/{lcl}")
+    public List<ProductCategory> getAllProductCategories(@PathVariable String lcl) {
+        return productCategoryService.getAllProductCategories(lcl);	
     }	
 	
 	@ResponseBody
