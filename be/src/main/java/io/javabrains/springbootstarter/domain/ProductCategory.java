@@ -1,6 +1,9 @@
 package io.javabrains.springbootstarter.domain;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,11 +13,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
@@ -32,7 +36,6 @@ public class ProductCategory {
     @JsonIgnore
     private Collection<Product> products;
 	
-
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="cat_id")
@@ -49,8 +52,18 @@ public class ProductCategory {
 	
 	@Column(name="lcl_cd", table="category_attr_lcl")	
 	private String lclCd;
+	
+	@ManyToOne(cascade={CascadeType.ALL})
+	@JoinColumn(name="cat_prnt_id", insertable=false, updatable=false)
+	private ProductCategory parent;
 
+	@OneToMany(mappedBy="parent")
+	private List<ProductCategory> children = new ArrayList<ProductCategory>();
 
+	public List<ProductCategory> getChildren() {
+		return children;
+	}
+	
 	public Long getParentCategoryId() {
 		return parentCategoryId;
 	}
@@ -86,4 +99,6 @@ public class ProductCategory {
 	public void setLclCd(String lclCd) {
 		this.lclCd = lclCd;
 	}
+	
+	
 }
