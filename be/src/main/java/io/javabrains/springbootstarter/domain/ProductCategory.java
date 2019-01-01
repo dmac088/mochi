@@ -52,17 +52,17 @@ public class ProductCategory {
 	
 	@Column(name="lcl_cd", table="category_attr_lcl")	
 	private String lclCd;
-	
-	@ManyToOne(cascade={CascadeType.ALL})
-	@JoinColumn(name="cat_prnt_id", insertable=false, updatable=false)
-	private ProductCategory parent;
-
-	@OneToMany(mappedBy="parent")
-	private List<ProductCategory> children = new ArrayList<ProductCategory>();
-
-	public List<ProductCategory> getChildren() {
-		return children;
-	}
+//	
+//	@ManyToOne(cascade=CascadeType.ALL)
+//	@JoinColumn(name="cat_prnt_id", insertable=false, updatable=false)
+//	private ProductCategory parent;
+//
+//	@OneToMany(mappedBy="parent")
+//	private List<ProductCategory> children = new ArrayList<ProductCategory>();
+//
+//	public List<ProductCategory> getChildren() {
+//		return children;
+//	}
 	
 	public Long getParentCategoryId() {
 		return parentCategoryId;
