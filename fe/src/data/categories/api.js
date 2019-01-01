@@ -4,7 +4,8 @@ const endPoints = {
 	get: '/api/ProductCategory/',
 };
 
-export const get = (locale) => 	fetchApi(endPoints.get + locale,
+export const findAll = (locale) => 	fetchApi(
+																				 endPoints.get + locale,
 																				 {},
 																				 {},
 																				 'GET',
