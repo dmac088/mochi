@@ -12,6 +12,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -20,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "category", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "cat_id")
+@SecondaryTable(schema = "mochi", name = "category_attr_lcl", pkJoinColumns = @PrimaryKeyJoinColumn(name = "cat_id"))
 public class ProductCategory {
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -39,12 +41,16 @@ public class ProductCategory {
 	@Column(name="cat_cd")
 	private String categoryCode;
 	
-	@Column(name="cat_sht_desc")
-	private String categoryDesc;
-	
 	@Column(name="cat_prnt_id")
 	private Long parentCategoryId;
 	
+	@Column(name="cat_desc", table="category_attr_lcl")
+	private String categoryDesc;
+	
+	@Column(name="lcl_cd", table="category_attr_lcl")	
+	private String lclCd;
+
+
 	public Long getParentCategoryId() {
 		return parentCategoryId;
 	}
@@ -71,5 +77,13 @@ public class ProductCategory {
 
 	public void setCategoryDesc(String categoryDesc) {
 		this.categoryDesc = categoryDesc;
+	}
+	
+	public String getLclCd() {
+		return lclCd;
+	}
+
+	public void setLclCd(String lclCd) {
+		this.lclCd = lclCd;
 	}
 }
