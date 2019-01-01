@@ -17,15 +17,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-
 import io.javabrains.springbootstarter.security.User;
-import io.javabrains.springbootstarter.security.UserRoleRepository;
-import io.javabrains.springbootstarter.security.UserRoleService;
 
 @Entity
 @Table(name = "party", schema = "mochi")
