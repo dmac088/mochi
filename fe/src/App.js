@@ -42,9 +42,18 @@ class App extends Component {
   getCategories() {
     categoryApi .findAll('HKG')
     .then((response) => {
-       this.setState({
-       categoryList: response
-       });
+      return response.text();
+    })
+    .then((responseText) => {
+      return JSON.parse(responseText);
+    })
+    .then((responseJSON) => {
+      this.setState({
+        categoryList: responseJSON
+      });
+    })
+    .catch(()=>{
+      console.log('getCategories failed!');
     });
   }
 
@@ -52,7 +61,6 @@ class App extends Component {
   getProducts() {
     productService.findAll('HKG')
     .then((response) => {
-      console.log(response);
        this.setState({
        productList: response
        });
@@ -62,7 +70,6 @@ class App extends Component {
   componentWillMount() {
     this.getCategories();
     this.getProducts();
-    console.log(this.state.categoryList);
   }
 
   autoLogin = () =>  {
@@ -156,7 +163,7 @@ class App extends Component {
         totalItems={this.props.cart.totalItems}
         total={this.props.cart.totalAmount}
       />
-      <CategoryNavigator />
+    <CategoryNavigator categoryList={this.state.categoryList}/>
       <Route path="/" exact component =  {(routeProps) => (
                   <Landing {...routeProps}
                     {...this.state}

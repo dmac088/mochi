@@ -9,7 +9,5 @@ export const findAll = (locale) => 	fetchApi(
 																				 {},
 																				 {},
 																				 'GET',
-																				 {
-
-																				 }
+																				 {}
 																			 );
