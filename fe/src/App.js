@@ -37,6 +37,15 @@ class App extends Component {
     };
   }
 
+  getCategories() {
+    categoryService.findAll('HKG')
+    .then((response) => {
+       this.setState({
+       productList: response
+       });
+    });
+  }
+
   // Fetch Initial Set of Products from external API
   getProducts() {
     productService.findAll('HKG')
@@ -79,19 +88,19 @@ class App extends Component {
   }
 
   // Add to Cart
- handleAddToCart = (selectedProducts) => {
-  //console.log('handleAddToCart');
-  cartService.addToCart(this.props.cart, selectedProducts);
-  setTimeout(() => {
-                      this.setState({
-                       cartBounce: false,
-                       quantity: 1,
-                     });
+  handleAddToCart = (selectedProducts) => {
+    //console.log('handleAddToCart');
+    cartService.addToCart(this.props.cart, selectedProducts);
+    setTimeout(() => {
+                        this.setState({
+                         cartBounce: false,
+                         quantity: 1,
+                       });
 
-                   },
-  1000
-  );
-}
+                     },
+    1000
+    );
+  }
 
   emptyCart = () => {
     cartService.emptyCart();
@@ -141,9 +150,8 @@ class App extends Component {
         handleSearch={this.handleSearch}
         totalItems={this.props.cart.totalItems}
         total={this.props.cart.totalAmount}
-
       />
-      <CategoryNavigator/>
+      <CategoryNavigator />
       <Route path="/" exact component =  {(routeProps) => (
                   <Landing {...routeProps}
                     {...this.state}
