@@ -78,11 +78,25 @@ CREATE TABLE mochi.category (
 ALTER TABLE mochi.category OWNER TO mochidb_owner;
 
 --
+-- Name: category_attr_lcl_cat_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE SEQUENCE mochi.category_attr_lcl_cat_id_seq
+    START WITH 4
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE mochi.category_attr_lcl_cat_id_seq OWNER TO mochidb_owner;
+
+--
 -- Name: category_attr_lcl; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
 CREATE TABLE mochi.category_attr_lcl (
-    cat_lcl_id bigint NOT NULL,
+    cat_lcl_id bigint DEFAULT nextval('mochi.category_attr_lcl_cat_id_seq'::regclass) NOT NULL,
     cat_id bigint NOT NULL,
     cat_desc character varying(100),
     cat_img_pth character varying(100),
@@ -724,7 +738,20 @@ COPY mochi.category (cat_id, cat_cd, cat_prnt_id) FROM stdin;
 --
 
 COPY mochi.category_attr_lcl (cat_lcl_id, cat_id, cat_desc, cat_img_pth, lcl_cd) FROM stdin;
+10	2	ALL		ENG
+11	3	Fruit		ENG
+12	4	Vegetables		ENG
+13	2	所有		HKG
+14	3	水果		HKG
+15	4	蔬菜		HKG
 \.
+
+
+--
+-- Name: category_attr_lcl_cat_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
+--
+
+SELECT pg_catalog.setval('mochi.category_attr_lcl_cat_id_seq', 15, true);
 
 
 --
