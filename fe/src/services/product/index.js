@@ -15,8 +15,6 @@ import { initialState } from './reducer';
       return JSON.parse(responseText);
     })
     .then((responseJSON)=> {
-			//we dont want to commit the product list to redux
-      //store.dispatch(productActionCreators.update({"items": responseJSON}));
 			return responseJSON;
     })
 		.then(onRequestSuccess)
@@ -31,8 +29,6 @@ import { initialState } from './reducer';
 			return JSON.parse(responseText);
 		})
 		.then((responseJSON)=> {
-			//we dont want to commit the product list to redux
-			//store.dispatch(productActionCreators.update({"items": responseJSON}));
 			return responseJSON;
 		})
 		.then(onRequestSuccess)
