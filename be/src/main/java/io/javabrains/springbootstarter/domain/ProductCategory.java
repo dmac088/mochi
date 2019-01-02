@@ -44,28 +44,32 @@ public class ProductCategory {
 	@Column(name="cat_cd")
 	private String categoryCode;
 	
-	@Column(name="cat_prnt_id")
-	private Long parentCategoryId;
-	
 	@Column(name="cat_desc", table="category_attr_lcl")
 	private String categoryDesc;
 	
 	@Column(name="lcl_cd", table="category_attr_lcl")	
 	private String lclCd;
-//	
-//	@ManyToOne(cascade=CascadeType.ALL)
-//	@JoinColumn(name="cat_prnt_id", insertable=false, updatable=false)
-//	private ProductCategory parent;
-//
-//	@OneToMany(mappedBy="parent")
-//	private List<ProductCategory> children = new ArrayList<ProductCategory>();
-//
-//	public List<ProductCategory> getChildren() {
-//		return children;
-//	}
 	
-	public Long getParentCategoryId() {
-		return parentCategoryId;
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional=false)
+	@JoinColumn(name="cat_prnt_id", nullable=false)
+	private ProductCategory parent;
+
+	//@JsonIgnore
+	@OneToMany(mappedBy="parent")	
+	private List<ProductCategory> children = new ArrayList<ProductCategory>();
+
+	public List<ProductCategory> getChildren() {
+		return children;
+	}
+	
+
+	public ProductCategory getParent() {
+		return parent;
+	}
+
+	public void setParent(ProductCategory parent) {
+		this.parent = parent;
 	}
 
 	public Long getCategoryId() {
