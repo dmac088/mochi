@@ -32,10 +32,10 @@ public class ProductCategoryController {
     }	
 	
 	@ResponseBody
-	@RequestMapping("/ProductCategory/{id}")
-	public Optional<ProductCategory> getProductCategory(@PathVariable Long id) {
+	@RequestMapping(method=RequestMethod.GET, value="/ProductCategory/{lcl}/{id}")
+	public Optional<ProductCategory> getProductCategory(@PathVariable String lcl, @PathVariable Long id) {
 		System.out.println("calling getProduct");
-		return productCategoryService.getProductCategory(id);
+		return productCategoryService.getProductCategory(lcl, id);
 	}
 	
 	@ResponseBody

@@ -13,5 +13,8 @@ public interface ProductCategoryRepository extends CrudRepository<ProductCategor
 
 	Optional<ProductCategory> findByCategoryId(Long id);
 	
+	Optional<ProductCategory> findByLclCdAndCategoryId(String lcl, Long id);
+	
+	ArrayList<ProductCategory> findByParentCategoryIdAndLclCd(Long parentId, String lcl);
 	
 }

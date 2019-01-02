@@ -9,7 +9,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface ProductRepository extends CrudRepository<Product, Long> {
 
-	
 	ArrayList<Product> findByLclCd(String lng);
 	
 	ArrayList<Product> findByLclCdAndCategoriesCategoryDesc(String lng, String categoryDesc);

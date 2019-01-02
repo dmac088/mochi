@@ -23,10 +23,8 @@ public class ProductCategoryService {
 		return categories;
 	}
 	
-
-	
-	public Optional<ProductCategory> getProductCategory(Long id) {
-		Optional<ProductCategory> p = productCategoryRepository.findById(id);
+	public Optional<ProductCategory> getProductCategory(String lcl, Long id) {
+		Optional<ProductCategory> p = productCategoryRepository.findByLclCdAndCategoryId(lcl, id);
 		return p;
 	}
 	
