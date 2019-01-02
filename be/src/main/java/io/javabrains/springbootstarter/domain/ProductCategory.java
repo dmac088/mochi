@@ -55,7 +55,7 @@ public class ProductCategory {
 	@JoinColumn(name="cat_prnt_id", nullable=false)
 	private ProductCategory parent;
 
-	//@JsonIgnore
+	@JsonIgnore
 	@OneToMany(mappedBy="parent")	
 	private List<ProductCategory> children = new ArrayList<ProductCategory>();
 
