@@ -10,7 +10,6 @@ import org.springframework.data.jpa.domain.Specification;
 
 public class ProductSpecs {
 
-
 	  public static Specification<Product> isTest(String lcl) {
 		    return new Specification<Product>() {
 		      public Predicate toPredicate(Root<Product> root, CriteriaQuery<?> query,
