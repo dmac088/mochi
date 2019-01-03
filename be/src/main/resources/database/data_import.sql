@@ -105,7 +105,14 @@ values (9, '12366678', now());
 insert into mochi.product(prd_id, upc_cd, prd_crtd_dt)
 values (10, '23477789', now());
 
+insert into mochi.product(prd_id, upc_cd, prd_crtd_dt)
+values (11, '3577789', now());
 
+insert into mochi.product(prd_id, upc_cd, prd_crtd_dt)
+values (12, '64377789', now());
+
+insert into mochi.product(prd_id, upc_cd, prd_crtd_dt)
+values (13, '76477789', now());
 
 
 insert into mochi.product_attr_lcl(prd_lcl_id, prd_id, prd_desc, prd_img_pth, prd_rrp, lcl_cd)
@@ -168,69 +175,30 @@ values (19, 10, 'brinjal', 'images/brinjal.jpg', 35, 'ENG');
 insert into  mochi.product_attr_lcl(prd_lcl_id, prd_id, prd_desc, prd_img_pth, prd_rrp, lcl_cd)
 values (20, 10, '茄子', 'images/brinjal.jpg', 35, 'HKG');
 
+insert into  mochi.product_attr_lcl(prd_lcl_id, prd_id, prd_desc, prd_img_pth, prd_rrp, lcl_cd)	
+values (21, 11, 'capsicum', 'images/capsicum.jpg', 60, 'ENG');
 
-INSERT INTO mochi.product_category(
-            prd_id, cat_id)
-VALUES (1, 3);
+insert into  mochi.product_attr_lcl(prd_lcl_id, prd_id, prd_desc, prd_img_pth, prd_rrp, lcl_cd)
+values (22, 11, '辣椒', 'images/capsicum.jpg', 60, 'HKG');
 
-INSERT INTO mochi.product_category(
-            prd_id, cat_id)
-VALUES (2, 3);
+insert into  mochi.product_attr_lcl(prd_lcl_id, prd_id, prd_desc, prd_img_pth, prd_rrp, lcl_cd)	
+values (23, 12, 'mushroom', 'images/button-mushroom.jpg', 60, 'ENG');
 
-INSERT INTO mochi.product_category(
-            prd_id, cat_id)
-VALUES (3, 4);
+insert into  mochi.product_attr_lcl(prd_lcl_id, prd_id, prd_desc, prd_img_pth, prd_rrp, lcl_cd)
+values (24, 12, '蘑菇', 'images/button-mushroom.jpg', 60, 'HKG');
 
-INSERT INTO mochi.product_category(
-            prd_id, cat_id)
-VALUES (4, 4);
+insert into  mochi.product_attr_lcl(prd_lcl_id, prd_id, prd_desc, prd_img_pth, prd_rrp, lcl_cd)	
+values (25, 13, 'potato', 'images/potato.jpg', 22, 'ENG');
 
-INSERT INTO mochi.product_category(
-            prd_id, cat_id)
-VALUES (5, 4);
+insert into  mochi.product_attr_lcl(prd_lcl_id, prd_id, prd_desc, prd_img_pth, prd_rrp, lcl_cd)
+values (26, 13, '土豆', 'images/potato.jpg', 22, 'HKG');
 
-INSERT INTO mochi.product_category(
-            prd_id, cat_id)
-VALUES (6, 4);
 
-INSERT INTO mochi.product_category(
-            prd_id, cat_id)
-VALUES (7, 4);
 
-INSERT INTO mochi.product_category(
-            prd_id, cat_id)
-VALUES (8, 3);
 
-INSERT INTO mochi.product_category(
-            prd_id, cat_id)
-VALUES (9, 4);
 
-INSERT INTO mochi.product_category(
-            prd_id, cat_id)
-VALUES (10, 4);
-  
+
 /*
-    {
-        "id": 9,
-        "name": "Capsicum",
-        "price": 60,
-        "image": "images/capsicum.jpg",
-        "category": "vegetables"
-    },
-    {
-        "id": 10,
-        "name": "Mushroom - 1 Kg",
-        "price": 75,
-        "image": "images/button-mushroom.jpg",
-        "category": "vegetables"
-    },
-    {
-        "id": 11,
-        "name": "Potato - 1 Kg",
-        "price": 22,
-        "image": "images/potato.jpg",
-        "category": "vegetables"
-    },
     {
         "id": 12,
         "name": "Pumpkin - 1 Kg",
@@ -366,7 +334,57 @@ VALUES (10, 4);
     }
 */
 
+INSERT INTO mochi.product_category(
+            prd_id, cat_id)
+VALUES (1, 3);
 
+INSERT INTO mochi.product_category(
+            prd_id, cat_id)
+VALUES (2, 3);
+
+INSERT INTO mochi.product_category(
+            prd_id, cat_id)
+VALUES (3, 4);
+
+INSERT INTO mochi.product_category(
+            prd_id, cat_id)
+VALUES (4, 4);
+
+INSERT INTO mochi.product_category(
+            prd_id, cat_id)
+VALUES (5, 4);
+
+INSERT INTO mochi.product_category(
+            prd_id, cat_id)
+VALUES (6, 4);
+
+INSERT INTO mochi.product_category(
+            prd_id, cat_id)
+VALUES (7, 4);
+
+INSERT INTO mochi.product_category(
+            prd_id, cat_id)
+VALUES (8, 3);
+
+INSERT INTO mochi.product_category(
+            prd_id, cat_id)
+VALUES (9, 4);
+
+INSERT INTO mochi.product_category(
+            prd_id, cat_id)
+VALUES (10, 4);
+  
+INSERT INTO mochi.product_category(
+            prd_id, cat_id)
+VALUES (11, 4);
+
+INSERT INTO mochi.product_category(
+            prd_id, cat_id)
+VALUES (12, 4);
+
+INSERT INTO mochi.product_category(
+            prd_id, cat_id)
+VALUES (13, 4);
 
 
 INSERT INTO mochi.role(
