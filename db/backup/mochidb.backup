@@ -496,7 +496,8 @@ ALTER TABLE mochi.tag_tag_id_seq OWNER TO mochidb_owner;
 
 CREATE TABLE mochi.tag (
     tag_id bigint DEFAULT nextval('mochi.tag_tag_id_seq'::regclass) NOT NULL,
-    tag_name text NOT NULL
+    tag_name text NOT NULL,
+    lcl_cd character(3) NOT NULL
 );
 
 
@@ -1131,7 +1132,7 @@ SELECT pg_catalog.setval('mochi.role_type_role_typ_id_seq', 1, false);
 -- Data for Name: tag; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY mochi.tag (tag_id, tag_name) FROM stdin;
+COPY mochi.tag (tag_id, tag_name, lcl_cd) FROM stdin;
 \.
 
 
