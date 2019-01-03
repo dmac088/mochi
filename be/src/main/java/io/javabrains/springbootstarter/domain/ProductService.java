@@ -2,9 +2,11 @@ package io.javabrains.springbootstarter.domain;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,23 +42,22 @@ public class ProductService {
 		//here we need to recursively loop through the sub-categories
 		//of the passed category and build a list of de-duplicated products
 		Optional<ProductCategory> cat = productCategoryRepository.findByLclCdAndCategoryId(lcl, productCategoryId);
+		Set<Product> set = new HashSet<>();
+		recurseCategories(cat.get(), set);
 		List<Product> pal = new ArrayList<Product>();
-		recurseCategories(cat.get(), pal);
-//		for(Product p : pal) {
-//            System.out.println(p.getProductDesc());
-//        }
+		pal.addAll(set);
 		return pal;
 	}
 	
-	private void recurseCategories(ProductCategory cat, List<Product> pal) {
+	private void recurseCategories(ProductCategory cat, Set<Product> pset) {
 		if(cat.getChildren().isEmpty()) {
 			//System.out.println("there are no children for this category " + cat.getCategoryDesc());
-			pal.addAll(cat.getProducts());
+			pset.addAll(cat.getProducts());
 			return;
 		}
 		//System.out.println("there are children for this category " + cat.getCategoryDesc());
 		for(ProductCategory c : cat.getChildren()) {
-			recurseCategories(c, pal);
+			recurseCategories(c, pset);
 		}
 	}
 
