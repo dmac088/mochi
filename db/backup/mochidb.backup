@@ -919,8 +919,16 @@ SELECT pg_catalog.setval('mochi.person_id_seq', 6, false);
 --
 
 COPY mochi.product (prd_id, upc_cd, prd_crtd_dt) FROM stdin;
-1	12345678    	2018-11-15
-2	23456789    	2018-11-15
+1	12345678    	2019-01-03
+2	23464789    	2019-01-03
+3	19633678    	2019-01-03
+4	23456645    	2019-01-03
+5	12383658    	2019-01-03
+6	23739283    	2019-01-03
+7	14445678    	2019-01-03
+8	25556789    	2019-01-03
+9	12366678    	2019-01-03
+10	23477789    	2019-01-03
 \.
 
 
@@ -929,10 +937,26 @@ COPY mochi.product (prd_id, upc_cd, prd_crtd_dt) FROM stdin;
 --
 
 COPY mochi.product_attr_lcl (prd_lcl_id, prd_id, prd_desc, prd_img_pth, prd_rrp, lcl_cd) FROM stdin;
-1	1	mango	images/mango.jpg	5.99	ENG
-2	1	芒果	images/mango.jpg	5.99	HKG
-3	2	orange	images/orange.jpg	8.99	ENG
-4	2	橙子	images/orange.jpg	8.99	HKG
+1	1	mango	images/mango.jpg	75	ENG
+2	1	芒果	images/mango.jpg	75	HKG
+3	2	orange	images/orange.jpg	75	ENG
+4	2	橙子	images/orange.jpg	75	HKG
+5	3	brocolli	images/broccoli.jpg	120	ENG
+6	3	西兰花	images/broccoli.jpg	120	HKG
+7	4	cauliflower	images/cauliflower.jpg	60	ENG
+8	4	菜花	images/broccoli.jpg	60	HKG
+9	5	cucumber	images/cucumber.jpg	48	ENG
+10	5	黄瓜	images/cucumber.jpg	48	HKG
+11	6	beetroot	images/beetroot.jpg	32	ENG
+12	6	红菜头	images/beetroot.jpg	32	HKG
+13	7	carrot	images/carrots.jpg	56	ENG
+14	7	胡萝卜	images/carrots.jpg	56	HKG
+15	8	tomato	images/tomato.jpg	16	ENG
+16	8	番茄	images/tomato.jpg	16	HKG
+17	9	beans	images/beans.jpg	82	ENG
+18	9	豆子	images/beans.jpg	82	HKG
+19	10	brinjal	images/brinjal.jpg	35	ENG
+20	10	茄子	images/brinjal.jpg	35	HKG
 \.
 
 
@@ -941,8 +965,16 @@ COPY mochi.product_attr_lcl (prd_lcl_id, prd_id, prd_desc, prd_img_pth, prd_rrp,
 --
 
 COPY mochi.product_category (prd_cat_id, prd_id, cat_id) FROM stdin;
-1	1	3
-2	2	4
+3	1	3
+4	2	3
+5	3	4
+6	4	4
+7	5	4
+8	6	4
+9	7	4
+10	8	3
+11	9	4
+12	10	4
 \.
 
 
@@ -950,7 +982,7 @@ COPY mochi.product_category (prd_cat_id, prd_id, cat_id) FROM stdin;
 -- Name: product_category_prd_cat_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('mochi.product_category_prd_cat_id_seq', 2, true);
+SELECT pg_catalog.setval('mochi.product_category_prd_cat_id_seq', 12, true);
 
 
 --
