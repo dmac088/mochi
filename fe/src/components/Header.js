@@ -3,6 +3,7 @@ import React from 'react';
 import Greeting from './Greeting';
 import Selector from './Selector';
 import Search from './Search';
+import LanguageSelector from './LanguageSelector';
 import { Link } from 'react-router-dom';
 
 
@@ -18,6 +19,7 @@ const Header = (props) => {
             authenticated={props.authenticated}
             customer={props.customer}
           />
+        <LanguageSelector/>
             <Search
               handleSearch={props.handleSearch}
             />
