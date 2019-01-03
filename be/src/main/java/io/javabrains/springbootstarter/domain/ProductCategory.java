@@ -33,7 +33,7 @@ public class ProductCategory {
     		   joinColumns 			= @JoinColumn(name = "cat_id"), 
     		   inverseJoinColumns 	= @JoinColumn(name = "prd_id"))
     @OrderBy
-    @JsonIgnore
+    //@JsonIgnore
     private Collection<Product> products;
 	
 	@Id
