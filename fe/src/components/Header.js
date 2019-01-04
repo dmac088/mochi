@@ -19,7 +19,9 @@ const Header = (props) => {
             authenticated={props.authenticated}
             customer={props.customer}
           />
-        <LanguageSelector/>
+        <LanguageSelector
+            changeLang ={props.changeLang}
+          />
             <Search
               handleSearch={props.handleSearch}
             />

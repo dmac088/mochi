@@ -32,6 +32,7 @@ class App extends Component {
   constructor(props) {
     super(props);
       this.state = {
+       currentLang: "ENG",
        productList: [],
        categoryList: [],
        searchTerm: '',
@@ -40,7 +41,7 @@ class App extends Component {
   }
 
   getCategories() {
-    categoryApi.findAll('ENG')
+    categoryApi.findAll(this.state.currentLang)
     .then((response) => {
       return response.text();
     })
@@ -69,12 +70,19 @@ class App extends Component {
 
   categoryClick = (event) => {
     console.log('category ' + event.target.id + ' clicked!');
-    this.getProducts('HKG', event.target.id);
+    this.getProducts(this.state.currentLang, event.target.id);
+  }
+
+  changeLang = (event) => {
+    console.log('changeLang id = ' + event.target.id);
+    this.setState({
+      currentLang: event.target.id
+    });
   }
 
   componentWillMount() {
     this.getCategories();
-    this.getProducts('HKG', 2);
+    this.getProducts(this.state.currentLang, 2);
   }
 
   autoLogin = () =>  {
@@ -165,6 +173,7 @@ class App extends Component {
       <Header authenticated={this.props.tokens.authenticated}
         customer={this.props.customer}
         handleSearch={this.handleSearch}
+        changeLang={this.changeLang}
         totalItems={this.props.cart.totalItems}
         total={this.props.cart.totalAmount}
       />

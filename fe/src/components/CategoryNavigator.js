@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import * as productService from '../services/product';
 
 const renderCategoryListItems = (categoryList, categoryClick) => {
   return categoryList = categoryList.map(category => {
