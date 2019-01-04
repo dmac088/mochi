@@ -137,7 +137,7 @@ insert into  mochi.product_attr_lcl(prd_lcl_id, prd_id, prd_desc, prd_img_pth, p
 values (7, 4, 'cauliflower', 'images/cauliflower.jpg', 60, 'ENG');
 
 insert into  mochi.product_attr_lcl(prd_lcl_id, prd_id, prd_desc, prd_img_pth, prd_rrp, lcl_cd)
-values (8, 4, '菜花', 'images/broccoli.jpg', 60, 'HKG');
+values (8, 4, '菜花', 'images/cauliflower.jpg', 60, 'HKG');
 
 insert into  mochi.product_attr_lcl(prd_lcl_id, prd_id, prd_desc, prd_img_pth, prd_rrp, lcl_cd)	
 values (9, 5, 'cucumber', 'images/cucumber.jpg', 48, 'ENG');
