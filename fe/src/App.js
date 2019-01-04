@@ -32,7 +32,8 @@ class App extends Component {
   constructor(props) {
     super(props);
       this.state = {
-       currentLang: "HKG",
+       currentCategory: "ALL"
+       currentLang: "ENG",
        productList: [],
        categoryList: [],
        searchTerm: '',
@@ -71,13 +72,21 @@ class App extends Component {
   categoryClick = (event) => {
     console.log('category ' + event.target.id + ' clicked!');
     this.getProducts(this.state.currentLang, event.target.id);
+    this.setState({
+      currentCategory: event.target.id
+    });
   }
 
   changeLang = (event) => {
+    //we need a callback to refresh categories and products
+
+
     console.log('changeLang id = ' + event.target.id);
     this.setState({
       currentLang: event.target.id
     });
+    this.getCategories();
+    //this.getProducts(this.state.currentLang, event.target.id);
   }
 
   componentWillMount() {
