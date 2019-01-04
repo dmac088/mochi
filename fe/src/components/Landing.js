@@ -10,6 +10,7 @@ const Landing = (props) =>  {
             searchTerm={props.searchTerm}
             addToCart={props.addToCart}
             openModal={props.openModal}
+            lang={props.lang}
           />
         </div>
     );

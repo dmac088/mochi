@@ -32,6 +32,7 @@ class Products extends Component{
 											 id=				{product.productId}
 											 addToCart=	{this.props.addToCart}
 											 openModal=	{this.props.openModal}
+											 lang=			{this.props.lang}
 							/>
 					)
 				}
