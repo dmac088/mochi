@@ -180,6 +180,7 @@ class App extends Component {
         customer={this.props.customer}
         handleSearch={this.handleSearch}
         changeLang={this.changeLang}
+        lang={langSelector[this.state.currentLang]}
         totalItems={this.props.cart.totalItems}
         total={this.props.cart.totalAmount}
       />
