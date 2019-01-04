@@ -19,6 +19,12 @@ import javax.persistence.OrderBy;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
+
+import org.hibernate.Filter;
+import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.FilterJoinTable;
+import org.hibernate.annotations.ParamDef;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 

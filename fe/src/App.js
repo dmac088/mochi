@@ -32,7 +32,7 @@ class App extends Component {
   constructor(props) {
     super(props);
       this.state = {
-       currentLang: "ENG",
+       currentLang: "HKG",
        productList: [],
        categoryList: [],
        searchTerm: '',

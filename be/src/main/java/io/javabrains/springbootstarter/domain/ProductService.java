@@ -43,21 +43,21 @@ public class ProductService {
 		//of the passed category and build a list of de-duplicated products
 		Optional<ProductCategory> cat = productCategoryRepository.findByLclCdAndCategoryId(lcl, productCategoryId);
 		Set<Product> set = new HashSet<>();
-		recurseCategories(cat.get(), set);
+		recurseCategories(lcl, cat.get(), set);
 		List<Product> pal = new ArrayList<Product>();
 		pal.addAll(set);
 		return pal;
 	}
 	
-	private void recurseCategories(ProductCategory cat, Set<Product> pset) {
+	private void recurseCategories(String lcl, ProductCategory cat, Set<Product> pset) {
 		if(cat.getChildren().isEmpty()) {
 			//System.out.println("there are no children for this category " + cat.getCategoryDesc());
-			pset.addAll(cat.getProducts());
+			pset.addAll(productRepository.findByLclCdAndCategoriesCategoryId(lcl, cat.getCategoryId()));
 			return;
 		}
 		//System.out.println("there are children for this category " + cat.getCategoryDesc());
 		for(ProductCategory c : cat.getChildren()) {
-			recurseCategories(c, pset);
+			recurseCategories(lcl, c, pset);
 		}
 	}
 
