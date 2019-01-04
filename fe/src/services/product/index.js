@@ -26,6 +26,7 @@ import { initialState } from './reducer';
 			return response.text();
 		})
 		.then((responseText)=> {
+			console.log(responseText);
 			return JSON.parse(responseText);
 		})
 		.then((responseJSON)=> {
