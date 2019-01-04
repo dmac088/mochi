@@ -85,9 +85,9 @@ class Product extends Component{
                     <button className={!this.state.isAdded ? "" : "added"}
 														type="button"
 														onClick={this.addToCart.bind(this, image, name, price, id, quantity)}>{
-																!this.state.isAdded ? 
-																"ADD TO CART" :
-																"✔ ADDED"}
+																!this.state.isAdded ?
+																this.props.lang.addToCart :
+																this.props.lang.addedToCart}
 										</button>
                 </div>
             </div>

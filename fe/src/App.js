@@ -25,7 +25,7 @@ import * as cartSelector from './services/cart/selectors';
 import { initialState } from './services/cart/reducer';
 import './scss/style.scss';
 import CategoryNavigator from './components/CategoryNavigator'
-
+import langSelector from './config/lang/selector';
 
 class App extends Component {
 
@@ -191,6 +191,7 @@ class App extends Component {
                   <Landing {...routeProps}
                     {...this.state}
                     addToCart={this.handleAddToCart}
+                    lang={langSelector[this.state.currentLang]}
                     openModal={this.openModal}
                     updateQuantity={this.updateQuantity}
                     productQuantity={this.state.quantity}
