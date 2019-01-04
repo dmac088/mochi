@@ -24,6 +24,7 @@ const Header = (props) => {
           />
             <Search
               handleSearch={props.handleSearch}
+              lang={props.lang}
             />
                         <div className="cart-info">
                           <table>

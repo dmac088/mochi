@@ -11,7 +11,7 @@ const Search = (props) => {
         placeholder="Search"
         aria-label="Search"
       />
-      <button className="btn btn-outline-success mr-sm-5 my-2 my-sm-0" type="submit">Search</button>
+    <button className="btn btn-outline-success mr-sm-5 my-2 my-sm-0" type="submit">{props.lang.searchProduct}</button>
       </div>
     );
 }
