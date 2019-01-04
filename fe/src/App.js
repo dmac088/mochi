@@ -32,7 +32,7 @@ class App extends Component {
   constructor(props) {
     super(props);
       this.state = {
-       currentCategory: "ALL",
+       currentCategory: 2,
        currentLang: "ENG",
        productList: [],
        categoryList: [],
@@ -41,8 +41,8 @@ class App extends Component {
     };
   }
 
-  getCategories() {
-    categoryApi.findAll(this.state.currentLang)
+  getCategories(currentLang) {
+    categoryApi.findAll(currentLang)
     .then((response) => {
       return response.text();
     })
@@ -70,7 +70,6 @@ class App extends Component {
   }
 
   categoryClick = (event) => {
-    console.log('category ' + event.target.id + ' clicked!');
     this.getProducts(this.state.currentLang, event.target.id);
     this.setState({
       currentCategory: event.target.id
@@ -78,20 +77,18 @@ class App extends Component {
   }
 
   changeLang = (event) => {
-    //we need a callback to refresh categories and products
-
-
-    console.log('changeLang id = ' + event.target.id);
     this.setState({
       currentLang: event.target.id
     });
-    this.getCategories();
-    //this.getProducts(this.state.currentLang, event.target.id);
+    this.getCategories(event.target.id);
+    this.getProducts(event.target.id, this.state.currentCategory);
   }
 
   componentWillMount() {
-    this.getCategories();
-    this.getProducts(this.state.currentLang, 2);
+    console.log(this.state.currentLang);
+    console.log(this.state.currentCategory);
+    this.getCategories(this.state.currentLang);
+    this.getProducts(this.state.currentLang, this.state.currentCategory);
   }
 
   autoLogin = () =>  {
