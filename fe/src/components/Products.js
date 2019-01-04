@@ -25,13 +25,13 @@ class Products extends Component{
 			productsData = this.props.productsList.filter(searchingFor(term)).map(product =>{
 
 				return(
-							<Product key={product.productId}
-									 price={product.productRrp}
-									 name={product.productDesc}
-									 image={config.url + '/' + product.productImage}
-									 id={product.productId}
-									 addToCart={this.props.addToCart}
-									 openModal={this.props.openModal}
+							<Product key=				{product.productId}
+											 price=			{product.productRrp}
+											 name=			{product.productDesc}
+											 image=			{config.url + '/' + product.productImage}
+											 id=				{product.productId}
+											 addToCart=	{this.props.addToCart}
+											 openModal=	{this.props.openModal}
 							/>
 					)
 				}
