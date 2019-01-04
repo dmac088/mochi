@@ -4,7 +4,6 @@ import Counter from './Counter';
 class Product extends Component{
 
 	constructor(props){
-		//console.log('Product...');
 		super(props);
         this.state = {
             selectedProduct: {},
@@ -15,7 +14,6 @@ class Product extends Component{
     }
 
 		updateQuantity = (qty) => {
-			console.log("quantity added..." + qty);
 			this.setState({
 				quantity: qty
 			});
@@ -86,7 +84,10 @@ class Product extends Component{
                 <div className="product-action">
                     <button className={!this.state.isAdded ? "" : "added"}
 														type="button"
-														onClick={this.addToCart.bind(this, image, name, price, id, quantity)}>{!this.state.isAdded ? "ADD TO CART" : "✔ ADDED"}
+														onClick={this.addToCart.bind(this, image, name, price, id, quantity)}>{
+																!this.state.isAdded ? 
+																"ADD TO CART" :
+																"✔ ADDED"}
 										</button>
                 </div>
             </div>
