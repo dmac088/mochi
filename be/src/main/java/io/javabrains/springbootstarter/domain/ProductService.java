@@ -8,6 +8,11 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,6 +20,9 @@ public class ProductService {
 
 	@Autowired
 	private ProductRepository productRepository; 
+	
+	@Autowired
+	private ProductPagingAndSortingRepository productPagingAndSortingRepository;
 	
 	@Autowired
 	private ProductCategoryRepository productCategoryRepository;
@@ -28,13 +36,8 @@ public class ProductService {
 		return Products;
 	}
 	
-	public List<Product> getAllProducts(String lcl) {
-		List<Product> Products = new ArrayList<>();
-		Iterator<Product> i = productRepository.findByLclCd(lcl).iterator();
-		while(i.hasNext()) {
-			  Products.add(i.next());
-		}
-		return Products;
+	public Page<Product> getAllProducts(String lcl) {
+		return productPagingAndSortingRepository.findByLclCd(lcl, PageRequest.of(1, 5, Sort.by("productRrp")));	
 	}
 	
 	public List<Product> getAllProducts(String lcl, Long productCategoryId) {

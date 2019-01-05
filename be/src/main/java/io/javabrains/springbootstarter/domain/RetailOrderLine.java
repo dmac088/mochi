@@ -1,12 +1,12 @@
 package io.javabrains.springbootstarter.domain;
 
 //@Entity
-public class OrderLine {
+public class RetailOrderLine {
 
 	private Product product;
 	private int quantity;
 	
-	public OrderLine() {
+	public RetailOrderLine() {
 		super();
 	}
 	
