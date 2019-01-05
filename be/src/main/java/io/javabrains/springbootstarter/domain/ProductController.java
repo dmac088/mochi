@@ -44,12 +44,12 @@ public class ProductController {
 //    public List<Product> getAllProducts(@PathVariable String lcl, @PathVariable Long catid) {
 //        return productService.getAllProducts(lcl, catid);	
 //    }	
-//	
-//	@ResponseBody
-//	@RequestMapping(method=RequestMethod.GET, value="/Product/{lcl}/cat/{catid}/page/{pageNo}/{size}")
-//    public Page<Product> getAllProducts(@PathVariable String lcl, @PathVariable Long catid, @PathVariable int pageNo, @PathVariable int size) {
-//        return productService.getAllProducts(lcl, catid, pageNo, size);	
-//    }	
+	
+	@ResponseBody
+	@RequestMapping(method=RequestMethod.GET, value="/Product/{lcl}/cat/{catid}/page/{pageNo}/size/{size}")
+    public List<Product> getAllProducts(@PathVariable String lcl, @PathVariable Long catid, @PathVariable int pageNo, @PathVariable int size) {
+        return productService.getAllProducts(lcl, catid, pageNo, size);	
+    }	
 	
 	@ResponseBody
 	@RequestMapping("/Product/id/{id}")
