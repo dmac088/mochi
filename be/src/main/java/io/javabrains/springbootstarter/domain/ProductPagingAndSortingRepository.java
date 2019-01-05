@@ -11,5 +11,5 @@ public interface ProductPagingAndSortingRepository extends PagingAndSortingRepos
 	
 	Page<Product> findByLclCd(String lcl, Pageable pageable);
 	
-	Page<Product> findByLclCdOrderByProductRrpAsc(String lcl, Pageable pageable);
+	Page<Product> findByLclCdAndCategoriesCategoryId(String lcl, Long productCategoryId, Pageable pageable);
 }
