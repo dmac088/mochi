@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -36,11 +34,11 @@ public class ProductService {
 		return Products;
 	}
 	
-	public Page<Product> getAllProducts(String lcl) {
-		return productPagingAndSortingRepository.findByLclCd(lcl, PageRequest.of(1, 5, Sort.by("productRrp")));	
+	public Page<Product> getAllProducts(String lcl, int page, int size) {
+		return productPagingAndSortingRepository.findByLclCd(lcl, PageRequest.of(page, size, Sort.by("productRrp")));
 	}
 	
-	public List<Product> getAllProducts(String lcl, Long productCategoryId) {
+	public List<Product> getAllProducts(String lcl, Long productCategoryId, int page, int size) {
 		//here we need to recursively loop through the sub-categories
 		//of the passed category and build a list of de-duplicated products
 		Optional<ProductCategory> cat = productCategoryRepository.findByLclCdAndCategoryId(lcl, productCategoryId);
