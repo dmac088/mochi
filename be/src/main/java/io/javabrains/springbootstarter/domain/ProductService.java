@@ -8,7 +8,9 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -47,7 +49,10 @@ public class ProductService {
 		recurseCategories(lcl, cat.get(), set);
 		List<Product> pal = new ArrayList<Product>();
 		pal.addAll(set);
-		return pal;
+		PagedListHolder<Product> productPage = new PagedListHolder<Product>(pal);
+		productPage.setPageSize(size);
+		productPage.setPage(page);
+		return productPage.getPageList();
 	}
 	
 	private void recurseCategories(String lcl, ProductCategory cat, Set<Product> pset) {
