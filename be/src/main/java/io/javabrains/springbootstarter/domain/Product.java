@@ -33,7 +33,7 @@ public class Product {
 	private Date productCreateDt;
 	
 	@Column(name="prd_rrp", table="product_attr_lcl")
-	private double ProductRrp;
+	private double productRrp;
 
 	@Column(name="prd_desc", table="product_attr_lcl")
 	private String ProductDesc;
@@ -81,11 +81,11 @@ public class Product {
 	}
 
 	public double getProductRrp() {
-		return ProductRrp;
+		return productRrp;
 	}
 
 	public void setProductRrp(double productRrp) {
-		ProductRrp = productRrp;
+		this.productRrp = productRrp;
 	}
 
 	public String getProductDesc() {
