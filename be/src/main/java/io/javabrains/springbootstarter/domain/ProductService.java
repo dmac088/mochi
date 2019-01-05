@@ -35,6 +35,7 @@ public class ProductService {
 	}
 	
 	public Page<Product> getAllProducts(String lcl, int page, int size) {
+	
 		return productPagingAndSortingRepository.findByLclCd(lcl, PageRequest.of(page, size, Sort.by("productRrp")));
 	}
 	
