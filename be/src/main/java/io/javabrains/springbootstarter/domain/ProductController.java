@@ -47,7 +47,7 @@ public class ProductController {
 	
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.GET, value="/Product/{lcl}/cat/{catid}/page/{pageNo}/size/{size}")
-    public List<Product> getAllProducts(@PathVariable String lcl, @PathVariable Long catid, @PathVariable int pageNo, @PathVariable int size) {
+    public Page<Product> getAllProducts(@PathVariable String lcl, @PathVariable Long catid, @PathVariable int pageNo, @PathVariable int size) {
         return productService.getAllProducts(lcl, catid, pageNo, size);	
     }	
 	

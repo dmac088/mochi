@@ -8,7 +8,9 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PagedListHolder;
+import org.springframework.beans.support.SortDefinition;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -41,7 +43,7 @@ public class ProductService {
 		return productPagingAndSortingRepository.findByLclCd(lcl, PageRequest.of(page, size, Sort.by("productRrp")));
 	}
 	
-	public List<Product> getAllProducts(String lcl, Long productCategoryId, int page, int size) {
+	public Page<Product> getAllProducts(String lcl, Long productCategoryId, int page, int size) {
 		//here we need to recursively loop through the sub-categories
 		//of the passed category and build a list of de-duplicated products
 		Optional<ProductCategory> cat = productCategoryRepository.findByLclCdAndCategoryId(lcl, productCategoryId);
@@ -52,7 +54,10 @@ public class ProductService {
 		PagedListHolder<Product> productPage = new PagedListHolder<Product>(pal);
 		productPage.setPageSize(size);
 		productPage.setPage(page);
-		return productPage.getPageList();
+		MutableSortDefinition x = new MutableSortDefinition("productRrp", true, true);
+		productPage.setSort(x);
+		productPage.resort();
+		return new PageImpl<Product>(productPage.getPageList());
 	}
 	
 	private void recurseCategories(String lcl, ProductCategory cat, Set<Product> pset) {
