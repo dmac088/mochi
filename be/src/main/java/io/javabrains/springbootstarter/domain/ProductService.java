@@ -51,13 +51,7 @@ public class ProductService {
 		recurseCategories(lcl, cat.get(), set);
 		List<Product> pal = new ArrayList<Product>();
 		pal.addAll(set);
-		PagedListHolder<Product> productPage = new PagedListHolder<Product>(pal);
-		productPage.setPageSize(size);
-		productPage.setPage(page);
-		MutableSortDefinition x = new MutableSortDefinition("productRrp", true, true);
-		productPage.setSort(x);
-		productPage.resort();
-		return new PageImpl<Product>(productPage.getPageList());
+		return new PageImpl<Product>(pal, PageRequest.of(page, size, Sort.by("productRrp")), pal.size());
 	}
 	
 	private void recurseCategories(String lcl, ProductCategory cat, Set<Product> pset) {
