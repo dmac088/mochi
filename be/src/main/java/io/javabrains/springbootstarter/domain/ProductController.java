@@ -27,9 +27,9 @@ public class ProductController {
 	private ProductService productService;	
 	
 	@ResponseBody
-	@RequestMapping(method=RequestMethod.GET, value="/Product/page/{pageNo}/size/{size}")
-    public Page<Product> getAllProducts( @PathVariable int pageNo, @PathVariable int size) {
-        return productService.getAllProducts(pageNo, size);	
+	@RequestMapping(method=RequestMethod.GET, value="/Product")
+    public List<Product> getAllProducts() {
+        return productService.getAllProducts();	
     }		
 	
 	@ResponseBody
