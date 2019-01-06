@@ -33,7 +33,7 @@ public class ProductController {
     }		
 	
 	@ResponseBody
-	@RequestMapping("/Product/id/{id}")
+	@RequestMapping("/Product/{id}")
 	public Optional<Product> getProduct(@PathVariable Long id) {
 		return productService.getProduct(id);
 	}
