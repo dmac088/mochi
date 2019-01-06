@@ -16,7 +16,7 @@ public class ProductCategoryService {
 	
 	public List<ProductCategory> getAllProductCategories(String lcl) {
 		List<ProductCategory> categories = new ArrayList<>();
-		Iterator<ProductCategory> i = productCategoryRepository.findByLclCd(lcl).iterator();
+		Iterator<ProductCategory> i = productCategoryRepository.findByProductCategoryAttributeLclCd(lcl).iterator();
 		while(i.hasNext()) {
 			categories.add(i.next());
 		}
@@ -24,7 +24,7 @@ public class ProductCategoryService {
 	}
 	
 	public Optional<ProductCategory> getProductCategory(String lcl, Long id) {
-		Optional<ProductCategory> p = productCategoryRepository.findByLclCdAndCategoryId(lcl, id);
+		Optional<ProductCategory> p = productCategoryRepository.findByProductCategoryAttributeLclCdAndCategoryId(lcl, id);
 		return p;
 	}
 	

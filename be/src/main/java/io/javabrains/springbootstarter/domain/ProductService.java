@@ -46,7 +46,7 @@ public class ProductService {
 	public Page<Product> getAllProducts(String lcl, Long productCategoryId, int page, int size) {
 		//here we need to recursively loop through the sub-categories
 		//of the passed category and build a list of de-duplicated products
-		Optional<ProductCategory> cat = productCategoryRepository.findByLclCdAndCategoryId(lcl, productCategoryId);
+		Optional<ProductCategory> cat = productCategoryRepository.findByProductCategoryAttributeLclCdAndCategoryId(lcl, productCategoryId);
 		Set<Product> set = new HashSet<>();
 		recurseCategories(lcl, cat.get(), set);
 		List<Product> pal = new ArrayList<Product>();
