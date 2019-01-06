@@ -26,9 +26,6 @@ public class ProductService {
 	@Autowired
 	private ProductPagingAndSortingRepository productPagingAndSortingRepository;
 	
-	@Autowired
-	private ProductCategoryRepository productCategoryRepository;
-	
 	public List<Product> getAllProducts() {
 		List<Product> Products = new ArrayList<>();
 		Iterator<Product> i = productRepository.findAll().iterator();
@@ -38,16 +35,9 @@ public class ProductService {
 		return Products;
 	}
 	
-	public Page<Product> getAllProducts(String lcl, int page, int size) {
-	
-		return productPagingAndSortingRepository.findByLclCd(lcl, PageRequest.of(page, size, Sort.by("productRrp")));
+	public Page<Product> getAllProducts(int page, int size) {
+		return productPagingAndSortingRepository.findAll(PageRequest.of(page, size));
 	}
-	
-	public Page<Product> getAllProducts(String lcl, Long productCategoryId, int page, int size) {
-		return null;
-		//return productPagingAndSortingRepository
-	}
-
 	
 	public Optional<Product> getProduct(Long id) {
 		Optional<Product> p = productRepository.findById(id);
