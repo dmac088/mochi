@@ -32,18 +32,6 @@ public class Product {
 	@Column(name="prd_crtd_dt")
 	private Date productCreateDt;
 	
-	@Column(name="prd_rrp", table="product_attr_lcl")
-	private double productRrp;
-
-	@Column(name="prd_desc", table="product_attr_lcl")
-	private String ProductDesc;
-	
-	@Column(name="prd_img_pth", table="product_attr_lcl")
-	private String ProductImage;
-	
-	@Column(name="lcl_cd", table="product_attr_lcl")	
-	private String lclCd;
-	
 	@ManyToMany(mappedBy = "products")
 	@JsonIgnore
 	private Collection<ProductCategory> categories;
@@ -78,38 +66,6 @@ public class Product {
 
 	public void setProductCreateDt(Date productCreateDt) {
 		this.productCreateDt = productCreateDt;
-	}
-
-	public double getProductRrp() {
-		return productRrp;
-	}
-
-	public void setProductRrp(double productRrp) {
-		this.productRrp = productRrp;
-	}
-
-	public String getProductDesc() {
-		return ProductDesc;
-	}
-
-	public void setProductDesc(String productDesc) {
-		ProductDesc = productDesc;
-	}
-
-	public String getProductImage() {
-		return ProductImage;
-	}
-
-	public void setProductImage(String productImage) {
-		ProductImage = productImage;
-	}
-
-	public String getLclCd() {
-		return lclCd;
-	}
-	
-	public void setLclCd(String lclCd) {
-		this.lclCd = lclCd;
 	}
 			
 }

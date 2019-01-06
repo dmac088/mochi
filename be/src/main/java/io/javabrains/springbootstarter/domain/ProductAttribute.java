@@ -22,6 +22,12 @@ public class ProductAttribute {
 	@Column(name="prd_lcl_id")
 	private Long Id;
 	
+	@Column(name="prd_rrp")
+	private double productRrp;
+	
+	@Column(name="prd_img_pth")
+	private String ProductImage;
+
 	@Column(name="prd_id")
 	private Long productId;
 	
@@ -30,7 +36,7 @@ public class ProductAttribute {
 	
 	@Column(name="lcl_cd")	
 	private String lclCd;
-
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="prd_id", insertable=false, updatable=false)
 	@JsonBackReference
@@ -58,6 +64,21 @@ public class ProductAttribute {
 
 	public void setLclCd(String lclCd) {
 		this.lclCd = lclCd;
+	}
+	public double getProductRrp() {
+		return productRrp;
+	}
+
+	public void setProductRrp(double productRrp) {
+		this.productRrp = productRrp;
+	}
+
+	public String getProductImage() {
+		return ProductImage;
+	}
+
+	public void setProductImage(String productImage) {
+		ProductImage = productImage;
 	}
 	
 	

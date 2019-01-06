@@ -26,30 +26,11 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;	
 	
-//	@ResponseBody
-//	@RequestMapping(method=RequestMethod.GET, value="/Product/{lcl}")
-//    public Page<Product> getAllProducts(@PathVariable String lcl) {
-//        return productService.getAllProducts(lcl);	
-//    }	
-	
 	@ResponseBody
-	@RequestMapping(method=RequestMethod.GET, value="/Product/{lcl}/page/{pageNo}/size/{size}")
-    public Page<Product> getAllProducts(@PathVariable String lcl, @PathVariable int pageNo, @PathVariable int size) {
-        return productService.getAllProducts(lcl, pageNo, size);	
-    }	
-	
-	
-//	@ResponseBody
-//	@RequestMapping(method=RequestMethod.GET, value="/Product/{lcl}/{catid}")
-//    public List<Product> getAllProducts(@PathVariable String lcl, @PathVariable Long catid) {
-//        return productService.getAllProducts(lcl, catid);	
-//    }	
-	
-	@ResponseBody
-	@RequestMapping(method=RequestMethod.GET, value="/Product/{lcl}/cat/{catid}/page/{pageNo}/size/{size}")
-    public Page<Product> getAllProducts(@PathVariable String lcl, @PathVariable Long catid, @PathVariable int pageNo, @PathVariable int size) {
-        return productService.getAllProducts(lcl, catid, pageNo, size);	
-    }	
+	@RequestMapping(method=RequestMethod.GET, value="/Product/page/{pageNo}/size/{size}")
+    public Page<Product> getAllProducts( @PathVariable int pageNo, @PathVariable int size) {
+        return productService.getAllProducts(pageNo, size);	
+    }		
 	
 	@ResponseBody
 	@RequestMapping("/Product/id/{id}")
