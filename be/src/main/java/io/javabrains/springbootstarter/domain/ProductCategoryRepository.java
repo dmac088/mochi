@@ -9,11 +9,8 @@ public interface ProductCategoryRepository extends CrudRepository<ProductCategor
 
 	ArrayList<ProductCategory> findAll();
 	
-	ArrayList<ProductCategory> findByProductCategoryAttributeLclCd(String lcl);
-
 	Optional<ProductCategory> findByCategoryId(Long id);
 	
-	Optional<ProductCategory> findByProductCategoryAttributeLclCdAndCategoryId(String lcl, Long id);
 	
 	
 }

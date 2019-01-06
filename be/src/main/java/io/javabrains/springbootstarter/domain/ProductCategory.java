@@ -22,8 +22,9 @@ import javax.persistence.PrimaryKeyJoinColumn;
 //import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
 
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 @Entity
@@ -56,6 +57,10 @@ public class ProductCategory {
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional=false)
 	@JoinColumn(name="cat_prnt_id", nullable=false)
 	private ProductCategory parent;
+	
+	@OneToMany(mappedBy="productCategory",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonBackReference
+	private List<ProductCategoryAttribute> productCategoryAttribute;
 
 //	@JsonIgnore
 //	@OneToMany(fetch = FetchType.LAZY)
@@ -64,18 +69,13 @@ public class ProductCategory {
 //					@JoinColumn(name="lcl_cd", table="category_attr_lcl")
 //				})
 //	private List<ProductCategory> children = new ArrayList<ProductCategory>();
-	
 
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="cat_id")
-	private ProductCategoryAttribute productCategoryAttribute;
-	
-	public ProductCategoryAttribute getProductCategoryAttribute() {
+	public List<ProductCategoryAttribute> getProductCategoryAttribute() {
 		return productCategoryAttribute;
 	}
 
 
-	public void setProductCategoryAttribute(ProductCategoryAttribute productCategoryAttribute) {
+	public void setProductCategoryAttribute(List<ProductCategoryAttribute> productCategoryAttribute) {
 		this.productCategoryAttribute = productCategoryAttribute;
 	}
 
