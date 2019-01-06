@@ -1,0 +1,51 @@
+package io.javabrains.springbootstarter.domain;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
+
+
+
+@Entity
+@Table(name = "category_attr_lcl", schema = "mochi")
+@PrimaryKeyJoinColumn(name = "cat_id")
+public class ProductCategoryAttribute {
+
+	
+	
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="cat_lcl_id")
+	private Long Id;
+
+	@Id
+	@Column(name="cat_id")
+	private Long categoryId;
+	
+	@Column(name="cat_desc")
+	private String categoryDesc;
+	
+	@Column(name="lcl_cd")	
+	private String lclCd;
+	
+	public String getCategoryDesc() {
+		return categoryDesc;
+	}
+
+	public void setCategoryDesc(String categoryDesc) {
+		this.categoryDesc = categoryDesc;
+	}
+	
+	public String getLclCd() {
+		return lclCd;
+	}
+
+	public void setLclCd(String lclCd) {
+		this.lclCd = lclCd;
+	}
+	
+	
+}
