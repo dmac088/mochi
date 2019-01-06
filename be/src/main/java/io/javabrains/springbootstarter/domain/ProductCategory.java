@@ -55,7 +55,7 @@ public class ProductCategory {
 	
 	@OneToMany(mappedBy="productCategory",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonManagedReference
-	@Where(clause = " lcl_cd = 'ENG' ")
+	//@Where(clause = " lcl_cd = 'ENG' ")
 	//@Filter(name = "lclCdFilter")
 	private List<ProductCategoryAttribute> productCategoryAttribute;
 
