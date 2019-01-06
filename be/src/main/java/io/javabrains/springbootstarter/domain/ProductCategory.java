@@ -19,8 +19,12 @@ import javax.persistence.OrderBy;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.Where;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 @Entity
@@ -50,17 +54,10 @@ public class ProductCategory {
 	private ProductCategory parent;
 	
 	@OneToMany(mappedBy="productCategory",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JsonBackReference
+	@JsonManagedReference
+	@Where(clause = " lcl_cd = 'ENG' ")
+	//@Filter(name = "lclCdFilter")
 	private List<ProductCategoryAttribute> productCategoryAttribute;
-
-	public List<ProductCategoryAttribute> getProductCategoryAttribute() {
-		return productCategoryAttribute;
-	}
-
-
-	public void setProductCategoryAttribute(List<ProductCategoryAttribute> productCategoryAttribute) {
-		this.productCategoryAttribute = productCategoryAttribute;
-	}
 
 	//@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY)
@@ -78,6 +75,14 @@ public class ProductCategory {
 
 	public void setParent(ProductCategory parent) {
 		this.parent = parent;
+	}
+	
+	public List<ProductCategoryAttribute> getProductCategoryAttribute() {
+		return productCategoryAttribute;
+	}
+
+	public void setProductCategoryAttribute(List<ProductCategoryAttribute> productCategoryAttribute) {
+		this.productCategoryAttribute = productCategoryAttribute;
 	}
 
 	public Long getCategoryId() {
