@@ -19,7 +19,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Entity
 @Table(name = "category_attr_lcl", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "cat_lcl_id")
-//@FilterDef(name = "lclCdFilter", defaultCondition=" lcl_cd = 'HKG' ")
 public class ProductCategoryAttribute {
 
 	@Id
