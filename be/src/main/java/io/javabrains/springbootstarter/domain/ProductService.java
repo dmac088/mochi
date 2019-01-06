@@ -44,32 +44,8 @@ public class ProductService {
 	}
 	
 	public Page<Product> getAllProducts(String lcl, Long productCategoryId, int page, int size) {
-		//here we need to recursively loop through the sub-categories
-		//of the passed category and build a list of de-duplicated products
-		Optional<ProductCategory> cat = productCategoryRepository.findByProductCategoryAttributeLclCdAndCategoryId(lcl, productCategoryId);
-		Set<Product> set = new HashSet<>();
-		recurseCategories(lcl, cat.get(), set);
-		List<Product> pal = new ArrayList<Product>();
-		pal.addAll(set);
-		PagedListHolder<Product> productPage = new PagedListHolder<Product>(pal);
-		MutableSortDefinition x = new MutableSortDefinition("productRrp", true, true);
-		productPage.setSort(x);
-		productPage.resort();
-		productPage.setPageSize(size);
-		productPage.setPage(page);
-		return new PageImpl<Product>(productPage.getPageList());
-	}
-	
-	private void recurseCategories(String lcl, ProductCategory cat, Set<Product> pset) {
-		if(cat.getChildren().isEmpty()) {
-			//System.out.println("there are no children for this category " + cat.getCategoryDesc());
-			pset.addAll(productRepository.findByLclCdAndCategoriesCategoryId(lcl, cat.getCategoryId()));
-			return;
-		}
-		//System.out.println("there are children for this category " + cat.getCategoryDesc());
-		for(ProductCategory c : cat.getChildren()) {
-			recurseCategories(lcl, c, pset);
-		}
+		return null;
+		//return productPagingAndSortingRepository
 	}
 
 	

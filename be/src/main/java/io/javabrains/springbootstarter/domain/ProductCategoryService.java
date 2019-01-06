@@ -12,23 +12,9 @@ public class ProductCategoryService {
 	@Autowired
 	private ProductCategoryRepository productCategoryRepository; 
 	
-	@Autowired
-	private ProductCategoryAttributeRepository productCategoryAttributeRepository; 
-	
-	public List<ProductCategoryAttribute> getAllProductCategories(String lcl) {
-		return productCategoryAttributeRepository.findByLclCd(lcl);
-//		List<ProductCategory> categories = new ArrayList<>();
-//		Iterator<ProductCategory> i = productCategoryRepository.findByProductCategoryAttributeLclCd(lcl).iterator();
-//		while(i.hasNext()) {
-//			categories.add(i.next());
-//		}
-//		return categories;
+	public List<ProductCategory> getAllProductCategories(String lcl) {
+		return productCategoryRepository.findAll();
 	}
-	
-//	public Optional<ProductCategory> getProductCategory(String lcl, Long id) {
-//		Optional<ProductCategory> p = productCategoryRepository.findAll();//(lcl, id);
-//		return p;
-//	}
 	
 	public void addProductCategory(ProductCategory productCategory) {
 		productCategoryRepository.save(productCategory);
