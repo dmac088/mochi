@@ -27,15 +27,14 @@ public class ProductCategoryController {
 	
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.GET, value="/ProductCategory/{lcl}")
-    public List<ProductCategoryAttribute> getAllProductCategories(@PathVariable String lcl) {
+    public List<ProductCategory> getAllProductCategories(@PathVariable String lcl) {
         return productCategoryService.getAllProductCategories(lcl);	
     }	
 //	
 //	@ResponseBody
 //	@RequestMapping(method=RequestMethod.GET, value="/ProductCategory/{lcl}/{id}")
 //	public Optional<ProductCategory> getProductCategory(@PathVariable String lcl, @PathVariable Long id) {
-//		System.out.println("calling getProduct");
-//		return productCategoryService.getProductCategory(lcl, id);
+//		return productCategoryService.get
 //	}
 	
 	@ResponseBody

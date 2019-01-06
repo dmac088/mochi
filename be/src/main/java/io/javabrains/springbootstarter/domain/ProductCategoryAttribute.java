@@ -10,11 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-
 
 @Entity
 @Table(name = "category_attr_lcl", schema = "mochi")
@@ -38,6 +34,7 @@ public class ProductCategoryAttribute {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="cat_id", insertable=false, updatable=false)
+	@JsonManagedReference
 	private ProductCategory productCategory;
 	
 	public ProductCategory getProductCategory() {

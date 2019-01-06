@@ -10,7 +10,4 @@ public interface ProductCategoryRepository extends CrudRepository<ProductCategor
 	ArrayList<ProductCategory> findAll();
 	
 	Optional<ProductCategory> findByCategoryId(Long id);
-	
-	
-	
 }
