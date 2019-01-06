@@ -28,13 +28,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @PrimaryKeyJoinColumn(name = "cat_id")
 public class ProductCategory {
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "product_category", schema="mochi", 
     		   joinColumns 			= @JoinColumn(name = "cat_id"), 
     		   inverseJoinColumns 	= @JoinColumn(name = "prd_id"))
     @OrderBy
-    //@JsonIgnore
-    private Collection<Product> products;
+    @JsonIgnore
+    private List<Product> products;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

@@ -1,16 +1,16 @@
 package io.javabrains.springbootstarter.domain;
 
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
 
 public interface ProductCategoryAttributeRepository extends CrudRepository<ProductCategoryAttribute, Long> {
 
-	ArrayList<ProductCategoryAttribute> findAll();
+	List<ProductCategoryAttribute> findAll();
 	
-	ArrayList<ProductCategoryAttribute> findByLclCd(String lcl);
+	List<ProductCategoryAttribute> findAllByLclCd(String lcl);
 
-	Optional<ProductCategoryAttribute> findByCategoryId(Long id);
+	Optional<ProductCategoryAttribute> findByLclCdAndCategoryId(String lcl, Long id);
 
 }
