@@ -1,20 +1,12 @@
 package io.javabrains.springbootstarter.domain;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
+
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.support.MutableSortDefinition;
-import org.springframework.beans.support.PagedListHolder;
-import org.springframework.beans.support.SortDefinition;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,12 +19,7 @@ public class ProductService {
 	private ProductPagingAndSortingRepository productPagingAndSortingRepository;
 	
 	public List<Product> getAllProducts() {
-		List<Product> Products = new ArrayList<>();
-		Iterator<Product> i = productRepository.findAll().iterator();
-		while(i.hasNext()) {
-			  Products.add(i.next());
-		}
-		return Products;
+		return productRepository.findAll();
 	}
 	
 	public Page<Product> getAllProducts(int page, int size) {
