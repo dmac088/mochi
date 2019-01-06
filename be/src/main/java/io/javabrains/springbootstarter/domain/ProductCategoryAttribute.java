@@ -41,6 +41,10 @@ public class ProductCategoryAttribute {
 		return productCategory;
 	}
 
+	public void setProductCategory(ProductCategory productCategory) {
+		this.productCategory = productCategory;
+	}
+
 	public String getCategoryDesc() {
 		return categoryDesc;
 	}

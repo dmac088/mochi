@@ -26,16 +26,16 @@ public class ProductCategoryController {
 	private ProductCategoryService productCategoryService;	
 	
 	@ResponseBody
-	@RequestMapping(method=RequestMethod.GET, value="/ProductCategory/{lcl}")
-    public List<ProductCategory> getAllProductCategories(@PathVariable String lcl) {
-        return productCategoryService.getAllProductCategories(lcl);	
+	@RequestMapping(method=RequestMethod.GET, value="/ProductCategory")
+    public List<ProductCategory> getAllProductCategories() {
+        return productCategoryService.getAllProductCategories();	
     }	
-//	
-//	@ResponseBody
-//	@RequestMapping(method=RequestMethod.GET, value="/ProductCategory/{lcl}/{id}")
-//	public Optional<ProductCategory> getProductCategory(@PathVariable String lcl, @PathVariable Long id) {
-//		return productCategoryService.get
-//	}
+	
+	@ResponseBody
+	@RequestMapping(method=RequestMethod.GET, value="/ProductCategory/{id}")
+	public Optional<ProductCategory> getProductCategory(@PathVariable Long id) {
+		return productCategoryService.getAllProductCategories(id);
+	}
 	
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.POST, value="/ProductCategory")
