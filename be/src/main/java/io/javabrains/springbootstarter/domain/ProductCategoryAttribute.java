@@ -10,11 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.FilterDef;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "category_attr_lcl", schema = "mochi")
@@ -28,7 +24,7 @@ public class ProductCategoryAttribute {
 	
 	@Column(name="cat_id")
 	private Long categoryId;
-	
+
 	@Column(name="cat_desc")
 	private String categoryDesc;
 	
@@ -39,6 +35,10 @@ public class ProductCategoryAttribute {
 	@JoinColumn(name="cat_id", insertable=false, updatable=false)
 	@JsonBackReference
 	private ProductCategory productCategory;
+	
+	public Long getCategoryId() {
+		return categoryId;
+	}
 	
 	public ProductCategory getProductCategory() {
 		return productCategory;

@@ -1,6 +1,5 @@
 package io.javabrains.springbootstarter.domain;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -18,11 +17,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Filter;
-import org.hibernate.annotations.Where;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -37,7 +31,7 @@ public class ProductCategory {
     		   joinColumns 			= @JoinColumn(name = "cat_id"), 
     		   inverseJoinColumns 	= @JoinColumn(name = "prd_id"))
     @OrderBy
-    //@JsonIgnore
+    @JsonIgnore
     private List<Product> products;
 	
 	@Id
@@ -55,14 +49,11 @@ public class ProductCategory {
 	
 	@OneToMany(mappedBy="productCategory",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonManagedReference
-	//@Where(clause = " lcl_cd = 'ENG' ")
-	//@Filter(name = "lclCdFilter")
 	private List<ProductCategoryAttribute> productCategoryAttribute;
 
-	//@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name="cat_prnt_id")
-	private List<ProductCategory> children = new ArrayList<ProductCategory>();	
+	private List<ProductCategory> children;	
 	
 	public List<ProductCategory> getChildren() {
 		return children;
