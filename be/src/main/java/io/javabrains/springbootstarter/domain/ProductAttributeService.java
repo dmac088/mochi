@@ -15,9 +15,13 @@ public class ProductAttributeService {
 	public List<ProductAttribute> getProductAttribute() {
 		return productAttributeRepository.findAll();
 	}
+
+	public List<ProductAttribute> getProductAttribute(String lcl) {
+		return productAttributeRepository.findByLclCd(lcl);
+	}
 	
-	public Optional<ProductAttribute> getProductAttribute(Long id) {
-		return productAttributeRepository.findByProductId(id);
+	public Optional<ProductAttribute> getProductAttribute(String lcl, Long id) {
+		return productAttributeRepository.findByLclCdAndProductId(lcl, id);
 	}
 	
 	public void addProductAttribute(ProductAttribute ProductAttribute) {

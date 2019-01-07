@@ -17,12 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/api")
 public class ProductAttributeController {
 
-	@Value("${server.port}")
-	private String serverPort;
-
-	@Value("${server.host}")
-	private String serverHost;
-	
 	@Autowired
 	private ProductAttributeService productAttributeService;	
 
@@ -33,9 +27,15 @@ public class ProductAttributeController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("/ProductAttribute/{id}")
-	public Optional<ProductAttribute> getProductAttribute(@PathVariable Long id) {
-		return productAttributeService.getProductAttribute(id);
+	@RequestMapping("/ProductAttribute/{lcl}")
+	public List<ProductAttribute> getProductAttribute(@PathVariable String lcl) {
+		return productAttributeService.getProductAttribute(lcl);
+	}
+	
+	@ResponseBody
+	@RequestMapping("/ProductAttribute/lcl/{id}")
+	public Optional<ProductAttribute> getProductAttribute(@PathVariable String lcl, @PathVariable Long id) {
+		return productAttributeService.getProductAttribute(lcl, id);
 	}
 	
 	@ResponseBody
