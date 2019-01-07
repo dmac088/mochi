@@ -14,9 +14,9 @@ public class ProductCategoryDTO {
 	
 	private String lclCd;
 	
-	private ProductCategory parent;	
+	private ProductCategoryDTO parent;	
 
-	private List<ProductCategory> children;	
+	private List<ProductCategoryDTO> children;	
 	
 	public Long getCategoryId() {
 		return categoryId;
@@ -50,19 +50,19 @@ public class ProductCategoryDTO {
 		this.lclCd = lclCd;
 	}
 
-	public ProductCategory getParent() {
+	public ProductCategoryDTO getParent() {
 		return parent;
 	}
 
-	public void setParent(ProductCategory parent) {
+	public void setParent(ProductCategoryDTO parent) {
 		this.parent = parent;
 	}
 	
-	public List<ProductCategory> getChildren() {
+	public List<ProductCategoryDTO> getChildren() {
 		return children;
 	}
 
-	public void setChildren(List<ProductCategory> children) {
+	public void setChildren(List<ProductCategoryDTO> children) {
 		this.children = children;
 	}
 

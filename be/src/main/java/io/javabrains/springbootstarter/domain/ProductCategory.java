@@ -49,7 +49,7 @@ public class ProductCategory {
 	private ProductCategory parent;
 	
 	@OneToMany(mappedBy="productCategory",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JsonManagedReference
+	@JsonIgnore
 	private List<ProductCategoryAttribute> productCategoryAttribute;
 
 	@OneToMany(fetch = FetchType.LAZY)
