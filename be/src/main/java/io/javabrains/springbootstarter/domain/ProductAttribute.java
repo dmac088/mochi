@@ -21,18 +21,18 @@ public class ProductAttribute {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="prd_lcl_id")
 	private Long Id;
-	
-	@Column(name="prd_rrp")
-	private double productRrp;
-	
-	@Column(name="prd_img_pth")
-	private String ProductImage;
 
 	@Column(name="prd_id")
 	private Long productId;
 	
 	@Column(name="prd_desc")
 	private String productDesc;
+	
+	@Column(name="prd_rrp")
+	private double productRrp;
+	
+	@Column(name="prd_img_pth")
+	private String ProductImage;
 	
 	@Column(name="lcl_cd")	
 	private String lclCd;
@@ -41,6 +41,10 @@ public class ProductAttribute {
 	@JoinColumn(name="prd_id", insertable=false, updatable=false)
 	@JsonBackReference
 	private Product product;
+	
+	public Long getProductId() {
+		return productId;
+	}
 	
 	public Product getProduct() {
 		return product;
@@ -65,6 +69,7 @@ public class ProductAttribute {
 	public void setLclCd(String lclCd) {
 		this.lclCd = lclCd;
 	}
+	
 	public double getProductRrp() {
 		return productRrp;
 	}
@@ -80,6 +85,4 @@ public class ProductAttribute {
 	public void setProductImage(String productImage) {
 		ProductImage = productImage;
 	}
-	
-	
 }
