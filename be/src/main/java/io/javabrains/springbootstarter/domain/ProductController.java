@@ -16,12 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/api")
 public class ProductController {
-
-	@Value("${server.port}")
-	private String serverPort;
-
-	@Value("${server.host}")
-	private String serverHost;
 	
 	@Autowired
 	private ProductService productService;	
@@ -32,11 +26,11 @@ public class ProductController {
         return productService.getAllProducts();	
     }		
 	
-	@ResponseBody
-	@RequestMapping("/Product/{id}")
-	public Optional<Product> getProduct(@PathVariable Long id) {
-		return productService.getProduct(id);
-	}
+//	@ResponseBody
+//	@RequestMapping("/Product/{id}")
+//	public Optional<Product> getProduct(@PathVariable Long id) {
+//		return productService.getProduct(id);
+//	}
 	
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.POST, value="/Product")
