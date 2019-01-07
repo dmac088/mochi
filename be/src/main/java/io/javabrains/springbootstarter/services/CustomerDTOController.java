@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
-public class CustomerController {
+public class CustomerDTOController {
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private ICustomerService customerService;
+    private ICustomerDTOService customerService;
 
-    public CustomerController() {
+    public CustomerDTOController() {
         super();
     }
     

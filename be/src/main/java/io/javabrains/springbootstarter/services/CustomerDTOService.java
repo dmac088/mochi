@@ -19,7 +19,7 @@ import io.javabrains.springbootstarter.security.UserRoleService;
 
 @Service
 @Transactional
-public class CustomerService implements ICustomerService {
+public class CustomerDTOService implements ICustomerDTOService {
 
     @Autowired
     private PartyRepository partyRepository;
