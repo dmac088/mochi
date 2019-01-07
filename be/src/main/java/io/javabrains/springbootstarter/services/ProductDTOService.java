@@ -29,6 +29,14 @@ public class ProductDTOService implements IProductDTOService {
 		Page<ProductDTO> pp = ppa.map(this::convertToProductDto);
 		return pp;
 	}	
+    
+    @Override
+ 	@Transactional
+ 	public Page<ProductDTO> getProducts(String lcl, Long categoryId, int page, int size) {
+ 		Page<ProductAttribute> ppa = productAttributePagingAndSortingRepository.findByLclCdAndProductCategoriesCategoryId(lcl, categoryId, PageRequest.of(page, size, Sort.by("productRrp").descending()));
+ 		Page<ProductDTO> pp = ppa.map(this::convertToProductDto);
+ 		return pp;
+ 	}	
 	
     private ProductDTO convertToProductDto(final ProductAttribute productAttribute) {
         //get values from contact entity and set them in contactDto

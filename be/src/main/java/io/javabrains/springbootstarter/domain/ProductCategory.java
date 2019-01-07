@@ -64,7 +64,6 @@ public class ProductCategory {
 	@JoinColumn(name="cat_prnt_id")
 	private List<ProductCategory> children = new ArrayList<ProductCategory>();	
 	
-
 	public List<ProductCategory> getChildren() {
 		return children;
 	}
