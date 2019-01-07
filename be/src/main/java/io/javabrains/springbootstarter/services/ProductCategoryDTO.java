@@ -14,6 +14,8 @@ public class ProductCategoryDTO {
 	
 	private String lclCd;
 	
+	private ProductCategory parent;	
+
 	private List<ProductCategory> children;	
 	
 	public Long getCategoryId() {
@@ -48,6 +50,14 @@ public class ProductCategoryDTO {
 		this.lclCd = lclCd;
 	}
 
+	public ProductCategory getParent() {
+		return parent;
+	}
+
+	public void setParent(ProductCategory parent) {
+		this.parent = parent;
+	}
+	
 	public List<ProductCategory> getChildren() {
 		return children;
 	}

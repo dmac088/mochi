@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import io.javabrains.springbootstarter.domain.ProductCategory;
 import io.javabrains.springbootstarter.domain.ProductCategoryAttribute;
 import io.javabrains.springbootstarter.domain.ProductCategoryAttributeRepository;
+import io.javabrains.springbootstarter.domain.ProductCategoryRepository;
 
 @Service
 @Transactional
@@ -33,6 +34,7 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
         	pcDTO.setCategoryId(pc.getCategoryId());
         	pcDTO.setCategoryCode(pc.getCategoryCode());
         	pcDTO.setCategoryDesc(pca.getCategoryDesc());
+        	//pcDTO.setParent(pc.getParent());
         	pcDTO.setChildren(pc.getChildren());
         	pcDTO.setLclCd(pca.getLclCd());
         	lpcDTO.add(pcDTO);
@@ -51,6 +53,7 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
         	pcDTO.setCategoryId(pc.getCategoryId());
         	pcDTO.setCategoryCode(pc.getCategoryCode());
         	pcDTO.setCategoryDesc(pca.getCategoryDesc());
+        	//pcDTO.setParent(pc.getParent());
         	pcDTO.setChildren(pc.getChildren());
         	pcDTO.setLclCd(pca.getLclCd());
         	lpcDTO.add(pcDTO);
