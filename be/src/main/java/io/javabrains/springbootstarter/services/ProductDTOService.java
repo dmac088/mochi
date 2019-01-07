@@ -1,34 +1,20 @@
 package io.javabrains.springbootstarter.services;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import io.javabrains.springbootstarter.domain.Party;
-import io.javabrains.springbootstarter.domain.PartyPerson;
-import io.javabrains.springbootstarter.domain.PartyPersonRepository;
-import io.javabrains.springbootstarter.domain.PartyRepository;
 import io.javabrains.springbootstarter.domain.ProductAttribute;
-import io.javabrains.springbootstarter.domain.ProductAttributeRepository;
-import io.javabrains.springbootstarter.domain.ProductRepository;
-import io.javabrains.springbootstarter.domain.Role;
-import io.javabrains.springbootstarter.domain.RoleCustomer;
-import io.javabrains.springbootstarter.errors.CustomerAlreadyExistException;
-import io.javabrains.springbootstarter.security.User;
-import io.javabrains.springbootstarter.security.UserRole;
-import io.javabrains.springbootstarter.security.UserRoleService;
+import io.javabrains.springbootstarter.domain.ProductAttributePagingAndSortingRepository;
 
 @Service
 @Transactional
 public class ProductDTOService implements IProductDTOService {
 
     @Autowired
-    private ProductAttributeRepository productAttributeRepository;
-    
-    @Autowired
-    private ProductRepository productRepository;
+    private ProductAttributePagingAndSortingRepository productAttributePagingAndSortingRepository;
     
     // API
     //This method should accept a DTO and return a DTO
@@ -36,23 +22,25 @@ public class ProductDTOService implements IProductDTOService {
     //if we did not use a DTO we would have JSON nesting as per the domain model structure, which is hard to manage in our client views
     //The DTO is simple and dumb, it is the service layer that manages the translation between DTO and domain objects
     
-	
-	@Override
+    @Override
 	@Transactional
-	public List<ProductDTO> getProducts(String lcl) {
-		List<ProductDTO> pl = new ArrayList<ProductDTO>();
-		List<ProductAttribute> pal = productAttributeRepository.findByLclCd(lcl);
-		for(ProductAttribute pa : pal) {
-			ProductDTO p = new ProductDTO();
-			p.setProductId(pa.getProduct().getProductId());
-			p.setProductImage(pa.getProductImage());
-			p.setProductRrp(pa.getProductRrp());
-			p.setLclCd(pa.getLclCd());
-			p.setProductUPC(pa.getProduct().getProductUPC());
-			p.setProductDesc(pa.getProductDesc());
-			p.setProductCreateDt(pa.getProduct().getProductCreateDt());
-			pl.add(p);
-		}
-		return pl;
+	public Page<ProductDTO> getProducts(String lcl, int page, int size) {
+		Page<ProductAttribute> ppa = productAttributePagingAndSortingRepository.findByLclCd(lcl, PageRequest.of(page, size, Sort.by("productRrp").descending()));
+		Page<ProductDTO> pp = ppa.map(this::convertToProductDto);
+		return pp;
 	}	
+	
+    private ProductDTO convertToProductDto(final ProductAttribute productAttribute) {
+        //get values from contact entity and set them in contactDto
+        //e.g. contactDto.setContactId(contact.getContactId());
+        final ProductDTO productDto = new ProductDTO();
+        productDto.setProductId(productAttribute.getProduct().getProductId());
+        productDto.setProductCreateDt(productAttribute.getProduct().getProductCreateDt());
+        productDto.setProductUPC(productAttribute.getProduct().getProductUPC());
+        productDto.setProductDesc(productAttribute.getProductDesc());
+        productDto.setProductRrp(productAttribute.getProductRrp());
+        productDto.setProductImage(productAttribute.getProductImage());
+        productDto.setLclCd(productAttribute.getLclCd());
+        return productDto;
+    }
 }

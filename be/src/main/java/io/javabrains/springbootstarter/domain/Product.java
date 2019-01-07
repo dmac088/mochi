@@ -39,7 +39,7 @@ public class Product {
 	@ManyToMany(mappedBy = "products")
 	@JsonIgnore
 	private Collection<ProductCategory> categories;
-	
+
 	@OneToMany(mappedBy="product",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonManagedReference
 	//@Where(clause = " lcl_cd = 'ENG' ")
@@ -52,6 +52,15 @@ public class Product {
 	
 	public Collection<ProductCategory> getCategories() {
 		return this.categories;
+	}
+	
+	
+	public List<ProductAttribute> getProductAttribute() {
+		return productAttribute;
+	}
+
+	public void setProductAttribute(List<ProductAttribute> productAttribute) {
+		this.productAttribute = productAttribute;
 	}
 
 	public void setCategories(Collection<ProductCategory> categories) {

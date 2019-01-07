@@ -1,11 +1,14 @@
 package io.javabrains.springbootstarter.services;
-import java.util.List;
+
+
+import org.springframework.data.domain.Page;
+
 
 public interface IProductDTOService {
 
 	 //List<ProductDTO> getProducts();
 	 
-	 List<ProductDTO> getProducts(String lcl);
+	 Page<ProductDTO> getProducts(String lcl, int page, int size);
 	 
 	// ProductDTO getProduct(Long productId);
 }
