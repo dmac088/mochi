@@ -30,7 +30,7 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
     
     @Override
 	@Transactional
-	public List<ProductCategoryDTO> getProductCategories(String lcl) {
+	public List<ProductCategoryDTO> getProductCategories(final String lcl) {
     	
     	List<ProductCategory> lpc = productCategoryRepository.findAll();
     	
