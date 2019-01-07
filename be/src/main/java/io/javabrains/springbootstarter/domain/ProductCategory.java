@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -52,7 +53,9 @@ public class ProductCategory {
 	private List<ProductCategoryAttribute> productCategoryAttribute;
 
 	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name="cat_prnt_id")
+	@JoinColumns({
+		@JoinColumn(name="cat_prnt_id")
+	})
 	private List<ProductCategory> children;	
 	
 	public List<ProductCategory> getChildren() {
