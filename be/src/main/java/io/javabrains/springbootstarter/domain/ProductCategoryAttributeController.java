@@ -15,12 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/api")
 public class ProductCategoryAttributeController {
-
-	@Value("${server.port}")
-	private String serverPort;
-
-	@Value("${server.host}")
-	private String serverHost;
 	
 	@Autowired
 	private ProductCategoryAttributeService productCategoryAttributeService;	
