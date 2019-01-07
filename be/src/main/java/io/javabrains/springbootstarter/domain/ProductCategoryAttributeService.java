@@ -15,7 +15,7 @@ public class ProductCategoryAttributeService {
 	
 	
 	public List<ProductCategoryAttribute> getAllProductCategoryAttributes(String lcl) {
-		return productCategoryAttributeRepository.findAllByLclCd(lcl);
+		return productCategoryAttributeRepository.findByLclCd(lcl);
 	}
 	
 	public Optional<ProductCategoryAttribute> getProductCategoryAttribute(String lcl, Long id) {

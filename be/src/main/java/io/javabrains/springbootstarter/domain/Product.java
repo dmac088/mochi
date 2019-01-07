@@ -14,7 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -42,8 +41,6 @@ public class Product {
 
 	@OneToMany(mappedBy="product",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonManagedReference
-	//@Where(clause = " lcl_cd = 'ENG' ")
-	//@Filter(name = "lclCdFilter")
 	private List<ProductAttribute> productAttribute;
 
 	public Long getProductId() {
