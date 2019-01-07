@@ -26,4 +26,10 @@ public class ProductDTOController {
     	return productService.getProducts(lcl, page, size);
     }
     
+    
+    @GetMapping("/Product/{lcl}/cat/{cat}/page/{page}/size/{size}")
+    public Page<ProductDTO> getProducts(@PathVariable String lcl,@PathVariable Long cat, @PathVariable int page,@PathVariable int size) {
+    	return productService.getProducts(lcl, cat, page, size);
+    }
+    
 }

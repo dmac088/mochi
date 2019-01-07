@@ -38,7 +38,7 @@ public class Product {
 	
 	@ManyToMany(mappedBy = "products")
 	@JsonIgnore
-	private Collection<ProductCategory> categories;
+	private List<ProductCategory> categories;
 
 	@OneToMany(mappedBy="product",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonManagedReference
@@ -63,7 +63,7 @@ public class Product {
 		this.productAttribute = productAttribute;
 	}
 
-	public void setCategories(Collection<ProductCategory> categories) {
+	public void setCategories(List<ProductCategory> categories) {
 		this.categories = categories;
 	}
 
