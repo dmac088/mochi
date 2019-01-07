@@ -22,7 +22,7 @@ import io.javabrains.springbootstarter.security.UserRoleService;
 
 @Service
 @Transactional
-public class ProductDTOService implements IProductService {
+public class ProductDTOService implements IProductDTOService {
 
     @Autowired
     private ProductAttributeRepository productAttributeRepository;
@@ -55,85 +55,4 @@ public class ProductDTOService implements IProductService {
 		}
 		return pl;
 	}	
-		
-//		List<Party> pl = partyRepository.findAll();
-//		for(Party p : pl) {
-//			CustomerDTO c = new CustomerDTO();
-//			c.setCustomerID(((RoleCustomer)p.getPartyRole(PARTY_ROLE_NAME)).getCustomerNumber());
-//			c.setGivenName(((PartyPerson)p).getGivenName());
-//			c.setFamilyName(((PartyPerson)p).getFamilyName());
-//			c.setUserName(p.getPartyUser().getUsername());
-//			c.setPassword(p.getPartyUser().getPassword());
-//			cl.add(c);
-//		}
-//		return cl;
-	}
-	
-	
-//	@Override
-//	@Transactional
-//	public CustomerDTO getCustomer(String userName) {
-//		Optional<Party> pr1 = partyRepository.findByPartyUserUsername(userName);
-//		CustomerDTO c1 = new CustomerDTO();
-//		c1.setGivenName(((PartyPerson)pr1.get()).getGivenName());
-//		c1.setFamilyName(((PartyPerson)pr1.get()).getFamilyName());
-//		c1.setUserName(((PartyPerson)pr1.get()).getPartyUser().getUsername());
-//		c1.setCustomerID(((RoleCustomer)((PartyPerson)pr1.get()).getPartyRole(PARTY_ROLE_NAME)).getCustomerNumber());
-//		return c1;
-//	}
-	
-	
-//    @Override
-//	@Transactional
-//    public void registerNewCustomer(final CustomerDTO customer) {
-//    	System.out.println(customer.getPassword());
-//        if (customerExist(customer.getUserName())) {
-//            throw new CustomerAlreadyExistException("There is an account with that username: " + customer.getUserName());
-//        }
-//        
-//        PartyPerson p1 = new PartyPerson();
-//        p1.setGivenName(customer.getGivenName());
-//        p1.setFamilyName(customer.getFamilyName());
-//        
-//        
-//		//create the role object
-//		p1.setPartyRoles(new ArrayList<Role>());
-//		RoleCustomer c1 = new RoleCustomer();
-//		c1.setRoleStart(new Date());
-//		
-//		//create a new user object
-//		User u1 = new User();
-//		u1.setUsername(customer.getUserName());
-//		u1.setEnabled(true);
-//		u1.setUserRoles(new ArrayList<UserRole>());
-//		u1.addUserRole(userRoleService.loadUserRoleByRoleName(USER_ROLE_NAME));
-//		u1.setPassword(customer.getPassword());
-//		
-//		//add user to person 
-//		p1.addUser(u1);
-//		
-//		//addPartytoUser
-//		u1.setUserParty(p1);
-//		
-//		//add the role to person
-//		p1.addRole(c1);
-//		
-//		//add the person to role
-//		c1.setRoleParty(p1);
-//		 
-//		//add role to person
-//		p1.addRole(c1);
-//		c1.setRoleParty(p1);
-//		
-//		//persist the parent
-//		personRepository.save(p1);
-//    }
-//
-//    @Override
-//    public boolean customerExist(final String username) {
-//        return partyRepository.findByPartyUserUsername(username).isPresent();
-//        
-//    }
-
-    
-//}
+}

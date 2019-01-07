@@ -19,7 +19,7 @@ public class ProductDTOController {
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private IProductService productService;
+    private IProductDTOService productService;
 
     public ProductDTOController() {
         super();
