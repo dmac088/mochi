@@ -39,6 +39,7 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
 		for(ProductCategory pc : lpc) {
         	lpcDTO.add(convertToProductCategoryDto(pc, lcl));
         }
+		
 		return lpcDTO;
 	}	
     
@@ -57,22 +58,18 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
         return pcDto;
     }
     
+    
     @Override
  	@Transactional
- 	public List<ProductCategoryDTO> getProductCategories(String lcl, Long parentCategoryId) {
- 		List<ProductCategoryAttribute> lpca = productCategoryAttributeRepository.findByLclCdAndProductCategoryParentCategoryId(lcl, parentCategoryId);
-        final List<ProductCategoryDTO> lpcDTO = new ArrayList<ProductCategoryDTO>();
-        for(ProductCategoryAttribute pca : lpca) {
-        	ProductCategoryDTO pcDTO = new ProductCategoryDTO();
-        	ProductCategory pc = pca.getProductCategory();
-        	pcDTO.setCategoryId(pc.getCategoryId());
-        	pcDTO.setCategoryCode(pc.getCategoryCode());
-        	pcDTO.setCategoryDesc(pca.getCategoryDesc());
-        	//pcDTO.setParent(pc.getParent());
-        	pcDTO.setChildren(pc.getChildren());
-        	pcDTO.setLclCd(pca.getLclCd());
-        	lpcDTO.add(pcDTO);
+ 	public List<ProductCategoryDTO> getProductCategories(final String lcl, final Long parentCategoryId) {
+    	
+    	List<ProductCategory> lpc = productCategoryRepository.findByParentCategoryId(parentCategoryId);
+    	
+		final List<ProductCategoryDTO> lpcDTO = new ArrayList<ProductCategoryDTO>();
+		
+		for(ProductCategory pc : lpc) {
+        	lpcDTO.add(convertToProductCategoryDto(pc, lcl));
         }
-        return lpcDTO;
+		return lpcDTO;
  	}	
 }
