@@ -1,5 +1,9 @@
 package io.javabrains.springbootstarter.services;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -8,6 +12,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import io.javabrains.springbootstarter.domain.ProductAttribute;
 import io.javabrains.springbootstarter.domain.ProductAttributePagingAndSortingRepository;
+import io.javabrains.springbootstarter.domain.ProductCategory;
+import io.javabrains.springbootstarter.domain.ProductCategoryRepository;
 
 @Service
 @Transactional
@@ -15,6 +21,9 @@ public class ProductDTOService implements IProductDTOService {
 
     @Autowired
     private ProductAttributePagingAndSortingRepository productAttributePagingAndSortingRepository;
+    
+    @Autowired
+    private ProductCategoryRepository productCategoryRepository;
     
     // API
     //This method should accept a DTO and return a DTO
@@ -32,11 +41,33 @@ public class ProductDTOService implements IProductDTOService {
     
     @Override
  	@Transactional
- 	public Page<ProductDTO> getProducts(String lcl, Long categoryId, int page, int size) {
+ 	public Page<ProductDTO> getProductsForCategory(String lcl, Long categoryId, int page, int size) {
  		Page<ProductAttribute> ppa = productAttributePagingAndSortingRepository.findByLclCdAndProductCategoriesCategoryId(lcl, categoryId, PageRequest.of(page, size, Sort.by("productRrp").descending()));
  		Page<ProductDTO> pp = ppa.map(this::convertToProductDto);
  		return pp;
  	}	
+    
+    @Override
+ 	@Transactional
+ 	public Page<ProductDTO> getAllProductsForCategory(String lcl, Long categoryId, int page, int size) {
+    	//get a list of category ids for the current category and its child categories
+    	List<ProductCategory> pcl = new ArrayList<ProductCategory>();
+    	ProductCategory pc = productCategoryRepository.findByCategoryId(categoryId).get();
+    	recurseCategories(pcl, pc);
+    	System.out.println(pcl.size());
+    	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
+ 		Page<ProductAttribute> ppa = productAttributePagingAndSortingRepository.findDistinctByLclCdAndProductCategoriesCategoryIdIn(lcl, categoryIds, PageRequest.of(page, size, Sort.by("productRrp").descending()));
+ 		Page<ProductDTO> pp = ppa.map(this::convertToProductDto);
+ 		return pp;
+ 	}	
+    
+    public void recurseCategories(List<ProductCategory> pcl, ProductCategory pc) {
+    	pcl.add(pc);
+    	for(ProductCategory child : pc.getChildren()) {
+    		recurseCategories(pcl, child);
+    	}
+    }
+    
 	
     private ProductDTO convertToProductDto(final ProductAttribute productAttribute) {
         //get values from contact entity and set them in contactDto

@@ -11,6 +11,7 @@ import store from './store';
 import Header from './components/Header';
 import Signup from './components/Signup';
 import ManageCart from './components/ManageCart';
+import Paginator from './components/Paginator';
 import * as tokensActionCreators from './services/session/actions';
 import * as customerActionCreators from './services/customer/actions';
 import * as cartActionCreators from './services/cart/actions';
@@ -184,20 +185,22 @@ class App extends Component {
         totalItems={this.props.cart.totalItems}
         total={this.props.cart.totalAmount}
       />
-    <CategoryNavigator
-        categoryList={this.state.categoryList}
-        categoryClick={this.categoryClick}
-    />
+      <Paginator/>
+      <CategoryNavigator
+          categoryList={this.state.categoryList}
+          categoryClick={this.categoryClick}
+      />
       <Route path="/" exact component =  {(routeProps) => (
-                  <Landing {...routeProps}
-                    {...this.state}
-                    addToCart={this.handleAddToCart}
-                    lang={langSelector[this.state.currentLang]}
-                    openModal={this.openModal}
-                    updateQuantity={this.updateQuantity}
-                    productQuantity={this.state.quantity}
-                  />
-                )} />
+                                                              <Landing {...routeProps}
+                                                                {...this.state}
+                                                                addToCart={this.handleAddToCart}
+                                                                lang={langSelector[this.state.currentLang]}
+                                                                openModal={this.openModal}
+                                                                updateQuantity={this.updateQuantity}
+                                                                productQuantity={this.state.quantity}
+                                                              />
+                                                          )}
+      />
       <Route path="/Login" component =  {(routeProps) => (
                 <Login {...routeProps}
                 />
