@@ -64,8 +64,9 @@ class App extends Component {
   getProducts = (locale, categoryId) => {
     productService.findByCategory(locale, categoryId)
     .then((response) => {
+      console.log(response);
        this.setState({
-         productList: response
+         productList: response.content
        });
     });
   }
