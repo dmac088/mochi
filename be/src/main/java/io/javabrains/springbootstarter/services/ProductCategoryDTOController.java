@@ -24,9 +24,18 @@ public class ProductCategoryDTOController {
     	return productCategoryService.getProductCategories(lcl);
     }
     
-    @GetMapping("/ProductCategory/{lcl}/cat/{parentCat}")
+    @GetMapping("/ProductCategory/{lcl}/ParentCategory/{parentCat}")
     public List<ProductCategoryDTO> getProductCategories(@PathVariable String lcl,@PathVariable Long parentCat) {
     	return productCategoryService.getProductCategories(lcl, parentCat);
     }
     
+    @GetMapping("/ProductCategory/{lcl}/level/{level}")
+    public List<ProductCategoryDTO> getProductCategoriesForLevel(@PathVariable String lcl,@PathVariable Long level) {
+    	return productCategoryService.getProductCategoriesForLevel(lcl, level);
+    }
+
+    @GetMapping("/ProductCategory/{lcl}/id/{categoryId}")
+    public ProductCategoryDTO getProductCategory(@PathVariable String lcl, @PathVariable Long categoryId) {
+    	return productCategoryService.getProductCategory(lcl, categoryId);
+    }
 }

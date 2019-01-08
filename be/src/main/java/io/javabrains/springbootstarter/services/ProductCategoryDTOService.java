@@ -5,8 +5,6 @@ import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import io.javabrains.springbootstarter.domain.ProductAttribute;
 import io.javabrains.springbootstarter.domain.ProductCategory;
 import io.javabrains.springbootstarter.domain.ProductCategoryAttribute;
 import io.javabrains.springbootstarter.domain.ProductCategoryAttributeRepository;
@@ -55,13 +53,35 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
         	lpcDTO.add(convertToProductCategoryDto(pc, lcl));
         }
 		return lpcDTO;
- 	}	
+ 	}
+    
+    @Override
+  	@Transactional
+  	public List<ProductCategoryDTO> getProductCategoriesForLevel(final String lcl, final Long level) {
+     	
+     	List<ProductCategory> lpc = productCategoryRepository.findByCategoryLevel(level);
+     	
+ 		final List<ProductCategoryDTO> lpcDTO = new ArrayList<ProductCategoryDTO>();
+ 		
+ 		for(ProductCategory pc : lpc) {
+         	lpcDTO.add(convertToProductCategoryDto(pc, lcl));
+         }
+ 		return lpcDTO;
+  	}	
+    
+    @Override
+  	@Transactional
+  	public ProductCategoryDTO getProductCategory(final String lcl, final Long categoryId) {
+     	ProductCategory pc = productCategoryRepository.findByCategoryId(categoryId).get();
+     	return	convertToProductCategoryDto(pc, lcl);
+  	}	
     
     private ProductCategoryDTO convertToProductCategoryDto(final ProductCategory pc,final String lcl) {
     	ProductCategoryAttribute pca = productCategoryAttributeRepository.findByLclCdAndCategoryId(lcl, pc.getCategoryId()).get();	
         final ProductCategoryDTO pcDto = new ProductCategoryDTO();
         pcDto.setCategoryId(pc.getCategoryId());
         pcDto.setCategoryCode(pc.getCategoryCode());
+        pcDto.setCategoryLevel(pc.getCategoryLevel());
         List<ProductCategoryDTO> pcDTOl = new ArrayList<ProductCategoryDTO>();
         for(ProductCategory pc1 : pc.getChildren()) {
         	pcDTOl.add(convertToProductCategoryDto(pc1, lcl));
