@@ -12,6 +12,8 @@ public class ProductCategoryDTO {
 	
 	private String categoryDesc;
 	
+	private Long categoryLevel;
+
 	private String lclCd;
 	
 	private ProductCategoryDTO parent;	
@@ -40,6 +42,14 @@ public class ProductCategoryDTO {
 
 	public void setCategoryDesc(String categoryDesc) {
 		this.categoryDesc = categoryDesc;
+	}
+	
+	public Long getCategoryLevel() {
+		return categoryLevel;
+	}
+
+	public void setCategoryLevel(Long categoryLevel) {
+		this.categoryLevel = categoryLevel;
 	}
 
 	public String getLclCd() {

@@ -12,5 +12,7 @@ public interface ProductCategoryRepository extends CrudRepository<ProductCategor
 	
 	Optional<ProductCategory> findByCategoryId(Long id);
 	
+	List<ProductCategory> findByCategoryLevel(Long level);
+	
 	List<ProductCategory> findByParentCategoryId(Long categoryId);
 }

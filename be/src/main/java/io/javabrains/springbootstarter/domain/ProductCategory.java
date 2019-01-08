@@ -19,8 +19,6 @@ import javax.persistence.OrderBy;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 
 @Entity
 @Table(name = "category", schema = "mochi")
@@ -43,6 +41,9 @@ public class ProductCategory {
 	@Column(name="cat_cd")
 	private String categoryCode;
 	
+	@Column(name="cat_lvl")
+	private Long categoryLevel;
+
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional=false)
 	@JoinColumn(name="cat_prnt_id", nullable=false)
@@ -80,6 +81,14 @@ public class ProductCategory {
 
 	public Long getCategoryId() {
 		return categoryId;
+	}
+	
+	public Long getCategoryLevel() {
+		return categoryLevel;
+	}
+
+	public void setCategoryLevel(Long categoryLevel) {
+		this.categoryLevel = categoryLevel;
 	}
 	
 	public Collection<Product> getProducts() {
