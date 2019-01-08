@@ -72,8 +72,9 @@ SET default_with_oids = false;
 
 CREATE TABLE category (
     cat_id bigint DEFAULT nextval('category_cat_id_seq'::regclass) NOT NULL,
-    cat_cd character(5),
-    cat_prnt_id bigint
+    cat_cd character(5) NOT NULL,
+    cat_prnt_id bigint,
+    cat_lvl bigint
 );
 
 
@@ -790,10 +791,10 @@ SET search_path = mochi, pg_catalog;
 -- Data for Name: category; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY category (cat_id, cat_cd, cat_prnt_id) FROM stdin;
-3	FRT01	2
-4	VEG01	2
-2	ALL  	\N
+COPY category (cat_id, cat_cd, cat_prnt_id, cat_lvl) FROM stdin;
+2	ALL  	\N	0
+3	FRT01	2	1
+4	VEG01	2	1
 \.
 
 
