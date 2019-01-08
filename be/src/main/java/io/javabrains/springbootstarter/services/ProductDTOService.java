@@ -54,7 +54,6 @@ public class ProductDTOService implements IProductDTOService {
     	List<ProductCategory> pcl = new ArrayList<ProductCategory>();
     	ProductCategory pc = productCategoryRepository.findByCategoryId(categoryId).get();
     	recurseCategories(pcl, pc);
-    	System.out.println(pcl.size());
     	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
  		Page<ProductAttribute> ppa = productAttributePagingAndSortingRepository.findDistinctByLclCdAndProductCategoriesCategoryIdIn(lcl, categoryIds, PageRequest.of(page, size, Sort.by("productRrp").descending()));
  		Page<ProductDTO> pp = ppa.map(this::convertToProductDto);
