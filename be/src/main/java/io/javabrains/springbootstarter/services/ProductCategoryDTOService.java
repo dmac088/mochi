@@ -43,7 +43,7 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
     
     @Override
  	@Transactional
- 	public List<ProductCategoryDTO> getProductCategories(final String lcl, final Long parentCategoryId) {
+ 	public List<ProductCategoryDTO> getProductCategoryParent(final String lcl, final Long parentCategoryId) {
     	
     	List<ProductCategory> lpc = productCategoryRepository.findByParentCategoryId(parentCategoryId);
     	
@@ -86,6 +86,7 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
         for(ProductCategory pc1 : pc.getChildren()) {
         	pcDTOl.add(convertToProductCategoryDto(pc1, lcl));
         }
+        //pcDto.setParent(convertToProductCategoryDto(pc.getParent(), lcl));
         pcDto.setChildren(pcDTOl);
         pcDto.setCategoryDesc(pca.getCategoryDesc());
         pcDto.setLclCd(pca.getLclCd());

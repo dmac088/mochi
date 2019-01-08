@@ -9,7 +9,7 @@ public interface IProductCategoryDTOService {
 	 
 	 List<ProductCategoryDTO> getProductCategoriesForLevel(String lcl, Long level);
 	 
-	 List<ProductCategoryDTO> getProductCategories(String lcl, Long parentCategoryId);
+	 List<ProductCategoryDTO> getProductCategoryParent(String lcl, Long parentCategoryId);
 	 
 	 ProductCategoryDTO getProductCategory(String lcl, Long categoryId);
 

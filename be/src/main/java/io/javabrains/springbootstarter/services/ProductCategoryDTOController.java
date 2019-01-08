@@ -26,7 +26,7 @@ public class ProductCategoryDTOController {
     
     @GetMapping("/ProductCategory/{lcl}/ParentCategory/{parentCat}")
     public List<ProductCategoryDTO> getProductCategories(@PathVariable String lcl,@PathVariable Long parentCat) {
-    	return productCategoryService.getProductCategories(lcl, parentCat);
+    	return productCategoryService.getProductCategoryParent(lcl, parentCat);
     }
     
     @GetMapping("/ProductCategory/{lcl}/level/{level}")
