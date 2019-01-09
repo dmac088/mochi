@@ -35,7 +35,7 @@ class App extends Component {
       this.state = {
        currentCategory: 2,
        currentLang: "ENG",
-       productList: [],
+       page: {content:[]},
        categoryList: [],
        searchTerm: '',
        modalActive: false,
@@ -66,7 +66,7 @@ class App extends Component {
     .then((response) => {
       console.log(response);
        this.setState({
-         productList: response.content
+         page: response
        });
     });
   }
