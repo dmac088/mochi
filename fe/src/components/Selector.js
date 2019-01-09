@@ -1,17 +1,8 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import React from 'react';
 import * as session from '../services/session';
-import store from '../store';
-import { deepValue } from '../services/api';
-import { initialState } from '../services/customer/reducer';
-import * as customerActionCreators from '../services/customer/actions';
 import { Link } from 'react-router-dom';
 
 const Selector = (props) => {
-
-  const reduxSubscribedFunction = () => {
-  }
 
   const logoutClick = (event) => {
     session.clearSession();

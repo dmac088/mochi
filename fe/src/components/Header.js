@@ -46,11 +46,8 @@ const Header = (props) => {
                             </tbody>
                           </table>
                         </div>
-                        <a
-                          className="cart-icon"
-                          href="#"
-
-                        >
+                        <a className="cart-icon"
+                          href="#">
                           <img
                             className={props.cartBounce ? "tada" : " "}
                             src="https://res.cloudinary.com/sivadass/image/upload/v1493548928/icons/bag.png"

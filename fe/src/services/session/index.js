@@ -4,8 +4,6 @@ import * as customerApi from '../customer/api';
 import * as sessionSelectors from './selectors';
 import * as tokenActionCreators from './actions';
 import * as customerActionCreators from '../customer/actions';
-import * as tokenReducer from './reducer';
-import * as customerReducer from '../customer/reducer';
 import * as customerService from '../customer';
 
 const SESSION_TIMEOUT_THRESHOLD = 300; // Will refresh the access token 5 minutes before it expires

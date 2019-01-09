@@ -3,9 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
   Route,
-  Link,
   BrowserRouter as Router,
-  Switch,
 } from 'react-router-dom';
 import store from './store';
 import Header from './components/Header';
@@ -22,8 +20,6 @@ import * as categoryApi from './data/categories/api';
 import Landing from './components/Landing';
 import Login from './components/Login';
 import Footer from './components/Footer';
-import * as cartSelector from './services/cart/selectors';
-import { initialState } from './services/cart/reducer';
 import './scss/style.scss';
 import CategoryNavigator from './components/CategoryNavigator'
 import langSelector from './config/lang/selector';
@@ -64,7 +60,6 @@ class App extends Component {
   getProducts = (locale, categoryId) => {
     pageService.findByCategory(locale, categoryId)
     .then((response) => {
-      console.log(response);
        this.setState({
          page: response
        });
@@ -87,8 +82,6 @@ class App extends Component {
   }
 
   componentWillMount() {
-    console.log(this.state.currentLang);
-    console.log(this.state.currentCategory);
     this.getCategories(this.state.currentLang);
     this.getProducts(this.state.currentLang, this.state.currentCategory);
   }

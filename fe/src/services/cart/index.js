@@ -2,7 +2,6 @@
 import store from '../../store';
 import * as api from './api';
 import * as actionCreators from './actions';
-import { initialState } from './reducer';
 
 
 	export const findByUserName = (userName) =>
@@ -33,7 +32,7 @@ import { initialState } from './reducer';
 		if (checkProduct(cart, productID)) {
 	  //increment the quantity of the product in the cart
 	    console.log("incrementing product quantity");
-	    let index = cart.items.findIndex(x => x.id == productID);
+	    let index = cart.items.findIndex(x => x.id === productID);
 	    cart.items[index].quantity =
 	    Number(cart.items[index].quantity) + Number(productQty);
 	  } else {
@@ -62,7 +61,7 @@ import { initialState } from './reducer';
 	}
 
 	export const updateQuantity = (cart, selectedProduct, qty) => {
-		let index = cart.items.findIndex(x => x.id == selectedProduct.id);
+		let index = cart.items.findIndex(x => x.id === selectedProduct.id);
 		cart.items[index].quantity =
 		Number(cart.items[index].quantity) + Number(qty);
 		persistCart(cart);
