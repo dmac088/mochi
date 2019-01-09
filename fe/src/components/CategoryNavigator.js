@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 
 const renderCategoryListItems = (categoryList, categoryClick) => {
   return categoryList = categoryList.map(category => {

@@ -8,8 +8,6 @@ import { initialState } from '../services/customer/reducer';
 import * as tokensActionCreators from '../services/session/actions';
 import * as customerActionCreators from '../services/customer/actions';
 import * as customerSelector from '../services/customer/selectors';
-import { Link, withRouter } from 'react-router-dom';
-
 
 class Login extends Component {
 

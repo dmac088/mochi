@@ -5,16 +5,13 @@ import LoadingProducts from '../loaders/Products';
 import NoResults from "../empty-states/NoResults";
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
-
 class Products extends Component{
 	constructor(props){
-		//console.log('Products...');
 		super(props);
 	}
   	render(){
     	let productsData;
     	let term = this.props.searchTerm;
-    	let x;
 
 			function searchingFor(term){
 				return function(x){

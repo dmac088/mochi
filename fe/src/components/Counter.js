@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import * as cartSelector from '../services/cart/selectors';
 
 class Counter extends Component {
 	constructor(props){

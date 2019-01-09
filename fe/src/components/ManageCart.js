@@ -1,12 +1,6 @@
-import React, {Component} from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as tokensActionCreators from '../services/session/actions';
-import * as customerActionCreators from '../services/customer/actions';
-import * as cartActionCreators from '../services/cart/actions';
+import React from 'react';
 import * as cartSelector from '../services/cart/selectors';
 import * as cartService from '../services/cart';
-import config from '../config/config';
 import Counter from './Counter';
 
   const removeItem = (event) => {
@@ -44,9 +38,7 @@ import Counter from './Counter';
 
 
     const renderCartItems = (cart) => {
-
-          let cartItems;
-          return cartItems = cart.items.map(product => {
+          return cart.items.map(product => {
               return(
                 <tr key={product.id}>
                   <td>
