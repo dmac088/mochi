@@ -2,11 +2,12 @@ import { fetchApi } from '../../services/api';
 
 const endPoints = {
 	get: '/api/Product/',
-	page: '/page/0/size/5',
+	page: '/page/',
+	size: '/size/',
 };
 
-export const findAll = (locale) => fetchApi(
-																						endPoints.get + locale + endPoints.page,
+export const findAll = (locale, page = 0) => fetchApi(
+																						endPoints.get + locale + endPoints.page + page + endPoints.size + "5",
 																						{},
 																						{},
 																						'GET',
@@ -14,8 +15,8 @@ export const findAll = (locale) => fetchApi(
 																					 );
 
 
-export const findByCategory = (locale, categoryId) => fetchApi(
-																																endPoints.get + locale + '/cat/' + categoryId + endPoints.page,
+export const findByCategory = (locale, categoryId, page = 0) => fetchApi(
+																																endPoints.get + locale + '/cat/' + categoryId + endPoints.page + page + endPoints.size + "5" ,
 																																{},
 																																{},
 																																'GET',

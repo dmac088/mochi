@@ -6,8 +6,8 @@ import * as actionCreators from './actions';
 import * as productActionCreators from '../page/actions';
 import { initialState } from './reducer';
 
-	export const findAll = (locale) =>
-		api.findAll(locale)
+	export const findAll = (locale, page) =>
+		api.findAll(locale, page)
 		.then((response) => {
       return response.text();
     })
@@ -20,8 +20,8 @@ import { initialState } from './reducer';
 		.then(onRequestSuccess)
 		.catch(onRequestFailed);
 
-	export const findByCategory = (locale, categoryId) =>
-		api.findByCategory(locale, categoryId)
+	export const findByCategory = (locale, categoryId, page) =>
+		api.findByCategory(locale, categoryId, page)
 		.then((response) => {
 			return response.text();
 		})

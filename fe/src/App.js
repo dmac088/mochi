@@ -58,8 +58,8 @@ class App extends Component {
   }
 
   // Fetch Initial Set of Products from external API
-  getProducts = (locale, categoryId) => {
-    pageService.findByCategory(locale, categoryId)
+  getProducts = (locale, categoryId, page) => {
+    pageService.findByCategory(locale, categoryId, page)
     .then((response) => {
        this.setState({
          page: response
@@ -68,7 +68,7 @@ class App extends Component {
   }
 
   categoryClick = (event) => {
-    this.getProducts(this.state.currentLang, event.target.id);
+    this.getProducts(this.state.currentLang, event.target.id, this.state.currentPage);
     this.setState({
       currentCategory: event.target.id
     });
@@ -79,11 +79,12 @@ class App extends Component {
       currentLang: event.target.id
     });
     this.getCategories(event.target.id);
-    this.getProducts(event.target.id, this.state.currentCategory);
+    this.getProducts(event.target.id, this.state.currentCategory, this.state.currentPage);
   }
 
   changePage = (event) => {
     console.log("changePage to: " + event.target.id);
+    this.getProducts(this.state.currentLang, this.state.currentCategory, event.target.id);
     this.setState({
       currentPage: event.target.id
     });
@@ -91,7 +92,7 @@ class App extends Component {
 
   componentWillMount() {
     this.getCategories(this.state.currentLang);
-    this.getProducts(this.state.currentLang, this.state.currentCategory);
+    this.getProducts(this.state.currentLang, this.state.currentCategory, this.state.currentPage);
   }
 
   autoLogin = () =>  {
@@ -172,7 +173,6 @@ class App extends Component {
   }
 
   render() {
-  //console.log('rendering app!')
   return (
    <div className="App">
     <link rel="stylesheet"
@@ -194,7 +194,7 @@ class App extends Component {
       <Paginator
         page={this.state.page}
         changePage={this.changePage}
-        />
+      />
       <CategoryNavigator
           categoryList={this.state.categoryList}
           categoryClick={this.categoryClick}
