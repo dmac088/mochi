@@ -1,18 +1,19 @@
 import React from 'react';
+import { ListGroup, ListGroupItem, Badge } from 'reactstrap';
 
 const renderCategoryListItems = (categoryList, categoryClick) => {
   return categoryList = categoryList.map(category => {
       return(
-        <button key={category.categoryId} id={category.categoryId} onClick={categoryClick}>{category.categoryDesc}</button>
+        <ListGroupItem key={category.categoryId} id={category.categoryId} onClick={categoryClick}  tag="a" href="#">{category.categoryDesc} <Badge pill>14</Badge></ListGroupItem>
       )
     });
 }
 
 const CategoryNavigator = (props) => {
   return (
-    <ul>
+    <ListGroup>
       {renderCategoryListItems(props.categoryList, props.categoryClick)}
-    </ul>
+    </ListGroup>
   );
 }
 
