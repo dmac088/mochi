@@ -384,7 +384,8 @@ header .container {
   animation-fill-mode: both; }
 
 .products-wrapper {
-  padding-top: 98px;
+  //padding-top: 98px;
+  padding-top: 0px;
   animation: slideUp 300ms linear;
   animation-delay: 150ms; }
   @media (max-width: 991px) {

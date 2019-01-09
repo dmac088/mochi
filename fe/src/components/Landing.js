@@ -4,7 +4,6 @@ import Products from  './Products';
 const Landing = (props) =>  {
   console.log('Landing...');
     return(
-        <div>
           <Products
             productsList={props.page.content}
             searchTerm={props.searchTerm}
@@ -12,7 +11,6 @@ const Landing = (props) =>  {
             openModal={props.openModal}
             lang={props.lang}
           />
-        </div>
     );
 }
 
