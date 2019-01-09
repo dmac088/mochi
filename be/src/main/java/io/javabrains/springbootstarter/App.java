@@ -20,12 +20,12 @@ public class App {
 	
 	 private static final Logger LOG = LoggerFactory.getLogger(App.class);
 
-	    @Value("${spring.profiles.active}")
-	    protected String springProfilesActive;
+	    //@Value("${spring.profiles.active}")
+	    //protected String springProfilesActive;
 
 	    public void onApplicationEvent(ContextRefreshedEvent event) {
 	        LOG.info("=======================================");
-	        LOG.info("App running with active profiles: {}", springProfilesActive);
+	     //   LOG.info("App running with active profiles: {}", springProfilesActive);
 	        LOG.info("=======================================");
 	    }
 	
