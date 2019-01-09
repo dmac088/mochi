@@ -210,7 +210,7 @@ class App extends Component {
           </div>
           <div className="col-sm-10">
             <PageSize
-              size={this.state.currentPageSize}
+              currentPageSize={this.state.currentPageSize}
               changePageSize={this.changePageSize}
             />
             <br/>
@@ -218,7 +218,6 @@ class App extends Component {
               page={this.state.page}
               changePage={this.changePage}
             />
-
             <Route path="/" exact component =  {(routeProps) => (
                                                                     <Landing {...routeProps}
                                                                       {...this.state}

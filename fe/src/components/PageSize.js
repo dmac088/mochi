@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Badge } from 'reactstrap';
 
 export default class Example extends React.Component {
   constructor(props) {
@@ -18,10 +18,11 @@ export default class Example extends React.Component {
   }
 
   render() {
+    console.log(this.props.currentPageSize);
     return (
       <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
         <DropdownToggle caret>
-          Page Size
+          Page Size <Badge pill>{this.props.currentPageSize}</Badge>
         </DropdownToggle>
         <DropdownMenu>
           <DropdownItem id="5" onClick={this.props.changePageSize}>5</DropdownItem>
