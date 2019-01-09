@@ -34,7 +34,7 @@ public class ProductCategory {
     @OrderBy
     @JsonIgnore
     private List<Product> products;
-	
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="cat_id")
@@ -60,9 +60,7 @@ public class ProductCategory {
 		@JoinColumn(name="cat_prnt_id")
 	})
 	private List<ProductCategory> children;	
-	
-	@Transient
-	private Long childCategoryCount; 
+
 	
 	public Long getChildCategoryCount() {
 		return new Long(this.children.size());
@@ -110,6 +108,10 @@ public class ProductCategory {
 
 	public void setCategoryCode(String categoryCode) {
 		this.categoryCode = categoryCode;
+	}
+	
+	public Long getProductCount() {
+		return new Long(products.size());
 	}
 	
 }
