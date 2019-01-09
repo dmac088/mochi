@@ -6,7 +6,7 @@ const Landing = (props) =>  {
     return(
         <div>
           <Products
-            productsList={props.productList}
+            productsList={props.page.content}
             searchTerm={props.searchTerm}
             addToCart={props.addToCart}
             openModal={props.openModal}
