@@ -189,52 +189,61 @@ class App extends Component {
 
     <Router>
       <div>
-        <Header authenticated={this.props.tokens.authenticated}
-          customer={this.props.customer}
-          handleSearch={this.handleSearch}
-          changeLang={this.changeLang}
-          lang={langSelector[this.state.currentLang]}
-          totalItems={this.props.cart.totalItems}
-          total={this.props.cart.totalAmount}
-        />
+        <div className="row">
+          <div className="col-sm-12">
+            <Header authenticated={this.props.tokens.authenticated}
+              customer={this.props.customer}
+              handleSearch={this.handleSearch}
+              changeLang={this.changeLang}
+              lang={langSelector[this.state.currentLang]}
+              totalItems={this.props.cart.totalItems}
+              total={this.props.cart.totalAmount}
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-sm-2">
+            <CategoryNavigator
+              categoryList={this.state.categoryList}
+              categoryClick={this.categoryClick}
+            />
+          </div>
+          <div className="col-sm-10">
+            <PageSize
+              size={this.state.currentPageSize}
+              changePageSize={this.changePageSize}
+            />
+            <br/>
+            <Paginator
+              page={this.state.page}
+              changePage={this.changePage}
+            />
 
-        <PageSize
-          size={this.state.currentPageSize}
-          changePageSize={this.changePageSize}
-        />
-
-        <br/>
-        <Paginator
-          page={this.state.page}
-          changePage={this.changePage}
-        />
-
-        <CategoryNavigator
-          categoryList={this.state.categoryList}
-          categoryClick={this.categoryClick}
-        />
-
-        <Route path="/" exact component =  {(routeProps) => (
-                                                                <Landing {...routeProps}
-                                                                  {...this.state}
-                                                                  addToCart={this.handleAddToCart}
-                                                                  lang={langSelector[this.state.currentLang]}
-                                                                  openModal={this.openModal}
-                                                                  updateQuantity={this.updateQuantity}
-                                                                  productQuantity={this.state.quantity}
-                                                                />
-                                                            )}
-        />
-        <Route path="/Login" component =  {(routeProps) => (
-                  <Login {...routeProps}
-                  />
-        )}/>
-        <Route path="/Signup" component={Signup} />
+            <Route path="/" exact component =  {(routeProps) => (
+                                                                    <Landing {...routeProps}
+                                                                      {...this.state}
+                                                                      addToCart={this.handleAddToCart}
+                                                                      lang={langSelector[this.state.currentLang]}
+                                                                      openModal={this.openModal}
+                                                                      updateQuantity={this.updateQuantity}
+                                                                      productQuantity={this.state.quantity}
+                                                                    />
+                                                                )}
+            />
+            <Route path="/Login" component =  {(routeProps) => (
+                      <Login {...routeProps}
+                      />
+            )}/>
+            <Route path="/Signup" component={Signup} />
+          </div>
+        </div>
       </div>
       </Router>
+
       <ManageCart cart={this.props}
                   updateQuantity={this.props.updateQuantity}
       />
+
       <Footer/>
       <button onClick={this.printState}>Print Redux State</button>
       <button onClick={this.printLocalState}>Print Local State</button>
