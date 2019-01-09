@@ -16,7 +16,7 @@ import * as tokensActionCreators from './services/session/actions';
 import * as customerActionCreators from './services/customer/actions';
 import * as cartActionCreators from './services/cart/actions';
 import * as sessionService from './services/session';
-import * as productService from './services/product';
+import * as pageService from './services/page';
 import * as cartService from './services/cart';
 import * as categoryApi from './data/categories/api';
 import Landing from './components/Landing';
@@ -62,7 +62,7 @@ class App extends Component {
 
   // Fetch Initial Set of Products from external API
   getProducts = (locale, categoryId) => {
-    productService.findByCategory(locale, categoryId)
+    pageService.findByCategory(locale, categoryId)
     .then((response) => {
       console.log(response);
        this.setState({

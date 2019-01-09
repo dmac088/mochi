@@ -3,7 +3,7 @@ import store from '../../store';
 import * as session from '../session';
 import * as api from './api';
 import * as actionCreators from './actions';
-import * as productActionCreators from '../product/actions';
+import * as productActionCreators from '../page/actions';
 import { initialState } from './reducer';
 
 	export const findAll = (locale) =>
