@@ -10,6 +10,7 @@ import Header from './components/Header';
 import Signup from './components/Signup';
 import ManageCart from './components/ManageCart';
 import Paginator from './components/Paginator';
+import PageSize from './components/PageSize';
 import * as tokensActionCreators from './services/session/actions';
 import * as customerActionCreators from './services/customer/actions';
 import * as cartActionCreators from './services/cart/actions';
@@ -32,6 +33,7 @@ class App extends Component {
        currentCategory: 2,
        currentLang: "ENG",
        currentPage: 0,
+       currentPageSize: 5,
        page: {content:[]},
        categoryList: [],
        searchTerm: '',
@@ -68,9 +70,10 @@ class App extends Component {
   }
 
   categoryClick = (event) => {
-    this.getProducts(this.state.currentLang, event.target.id, this.state.currentPage);
+    this.getProducts(this.state.currentLang, event.target.id, 0);
     this.setState({
-      currentCategory: event.target.id
+      currentCategory: event.target.id,
+      currentPage: 0,
     });
   }
 
@@ -79,14 +82,22 @@ class App extends Component {
       currentLang: event.target.id
     });
     this.getCategories(event.target.id);
-    this.getProducts(event.target.id, this.state.currentCategory, this.state.currentPage);
+    this.getProducts(event.target.id, this.state.currentCategory, this.state.currentPage, this.state.currentPageSize);
   }
 
   changePage = (event) => {
     console.log("changePage to: " + event.target.id);
-    this.getProducts(this.state.currentLang, this.state.currentCategory, event.target.id);
+    this.getProducts(this.state.currentLang, this.state.currentCategory, event.target.id, this.state.currentPageSize);
     this.setState({
       currentPage: event.target.id
+    });
+  }
+
+  changePageSize = (event) => {
+    console.log("changePageSize to: " + event.target.id);
+    this.getProducts(this.state.currentLang, this.state.currentCategory, this.state.currentPage, event.target.id);
+    this.setState({
+      currentPageSize: event.target.id
     });
   }
 
@@ -175,52 +186,56 @@ class App extends Component {
   render() {
   return (
    <div className="App">
-    <link rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossOrigin="anonymous"
-    />
 
-  <Router>
-    <div>
-      <Header authenticated={this.props.tokens.authenticated}
-        customer={this.props.customer}
-        handleSearch={this.handleSearch}
-        changeLang={this.changeLang}
-        lang={langSelector[this.state.currentLang]}
-        totalItems={this.props.cart.totalItems}
-        total={this.props.cart.totalAmount}
-      />
-      <Paginator
-        page={this.state.page}
-        changePage={this.changePage}
-      />
-      <CategoryNavigator
+    <Router>
+      <div>
+        <Header authenticated={this.props.tokens.authenticated}
+          customer={this.props.customer}
+          handleSearch={this.handleSearch}
+          changeLang={this.changeLang}
+          lang={langSelector[this.state.currentLang]}
+          totalItems={this.props.cart.totalItems}
+          total={this.props.cart.totalAmount}
+        />
+
+        <PageSize
+          size={this.state.currentPageSize}
+          changePageSize={this.changePageSize}
+        />
+
+        <br/>
+        <Paginator
+          page={this.state.page}
+          changePage={this.changePage}
+        />
+
+        <CategoryNavigator
           categoryList={this.state.categoryList}
           categoryClick={this.categoryClick}
+        />
+
+        <Route path="/" exact component =  {(routeProps) => (
+                                                                <Landing {...routeProps}
+                                                                  {...this.state}
+                                                                  addToCart={this.handleAddToCart}
+                                                                  lang={langSelector[this.state.currentLang]}
+                                                                  openModal={this.openModal}
+                                                                  updateQuantity={this.updateQuantity}
+                                                                  productQuantity={this.state.quantity}
+                                                                />
+                                                            )}
+        />
+        <Route path="/Login" component =  {(routeProps) => (
+                  <Login {...routeProps}
+                  />
+        )}/>
+        <Route path="/Signup" component={Signup} />
+      </div>
+      </Router>
+      <ManageCart cart={this.props}
+                  updateQuantity={this.props.updateQuantity}
       />
-      <Route path="/" exact component =  {(routeProps) => (
-                                                              <Landing {...routeProps}
-                                                                {...this.state}
-                                                                addToCart={this.handleAddToCart}
-                                                                lang={langSelector[this.state.currentLang]}
-                                                                openModal={this.openModal}
-                                                                updateQuantity={this.updateQuantity}
-                                                                productQuantity={this.state.quantity}
-                                                              />
-                                                          )}
-      />
-      <Route path="/Login" component =  {(routeProps) => (
-                <Login {...routeProps}
-                />
-      )}/>
-      <Route path="/Signup" component={Signup} />
-    </div>
-    </Router>
-    <ManageCart cart={this.props}
-                updateQuantity={this.props.updateQuantity}
-    />
-    <Footer/>
+      <Footer/>
       <button onClick={this.printState}>Print Redux State</button>
       <button onClick={this.printLocalState}>Print Local State</button>
       <button onClick={this.printProps}>Print Props</button>
