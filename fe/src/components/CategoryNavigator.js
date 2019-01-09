@@ -3,7 +3,7 @@ import React from 'react';
 const renderCategoryListItems = (categoryList, categoryClick) => {
   return categoryList = categoryList.map(category => {
       return(
-        <button id={category.categoryId} onClick={categoryClick}>{category.categoryDesc}</button>
+        <button key={category.categoryId} id={category.categoryId} onClick={categoryClick}>{category.categoryDesc}</button>
       )
     });
 }
