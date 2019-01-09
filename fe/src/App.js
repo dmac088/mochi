@@ -183,7 +183,9 @@ class App extends Component {
         totalItems={this.props.cart.totalItems}
         total={this.props.cart.totalAmount}
       />
-      <Paginator/>
+      <Paginator
+        page={this.state.page}
+        />
       <CategoryNavigator
           categoryList={this.state.categoryList}
           categoryClick={this.categoryClick}
