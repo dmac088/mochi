@@ -20,7 +20,6 @@ const Paginator = (props) => {
         </li>
       </ul>
     </nav>
-
   )
 }
 
@@ -32,7 +31,5 @@ const renderPaginator = (pages, changePage) => {
     )}
   );
 }
-
-
 
 export default Paginator;
