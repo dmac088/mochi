@@ -60,8 +60,8 @@ class App extends Component {
   }
 
   // Fetch Initial Set of Products from external API
-  getProducts = (locale, categoryId, page) => {
-    pageService.findByCategory(locale, categoryId, page)
+  getProducts = (locale, categoryId, page, size) => {
+    pageService.findByCategory(locale, categoryId, page, size)
     .then((response) => {
        this.setState({
          page: response
@@ -70,7 +70,7 @@ class App extends Component {
   }
 
   categoryClick = (event) => {
-    this.getProducts(this.state.currentLang, event.target.id, 0);
+    this.getProducts(this.state.currentLang, event.target.id, 0, this.state.currentPageSize);
     this.setState({
       currentCategory: event.target.id,
       currentPage: 0,
@@ -103,7 +103,7 @@ class App extends Component {
 
   componentWillMount() {
     this.getCategories(this.state.currentLang);
-    this.getProducts(this.state.currentLang, this.state.currentCategory, this.state.currentPage);
+    this.getProducts(this.state.currentLang, this.state.currentCategory, this.state.currentPage, this.state.currentPageSize);
   }
 
   autoLogin = () =>  {
