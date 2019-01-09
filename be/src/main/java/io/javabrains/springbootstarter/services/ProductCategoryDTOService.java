@@ -91,6 +91,7 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
         pcDto.setCategoryDesc(pca.getCategoryDesc());
         pcDto.setLclCd(pca.getLclCd());
         pcDto.setChildCategoryCount(new Long(pc.getChildren().size()));
+        pcDto.setProductCount(new Long(pc.getProducts().size()));
         return pcDto;
     }
 }

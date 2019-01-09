@@ -11,7 +11,7 @@ public class ProductCategoryDTO {
 	private String categoryCode;
 	
 	private String categoryDesc;
-	
+
 	private Long categoryLevel;
 
 	private String lclCd;
@@ -19,6 +19,8 @@ public class ProductCategoryDTO {
 	private ProductCategoryDTO parent;	
 
 	private Long childCategoryCount;
+
+	private Long productCount; 
 	
 	private List<ProductCategoryDTO> children;
 	
@@ -84,6 +86,14 @@ public class ProductCategoryDTO {
 
 	public void setChildCategoryCount(Long childCategoryCount) {
 		this.childCategoryCount = childCategoryCount;
+	}
+	
+	public Long getProductCount() {
+		return productCount;
+	}
+
+	public void setProductCount(Long productCount) {
+		this.productCount = productCount;
 	}
 
 	@Override
