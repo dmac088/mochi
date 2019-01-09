@@ -155,6 +155,10 @@ class App extends Component {
     console.log(store.getState());
   }
 
+  printLocalState = () => {
+    console.log(this.state);
+  }
+
   printProps = () => {
     console.log(this.props);
   }
@@ -207,6 +211,7 @@ class App extends Component {
     />
     <Footer/>
       <button onClick={this.printState}>Print Redux State</button>
+      <button onClick={this.printLocalState}>Print Local State</button>
       <button onClick={this.printProps}>Print Props</button>
       <button onClick={this.emptyCart}>Empty Cart</button>
    </div>
