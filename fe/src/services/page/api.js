@@ -15,9 +15,9 @@ export const findAll = (locale) => fetchApi(
 
 
 export const findByCategory = (locale, categoryId) => fetchApi(
-																						endPoints.get + locale + '/cat/' + categoryId + endPoints.page,
-																						{},
-																						{},
-																						'GET',
-																						{}
-																						);
+																																endPoints.get + locale + '/cat/' + categoryId + endPoints.page,
+																																{},
+																																{},
+																																'GET',
+																																{}
+																															);
