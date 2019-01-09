@@ -1,19 +1,33 @@
 import React from 'react';
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
+export default class Example extends React.Component {
+  constructor(props) {
+    super(props);
 
-const PageSize = (props) => {
-  return (
-    <div className="dropdown">
-      <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Page Size
-      </button>
-      <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a className="dropdown-item" href="#">5</a>
-        <a className="dropdown-item" href="#">10</a>
-        <a className="dropdown-item" href="#">30</a>
-      </div>
-    </div>
-  )
+    this.toggle = this.toggle.bind(this);
+    this.state = {
+      dropdownOpen: false
+    };
+  }
+
+  toggle() {
+    this.setState(prevState => ({
+      dropdownOpen: !prevState.dropdownOpen
+    }));
+  }
+
+  render() {
+    return (
+      <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+        <DropdownToggle caret>
+          Page Size
+        </DropdownToggle>
+        <DropdownMenu>
+          <DropdownItem>5</DropdownItem>
+          <DropdownItem>10</DropdownItem>
+        </DropdownMenu>
+      </Dropdown>
+    );
+  }
 }
-
-export default PageSize;
