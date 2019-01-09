@@ -31,6 +31,7 @@ class App extends Component {
       this.state = {
        currentCategory: 2,
        currentLang: "ENG",
+       currentPage: 0,
        page: {content:[]},
        categoryList: [],
        searchTerm: '',
@@ -79,6 +80,13 @@ class App extends Component {
     });
     this.getCategories(event.target.id);
     this.getProducts(event.target.id, this.state.currentCategory);
+  }
+
+  changePage = (event) => {
+    console.log("changePage to: " + event.target.id);
+    this.setState({
+      currentPage: event.target.id
+    });
   }
 
   componentWillMount() {
@@ -185,6 +193,7 @@ class App extends Component {
       />
       <Paginator
         page={this.state.page}
+        changePage={this.changePage}
         />
       <CategoryNavigator
           categoryList={this.state.categoryList}
