@@ -28,7 +28,7 @@ const renderPaginator = (pages, changePage) => {
   console.log("pages = " +  pages)
   return Array.apply(null, {length: pages}).map(Number.call,page => {
     return (
-          <li className="page-item"><a id={page} className="page-link" onClick={changePage} href="#">{page+1}</a></li>
+          <li key={page} className="page-item"><a id={page} className="page-link" onClick={changePage} href="#">{page+1}</a></li>
     )}
   );
 }
