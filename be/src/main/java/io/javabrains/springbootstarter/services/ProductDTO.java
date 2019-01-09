@@ -31,8 +31,8 @@ public class ProductDTO {
 	
 	private String lclCd;
 	
-	
-    public Long getProductId() {
+
+	public Long getProductId() {
 		return productId;
 	}
 
