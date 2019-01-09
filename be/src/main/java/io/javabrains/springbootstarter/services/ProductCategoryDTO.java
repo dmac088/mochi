@@ -18,7 +18,9 @@ public class ProductCategoryDTO {
 	
 	private ProductCategoryDTO parent;	
 
-	private List<ProductCategoryDTO> children;	
+	private Long childCategoryCount;
+	
+	private List<ProductCategoryDTO> children;
 	
 	public Long getCategoryId() {
 		return categoryId;
@@ -74,6 +76,14 @@ public class ProductCategoryDTO {
 
 	public void setChildren(List<ProductCategoryDTO> children) {
 		this.children = children;
+	}
+	
+	public Long getChildCategoryCount() {
+		return childCategoryCount;
+	}
+
+	public void setChildCategoryCount(Long childCategoryCount) {
+		this.childCategoryCount = childCategoryCount;
 	}
 
 	@Override

@@ -18,6 +18,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -59,6 +61,13 @@ public class ProductCategory {
 	})
 	private List<ProductCategory> children;	
 	
+	@Transient
+	private Long childCategoryCount; 
+	
+	public Long getChildCategoryCount() {
+		return new Long(this.children.size());
+	}
+
 	public List<ProductCategory> getChildren() {
 		return children;
 	}
