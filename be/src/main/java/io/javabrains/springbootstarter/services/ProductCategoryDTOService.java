@@ -88,14 +88,14 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
     private ProductCategoryDTO convertToProductCategoryDto(final ProductCategory pc,final String lcl) {
     	ProductCategoryAttribute pca = productCategoryAttributeRepository.findByLclCdAndCategoryId(lcl, pc.getCategoryId()).get();	
         final ProductCategoryDTO pcDto = new ProductCategoryDTO();
-        pcDto.setProductCount(new Long(0));
+        pcDto.setProductCount(new Long(pc.getProducts().size()));
         pcDto.setCategoryId(pc.getCategoryId());
         pcDto.setCategoryCode(pc.getCategoryCode());
         pcDto.setCategoryLevel(pc.getCategoryLevel());
         List<ProductCategoryDTO> pcDTOl = new ArrayList<ProductCategoryDTO>();
         for(ProductCategory pc1 : pc.getChildren()) {
         	ProductCategoryDTO pcchild = convertToProductCategoryDto(pc1, lcl);
-        	pcDto.setProductCount(pcDto.getProductCount() + pc1.getProducts().size());
+        	pcDto.setProductCount(pcDto.getProductCount() + pc.getProducts().size() + pc1.getProducts().size());
         	pcchild.setProductCount(new Long(pc1.getProducts().size()));
         	pcDTOl.add(pcchild);
         }
