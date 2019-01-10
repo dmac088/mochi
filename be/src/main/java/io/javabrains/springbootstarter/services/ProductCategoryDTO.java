@@ -1,6 +1,9 @@
 package io.javabrains.springbootstarter.services;
 
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.javabrains.springbootstarter.domain.ProductCategory;
 
 
@@ -16,6 +19,7 @@ public class ProductCategoryDTO {
 
 	private String lclCd;
 	
+	@JsonIgnore
 	private ProductCategoryDTO parent;	
 
 	private Long childCategoryCount;

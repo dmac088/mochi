@@ -2,9 +2,16 @@ package io.javabrains.springbootstarter.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import io.javabrains.springbootstarter.domain.ProductAttribute;
 import io.javabrains.springbootstarter.domain.ProductCategory;
 import io.javabrains.springbootstarter.domain.ProductCategoryAttribute;
 import io.javabrains.springbootstarter.domain.ProductCategoryAttributeRepository;
@@ -74,24 +81,30 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
   	public ProductCategoryDTO getProductCategory(final String lcl, final Long categoryId) {
      	ProductCategory pc = productCategoryRepository.findByCategoryId(categoryId).get();
      	return	convertToProductCategoryDto(pc, lcl);
-  	}	
+  	}
+    
+  
     
     private ProductCategoryDTO convertToProductCategoryDto(final ProductCategory pc,final String lcl) {
     	ProductCategoryAttribute pca = productCategoryAttributeRepository.findByLclCdAndCategoryId(lcl, pc.getCategoryId()).get();	
         final ProductCategoryDTO pcDto = new ProductCategoryDTO();
+        pcDto.setProductCount(new Long(0));
         pcDto.setCategoryId(pc.getCategoryId());
         pcDto.setCategoryCode(pc.getCategoryCode());
         pcDto.setCategoryLevel(pc.getCategoryLevel());
         List<ProductCategoryDTO> pcDTOl = new ArrayList<ProductCategoryDTO>();
         for(ProductCategory pc1 : pc.getChildren()) {
-        	pcDTOl.add(convertToProductCategoryDto(pc1, lcl));
+        	ProductCategoryDTO pcchild = convertToProductCategoryDto(pc1, lcl);
+        	pcDto.setProductCount(pcDto.getProductCount() + pc1.getProducts().size());
+        	pcchild.setProductCount(new Long(pc1.getProducts().size()));
+        	pcDTOl.add(pcchild);
         }
         //pcDto.setParent(convertToProductCategoryDto(pc.getParent(), lcl));
         pcDto.setChildren(pcDTOl);
         pcDto.setCategoryDesc(pca.getCategoryDesc());
         pcDto.setLclCd(pca.getLclCd());
         pcDto.setChildCategoryCount(new Long(pc.getChildren().size()));
-        pcDto.setProductCount(new Long(pc.getProducts().size()));
+        
         return pcDto;
     }
 }
