@@ -73,25 +73,25 @@ class App extends Component {
     this.setState({
       currentCategory: event.target.id,
       currentPage: 0,
-    });
+    }, this.getProducts);
   }
 
   changeLang = (event) => {
     this.setState({
       currentLang: event.target.id
-    });
+    }, this.getProducts);
   }
 
   changePage = (event) => {
     this.setState({
       currentPage: event.target.id
-    });
+    }, this.getProducts);
   }
 
   changePageSize = (event) => {
     this.setState({
       currentPageSize: event.target.id
-    });
+    }, this.getProducts);
   }
 
   componentWillMount() {
@@ -123,7 +123,9 @@ class App extends Component {
 
   // Search by Keyword
   handleSearch = (event) => {
-   this.setState({ searchTerm: event.target.value });
+   this.setState({
+      searchTerm: event.target.value
+    }, this.getProducts);
   }
 
   // Add to Cart
@@ -141,11 +143,10 @@ class App extends Component {
   }
 
   emptyCart = () => {
-    cartService.emptyCart();
     this.setState({
       totalItems: 0,
       totalAmount: 0,
-    });
+    }, cartService.emptyCart);
   }
 
   // Open Modal
