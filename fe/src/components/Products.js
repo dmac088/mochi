@@ -1,25 +1,21 @@
-import React, {Component} from 'react';
+import React from 'react';
 import config from '../config/config';
 import Product from './Product';
 import LoadingProducts from '../loaders/Products';
 import NoResults from "../empty-states/NoResults";
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
-class Products extends Component{
-	constructor(props){
-		super(props);
+function searchingFor(term){
+	return function(x){
+		return x.productDesc.toLowerCase().includes(term.toLowerCase()) || !term;
 	}
-  	render(){
+}
+
+const Products = (props) => {
     	let productsData;
-    	let term = this.props.searchTerm;
+    	let term = props.searchTerm;
 
-			function searchingFor(term){
-				return function(x){
-					return x.productDesc.toLowerCase().includes(term.toLowerCase()) || !term;
-				}
-			}
-
-			productsData = this.props.productsList.filter(searchingFor(term)).map(product =>{
+			productsData = props.productsList.filter(searchingFor(term)).map(product =>{
 
 				return(
 							<Product key=				{product.productId}
@@ -27,9 +23,9 @@ class Products extends Component{
 											 name=			{product.productDesc}
 											 image=			{config.url + '/' + product.productImage}
 											 id=				{product.productId}
-											 addToCart=	{this.props.addToCart}
-											 openModal=	{this.props.openModal}
-											 lang=			{this.props.lang}
+											 addToCart=	{props.addToCart}
+											 openModal=	{props.openModal}
+											 lang=			{props.lang}
 							/>
 					)
 				}
@@ -58,6 +54,6 @@ class Products extends Component{
 			</div>
 		)
 	}
-}
+
 
 export default Products;
