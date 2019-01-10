@@ -69,7 +69,7 @@ class App extends Component {
     });
   }
 
-  categoryClick = (event) => {
+  changeCategory = (event) => {
     this.setState({
       currentCategory: event.target.id,
       currentPage: 0,
@@ -197,7 +197,7 @@ class App extends Component {
           <div className="col-sm-2">
             <CategoryNavigator
               categoryList={this.state.categoryList}
-              categoryClick={this.categoryClick}
+              changeCategory={this.changeCategory}
             />
           </div>
           <div className="col-sm-10">
