@@ -1,9 +1,5 @@
-
-import store from '../../store';
 import * as session from '../session';
 import * as api from './api';
-import * as actionCreators from './actions';
-import * as productActionCreators from '../page/actions';
 import { initialState } from './reducer';
 
 	export const findAll = (locale, page, size) =>
@@ -21,7 +17,7 @@ import { initialState } from './reducer';
 		.catch(onRequestFailed);
 
 	export const findByCategory = (locale, categoryId, page, size) =>
-	
+
 		api.findByCategory(locale, categoryId, page, size)
 		.then((response) => {
 			return response.text();
