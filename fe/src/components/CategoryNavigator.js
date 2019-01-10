@@ -4,7 +4,7 @@ import { ListGroup, ListGroupItem, Badge } from 'reactstrap';
 const renderCategoryListItems = (categoryList, categoryClick) => {
   return categoryList = categoryList.map(category => {
       return(
-        <ListGroupItem key={category.categoryId} id={category.categoryId} onClick={categoryClick}  tag="a" href="#">{category.categoryDesc} <Badge pill>14</Badge></ListGroupItem>
+        <ListGroupItem key={category.categoryId} id={category.categoryId} onClick={categoryClick}  tag="a" href="#">{category.categoryDesc} <Badge pill>{category.productCount}</Badge></ListGroupItem>
       )
     });
 }
