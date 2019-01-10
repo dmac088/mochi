@@ -41,8 +41,8 @@ class App extends Component {
     };
   }
 
-  getCategories(currentLang) {
-    categoryApi.findAll(currentLang)
+  getCategories() {
+    categoryApi.findAll(this.state.currentLang)
     .then((response) => {
       return response.text();
     })
@@ -60,8 +60,8 @@ class App extends Component {
   }
 
   // Fetch Initial Set of Products from external API
-  getProducts = (locale, categoryId, page, size) => {
-    pageService.findByCategory(locale, categoryId, page, size)
+  getProducts = () => {
+    pageService.findByCategory(this.state.currentLang, this.state.currentCategory, this.state.currentPage, this.state.currentPageSize)
     .then((response) => {
        this.setState({
          page: response
@@ -70,7 +70,6 @@ class App extends Component {
   }
 
   categoryClick = (event) => {
-    this.getProducts(this.state.currentLang, event.target.id, 0, this.state.currentPageSize);
     this.setState({
       currentCategory: event.target.id,
       currentPage: 0,
@@ -81,29 +80,23 @@ class App extends Component {
     this.setState({
       currentLang: event.target.id
     });
-    this.getCategories(event.target.id);
-    this.getProducts(event.target.id, this.state.currentCategory, this.state.currentPage, this.state.currentPageSize);
   }
 
   changePage = (event) => {
-    console.log("changePage to: " + event.target.id);
-    this.getProducts(this.state.currentLang, this.state.currentCategory, event.target.id, this.state.currentPageSize);
     this.setState({
       currentPage: event.target.id
     });
   }
 
   changePageSize = (event) => {
-    console.log("changePageSize to: " + event.target.id);
-    this.getProducts(this.state.currentLang, this.state.currentCategory, this.state.currentPage, event.target.id);
     this.setState({
       currentPageSize: event.target.id
     });
   }
 
   componentWillMount() {
-    this.getCategories(this.state.currentLang);
-    this.getProducts(this.state.currentLang, this.state.currentCategory, this.state.currentPage, this.state.currentPageSize);
+    this.getCategories();
+    this.getProducts();
   }
 
   autoLogin = () =>  {
@@ -135,7 +128,6 @@ class App extends Component {
 
   // Add to Cart
   handleAddToCart = (selectedProducts) => {
-    //console.log('handleAddToCart');
     cartService.addToCart(this.props.cart, selectedProducts);
     setTimeout(() => {
                         this.setState({
@@ -186,7 +178,6 @@ class App extends Component {
   render() {
   return (
    <div className="App">
-
     <Router>
       <div>
         <div className="row">
