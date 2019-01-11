@@ -2,6 +2,7 @@ import React from 'react';
 import * as cartSelector from '../services/cart/selectors';
 import * as cartService from '../services/cart';
 import Counter from './Counter';
+import { Table } from 'react-bootstrap';
 
   const removeItem = (event) => {
     let cart = cartSelector.get();
@@ -15,13 +16,11 @@ import Counter from './Counter';
   const renderCart = (cart) => {
         return(
           <div className="container">
-            <br />
-            <hr />
-            <div className="card">
-              <table className="table table-hover shopping-cart-wrap">
-                <thead className="text-muted">
+              <Table responsive>
+                <thead>
                   <tr>
                     <th scope="col">Product</th>
+                    <th scope="col" width={120}>Name</th>
                     <th scope="col" width={120}>Quantity</th>
                     <th scope="col" width={120}>Price</th>
                     <th scope="col" width={200} className="text-right">Action</th>
@@ -30,8 +29,7 @@ import Counter from './Counter';
                 <tbody>
                   {renderCartItems(cart)}
                 </tbody>
-              </table>
-            </div>
+              </Table>
           </div>
         )
     }
@@ -46,18 +44,12 @@ import Counter from './Counter';
                       <div className="product">
                         <img className="product-image" src={product.image} />
                       </div>
-                      <figcaption className="media-body">
-                        <h6 className="title text-truncate">{product.name}</h6>
-                        <dl className="param param-inline small">
-                          <dt>Size: </dt>
-                          <dd>XXL</dd>
-                        </dl>
-                        <dl className="param param-inline small">
-                          <dt>Color: </dt>
-                          <dd>Orange color</dd>
-                        </dl>
-                      </figcaption>
                     </figure>
+                  </td>
+                  <td>
+                    <figcaption className="media-body">
+                      <h6 className="title text-truncate">{product.name}</h6>
+                    </figcaption>
                   </td>
                   <td>
                     <Counter productQuantity={product.quantity}/>
