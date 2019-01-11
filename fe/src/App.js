@@ -33,7 +33,7 @@ class App extends Component {
        currentCategory: 2,
        currentLang: "ENG",
        currentPage: 0,
-       currentPageSize: 5,
+       currentPageSize: 10,
        page: {content:[]},
        categoryList: [],
        searchTerm: '',
