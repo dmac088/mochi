@@ -2,9 +2,11 @@ import * as session from '../session';
 import * as api from './api';
 import { initialState } from './reducer';
 
-	export const findAll = (locale, categoryId=2, page, size) =>
-		api.findAll(locale, page, size)
+	export const findAll = (locale = "ENG", categoryId = 2, page = 0, size = 10) =>
+		api.findAll(locale, categoryId, page, size)
 		.then((response) => {
+			console.log(categoryId);
+			console.log(response);
       return response.text();
     })
     .then((responseText)=> {
