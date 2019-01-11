@@ -3,6 +3,7 @@ import * as cartSelector from '../services/cart/selectors';
 import * as cartService from '../services/cart';
 import Counter from './Counter';
 import { Table } from 'react-bootstrap';
+import CounterInput from 'react-bootstrap-counter';
 
   const removeItem = (event) => {
     let cart = cartSelector.get();
@@ -36,6 +37,7 @@ import { Table } from 'react-bootstrap';
 
 
     const renderCartItems = (cart) => {
+      console.log(cart);
           return cart.items.map(product => {
               return(
                 <tr key={product.id}>
@@ -52,7 +54,7 @@ import { Table } from 'react-bootstrap';
                     </figcaption>
                   </td>
                   <td>
-                    <Counter productQuantity={product.quantity}/>
+                    <CounterInput value={product.quantity} min={1} max={50} onChange={ (value) => { console.log(value) } } />
                   </td>
                   <td>
                     <div className="price-wrap">
@@ -61,7 +63,7 @@ import { Table } from 'react-bootstrap';
                     </div> {/* price-wrap .// */}
                   </td>
                   <td className="text-right">
-                    <a title href className="btn btn-outline-success" data-toggle="tooltip" data-original-title="Save to Wishlist"> <i className="fa fa-heart" /></a>
+
                     <button
                       id={product.id}
                       className="btn btn-outline-danger"
