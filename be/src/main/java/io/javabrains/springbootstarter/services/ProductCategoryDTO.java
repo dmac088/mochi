@@ -4,8 +4,6 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import io.javabrains.springbootstarter.domain.ProductCategory;
-
 
 public class ProductCategoryDTO {
 	
