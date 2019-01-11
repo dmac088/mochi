@@ -24,10 +24,12 @@ const Paginator = (props) => {
 }
 
 const renderPaginator = (pages, changePage) => {
-  console.log("pages = " +  pages)
+  console.log("pages = " +  pages);
   return Array.apply(null, {length: pages}).map(Number.call,page => {
     return (
+      <React.Fragment>
           <li key={page} className="page-item"><a id={page} className="page-link" onClick={changePage} href="#">{page+1}</a></li>
+      </React.Fragment>
     )}
   );
 }
