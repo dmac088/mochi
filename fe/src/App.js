@@ -60,20 +60,18 @@ class App extends Component {
   }
 
   // Fetch Initial Set of Products from external API
-  getProducts = () => {
-    pageService.findByCategory(this.state.currentLang, this.state.currentCategory, this.state.currentPage, this.state.currentPageSize)
+  getProducts = (category) => {
+    pageService.findByCategory(this.state.currentLang, category, this.state.currentPage, this.state.currentPageSize)
     .then((response) => {
        this.setState({
-         page: response
+         page: response,
+         currentCategory: category,
        });
     });
   }
 
   changeCategory = (event) => {
-    this.setState({
-      currentCategory: event.target.id,
-      currentPage: 0,
-    }, this.getProducts);
+    this.getProducts(event.target.id);
   }
 
   changeLang = (event) => {
@@ -96,7 +94,7 @@ class App extends Component {
 
   componentWillMount() {
     this.getCategories();
-    this.getProducts();
+    this.getProducts(this.state.currentCategory);
   }
 
   autoLogin = () =>  {
