@@ -30,8 +30,8 @@ const renderPaginator = (pages, changePage) => {
       <React.Fragment>
           <li key={page} className="page-item"><a id={page} className="page-link" onClick={changePage} href="#">{page+1}</a></li>
       </React.Fragment>
-    )}
-  );
+    )
+  });
 }
 
 export default Paginator;
