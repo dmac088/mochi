@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import Counter from './Counter';
-import CounterInput from 'react-bootstrap-counter';
 
 class Product extends Component{
 
@@ -81,7 +80,7 @@ class Product extends Component{
                 </div>
                 <h4 className="product-name">{this.props.name}</h4>
                 <p className="product-price">{this.props.price}</p>
-								<CounterInput value={quantity} min={1} max={6} onChange={this.updateQuantity} />
+								<Counter onChange={this.updateQuantity} />
                 <div className="product-action">
                     <button className={!this.state.isAdded ? "" : "added"}
 														type="button"
