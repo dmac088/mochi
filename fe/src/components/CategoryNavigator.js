@@ -1,11 +1,11 @@
-import React  from 'react';
+import React from 'react';
 import { ListGroup, ListGroupItem, Badge }  from 'react-bootstrap';
 
 const CategoryNavigator = (props) => {
   return (
-    <ListGroup>
+    <ul>
       {renderCategoryListItems(props.categoryList, props.changeCategory)}
-    </ListGroup>
+    </ul>
   );
 }
 
