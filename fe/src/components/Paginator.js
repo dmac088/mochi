@@ -1,20 +1,20 @@
 import React from 'react';
-
+import { Pager, Pagination }  from 'react-bootstrap';
 
 const Paginator = (props) => {
   return (
     <nav aria-label="Page navigation example">
-      <ul className="pagination">
-        <li className="page-link">
+      <Pagination>
+        <Pagination.Item bsSize="medium">
             <span aria-hidden="true">«</span>
             <span className="sr-only">Previous</span>
-        </li>
+        </Pagination.Item>
         {renderPaginator(props.page.totalPages, props.changePage)}
-        <li className="page-link">
+        <Pagination.Item bsSize="medium">
             <span aria-hidden="true">»</span>
             <span className="sr-only">Next</span>
-        </li>
-      </ul>
+        </Pagination.Item>
+      </Pagination>
     </nav>
   )
 }
@@ -23,7 +23,7 @@ const renderPaginator = (pages, changePage) => {
   console.log("pages = " +  pages);
   return Array.apply(null, {length: pages}).map(Number.call,page => {
     return (
-      <li key={page} className="page-link" id={page}  onClick={changePage} href="#">{page+1}</li>
+      <Pagination.Item bsSize="medium" key={page} className="page-link" id={page}  onClick={changePage} href="#">{page+1}</Pagination.Item>
     )
   });
 }
