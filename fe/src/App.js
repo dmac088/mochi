@@ -118,9 +118,9 @@ class App extends Component {
 
   // Search by Keyword
   handleSearch = (event) => {
-    // this.setState({
-    //   searchTerm: event.target.value
-    // });
+    this.setState({
+      searchTerm: event.target.value
+    });
   }
 
   // Add to Cart
