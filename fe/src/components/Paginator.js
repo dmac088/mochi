@@ -5,15 +5,9 @@ const Paginator = (props) => {
   return (
     <nav aria-label="Page navigation example">
       <Pagination>
-        <Pagination.Item bsSize="medium">
-            <span aria-hidden="true">«</span>
-            <span className="sr-only">Previous</span>
-        </Pagination.Item>
+        <Pagination.First />
         {renderPaginator(props.page.totalPages, props.changePage)}
-        <Pagination.Item bsSize="medium">
-            <span aria-hidden="true">»</span>
-            <span className="sr-only">Next</span>
-        </Pagination.Item>
+        <Pagination.Last />
       </Pagination>
     </nav>
   )
