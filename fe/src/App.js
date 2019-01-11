@@ -41,8 +41,8 @@ class App extends Component {
     };
   }
 
-  getCategories() {
-    categoryApi.findAll(this.state.currentLang)
+  getCategories(lang) {
+    categoryApi.findAll(lang)
     .then((response) => {
       return response.text();
     })
@@ -60,41 +60,38 @@ class App extends Component {
   }
 
   // Fetch Initial Set of Products from external API
-  getProducts = (category) => {
-    pageService.findByCategory(this.state.currentLang, category, this.state.currentPage, this.state.currentPageSize)
+  getProducts = (lang, category, page, size) => {
+    pageService.findAll(lang, category, page, size)
     .then((response) => {
        this.setState({
          page: response,
          currentCategory: category,
+         currentLang: lang,
+         currentPage: page,
+         currentPageSize: size
        });
     });
   }
 
-  changeCategory = (event) => {
-    this.getProducts(event.target.id);
+  changeLang = (event) => {
+    this.getProducts(event.target.id, this.state.currentCategory, this.state.currentPage, this.state.currentPageSize);
   }
 
-  changeLang = (event) => {
-    this.setState({
-      currentLang: event.target.id
-    }, this.getProducts);
+  changeCategory = (event) => {
+    this.getProducts(this.state.currentLang, event.target.id, this.state.currentPage, this.state.currentPageSize);
   }
 
   changePage = (event) => {
-    this.setState({
-      currentPage: event.target.id
-    }, this.getProducts);
+    this.getProducts(this.state.currentLang, this.state.currentCategory, event.target.id, this.state.currentPageSize);
   }
 
   changePageSize = (event) => {
-    this.setState({
-      currentPageSize: event.target.id
-    }, this.getProducts);
+    this.getProducts(this.state.currentLang, this.state.currentCategory, this.state.currentPage, event.target.id);
   }
 
   componentWillMount() {
-    this.getCategories();
-    this.getProducts(this.state.currentCategory);
+    this.getCategories(this.state.currentLang);
+    this.getProducts(this.state.currentLang, this.state.currentCategory, this.state.currentPage, this.state.currentPageSize);
   }
 
   autoLogin = () =>  {
@@ -121,9 +118,9 @@ class App extends Component {
 
   // Search by Keyword
   handleSearch = (event) => {
-   this.setState({
-      searchTerm: event.target.value
-    }, this.getProducts);
+    // this.setState({
+    //   searchTerm: event.target.value
+    // });
   }
 
   // Add to Cart
@@ -131,10 +128,9 @@ class App extends Component {
     cartService.addToCart(this.props.cart, selectedProducts);
     setTimeout(() => {
                         this.setState({
-                         cartBounce: false,
-                         quantity: 1,
-                       });
-
+                           cartBounce: false,
+                           quantity: 1,
+                        });
                      },
     1000
     );
@@ -149,17 +145,17 @@ class App extends Component {
 
   // Open Modal
   openModal = (product) => {
-    this.setState({
-      quickViewProduct: product,
-      modalActive: true
-    });
+    // this.setState({
+    //   quickViewProduct: product,
+    //   modalActive: true
+    // });
   }
 
   // Close Modal
   closeModal = () => {
-    this.setState({
-      modalActive: false
-    });
+    // this.setState({
+    //   modalActive: false
+    // });
   }
 
   printState = () => {

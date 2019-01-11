@@ -3,18 +3,16 @@ import { ListGroup, ListGroupItem, Badge }  from 'react-bootstrap';
 
 const CategoryNavigator = (props) => {
   return (
-    <ul>
+    <ListGroup>
       {renderCategoryListItems(props.categoryList, props.changeCategory)}
-    </ul>
+    </ListGroup>
   );
 }
 
 const renderCategoryListItems = (categoryList, changeCategory) => {
   return categoryList = categoryList.map(category => {
       return(
-        <React.Fragment>
-          <li key={category.categoryId} id={category.categoryId} onClick={changeCategory}  tag="a" href="#">{category.categoryDesc} <Badge pill>{category.productCount}</Badge></li>
-        </React.Fragment>
+          <ListGroupItem key={category.categoryId} id={category.categoryId} onClick={changeCategory}>{category.categoryDesc} <Badge pill>{category.productCount}</Badge></ListGroupItem>
       )
     });
 }
