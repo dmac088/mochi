@@ -16,22 +16,22 @@ class Product extends Component {
 													"productRrp": null,
 													"lclCd": null,
 													"productImage": null,
-													"quantity": 0,
 												},
-	            					quickViewProdcut: {},
-	            					isAdded: false,
+												"quantity": 0,
+	            					"quickViewProdcut": {},
+	            					"isAdded": false,
         						 }
     }
 
 		incrementQuantity = () => {
 			this.setState((prevState, value) => ({
-				 productDTO: {quantity: prevState.productDTO.quantity +1}
+				 quantity: prevState.quantity + 1
 			}));
 		}
 
 		decrementQuantity = () => {
 			this.setState((prevState, value) => ({
-				 productDTO: {quantity: prevState.productDTO.quantity -1}
+				 quantity: prevState.quantity - 1
 			}));
 		}
 
@@ -48,8 +48,8 @@ class Product extends Component {
                 name: name,
                 price: price,
                 id: id,
-                quantity: quantity
-            }
+            },
+						quantity: quantity
         }, () => {
             		 	this.props.addToCart(this.state.productDTO);
         				 })
@@ -88,7 +88,7 @@ class Product extends Component {
         let name = this.props.product.productDesc;
         let price = this.props.product.productRrp;
         let id = this.props.product.productId;
-        let quantity = this.state.currentQuantity;
+        let quantity = this.state.quantity;
         return(
             <div className="product">
                 <div className="product-image">
