@@ -1,10 +1,11 @@
-	import store from '../../store';
+import store from '../../store';
 import * as api from './api';
 import * as customerApi from '../customer/api';
 import * as sessionSelectors from './selectors';
 import * as tokenActionCreators from './actions';
 import * as customerActionCreators from '../customer/actions';
 import * as customerService from '../customer';
+import _ from 'lodash';
 
 const SESSION_TIMEOUT_THRESHOLD = 300; // Will refresh the access token 5 minutes before it expires
 
@@ -97,7 +98,7 @@ export const authenticate = (customer, routeLanding, routeLogin) => {
 			 return JSON.parse(responseText);
 		})
 		.then ((responseJSON) => {
-			let newstate = {...session.tokens};
+			let newstate = _.cloneDeep(session.tokens);
 			newstate['access_token'] =  responseJSON.access_token;
 			persistTokens(newstate);
 		})
