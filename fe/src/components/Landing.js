@@ -2,7 +2,6 @@ import React from 'react';
 import Products from  './Products';
 
 const Landing = (props) =>  {
-  console.log('Landing...');
     return(
           <Products
             productsList={props.page.content}

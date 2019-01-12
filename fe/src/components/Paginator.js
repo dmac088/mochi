@@ -14,7 +14,6 @@ const Paginator = (props) => {
 }
 
 const renderPaginator = (pages, changePage) => {
-  console.log("pages = " +  pages);
   return Array.apply(null, {length: pages}).map(Number.call,page => {
     return (
       <Pagination.Item bsSize="medium" key={page} className="page-link" id={page}  onClick={changePage} href="#">{page+1}</Pagination.Item>
