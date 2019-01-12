@@ -27,7 +27,7 @@ import * as actionCreators from './actions';
 	}
 
 	export const addToCart = (cart, selectedProducts) => {
-		let cartCopy = ...cart
+		let cartCopy = {...cart}
 		let productID = selectedProducts.id;
 		let productQty = selectedProducts.quantity;
 		if (checkProduct(cartCopy, productID)) {
