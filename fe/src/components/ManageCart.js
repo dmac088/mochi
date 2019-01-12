@@ -34,6 +34,14 @@ import Counter from './Counter';
         )
     }
 
+    const incrementQuantity = () => {
+
+    }
+
+    const decrementQuantity = () => {
+      
+    }
+
 
     const renderCartItems = (cart) => {
           return cart.items.map(product => {

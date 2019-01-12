@@ -26,13 +26,13 @@ class Product extends Component {
     }
 
 		incrementQuantity = () => {
-			this.setState((prevState, value) => ({
+			this.setState((prevState) => ({
 				 product: {quantity: prevState.product.quantity + 1}
 			}));
 		}
 
 		decrementQuantity = () => {
-			this.setState((prevState, value) => ({
+			this.setState((prevState) => ({
 				 product: {quantity: prevState.product.quantity - 1}
 			}));
 		}
