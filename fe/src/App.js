@@ -124,8 +124,8 @@ class App extends Component {
   }
 
   // Add to Cart
-  handleAddToCart = (selectedProducts) => {
-    cartService.addToCart(this.props.cart, selectedProducts);
+  handleAddToCart = (selectedProduct) => {
+    cartService.addToCart(this.props.cart, selectedProduct);
     setTimeout(() => {
                         this.setState({
                            cartBounce: false,
