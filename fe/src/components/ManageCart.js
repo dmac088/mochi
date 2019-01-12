@@ -34,20 +34,23 @@ import Counter from './Counter';
         )
     }
 
-    const incrementQuantity = () => {
+    const incrementQuantity = (e) => {
       //update the redux state to increase the quantity by 1
+      let cart = cartSelector.get();
+      cartService.updateQuantity(cart, e.target.id, 1)
 
     }
 
-    const decrementQuantity = () => {
+    const decrementQuantity = (e) => {
       //update the redux state to reduce the quantity by 1
+      let cart = cartSelector.get();
+      cartService.updateQuantity(cart, e.target.id, -1)
     }
 
 
     const renderCartItems = (cart) => {
 
           return cart.items.map(product => {
-              console.log(product);
               return(
                 <tr key={product.productDTO.id}>
                   <td>
@@ -64,6 +67,9 @@ import Counter from './Counter';
                   </td>
                   <td>
                     <Counter
+                      incrementQuantity={incrementQuantity}
+      								decrementQuantity={decrementQuantity}
+                      productId={product.productDTO.id}
                       productQty={product.quantity}
                     />
                   </td>

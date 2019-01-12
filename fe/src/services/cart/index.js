@@ -22,8 +22,6 @@ import * as actionCreators from './actions';
 
 	const checkProduct = (cart, productID) => {
 		return cart.items.some(function(item) {
-	//	console.log('this is the item');
-		//	console.log(item);
 			return item.productDTO.id === productID;
 		});
 	}
@@ -62,11 +60,11 @@ import * as actionCreators from './actions';
 		  persistCart(cartCopy);
 	}
 
-	export const updateQuantity = (cart, selectedProduct, qty) => {
-		let index = cart.items.findIndex(x => x.id === selectedProduct.id);
-		cart.items[index].quantity =
-		Number(cart.items[index].quantity) + Number(qty);
-		persistCart(cart);
+	export const updateQuantity = (cart, productId, qty) => {
+		let cartCopy = {...cart}
+		let index = cartCopy.items.findIndex(x => x.productDTO.id === Number(productId));
+		cartCopy.items[index].quantity = Number(cartCopy.items[index].quantity) + Number(qty);
+		persistCart(cartCopy);
 	}
 
 	export const sumTotalItems = (cart) => {
