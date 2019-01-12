@@ -41,8 +41,8 @@ import _ from 'lodash';
 	    cartClone.items.push(selectedProducts);
 	  };
 
-		cartClone.totalItems = sumTotalItems(cartClone);
-		cartClone.totalAmount = sumTotalAmount(cartClone);
+		cartClone.totalItems = sumTotalItems(cartClone.items);
+		cartClone.totalAmount = sumTotalAmount(cartClone.items);
 	  persistCart(cartClone);
 	}
 
@@ -59,8 +59,7 @@ import _ from 'lodash';
 														items: filtered,
 														totalItems: sumTotalItems(filtered),
 														totalAmount: sumTotalAmount(filtered),
-										}
-										;
+										};
 		  persistCart(newCart);
 	}
 
@@ -68,6 +67,8 @@ import _ from 'lodash';
 		let cartClone = _.cloneDeep(cart);
 		let index = cartClone.items.findIndex(x => x.productDTO.id === Number(productId));
 		cartClone.items[index].quantity = Number(cartClone.items[index].quantity) + Number(qty);
+		cartClone.totalItems = sumTotalItems(cartClone.items);
+		cartClone.totalAmount = sumTotalAmount(cartClone.items);
 		persistCart(cartClone);
 	}
 
