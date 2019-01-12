@@ -2,6 +2,7 @@
 import store from '../../store';
 import * as api from './api';
 import * as actionCreators from './actions';
+import _ from 'lodash';
 
 
 	export const findByUserName = (userName) =>
@@ -20,10 +21,6 @@ import * as actionCreators from './actions';
 	 	store.dispatch(actionCreators.update({"cart": cart }));
 	}
 
-	export const  persistCartItems = (cart) => {
-		store.dispatch(actionCreators.update({"cart": cart }));
-	}
-
 	const checkProduct = (cart, productID) => {
 		return cart.items.some(function(item) {
 			return item.productDTO.id === productID;
@@ -31,28 +28,28 @@ import * as actionCreators from './actions';
 	}
 
 	export const addToCart = (cart, selectedProducts) => {
-		let cartCopy = {...cart}
+		let cartClone = _.cloneDeep(cart)
 		let productID = selectedProducts.id;
 		let productQty = selectedProducts.quantity;
-		if (checkProduct(cartCopy, productID)) {
+		if (checkProduct(cartClone, productID)) {
 	  //increment the quantity of the product in the cart
 	    console.log("incrementing product quantity");
-	    let index = cartCopy.items.findIndex(x => x.id === productID);
-	    cartCopy.items[index].quantity =
-	    Number(cartCopy.items[index].quantity) + Number(productQty);
+	    let index = cartClone.items.findIndex(x => x.id === productID);
+	    cartClone.items[index].quantity =
+	    Number(cartClone.items[index].quantity) + Number(productQty);
 	  } else {
 	    //add the product to the cart
 	    console.log('adding to cart....');
-	    cartCopy.items.push(selectedProducts);
+	    cartClone.items.push(selectedProducts);
 	  };
 
-		cartCopy.totalItems = sumTotalItems(cartCopy);
-		cartCopy.totalAmount = sumTotalAmount(cartCopy);
-	  persistCart(cart);
+		cartClone.totalItems = sumTotalItems(cartClone);
+		cartClone.totalAmount = sumTotalAmount(cartClone);
+	  persistCart(cartClone);
 	}
 
 	export const removeFromCart = (cart, productId) => {
-			let cartItemsCopy = {...cart.items}
+			let cartItemsCopy = _.cloneDeep(cart.items)
 			if (checkProduct(cart, productId)) {
 				console.log('removing item from cart....');
 				var filtered = cartItemsCopy.filter(function(value, index, arr){
@@ -70,10 +67,10 @@ import * as actionCreators from './actions';
 	}
 
 	export const updateQuantity = (cart, productId, qty) => {
-		let cartCopy = {...cart}
-		let index = cartCopy.items.findIndex(x => x.productDTO.id === Number(productId));
-		cartCopy.items[index].quantity = Number(cartCopy.items[index].quantity) + Number(qty);
-		persistCart(cartCopy);
+		let cartClone = _.cloneDeep(cart);
+		let index = cartClone.items.findIndex(x => x.productDTO.id === Number(productId));
+		cartClone.items[index].quantity = Number(cartClone.items[index].quantity) + Number(qty);
+		persistCart(cartClone);
 	}
 
 	export const sumTotalItems = (items) => {

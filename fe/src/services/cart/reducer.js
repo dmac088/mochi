@@ -1,4 +1,5 @@
 import * as actionTypes from './actionTypes';
+import _ from 'lodash';
 
 export const initialState = {
 															cart: {
