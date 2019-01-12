@@ -20,6 +20,10 @@ import * as actionCreators from './actions';
 	 	store.dispatch(actionCreators.update({"cart": cart }));
 	}
 
+	export const  persistCartItems = (cart) => {
+		store.dispatch(actionCreators.update({"cart": cart }));
+	}
+
 	const checkProduct = (cart, productID) => {
 		return cart.items.some(function(item) {
 			return item.productDTO.id === productID;
@@ -48,17 +52,21 @@ import * as actionCreators from './actions';
 	}
 
 	export const removeFromCart = (cart, productId) => {
-			let cartCopy = {...cart}
-			if (checkProduct(cartCopy, productId)) {
+			let cartItemsCopy = {...cart.items}
+			if (checkProduct(cart, productId)) {
 				console.log('removing item from cart....');
-				var filtered = cartCopy.items.filter(function(value, index, arr){
+				var filtered = cartItemsCopy.filter(function(value, index, arr){
 																			return value.productDTO.id !== productId;
 																		});
 			}
-			cartCopy.items = filtered;
-			cartCopy.totalItems = sumTotalItems(cartCopy);
-			cartCopy.totalAmount = sumTotalAmount(cartCopy);
-		  persistCart(cartCopy);
+			let newCart = {
+										cart: {
+														items: filtered,
+														totalItems: sumTotalItems(filtered),
+														totalAmount: sumTotalAmount(filtered),
+													}
+										};
+		  persistCart(newCart);
 	}
 
 	export const updateQuantity = (cart, productId, qty) => {
@@ -68,16 +76,16 @@ import * as actionCreators from './actions';
 		persistCart(cartCopy);
 	}
 
-	export const sumTotalItems = (cart) => {
+	export const sumTotalItems = (items) => {
 	  let total = 0;
-	  total = cart.items.length;
+	  total = items.length;
 	  return total;
   }
 
-  export const sumTotalAmount = (cart) => {
+  export const sumTotalAmount = (items) => {
 	  let total = 0;
-	  for (var i = 0; i < cart.items.length; i++) {
-	  total += cart.items[i].price * parseInt(cart.items[i].quantity);
+	  for (var i = 0; i < items.length; i++) {
+	  total += items[i].price * parseInt(items[i].quantity);
 	  }
 	  return total;
  	}
