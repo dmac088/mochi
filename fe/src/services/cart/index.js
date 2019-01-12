@@ -27,33 +27,34 @@ import * as actionCreators from './actions';
 	}
 
 	export const addToCart = (cart, selectedProducts) => {
+		let cartCopy = ...cart
 		let productID = selectedProducts.id;
 		let productQty = selectedProducts.quantity;
-		if (checkProduct(cart, productID)) {
+		if (checkProduct(cartCopy, productID)) {
 	  //increment the quantity of the product in the cart
 	    console.log("incrementing product quantity");
-	    let index = cart.items.findIndex(x => x.id === productID);
-	    cart.items[index].quantity =
-	    Number(cart.items[index].quantity) + Number(productQty);
+	    let index = cartCopy.items.findIndex(x => x.id === productID);
+	    cartCopy.items[index].quantity =
+	    Number(cartCopy.items[index].quantity) + Number(productQty);
 	  } else {
 	    //add the product to the cart
 	    console.log('adding to cart....');
-	    cart.items.push(selectedProducts);
+	    cartCopy.items.push(selectedProducts);
 	  };
 
-		cart.totalItems = sumTotalItems(cart);
-		cart.totalAmount = sumTotalAmount(cart);
+		cartCopy.totalItems = sumTotalItems(cartCopy);
+		cartCopy.totalAmount = sumTotalAmount(cartCopy);
 	  persistCart(cart);
 	}
 
 	export const removeFromCart = (cart, productId) => {
-			if (checkProduct(cart, productId)) {
+			let cartCopy = {...cart}
+			if (checkProduct(cartCopy, productId)) {
 				console.log('removing item from cart....');
-				var filtered = cart.items.filter(function(value, index, arr){
+				var filtered = cartCopy.items.filter(function(value, index, arr){
 																			return value.productDTO.id !== productId;
 																		});
 			}
-			let cartCopy = {...cart}
 			cartCopy.items = filtered;
 			cartCopy.totalItems = sumTotalItems(cartCopy);
 			cartCopy.totalAmount = sumTotalAmount(cartCopy);
