@@ -33,13 +33,11 @@ import _ from 'lodash';
 		let productQty = selectedProducts.quantity;
 		if (checkProduct(cartClone, productID)) {
 	  //increment the quantity of the product in the cart
-	    console.log("incrementing product quantity");
 	    let index = cartClone.items.findIndex(x => x.id === productID);
 	    cartClone.items[index].quantity =
 	    Number(cartClone.items[index].quantity) + Number(productQty);
 	  } else {
 	    //add the product to the cart
-	    console.log('adding to cart....');
 	    cartClone.items.push(selectedProducts);
 	  };
 
