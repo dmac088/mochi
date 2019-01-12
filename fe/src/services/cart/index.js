@@ -18,6 +18,7 @@ import _ from 'lodash';
 	};
 
 	export const  persistCart = (cart) => {
+		console.log(cart);
 	 	store.dispatch(actionCreators.update({"cart": cart }));
 	}
 
@@ -57,12 +58,12 @@ import _ from 'lodash';
 																		});
 			}
 			let newCart = {
-										cart: {
+
 														items: filtered,
 														totalItems: sumTotalItems(filtered),
 														totalAmount: sumTotalAmount(filtered),
-													}
-										};
+										}
+										;
 		  persistCart(newCart);
 	}
 
