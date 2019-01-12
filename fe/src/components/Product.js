@@ -8,6 +8,7 @@ class Product extends Component {
 	constructor(props){
 		super(props);
         this.state = {
+											product: {
 												productDTO: {
 													"productId": null,
 													"productUPC": null,
@@ -20,38 +21,41 @@ class Product extends Component {
 												"quantity": 0,
 	            					"quickViewProdcut": {},
 	            					"isAdded": false,
-        						 }
+        						 },
+									 }
     }
 
 		incrementQuantity = () => {
 			this.setState((prevState, value) => ({
-				 quantity: prevState.quantity + 1
+				 product: {quantity: prevState.product.quantity + 1}
 			}));
 		}
 
 		decrementQuantity = () => {
 			this.setState((prevState, value) => ({
-				 quantity: prevState.quantity - 1
+				 product: {quantity: prevState.product.quantity - 1}
 			}));
 		}
 
     resetQuantity = () => {
 		 	this.setState({
-		 		quantity: 1
+		 		product: {quantity: 1}
 		 	});
    	}
 
     addToCart = (image, name, price, id, quantity) => {
         this.setState({
+					product: {
             productDTO: {
                 image: config.url + '/' + image,
                 name: name,
                 price: price,
                 id: id,
             },
-						quantity: quantity
+						quantity: quantity,
+					}
         }, () => {
-            		 	this.props.addToCart(this.state.productDTO);
+            		 	this.props.addToCart(this.state.product);
         				 })
 
         this.setState({
@@ -62,7 +66,7 @@ class Product extends Component {
             setTimeout(() => {
                 this.setState({
                     isAdded: false,
-                    productDTO: {}
+                    product: {}
                 });
             }, 3500);
         	}
@@ -88,7 +92,7 @@ class Product extends Component {
         let name = this.props.product.productDesc;
         let price = this.props.product.productRrp;
         let id = this.props.product.productId;
-        let quantity = this.state.quantity;
+        let quantity = this.state.product.quantity;
         return(
             <div className="product">
                 <div className="product-image">
