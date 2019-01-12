@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import Counter from './Counter';
 
-class Product extends Component{
+class Product extends Component {
 
 	constructor(props){
 		super(props);
@@ -9,13 +10,15 @@ class Product extends Component{
             selectedProduct: {},
             quickViewProdcut: {},
             isAdded: false,
-						quantity: 1
+						quantity: 1,
         }
     }
 
-		updateQuantity = (qty) => {
-			this.setState({
-				quantity: qty
+		updateQuantity = (value) => {
+			this.setState((prevState, value) => ({
+				 quantity:  value
+			}), () => {
+					console.log('updateQuantity AFTER', this.state.quantity);
 			});
 		}
 
@@ -80,7 +83,9 @@ class Product extends Component{
                 </div>
                 <h4 className="product-name">{this.props.name}</h4>
                 <p className="product-price">{this.props.price}</p>
-								<Counter onChange={this.updateQuantity} />
+								<Counter updateQuantity={this.updateQuantity}
+												 productQty={this.state.quantity}
+								/>
                 <div className="product-action">
                     <button className={!this.state.isAdded ? "" : "added"}
 														type="button"
@@ -94,5 +99,10 @@ class Product extends Component{
         )
     }
 }
+
+
+Product.propTypes = {
+  quantity: PropTypes.number
+};
 
 export default Product;
