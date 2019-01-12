@@ -22,7 +22,9 @@ import * as actionCreators from './actions';
 
 	const checkProduct = (cart, productID) => {
 		return cart.items.some(function(item) {
-			return item.id === productID;
+	//	console.log('this is the item');
+		//	console.log(item);
+			return item.productDTO.id === productID;
 		});
 	}
 
@@ -50,7 +52,7 @@ import * as actionCreators from './actions';
 			if (checkProduct(cart, productId)) {
 				console.log('removing item from cart....');
 				var filtered = cart.items.filter(function(value, index, arr){
-																			return value.id !== productId;
+																			return value.productDTO.id !== productId;
 																		});
 			}
 			let cartCopy = {...cart}

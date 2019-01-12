@@ -35,28 +35,31 @@ import Counter from './Counter';
     }
 
     const incrementQuantity = () => {
+      //update the redux state to increase the quantity by 1
 
     }
 
     const decrementQuantity = () => {
-      
+      //update the redux state to reduce the quantity by 1
     }
 
 
     const renderCartItems = (cart) => {
+
           return cart.items.map(product => {
+              console.log(product);
               return(
-                <tr key={product.id}>
+                <tr key={product.productDTO.id}>
                   <td>
                     <figure className="media">
                       <div className="product">
-                        <img className="product-image" src={product.image} />
+                        <img className="product-image" src={product.productDTO.image} />
                       </div>
                     </figure>
                   </td>
                   <td>
                     <figcaption className="media-body">
-                      <h6 className="title text-truncate">{product.name}</h6>
+                      <h6 className="title text-truncate">{product.productDTO.name}</h6>
                     </figcaption>
                   </td>
                   <td>
@@ -66,13 +69,13 @@ import Counter from './Counter';
                   </td>
                   <td>
                     <div className="price-wrap">
-                      <p className="product-price">{product.price}</p>
+                      <p className="product-price">{product.productDTO.price}</p>
                       <small className="text-muted"></small>
                     </div> {/* price-wrap .// */}
                   </td>
                   <td className="text-right">
                     <button
-                      id={product.id}
+                      id={product.productDTO.id}
                       className="btn btn-outline-danger"
                       onClick={removeItem}>
                         × Remove
