@@ -18,7 +18,7 @@ class Product extends Component {
 													"lclCd": null,
 													"productImage": null,
 												},
-												"quantity": 0,
+												"quantity": 1,
 	            					"quickViewProdcut": {},
 	            					"isAdded": false,
         						 },
@@ -47,7 +47,7 @@ class Product extends Component {
         this.setState({
 					product: {
             productDTO: {
-                image: config.url + '/' + image,
+                image: image,
                 name: name,
                 price: price,
                 id: id,
