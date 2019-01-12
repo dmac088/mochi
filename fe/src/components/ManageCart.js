@@ -52,7 +52,9 @@ import Counter from './Counter';
                     </figcaption>
                   </td>
                   <td>
-                    <Counter/>
+                    <Counter
+                      productQty={product.quantity}
+                    />
                   </td>
                   <td>
                     <div className="price-wrap">

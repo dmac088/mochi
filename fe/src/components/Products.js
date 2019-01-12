@@ -1,5 +1,5 @@
 import React from 'react';
-import config from '../config/config';
+
 import Product from './Product';
 import LoadingProducts from '../loaders/Products';
 import NoResults from "../empty-states/NoResults";
@@ -18,11 +18,7 @@ const Products = (props) => {
 			productsData = props.productsList.filter(searchingFor(term)).map(product =>{
 
 				return(
-							<Product key=				{product.productId}
-											 price=			{product.productRrp}
-											 name=			{product.productDesc}
-											 image=			{config.url + '/' + product.productImage}
-											 id=				{product.productId}
+							<Product product=		{product}
 											 addToCart=	{props.addToCart}
 											 openModal=	{props.openModal}
 											 lang=			{props.lang}

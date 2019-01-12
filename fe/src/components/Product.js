@@ -1,28 +1,37 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Counter from './Counter';
+import config from '../config/config';
 
 class Product extends Component {
 
 	constructor(props){
 		super(props);
         this.state = {
-            selectedProduct: { quantity: 1 },
-            quickViewProdcut: {},
-            isAdded: false,
-
-        }
+												productDTO: {
+													"productId": null,
+													"productUPC": null,
+													"productCreateDt": null,
+													"productDesc": null,
+													"productRrp": null,
+													"lclCd": null,
+													"productImage": null,
+													"quantity": 0,
+												},
+	            					quickViewProdcut: {},
+	            					isAdded: false,
+        						 }
     }
 
 		incrementQuantity = () => {
 			this.setState((prevState, value) => ({
-				 selectedProduct: {quantity: prevState.selectedProduct.quantity +1}
+				 productDTO: {quantity: prevState.productDTO.quantity +1}
 			}));
 		}
 
 		decrementQuantity = () => {
 			this.setState((prevState, value) => ({
-				 selectedProduct: {quantity: prevState.selectedProduct.quantity -1}
+				 productDTO: {quantity: prevState.productDTO.quantity -1}
 			}));
 		}
 
@@ -34,15 +43,15 @@ class Product extends Component {
 
     addToCart = (image, name, price, id, quantity) => {
         this.setState({
-            selectedProduct: {
-                image: image,
+            productDTO: {
+                image: config.url + '/' + image,
                 name: name,
                 price: price,
                 id: id,
                 quantity: quantity
             }
         }, () => {
-            					this.props.addToCart(this.state.selectedProduct);
+            		 	this.props.addToCart(this.state.productDTO);
         				 })
 
         this.setState({
@@ -53,7 +62,7 @@ class Product extends Component {
             setTimeout(() => {
                 this.setState({
                     isAdded: false,
-                    selectedProduct: {}
+                    productDTO: {}
                 });
             }, 3500);
         	}
@@ -69,27 +78,27 @@ class Product extends Component {
                 id: id
             }
         }, () => {
-            this.props.openModal(this.state.quickViewProdcut);
-        	})
+            			this.props.openModal(this.state.quickViewProdcut);
+        				 })
     }
 
 
     render(){
-        let image = this.props.image;
-        let name = this.props.name;
-        let price = this.props.price;
-        let id = this.props.id;
+        let image = config.url + '/' + this.props.product.productImage;
+        let name = this.props.product.productDesc;
+        let price = this.props.product.productRrp;
+        let id = this.props.product.productId;
         let quantity = this.state.currentQuantity;
         return(
             <div className="product">
                 <div className="product-image">
                     <img src={image} alt={this.props.name} onClick={this.quickView.bind(this, image, name, price, id, quantity)}/>
                 </div>
-                <h4 className="product-name">{this.props.name}</h4>
-                <p className="product-price">{this.props.price}</p>
+                <h4 className="product-name">{name}</h4>
+                <p className="product-price">{price}</p>
 								<Counter incrementQuantity={this.incrementQuantity}
 												 decrementQuantity={this.decrementQuantity}
-												 productQty={this.state.selectedProduct.quantity}
+												 productQty={quantity}
 								/>
                 <div className="product-action">
                     <button className={!this.state.isAdded ? "" : "added"}
