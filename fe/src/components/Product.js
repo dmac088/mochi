@@ -7,19 +7,23 @@ class Product extends Component {
 	constructor(props){
 		super(props);
         this.state = {
-            selectedProduct: {},
+            selectedProduct: { quantity: 1 },
             quickViewProdcut: {},
             isAdded: false,
-						quantity: 1,
+
         }
     }
 
-		updateQuantity = (value) => {
+		incrementQuantity = () => {
 			this.setState((prevState, value) => ({
-				 quantity:  value
-			}), () => {
-					console.log('updateQuantity AFTER', this.state.quantity);
-			});
+				 selectedProduct: {quantity: prevState.selectedProduct.quantity +1}
+			}));
+		}
+
+		decrementQuantity = () => {
+			this.setState((prevState, value) => ({
+				 selectedProduct: {quantity: prevState.selectedProduct.quantity -1}
+			}));
 		}
 
     resetQuantity = () => {
@@ -75,7 +79,7 @@ class Product extends Component {
         let name = this.props.name;
         let price = this.props.price;
         let id = this.props.id;
-        let quantity = this.state.quantity;
+        let quantity = this.state.currentQuantity;
         return(
             <div className="product">
                 <div className="product-image">
@@ -83,8 +87,9 @@ class Product extends Component {
                 </div>
                 <h4 className="product-name">{this.props.name}</h4>
                 <p className="product-price">{this.props.price}</p>
-								<Counter updateQuantity={this.updateQuantity}
-												 productQty={this.state.quantity}
+								<Counter incrementQuantity={this.incrementQuantity}
+												 decrementQuantity={this.decrementQuantity}
+												 productQty={this.state.selectedProduct.quantity}
 								/>
                 <div className="product-action">
                     <button className={!this.state.isAdded ? "" : "added"}
@@ -99,10 +104,5 @@ class Product extends Component {
         )
     }
 }
-
-
-Product.propTypes = {
-  quantity: PropTypes.number
-};
 
 export default Product;
