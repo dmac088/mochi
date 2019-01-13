@@ -22,14 +22,15 @@ const Header = (props) => {
             <Navbar.Toggle />
           </Navbar.Header>
           <Navbar.Collapse>
+        <Nav>
           <Navbar.Form>
               <Search
                   handleSearch={props.handleSearch}
                   lang={props.lang}
               />
           </Navbar.Form>
-
-          <Nav pullRight>
+        </Nav>
+          <Nav>
             <NavItem>
               <HeaderCartSummary
                       totalItems={props.totalItems}
@@ -54,13 +55,14 @@ const Header = (props) => {
                customer={props.customer}
                />
            </NavItem>
-           <Selector
-             authenticated={props.authenticated}
-             customer={props.customer}
-             />
-           </Nav>
 
-
+        </Nav>
+        <Nav>
+          <Selector
+            authenticated={props.authenticated}
+            customer={props.customer}
+           />
+        </Nav>
         </Navbar.Collapse>
         </Navbar>
     );
