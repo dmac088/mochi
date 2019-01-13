@@ -12,7 +12,7 @@ const CategoryNavigator = (props) => {
 const renderCategoryListItems = (categoryList, changeCategory) => {
   return categoryList = categoryList.map(category => {
       return(
-          <ListGroupItem key={category.categoryId} id={category.categoryId} onClick={changeCategory}>{category.categoryDesc} <Badge pill>{category.productCount}</Badge></ListGroupItem>
+          <ListGroupItem key={category.categoryId} id={category.categoryId} onClick={changeCategory}>{category.categoryDesc} <Badge pill="true">{category.productCount}</Badge></ListGroupItem>
       )
     });
 }

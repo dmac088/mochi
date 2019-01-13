@@ -91,7 +91,7 @@ class Product extends Component {
         let image = config.url + '/' + this.props.product.productImage;
         let name = this.props.product.productDesc;
         let price = this.props.product.productRrp;
-        let id = this.props.product.productId;
+        let id = this.props.product;
         let quantity = this.state.product.quantity;
         return(
             <div className="product">
