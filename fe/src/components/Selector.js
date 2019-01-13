@@ -52,11 +52,9 @@ const Selector = (props) => {
 
     return(
         <React.Fragment>
-          <Form inline>
             {renderLoginButton(props)}
             {renderLogoutButton(props)}
             {rendersignupButton(props)}
-          </Form>
         </React.Fragment>
     );
 }
