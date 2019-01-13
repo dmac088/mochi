@@ -5,14 +5,14 @@ import Selector from './Selector';
 import Search from './Search';
 import LanguageSelector from './LanguageSelector';
 import { Link } from 'react-router-dom';
-import { Navbar, Nav } from 'react-bootstrap';
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
 
 
 const Header = (props) => {
 
       return(
         <Navbar>
-          <Nav className="navbar navbar-light bg-light justify-content-between">
+          <NavItem className="navbar navbar-light bg-light justify-content-between">
             <div className="navbar-brand">
                 <Link to="/">HOME</Link>
             </div>
@@ -69,7 +69,7 @@ const Header = (props) => {
                   customer={props.customer}
                 />
             </div>
-          </Nav>
+          </NavItem>
         </Navbar>
     );
 }
