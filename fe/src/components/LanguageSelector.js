@@ -1,13 +1,14 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const LanguageSelector = (props) => {
   return (
     <ul>
       <li onClick={props.changeLang}>
-         <a id="ENG" href="#">ENG</a>
+         <Link to="/" id="ENG">ENG</Link>
       </li>
       <li onClick={props.changeLang}>
-        <a id="HKG" href="#">HKG</a>
+        <Link to="/" id="HKG">HKG</Link>
       </li>
     </ul>
   );

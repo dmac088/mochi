@@ -5,7 +5,7 @@ import Selector from './Selector';
 import Search from './Search';
 import LanguageSelector from './LanguageSelector';
 import { Link } from 'react-router-dom';
-import { Navbar, Nav, NavItem, MenuItem, NavDropdown } from 'react-bootstrap';
+import { Navbar, Nav } from 'react-bootstrap';
 
 
 const Header = (props) => {
@@ -70,6 +70,9 @@ const Header = (props) => {
               <Selector
                 authenticated={props.authenticated}
                 customer={props.customer}
+                />
+              <LanguageSelector
+                changeLang={props.changeLang}
                 />
           </Nav>
         </Navbar>

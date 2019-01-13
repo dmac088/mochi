@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pager, Pagination }  from 'react-bootstrap';
+import { Pagination }  from 'react-bootstrap';
 
 const Paginator = (props) => {
   return (
