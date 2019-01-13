@@ -63,13 +63,16 @@ class App extends Component {
   getProducts = (lang = "ENG", category = 2, page = 0, size = 10) => {
     pageService.findAll(lang, category, page, size)
     .then((response) => {
-       this.setState({
+       this.setState((prevState) => ({
          page: response,
          currentCategory: category,
          currentLang: lang,
-         currentPage: page,
+         currentPage: (prevState.currentCategory !== category) ? 0 : page,
          currentPageSize: size
-       });
+       }));
+    })
+    .then(() => {
+      console.log(this.state.currentPage);
     });
   }
 
