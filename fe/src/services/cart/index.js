@@ -80,7 +80,7 @@ import _ from 'lodash';
   export const sumTotalAmount = (items) => {
 	  let total = 0;
 	  for (var i = 0; i < items.length; i++) {
-	  total += items[i].productDTO.price * parseInt(items[i].quantity);
+	  total += items[i].productDTO.productRrp * parseInt(items[i].quantity);
 	  }
 	  return total;
  	}
