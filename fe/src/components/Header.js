@@ -23,13 +23,13 @@ const Header = (props) => {
           </Navbar.Header>
 
           <Nav>
-          <Navbar.Form>
-            <Search
-                handleSearch={props.handleSearch}
-                lang={props.lang}
-            />
-          </Navbar.Form>
-        </Nav>
+            <Navbar.Form>
+              <Search
+                  handleSearch={props.handleSearch}
+                  lang={props.lang}
+              />
+            </Navbar.Form>
+          </Nav>
           <Nav>
             <HeaderCartSummary
                     totalItems={props.totalItems}
@@ -48,12 +48,12 @@ const Header = (props) => {
                totalItems={props.totalItems}
              />
           </Nav>
-          <Nav>
+          <Navbar.Text>
              <Greeting
                authenticated={props.authenticated}
                customer={props.customer}
                />
-           </Nav>
+           </Navbar.Text>
           <Nav>
              <Selector
                authenticated={props.authenticated}
