@@ -55,10 +55,12 @@ const Header = (props) => {
                customer={props.customer}
                />
            </Nav>
-          <Selector
-            authenticated={props.authenticated}
-            customer={props.customer}
-           />
+           <Nav>
+            <Selector
+              authenticated={props.authenticated}
+              customer={props.customer}
+             />
+         </Nav>
         </Nav>
         </Navbar.Collapse>
         </Navbar>
