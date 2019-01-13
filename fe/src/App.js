@@ -182,6 +182,7 @@ class App extends Component {
               handleSearch={this.handleSearch}
               changeLang={this.changeLang}
               lang={langSelector[this.state.currentLang]}
+              currentLang={this.state.currentLang}
               totalItems={this.props.cart.totalItems}
               total={this.props.cart.totalAmount}
             />
