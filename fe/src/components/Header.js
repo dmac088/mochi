@@ -57,8 +57,7 @@ const Header = (props) => {
            </Nav>
            <Nav>
              <div
-               className="cart-icon"
-               href="#">
+               className="cart-icon">
                <img
                  className={props.cartBounce ? "tada" : " "}
                  src="https://res.cloudinary.com/sivadass/image/upload/v1493548928/icons/bag.png"
