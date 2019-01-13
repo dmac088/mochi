@@ -18,63 +18,73 @@ const Header = (props) => {
               </Link>
             </Navbar.Brand>
           </Navbar.Header>
-
+          <Navbar.Collapse>
+            <Nav>
               <Search
                 handleSearch={props.handleSearch}
                 lang={props.lang}
               />
-              <div className="cart-info">
-                <table>
-                  <tbody>
-                    <tr>
-                      <td>
-                        No. of items
-                      </td>
-                      <td>:</td>
-                      <td>
-                        <strong>
-                          {props.totalItems}
-                        </strong>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        Sub Total
-                      </td>
-                      <td>:</td>
-                      <td>
-                        <strong>
-                          {props.total}
-                        </strong>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div
-                className="cart-icon"
-                href="#">
-                <img
-                  className={props.cartBounce ? "tada" : " "}
-                  src="https://res.cloudinary.com/sivadass/image/upload/v1493548928/icons/bag.png"
-                  alt="Cart"
-                  />
-                {props.totalItems ? (
-                  <span className="cart-count">
-                    {props.totalItems}
-                  </span>
-                ) : (
-                  ""
-                )}
-              </div>
-              <Selector
-                authenticated={props.authenticated}
-                customer={props.customer}
-                />
-              <LanguageSelector
-                changeLang={props.changeLang}
-                />
-      
+           </Nav>
+           <Nav>
+             <div className="cart-info">
+               <table>
+                 <tbody>
+                   <tr>
+                     <td>
+                       No. of items
+                     </td>
+                     <td>:</td>
+                     <td>
+                       <strong>
+                         {props.totalItems}
+                       </strong>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td>
+                       Sub Total
+                     </td>
+                     <td>:</td>
+                     <td>
+                       <strong>
+                         {props.total}
+                       </strong>
+                     </td>
+                   </tr>
+                 </tbody>
+               </table>
+             </div>
+           </Nav>
+           <Nav>
+             <div
+               className="cart-icon"
+               href="#">
+               <img
+                 className={props.cartBounce ? "tada" : " "}
+                 src="https://res.cloudinary.com/sivadass/image/upload/v1493548928/icons/bag.png"
+                 alt="Cart"
+                 />
+               {props.totalItems ? (
+                 <span className="cart-count">
+                   {props.totalItems}
+                 </span>
+               ) : (
+                 ""
+               )}
+             </div>
+           </Nav>
+           <Nav>
+             <LanguageSelector
+               changeLang={props.changeLang}
+               />
+           </Nav>
+           <Nav>
+             <Selector
+               authenticated={props.authenticated}
+               customer={props.customer}
+               />
+           </Nav>
+         </Navbar.Collapse>
         </Navbar>
     );
 }
