@@ -40,6 +40,7 @@ const Header = (props) => {
            <Nav>
              <LanguageSelector
                changeLang={props.changeLang}
+               currentLang={props.currentLang}
                />
            </Nav>
            <Nav>

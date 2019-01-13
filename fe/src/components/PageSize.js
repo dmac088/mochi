@@ -8,10 +8,8 @@ const PageSize = (props) => {
         title={"Page (" + props.currentPageSize + ")"}
       >
        <MenuItem id="5" onClick={props.changePageSize} eventKey="5">5</MenuItem>
-       <MenuItem id="10" onClick={props.changePageSize} eventKey="10">10</MenuItem>
-       <MenuItem id="20" onClick={props.changePageSize} eventKey="20" active>
-         20
-       </MenuItem>
+       <MenuItem id="10" onClick={props.changePageSize} eventKey="10" active>10</MenuItem>
+       <MenuItem id="20" onClick={props.changePageSize} eventKey="20">20</MenuItem>
     </DropdownButton>
   )
 };
