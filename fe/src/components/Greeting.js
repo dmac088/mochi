@@ -3,7 +3,7 @@ import React from 'react';
 const Greeting = (props) =>{
     return(
       <React.Fragment>
-        {(props.authenticated) ? 'Welcome ' + props.customer.givenName + ' you are logged in!' : ''}
+        {(props.authenticated) ? 'Signed in as: ' + props.customer.givenName : ''}
       </React.Fragment>
     );
 }
