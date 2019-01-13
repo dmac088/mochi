@@ -55,7 +55,7 @@ import Counter from './Counter';
                 <tr key={product.productDTO.id}>
                   <td>
                     <figure className="media">
-                      <div className="product">
+                      <div  className="product">
                         <img className="product-image" src={product.productDTO.image} />
                       </div>
                     </figure>
