@@ -7,7 +7,7 @@ import Selector from './Selector';
 import Search from './Search';
 import LanguageSelector from './LanguageSelector';
 import { Link } from 'react-router-dom';
-import { Navbar, Nav } from 'react-bootstrap';
+import { Navbar, Nav ,NavItem} from 'react-bootstrap';
 
 
 const Header = (props) => {
@@ -22,44 +22,45 @@ const Header = (props) => {
             <Navbar.Toggle />
           </Navbar.Header>
           <Navbar.Collapse>
-          <Nav>
-            <Navbar.Form>
+          <Navbar.Form>
               <Search
                   handleSearch={props.handleSearch}
                   lang={props.lang}
               />
-            </Navbar.Form>
-          </Nav>
-          <Nav>
-            <HeaderCartSummary
-                    totalItems={props.totalItems}
-                    total={props.total}
-            />
-          </Nav>
-          <Nav>
+          </Navbar.Form>
+
+          <Nav pullRight>
+            <NavItem>
+              <HeaderCartSummary
+                      totalItems={props.totalItems}
+                      total={props.total}
+              />
+            </NavItem>
+
             <LanguageSelector
                changeLang={props.changeLang}
                currentLang={props.currentLang}
             />
-          </Nav>
-          <Nav>
+
+          <NavItem>
             <CartMenu
                cartBounce={props.cartBounce}
                totalItems={props.totalItems}
              />
-          </Nav>
-          <Navbar.Text>
+         </NavItem>
+            <NavItem>
              <Greeting
                authenticated={props.authenticated}
                customer={props.customer}
                />
-           </Navbar.Text>
-          <Nav>
-             <Selector
-               authenticated={props.authenticated}
-               customer={props.customer}
-               />
-          </Nav>
+           </NavItem>
+           <Selector
+             authenticated={props.authenticated}
+             customer={props.customer}
+             />
+           </Nav>
+
+
         </Navbar.Collapse>
         </Navbar>
     );
