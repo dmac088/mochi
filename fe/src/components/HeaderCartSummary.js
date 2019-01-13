@@ -1,9 +1,10 @@
 import React from 'react';
+import { Table } from 'react-bootstrap';
 
 const HeaderCartSummary = (props) =>{
     return(
         <div className="cart-info">
-          <table>
+          <Table condensed hover>
             <tbody>
               <tr>
                 <td>
@@ -28,7 +29,7 @@ const HeaderCartSummary = (props) =>{
                 </td>
               </tr>
             </tbody>
-          </table>
+          </Table>
         </div>
     );
 }

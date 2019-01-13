@@ -1,16 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { NavDropdown, MenuItem } from 'react-bootstrap';
 
 const LanguageSelector = (props) => {
   return (
-    <ul>
-      <li onClick={props.changeLang}>
-         <Link to="/" id="ENG">ENG</Link>
-      </li>
-      <li onClick={props.changeLang}>
-        <Link to="/" id="HKG">HKG</Link>
-      </li>
-    </ul>
+    <NavDropdown eventKey={3} title="Lang" id="basic-nav-dropdown">
+      <MenuItem id="ENG" onClick={props.changeLang}>
+          ENG
+      </MenuItem>
+      <MenuItem id="HKG" onClick={props.changeLang}>
+          HKG
+      </MenuItem>
+    </NavDropdown>
   );
 }
 
