@@ -47,10 +47,11 @@ class Product extends Component {
         this.setState({
 					product: {
             productDTO: {
-                image: image,
-                name: name,
-                price: price,
-                id: id,
+								"productId": id,
+								"productCreateDt": '',
+								"productRrp": price,
+								"productDesc": name,
+								"productImage": image,
             },
 						quantity: quantity,
 					}
@@ -91,7 +92,7 @@ class Product extends Component {
         let image = config.url + '/' + this.props.product.productImage;
         let name = this.props.product.productDesc;
         let price = this.props.product.productRrp;
-        let id = this.props.product;
+        let id = this.props.product.productId;
         let quantity = this.state.product.quantity;
         return(
             <div className="product">
