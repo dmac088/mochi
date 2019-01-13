@@ -48,6 +48,12 @@ const Header = (props) => {
              />
            </Nav>
            <Nav>
+             <Greeting
+               authenticated={props.authenticated}
+               customer={props.customer}
+               />
+           </Nav>
+           <Nav>
              <Selector
                authenticated={props.authenticated}
                customer={props.customer}
