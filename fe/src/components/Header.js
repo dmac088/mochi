@@ -18,7 +18,7 @@ const Header = (props) => {
               </Link>
             </Navbar.Brand>
           </Navbar.Header>
-          <Nav>
+
               <Search
                 handleSearch={props.handleSearch}
                 lang={props.lang}
@@ -74,7 +74,7 @@ const Header = (props) => {
               <LanguageSelector
                 changeLang={props.changeLang}
                 />
-          </Nav>
+      
         </Navbar>
     );
 }
