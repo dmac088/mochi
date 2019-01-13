@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Button, Form, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+import { Button, Form, FormGroup, FormControl } from 'react-bootstrap';
 
 const Search = (props) => {
     return(
@@ -8,7 +8,7 @@ const Search = (props) => {
         <FormGroup controlId="formInlineName">
           <FormControl type="text" placeholder="Search" />
         </FormGroup>
-        <Button type="submit">Search</Button>
+        <Button>Search</Button>
       </Form>
     );
 }
