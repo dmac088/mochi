@@ -1,8 +1,8 @@
 import * as session from '../session';
 import * as api from './api';
 
-	export const findAll = (locale, categoryId, page, size) =>
-		api.findAll(locale, categoryId, page, size)
+	export const findAll = (locale, categoryId, page, size) => {
+		return api.findAll(locale, categoryId, page, size)
 		.then((response) => {
       return response.text();
     })
@@ -13,7 +13,8 @@ import * as api from './api';
 			return responseJSON;
     })
 		.then(onRequestSuccess)
-		.catch(onRequestFailed);
+		.catch(onRequestFailed)
+	};
 
 	const onRequestSuccess = (response) => {
 		console.log('request successfully completed!');
