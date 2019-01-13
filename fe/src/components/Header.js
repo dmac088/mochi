@@ -21,47 +21,45 @@ const Header = (props) => {
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>
-          <Navbar.Collapse>
-            <Nav>
-              <Search
+
+          <Nav>
+          <Navbar.Form>
+            <Search
                 handleSearch={props.handleSearch}
                 lang={props.lang}
-              />
-           </Nav>
-           <Nav>
-            <HeaderCartSummary
-                totalItems={props.totalItems}
-                total={props.total}
             />
-           </Nav>
-           <Nav>
-
-           </Nav>
-           <Nav>
-             <LanguageSelector
+          </Navbar.Form>
+        </Nav>
+          <Nav>
+            <HeaderCartSummary
+                    totalItems={props.totalItems}
+                    total={props.total}
+            />
+          </Nav>
+          <Nav>
+            <LanguageSelector
                changeLang={props.changeLang}
                currentLang={props.currentLang}
-               />
-           </Nav>
-           <Nav>
-             <CartMenu
+            />
+          </Nav>
+          <Nav>
+            <CartMenu
                cartBounce={props.cartBounce}
                totalItems={props.totalItems}
              />
-           </Nav>
-           <Navbar.Text>
+          </Nav>
+          <Nav>
              <Greeting
                authenticated={props.authenticated}
                customer={props.customer}
                />
-           </Navbar.Text>
-           <Nav>
+           </Nav>
+          <Nav>
              <Selector
                authenticated={props.authenticated}
                customer={props.customer}
                />
-           </Nav>
-         </Navbar.Collapse>
+          </Nav>
         </Navbar>
     );
 }

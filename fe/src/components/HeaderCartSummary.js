@@ -3,7 +3,6 @@ import { Table } from 'react-bootstrap';
 
 const HeaderCartSummary = (props) =>{
     return(
-        <div className="cart-info">
           <Table condensed responsive>
             <tbody>
               <tr>
@@ -30,7 +29,6 @@ const HeaderCartSummary = (props) =>{
               </tr>
             </tbody>
           </Table>
-        </div>
     );
 }
 
