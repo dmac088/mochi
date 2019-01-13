@@ -49,7 +49,6 @@ import _ from 'lodash';
 	export const removeFromCart = (cart, productId) => {
 			let cartItemsCopy = _.cloneDeep(cart.items)
 			if (checkProduct(cart, productId)) {
-				console.log('removing item from cart....');
 				var filtered = cartItemsCopy.filter(function(value, index, arr){
 																			return value.productDTO.id !== productId;
 																		});
@@ -66,7 +65,6 @@ import _ from 'lodash';
 	export const updateQuantity = (cart, productId, qty) => {
 		let cartClone = _.cloneDeep(cart);
 		let index = cartClone.items.findIndex(x => x.productDTO.id === Number(productId));
-		console.log(cartClone);
 		cartClone.items[index].quantity = Number(cartClone.items[index].quantity) + Number(qty);
 		cartClone.totalItems = sumTotalItems(cartClone.items);
 		cartClone.totalAmount = sumTotalAmount(cartClone.items);
