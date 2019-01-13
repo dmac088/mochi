@@ -1,7 +1,7 @@
 import React from 'react';
 import * as session from '../services/session';
 import { Link } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 
 const Selector = (props) => {
 
@@ -31,7 +31,7 @@ const Selector = (props) => {
         <Link to="/Login">
           <Button type="button">
              Login
-         </Button>
+          </Button>
        </Link>;
       }
       return button;
@@ -42,20 +42,22 @@ const Selector = (props) => {
      if(!props.authenticated) {
        button =
        <Link to="/Signup">
-       <Button type="submit">
-          SignUp
-        </Button>
+         <Button type="submit">
+           SignUp
+         </Button>
       </Link>;
      }
      return button;
     }
 
     return(
-        <div>
-          {renderLoginButton(props)}
-          {renderLogoutButton(props)}
-          {rendersignupButton(props)}
-        </div>
+        <React.Fragment>
+          <Form inline>
+            {renderLoginButton(props)}
+            {renderLogoutButton(props)}
+            {rendersignupButton(props)}
+          </Form>
+        </React.Fragment>
     );
 }
 

@@ -48,12 +48,12 @@ const Header = (props) => {
                totalItems={props.totalItems}
              />
            </Nav>
-           <Nav>
+           <Navbar.Text>
              <Greeting
                authenticated={props.authenticated}
                customer={props.customer}
                />
-           </Nav>
+           </Navbar.Text>
            <Nav>
              <Selector
                authenticated={props.authenticated}
