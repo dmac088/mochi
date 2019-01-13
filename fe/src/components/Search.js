@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Button } from 'react-bootstrap';
 
 const Search = (props) => {
     return(
@@ -11,7 +12,7 @@ const Search = (props) => {
           placeholder="Search"
           aria-label="Search"
         />
-        <button className="btn btn-outline-success mr-sm-5 my-2 my-sm-0" type="submit">{props.lang.searchProduct}</button>
+        <Button type="submit">{props.lang.searchProduct}</Button>
       </div>
     );
 }
