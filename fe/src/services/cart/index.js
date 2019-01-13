@@ -66,6 +66,7 @@ import _ from 'lodash';
 	export const updateQuantity = (cart, productId, qty) => {
 		let cartClone = _.cloneDeep(cart);
 		let index = cartClone.items.findIndex(x => x.productDTO.id === Number(productId));
+		console.log(cartClone);
 		cartClone.items[index].quantity = Number(cartClone.items[index].quantity) + Number(qty);
 		cartClone.totalItems = sumTotalItems(cartClone.items);
 		cartClone.totalAmount = sumTotalAmount(cartClone.items);
@@ -81,7 +82,7 @@ import _ from 'lodash';
   export const sumTotalAmount = (items) => {
 	  let total = 0;
 	  for (var i = 0; i < items.length; i++) {
-	  total += items[i].price * parseInt(items[i].quantity);
+	  total += items[i].productDTO.price * parseInt(items[i].quantity);
 	  }
 	  return total;
  	}
