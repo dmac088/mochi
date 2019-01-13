@@ -54,16 +54,12 @@ class Product extends Component {
             },
 						quantity: quantity,
 					}
-        }, () => {
-            		 	this.props.addToCart(this.state.product);
-        				 })
+        }, () => {this.props.addToCart(this.state.product);})
 
         this.setState({
             isAdded: true
-        },
-
-					() => {
-            setTimeout(() => {
+        }, () => {
+					setTimeout(() => {
                 this.setState({
                     isAdded: false,
                     product: {}

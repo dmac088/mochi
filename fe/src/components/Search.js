@@ -8,7 +8,7 @@ const Search = (props) => {
         <FormGroup controlId="formInlineName">
           <FormControl type="text" placeholder="Search" />
         </FormGroup>
-        <Button>Search</Button>
+        <Button onClick={props.handleSearch}>Search</Button>
       </Form>
     );
 }
