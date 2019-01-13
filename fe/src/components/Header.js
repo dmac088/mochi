@@ -1,6 +1,8 @@
 
 import React from 'react';
 import Greeting from './Greeting';
+import HeaderCartSummary from './HeaderCartSummary';
+import CartMenu from './CartMenu';
 import Selector from './Selector';
 import Search from './Search';
 import LanguageSelector from './LanguageSelector';
@@ -26,56 +28,24 @@ const Header = (props) => {
               />
            </Nav>
            <Nav>
-             <div className="cart-info">
-               <table>
-                 <tbody>
-                   <tr>
-                     <td>
-                       No. of items
-                     </td>
-                     <td>:</td>
-                     <td>
-                       <strong>
-                         {props.totalItems}
-                       </strong>
-                     </td>
-                   </tr>
-                   <tr>
-                     <td>
-                       Sub Total
-                     </td>
-                     <td>:</td>
-                     <td>
-                       <strong>
-                         {props.total}
-                       </strong>
-                     </td>
-                   </tr>
-                 </tbody>
-               </table>
-             </div>
+            <HeaderCartSummary
+                totalItems={props.totalItems}
+                total={props.total}
+            />
            </Nav>
            <Nav>
-             <div
-               className="cart-icon">
-               <img
-                 className={props.cartBounce ? "tada" : " "}
-                 src="https://res.cloudinary.com/sivadass/image/upload/v1493548928/icons/bag.png"
-                 alt="Cart"
-                 />
-               {props.totalItems ? (
-                 <span className="cart-count">
-                   {props.totalItems}
-                 </span>
-               ) : (
-                 ""
-               )}
-             </div>
+
            </Nav>
            <Nav>
              <LanguageSelector
                changeLang={props.changeLang}
                />
+           </Nav>
+           <Nav>
+             <CartMenu
+               cartBounce={props.cartBounce}
+               totalItems={props.totalItems}
+             />
            </Nav>
            <Nav>
              <Selector
