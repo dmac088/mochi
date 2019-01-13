@@ -21,7 +21,7 @@ const Header = (props) => {
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>
-
+          <Navbar.Collapse>
           <Nav>
             <Navbar.Form>
               <Search
@@ -60,6 +60,7 @@ const Header = (props) => {
                customer={props.customer}
                />
           </Nav>
+        </Navbar.Collapse>
         </Navbar>
     );
 }
