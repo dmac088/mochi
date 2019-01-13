@@ -31,30 +31,30 @@ const Header = (props) => {
 
           </Nav>
           <Nav pullRight>
-            <NavItem>
+            <Nav>
               <HeaderCartSummary
                       totalItems={props.totalItems}
                       total={props.total}
               />
-            </NavItem>
+            </Nav>
 
             <LanguageSelector
                changeLang={props.changeLang}
                currentLang={props.currentLang}
             />
 
-          <NavItem>
+          <Nav>
             <CartMenu
                cartBounce={props.cartBounce}
                totalItems={props.totalItems}
              />
-         </NavItem>
-            <NavItem>
+          </Nav>
+            <Nav>
              <Greeting
                authenticated={props.authenticated}
                customer={props.customer}
                />
-           </NavItem>
+           </Nav>
           <Selector
             authenticated={props.authenticated}
             customer={props.customer}
