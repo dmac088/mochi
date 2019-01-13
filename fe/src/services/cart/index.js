@@ -23,22 +23,22 @@ import _ from 'lodash';
 
 	const checkProduct = (cart, productID) => {
 		return cart.items.some(function(item) {
-			return item.productDTO.id === productID;
+			return item.productDTO.productId === productID;
 		});
 	}
 
-	export const addToCart = (cart, selectedProducts) => {
+	export const addToCart = (cart, selectedProduct) => {
 		let cartClone = _.cloneDeep(cart)
-		let productID = selectedProducts.id;
-		let productQty = selectedProducts.quantity;
+		let productID = selectedProduct.productDTO.productId;
+		let productQty = selectedProduct.quantity;
+
 		if (checkProduct(cartClone, productID)) {
 	  //increment the quantity of the product in the cart
-	    let index = cartClone.items.findIndex(x => x.id === productID);
-	    cartClone.items[index].quantity =
-	    Number(cartClone.items[index].quantity) + Number(productQty);
+	    let index = cartClone.items.findIndex(x => x.productDTO.productId === productID);
+	    cartClone.items[index].quantity = Number(cartClone.items[index].quantity) + Number(productQty);
 	  } else {
 	    //add the product to the cart
-	    cartClone.items.push(selectedProducts);
+	    cartClone.items.push(selectedProduct);
 	  };
 
 		cartClone.totalItems = sumTotalItems(cartClone.items);
@@ -47,10 +47,10 @@ import _ from 'lodash';
 	}
 
 	export const removeFromCart = (cart, productId) => {
-			let cartItemsCopy = _.cloneDeep(cart.items)
 			if (checkProduct(cart, productId)) {
-				var filtered = cartItemsCopy.filter(function(value, index, arr){
-																			return value.productDTO.id !== productId;
+				var filtered = cart.items.filter(function(value, index, arr){
+
+																			return value.productDTO.productId !== productId;
 																		});
 			}
 			let newCart = {
@@ -64,7 +64,7 @@ import _ from 'lodash';
 
 	export const updateQuantity = (cart, productId, qty) => {
 		let cartClone = _.cloneDeep(cart);
-		let index = cartClone.items.findIndex(x => x.productDTO.id === Number(productId));
+		let index = cartClone.items.findIndex(x => x.productDTO.productId === Number(productId));
 		cartClone.items[index].quantity = Number(cartClone.items[index].quantity) + Number(qty);
 		cartClone.totalItems = sumTotalItems(cartClone.items);
 		cartClone.totalAmount = sumTotalAmount(cartClone.items);

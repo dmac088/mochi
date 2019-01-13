@@ -19,13 +19,10 @@ const Header = (props) => {
             </Navbar.Brand>
           </Navbar.Header>
           <Nav>
-            <NavItem>
               <Search
                 handleSearch={props.handleSearch}
                 lang={props.lang}
               />
-            </NavItem>
-            <NavItem>
               <div className="cart-info">
                 <table>
                   <tbody>
@@ -54,8 +51,6 @@ const Header = (props) => {
                   </tbody>
                 </table>
               </div>
-            </NavItem>
-            <NavItem>
               <div
                 className="cart-icon"
                 href="#">
@@ -72,13 +67,10 @@ const Header = (props) => {
                   ""
                 )}
               </div>
-            </NavItem>
-            <NavItem>
               <Selector
                 authenticated={props.authenticated}
                 customer={props.customer}
                 />
-            </NavItem>
           </Nav>
         </Navbar>
     );

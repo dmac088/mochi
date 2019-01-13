@@ -14,7 +14,7 @@ const Selector = (props) => {
      if(props.authenticated) {
        button =
        <Link to="/">
-         <Button
+         <Button type="button"
               onClick={logoutClick}
               className="btn btn-outline-success ml-sm-3 mr-sm-3 my-2 my-sm-0">
             Logout
@@ -29,7 +29,7 @@ const Selector = (props) => {
      if(!props.authenticated) {
         button =
         <Link to="/Login">
-          <Button>
+          <Button type="button">
              Login
          </Button>
        </Link>;

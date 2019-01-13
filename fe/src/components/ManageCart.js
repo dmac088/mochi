@@ -46,42 +46,42 @@ import Counter from './Counter';
       let cart = cartSelector.get();
       cartService.updateQuantity(cart, e.target.id, -1)
     }
-
-
+    
     const renderCartItems = (cart) => {
 
           return cart.items.map(product => {
+            console.log("mapped id = " + product.productDTO.productId);
               return(
-                <tr key={product.productDTO.id}>
+                <tr key={product.productDTO.productId} id={product.productDTO.productId}>
                   <td>
                     <figure className="media">
                       <div  className="product">
-                        <img className="product-image" src={product.productDTO.image} />
+                        <img className="product-image" src={product.productDTO.productImage} />
                       </div>
                     </figure>
                   </td>
                   <td>
                     <figcaption className="media-body">
-                      <h6 className="title text-truncate">{product.productDTO.name}</h6>
+                      <h6 className="title text-truncate">{product.productDTO.productDesc}</h6>
                     </figcaption>
                   </td>
                   <td>
                     <Counter
                       incrementQuantity={incrementQuantity}
       								decrementQuantity={decrementQuantity}
-                      productId={product.productDTO.id}
+                      productId={product.productDTO.productId}
                       productQty={product.quantity}
                     />
                   </td>
                   <td>
                     <div className="price-wrap">
-                      <p className="product-price">{product.productDTO.price}</p>
+                      <p className="product-price">{product.productDTO.productRrp}</p>
                       <small className="text-muted"></small>
                     </div> {/* price-wrap .// */}
                   </td>
                   <td className="text-right">
                     <button
-                      id={product.productDTO.id}
+                      id={product.productDTO.productId}
                       className="btn btn-outline-danger"
                       onClick={removeItem}>
                         × Remove
