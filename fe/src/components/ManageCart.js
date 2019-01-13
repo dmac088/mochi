@@ -46,11 +46,10 @@ import Counter from './Counter';
       let cart = cartSelector.get();
       cartService.updateQuantity(cart, e.target.id, -1)
     }
-    
+
     const renderCartItems = (cart) => {
 
           return cart.items.map(product => {
-            console.log("mapped id = " + product.productDTO.productId);
               return(
                 <tr key={product.productDTO.productId} id={product.productDTO.productId}>
                   <td>
