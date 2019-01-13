@@ -6,7 +6,7 @@ const PageSize = (props) => {
   return (
     <DropdownButton
         id="1"
-        tile="test"
+        title="test"
       >
        <MenuItem id="5" onClick={props.changePageSize} eventKey="5">5</MenuItem>
        <MenuItem id="10" onClick={props.changePageSize} eventKey="10">10</MenuItem>

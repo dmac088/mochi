@@ -5,72 +5,38 @@ import Selector from './Selector';
 import Search from './Search';
 import LanguageSelector from './LanguageSelector';
 import { Link } from 'react-router-dom';
-import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, MenuItem, NavDropdown } from 'react-bootstrap';
 
 
 const Header = (props) => {
 
       return(
         <Navbar>
-          <NavItem className="navbar navbar-light bg-light justify-content-between">
-            <div className="navbar-brand">
-                <Link to="/">HOME</Link>
-            </div>
-            <div className="form-inline">
-              <Greeting
-                authenticated={props.authenticated}
-                customer={props.customer}
-              />
-            <LanguageSelector
-                changeLang ={props.changeLang}
-              />
-                <Search
-                  handleSearch={props.handleSearch}
-                  lang={props.lang}
-                />
-                            <div className="cart-info">
-                              <table>
-                                <tbody>
-                                  <tr>
-                                    <td>No. of items</td>
-                                    <td>:</td>
-                                    <td>
-                                      <strong>{props.totalItems}</strong>
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td>Sub Total</td>
-                                    <td>:</td>
-                                    <td>
-                                      <strong>{props.total}</strong>
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>
-                            <a className="cart-icon"
-                              href="#">
-                              <img
-                                className={props.cartBounce ? "tada" : " "}
-                                src="https://res.cloudinary.com/sivadass/image/upload/v1493548928/icons/bag.png"
-                                alt="Cart"
-                              />
-                              {props.totalItems ? (
-                                <span className="cart-count">{props.totalItems}</span>
-                              ) : (
-                                ""
-                              )}
-                            </a>
-
-
-
-                <Selector
-                  authenticated={props.authenticated}
-                  customer={props.customer}
-                />
-            </div>
-          </NavItem>
+          <Navbar.Header>
+            <Navbar.Brand>
+              <a href="#home">React-Bootstrap</a>
+            </Navbar.Brand>
+          </Navbar.Header>
+          <Nav>
+            <NavItem eventKey={1} href="#">
+              Link
+            </NavItem>
+            <NavItem eventKey={2} href="#">
+              Link
+            </NavItem>
+            <NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">
+              <MenuItem eventKey={3.1}>Action</MenuItem>
+              <MenuItem eventKey={3.2}>Another action</MenuItem>
+              <MenuItem eventKey={3.3}>Something else here</MenuItem>
+              <MenuItem divider />
+              <MenuItem eventKey={3.4}>Separated link</MenuItem>
+            </NavDropdown>
+          </Nav>
         </Navbar>
+
+
+
+
     );
 }
 

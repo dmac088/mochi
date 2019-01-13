@@ -18,11 +18,14 @@ const Products = (props) => {
 			productsData = props.productsList.filter(searchingFor(term)).map(product =>{
 
 				return(
-							<Product product=		{product}
+					<div key={product.productId}>
+							<Product
+											 product=		{product}
 											 addToCart=	{props.addToCart}
 											 openModal=	{props.openModal}
 											 lang=			{props.lang}
 							/>
+					</div>
 					)
 				}
 		);
