@@ -1,6 +1,7 @@
 import React from 'react';
 import * as session from '../services/session';
 import { Link } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 
 const Selector = (props) => {
 
@@ -13,11 +14,11 @@ const Selector = (props) => {
      if(props.authenticated) {
        button =
        <Link to="/">
-         <button
+         <Button
               onClick={logoutClick}
               className="btn btn-outline-success ml-sm-3 mr-sm-3 my-2 my-sm-0">
             Logout
-         </button>
+         </Button>
        </Link>;
      }
      return button;
@@ -28,11 +29,9 @@ const Selector = (props) => {
      if(!props.authenticated) {
         button =
         <Link to="/Login">
-        <button
-            className="btn btn-outline-success ml-sm-3 mr-sm-2 my-2 my-sm-0"
-            type="submit">
-           Login
-       </button>
+          <Button>
+             Login
+         </Button>
        </Link>;
       }
       return button;
@@ -43,11 +42,9 @@ const Selector = (props) => {
      if(!props.authenticated) {
        button =
        <Link to="/Signup">
-       <button
-           className="btn btn-outline-success ml-sm-3 mr-sm-3 my-2 my-sm-0"
-           type="submit">
+       <Button type="submit">
           SignUp
-        </button>
+        </Button>
       </Link>;
      }
      return button;

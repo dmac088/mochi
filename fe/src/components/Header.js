@@ -9,34 +9,78 @@ import { Navbar, Nav, NavItem, MenuItem, NavDropdown } from 'react-bootstrap';
 
 
 const Header = (props) => {
-
       return(
         <Navbar>
           <Navbar.Header>
             <Navbar.Brand>
-              <a href="#home">React-Bootstrap</a>
+              <Link to="/">
+                New Zealand Bee
+              </Link>
             </Navbar.Brand>
           </Navbar.Header>
           <Nav>
-            <NavItem eventKey={1} href="#">
-              Link
+            <NavItem>
+              <Search
+                handleSearch={props.handleSearch}
+                lang={props.lang}
+              />
             </NavItem>
-            <NavItem eventKey={2} href="#">
-              Link
+            <NavItem>
+              <div className="cart-info">
+                <table>
+                  <tbody>
+                    <tr>
+                      <td>
+                        No. of items
+                      </td>
+                      <td>:</td>
+                      <td>
+                        <strong>
+                          {props.totalItems}
+                        </strong>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Sub Total
+                      </td>
+                      <td>:</td>
+                      <td>
+                        <strong>
+                          {props.total}
+                        </strong>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </NavItem>
-            <NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">
-              <MenuItem eventKey={3.1}>Action</MenuItem>
-              <MenuItem eventKey={3.2}>Another action</MenuItem>
-              <MenuItem eventKey={3.3}>Something else here</MenuItem>
-              <MenuItem divider />
-              <MenuItem eventKey={3.4}>Separated link</MenuItem>
-            </NavDropdown>
+            <NavItem>
+              <div
+                className="cart-icon"
+                href="#">
+                <img
+                  className={props.cartBounce ? "tada" : " "}
+                  src="https://res.cloudinary.com/sivadass/image/upload/v1493548928/icons/bag.png"
+                  alt="Cart"
+                  />
+                {props.totalItems ? (
+                  <span className="cart-count">
+                    {props.totalItems}
+                  </span>
+                ) : (
+                  ""
+                )}
+              </div>
+            </NavItem>
+            <NavItem>
+              <Selector
+                authenticated={props.authenticated}
+                customer={props.customer}
+                />
+            </NavItem>
           </Nav>
         </Navbar>
-
-
-
-
     );
 }
 
