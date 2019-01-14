@@ -3,7 +3,7 @@ import store from '../../store';
 import * as api from './api';
 import * as actionCreators from './actions';
 import _ from 'lodash';
-
+import * as cartSelector from './selectors';
 
 	export const findByUserName = (userName) =>
 		api.findByUserName(userName)
@@ -52,21 +52,22 @@ import _ from 'lodash';
 	    //add the product to the cart
 			addCartItem(cart, selectedProduct);
 	  };
-		updateCartTotals(cart);
+		updateCartTotals(cartSelector.get());
 	}
 
 	export const removeFromCart = (cart, productId) => {
 			if (checkProduct(cart, productId)) {
 				removeCartItem(cart, productId);
 			}
-			updateCartTotals(cart);
+			updateCartTotals(cartSelector.get());
 	}
 
 	export const updateQuantity = (cart, productId, qty) => {
-		let cartClone = _.cloneDeep(cart);
-		let index = cartClone.items.findIndex(x => x.productDTO.productId === Number(productId));
-		cartClone.items[index].quantity = Number(cartClone.items[index].quantity) + Number(qty);
-		updateCartTotals(cartClone);
+		let index = cart.items.findIndex(x => x.productDTO.productId === Number(productId));
+		let updatedItem =  _.cloneDeep(cart.items[index]);
+		updatedItem.quantity = Number(cart.items[index].quantity) + Number(qty);
+		updateCartItem(cart, index, updatedItem);
+		updateCartTotals(cartSelector.get());
 	}
 
 	export const sumTotalItems = (items) => {
