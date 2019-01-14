@@ -5,21 +5,21 @@ export const update = cart => ({
 	cart,
 });
 
-export const addProduct = (cart, item) => ({
-	type: actionTypes.ADD_PRODUCT,
+export const addItem = (cart, item) => ({
+	type: actionTypes.ADD_ITEM,
 	cart,
 	item,
 });
 
-export const updateProduct = (cart, index, item) => ({
-	type: actionTypes.UPDATE_PRODUCT,
+export const updateItem = (cart, index, item) => ({
+	type: actionTypes.UPDATE_ITEM,
 	cart,
 	index,
 	item,
 });
 
-export const updateCartItems = (cart, items) => ({
-	type: actionTypes.UPDATE_CART_ITEMS,
+export const removeItem = (cart, productId) => ({
+	type: actionTypes.REMOVE_ITEM,
 	cart,
-	items,
+	productId,
 });
