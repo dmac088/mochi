@@ -21,7 +21,7 @@ import _ from 'lodash';
 	 	store.dispatch(actionCreators.update({"cart": cart }));
 	}
 
-	export const persistCartItem = (cart, item) => {
+	export const addCartItem = (cart, item) => {
 		store.dispatch(actionCreators.addItem(cart, item))
 	}
 
@@ -40,47 +40,42 @@ import _ from 'lodash';
 	}
 
 	export const addToCart = (cart, selectedProduct) => {
-		let productID = selectedProduct.productDTO.productId;
+		let productId = selectedProduct.productDTO.productId;
 		let productQty = selectedProduct.quantity;
-		if (checkProduct(cart, productID)) {
-	  //increment the quantity of the product in the cart
-	    let index = cart.items.findIndex(x => x.productDTO.productId === productID);
+		if (checkProduct(cart, productId)) {
+	    let index = cart.items.findIndex(x => x.productDTO.productId === productId);
 			let updatedItem = _.cloneDeep(cart.items[index]);
 			updatedItem.quantity = updatedItem.quantity + Number(productQty);
 			updateCartItem(cart, index, updatedItem);
 	  } else {
 	    //add the product to the cart
-			persistCartItem(cart, selectedProduct);
-	    //cartClone.items.push(selectedProduct);
+			addCartItem(cart, selectedProduct);
 	  };
-
-		//cartClone.totalItems = sumTotalItems(cartClone.items);
-		//cartClone.totalAmount = sumTotalAmount(cartClone.items);
-
+		updateCartTotals(cart);
 	}
 
 	export const removeFromCart = (cart, productId) => {
 			if (checkProduct(cart, productId)) {
-				console.log(cart);
-				console.log(productId);
 				removeCartItem(cart, productId);
 			}
-
-			// let newCart = {
-			// 											items: filtered,
-			// 											totalItems: sumTotalItems(filtered),
-			// 											totalAmount: sumTotalAmount(filtered),
-			// 							};
-		  // persistCart(newCart);
+			updateCartTotals(cart);
 	}
+
+	export const updateCartTotals = (cart) => {
+			let cartClone = _.cloneDeep(cart);
+			cartClone.totalItems = sumTotalItems(cartClone.items);
+			cartClone.totalAmount = sumTotalAmount(cartClone.items);
+			persistCart(cartClone);
+	}
+
+
 
 	export const updateQuantity = (cart, productId, qty) => {
 		let cartClone = _.cloneDeep(cart);
 		let index = cartClone.items.findIndex(x => x.productDTO.productId === Number(productId));
 		cartClone.items[index].quantity = Number(cartClone.items[index].quantity) + Number(qty);
-		cartClone.totalItems = sumTotalItems(cartClone.items);
-		cartClone.totalAmount = sumTotalAmount(cartClone.items);
 		persistCart(cartClone);
+		updateCartTotals(cartClone);
 	}
 
 	export const sumTotalItems = (items) => {

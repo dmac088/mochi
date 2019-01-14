@@ -10,7 +10,7 @@ import Counter from './Counter';
     }
 
     const ManageCart = (props) => {
-      return renderCart(props.cart.cart);
+      return renderCart(props.cart);
     }
 
     const renderCart = (cart) => {
@@ -48,7 +48,7 @@ import Counter from './Counter';
     }
 
     const renderCartItems = (cart) => {
-
+          console.log(cart);
           return cart.items.map(product => {
               return(
                 <tr key={product.productDTO.productId} id={product.productDTO.productId}>
