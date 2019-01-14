@@ -21,6 +21,18 @@ import _ from 'lodash';
 	 	store.dispatch(actionCreators.update({"cart": cart }));
 	}
 
+	export const persistCartItem = (cart, item) => {
+		store.dispatch(actionCreators.addProduct(cart, item))
+	}
+
+	export const updateCartItem = (cart, index, item) => {
+		store.dispatch(actionCreators.updateProduct(cart, index, item))
+	}
+
+	export const updateCartItems = (cart, items) => {
+		store.dispatch(actionCreators.updateCartItems(cart, items))
+	}
+
 	const checkProduct = (cart, productID) => {
 		return cart.items.some(function(item) {
 			return item.productDTO.productId === productID;
@@ -28,38 +40,38 @@ import _ from 'lodash';
 	}
 
 	export const addToCart = (cart, selectedProduct) => {
-		let cartClone = _.cloneDeep(cart)
 		let productID = selectedProduct.productDTO.productId;
 		let productQty = selectedProduct.quantity;
-
-		if (checkProduct(cartClone, productID)) {
+		if (checkProduct(cart, productID)) {
 	  //increment the quantity of the product in the cart
-	    let index = cartClone.items.findIndex(x => x.productDTO.productId === productID);
-	    cartClone.items[index].quantity = Number(cartClone.items[index].quantity) + Number(productQty);
+	    let index = cart.items.findIndex(x => x.productDTO.productId === productID);
+			let updatedItem = _.cloneDeep(cart.items[index]);
+			updatedItem.quantity = updatedItem.quantity + Number(productQty);
+			updateCartItem(cart, index, updatedItem);
 	  } else {
 	    //add the product to the cart
-	    cartClone.items.push(selectedProduct);
+			persistCartItem(cart, selectedProduct);
+	    //cartClone.items.push(selectedProduct);
 	  };
 
-		cartClone.totalItems = sumTotalItems(cartClone.items);
-		cartClone.totalAmount = sumTotalAmount(cartClone.items);
-	  persistCart(cartClone);
+		//cartClone.totalItems = sumTotalItems(cartClone.items);
+		//cartClone.totalAmount = sumTotalAmount(cartClone.items);
+
 	}
 
 	export const removeFromCart = (cart, productId) => {
 			if (checkProduct(cart, productId)) {
 				var filtered = cart.items.filter(function(value, index, arr){
-
-																			return value.productDTO.productId !== productId;
-																		});
+							return value.productDTO.productId !== productId;
+				});
 			}
-			let newCart = {
-
-														items: filtered,
-														totalItems: sumTotalItems(filtered),
-														totalAmount: sumTotalAmount(filtered),
-										};
-		  persistCart(newCart);
+			updateCartItems(cart, filtered);
+			// let newCart = {
+			// 											items: filtered,
+			// 											totalItems: sumTotalItems(filtered),
+			// 											totalAmount: sumTotalAmount(filtered),
+			// 							};
+		  // persistCart(newCart);
 	}
 
 	export const updateQuantity = (cart, productId, qty) => {
