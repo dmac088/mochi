@@ -14,7 +14,13 @@ export const reducer = (state = initialState, action) => {
 	//take a copy of the the state
 	//then perform some updates on that state copy based on the action parameter
 	//return the new state
-	
+
+
+	//currently what I'm doing is craeting a copy of the object outside of the reducer
+	//modifying the object (update)
+	//then passing that new object to the reducer
+	//the reducer then simply takes a copy of the object and passing it back to me
+
 	switch (action.type) {
 		case actionTypes.UPDATE:
 		console.log(action);
