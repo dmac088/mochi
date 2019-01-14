@@ -249,7 +249,7 @@ class App extends Component {
 export default connect(state => ({
     tokens:   state.services.session.tokens,
     customer: state.services.customer.customer,
-    cart:     state.services.cart.cart,
+    cart:     state.services.cart,
 }), dispatch => ({
   	actions: {
   		tokens:   bindActionCreators(tokensActionCreators, dispatch),
