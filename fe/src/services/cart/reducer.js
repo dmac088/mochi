@@ -20,11 +20,6 @@ export const reducer = (state = initialState, action) => {
 	//the reducer then simply takes a copy of the object and passing it back to me
   let cartClone = null;
 	switch (action.type) {
-		case actionTypes.UPDATE_CART:
-			console.log("UPDATE_CART");
-			//remember whatever we do, just don't mutate the passed cart object
-			//if we pass in a whole new cart we simply replace the current by returning a copy
-			return 	_.cloneDeep(action.cart);
 		case actionTypes.ADD_ITEM:
 			cartClone = _.cloneDeep(action.cart);
 			cartClone.items.push(action.item);
@@ -39,6 +34,10 @@ export const reducer = (state = initialState, action) => {
 															return value.productDTO.productId !== action.productId;
 												});
 			return cartClone;
+		case actionTypes.UPDATE_CART_TOTALS:
+			cartClone = _.cloneDeep(action.cart);
+			cartClone.totalItems = action.totalItems;
+			cartClone.totalAmount = action.totalAmount;
 		default:
 			return state;
 	}

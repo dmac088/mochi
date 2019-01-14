@@ -1,10 +1,5 @@
 import * as actionTypes from './actionTypes';
 
-export const update = cart => ({
-	type: actionTypes.UPDATE_CART,
-	cart,
-});
-
 export const addItem = (cart, item) => ({
 	type: actionTypes.ADD_ITEM,
 	cart,
@@ -22,4 +17,11 @@ export const removeItem = (cart, productId) => ({
 	type: actionTypes.REMOVE_ITEM,
 	cart,
 	productId,
+});
+
+export const updateCartTotals = (cart, totalItems, totalAmount) => ({
+	type: actionTypes.UPDATE_CART_TOTALS,
+	cart,
+	totalItems,
+	totalAmount,
 });
