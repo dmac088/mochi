@@ -19,8 +19,10 @@ export const reducer = (state = initialState, action) => {
 	//then passing that new object to the reducer
 	//the reducer then simply takes a copy of the object and passing it back to me
   let cartClone = null;
+	console.log(action.type);
 	switch (action.type) {
 		case actionTypes.ADD_ITEM:
+
 			cartClone = _.cloneDeep(action.cart);
 			cartClone.items.push(action.item);
 			return cartClone;
@@ -38,6 +40,7 @@ export const reducer = (state = initialState, action) => {
 			cartClone = _.cloneDeep(action.cart);
 			cartClone.totalItems = action.totalItems;
 			cartClone.totalAmount = action.totalAmount;
+			return cartClone;
 		default:
 			return state;
 	}

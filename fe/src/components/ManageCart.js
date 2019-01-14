@@ -48,7 +48,6 @@ import Counter from './Counter';
     }
 
     const renderCartItems = (cart) => {
-          console.log(cart);
           return cart.items.map(product => {
               return(
                 <tr key={product.productDTO.productId} id={product.productDTO.productId}>
