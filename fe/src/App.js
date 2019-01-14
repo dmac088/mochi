@@ -174,7 +174,6 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.props.cart);
   return (
    <div className="App">
     <Router>
