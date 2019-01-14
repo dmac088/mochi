@@ -22,15 +22,15 @@ import _ from 'lodash';
 	}
 
 	export const persistCartItem = (cart, item) => {
-		store.dispatch(actionCreators.addProduct(cart, item))
+		store.dispatch(actionCreators.addItem(cart, item))
 	}
 
 	export const updateCartItem = (cart, index, item) => {
-		store.dispatch(actionCreators.updateProduct(cart, index, item))
+		store.dispatch(actionCreators.updateItem(cart, index, item));
 	}
 
-	export const updateCartItems = (cart, items) => {
-		store.dispatch(actionCreators.updateCartItems(cart, items))
+	export const removeCartItem = (cart, productId) => {
+		store.dispatch(actionCreators.removeItem(cart, productId));
 	}
 
 	const checkProduct = (cart, productID) => {
@@ -61,11 +61,11 @@ import _ from 'lodash';
 
 	export const removeFromCart = (cart, productId) => {
 			if (checkProduct(cart, productId)) {
-				var filtered = cart.items.filter(function(value, index, arr){
-							return value.productDTO.productId !== productId;
-				});
+				console.log(cart);
+				console.log(productId);
+				removeCartItem(cart, productId);
 			}
-			updateCartItems(cart, filtered);
+
 			// let newCart = {
 			// 											items: filtered,
 			// 											totalItems: sumTotalItems(filtered),
