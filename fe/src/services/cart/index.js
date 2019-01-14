@@ -17,10 +17,6 @@ import _ from 'lodash';
 		throw exception;
 	};
 
-	export const  persistCart = (cart) => {
-	 	store.dispatch(actionCreators.update({"cart": cart }));
-	}
-
 	export const addCartItem = (cart, item) => {
 		store.dispatch(actionCreators.addItem(cart, item))
 	}
@@ -31,6 +27,11 @@ import _ from 'lodash';
 
 	export const removeCartItem = (cart, productId) => {
 		store.dispatch(actionCreators.removeItem(cart, productId));
+	}
+
+	export const updateCartTotals = (cart) => {
+			store.dispatch(actionCreators.updateCartTotals(
+								cart, sumTotalItems(cart.items), sumTotalAmount(cart.items)));
 	}
 
 	const checkProduct = (cart, productID) => {
@@ -61,20 +62,10 @@ import _ from 'lodash';
 			updateCartTotals(cart);
 	}
 
-	export const updateCartTotals = (cart) => {
-			let cartClone = _.cloneDeep(cart);
-			cartClone.totalItems = sumTotalItems(cartClone.items);
-			cartClone.totalAmount = sumTotalAmount(cartClone.items);
-			persistCart(cartClone);
-	}
-
-
-
 	export const updateQuantity = (cart, productId, qty) => {
 		let cartClone = _.cloneDeep(cart);
 		let index = cartClone.items.findIndex(x => x.productDTO.productId === Number(productId));
 		cartClone.items[index].quantity = Number(cartClone.items[index].quantity) + Number(qty);
-		persistCart(cartClone);
 		updateCartTotals(cartClone);
 	}
 
@@ -94,5 +85,5 @@ import _ from 'lodash';
 
 	export const emptyCart = () => {
 		console.log('emptyCart....');
-		persistCart({items:[]});
+		//persistCart({items:[]});
 	}
