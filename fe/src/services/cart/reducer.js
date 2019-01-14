@@ -1,4 +1,5 @@
 import * as actionTypes from './actionTypes';
+import _ from 'lodash';
 
 export const initialState = {
 															cart: {
@@ -9,11 +10,16 @@ export const initialState = {
 														};
 
 export const reducer = (state = initialState, action) => {
+	//in this function we should accept the this.state
+	//take a copy of the the state
+	//then perform some updates on that state copy based on the action parameter
+	//return the new state
+	
 	switch (action.type) {
 		case actionTypes.UPDATE:
-			return {
-				...action.cart,
-			};
+		console.log(action);
+		return 	_.cloneDeep(action.cart);
+
 		default:
 			return state;
 	}
