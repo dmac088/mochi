@@ -247,13 +247,13 @@ class App extends Component {
 //on a dispatch call from anywhere in the application
 //this function will fire and update authenticated
 export default connect(state => ({
-  tokens:   state.services.session.tokens,
-  customer: state.services.customer.customer,
-  cart:     state.services.cart.cart,
+    tokens:   state.services.session.tokens,
+    customer: state.services.customer.customer,
+    cart:     state.services.cart.cart,
 }), dispatch => ({
-	actions: {
-		tokens:   bindActionCreators(tokensActionCreators, dispatch),
-    customer: bindActionCreators(customerActionCreators, dispatch),
-    cart:     bindActionCreators(cartActionCreators, dispatch),
-	},
+  	actions: {
+  		tokens:   bindActionCreators(tokensActionCreators, dispatch),
+      customer: bindActionCreators(customerActionCreators, dispatch),
+      cart:     bindActionCreators(cartActionCreators, dispatch),
+  	},
 }))(App);
