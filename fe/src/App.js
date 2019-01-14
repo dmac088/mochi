@@ -229,7 +229,7 @@ class App extends Component {
       </div>
       </Router>
 
-      <ManageCart cart={this.props}
+      <ManageCart cart={this.props.cart}
                   updateQuantity={this.props.updateQuantity}
       />
 
