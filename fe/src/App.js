@@ -234,7 +234,6 @@ export default connect(state => ({
 }), dispatch => ({
   	actions: {
   		tokens:   bindActionCreators(tokensActionCreators, dispatch),
-      customer: bindActionCreators(customerActionCreators, dispatch),
-      cart:     bindActionCreators(cartActionCreators, dispatch),
+      customer: bindActionCreators(customerActionCreators, dispatch)
   	},
 }))(App);
