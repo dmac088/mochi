@@ -127,10 +127,7 @@ class App extends Component {
   }
 
   emptyCart = () => {
-    this.setState({
-      totalItems: 0,
-      totalAmount: 0,
-    }, cartService.emptyCart);
+    cartService.emptyCart());
   }
 
   // Open Modal
