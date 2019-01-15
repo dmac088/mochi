@@ -18,24 +18,21 @@ export const reducer = (state = initialState, action) => {
 	//modifying the object (update)
 	//then passing that new object to the reducer
 	//the reducer then simply takes a copy of the object and passing it back to me
-  let cartClone = null;
+
+  let cartClone = _.cloneDeep(action.cart);
 	switch (action.type) {
 		case actionTypes.ADD_ITEM:
-			cartClone = _.cloneDeep(action.cart);
 			cartClone.items.push(action.item);
 			return cartClone;
 		case actionTypes.UPDATE_ITEM:
-			cartClone = _.cloneDeep(action.cart);
 			cartClone.items[action.index] = action.item;
 			return cartClone;
 		case actionTypes.REMOVE_ITEM:
-			cartClone = _.cloneDeep(action.cart);
 			cartClone.items = cartClone.items.filter(function(value, index, arr){
 															return value.productDTO.productId !== action.productId;
 												});
 			return cartClone;
 		case actionTypes.UPDATE_CART_TOTALS:
-			cartClone = _.cloneDeep(action.cart);
 			cartClone.totalItems = action.totalItems;
 			cartClone.totalAmount = action.totalAmount;
 			return cartClone;
