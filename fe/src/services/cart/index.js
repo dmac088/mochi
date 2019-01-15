@@ -29,7 +29,8 @@ import * as cartSelector from './selectors';
 		store.dispatch(actionCreators.removeItem(cart, productId));
 	}
 
-	export const updateCartTotals = (cart) => {
+	export const updateCartTotals = () => {
+			let cart = cartSelector.get();
 			store.dispatch(actionCreators.updateCartTotals(
 								cart, sumTotalItems(cart.items), sumTotalAmount(cart.items)));
 	}
@@ -52,14 +53,14 @@ import * as cartSelector from './selectors';
 	    //add the product to the cart
 			addCartItem(cart, selectedProduct);
 	  };
-		updateCartTotals(cartSelector.get());
+		updateCartTotals();
 	}
 
 	export const removeFromCart = (cart, productId) => {
 			if (checkProduct(cart, productId)) {
 				removeCartItem(cart, productId);
 			}
-			updateCartTotals(cartSelector.get());
+			updateCartTotals();
 	}
 
 	export const updateQuantity = (cart, productId, qty) => {
@@ -67,7 +68,7 @@ import * as cartSelector from './selectors';
 		let updatedItem =  _.cloneDeep(cart.items[index]);
 		updatedItem.quantity = Number(cart.items[index].quantity) + Number(qty);
 		updateCartItem(cart, index, updatedItem);
-		updateCartTotals(cartSelector.get());
+		updateCartTotals();
 	}
 
 	export const sumTotalItems = (items) => {
