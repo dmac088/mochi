@@ -181,13 +181,11 @@ class App extends Component {
         <div className="row">
           <div className="col-sm-12">
             <Header authenticated={this.props.tokens.authenticated}
-              customer={this.props.customer}
-              handleSearch={this.handleSearch}
-              changeLang={this.changeLang}
-              lang={langSelector[this.state.currentLang]}
-              currentLang={this.state.currentLang}
-              totalItems={this.props.cart.totalItems}
-              total={this.props.cart.totalAmount}
+                    customer={this.props.customer}
+                    handleSearch={this.handleSearch}
+                    changeLang={this.changeLang}
+                    lang={langSelector[this.state.currentLang]}
+                    currentLang={this.state.currentLang}
             />
           </div>
         </div>
