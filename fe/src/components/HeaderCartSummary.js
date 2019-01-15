@@ -1,7 +1,14 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Table } from 'react-bootstrap';
+import { connect } from 'react-redux';
 
-const HeaderCartSummary = (props) =>{
+class HeaderCartSummary extends Component {
+
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
     return(
           <Table condensed responsive>
             <tbody>
@@ -12,7 +19,7 @@ const HeaderCartSummary = (props) =>{
                 <td>:</td>
                 <td>
                   <strong>
-                    {props.totalItems}
+                    {this.props.cart.totalItems}
                   </strong>
                 </td>
               </tr>
@@ -23,7 +30,7 @@ const HeaderCartSummary = (props) =>{
                 <td>:</td>
                 <td>
                   <strong>
-                    {props.total}
+                    {this.props.cart.totalAmount}
                   </strong>
                 </td>
               </tr>
@@ -32,5 +39,10 @@ const HeaderCartSummary = (props) =>{
     );
 }
 
+}
 
-export default HeaderCartSummary;
+
+export default connect(state => ({
+    cart:     state.services.cart,
+}))
+(HeaderCartSummary);

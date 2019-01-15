@@ -32,10 +32,7 @@ const Header = (props) => {
           </Nav>
           <Nav pullRight>
             <Nav>
-              <HeaderCartSummary
-                      totalItems={props.totalItems}
-                      total={props.total}
-              />
+              <HeaderCartSummary/>
             </Nav>
 
             <LanguageSelector
