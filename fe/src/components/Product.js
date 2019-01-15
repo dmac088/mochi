@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import Counter from './Counter';
 import config from '../config/config';
+import * as cartSelector from '../services/cart/selectors';
+import * as cartService from '../services/cart';
 
 class Product extends Component {
 
@@ -54,7 +56,10 @@ class Product extends Component {
             },
 						quantity: quantity,
 					}
-        }, () => {this.props.addToCart(this.state.product);})
+        }, () => {
+									//this.props.addToCart(this.state.product);
+									cartService.addToCart(cartSelector.get(), this.state.product);
+				})
 
         this.setState({
             isAdded: true
