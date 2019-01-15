@@ -126,19 +126,6 @@ class App extends Component {
     });
   }
 
-  // Add to Cart
-  handleAddToCart = (selectedProduct) => {
-    cartService.addToCart(this.props.cart, selectedProduct);
-    setTimeout(() => {
-                        this.setState({
-                           cartBounce: false,
-                           quantity: 1,
-                        });
-                     },
-    1000
-    );
-  }
-
   emptyCart = () => {
     this.setState({
       totalItems: 0,
@@ -209,7 +196,6 @@ class App extends Component {
             <Route path="/" exact component =  {(routeProps) => (
                                                                     <Landing {...routeProps}
                                                                       {...this.state}
-                                                                      addToCart={this.handleAddToCart}
                                                                       lang={langSelector[this.state.currentLang]}
                                                                       openModal={this.openModal}
                                                                       updateQuantity={this.updateQuantity}
@@ -227,9 +213,7 @@ class App extends Component {
       </div>
       </Router>
 
-      <ManageCart cart={this.props.cart}
-                  updateQuantity={this.props.updateQuantity}
-      />
+      <ManageCart/>
 
       <Footer/>
       <button onClick={this.printState}>Print Redux State</button>
@@ -246,8 +230,7 @@ class App extends Component {
 //this function will fire and update authenticated
 export default connect(state => ({
     tokens:   state.services.session.tokens,
-    customer: state.services.customer.customer,
-    cart:     state.services.cart,
+    customer: state.services.customer.customer
 }), dispatch => ({
   	actions: {
   		tokens:   bindActionCreators(tokensActionCreators, dispatch),

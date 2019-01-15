@@ -1,54 +1,37 @@
-import React from 'react';
+import React, { Component } from 'react';
 import * as cartSelector from '../services/cart/selectors';
 import * as cartService from '../services/cart';
 import { Table } from 'react-bootstrap';
 import Counter from './Counter';
+import { connect } from 'react-redux';
 
-    const removeItem = (event) => {
-      let cart = cartSelector.get();
-      cartService.removeFromCart(cart, Number(event.target.id));
+
+/*
+cart={this.props.cart}
+            updateQuantity={this.props.updateQuantity}
+*/
+class ManageCart extends Component {
+
+    constructor(props) {
+      super(props);
     }
 
-    const ManageCart = (props) => {
-      return renderCart(props.cart);
+    removeItem = (event) => {
+      cartService.removeFromCart(cartSelector.get(), Number(event.target.id));
     }
 
-    const renderCart = (cart) => {
-        return(
-          <div className="container">
-              <Table responsive>
-                <thead>
-                  <tr>
-                    <th scope="col">Product</th>
-                    <th scope="col" width={120}>Name</th>
-                    <th scope="col" width={120}>Quantity</th>
-                    <th scope="col" width={120}>Price</th>
-                    <th scope="col" width={200} className="text-right">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {renderCartItems(cart)}
-                </tbody>
-              </Table>
-          </div>
-        )
-    }
-
-    const incrementQuantity = (e) => {
+    incrementQuantity = (e) => {
       //update the redux state to increase the quantity by 1
-      let cart = cartSelector.get();
-      cartService.updateQuantity(cart, e.target.id, 1)
-
+      cartService.updateQuantity(cartSelector.get(), e.target.id, 1)
     }
 
-    const decrementQuantity = (e) => {
+    decrementQuantity = (e) => {
       //update the redux state to reduce the quantity by 1
-      let cart = cartSelector.get();
-      cartService.updateQuantity(cart, e.target.id, -1)
+      cartService.updateQuantity(cartSelector.get(), e.target.id, -1)
     }
 
-    const renderCartItems = (cart) => {
-          return cart.items.map(product => {
+    renderCartItems = () => {
+          return cartSelector.get().items.map(product => {
               return(
                 <tr key={product.productDTO.productId} id={product.productDTO.productId}>
                   <td>
@@ -65,8 +48,8 @@ import Counter from './Counter';
                   </td>
                   <td>
                     <Counter
-                      incrementQuantity={incrementQuantity}
-      								decrementQuantity={decrementQuantity}
+                      incrementQuantity={this.incrementQuantity}
+      								decrementQuantity={this.decrementQuantity}
                       productId={product.productDTO.productId}
                       productQty={product.quantity}
                     />
@@ -81,7 +64,7 @@ import Counter from './Counter';
                     <button
                       id={product.productDTO.productId}
                       className="btn btn-outline-danger"
-                      onClick={removeItem}>
+                      onClick={this.removeItem}>
                         × Remove
                     </button>
                   </td>
@@ -90,4 +73,30 @@ import Counter from './Counter';
           });
     }
 
-export default ManageCart;
+    render() {
+      return(
+          <div className="container">
+              <Table responsive>
+                <thead>
+                  <tr>
+                    <th scope="col">Product</th>
+                    <th scope="col" width={120}>Name</th>
+                    <th scope="col" width={120}>Quantity</th>
+                    <th scope="col" width={120}>Price</th>
+                    <th scope="col" width={200} className="text-right">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.renderCartItems()}
+                </tbody>
+              </Table>
+          </div>
+        )
+    }
+}
+
+
+export default connect(state => ({
+      cart:     state.services.cart,
+}))
+(ManageCart);
