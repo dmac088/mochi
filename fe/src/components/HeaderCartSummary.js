@@ -37,8 +37,7 @@ class HeaderCartSummary extends Component {
             </tbody>
           </Table>
     );
-}
-
+  }
 }
 
 
