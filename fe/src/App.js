@@ -127,7 +127,7 @@ class App extends Component {
   }
 
   emptyCart = () => {
-    cartService.emptyCart());
+    cartService.emptyCart();
   }
 
   // Open Modal
