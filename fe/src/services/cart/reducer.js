@@ -8,17 +8,6 @@ export const initialState = {
 														};
 
 export const reducer = (state = initialState, action) => {
-	//in this function we should accept the this.state
-	//take a copy of the the state
-	//then perform some updates on that state copy based on the action parameter
-	//return the new state
-
-
-	//currently what I'm doing is craeting a copy of the object outside of the reducer
-	//modifying the object (update)
-	//then passing that new object to the reducer
-	//the reducer then simply takes a copy of the object and passing it back to me
-
   let cartClone = _.cloneDeep(action.cart);
 	switch (action.type) {
 		case actionTypes.ADD_ITEM:
