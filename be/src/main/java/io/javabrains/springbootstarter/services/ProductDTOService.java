@@ -33,29 +33,29 @@ public class ProductDTOService implements IProductDTOService {
     
     @Override
 	@Transactional
-	public Page<ProductDTO> getProducts(String lcl, int page, int size) {
-		Page<ProductAttribute> ppa = productAttributePagingAndSortingRepository.findByLclCd(lcl, PageRequest.of(page, size, Sort.by("productRrp").descending()));
+	public Page<ProductDTO> getProducts(String lcl, int page, int size, String sortBy) {
+		Page<ProductAttribute> ppa = productAttributePagingAndSortingRepository.findByLclCd(lcl, PageRequest.of(page, size, Sort.by(sortBy).descending()));
 		Page<ProductDTO> pp = ppa.map(this::convertToProductDto);
 		return pp;
 	}	
     
     @Override
  	@Transactional
- 	public Page<ProductDTO> getProductsForCategory(String lcl, Long categoryId, int page, int size) {
- 		Page<ProductAttribute> ppa = productAttributePagingAndSortingRepository.findByLclCdAndProductCategoriesCategoryId(lcl, categoryId, PageRequest.of(page, size, Sort.by("productRrp").descending()));
+ 	public Page<ProductDTO> getProductsForCategory(String lcl, Long categoryId, int page, int size, String sortBy) {
+ 		Page<ProductAttribute> ppa = productAttributePagingAndSortingRepository.findByLclCdAndProductCategoriesCategoryId(lcl, categoryId, PageRequest.of(page, size, Sort.by(sortBy).descending()));
  		Page<ProductDTO> pp = ppa.map(this::convertToProductDto);
  		return pp;
  	}	
     
     @Override
  	@Transactional
- 	public Page<ProductDTO> getAllProductsForCategory(String lcl, Long categoryId, int page, int size) {
+ 	public Page<ProductDTO> getAllProductsForCategory(String lcl, Long categoryId, int page, int size, String sortBy) {
     	//get a list of category ids for the current category and its child categories
     	List<ProductCategory> pcl = new ArrayList<ProductCategory>();
     	ProductCategory pc = productCategoryRepository.findByCategoryId(categoryId).get();
     	recurseCategories(pcl, pc);
     	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
- 		Page<ProductAttribute> ppa = productAttributePagingAndSortingRepository.findDistinctByLclCdAndProductCategoriesCategoryIdIn(lcl, categoryIds, PageRequest.of(page, size, Sort.by("productRrp").descending()));
+ 		Page<ProductAttribute> ppa = productAttributePagingAndSortingRepository.findDistinctByLclCdAndProductCategoriesCategoryIdIn(lcl, categoryIds, PageRequest.of(page, size, Sort.by(sortBy).descending()));
  		Page<ProductDTO> pp = ppa.map(this::convertToProductDto);
  		return pp;
  	}	
