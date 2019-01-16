@@ -78,7 +78,7 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
     
   
     
-    private ProductCategoryDTO convertToProductCategoryDto(final ProductCategory pc,final String lcl) {
+    private ProductCategoryDTO convertToProductCategoryDto(final ProductCategory pc, final String lcl) {
     	ProductCategoryAttribute pca = productCategoryAttributeRepository.findByLclCdAndCategoryId(lcl, pc.getCategoryId()).get();	
         final ProductCategoryDTO pcDto = new ProductCategoryDTO();
         pcDto.setProductCount(new Long(pc.getProducts().size()));
@@ -92,7 +92,6 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
         	pcchild.setProductCount(new Long(pc1.getProducts().size()));
         	pcDTOl.add(pcchild);
         }
-        //pcDto.setParent(convertToProductCategoryDto(pc.getParent(), lcl));
         pcDto.setChildren(pcDTOl);
         pcDto.setCategoryDesc(pca.getCategoryDesc());
         pcDto.setLclCd(pca.getLclCd());

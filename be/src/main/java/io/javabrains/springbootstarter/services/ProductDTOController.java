@@ -17,14 +17,14 @@ public class ProductDTOController {
         super();
     }
     
-    @GetMapping("/Product/{lcl}/page/{page}/size/{size}")
-    public Page<ProductDTO> getProducts(@PathVariable String lcl,@PathVariable int page,@PathVariable int size) {
-    	return productService.getProducts(lcl, page, size);
+    @GetMapping("/Product/{lcl}/page/{page}/size/{size}/sortBy/{sortBy}")
+    public Page<ProductDTO> getProducts(@PathVariable String lcl,@PathVariable int page, @PathVariable int size, @PathVariable String sortBy) {
+    	return productService.getProducts(lcl, page, size, sortBy);
     }
     
-    @GetMapping("/Product/{lcl}/cat/{cat}/page/{page}/size/{size}")
-    public Page<ProductDTO> getProducts(@PathVariable String lcl,@PathVariable Long cat, @PathVariable int page,@PathVariable int size) {
-    	return productService.getAllProductsForCategory(lcl, cat, page, size);
+    @GetMapping("/Product/{lcl}/cat/{cat}/page/{page}/size/{size}/sortBy/{sortBy}")
+    public Page<ProductDTO> getProducts(@PathVariable String lcl,@PathVariable Long cat, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy) {
+    	return productService.getAllProductsForCategory(lcl, cat, page, size, sortBy);
     }
     
 }

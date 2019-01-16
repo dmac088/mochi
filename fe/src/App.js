@@ -11,6 +11,7 @@ import Signup from './components/Signup';
 import ManageCart from './components/ManageCart';
 import Paginator from './components/Paginator';
 import PageSize from './components/PageSize';
+import PageSort from './components/PageSort';
 import * as tokensActionCreators from './services/session/actions';
 import * as customerActionCreators from './services/customer/actions';
 import * as cartActionCreators from './services/cart/actions';
@@ -25,6 +26,8 @@ import './scss/style.scss';
 import CategoryNavigator from './components/CategoryNavigator'
 import langSelector from './config/lang/selector';
 
+
+
 class App extends Component {
 
   constructor(props) {
@@ -34,6 +37,7 @@ class App extends Component {
        currentLang: "ENG",
        currentPage: 0,
        currentPageSize: 10,
+       currentPageSort: 1,
        page: {content:[]},
        categoryList: [],
        searchTerm: '',
@@ -60,15 +64,16 @@ class App extends Component {
   }
 
   // Fetch Initial Set of Products from external API
-  getProducts = (lang = "ENG", category = 2, page = 0, size = 10) => {
-    pageService.findAll(lang, category, page, size)
+  getProducts = (lang = "ENG", category = 2, page = 0, size = 10, sort = 1) => {
+    pageService.findAll(lang, category, page, size, sort)
     .then((response) => {
        this.setState((prevState) => ({
          page: response,
          currentCategory: category,
          currentLang: lang,
          currentPage: (prevState.currentCategory !== category) ? 0 : page,
-         currentPageSize: size
+         currentPageSize: size,
+         currentPageSort: sort,
        }));
     })
     .then(() => {
@@ -77,19 +82,23 @@ class App extends Component {
   }
 
   changeLang = (event) => {
-    this.getProducts(event.target.id, this.state.currentCategory, this.state.currentPage, this.state.currentPageSize);
+    this.getProducts(event.target.id, this.state.currentCategory, this.state.currentPage, this.state.currentPageSize, this.state.currentPageSort);
   }
 
   changeCategory = (event) => {
-    this.getProducts(this.state.currentLang, event.target.id, this.state.currentPage, this.state.currentPageSize);
+    this.getProducts(this.state.currentLang, event.target.id, this.state.currentPage, this.state.currentPageSize, this.state.currentPageSort);
   }
 
   changePage = (event) => {
-    this.getProducts(this.state.currentLang, this.state.currentCategory, event.target.id, this.state.currentPageSize);
+    this.getProducts(this.state.currentLang, this.state.currentCategory, event.target.id, this.state.currentPageSize, this.state.currentPageSort);
   }
 
   changePageSize = (event) => {
-    this.getProducts(this.state.currentLang, this.state.currentCategory, this.state.currentPage, event.target.id);
+    this.getProducts(this.state.currentLang, this.state.currentCategory, this.state.currentPage, event.target.id, this.state.currentPageSort);
+  }
+
+  changePageSort = (event) => {
+    this.getProducts(this.state.currentLang, this.state.currentCategory, this.state.currentPage, this.state.currentPageSize, event.target.id);
   }
 
   componentWillMount() {
@@ -184,6 +193,11 @@ class App extends Component {
             <PageSize
               currentPageSize={this.state.currentPageSize}
               changePageSize={this.changePageSize}
+            />
+            <PageSort currentPageSort
+                currentPageSort={this.state.currentPageSort}
+                changePageSort={this.changePageSort}
+
             />
             <br/>
             <Paginator
