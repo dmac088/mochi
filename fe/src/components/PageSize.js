@@ -4,7 +4,7 @@ import { DropdownButton, MenuItem  } from 'react-bootstrap';
 const PageSize = (props) => {
   return (
     <DropdownButton
-        id="1"
+        id="pageSize"
         title={"Page Size (" + props.currentPageSize + ")"}
       >
        <MenuItem id="5" onClick={props.changePageSize} eventKey="5" active={props.currentPageSize === "5"}>5</MenuItem>

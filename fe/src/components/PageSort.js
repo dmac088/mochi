@@ -9,7 +9,7 @@ const sortAliases = {
 const PageSort = (props) => {
   return (
     <DropdownButton
-        id="1"
+        id="pageSort"
         title={"Sort: " + sortAliases[props.currentPageSort]}
       >
        <MenuItem id="1" onClick={props.changePageSort} eventKey="1" active={props.currentPageSort === 1}>{sortAliases[1]}</MenuItem>
