@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
 import org.hibernate.search.jpa.FullTextEntityManager;
@@ -14,10 +15,10 @@ import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import io.javabrains.springbootstarter.domain.ProductAttribute;
+import io.javabrains.springbootstarter.domain.ProductCategoryAttribute;
 
 @Service
 public class SearchIndexService {
@@ -39,19 +40,31 @@ public class SearchIndexService {
 	}
 
 		//will change this to a page later
-	public Page<ProductDTO> findProduct(String lcl, String searchTerm, int page, int size, String sortBy) {
+	public Page<ProductDTO> findProduct(String lcl, String categoryDesc, String searchTerm, int page, int size, String sortBy) {
 		FullTextEntityManager fullTextEntityManager 
 		  = Search.getFullTextEntityManager(em);
 		
-		QueryBuilder queryBuilder = fullTextEntityManager.getSearchFactory() 
+		QueryBuilder productAttributeQueryBuilder = fullTextEntityManager.getSearchFactory() 
 				  .buildQueryBuilder()
 				  .forEntity(ProductAttribute.class)
 				  .get();
 		
-		org.apache.lucene.search.Query query = queryBuilder
+		QueryBuilder productCategoryAttributeQueryBuilder = fullTextEntityManager.getSearchFactory() 
+				  .buildQueryBuilder()
+				  .forEntity(ProductCategoryAttribute.class)
+				  .get();
+		
+		/*org.apache.lucene.search.Query query = queryBuilder
 				  .keyword()
-				  .onField("productDesc")
-				  .matching(searchTerm)
+				  .onField("productDesc").matching(searchTerm)
+				  .createQuery();*/
+		
+		//System.out.println("the categoryId is = " + categoryId);
+		
+		Query query = productAttributeQueryBuilder
+				  .bool()
+				  .must(productAttributeQueryBuilder.keyword().onField("productDesc").matching(searchTerm).createQuery())
+				  .must(productCategoryAttributeQueryBuilder.keyword().onField("categoryDesc").matching(categoryDesc).createQuery())
 				  .createQuery();
 		
 		org.apache.lucene.search.Sort sort = new Sort(new SortField(sortBy, SortField.Type.DOUBLE));
@@ -62,13 +75,16 @@ public class SearchIndexService {
 		//sorting
 		jpaQuery.setSort(sort);
 		
-		//pagination
-		//jpaQuery.setFirstResult(0); //start from the 15th element
-		//jpaQuery.setMaxResults(5); //return 10 elements
-		
 		List<ProductAttribute> results = jpaQuery.getResultList();		
 		
+		System.out.println(results.size());
+		
+		for(ProductAttribute pca : results) {
+			System.out.println(pca.getProductDesc());
+		}
+		
 		List<ProductDTO> lp = new ArrayList<ProductDTO>();
+
 		for(ProductAttribute pa : results) {
 			lp.add(productDTOService.convertToProductDto(pa));
 		}
