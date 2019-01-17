@@ -14,7 +14,6 @@ public class SearchIndexController {
     private SearchIndexService searchIndexService;
 	
     public SearchIndexController() {
-        super();
     }
     
     @GetMapping("/CreateSearchIndex")
