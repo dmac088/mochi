@@ -40,7 +40,7 @@ public class SearchIndexService {
 	}
 
 		//will change this to a page later
-	public Page<ProductDTO> findProduct(String lcl, String categoryDesc, String searchTerm, int page, int size, String sortBy) {
+	public Page<ProductDTO> findProduct(String lcl, String categoryId, String searchTerm, int page, int size, String sortBy) {
 		
 		FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
 		
@@ -59,6 +59,9 @@ public class SearchIndexService {
 		
 		org.hibernate.search.jpa.FullTextQuery jpaQuery
 		  = fullTextEntityManager.createFullTextQuery(query, ProductAttribute.class);
+		
+		//filtering
+		jpaQuery.enableFullTextFilter("SelectedCategory").setParameter("categoryId", Long.parseLong(categoryId));
 		
 		//sorting
 		jpaQuery.setSort(sort);
