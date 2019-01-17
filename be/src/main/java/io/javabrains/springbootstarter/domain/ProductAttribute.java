@@ -13,6 +13,7 @@ import javax.persistence.Table;
 
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.TermVector;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -35,6 +36,8 @@ public class ProductAttribute {
 	@Field(termVector = TermVector.YES)
 	private String productDesc;
 	
+	@SortableField
+	@Field(termVector = TermVector.YES)
 	@Column(name="prd_rrp")
 	private double productRrp;
 	
