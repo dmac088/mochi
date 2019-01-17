@@ -103,6 +103,7 @@ class Product extends Component {
                 <p className="product-price">{price}</p>
 								<Counter incrementQuantity={this.incrementQuantity}
 												 decrementQuantity={this.decrementQuantity}
+												 productId={id}
 												 productQty={quantity}
 								/>
                 <div className="product-action">
