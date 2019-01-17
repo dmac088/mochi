@@ -1,11 +1,12 @@
 import { fetchApi } from '../../services/api';
 
 const endPoints = {
-	get: '/api/Product/',
-	category: '/cat/',
-	page: '/page/',
-	size: '/size/',
-	sort: '/sortBy/',
+	get: '/api/Search/',
+	category: '/Cat/',
+	search: '/SearchTerm/',
+	page: '/Page/',
+	size: '/Size/',
+	sort: '/SortBy/',
 };
 
 const sortSelector = {
@@ -13,9 +14,10 @@ const sortSelector = {
         2:"productRrp"
       };
 
-export const findAll = (locale, categoryId, page, size, sort) => fetchApi(
+export const findAll = (locale, categoryId, searchTerm, page, size, sort) => fetchApi(
 																																	endPoints.get + locale
 																																+ endPoints.category + categoryId
+																																+ endpoints.search + searchTerm
 																																+ endPoints.page + page
 																																+ endPoints.size + size
 																																+ endPoints.sort + sortSelector[sort],

@@ -1,8 +1,8 @@
 import * as session from '../session';
 import * as api from './api';
 
-	export const findAll = (locale, categoryId, page, size, sort) => {
-		return api.findAll(locale, categoryId, page, size, sort)
+	export const findAll = (locale, categoryId, searchTerm, page, size, sort) => {
+		return api.findAll(locale, categoryId, searchTerm, page, size, sort)
 		.then((response) => {
       return response.text();
     })
