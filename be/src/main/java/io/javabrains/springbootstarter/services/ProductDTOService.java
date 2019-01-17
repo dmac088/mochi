@@ -68,7 +68,7 @@ public class ProductDTOService implements IProductDTOService {
     }
     
 	
-    private ProductDTO convertToProductDto(final ProductAttribute productAttribute) {
+    public ProductDTO convertToProductDto(final ProductAttribute productAttribute) {
         //get values from contact entity and set them in contactDto
         //e.g. contactDto.setContactId(contact.getContactId());
         final ProductDTO productDto = new ProductDTO();
