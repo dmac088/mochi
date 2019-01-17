@@ -10,9 +10,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.TermVector;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
+@Indexed
 @Table(name = "product_attr_lcl", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "prd_lcl_id")
 public class ProductAttribute {
@@ -26,6 +32,7 @@ public class ProductAttribute {
 	private Long productId;
 	
 	@Column(name="prd_desc")
+	@Field(termVector = TermVector.YES)
 	private String productDesc;
 	
 	@Column(name="prd_rrp")
@@ -54,6 +61,7 @@ public class ProductAttribute {
 		this.product = product;
 	}
 
+	
 	public String getProductDesc() {
 		return productDesc;
 	}

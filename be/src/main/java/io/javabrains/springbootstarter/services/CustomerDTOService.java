@@ -73,7 +73,6 @@ public class CustomerDTOService implements ICustomerDTOService {
     @Override
 	@Transactional
     public void registerNewCustomer(final CustomerDTO customer) {
-    	System.out.println(customer.getPassword());
         if (customerExist(customer.getUserName())) {
             throw new CustomerAlreadyExistException("There is an account with that username: " + customer.getUserName());
         }
@@ -81,7 +80,6 @@ public class CustomerDTOService implements ICustomerDTOService {
         PartyPerson p1 = new PartyPerson();
         p1.setGivenName(customer.getGivenName());
         p1.setFamilyName(customer.getFamilyName());
-        
         
 		//create the role object
 		p1.setPartyRoles(new ArrayList<Role>());
