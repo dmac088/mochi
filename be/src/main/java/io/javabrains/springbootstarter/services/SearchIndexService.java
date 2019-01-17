@@ -65,10 +65,10 @@ public class SearchIndexService {
 		//jpaQuery.setFirstResult(0); //start from the 15th element
 		//jpaQuery.setMaxResults(5); //return 10 elements
 		
-		List<ProductAttribute> results = jpaQuery.getResultList();
+		List<ProductAttribute> results = jpaQuery.getResultList();		
 		
-		List<ProductDTO> lp = new ArrayList<ProductDTO>(); 
-		
+		List<ProductDTO> lp = new ArrayList<ProductDTO>();
+		System.out.println(results.size());
 		for(ProductAttribute pa : results) {
 			lp.add(productDTOService.convertToProductDto(pa));
 		}

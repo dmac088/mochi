@@ -35,7 +35,7 @@ public class ProductDTOService implements IProductDTOService {
 	@Transactional
 	public Page<ProductDTO> getProducts(String lcl, int page, int size, String sortBy) {
 		Page<ProductAttribute> ppa = productAttributePagingAndSortingRepository.findByLclCd(lcl, PageRequest.of(page, size, Sort.by(sortBy).descending()));
-		Page<ProductDTO> pp = ppa.map(this::convertToProductDto);
+		Page<ProductDTO> pp = ppa.map(pa -> ProductDTOService.convertToProductDto(pa));
 		return pp;
 	}	
     
@@ -43,7 +43,7 @@ public class ProductDTOService implements IProductDTOService {
  	@Transactional
  	public Page<ProductDTO> getProductsForCategory(String lcl, Long categoryId, int page, int size, String sortBy) {
  		Page<ProductAttribute> ppa = productAttributePagingAndSortingRepository.findByLclCdAndProductCategoriesCategoryId(lcl, categoryId, PageRequest.of(page, size, Sort.by(sortBy).descending()));
- 		Page<ProductDTO> pp = ppa.map(this::convertToProductDto);
+ 		Page<ProductDTO> pp = ppa.map(pa -> ProductDTOService.convertToProductDto(pa));
  		return pp;
  	}	
     
@@ -56,7 +56,7 @@ public class ProductDTOService implements IProductDTOService {
     	recurseCategories(pcl, pc);
     	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
  		Page<ProductAttribute> ppa = productAttributePagingAndSortingRepository.findDistinctByLclCdAndProductCategoriesCategoryIdIn(lcl, categoryIds, PageRequest.of(page, size, Sort.by(sortBy).descending()));
- 		Page<ProductDTO> pp = ppa.map(this::convertToProductDto);
+ 		Page<ProductDTO> pp = ppa.map(pa -> ProductDTOService.convertToProductDto(pa));
  		return pp;
  	}	
     
@@ -68,7 +68,7 @@ public class ProductDTOService implements IProductDTOService {
     }
     
 	
-    public ProductDTO convertToProductDto(final ProductAttribute productAttribute) {
+    public static ProductDTO convertToProductDto(final ProductAttribute productAttribute) {
         //get values from contact entity and set them in contactDto
         //e.g. contactDto.setContactId(contact.getContactId());
         final ProductDTO productDto = new ProductDTO();
