@@ -14,6 +14,7 @@ import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import io.javabrains.springbootstarter.domain.ProductAttribute;
@@ -38,7 +39,7 @@ public class SearchIndexService {
 	}
 
 		//will change this to a page later
-	public Page<ProductDTO> findProduct(String lcl, String searchTerm) {
+	public Page<ProductDTO> findProduct(String lcl, String searchTerm, int page, int size, String sortBy) {
 		FullTextEntityManager fullTextEntityManager 
 		  = Search.getFullTextEntityManager(em);
 		
@@ -53,7 +54,7 @@ public class SearchIndexService {
 				  .matching(searchTerm)
 				  .createQuery();
 		
-		org.apache.lucene.search.Sort sort = new Sort(new SortField("productRrp", SortField.Type.DOUBLE));
+		org.apache.lucene.search.Sort sort = new Sort(new SortField(sortBy, SortField.Type.DOUBLE));
 		
 		org.hibernate.search.jpa.FullTextQuery jpaQuery
 		  = fullTextEntityManager.createFullTextQuery(query, ProductAttribute.class);
@@ -68,12 +69,11 @@ public class SearchIndexService {
 		List<ProductAttribute> results = jpaQuery.getResultList();		
 		
 		List<ProductDTO> lp = new ArrayList<ProductDTO>();
-		System.out.println(results.size());
 		for(ProductAttribute pa : results) {
 			lp.add(productDTOService.convertToProductDto(pa));
 		}
 		
-		Page<ProductDTO> pp = new PageImpl<ProductDTO>(lp);
+		Page<ProductDTO> pp = new PageImpl<ProductDTO>(lp, PageRequest.of(page, size, org.springframework.data.domain.Sort.by(sortBy).descending()), lp.size());
 		return pp;
 	}	
 	
