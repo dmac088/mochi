@@ -2,19 +2,7 @@ package io.javabrains.springbootstarter.services;
 
 import java.util.Date;
 
-//this is the grand daddy DTO
-/*---------------------------testing DTO JSON---------------------------
-{
-	"userName":"dmac654331",
-	"password":"magic7653",
-	"enabled":true,
-	"givenName":"Ronald",
-	"familyName":"McDonald"
-}
-*/
 
-//@JsonTypeName(value = "customer")
-//@JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.NAME)
 public class ProductDTO {
 
 	private Long productId;

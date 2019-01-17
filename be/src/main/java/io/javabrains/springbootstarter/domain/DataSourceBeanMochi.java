@@ -5,7 +5,6 @@ package io.javabrains.springbootstarter.domain;
 import java.util.Properties;
 
 import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -43,16 +42,13 @@ public class DataSourceBeanMochi {
                 .username(env.getProperty("spring.datasource.mochi.username"))
                 .password(env.getProperty("spring.datasource.mochi.password"))
                 .driverClassName(env.getProperty("spring.jpa.properties.hibernate.driver_class"))
-                
                 .build();
     }
 	
 	private Properties additionalJpaProperties(){
 		Properties properties = new Properties();
-		//properties.setProperty("hibernate.hbm2ddl.auto", "update");
 		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
 		properties.setProperty("hibernate.show_sql", "true");
-		
 		return properties;
 	}
      
