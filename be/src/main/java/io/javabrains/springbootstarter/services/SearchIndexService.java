@@ -41,30 +41,18 @@ public class SearchIndexService {
 
 		//will change this to a page later
 	public Page<ProductDTO> findProduct(String lcl, String categoryDesc, String searchTerm, int page, int size, String sortBy) {
-		FullTextEntityManager fullTextEntityManager 
-		  = Search.getFullTextEntityManager(em);
+		
+		FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
 		
 		QueryBuilder productAttributeQueryBuilder = fullTextEntityManager.getSearchFactory() 
 				  .buildQueryBuilder()
 				  .forEntity(ProductAttribute.class)
 				  .get();
 		
-		QueryBuilder productCategoryAttributeQueryBuilder = fullTextEntityManager.getSearchFactory() 
-				  .buildQueryBuilder()
-				  .forEntity(ProductCategoryAttribute.class)
-				  .get();
 		
-		/*org.apache.lucene.search.Query query = queryBuilder
+		org.apache.lucene.search.Query query = productAttributeQueryBuilder
 				  .keyword()
 				  .onField("productDesc").matching(searchTerm)
-				  .createQuery();*/
-		
-		//System.out.println("the categoryId is = " + categoryId);
-		
-		Query query = productAttributeQueryBuilder
-				  .bool()
-				  .must(productAttributeQueryBuilder.keyword().onField("productDesc").matching(searchTerm).createQuery())
-				  .must(productCategoryAttributeQueryBuilder.keyword().onField("categoryDesc").matching(categoryDesc).createQuery())
 				  .createQuery();
 		
 		org.apache.lucene.search.Sort sort = new Sort(new SortField(sortBy, SortField.Type.DOUBLE));
@@ -75,13 +63,7 @@ public class SearchIndexService {
 		//sorting
 		jpaQuery.setSort(sort);
 		
-		List<ProductAttribute> results = jpaQuery.getResultList();		
-		
-		System.out.println(results.size());
-		
-		for(ProductAttribute pca : results) {
-			System.out.println(pca.getProductDesc());
-		}
+		List<ProductAttribute> results = jpaQuery.getResultList();
 		
 		List<ProductDTO> lp = new ArrayList<ProductDTO>();
 
