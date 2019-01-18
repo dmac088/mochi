@@ -14,7 +14,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import io.javabrains.springbootstarter.domain.ProductAttribute;
-import io.javabrains.springbootstarter.domain.ProductCategoryAttribute;
 
 @Service
 public class SearchIndexService {
@@ -47,17 +46,28 @@ public class SearchIndexService {
 		
 		
 		org.apache.lucene.search.Query query = 
-			productAttributeQueryBuilder.keyword()
+			productAttributeQueryBuilder
+			.bool()
+			.must(productAttributeQueryBuilder.keyword()
 		    .onFields("productDesc", "product.categories.productCategoryAttribute.categoryDesc")
 		    .matching(searchTerm)
-		    .createQuery();
+		    .createQuery())
+			.must(productAttributeQueryBuilder.keyword()
+			.onField("product.categories.productCategoryAttribute.lclCd")
+			.matching(lcl)
+			.createQuery())
+			.must(productAttributeQueryBuilder.keyword()
+			.onField("lclCd")
+			.matching(lcl)
+			.createQuery())
+			.createQuery();
 		
 		org.apache.lucene.search.Sort sort = new Sort(new SortField(sortBy, SortField.Type.DOUBLE));
 		
 		org.hibernate.search.jpa.FullTextQuery jpaQuery
 		  = fullTextEntityManager.createFullTextQuery(query, ProductAttribute.class);
 		
-		//filtering
+		//filtering DOESN'T WORK!!!!!
 		//jpaQuery.enableFullTextFilter("SelectedCategory").setParameter("categoryDesc", categoryDesc);
 		
 		//sorting

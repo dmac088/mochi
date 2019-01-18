@@ -11,8 +11,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.FullTextFilterDef;
-import org.hibernate.search.annotations.FullTextFilterDefs;
 import org.hibernate.search.annotations.TermVector;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -20,9 +18,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Entity
 @Table(name = "category_attr_lcl", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "cat_lcl_id")
-//@FullTextFilterDefs({
-//    @FullTextFilterDef(name = "SelectedCategory", impl = selectedCategoryFilterFactory.class)
-//})
 public class ProductCategoryAttribute {
 
 	@Id
@@ -38,6 +33,7 @@ public class ProductCategoryAttribute {
 	private String categoryDesc;
 	
 	@Column(name="lcl_cd")	
+	@Field
 	private String lclCd;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -72,6 +68,4 @@ public class ProductCategoryAttribute {
 	public void setLclCd(String lclCd) {
 		this.lclCd = lclCd;
 	}
-	
-	
 }
