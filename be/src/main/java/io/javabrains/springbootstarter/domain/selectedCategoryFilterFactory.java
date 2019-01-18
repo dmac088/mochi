@@ -6,17 +6,17 @@ import org.apache.lucene.search.TermQuery;
 import org.hibernate.search.annotations.Factory;
 
 public class selectedCategoryFilterFactory {
-    private Long categoryId;
+    private String categoryDesc;
 
     /**
      * injected parameter
      */
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
+    public void setCategoryDesc(String categoryDesc) {
+        this.categoryDesc = categoryDesc;
     }
 
     @Factory
     public Query getFilter() {
-        return new TermQuery( new Term( "categoryId", categoryId.toString() ) );
+        return new TermQuery( new Term( "categoryDesc", categoryDesc.toString() ) );
     }
 }
