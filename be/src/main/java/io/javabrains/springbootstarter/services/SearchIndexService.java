@@ -49,6 +49,7 @@ public class SearchIndexService {
 			productAttributeQueryBuilder
 			.bool()
 			.must(productAttributeQueryBuilder.keyword()
+			.fuzzy()
 		    .onFields("productDesc", "product.categories.productCategoryAttribute.categoryDesc")
 		    .matching(searchTerm)
 		    .createQuery())
