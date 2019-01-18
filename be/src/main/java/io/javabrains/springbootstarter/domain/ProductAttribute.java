@@ -10,9 +10,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.TermVector;
 
@@ -48,6 +48,7 @@ public class ProductAttribute {
 	private String lclCd;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
+	@IndexedEmbedded
 	@JoinColumn(name="prd_id", insertable=false, updatable=false)
 	@JsonBackReference
 	private Product product;

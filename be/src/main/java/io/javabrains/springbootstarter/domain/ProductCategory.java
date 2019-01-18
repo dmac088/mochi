@@ -19,17 +19,13 @@ import javax.persistence.OrderBy;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import org.hibernate.search.annotations.FullTextFilterDef;
-import org.hibernate.search.annotations.FullTextFilterDefs;
+import org.hibernate.search.annotations.IndexedEmbedded;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "category", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "cat_id")
-@FullTextFilterDefs( {
-    @FullTextFilterDef(name = "SelectedCategory", impl = selectedCategoryFilterFactory.class)
-})
 public class ProductCategory {
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -57,6 +53,7 @@ public class ProductCategory {
 	private ProductCategory parent;
 	
 	@OneToMany(mappedBy="productCategory",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@IndexedEmbedded
 	@JsonIgnore
 	private List<ProductCategoryAttribute> productCategoryAttribute;
 

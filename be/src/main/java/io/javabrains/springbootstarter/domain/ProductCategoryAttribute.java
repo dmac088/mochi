@@ -10,17 +10,19 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-
 import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.FullTextFilterDef;
+import org.hibernate.search.annotations.FullTextFilterDefs;
 import org.hibernate.search.annotations.TermVector;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-@Indexed
 @Table(name = "category_attr_lcl", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "cat_lcl_id")
+//@FullTextFilterDefs({
+//    @FullTextFilterDef(name = "SelectedCategory", impl = selectedCategoryFilterFactory.class)
+//})
 public class ProductCategoryAttribute {
 
 	@Id
@@ -29,7 +31,6 @@ public class ProductCategoryAttribute {
 	private Long Id;
 	
 	@Column(name="cat_id")
-	@Field
 	private Long categoryId;
 
 	@Column(name="cat_desc")

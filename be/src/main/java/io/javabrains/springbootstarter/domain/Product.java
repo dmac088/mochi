@@ -16,6 +16,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import org.hibernate.search.annotations.IndexedEmbedded;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -36,6 +38,7 @@ public class Product {
 	private Date productCreateDt;
 	
 	@ManyToMany(mappedBy = "products")
+	@IndexedEmbedded
 	@JsonIgnore
 	private List<ProductCategory> categories;
 

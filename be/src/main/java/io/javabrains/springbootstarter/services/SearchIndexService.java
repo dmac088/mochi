@@ -2,11 +2,8 @@ package io.javabrains.springbootstarter.services;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
-import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
 import org.hibernate.search.jpa.FullTextEntityManager;
@@ -16,7 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
 import io.javabrains.springbootstarter.domain.ProductAttribute;
 import io.javabrains.springbootstarter.domain.ProductCategoryAttribute;
 
@@ -40,7 +36,7 @@ public class SearchIndexService {
 	}
 
 		//will change this to a page later
-	public Page<ProductDTO> findProduct(String lcl, String categoryId, String searchTerm, int page, int size, String sortBy) {
+	public Page<ProductDTO> findProduct(String lcl, String categoryDesc, String searchTerm, int page, int size, String sortBy) {
 		
 		FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
 		
@@ -51,9 +47,14 @@ public class SearchIndexService {
 		
 		
 		org.apache.lucene.search.Query query = productAttributeQueryBuilder
-				  .keyword()
-				  .onField("productDesc").matching(searchTerm)
-				  .createQuery();
+		  .bool()
+		  .must(productAttributeQueryBuilder.keyword()
+		    .onField("productDesc").matching(searchTerm)
+		    .createQuery())
+		  .must(productAttributeQueryBuilder.keyword()
+			.onField("product.categories.productCategoryAttribute.categoryDesc").matching(categoryDesc)
+			.createQuery())
+		  .createQuery();
 		
 		org.apache.lucene.search.Sort sort = new Sort(new SortField(sortBy, SortField.Type.DOUBLE));
 		
@@ -61,7 +62,7 @@ public class SearchIndexService {
 		  = fullTextEntityManager.createFullTextQuery(query, ProductAttribute.class);
 		
 		//filtering
-		jpaQuery.enableFullTextFilter("SelectedCategory").setParameter("categoryId", Long.parseLong(categoryId));
+		//jpaQuery.enableFullTextFilter("SelectedCategory").setParameter("categoryDesc", categoryDesc);
 		
 		//sorting
 		jpaQuery.setSort(sort);
