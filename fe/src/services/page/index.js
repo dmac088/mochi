@@ -2,7 +2,7 @@ import * as session from '../session';
 import * as api from './api';
 
 	export const findAll = (locale, categoryId, searchTerm, page, size, sort) => {
-		return api.findAll(locale, categoryId, searchTerm, page, size, sort)
+		return api.findAll(locale, searchTerm, page, size, sort)
 		.then((response) => {
       return response.text();
     })

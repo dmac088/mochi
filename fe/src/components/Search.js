@@ -6,7 +6,7 @@ const Search = (props) => {
     return(
       <Navbar.Form>
           <FormGroup controlId="formInlineName">
-            <FormControl type="text" placeholder="Search" />
+            <FormControl onChange={props.updateSearch} type="text" placeholder="Search" />
           </FormGroup>
           <Button onClick={props.handleSearch}>Search</Button>
       </Navbar.Form>
