@@ -44,7 +44,8 @@ public class ProductAttribute {
 	@Column(name="prd_img_pth")
 	private String ProductImage;
 	
-	@Column(name="lcl_cd")	
+	@Column(name="lcl_cd")
+	@Field
 	private String lclCd;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
