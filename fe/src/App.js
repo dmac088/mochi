@@ -37,10 +37,10 @@ class App extends Component {
        currentLang: "ENG",
        currentPage: 0,
        currentPageSize: 10,
-       currentPageSort: 1,
+       currentPageSort: 2,
        page: {content:[]},
        categoryList: [],
-       searchTerm: '',
+       currentSearchTerm: 'Fruit',
        modalActive: false,
     };
   }
@@ -64,13 +64,14 @@ class App extends Component {
   }
 
   // Fetch Initial Set of Products from external API
-  getProducts = (lang = "ENG", category = 2, page = 0, size = 10, sort = 1) => {
-    pageService.findAll(lang, category, page, size, sort)
+  getProducts = (locale = "ENG", category = 2, searchTerm = "Fruit", page = 0, size = 10, sort = 2) => {
+    pageService.findAll(locale, category, searchTerm, page, size, sort)
     .then((response) => {
        this.setState((prevState) => ({
          page: response,
          currentCategory: category,
-         currentLang: lang,
+         currentLang: locale,
+         currentSearchTerm: searchTerm,
          currentPage: (prevState.currentCategory !== category) ? 0 : page,
          currentPageSize: size,
          currentPageSort: sort,
@@ -81,29 +82,34 @@ class App extends Component {
     });
   }
 
+  handleSearch = (event) => {
+    console.log(event);
+    this.getProducts(this.state.currentLang, this.state.currentCategory, this.state.currentSearchTerm, this.state.currentPage, this.state.currentPageSize, this.state.currentPageSort);
+  }
+
   changeLang = (event) => {
-    this.getProducts(event.target.id, this.state.currentCategory, this.state.currentPage, this.state.currentPageSize, this.state.currentPageSort);
+    this.getProducts(event.target.id, this.state.currentCategory, this.state.searchTerm, this.state.currentPage, this.state.currentPageSize, this.state.currentPageSort);
   }
 
   changeCategory = (event) => {
-    this.getProducts(this.state.currentLang, event.target.id, this.state.currentPage, this.state.currentPageSize, this.state.currentPageSort);
+    this.getProducts(this.state.currentLang, event.target.id, this.state.searchTerm, this.state.currentPage, this.state.currentPageSize, this.state.currentPageSort);
   }
 
   changePage = (event) => {
-    this.getProducts(this.state.currentLang, this.state.currentCategory, event.target.id, this.state.currentPageSize, this.state.currentPageSort);
+    this.getProducts(this.state.currentLang, this.state.currentCategory, this.state.searchTerm, event.target.id, this.state.currentPageSize, this.state.currentPageSort);
   }
 
   changePageSize = (event) => {
-    this.getProducts(this.state.currentLang, this.state.currentCategory, this.state.currentPage, event.target.id, this.state.currentPageSort);
+    this.getProducts(this.state.currentLang, this.state.currentCategory, this.state.searchTerm, this.state.currentPage, event.target.id, this.state.currentPageSort);
   }
 
   changePageSort = (event) => {
-    this.getProducts(this.state.currentLang, this.state.currentCategory, this.state.currentPage, this.state.currentPageSize, event.target.id);
+    this.getProducts(this.state.currentLang, this.state.currentCategory, this.state.searchTerm, this.state.currentPage, this.state.currentPageSize, event.target.id);
   }
 
   componentWillMount() {
     this.getCategories(this.state.currentLang);
-    this.getProducts(this.state.currentLang, this.state.currentCategory, this.state.currentPage, this.state.currentPageSize);
+    this.getProducts(this.state.currentLang, this.state.currentCategory, this.state.searchTerm, this.state.currentPage, this.state.currentPageSize, this.state.currentPageSort);
   }
 
   autoLogin = () =>  {
@@ -128,10 +134,10 @@ class App extends Component {
   reduxSubscribedFunction = () => {
   }
 
-  // Search by Keyword
-  handleSearch = (event) => {
+  updateSearch = (event) => {
+    console.log(event.target.value);
     this.setState({
-      searchTerm: event.target.value
+      currentSearchTerm: event.target.value
     });
   }
 
@@ -176,6 +182,7 @@ class App extends Component {
             <Header authenticated={this.props.tokens.authenticated}
                     customer={this.props.customer}
                     handleSearch={this.handleSearch}
+                    updateSearch={this.updateSearch}
                     changeLang={this.changeLang}
                     lang={langSelector[this.state.currentLang]}
                     currentLang={this.state.currentLang}

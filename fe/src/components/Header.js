@@ -25,6 +25,7 @@ const Header = (props) => {
         <Nav>
 
               <Search
+                  updateSearch={props.updateSearch}
                   handleSearch={props.handleSearch}
                   lang={props.lang}
               />
