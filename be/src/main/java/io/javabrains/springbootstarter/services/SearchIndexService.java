@@ -46,15 +46,11 @@ public class SearchIndexService {
 				  .get();
 		
 		
-		org.apache.lucene.search.Query query = productAttributeQueryBuilder
-		  .bool()
-		  .must(productAttributeQueryBuilder.keyword()
-		    .onField("productDesc").matching(searchTerm)
-		    .createQuery())
-		  .must(productAttributeQueryBuilder.keyword()
-			.onField("product.categories.productCategoryAttribute.categoryDesc").matching(categoryDesc)
-			.createQuery())
-		  .createQuery();
+		org.apache.lucene.search.Query query = 
+			productAttributeQueryBuilder.keyword()
+		    .onFields("productDesc", "product.categories.productCategoryAttribute.categoryDesc")
+		    .matching(searchTerm)
+		    .createQuery();
 		
 		org.apache.lucene.search.Sort sort = new Sort(new SortField(sortBy, SortField.Type.DOUBLE));
 		
