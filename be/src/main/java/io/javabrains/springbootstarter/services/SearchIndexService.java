@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import io.javabrains.springbootstarter.domain.ProductAttribute;
+import org.apache.lucene.analysis.Analyzer;
 
 @Service
 public class SearchIndexService {
@@ -34,14 +35,21 @@ public class SearchIndexService {
 		}
 	}
 
-		//will change this to a page later
 	public Page<ProductDTO> findProduct(String lcl, String searchTerm, int page, int size, String sortBy) {
 		
 		FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
 		
-		QueryBuilder productAttributeQueryBuilder = fullTextEntityManager.getSearchFactory() 
+		Analyzer selectedAnalyzer = fullTextEntityManager.getSearchFactory().getAnalyzer(lcl);
+		
+		
+		//fullTextEntityManager.getSearchFactory()
+		
+		QueryBuilder productAttributeQueryBuilder = 
+				fullTextEntityManager.getSearchFactory()
 				  .buildQueryBuilder()
 				  .forEntity(ProductAttribute.class)
+				  .overridesForField("productDesc", lcl)
+				  .overridesForField("product.categories.productCategoryAttribute.categoryDesc", lcl)
 				  .get();
 		
 		
