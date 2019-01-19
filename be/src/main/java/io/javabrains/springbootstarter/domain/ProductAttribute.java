@@ -43,8 +43,8 @@ filters = {
 @AnalyzerDef(name = "HKG",
 tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
 filters = {
-  @TokenFilterDef(factory = LowerCaseFilterFactory.class),
   @TokenFilterDef(factory = CJKWidthFilterFactory.class),
+  @TokenFilterDef(factory = LowerCaseFilterFactory.class),
   @TokenFilterDef(factory = CJKBigramFilterFactory.class)
 })
 public class ProductAttribute {
