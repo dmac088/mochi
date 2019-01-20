@@ -11,6 +11,11 @@ public class RoleCustomerSpecs {
 
 	public static Specification<RoleCustomer> byCustomerNumber(String customerId) {
 		return new Specification<RoleCustomer>() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			public Predicate toPredicate(Root<RoleCustomer> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
 
 				return builder.equal(root.get("CustomerNumber"), customerId);

@@ -25,6 +25,11 @@ import lombok.Setter;
 @EqualsAndHashCode(of = "id")
 public class UserRole implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(						//the table that manages the many to many relationship
     								name = "ROLE_PERMISSION", schema="security", 

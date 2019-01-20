@@ -18,7 +18,12 @@ import lombok.Setter;
 @EqualsAndHashCode(of = "id")
 public class Authority implements GrantedAuthority {
 
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
