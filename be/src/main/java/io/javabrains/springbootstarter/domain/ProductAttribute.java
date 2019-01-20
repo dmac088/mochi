@@ -57,8 +57,9 @@ public class ProductAttribute {
 	@Column(name="prd_id")
 	private Long productId;
 	
-	@Column(name="prd_desc")
+	@SortableField
 	@Field(termVector = TermVector.YES)
+	@Column(name="prd_desc")
 	private String productDesc;
 	
 	@SortableField

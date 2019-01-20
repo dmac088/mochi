@@ -11,17 +11,13 @@ import org.apache.lucene.search.SortField;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import io.javabrains.springbootstarter.domain.PageableUtil;
 import io.javabrains.springbootstarter.domain.ProductAttribute;
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.queryparser.classic.QueryParser;
 
 @Service
 public class SearchIndexService {
@@ -84,7 +80,6 @@ public class SearchIndexService {
 			.createQuery())
 			.createQuery();
 		
-		org.apache.lucene.search.Sort sort = new Sort(new SortField(sortBy, SortField.Type.DOUBLE));
 		
 		org.hibernate.search.jpa.FullTextQuery jpaQuery
 		  = fullTextEntityManager.createFullTextQuery(query, ProductAttribute.class);
@@ -94,6 +89,7 @@ public class SearchIndexService {
 		jpaQuery.setMaxResults(pageable.getPageSize());
 	
 		//sorting
+		org.apache.lucene.search.Sort sort = new Sort(new SortField(getSortField(sortBy), getSortFieldType(sortBy)));
 		jpaQuery.setSort(sort);
 		
 		List<ProductAttribute> results = jpaQuery.getResultList();
@@ -102,6 +98,37 @@ public class SearchIndexService {
 
 		Page<ProductDTO> pp = new PageImpl<ProductDTO>(lp, pageable, jpaQuery.getResultSize());
 		return pp;
-	}	
+	}
+	
+	private String getSortField(String field) {
+		switch(field) {
+		case "description":
+			return "productDesc";
+		case "price":
+			return "productRrp";
+		case "productDesc":
+			return "productDesc";
+		case "productRrp":
+			return "productRrp";
+		default: 
+			return "productDesc";
+		}
+	}
+	
+	private SortField.Type getSortFieldType(String field) {
+		switch(field) {
+		case "productDesc":
+			return SortField.Type.STRING;
+		case "description":
+			return SortField.Type.STRING;
+		case "price":
+			return SortField.Type.DOUBLE;
+		case "productRrp":
+			return SortField.Type.DOUBLE;
+		default: 
+			return SortField.Type.STRING;
+		}
+	}
+
 	
 }
