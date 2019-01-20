@@ -33,7 +33,7 @@ class App extends Component {
   constructor(props) {
     super(props);
       this.state = {
-       currentCategory: "All",
+       currentCategory: "ALL",
        currentLang: "ENG",
        currentPage: 0,
        currentPageSize: 10,
@@ -64,7 +64,7 @@ class App extends Component {
   }
 
   // Fetch Initial Set of Products from external API
-  getProducts = (locale = "ENG", category = 'All', searchTerm = "-Z", page = 0, size = 10, sort = 2) => {
+  getProducts = (locale = "ENG", category = "ALL", searchTerm = "-Z", page = 0, size = 10, sort = 2) => {
 
     pageService.findAll(locale, category, (searchTerm === undefined || searchTerm === "") ? "-Z" : searchTerm, page, size, sort)
     .then((response) => {
