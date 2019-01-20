@@ -2,6 +2,8 @@ package io.javabrains.springbootstarter.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.apache.lucene.search.Sort;
@@ -86,20 +88,16 @@ public class SearchIndexService {
 		org.hibernate.search.jpa.FullTextQuery jpaQuery
 		  = fullTextEntityManager.createFullTextQuery(query, ProductAttribute.class);
 		
-		//filtering DOESN'T WORK!!!!!
-		//jpaQuery.enableFullTextFilter("SelectedCategory").setParameter("categoryDesc", categoryDesc);
-		
+		jpaQuery.setFirstResult(page);
+		jpaQuery.setMaxResults(size);
+	
 		//sorting
 		jpaQuery.setSort(sort);
 		
 		List<ProductAttribute> results = jpaQuery.getResultList();
 		
-		List<ProductDTO> lp = new ArrayList<ProductDTO>();
+		List<ProductDTO> lp = results.stream().map(pa -> productDTOService.convertToProductDto(pa)).collect(Collectors.toList());
 
-		for(ProductAttribute pa : results) {
-			lp.add(productDTOService.convertToProductDto(pa));
-		}
-		
 		Page<ProductDTO> pp = new PageImpl<ProductDTO>(lp, PageRequest.of(page, size, org.springframework.data.domain.Sort.by(sortBy).descending()), lp.size());
 		return pp;
 	}	
