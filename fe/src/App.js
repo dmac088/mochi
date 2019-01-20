@@ -33,14 +33,14 @@ class App extends Component {
   constructor(props) {
     super(props);
       this.state = {
-       currentCategory: 2,
+       currentCategory: "All",
        currentLang: "ENG",
        currentPage: 0,
        currentPageSize: 10,
        currentPageSort: 2,
        page: {content:[]},
        categoryList: [],
-       currentSearchTerm: 'Fruit',
+       currentSearchTerm: "",
        modalActive: false,
     };
   }
@@ -64,7 +64,7 @@ class App extends Component {
   }
 
   // Fetch Initial Set of Products from external API
-  getProducts = (locale = "ENG", category = 2, searchTerm = "Fruit", page = 0, size = 10, sort = 2) => {
+  getProducts = (locale = "ENG", category = 'All', searchTerm = "Fruit", page = 0, size = 10, sort = 2) => {
     pageService.findAll(locale, category, searchTerm, page, size, sort)
     .then((response) => {
        this.setState((prevState) => ({
