@@ -89,12 +89,12 @@ public class SearchIndexService {
 		org.hibernate.search.jpa.FullTextQuery jpaQuery
 		  = fullTextEntityManager.createFullTextQuery(query, ProductAttribute.class);
 		
-		Pageable pageable = PageRequest.of(page, size, org.springframework.data.domain.Sort.by(sortBy).descending());
+		Pageable pageable = PageRequest.of(page, size);
 		jpaQuery.setFirstResult(pageableUtil.getStartPosition(pageable));
 		jpaQuery.setMaxResults(pageable.getPageSize());
 	
 		//sorting
-		//jpaQuery.setSort(sort);
+		jpaQuery.setSort(sort);
 		
 		List<ProductAttribute> results = jpaQuery.getResultList();
 		
