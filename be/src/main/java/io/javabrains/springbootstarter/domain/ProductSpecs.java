@@ -12,7 +12,12 @@ public class ProductSpecs {
 
 	  public static Specification<Product> byProductLclCd(String lcl) {
 		    return new Specification<Product>() {
-		      public Predicate toPredicate(Root<Product> root, CriteriaQuery<?> query,
+		      /**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+
+			public Predicate toPredicate(Root<Product> root, CriteriaQuery<?> query,
 		            CriteriaBuilder builder) {
 		    	 // return builder.equal(root.get("productUPC"), "12345678");
 		    	  return builder.equal(root.get("lclCd"), lcl);

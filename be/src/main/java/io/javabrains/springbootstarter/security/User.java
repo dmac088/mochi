@@ -37,6 +37,11 @@ import lombok.Setter;
 @Setter
 public class User implements UserDetails, Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
     @Column(name = "pty_id")
     private Long Id;

@@ -12,6 +12,12 @@ import javax.persistence.Table;
 @PrimaryKeyJoinColumn(name = "org_id")
 public class Organization extends Party implements Serializable  {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	
 	@Column(name="org_nme")
 	private String OrganizationName;
 

@@ -91,7 +91,7 @@ public class SearchIndexService {
 		
 		List<ProductAttribute> results = (List<ProductAttribute>)jpaQuery.getResultList();
 		
-		List<ProductDTO> lp = results.stream().map(pa -> productDTOService.convertToProductDto(pa)).collect(Collectors.toList());
+		List<ProductDTO> lp = results.stream().map(pa -> ProductDTOService.convertToProductDto(pa)).collect(Collectors.toList());
 
 		Page<ProductDTO> pp = new PageImpl<ProductDTO>(lp, pageable, jpaQuery.getResultSize());
 		return pp;
