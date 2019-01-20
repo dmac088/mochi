@@ -9,12 +9,14 @@ import org.apache.lucene.search.SortField;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import io.javabrains.springbootstarter.domain.ProductAttribute;
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.queryparser.classic.QueryParser;
 
 @Service
 public class SearchIndexService {
@@ -41,16 +43,15 @@ public class SearchIndexService {
 		
 		Analyzer selectedAnalyzer = fullTextEntityManager.getSearchFactory().getAnalyzer(lcl);
 		
-		
-		//fullTextEntityManager.getSearchFactory()
-		
 		QueryBuilder productAttributeQueryBuilder = 
 				fullTextEntityManager.getSearchFactory()
 				  .buildQueryBuilder()
 				  .forEntity(ProductAttribute.class)
 				  .overridesForField("productDesc", lcl)
 				  .overridesForField("product.categories.productCategoryAttribute.categoryDesc", lcl)
+				  .overridesForField("product.categories.parent.productCategoryAttribute.categoryDesc", lcl)
 				  .get();
+		
 		
 		
 		org.apache.lucene.search.Query query = 
