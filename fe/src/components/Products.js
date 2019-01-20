@@ -1,5 +1,4 @@
 import React from 'react';
-
 import Product from './Product';
 import LoadingProducts from '../loaders/Products';
 import NoResults from "../empty-states/NoResults";
@@ -23,7 +22,7 @@ const Products = (props) => {
 					)
 				}
 		);
-    
+
 		// Empty and Loading States
 		let view;
 		if(productsData.length <= 0){
