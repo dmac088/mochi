@@ -66,7 +66,7 @@ public class SearchIndexService {
 			.matching(lcl)
 		    .createQuery())
 			.must(productAttributeQueryBuilder.keyword()
-			.onField("product.categories.parent.productCategoryAttribute.categoryDesc")
+			.onFields("product.categories.productCategoryAttribute.categoryDesc", "product.categories.parent.productCategoryAttribute.categoryDesc")
 			.matching(categoryName)
 			.createQuery())
 			.must(productAttributeQueryBuilder.keyword()
