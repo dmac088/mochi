@@ -40,7 +40,7 @@ class App extends Component {
        currentPageSort: 2,
        page: {content:[]},
        categoryList: [],
-       currentSearchTerm: "",
+       currentSearchTerm: "-Z",
        modalActive: false,
     };
   }
@@ -65,7 +65,8 @@ class App extends Component {
 
   // Fetch Initial Set of Products from external API
   getProducts = (locale = "ENG", category = 'All', searchTerm = "-Z", page = 0, size = 10, sort = 2) => {
-    pageService.findAll(locale, category, searchTerm, page, size, sort)
+
+    pageService.findAll(locale, category, (searchTerm === undefined || searchTerm === "") ? "-Z" : searchTerm, page, size, sort)
     .then((response) => {
        this.setState((prevState) => ({
          page: response,
