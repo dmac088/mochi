@@ -35,7 +35,7 @@ public class SearchIndexService {
 		}
 	}
 
-	public Page<ProductDTO> findProduct(String lcl, String categoryName, String searchTerm, int page, int size, String sortBy) {
+	public Page<ProductDTO> findProduct(String lcl, String categoryCode, String searchTerm, int page, int size, String sortBy) {
 		
 		PageableUtil pageableUtil = new PageableUtil();
 		
@@ -68,8 +68,8 @@ public class SearchIndexService {
 			.matching(lcl)
 		    .createQuery())
 			.must(productAttributeQueryBuilder.keyword()
-			.onFields("product.categories.productCategoryAttribute.categoryDesc", "product.categories.parent.productCategoryAttribute.categoryDesc")
-			.matching(categoryName)
+			.onFields("product.categories.categoryCode", "product.categories.parent.categoryCode")
+			.matching(categoryCode)
 			.createQuery())
 			.must(productAttributeQueryBuilder.keyword()
 			.onField("lclCd")
