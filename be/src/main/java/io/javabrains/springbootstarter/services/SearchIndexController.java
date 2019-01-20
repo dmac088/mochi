@@ -23,8 +23,8 @@ public class SearchIndexController {
     	return "Search Index Created!";
     }
     
-    @GetMapping("/Search/{lcl}/SearchTerm/{term}/Page/{page}/Size/{size}/SortBy/{sortBy}")
-    public Page<ProductDTO> search(@PathVariable String lcl, @PathVariable String term, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy) {
-    	return searchIndexService.findProduct(lcl, term, page, size, sortBy);
+    @GetMapping("/Search/{lcl}/Category/{category}/SearchTerm/{term}/Page/{page}/Size/{size}/SortBy/{sortBy}")
+    public Page<ProductDTO> search(@PathVariable String lcl, @PathVariable String category,@PathVariable String term, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy) {
+    	return searchIndexService.findProduct(lcl, category, term, page, size, sortBy);
     }
 }

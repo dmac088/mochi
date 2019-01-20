@@ -35,7 +35,7 @@ public class SearchIndexService {
 		}
 	}
 
-	public Page<ProductDTO> findProduct(String lcl, String searchTerm, int page, int size, String sortBy) {
+	public Page<ProductDTO> findProduct(String lcl, String categoryName, String searchTerm, int page, int size, String sortBy) {
 		
 		FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
 		
@@ -62,8 +62,12 @@ public class SearchIndexService {
 		    .matching(searchTerm)
 		    .createQuery())
 			.must(productAttributeQueryBuilder.keyword()
-			.onField("product.categories.productCategoryAttribute.lclCd")
+			.onField("product.categories.parent.productCategoryAttribute.lclCd")
 			.matching(lcl)
+		    .createQuery())
+			.must(productAttributeQueryBuilder.keyword()
+			.onField("product.categories.parent.productCategoryAttribute.categoryDesc")
+			.matching(categoryName)
 			.createQuery())
 			.must(productAttributeQueryBuilder.keyword()
 			.onField("lclCd")
