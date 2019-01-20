@@ -84,8 +84,7 @@ class App extends Component {
   }
 
   handleSearch = (event) => {
-    console.log(event);
-    this.getProducts(this.state.currentLang, this.state.currentCategory, this.state.currentSearchTerm, this.state.currentPage, this.state.currentPageSize, this.state.currentPageSort);
+    this.getProducts(this.state.currentLang, this.state.currentCategory, event.target.value, this.state.currentPage, this.state.currentPageSize, this.state.currentPageSort);
   }
 
   changeLang = (event) => {
@@ -135,12 +134,7 @@ class App extends Component {
   reduxSubscribedFunction = () => {
   }
 
-  updateSearch = (event) => {
-    console.log(event.target.value);
-    this.setState({
-      currentSearchTerm: event.target.value
-    });
-  }
+
 
   emptyCart = () => {
     cartService.emptyCart();
