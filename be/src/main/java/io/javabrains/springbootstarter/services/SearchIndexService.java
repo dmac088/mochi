@@ -1,9 +1,6 @@
 package io.javabrains.springbootstarter.services;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.apache.lucene.search.Sort;
@@ -92,7 +89,7 @@ public class SearchIndexService {
 		org.apache.lucene.search.Sort sort = new Sort(new SortField(getSortField(sortBy), getSortFieldType(sortBy)));
 		jpaQuery.setSort(sort);
 		
-		List<ProductAttribute> results = jpaQuery.getResultList();
+		List<ProductAttribute> results = (List<ProductAttribute>)jpaQuery.getResultList();
 		
 		List<ProductDTO> lp = results.stream().map(pa -> productDTOService.convertToProductDto(pa)).collect(Collectors.toList());
 
