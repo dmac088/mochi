@@ -64,7 +64,7 @@ class App extends Component {
   }
 
   // Fetch Initial Set of Products from external API
-  getProducts = (locale = "ENG", category = 'All', searchTerm = "Fruit", page = 0, size = 10, sort = 2) => {
+  getProducts = (locale = "ENG", category = 'All', searchTerm = "-Z", page = 0, size = 10, sort = 2) => {
     pageService.findAll(locale, category, searchTerm, page, size, sort)
     .then((response) => {
        this.setState((prevState) => ({
