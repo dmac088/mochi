@@ -12,7 +12,6 @@ class Search extends Component {
   }
 
   updateSearch = (event) => {
-    console.log(event.target.value);
     this.setState({
       currentSearchTerm: event.target.value
     });
