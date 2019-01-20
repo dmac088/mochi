@@ -88,6 +88,7 @@ class App extends Component {
   }
 
   changeLang = (event) => {
+    this.getCategories(event.target.id);
     this.getProducts(event.target.id, this.state.currentCategory, this.state.searchTerm, this.state.currentPage, this.state.currentPageSize, this.state.currentPageSort);
   }
 
@@ -189,6 +190,7 @@ class App extends Component {
             <CategoryNavigator
               categoryList={this.state.categoryList}
               changeCategory={this.changeCategory}
+              lang={langSelector[this.state.currentLang]}
             />
           </div>
           <div className="col-sm-10">
