@@ -15,7 +15,10 @@ import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import io.javabrains.springbootstarter.domain.PageableUtil;
 import io.javabrains.springbootstarter.domain.ProductAttribute;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.queryparser.classic.QueryParser;
@@ -41,6 +44,8 @@ public class SearchIndexService {
 
 	public Page<ProductDTO> findProduct(String lcl, String categoryName, String searchTerm, int page, int size, String sortBy) {
 		
+		PageableUtil pageableUtil = new PageableUtil();
+		
 		FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
 				
 		QueryBuilder productAttributeQueryBuilder = 
@@ -51,10 +56,6 @@ public class SearchIndexService {
 				  .overridesForField("product.categories.productCategoryAttribute.categoryDesc", lcl)
 				  .overridesForField("product.categories.parent.productCategoryAttribute.categoryDesc", lcl)
 				  .get();
-		
-		
-		System.out.println("searchTerm = " + searchTerm);
-		
 		
 		org.apache.lucene.search.Query searchQuery = productAttributeQueryBuilder.keyword()
 													.fuzzy()
@@ -88,17 +89,18 @@ public class SearchIndexService {
 		org.hibernate.search.jpa.FullTextQuery jpaQuery
 		  = fullTextEntityManager.createFullTextQuery(query, ProductAttribute.class);
 		
-		jpaQuery.setFirstResult(page);
-		jpaQuery.setMaxResults(size);
+		Pageable pageable = PageRequest.of(page, size, org.springframework.data.domain.Sort.by(sortBy).descending());
+		jpaQuery.setFirstResult(pageableUtil.getStartPosition(pageable));
+		jpaQuery.setMaxResults(pageable.getPageSize());
 	
 		//sorting
-		jpaQuery.setSort(sort);
+		//jpaQuery.setSort(sort);
 		
 		List<ProductAttribute> results = jpaQuery.getResultList();
 		
 		List<ProductDTO> lp = results.stream().map(pa -> productDTOService.convertToProductDto(pa)).collect(Collectors.toList());
 
-		Page<ProductDTO> pp = new PageImpl<ProductDTO>(lp, PageRequest.of(page, size, org.springframework.data.domain.Sort.by(sortBy).descending()), lp.size());
+		Page<ProductDTO> pp = new PageImpl<ProductDTO>(lp, pageable, jpaQuery.getResultSize());
 		return pp;
 	}	
 	
