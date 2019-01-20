@@ -40,9 +40,7 @@ public class SearchIndexService {
 	public Page<ProductDTO> findProduct(String lcl, String categoryName, String searchTerm, int page, int size, String sortBy) {
 		
 		FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
-		
-		Analyzer selectedAnalyzer = fullTextEntityManager.getSearchFactory().getAnalyzer(lcl);
-		
+				
 		QueryBuilder productAttributeQueryBuilder = 
 				fullTextEntityManager.getSearchFactory()
 				  .buildQueryBuilder()
@@ -53,15 +51,22 @@ public class SearchIndexService {
 				  .get();
 		
 		
+		System.out.println("searchTerm = " + searchTerm);
+		
+		
+		org.apache.lucene.search.Query searchQuery = productAttributeQueryBuilder.keyword()
+													.fuzzy()
+													.onFields("productDesc", "product.categories.productCategoryAttribute.categoryDesc")
+													.matching(searchTerm)
+													 .createQuery();
+				
 		
 		org.apache.lucene.search.Query query = 
 			productAttributeQueryBuilder
 			.bool()
-			.must(productAttributeQueryBuilder.keyword()
-			.fuzzy()
-		    .onFields("productDesc", "product.categories.productCategoryAttribute.categoryDesc")
-		    .matching(searchTerm)
-		    .createQuery())
+			.must(
+				(!(searchTerm.equals("-Z")) ? searchQuery : null)
+			)
 			.must(productAttributeQueryBuilder.keyword()
 			.onField("product.categories.parent.productCategoryAttribute.lclCd")
 			.matching(lcl)
