@@ -23,9 +23,7 @@ const Products = (props) => {
 					)
 				}
 		);
-
-    console.log("productData length = " + productsData.length)
-
+    
 		// Empty and Loading States
 		let view;
 		if(productsData.length <= 0){
