@@ -209,7 +209,8 @@ class App extends Component {
               changePage={this.changePage}
             />
             <Route path="/" exact component =  {(routeProps) => (
-                                                                    <Landing {...routeProps}
+                                                                    <Landing
+                                                                      {...routeProps}
                                                                       {...this.state}
                                                                       lang={langSelector[this.state.currentLang]}
                                                                       openModal={this.openModal}
@@ -219,8 +220,9 @@ class App extends Component {
                                                                 )}
             />
             <Route path="/Login" component =  {(routeProps) => (
-                      <Login {...routeProps}
-                      />
+                <Login
+                  {...routeProps}
+                />
             )}/>
             <Route path="/Signup" component={Signup} />
           </div>
