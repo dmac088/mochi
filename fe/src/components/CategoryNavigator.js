@@ -1,22 +1,38 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { ListGroup, ListGroupItem, Badge }  from 'react-bootstrap';
+import { Link }  from 'react-router-dom';
+import { withRouter } from "react-router-dom";
 
-const CategoryNavigator = (props) => {
-  return (
-    <ListGroup>
-      {renderCategoryListItems(props.categoryList, props.changeCategory)}
-    </ListGroup>
-  );
-}
+class CategoryNavigator extends Component {
 
-const renderCategoryListItems = (categoryList, changeCategory) => {
-  return categoryList = categoryList.map(category => {
+  constructor(props) {
+    super(props);
+  }
+
+  myFunction = (event) => {
+      this.props.history.push(
+        pathname: '/category',
+        search: '?name=' + event.target.id 
+      );
+  }
+
+  renderCategoryListItems = (categoryList, changeCategory) => {
+    return categoryList = categoryList.map(category => {
       return(
-          <ListGroupItem key={category.categoryId} id={category.categoryCode} onClick={changeCategory}>{category.categoryDesc}
-            <Badge key={category.categoryId} id={category.categoryCode} pill="true">{category.productCount}</Badge>
+          <ListGroupItem key={category.categoryId} id={category.categoryCode} onClick={changeCategory}>
+            {category.categoryDesc}<Badge key={category.categoryId} id={category.categoryCode} pill="true">{category.productCount}</Badge>
           </ListGroupItem>
       )
     });
-}
+  }
 
-export default CategoryNavigator;
+  render() {
+    return (
+      <ListGroup>
+        {this.renderCategoryListItems(this.props.categoryList, this.props.changeCategory)}
+      </ListGroup>
+    );
+  }
+
+}
+export default withRouter(CategoryNavigator);
