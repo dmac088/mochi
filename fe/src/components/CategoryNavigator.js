@@ -9,17 +9,17 @@ class CategoryNavigator extends Component {
     super(props);
   }
 
-  myFunction = (event) => {
-      this.props.history.push(
-        pathname: '/category',
-        search: '?name=' + event.target.id 
-      );
+  reRoute = (event) => {
+      this.props.history.push({
+        "pathname": '/category',
+        "search": '?name=' + event.target.id,
+      });
   }
 
   renderCategoryListItems = (categoryList, changeCategory) => {
     return categoryList = categoryList.map(category => {
       return(
-          <ListGroupItem key={category.categoryId} id={category.categoryCode} onClick={changeCategory}>
+          <ListGroupItem key={category.categoryId} id={category.categoryCode} onClick={this.reRoute}>
             {category.categoryDesc}<Badge key={category.categoryId} id={category.categoryCode} pill="true">{category.productCount}</Badge>
           </ListGroupItem>
       )
