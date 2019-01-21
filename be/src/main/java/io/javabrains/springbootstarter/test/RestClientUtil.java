@@ -63,11 +63,11 @@ public class RestClientUtil {
     private static String OAUTH_TOKEN_CLIENTID 				= "spring-security-oauth2-read-write-client";
     private static String OAUTH_TOKEN_GRANT_TYPE 			= "password";
     
-    private static String CUSTOMER_ENDPOINT 				= "https://localhost:8090/api/Customer";
+    //private static String CUSTOMER_ENDPOINT 				= "https://localhost:8090/api/Customer";
     private static String PERSON_ENDPOINT 					= "https://localhost:8090/api/Person";
     private static String CUSTOMER_GIVEN_NAME_EN 			= "Daniel";
     private static String CUSTOMER_FAMILY_NAME_EN 			= "Mackie";
-    private static String CUSTOMER_NAME_CN 					= "丹尼爾麥基";
+    //private static String CUSTOMER_NAME_CN 					= "丹尼爾麥基";
     private static Date   CUSTOMER_START_DATE 				= new Date();
     private static String CUSTOMER_ROLE_TYPE 				= "Customer";
     
@@ -129,14 +129,14 @@ public class RestClientUtil {
 	     //Create the customer
 
 		 RoleCustomer objCustomer = new RoleCustomer();
-		 objCustomer.setRoleStart(this.CUSTOMER_START_DATE);
+		 objCustomer.setRoleStart(RestClientUtil.CUSTOMER_START_DATE);
 		 objCustomer.getRoleType().setRoleTypeDesc(CUSTOMER_ROLE_TYPE);
 		 
 		 //Create the person
 		
 		 PartyPerson objPerson = new PartyPerson();
-		 objPerson.setGivenName(this.CUSTOMER_GIVEN_NAME_EN);
-		 objPerson.setFamilyName(this.CUSTOMER_FAMILY_NAME_EN);
+		 objPerson.setGivenName(RestClientUtil.CUSTOMER_GIVEN_NAME_EN);
+		 objPerson.setFamilyName(RestClientUtil.CUSTOMER_FAMILY_NAME_EN);
 		
 		 
 		 //Create the user
@@ -155,7 +155,7 @@ public class RestClientUtil {
 		 objCustomer.setRoleParty(objPerson);
 		 
 		 HttpEntity<PartyPerson> personEntity = new HttpEntity<PartyPerson>(objPerson, headers);
-		 ResponseEntity<PartyPerson> uri = restTemplate.exchange(this.PERSON_ENDPOINT, HttpMethod.POST, personEntity, PartyPerson.class);
+		 ResponseEntity<PartyPerson> uri = restTemplate.exchange(RestClientUtil.PERSON_ENDPOINT, HttpMethod.POST, personEntity, PartyPerson.class);
 		 Assert.assertTrue(CUSTOMER_USERNAME.equals(uri.getBody().getPartyUser().getUsername()));
 		 Assert.assertTrue(CUSTOMER_GIVEN_NAME_EN.equals(uri.getBody().getGivenName()));
 	}
