@@ -1,4 +1,5 @@
 package io.javabrains.springbootstarter.services;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
@@ -18,8 +19,6 @@ import io.javabrains.springbootstarter.domain.ProductAttribute;
 
 @Service
 public class SearchIndexService {
-	
-	private ProductDTOService productDTOService;
 	
 	@PersistenceContext(unitName = "mochiEntityManagerFactory")
 	private EntityManager em;
@@ -89,7 +88,8 @@ public class SearchIndexService {
 		org.apache.lucene.search.Sort sort = new Sort(new SortField(getSortField(sortBy), getSortFieldType(sortBy)));
 		jpaQuery.setSort(sort);
 		
-		List<ProductAttribute> results = (List<ProductAttribute>)jpaQuery.getResultList();
+		@SuppressWarnings("unchecked")
+		List<ProductAttribute> results =  Collections.checkedList(jpaQuery.getResultList(), ProductAttribute.class);
 		
 		List<ProductDTO> lp = results.stream().map(pa -> ProductDTOService.convertToProductDto(pa)).collect(Collectors.toList());
 
