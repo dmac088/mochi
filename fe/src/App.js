@@ -86,8 +86,9 @@ class App extends Component {
     let categoryPromise = this.getCategories(params.lang);
 
     Promise.all(
-      [productPromise,
-        categoryPromise])
+                [productPromise,
+                categoryPromise]
+               )
     .then((values) => {
          this.setState({
                          queryParams: {
