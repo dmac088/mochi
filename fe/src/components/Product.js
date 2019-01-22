@@ -3,6 +3,7 @@ import Counter from './Counter';
 import config from '../config/config';
 import * as cartSelector from '../services/cart/selectors';
 import * as cartService from '../services/cart';
+import langSelector from '../config/lang/selector';
 
 class Product extends Component {
 
@@ -57,14 +58,14 @@ class Product extends Component {
 						quantity: quantity,
 					}
         }, () => {
-									//this.props.addToCart(this.state.product);
-									cartService.addToCart(cartSelector.get(), this.state.product);
+						//this.props.addToCart(this.state.product);
+						cartService.addToCart(cartSelector.get(), this.state.product);
 				})
 
         this.setState({
             isAdded: true
         }, () => {
-					setTimeout(() => {
+						setTimeout(() => {
                 this.setState({
                     isAdded: false,
                     product: {}
@@ -77,10 +78,10 @@ class Product extends Component {
     quickView = (image, name, price, id) => {
         this.setState({
             quickViewProdcut: {
-                image: image,
-                name: name,
-                price: price,
-                id: id
+                "productImage": image,
+                "productDesc": name,
+                "productRrp": price,
+                "productId": id
             }
         }, () => {
             			this.props.openModal(this.state.quickViewProdcut);
@@ -111,8 +112,10 @@ class Product extends Component {
 														type="button"
 														onClick={this.addToCart.bind(this, image, name, price, id, quantity)}>{
 																!this.state.isAdded ?
-																this.props.lang.addToCart :
-																this.props.lang.addedToCart}
+																langSelector[this.props.currentLang].addToCart
+																:
+																langSelector[this.props.currentLang].addedToCart
+															}
 										</button>
                 </div>
             </div>

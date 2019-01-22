@@ -40,6 +40,7 @@
     "node-sass": "^4.9.3",
     "popper.js": "^1.14.6",
     "prop-types": "^15.6.2",
+    "query-string": "^6.2.0",
     "react": "^16.7.0",
     "react-bootstrap": "^0.32.4",
     "react-bootstrap-counter": "^1.0.1",
