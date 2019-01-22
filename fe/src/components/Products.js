@@ -6,6 +6,7 @@ import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 
 const Products = (props) => {
+  console.log(props);
     	let productsData;
 
 			productsData = props.productsList.map(product =>{
@@ -14,9 +15,8 @@ const Products = (props) => {
 					<div key={product.productId}>
 							<Product
 											 product=		{product}
-											 addToCart=	{props.addToCart}
 											 openModal=	{props.openModal}
-											 currentLang=			{props.currentLang}
+											 lang=			{props.lang}
 							/>
 					</div>
 					)

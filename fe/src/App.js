@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
   Route,
-  BrowserRouter as Router,
+  withRouter
 } from 'react-router-dom';
 import store from './store';
 import Header from './components/Header';
@@ -34,19 +34,21 @@ class App extends Component {
   constructor(props) {
     super(props);
       this.state = {
-       currentCategory: "ALL",
-       currentLang: "ENG",
-       currentPage: 0,
-       currentPageSize: 10,
-       currentPageSort: 2,
-       page: {content:[]},
-       categoryList: [],
-       currentSearchTerm: "-Z",
-       modalActive: false,
-    };
+        queryParams: {
+                       lang: "ENG",
+                       category: "ALL",
+                       term: "-Z",
+                       page: 0,
+                       size: 10,
+                       sort: 2,
+                     },
+                     categoryList: [],
+                     modalActive: false,
+                     pagedItems: {content:[]},
+                   };
   }
 
-  getCategories(lang) {
+  getCategories = (lang = "ENG") =>
     categoryApi.findAll(lang)
     .then((response) => {
       return response.text();
@@ -55,44 +57,55 @@ class App extends Component {
       return JSON.parse(responseText);
     })
     .then((responseJSON) => {
-      this.setState({
-        categoryList: responseJSON
-      });
+      return responseJSON
     })
     .catch(()=>{
       console.log('getCategories failed!');
     });
-  }
 
-  handleSearch = (event) => {
-    //this.getProducts(this.state.currentLang, this.state.currentCategory, event.target.value, this.state.currentPage, this.state.currentPageSize, this.state.currentPageSort);
-  }
 
-  changeLang = (event) => {
-    //this.getCategories(event.target.id);
-    //this.getProducts(event.target.id, this.state.currentCategory, this.state.searchTerm, this.state.currentPage, this.state.currentPageSize, this.state.currentPageSort);
-  }
+  getProducts = (lang = "ENG", category = "ALL", term = "", page = 0, size = 10, sort = 2) =>
+    pageService.findAll(lang,
+                        category,
+                        (term === undefined || term === "") ? "-Z" : term,
+                        page,
+                        size,
+                        sort);
 
-  changeCategory = (event) => {
-    //this.getProducts(this.state.currentLang, event.target.id, this.state.searchTerm, this.state.currentPage, this.state.currentPageSize, this.state.currentPageSort);
-  }
+  refreshFromParams = () => {
+    let params = (qs.parse(this.props.location.search));
+    let productPromise = this.getProducts(
+                                           params.lang,
+                                           params.category,
+                                           params.term,
+                                           params.page,
+                                           params.size,
+                                           params.sort
+                                         );
 
-  changePage = (event) => {
-    //this.getProducts(this.state.currentLang, this.state.currentCategory, this.state.searchTerm, event.target.id, this.state.currentPageSize, this.state.currentPageSort);
-  }
+    let categoryPromise = this.getCategories(params.lang);
 
-  changePageSize = (event) => {
-    //this.getProducts(this.state.currentLang, this.state.currentCategory, this.state.searchTerm, this.state.currentPage, event.target.id, this.state.currentPageSort);
-  }
-
-  changePageSort = (event) => {
-    //this.getProducts(this.state.currentLang, this.state.currentCategory, this.state.searchTerm, this.state.currentPage, this.state.currentPageSize, event.target.id);
+    Promise.all(
+      [productPromise,
+        categoryPromise])
+    .then((values) => {
+         this.setState({
+                         queryParams: {
+                                        lang:      (params.lang === undefined) ? "ENG" : params.lang,
+                                        category:  (params.category === undefined) ? "ALL" : params.category,
+                                        term:      (params.term === undefined || params.term === "") ? "-Z" : params.term,
+                                        page:      (params.page === undefined) ? 0 : params.page,
+                                        size:      (params.size === undefined) ? 10 : params.size,
+                                        sort:      (params.sort === undefined) ? 2 : params.sort,
+                                      },
+                                      pagedItems: values[0],
+                                      categoryList: values[1]
+                       });
+       });
   }
 
   componentWillMount() {
-  //  console.log(this.props);
-  //  this.getCategories(this.state.currentLang);
-  //  this.getProducts(this.state.currentLang, this.state.currentCategory, this.state.searchTerm, this.state.currentPage, this.state.currentPageSize, this.state.currentPageSort);
+    this.refreshFromParams();
   }
 
   autoLogin = () =>  {
@@ -151,7 +164,6 @@ class App extends Component {
   render() {
   return (
    <div className="App">
-    <Router>
       <div>
         <div className="row">
           <div className="col-sm-12">
@@ -160,8 +172,7 @@ class App extends Component {
                     handleSearch={this.handleSearch}
                     updateSearch={this.updateSearch}
                     changeLang={this.changeLang}
-                    lang={langSelector[this.state.currentLang]}
-                    currentLang={this.state.currentLang}
+                    lang={this.state.queryParams.lang}
             />
           </div>
         </div>
@@ -170,7 +181,7 @@ class App extends Component {
             <CategoryNavigator
               categoryList={this.state.categoryList}
               changeCategory={this.changeCategory}
-              lang={this.state.currentLang}
+              lang={this.state.queryParams.lang}
             />
           </div>
           <div className="col-sm-10">
@@ -185,15 +196,15 @@ class App extends Component {
             />
             <br/>
             <Paginator
-              page={this.state.page}
+              pagedItems={this.state.pagedItems}
               changePage={this.changePage}
             />
           <Route path="/" exact component =  {(routeProps) => (
                                                       <Landing
                                                         {...routeProps}
-                                                        currentLang={this.state.currentLang}
+                                                        lang={this.state.queryParams.lang}
                                                         openModal={this.openModal}
-                                                        page={this.state.page}
+                                                        pagedItems={this.state.pagedItems}
                                                       />
                                                 )}
             />
@@ -206,16 +217,15 @@ class App extends Component {
             <Route path="/Search" component={(routeProps) => (
                                                       <Landing
                                                         {...routeProps}
-                                                        currentLang={this.state.currentLang}
+                                                        lang={this.state.queryParams.lang}
                                                         openModal={this.openModal}
-                                                        page={this.state.page}
+                                                        pagedItems={this.state.pagedItems}
                                                       />
                                               )}
             />
           </div>
         </div>
       </div>
-      </Router>
 
       <ManageCart/>
 
@@ -232,7 +242,7 @@ class App extends Component {
 
 //on a dispatch call from anywhere in the application
 //this function will fire and update authenticated
-export default connect(state => ({
+export default withRouter(connect(state => ({
     tokens:   state.services.session.tokens,
     customer: state.services.customer.customer
 }), dispatch => ({
@@ -240,4 +250,4 @@ export default connect(state => ({
   		tokens:   bindActionCreators(tokensActionCreators, dispatch),
       customer: bindActionCreators(customerActionCreators, dispatch)
   	},
-}))(App);
+}))(App));
