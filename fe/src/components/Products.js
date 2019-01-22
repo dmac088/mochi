@@ -6,7 +6,7 @@ import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 
 const Products = (props) => {
-  console.log(props);
+
     	let productsData;
 
 			productsData = props.productsList.map(product =>{
