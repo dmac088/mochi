@@ -7,39 +7,32 @@ import * as pageService from '../services/page';
 class Landing extends Component {
 
   constructor(props) {
-    super();
     super(props);
       this.state = {
-       page: {content:[]}
-    };
+        page: {content:[]}
+      };
   }
 
   componentWillMount() {
-    const defaultQs = {
-                      category: "ALL",
-                      lang: "ENG",
-                      page: 0,
-                      size: 10,
-                      sort: 2,
-                      term: "",
-                    };
-    const searchString = qs.stringify(defaultQs);
-    this.props.history.push({
-      "pathname": '/Search',
-      "search": searchString,
-    });
-    this.getProducts();
+    const values = (qs.parse(this.props.location.search));
+    const queryObject =       {
+                        lang:     values.lang,
+                        category: values.category,
+                        term:     values.term,
+                        page:     values.page,
+                        size:     values.size,
+                        sort:     values.sort,
+                      };
+    this.getProducts(queryObject.lang, queryObject.category, queryObject.term, queryObject.page, queryObject.size, queryObject.sort);
 	}
 
-  getProducts = () => {
-    const values = (qs.parse(this.props.location.search));
-    //console.log(values.category)
-    pageService.findAll(values.lang,
-                        values.category,
-                        (values.term === undefined || values.term === "") ? "-Z" : values.term,
-                        values.page,
-                        values.size,
-                        values.sort)
+  getProducts = (lang = "ENG", category = "ALL", term = "", page = 0, size = 5, sort = 2) => {
+    pageService.findAll(lang,
+                        category,
+                        (term === undefined || term === "") ? "-Z" : term,
+                        page,
+                        size,
+                        sort)
     .then((response) => {
        this.setState((prevState) => ({
          page: response,
@@ -51,7 +44,6 @@ class Landing extends Component {
   }
 
   render() {
-    console.log(this.props.location.search);
     return(
           <Products
             productsList={this.state.page.content}
