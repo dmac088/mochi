@@ -35,7 +35,7 @@ const Header = (props) => {
           </Nav>
           <LanguageSelector
             changeLang={props.changeLang}
-            currentLang={props.currentLang}
+            lang={props.lang}
             />
           <Nav>
             <CartMenu

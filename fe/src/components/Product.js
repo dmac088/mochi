@@ -90,6 +90,7 @@ class Product extends Component {
 
 
     render(){
+			//console.log(this.props);
         let image = config.url + '/' + this.props.product.productImage;
         let name = this.props.product.productDesc;
         let price = this.props.product.productRrp;
@@ -112,9 +113,9 @@ class Product extends Component {
 														type="button"
 														onClick={this.addToCart.bind(this, image, name, price, id, quantity)}>{
 																!this.state.isAdded ?
-																langSelector[this.props.currentLang].addToCart
+																langSelector[this.props.lang].addToCart
 																:
-																langSelector[this.props.currentLang].addedToCart
+																langSelector[this.props.lang].addedToCart
 															}
 										</button>
                 </div>

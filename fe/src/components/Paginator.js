@@ -6,7 +6,7 @@ const Paginator = (props) => {
     <nav aria-label="Page navigation example">
       <Pagination>
         <Pagination.First />
-        {renderPaginator(props.page.totalPages, props.changePage)}
+        {renderPaginator(props.pagedItems.totalPages, props.changePage)}
         <Pagination.Last />
       </Pagination>
     </nav>
