@@ -64,54 +64,35 @@ class App extends Component {
     });
   }
 
-  // Fetch Initial Set of Products from external API
-  getProducts = (locale = "ENG", category = "ALL", searchTerm = "-Z", page = 0, size = 10, sort = 2) => {
-    pageService.findAll(locale, category, (searchTerm === undefined || searchTerm === "") ? "-Z" : searchTerm, page, size, sort)
-    .then((response) => {
-       this.setState((prevState) => ({
-         page: response,
-         currentCategory: category,
-         currentLang: locale,
-         currentSearchTerm: searchTerm,
-         currentPage: (prevState.currentCategory !== category) ? 0 : page,
-         currentPageSize: size,
-         currentPageSort: sort,
-       }));
-    })
-    .then(() => {
-      console.log(this.state.currentPage);
-    });
-  }
-
   handleSearch = (event) => {
-    this.getProducts(this.state.currentLang, this.state.currentCategory, event.target.value, this.state.currentPage, this.state.currentPageSize, this.state.currentPageSort);
+    //this.getProducts(this.state.currentLang, this.state.currentCategory, event.target.value, this.state.currentPage, this.state.currentPageSize, this.state.currentPageSort);
   }
 
   changeLang = (event) => {
-    this.getCategories(event.target.id);
-    this.getProducts(event.target.id, this.state.currentCategory, this.state.searchTerm, this.state.currentPage, this.state.currentPageSize, this.state.currentPageSort);
+    //this.getCategories(event.target.id);
+    //this.getProducts(event.target.id, this.state.currentCategory, this.state.searchTerm, this.state.currentPage, this.state.currentPageSize, this.state.currentPageSort);
   }
 
   changeCategory = (event) => {
-    this.getProducts(this.state.currentLang, event.target.id, this.state.searchTerm, this.state.currentPage, this.state.currentPageSize, this.state.currentPageSort);
+    //this.getProducts(this.state.currentLang, event.target.id, this.state.searchTerm, this.state.currentPage, this.state.currentPageSize, this.state.currentPageSort);
   }
 
   changePage = (event) => {
-    this.getProducts(this.state.currentLang, this.state.currentCategory, this.state.searchTerm, event.target.id, this.state.currentPageSize, this.state.currentPageSort);
+    //this.getProducts(this.state.currentLang, this.state.currentCategory, this.state.searchTerm, event.target.id, this.state.currentPageSize, this.state.currentPageSort);
   }
 
   changePageSize = (event) => {
-    this.getProducts(this.state.currentLang, this.state.currentCategory, this.state.searchTerm, this.state.currentPage, event.target.id, this.state.currentPageSort);
+    //this.getProducts(this.state.currentLang, this.state.currentCategory, this.state.searchTerm, this.state.currentPage, event.target.id, this.state.currentPageSort);
   }
 
   changePageSort = (event) => {
-    this.getProducts(this.state.currentLang, this.state.currentCategory, this.state.searchTerm, this.state.currentPage, this.state.currentPageSize, event.target.id);
+    //this.getProducts(this.state.currentLang, this.state.currentCategory, this.state.searchTerm, this.state.currentPage, this.state.currentPageSize, event.target.id);
   }
 
   componentWillMount() {
-    console.log(this.props);
-    this.getCategories(this.state.currentLang);
-    this.getProducts(this.state.currentLang, this.state.currentCategory, this.state.searchTerm, this.state.currentPage, this.state.currentPageSize, this.state.currentPageSort);
+  //  console.log(this.props);
+  //  this.getCategories(this.state.currentLang);
+  //  this.getProducts(this.state.currentLang, this.state.currentCategory, this.state.searchTerm, this.state.currentPage, this.state.currentPageSize, this.state.currentPageSort);
   }
 
   autoLogin = () =>  {
