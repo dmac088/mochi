@@ -16,7 +16,7 @@ const Products = (props) => {
 											 product=		{product}
 											 addToCart=	{props.addToCart}
 											 openModal=	{props.openModal}
-											 lang=			{props.lang}
+											 currentLang=			{props.currentLang}
 							/>
 					</div>
 					)

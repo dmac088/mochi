@@ -25,6 +25,7 @@ import Footer from './components/Footer';
 import './scss/style.scss';
 import CategoryNavigator from './components/CategoryNavigator'
 import langSelector from './config/lang/selector';
+import qs from 'query-string';
 
 
 
@@ -65,7 +66,6 @@ class App extends Component {
 
   // Fetch Initial Set of Products from external API
   getProducts = (locale = "ENG", category = "ALL", searchTerm = "-Z", page = 0, size = 10, sort = 2) => {
-
     pageService.findAll(locale, category, (searchTerm === undefined || searchTerm === "") ? "-Z" : searchTerm, page, size, sort)
     .then((response) => {
        this.setState((prevState) => ({
@@ -109,6 +109,7 @@ class App extends Component {
   }
 
   componentWillMount() {
+    console.log(this.props);
     this.getCategories(this.state.currentLang);
     this.getProducts(this.state.currentLang, this.state.currentCategory, this.state.searchTerm, this.state.currentPage, this.state.currentPageSize, this.state.currentPageSort);
   }
@@ -134,8 +135,6 @@ class App extends Component {
 
   reduxSubscribedFunction = () => {
   }
-
-
 
   emptyCart = () => {
     cartService.emptyCart();
@@ -190,7 +189,7 @@ class App extends Component {
             <CategoryNavigator
               categoryList={this.state.categoryList}
               changeCategory={this.changeCategory}
-              lang={langSelector[this.state.currentLang]}
+              lang={this.state.currentLang}
             />
           </div>
           <div className="col-sm-10">
@@ -208,16 +207,14 @@ class App extends Component {
               page={this.state.page}
               changePage={this.changePage}
             />
-            <Route path="/" exact component =  {(routeProps) => (
-                                                                    <Landing
-                                                                      {...routeProps}
-                                                                      {...this.state}
-                                                                      lang={langSelector[this.state.currentLang]}
-                                                                      openModal={this.openModal}
-                                                                      updateQuantity={this.updateQuantity}
-                                                                      productQuantity={this.state.quantity}
-                                                                    />
-                                                                )}
+          <Route path="/" exact component =  {(routeProps) => (
+                                                      <Landing
+                                                        {...routeProps}
+                                                        currentLang={this.state.currentLang}
+                                                        openModal={this.openModal}
+                                                        page={this.state.page}
+                                                      />
+                                                )}
             />
             <Route path="/Login" component =  {(routeProps) => (
                 <Login
@@ -225,6 +222,15 @@ class App extends Component {
                 />
             )}/>
             <Route path="/Signup" component={Signup} />
+            <Route path="/Search" component={(routeProps) => (
+                                                      <Landing
+                                                        {...routeProps}
+                                                        currentLang={this.state.currentLang}
+                                                        openModal={this.openModal}
+                                                        page={this.state.page}
+                                                      />
+                                              )}
+            />
           </div>
         </div>
       </div>

@@ -1,17 +1,42 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { DropdownButton, MenuItem  } from 'react-bootstrap';
+import {
+  Route,
+  withRouter,
+} from 'react-router-dom';
+import qs from 'query-string';
 
-const PageSize = (props) => {
-  return (
-    <DropdownButton
-        id="pageSize"
-        title={"Page Size (" + props.currentPageSize + ")"}
-      >
-       <MenuItem id="5" onClick={props.changePageSize} eventKey="5" active={props.currentPageSize === "5"}>5</MenuItem>
-       <MenuItem id="10" onClick={props.changePageSize} eventKey="10" active={props.currentPageSize === "10"}>10</MenuItem>
-       <MenuItem id="20" onClick={props.changePageSize} eventKey="20" active={props.currentPageSize === "20"}>20</MenuItem>
-    </DropdownButton>
-  )
+
+class PageSize extends Component {
+
+  constructor(props) {
+    super(props);
+  }
+
+  changePageSize = (event) => {
+    const query =  { pageSize: event.target.id };
+    const searchString = qs.stringify(query);
+    this.props.history.push({
+      "pathname": '/Search',
+      "search": searchString,
+    });
+  }
+
+
+  render() {
+    console.log("rendering PageSize");
+    return (
+      <DropdownButton
+          id="pageSize"
+          title={"Page Size (" + this.props.currentPageSize + ")"}
+        >
+         <MenuItem id="5" onClick={this.changePageSize} eventKey="5" active={this.props.currentPageSize === "5"}>5</MenuItem>
+         <MenuItem id="10" onClick={this.changePageSize} eventKey="10" active={this.props.currentPageSize === "10"}>10</MenuItem>
+         <MenuItem id="20" onClick={this.changePageSize} eventKey="20" active={this.props.currentPageSize === "20"}>20</MenuItem>
+      </DropdownButton>
+    )
+  }
+
 };
 
-export default PageSize;
+export default withRouter(PageSize);

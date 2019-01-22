@@ -11,7 +11,7 @@ class CategoryNavigator extends Component {
 
   reRoute = (event) => {
       this.props.history.push({
-        "pathname": '/category',
+        "pathname": '/Category',
         "search": '?name=' + event.target.id,
       });
   }
