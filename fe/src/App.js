@@ -26,6 +26,7 @@ import './scss/style.scss';
 import CategoryNavigator from './components/CategoryNavigator'
 import langSelector from './config/lang/selector';
 import qs from 'query-string';
+import _ from 'lodash';
 
 
 
@@ -37,7 +38,7 @@ class App extends Component {
         queryParams: {
                        lang: "ENG",
                        category: "ALL",
-                       term: "-Z",
+                       term: "",
                        page: "0",
                        size: "10",
                        sort: "2",
@@ -45,6 +46,7 @@ class App extends Component {
                      categoryList: [],
                      modalActive: false,
                      pagedItems: {content:[]},
+                     dataLoaded: 0,
                    };
   }
 
@@ -63,60 +65,39 @@ class App extends Component {
       console.log('getCategories failed!');
     });
 
-  getProducts = (lang = "ENG", category = "ALL", term = "", page = "0", size = "10", sort = "2") =>
-    pageService.findAll(lang,
-                        category,
-                        (term === undefined || term === "") ? "-Z" : term,
-                        page,
-                        size,
-                        sort);
+  getProducts = (queryParams) =>
+    pageService.findAll(queryParams.lang,
+                        queryParams.category,
+                        queryParams.term,
+                        queryParams.page,
+                        queryParams.size,
+                        queryParams.sort);
 
-
-
-  //this function will read URL parameters
-  //and refresh the product data accordingly via setState
-  //child compoents that change the URL params need to
-  //explicitly call this function to re-render the refreshData
-  //which will update state and force a refresh of child components
   refreshData = (search) => {
-    let params = (qs.parse(search));
-    if (params.lang      === this.state.queryParams.lang
-    && params.category  === this.state.queryParams.category
-    && ((params.term    === undefined || params.term === "") ? "-Z" : params.term) === this.state.queryParams.term
-    && params.page      === this.state.queryParams.page
-    && params.sort      === this.state.queryParams.sort) { return null; }
-
-    let productPromise = this.getProducts(
-                                           params.lang,
-                                           params.category,
-                                           params.term,
-                                           params.page,
-                                           params.size,
-                                           params.sort
-                                         );
-
-    let categoryPromise = this.getCategories(params.lang);
-
-    Promise.all(
-                [productPromise,
-                categoryPromise]
-               )
+    let urlParams = (qs.parse(search));
+    let stateParams = (qs.parse(qs.stringify(this.state.queryParams)));
+    //if the local state and url parameters match and the data is loaded
+    if (_.isEqual(stateParams, urlParams)) {return null;}
+    let mergedParams = Object.assign(stateParams, urlParams);
+    let productPromise  = this.getProducts(mergedParams);
+    let categoryPromise = this.getCategories(mergedParams.lang);
+    Promise.all([productPromise,categoryPromise])
     .then((values) => {
          this.setState({
-                         queryParams: {
-                                        lang:      (params.lang     === undefined) ? "ENG" : params.lang,
-                                        category:  (params.category === undefined) ? "ALL" : params.category,
-                                        term:      (params.term     === undefined || params.term === "") ? "-Z" : params.term,
-                                        page:      (params.page     === undefined) ? "0" : params.page,
-                                        size:      (params.size     === undefined) ? "10" : params.size,
-                                        sort:      (params.sort     === undefined) ? "2" : params.sort,
-                                      },
-                                      pagedItems: values[0],
-                                      categoryList: values[1]
+                         queryParams:   mergedParams,
+                         pagedItems:    values[0],
+                         categoryList:  values[1],
+                         dataLoaded:    1
                        }, () => {
-                         console.log("the callback is here!");
+                         console.log("products loaded and state set!");
                        });
-       });
+       })
+      .then(() => {
+        this.props.history.push({
+            "pathname": '/Search',
+            "search": qs.stringify(this.state.queryParams),
+        });
+      });
   }
 
   componentWillMount() {
@@ -183,7 +164,7 @@ class App extends Component {
 
   render() {
     //console.log("render App");
-    this.refreshData(this.props.location.search);
+this.refreshData(this.props.location.search);
   return (
    <div className="App">
       <div>
