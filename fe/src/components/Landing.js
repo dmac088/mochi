@@ -16,7 +16,7 @@ class Landing extends Component {
 
 
   render() {
-    console.log("Landing");
+    console.log("rendering Landing");
     return(
           <Products
             productsList={this.props.pagedItems.content}

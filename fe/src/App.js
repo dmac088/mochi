@@ -63,7 +63,6 @@ class App extends Component {
       console.log('getCategories failed!');
     });
 
-
   getProducts = (lang = "ENG", category = "ALL", term = "", page = 0, size = 10, sort = 2) =>
     pageService.findAll(lang,
                         category,
@@ -72,7 +71,14 @@ class App extends Component {
                         size,
                         sort);
 
-  refreshFromParams = () => {
+
+
+  //this function will read URL parameters
+  //and refresh the product data accordingly via setState
+  //child compoents that change the URL params need to
+  //explicitly call this function to re-render the refreshData
+  //which will update state and force a refresh of child components
+  refreshData = () => {
     let params = (qs.parse(this.props.location.search));
     let productPromise = this.getProducts(
                                            params.lang,
@@ -106,7 +112,17 @@ class App extends Component {
   }
 
   componentWillMount() {
-    this.refreshFromParams();
+    console.log("componentWillMount");
+    this.refreshData();
+  }
+
+  componentDidUpdate = (prevProps, prevState) => {
+    console.log("componentDidUpdate");
+    //this.refreshData();
+  }
+
+  componentWillReceiveProps() {
+    console.log("componentWillReceiveProps");
   }
 
   autoLogin = () =>  {
@@ -119,6 +135,7 @@ class App extends Component {
   }
 
   componentDidMount() {
+    console.log("componentDidMount");
 		const unsubscribe = store.subscribe(() => {
                         			if (store.getState().services.persist.isHydrated) {
                         				unsubscribe(); //call unsubscribe again! wait! what!?
@@ -162,7 +179,19 @@ class App extends Component {
     console.log(this.props);
   }
 
+  renderLanding = (routeProps) => {
+    return (
+      <Landing
+        {...routeProps}
+        lang={this.state.queryParams.lang}
+        openModal={this.openModal}
+        pagedItems={this.state.pagedItems}
+      />
+    );
+  }
+
   render() {
+    console.log("render App");
   return (
    <div className="App">
       <div>
@@ -181,7 +210,7 @@ class App extends Component {
           <div className="col-sm-2">
             <CategoryNavigator
               categoryList={this.state.categoryList}
-              changeCategory={this.changeCategory}
+              refreshData={this.refreshData}
               lang={this.state.queryParams.lang}
             />
           </div>
@@ -200,29 +229,14 @@ class App extends Component {
               pagedItems={this.state.pagedItems}
               changePage={this.changePage}
             />
-          <Route path="/" exact component =  {(routeProps) => (
-                                                      <Landing
-                                                        {...routeProps}
-                                                        lang={this.state.queryParams.lang}
-                                                        openModal={this.openModal}
-                                                        pagedItems={this.state.pagedItems}
-                                                      />
-                                                )}
-            />
+            <Route path="/" exact={true} component =  {this.renderLanding}/>
             <Route path="/Login" component =  {(routeProps) => (
-                <Login
-                  {...routeProps}
-                />
-            )}/>
+                                                                <Login
+                                                                  {...routeProps}
+                                                                />
+                                              )}/>
             <Route path="/Signup" component={Signup} />
-            <Route path="/Search" component={(routeProps) => (
-                                                      <Landing
-                                                        {...routeProps}
-                                                        lang={this.state.queryParams.lang}
-                                                        openModal={this.openModal}
-                                                        pagedItems={this.state.pagedItems}
-                                                      />
-                                              )}
+            <Route path="/Search" component={this.renderLanding}
             />
           </div>
         </div>
