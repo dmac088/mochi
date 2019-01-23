@@ -14,7 +14,7 @@ class PageSize extends Component {
   }
 
   changePageSize = (event) => {
-    const query =  { pageSize: event.target.id };
+    const query =  { size: event.target.id };
     const searchString = qs.stringify(query);
     this.props.history.push({
       "pathname": '/Search',
