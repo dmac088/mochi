@@ -37,10 +37,10 @@ class App extends Component {
         queryParams: {
                        lang: "ENG",
                        category: "ALL",
-                       term: "-Z",
-                       page: 0,
-                       size: 10,
-                       sort: 2,
+                       term: "",
+                       page: "0",
+                       size: "10",
+                       sort: "2",
                      },
                      categoryList: [],
                      modalActive: false,
@@ -63,7 +63,7 @@ class App extends Component {
       console.log('getCategories failed!');
     });
 
-  getProducts = (lang = "ENG", category = "ALL", term = "", page = 0, size = 10, sort = 2) =>
+  getProducts = (lang = "ENG", category = "ALL", term = "", page = "0", size = "10", sort = "2") =>
     pageService.findAll(lang,
                         category,
                         (term === undefined || term === "") ? "-Z" : term,
@@ -78,8 +78,15 @@ class App extends Component {
   //child compoents that change the URL params need to
   //explicitly call this function to re-render the refreshData
   //which will update state and force a refresh of child components
-  refreshData = () => {
-    let params = (qs.parse(this.props.location.search));
+  refreshData = (search) => {
+    let params = (qs.parse(search));
+    if (
+       params.lang      === this.state.queryParams.lang
+    && params.category  === this.state.queryParams.category
+    && ((params.term    === undefined || params.term === "") ? "-Z" : params.term) === this.state.queryParams.term
+    && params.page      === this.state.queryParams.page
+    && params.sort      === this.state.queryParams.sort) { return null; }
+
     let productPromise = this.getProducts(
                                            params.lang,
                                            params.category,
@@ -98,12 +105,12 @@ class App extends Component {
     .then((values) => {
          this.setState({
                          queryParams: {
-                                        lang:      (params.lang === undefined) ? "ENG" : params.lang,
+                                        lang:      (params.lang     === undefined) ? "ENG" : params.lang,
                                         category:  (params.category === undefined) ? "ALL" : params.category,
-                                        term:      (params.term === undefined || params.term === "") ? "-Z" : params.term,
-                                        page:      (params.page === undefined) ? 0 : params.page,
-                                        size:      (params.size === undefined) ? 10 : params.size,
-                                        sort:      (params.sort === undefined) ? 2 : params.sort,
+                                        term:      (params.term     === undefined || params.term === "") ? "-Z" : params.term,
+                                        page:      (params.page     === undefined) ? 0 : params.page,
+                                        size:      (params.size     === undefined) ? 10 : params.size,
+                                        sort:      (params.sort     === undefined) ? 2 : params.sort,
                                       },
                                       pagedItems: values[0],
                                       categoryList: values[1]
@@ -112,17 +119,17 @@ class App extends Component {
   }
 
   componentWillMount() {
-    console.log("componentWillMount");
+    //console.log("componentWillMount");
     this.refreshData();
   }
 
   componentDidUpdate = (prevProps, prevState) => {
-    console.log("componentDidUpdate");
+    //console.log("componentDidUpdate");
     //this.refreshData();
   }
 
   componentWillReceiveProps() {
-    console.log("componentWillReceiveProps");
+    //console.log("componentWillReceiveProps");
   }
 
   autoLogin = () =>  {
@@ -135,7 +142,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    console.log("componentDidMount");
+    //console.log("componentDidMount");
 		const unsubscribe = store.subscribe(() => {
                         			if (store.getState().services.persist.isHydrated) {
                         				unsubscribe(); //call unsubscribe again! wait! what!?
@@ -150,21 +157,6 @@ class App extends Component {
 
   emptyCart = () => {
     cartService.emptyCart();
-  }
-
-  // Open Modal
-  openModal = (product) => {
-    // this.setState({
-    //   quickViewProduct: product,
-    //   modalActive: true
-    // });
-  }
-
-  // Close Modal
-  closeModal = () => {
-    // this.setState({
-    //   modalActive: false
-    // });
   }
 
   printState = () => {
@@ -190,8 +182,17 @@ class App extends Component {
     );
   }
 
+  renderLogin = (routeProps) => {
+    return (
+              <Login
+                {...routeProps}
+              />
+          );
+  }
+
   render() {
-    console.log("render App");
+    //console.log("render App");
+    this.refreshData(this.props.location.search);
   return (
    <div className="App">
       <div>
@@ -222,28 +223,21 @@ class App extends Component {
             <PageSort currentPageSort
                 currentPageSort={this.state.currentPageSort}
                 changePageSort={this.changePageSort}
-
             />
             <br/>
             <Paginator
               pagedItems={this.state.pagedItems}
               changePage={this.changePage}
             />
-            <Route path="/" exact={true} component =  {this.renderLanding}/>
-            <Route path="/Login" component =  {(routeProps) => (
-                                                                <Login
-                                                                  {...routeProps}
-                                                                />
-                                              )}/>
+            <Route path="/" exact={true} component={this.renderLanding}/>
+            <Route path="/Login" component ={this.renderLogin}/>
             <Route path="/Signup" component={Signup} />
             <Route path="/Search" component={this.renderLanding}
             />
           </div>
         </div>
       </div>
-
       <ManageCart/>
-
       <Footer/>
       <button onClick={this.printState}>Print Redux State</button>
       <button onClick={this.printLocalState}>Print Local State</button>

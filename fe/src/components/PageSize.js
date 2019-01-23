@@ -24,7 +24,6 @@ class PageSize extends Component {
 
 
   render() {
-    console.log("rendering PageSize");
     return (
       <DropdownButton
           id="pageSize"
