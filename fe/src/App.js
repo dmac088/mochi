@@ -37,7 +37,7 @@ class App extends Component {
         queryParams: {
                        lang: "ENG",
                        category: "ALL",
-                       term: "",
+                       term: "-Z",
                        page: "0",
                        size: "10",
                        sort: "2",
@@ -80,8 +80,7 @@ class App extends Component {
   //which will update state and force a refresh of child components
   refreshData = (search) => {
     let params = (qs.parse(search));
-    if (
-       params.lang      === this.state.queryParams.lang
+    if (params.lang      === this.state.queryParams.lang
     && params.category  === this.state.queryParams.category
     && ((params.term    === undefined || params.term === "") ? "-Z" : params.term) === this.state.queryParams.term
     && params.page      === this.state.queryParams.page
@@ -108,28 +107,20 @@ class App extends Component {
                                         lang:      (params.lang     === undefined) ? "ENG" : params.lang,
                                         category:  (params.category === undefined) ? "ALL" : params.category,
                                         term:      (params.term     === undefined || params.term === "") ? "-Z" : params.term,
-                                        page:      (params.page     === undefined) ? 0 : params.page,
-                                        size:      (params.size     === undefined) ? 10 : params.size,
-                                        sort:      (params.sort     === undefined) ? 2 : params.sort,
+                                        page:      (params.page     === undefined) ? "0" : params.page,
+                                        size:      (params.size     === undefined) ? "10" : params.size,
+                                        sort:      (params.sort     === undefined) ? "2" : params.sort,
                                       },
                                       pagedItems: values[0],
                                       categoryList: values[1]
+                       }, () => {
+                         console.log("the callback is here!");
                        });
        });
   }
 
   componentWillMount() {
-    //console.log("componentWillMount");
     this.refreshData();
-  }
-
-  componentDidUpdate = (prevProps, prevState) => {
-    //console.log("componentDidUpdate");
-    //this.refreshData();
-  }
-
-  componentWillReceiveProps() {
-    //console.log("componentWillReceiveProps");
   }
 
   autoLogin = () =>  {
