@@ -91,12 +91,6 @@ class App extends Component {
                        }, () => {
                          console.log("products loaded and state set!");
                        });
-       })
-      .then(() => {
-        this.props.history.push({
-            "pathname": '/Search',
-            "search": qs.stringify(this.state.queryParams),
-        });
       });
   }
 
