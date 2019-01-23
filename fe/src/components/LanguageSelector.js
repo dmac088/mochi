@@ -3,7 +3,7 @@ import { NavDropdown, MenuItem } from 'react-bootstrap';
 
 const LanguageSelector = (props) => {
   return (
-    <NavDropdown eventKey={3} title={props.currentLang} id="basic-nav-dropdown">
+    <NavDropdown eventKey={3} title={props.lang} id="basic-nav-dropdown">
       <MenuItem id="ENG" onClick={props.changeLang}>
           ENG
       </MenuItem>
