@@ -4,10 +4,6 @@ import { connect } from 'react-redux';
 
 class HeaderCartSummary extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return(
           <Table condensed responsive>
@@ -40,8 +36,6 @@ class HeaderCartSummary extends Component {
   }
 }
 
-
 export default connect(state => ({
     cart:     state.services.cart,
-}))
-(HeaderCartSummary);
+}))(HeaderCartSummary);

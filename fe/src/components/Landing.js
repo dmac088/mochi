@@ -1,14 +1,9 @@
 import React, { Component } from 'react';
 import Products from './Products';
 import { withRouter } from 'react-router-dom';
-import qs from 'query-string';
-import * as pageService from '../services/page';
 
 class Landing extends Component {
 
-  constructor(props) {
-    super(props);
-  }
 
   componentWillMount() {
   }
