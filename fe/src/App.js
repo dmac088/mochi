@@ -195,8 +195,7 @@ class App extends Component {
               size={this.state.queryParams.size}
             />
             <PageSort currentPageSort
-              currentPageSort={this.state.currentPageSort}
-              changePageSort={this.changePageSort}
+              sort={this.state.queryParams.sort}
             />
             <br/>
             <Paginator
