@@ -1,24 +1,44 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Pagination }  from 'react-bootstrap';
+import { withRouter } from "react-router-dom";
+import qs from 'query-string';
 
-const Paginator = (props) => {
-  return (
-    <nav aria-label="Page navigation example">
-      <Pagination>
-        <Pagination.First />
-        {renderPaginator(props.pagedItems.totalPages, props.changePage)}
-        <Pagination.Last />
-      </Pagination>
-    </nav>
-  )
-}
+class Paginator extends Component {
 
-const renderPaginator = (pages, changePage) => {
-  return Array.apply(null, {length: pages}).map(Number.call,page => {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
     return (
-      <Pagination.Item key={page} className="page-link" id={page}  onClick={changePage}>{page+1}</Pagination.Item>
-    )
-  });
+        <nav aria-label="Page navigation example">
+          <Pagination>
+            <Pagination.First />
+              {this.renderPaginator(this.props.totalPages)}
+            <Pagination.Last />
+          </Pagination>
+        </nav>
+    );
+  }
+
+  changePage = (event) => {
+    //get the query parameters
+    const query =  { page: event.target.id };
+    const searchString = qs.stringify(query);
+    this.props.history.push({
+      "pathname": '/Search',
+      "search": searchString,
+    });
+  }
+
+  renderPaginator = (pages) => {
+    return Array.apply(null, {length: pages}).map(Number.call,page => {
+      return (
+        <Pagination.Item key={page} className="page-link" id={page}  onClick={this.changePage}>{page+1}</Pagination.Item>
+      )
+    });
+  }
+
 }
 
-export default Paginator;
+export default withRouter(Paginator);
