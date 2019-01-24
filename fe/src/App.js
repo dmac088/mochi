@@ -78,16 +78,9 @@ class App extends Component {
   refreshData = (search) => {
     let urlParams = (qs.parse(search));
     let stateParams = (qs.parse(qs.stringify(this.state.queryParams)));
-    //if the local state and url parameters match then no need to re-render
+    //if the local state and url parameters match then no need to reload data
     if (_.isEqual(stateParams, urlParams)) {return null;}
-
     let mergedParams = Object.assign(stateParams, urlParams);
-
-
-    //if the local state, merged with the URL params is not equal to the url parameters
-    //then the URL is missing essential information for rendering
-    if(!_.isEqual(mergedParams, urlParams)) {return null;}
-
     //define our promises and fetch the data
     let productPromise  = this.getProducts(mergedParams);
     let categoryPromise = this.getCategories(mergedParams.lang);
@@ -101,7 +94,11 @@ class App extends Component {
                          categoryList:  values[1],
                          dataLoaded:    1
                        }, () => {
-                         console.log("products loaded and state set!");
+                          //also set the URL state, since they need to be in sync
+                          this.props.history.push({
+                                "pathname": '/Search',
+                                "search": qs.stringify(this.state.queryParams),
+                          });
                        });
       });
   }
