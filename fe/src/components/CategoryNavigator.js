@@ -12,23 +12,12 @@ class CategoryNavigator extends Component {
 
   changeCategory = (event) => {
     //get the query parameters
-    let params = (qs.parse(this.props.location.search));
-    let queryParams = {
-      lang: ((params.lang === undefined) ? "ENG" : params.lang),
-      category: ((event.target.id === undefined) ? "ALL" : event.target.id),
-      term: ((params.term === undefined) ? "" : params.term),
-      page: ((params.page === undefined) ? "0"  : params.page),
-      size: ((params.size === undefined) ? "10" : params.size),
-      sort: ((params.sort === undefined) ? "2"  : params.sort),
-    }
-
-    //this will cause a refresh of App, since that is where the route is defined
+    const query =  { category: event.target.id };
+    const searchString = qs.stringify(query);
     this.props.history.push({
-        "pathname": '/Search',
-        "search": qs.stringify(queryParams),
-        "state": queryParams
+      "pathname": '/Search',
+      "search": searchString,
     });
-
   }
 
   renderCategoryListItems = (categoryList, changeCategory) => {
