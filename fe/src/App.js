@@ -82,9 +82,7 @@ class App extends Component {
     if (_.isEqual(stateParams, urlParams) && isMounting === 0) {return null;}
     let mergedParams = Object.assign(_.cloneDeep(stateParams), urlParams);
 
-    // console.log(stateParams.category);
-    // console.log(stateParams.category);
-    if(_.isEqual(stateParams, mergedParams) && isMounting === 0) {return null;}
+    if(_.isEqual(stateParams, mergedParams, urlParams) && isMounting === 0) {return null;}
 
     let productPromise  = this.getProducts(mergedParams);
     let categoryPromise = this.getCategories(mergedParams.lang);
@@ -100,7 +98,7 @@ class App extends Component {
                           //also set the URL state, since they need to be in sync
                           this.props.history.push({
                                 "pathname": '/Search',
-                                "search": qs.stringify(this.state.queryParams),
+                                "search": qs.stringify(mergedParams),
                           });
                        });
       });
