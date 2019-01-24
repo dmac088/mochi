@@ -8,7 +8,7 @@ class PageSize extends Component {
 
   changePageSize = (event) => {
     let urlParams = (qs.parse(this.props.history.location.search));
-    let mergedParams = Object.assign(urlParams, { search: event.target.id });
+    let mergedParams = Object.assign(urlParams, { size: event.target.id });
     const searchString = qs.stringify(mergedParams);
     this.props.history.push({
       "pathname": '/Search',
