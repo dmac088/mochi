@@ -102,19 +102,20 @@ class App extends Component {
   }
 
   componentWillMount() {
-    if(this.props.location.pathname === "/Search" || this.props.location.pathname === "/") {
-      console.log("refreshing data!");
-      this.refreshData(this.props.location.search);
-    }
-
+    if(!this.shouldRefreshdata(this.props.location)) {return(null);}
+    this.refreshData(this.props.location.search);
   }
-
   componentDidUpdate() {
-    if(this.props.location.pathname === "/Search" || this.props.location.pathname === "/") {
-      console.log("refreshing data!");
-      this.refreshData(this.props.location.search);
-    }
+    if(!this.shouldRefreshdata(this.props.location)) {return(null);}
+    this.refreshData(this.props.location.search);
   }
+
+  shouldRefreshdata = (location) => {
+    return (location.pathname === "/Search"
+         || location.pathname === "/");
+  }
+
+
 
   autoLogin = () =>  {
     sessionService.refreshToken().then(() => {
