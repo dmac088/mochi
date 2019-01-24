@@ -45,8 +45,7 @@ class App extends Component {
                      },
                      categoryList: [],
                      modalActive: false,
-                     pagedItems: {content:[]},
-                     dataLoaded: 0,
+                     pagedItems: {content:[]}
                    };
   }
 
@@ -91,8 +90,7 @@ class App extends Component {
          this.setState({
                          queryParams:   mergedParams,
                          pagedItems:    values[0],
-                         categoryList:  values[1],
-                         dataLoaded:    1
+                         categoryList:  values[1]
                        }, () => {
                           //also set the URL state, since they need to be in sync
                           this.props.history.push({
@@ -194,8 +192,7 @@ class App extends Component {
           </div>
           <div className="col-sm-10">
             <PageSize
-              currentPageSize={this.state.currentPageSize}
-              changePageSize={this.changePageSize}
+              size={this.state.queryParams.size}
             />
             <PageSort currentPageSort
                 currentPageSort={this.state.currentPageSort}
