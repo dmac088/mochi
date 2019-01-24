@@ -104,7 +104,7 @@ class App extends Component {
   }
 
   componentWillMount() {
-    this.refreshData();
+    this.refreshData(this.props.location.search);
   }
 
   componentDidUpdate() {
