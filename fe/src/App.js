@@ -73,14 +73,26 @@ class App extends Component {
                         queryParams.size,
                         queryParams.sort);
 
+
+
   refreshData = (search) => {
     let urlParams = (qs.parse(search));
     let stateParams = (qs.parse(qs.stringify(this.state.queryParams)));
-    //if the local state and url parameters match and the data is loaded
+    //if the local state and url parameters match then no need to re-render
     if (_.isEqual(stateParams, urlParams)) {return null;}
+
     let mergedParams = Object.assign(stateParams, urlParams);
+
+
+    //if the local state, merged with the URL params is not equal to the url parameters
+    //then the URL is missing essential information for rendering
+    if(!_.isEqual(mergedParams, urlParams)) {return null;}
+
+    //define our promises and fetch the data
     let productPromise  = this.getProducts(mergedParams);
     let categoryPromise = this.getCategories(mergedParams.lang);
+
+    //fetch the data and set the state
     Promise.all([productPromise,categoryPromise])
     .then((values) => {
          this.setState({
@@ -96,6 +108,10 @@ class App extends Component {
 
   componentWillMount() {
     this.refreshData();
+  }
+
+  componentDidUpdate() {
+    this.refreshData(this.props.location.search);
   }
 
   autoLogin = () =>  {
@@ -157,8 +173,7 @@ class App extends Component {
   }
 
   render() {
-    //console.log("render App");
-this.refreshData(this.props.location.search);
+  //console.log("render App");
   return (
    <div className="App">
       <div>
