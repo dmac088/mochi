@@ -195,13 +195,12 @@ class App extends Component {
               size={this.state.queryParams.size}
             />
             <PageSort currentPageSort
-                currentPageSort={this.state.currentPageSort}
-                changePageSort={this.changePageSort}
+              currentPageSort={this.state.currentPageSort}
+              changePageSort={this.changePageSort}
             />
             <br/>
             <Paginator
-              pagedItems={this.state.pagedItems}
-              changePage={this.changePage}
+              totalPages={this.state.pagedItems.totalPages}
             />
             <Route path="/" exact={true} component={this.renderLanding}/>
             <Route path="/Login" component ={this.renderLogin}/>
