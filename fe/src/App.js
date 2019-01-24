@@ -74,13 +74,18 @@ class App extends Component {
 
 
 
-  refreshData = (search, isMounting) => {
+  refreshData = (search, isMounting = 0) => {
     let urlParams = (qs.parse(search));
     let stateParams = (qs.parse(qs.stringify(this.state.queryParams)));
+
     //if the local state and url parameters match then no need to reload data
     if (_.isEqual(stateParams, urlParams) && isMounting === 0) {return null;}
-    let mergedParams = Object.assign(stateParams, urlParams);
-    //define our promises and fetch the data
+    let mergedParams = Object.assign(_.cloneDeep(stateParams), urlParams);
+
+    // console.log(stateParams.category);
+    // console.log(stateParams.category);
+    if(_.isEqual(stateParams, mergedParams) && isMounting === 0) {return null;}
+
     let productPromise  = this.getProducts(mergedParams);
     let categoryPromise = this.getCategories(mergedParams.lang);
 
@@ -107,7 +112,7 @@ class App extends Component {
   }
   componentDidUpdate() {
     if(!this.shouldRefreshdata(this.props.location)) {return(null);}
-    this.refreshData(this.props.location.search, 0);
+    this.refreshData(this.props.location.search);
   }
 
   shouldRefreshdata = (location) => {
