@@ -5,9 +5,6 @@ import qs from 'query-string';
 
 class Paginator extends Component {
 
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     return (

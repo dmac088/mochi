@@ -14,7 +14,6 @@ import PageSize from './components/PageSize';
 import PageSort from './components/PageSort';
 import * as tokensActionCreators from './services/session/actions';
 import * as customerActionCreators from './services/customer/actions';
-import * as cartActionCreators from './services/cart/actions';
 import * as sessionService from './services/session';
 import * as pageService from './services/page';
 import * as cartService from './services/cart';
@@ -24,7 +23,6 @@ import Login from './components/Login';
 import Footer from './components/Footer';
 import './scss/style.scss';
 import CategoryNavigator from './components/CategoryNavigator'
-import langSelector from './config/lang/selector';
 import qs from 'query-string';
 import _ from 'lodash';
 
@@ -181,14 +179,15 @@ class App extends Component {
   render() {
   //console.log("render App");
   return (
-   <div className="App">
+    <div className="App">
       <div>
         <div className="row">
           <div className="col-sm-12">
-            <Header authenticated={this.props.tokens.authenticated}
-                    customer={this.props.customer}
-                    lang={this.state.queryParams.lang}
-            />
+            <Header
+              authenticated={this.props.tokens.authenticated}
+              customer={this.props.customer}
+              lang={this.state.queryParams.lang}
+              />
           </div>
         </div>
         <div className="row">
@@ -201,28 +200,49 @@ class App extends Component {
             <PageSize
               size={this.state.queryParams.size}
             />
-            <PageSort currentPageSort
+            <PageSort
+              currentPageSort
               sort={this.state.queryParams.sort}
             />
             <br/>
             <Paginator
               totalPages={this.state.pagedItems.totalPages}
             />
-            <Route path="/" exact={true} component={this.renderLanding}/>
-            <Route path="/Login" component ={this.renderLogin}/>
-            <Route path="/Signup" component={Signup} />
-            <Route path="/Search" component={this.renderLanding}
+            <Route
+              path="/"
+              exact={true}
+              component={this.renderLanding}
+            />
+            <Route
+              path="/Login"
+              component ={this.renderLogin}
+            />
+            <Route
+              path="/Signup"
+              component={Signup}
+            />
+            <Route
+              path="/Search"
+              component={this.renderLanding}
             />
           </div>
         </div>
       </div>
       <ManageCart/>
       <Footer/>
-      <button onClick={this.printState}>Print Redux State</button>
-      <button onClick={this.printLocalState}>Print Local State</button>
-      <button onClick={this.printProps}>Print Props</button>
-      <button onClick={this.emptyCart}>Empty Cart</button>
-   </div>
+      <button onClick={this.printState}>
+        Print Redux State
+      </button>
+      <button onClick={this.printLocalState}>
+        Print Local State
+      </button>
+      <button onClick={this.printProps}>
+        Print Props
+      </button>
+      <button onClick={this.emptyCart}>
+        Empty Cart
+      </button>
+    </div>
   );
   }
 }

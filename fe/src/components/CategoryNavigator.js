@@ -1,14 +1,9 @@
 import React, { Component } from 'react';
 import { ListGroup, ListGroupItem, Badge }  from 'react-bootstrap';
-import { Link }  from 'react-router-dom';
 import { withRouter } from "react-router-dom";
 import qs from 'query-string';
 
 class CategoryNavigator extends Component {
-
-  constructor(props) {
-    super(props);
-  }
 
   changeCategory = (event) => {
     //get the query parameters

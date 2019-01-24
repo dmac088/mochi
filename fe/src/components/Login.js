@@ -9,7 +9,6 @@ import * as tokensActionCreators from '../services/session/actions';
 import * as customerActionCreators from '../services/customer/actions';
 import * as customerSelector from '../services/customer/selectors';
 import { withRouter } from "react-router-dom";
-import qs from 'query-string';
 
 
 

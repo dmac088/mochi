@@ -7,7 +7,7 @@ import Selector from './Selector';
 import Search from './Search';
 import LanguageSelector from './LanguageSelector';
 import { Link } from 'react-router-dom';
-import { Navbar, Nav ,NavItem} from 'react-bootstrap';
+import { Navbar, Nav } from 'react-bootstrap';
 
 
 const Header = (props) => {

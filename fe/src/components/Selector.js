@@ -1,7 +1,7 @@
 import React from 'react';
 import * as session from '../services/session';
 import { Link } from 'react-router-dom';
-import { Button, Form } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 const Selector = (props) => {
 

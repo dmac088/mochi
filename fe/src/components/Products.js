@@ -1,6 +1,5 @@
 import React from 'react';
 import Product from './Product';
-import LoadingProducts from '../loaders/Products';
 import NoResults from "../empty-states/NoResults";
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 

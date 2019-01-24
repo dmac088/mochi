@@ -12,10 +12,6 @@ cart={this.props.cart}
 */
 class ManageCart extends Component {
 
-    constructor(props) {
-      super(props);
-    }
-
     removeItem = (event) => {
       cartService.removeFromCart(cartSelector.get(), Number(event.target.id));
     }
@@ -98,5 +94,4 @@ class ManageCart extends Component {
 
 export default connect(state => ({
       cart:     state.services.cart,
-}))
-(ManageCart);
+}))(ManageCart);

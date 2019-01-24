@@ -1,17 +1,10 @@
 import React, { Component } from 'react';
 import { DropdownButton, MenuItem  } from 'react-bootstrap';
-import {
-  Route,
-  withRouter,
-} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import qs from 'query-string';
 
 
 class PageSize extends Component {
-
-  constructor(props) {
-    super(props);
-  }
 
   changePageSize = (event) => {
     const query =  { size: event.target.id };

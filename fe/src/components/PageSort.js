@@ -10,10 +10,6 @@ const sortAliases = {
 
 class PageSort extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   changePageSort = (event) => {
     //get the query parameters
     const query =  { sort: event.target.id };

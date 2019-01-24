@@ -4,11 +4,7 @@ import { withRouter } from "react-router-dom";
 import qs from 'query-string';
 
 class LanguageSelector extends Component {
-
-  constructor(props) {
-    super(props);
-  }
-
+  
   changeLang = (event) => {
     //get the query parameters
     const query =  { lang: event.target.id };
