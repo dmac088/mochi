@@ -102,11 +102,18 @@ class App extends Component {
   }
 
   componentWillMount() {
-    this.refreshData(this.props.location.search);
+    if(this.props.location.pathname === "/Search" || this.props.location.pathname === "/") {
+      console.log("refreshing data!");
+      this.refreshData(this.props.location.search);
+    }
+
   }
 
   componentDidUpdate() {
-    this.refreshData(this.props.location.search);
+    if(this.props.location.pathname === "/Search" || this.props.location.pathname === "/") {
+      console.log("refreshing data!");
+      this.refreshData(this.props.location.search);
+    }
   }
 
   autoLogin = () =>  {
@@ -176,8 +183,6 @@ class App extends Component {
           <div className="col-sm-12">
             <Header authenticated={this.props.tokens.authenticated}
                     customer={this.props.customer}
-                    updateSearch={this.updateSearch}
-                    changeLang={this.changeLang}
                     lang={this.state.queryParams.lang}
             />
           </div>
@@ -186,8 +191,6 @@ class App extends Component {
           <div className="col-sm-2">
             <CategoryNavigator
               categoryList={this.state.categoryList}
-              refreshData={this.refreshData}
-              lang={this.state.queryParams.lang}
             />
           </div>
           <div className="col-sm-10">
