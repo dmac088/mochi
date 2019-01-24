@@ -8,6 +8,10 @@ import { initialState } from '../services/customer/reducer';
 import * as tokensActionCreators from '../services/session/actions';
 import * as customerActionCreators from '../services/customer/actions';
 import * as customerSelector from '../services/customer/selectors';
+import { withRouter } from "react-router-dom";
+import qs from 'query-string';
+
+
 
 class Login extends Component {
 
@@ -26,14 +30,16 @@ class Login extends Component {
     props.history.push('/');
   }
 
-  routeLogin = (props = this.props) => {
-    props.history.push('/Login');
+  routeLogin = () => {
+    this.props.history.push({
+      "pathname": '/Login'
+    });
   }
 
   loginClick = () => {
     session.authenticate(customerSelector.get(),
-      this.routeLanding,
-      this.routeLogin);
+                          this.routeLanding,
+                          this.routeLogin);
   }
 
   renderLoginButton = () => {
@@ -101,11 +107,11 @@ class Login extends Component {
     }
 }
 
-export default connect(state => ({
+export default withRouter(connect(state => ({
     tokens: state.services.session.tokens,
 }), dispatch => ({
 	actions: {
 		tokens: bindActionCreators(tokensActionCreators, dispatch),
     customer: bindActionCreators(customerActionCreators, dispatch),
 	},
-}))(Login);
+}))(Login));
