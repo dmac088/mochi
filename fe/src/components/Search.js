@@ -9,19 +9,19 @@ class Search extends Component {
   constructor(props) {
     super(props);
       this.state = {
-       currentSearchTerm: "-Z",
+       term: "",
     };
   }
 
   updateSearch = (event) => {
     this.setState({
-      currentSearchTerm: event.target.value
+      term: event.target.value
     });
   }
 
   handleSearch = (event) => {
     //get the query parameters
-    const query =  { term: this.state.currentSearchTerm };
+    const query =  { term: this.state.term };
     const searchString = qs.stringify(query);
     this.props.history.push({
       "pathname": '/Search',
