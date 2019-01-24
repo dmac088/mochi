@@ -178,7 +178,6 @@ class App extends Component {
           <div className="col-sm-12">
             <Header authenticated={this.props.tokens.authenticated}
                     customer={this.props.customer}
-                    handleSearch={this.handleSearch}
                     updateSearch={this.updateSearch}
                     changeLang={this.changeLang}
                     lang={this.state.queryParams.lang}
