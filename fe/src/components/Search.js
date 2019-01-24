@@ -20,9 +20,9 @@ class Search extends Component {
   }
 
   handleSearch = (event) => {
-    //get the query parameters
-    const query =  { term: this.state.term };
-    const searchString = qs.stringify(query);
+    let urlParams = (qs.parse(this.props.history.location.search));
+    let mergedParams = Object.assign(urlParams, { term: this.state.term });
+    const searchString = qs.stringify(mergedParams);
     this.props.history.push({
       "pathname": '/Search',
       "search": searchString,

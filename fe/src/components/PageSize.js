@@ -7,8 +7,9 @@ import qs from 'query-string';
 class PageSize extends Component {
 
   changePageSize = (event) => {
-    const query =  { size: event.target.id };
-    const searchString = qs.stringify(query);
+    let urlParams = (qs.parse(this.props.history.location.search));
+    let mergedParams = Object.assign(urlParams, { search: event.target.id });
+    const searchString = qs.stringify(mergedParams);
     this.props.history.push({
       "pathname": '/Search',
       "search": searchString,
