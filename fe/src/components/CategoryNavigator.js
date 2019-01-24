@@ -7,8 +7,9 @@ class CategoryNavigator extends Component {
 
   changeCategory = (event) => {
     //get the query parameters
-    const query =  { category: event.target.id };
-    const searchString = qs.stringify(query);
+    let urlParams = (qs.parse(this.props.history.location.search));
+    let mergedParams = Object.assign(urlParams, { category: event.target.id });
+    const searchString = qs.stringify(mergedParams);
     this.props.history.push({
       "pathname": '/Search',
       "search": searchString,

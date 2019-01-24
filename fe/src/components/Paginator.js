@@ -19,9 +19,9 @@ class Paginator extends Component {
   }
 
   changePage = (event) => {
-    //get the query parameters
-    const query =  { page: event.target.id };
-    const searchString = qs.stringify(query);
+    let urlParams = (qs.parse(this.props.history.location.search));
+    let mergedParams = Object.assign(urlParams, { page: event.target.id });
+    const searchString = qs.stringify(mergedParams);
     this.props.history.push({
       "pathname": '/Search',
       "search": searchString,
