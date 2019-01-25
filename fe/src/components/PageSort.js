@@ -12,7 +12,10 @@ class PageSort extends Component {
 
   changePageSort = (event) => {
     let urlParams = (qs.parse(this.props.history.location.search));
-    let mergedParams = Object.assign(urlParams, { sort: event.target.id });
+    let mergedParams = Object.assign(urlParams, {
+                                                  sort: event.target.id,
+                                                  page: 0,
+                                                });
     const searchString = qs.stringify(mergedParams);
     this.props.history.push({
       "pathname": '/Search',
