@@ -43,7 +43,8 @@ class App extends Component {
                      },
                      categoryList: [],
                      modalActive: false,
-                     pagedItems: {content:[]}
+                     pagedItems: {content:[]},
+                     mountComplete: 0,
                    };
   }
 
@@ -72,15 +73,13 @@ class App extends Component {
 
 
 
-  refreshData = (search, isMounting = 0) => {
+  refreshData = (search) => {
     let urlParams = (qs.parse(search));
     let stateParams = (qs.parse(qs.stringify(this.state.queryParams)));
 
     //if the local state and url parameters match then no need to reload data
-    if (_.isEqual(stateParams, urlParams) && isMounting === 0) {return null;}
+    if (_.isEqual(stateParams, urlParams)) {return null;}
     let mergedParams = Object.assign(_.cloneDeep(stateParams), urlParams);
-
-    if(_.isEqual(stateParams, mergedParams, urlParams) && isMounting === 0) {return null;}
 
     let productPromise  = this.getProducts(mergedParams);
     let categoryPromise = this.getCategories(mergedParams.lang);
@@ -91,7 +90,7 @@ class App extends Component {
          this.setState({
                          queryParams:   mergedParams,
                          pagedItems:    values[0],
-                         categoryList:  values[1]
+                         categoryList:  values[1],
                        }, () => {
                           //also set the URL state, since they need to be in sync
                           this.props.history.push({
@@ -104,7 +103,7 @@ class App extends Component {
 
   componentWillMount() {
     if(!this.shouldRefreshdata(this.props.location)) {return(null);}
-    this.refreshData(this.props.location.search, 1);
+    this.refreshData(this.props.location.search);
   }
   componentDidUpdate() {
     if(!this.shouldRefreshdata(this.props.location)) {return(null);}
