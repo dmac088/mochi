@@ -3,25 +3,33 @@ import React, { Component } from 'react';
 import { Navbar, Button, FormGroup, FormControl } from 'react-bootstrap';
 import { withRouter } from "react-router-dom";
 import qs from 'query-string';
+import _ from 'lodash';
 
 class Search extends Component {
 
   constructor(props) {
     super(props);
       this.state = {
-       term: "",
-    };
+        inputTerm: "",
+     };
+  }
+
+  componentWillMount() {
+    let urlParams = (qs.parse(this.props.history.location.search));
+    this.setState({
+      inputTerm: urlParams.term
+    });
   }
 
   updateSearch = (event) => {
     this.setState({
-      term: event.target.value
+      inputTerm: event.target.value
     });
   }
 
-  handleSearch = (event) => {
+  handleSearch = () => {
     let urlParams = (qs.parse(this.props.history.location.search));
-    let mergedParams = Object.assign(urlParams, { term: this.state.term });
+    let mergedParams = Object.assign(_.cloneDeep(urlParams), { term: this.state.inputTerm });
     const searchString = qs.stringify(mergedParams);
     this.props.history.push({
       "pathname": '/Search',
@@ -29,13 +37,19 @@ class Search extends Component {
     });
   }
 
+  handleKeyPress = (target) => {
+    if(target.charCode === 13){
+            this.handleSearch();
+    }
+  }
+
   render() {
       return(
         <Navbar.Form>
             <FormGroup controlId="formInlineName">
-              <FormControl onChange={this.updateSearch} type="text" placeholder="Search" />
+              <FormControl onChange={this.updateSearch} type="text" value={this.state.inputTerm} placeholder="Search..." onKeyPress={this.handleKeyPress} />
+              <Button onClick={this.handleSearch} value={this.state.currentSearchTerm}>Search</Button>
             </FormGroup>
-            <Button onClick={this.handleSearch} value={this.state.currentSearchTerm}>Search</Button>
         </Navbar.Form>
       );
     }
