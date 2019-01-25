@@ -19,4 +19,5 @@ ReactDOM.render(<Provider store={store}>
                     <App />
                   </Router>
                 </Provider>, document.getElementById('root'));
+                
 registerServiceWorker();
