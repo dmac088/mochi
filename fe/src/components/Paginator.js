@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Pagination }  from 'react-bootstrap';
 import { withRouter } from "react-router-dom";
 import qs from 'query-string';
 
@@ -8,13 +7,8 @@ class Paginator extends Component {
 
   render() {
     return (
-        <nav aria-label="Page navigation example">
-          <Pagination>
-            <Pagination.First />
-              {this.renderPaginator(this.props.totalPages)}
-            <Pagination.Last />
-          </Pagination>
-        </nav>
+        <div>
+        </div>
     );
   }
 
@@ -31,7 +25,7 @@ class Paginator extends Component {
   renderPaginator = (pages) => {
     return Array.apply(null, {length: pages}).map(Number.call,page => {
       return (
-        <Pagination.Item key={page} className="page-link" id={page}  onClick={this.changePage}>{page+1}</Pagination.Item>
+        <li key={page} className="page-link" id={page}  onClick={this.changePage}>{page+1}</li>
       )
     });
   }

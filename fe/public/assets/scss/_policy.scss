@@ -1,0 +1,56 @@
+
+/*=============================================
+=            05. Policy             =
+=============================================*/
+.policy-section{
+
+    .policy-titles{
+        background: #ffffff;
+        border: 1px solid #e0e0e0;
+
+        .single-policy{
+            flex-basis: 33.3333%;
+            padding: 15px 0;
+            padding-left: 70px;
+            position: relative;
+
+            @media #{$large-mobile}{
+                flex-basis: 100%;
+            }
+            @media #{$extra-small-mobile}{
+                padding-right: 10px;
+            }
+
+            &:nth-child(1), &:nth-child(2){
+                border-right: 1px solid #e0e0e0;
+                @media #{$large-mobile}{
+                    border-bottom: 1px solid #e0e0e0;
+                    border-right: 0;
+                 }
+            }
+     
+
+            span{
+                position: absolute;
+                left: 20px;
+                top: 50%;
+                margin-top: -12px;
+            }
+            p{
+                margin-bottom: 0;
+                font-weight: 500;
+                line-height: 22px;
+            
+            }
+
+
+        }
+
+    }
+
+}
+
+
+
+/*=====  End of 05. Policy   ======*/
+

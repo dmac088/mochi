@@ -21,7 +21,6 @@ import * as categoryApi from './data/categories/api';
 import Landing from './components/Landing';
 import Login from './components/Login';
 import Footer from './components/Footer';
-import './scss/style.scss';
 import CategoryNavigator from './components/CategoryNavigator'
 import qs from 'query-string';
 import _ from 'lodash';
@@ -106,8 +105,8 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if(!this.shouldRefreshdata(this.props.location)) {return(null);}
-    this.refreshData(this.props.location.search);
+    // if(!this.shouldRefreshdata(this.props.location)) {return(null);}
+    // this.refreshData(this.props.location.search);
   }
 
   shouldRefreshdata = (location) => {
@@ -178,70 +177,14 @@ class App extends Component {
   render() {
   //console.log("render App");
   return (
-    <div className="App">
-      <div>
-        <div className="row">
-          <div className="col-sm-12">
-            <Header
-              authenticated={this.props.tokens.authenticated}
-              customer={this.props.customer}
-              lang={this.state.queryParams.lang}
-              />
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-2">
-            <CategoryNavigator
-              categoryList={this.state.categoryList}
-            />
-          </div>
-          <div className="col-sm-10">
-            <PageSize
-              size={this.state.queryParams.size}
-            />
-            <PageSort
-              currentPageSort
-              sort={this.state.queryParams.sort}
-            />
-            <br/>
-            <Paginator
-              totalPages={this.state.pagedItems.totalPages}
-            />
-            <Route
-              path="/"
-              exact={true}
-              component={this.renderLanding}
-            />
-            <Route
-              path="/Login"
-              component ={this.renderLogin}
-            />
-            <Route
-              path="/Signup"
-              component={Signup}
-            />
-            <Route
-              path="/Search"
-              component={this.renderLanding}
-            />
-          </div>
-        </div>
-      </div>
-      <ManageCart/>
-      <Footer/>
-      <button onClick={this.printState}>
-        Print Redux State
-      </button>
-      <button onClick={this.printLocalState}>
-        Print Local State
-      </button>
-      <button onClick={this.printProps}>
-        Print Props
-      </button>
-      <button onClick={this.emptyCart}>
-        Empty Cart
-      </button>
-    </div>
+        <React.Fragment>
+          <Header
+            authenticated={this.props.tokens.authenticated}
+            customer={this.props.customer}
+            lang={this.state.queryParams.lang}
+          />
+          <Landing/>
+        </React.Fragment>
   );
   }
 }

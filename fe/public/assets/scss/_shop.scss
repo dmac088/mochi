@@ -1,0 +1,103 @@
+
+/*=============================================
+=            12. Shop Page              =
+=============================================*/
+
+
+/*----------  Shop header  ----------*/
+
+    .view-mode-icons{
+
+        @media #{$large-mobile}{
+            margin-bottom: 20px;
+        }
+        a{
+            font-size: 15px;
+            background-color: #ebebeb;
+            color: #999;
+            width: 50px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+
+            &:first-child{
+                border-top-left-radius: 25px;
+                border-bottom-left-radius: 25px;
+                padding-left: 5px;
+            }
+            &:last-child{
+                border-top-right-radius: 25px;
+                border-bottom-right-radius: 25px;
+                padding-right: 5px;
+            }
+
+            &:hover, &.active{
+                background-color: $theme-color;
+                color: #ffffff;
+            }
+
+        }
+    }
+
+    .sort-by-dropdown{
+        font-weight: 500;
+        margin-right: 10px;
+        font-size: 15px;
+        color: #323232;
+
+        @media #{$large-mobile}{
+            font-size: 14px;
+        }
+        select{
+            padding: 5px 10px;
+            margin-left: 10px;
+        }
+        p{
+            margin-bottom: 0; 
+        }
+    }
+
+    p.result-show-message{
+        font-size: 15px;
+        font-weight: 500;
+
+        @media #{$large-mobile}{
+            font-size: 14px;
+        }
+    }
+
+
+
+    
+    /*----------  Shop product grid list switcher style  ----------*/
+    
+    .shop-product-wrap {
+        &.grid {
+            .shop-list-view-product {
+                display: none;
+            }
+        }
+    
+        &.list {
+            .shop-grid-view-product {
+                display: none;
+            }
+        }
+    }
+    
+    
+    .shop-product-wrap.list {
+    
+        [class*="col"],
+        [class*="col-"] {
+            -webkit-box-flex: 1;
+            -ms-flex: 1 0 100%;
+            flex: 1 0 100%;
+            width: 100%;
+            max-width: 100%;
+        }
+    }
+    
+
+/*=====  End of 12. Shop Page     ======*/
+
