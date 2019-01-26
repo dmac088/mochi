@@ -1,6 +1,5 @@
 
 import React, { Component } from 'react';
-import { Navbar, Button, FormGroup, FormControl } from 'react-bootstrap';
 import { withRouter } from "react-router-dom";
 import qs from 'query-string';
 import _ from 'lodash';
@@ -22,6 +21,7 @@ class Search extends Component {
   }
 
   updateSearch = (event) => {
+    console.log(event.target.value);
     this.setState({
       inputTerm: event.target.value
     });
@@ -45,12 +45,12 @@ class Search extends Component {
 
   render() {
       return(
-        <Navbar.Form>
-            <FormGroup controlId="formInlineName">
-              <FormControl onChange={this.updateSearch} type="text" value={this.state.inputTerm} placeholder="Search..." onKeyPress={this.handleKeyPress} />
-              <Button onClick={this.handleSearch} value={this.state.currentSearchTerm}>Search</Button>
-            </FormGroup>
-        </Navbar.Form>
+        <div className="header-advance-search">
+          <form action="#">
+            <input type="text" onChange={this.updateSearch} value={this.state.inputTerm} placeholder="Search your product" />
+            <button onClick={this.handleSearch}><span className="icon_search" /></button>
+          </form>
+        </div>
       );
     }
 }

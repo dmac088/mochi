@@ -2,11 +2,14 @@
   "parser": "babel-eslint",
   "env": {
     "node": true,
-    "es6": true
+    "es6": true,
+    "jquery": true
   },
   "plugins": [
     "babel",
-    "react"
+    "react",
+    "dollar-sign",
+    "jquery"
   ],
   "rules": {
     "indent": [2, 2],
@@ -57,4 +60,3 @@
   },
   "extends": "eslint:recommended"
 }
-

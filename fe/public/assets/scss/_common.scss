@@ -1,0 +1,414 @@
+/*=============================================
+=            01. Theme defaultt css            =
+=============================================*/
+
+/*-- Google Font --*/
+@import url('https://fonts.googleapis.com/css?family=Rubik:300,300i,400,400i,500,500i,700,700i,900,900i');
+
+/*-- Common Style --*/
+*, *::after, *::before {
+  box-sizing: border-box;
+}
+html, body {
+    height: 100%;
+}
+body{
+    background-color: $body-bg-color; 
+    line-height: 24px; 
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    visibility: visible; 
+    font-family: $rubik;
+    color: $body-color;
+    position: relative;
+    overflow-x: hidden;
+    padding-top: 186px;
+
+    @media #{$large-mobile}{
+        padding-top: 295px;
+    }
+    @media #{$small-mobile}{
+        padding-top: 319px;
+    }
+    @media #{$extra-small-mobile}{
+        padding-top: 349px;
+    }
+ 
+
+
+}
+h1, h2, h3, h4, h5, h6 {
+    color: $heading-color;
+    font-family: $rubik;
+    font-weight: 400;
+    margin-top: 0;
+}
+h1 {
+    font-size: 36px;
+    line-height: 42px;
+}
+h2 {
+    font-size: 30px;
+    line-height: 36px;
+}
+h3 {
+    font-size: 24px;
+    line-height: 30px;
+}
+h4 {
+    font-size: 18px;
+    line-height: 24px;
+}
+h5 {
+    font-size: 14px;
+    line-height: 18px;
+}
+h6 {
+    font-size: 12px;
+    line-height: 14px;
+}
+p:last-child {
+    margin-bottom: 0;
+}
+a, button {
+    color: inherit;
+    display: inline-block;
+    line-height: inherit;
+    text-decoration: none;
+    cursor: pointer;
+}
+a, button, img, input, span {
+    transition: all 0.3s ease 0s;
+}
+*:focus {
+    outline: none !important;
+}
+a:focus {
+    color: inherit;
+    outline: none;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: none;
+    color: $hover-color;
+}
+button, input[type="submit"] {
+    cursor: pointer;
+}
+ul {
+    list-style: outside none none;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+
+/*-- Tab Content & Pane Fix --*/
+.tab-content {
+    width: 100%;
+    & .tab-pane {
+        display: block;
+        height: 0;
+        max-width: 100%;
+        visibility: hidden;
+        overflow: hidden;
+        opacity: 0;
+        &.active {
+            height: auto;
+            visibility: visible;
+            opacity: 1;
+            overflow: visible;
+        }
+    }
+}
+
+
+/*----------  on sale badge  ----------*/
+
+
+
+.onsale{
+    background: #ffaf00;
+    box-shadow: none;
+    color: #fff;
+    font-family: Rubik, Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    height: 24px;
+    left: 20px;
+    line-height: 24px;
+    min-height: auto;
+    min-width: 44px;
+    padding: 0 9px;
+    position: absolute;
+    right: auto;
+    text-align: center;
+    text-shadow: none;
+    text-transform: uppercase;
+    top: 20px;
+    z-index: 42;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+}
+
+
+
+/*----------  product hover icons  ----------*/
+
+.product-hover-icons {
+    position: absolute;
+    bottom: auto;
+    left: 50%;
+    margin: 0;
+    margin-right: -50%;
+    max-width: 90%;
+    padding: 0;
+    right: auto;
+    top: 50%;
+    z-index: 78;
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-50%, -50%);
+    transition: 0.3s;
+
+    a {
+        display: inline-block;
+        background: #80bb01;
+        border: none;
+        color: #fff;
+        height: 43px;
+        letter-spacing: 0;
+        line-height: 46px;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        text-transform: none;
+        width: 43px;
+        border-radius: 100%;
+        transition: all .3s ease; 
+        position: relative;
+
+        @media #{$small-mobile}{
+            height: 33px;
+            width: 33px;
+            line-height: 33px;
+            font-size: 13px;
+        }
+
+
+        &:hover {
+            background: $dark-hover-color;
+
+            &:before, &:after {
+                visibility: visible;
+                opacity: 1;
+            }
+        }
+
+        &.active {
+            background: $dark-hover-color;
+        }
+
+        &:before {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            margin-bottom: 12px;
+            transform: translateX(-50%);
+            font-size: 14px;
+            font-weight: 400;
+            background-color: #444444;
+            color: #ffffff;
+            line-height: 16px;
+            padding: 5px 10px;
+            border-radius: 2px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+        }
+
+        &:after{
+            position: absolute;
+            left: 50%;
+            bottom: 100%;
+            margin-bottom: 8px;
+            margin-left: -4px;
+            content: "";
+            border-width: 4px 4px 0 4px;
+            border-style: solid;
+            border-color: #444444 transparent transparent transparent;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+        }
+
+
+    }
+}
+
+
+
+
+
+/*----------  scroll to top  ----------*/
+
+  /* scroll to top */
+
+  a.scroll-top {
+    background: #666;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    line-height: 40px;
+    display: none;
+    text-align: center;
+    color: #fff;
+    font-family: 'FontAwesome';
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+    z-index: 50000;
+
+    &:after {
+      content: "\f077";
+      display: inline;
+      font-size: 20px;
+    }
+
+    &:hover{
+      background-color: $hover-color;
+      color: #ffffff;
+    }
+  }
+
+
+
+  
+  /*----------  breadcrumb  ----------*/
+  
+  .breadcrumb-area{
+      .breadcrumb-container{
+          border-bottom: 1px solid #dddddd;
+          padding: 20px 0;
+          ul{
+              li{
+                  display: inline-block;
+                  padding-right: 60px;
+                  position: relative;
+                  font-size: 15px;
+                  line-height: 25px;
+
+                  &:last-child{
+                      &:after{
+                          content: "";
+                      }
+                  }
+
+                  &.active{
+                      color: $theme-color;
+                  }
+
+                  &:after{
+                      position: absolute;
+                      top: 0;
+                      right: 30px;
+                      content: ">";
+                  }
+                  a{
+
+                  }
+              }
+          }
+      }
+  }
+
+
+
+/*----------  custom zoom in animation  ----------*/
+
+@keyframes customZoomIn {
+    from {
+        opacity: 0;
+        -webkit-transform: scale3d(0.8, 0.8, 0.8);
+        transform: scale3d(0.8, 0.8, 0.8);
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+
+
+/*----------  select  browser issue fix  ----------*/
+
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding-right: 20px;
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' version='1.1' height='10px' width='15px'%3E%3Ctext x='0' y='10' fill='black'%3E%E2%96%BE%3C/text%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: 95% 50%;
+
+  }
+
+
+  
+  /*----------  pagination style  ----------*/
+
+  .pagination-container{
+      background-color: #ffffff;
+      box-shadow: 0px 5px 4px 0px rgba(0,0,0,0.1);
+      padding: 15px 15px;
+  }
+  
+  .pagination-content{
+      ul{
+          li{
+              display: inline-block;
+              height: 30px;
+              width: 30px;
+              line-height: 30px;
+              border-radius: 3px; 
+              a{
+                  background-color: #666666;
+                  border-radius: 3px; 
+                  color: #ffffff;
+                  display: block;
+                  &:hover{
+                      background-color: $theme-color;
+                  }
+                  &.active{
+                    background-color: $theme-color;
+                  }
+              }
+          }
+      }
+  }
+
+
+  
+  /*----------  section big title  ----------*/
+  
+  .section-big-title{
+      margin-top: -10px;
+  }
+
+
+  
+  /*----------  nice select style  ----------*/
+  
+  .nice-select.open .list{
+      z-index: 999;
+  } 
+  

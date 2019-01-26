@@ -1,7 +1,6 @@
 import React from 'react';
 import * as session from '../services/session';
 import { Link } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
 
 const Selector = (props) => {
 
@@ -9,42 +8,42 @@ const Selector = (props) => {
     session.clearSession();
   }
 
-  const renderLogoutButton = () => {
+  const renderLogoutbutton = () => {
      let button;
      if(props.authenticated) {
        button =
        <Link to="/">
-         <Button type="button"
+         <button type="button"
               onClick={logoutClick}
               className="btn btn-outline-success ml-sm-3 mr-sm-3 my-2 my-sm-0">
             Logout
-         </Button>
+         </button>
        </Link>;
      }
      return button;
   }
 
-  const renderLoginButton = (props) => {
+  const renderLoginbutton = (props) => {
      let button;
      if(!props.authenticated) {
         button =
         <Link to="/Login">
-          <Button type="button">
+          <button type="button">
              Login
-          </Button>
+          </button>
        </Link>;
       }
       return button;
   }
 
-  const rendersignupButton = () => {
+  const rendersignupbutton = () => {
      let button;
      if(!props.authenticated) {
        button =
        <Link to="/Signup">
-         <Button type="submit">
+         <button type="submit">
            SignUp
-         </Button>
+         </button>
       </Link>;
      }
      return button;
@@ -52,9 +51,9 @@ const Selector = (props) => {
 
     return(
         <React.Fragment>
-            {renderLoginButton(props)}
-            {renderLogoutButton(props)}
-            {rendersignupButton(props)}
+            {renderLoginbutton(props)}
+            {renderLogoutbutton(props)}
+            {rendersignupbutton(props)}
         </React.Fragment>
     );
 }

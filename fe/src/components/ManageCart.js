@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import * as cartSelector from '../services/cart/selectors';
 import * as cartService from '../services/cart';
-import { Table } from 'react-bootstrap';
 import Counter from './Counter';
 import { connect } from 'react-redux';
 
@@ -72,7 +71,7 @@ class ManageCart extends Component {
     render() {
       return(
           <div className="container">
-              <Table responsive>
+              <table>
                 <thead>
                   <tr>
                     <th scope="col">Product</th>
@@ -85,7 +84,7 @@ class ManageCart extends Component {
                 <tbody>
                   {this.renderCartItems()}
                 </tbody>
-              </Table>
+              </table>
           </div>
         )
     }
