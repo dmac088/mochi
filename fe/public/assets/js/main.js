@@ -1,7 +1,7 @@
 (function ($) {
 	"use strict";
 
-	/*--
+		/*--
     Menu Sticky
     -----------------------------------*/
     var windows = $(window);
