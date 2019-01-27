@@ -1,0 +1,43 @@
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+const $ = window.$;
+
+class Policy extends Component {
+
+  render() {
+    return (
+      <div className="policy-section mb-35">
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-12">
+              <div className="policy-titles d-flex align-items-center flex-wrap">
+                {/*=======  single policy  =======*/}
+                <div className="single-policy">
+                  <span><img src="assets/images/policy-icon1.png" className="img-fluid" alt /></span>
+                  <p> FREE SHIPPING ON ORDERS OVER $200</p>
+                </div>
+                {/*=======  End of single policy  =======*/}
+                {/*=======  single policy  =======*/}
+                <div className="single-policy">
+                  <span><img src="assets/images/policy-icon2.png" className="img-fluid" alt /></span>
+                  <p>30 -DAY RETURNS MONEY BACK</p>
+                </div>
+                {/*=======  End of single policy  =======*/}
+                {/*=============================================
+          =            single policy         =
+          =============================================*/}
+                <div className="single-policy">
+                  <span><img src="assets/images/policy-icon3.png" className="img-fluid" alt /></span>
+                  <p> 24/7 SUPPORT</p>
+                </div>
+                {/*=====  End of single policy  ======*/}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+}
+
+export default Policy;

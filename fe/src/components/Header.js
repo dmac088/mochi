@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { Component } from 'react';
 import Greeting from './Greeting';
 import HeaderCartSummary from './HeaderCartSummary';
 import CartMenu from './CartMenu';
@@ -7,9 +7,68 @@ import Selector from './Selector';
 import Search from './Search';
 import LanguageSelector from './LanguageSelector';
 import { Link } from 'react-router-dom';
+const $ = window.$;
+
+class Header extends Component {
+
+  componentDidMount() {
+      this.initHeader();
+    }
+
+  initHeader = () => {
+    /*--
+      Menu Sticky
+      -----------------------------------*/
+      let windows = $(window);
+      let screenSize = windows.width();
+      let sticky = $('.header-sticky');
+      let menubarTop = $('.menubar-top');
 
 
-const Header = (props) => {
+      windows.on('scroll', function () {
+        let scroll = windows.scrollTop();
+
+
+        if (scroll < 300) {
+          sticky.removeClass('is-sticky');
+
+          menubarTop.removeClass('d-none');
+          menubarTop.addClass('d-flex');
+        } else {
+          sticky.addClass('is-sticky');
+          menubarTop.addClass('d-none');
+          menubarTop.removeClass('d-flex');
+        }
+
+      if (scroll >= 400) {
+        $('.scroll-top').fadeIn();
+      } else {
+        $('.scroll-top').fadeOut();
+      }
+
+    });
+
+    $('.scroll-top').on('click', function () {
+      $('html,body').animate({
+        scrollTop: 0
+      }, 2000);
+    });
+
+    /*--------------------------
+      Mobile Menu
+      ------------------------*/
+      let mainMenuNav = $('.main-menu nav');
+      mainMenuNav.meanmenu({
+        meanScreenWidth: '991',
+        meanMenuContainer: '.mobile-menu',
+        meanMenuClose: '<span class="menu-close"></span>',
+        meanMenuOpen: '<span class="menu-bar"></span>',
+        meanRevealPosition: 'right',
+        meanMenuCloseSize: '0',
+      });
+  }
+
+render() {
   return(
     <header>
         {/*=======  header top  =======*/}
@@ -110,7 +169,7 @@ const Header = (props) => {
                           <li className="menu-item-has-children"><a href="single-product.html">Single Product</a>
                             <ul className="sub-menu">
                               <li><a href="single-product.html">Single Product</a></li>
-                              <li><a href="single-product-variable.html">Single Product variable</a></li>
+                              <li><a href="single-product-letiable.html">Single Product letiable</a></li>
                               <li><a href="single-product-affiliate.html">Single Product affiliate</a></li>
                               <li><a href="single-product-group.html">Single Product group</a></li>
                               <li><a href="single-product-tabstyle-2.html">Tab Style 2</a></li>
@@ -179,6 +238,7 @@ const Header = (props) => {
         {/*=======  End of header bottom  =======*/}
       </header>
     );
+  }
 }
 
 export default Header;
