@@ -6,6 +6,7 @@ import TabSliderContiner from './TabSliderContiner';
 import BannerSlider from './BannerSlider';
 import BestSeller from './BestSeller';
 import BlogPosts from './BlogPosts';
+import BrandSlider from './BrandSlider';
 import { withRouter } from 'react-router-dom';
 
 class Landing extends Component {
@@ -1265,81 +1266,7 @@ class Landing extends Component {
         {/*=============================================
 	=            Brand logo slider         =
 	=============================================*/}
-        <div className="slider brand-logo-slider mb-35">
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-12">
-                {/*=======  blog slider section title  =======*/}
-                <div className="section-title">
-                  <h3>brand logos</h3>
-                </div>
-                {/*=======  End of blog slider section title  =======*/}
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-lg-12">
-                {/*=======  brand logo wrapper  =======*/}
-                <div className="brand-logo-wrapper pt-20 pb-20">
-                  {/*=======  single-brand-logo  =======*/}
-                  <div className="col">
-                    <div className="single-brand-logo">
-                      <a href="#">
-                        <img src="assets/images/brands/brand1.png" className="img-fluid" alt />
-                      </a>
-                    </div>
-                  </div>
-                  {/*=======  End of single-brand-logo  =======*/}
-                  {/*=======  single-brand-logo  =======*/}
-                  <div className="col">
-                    <div className="single-brand-logo">
-                      <a href="#">
-                        <img src="assets/images/brands/brand2.png" className="img-fluid" alt />
-                      </a>
-                    </div>
-                  </div>
-                  {/*=======  End of single-brand-logo  =======*/}
-                  {/*=======  single-brand-logo  =======*/}
-                  <div className="col">
-                    <div className="single-brand-logo">
-                      <a href="#">
-                        <img src="assets/images/brands/brand3.png" className="img-fluid" alt />
-                      </a>
-                    </div>
-                  </div>
-                  {/*=======  End of single-brand-logo  =======*/}
-                  {/*=======  single-brand-logo  =======*/}
-                  <div className="col">
-                    <div className="single-brand-logo">
-                      <a href="#">
-                        <img src="assets/images/brands/brand4.png" className="img-fluid" alt />
-                      </a>
-                    </div>
-                  </div>
-                  {/*=======  End of single-brand-logo  =======*/}
-                  {/*=======  single-brand-logo  =======*/}
-                  <div className="col">
-                    <div className="single-brand-logo">
-                      <a href="#">
-                        <img src="assets/images/brands/brand5.png" className="img-fluid" alt />
-                      </a>
-                    </div>
-                  </div>
-                  {/*=======  End of single-brand-logo  =======*/}
-                  {/*=======  single-brand-logo  =======*/}
-                  <div className="col">
-                    <div className="single-brand-logo">
-                      <a href="#">
-                        <img src="assets/images/brands/brand6.png" className="img-fluid" alt />
-                      </a>
-                    </div>
-                  </div>
-                  {/*=======  End of single-brand-logo  =======*/}
-                </div>
-                {/*=======  End of brand logo wrapper  =======*/}
-              </div>
-            </div>
-          </div>
-        </div>
+        <BrandSlider/>
         {/*=====  End of Brand logo slider  ======*/}
         {/*=============================================
 	=            Footer         =
