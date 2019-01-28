@@ -1,7 +1,7 @@
 import React from 'react';
 import Product from './Product';
 import NoResults from "../empty-states/NoResults";
-import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
+import ReactCSSTransitionGroup from 'react-addons-transition-group';
 
 
 const Products = (props) => {
@@ -28,14 +28,14 @@ const Products = (props) => {
 			view = <NoResults />
 		} else{
 			view =
-			<CSSTransitionGroup
+			<ReactCSSTransitionGroup
 				transitionName="fadeIn"
 				transitionEnterTimeout={500}
 				transitionLeaveTimeout={300}
 				component="div"
 				className="products">
 					{productsData}
-			</CSSTransitionGroup>
+			</ReactCSSTransitionGroup>
 		}
 		return(
 			<div className="products-wrapper">
