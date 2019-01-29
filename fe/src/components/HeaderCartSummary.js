@@ -31,7 +31,7 @@ class HeaderCartSummary extends Component {
           visible: false,
         });
       }
-    }, 1000);
+    }, 500);
   }
 
   render() {
