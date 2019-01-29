@@ -10,21 +10,35 @@ class HeaderCartSummary extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { visible: false };
+    this.state = {
+      visible: false,
+      inParent: false,
+    };
   }
 
-
-  setVisible = () => {
-    this.setState({ visible: true })
+  setInParent = () => {
+    console.log("setInParent");
+    this.setState({
+      inParent: true,
+      visible: true,
+    });
   }
 
-  setNotVisible = () => {
-    this.setState({ visible: false });
+  setNotInParent = () => {
+    console.log("setNotInParent");
+    this.setState({ inParent: false });
+    setTimeout(() => {
+      if(!(this.state.inParent)) {
+        this.setState({
+          visible: false,
+        });
+      }
+    }, 1000);
   }
 
   render() {
     return(
-      <div onMouseEnter={this.setVisible} onMouseLeave={this.setNotVisible} className="shopping-cart" id="shopping-cart">
+      <div onMouseEnter={this.setInParent} onMouseLeave={this.setNotInParent} className="shopping-cart" id="shopping-cart">
           <a >
             <div className="cart-icon d-inline-block">
               <span className="icon_bag_alt" />
@@ -38,7 +52,9 @@ class HeaderCartSummary extends Component {
             </div>
          </a>
         <ReactTransitionGroup>
-          { this.state.visible ? <Accordion setVisible={this.setVisible} setNotVisible={this.setNotVisible}/> : null }
+          { this.state.visible ? <Accordion
+                                      visible={this.visible}
+                                 /> : null }
         </ReactTransitionGroup>
       </div>
     );
@@ -48,15 +64,14 @@ class HeaderCartSummary extends Component {
   class Accordion extends React.Component {
 
   	componentWillEnter (callback) {
-  		const element = ReactDOM.findDOMNode(this.container);
+    	const element = ReactDOM.findDOMNode(this.container);
       Velocity(element, 'slideDown', { duration: 1000 }).then(callback);
-
     }
 
   	componentWillLeave (callback) {
-  	  const element = ReactDOM.findDOMNode(this.container);
+      const element = ReactDOM.findDOMNode(this.container);
       Velocity(element, 'slideUp', { duration: 1000 }).then(callback);
-  	}
+    }
 
   	setContainer = (c) => {
   		this.container = c;
@@ -64,7 +79,7 @@ class HeaderCartSummary extends Component {
 
   	render() {
   		return (
-      <div className="cart-floating-box" id="cart-floating-box" onMouseLeave={this.props.setNotVisible} ref={this.setContainer}>
+      <div className="cart-floating-box" id="cart-floating-box" ref={this.setContainer}>
         <div className="cart-items">
           <div className="cart-float-single-item d-flex">
             <span className="remove-item"><a href="#"><i className="fa fa-times" /></a></span>
