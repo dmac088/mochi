@@ -30,25 +30,30 @@ class Header extends Component {
 
 
         if (scroll < 300) {
+          console.log("scroll < 300");
           sticky.removeClass('is-sticky');
 
           menubarTop.removeClass('d-none');
           menubarTop.addClass('d-flex');
         } else {
+          console.log("scroll >= 300");
           sticky.addClass('is-sticky');
           menubarTop.addClass('d-none');
           menubarTop.removeClass('d-flex');
         }
 
       if (scroll >= 400) {
+        console.log("scroll >= 400");
         $('.scroll-top').fadeIn();
       } else {
+        console.log("scroll < 400");
         $('.scroll-top').fadeOut();
       }
 
     });
 
     $('.scroll-top').on('click', function () {
+      console.log("animating");
       $('html,body').animate({
         scrollTop: 0
       }, 2000);
