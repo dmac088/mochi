@@ -12,23 +12,21 @@ class HeaderCartSummary extends Component {
     super(props);
     this.state = {
       visible: false,
-      inParent: false,
+      inContainer: false,
     };
   }
 
-  setInParent = () => {
-    console.log("setInParent");
+  setinContainer = () => {
     this.setState({
-      inParent: true,
+      inContainer: true,
       visible: true,
     });
   }
 
-  setNotInParent = () => {
-    console.log("setNotInParent");
-    this.setState({ inParent: false });
+  setNotinContainer = () => {;
+    this.setState({ inContainer: false });
     setTimeout(() => {
-      if(!(this.state.inParent)) {
+      if(!(this.state.inContainer)) {
         this.setState({
           visible: false,
         });
@@ -38,8 +36,8 @@ class HeaderCartSummary extends Component {
 
   render() {
     return(
-      <div onMouseEnter={this.setInParent} onMouseLeave={this.setNotInParent} className="shopping-cart" id="shopping-cart">
-          <a >
+      <div onMouseEnter={this.setinContainer} onMouseLeave={this.setNotinContainer} className="shopping-cart" id="shopping-cart">
+          <a href="cart.html">
             <div className="cart-icon d-inline-block">
               <span className="icon_bag_alt" />
             </div>
