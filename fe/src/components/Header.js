@@ -7,7 +7,7 @@ import Selector from './Selector';
 import Search from './Search';
 import LanguageSelector from './LanguageSelector';
 import { Link } from 'react-router-dom';
-const $ = window.$;
+//const $ = window.$;
 
 class Header extends Component {
 
@@ -15,62 +15,107 @@ class Header extends Component {
       this.initHeader();
     }
 
+
+
   initHeader = () => {
     /*--
       Menu Sticky
       -----------------------------------*/
-      let windows = $(window);
-      let screenSize = windows.width();
-      let sticky = $('.header-sticky');
-      let menubarTop = $('.menubar-top');
+      let screenSize = document.documentElement.clientWidth;
+      let sticky = document.querySelectorAll('.header-sticky');
+      let menubarTop = document.querySelectorAll('.menubar-top');
 
-
-      windows.on('scroll', function () {
-        let scroll = windows.scrollTop();
-
+      window.addEventListener("scroll", (e) => {
+        let scroll = document.documentElement.scrollTop;
 
         if (scroll < 300) {
-          console.log("scroll < 300");
-          sticky.removeClass('is-sticky');
+            [].forEach.call(sticky, function(el) {
+                el.classList.remove("is-sticky");
+            });
 
-          menubarTop.removeClass('d-none');
-          menubarTop.addClass('d-flex');
+            [].forEach.call(menubarTop, function(el) {
+                el.classList.remove("d-none");
+                el.classList.add("d-flex");
+            });
         } else {
-          console.log("scroll >= 300");
-          sticky.addClass('is-sticky');
-          menubarTop.addClass('d-none');
-          menubarTop.removeClass('d-flex');
+            // console.log(scroll);
+            [].forEach.call(sticky, function(el) {
+                el.classList.add("is-sticky");
+            });
+
+            [].forEach.call(menubarTop, function(el) {
+                el.classList.add("d-none");
+                el.classList.remove("d-flex");
+            });
         }
 
-      if (scroll >= 400) {
-        console.log("scroll >= 400");
-        $('.scroll-top').fadeIn();
-      } else {
-        console.log("scroll < 400");
-        $('.scroll-top').fadeOut();
-      }
+          if (scroll >= 400) {
+            let scrollTop = document.getElementsByClassName('scroll-top')[0];
+            console.log(scrollTop);
+            scrollTop.velocity("fadeIn", { duration: 1500 })
+            //$('.scroll-top').fadeIn();
+          } else {
+            let scrollTop = document.getElementsByClassName('scroll-top')[0];
+            console.log(scrollTop);
+            //scrollTop.velocity("fadeOut", { delay: 500, duration: 1500 });
+            //console.log(scroll);
+            //$('.scroll-top').fadeOut();
+          }
+      });
 
-    });
+      // windows.on('scroll', function () {
+      //   let scroll = windows.scrollTop();
+      //   console.log(scroll);
+      //   //
+      //   // $("#element3").velocity("scroll", {
+      //   //   container: $("#container"),
+      //   //   duration: 800,
+      //   //   delay: 500
+      //   // });
+      //
+      //   if (scroll < 300) {
+      //     console.log(scroll);
+      //     sticky.classList.remove('sticky');
+      //     //sticky.removeClass('is-sticky');
+      //
+      //     menubarTop.removeClass('d-none');
+      //     menubarTop.addClass('d-flex');
+      //   } else {
+      //     console.log(scroll);
+      //     sticky.addClass('is-sticky');
+      //     menubarTop.addClass('d-none');
+      //     menubarTop.removeClass('d-flex');
+      //   }
+    //
+    //   if (scroll >= 400) {
+    //     console.log(scroll);
+    //     $('.scroll-top').fadeIn();
+    //   } else {
+    //     console.log(scroll);
+    //     $('.scroll-top').fadeOut();
+    //   }
+    //
+    // });
 
-    $('.scroll-top').on('click', function () {
-      console.log("animating");
-      $('html,body').animate({
-        scrollTop: 0
-      }, 2000);
-    });
+    // $('.scroll-top').on('click', function () {
+    //   console.log("animating");
+    //   $('html,body').animate({
+    //     scrollTop: 0
+    //   }, 2000);
+    // });
 
     /*--------------------------
       Mobile Menu
       ------------------------*/
-      let mainMenuNav = $('.main-menu nav');
-      mainMenuNav.meanmenu({
-        meanScreenWidth: '991',
-        meanMenuContainer: '.mobile-menu',
-        meanMenuClose: '<span class="menu-close"></span>',
-        meanMenuOpen: '<span class="menu-bar"></span>',
-        meanRevealPosition: 'right',
-        meanMenuCloseSize: '0',
-      });
+      // let mainMenuNav = document.getElementsByClassName('main-menu nav')[0];
+      // mainMenuNav.meanmenu({
+      //   meanScreenWidth: '991',
+      //   meanMenuContainer: '.mobile-menu',
+      //   meanMenuClose: '<span class="menu-close"></span>',
+      //   meanMenuOpen: '<span class="menu-bar"></span>',
+      //   meanRevealPosition: 'right',
+      //   meanMenuCloseSize: '0',
+      // });
   }
 
 render() {
