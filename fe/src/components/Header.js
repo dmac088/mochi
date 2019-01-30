@@ -7,14 +7,16 @@ import Selector from './Selector';
 import Search from './Search';
 import LanguageSelector from './LanguageSelector';
 import { Link } from 'react-router-dom';
+const $ = window.$;
 
 class Header extends Component {
 
   componentDidMount() {
       this.initHeader();
-  }
+    }
 
-  
+
+
   initHeader = () => {
     /*--
       Menu Sticky
@@ -59,20 +61,22 @@ class Header extends Component {
             }
           }
       });
-    /*--------------------------
+      /*--------------------------
       Mobile Menu
       ------------------------*/
-      let mainMenuNav = document.getElementsByClassName('main-menu nav')[0];
-      if(!mainMenuNav === undefined) {
-        mainMenuNav.meanmenu({
+      //need to replace meanmenu with bootstrap hamburger
+      let mainMenuNavTest = (document.getElementsByClassName("main-menu")[0]).getElementsByTagName("nav");
+      let mainMenuNav = $('.main-menu nav');
+      console.log(mainMenuNav);
+      console.log(mainMenuNavTest);
+      mainMenuNav.meanmenu({
           meanScreenWidth: '991',
           meanMenuContainer: '.mobile-menu',
           meanMenuClose: '<span class="menu-close"></span>',
           meanMenuOpen: '<span class="menu-bar"></span>',
           meanRevealPosition: 'right',
           meanMenuCloseSize: '0',
-        });
-      }
+      });
   }
 
 render() {
