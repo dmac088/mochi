@@ -8,16 +8,47 @@ import BestSeller from './BestSeller';
 import BlogPosts from './BlogPosts';
 import BrandSlider from './BrandSlider';
 import { withRouter } from 'react-router-dom';
+import CSSTransitionGroup from 'react-addons-css-transition-group';
 
 class Landing extends Component {
 
-
-  componentWillMount() {
+  constructor(props) {
+    super(props);
+    this.state = {
+        theposition: 0,
+        showScroller: false
+    };
   }
 
+  componentDidMount() {
+    window.addEventListener('scroll', this.listenToScroll)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.listenToScroll)
+  }
+
+  listenToScroll = () => {
+    let scroll = document.documentElement.scrollTop;
+
+    this.setState({
+      theposition: scroll,
+    })
+  }
 
   render() {
     console.log("rendering Landing");
+    console.log(this.state.theposition);
+    let child = (this.state.theposition >= 400) ? <a  href="#"
+                                                      className="scroll-top"
+                                                      style= {{"content": '\f077',
+                                                             "display": "inline",
+                                                             "font-size": "20px"}}
+                                                  /> :
+                                                  <a href="#"
+                                                    className="scroll-top"
+                                                  />
+
     return(
       <div>
         <HeroSlider />
@@ -1566,7 +1597,9 @@ class Landing extends Component {
         </div>
         {/*=====  End of Quick view modal  ======*/}
         {/* scroll to top  */}
-        <a href="#" className="scroll-top" />
+        <CSSTransitionGroup>
+            {child}
+        </CSSTransitionGroup>
       </div>
       );
   }

@@ -28,11 +28,11 @@
 
 		//code for scroll top
 
-		if (scroll >= 400) {
-			$('.scroll-top').fadeIn();
-		} else {
-			$('.scroll-top').fadeOut();
-		}
+		// if (scroll >= 400) {
+		// 	$('.scroll-top').fadeIn();
+		// } else {
+		// 	$('.scroll-top').fadeOut();
+		// }
 
 	});
 
