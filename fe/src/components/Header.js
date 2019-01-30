@@ -11,10 +11,14 @@ const $ = window.$;
 
 class Header extends Component {
 
-  componentDidMount() {
-      this.initHeader();
-    }
+  // componentDidMount() {
+  //     this.initHeader();
+  //   }
 
+  constructor(props) {
+    super(props);
+    this.state = { theposition: 0};
+  }
 
 
   initHeader = () => {
@@ -28,38 +32,19 @@ class Header extends Component {
       window.addEventListener("scroll", (e) => {
         let scroll = document.documentElement.scrollTop;
 
-        if (scroll < 300) {
-            [].forEach.call(sticky, function(el) {
-                el.classList.remove("is-sticky");
-            });
 
-            [].forEach.call(menubarTop, function(el) {
-                el.classList.remove("d-none");
-                el.classList.add("d-flex");
-            });
-        } else {
-            // console.log(scroll);
-            [].forEach.call(sticky, function(el) {
-                el.classList.add("is-sticky");
-            });
-
-            [].forEach.call(menubarTop, function(el) {
-                el.classList.add("d-none");
-                el.classList.remove("d-flex");
-            });
-        }
-
-          if (scroll >= 400) {
-            let scrollTop = document.getElementsByClassName('scroll-top')[0];
-            if (!scrollTop === undefined) {
-              scrollTop.velocity("fadeIn", { duration: 1500 });
-            }
-          } else {
-            let scrollTop = document.getElementsByClassName('scroll-top')[0];
-            if (!scrollTop === undefined) {
-              scrollTop.velocity("fadeOut", { delay: 500, duration: 1500 });
-            }
-          }
+          //
+          // if (scroll >= 400) {
+          //   let scrollTop = document.getElementsByClassName('scroll-top')[0];
+          //   if (!scrollTop === undefined) {
+          //     scrollTop.velocity("fadeIn", { duration: 1500 });
+          //   }
+          // } else {
+          //   let scrollTop = document.getElementsByClassName('scroll-top')[0];
+          //   if (!scrollTop === undefined) {
+          //     scrollTop.velocity("fadeOut", { delay: 500, duration: 1500 });
+          //   }
+          // }
       });
       /*--------------------------
       Mobile Menu
@@ -78,6 +63,23 @@ class Header extends Component {
           meanMenuCloseSize: '0',
       });
   }
+
+
+componentDidMount() {
+  window.addEventListener('scroll', this.listenToScroll)
+}
+
+componentWillUnmount() {
+  window.removeEventListener('scroll', this.listenToScroll)
+}
+
+listenToScroll = () => {
+  let scroll = document.documentElement.scrollTop;
+
+  this.setState({
+    theposition: scroll,
+  })
+}
 
 render() {
   return(
@@ -118,7 +120,10 @@ render() {
         </div>
         {/*=======  End of header top  =======*/}
         {/*=======  header bottom  =======*/}
-        <div className="header-bottom header-bottom-one header-sticky">
+        <div className={
+                          "header-bottom header-bottom-one header-sticky "
+                          + ((this.state.theposition >= 300) ? "is-sticky" : "")
+                       }>
           <div className="container">
             <div className="row">
               <div className="col-md-3 col-sm-12 col-xs-12 text-lg-left text-md-center text-sm-center">
@@ -131,7 +136,10 @@ render() {
                 {/* end of logo */}
               </div>
               <div className="col-md-9 col-sm-12 col-xs-12">
-                <div className="menubar-top d-flex justify-content-between align-items-center flex-sm-wrap flex-md-wrap flex-lg-nowrap mt-sm-15">
+                <div className={
+                                "menubar-top justify-content-between align-items-center flex-sm-wrap flex-md-wrap flex-lg-nowrap mt-sm-15"
+                                + ((this.state.theposition >= 300) ? " d-none" : " d-flex")
+                              }>
                   {/* header phone number */}
                   <div className="header-contact d-flex">
                     <div className="phone-icon">
