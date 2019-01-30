@@ -7,16 +7,14 @@ import Selector from './Selector';
 import Search from './Search';
 import LanguageSelector from './LanguageSelector';
 import { Link } from 'react-router-dom';
-//const $ = window.$;
 
 class Header extends Component {
 
   componentDidMount() {
       this.initHeader();
-    }
+  }
 
-
-
+  
   initHeader = () => {
     /*--
       Menu Sticky
