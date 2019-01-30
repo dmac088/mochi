@@ -37,8 +37,6 @@ class Landing extends Component {
   }
 
   render() {
-    console.log("rendering Landing");
-    console.log(this.state.theposition);
     let child = (this.state.theposition >= 400) ? <a  href="#"
                                                       className="scroll-top"
                                                       style= {{"content": '\f077',
