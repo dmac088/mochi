@@ -24,6 +24,12 @@ class CategoryMenuContainer extends Component {
     window.addEventListener('resize', this.listenToResize);
   }
 
+  toggleVisible = () => {
+    this.setState(prevState => ({
+      menuVisible: !prevState.menuVisible
+    }));
+  }
+
   listenToResize = () => {
     let width =  window.innerWidth
               || document.documentElement.clientWidth
@@ -164,7 +170,7 @@ render() {
         <button className="category-toggle"> <span className="arrow_carrot-right_alt2 mr-2" /> All Categories</button>
       </div>
       {/* Category Menu */}
-      <nav className="category-menu">
+      <nav onClick={this.toggleVisible} className="category-menu">
       <ReactTransitionGroup>
         { this.state.menuVisible ? <CategoryMenu/> : null }
       </ReactTransitionGroup>
