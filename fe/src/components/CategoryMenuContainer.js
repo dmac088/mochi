@@ -14,15 +14,21 @@ class CategoryMenuContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        currentWidth: 0,
         menuVisible: true,
     };
   }
 
   componentDidMount() {
-    (this.getSize <= 991 && this.state.menuVisible === true) ?
-    this.setState({menuVisible: false}) : this.setState({menuVisible: true})
-    window.addEventListener('resize', () => {this.setState({currentWidth: this.getSize});});
+    this.renderMenu();
+    window.addEventListener('resize', this.renderMenu);
+  }
+
+  renderMenu = () => {
+    console.log(this.getSize());
+    (this.getSize() <= 991 && this.state.menuVisible === true) ?
+    this.setState({menuVisible: false}) :
+    this.setState({menuVisible: true});
+    console.log(this.state.menuVisible);
   }
 
   toggleVisible = () => {
