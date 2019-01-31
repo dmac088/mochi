@@ -8,7 +8,6 @@ import BestSeller from './BestSeller';
 import BlogPosts from './BlogPosts';
 import BrandSlider from './BrandSlider';
 import { withRouter } from 'react-router-dom';
-import CSSTransitionGroup from 'react-addons-css-transition-group';
 
 
 
@@ -23,11 +22,11 @@ class Landing extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener('scroll', this.listenToScroll)
+    window.addEventListener('scroll', this.listenToScroll);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.listenToScroll)
+    window.removeEventListener('scroll', this.listenToScroll);
   }
 
   listenToScroll = () => {

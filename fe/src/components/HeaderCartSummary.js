@@ -50,9 +50,7 @@ class HeaderCartSummary extends Component {
             </div>
          </a>
         <ReactTransitionGroup>
-          { this.state.visible ? <Accordion
-                                      visible={this.visible}
-                                 /> : null }
+          { this.state.visible ? <Accordion /> : null }
         </ReactTransitionGroup>
       </div>
     );
