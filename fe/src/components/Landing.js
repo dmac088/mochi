@@ -10,6 +10,8 @@ import BrandSlider from './BrandSlider';
 import { withRouter } from 'react-router-dom';
 import CSSTransitionGroup from 'react-addons-css-transition-group';
 
+
+
 class Landing extends Component {
 
   constructor(props) {
@@ -37,15 +39,11 @@ class Landing extends Component {
   }
 
   render() {
-    let child = (this.state.theposition >= 400) ? <a  href="#"
+    console.log(this.state.theposition);
+    let child = ((this.state.theposition >= 400) ? <a  href="#"
                                                       className="scroll-top"
-                                                      style= {{"content": '\f077',
-                                                             "display": "inline",
-                                                             "font-size": "20px"}}
                                                   /> :
-                                                  <a href="#"
-                                                    className="scroll-top"
-                                                  />
+                                                  null);
 
     return(
       <div>
@@ -1595,8 +1593,11 @@ class Landing extends Component {
         </div>
         {/*=====  End of Quick view modal  ======*/}
         {/* scroll to top  */}
-        <CSSTransitionGroup>
-            {child}
+        <CSSTransitionGroup
+          transitionName="fade"
+          transitionEnter={true}
+          >
+                {child}
         </CSSTransitionGroup>
       </div>
       );
