@@ -20,157 +20,145 @@ class CategoryMenuContainer extends Component {
   }
 
   componentDidMount() {
-    this.initMenu();
-    window.addEventListener('resize', this.listenToResize);
+    (this.getSize <= 991 && this.state.menuVisible === true) ?
+    this.setState({menuVisible: false}) : this.setState({menuVisible: true})
+    window.addEventListener('resize', () => {this.setState({currentWidth: this.getSize});});
   }
 
   toggleVisible = () => {
     this.setState(prevState => ({
       menuVisible: !prevState.menuVisible
     }));
+    console.log(this.state.menuVisible);
   }
 
-  listenToResize = () => {
-    let width =  window.innerWidth
+  getSize = () => {
+    return  window.innerWidth
               || document.documentElement.clientWidth
               || document.body.clientWidth;
-    console.log(width);
-    this.setState({
-      currentWidth: width,
-    })
   }
 
 
   initMenu = () => {
-
-      let windows = $(window);
-      let screenSize = windows.width();
-    /*---------------------
-      Category Menu
-      ------------------------*/
-
-      /*-- letiables --*/
-      let categoryToggleWrap = $('.category-toggle-wrap');
-      let categoryToggle = $('.category-toggle');
-      let categoryMenu = $('.category-menu');
-
-    /*
-     *  Category Menu Default Close for Mobile & Tablet Device
-     *  And Open for Desktop Device and Above
-     */
-     function categoryMenuToggle() {
-      let screenSize = windows.width();
-      if (screenSize <= 991) {
-        categoryMenu.slideUp();
-      } else {
-        categoryMenu.slideDown();
-      }
-     }
-
-     /*-- Category Menu Toggles --*/
-     function categorySubMenuToggle() {
-      let screenSize = windows.width();
-      if (screenSize <= 991) {
-        $('.category-menu .menu-item-has-children > a').prepend('<i class="expand menu-expand"></i>');
-        $('.category-menu .menu-item-has-children ul').slideUp();
-        //        $('.category-menu .menu-item-has-children i').on('click', function(e){
-        //            e.preventDefault();
-        //            $(this).toggleClass('expand');
-        //            $(this).siblings('ul').css('transition', 'none').slideToggle();
-        //        })
-      } else {
-        $('.category-menu .menu-item-has-children > a i').remove();
-        $('.category-menu .menu-item-has-children ul').slideDown();
-      }
-    }
-    categoryMenuToggle();
-    windows.resize(categoryMenuToggle);
-    categorySubMenuToggle();
-    windows.resize(categorySubMenuToggle);
-
-    categoryToggle.on('click', function () {
-      categoryMenu.slideToggle();
-    });
-
-    /*-- Category Sub Menu --*/
-    $('.category-menu').on('click', 'li a, li a .menu-expand', function (e) {
-      let $a = $(this).hasClass('menu-expand') ? $(this).parent() : $(this);
-      if ($a.parent().hasClass('menu-item-has-children')) {
-        if ($a.attr('href') === '#' || $(this).hasClass('menu-expand')) {
-          if ($a.siblings('ul:visible').length > 0) $a.siblings('ul').slideUp();
-          else {
-            $(this).parents('li').siblings('li').find('ul:visible').slideUp();
-            $a.siblings('ul').slideDown();
-          }
-        }
-      }
-      if ($(this).hasClass('menu-expand') || $a.attr('href') === '#') {
-        e.preventDefault();
-        return false;
-      }
-    });
-
-    /*-- Sidebar Category --*/
-    let categoryChildren = $('.sidebar-category li .children');
-
-    categoryChildren.slideUp();
-    categoryChildren.parents('li').addClass('has-children');
-
-    $('.sidebar-category').on('click', 'li.has-children > a', function (e) {
-
-      if ($(this).parent().hasClass('has-children')) {
-        if ($(this).siblings('ul:visible').length > 0) $(this).siblings('ul').slideUp();
-        else {
-          $(this).parents('li').siblings('li').find('ul:visible').slideUp();
-          $(this).siblings('ul').slideDown();
-        }
-      }
-      if ($(this).attr('href') === '#') {
-        e.preventDefault();
-        return false;
-      }
-    });
-
-    //More category
-
-    $(".category-menu li.hidden").hide();
-    $("#more-btn").on('click', function (e) {
-      e.preventDefault();
-      $(".category-menu li.hidden").toggle(500);
-      let htmlAfter = '<span class="icon_minus_alt2"></span> Less Categories';
-      let htmlBefore = '<span class="icon_plus_alt2"></span> More Categories';
-
-
-      if($(this).html() == htmlBefore){
-        $(this).html(htmlAfter);
-      }else{
-        $(this).html(htmlBefore);
-      }
-    });
+    //
+    //   let windows = $(window);
+    //   let screenSize = windows.width();
+    // /*---------------------
+    //   Category Menu
+    //   ------------------------*/
+    //
+    //   /*-- letiables --*/
+    //   let categoryToggleWrap = $('.category-toggle-wrap');
+    //   let categoryToggle = $('.category-toggle');
+    //   let categoryMenu = $('.category-menu');
+    //
+    // /*
+    //  *  Category Menu Default Close for Mobile & Tablet Device
+    //  *  And Open for Desktop Device and Above
+    //  */
+    //  function categoryMenuToggle() {
+    //   let screenSize = windows.width();
+    //   if (screenSize <= 991) {
+    //     categoryMenu.slideUp();
+    //   } else {
+    //     categoryMenu.slideDown();
+    //   }
+    //  }
+    //
+    //  /*-- Category Menu Toggles --*/
+    //  function categorySubMenuToggle() {
+    //   let screenSize = windows.width();
+    //   if (screenSize <= 991) {
+    //     $('.category-menu .menu-item-has-children > a').prepend('<i class="expand menu-expand"></i>');
+    //     $('.category-menu .menu-item-has-children ul').slideUp();
+    //     //        $('.category-menu .menu-item-has-children i').on('click', function(e){
+    //     //            e.preventDefault();
+    //     //            $(this).toggleClass('expand');
+    //     //            $(this).siblings('ul').css('transition', 'none').slideToggle();
+    //     //        })
+    //   } else {
+    //     $('.category-menu .menu-item-has-children > a i').remove();
+    //     $('.category-menu .menu-item-has-children ul').slideDown();
+    //   }
+    // }
+    // categoryMenuToggle();
+    // windows.resize(categoryMenuToggle);
+    // categorySubMenuToggle();
+    // windows.resize(categorySubMenuToggle);
+    //
+    // categoryToggle.on('click', function () {
+    //   categoryMenu.slideToggle();
+    // });
+    //
+    // /*-- Category Sub Menu --*/
+    // $('.category-menu').on('click', 'li a, li a .menu-expand', function (e) {
+    //   let $a = $(this).hasClass('menu-expand') ? $(this).parent() : $(this);
+    //   if ($a.parent().hasClass('menu-item-has-children')) {
+    //     if ($a.attr('href') === '#' || $(this).hasClass('menu-expand')) {
+    //       if ($a.siblings('ul:visible').length > 0) $a.siblings('ul').slideUp();
+    //       else {
+    //         $(this).parents('li').siblings('li').find('ul:visible').slideUp();
+    //         $a.siblings('ul').slideDown();
+    //       }
+    //     }
+    //   }
+    //   if ($(this).hasClass('menu-expand') || $a.attr('href') === '#') {
+    //     e.preventDefault();
+    //     return false;
+    //   }
+    // });
+    //
+    // /*-- Sidebar Category --*/
+    // let categoryChildren = $('.sidebar-category li .children');
+    //
+    // categoryChildren.slideUp();
+    // categoryChildren.parents('li').addClass('has-children');
+    //
+    // $('.sidebar-category').on('click', 'li.has-children > a', function (e) {
+    //
+    //   if ($(this).parent().hasClass('has-children')) {
+    //     if ($(this).siblings('ul:visible').length > 0) $(this).siblings('ul').slideUp();
+    //     else {
+    //       $(this).parents('li').siblings('li').find('ul:visible').slideUp();
+    //       $(this).siblings('ul').slideDown();
+    //     }
+    //   }
+    //   if ($(this).attr('href') === '#') {
+    //     e.preventDefault();
+    //     return false;
+    //   }
+    // });
+    //
+    // //More category
+    //
+    // $(".category-menu li.hidden").hide();
+    // $("#more-btn").on('click', function (e) {
+    //   e.preventDefault();
+    //   $(".category-menu li.hidden").toggle(500);
+    //   let htmlAfter = '<span class="icon_minus_alt2"></span> Less Categories';
+    //   let htmlBefore = '<span class="icon_plus_alt2"></span> More Categories';
+    //
+    //
+    //   if($(this).html() == htmlBefore){
+    //     $(this).html(htmlAfter);
+    //   }else{
+    //     $(this).html(htmlBefore);
+    //   }
+    // });
   }
 
 
 
 render() {
-  if (this.state.currentWidth <= 991 && this.state.menuVisible === true) {
-    this.setState({
-      menuVisible: false
-    });
-  } else if(this.state.currentWidth > 991 && this.state.menuVisible === false) {
-    this.setState({
-      menuVisible: true
-    });
-  }
   return (
-
     <div className="hero-side-category">
       {/* Category Toggle Wrap */}
       <div className="category-toggle-wrap">
         {/* Category Toggle */}
-        <button className="category-toggle"> <span className="arrow_carrot-right_alt2 mr-2" /> All Categories</button>
+        <button onClick={this.toggleVisible} className="category-toggle"> <span className="arrow_carrot-right_alt2 mr-2" /> All Categories</button>
       </div>
       {/* Category Menu */}
-      <nav onClick={this.toggleVisible} className="category-menu">
+      <nav  className="category-menu">
       <ReactTransitionGroup>
         { this.state.menuVisible ? <CategoryMenu/> : null }
       </ReactTransitionGroup>
