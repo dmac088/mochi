@@ -329,18 +329,6 @@ a.scroll-top {
     transition: width 0.5s, height 0.5s, opacity 0.5s 0.5s;
   }
 
-  /* .fade-enter {
-    opacity:  1;
-    display:  inline;
-    transition: width 0.5s, height 0.5s, opacity 0.5s 0.5s;
-  } */
-
-  /* .fade-enter.fade-enter-active {
-    opacity:  1;
-    display:  none;
-    transition: width 0.5s 0.5s, height 0.5s 0.5s, opacity 0.5s;
-  } */
-
 /*----------  breadcrumb  ----------*/
 .breadcrumb-area .breadcrumb-container {
   border-bottom: 1px solid #dddddd;
