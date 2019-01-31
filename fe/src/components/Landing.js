@@ -39,11 +39,12 @@ class Landing extends Component {
   }
 
   render() {
-    console.log(this.state.theposition);
-    let child = ((this.state.theposition >= 400) ? <a  href="#"
-                                                      className="scroll-top"
-                                                  /> :
-                                                  null);
+    let scrollTop = ((this.state.theposition >= 400) ? <a  href="#"
+                                                          className="scroll-top fadeIn"
+                                                      /> :
+                                                      <a  href="#"
+                                                          className="scroll-top fadeOut"
+                                                      />);
 
     return(
       <div>
@@ -1593,12 +1594,7 @@ class Landing extends Component {
         </div>
         {/*=====  End of Quick view modal  ======*/}
         {/* scroll to top  */}
-        <CSSTransitionGroup
-          transitionName="fade"
-          transitionEnter={true}
-          >
-                {child}
-        </CSSTransitionGroup>
+        {scrollTop}
       </div>
       );
   }

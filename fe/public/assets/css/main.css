@@ -296,13 +296,12 @@ ul {
 /*----------  scroll to top  ----------*/
 /* scroll to top */
 a.scroll-top {
-  opacity: 0;
   background: #666;
   width: 45px;
   height: 45px;
   border-radius: 50%;
   line-height: 40px;
-  display: inline;
+  display: inline-block;
   text-align: center;
   color: #fff;
   font-family: 'FontAwesome';
@@ -318,7 +317,7 @@ a.scroll-top {
     background-color: #80bb01;
     color: #ffffff; }
 
-  /* .fadeOut{
+  .fadeOut{
     opacity:  0;
     display:  none;
     transition: width 0.5s 0.5s, height 0.5s 0.5s, opacity 0.5s;
@@ -328,6 +327,18 @@ a.scroll-top {
     opacity:  1;
     display:  inline;
     transition: width 0.5s, height 0.5s, opacity 0.5s 0.5s;
+  }
+
+  /* .fade-enter {
+    opacity:  1;
+    display:  inline;
+    transition: width 0.5s, height 0.5s, opacity 0.5s 0.5s;
+  } */
+
+  /* .fade-enter.fade-enter-active {
+    opacity:  1;
+    display:  none;
+    transition: width 0.5s 0.5s, height 0.5s 0.5s, opacity 0.5s;
   } */
 
 /*----------  breadcrumb  ----------*/
@@ -6207,12 +6218,13 @@ footer {
 
 /*=====  End of 22. Footer ======*/
 
-
-.fade-enter {
-  opacity: 0.01;
+/* .example-appear {
+    "opacity": 0.01;
 }
 
-.fade-enter.fade-enter-active {
-  opacity: 1;
-  transition: opacity 1000ms ease-in;
-}
+.example-appear-active {
+    "opacity": 1;
+    "content": '\f077';
+    "display": "inline";
+    "transition": opacity 500ms ease-out;
+}; */
