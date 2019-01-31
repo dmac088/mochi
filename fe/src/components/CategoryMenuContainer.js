@@ -26,14 +26,12 @@ class CategoryMenuContainer extends Component {
   renderMenu = () => {
     if(this.getSize() <= 991 && this.state.menuVisible === true) {this.setState({menuVisible: false})}
     else if(this.getSize() > 991 && this.state.menuVisible === false) {this.setState({menuVisible: true})}
-    console.log(this.state.menuVisible);
   }
 
   toggleVisible = () => {
     this.setState(prevState => ({
       menuVisible: !prevState.menuVisible
     }));
-    console.log(this.state.menuVisible);
   }
 
   getSize = () => {
@@ -181,13 +179,13 @@ class CategoryMenu extends Component {
 
   componentWillEnter (callback) {
     const element = ReactDOM.findDOMNode(this.container);
-    if(element === undefined) {return}
+    if(element === undefined) {return;}
     Velocity(element, 'slideDown', { duration: 1000 }).then(callback);
   }
 
   componentWillLeave (callback) {
     const element = ReactDOM.findDOMNode(this.container);
-    if(element === undefined) {return}
+    if(element === undefined) {return;}
     Velocity(element, 'slideUp', { duration: 1000 }).then(callback);
   }
 
