@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import CategoryMenu from './CategoryMenu';
+import CategoryMenuContainer from './CategoryMenuContainer';
 import { connect } from 'react-redux';
 const $ = window.$;
 
@@ -69,7 +69,7 @@ class HeroSlider extends Component {
           <div className="row">
             <div className="col-lg-3 col-md-12">
               {/*=======  slider left category  =======*/}
-              <CategoryMenu/>
+              <CategoryMenuContainer/>
             </div>
             <div className="col-lg-6 col-md-12">
               {/*=======  slider container  =======*/}
