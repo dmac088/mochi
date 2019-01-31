@@ -5,10 +5,10 @@
     Version: 1.0
 
 -----------------------------------------------------------------------------------
-    
+
     CSS INDEX
     ===================
-	
+
     01. Theme default CSS
     02. Header
         02.1 Header top
@@ -296,12 +296,13 @@ ul {
 /*----------  scroll to top  ----------*/
 /* scroll to top */
 a.scroll-top {
+  opacity: 0;
   background: #666;
   width: 45px;
   height: 45px;
   border-radius: 50%;
   line-height: 40px;
-  display: none;
+  display: inline;
   text-align: center;
   color: #fff;
   font-family: 'FontAwesome';
@@ -316,6 +317,18 @@ a.scroll-top {
   a.scroll-top:hover {
     background-color: #80bb01;
     color: #ffffff; }
+
+  /* .fadeOut{
+    opacity:  0;
+    display:  none;
+    transition: width 0.5s 0.5s, height 0.5s 0.5s, opacity 0.5s;
+  }
+
+  .fadeIn{
+    opacity:  1;
+    display:  inline;
+    transition: width 0.5s, height 0.5s, opacity 0.5s 0.5s;
+  } */
 
 /*----------  breadcrumb  ----------*/
 .breadcrumb-area .breadcrumb-container {
@@ -6193,3 +6206,13 @@ footer {
     color: #80bb01; }
 
 /*=====  End of 22. Footer ======*/
+
+
+.fade-enter {
+  opacity: 0.01;
+}
+
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  transition: opacity 1000ms ease-in;
+}
