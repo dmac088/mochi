@@ -161,9 +161,9 @@ render() {
       </div>
       {/* Category Menu */}
       <nav  className="category-menu">
-      <ReactTransitionGroup>
+
         { this.state.menuVisible ? <CategoryMenu/> : null }
-      </ReactTransitionGroup>
+      
       </nav>
     </div>
   )
