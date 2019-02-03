@@ -8,6 +8,7 @@ import BestSeller from './BestSeller';
 import BlogPosts from './BlogPosts';
 import BrandSlider from './BrandSlider';
 import { withRouter } from 'react-router-dom';
+const $ = window.$;
 
 
 
@@ -37,8 +38,16 @@ class Landing extends Component {
     })
   }
 
+  animateScroll = () => {
+    $('.scroll-top').click(() => {
+        $('html,body')
+    			.velocity("scroll", 1000);
+    });
+  }
+
+
   render() {
-    let scrollTop = ((this.state.theposition >= 400) ? <a  href="#"
+    let scrollTop = ((this.state.theposition >= 400) ? <a onClick={this.animateScroll} href="#"
                                                           className="scroll-top fadeIn"
                                                       /> :
                                                       <a  href="#"
