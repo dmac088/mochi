@@ -11,9 +11,6 @@ const $ = window.$;
 
 class Header extends Component {
 
-  // componentDidMount() {
-  //     this.initHeader();
-  //   }
 
   constructor(props) {
     super(props);
@@ -21,52 +18,21 @@ class Header extends Component {
   }
 
 
-  initHeader = () => {
-    /*--
-      Menu Sticky
-    -----------------------------------*/
-      let screenSize = document.documentElement.clientWidth;
-      let sticky = document.querySelectorAll('.header-sticky');
-      let menubarTop = document.querySelectorAll('.menubar-top');
-
-      window.addEventListener("scroll", (e) => {
-        let scroll = document.documentElement.scrollTop;
-
-
-          //
-          // if (scroll >= 400) {
-          //   let scrollTop = document.getElementsByClassName('scroll-top')[0];
-          //   if (!scrollTop === undefined) {
-          //     scrollTop.velocity("fadeIn", { duration: 1500 });
-          //   }
-          // } else {
-          //   let scrollTop = document.getElementsByClassName('scroll-top')[0];
-          //   if (!scrollTop === undefined) {
-          //     scrollTop.velocity("fadeOut", { delay: 500, duration: 1500 });
-          //   }
-          // }
-      });
-      /*--------------------------
-      Mobile Menu
-      ------------------------*/
-      //need to replace meanmenu with bootstrap hamburger
-      let mainMenuNavTest = (document.getElementsByClassName("main-menu")[0]).getElementsByTagName("nav");
-      let mainMenuNav = $('.main-menu nav');
-      console.log(mainMenuNav);
-      console.log(mainMenuNavTest);
-      mainMenuNav.meanmenu({
-          meanScreenWidth: '991',
-          meanMenuContainer: '.mobile-menu',
-          meanMenuClose: '<span class="menu-close"></span>',
-          meanMenuOpen: '<span class="menu-bar"></span>',
-          meanRevealPosition: 'right',
-          meanMenuCloseSize: '0',
-      });
-  }
-
-
 componentDidMount() {
   window.addEventListener('scroll', this.listenToScroll)
+  this.mountMobileMenu();
+}
+
+mountMobileMenu = () => {
+  let mainMenuNav = $('.main-menu nav');
+  mainMenuNav.meanmenu({
+      meanScreenWidth: '991',
+      meanMenuContainer: '.mobile-menu',
+      meanMenuClose: '<span class="menu-close"></span>',
+      meanMenuOpen: '<span class="menu-bar"></span>',
+      meanRevealPosition: 'right',
+      meanMenuCloseSize: '0',
+  });
 }
 
 componentWillUnmount() {
@@ -75,7 +41,6 @@ componentWillUnmount() {
 
 listenToScroll = () => {
   let scroll = document.documentElement.scrollTop;
-
   this.setState({
     theposition: scroll,
   })

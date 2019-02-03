@@ -10,56 +10,7 @@
     var menubarTop = $('.menubar-top');
 
 
-    windows.on('scroll', function () {
-    	var scroll = windows.scrollTop();
 
-
-    	if (scroll < 300) {
-    		sticky.removeClass('is-sticky');
-
-    		menubarTop.removeClass('d-none');
-    		menubarTop.addClass('d-flex');
-    	} else {
-    		sticky.addClass('is-sticky');
-    		menubarTop.addClass('d-none');
-    		menubarTop.removeClass('d-flex');
-    	}
-
-
-		//code for scroll top
-
-		// if (scroll >= 400) {
-		// 	$('.scroll-top').fadeIn();
-		// } else {
-		// 	$('.scroll-top').fadeOut();
-		// }
-
-	});
-
-
-
-	/*--
-	Scroll to top
-	-----------------------------------*/
-
-	$('.scroll-top').on('click', function () {
-		$('html,body').animate({
-			scrollTop: 0
-		}, 2000);
-	});
-
-
-	/*--
-    Display Cart on Hover
-    -----------------------------------*/
-
-    $("#shopping-cart").mouseenter(function () {
-    	$("#cart-floating-box").stop().slideDown(1000);
-    });
-
-    $("#shopping-cart").mouseleave(function () {
-    	$("#cart-floating-box").stop().slideUp(1000);
-    });
 
 
 	/*--
