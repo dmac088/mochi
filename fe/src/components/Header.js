@@ -17,38 +17,37 @@ class Header extends Component {
     this.state = { theposition: 0};
   }
 
+  componentDidMount() {
+    window.addEventListener('scroll', this.listenToScroll)
+    this.mountMobileMenu();
+  }
 
-componentDidMount() {
-  window.addEventListener('scroll', this.listenToScroll)
-  this.mountMobileMenu();
-}
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.listenToScroll)
+  }
 
-mountMobileMenu = () => {
-  let mainMenuNav = $('.main-menu nav');
-  mainMenuNav.meanmenu({
-      meanScreenWidth: '991',
-      meanMenuContainer: '.mobile-menu',
-      meanMenuClose: '<span class="menu-close"></span>',
-      meanMenuOpen: '<span class="menu-bar"></span>',
-      meanRevealPosition: 'right',
-      meanMenuCloseSize: '0',
-  });
-}
+  mountMobileMenu = () => {
+    let mainMenuNav = $('.main-menu nav');
+    mainMenuNav.meanmenu({
+        meanScreenWidth: '991',
+        meanMenuContainer: '.mobile-menu',
+        meanMenuClose: '<span class="menu-close"></span>',
+        meanMenuOpen: '<span class="menu-bar"></span>',
+        meanRevealPosition: 'right',
+        meanMenuCloseSize: '0',
+    });
+  }
 
-componentWillUnmount() {
-  window.removeEventListener('scroll', this.listenToScroll)
-}
+  listenToScroll = () => {
+    let scroll = document.documentElement.scrollTop;
+    this.setState({
+      theposition: scroll,
+    });
+  }
 
-listenToScroll = () => {
-  let scroll = document.documentElement.scrollTop;
-  this.setState({
-    theposition: scroll,
-  })
-}
-
-render() {
-  return(
-    <header>
+  render() {
+    return(
+      <header>
         {/*=======  header top  =======*/}
         <div className="header-top pt-10 pb-10 pt-lg-10 pb-lg-10 pt-md-10 pb-md-10">
           <div className="container">
