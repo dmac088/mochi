@@ -160,11 +160,9 @@ render() {
         <button onClick={this.toggleVisible} className="category-toggle"> <span className="arrow_carrot-right_alt2 mr-2" /> All Categories</button>
       </div>
       {/* Category Menu */}
-      <nav  className="category-menu">
-
+      <ReactTransitionGroup component="nav" className="category-menu">
         { this.state.menuVisible ? <CategoryMenu/> : null }
-      
-      </nav>
+      </ReactTransitionGroup>
     </div>
   )
 }
