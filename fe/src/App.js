@@ -47,8 +47,8 @@ class App extends Component {
                    };
   }
 
-  getCategories = (lang = "ENG") =>
-    categoryApi.findAll(lang)
+  getCategories = (lang = "ENG", level = 1) =>
+    categoryApi.findAllForLevel(lang, level)
     .then((response) => {
       return response.text();
     })
