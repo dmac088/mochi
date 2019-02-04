@@ -9,6 +9,10 @@ import LanguageSelector from './LanguageSelector';
 import { Link } from 'react-router-dom';
 const $ = window.$;
 
+const windows = $(window);
+const categoryToggle = $('.category-toggle');
+const categoryMenu = $('.category-menu');
+
 class Header extends Component {
 
 
