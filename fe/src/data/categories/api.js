@@ -11,3 +11,11 @@ export const findAll = (locale) => 	fetchApi(
 																				 'GET',
 																				 {}
 																			 );
+
+export const findAllForLevel = (locale, level) => 	fetchApi(
+																			 		endPoints.get + locale + '/level/' + level,
+																			 		{},
+																			 		{},
+																			 		'GET',
+																			 		{}
+																			 	);

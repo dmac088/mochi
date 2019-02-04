@@ -173,6 +173,7 @@ class CategoryMenu extends Component {
   }
 
   renderCategoryListItems = (categoryList, changeCategory) => {
+    console.log(categoryList);
     return categoryList.map(category => {
       return(
           <li className="menu-item-has-children" key={category.categoryId} id={category.categoryCode} onClick={changeCategory}>
