@@ -795,6 +795,11 @@ COPY category (cat_id, cat_cd, cat_prnt_id, cat_lvl) FROM stdin;
 2	ALL	\N	0
 3	FRT01	2	1
 4	VEG01	2	1
+5	DGV01	4	2
+6	ROV01	4	2
+7	BAP01	4	2
+8	SVG01	4	2
+9	OTH01	4	2
 \.
 
 
@@ -809,6 +814,16 @@ COPY category_attr_lcl (cat_lcl_id, cat_id, cat_desc, cat_img_pth, lcl_cd) FROM 
 13	2	所有		HKG
 14	3	水果		HKG
 15	4	蔬菜		HKG
+16	5	Dark Green Vegetables	\N	ENG
+17	5	深綠色蔬菜	\N	HKG
+18	6	Red and Orange Vegetables	\N	ENG
+19	6	紅色和橙色蔬菜	\N	HKG
+20	7	Beans and Peas	\N	ENG
+21	7	豆類和豌豆	\N	HKG
+22	8	Starchy Vegetables	\N	ENG
+23	8	澱粉蔬菜	\N	HKG
+24	9	Other Vegetables	\N	ENG
+25	9	其他蔬菜	\N	HKG
 \.
 
 
