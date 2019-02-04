@@ -42,7 +42,7 @@ class Landing extends Component {
 
   animateScroll = () => {
     $('.scroll-top').click(() => {
-        $('html')
+        $('html,body')
     			.velocity("scroll", { duration: 1000 });
     });
   }
