@@ -24,6 +24,7 @@ class Landing extends Component {
 
   componentDidMount() {
     window.addEventListener('scroll', this.listenToScroll);
+    this.animateScroll();
   }
 
   componentWillUnmount() {
@@ -40,14 +41,15 @@ class Landing extends Component {
 
   animateScroll = () => {
     $('.scroll-top').click(() => {
-        $('html,body')
-    			.velocity("scroll", 1000);
+        $('html')
+    			.velocity("scroll", { duration: 1000 });
     });
   }
 
 
   render() {
-    let scrollTop = ((this.state.theposition >= 400) ? <a onClick={this.animateScroll} href="#"
+    let scrollTop = ((this.state.theposition >= 400) ? <a onClick={this.animateScroll}
+                                                          href="#"
                                                           className="scroll-top fadeIn"
                                                       /> :
                                                       <a  href="#"
