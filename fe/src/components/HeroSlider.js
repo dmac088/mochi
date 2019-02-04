@@ -69,7 +69,9 @@ class HeroSlider extends Component {
           <div className="row">
             <div className="col-lg-3 col-md-12">
               {/*=======  slider left category  =======*/}
-              <CategoryMenuContainer/>
+              <CategoryMenuContainer
+                categoryList={this.props.categoryList}
+              />
             </div>
             <div className="col-lg-6 col-md-12">
               {/*=======  slider container  =======*/}
