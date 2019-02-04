@@ -16,18 +16,6 @@ public class ProductCategoryController {
 	@Autowired
 	private ProductCategoryService productCategoryService;	
 	
-//	@ResponseBody
-//	@RequestMapping(method=RequestMethod.GET, value="/ProductCategory")
-//    public List<ProductCategory> getAllProductCategories() {
-//        return productCategoryService.getAllProductCategories();	
-//    }	
-//	
-//	@ResponseBody
-//	@RequestMapping(method=RequestMethod.GET, value="/ProductCategory/{id}")
-//	public Optional<ProductCategory> getProductCategory(@PathVariable Long id) {
-//		return productCategoryService.getAllProductCategories(id);
-//	}
-	
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.POST, value="/ProductCategory")
 	public void addProductCategory(ProductCategory productCategory) {	

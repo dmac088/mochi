@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 import ReactTransitionGroup from 'react-addons-transition-group';
 import Velocity from 'velocity-animate';
 import 'velocity-animate/velocity.ui';
+import qs from 'query-string';
 const $ = window.$;
 
 
@@ -66,7 +67,11 @@ render() {
       </div>
       {/* Category Menu */}
       <ReactTransitionGroup component="nav" className="category-menu">
-        { this.state.menuVisible ? <CategoryMenu/> : null }
+        { this.state.menuVisible ?
+          <CategoryMenu
+            categoryList={this.props.categoryList}
+          />
+          : null }
       </ReactTransitionGroup>
     </div>
   )
@@ -81,6 +86,7 @@ class CategoryMenu extends Component {
   }
 
   compoenentDidMount() {
+    $(".category-menu li.hidden").hide();
   }
 
   getSize = () => {
@@ -100,7 +106,7 @@ class CategoryMenu extends Component {
 
       //More category
 
-  		$(".category-menu li.hidden").hide();
+
   		$("#more-btn").on('click', function (e) {
   			e.preventDefault();
   			$(".category-menu li.hidden").toggle(500);
@@ -148,85 +154,69 @@ class CategoryMenu extends Component {
     Velocity(element, 'slideUp', { duration: 1000 }).then(callback);
   }
 
+  changeCategory = (event) => {
+    //get the query parameters
+    let urlParams = (qs.parse(this.props.history.location.search));
+    let mergedParams = Object.assign(urlParams, {
+                                                  category: event.target.id,
+                                                  page: 0
+                                                });
+    const searchString = qs.stringify(mergedParams);
+    this.props.history.push({
+      "pathname": '/Search',
+      "search": searchString,
+    });
+  }
+
   setContainer = (c) => {
     this.container = c;
   }
 
+  renderCategoryListItems = (categoryList, changeCategory) => {
+    return categoryList.map(category => {
+      return(
+          <li className="menu-item-has-children" key={category.categoryId} id={category.categoryCode} onClick={changeCategory}>
+          <a href="shop-left-sidebar.html">{category.categoryDesc}</a>
+            {/* Mega Category Menu Start */}
+            <ul className="category-mega-menu">
+              <li className="menu-item-has-children">
+                <a className="megamenu-head" href="shop-left-sidebar.html">Vegetables</a>
+                <ul>
+                  <li><a href="shop-left-sidebar.html">Salad</a></li>
+                  <li><a href="shop-left-sidebar.html">Fast Food</a></li>
+                  <li><a href="shop-left-sidebar.html">Fruits</a></li>
+                  <li><a href="shop-left-sidebar.html">Peanuts</a></li>
+                </ul>
+              </li>
+              <li className="menu-item-has-children">
+                <a className="megamenu-head" href="shop-left-sidebar.html">Fast Foods</a>
+                <ul>
+                  <li><a href="shop-left-sidebar.html">Vegetables</a></li>
+                  <li><a href="shop-left-sidebar.html">Fast Food</a></li>
+                  <li><a href="shop-left-sidebar.html">Fruit</a></li>
+                  <li><a href="shop-left-sidebar.html">Butter</a></li>
+                </ul>
+              </li>
+              <li className="menu-item-has-children">
+                <a className="megamenu-head" href="shop-left-sidebar.html">Salad</a>
+                <ul>
+                  <li><a href="shop-left-sidebar.html">Vegetables</a></li>
+                  <li><a href="shop-left-sidebar.html">Fast Food</a></li>
+                  <li><a href="shop-left-sidebar.html">Salad</a></li>
+                  <li><a href="shop-left-sidebar.html">Peanuts</a></li>
+                </ul>
+              </li>
+            </ul>{/* Mega Category Menu End */}
+          </li>
+      )
+    });
+  }
+
   render() {
+    //{this.renderCategoryListItems(this.props.categoryList, this.changeCategory)}
     return(
       <ul ref={this.setContainer}>
-        <li><a href="shop-left-sidebar.html">Vagatables</a></li>
-        <li className="menu-item-has-children"><a href="shop-left-sidebar.html">Salad</a>
-          {/* Mega Category Menu Start */}
-          <ul className="category-mega-menu">
-            <li className="menu-item-has-children">
-              <a className="megamenu-head" href="shop-left-sidebar.html">Vegetables</a>
-              <ul>
-                <li><a href="shop-left-sidebar.html">Salad</a></li>
-                <li><a href="shop-left-sidebar.html">Fast Food</a></li>
-                <li><a href="shop-left-sidebar.html">Fruits</a></li>
-                <li><a href="shop-left-sidebar.html">Peanuts</a></li>
-              </ul>
-            </li>
-            <li className="menu-item-has-children">
-              <a className="megamenu-head" href="shop-left-sidebar.html">Fast Foods</a>
-              <ul>
-                <li><a href="shop-left-sidebar.html">Vegetables</a></li>
-                <li><a href="shop-left-sidebar.html">Fast Food</a></li>
-                <li><a href="shop-left-sidebar.html">Fruit</a></li>
-                <li><a href="shop-left-sidebar.html">Butter</a></li>
-              </ul>
-            </li>
-            <li className="menu-item-has-children">
-              <a className="megamenu-head" href="shop-left-sidebar.html">Salad</a>
-              <ul>
-                <li><a href="shop-left-sidebar.html">Vegetables</a></li>
-                <li><a href="shop-left-sidebar.html">Fast Food</a></li>
-                <li><a href="shop-left-sidebar.html">Salad</a></li>
-                <li><a href="shop-left-sidebar.html">Peanuts</a></li>
-              </ul>
-            </li>
-          </ul>{/* Mega Category Menu End */}
-        </li>
-        <li className="menu-item-has-children"><a href="shop-left-sidebar.html">Fast Foods</a>
-          {/* Mega Category Menu Start */}
-          <ul className="category-mega-menu">
-            <li className="menu-item-has-children">
-              <a className="megamenu-head" href="shop-left-sidebar.html">Vegetables</a>
-              <ul>
-                <li><a href="shop-left-sidebar.html">Salad</a></li>
-                <li><a href="shop-left-sidebar.html">Fast Food</a></li>
-                <li><a href="shop-left-sidebar.html">Fruits</a></li>
-                <li><a href="shop-left-sidebar.html">Peanuts</a></li>
-              </ul>
-            </li>
-            <li className="menu-item-has-children">
-              <a className="megamenu-head" href="shop-left-sidebar.html">Fast Foods</a>
-              <ul>
-                <li><a href="shop-left-sidebar.html">Vegetables</a></li>
-                <li><a href="shop-left-sidebar.html">Fast Food</a></li>
-                <li><a href="shop-left-sidebar.html">Fruit</a></li>
-                <li><a href="shop-left-sidebar.html">Butter</a></li>
-              </ul>
-            </li>
-            <li className="menu-item-has-children">
-              <a className="megamenu-head" href="shop-left-sidebar.html">Salad</a>
-              <ul>
-                <li><a href="shop-left-sidebar.html">Vegetables</a></li>
-                <li><a href="shop-left-sidebar.html">Fast Food</a></li>
-                <li><a href="shop-left-sidebar.html">Salad</a></li>
-                <li><a href="shop-left-sidebar.html">Peanuts</a></li>
-              </ul>
-            </li>
-          </ul>{/* Mega Category Menu End */}
-        </li>
-        <li><a href="shop-left-sidebar.html">Beans</a></li>
-        <li><a href="shop-left-sidebar.html">Bread</a></li>
-        <li><a href="shop-left-sidebar.html">Fish &amp; Meats</a></li>
-        <li><a href="shop-left-sidebar.html">Peanuts</a></li>
-        <li><a href="shop-left-sidebar.html">Birds</a></li>
-        <li className="hidden"><a href="shop-left-sidebar.html">Eggs</a></li>
-        <li className="hidden"><a href="shop-left-sidebar.html">Fruits</a></li>
+        {this.renderCategoryListItems(this.props.categoryList, this.changeCategory)}
         <li><a href="#" id="more-btn"><span className="icon_plus_alt2" /> More Categories</a></li>
       </ul>
     )

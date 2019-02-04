@@ -105,8 +105,8 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    // if(!this.shouldRefreshdata(this.props.location)) {return(null);}
-    // this.refreshData(this.props.location.search);
+    if(!this.shouldRefreshdata(this.props.location)) {return(null);}
+    this.refreshData(this.props.location.search);
   }
 
   shouldRefreshdata = (location) => {
@@ -162,6 +162,7 @@ class App extends Component {
         lang={this.state.queryParams.lang}
         openModal={this.openModal}
         pagedItems={this.state.pagedItems}
+        categoryList={this.state.categoryList}
       />
     );
   }
@@ -175,17 +176,17 @@ class App extends Component {
   }
 
   render() {
-  //console.log("render App");
-  return (
-        <React.Fragment>
-          <Header
-            authenticated={this.props.tokens.authenticated}
-            customer={this.props.customer}
-            lang={this.state.queryParams.lang}
-          />
-          <Landing/>
-        </React.Fragment>
-  );
+    //console.log("render App");
+    return (
+          <React.Fragment>
+            <Header
+              authenticated={this.props.tokens.authenticated}
+              customer={this.props.customer}
+              lang={this.state.queryParams.lang}
+            />
+          {this.renderLanding()}
+          </React.Fragment>
+    );
   }
 }
 

@@ -59,7 +59,9 @@ class Landing extends Component {
 
     return(
       <div>
-        <HeroSlider />
+        <HeroSlider
+          categoryList={this.props.categoryList}
+        />
         <Policy />
         <div className="slider tab-slider mb-35">
           <div className="container">
