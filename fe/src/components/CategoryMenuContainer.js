@@ -115,7 +115,22 @@ class CategoryMenu extends Component {
   			}
   		});
 
+      //More category
 
+  		$(".category-menu li.hidden").hide();
+  		$("#more-btn").on('click', function (e) {
+  			e.preventDefault();
+  			$(".category-menu li.hidden").toggle(500);
+  			var htmlAfter = '<span class="icon_minus_alt2"></span> Less Categories';
+  			var htmlBefore = '<span class="icon_plus_alt2"></span> More Categories';
+
+
+  			if($(this).html() == htmlBefore){
+  				$(this).html(htmlAfter);
+  			}else{
+  				$(this).html(htmlBefore);
+  			}
+  		});
     }
 
   componentWillEnter (callback) {
