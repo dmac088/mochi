@@ -8,6 +8,7 @@ import BestSeller from './BestSeller';
 import BlogPosts from './BlogPosts';
 import BrandSlider from './BrandSlider';
 import { withRouter } from 'react-router-dom';
+import ReactTransitionGroup from 'react-addons-transition-group';
 const $ = window.$;
 
 
@@ -1604,7 +1605,9 @@ class Landing extends Component {
         </div>
         {/*=====  End of Quick view modal  ======*/}
         {/* scroll to top  */}
-        {scrollTop}
+        <ReactTransitionGroup>
+          {scrollTop}
+        </ReactTransitionGroup>
       </div>
       );
   }
