@@ -81,6 +81,23 @@ class CategoryMenu extends Component {
         $('.category-menu .menu-item-has-children > a i').remove();
         $('.category-menu .menu-item-has-children ul').slideDown();
       }
+
+      $('.category-menu').on('click', 'li a, li a .menu-expand', function (e) {
+  			var $a = $(this).hasClass('menu-expand') ? $(this).parent() : $(this);
+  			if ($a.parent().hasClass('menu-item-has-children')) {
+  				if ($a.attr('href') === '#' || $(this).hasClass('menu-expand')) {
+  					if ($a.siblings('ul:visible').length > 0) $a.siblings('ul').slideUp();
+  					else {
+  						$(this).parents('li').siblings('li').find('ul:visible').slideUp();
+  						$a.siblings('ul').slideDown();
+  					}
+  				}
+  			}
+  			if ($(this).hasClass('menu-expand') || $a.attr('href') === '#') {
+  				e.preventDefault();
+  				return false;
+  			}
+  		});
     }
 
   componentWillEnter (callback) {
