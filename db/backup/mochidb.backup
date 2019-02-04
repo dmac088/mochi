@@ -800,6 +800,12 @@ COPY category (cat_id, cat_cd, cat_prnt_id, cat_lvl) FROM stdin;
 7	BAP01	4	2
 8	SVG01	4	2
 9	OTH01	4	2
+10	POM01	3	2
+11	DRU01	3	2
+12	BER01	3	2
+13	MEL01	3	2
+14	CIT01	3	2
+15	TRO01	3	2
 \.
 
 
@@ -824,6 +830,18 @@ COPY category_attr_lcl (cat_lcl_id, cat_id, cat_desc, cat_img_pth, lcl_cd) FROM 
 23	8	澱粉蔬菜	\N	HKG
 24	9	Other Vegetables	\N	ENG
 25	9	其他蔬菜	\N	HKG
+26	10	Pomes	\N	ENG
+27	10	梨果	\N	HKG
+28	11	Drupes	\N	ENG
+29	11	核果	\N	HKG
+30	12	Berries	\N	ENG
+31	12	漿果	\N	HKG
+32	13	Melons	\N	ENG
+33	13	瓜	\N	HKG
+34	14	Citrus	\N	ENG
+35	14	柑橘	\N	HKG
+36	15	Tropical	\N	ENG
+37	15	熱帶	\N	HKG
 \.
 
 
