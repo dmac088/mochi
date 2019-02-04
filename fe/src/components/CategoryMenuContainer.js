@@ -64,9 +64,29 @@ class CategoryMenu extends Component {
     super(props);
   }
 
+  compoenentDidMount() {
+  }
+
+  getSize = () => {
+    return  window.innerWidth
+              || document.documentElement.clientWidth
+              || document.body.clientWidth;
+  }
+
+  categorySubMenuToggle = () => {
+      if (this.getSize() <= 991) {
+        $('.category-menu .menu-item-has-children > a').prepend('<i class="expand menu-expand"></i>');
+        $('.category-menu .menu-item-has-children ul').slideUp();
+      } else {
+        $('.category-menu .menu-item-has-children > a i').remove();
+        $('.category-menu .menu-item-has-children ul').slideDown();
+      }
+    }
+
   componentWillEnter (callback) {
     const element = ReactDOM.findDOMNode(this.container);
     if(element === undefined) {return;}
+    this.categorySubMenuToggle();
     Velocity(element, 'slideDown', { duration: 1000 }).then(callback);
   }
 
