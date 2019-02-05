@@ -24,7 +24,7 @@ class CategoryMenuContainer extends Component {
     window.addEventListener('resize', this.renderMenu);
     //More category
 
-    $(".category-menu li.hidden").hide();
+    //$(".category-menu li.hidden").hide();
     $("#more-btn").on('click', function (e) {
       e.preventDefault();
       $(".category-menu li.hidden").toggle(500);
@@ -197,43 +197,15 @@ class CategoryMenu extends Component {
     return(
       <ul ref={this.setContainer} >
         {this.renderCategoryListItems(this.props.categoryList, this.changeCategory)}
-        <li><a href="#" id="more-btn"><span className="icon_plus_alt2" /> More Categories</a></li>
+        {
+          (this.props.categoryList.size > 9)
+          ? <li><a href="#" id="more-btn"><span className="icon_plus_alt2" /> More Categories</a></li>
+          : null
+        }
+
       </ul>
     )
   }
 }
 
 export default CategoryMenuContainer;
-
-
-/*
-<ul className="category-mega-menu">
-  <li className="menu-item-has-children">
-    <a className="megamenu-head" href="shop-left-sidebar.html">Vegetables</a>
-    <ul>
-      <li><a href="shop-left-sidebar.html">Salad</a></li>
-      <li><a href="shop-left-sidebar.html">Fast Food</a></li>
-      <li><a href="shop-left-sidebar.html">Fruits</a></li>
-      <li><a href="shop-left-sidebar.html">Peanuts</a></li>
-    </ul>
-  </li>
-  <li className="menu-item-has-children">
-    <a className="megamenu-head" href="shop-left-sidebar.html">Fast Foods</a>
-    <ul>
-      <li><a href="shop-left-sidebar.html">Vegetables</a></li>
-      <li><a href="shop-left-sidebar.html">Fast Food</a></li>
-      <li><a href="shop-left-sidebar.html">Fruit</a></li>
-      <li><a href="shop-left-sidebar.html">Butter</a></li>
-    </ul>
-  </li>
-  <li className="menu-item-has-children">
-    <a className="megamenu-head" href="shop-left-sidebar.html">Salad</a>
-    <ul>
-      <li><a href="shop-left-sidebar.html">Vegetables</a></li>
-      <li><a href="shop-left-sidebar.html">Fast Food</a></li>
-      <li><a href="shop-left-sidebar.html">Salad</a></li>
-      <li><a href="shop-left-sidebar.html">Peanuts</a></li>
-    </ul>
-  </li>
-</ul>
-*/

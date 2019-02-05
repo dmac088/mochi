@@ -817,6 +817,15 @@ COPY category (cat_id, cat_cd, cat_prnt_id, cat_lvl) FROM stdin;
 24	MAC01	16	2
 25	OFT01	3	2
 26	ONT01	16	2
+27	DUM01	2	1
+28	DUM02	2	1
+29	DUM03	2	1
+30	DUM04	2	1
+31	DUM05	2	1
+32	DUM06	2	1
+33	DUM07	2	1
+34	DUM08	2	1
+35	DUM09	2	1
 \.
 
 
@@ -875,6 +884,7 @@ COPY category_attr_lcl (cat_lcl_id, cat_id, cat_desc, cat_img_pth, lcl_cd) FROM 
 57	25	其他水果	\N	HKG
 58	26	Other Nuts	\N	ENG
 59	26	其他堅果	\N	HKG
+77	35	假 9	\N	HKG
 \.
 
 
