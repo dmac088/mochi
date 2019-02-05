@@ -82,23 +82,7 @@ class CategoryMenu extends Component {
   }
 
   categorySubMenuToggle = () => {
-    //More category
-      // $('.category-menu').on('click', 'li a, li a .menu-expand', function (e) {
-  		// 	var $a = $(this).hasClass('menu-expand') ? $(this).parent() : $(this);
-  		// 	if ($a.parent().hasClass('menu-item-has-children')) {
-  		// 		if ($a.attr('href') === '#' || $(this).hasClass('menu-expand')) {
-  		// 			if ($a.siblings('ul:visible').length > 0) $a.siblings('ul').slideUp();
-  		// 			else {
-  		// 				$(this).parents('li').siblings('li').find('ul:visible').slideUp();
-  		// 				$a.siblings('ul').slideDown();
-  		// 			}
-  		// 		}
-  		// 	}
-  		// 	if ($(this).hasClass('menu-expand') || $a.attr('href') === '#') {
-  		// 		e.preventDefault();
-  		// 		return false;
-  		// 	}
-  		// });
+
   }
 
   componentWillEnter (callback) {
@@ -151,10 +135,11 @@ class CategoryMenu extends Component {
 
 
   expandCat = (e) => {
+    console.log("expandCat");
     e.preventDefault();
-    let id = e.target.id;
+    let id = Number(e.target.id);
     this.setState(prevState => ({
-      expandId: Number(id),
+      expandId: id,
       expanded: !prevState.expanded,
     }));
   }
@@ -196,7 +181,7 @@ class CategoryMenu extends Component {
                              //then nothing, else set style = display : none
                              (((this.state.expandId === category.categoryId) && this.state.expanded)
                              ? null
-                             : {"display":"none"})
+                             :  (this.getSize() <= 991) ? {"display":"none"} : null)
 
                           }>
                   {this.renderCategoryListItems(category.children, false, changeCategory, itemCounter)}
