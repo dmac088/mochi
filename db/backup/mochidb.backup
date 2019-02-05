@@ -884,6 +884,23 @@ COPY category_attr_lcl (cat_lcl_id, cat_id, cat_desc, cat_img_pth, lcl_cd) FROM 
 57	25	其他水果	\N	HKG
 58	26	Other Nuts	\N	ENG
 59	26	其他堅果	\N	HKG
+60	27	DUMMY 1	\N	ENG
+61	27	假 1	\N	HKG
+62	28	DUMMY 2	\N	ENG
+63	28	假 2	\N	HKG
+64	29	DUMMY 3	\N	ENG
+65	29	假 3	\N	HKG
+66	30	DUMMY 4	\N	ENG
+67	30	假 4	\N	HKG
+68	31	DUMMY 5	\N	ENG
+69	31	假 5	\N	HKG
+70	32	DUMMY 6	\N	ENG
+71	32	假 6	\N	HKG
+72	33	DUMMY 7	\N	ENG
+73	33	假 7	\N	HKG
+74	34	DUMMY 8	\N	ENG
+75	34	假 8	\N	HKG
+76	35	DUMMY 9	\N	ENG
 77	35	假 9	\N	HKG
 \.
 
