@@ -173,41 +173,20 @@ class CategoryMenu extends Component {
   }
 
   renderCategoryListItems = (categoryList, changeCategory) => {
-    console.log(categoryList);
     return categoryList.map(category => {
       return(
-          <li className="menu-item-has-children" key={category.categoryId} id={category.categoryCode} onClick={changeCategory}>
-          <a href="shop-left-sidebar.html">{category.categoryDesc}</a>
-            {/* Mega Category Menu Start */}
-            <ul className="category-mega-menu">
-              <li className="menu-item-has-children">
-                <a className="megamenu-head" href="shop-left-sidebar.html">Vegetables</a>
-                <ul>
-                  <li><a href="shop-left-sidebar.html">Salad</a></li>
-                  <li><a href="shop-left-sidebar.html">Fast Food</a></li>
-                  <li><a href="shop-left-sidebar.html">Fruits</a></li>
-                  <li><a href="shop-left-sidebar.html">Peanuts</a></li>
+          <li className={(category.childCategoryCount > 0) ? "menu-item-has-children" : null}
+              key={category.categoryId}
+              id={category.categoryCode}
+              onClick={changeCategory}>
+              <a className={(category.childCategoryCount > 0) ? "megamenu-head" : null} href="shop-left-sidebar.html">{category.categoryDesc}</a>
+              {
+              (category.childCategoryCount > 0) ?
+                <ul className="category-mega-menu">
+                  {this.renderCategoryListItems(category.children, changeCategory)}
                 </ul>
-              </li>
-              <li className="menu-item-has-children">
-                <a className="megamenu-head" href="shop-left-sidebar.html">Fast Foods</a>
-                <ul>
-                  <li><a href="shop-left-sidebar.html">Vegetables</a></li>
-                  <li><a href="shop-left-sidebar.html">Fast Food</a></li>
-                  <li><a href="shop-left-sidebar.html">Fruit</a></li>
-                  <li><a href="shop-left-sidebar.html">Butter</a></li>
-                </ul>
-              </li>
-              <li className="menu-item-has-children">
-                <a className="megamenu-head" href="shop-left-sidebar.html">Salad</a>
-                <ul>
-                  <li><a href="shop-left-sidebar.html">Vegetables</a></li>
-                  <li><a href="shop-left-sidebar.html">Fast Food</a></li>
-                  <li><a href="shop-left-sidebar.html">Salad</a></li>
-                  <li><a href="shop-left-sidebar.html">Peanuts</a></li>
-                </ul>
-              </li>
-            </ul>{/* Mega Category Menu End */}
+              : null
+              }
           </li>
       )
     });
@@ -216,7 +195,7 @@ class CategoryMenu extends Component {
   render() {
     //{this.renderCategoryListItems(this.props.categoryList, this.changeCategory)}
     return(
-      <ul ref={this.setContainer}>
+      <ul ref={this.setContainer} >
         {this.renderCategoryListItems(this.props.categoryList, this.changeCategory)}
         <li><a href="#" id="more-btn"><span className="icon_plus_alt2" /> More Categories</a></li>
       </ul>
@@ -225,3 +204,36 @@ class CategoryMenu extends Component {
 }
 
 export default CategoryMenuContainer;
+
+
+/*
+<ul className="category-mega-menu">
+  <li className="menu-item-has-children">
+    <a className="megamenu-head" href="shop-left-sidebar.html">Vegetables</a>
+    <ul>
+      <li><a href="shop-left-sidebar.html">Salad</a></li>
+      <li><a href="shop-left-sidebar.html">Fast Food</a></li>
+      <li><a href="shop-left-sidebar.html">Fruits</a></li>
+      <li><a href="shop-left-sidebar.html">Peanuts</a></li>
+    </ul>
+  </li>
+  <li className="menu-item-has-children">
+    <a className="megamenu-head" href="shop-left-sidebar.html">Fast Foods</a>
+    <ul>
+      <li><a href="shop-left-sidebar.html">Vegetables</a></li>
+      <li><a href="shop-left-sidebar.html">Fast Food</a></li>
+      <li><a href="shop-left-sidebar.html">Fruit</a></li>
+      <li><a href="shop-left-sidebar.html">Butter</a></li>
+    </ul>
+  </li>
+  <li className="menu-item-has-children">
+    <a className="megamenu-head" href="shop-left-sidebar.html">Salad</a>
+    <ul>
+      <li><a href="shop-left-sidebar.html">Vegetables</a></li>
+      <li><a href="shop-left-sidebar.html">Fast Food</a></li>
+      <li><a href="shop-left-sidebar.html">Salad</a></li>
+      <li><a href="shop-left-sidebar.html">Peanuts</a></li>
+    </ul>
+  </li>
+</ul>
+*/
