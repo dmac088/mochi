@@ -806,6 +806,15 @@ COPY category (cat_id, cat_cd, cat_prnt_id, cat_lvl) FROM stdin;
 13	MEL01	3	2
 14	CIT01	3	2
 15	TRO01	3	2
+16	NUT01	2	1
+17	PIS01	16	2
+18	HAZ01	16	2
+19	CAS01	16	2
+20	ALM01	16	2
+21	PEA01	16	2
+22	PEC01	16	2
+23	BRA01	16	2
+24	MAC01	16	2
 \.
 
 
@@ -842,6 +851,24 @@ COPY category_attr_lcl (cat_lcl_id, cat_id, cat_desc, cat_img_pth, lcl_cd) FROM 
 35	14	柑橘	\N	HKG
 36	15	Tropical	\N	ENG
 37	15	熱帶	\N	HKG
+38	16	Nuts	\N	ENG
+39	16	堅果	\N	HKG
+40	17	Pistachios	\N	ENG
+41	17	開心果	\N	HKG
+42	18	Hazelnuts	\N	ENG
+43	18	榛子	\N	HKG
+44	19	Cashews	\N	ENG
+45	19	腰果	\N	HKG
+46	20	Almonds	\N	ENG
+47	20	杏仁	\N	HKG
+48	21	Peanuts	\N	ENG
+49	21	花生	\N	HKG
+50	22	Pecans	\N	ENG
+51	22	胡桃	\N	HKG
+52	23	Brazil	\N	ENG
+53	23	巴西	\N	HKG
+54	24	Macadamia	\N	ENG
+55	24	澳洲	\N	HKG
 \.
 
 
@@ -849,7 +876,7 @@ COPY category_attr_lcl (cat_lcl_id, cat_id, cat_desc, cat_img_pth, lcl_cd) FROM 
 -- Name: category_attr_lcl_cat_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('category_attr_lcl_cat_id_seq', 15, true);
+SELECT pg_catalog.setval('category_attr_lcl_cat_id_seq', 19, true);
 
 
 --
