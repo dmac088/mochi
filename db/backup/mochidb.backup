@@ -1057,6 +1057,43 @@ COPY product (prd_id, upc_cd, prd_crtd_dt) FROM stdin;
 11	3577789     	2019-01-04
 12	64377789    	2019-01-04
 13	76477789    	2019-01-04
+14	13159658    	2019-02-05
+15	15410595    	2019-02-05
+16	18188784    	2019-02-05
+17	18911676    	2019-02-05
+18	17366878    	2019-02-05
+19	10760430    	2019-02-05
+20	10688155    	2019-02-05
+21	18170258    	2019-02-05
+22	17235347    	2019-02-05
+23	17236024    	2019-02-05
+24	19037164    	2019-02-05
+25	15483827    	2019-02-05
+26	13627671    	2019-02-05
+27	15946292    	2019-02-05
+28	16153782    	2019-02-05
+29	17152401    	2019-02-05
+30	16067775    	2019-02-05
+31	10233854    	2019-02-05
+32	13396664    	2019-02-05
+33	18853536    	2019-02-05
+34	17113406    	2019-02-05
+35	12985270    	2019-02-05
+36	18420497    	2019-02-05
+37	18696148    	2019-02-05
+38	17722309    	2019-02-05
+39	11433471    	2019-02-05
+40	10251701    	2019-02-05
+41	11610280    	2019-02-05
+42	11938920    	2019-02-05
+43	18515170    	2019-02-05
+44	14151045    	2019-02-05
+45	15098579    	2019-02-05
+46	13925766    	2019-02-05
+47	12339830    	2019-02-05
+48	14010256    	2019-02-05
+49	11292645    	2019-02-05
+50	13100260    	2019-02-05
 \.
 
 
@@ -1091,6 +1128,40 @@ COPY product_attr_lcl (prd_lcl_id, prd_id, prd_desc, prd_img_pth, prd_rrp, lcl_c
 24	12	蘑菇	images/button-mushroom.jpg	60	HKG
 25	13	potato	images/potato.jpg	22	ENG
 26	13	土豆	images/potato.jpg	22	HKG
+27	14	Pumpkin	images/pumpkin.jpg	48	ENG
+28	14	南瓜	images/pumpkin.jpg	48	HKG
+29	15	Corn	images/corn.jpg	75	ENG
+30	15	玉米	images/corn.jpg	75	HKG
+31	16	Onion	images/onion.jpg	16	ENG
+32	16	洋蔥	images/onion.jpg	16	HKG
+33	17	Apple	images/apple.jpg	72	ENG
+34	17	蘋果	images/apple.jpg	72	HKG
+35	18	Banana	images/banana.jpg	45	ENG
+36	18	香蕉	images/banana.jpg	45	HKG
+37	19	Grapes	images/grapes.jpg	60	ENG
+38	19	葡萄	images/grapes.jpg	60	HKG
+39	20	Musk Melon	images/musk-melon.jpg	36	ENG
+40	20	麝香甜瓜	images/musk-melon.jpg	36	HKG
+41	21	Pears	images/pears.jpg	69	ENG
+42	21	梨	images/pears.jpg	69	HKG
+43	22	Pomegranate	images/pomegranate.jpg	95	ENG
+44	22	石榴	images/pomegranate.jpg	95	HKG
+45	23	Raspberry	images/raspberry.jpg	160	ENG
+46	23	覆盆子	images/raspberry.jpg	160	HKG
+47	24	Strawberry	images/strawberry.jpg	180	ENG
+48	24	草莓	images/strawberry.jpg	180	HKG
+49	25	Water Melon	images/water-melon.jpg	28	ENG
+50	25	西瓜	images/water-melon.jpg	28	HKG
+51	26	Almonds	images/almonds.jpg	200	ENG
+52	26	杏仁	images/almonds.jpg	200	HKG
+53	27	Pistachio	images/pistachio.jpg	190	ENG
+54	27	開心果	images/pistachio.jpg	190	HKG
+55	28	Nuts Mixture	images/nuts-mixture.jpg	950	ENG
+56	28	堅果混合物	images/nuts-mixture.jpg	950	HKG
+57	29	Cashews	images/cashews.jpg	650	ENG
+58	29	腰果	images/cashews.jpg	650	HKG
+59	30	Walnuts	images/walnuts.jpg	170	ENG
+60	30	核桃	images/walnuts.jpg	170	HKG
 \.
 
 
