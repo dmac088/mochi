@@ -15,8 +15,9 @@ class CategoryMenuContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        menuVisible: true
-
+        menuVisible: true,
+        expandId: null,
+        expanded: false,
     };
   }
 
@@ -69,7 +70,9 @@ class CategoryMenu extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {showMore: false}
+    this.state = {
+      showMore: false,
+    }
   }
 
   getSize = () => {
@@ -80,24 +83,22 @@ class CategoryMenu extends Component {
 
   categorySubMenuToggle = () => {
     //More category
-    
-
-      $('.category-menu').on('click', 'li a, li a .menu-expand', function (e) {
-  			var $a = $(this).hasClass('menu-expand') ? $(this).parent() : $(this);
-  			if ($a.parent().hasClass('menu-item-has-children')) {
-  				if ($a.attr('href') === '#' || $(this).hasClass('menu-expand')) {
-  					if ($a.siblings('ul:visible').length > 0) $a.siblings('ul').slideUp();
-  					else {
-  						$(this).parents('li').siblings('li').find('ul:visible').slideUp();
-  						$a.siblings('ul').slideDown();
-  					}
-  				}
-  			}
-  			if ($(this).hasClass('menu-expand') || $a.attr('href') === '#') {
-  				e.preventDefault();
-  				return false;
-  			}
-  		});
+      // $('.category-menu').on('click', 'li a, li a .menu-expand', function (e) {
+  		// 	var $a = $(this).hasClass('menu-expand') ? $(this).parent() : $(this);
+  		// 	if ($a.parent().hasClass('menu-item-has-children')) {
+  		// 		if ($a.attr('href') === '#' || $(this).hasClass('menu-expand')) {
+  		// 			if ($a.siblings('ul:visible').length > 0) $a.siblings('ul').slideUp();
+  		// 			else {
+  		// 				$(this).parents('li').siblings('li').find('ul:visible').slideUp();
+  		// 				$a.siblings('ul').slideDown();
+  		// 			}
+  		// 		}
+  		// 	}
+  		// 	if ($(this).hasClass('menu-expand') || $a.attr('href') === '#') {
+  		// 		e.preventDefault();
+  		// 		return false;
+  		// 	}
+  		// });
   }
 
   componentWillEnter (callback) {
@@ -120,16 +121,16 @@ class CategoryMenu extends Component {
 
   changeCategory = (event) => {
     //get the query parameters
-    let urlParams = (qs.parse(this.props.history.location.search));
-    let mergedParams = Object.assign(urlParams, {
-                                                  category: event.target.id,
-                                                  page: 0
-                                                });
-    const searchString = qs.stringify(mergedParams);
-    this.props.history.push({
-      "pathname": '/Search',
-      "search": searchString,
-    });
+    // let urlParams = (qs.parse(this.props.history.location.search));
+    // let mergedParams = Object.assign(urlParams, {
+    //                                               category: event.target.id,
+    //                                               page: 0
+    //                                             });
+    // const searchString = qs.stringify(mergedParams);
+    // this.props.history.push({
+    //   "pathname": '/Search',
+    //   "search": searchString,
+    // });
   }
 
   setContainer = (c) => {
@@ -148,7 +149,18 @@ class CategoryMenu extends Component {
     })
   }
 
+
+  expandCat = (e) => {
+    e.preventDefault();
+    let id = e.target.id;
+    this.setState(prevState => ({
+      expandId: Number(id),
+      expanded: !prevState.expanded,
+    }));
+  }
+
   renderCategoryListItems = (categoryList, isRootList, changeCategory, itemCounter) => {
+
     return categoryList.map(category => {
         if(isRootList) {itemCounter+=1};
       return(
@@ -162,25 +174,31 @@ class CategoryMenu extends Component {
               ? " hidden"
               : "")
             }
-
             style={
               (isRootList && itemCounter > 8 && !this.state.showMore)
               ? {"display": "none"}
               : null
             }
-
               key={category.categoryId}
               id={category.categoryCode}
-              onClick={changeCategory}>
-              <a className={(category.childCategoryCount > 0) ? "megamenu-head" : null} href="shop-left-sidebar.html">{category.categoryDesc}
+              onClick={this.changeCategory}>
+              <a className={(category.childCategoryCount > 0) ? "megamenu-head" : null} href="#">{category.categoryDesc}
                 {(category.childCategoryCount > 0 && this.getSize() <= 991)
-                  ? <i class="expand menu-expand"></i>
+                  ? <i id={category.categoryId} onClick={e => this.expandCat(e)} className="expand menu-expand"></i>
                   : null
                 }
               </a>
               {
               (category.childCategoryCount > 0) ?
-                <ul className="category-mega-menu">
+                <ul className="category-mega-menu"
+
+                    style={  //if the id of the clicked element matches category.categoryId
+                             //then nothing, else set style = display : none
+                             (((this.state.expandId === category.categoryId) && this.state.expanded)
+                             ? null
+                             : {"display":"none"})
+
+                          }>
                   {this.renderCategoryListItems(category.children, false, changeCategory, itemCounter)}
                 </ul>
               : null
