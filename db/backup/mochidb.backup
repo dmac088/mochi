@@ -815,6 +815,8 @@ COPY category (cat_id, cat_cd, cat_prnt_id, cat_lvl) FROM stdin;
 22	PEC01	16	2
 23	BRA01	16	2
 24	MAC01	16	2
+25	OFT01	3	2
+26	ONT01	16	2
 \.
 
 
@@ -869,6 +871,10 @@ COPY category_attr_lcl (cat_lcl_id, cat_id, cat_desc, cat_img_pth, lcl_cd) FROM 
 53	23	巴西	\N	HKG
 54	24	Macadamia	\N	ENG
 55	24	澳洲	\N	HKG
+56	25	Other Fruit	\N	ENG
+57	25	其他水果	\N	HKG
+58	26	Other Nuts	\N	ENG
+59	26	其他堅果	\N	HKG
 \.
 
 
@@ -1170,19 +1176,36 @@ COPY product_attr_lcl (prd_lcl_id, prd_id, prd_desc, prd_img_pth, prd_rrp, lcl_c
 --
 
 COPY product_category (prd_cat_id, prd_id, cat_id) FROM stdin;
-26	1	3
-27	2	3
-28	3	4
-29	4	4
-30	5	4
-31	6	4
-32	7	4
-33	8	3
-34	9	4
-35	10	4
-36	11	4
-37	12	4
-38	13	4
+39	1	15
+40	2	14
+41	3	5
+42	4	8
+43	5	5
+44	6	6
+45	7	8
+46	8	14
+47	9	7
+48	10	9
+49	11	6
+50	12	9
+51	13	8
+52	14	8
+53	15	9
+54	16	9
+55	17	10
+56	18	15
+57	19	14
+58	20	13
+59	21	10
+60	22	10
+61	23	12
+62	24	12
+63	25	13
+64	26	20
+65	27	17
+66	28	26
+67	29	19
+68	30	26
 \.
 
 
@@ -1190,7 +1213,7 @@ COPY product_category (prd_cat_id, prd_id, cat_id) FROM stdin;
 -- Name: product_category_prd_cat_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('product_category_prd_cat_id_seq', 38, true);
+SELECT pg_catalog.setval('product_category_prd_cat_id_seq', 68, true);
 
 
 --
