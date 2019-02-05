@@ -15,29 +15,15 @@ class CategoryMenuContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        menuVisible: true,
+        menuVisible: true
+
     };
   }
 
   componentDidMount() {
     this.renderMenu();
     window.addEventListener('resize', this.renderMenu);
-    //More category
 
-    //$(".category-menu li.hidden").hide();
-    $("#more-btn").on('click', function (e) {
-      e.preventDefault();
-      $(".category-menu li.hidden").toggle(500);
-      var htmlAfter = '<span class="icon_minus_alt2"></span> Less Categories';
-      var htmlBefore = '<span class="icon_plus_alt2"></span> More Categories';
-
-
-      if($(this).html() == htmlBefore){
-        $(this).html(htmlAfter);
-      }else{
-        $(this).html(htmlBefore);
-      }
-    });
   }
 
   renderMenu = () => {
@@ -83,10 +69,7 @@ class CategoryMenu extends Component {
 
   constructor(props) {
     super(props);
-  }
-
-  compoenentDidMount() {
-    $(".category-menu li.hidden").hide();
+    this.state = {showMore: false}
   }
 
   getSize = () => {
@@ -96,30 +79,8 @@ class CategoryMenu extends Component {
   }
 
   categorySubMenuToggle = () => {
-      if (this.getSize() <= 991) {
-        $('.category-menu .menu-item-has-children > a').prepend('<i class="expand menu-expand"></i>');
-        $('.category-menu .menu-item-has-children ul').slideUp();
-      } else {
-        $('.category-menu .menu-item-has-children > a i').remove();
-        $('.category-menu .menu-item-has-children ul').slideDown();
-      }
-
-      //More category
-
-
-  		$("#more-btn").on('click', function (e) {
-  			e.preventDefault();
-  			$(".category-menu li.hidden").toggle(500);
-  			var htmlAfter = '<span class="icon_minus_alt2"></span> Less Categories';
-  			var htmlBefore = '<span class="icon_plus_alt2"></span> More Categories';
-
-
-  			if($(this).html() == htmlBefore){
-  				$(this).html(htmlAfter);
-  			}else{
-  				$(this).html(htmlBefore);
-  			}
-  		});
+    //More category
+    
 
       $('.category-menu').on('click', 'li a, li a .menu-expand', function (e) {
   			var $a = $(this).hasClass('menu-expand') ? $(this).parent() : $(this);
@@ -137,18 +98,21 @@ class CategoryMenu extends Component {
   				return false;
   			}
   		});
-
-
-    }
+  }
 
   componentWillEnter (callback) {
+    console.log("componentWillEnter");
     const element = ReactDOM.findDOMNode(this.container);
     if(element === undefined) {return;}
     this.categorySubMenuToggle();
+    if(this.getSize() <= 991) {
+      $('.category-menu .menu-item-has-children ul').velocity("slideUp");
+    }
     Velocity(element, 'slideDown', { duration: 1000 }).then(callback);
   }
 
   componentWillLeave (callback) {
+    console.log("componentWillLeave");
     const element = ReactDOM.findDOMNode(this.container);
     if(element === undefined) {return;}
     Velocity(element, 'slideUp', { duration: 1000 }).then(callback);
@@ -172,18 +136,52 @@ class CategoryMenu extends Component {
     this.container = c;
   }
 
-  renderCategoryListItems = (categoryList, changeCategory) => {
+  showMore = () => {
+    this.setState({
+      showMore: true,
+    })
+  }
+
+  showLess = () => {
+    this.setState({
+      showMore: false,
+    })
+  }
+
+  renderCategoryListItems = (categoryList, isRootList, changeCategory, itemCounter) => {
     return categoryList.map(category => {
+        if(isRootList) {itemCounter+=1};
       return(
-          <li className={(category.childCategoryCount > 0) ? "menu-item-has-children" : null}
+
+          <li className={
+              ((category.childCategoryCount > 0)
+              ? "menu-item-has-children"
+              : "")
+              +
+              ((isRootList && itemCounter > 8)
+              ? " hidden"
+              : "")
+            }
+
+            style={
+              (isRootList && itemCounter > 8 && !this.state.showMore)
+              ? {"display": "none"}
+              : null
+            }
+
               key={category.categoryId}
               id={category.categoryCode}
               onClick={changeCategory}>
-              <a className={(category.childCategoryCount > 0) ? "megamenu-head" : null} href="shop-left-sidebar.html">{category.categoryDesc}</a>
+              <a className={(category.childCategoryCount > 0) ? "megamenu-head" : null} href="shop-left-sidebar.html">{category.categoryDesc}
+                {(category.childCategoryCount > 0 && this.getSize() <= 991)
+                  ? <i class="expand menu-expand"></i>
+                  : null
+                }
+              </a>
               {
               (category.childCategoryCount > 0) ?
                 <ul className="category-mega-menu">
-                  {this.renderCategoryListItems(category.children, changeCategory)}
+                  {this.renderCategoryListItems(category.children, false, changeCategory, itemCounter)}
                 </ul>
               : null
               }
@@ -193,16 +191,15 @@ class CategoryMenu extends Component {
   }
 
   render() {
-    //{this.renderCategoryListItems(this.props.categoryList, this.changeCategory)}
     return(
       <ul ref={this.setContainer} >
-        {this.renderCategoryListItems(this.props.categoryList, this.changeCategory)}
+        {this.renderCategoryListItems(this.props.categoryList, true, this.changeCategory, 0)}
         {
-          (this.props.categoryList.size > 9)
-          ? <li><a href="#" id="more-btn"><span className="icon_plus_alt2" /> More Categories</a></li>
-          : null
-        }
 
+          ((this.props.categoryList.length > 8 && !this.state.showMore)
+          ? <li><a onClick={this.showMore} href="#" id="more-btn"><span className="icon_plus_alt2" /> More Categories</a></li>
+          : <li><a onClick={this.showLess} href="#" id="less-btn"><span className="icon_minus_alt2" /> Less Categories</a></li>)
+        }
       </ul>
     )
   }
