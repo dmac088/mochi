@@ -17,7 +17,7 @@ class CategoryMenuContainer extends Component {
     this.state = {
         menuVisible: true,
         expandId: null,
-        expanded: false,
+        expand: false,
     };
   }
 
@@ -135,17 +135,15 @@ class CategoryMenu extends Component {
 
 
   expandCat = (e) => {
-    console.log("expandCat");
     e.preventDefault();
     let id = Number(e.target.id);
     this.setState(prevState => ({
       expandId: id,
-      expanded: !prevState.expanded,
+      expand: (prevState.expandId === id) ? !prevState.expand : true,
     }));
   }
 
   renderCategoryListItems = (categoryList, isRootList, changeCategory, itemCounter) => {
-
     return categoryList.map(category => {
         if(isRootList) {itemCounter+=1};
       return(
@@ -179,8 +177,10 @@ class CategoryMenu extends Component {
 
                     style={  //if the id of the clicked element matches category.categoryId
                              //then nothing, else set style = display : none
-                             (((this.state.expandId === category.categoryId) && this.state.expanded)
+                             (((this.state.expandId === category.categoryId) && this.state.expand)
+                             //show
                              ? null
+                             //hide
                              :  (this.getSize() <= 991) ? {"display":"none"} : null)
 
                           }>
