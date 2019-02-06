@@ -157,7 +157,7 @@ class CategoryMenu extends Component {
               key={category.categoryId}
               id={category.categoryCode}
               onClick={this.changeCategory}>
-              <a className={(category.childCategoryCount > 0) ? "megamenu-head" : null} href="#">{category.categoryDesc}
+              <a className={(category.childCategoryCount > 0) ? "megamenu-head" : null} href="shop-left-sidebar.html">{category.categoryDesc}
                 {(category.childCategoryCount > 0 && this.getSize() <= 991)
                   ? <i id={category.categoryId} onClick={e => this.expandCat(e)} className="expand menu-expand"></i>
                   : null
