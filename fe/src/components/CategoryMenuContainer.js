@@ -81,15 +81,10 @@ class CategoryMenu extends Component {
               || document.body.clientWidth;
   }
 
-  categorySubMenuToggle = () => {
-
-  }
-
   componentWillEnter (callback) {
     console.log("componentWillEnter");
     const element = ReactDOM.findDOMNode(this.container);
     if(element === undefined) {return;}
-    this.categorySubMenuToggle();
     if(this.getSize() <= 991) {
       $('.category-menu .menu-item-has-children ul').velocity("slideUp");
     }
