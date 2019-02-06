@@ -84,17 +84,14 @@ class CategoryMenu extends Component {
   componentWillEnter (callback) {
     console.log("componentWillEnter");
     const element = ReactDOM.findDOMNode(this.container);
-    if(element === undefined) {return;}
-    if(this.getSize() <= 991) {
-      $('.category-menu .menu-item-has-children ul').velocity("slideUp");
-    }
+    if(element === undefined) {return}
     Velocity(element, 'slideDown', { duration: 1000 }).then(callback);
   }
 
   componentWillLeave (callback) {
     console.log("componentWillLeave");
     const element = ReactDOM.findDOMNode(this.container);
-    if(element === undefined) {return;}
+    if(element === undefined) {return}
     Velocity(element, 'slideUp', { duration: 1000 }).then(callback);
   }
 
