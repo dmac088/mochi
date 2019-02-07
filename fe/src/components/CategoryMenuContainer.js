@@ -8,6 +8,11 @@ import 'velocity-animate/velocity.ui';
 import qs from 'query-string';
 const $ = window.$;
 
+const isMobile = () => {
+  return  ((window.innerWidth
+            || document.documentElement.clientWidth
+            || document.body.clientWidth) <= 991);
+}
 
 class CategoryMenuContainer extends Component {
 
@@ -16,8 +21,6 @@ class CategoryMenuContainer extends Component {
     super(props);
     this.state = {
         menuVisible: true,
-        expandId: null,
-        expand: false,
     };
   }
 
@@ -28,8 +31,8 @@ class CategoryMenuContainer extends Component {
   }
 
   renderMenu = () => {
-    if(this.getSize() <= 991 && this.state.menuVisible === true) {this.setState({menuVisible: false})}
-    else if(this.getSize() > 991 && this.state.menuVisible === false) {this.setState({menuVisible: true})}
+    if(isMobile() && this.state.menuVisible === true) {this.setState({menuVisible: false})}
+    else if(!isMobile() && this.state.menuVisible === false) {this.setState({menuVisible: true})}
   }
 
   toggleVisible = () => {
@@ -38,11 +41,7 @@ class CategoryMenuContainer extends Component {
     }));
   }
 
-  getSize = () => {
-    return  window.innerWidth
-              || document.documentElement.clientWidth
-              || document.body.clientWidth;
-  }
+
 
 render() {
   return (
@@ -75,24 +74,17 @@ class CategoryMenu extends Component {
     }
   }
 
-  getSize = () => {
-    return  window.innerWidth
-              || document.documentElement.clientWidth
-              || document.body.clientWidth;
-  }
-
   componentWillEnter (callback) {
-    console.log("componentWillEnter");
     const element = ReactDOM.findDOMNode(this.container);
     if(element === undefined) {return}
     Velocity(element, 'slideDown', { duration: 1000 }).then(callback);
   }
 
   componentWillLeave (callback) {
-    console.log("componentWillLeave");
     const element = ReactDOM.findDOMNode(this.container);
     if(element === undefined) {return}
     Velocity(element, 'slideUp', { duration: 1000 }).then(callback);
+
   }
 
   changeCategory = (event) => {
@@ -108,6 +100,7 @@ class CategoryMenu extends Component {
     //   "search": searchString,
     // });
   }
+
 
   setContainer = (c) => {
     this.container = c;
@@ -126,76 +119,125 @@ class CategoryMenu extends Component {
   }
 
 
-  expandCat = (e) => {
-    e.preventDefault();
-    let id = Number(e.target.id);
-    this.setState(prevState => ({
-      expandId: id,
-      expand: (prevState.expandId === id) ? !prevState.expand : true,
-    }));
-  }
-
   renderCategoryListItems = (categoryList, isRootList, changeCategory, itemCounter) => {
     return categoryList.map(category => {
         if(isRootList) {itemCounter+=1};
       return(
-
-          <li className={
-              ((category.childCategoryCount > 0)
-              ? "menu-item-has-children"
-              : "")
-              +
-              ((isRootList && itemCounter > 8)
-              ? " hidden"
-              : "")
-            }
-            style={
-              (isRootList && itemCounter > 8 && !this.state.showMore)
-              ? {"display": "none"}
-              : null
-            }
-              key={category.categoryId}
-              id={category.categoryCode}
-              onClick={this.changeCategory}>
-              <a className={(category.childCategoryCount > 0) ? "megamenu-head" : null} href="shop-left-sidebar.html">{category.categoryDesc}
-                {(category.childCategoryCount > 0 && this.getSize() <= 991)
-                  ? <i id={category.categoryId} onClick={e => this.expandCat(e)} className="expand menu-expand"></i>
-                  : null
-                }
-              </a>
-              {
-              (category.childCategoryCount > 0) ?
-                <ul className="category-mega-menu"
-
-                    style={  //if the id of the clicked element matches category.categoryId
-                             //then nothing, else set style = display : none
-                             (((this.state.expandId === category.categoryId) && this.state.expand)
-                             //show
-                             ? null
-                             //hide
-                             :  (this.getSize() <= 991) ? {"display":"none"} : null)
-
-                          }>
-                  {this.renderCategoryListItems(category.children, false, changeCategory, itemCounter)}
-                </ul>
-              : null
-              }
-          </li>
+            <ReactTransitionGroup
+                  key={category.categoryId}
+                  component={CategoryMenuItem}
+                  category={category}
+                  renderCategoryListItems={this.renderCategoryListItems}
+                  isRootList={isRootList}
+                  changeCategory={changeCategory}
+                  itemCounter={itemCounter}>
+                  showMore={this.state.showMore}
+            </ReactTransitionGroup>
       )
     });
   }
 
   render() {
     return(
-      <ul ref={this.setContainer} >
+      <ul ref={this.setContainer}>
         {this.renderCategoryListItems(this.props.categoryList, true, this.changeCategory, 0)}
         {
-
           ((this.props.categoryList.length > 8 && !this.state.showMore)
           ? <li><a onClick={this.showMore} href="#" id="more-btn"><span className="icon_plus_alt2" /> More Categories</a></li>
           : <li><a onClick={this.showLess} href="#" id="less-btn"><span className="icon_minus_alt2" /> Less Categories</a></li>)
         }
       </ul>
+    )
+  }
+}
+
+
+class CategoryMenuItem extends Component {
+
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      expandId: null,
+      expand: false,
+    }
+  }
+
+  componentWillEnter (callback) {
+    console.log("componentWillEnter");
+  }
+
+  componentWillLeave (callback) {
+    console.log("componentWillLeave");
+  }
+
+  componentDidMount(callback) {
+    console.log("componentWillMount");
+    this.toggleExpansion(callback, true);
+  }
+
+  componentDidUpdate(callback) {
+    console.log("componentDidUpdate");
+    this.toggleExpansion(callback);
+  }
+
+  toggleExpansion = (callback, mounting = false) => {
+    if (this.container === undefined) {return}
+    const element = ReactDOM.findDOMNode(this.container);
+    if(element === undefined) {return}
+    if((this.state.expand && isMobile()) || !isMobile() ) {
+      Velocity(element, 'slideDown', { duration: 1000, "display":""}).then(callback);
+    } else if(!this.state.expand && isMobile()) {
+      Velocity(element, 'slideUp', { duration: ((mounting) ? 0 : 1000)}).then(callback);
+    }
+  }
+
+  setContainer = (c) => {
+    this.container = c;
+  }
+
+  expandCat = (e) => {
+      e.preventDefault();
+      let id = Number(e.target.id);
+      this.setState(prevState => ({
+        expandId: id,
+        expand: (prevState.expandId === id) ? !prevState.expand : true,
+      }));
+  }
+
+  render() {
+    return (
+        <li
+          className={
+                    ((this.props.category.childCategoryCount > 0)
+                    ? "menu-item-has-children"
+                    : "")
+                    +
+                    ((this.props.isRootList && this.props.itemCounter > 8)
+                    ? " hidden"
+                    : "")
+          }
+          style={
+            (this.props.isRootList && this.props.itemCounter > 8 && !this.props.showMore)
+            ? {"display": "none"}
+            : null
+          }
+
+          onClick={this.props.category.changeCategory}>
+          <a className={(this.props.category.childCategoryCount > 0) ?
+               "megamenu-head" : null} href="shop-left-sidebar.html">{this.props.category.categoryDesc}
+            {(this.props.category.childCategoryCount > 0 && isMobile())
+              ? <i id={this.props.category.categoryId} onClick={e => this.expandCat(e)} className="expand menu-expand"></i>
+              : null
+            }
+          </a>
+          {((this.props.category.childCategoryCount > 0)
+            ? <ul ref={this.setContainer}
+                  className="category-mega-menu">
+                  {this.props.renderCategoryListItems(this.props.category.children, false, this.props.changeCategory, this.props.itemCounter)}
+              </ul>
+            : null)}
+        </li>
     )
   }
 }
