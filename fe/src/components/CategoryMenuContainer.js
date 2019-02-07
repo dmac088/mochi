@@ -41,8 +41,6 @@ class CategoryMenuContainer extends Component {
     }));
   }
 
-
-
 render() {
   return (
     <div className="hero-side-category">
@@ -118,7 +116,6 @@ class CategoryMenu extends Component {
     })
   }
 
-
   renderCategoryListItems = (categoryList, isRootList, changeCategory, itemCounter) => {
     return categoryList.map(category => {
         if(isRootList) {itemCounter+=1};
@@ -153,7 +150,6 @@ class CategoryMenu extends Component {
 
 
 class CategoryMenuItem extends Component {
-
 
   constructor(props) {
     super(props);
