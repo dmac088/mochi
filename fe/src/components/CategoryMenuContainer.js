@@ -130,8 +130,8 @@ class CategoryMenu extends Component {
                   renderCategoryListItems={this.renderCategoryListItems}
                   isRootList={isRootList}
                   changeCategory={changeCategory}
-                  itemCounter={itemCounter}>
-                  showMore={this.state.showMore}
+                  itemCounter={itemCounter}
+                  showMore={this.state.showMore}>
             </ReactTransitionGroup>
       )
     });
