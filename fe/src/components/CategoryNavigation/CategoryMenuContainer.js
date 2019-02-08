@@ -3,6 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import ReactTransitionGroup from 'react-addons-transition-group';
 import Velocity from 'velocity-animate';
+import CategoryMenu from './CategoryMenu';
 import 'velocity-animate/velocity.ui';
 import qs from 'query-string';
 const $ = window.$;
@@ -14,7 +15,6 @@ const isMobile = () => {
 }
 
 class CategoryMenuContainer extends Component {
-
 
   constructor(props) {
     super(props);
