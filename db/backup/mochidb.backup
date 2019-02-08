@@ -827,6 +827,7 @@ COPY category (cat_id, cat_cd, cat_prnt_id, cat_lvl) FROM stdin;
 34	DUM08	2	1
 35	DUM09	2	1
 36	REV01	6	3
+37	ORV01	6	3
 \.
 
 
@@ -905,6 +906,8 @@ COPY category_attr_lcl (cat_lcl_id, cat_id, cat_desc, cat_img_pth, lcl_cd) FROM 
 77	35	假 9	\N	HKG
 78	36	Red Vegetables	\N	ENG
 79	36	紅色蔬菜	\N	HKG
+80	37	Orange Vegetables	\N	ENG
+81	37	橙色蔬菜	\N	HKG
 \.
 
 
