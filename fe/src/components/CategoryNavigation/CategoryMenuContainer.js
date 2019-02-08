@@ -12,8 +12,10 @@ class CategoryMenuContainer extends Component {
 
   constructor(props) {
     super(props);
+    console.log("constructing");
     this.state = {
         menuVisible: true,
+        isMobile: false,
     };
   }
 
@@ -23,8 +25,8 @@ class CategoryMenuContainer extends Component {
   }
 
   renderMenu = () => {
-    if(isMobile() && this.state.menuVisible) {this.setState({menuVisible: false})}
-    else if(!isMobile() && !this.state.menuVisible) {this.setState({menuVisible: true})}
+    if(isMobile() && !this.state.isMobile) { this.setState({isMobile: true, menuVisible: false}) }
+    if(!isMobile() && this.state.isMobile) { this.setState({isMobile: false, menuVisible: true}) }
   }
 
   toggleVisible = () => {
@@ -47,6 +49,7 @@ render() {
         ((this.state.menuVisible)
         ? <CategoryMenu
             categoryList={this.props.categoryList}
+            isMobile={isMobile}
             history={this.props.history}
           />
         : null)
@@ -123,6 +126,7 @@ class CategoryMenu extends Component {
                   isRootList={isRootList}
                   changeCategory={changeCategory}
                   itemCounter={itemCounter}
+                  isMobile={this.props.isMobile}
                   showMore={this.state.showMore}>
             </ReactTransitionGroup>
       )
@@ -151,7 +155,7 @@ class CategoryMenuItem extends Component {
     this.state = {
       expandId: this.props.category.categoryId,
       childCategoryCount: this.props.category.childCategoryCount,
-      expand: ((isMobile()) ? false : true),
+      expand: ((this.props.isMobile) ? false : true),
     }
   }
 
@@ -163,6 +167,7 @@ class CategoryMenuItem extends Component {
   }
 
   render() {
+    console.log("rendering items");
     return (
         <li
           className={
@@ -180,10 +185,18 @@ class CategoryMenuItem extends Component {
             : null
           }
           >
-          <a id={this.props.category.categoryCode} onClick={this.props.changeCategory} className={(this.props.category.childCategoryCount > 0) ?
-               "megamenu-head" : null} href="shop-left-sidebar.html">{this.props.category.categoryDesc}
-            {(this.props.category.childCategoryCount > 0 && isMobile())
-              ? <i id={this.props.category.categoryId} onClick={this.expandCat} className="expand menu-expand"></i>
+          <a  id={this.props.category.categoryCode}
+              onClick={this.props.changeCategory}
+              className={(this.props.category.childCategoryCount > 0) ? "megamenu-head" : null}
+              href="shop-left-sidebar.html">
+            {this.props.category.categoryDesc}
+
+            {(this.props.category.childCategoryCount > 0 && this.props.isMobile)
+              ? <i onClick={this.expandCat}
+                   className={(!this.state.expand)
+                              ? "expand menu-expand"
+                              : "menu-expand"}>
+                </i>
               : null
             }
           </a>
