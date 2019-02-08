@@ -83,7 +83,6 @@ class CategoryMenu extends Component {
     const element = ReactDOM.findDOMNode(this.container);
     if(element === undefined) {return}
     Velocity(element, 'slideUp', { duration: 1000 }).then(callback);
-
   }
 
   changeCategory = (event) => {
@@ -163,7 +162,7 @@ class CategoryMenuItem extends Component {
   expandCat = (e) => {
       if(!(e === undefined)) {e.preventDefault()}
       this.setState(prevState => ({
-        expand:  !prevState.expand,
+        expand: !prevState.expand,
       }));
   }
 
