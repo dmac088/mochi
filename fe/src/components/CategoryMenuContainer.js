@@ -27,12 +27,11 @@ class CategoryMenuContainer extends Component {
   componentDidMount() {
     this.renderMenu();
     window.addEventListener('resize', this.renderMenu);
-
   }
 
   renderMenu = () => {
-    if(isMobile() && this.state.menuVisible === true) {this.setState({menuVisible: false})}
-    else if(!isMobile() && this.state.menuVisible === false) {this.setState({menuVisible: true})}
+    if(isMobile() && this.state.menuVisible) {this.setState({menuVisible: false})}
+    else if(!isMobile() && !this.state.menuVisible) {this.setState({menuVisible: true})}
   }
 
   toggleVisible = () => {
@@ -51,11 +50,13 @@ render() {
       </div>
       {/* Category Menu */}
       <ReactTransitionGroup component="nav" className="category-menu">
-        { this.state.menuVisible ?
-          <CategoryMenu
+        {
+        ((this.state.menuVisible)
+        ? <CategoryMenu
             categoryList={this.props.categoryList}
           />
-          : null }
+        : null)
+        }
       </ReactTransitionGroup>
     </div>
   )
@@ -98,7 +99,6 @@ class CategoryMenu extends Component {
     //   "search": searchString,
     // });
   }
-
 
   setContainer = (c) => {
     this.container = c;
@@ -156,7 +156,7 @@ class CategoryMenuItem extends Component {
     this.state = {
       expandId: this.props.category.categoryId,
       childCategoryCount: this.props.category.childCategoryCount,
-      expand: false,
+      expand: ((isMobile()) ? false : true),
     }
   }
 
