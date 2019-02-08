@@ -201,7 +201,7 @@ class CategoryMenuItem extends Component {
             }
           </a>
           <ReactTransitionGroup>
-            {((this.state.hasChildren && this.state.expand)
+            {((this.state.hasChildren && (this.state.expand || !this.props.isMobile))
               ? <CategoryMenuItemSubList
                   renderCategoryListItems={this.props.renderCategoryListItems}
                   children={this.props.category.children}
