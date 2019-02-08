@@ -190,11 +190,13 @@ class CategoryMenuItem extends Component {
             {this.props.category.categoryDesc}
 
             {(this.state.hasChildren && this.props.isMobile)
-              ? <i onClick={this.expandCat}
+              ? <span>
+                  <i onClick={this.expandCat}
                    className={(!this.state.expand)
                               ? "expand menu-expand"
                               : "menu-expand"}>
-                </i>
+                  </i>
+              </span>
               : null
             }
           </a>
