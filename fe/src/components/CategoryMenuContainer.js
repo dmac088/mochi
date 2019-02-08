@@ -154,50 +154,16 @@ class CategoryMenuItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      expandId: null,
+      expandId: this.props.category.categoryId,
+      childCategoryCount: this.props.category.childCategoryCount,
       expand: false,
     }
   }
 
-  componentWillEnter (callback) {
-    console.log("componentWillEnter");
-  }
-
-  componentWillLeave (callback) {
-    console.log("componentWillLeave");
-  }
-
-  componentDidMount(callback) {
-    console.log("componentWillMount");
-    this.toggleExpansion(callback, true);
-  }
-
-  componentDidUpdate(callback) {
-    console.log("componentDidUpdate");
-    this.toggleExpansion(callback);
-  }
-
-  toggleExpansion = (callback, mounting = false) => {
-    if (this.container === undefined) {return}
-    const element = ReactDOM.findDOMNode(this.container);
-    if(element === undefined) {return}
-    if((this.state.expand && isMobile()) || !isMobile() ) {
-      Velocity(element, 'slideDown', { duration: 1000, "display":""}).then(callback);
-    } else if(!this.state.expand && isMobile()) {
-      Velocity(element, 'slideUp', { duration: ((mounting) ? 0 : 1000)}).then(callback);
-    }
-  }
-
-  setContainer = (c) => {
-    this.container = c;
-  }
-
   expandCat = (e) => {
-      e.preventDefault();
-      let id = Number(e.target.id);
+      if(!(e === undefined)) {e.preventDefault()}
       this.setState(prevState => ({
-        expandId: id,
-        expand: (prevState.expandId === id) ? !prevState.expand : true,
+        expand:  !prevState.expand,
       }));
   }
 
@@ -219,21 +185,57 @@ class CategoryMenuItem extends Component {
             : null
           }
 
-          onClick={this.props.category.changeCategory}>
+          onClick={this.props.changeCategory}>
           <a className={(this.props.category.childCategoryCount > 0) ?
                "megamenu-head" : null} href="shop-left-sidebar.html">{this.props.category.categoryDesc}
             {(this.props.category.childCategoryCount > 0 && isMobile())
-              ? <i id={this.props.category.categoryId} onClick={e => this.expandCat(e)} className="expand menu-expand"></i>
+              ? <i id={this.props.category.categoryId} onClick={this.expandCat} className="expand menu-expand"></i>
               : null
             }
           </a>
-          {((this.props.category.childCategoryCount > 0)
-            ? <ul ref={this.setContainer}
-                  className="category-mega-menu">
-                  {this.props.renderCategoryListItems(this.props.category.children, false, this.props.changeCategory, this.props.itemCounter)}
-              </ul>
-            : null)}
+          <ReactTransitionGroup>
+            {((this.props.category.childCategoryCount > 0 && this.state.expand)
+              ? <CategoryMenuItemSubList
+                  renderCategoryListItems={this.props.renderCategoryListItems}
+                  children={this.props.category.children}
+                  changeCategory={this.props.changeCategory}
+                  itemCounter={this.props.itemCounter}
+                />
+              : null)}
+          </ReactTransitionGroup>
         </li>
+    )
+  }
+}
+
+class CategoryMenuItemSubList extends Component {
+
+  constructor(props) {
+    super(props);
+  }
+
+  componentWillEnter (callback) {
+    const element = ReactDOM.findDOMNode(this.container);
+    if(element === undefined) {return}
+    Velocity(element, 'slideDown', { duration: 1000 , "display":""}).then(callback);
+  }
+
+  componentWillLeave (callback) {
+    const element = ReactDOM.findDOMNode(this.container);
+    if(element === undefined) {return}
+    Velocity(element, 'slideUp', { duration: 1000 }).then(callback);
+  }
+
+  setContainer = (c) => {
+    this.container = c;
+  }
+
+  render() {
+    return (
+      <ul ref={this.setContainer}
+          className="category-mega-menu">
+            {this.props.renderCategoryListItems(this.props.children, false, this.props.changeCategory, this.props.itemCounter)}
+      </ul>
     )
   }
 }
