@@ -80,6 +80,7 @@ class CategoryMenu extends Component {
   }
 
   changeCategory = (event) => {
+    if(event.target.tagName === "I") {return}
     //get the query parameters
     event.preventDefault();
     let urlParams = (qs.parse(this.props.history.location.search));
