@@ -200,7 +200,7 @@ class CategoryMenuItem extends Component {
               : null
             }
           </a>
-          <ReactTransitionGroup>
+          <ReactTransitionGroup component={React.Fragment}>
             {((this.state.hasChildren && (this.state.expand || !this.props.isMobile))
               ? <CategoryMenuItemSubList
                   renderCategoryListItems={this.props.renderCategoryListItems}
@@ -240,8 +240,8 @@ class CategoryMenuItemSubList extends Component {
     return (
       <ul ref={this.setContainer}
           className={
-            ((this.props.categoryLevel >= 2 && !this.props.isMobile)
-            ? ""
+            ((this.props.categoryLevel >= 2)
+            ? null
             : "category-mega-menu")
           }>
             {this.props.renderCategoryListItems(this.props.children, false, this.props.changeCategory, this.props.itemCounter)}
