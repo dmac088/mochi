@@ -208,6 +208,7 @@ class CategoryMenuItem extends Component {
                   categoryLevel={this.props.category.categoryLevel}
                   changeCategory={this.props.changeCategory}
                   itemCounter={this.props.itemCounter}
+                  isMobile={this.props.isMobile}
                 />
               : null)}
           </ReactTransitionGroup>
@@ -239,7 +240,9 @@ class CategoryMenuItemSubList extends Component {
     return (
       <ul ref={this.setContainer}
           className={
-          ((this.props.categoryLevel < 2) ? "category-mega-menu" : "")  
+            ((this.props.categoryLevel < 2 && !this.props.isMobile)
+            ? "category-mega-menu"
+            : "")  
           }>
             {this.props.renderCategoryListItems(this.props.children, false, this.props.changeCategory, this.props.itemCounter)}
       </ul>
