@@ -185,7 +185,7 @@ class CategoryMenuItem extends Component {
           >
           <a  id={this.props.category.categoryCode}
               onClick={this.props.changeCategory}
-              className={(this.state.hasChildren) ? "megamenu-head" : null}
+              className={(this.state.hasChildren) ? "megamenu-head" : "item_link"}
               href="shop-left-sidebar.html">
             {this.props.category.categoryDesc}
 
