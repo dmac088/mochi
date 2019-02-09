@@ -196,7 +196,7 @@ class CategoryMenuItem extends Component {
                               ? "expand menu-expand"
                               : "menu-expand"}>
                   </i>
-              </span>
+                </span>
               : null
             }
           </a>
@@ -241,7 +241,7 @@ class CategoryMenuItemSubList extends Component {
       <ul ref={this.setContainer}
           className={
             ((this.props.categoryLevel >= 2)
-            ? null
+            ? ""
             : "category-mega-menu")
           }>
             {this.props.renderCategoryListItems(this.props.children, false, this.props.changeCategory, this.props.itemCounter)}
