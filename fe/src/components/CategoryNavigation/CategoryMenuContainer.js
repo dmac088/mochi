@@ -239,11 +239,7 @@ class CategoryMenuItemSubList extends Component {
   render() {
     return (
       <ul ref={this.setContainer}
-          className={
-            ((this.props.categoryLevel >= 2)
-            ? ""
-            : "category-mega-menu")
-          }>
+          className="category-mega-menu">
             {this.props.renderCategoryListItems(this.props.children, false, this.props.changeCategory, this.props.itemCounter)}
       </ul>
     )
