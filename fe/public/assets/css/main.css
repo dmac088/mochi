@@ -3517,7 +3517,8 @@ a.single-sale-add-to-cart-btn {
           .category-mega-menu > li > a.megamenu-head {
             border-bottom: 1px solid #ddd; } }
     .category-mega-menu > li > ul li {
-      margin-bottom: 4px;
+      /*--previous value
+      margin-bottom: 4px;*/
     }
       @media only screen and (min-width: 768px) and (max-width: 991px) {
         .category-mega-menu > li > ul li::before {
