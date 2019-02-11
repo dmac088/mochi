@@ -3471,6 +3471,7 @@ a.single-sale-add-to-cart-btn {
     /*--previous value
       text-transform: uppercase;*/ }
 
+      /*this need only be applied on full screen*/
     .category-mega-menu > li.menu-item-has-children > a::before {
         font-family: 'fontAwesome';
         content: "\f054";
