@@ -172,6 +172,11 @@ class CategoryMenuItem extends Component {
                        ? 25
                        : 25 + (((this.props.category.categoryLevel-1) * 10))
                      ) + "px";
+
+    let indentLeft2 = ((this.props.category.categoryLevel === 1)
+                        ? 25
+                        : 25 + (((this.props.category.categoryLevel-1) * 15))
+                        ) + "px";
     return (
         <li
           className={
@@ -186,14 +191,14 @@ class CategoryMenuItem extends Component {
           style={
             (this.props.isRootList && this.props.itemCounter > 8 && !this.props.showMore)
             ? {"display": "none"}
-            : null
+            : {"--my-left-indent":indentLeft}
           }
           >
           <a  id={this.props.category.categoryCode}
               onClick={this.props.changeCategory}
               className={"megamenu-head"}
               style={(this.props.isMobile)
-                     ? {"padding-left": indentLeft}
+                     ? {"padding-left": indentLeft2}
                       : {"":""}}
               href="shop-left-sidebar.html">
             {this.props.category.categoryDesc}
