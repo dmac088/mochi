@@ -167,16 +167,14 @@ class CategoryMenuItem extends Component {
       }));
   }
 
-  render() {
-    let indentLeft = ((this.props.category.categoryLevel === 1)
-                       ? 25
-                       : 25 + (((this.props.category.categoryLevel-1) * 10))
-                     ) + "px";
-
-    let indentLeft2 = ((this.props.category.categoryLevel === 1)
+  getIndent = (offset = 0) => {
+    return ((this.props.category.categoryLevel === 1)
                         ? 25
-                        : 25 + (((this.props.category.categoryLevel-1) * 15))
+                        : 25 + ((((this.props.category.categoryLevel-1) * 10))-offset)
                         ) + "px";
+  }
+
+  render() {
     return (
         <li
           className={
@@ -191,14 +189,14 @@ class CategoryMenuItem extends Component {
           style={
             (this.props.isRootList && this.props.itemCounter > 8 && !this.props.showMore)
             ? {"display": "none"}
-            : {"--my-left-indent":indentLeft}
+            : {"--my-left-indent": this.getIndent(10)}
           }
           >
           <a  id={this.props.category.categoryCode}
               onClick={this.props.changeCategory}
               className={"megamenu-head"}
               style={(this.props.isMobile)
-                     ? {"padding-left": indentLeft2}
+                     ? {"--my-cat-indent": this.getIndent()}
                       : {"":""}}
               href="shop-left-sidebar.html">
             {this.props.category.categoryDesc}

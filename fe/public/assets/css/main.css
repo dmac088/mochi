@@ -3590,7 +3590,7 @@ a.single-sale-add-to-cart-btn {
             border-bottom: none; } }
         @media only screen and (min-width: 768px) and (max-width: 991px) {
           .category-mega-menu > li > ul li a {
-            padding: 10px 25px 10px 45px;
+            padding: 10px 25px 10px var(--my-cat-indent);
             line-height: 30px;
             font-size: 14px;
             color: #666666;
@@ -3598,7 +3598,7 @@ a.single-sale-add-to-cart-btn {
             position: relative; } }
         @media only screen and (max-width: 767px) {
           .category-mega-menu > li > ul li a {
-            padding: 10px 25px 10px 45px;
+            padding: 10px 25px 10px var(--my-cat-indent);
             line-height: 30px;
             font-size: 14px;
             color: #666666;
