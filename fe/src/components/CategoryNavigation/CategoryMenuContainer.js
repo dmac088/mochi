@@ -106,28 +106,33 @@ class CategoryMenu extends Component {
   renderCategoryListItems = (categoryList, isRootList, changeCategory, itemCounter) => {
     return categoryList.map(category => {
         if(isRootList) {itemCounter+=1};
+        let categoryId = category.categoryId;
+        let isMobile = this.props.isMobile;
+        let showMore = this.state.showMore;
       return(
             <ReactTransitionGroup
-                  key={category.categoryId}
+                  key={categoryId}
                   component={CategoryMenuItem}
                   category={category}
                   renderCategoryListItems={this.renderCategoryListItems}
                   isRootList={isRootList}
                   changeCategory={changeCategory}
                   itemCounter={itemCounter}
-                  isMobile={this.props.isMobile}
-                  showMore={this.state.showMore}>
+                  isMobile={isMobile}
+                  showMore={showMore}>
             </ReactTransitionGroup>
       )
     });
   }
 
   render() {
+    let categoryList = this.props.categoryList;
+    let showMore = this.state.showMore;
     return(
       <ul ref={this.setContainer}>
-        {this.renderCategoryListItems(this.props.categoryList, true, this.changeCategory, 0)}
+        {this.renderCategoryListItems(categoryList, true, this.changeCategory, 0)}
         {
-          ((this.props.categoryList.length > 8 && !this.state.showMore)
+          ((categoryList.length > 8 && !showMore)
           ? <li><a onClick={this.showMore} href="#" id="more-btn"><span className="icon_plus_alt2" /> More Categories</a></li>
           : <li><a onClick={this.showLess} href="#" id="less-btn"><span className="icon_minus_alt2" /> Less Categories</a></li>)
         }
