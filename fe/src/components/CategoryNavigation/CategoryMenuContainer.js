@@ -3,7 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import ReactTransitionGroup from 'react-addons-transition-group';
 import Velocity from 'velocity-animate';
-import { isMobile, slide, upadteParams } from '../../services/helpers/ScreenHelper';
+import { isMobile, slide, updateParams } from '../../services/helpers/ScreenHelper';
 import 'velocity-animate/velocity.ui';
 const $ = window.$;
 
@@ -82,7 +82,7 @@ class CategoryMenu extends Component {
   changeCategory = (event) => {
     if(event.target.tagName === "I") {return}
     event.preventDefault();
-    upadteParams(this.props.history.location.search,
+    updateParams(this.props.history.location.search,
                 {category: event.target.id, page: 0},
                 this.props.history);
   }
