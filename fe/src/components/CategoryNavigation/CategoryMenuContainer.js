@@ -208,7 +208,6 @@ class CategoryMenuItem extends Component {
                   categoryLevel={this.props.category.categoryLevel}
                   changeCategory={this.props.changeCategory}
                   itemCounter={this.props.itemCounter}
-                  isMobile={this.props.isMobile}
                 />
               : null)}
           </ReactTransitionGroup>
