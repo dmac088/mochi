@@ -3556,6 +3556,7 @@ a.single-sale-add-to-cart-btn {
           /*--previous value
             left: 35px;
           */
+          left: var(--my-left-indent);
           } }
       @media only screen and (max-width: 767px) {
         .category-mega-menu > li > ul li::before {
@@ -3568,7 +3569,9 @@ a.single-sale-add-to-cart-btn {
           position: relative;
           /*--previous value
             left: 35px;
-          */ } }
+          */
+          left: var(--my-left-indent);
+          } }
       .category-mega-menu > li > ul li:last-child {
         margin-bottom: 0; }
       .category-mega-menu > li > ul li a {
