@@ -3553,7 +3553,10 @@ a.single-sale-add-to-cart-btn {
           background-color: #606060;
           margin: 24px 0;
           position: relative;
-          left: 35px; } }
+          /*--previous value
+            left: 35px;
+          */
+          } }
       @media only screen and (max-width: 767px) {
         .category-mega-menu > li > ul li::before {
           content: "";
@@ -3563,7 +3566,9 @@ a.single-sale-add-to-cart-btn {
           background-color: #606060;
           margin: 24px 0;
           position: relative;
-          left: 35px; } }
+          /*--previous value
+            left: 35px;
+          */ } }
       .category-mega-menu > li > ul li:last-child {
         margin-bottom: 0; }
       .category-mega-menu > li > ul li a {
