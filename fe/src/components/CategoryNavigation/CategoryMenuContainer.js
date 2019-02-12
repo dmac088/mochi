@@ -21,7 +21,9 @@ class CategoryMenuContainer extends Component {
 
   componentDidMount() {
     this.renderMenu(true);
-    window.addEventListener('resize', this.renderMenu);
+    window.addEventListener('resize', this.renderMenu , {
+      passive: true
+    });
   }
 
   renderMenu = (isMounting = false) => {
@@ -166,6 +168,10 @@ class CategoryMenuItem extends Component {
   }
 
   render() {
+    let indentLeft = ((this.props.category.categoryLevel === 1)
+                       ? 25
+                       : 25 + (((this.props.category.categoryLevel-1) * 10))
+                     ) + "px";
     return (
         <li
           className={
@@ -185,16 +191,17 @@ class CategoryMenuItem extends Component {
           >
           <a  id={this.props.category.categoryCode}
               onClick={this.props.changeCategory}
-              className={(this.state.hasChildren) ? "megamenu-head" : ""}
+              className={"megamenu-head"}
+              style={(this.props.isMobile)
+                     ? {"padding-left": indentLeft}
+                      : {"":""}}
               href="shop-left-sidebar.html">
             {this.props.category.categoryDesc}
 
             {(this.state.hasChildren && this.props.isMobile)
               ? <span>
                   <i onClick={this.expandCat}
-                   className={(!this.state.expand)
-                              ? "expand menu-expand"
-                              : "menu-expand"}>
+                   className={((!this.state.expand) ? "expand" : "") + " menu-expand"}>
                   </i>
                 </span>
               : null
