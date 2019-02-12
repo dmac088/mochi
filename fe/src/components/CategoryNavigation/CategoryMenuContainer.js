@@ -167,57 +167,69 @@ class CategoryMenuItem extends Component {
       }));
   }
 
-  getIndent = (offset = 0) => {
-    return ((this.props.category.categoryLevel === 1)
-                        ? 25
-                        : 25 + ((((this.props.category.categoryLevel-1) * 10))-offset)
-                        ) + "px";
+  getIndent = (level, offset = 0) => {
+    return ((level === 1)
+          ? 25
+          : 25 + (((level-1) * 10)-offset)) + "px";
   }
 
   render() {
+    let catlvl = this.props.category.categoryLevel;
+    let catId = this.props.category.categoryId;
+    let catCode = this.props.category.categoryCode;
+    let catDesc = this.props.category.categoryDesc;
+    let hasChildren = this.state.hasChildren;
+    let itemCount = this.props.itemCounter;
+    let rootList = this.props.isRootList;
+    let isMobile = this.props.isMobile;
+    let expand = this.state.expand;
+    let changeCategory = this.props.changeCategory;
+    let showMore = this.props.showMore;
+    let children = this.props.category.children;
+
     return (
         <li
           className={
-                    ((this.state.hasChildren)
+                    ((hasChildren)
                     ? "menu-item-has-children"
                     : "")
                     +
-                    ((this.props.isRootList && this.props.itemCounter > 8)
+                    ((rootList && itemCount > 8)
                     ? " hidden"
                     : "")
           }
           style={
-            (this.props.isRootList && this.props.itemCounter > 8 && !this.props.showMore)
+            (rootList && itemCount > 8 && !showMore)
             ? {"display": "none"}
-            : {"--my-left-indent": this.getIndent(10)}
+            : {"--my-left-indent": this.getIndent(catlvl,10)}
           }
           >
-          <a  id={this.props.category.categoryCode}
-              onClick={this.props.changeCategory}
+          <a  id={catCode}
+              onClick={changeCategory}
               className={"megamenu-head"}
-              style={(this.props.isMobile)
-                     ? {"--my-cat-indent": this.getIndent()}
+              style={(isMobile)
+                     ? {"--my-cat-indent": this.getIndent(catlvl)}
                       : {"":""}}
               href="shop-left-sidebar.html">
-            {this.props.category.categoryDesc}
+            {catDesc}
 
-            {(this.state.hasChildren && this.props.isMobile)
+            {(hasChildren && isMobile)
               ? <span>
                   <i onClick={this.expandCat}
-                   className={((!this.state.expand) ? "expand" : "") + " menu-expand"}>
+                   className={((!expand) ? "expand" : "") + " menu-expand"}>
                   </i>
                 </span>
               : null
             }
           </a>
           <ReactTransitionGroup component={React.Fragment}>
-            {((this.state.hasChildren && (this.state.expand || !this.props.isMobile))
+            {((hasChildren && (expand || !isMobile))
               ? <CategoryMenuItemSubList
                   renderCategoryListItems={this.props.renderCategoryListItems}
-                  children={this.props.category.children}
-                  categoryLevel={this.props.category.categoryLevel}
-                  changeCategory={this.props.changeCategory}
-                  itemCounter={this.props.itemCounter}
+                  children={children}
+                  categoryLevel={catlvl}
+                  changeCategory={changeCategory}
+                  itemCounter={itemCount}
                 />
               : null)}
           </ReactTransitionGroup>
@@ -246,10 +258,14 @@ class CategoryMenuItemSubList extends Component {
   }
 
   render() {
+    let itemCount = this.props.itemCounter;
+    let changeCategory = this.props.changeCategory;
+    let children = this.props.children;
+
     return (
       <ul ref={this.setContainer}
           className="category-mega-menu">
-            {this.props.renderCategoryListItems(this.props.children, false, this.props.changeCategory, this.props.itemCounter)}
+            {this.props.renderCategoryListItems(children, false, changeCategory, itemCount)}
       </ul>
     )
   }
