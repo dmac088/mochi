@@ -1,18 +1,14 @@
 import React, { Component } from 'react';
 import { withRouter } from "react-router-dom";
+import { updateParams } from '../services/helpers/ScreenHelper';
 import qs from 'query-string';
 
 class LanguageSelector extends Component {
 
   changeLang = (event) => {
-    console.log("changeLang");
-    let urlParams = (qs.parse(this.props.history.location.search));
-    let mergedParams = Object.assign(urlParams, { lang: event.target.id });
-    const searchString = qs.stringify(mergedParams);
-    this.props.history.push({
-      "pathname": '/Search',
-      "search": searchString,
-    });
+    updateParams(this.props.history.location.search,
+                { lang: event.target.id },
+                  this.props.history);
   }
 
   render() {
