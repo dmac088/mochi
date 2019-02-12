@@ -3,9 +3,8 @@ import { Link, withRouter } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import ReactTransitionGroup from 'react-addons-transition-group';
 import Velocity from 'velocity-animate';
-import { isMobile } from '../../services/helpers/ScreenHelper';
+import { isMobile, slide, upadteParams } from '../../services/helpers/ScreenHelper';
 import 'velocity-animate/velocity.ui';
-import qs from 'query-string';
 const $ = window.$;
 
 class CategoryMenuContainer extends Component {
@@ -14,8 +13,8 @@ class CategoryMenuContainer extends Component {
     super(props);
     console.log("constructing");
     this.state = {
-        menuVisible: true,
-        isMobile: false,
+      menuVisible: true,
+      isMobile: false,
     };
   }
 
@@ -73,31 +72,19 @@ class CategoryMenu extends Component {
   }
 
   componentWillEnter (callback) {
-    const element = ReactDOM.findDOMNode(this.container);
-    if(element === undefined) {return}
-    Velocity(element, 'slideDown', { duration: 500 }).then(callback);
+    slide(this.container, 'slideDown', null, callback);
   }
 
   componentWillLeave (callback) {
-    const element = ReactDOM.findDOMNode(this.container);
-    if(element === undefined) {return}
-    Velocity(element, 'slideUp', { duration: 500 }).then(callback);
+    slide(this.container, 'slideUp', null, callback);
   }
 
   changeCategory = (event) => {
     if(event.target.tagName === "I") {return}
-    //get the query parameters
     event.preventDefault();
-    let urlParams = (qs.parse(this.props.history.location.search));
-    let mergedParams = Object.assign(urlParams, {
-                                                  category: event.target.id,
-                                                  page: 0
-                                                });
-    const searchString = qs.stringify(mergedParams);
-    this.props.history.push({
-      "pathname": '/Search',
-      "search": searchString,
-    });
+    upadteParams(this.props.history.location.search,
+                {category: event.target.id, page: 0},
+                this.props.history);
   }
 
   setContainer = (c) => {
@@ -194,7 +181,7 @@ class CategoryMenuItem extends Component {
                     ? "menu-item-has-children"
                     : "")
                     +
-                    ((rootList && itemCount > 8)
+                    ((itemCount > 8)
                     ? " hidden"
                     : "")
           }
@@ -242,15 +229,11 @@ class CategoryMenuItem extends Component {
 class CategoryMenuItemSubList extends Component {
 
   componentWillEnter (callback) {
-    const element = ReactDOM.findDOMNode(this.container);
-    if(element === undefined) {return}
-    Velocity(element, 'slideDown', { duration: 500 , "display":""}).then(callback);
+    slide(this.container, 'slideDown', { duration: 500 , "display":""}, callback);
   }
 
   componentWillLeave (callback) {
-    const element = ReactDOM.findDOMNode(this.container);
-    if(element === undefined) {return}
-    Velocity(element, 'slideUp', { duration: 500 }).then(callback);
+    slide(this.container, 'slideUp', null, callback);
   }
 
   setContainer = (c) => {
