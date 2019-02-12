@@ -3480,6 +3480,24 @@ a.single-sale-add-to-cart-btn {
         top: 0;
         line-height: 50px; }
 
+    @media only screen and (max-width: 767px) {
+          .category-mega-menu > li.menu-item-has-children > a::before {
+            content: "";
+          }
+      }
+
+      @media only screen and (min-width: 992px) and (max-width: 1199px) {
+            .category-mega-menu > li.menu-item-has-children > a::before {
+              content: "";
+            }
+        }
+
+        @media only screen and (min-width: 768px) and (max-width: 991px) {
+              .category-mega-menu > li.menu-item-has-children > a::before {
+                content: "";
+              }
+          }
+
     .category-mega-menu > li.menu-item-has-children:hover > ul.category-mega-menu {
           z-index: 9;
           opacity: 1;
