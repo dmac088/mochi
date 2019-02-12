@@ -73,13 +73,13 @@ class CategoryMenu extends Component {
   componentWillEnter (callback) {
     const element = ReactDOM.findDOMNode(this.container);
     if(element === undefined) {return}
-    Velocity(element, 'slideDown', { duration: 1000 }).then(callback);
+    Velocity(element, 'slideDown', { duration: 500 }).then(callback);
   }
 
   componentWillLeave (callback) {
     const element = ReactDOM.findDOMNode(this.container);
     if(element === undefined) {return}
-    Velocity(element, 'slideUp', { duration: 1000 }).then(callback);
+    Velocity(element, 'slideUp', { duration: 500 }).then(callback);
   }
 
   changeCategory = (event) => {
@@ -222,13 +222,13 @@ class CategoryMenuItemSubList extends Component {
   componentWillEnter (callback) {
     const element = ReactDOM.findDOMNode(this.container);
     if(element === undefined) {return}
-    Velocity(element, 'slideDown', { duration: 1000 , "display":""}).then(callback);
+    Velocity(element, 'slideDown', { duration: 500 , "display":""}).then(callback);
   }
 
   componentWillLeave (callback) {
     const element = ReactDOM.findDOMNode(this.container);
     if(element === undefined) {return}
-    Velocity(element, 'slideUp', { duration: 1000 }).then(callback);
+    Velocity(element, 'slideUp', { duration: 500 }).then(callback);
   }
 
   setContainer = (c) => {
