@@ -81,7 +81,7 @@ class CategoryMenu extends Component {
     if(e.target.tagName === "I") {return}
     e.preventDefault();
     updateParams(this.props.history.location.search,
-                {category: event.target.id, page: 0},
+                {category: e.target.id, page: 0},
                 this.props.history);
   }
 
