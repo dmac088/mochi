@@ -11,7 +11,6 @@ class CategoryMenuContainer extends Component {
 
   constructor(props) {
     super(props);
-    console.log("constructing");
     this.state = {
       menuVisible: true,
       isMobile: false,
