@@ -20,9 +20,7 @@ class CategoryMenuContainer extends Component {
 
   componentDidMount() {
     this.renderMenu(true);
-    window.addEventListener('resize', this.renderMenu , {
-      passive: true
-    });
+    window.addEventListener('resize', this.renderMenu , { passive: true });
   }
 
   renderMenu = (isMounting = false) => {
@@ -79,9 +77,9 @@ class CategoryMenu extends Component {
     slide(this.container, 'slideUp', null, callback);
   }
 
-  changeCategory = (event) => {
-    if(event.target.tagName === "I") {return}
-    event.preventDefault();
+  changeCategory = (e) => {
+    if(e.target.tagName === "I") {return}
+    e.preventDefault();
     updateParams(this.props.history.location.search,
                 {category: event.target.id, page: 0},
                 this.props.history);
@@ -91,13 +89,15 @@ class CategoryMenu extends Component {
     this.container = c;
   }
 
-  showMore = () => {
+  showMore = (e) => {
+    e.preventDefault();
     this.setState({
       showMore: true,
     })
   }
 
-  showLess = () => {
+  showLess = (e) => {
+    e.preventDefault();
     this.setState({
       showMore: false,
     })
@@ -153,7 +153,7 @@ class CategoryMenuItem extends Component {
   }
 
   expandCat = (e) => {
-      if(!(e === undefined)) {e.preventDefault()}
+      e.preventDefault()
       this.setState(prevState => ({
         expand: !prevState.expand,
       }));
