@@ -6,9 +6,9 @@
 
 /*-- Category Toggle Wrap --*/
 .category-toggle-wrap {
-   
+
     width: 100%;
-    padding: 12px 25px; 
+    padding: 12px 25px;
     position: relative;
     border-top-right-radius: 5px;
 
@@ -35,7 +35,7 @@
         z-index: 1;
         transform: translateY(100%);
     }
- 
+
 
 
     // Responsive
@@ -45,7 +45,7 @@
 
     // Category Toggle
     & .category-toggle {
-        
+
         padding: 0;
         margin: 0;
         border: none;
@@ -53,7 +53,7 @@
         color: $white;
         font-size: 15px;
         text-transform: uppercase;
-        font-weight: 500; 
+        font-weight: 500;
         line-height: 30px;
         width: 100%;
         text-align: left;
@@ -95,8 +95,8 @@
 
 .hero-side-category {
     background-color: $white;
-    width: 100%; 
-    text-transform: capitalize; 
+    width: 100%;
+    text-transform: capitalize;
 
     @media #{$large-mobile} {
         min-height: 50px;
@@ -104,7 +104,7 @@
 
     // Responsive
     @media #{$tablet-device} {
-        width: 100%; 
+        width: 100%;
         position: relative;
     }
 
@@ -153,7 +153,7 @@
 
         // Responsive
         @media #{$tablet-device} {
-            position: absolute; 
+            position: absolute;
             top: 55px;
             z-index: 9;
         }
@@ -268,7 +268,7 @@
                     line-height: 30px;
                     font-size: 14px;
                     color: #606060;
-                    font-weight: 400; 
+                    font-weight: 400;
                     position: relative;
                     border-bottom: 1px solid #e8e8e8;
 
@@ -282,8 +282,8 @@
                     }
                 }
 
-                &:hover {
-                    & .category-mega-menu {
+                &:hover> {
+                    & ul.category-mega-menu {
                         z-index: 9;
                         opacity: 1;
                         visibility: visible;
@@ -344,9 +344,8 @@
     position: absolute;
     left: 255px;
     top: 0;
-    width: 800px;
+    width: 100%;
     z-index: 999;
-    max-width: 910px;
     display: flex;
     flex-wrap: wrap;
     background-color: #ffffff;
@@ -354,14 +353,13 @@
 
     @media #{$desktop-device}{
         left: 210px;
-        width: 650px;
+        width: 100%;
 
     }
 
     @media #{$tablet-device}{
         box-shadow: none;
     }
-    padding: 40px;
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease 0s;
@@ -389,10 +387,9 @@
         transition: none;
     }
 
-    &>li {
+    & > li {
         float: left;
-        width: 33.33%;
-        padding: 0 15px;
+        width: 100%;
 
         // Responsive
         @media #{$tablet-device} {
@@ -430,14 +427,23 @@
                 left: 25px;
             }
         }
+	
+		& > a.megamenu-head {
+			
+			//Responsive
+			@media #{$tablet-device} {
+				border-bottom: 1px solid #ddd;
+			}
+			
+			@media #{$large-mobile} {
+				border-bottom: 1px solid #ddd;
+			}
+		}
+				
 
         &>a {
             display: block;
-            font-size: 16px;
-            font-weight: 500; 
-            color: $theme-color;
-            text-transform: uppercase;
-            
+
             @media #{$large-mobile}{
                 border-bottom: 1px solid #e8e8e8;
             }
@@ -469,6 +475,8 @@
                 text-transform: inherit;
             }
 
+
+
             &.megamenu-head{
                 @media #{$tablet-device}{
                     border-bottom: 1px solid #ddd;
@@ -476,15 +484,52 @@
                 @media #{$large-mobile}{
                     border-bottom: 1px solid #ddd;
                 }
-                padding-bottom: 10px;
             }
         }
 
-         
+    &.menu-item-has-children {
+		& a {
+			&::before {
+				font-family: 'fontAwesome';
+				content: "\f054";
+				position: absolute;
+				right: 25px;
+				top: 0;
+				line-height: 50px;
+			}
+
+			@media #{$large-mobile} {
+               &::before {
+				   content: "";
+			   }
+            }
+
+            @media #{$desktop-device} {
+                &::before {
+					content: "";
+				}
+            }
+
+            //Responsive
+            @media #{$tablet-device} {
+                &::before {
+					content: "";
+				}
+            }
+		}
+
+		&:hover {
+			& > ul.category-mega-menu {
+				z-index: 9;
+				opacity: 1;
+				visibility: visible;
+			}
+		}
+		
+	}
 
         &>ul {
             & li {
-                margin-bottom: 4px;
 
                 // Responsive
                 @media #{$tablet-device} {
@@ -498,7 +543,7 @@
                         background-color: #606060;
                         margin: 24px 0;
                         position: relative;
-                        left: 35px;
+                        left: var(--my-left-indent);
                     }
                 }
 
@@ -513,10 +558,10 @@
                         background-color: #606060;
                         margin: 24px 0;
                         position: relative;
-                        left: 35px;
+                        left: var(--my-left-indent);
                     }
                 }
-
+				
                 // Child Selector
                 &:last-child {
                     margin-bottom: 0;
@@ -526,7 +571,7 @@
                     display: block;
                     font-size: 14px;
                     color: #606060;
-                    line-height: 20px;
+                    line-height: 30px;
                     @media #{$large-mobile}{
                         border-bottom: 1px solid #e8e8e8;
                     }
@@ -537,16 +582,16 @@
 
                     // Responsive
                     @media #{$tablet-device} {
-                        padding: 10px 25px 10px 45px;
+                        padding: 10px 25px 10px var(--my-cat-indent);
                         line-height: 30px;
                         font-size: 14px;
-                        color: #666666; 
+                        color: #666666;
                         font-weight: 400;
                         position: relative;
                     }
 
                     @media #{$large-mobile} {
-                        padding: 10px 25px 10px 45px;
+                        padding: 10px 25px 10px var(--my-cat-indent);
                         line-height: 30px;
                         font-size: 14px;
                         color: #666666;
@@ -583,7 +628,7 @@
 
     }
 
-    
+
 
 
 }

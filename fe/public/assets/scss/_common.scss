@@ -7,6 +7,7 @@
 
 /*-- Common Style --*/
 *, *::after, *::before {
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 html, body {
@@ -79,6 +80,8 @@ a, button {
     cursor: pointer;
 }
 a, button, img, input, span {
+	-webkit-transition: all 0.3s ease 0s;
+    -o-transition: all 0.3s ease 0s;
     transition: all 0.3s ease 0s;
 }
 *:focus {
@@ -131,6 +134,7 @@ ul {
 
 .onsale{
     background: #ffaf00;
+	-webkit-box-shadow: none;
     box-shadow: none;
     color: #fff;
     font-family: Rubik, Arial, Helvetica, sans-serif;
@@ -175,7 +179,11 @@ ul {
     z-index: 78;
     opacity: 0;
     visibility: hidden;
+	-webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
+	-webkit-transition: 0.3s;
+    -o-transition: 0.3s;
     transition: 0.3s;
 
     a {
@@ -192,6 +200,8 @@ ul {
         text-transform: none;
         width: 43px;
         border-radius: 100%;
+		-webkit-transition: all .3s ease;
+		-o-transition: all .3s ease;
         transition: all .3s ease; 
         position: relative;
 
@@ -222,6 +232,8 @@ ul {
             bottom: 100%;
             left: 50%;
             margin-bottom: 12px;
+			-webkit-transform: translateX(-50%);
+			-ms-transform: translateX(-50%);
             transform: translateX(-50%);
             font-size: 14px;
             font-weight: 400;
@@ -233,6 +245,8 @@ ul {
             white-space: nowrap;
             opacity: 0;
             visibility: hidden;
+			-webkit-transition: 0.3s;
+			-o-transition: 0.3s;
             transition: 0.3s;
         }
 
@@ -248,6 +262,8 @@ ul {
             border-color: #444444 transparent transparent transparent;
             opacity: 0;
             visibility: hidden;
+			-webkit-transition: 0.3s;
+			-o-transition: 0.3s;
             transition: 0.3s;
         }
 
@@ -269,7 +285,7 @@ ul {
     height: 45px;
     border-radius: 50%;
     line-height: 40px;
-    display: none;
+    display: inline-block;
     text-align: center;
     color: #fff;
     font-family: 'FontAwesome';
@@ -288,6 +304,17 @@ ul {
       background-color: $hover-color;
       color: #ffffff;
     }
+	
+	.fadeOut{
+		opacity: 0;
+		display: none;
+		transition: width 0.5s 0.5s, height 0.5s 0.5s, opacity 0.5s;
+	}
+	.fadeIn{
+		opacity: 1;
+		display: inline;
+		transition: width 0.5s, height 0.5s, opacity 0.5s 0.5s;
+	}
   }
 
 
@@ -335,6 +362,17 @@ ul {
 
 /*----------  custom zoom in animation  ----------*/
 
+@-webkit-keyframes customZoomIn {
+    from {
+        opacity: 0;
+        -webkit-transform: scale3d(0.8, 0.8, 0.8);
+        transform: scale3d(0.8, 0.8, 0.8);
+   }
+    50% {
+        opacity: 1;
+   }
+}
+
 @keyframes customZoomIn {
     from {
         opacity: 0;
@@ -368,6 +406,7 @@ select {
 
   .pagination-container{
       background-color: #ffffff;
+	  -webkit-box-shadow: 0px 5px 4px 0px rgba(0, 0, 0, 0.1);
       box-shadow: 0px 5px 4px 0px rgba(0,0,0,0.1);
       padding: 15px 15px;
   }
