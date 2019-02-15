@@ -199,12 +199,12 @@
 
                     &>a {
                         &::before {
-                            font-family: 'fontAwesome';
-                            content: "\f054";
-                            position: absolute;
-                            right: 25px;
-                            top: 0;
-                            line-height: 50px;
+							font-family: 'fontAwesome';
+							content: "\f054";
+							position: absolute;
+							right: 25px;
+							top: 0;
+							line-height: 50px;
 
                             // Responsive
                             @media #{$tablet-device} {
@@ -496,7 +496,7 @@
         }
 
     &.menu-item-has-children {
-		& a {
+		& > a {
 			&::before {
 				font-family: 'fontAwesome';
 				content: "\f054";
