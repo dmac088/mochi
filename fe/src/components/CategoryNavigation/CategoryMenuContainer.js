@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
-import ReactDOM from 'react-dom';
+import { withRouter } from 'react-router-dom';
 import ReactTransitionGroup from 'react-addons-transition-group';
-import Velocity from 'velocity-animate';
 import { isMobile, slide, updateParams } from '../../services/helpers/ScreenHelper';
 import 'velocity-animate/velocity.ui';
-const $ = window.$;
+
 
 class CategoryMenuContainer extends Component {
 
