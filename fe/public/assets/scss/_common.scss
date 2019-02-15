@@ -305,18 +305,19 @@ ul {
       color: #ffffff;
     }
 	
-	.fadeOut{
+  }
+
+  .fadeOut{
 		opacity: 0;
-		display: none;
+	 	display: none;
 		transition: width 0.5s 0.5s, height 0.5s 0.5s, opacity 0.5s;
-	}
-	.fadeIn{
+  }
+  
+  .fadeIn{
 		opacity: 1;
 		display: inline;
 		transition: width 0.5s, height 0.5s, opacity 0.5s 0.5s;
-	}
-  }
-
+   }
 
 
   
