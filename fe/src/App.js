@@ -2,16 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
-  Route,
   withRouter
 } from 'react-router-dom';
 import store from './store';
 import Header from './components/Header';
-import Signup from './components/Signup';
-import ManageCart from './components/ManageCart';
-import Paginator from './components/Paginator';
-import PageSize from './components/PageSize';
-import PageSort from './components/PageSort';
 import * as tokensActionCreators from './services/session/actions';
 import * as customerActionCreators from './services/customer/actions';
 import * as sessionService from './services/session';
@@ -20,8 +14,6 @@ import * as cartService from './services/cart';
 import * as categoryApi from './data/categories/api';
 import Landing from './components/Landing';
 import Login from './components/Login';
-import Footer from './components/Footer';
-import CategoryNavigator from './components/CategoryNavigator'
 import qs from 'query-string';
 import _ from 'lodash';
 
