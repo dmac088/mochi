@@ -388,6 +388,14 @@
     }
 
     & > li {
+		display: block;
+		padding: 10px 25px;
+		line-height: 30px;
+		font-size: 14px;
+		color: #606060;
+		font-weight: 400;
+		position: relative;
+		border-bottom: 1px solid #e8e8e8;
         float: left;
         width: 100%;
 
