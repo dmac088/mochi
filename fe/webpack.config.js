@@ -16,7 +16,15 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
     compress: true,
-    port: 3000
+    port: 3000,
+    open: true,
+    watchOptions: {
+      // Delay the rebuild after the first change
+      aggregateTimeout: 300,
+
+      // Poll using interval (in ms, accepts boolean too)
+      poll: 1000,
+    },
   },
   entry: {
     app: './index.js',
