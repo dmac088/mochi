@@ -14,7 +14,7 @@
             }
         }
 
-        @media #{$small-mobile}{
+        @media #{$small-mobile}{ 
             width: 80%;
             margin: auto;
         }
@@ -443,7 +443,7 @@
 /*----------  07.7 Multisale slider product  ----------*/
 
 .multisale-slider-product {
-    border-right: 1px solid #e0e0e0; 
+    border-right: 1px solid #e0e0e0;
     padding: 30px 5px;
     text-align: center;
     position: relative;
@@ -474,9 +474,9 @@
             color: #ffffff;
             display: inline-block;
             text-transform: uppercase;
-            padding: 8px; 
+            padding: 8px;
             font-weight: 500;
-            border-right: 1px solid #ffffff; 
+            border-right: 1px solid #ffffff;
 
             @media #{$large-mobile}{
                 padding: 10px;
@@ -627,9 +627,9 @@
     padding: 30px 5px;
     text-align: center;
     position: relative;
-    background-color: #ffffff; 
+    background-color: #ffffff;
 
- 
+
 
     .image {
         margin-bottom: 20px;
@@ -688,8 +688,8 @@
 
 .shop-list-view-product{
     padding: 20px;
-    background-color: #ffffff; 
-    display: flex; 
+    background-color: #ffffff;
+    display: flex;
     align-items: start;
     border-bottom: 1px solid #e0e0e0;
 
@@ -760,7 +760,7 @@
             line-height: 30px;
             color: #666666;
         }
-    } 
+    }
 }
 
 /*----------  list product icons  ----------*/
@@ -785,7 +785,7 @@
         text-transform: none;
         width: 43px;
         border-radius: 100%;
-        transition: all .3s ease; 
+        transition: all .3s ease;
         position: relative;
 
 
