@@ -14,7 +14,7 @@ module.exports = {
   watch: false,
   context: path.resolve(__dirname, './src'),
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
+    contentBase: path.join(__dirname, 'build'),
     compress: true,
     port: 3000,
     open: true,
@@ -34,13 +34,6 @@ module.exports = {
     publicPath: "dist",
     filename: '[name].bundle.js',
   },
-  devtool: 'source-map',
-  resolve: {
-    alias: {
-      moment: 'moment/src/moment'
-    }
-  },
-
   module: {
     rules: [
       {
