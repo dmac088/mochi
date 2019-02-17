@@ -64,7 +64,7 @@ module.exports = {
         ]
       },
       {
-        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        test: /\.(jpe?g|png|gif|svg)$/i,
         use: "file-loader"
       }
     ]
@@ -72,7 +72,7 @@ module.exports = {
   devtool: "inline-source-map",
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "main.scss"
+      filename: "main.css"
     }),
 
     new HtmlWebpackPlugin({

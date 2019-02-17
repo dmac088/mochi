@@ -435,19 +435,19 @@
                 left: 25px;
             }
         }
-	
+
 		& > a.megamenu-head {
-			
+
 			//Responsive
 			@media #{$tablet-device} {
 				border-bottom: 1px solid #ddd;
 			}
-			
+
 			@media #{$large-mobile} {
 				border-bottom: 1px solid #ddd;
 			}
 		}
-				
+
 
         &>a {
             display: block;
@@ -533,7 +533,7 @@
 				visibility: visible;
 			}
 		}
-		
+
 	}
 
         &>ul {
@@ -569,7 +569,7 @@
                         left: var(--my-left-indent);
                     }
                 }
-				
+
                 // Child Selector
                 &:last-child {
                     margin-bottom: 0;
