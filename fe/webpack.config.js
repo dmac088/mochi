@@ -13,6 +13,11 @@ const PATHS = {
 module.exports = {
   watch: false,
   context: path.resolve(__dirname, './src'),
+  devServer: {
+    contentBase: path.join(__dirname, 'dist'),
+    compress: true,
+    port: 3000
+  },
   entry: {
     app: './index.js',
   },
