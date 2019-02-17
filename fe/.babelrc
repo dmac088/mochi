@@ -1,11 +1,10 @@
 {
-"presets": ["env", "react",  "es2015", "stage-0" ],
-"plugins": ["transform-runtime",
-            "transform-async-to-generator",
-            "transform-class-properties",
-            "transform-regenerator",
-            "syntax-async-functions",
-            "babel-plugin-transform-decorators-legacy",
-            "@babel/plugin-proposal-decorators",
-            { "legacy": true }] 
+"presets": ["@babel/preset-env", "@babel/preset-react"],
+"plugins": ["@babel/plugin-transform-runtime",
+            "@babel/transform-async-to-generator",
+            "@babel/plugin-proposal-class-properties",
+            "@babel/plugin-transform-regenerator",
+            ["@babel/plugin-proposal-decorators",
+            { "legacy": true }]
+          ]
 }

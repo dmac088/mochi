@@ -2,8 +2,8 @@
 var packageJSON = require('./package.json');
 const path = require('path');
 const webpack = require('webpack');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
-
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 
 const PATHS = {
@@ -31,24 +31,30 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.js$/,
         include:[path.resolve(__dirname, 'src')],
         exclude: [path.resolve(__dirname,"node_modules")],
-        use: "babel-loader"
+        use: {
+          loader: "babel-loader"
+        }
       },
       {
-        test: /\.scss?$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: 'css-loader!sass-loader'
-        })
+        test: /\.css$/,
+        use:  [
+                  'style-loader',
+                  MiniCssExtractPlugin.loader,
+                  'css-loader'
+              ]
       },
-	   {
-        test: /\.css?$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: 'css-loader'
-        })
+      {
+        test: /\.scss$/,
+        use: [
+          'style-loader',
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'postcss-loader',
+          'sass-loader'
+        ]
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
@@ -57,11 +63,15 @@ module.exports = {
     ]
   },
   plugins: [
-    new ExtractTextPlugin('main.scss'),
-    new webpack.ProvidePlugin({
-            $: "jquery",
-            jQuery: "jquery",
-            jquery: 'jquery'
+    new MiniCssExtractPlugin({
+      filename: "main.scss"
+    }),
+    new HtmlWebpackPlugin({
+      inject: false,
+      hash: true,
+      template: '../public/index.html',
+      filename: 'index.html'
     })
+
   ]
 };
