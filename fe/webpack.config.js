@@ -14,7 +14,7 @@ module.exports = {
   watch: false,
   context: path.resolve(__dirname, './src'),
   devServer: {
-    contentBase: path.join(__dirname, 'build'),
+    contentBase: "./public",
     compress: true,
     port: 3000,
     open: true,
@@ -68,16 +68,17 @@ module.exports = {
       }
     ]
   },
+  devtool: "inline-source-map",
   plugins: [
     new MiniCssExtractPlugin({
       filename: "main.scss"
     }),
+
     new HtmlWebpackPlugin({
       inject: false,
       hash: true,
       template: '../public/index.html',
       filename: 'index.html'
     })
-
   ]
 };
