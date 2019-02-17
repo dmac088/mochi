@@ -17,7 +17,6 @@ import Login from './components/Login';
 import qs from 'query-string';
 import _ from 'lodash';
 import './../public/assets/scss/main.scss';
-import './../public/assets/css/main.css';
 
 
 

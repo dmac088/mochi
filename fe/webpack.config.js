@@ -72,7 +72,7 @@ module.exports = {
   devtool: "inline-source-map",
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "main.css"
+      filename: '[name].bundle.css'
     }),
 
     new HtmlWebpackPlugin({
