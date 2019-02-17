@@ -18,6 +18,7 @@ module.exports = {
     compress: true,
     port: 3000,
     open: true,
+    historyApiFallback: true,
     watchOptions: {
       // Delay the rebuild after the first change
       aggregateTimeout: 300,
