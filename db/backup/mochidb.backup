@@ -1822,11 +1822,19 @@ ALTER TABLE ONLY mochi.tag
 
 
 --
--- Name: uc_cat_lcl_1; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_cat_desc; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
 ALTER TABLE ONLY mochi.category_attr_lcl
-    ADD CONSTRAINT uc_cat_lcl_1 UNIQUE (cat_id, lcl_cd);
+    ADD CONSTRAINT uc_cat_desc UNIQUE (cat_desc);
+
+
+--
+-- Name: uc_cat_lcl; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.category_attr_lcl
+    ADD CONSTRAINT uc_cat_lcl UNIQUE (cat_id, lcl_cd);
 
 
 --
