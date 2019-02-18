@@ -177,7 +177,7 @@ class App extends Component {
               customer={this.props.customer}
               lang={this.state.queryParams.lang}
             />
-          {this.renderLanding()}
+            {this.renderLanding()}
           </React.Fragment>
     );
   }

@@ -11,13 +11,19 @@ const Products = (props) => {
 			productsData = props.productsList.map(product =>{
 
 				return(
-  					<div key={product.productId}>
-  							<Product
-  											 product=		{product}
-  											 openModal=	{props.openModal}
-  											 lang=			{props.lang}
-  							/>
-  					</div>
+            <div class="shop-page-container mb-50">
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-3 order-2 order-lg-1">
+                    <!--=======  sidebar area  =======-->
+
+                    <div class="sidebar-area">
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
 					)
 				}
 		);
