@@ -15,12 +15,8 @@ export const slide = (container, direction, params = { duration: 500}, callback)
   Velocity(element, direction, params).then(callback);
 }
 
-export const updateParams = (search, params, history) => {
+export const updateParams = (search, params) => {
   let urlParams = (qs.parse(search));
   let mergedParams = Object.assign(urlParams, params);
-  let searchString = qs.stringify(mergedParams);
-  history.push({
-    "pathname": '/Search',
-    "search": searchString,
-  });
+  return qs.stringify(mergedParams);
 }

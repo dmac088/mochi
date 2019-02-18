@@ -74,9 +74,10 @@ class CategoryMenu extends Component {
   changeCategory = (e) => {
     if(e.target.tagName === "I") {return}
     e.preventDefault();
-    updateParams(this.props.history.location.search,
-                {category: e.target.id, page: 0},
-                this.props.history);
+    console.dir(e.currentTarget.text);
+    this.props.history.push({
+      "pathname": '/ProductCategory/' + e.currentTarget.text
+    });
   }
 
   setContainer = (c) => {
