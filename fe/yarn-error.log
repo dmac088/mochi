@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/Cellar/node/10.10.0/bin/node /usr/local/Cellar/yarn/1.9.4/libexec/bin/yarn.js install
+  /usr/local/Cellar/node/10.10.0/bin/node /usr/local/Cellar/yarn/1.9.4/libexec/bin/yarn.js add pathToRegexp
 
 PATH: 
   /Library/Frameworks/Python.framework/Versions/2.7/bin:/usr/local/autoconf/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/Library/Frameworks/Python.framework/Versions/2.7/bin:/usr/local/autoconf/bin
@@ -14,12 +14,17 @@ Platform:
   darwin x64
 
 Trace: 
-  SyntaxError: /Users/danielmackie/projects/mochi/fe/package.json: Unexpected token } in JSON at position 1374
-      at JSON.parse (<anonymous>)
-      at /usr/local/Cellar/yarn/1.9.4/libexec/lib/cli.js:1130:59
-      at Generator.next (<anonymous>)
-      at step (/usr/local/Cellar/yarn/1.9.4/libexec/lib/cli.js:92:30)
-      at /usr/local/Cellar/yarn/1.9.4/libexec/lib/cli.js:103:13
+  Error: https://registry.yarnpkg.com/pathToRegexp: Not found
+      at Request.params.callback [as _callback] (/usr/local/Cellar/yarn/1.9.4/libexec/lib/cli.js:64202:18)
+      at Request.self.callback (/usr/local/Cellar/yarn/1.9.4/libexec/lib/cli.js:137468:22)
+      at Request.emit (events.js:182:13)
+      at Request.<anonymous> (/usr/local/Cellar/yarn/1.9.4/libexec/lib/cli.js:138440:10)
+      at Request.emit (events.js:182:13)
+      at IncomingMessage.<anonymous> (/usr/local/Cellar/yarn/1.9.4/libexec/lib/cli.js:138362:12)
+      at Object.onceWrapper (events.js:273:13)
+      at IncomingMessage.emit (events.js:187:15)
+      at endReadableNT (_stream_readable.js:1092:12)
+      at process._tickCallback (internal/process/next_tick.js:63:19)
 
 npm manifest: 
   {
@@ -28,8 +33,9 @@ npm manifest:
     "description": "simple react shopping cart without using redux",
     "main": "main.js",
     "scripts": {
-      "start": "react-scripts start",
-      "build": "react-scripts build",
+      "dev": "webpack --mode development",
+      "start": "webpack-dev-server --mode development",
+      "build": "webpack --mode production",
       "test": "react-scripts test --env=jsdom",
       "eject": "react-scripts eject"
     },
@@ -56,10 +62,9 @@ npm manifest:
       "react-dom": "^16.7.0",
       "react-redux": "^5.1.0",
       "react-router-dom": "^4.3.1",
-      "react-scripts": "^2.1.5",
       "react-transition-group": "^2.5.3",
       "redux": "^3.6.0",
-      "redux-persist": "^3.4.0",
+      "redux-persist": "^3.5.0",
       "redux-persist-transform-filter": "0.0.4",
       "redux-thunk": "^2.1.0",
       "remote-redux-devtools": "^0.5.13",
@@ -69,7 +74,7 @@ npm manifest:
       "save": "^2.3.3",
       "style-loader": "^0.23.0",
       "velocity-animate": "^1.5.2",
-      "velocity-react": "^1.4.1",
+      "velocity-react": "^1.4.1"
     },
     "proxy": "https://localhost:8090",
     "browserslist": [
@@ -88,9 +93,10 @@ npm manifest:
       "babel-loader": "^8.0.5",
       "html-webpack-plugin": "^3.2.0",
       "mini-css-extract-plugin": "^0.5.0",
+      "react-scripts": "^2.1.5",
       "webpack": "^4.29.4",
       "webpack-cli": "^3.2.3",
-      "webpack-dev-server": "^3.1.14",
+      "webpack-dev-server": "^3.1.14"
     }
   }
 
@@ -8250,7 +8256,7 @@ Lockfile:
       lodash.set "^4.3.2"
       redux-persist "^3.4.0"
   
-  redux-persist@^3.4.0:
+  redux-persist@^3.4.0, redux-persist@^3.5.0:
     version "3.5.0"
     resolved "https://registry.yarnpkg.com/redux-persist/-/redux-persist-3.5.0.tgz#84bd74c2b17e32d490aea71196a812f2013fcc8e"
     dependencies:
