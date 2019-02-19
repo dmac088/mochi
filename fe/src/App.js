@@ -160,6 +160,18 @@ class App extends Component {
     );
   }
 
+  renderProducts = (routeProps) => {
+    return (
+      <Products
+        {...routeProps}
+        lang={this.state.queryParams.lang}
+        openModal={this.openModal}
+        pagedItems={this.state.pagedItems}
+        categoryList={this.state.categoryList}
+      />
+    );
+  }
+
   renderLogin = (routeProps) => {
     return (
               <Login
@@ -177,7 +189,15 @@ class App extends Component {
               customer={this.props.customer}
               lang={this.state.queryParams.lang}
             />
-            {this.renderLanding()}
+            <Route
+              path="/category"
+              component={this.renderProducts}
+            />
+            <Route
+              path="/"
+              exact={true}
+              component={this.renderLanding}
+            />
           </React.Fragment>
     );
   }

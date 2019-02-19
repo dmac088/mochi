@@ -1,48 +1,49 @@
 import React from 'react';
-import Product from './Product';
+import Product from './Products/Product';
+import CategorySidebar from './Products/Sidebars/CategorySidebar';
+import BrandSidebar from './Products/Sidebars/BrandSidebar';
+import PriceSidebar from './Products/Sidebars/PriceSidebar';
+import TopRatedSidebar from './Products/Sidebars/TopRatedSidebar';
+import TagSidebar from './Products/Sidebars/TagSidebar';
+import ShopBanner from './Products/ShopBanner';
+import BreadCrumb from './Products/BreadCrumb';
+import ShopHeader from './Products/ShopHeader';
+import Pagination from './Products/Pagination';
 import NoResults from "../empty-states/NoResults";
 import ReactCSSTransitionGroup from 'react-addons-transition-group';
 
 
-const Products = (props) => {
+class Products extends Component {
 
-    	let productsData;
-
-			productsData = props.productsList.map(product =>{
-
+  render() {
 				return(
-  					<div key={product.productId}>
-  							<Product
-  											 product=		{product}
-  											 openModal=	{props.openModal}
-  											 lang=			{props.lang}
-  							/>
-  					</div>
+            <div class="shop-page-container mb-50">
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-3 order-2 order-lg-1">
+                    <div class="sidebar-area">
+                      <CategorySidebar/>
+                      <BrandSidebar/>
+                      <PriceSidebar/>
+                      <TopRatedSidebar/>
+                      <TagSidebar/>
+                    </div>
+                  </div>
+                  <div class="col-lg-9 order-1 order-lg-2 mb-sm-35 mb-xs-35">
+                    <ShopBanner/>
+                    <BreadCrumb/>
+                    <ShopHeader/>
+                    <div class="shop-product-wrap list row no-gutters mb-35">
+                      <Product/>
+                    </div>
+                    <Pagination/>
+                  </div>
+                </div>
+              </div>
+            </div>
 					)
 				}
-		);
-
-		// Empty and Loading States
-		let view;
-		if(productsData.length <= 0){
-			view = <NoResults />
-		} else{
-			view =
-			<ReactCSSTransitionGroup
-				transitionName="fadeIn"
-				transitionEnterTimeout={500}
-				transitionLeaveTimeout={300}
-				component="div"
-				className="products">
-					{productsData}
-			</ReactCSSTransitionGroup>
-		}
-		return(
-			<div className="products-wrapper">
-				{view}
-			</div>
-		)
-	}
+}
 
 
 export default Products;

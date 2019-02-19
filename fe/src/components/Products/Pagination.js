@@ -9,8 +9,6 @@ class Pagination extends Component {
           <div class="container">
             <div class="row">
               <div class="col-lg-12">
-                <!--=======  pagination-content  =======-->
-
                 <div class="pagination-content text-center">
                   <ul>
                     <li><a class="active" href="#">1</a></li>
@@ -20,8 +18,6 @@ class Pagination extends Component {
                     <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
                   </ul>
                 </div>
-
-                <!--=======  End of pagination-content  =======-->
               </div>
             </div>
           </div>
@@ -29,3 +25,5 @@ class Pagination extends Component {
       )
     }
 }
+
+export default Pagination;

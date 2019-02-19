@@ -7,8 +7,6 @@ class TagSidebar extends Component {
     return (
       <div class="sidebar">
         <h3 class="sidebar-title">Product Tags</h3>
-        <!--=======  tag container  =======-->
-
         <ul class="tag-container">
           <li><a href="shop-left-sidebar.html">new</a> </li>
           <li><a href="shop-left-sidebar.html">bags</a> </li>
@@ -17,9 +15,9 @@ class TagSidebar extends Component {
           <li><a href="shop-left-sidebar.html">fashion</a> </li>
           <li><a href="shop-left-sidebar.html">Accessories</a> </li>
         </ul>
-
-        <!--=======  End of tag container  =======-->
       </div>
     );
   }
 }
+
+export default TagSidebar;

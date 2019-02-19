@@ -16,3 +16,5 @@ class BrandSidebar extends Component {
       );
   }
 }
+
+export default BrandSidebar;

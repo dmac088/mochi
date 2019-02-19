@@ -24,4 +24,4 @@ class BreadCrumb extends Component {
   }
 
 }
-export default withRouter(CategoryNavigator);
+export default BreadCrumb;
