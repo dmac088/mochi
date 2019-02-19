@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
-  withRouter
+  withRouter,
+  Route
 } from 'react-router-dom';
 import store from './store';
 import Header from './components/Header';
+import Products from './components/Products';
 import * as tokensActionCreators from './services/session/actions';
 import * as customerActionCreators from './services/customer/actions';
 import * as sessionService from './services/session';
@@ -65,41 +67,47 @@ class App extends Component {
 
 
 
-  refreshData = (search) => {
-    let urlParams = (qs.parse(search));
-    let stateParams = (qs.parse(qs.stringify(this.state.queryParams)));
+  refreshData = (/*search*/) => {
+    //let urlParams = (qs.parse(search));
+    //let stateParams = (qs.parse(qs.stringify(this.state.queryParams)));
 
     //if the local state and url parameters match then no need to reload data
-    if (_.isEqual(stateParams, urlParams) && this.state.isMounted === 1) {return null;}
-    let mergedParams = Object.assign(_.cloneDeep(stateParams), urlParams);
+    //if (_.isEqual(stateParams, urlParams) && this.state.isMounted === 1) {return null;}
+    //let mergedParams = Object.assign(_.cloneDeep(stateParams), urlParams);
 
-    let productPromise  = this.getProducts(mergedParams);
-    let categoryPromise = this.getCategories(mergedParams.lang);
+    //let productPromise  = this.getProducts(mergedParams);
+    //let categoryPromise = this.getCategories(mergedParam.lang);
+    let categoryPromise = this.getCategories(this.state.lang);
 
     //fetch the data and set the state
-    Promise.all([productPromise,categoryPromise])
+    Promise.all([/*productPromise,*/categoryPromise])
     .then((values) => {
+      console.log(values[0]);
          this.setState({
-                         queryParams:   mergedParams,
-                         pagedItems:    values[0],
-                         categoryList:  values[1],
+                         /*queryParams:   mergedParams,
+                         pagedItems:    values[0],*/
+                         categoryList:  values[0],
                          isMounted: 1,
                        }, () => {
                           //also set the URL state, since they need to be in sync
-                          this.props.history.push({
-                                "pathname": '/Search',
-                                "search": qs.stringify(mergedParams),
-                          });
+                          // this.props.history.push({
+                          //       "pathname": '/Search',
+                          //       "search": qs.stringify(mergedParams),
+                          // });
+
+
                        });
       });
   }
 
   componentWillMount() {
+    this.refreshData();
+
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if(!this.shouldRefreshdata(this.props.location)) {return(null);}
-    this.refreshData(this.props.location.search);
+    //if(!this.shouldRefreshdata(this.props.location)) {return(null);}
+    /*this.refreshData(this.props.location.search);*/
   }
 
   shouldRefreshdata = (location) => {

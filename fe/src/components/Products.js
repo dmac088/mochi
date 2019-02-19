@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Product from './Products/Product';
 import CategorySidebar from './Products/Sidebars/CategorySidebar';
 import BrandSidebar from './Products/Sidebars/BrandSidebar';
