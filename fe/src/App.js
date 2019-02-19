@@ -203,7 +203,7 @@ class App extends Component {
     return (
           <React.Fragment>
             <Route
-              path={"/"}
+              path={"/:locale"}
               component={this.renderHeader}
             />
             <Route
