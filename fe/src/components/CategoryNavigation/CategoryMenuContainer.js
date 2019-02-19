@@ -76,7 +76,7 @@ class CategoryMenu extends Component {
     e.preventDefault();
     console.dir(e.currentTarget.text);
     this.props.history.push({
-      "pathname": '/ProductCategory/' + e.currentTarget.text
+      "pathname": '/category/' + e.currentTarget.text
     });
   }
 

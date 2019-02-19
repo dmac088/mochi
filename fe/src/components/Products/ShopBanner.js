@@ -8,9 +8,11 @@ class ShopBanner extends Component {
     return (
       <div class="shop-page-banner mb-35">
         <a href="shop-left-sidebar.html">
-          <img src="assets/images/banners/shop-banner.jpg" class="img-fluid" alt="">
+          <img src="assets/images/banners/shop-banner.jpg" class="img-fluid" alt="" />
         </a>
       </div>
     );
   }
 }
+
+export default ShopBanner;

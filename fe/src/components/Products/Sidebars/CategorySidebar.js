@@ -20,5 +20,6 @@ class CategorySidebar extends Component {
       </div>
     );
   }
-
 }
+
+export default CategorySidebar;
