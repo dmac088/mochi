@@ -203,13 +203,24 @@ class App extends Component {
     return (
           <React.Fragment>
             <Route
-              path={"/:locale"}
-              component={this.renderHeader}
+              path={"/"}
+              exact={true}
+              render={props =>
+                <React.Fragment>
+                    {this.renderHeader()}
+                    {this.renderLanding()}
+                </React.Fragment>
+              }
             />
             <Route
               path={"/:locale"}
               exact={true}
-              component={this.renderLanding}
+              render={props =>
+                <React.Fragment>
+                    {this.renderHeader()}
+                    {this.renderLanding()}
+                </React.Fragment>
+              }
             />
             <Route
               path={"/:locale/category/:category"}
