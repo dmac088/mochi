@@ -15,7 +15,6 @@ const categoryMenu = $('.category-menu');
 
 class Header extends Component {
 
-
   constructor(props) {
     super(props);
     this.state = { theposition: 0};
@@ -35,8 +34,8 @@ class Header extends Component {
     mainMenuNav.meanmenu({
         meanScreenWidth: '991',
         meanMenuContainer: '.mobile-menu',
-        meanMenuClose: '<span class="menu-close"></span>',
-        meanMenuOpen: '<span class="menu-bar"></span>',
+        meanMenuClose: '<span className="menu-close"></span>',
+        meanMenuOpen: '<span className="menu-bar"></span>',
         meanRevealPosition: 'right',
         meanMenuCloseSize: '0',
     });

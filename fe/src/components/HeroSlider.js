@@ -24,8 +24,8 @@ class HeroSlider extends Component {
   		fade: true,
   		infinite: true,
   		slidesToShow: 1,
-  		prevArrow: '<button type="button" class="slick-prev"><i class="fa fa-chevron-left"></i></button>',
-  		nextArrow: '<button type="button" class="slick-next"><i class="fa fa-chevron-right"></i></button>',
+  		prevArrow: '<button type="button" className="slick-prev"><i className="fa fa-chevron-left"></i></button>',
+  		nextArrow: '<button type="button" className="slick-next"><i className="fa fa-chevron-right"></i></button>',
   	});
 
   	/*--

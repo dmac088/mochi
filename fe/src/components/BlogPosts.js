@@ -20,8 +20,8 @@ initBlogPosts = () => {
 		dots: false,
 		infinite: true,
 		slidesToShow: 3,
-		prevArrow: '<button type="button" class="slick-prev"><i class="fa fa-caret-left"></i></button>',
-		nextArrow: '<button type="button" class="slick-next"><i class="fa fa-caret-right"></i></button>',
+		prevArrow: '<button type="button" className="slick-prev"><i className="fa fa-caret-left"></i></button>',
+		nextArrow: '<button type="button" className="slick-next"><i className="fa fa-caret-right"></i></button>',
 		responsive: [{
 			breakpoint: 1499,
 			settings: {

@@ -180,6 +180,16 @@ class App extends Component {
     );
   }
 
+  renderHeader = (routeProps) => {
+    return (
+      <Header
+        {...routeProps}
+        authenticated={this.props.tokens.authenticated}
+        customer={this.props.customer}
+      />
+    );
+  }
+
   renderLogin = (routeProps) => {
     return (
               <Login
@@ -192,19 +202,19 @@ class App extends Component {
     //console.log("render App");
     return (
           <React.Fragment>
-            <Header
-              authenticated={this.props.tokens.authenticated}
-              customer={this.props.customer}
-              lang={this.state.queryParams.lang}
+            <Route
+              path={"/"}
+              component={this.renderHeader}
             />
             <Route
-              path="/category"
-              component={this.renderProducts}
-            />
-            <Route
-              path="/"
+              path={"/:locale"}
               exact={true}
               component={this.renderLanding}
+            />
+            <Route
+              path={"/:locale/category/:category"}
+              exact={true}
+              component={this.renderProducts}
             />
           </React.Fragment>
     );

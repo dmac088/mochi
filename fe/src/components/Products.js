@@ -17,13 +17,13 @@ class Products extends Component {
 
   render() {
 				return(
-            <div class="shop-page-container mb-50">
-              <div class="container">
+            <div className="shop-page-container mb-50">
+              <div className="container">
                 <BreadCrumb/>
-                <div class="row">
-                  <div class="col-lg-3 order-2 order-lg-1">
+                <div className="row">
+                  <div className="col-lg-3 order-2 order-lg-1">
 
-                    <div class="sidebar-area">
+                    <div className="sidebar-area">
                       <CategorySidebar/>
                       <BrandSidebar/>
                       <PriceSidebar/>
@@ -32,11 +32,11 @@ class Products extends Component {
                     </div>
                   </div>
 
-                  <div class="col-lg-9 order-1 order-lg-2 mb-sm-35 mb-xs-35">
+                  <div className="col-lg-9 order-1 order-lg-2 mb-sm-35 mb-xs-35">
                     <ShopBanner/>
 
                     <ShopHeader/>
-                    <div class="shop-product-wrap list row no-gutters mb-35">
+                    <div className="shop-product-wrap list row no-gutters mb-35">
                       <Product/>
                     </div>
                     <Pagination/>

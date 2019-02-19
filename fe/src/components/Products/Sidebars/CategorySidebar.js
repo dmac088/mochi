@@ -5,10 +5,10 @@ class CategorySidebar extends Component {
 
   render() {
     return (
-      <div class="sidebar mb-35">
-        <h3 class="sidebar-title">PRODUCT CATEGORIES</h3>
-        <ul class="product-categories">
-          <li><a class="active" href="shop-left-sidebar.html">Beans</a></li>
+      <div className="sidebar mb-35">
+        <h3 className="sidebar-title">PRODUCT CATEGORIES</h3>
+        <ul className="product-categories">
+          <li><a className="active" href="shop-left-sidebar.html">Beans</a></li>
           <li><a href="shop-left-sidebar.html">Bread</a></li>
           <li><a href="shop-left-sidebar.html">Eggs</a></li>
           <li><a href="shop-left-sidebar.html">Fruits</a></li>
