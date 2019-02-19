@@ -6,14 +6,14 @@ class BreadCrumb extends Component {
 
   render() {
     return (
-      <div class="breadcrumb-area mb-50">
-    		<div class="container">
-    			<div class="row">
-    				<div class="col">
-    					<div class="breadcrumb-container">
+      <div className="breadcrumb-area mb-50">
+    		<div className="container">
+    			<div className="row">
+    				<div className="col">
+    					<div className="breadcrumb-container">
     						<ul>
-    							<li><a href="index.html"><i class="fa fa-home"></i> Home</a></li>
-    							<li class="active">Shop</li>
+    							<li><a href="index.html"><i className="fa fa-home"></i> Home</a></li>
+    							<li className="active">Shop</li>
     						</ul>
     					</div>
     				</div>

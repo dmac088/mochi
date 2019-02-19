@@ -8,74 +8,74 @@ class TopRatedSidebar extends Component {
 
   render() {
     return (
-      <div class="sidebar mb-35">
-        <h3 class="sidebar-title">Top rated products</h3>
-        <div class="top-rated-product-container">
-          <div class="single-top-rated-product d-flex align-content-center">
-            <div class="image">
+      <div className="sidebar mb-35">
+        <h3 className="sidebar-title">Top rated products</h3>
+        <div className="top-rated-product-container">
+          <div className="single-top-rated-product d-flex align-content-center">
+            <div className="image">
               <a href="single-product.html">
-                <img src="assets/images/products/product01.jpg" class="img-fluid" alt=""/>
+                <img src="assets/images/products/product01.jpg" className="img-fluid" alt=""/>
               </a>
             </div>
-            <div class="content">
+            <div className="content">
               <p><a href="single-product.html">Eodem modo vel mattis</a></p>
-              <p class="product-rating">
-                <i class="fa fa-star active"></i>
-                <i class="fa fa-star active"></i>
-                <i class="fa fa-star active"></i>
-                <i class="fa fa-star active"></i>
-                <i class="fa fa-star active"></i>
+              <p className="product-rating">
+                <i className="fa fa-star active"></i>
+                <i className="fa fa-star active"></i>
+                <i className="fa fa-star active"></i>
+                <i className="fa fa-star active"></i>
+                <i className="fa fa-star active"></i>
               </p>
 
-              <p class="product-price">
-                <span class="discounted-price"> $10.00</span>
-                <span class="main-price">$12.90</span>
+              <p className="product-price">
+                <span className="discounted-price"> $10.00</span>
+                <span className="main-price">$12.90</span>
 
               </p>
             </div>
           </div>
-          <div class="single-top-rated-product d-flex align-content-center">
-            <div class="image">
+          <div className="single-top-rated-product d-flex align-content-center">
+            <div className="image">
               <a href="single-product.html">
-                <img src="assets/images/products/product02.jpg" class="img-fluid" alt=""/>
+                <img src="assets/images/products/product02.jpg" className="img-fluid" alt=""/>
               </a>
             </div>
-            <div class="content">
+            <div className="content">
               <p><a href="single-product.html">Mirum est notare tellus</a></p>
-              <p class="product-rating">
-                <i class="fa fa-star active"></i>
-                <i class="fa fa-star active"></i>
-                <i class="fa fa-star active"></i>
-                <i class="fa fa-star active"></i>
-                <i class="fa fa-star active"></i>
+              <p className="product-rating">
+                <i className="fa fa-star active"></i>
+                <i className="fa fa-star active"></i>
+                <i className="fa fa-star active"></i>
+                <i className="fa fa-star active"></i>
+                <i className="fa fa-star active"></i>
               </p>
 
-              <p class="product-price">
-                <span class="discounted-price"> $10.00</span>
-                <span class="main-price">$12.90</span>
+              <p className="product-price">
+                <span className="discounted-price"> $10.00</span>
+                <span className="main-price">$12.90</span>
 
               </p>
             </div>
           </div>
-          <div class="single-top-rated-product d-flex align-content-center">
-            <div class="image">
+          <div className="single-top-rated-product d-flex align-content-center">
+            <div className="image">
               <a href="single-product.html">
-                <img src="assets/images/products/product03.jpg" class="img-fluid" alt=""/>
+                <img src="assets/images/products/product03.jpg" className="img-fluid" alt=""/>
               </a>
             </div>
-            <div class="content">
+            <div className="content">
               <p><a href="single-product.html">Aliquam lobortis est turpis</a></p>
-              <p class="product-rating">
-                <i class="fa fa-star active"></i>
-                <i class="fa fa-star active"></i>
-                <i class="fa fa-star active"></i>
-                <i class="fa fa-star active"></i>
-                <i class="fa fa-star active"></i>
+              <p className="product-rating">
+                <i className="fa fa-star active"></i>
+                <i className="fa fa-star active"></i>
+                <i className="fa fa-star active"></i>
+                <i className="fa fa-star active"></i>
+                <i className="fa fa-star active"></i>
               </p>
 
-              <p class="product-price">
-                <span class="discounted-price"> $10.00</span>
-                <span class="main-price">$12.90</span>
+              <p className="product-price">
+                <span className="discounted-price"> $10.00</span>
+                <span className="main-price">$12.90</span>
 
               </p>
             </div>

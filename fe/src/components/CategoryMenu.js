@@ -41,7 +41,7 @@ class CategoryMenu extends Component {
      function categorySubMenuToggle() {
       let screenSize = windows.width();
       if (screenSize <= 991) {
-        $('.category-menu .menu-item-has-children > a').prepend('<i class="expand menu-expand"></i>');
+        $('.category-menu .menu-item-has-children > a').prepend('<i className="expand menu-expand"></i>');
         $('.category-menu .menu-item-has-children ul').slideUp();
         //        $('.category-menu .menu-item-has-children i').on('click', function(e){
         //            e.preventDefault();
@@ -107,8 +107,8 @@ class CategoryMenu extends Component {
     $("#more-btn").on('click', function (e) {
       e.preventDefault();
       $(".category-menu li.hidden").toggle(500);
-      let htmlAfter = '<span class="icon_minus_alt2"></span> Less Categories';
-      let htmlBefore = '<span class="icon_plus_alt2"></span> More Categories';
+      let htmlAfter = '<span className="icon_minus_alt2"></span> Less Categories';
+      let htmlBefore = '<span className="icon_plus_alt2"></span> More Categories';
 
 
       if($(this).html() == htmlBefore){

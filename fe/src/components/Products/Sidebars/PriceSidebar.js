@@ -5,11 +5,11 @@ class PriceSidebar extends Component {
 
   render() {
     return (
-      <div class="sidebar mb-35">
-        <h3 class="sidebar-title">Filter By Price</h3>
-        <div class="sidebar-price">
+      <div className="sidebar mb-35">
+        <h3 className="sidebar-title">Filter By Price</h3>
+        <div className="sidebar-price">
           <div id="price-range"></div>
-          <input type="text" id="price-amount" readonly />
+          <input type="text" id="price-amount" readOnly />
         </div>
       </div>
     );

@@ -74,9 +74,9 @@ class CategoryMenu extends Component {
   changeCategory = (e) => {
     if(e.target.tagName === "I") {return}
     e.preventDefault();
-    console.dir(e.currentTarget.text);
+
     this.props.history.push({
-      "pathname": '/category/' + e.currentTarget.text
+      "pathname": this.props.history.location.pathname + '/category/' + e.currentTarget.text
     });
   }
 
@@ -121,6 +121,7 @@ class CategoryMenu extends Component {
   }
 
   render() {
+    console.log(this.props.history.location);
     let categoryList = this.props.categoryList;
     let showMore = this.state.showMore;
     return(
