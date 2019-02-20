@@ -21,12 +21,12 @@ class Header extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener('scroll', this.listenToScroll)
+    window.addEventListener('scroll', this.listenToScroll, { passive: true })
     this.mountMobileMenu();
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.listenToScroll)
+    window.removeEventListener('scroll', this.listenToScroll, { passive: true })
   }
 
   mountMobileMenu = () => {
