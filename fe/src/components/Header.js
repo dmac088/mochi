@@ -59,10 +59,10 @@ class Header extends Component {
                 {/* currncy language dropdown */}
                 <div className="lang-currency-dropdown">
                   <ul>
-                    <li> <a href="#">Language <i className="fa fa-chevron-down" /></a>
+                    <li> <a onClick={(e) => e.preventDefault()} href="#">Language <i className="fa fa-chevron-down" /></a>
                       <LanguageSelector/>
                     </li>
-                    <li><a href="#">Dollar <i className="fa fa-chevron-down" /></a>
+                    <li><a onClick={(e) => e.preventDefault()} href="#">Dollar <i className="fa fa-chevron-down" /></a>
                       <ul>
                         <li><a href="#">Euro</a></li>
                       </ul>
