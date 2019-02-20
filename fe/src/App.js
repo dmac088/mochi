@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
   withRouter,
-  Route,
-  Redirect
+  Route
 } from 'react-router-dom';
 import store from './store';
 import Header from './components/Header';
