@@ -211,7 +211,6 @@ class App extends Component {
     //console.log("render App");
     return (
           <React.Fragment>
-            <Redirect from="/" to="/en-HK" />
             <Route
               path={"/:locale?"}
               exact={true}
