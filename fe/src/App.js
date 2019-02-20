@@ -97,10 +97,8 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    console.log(prevProps);
-    console.log(this.props);
-    return;
-    this.refreshData(prevState);
+    //return;
+    ///this.refreshData(prevState);
     //if(!this.shouldRefreshdata(this.props.location)) {return(null);}
     /*this.refreshData(this.props.location.search);*/
   }

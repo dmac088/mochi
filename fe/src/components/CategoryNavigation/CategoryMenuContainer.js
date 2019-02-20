@@ -33,6 +33,7 @@ class CategoryMenuContainer extends Component {
   }
 
   render() {
+    console.log(this.props.match.params);
     return (
       <div className="hero-side-category">
         <div className="category-toggle-wrap">
@@ -122,7 +123,6 @@ class CategoryMenu extends Component {
   }
 
   render() {
-    console.log(this.props.history.location);
     let categoryList = this.props.categoryList;
     let showMore = this.state.showMore;
     return(
