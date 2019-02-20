@@ -82,7 +82,6 @@ class App extends Component {
     //fetch the data and set the state
     Promise.all([/*productPromise,*/categoryPromise])
     .then((values) => {
-      console.log(values[0]);
          this.setState({
                          /*queryParams:   mergedParams,
                          pagedItems:    values[0],*/
@@ -203,22 +202,11 @@ class App extends Component {
     return (
           <React.Fragment>
             <Route
-              path={"/"}
-              exact={true}
-              render={props =>
+              path={"/:locale?"}
+              render={(props) => 
                 <React.Fragment>
-                    {this.renderHeader()}
-                    {this.renderLanding()}
-                </React.Fragment>
-              }
-            />
-            <Route
-              path={"/:locale"}
-              exact={true}
-              render={props =>
-                <React.Fragment>
-                    {this.renderHeader()}
-                    {this.renderLanding()}
+                  {this.renderHeader(props)}
+                  {this.renderLanding(props)}
                 </React.Fragment>
               }
             />

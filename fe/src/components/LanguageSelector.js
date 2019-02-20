@@ -6,9 +6,8 @@ class LanguageSelector extends Component {
 
   changeLang = (e) => {
     console.log(this.props.match);
-    console.log(this.props.history);
     this.props.history.push({
-      "locale": e.currentTarget.id
+       "locale": e.currentTarget.id
     });
   }
 
