@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
   withRouter,
-  Route
+  Route,
+  Redirect
 } from 'react-router-dom';
 import store from './store';
 import Header from './components/Header';
@@ -189,6 +190,15 @@ class App extends Component {
     );
   }
 
+  renderDefault = (props) => {
+    return(
+      <React.Fragment>
+        {this.renderHeader(props)}
+        {this.renderLanding(props)}
+      </React.Fragment>
+    )
+  }
+
   renderLogin = (routeProps) => {
     return (
               <Login
@@ -201,19 +211,20 @@ class App extends Component {
     //console.log("render App");
     return (
           <React.Fragment>
+            <Redirect from="/" to="/en-HK" />
             <Route
               path={"/:locale?"}
+              exact={true}
+              render={(props) => this.renderDefault(props)}
+            />
+            <Route
+              path={"/:locale?/category/:category"}
               render={(props) =>
                 <React.Fragment>
                   {this.renderHeader(props)}
-                  {this.renderLanding(props)}
+                  {this.renderProducts(props)}
                 </React.Fragment>
               }
-            />
-            <Route
-              path={"/:locale/category/:category"}
-              exact={true}
-              component={this.renderProducts}
             />
           </React.Fragment>
     );
