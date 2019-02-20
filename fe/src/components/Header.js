@@ -96,7 +96,7 @@ class Header extends Component {
               <div className="col-md-3 col-sm-12 col-xs-12 text-lg-left text-md-center text-sm-center">
                 {/* logo */}
                 <div className="logo mt-15 mb-15">
-                  <Link to='/'>
+                  <Link to={'/'+this.props.match.params.locale} >
                     <img src="assets/images/logo.png" className="img-fluid" alt />
                   </Link>
                 </div>

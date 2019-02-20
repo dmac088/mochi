@@ -3,11 +3,12 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
   withRouter,
-  Route
+  Route,
+  Redirect
 } from 'react-router-dom';
 import store from './store';
 import Header from './components/Header';
-import Products from './components/Products';
+import Products from './components/Products/Products';
 import * as tokensActionCreators from './services/session/actions';
 import * as customerActionCreators from './services/customer/actions';
 import * as sessionService from './services/session';
@@ -93,6 +94,9 @@ class App extends Component {
   }
 
   componentWillMount(prevProps, prevState, snapshot) {
+    if(this.props.match.params.locale === undefined) {
+      this.props.history.push('/' + this.state.lang);
+    }
     this.refreshData(prevState);
   }
 
