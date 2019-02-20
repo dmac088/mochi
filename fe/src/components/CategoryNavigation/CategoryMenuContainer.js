@@ -12,6 +12,7 @@ class CategoryMenuContainer extends Component {
     this.state = {
       menuVisible: true,
       isMobile: false,
+      categoryList: [],
     };
   }
 
@@ -31,28 +32,28 @@ class CategoryMenuContainer extends Component {
     }));
   }
 
-render() {
-  return (
-    <div className="hero-side-category">
-      <div className="category-toggle-wrap">
-        <button onClick={this.toggleVisible} className="category-toggle"> <span className="arrow_carrot-right_alt2 mr-2" /> All Categories</button>
+  render() {
+    return (
+      <div className="hero-side-category">
+        <div className="category-toggle-wrap">
+          <button onClick={this.toggleVisible} className="category-toggle"> <span className="arrow_carrot-right_alt2 mr-2" /> All Categories</button>
+        </div>
+        <ReactTransitionGroup component="nav" className="category-menu">
+          {
+          ((this.state.menuVisible)
+          ? <CategoryMenu
+              categoryList={this.props.categoryList}
+              isMobile={this.state.isMobile}
+              history={this.props.history}
+              match={this.props.match}
+            />
+          : null)
+          }
+        </ReactTransitionGroup>
       </div>
-      <ReactTransitionGroup component="nav" className="category-menu">
-        {
-        ((this.state.menuVisible)
-        ? <CategoryMenu
-            categoryList={this.props.categoryList}
-            isMobile={this.state.isMobile}
-            history={this.props.history}
-            match={this.props.match}
-          />
-        : null)
-        }
-      </ReactTransitionGroup>
-    </div>
-  )
-}
-}
+    )
+  }
+  }
 
 
 class CategoryMenu extends Component {
