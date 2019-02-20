@@ -44,6 +44,7 @@ render() {
             categoryList={this.props.categoryList}
             isMobile={this.state.isMobile}
             history={this.props.history}
+            match={this.props.match}
           />
         : null)
         }
@@ -74,8 +75,9 @@ class CategoryMenu extends Component {
   changeCategory = (e) => {
     if(e.target.tagName === "I") {return}
     e.preventDefault();
-    console.log(this.props);
-    this.props.history.push('/category/' + e.currentTarget.text);
+    const { url } = this.props.match;
+    const { locale } = this.props.match.params;
+    this.props.history.push('/'+((!locale) ? 'en-GB' : locale) + '/category/' + e.currentTarget.text);
   }
 
   setContainer = (c) => {
