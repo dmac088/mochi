@@ -101,7 +101,7 @@ CREATE TABLE mochi.category_attr_lcl (
     cat_id bigint NOT NULL,
     cat_desc character varying(100),
     cat_img_pth character varying(100),
-    lcl_cd character(3) NOT NULL
+    lcl_cd character varying(5) NOT NULL
 );
 
 
@@ -156,6 +156,17 @@ CREATE SEQUENCE mochi.hibernate_sequence
 
 
 ALTER TABLE mochi.hibernate_sequence OWNER TO mochidb_owner;
+
+--
+-- Name: locale; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE mochi.locale (
+    lcl_cd character varying(20) NOT NULL
+);
+
+
+ALTER TABLE mochi.locale OWNER TO mochidb_owner;
 
 --
 -- Name: order; Type: TABLE; Schema: mochi; Owner: mochidb_owner
@@ -326,7 +337,7 @@ CREATE TABLE mochi.product_attr_lcl (
     prd_desc character varying(100),
     prd_img_pth character varying(100),
     prd_rrp numeric,
-    lcl_cd character(3) NOT NULL
+    lcl_cd character varying(5) NOT NULL
 );
 
 
@@ -826,78 +837,78 @@ COPY mochi.category (cat_id, cat_cd, cat_prnt_id, cat_lvl) FROM stdin;
 --
 
 COPY mochi.category_attr_lcl (cat_lcl_id, cat_id, cat_desc, cat_img_pth, lcl_cd) FROM stdin;
-10	2	ALL		ENG
-11	3	Fruit		ENG
-12	4	Vegetables		ENG
-13	2	所有		HKG
-14	3	水果		HKG
-15	4	蔬菜		HKG
-16	5	Dark Green Vegetables	\N	ENG
-17	5	深綠色蔬菜	\N	HKG
-18	6	Red and Orange Vegetables	\N	ENG
-19	6	紅色和橙色蔬菜	\N	HKG
-20	7	Beans and Peas	\N	ENG
-21	7	豆類和豌豆	\N	HKG
-22	8	Starchy Vegetables	\N	ENG
-23	8	澱粉蔬菜	\N	HKG
-24	9	Other Vegetables	\N	ENG
-25	9	其他蔬菜	\N	HKG
-26	10	Pomes	\N	ENG
-27	10	梨果	\N	HKG
-28	11	Drupes	\N	ENG
-29	11	核果	\N	HKG
-30	12	Berries	\N	ENG
-31	12	漿果	\N	HKG
-32	13	Melons	\N	ENG
-33	13	瓜	\N	HKG
-34	14	Citrus	\N	ENG
-35	14	柑橘	\N	HKG
-36	15	Tropical	\N	ENG
-37	15	熱帶	\N	HKG
-38	16	Nuts	\N	ENG
-39	16	堅果	\N	HKG
-40	17	Pistachios	\N	ENG
-41	17	開心果	\N	HKG
-42	18	Hazelnuts	\N	ENG
-43	18	榛子	\N	HKG
-44	19	Cashews	\N	ENG
-45	19	腰果	\N	HKG
-46	20	Almonds	\N	ENG
-47	20	杏仁	\N	HKG
-48	21	Peanuts	\N	ENG
-49	21	花生	\N	HKG
-50	22	Pecans	\N	ENG
-51	22	胡桃	\N	HKG
-52	23	Brazil	\N	ENG
-53	23	巴西	\N	HKG
-54	24	Macadamia	\N	ENG
-55	24	澳洲	\N	HKG
-56	25	Other Fruit	\N	ENG
-57	25	其他水果	\N	HKG
-58	26	Other Nuts	\N	ENG
-59	26	其他堅果	\N	HKG
-60	27	DUMMY 1	\N	ENG
-61	27	假 1	\N	HKG
-62	28	DUMMY 2	\N	ENG
-63	28	假 2	\N	HKG
-64	29	DUMMY 3	\N	ENG
-65	29	假 3	\N	HKG
-66	30	DUMMY 4	\N	ENG
-67	30	假 4	\N	HKG
-68	31	DUMMY 5	\N	ENG
-69	31	假 5	\N	HKG
-70	32	DUMMY 6	\N	ENG
-71	32	假 6	\N	HKG
-72	33	DUMMY 7	\N	ENG
-73	33	假 7	\N	HKG
-74	34	DUMMY 8	\N	ENG
-75	34	假 8	\N	HKG
-76	35	DUMMY 9	\N	ENG
-77	35	假 9	\N	HKG
-78	36	Red Vegetables	\N	ENG
-79	36	紅色蔬菜	\N	HKG
-80	37	Orange Vegetables	\N	ENG
-81	37	橙色蔬菜	\N	HKG
+13	2	所有		zh-HK
+14	3	水果		zh-HK
+15	4	蔬菜		zh-HK
+17	5	深綠色蔬菜	\N	zh-HK
+19	6	紅色和橙色蔬菜	\N	zh-HK
+21	7	豆類和豌豆	\N	zh-HK
+23	8	澱粉蔬菜	\N	zh-HK
+25	9	其他蔬菜	\N	zh-HK
+27	10	梨果	\N	zh-HK
+29	11	核果	\N	zh-HK
+31	12	漿果	\N	zh-HK
+33	13	瓜	\N	zh-HK
+35	14	柑橘	\N	zh-HK
+37	15	熱帶	\N	zh-HK
+39	16	堅果	\N	zh-HK
+41	17	開心果	\N	zh-HK
+43	18	榛子	\N	zh-HK
+45	19	腰果	\N	zh-HK
+47	20	杏仁	\N	zh-HK
+49	21	花生	\N	zh-HK
+51	22	胡桃	\N	zh-HK
+53	23	巴西	\N	zh-HK
+55	24	澳洲	\N	zh-HK
+57	25	其他水果	\N	zh-HK
+59	26	其他堅果	\N	zh-HK
+61	27	假 1	\N	zh-HK
+63	28	假 2	\N	zh-HK
+65	29	假 3	\N	zh-HK
+67	30	假 4	\N	zh-HK
+69	31	假 5	\N	zh-HK
+71	32	假 6	\N	zh-HK
+73	33	假 7	\N	zh-HK
+75	34	假 8	\N	zh-HK
+77	35	假 9	\N	zh-HK
+79	36	紅色蔬菜	\N	zh-HK
+81	37	橙色蔬菜	\N	zh-HK
+10	2	ALL		en-GB
+11	3	Fruit		en-GB
+12	4	Vegetables		en-GB
+16	5	Dark Green Vegetables	\N	en-GB
+18	6	Red and Orange Vegetables	\N	en-GB
+20	7	Beans and Peas	\N	en-GB
+22	8	Starchy Vegetables	\N	en-GB
+24	9	Other Vegetables	\N	en-GB
+26	10	Pomes	\N	en-GB
+28	11	Drupes	\N	en-GB
+30	12	Berries	\N	en-GB
+32	13	Melons	\N	en-GB
+34	14	Citrus	\N	en-GB
+36	15	Tropical	\N	en-GB
+38	16	Nuts	\N	en-GB
+40	17	Pistachios	\N	en-GB
+42	18	Hazelnuts	\N	en-GB
+44	19	Cashews	\N	en-GB
+46	20	Almonds	\N	en-GB
+48	21	Peanuts	\N	en-GB
+50	22	Pecans	\N	en-GB
+52	23	Brazil	\N	en-GB
+54	24	Macadamia	\N	en-GB
+56	25	Other Fruit	\N	en-GB
+58	26	Other Nuts	\N	en-GB
+60	27	DUMMY 1	\N	en-GB
+62	28	DUMMY 2	\N	en-GB
+64	29	DUMMY 3	\N	en-GB
+66	30	DUMMY 4	\N	en-GB
+68	31	DUMMY 5	\N	en-GB
+70	32	DUMMY 6	\N	en-GB
+72	33	DUMMY 7	\N	en-GB
+74	34	DUMMY 8	\N	en-GB
+76	35	DUMMY 9	\N	en-GB
+78	36	Red Vegetables	\N	en-GB
+80	37	Orange Vegetables	\N	en-GB
 \.
 
 
@@ -958,6 +969,224 @@ COPY mochi.discount  FROM stdin;
 --
 
 SELECT pg_catalog.setval('mochi.hibernate_sequence', 232253, true);
+
+
+--
+-- Data for Name: locale; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+COPY mochi.locale (lcl_cd) FROM stdin;
+af-ZA
+am-ET
+ar-AE
+ar-BH
+ar-DZ
+ar-EG
+ar-IQ
+ar-JO
+ar-KW
+ar-LB
+ar-LY
+ar-MA
+arn-CL
+ar-OM
+ar-QA
+ar-SA
+ar-SY
+ar-TN
+ar-YE
+as-IN
+az-Cyrl-AZ
+az-Latn-AZ
+ba-RU
+be-BY
+bg-BG
+bn-BD
+bn-IN
+bo-CN
+br-FR
+bs-Cyrl-BA
+bs-Latn-BA
+ca-ES
+co-FR
+cs-CZ
+cy-GB
+da-DK
+de-AT
+de-CH
+de-DE
+de-LI
+de-LU
+dsb-DE
+dv-MV
+el-GR
+en-029
+en-AU
+en-BZ
+en-CA
+en-GB
+en-IE
+en-IN
+en-JM
+en-MY
+en-NZ
+en-PH
+en-SG
+en-TT
+en-US
+en-ZA
+en-ZW
+es-AR
+es-BO
+es-CL
+es-CO
+es-CR
+es-DO
+es-EC
+es-ES
+es-GT
+es-HN
+es-MX
+es-NI
+es-PA
+es-PE
+es-PR
+es-PY
+es-SV
+es-US
+es-UY
+es-VE
+et-EE
+eu-ES
+fa-IR
+fi-FI
+fil-PH
+fo-FO
+fr-BE
+fr-CA
+fr-CH
+fr-FR
+fr-LU
+fr-MC
+fy-NL
+ga-IE
+gd-GB
+gl-ES
+gsw-FR
+gu-IN
+ha-Latn-NG
+he-IL
+hi-IN
+hr-BA
+hr-HR
+hsb-DE
+hu-HU
+hy-AM
+id-ID
+ig-NG
+ii-CN
+is-IS
+it-CH
+it-IT
+iu-Cans-CA
+iu-Latn-CA
+ja-JP
+ka-GE
+kk-KZ
+kl-GL
+km-KH
+kn-IN
+kok-IN
+ko-KR
+ky-KG
+lb-LU
+lo-LA
+lt-LT
+lv-LV
+mi-NZ
+mk-MK
+ml-IN
+mn-MN
+mn-Mong-CN
+moh-CA
+mr-IN
+ms-BN
+ms-MY
+mt-MT
+nb-NO
+ne-NP
+nl-BE
+nl-NL
+nn-NO
+nso-ZA
+oc-FR
+or-IN
+pa-IN
+pl-PL
+prs-AF
+ps-AF
+pt-BR
+pt-PT
+qut-GT
+quz-BO
+quz-EC
+quz-PE
+rm-CH
+ro-RO
+ru-RU
+rw-RW
+sah-RU
+sa-IN
+se-FI
+se-NO
+se-SE
+si-LK
+sk-SK
+sl-SI
+sma-NO
+sma-SE
+smj-NO
+smj-SE
+smn-FI
+sms-FI
+sq-AL
+sr-Cyrl-BA
+sr-Cyrl-CS
+sr-Cyrl-ME
+sr-Cyrl-RS
+sr-Latn-BA
+sr-Latn-CS
+sr-Latn-ME
+sr-Latn-RS
+sv-FI
+sv-SE
+sw-KE
+syr-SY
+ta-IN
+te-IN
+tg-Cyrl-TJ
+th-TH
+tk-TM
+tn-ZA
+tr-TR
+tt-RU
+tzm-Latn-DZ
+ug-CN
+uk-UA
+ur-PK
+uz-Cyrl-UZ
+uz-Latn-UZ
+vi-VN
+wo-SN
+xh-ZA
+yo-NG
+zh-CN
+zh-HK
+zh-MO
+zh-SG
+zh-TW
+zu-ZA
+\.
 
 
 --
@@ -1131,66 +1360,66 @@ COPY mochi.product (prd_id, upc_cd, prd_crtd_dt) FROM stdin;
 --
 
 COPY mochi.product_attr_lcl (prd_lcl_id, prd_id, prd_desc, prd_img_pth, prd_rrp, lcl_cd) FROM stdin;
-1	1	mango	images/mango.jpg	75	ENG
-2	1	芒果	images/mango.jpg	75	HKG
-3	2	orange	images/orange.jpg	75	ENG
-4	2	橙子	images/orange.jpg	75	HKG
-5	3	brocolli	images/broccoli.jpg	120	ENG
-6	3	西兰花	images/broccoli.jpg	120	HKG
-7	4	cauliflower	images/cauliflower.jpg	60	ENG
-8	4	菜花	images/cauliflower.jpg	60	HKG
-9	5	cucumber	images/cucumber.jpg	48	ENG
-10	5	黄瓜	images/cucumber.jpg	48	HKG
-11	6	beetroot	images/beetroot.jpg	32	ENG
-12	6	红菜头	images/beetroot.jpg	32	HKG
-13	7	carrot	images/carrots.jpg	56	ENG
-14	7	胡萝卜	images/carrots.jpg	56	HKG
-15	8	tomato	images/tomato.jpg	16	ENG
-16	8	番茄	images/tomato.jpg	16	HKG
-17	9	beans	images/beans.jpg	82	ENG
-18	9	豆子	images/beans.jpg	82	HKG
-19	10	brinjal	images/brinjal.jpg	35	ENG
-20	10	茄子	images/brinjal.jpg	35	HKG
-21	11	capsicum	images/capsicum.jpg	60	ENG
-22	11	辣椒	images/capsicum.jpg	60	HKG
-23	12	mushroom	images/button-mushroom.jpg	60	ENG
-24	12	蘑菇	images/button-mushroom.jpg	60	HKG
-25	13	potato	images/potato.jpg	22	ENG
-26	13	土豆	images/potato.jpg	22	HKG
-27	14	Pumpkin	images/pumpkin.jpg	48	ENG
-28	14	南瓜	images/pumpkin.jpg	48	HKG
-29	15	Corn	images/corn.jpg	75	ENG
-30	15	玉米	images/corn.jpg	75	HKG
-31	16	Onion	images/onion.jpg	16	ENG
-32	16	洋蔥	images/onion.jpg	16	HKG
-33	17	Apple	images/apple.jpg	72	ENG
-34	17	蘋果	images/apple.jpg	72	HKG
-35	18	Banana	images/banana.jpg	45	ENG
-36	18	香蕉	images/banana.jpg	45	HKG
-37	19	Grapes	images/grapes.jpg	60	ENG
-38	19	葡萄	images/grapes.jpg	60	HKG
-39	20	Musk Melon	images/musk-melon.jpg	36	ENG
-40	20	麝香甜瓜	images/musk-melon.jpg	36	HKG
-41	21	Pears	images/pears.jpg	69	ENG
-42	21	梨	images/pears.jpg	69	HKG
-43	22	Pomegranate	images/pomegranate.jpg	95	ENG
-44	22	石榴	images/pomegranate.jpg	95	HKG
-45	23	Raspberry	images/raspberry.jpg	160	ENG
-46	23	覆盆子	images/raspberry.jpg	160	HKG
-47	24	Strawberry	images/strawberry.jpg	180	ENG
-48	24	草莓	images/strawberry.jpg	180	HKG
-49	25	Water Melon	images/water-melon.jpg	28	ENG
-50	25	西瓜	images/water-melon.jpg	28	HKG
-51	26	Almonds	images/almonds.jpg	200	ENG
-52	26	杏仁	images/almonds.jpg	200	HKG
-53	27	Pistachio	images/pistachio.jpg	190	ENG
-54	27	開心果	images/pistachio.jpg	190	HKG
-55	28	Nuts Mixture	images/nuts-mixture.jpg	950	ENG
-56	28	堅果混合物	images/nuts-mixture.jpg	950	HKG
-57	29	Cashews	images/cashews.jpg	650	ENG
-58	29	腰果	images/cashews.jpg	650	HKG
-59	30	Walnuts	images/walnuts.jpg	170	ENG
-60	30	核桃	images/walnuts.jpg	170	HKG
+2	1	芒果	images/mango.jpg	75	zh-HK
+4	2	橙子	images/orange.jpg	75	zh-HK
+6	3	西兰花	images/broccoli.jpg	120	zh-HK
+8	4	菜花	images/cauliflower.jpg	60	zh-HK
+10	5	黄瓜	images/cucumber.jpg	48	zh-HK
+12	6	红菜头	images/beetroot.jpg	32	zh-HK
+14	7	胡萝卜	images/carrots.jpg	56	zh-HK
+16	8	番茄	images/tomato.jpg	16	zh-HK
+18	9	豆子	images/beans.jpg	82	zh-HK
+20	10	茄子	images/brinjal.jpg	35	zh-HK
+22	11	辣椒	images/capsicum.jpg	60	zh-HK
+24	12	蘑菇	images/button-mushroom.jpg	60	zh-HK
+26	13	土豆	images/potato.jpg	22	zh-HK
+28	14	南瓜	images/pumpkin.jpg	48	zh-HK
+30	15	玉米	images/corn.jpg	75	zh-HK
+32	16	洋蔥	images/onion.jpg	16	zh-HK
+34	17	蘋果	images/apple.jpg	72	zh-HK
+36	18	香蕉	images/banana.jpg	45	zh-HK
+38	19	葡萄	images/grapes.jpg	60	zh-HK
+40	20	麝香甜瓜	images/musk-melon.jpg	36	zh-HK
+42	21	梨	images/pears.jpg	69	zh-HK
+44	22	石榴	images/pomegranate.jpg	95	zh-HK
+46	23	覆盆子	images/raspberry.jpg	160	zh-HK
+48	24	草莓	images/strawberry.jpg	180	zh-HK
+50	25	西瓜	images/water-melon.jpg	28	zh-HK
+52	26	杏仁	images/almonds.jpg	200	zh-HK
+54	27	開心果	images/pistachio.jpg	190	zh-HK
+56	28	堅果混合物	images/nuts-mixture.jpg	950	zh-HK
+58	29	腰果	images/cashews.jpg	650	zh-HK
+60	30	核桃	images/walnuts.jpg	170	zh-HK
+1	1	mango	images/mango.jpg	75	en-GB
+3	2	orange	images/orange.jpg	75	en-GB
+5	3	brocolli	images/broccoli.jpg	120	en-GB
+7	4	cauliflower	images/cauliflower.jpg	60	en-GB
+9	5	cucumber	images/cucumber.jpg	48	en-GB
+11	6	beetroot	images/beetroot.jpg	32	en-GB
+13	7	carrot	images/carrots.jpg	56	en-GB
+15	8	tomato	images/tomato.jpg	16	en-GB
+17	9	beans	images/beans.jpg	82	en-GB
+19	10	brinjal	images/brinjal.jpg	35	en-GB
+21	11	capsicum	images/capsicum.jpg	60	en-GB
+23	12	mushroom	images/button-mushroom.jpg	60	en-GB
+25	13	potato	images/potato.jpg	22	en-GB
+27	14	Pumpkin	images/pumpkin.jpg	48	en-GB
+29	15	Corn	images/corn.jpg	75	en-GB
+31	16	Onion	images/onion.jpg	16	en-GB
+33	17	Apple	images/apple.jpg	72	en-GB
+35	18	Banana	images/banana.jpg	45	en-GB
+37	19	Grapes	images/grapes.jpg	60	en-GB
+39	20	Musk Melon	images/musk-melon.jpg	36	en-GB
+41	21	Pears	images/pears.jpg	69	en-GB
+43	22	Pomegranate	images/pomegranate.jpg	95	en-GB
+45	23	Raspberry	images/raspberry.jpg	160	en-GB
+47	24	Strawberry	images/strawberry.jpg	180	en-GB
+49	25	Water Melon	images/water-melon.jpg	28	en-GB
+51	26	Almonds	images/almonds.jpg	200	en-GB
+53	27	Pistachio	images/pistachio.jpg	190	en-GB
+55	28	Nuts Mixture	images/nuts-mixture.jpg	950	en-GB
+57	29	Cashews	images/cashews.jpg	650	en-GB
+59	30	Walnuts	images/walnuts.jpg	170	en-GB
 \.
 
 
@@ -1742,6 +1971,14 @@ ALTER TABLE ONLY mochi.person
 
 
 --
+-- Name: pk_locale; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.locale
+    ADD CONSTRAINT pk_locale PRIMARY KEY (lcl_cd);
+
+
+--
 -- Name: product_attr_lcl_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -1973,6 +2210,14 @@ ALTER TABLE ONLY mochi.category_attr_lcl
 
 
 --
+-- Name: category_attr_lcl_lcl_cd_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.category_attr_lcl
+    ADD CONSTRAINT category_attr_lcl_lcl_cd_fkey FOREIGN KEY (lcl_cd) REFERENCES mochi.locale(lcl_cd);
+
+
+--
 -- Name: customer_role_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -2026,6 +2271,14 @@ ALTER TABLE ONLY mochi.party
 
 ALTER TABLE ONLY mochi.person
     ADD CONSTRAINT person_person_id_fkey FOREIGN KEY (psn_id) REFERENCES mochi.party(pty_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: product_attr_lcl_lcl_cd_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.product_attr_lcl
+    ADD CONSTRAINT product_attr_lcl_lcl_cd_fkey FOREIGN KEY (lcl_cd) REFERENCES mochi.locale(lcl_cd);
 
 
 --
