@@ -6,11 +6,11 @@ class QuickView extends Component{
 		super(props);
 	}
   componentDidMount() {
-		document.addEventListener('click', this.handleClickOutside.bind(this), true);
+		document.addEventListener('click', this.handleClickOutside.bind(this), { passive: true });
 	}
 
 	componentWillUnmount() {
-		document.removeEventListener('click', this.handleClickOutside.bind(this), true);
+		document.removeEventListener('click', this.handleClickOutside.bind(this), { passive: true });
 	}
 
 	handleClickOutside(event) {
