@@ -5,6 +5,7 @@ class BreadCrumb extends Component {
 
 
   render() {
+    console.log(this.props.match);
     return (
       <div className="breadcrumb-area mb-50">
     		<div className="container">
@@ -12,7 +13,7 @@ class BreadCrumb extends Component {
     				<div className="col">
     					<div className="breadcrumb-container">
     						<ul>
-    							<li><Link to='/'><i className="fa fa-home"></i> Home</Link></li>
+    							<li><Link to={'/'+this.props.match.params.locale}><i className="fa fa-home"></i> Home</Link></li>
     							<li className="active">Shop</li>
     						</ul>
     					</div>
