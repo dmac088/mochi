@@ -60,6 +60,7 @@ class Landing extends Component {
     return(
       <div>
         <HeroSlider
+          match={this.props.match}
           categoryList={this.props.categoryList}
         />
         <Policy />

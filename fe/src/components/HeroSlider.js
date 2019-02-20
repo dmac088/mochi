@@ -70,6 +70,7 @@ class HeroSlider extends Component {
             <div className="col-lg-3 col-md-12">
               {/*=======  slider left category  =======*/}
               <CategoryMenuContainer
+                match={this.props.match}
                 categoryList={this.props.categoryList}
               />
             </div>
