@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import HeroSlider from './HeroSlider';
 import Policy from './Policy';
-import Products from './Products';
+import Products from './Products/Products';
 import TabSliderContiner from './TabSliderContiner';
 import BannerSlider from './BannerSlider';
 import BestSeller from './BestSeller';
@@ -40,7 +40,9 @@ class Landing extends Component {
     })
   }
 
-  animateScroll = () => {
+  animateScroll = (e) => {
+    if(e === undefined) {return}
+    e.preventDefault();
     $('.scroll-top').click(() => {
         $('html,body')
     			.velocity("scroll", { duration: 1000 });
