@@ -1,6 +1,6 @@
 let langSelector = {};
 
-   langSelector['HKG'] = require('./hkg').default;
-   langSelector['ENG'] = require('./eng').default;
+   langSelector['zh-HK'] = require('./zh-HK').default;
+   langSelector['en-GB'] = require('./en-GB').default;
 
 export default langSelector

@@ -34,7 +34,7 @@ class App extends Component {
     super(props);
       this.state = {
         queryParams: {
-                       lang: "ENG",
+                       lang: "en-GB",
                        category: "ALL",
                        term: "",
                        page: "0",
@@ -48,7 +48,7 @@ class App extends Component {
                    };
   }
 
-  getCategories = (lang = "ENG") =>
+  getCategories = (lang = "en-GB") =>
     categoryApi.findAll(lang)
     .then((response) => {
       return response.text();
