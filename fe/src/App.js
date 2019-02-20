@@ -28,7 +28,7 @@ class App extends Component {
     super(props);
       this.state = {
         queryParams: {
-                       lang: "ENG",
+                       lang: "en-GB",
                        category: "ALL",
                        term: "",
                        page: "0",
@@ -42,7 +42,7 @@ class App extends Component {
                    };
   }
 
-  getCategories = (lang = "ENG", level = 1) =>
+  getCategories = (lang = "en-GB", level = 1) =>
     categoryApi.findAllForLevel(lang, level)
     .then((response) => {
       return response.text();
@@ -203,7 +203,7 @@ class App extends Component {
           <React.Fragment>
             <Route
               path={"/:locale?"}
-              render={(props) => 
+              render={(props) =>
                 <React.Fragment>
                   {this.renderHeader(props)}
                   {this.renderLanding(props)}

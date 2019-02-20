@@ -7,9 +7,7 @@ class LanguageSelector extends Component {
   changeLang = (e) => {
     const url = this.props.location.pathname;
     const { locale } = this.props.match.params;
-    console.log(url);
-    console.log(locale);
-    this.props.history.push(url.replace(locale, event.target.id));
+    this.props.history.push(url.replace(locale || '', event.target.id));
   }
 
   render() {
