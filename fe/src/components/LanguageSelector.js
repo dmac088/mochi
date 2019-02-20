@@ -5,10 +5,11 @@ import { updateParams } from '../services/helpers/ScreenHelper';
 class LanguageSelector extends Component {
 
   changeLang = (e) => {
-    console.log(this.props.match);
-    this.props.history.push({
-       "locale": e.currentTarget.id
-    });
+    const url = this.props.location.pathname;
+    const { locale } = this.props.match.params;
+    console.log(url);
+    console.log(locale);
+    this.props.history.push(url.replace(locale, event.target.id));
   }
 
   render() {
