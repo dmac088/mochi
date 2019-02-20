@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 
 class BreadCrumb extends Component {
 
@@ -12,7 +12,7 @@ class BreadCrumb extends Component {
     				<div className="col">
     					<div className="breadcrumb-container">
     						<ul>
-    							<li><a href="index.html"><i className="fa fa-home"></i> Home</a></li>
+    							<li><Link to='/'><i className="fa fa-home"></i> Home</Link></li>
     							<li className="active">Shop</li>
     						</ul>
     					</div>
