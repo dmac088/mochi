@@ -15,8 +15,8 @@ class LanguageSelector extends Component {
   render() {
     return (
       <ul>
-        <li><a id="en" onClick={this.changeLang}>English</a></li>
-        <li><a id="zh" onClick={this.changeLang}>Chinese</a></li>
+        <li><a id="en-GB" onClick={this.changeLang}>English</a></li>
+        <li><a id="zh-HK" onClick={this.changeLang}>Chinese</a></li>
       </ul>
     )
   }

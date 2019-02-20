@@ -18,10 +18,10 @@ class LanguageSelector extends Component {
   render() {
     return (
       <NavDropdown eventKey={3} title={this.props.lang} id="basic-nav-dropdown">
-        <MenuItem id="ENG" onClick={this.changeLang}>
+        <MenuItem id="en-GB" onClick={this.changeLang}>
             ENG
         </MenuItem>
-        <MenuItem id="HKG" onClick={this.changeLang}>
+        <MenuItem id="zh-HK" onClick={this.changeLang}>
             HKG
         </MenuItem>
       </NavDropdown>
