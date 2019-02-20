@@ -27,14 +27,7 @@ class App extends Component {
   constructor(props) {
     super(props);
       this.state = {
-        queryParams: {
-                       lang: "en-GB",
-                       category: "ALL",
-                       term: "",
-                       page: "0",
-                       size: "10",
-                       sort: "2",
-                     },
+                     lang: "en-GB",
                      categoryList: [],
                      modalActive: false,
                      pagedItems: {content:[]},
@@ -67,7 +60,7 @@ class App extends Component {
 
 
 
-  refreshData = (/*search*/) => {
+  refreshData = (prevState) => {
     //let urlParams = (qs.parse(search));
     //let stateParams = (qs.parse(qs.stringify(this.state.queryParams)));
 
@@ -99,12 +92,15 @@ class App extends Component {
       });
   }
 
-  componentWillMount() {
-    this.refreshData();
-
+  componentWillMount(prevProps, prevState, snapshot) {
+    this.refreshData(prevState);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
+    console.log(prevProps);
+    console.log(this.props);
+    return;
+    this.refreshData(prevState);
     //if(!this.shouldRefreshdata(this.props.location)) {return(null);}
     /*this.refreshData(this.props.location.search);*/
   }
@@ -159,7 +155,7 @@ class App extends Component {
     return (
       <Landing
         {...routeProps}
-        lang={this.state.queryParams.lang}
+        lang={this.state.lang}
         openModal={this.openModal}
         pagedItems={this.state.pagedItems}
         categoryList={this.state.categoryList}
@@ -171,7 +167,7 @@ class App extends Component {
     return (
       <Products
         {...routeProps}
-        lang={this.state.queryParams.lang}
+        lang={this.state.lang}
         openModal={this.openModal}
         pagedItems={this.state.pagedItems}
         categoryList={this.state.categoryList}
