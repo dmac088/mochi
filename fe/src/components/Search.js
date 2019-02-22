@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react';
 import { withRouter } from "react-router-dom";
+import { isMobile, slide, updateParams } from '../services/helpers/ScreenHelper';
 import qs from 'query-string';
 import _ from 'lodash';
 
@@ -31,13 +32,9 @@ class Search extends Component {
     if(e === undefined) {return}
     e.preventDefault();
     const { locale } = this.props.match.params;
-    console.log(locale);
-    let urlParams = (qs.parse(this.props.history.location.search));
-    let mergedParams = Object.assign(_.cloneDeep(urlParams), { term: this.state.inputTerm });
-    const searchString = qs.stringify(mergedParams);
     this.props.history.push({
       "pathname": '/' + locale + '/Search',
-      "search": searchString,
+      "search": updateParams(this.props.history.location.search, {term: this.state.inputTerm, page: 0}, this.props.history),
      });
   }
 
