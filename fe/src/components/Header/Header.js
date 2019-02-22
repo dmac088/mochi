@@ -1,10 +1,8 @@
 
 import React, { Component } from 'react';
 import Greeting from './Greeting';
-import HeaderCartSummary from './HeaderCartSummary';
-import CartMenu from './CartMenu';
-import Selector from './Selector';
 import Search from './Search';
+import HeaderCartSummary from './HeaderCartSummary';
 import LanguageSelector from './LanguageSelector';
 import CurrencySelector from './CurrencySelector';
 import { Link } from 'react-router-dom';

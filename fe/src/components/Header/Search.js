@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import { withRouter } from "react-router-dom";
-import { isMobile, slide, updateParams } from '../services/helpers/ScreenHelper';
+import { isMobile, slide, updateParams } from '../../services/helpers/ScreenHelper';
 import qs from 'query-string';
 import _ from 'lodash';
 

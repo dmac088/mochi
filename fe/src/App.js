@@ -7,7 +7,7 @@ import {
   Redirect
 } from 'react-router-dom';
 import store from './store';
-import Header from './components/Header';
+import Header from './components/Header/Header';
 import Products from './components/Products/Products';
 import * as tokensActionCreators from './services/session/actions';
 import * as customerActionCreators from './services/customer/actions';
@@ -15,7 +15,7 @@ import * as sessionService from './services/session';
 import * as pageService from './services/page';
 import * as cartService from './services/cart';
 import * as categoryApi from './data/categories/api';
-import Landing from './components/Landing';
+import Landing from './components/Landing/Landing';
 import Login from './components/Login';
 import qs from 'query-string';
 import _ from 'lodash';
