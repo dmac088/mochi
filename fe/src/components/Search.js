@@ -27,14 +27,18 @@ class Search extends Component {
     });
   }
 
-  handleSearch = () => {
+  handleSearch = (e) => {
+    if(e === undefined) {return}
+    e.preventDefault();
+    const { locale } = this.props.match.params;
+    console.log(locale);
     let urlParams = (qs.parse(this.props.history.location.search));
     let mergedParams = Object.assign(_.cloneDeep(urlParams), { term: this.state.inputTerm });
     const searchString = qs.stringify(mergedParams);
     this.props.history.push({
-      "pathname": '/Search',
+      "pathname": '/' + locale + '/Search',
       "search": searchString,
-    });
+     });
   }
 
   handleKeyPress = (target) => {
