@@ -5,9 +5,11 @@ import { updateParams } from '../services/helpers/ScreenHelper';
 class LanguageSelector extends Component {
 
   changeLang = (e) => {
+    //console.log(this.props.location);
     const url = this.props.location.pathname;
+    const search = this.props.location.search;
     const { locale } = this.props.match.params;
-    this.props.history.push(url.replace(locale || '', event.target.id));
+    this.props.history.push(url.replace(locale || '', event.target.id) + search);
   }
 
   render() {

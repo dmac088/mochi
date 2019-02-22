@@ -214,6 +214,16 @@ class App extends Component {
               render={(props) => this.renderDefault(props)}
             />
             <Route
+              path={"/:locale/Search"}
+              exact={true}
+              render={(props) =>
+                <React.Fragment>
+                  {this.renderHeader(props)}
+                  {this.renderProducts(props)}
+                </React.Fragment>
+              }
+            />
+            <Route
               path={"/:locale?/category/:category"}
               render={(props) =>
                 <React.Fragment>
