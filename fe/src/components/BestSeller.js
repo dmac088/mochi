@@ -88,7 +88,7 @@ render() {
                       <div className="col-lg-4 pl-0 pr-0">
                         <div className="image">
                           <a href="single-product.html">
-                            <img src="assets/images/products/product01.jpg" className="img-fluid" alt />
+                            <img src="assets/images/products/product01.jpg" className="img-fluid" alt="" />
                           </a>
                         </div>
                       </div>
@@ -112,7 +112,7 @@ render() {
                       <div className="col-lg-4 pl-0 pr-0">
                         <div className="image">
                           <a href="single-product.html">
-                            <img src="assets/images/products/product02.jpg" className="img-fluid" alt />
+                            <img src="assets/images/products/product02.jpg" className="img-fluid" alt="" />
                           </a>
                         </div>
                       </div>
@@ -142,7 +142,7 @@ render() {
                       <div className="col-lg-4 pl-0 pr-0">
                         <div className="image">
                           <a href="single-product.html">
-                            <img src="assets/images/products/product03.jpg" className="img-fluid" alt />
+                            <img src="assets/images/products/product03.jpg" className="img-fluid" alt="" />
                           </a>
                         </div>
                       </div>
@@ -166,7 +166,7 @@ render() {
                       <div className="col-lg-4 pl-0 pr-0">
                         <div className="image">
                           <a href="single-product.html">
-                            <img src="assets/images/products/product04.jpg" className="img-fluid" alt />
+                            <img src="assets/images/products/product04.jpg" className="img-fluid" alt="" />
                           </a>
                         </div>
                       </div>
@@ -196,7 +196,7 @@ render() {
                       <div className="col-lg-4 pl-0 pr-0">
                         <div className="image">
                           <a href="single-product.html">
-                            <img src="assets/images/products/product05.jpg" className="img-fluid" alt />
+                            <img src="assets/images/products/product05.jpg" className="img-fluid" alt="" />
                           </a>
                         </div>
                       </div>
@@ -220,7 +220,7 @@ render() {
                       <div className="col-lg-4 pl-0 pr-0">
                         <div className="image">
                           <a href="single-product.html">
-                            <img src="assets/images/products/product06.jpg" className="img-fluid" alt />
+                            <img src="assets/images/products/product06.jpg" className="img-fluid" alt="" />
                           </a>
                         </div>
                       </div>
@@ -250,7 +250,7 @@ render() {
                       <div className="col-lg-4 pl-0 pr-0">
                         <div className="image">
                           <a href="single-product.html">
-                            <img src="assets/images/products/product07.jpg" className="img-fluid" alt />
+                            <img src="assets/images/products/product07.jpg" className="img-fluid" alt="" />
                           </a>
                         </div>
                       </div>
@@ -274,7 +274,7 @@ render() {
                       <div className="col-lg-4 pl-0 pr-0">
                         <div className="image">
                           <a href="single-product.html">
-                            <img src="assets/images/products/product08.jpg" className="img-fluid" alt />
+                            <img src="assets/images/products/product08.jpg" className="img-fluid" alt="" />
                           </a>
                         </div>
                       </div>
@@ -304,7 +304,7 @@ render() {
                       <div className="col-lg-4 pl-0 pr-0">
                         <div className="image">
                           <a href="single-product.html">
-                            <img src="assets/images/products/product09.jpg" className="img-fluid" alt />
+                            <img src="assets/images/products/product09.jpg" className="img-fluid" alt="" />
                           </a>
                         </div>
                       </div>
@@ -328,7 +328,7 @@ render() {
                       <div className="col-lg-4 pl-0 pr-0">
                         <div className="image">
                           <a href="single-product.html">
-                            <img src="assets/images/products/product10.jpg" className="img-fluid" alt />
+                            <img src="assets/images/products/product10.jpg" className="img-fluid" alt="" />
                           </a>
                         </div>
                       </div>
@@ -358,7 +358,7 @@ render() {
                       <div className="col-lg-4 pl-0 pr-0">
                         <div className="image">
                           <a href="single-product.html">
-                            <img src="assets/images/products/product11.jpg" className="img-fluid" alt />
+                            <img src="assets/images/products/product11.jpg" className="img-fluid" alt="" />
                           </a>
                         </div>
                       </div>
@@ -382,7 +382,7 @@ render() {
                       <div className="col-lg-4 pl-0 pr-0">
                         <div className="image">
                           <a href="single-product.html">
-                            <img src="assets/images/products/product12.jpg" className="img-fluid" alt />
+                            <img src="assets/images/products/product12.jpg" className="img-fluid" alt="" />
                           </a>
                         </div>
                       </div>

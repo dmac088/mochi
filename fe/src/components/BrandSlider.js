@@ -79,7 +79,7 @@ render() {
               <div className="col">
                 <div className="single-brand-logo">
                   <a href="#">
-                    <img src="assets/images/brands/brand1.png" className="img-fluid" alt />
+                    <img src="assets/images/brands/brand1.png" className="img-fluid" alt="" />
                   </a>
                 </div>
               </div>
@@ -88,7 +88,7 @@ render() {
               <div className="col">
                 <div className="single-brand-logo">
                   <a href="#">
-                    <img src="assets/images/brands/brand2.png" className="img-fluid" alt />
+                    <img src="assets/images/brands/brand2.png" className="img-fluid" alt="" />
                   </a>
                 </div>
               </div>
@@ -97,7 +97,7 @@ render() {
               <div className="col">
                 <div className="single-brand-logo">
                   <a href="#">
-                    <img src="assets/images/brands/brand3.png" className="img-fluid" alt />
+                    <img src="assets/images/brands/brand3.png" className="img-fluid" alt="" />
                   </a>
                 </div>
               </div>
@@ -106,7 +106,7 @@ render() {
               <div className="col">
                 <div className="single-brand-logo">
                   <a href="#">
-                    <img src="assets/images/brands/brand4.png" className="img-fluid" alt />
+                    <img src="assets/images/brands/brand4.png" className="img-fluid" alt="" />
                   </a>
                 </div>
               </div>
@@ -115,7 +115,7 @@ render() {
               <div className="col">
                 <div className="single-brand-logo">
                   <a href="#">
-                    <img src="assets/images/brands/brand5.png" className="img-fluid" alt />
+                    <img src="assets/images/brands/brand5.png" className="img-fluid" alt="" />
                   </a>
                 </div>
               </div>
@@ -124,7 +124,7 @@ render() {
               <div className="col">
                 <div className="single-brand-logo">
                   <a href="#">
-                    <img src="assets/images/brands/brand6.png" className="img-fluid" alt />
+                    <img src="assets/images/brands/brand6.png" className="img-fluid" alt="" />
                   </a>
                 </div>
               </div>

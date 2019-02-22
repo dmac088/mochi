@@ -80,7 +80,7 @@ class HeaderCartSummary extends Component {
           <div className="cart-float-single-item d-flex">
             <span className="remove-item"><a href="#"><i className="fa fa-times" /></a></span>
             <div className="cart-float-single-item-image">
-              <a href="single-product.html"><img src="assets/images/products/product01.jpg" className="img-fluid" alt /></a>
+              <a href="single-product.html"><img src="assets/images/products/product01.jpg" className="img-fluid" alt="" /></a>
             </div>
             <div className="cart-float-single-item-desc">
               <p className="product-title"> <a href="single-product.html">Duis pulvinar obortis eleifend </a></p>
@@ -90,7 +90,7 @@ class HeaderCartSummary extends Component {
           <div className="cart-float-single-item d-flex">
             <span className="remove-item"><a href="#"><i className="fa fa-times" /></a></span>
             <div className="cart-float-single-item-image">
-              <a href="single-product.html"><img src="assets/images/products/product02.jpg" className="img-fluid" alt /></a>
+              <a href="single-product.html"><img src="assets/images/products/product02.jpg" className="img-fluid" alt="" /></a>
             </div>
             <div className="cart-float-single-item-desc">
               <p className="product-title"> <a href="single-product.html">Fusce ultricies dolor vitae</a></p>

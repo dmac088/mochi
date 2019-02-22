@@ -93,7 +93,7 @@ class Landing extends Component {
                           <div className="gf-product tab-slider-sub-product">
                             <div className="image">
                               <a href="single-product.html">
-                                <img src="assets/images/products/product03.jpg" className="img-fluid" alt />
+                                <img src="assets/images/products/product03.jpg" className="img-fluid" alt="" />
                               </a>
                               <div className="product-hover-icons">
                                 <a href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
@@ -119,7 +119,7 @@ class Landing extends Component {
                             <div className="image">
                               <a href="single-product.html">
                                 <span className="onsale">Sale!</span>
-                                <img src="assets/images/products/product04.jpg" className="img-fluid" alt />
+                                <img src="assets/images/products/product04.jpg" className="img-fluid" alt="" />
                               </a>
                               <div className="product-hover-icons">
                                 <a href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
@@ -150,7 +150,7 @@ class Landing extends Component {
                             <div className="image">
                               <a href="single-product.html">
                                 <span className="onsale">Sale!</span>
-                                <img src="assets/images/products/product01.jpg" className="img-fluid" alt />
+                                <img src="assets/images/products/product01.jpg" className="img-fluid" alt="" />
                               </a>
                               <div className="product-hover-icons">
                                 <a className="active" href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
@@ -176,7 +176,7 @@ class Landing extends Component {
                           <div className="gf-product tab-slider-sub-product">
                             <div className="image">
                               <a href="single-product.html">
-                                <img src="assets/images/products/product02.jpg" className="img-fluid" alt />
+                                <img src="assets/images/products/product02.jpg" className="img-fluid" alt="" />
                               </a>
                               <div className="product-hover-icons">
                                 <a href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
@@ -206,7 +206,7 @@ class Landing extends Component {
                             <div className="image">
                               <a href="single-product.html">
                                 <span className="onsale">Sale!</span>
-                                <img src="assets/images/products/product05.jpg" className="img-fluid" alt />
+                                <img src="assets/images/products/product05.jpg" className="img-fluid" alt="" />
                               </a>
                               <div className="product-hover-icons">
                                 <a href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
@@ -232,7 +232,7 @@ class Landing extends Component {
                           <div className="gf-product tab-slider-sub-product">
                             <div className="image">
                               <a href="single-product.html">
-                                <img src="assets/images/products/product06.jpg" className="img-fluid" alt />
+                                <img src="assets/images/products/product06.jpg" className="img-fluid" alt="" />
                               </a>
                               <div className="product-hover-icons">
                                 <a className="active" href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
@@ -262,7 +262,7 @@ class Landing extends Component {
                             <div className="image">
                               <a href="single-product.html">
                                 <span className="onsale">Sale!</span>
-                                <img src="assets/images/products/product07.jpg" className="img-fluid" alt />
+                                <img src="assets/images/products/product07.jpg" className="img-fluid" alt="" />
                               </a>
                               <div className="product-hover-icons">
                                 <a href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
@@ -289,7 +289,7 @@ class Landing extends Component {
                             <div className="image">
                               <a href="single-product.html">
                                 <span className="onsale">Sale!</span>
-                                <img src="assets/images/products/product08.jpg" className="img-fluid" alt />
+                                <img src="assets/images/products/product08.jpg" className="img-fluid" alt="" />
                               </a>
                               <div className="product-hover-icons">
                                 <a href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
@@ -320,7 +320,7 @@ class Landing extends Component {
                             <div className="image">
                               <a href="single-product.html">
                                 <span className="onsale">Sale!</span>
-                                <img src="assets/images/products/product09.jpg" className="img-fluid" alt />
+                                <img src="assets/images/products/product09.jpg" className="img-fluid" alt="" />
                               </a>
                               <div className="product-hover-icons">
                                 <a className="active" href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
@@ -347,7 +347,7 @@ class Landing extends Component {
                             <div className="image">
                               <a href="single-product.html">
                                 <span className="onsale">Sale!</span>
-                                <img src="assets/images/products/product10.jpg" className="img-fluid" alt />
+                                <img src="assets/images/products/product10.jpg" className="img-fluid" alt="" />
                               </a>
                               <div className="product-hover-icons">
                                 <a href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
@@ -384,7 +384,7 @@ class Landing extends Component {
                             <div className="image">
                               <a href="single-product.html">
                                 <span className="onsale">Sale!</span>
-                                <img src="assets/images/products/product09.jpg" className="img-fluid" alt />
+                                <img src="assets/images/products/product09.jpg" className="img-fluid" alt="" />
                               </a>
                               <div className="product-hover-icons">
                                 <a className="active" href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
@@ -411,7 +411,7 @@ class Landing extends Component {
                             <div className="image">
                               <a href="single-product.html">
                                 <span className="onsale">Sale!</span>
-                                <img src="assets/images/products/product10.jpg" className="img-fluid" alt />
+                                <img src="assets/images/products/product10.jpg" className="img-fluid" alt="" />
                               </a>
                               <div className="product-hover-icons">
                                 <a href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
@@ -442,7 +442,7 @@ class Landing extends Component {
                             <div className="image">
                               <a href="single-product.html">
                                 <span className="onsale">Sale!</span>
-                                <img src="assets/images/products/product01.jpg" className="img-fluid" alt />
+                                <img src="assets/images/products/product01.jpg" className="img-fluid" alt="" />
                               </a>
                               <div className="product-hover-icons">
                                 <a className="active" href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
@@ -468,7 +468,7 @@ class Landing extends Component {
                           <div className="gf-product tab-slider-sub-product">
                             <div className="image">
                               <a href="single-product.html">
-                                <img src="assets/images/products/product02.jpg" className="img-fluid" alt />
+                                <img src="assets/images/products/product02.jpg" className="img-fluid" alt="" />
                               </a>
                               <div className="product-hover-icons">
                                 <a href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
@@ -497,7 +497,7 @@ class Landing extends Component {
                           <div className="gf-product tab-slider-sub-product">
                             <div className="image">
                               <a href="single-product.html">
-                                <img src="assets/images/products/product03.jpg" className="img-fluid" alt />
+                                <img src="assets/images/products/product03.jpg" className="img-fluid" alt="" />
                               </a>
                               <div className="product-hover-icons">
                                 <a href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
@@ -523,7 +523,7 @@ class Landing extends Component {
                             <div className="image">
                               <a href="single-product.html">
                                 <span className="onsale">Sale!</span>
-                                <img src="assets/images/products/product04.jpg" className="img-fluid" alt />
+                                <img src="assets/images/products/product04.jpg" className="img-fluid" alt="" />
                               </a>
                               <div className="product-hover-icons">
                                 <a href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
@@ -554,7 +554,7 @@ class Landing extends Component {
                             <div className="image">
                               <a href="single-product.html">
                                 <span className="onsale">Sale!</span>
-                                <img src="assets/images/products/product05.jpg" className="img-fluid" alt />
+                                <img src="assets/images/products/product05.jpg" className="img-fluid" alt="" />
                               </a>
                               <div className="product-hover-icons">
                                 <a href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
@@ -580,7 +580,7 @@ class Landing extends Component {
                           <div className="gf-product tab-slider-sub-product">
                             <div className="image">
                               <a href="single-product.html">
-                                <img src="assets/images/products/product06.jpg" className="img-fluid" alt />
+                                <img src="assets/images/products/product06.jpg" className="img-fluid" alt="" />
                               </a>
                               <div className="product-hover-icons">
                                 <a className="active" href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
@@ -610,7 +610,7 @@ class Landing extends Component {
                             <div className="image">
                               <a href="single-product.html">
                                 <span className="onsale">Sale!</span>
-                                <img src="assets/images/products/product07.jpg" className="img-fluid" alt />
+                                <img src="assets/images/products/product07.jpg" className="img-fluid" alt="" />
                               </a>
                               <div className="product-hover-icons">
                                 <a href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
@@ -637,7 +637,7 @@ class Landing extends Component {
                             <div className="image">
                               <a href="single-product.html">
                                 <span className="onsale">Sale!</span>
-                                <img src="assets/images/products/product08.jpg" className="img-fluid" alt />
+                                <img src="assets/images/products/product08.jpg" className="img-fluid" alt="" />
                               </a>
                               <div className="product-hover-icons">
                                 <a href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
@@ -681,7 +681,7 @@ class Landing extends Component {
                 {/*=======  single banner  =======*/}
                 <div className="single-banner">
                   <a href="shop-left-sidebar.html">
-                    <img src="assets/images/banners/home2-banner1-1.jpg" className="img-fluid" alt />
+                    <img src="assets/images/banners/home2-banner1-1.jpg" className="img-fluid" alt="" />
                   </a>
                 </div>
                 {/*=======  End of single banner  =======*/}
@@ -690,7 +690,7 @@ class Landing extends Component {
                 {/*=======  single banner  =======*/}
                 <div className="single-banner">
                   <a href="shop-left-sidebar.html">
-                    <img src="assets/images/banners/home2-banner1-2.jpg" className="img-fluid" alt />
+                    <img src="assets/images/banners/home2-banner1-2.jpg" className="img-fluid" alt="" />
                   </a>
                 </div>
                 {/*=======  End of single banner  =======*/}
@@ -722,7 +722,7 @@ class Landing extends Component {
                       {/*=======  slider side banner  =======*/}
                       <div className="slider-side-banner">
                         <a href="shop-left-sidebar.html">
-                          <img src="assets/images/banners/home4-category1-sidebar.jpg" className="img-fluid" alt />
+                          <img src="assets/images/banners/home4-category1-sidebar.jpg" className="img-fluid" alt="" />
                         </a>
                       </div>
                       {/*=======  End of slider side banner  =======*/}
@@ -736,7 +736,7 @@ class Landing extends Component {
                           {/*=======  slider banner  =======*/}
                           <div className="slider-banner">
                             <a href="shop-left-sidebar.html">
-                              <img src="assets/images/banners/home4-category1-banner1.jpg" className="img-fluid" alt />
+                              <img src="assets/images/banners/home4-category1-banner1.jpg" className="img-fluid" alt="" />
                             </a>
                           </div>
                           {/*=======  End of slider banner  =======*/}
@@ -745,7 +745,7 @@ class Landing extends Component {
                           {/*=======  slider banner  =======*/}
                           <div className="slider-banner">
                             <a href="shop-left-sidebar.html">
-                              <img src="assets/images/banners/home4-category1-banner2.jpg" className="img-fluid" alt />
+                              <img src="assets/images/banners/home4-category1-banner2.jpg" className="img-fluid" alt="" />
                             </a>
                           </div>
                           {/*=======  End of slider banner  =======*/}
@@ -783,7 +783,7 @@ class Landing extends Component {
                       {/*=======  slider side banner  =======*/}
                       <div className="slider-side-banner">
                         <a href="shop-left-sidebar.html">
-                          <img src="assets/images/banners/home4-category2-sidebar.jpg" className="img-fluid" alt />
+                          <img src="assets/images/banners/home4-category2-sidebar.jpg" className="img-fluid" alt="" />
                         </a>
                       </div>
                       {/*=======  End of slider side banner  =======*/}
@@ -796,7 +796,7 @@ class Landing extends Component {
                           <div className="image">
                             <a href="single-product.html">
                               <span className="onsale">Sale!</span>
-                              <img src="assets/images/products/product01.jpg" className="img-fluid" alt />
+                              <img src="assets/images/products/product01.jpg" className="img-fluid" alt="" />
                             </a>
                             <div className="product-hover-icons">
                               <a href="#" data-tooltip="Quick view" data-toggle="modal" data-target="#quick-view-modal-container"> <span className="icon_search" /> </a>
@@ -820,7 +820,7 @@ class Landing extends Component {
                           <div className="image">
                             <a href="single-product.html">
                               <span className="onsale">Sale!</span>
-                              <img src="assets/images/products/product02.jpg" className="img-fluid" alt />
+                              <img src="assets/images/products/product02.jpg" className="img-fluid" alt="" />
                             </a>
                             <div className="product-hover-icons">
                               <a href="#" data-tooltip="Quick view" data-toggle="modal" data-target="#quick-view-modal-container"> <span className="icon_search" /> </a>
@@ -844,7 +844,7 @@ class Landing extends Component {
                           <div className="image">
                             <a href="single-product.html">
                               <span className="onsale">Sale!</span>
-                              <img src="assets/images/products/product03.jpg" className="img-fluid" alt />
+                              <img src="assets/images/products/product03.jpg" className="img-fluid" alt="" />
                             </a>
                             <div className="product-hover-icons">
                               <a href="#" data-tooltip="Quick view" data-toggle="modal" data-target="#quick-view-modal-container"> <span className="icon_search" /> </a>
@@ -868,7 +868,7 @@ class Landing extends Component {
                           <div className="image">
                             <a href="single-product.html">
                               <span className="onsale">Sale!</span>
-                              <img src="assets/images/products/product04.jpg" className="img-fluid" alt />
+                              <img src="assets/images/products/product04.jpg" className="img-fluid" alt="" />
                             </a>
                             <div className="product-hover-icons">
                               <a href="#" data-tooltip="Quick view" data-toggle="modal" data-target="#quick-view-modal-container"> <span className="icon_search" /> </a>
@@ -892,7 +892,7 @@ class Landing extends Component {
                           <div className="image">
                             <a href="single-product.html">
                               <span className="onsale">Sale!</span>
-                              <img src="assets/images/products/product05.jpg" className="img-fluid" alt />
+                              <img src="assets/images/products/product05.jpg" className="img-fluid" alt="" />
                             </a>
                             <div className="product-hover-icons">
                               <a href="#" data-tooltip="Quick view" data-toggle="modal" data-target="#quick-view-modal-container"> <span className="icon_search" /> </a>
@@ -918,7 +918,7 @@ class Landing extends Component {
                           {/*=======  slider banner  =======*/}
                           <div className="slider-banner">
                             <a href="shop-left-sidebar.html">
-                              <img src="assets/images/banners/home4-category2-banner1.jpg" className="img-fluid" alt />
+                              <img src="assets/images/banners/home4-category2-banner1.jpg" className="img-fluid" alt="" />
                             </a>
                           </div>
                           {/*=======  End of slider banner  =======*/}
@@ -927,7 +927,7 @@ class Landing extends Component {
                           {/*=======  slider banner  =======*/}
                           <div className="slider-banner">
                             <a href="shop-left-sidebar.html">
-                              <img src="assets/images/banners/home4-category2-banner2.jpg" className="img-fluid" alt />
+                              <img src="assets/images/banners/home4-category2-banner2.jpg" className="img-fluid" alt="" />
                             </a>
                           </div>
                           {/*=======  End of slider banner  =======*/}
@@ -965,7 +965,7 @@ class Landing extends Component {
                       {/*=======  slider side banner  =======*/}
                       <div className="slider-side-banner">
                         <a href="shop-left-sidebar.html">
-                          <img src="assets/images/banners/home4-category3-sidebar.jpg" className="img-fluid" alt />
+                          <img src="assets/images/banners/home4-category3-sidebar.jpg" className="img-fluid" alt="" />
                         </a>
                       </div>
                       {/*=======  End of slider side banner  =======*/}
@@ -978,7 +978,7 @@ class Landing extends Component {
                           <div className="image">
                             <a href="single-product.html">
                               <span className="onsale">Sale!</span>
-                              <img src="assets/images/products/product01.jpg" className="img-fluid" alt />
+                              <img src="assets/images/products/product01.jpg" className="img-fluid" alt="" />
                             </a>
                             <div className="product-hover-icons">
                               <a href="#" data-tooltip="Quick view" data-toggle="modal" data-target="#quick-view-modal-container"> <span className="icon_search" /> </a>
@@ -1002,7 +1002,7 @@ class Landing extends Component {
                           <div className="image">
                             <a href="single-product.html">
                               <span className="onsale">Sale!</span>
-                              <img src="assets/images/products/product02.jpg" className="img-fluid" alt />
+                              <img src="assets/images/products/product02.jpg" className="img-fluid" alt="" />
                             </a>
                             <div className="product-hover-icons">
                               <a href="#" data-tooltip="Quick view" data-toggle="modal" data-target="#quick-view-modal-container"> <span className="icon_search" /> </a>
@@ -1026,7 +1026,7 @@ class Landing extends Component {
                           <div className="image">
                             <a href="single-product.html">
                               <span className="onsale">Sale!</span>
-                              <img src="assets/images/products/product03.jpg" className="img-fluid" alt />
+                              <img src="assets/images/products/product03.jpg" className="img-fluid" alt="" />
                             </a>
                             <div className="product-hover-icons">
                               <a href="#" data-tooltip="Quick view" data-toggle="modal" data-target="#quick-view-modal-container"> <span className="icon_search" /> </a>
@@ -1050,7 +1050,7 @@ class Landing extends Component {
                           <div className="image">
                             <a href="single-product.html">
                               <span className="onsale">Sale!</span>
-                              <img src="assets/images/products/product04.jpg" className="img-fluid" alt />
+                              <img src="assets/images/products/product04.jpg" className="img-fluid" alt="" />
                             </a>
                             <div className="product-hover-icons">
                               <a href="#" data-tooltip="Quick view" data-toggle="modal" data-target="#quick-view-modal-container"> <span className="icon_search" /> </a>
@@ -1074,7 +1074,7 @@ class Landing extends Component {
                           <div className="image">
                             <a href="single-product.html">
                               <span className="onsale">Sale!</span>
-                              <img src="assets/images/products/product05.jpg" className="img-fluid" alt />
+                              <img src="assets/images/products/product05.jpg" className="img-fluid" alt="" />
                             </a>
                             <div className="product-hover-icons">
                               <a href="#" data-tooltip="Quick view" data-toggle="modal" data-target="#quick-view-modal-container"> <span className="icon_search" /> </a>
@@ -1100,7 +1100,7 @@ class Landing extends Component {
                           {/*=======  slider banner  =======*/}
                           <div className="slider-banner">
                             <a href="shop-left-sidebar.html">
-                              <img src="assets/images/banners/home4-category3-banner1.jpg" className="img-fluid" alt />
+                              <img src="assets/images/banners/home4-category3-banner1.jpg" className="img-fluid" alt="" />
                             </a>
                           </div>
                           {/*=======  End of slider banner  =======*/}
@@ -1109,7 +1109,7 @@ class Landing extends Component {
                           {/*=======  slider banner  =======*/}
                           <div className="slider-banner">
                             <a href="shop-left-sidebar.html">
-                              <img src="assets/images/banners/home4-category3-banner2.jpg" className="img-fluid" alt />
+                              <img src="assets/images/banners/home4-category3-banner2.jpg" className="img-fluid" alt="" />
                             </a>
                           </div>
                           {/*=======  End of slider banner  =======*/}
@@ -1147,7 +1147,7 @@ class Landing extends Component {
                       {/*=======  slider side banner  =======*/}
                       <div className="slider-side-banner">
                         <a href="shop-left-sidebar.html">
-                          <img src="assets/images/banners/home4-category4-sidebar.jpg" className="img-fluid" alt />
+                          <img src="assets/images/banners/home4-category4-sidebar.jpg" className="img-fluid" alt="" />
                         </a>
                       </div>
                       {/*=======  End of slider side banner  =======*/}
@@ -1160,7 +1160,7 @@ class Landing extends Component {
                           <div className="image">
                             <a href="single-product.html">
                               <span className="onsale">Sale!</span>
-                              <img src="assets/images/products/product01.jpg" className="img-fluid" alt />
+                              <img src="assets/images/products/product01.jpg" className="img-fluid" alt="" />
                             </a>
                             <div className="product-hover-icons">
                               <a href="#" data-tooltip="Quick view" data-toggle="modal" data-target="#quick-view-modal-container"> <span className="icon_search" /> </a>
@@ -1184,7 +1184,7 @@ class Landing extends Component {
                           <div className="image">
                             <a href="single-product.html">
                               <span className="onsale">Sale!</span>
-                              <img src="assets/images/products/product02.jpg" className="img-fluid" alt />
+                              <img src="assets/images/products/product02.jpg" className="img-fluid" alt="" />
                             </a>
                             <div className="product-hover-icons">
                               <a href="#" data-tooltip="Quick view" data-toggle="modal" data-target="#quick-view-modal-container"> <span className="icon_search" /> </a>
@@ -1208,7 +1208,7 @@ class Landing extends Component {
                           <div className="image">
                             <a href="single-product.html">
                               <span className="onsale">Sale!</span>
-                              <img src="assets/images/products/product03.jpg" className="img-fluid" alt />
+                              <img src="assets/images/products/product03.jpg" className="img-fluid" alt="" />
                             </a>
                             <div className="product-hover-icons">
                               <a href="#" data-tooltip="Quick view" data-toggle="modal" data-target="#quick-view-modal-container"> <span className="icon_search" /> </a>
@@ -1232,7 +1232,7 @@ class Landing extends Component {
                           <div className="image">
                             <a href="single-product.html">
                               <span className="onsale">Sale!</span>
-                              <img src="assets/images/products/product04.jpg" className="img-fluid" alt />
+                              <img src="assets/images/products/product04.jpg" className="img-fluid" alt="" />
                             </a>
                             <div className="product-hover-icons">
                               <a href="#" data-tooltip="Quick view" data-toggle="modal" data-target="#quick-view-modal-container"> <span className="icon_search" /> </a>
@@ -1256,7 +1256,7 @@ class Landing extends Component {
                           <div className="image">
                             <a href="single-product.html">
                               <span className="onsale">Sale!</span>
-                              <img src="assets/images/products/product05.jpg" className="img-fluid" alt />
+                              <img src="assets/images/products/product05.jpg" className="img-fluid" alt="" />
                             </a>
                             <div className="product-hover-icons">
                               <a href="#" data-tooltip="Quick view" data-toggle="modal" data-target="#quick-view-modal-container"> <span className="icon_search" /> </a>
@@ -1282,7 +1282,7 @@ class Landing extends Component {
                           {/*=======  slider banner  =======*/}
                           <div className="slider-banner">
                             <a href="shop-left-sidebar.html">
-                              <img src="assets/images/banners/home4-category4-banner1.jpg" className="img-fluid" alt />
+                              <img src="assets/images/banners/home4-category4-banner1.jpg" className="img-fluid" alt="" />
                             </a>
                           </div>
                           {/*=======  End of slider banner  =======*/}
@@ -1291,7 +1291,7 @@ class Landing extends Component {
                           {/*=======  slider banner  =======*/}
                           <div className="slider-banner">
                             <a href="shop-left-sidebar.html">
-                              <img src="assets/images/banners/home4-category4-banner2.jpg" className="img-fluid" alt />
+                              <img src="assets/images/banners/home4-category4-banner2.jpg" className="img-fluid" alt="" />
                             </a>
                           </div>
                           {/*=======  End of slider banner  =======*/}
@@ -1324,7 +1324,7 @@ class Landing extends Component {
                   {/*=======  newsletter title =======*/}
                   <div className="newsletter-title">
                     <h1>
-                      <img src="assets/images/icon-newsletter.png" alt />
+                      <img src="assets/images/icon-newsletter.png" alt="" />
                       Send Newsletter
                     </h1>
                   </div>
@@ -1495,7 +1495,7 @@ class Landing extends Component {
                 <div className="col-lg-8 col-md-6 col-sm-12 col-xs-12">
                   {/*=======  payment info  =======*/}
                   <div className="payment-info text-center text-md-right">
-                    <p>Allow payment base on <img src="assets/images/payment-icon.png" className="img-fluid" alt /></p>
+                    <p>Allow payment base on <img src="assets/images/payment-icon.png" className="img-fluid" alt="" /></p>
                   </div>
                   {/*=======  End of payment info  =======*/}
                 </div>
@@ -1526,28 +1526,28 @@ class Landing extends Component {
                         <div className="tab-pane fade show active" id="single-slide1" role="tabpanel" aria-labelledby="single-slide-tab-1">
                           {/*Single Product Image Start*/}
                           <div className="single-product-img img-full">
-                            <img src="assets/images/products/product01.jpg" className="img-fluid" alt />
+                            <img src="assets/images/products/product01.jpg" className="img-fluid" alt="" />
                           </div>
                           {/*Single Product Image End*/}
                         </div>
                         <div className="tab-pane fade" id="single-slide2" role="tabpanel" aria-labelledby="single-slide-tab-2">
                           {/*Single Product Image Start*/}
                           <div className="single-product-img img-full">
-                            <img src="assets/images/products/product02.jpg" className="img-fluid" alt />
+                            <img src="assets/images/products/product02.jpg" className="img-fluid" alt="" />
                           </div>
                           {/*Single Product Image End*/}
                         </div>
                         <div className="tab-pane fade" id="single-slide3" role="tabpanel" aria-labelledby="single-slide-tab-3">
                           {/*Single Product Image Start*/}
                           <div className="single-product-img img-full">
-                            <img src="assets/images/products/product03.jpg" className="img-fluid" alt />
+                            <img src="assets/images/products/product03.jpg" className="img-fluid" alt="" />
                           </div>
                           {/*Single Product Image End*/}
                         </div>
                         <div className="tab-pane fade" id="single-slide4" role="tabpanel" aria-labelledby="single-slide-tab-4">
                           {/*Single Product Image Start*/}
                           <div className="single-product-img img-full">
-                            <img src="assets/images/products/product04.jpg" className="img-fluid" alt />
+                            <img src="assets/images/products/product04.jpg" className="img-fluid" alt="" />
                           </div>
                           {/*Single Product Image End*/}
                         </div>
@@ -1557,16 +1557,16 @@ class Landing extends Component {
                       <div className="product-small-image-list">
                         <div className="nav small-image-slider" role="tablist">
                           <div className="single-small-image img-full">
-                            <a data-toggle="tab" id="single-slide-tab-1" href="#single-slide1"><img src="assets/images/products/product01.jpg" className="img-fluid" alt /></a>
+                            <a data-toggle="tab" id="single-slide-tab-1" href="#single-slide1"><img src="assets/images/products/product01.jpg" className="img-fluid" alt="" /></a>
                           </div>
                           <div className="single-small-image img-full">
-                            <a data-toggle="tab" id="single-slide-tab-2" href="#single-slide2"><img src="assets/images/products/product02.jpg" className="img-fluid" alt /></a>
+                            <a data-toggle="tab" id="single-slide-tab-2" href="#single-slide2"><img src="assets/images/products/product02.jpg" className="img-fluid" alt="" /></a>
                           </div>
                           <div className="single-small-image img-full">
-                            <a data-toggle="tab" id="single-slide-tab-3" href="#single-slide3"><img src="assets/images/products/product03.jpg" className="img-fluid" alt /></a>
+                            <a data-toggle="tab" id="single-slide-tab-3" href="#single-slide3"><img src="assets/images/products/product03.jpg" className="img-fluid" alt="" /></a>
                           </div>
                           <div className="single-small-image img-full">
-                            <a data-toggle="tab" id="single-slide-tab-4" href="#single-slide4"><img src="assets/images/products/product04.jpg" alt /></a>
+                            <a data-toggle="tab" id="single-slide-tab-4" href="#single-slide4"><img src="assets/images/products/product04.jpg" alt="" /></a>
                           </div>
                         </div>
                       </div>

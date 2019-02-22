@@ -84,9 +84,9 @@ class HeroSlider extends Component {
                     <div className="slider-content">
                       <h1>Organic<span>vegetables</span></h1>
                       <h1 className="change-text">Up to <span>50% off</span></h1>
-                      <p><img src="assets/images/icon-slider.png" alt /> <span>save up to 10%</span></p>
-                      <p><img src="assets/images/icon-slider.png" alt /> <span>free shipping</span></p>
-                      <p><img src="assets/images/icon-slider.png" alt /> <span>return in 24 hours</span></p>
+                      <p><img src="assets/images/icon-slider.png" alt="" /> <span>save up to 10%</span></p>
+                      <p><img src="assets/images/icon-slider.png" alt="" /> <span>free shipping</span></p>
+                      <p><img src="assets/images/icon-slider.png" alt="" /> <span>return in 24 hours</span></p>
                       <a href="shop-left-sidebar.html" className="slider-two-btn mt-20">start at $9</a>
                     </div>
                   </div>
@@ -96,9 +96,9 @@ class HeroSlider extends Component {
                     <div className="slider-content">
                       <h1>Organic<span>vegetables</span></h1>
                       <h1 className="change-text">Up to <span>50% off</span></h1>
-                      <p><img src="assets/images/icon-slider.png" alt /> <span>save up to 10%</span></p>
-                      <p><img src="assets/images/icon-slider.png" alt /> <span>free shipping</span></p>
-                      <p><img src="assets/images/icon-slider.png" alt /> <span>return in 24 hours</span></p>
+                      <p><img src="assets/images/icon-slider.png" alt="" /> <span>save up to 10%</span></p>
+                      <p><img src="assets/images/icon-slider.png" alt="" /> <span>free shipping</span></p>
+                      <p><img src="assets/images/icon-slider.png" alt="" /> <span>return in 24 hours</span></p>
                       <a href="shop-left-sidebar.html" className="slider-two-btn mt-20">start at $9</a>
                     </div>
                   </div>
@@ -116,7 +116,7 @@ class HeroSlider extends Component {
                   <div className="col-lg-12 col-sm-6">
                     <div className="slider-side-banner mb-20 mb-sm-0 mb-xs-0">
                       <a href="shop-left-sidebar.html">
-                        <img src="assets/images/banners/home3-banner1-1.jpg" className="img-fluid" alt />
+                        <img src="assets/images/banners/home3-banner1-1.jpg" className="img-fluid" alt="" />
                       </a>
                     </div>
                   </div>
@@ -125,7 +125,7 @@ class HeroSlider extends Component {
                   <div className="col-lg-12 col-sm-6">
                     <div className="slider-side-banner mb-0 mb-sm-0 mb-xs-0">
                       <a href="shop-left-sidebar.html">
-                        <img src="assets/images/banners/home3-banner1-2.jpg" className="img-fluid" alt />
+                        <img src="assets/images/banners/home3-banner1-2.jpg" className="img-fluid" alt="" />
                       </a>
                     </div>
                   </div>
