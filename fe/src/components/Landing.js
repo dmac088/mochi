@@ -41,8 +41,7 @@ class Landing extends Component {
   }
 
   animateScroll = (e) => {
-    if(e === undefined) {return}
-    e.preventDefault();
+    if(!(e === undefined)) {e.preventDefault()}
     $('.scroll-top').click(() => {
         $('html,body')
     			.velocity("scroll", { duration: 1000 });
