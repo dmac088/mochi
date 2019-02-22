@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import ReactTransitionGroup from 'react-addons-transition-group';
-import { isMobile, slide, updateParams } from '../../services/helpers/ScreenHelper';
+import { isMobile, slide, updateParams } from '../../../services/helpers/ScreenHelper';
 import 'velocity-animate/velocity.ui';
 
 

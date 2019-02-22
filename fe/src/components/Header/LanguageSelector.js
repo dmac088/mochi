@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from "react-router-dom";
-import { updateParams } from '../services/helpers/ScreenHelper';
+import { updateParams } from '../../services/helpers/ScreenHelper';
 
 class LanguageSelector extends Component {
 

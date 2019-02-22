@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import HeroSlider from './HeroSlider';
 import Policy from './Policy';
-import Products from './Products/Products';
 import TabSliderContiner from './TabSliderContiner';
 import BannerSlider from './BannerSlider';
 import BestSeller from './BestSeller';
