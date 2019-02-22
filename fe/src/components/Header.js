@@ -97,7 +97,7 @@ class Header extends Component {
                 {/* logo */}
                 <div className="logo mt-15 mb-15">
                   <Link to={'/'+this.props.match.params.locale} >
-                    <img src="assets/images/logo.png" className="img-fluid" alt />
+                    <img src="assets/images/logo.png" className="img-fluid" alt="" />
                   </Link>
                 </div>
                 {/* end of logo */}
@@ -110,7 +110,7 @@ class Header extends Component {
                   {/* header phone number */}
                   <div className="header-contact d-flex">
                     <div className="phone-icon">
-                      <img src="assets/images/icon-phone.png" className="img-fluid" alt />
+                      <img src="assets/images/icon-phone.png" className="img-fluid" alt="" />
                     </div>
                     <div className="phone-number">
                       Phone: <span className="number">1-888-123-456-89</span>

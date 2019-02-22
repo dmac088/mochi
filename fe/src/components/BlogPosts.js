@@ -79,7 +79,7 @@ render() {
             <div className="single-post-wrapper">
               <div className="post-thumb">
                 <a href="blog-post-image-format.html">
-                  <img src="assets/images/blog-image/blog01.jpg" className="img-fluid" alt />
+                  <img src="assets/images/blog-image/blog01.jpg" className="img-fluid" alt="" />
                 </a>
               </div>
               <div className="post-info">
@@ -97,7 +97,7 @@ render() {
             <div className="single-post-wrapper">
               <div className="post-thumb">
                 <a href="blog-post-image-gallery.html">
-                  <img src="assets/images/blog-image/blog02.jpg" className="img-fluid" alt />
+                  <img src="assets/images/blog-image/blog02.jpg" className="img-fluid" alt="" />
                 </a>
               </div>
               <div className="post-info">
@@ -115,7 +115,7 @@ render() {
             <div className="single-post-wrapper">
               <div className="post-thumb">
                 <a href="blog-post-audio-format.html">
-                  <img src="assets/images/blog-image/blog03.jpg" className="img-fluid" alt />
+                  <img src="assets/images/blog-image/blog03.jpg" className="img-fluid" alt="" />
                 </a>
               </div>
               <div className="post-info">
@@ -133,7 +133,7 @@ render() {
             <div className="single-post-wrapper">
               <div className="post-thumb">
                 <a href="blog-post-video-format.html">
-                  <img src="assets/images/blog-image/blog04.jpg" className="img-fluid" alt />
+                  <img src="assets/images/blog-image/blog04.jpg" className="img-fluid" alt="" />
                 </a>
               </div>
               <div className="post-info">
