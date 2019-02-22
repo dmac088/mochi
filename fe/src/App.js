@@ -29,6 +29,7 @@ class App extends Component {
     super(props);
       this.state = {
                      lang: "en-GB",
+                     currency: "USD",
                      categoryList: [],
                      modalActive: false,
                      pagedItems: {content:[]},
@@ -95,7 +96,7 @@ class App extends Component {
 
   componentWillMount(prevProps, prevState, snapshot) {
     if(this.props.match.params.locale === undefined) {
-      this.props.history.push('/' + this.state.lang);
+      this.props.history.push('/' + this.state.lang  + "/" + this.state.currency);
     }
     this.refreshData(prevState);
   }
@@ -158,6 +159,7 @@ class App extends Component {
       <Landing
         {...routeProps}
         lang={this.state.lang}
+        currency={this.state.currency}
         openModal={this.openModal}
         pagedItems={this.state.pagedItems}
         categoryList={this.state.categoryList}
@@ -170,6 +172,7 @@ class App extends Component {
       <Products
         {...routeProps}
         lang={this.state.lang}
+        currency={this.state.currency}
         openModal={this.openModal}
         pagedItems={this.state.pagedItems}
         categoryList={this.state.categoryList}
@@ -209,12 +212,12 @@ class App extends Component {
     return (
           <React.Fragment>
             <Route
-              path={"/:locale?"}
+              path={"/:locale/:currency"}
               exact={true}
               render={(props) => this.renderDefault(props)}
             />
             <Route
-              path={"/:locale/Search"}
+              path={"/:locale/:currency/Search"}
               exact={true}
               render={(props) =>
                 <React.Fragment>
@@ -224,7 +227,7 @@ class App extends Component {
               }
             />
             <Route
-              path={"/:locale?/category/:category"}
+              path={"/:locale/:currency/category/:category"}
               render={(props) =>
                 <React.Fragment>
                   {this.renderHeader(props)}

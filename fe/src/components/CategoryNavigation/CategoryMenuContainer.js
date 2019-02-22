@@ -78,8 +78,8 @@ class CategoryMenu extends Component {
     if(e.target.tagName === "I") {return}
     e.preventDefault();
     const { url } = this.props.match;
-    const { locale } = this.props.match.params;
-    this.props.history.push('/'+((!locale) ? 'en-GB' : locale) + '/category/' + e.currentTarget.text);
+    const { locale, currency } = this.props.match.params;
+    this.props.history.push('/'+ locale + '/'+ currency + '/category/' + e.currentTarget.text);
   }
 
   setContainer = (c) => {

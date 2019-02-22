@@ -6,6 +6,7 @@ import CartMenu from './CartMenu';
 import Selector from './Selector';
 import Search from './Search';
 import LanguageSelector from './LanguageSelector';
+import CurrencySelector from './CurrencySelector';
 import { Link } from 'react-router-dom';
 const $ = window.$;
 
@@ -63,9 +64,7 @@ class Header extends Component {
                       <LanguageSelector/>
                     </li>
                     <li><a onClick={(e) => e.preventDefault()} href="#">Dollar <i className="fa fa-chevron-down" /></a>
-                      <ul>
-                        <li><a href="#">Euro</a></li>
-                      </ul>
+                      <CurrencySelector/>
                     </li>
                   </ul>
                 </div>

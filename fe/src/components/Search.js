@@ -31,9 +31,9 @@ class Search extends Component {
   handleSearch = (e) => {
     if(e === undefined) {return}
     e.preventDefault();
-    const { locale } = this.props.match.params;
+    const { locale, currency } = this.props.match.params;
     this.props.history.push({
-      "pathname": '/' + locale + '/Search',
+      "pathname": '/' + locale + '/' + currency + '/Search',
       "search": updateParams(this.props.history.location.search, {term: this.state.inputTerm, page: 0}, this.props.history),
      });
   }
