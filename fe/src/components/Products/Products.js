@@ -6,7 +6,7 @@ import PriceSidebar from './Sidebars/PriceSidebar';
 import TopRatedSidebar from './Sidebars/TopRatedSidebar';
 import TagSidebar from './Sidebars/TagSidebar';
 import ShopBanner from './ShopBanner';
-import BreadCrumb from './BreadCrumb';
+import BreadCrumb from '../BreadCrumb';
 import ShopHeader from './ShopHeader';
 import Pagination from './Pagination';
 import NoResults from "../../empty-states/NoResults";
@@ -19,7 +19,8 @@ class Products extends Component {
             <div className="shop-page-container mb-50">
               <div className="container">
                 <BreadCrumb
-                  match={this.props.match}/>
+                  match={this.props.match}
+                  page="Shop"/>
                 <div className="row">
                   <div className="col-lg-3 order-2 order-lg-1">
                     <div className="sidebar-area">

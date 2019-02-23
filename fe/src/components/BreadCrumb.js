@@ -14,7 +14,7 @@ class BreadCrumb extends Component {
     					<div className="breadcrumb-container">
     						<ul>
     							<li><Link to={'/'+ locale + '/' + currency}><i className="fa fa-home"></i> Home</Link></li>
-    							<li className="active">Shop</li>
+    							<li className="active">{this.props.page}</li>
     						</ul>
     					</div>
     				</div>
