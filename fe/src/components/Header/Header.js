@@ -48,8 +48,21 @@ class Header extends Component {
   }
 
   checkout = (e) => {
+    e.preventDefault();
     const url = this.props.location.pathname;
     this.props.history.push(url + '/Checkout');
+  }
+
+  account = (e) => {
+    e.preventDefault();
+    const url = this.props.location.pathname;
+    this.props.history.push(url + '/Account');
+  }
+
+  wishlist = (e) => {
+    e.preventDefault();
+    const url = this.props.location.pathname;
+    this.props.history.push(url + '/Wishlist');
   }
 
   render() {
@@ -78,9 +91,9 @@ class Header extends Component {
                 {/* header top menu */}
                 <div className="header-top-menu">
                   <ul>
-                    <li><a href="my-account.html">My account</a></li>
-                    <li><a href="wishlist.html">Wishlist</a></li>
-                    <li><a onClick={this.checkout} >Checkout</a></li>
+                    <li><a onClick={this.account} href="#">My account</a></li>
+                    <li><a onClick={this.wishlist} href="#">Wishlist</a></li>
+                    <li><a onClick={this.checkout} href="#">Checkout</a></li>
                   </ul>
                 </div>
                 {/* end of header top menu */}
