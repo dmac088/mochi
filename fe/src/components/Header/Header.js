@@ -47,6 +47,12 @@ class Header extends Component {
     });
   }
 
+  home = (e) => {
+    e.preventDefault();
+    const { locale, currency } = this.props.match.params;
+    this.props.history.push('/' + locale + '/' + currency);
+  }
+
   checkout = (e) => {
     e.preventDefault();
     const { locale, currency } = this.props.match.params;
@@ -138,7 +144,7 @@ class Header extends Component {
                 <div className="main-menu">
                   <nav>
                     <ul>
-                      <li className="active"><a href="#">HOME</a>
+                      <li className="active"><a onClick={this.home} href="#">HOME</a>
                       </li>
                       <li className="menu-item-has-children"><a href="#">Brands</a>
                         <ul className="mega-menu three-column">
