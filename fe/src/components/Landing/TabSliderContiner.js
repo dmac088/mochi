@@ -63,9 +63,7 @@ class TabSliderContiner extends Component {
 render() {
   return(
     <div className="tab-slider-container">
-      {/*=======  single tab slider item  =======*/}
       <div className="single-tab-slider-item">
-        {/*=======  tab slider sub product  =======*/}
         <div className="gf-product tab-slider-sub-product">
           <div className="image">
             <a href="single-product.html">
@@ -91,8 +89,6 @@ render() {
             </div>
           </div>
         </div>
-        {/*=======  End of tab slider sub product  =======*/}
-        {/*=======  tab slider sub product  =======*/}
         <div className="gf-product tab-slider-sub-product">
           <div className="image">
             <a href="single-product.html">
@@ -116,12 +112,8 @@ render() {
             </div>
           </div>
         </div>
-        {/*=======  End of tab slider sub product  =======*/}
       </div>
-      {/*=======  End of single tab slider product  =======*/}
-      {/*=======  single tab slider item  =======*/}
       <div className="single-tab-slider-item">
-        {/*=======  tab slider sub product  =======*/}
         <div className="gf-product tab-slider-sub-product">
           <div className="image">
             <a href="single-product.html">
@@ -145,8 +137,6 @@ render() {
             </div>
           </div>
         </div>
-        {/*=======  End of tab slider sub product  =======*/}
-        {/*=======  tab slider sub product  =======*/}
         <div className="gf-product tab-slider-sub-product">
           <div className="image">
             <a href="single-product.html">
@@ -172,12 +162,8 @@ render() {
             </div>
           </div>
         </div>
-        {/*=======  End of tab slider sub product  =======*/}
       </div>
-      {/*=======  End of single tab slider product  =======*/}
-      {/*=======  single tab slider item  =======*/}
       <div className="single-tab-slider-item">
-        {/*=======  tab slider sub product  =======*/}
         <div className="gf-product tab-slider-sub-product">
           <div className="image">
             <a href="single-product.html">
@@ -203,8 +189,6 @@ render() {
             </div>
           </div>
         </div>
-        {/*=======  End of tab slider sub product  =======*/}
-        {/*=======  tab slider sub product  =======*/}
         <div className="gf-product tab-slider-sub-product">
           <div className="image">
             <a href="single-product.html">
@@ -228,12 +212,8 @@ render() {
             </div>
           </div>
         </div>
-        {/*=======  End of tab slider sub product  =======*/}
       </div>
-      {/*=======  End of single tab slider product  =======*/}
-      {/*=======  single tab slider item  =======*/}
       <div className="single-tab-slider-item">
-        {/*=======  tab slider sub product  =======*/}
         <div className="gf-product tab-slider-sub-product">
           <div className="image">
             <a href="single-product.html">
@@ -259,8 +239,6 @@ render() {
             </div>
           </div>
         </div>
-        {/*=======  End of tab slider sub product  =======*/}
-        {/*=======  tab slider sub product  =======*/}
         <div className="gf-product tab-slider-sub-product">
           <div className="image">
             <a href="single-product.html">
@@ -286,12 +264,8 @@ render() {
             </div>
           </div>
         </div>
-        {/*=======  End of tab slider sub product  =======*/}
       </div>
-      {/*=======  End of single tab slider product  =======*/}
-      {/*=======  single tab slider item  =======*/}
       <div className="single-tab-slider-item">
-        {/*=======  tab slider sub product  =======*/}
         <div className="gf-product tab-slider-sub-product">
           <div className="image">
             <a href="single-product.html">
@@ -317,8 +291,6 @@ render() {
             </div>
           </div>
         </div>
-        {/*=======  End of tab slider sub product  =======*/}
-        {/*=======  tab slider sub product  =======*/}
         <div className="gf-product tab-slider-sub-product">
           <div className="image">
             <a href="single-product.html">
@@ -344,9 +316,7 @@ render() {
             </div>
           </div>
         </div>
-        {/*=======  End of tab slider sub product  =======*/}
       </div>
-      {/*=======  End of single tab slider product  =======*/}
     </div>
   )
 }
