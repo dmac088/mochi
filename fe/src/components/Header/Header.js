@@ -53,7 +53,6 @@ class Header extends Component {
   }
 
   render() {
-    console.log(this.props);
     const { locale, currency } = this.props.match.params;
     return(
       <header>
@@ -126,6 +125,7 @@ class Header extends Component {
                   {/* end of search bar */}
                   {/* shopping cart */}
                   <HeaderCartSummary
+                    match={this.props.match}
                     location={this.props.location}
                     history={this.props.history}
                   />
