@@ -18,16 +18,16 @@ class ProductHighlights extends Component {
                 </nav>
                 <div className="tab-content" id="nav-tabContent">
                   <div className="tab-pane fade show active" id="featured" role="tabpanel" aria-labelledby="featured-tab">
-                    {/*=======  tab slider container  =======*/}
+
                     <TabSliderContiner/>
-                    {/*=======  End of tab slider container  =======*/}
+
                   </div>
                   <div className="tab-pane fade" id="new-arrivals" role="tabpanel" aria-labelledby="new-arrival-tab">
-                    {/*=======  tab slider container  =======*/}
+
                     <div className="tab-slider-container">
-                      {/*=======  single tab slider item  =======*/}
+
                       <div className="single-tab-slider-item">
-                        {/*=======  tab slider sub product  =======*/}
+
                         <div className="gf-product tab-slider-sub-product">
                           <div className="image">
                             <a href="single-product.html">
@@ -51,8 +51,7 @@ class ProductHighlights extends Component {
                             </div>
                           </div>
                         </div>
-                        {/*=======  End of tab slider sub product  =======*/}
-                        {/*=======  tab slider sub product  =======*/}
+
                         <div className="gf-product tab-slider-sub-product">
                           <div className="image">
                             <a href="single-product.html">
@@ -78,12 +77,11 @@ class ProductHighlights extends Component {
                             </div>
                           </div>
                         </div>
-                        {/*=======  End of tab slider sub product  =======*/}
+
                       </div>
-                      {/*=======  End of single tab slider product  =======*/}
-                      {/*=======  single tab slider item  =======*/}
+
                       <div className="single-tab-slider-item">
-                        {/*=======  tab slider sub product  =======*/}
+
                         <div className="gf-product gf-product tab-slider-sub-product">
                           <div className="image">
                             <a href="single-product.html">
@@ -109,8 +107,7 @@ class ProductHighlights extends Component {
                             </div>
                           </div>
                         </div>
-                        {/*=======  End of tab slider sub product  =======*/}
-                        {/*=======  tab slider sub product  =======*/}
+
                         <div className="gf-product tab-slider-sub-product">
                           <div className="image">
                             <a href="single-product.html">
@@ -134,12 +131,9 @@ class ProductHighlights extends Component {
                             </div>
                           </div>
                         </div>
-                        {/*=======  End of tab slider sub product  =======*/}
                       </div>
-                      {/*=======  End of single tab slider product  =======*/}
-                      {/*=======  single tab slider item  =======*/}
+
                       <div className="single-tab-slider-item">
-                        {/*=======  tab slider sub product  =======*/}
                         <div className="gf-product tab-slider-sub-product">
                           <div className="image">
                             <a href="single-product.html">
@@ -165,8 +159,6 @@ class ProductHighlights extends Component {
                             </div>
                           </div>
                         </div>
-                        {/*=======  End of tab slider sub product  =======*/}
-                        {/*=======  tab slider sub product  =======*/}
                         <div className="gf-product tab-slider-sub-product">
                           <div className="image">
                             <a href="single-product.html">
@@ -190,12 +182,8 @@ class ProductHighlights extends Component {
                             </div>
                           </div>
                         </div>
-                        {/*=======  End of tab slider sub product  =======*/}
                       </div>
-                      {/*=======  End of single tab slider product  =======*/}
-                      {/*=======  single tab slider item  =======*/}
                       <div className="single-tab-slider-item">
-                        {/*=======  tab slider sub product  =======*/}
                         <div className="gf-product tab-slider-sub-product">
                           <div className="image">
                             <a href="single-product.html">
@@ -221,8 +209,6 @@ class ProductHighlights extends Component {
                             </div>
                           </div>
                         </div>
-                        {/*=======  End of tab slider sub product  =======*/}
-                        {/*=======  tab slider sub product  =======*/}
                         <div className="gf-product tab-slider-sub-product">
                           <div className="image">
                             <a href="single-product.html">
@@ -248,12 +234,8 @@ class ProductHighlights extends Component {
                             </div>
                           </div>
                         </div>
-                        {/*=======  End of tab slider sub product  =======*/}
                       </div>
-                      {/*=======  End of single tab slider product  =======*/}
-                      {/*=======  single tab slider item  =======*/}
                       <div className="single-tab-slider-item">
-                        {/*=======  tab slider sub product  =======*/}
                         <div className="gf-product tab-slider-sub-product">
                           <div className="image">
                             <a href="single-product.html">
@@ -279,8 +261,7 @@ class ProductHighlights extends Component {
                             </div>
                           </div>
                         </div>
-                        {/*=======  End of tab slider sub product  =======*/}
-                        {/*=======  tab slider sub product  =======*/}
+
                         <div className="gf-product tab-slider-sub-product">
                           <div className="image">
                             <a href="single-product.html">
@@ -306,18 +287,18 @@ class ProductHighlights extends Component {
                             </div>
                           </div>
                         </div>
-                        {/*=======  End of tab slider sub product  =======*/}
+
                       </div>
-                      {/*=======  End of single tab slider product  =======*/}
+
                     </div>
-                    {/*=======  End of tab slider container  =======*/}
+
                   </div>
                   <div className="tab-pane fade" id="on-sale" role="tabpanel" aria-labelledby="nav-onsale-tab">
-                    {/*=======  tab slider container  =======*/}
+
                     <div className="tab-slider-container">
-                      {/*=======  single tab slider item  =======*/}
+
                       <div className="single-tab-slider-item">
-                        {/*=======  tab slider sub product  =======*/}
+
                         <div className="gf-product tab-slider-sub-product">
                           <div className="image">
                             <a href="single-product.html">
@@ -343,8 +324,6 @@ class ProductHighlights extends Component {
                             </div>
                           </div>
                         </div>
-                        {/*=======  End of tab slider sub product  =======*/}
-                        {/*=======  tab slider sub product  =======*/}
                         <div className="gf-product tab-slider-sub-product">
                           <div className="image">
                             <a href="single-product.html">
@@ -370,12 +349,8 @@ class ProductHighlights extends Component {
                             </div>
                           </div>
                         </div>
-                        {/*=======  End of tab slider sub product  =======*/}
                       </div>
-                      {/*=======  End of single tab slider product  =======*/}
-                      {/*=======  single tab slider item  =======*/}
                       <div className="single-tab-slider-item">
-                        {/*=======  tab slider sub product  =======*/}
                         <div className="gf-product gf-product tab-slider-sub-product">
                           <div className="image">
                             <a href="single-product.html">
@@ -401,8 +376,6 @@ class ProductHighlights extends Component {
                             </div>
                           </div>
                         </div>
-                        {/*=======  End of tab slider sub product  =======*/}
-                        {/*=======  tab slider sub product  =======*/}
                         <div className="gf-product tab-slider-sub-product">
                           <div className="image">
                             <a href="single-product.html">
@@ -426,12 +399,8 @@ class ProductHighlights extends Component {
                             </div>
                           </div>
                         </div>
-                        {/*=======  End of tab slider sub product  =======*/}
                       </div>
-                      {/*=======  End of single tab slider product  =======*/}
-                      {/*=======  single tab slider item  =======*/}
                       <div className="single-tab-slider-item">
-                        {/*=======  tab slider sub product  =======*/}
                         <div className="gf-product tab-slider-sub-product">
                           <div className="image">
                             <a href="single-product.html">
@@ -455,8 +424,6 @@ class ProductHighlights extends Component {
                             </div>
                           </div>
                         </div>
-                        {/*=======  End of tab slider sub product  =======*/}
-                        {/*=======  tab slider sub product  =======*/}
                         <div className="gf-product tab-slider-sub-product">
                           <div className="image">
                             <a href="single-product.html">
@@ -482,12 +449,8 @@ class ProductHighlights extends Component {
                             </div>
                           </div>
                         </div>
-                        {/*=======  End of tab slider sub product  =======*/}
                       </div>
-                      {/*=======  End of single tab slider product  =======*/}
-                      {/*=======  single tab slider item  =======*/}
                       <div className="single-tab-slider-item">
-                        {/*=======  tab slider sub product  =======*/}
                         <div className="gf-product tab-slider-sub-product">
                           <div className="image">
                             <a href="single-product.html">
@@ -513,8 +476,6 @@ class ProductHighlights extends Component {
                             </div>
                           </div>
                         </div>
-                        {/*=======  End of tab slider sub product  =======*/}
-                        {/*=======  tab slider sub product  =======*/}
                         <div className="gf-product tab-slider-sub-product">
                           <div className="image">
                             <a href="single-product.html">
@@ -538,12 +499,8 @@ class ProductHighlights extends Component {
                             </div>
                           </div>
                         </div>
-                        {/*=======  End of tab slider sub product  =======*/}
                       </div>
-                      {/*=======  End of single tab slider product  =======*/}
-                      {/*=======  single tab slider item  =======*/}
                       <div className="single-tab-slider-item">
-                        {/*=======  tab slider sub product  =======*/}
                         <div className="gf-product tab-slider-sub-product">
                           <div className="image">
                             <a href="single-product.html">
@@ -569,8 +526,6 @@ class ProductHighlights extends Component {
                             </div>
                           </div>
                         </div>
-                        {/*=======  End of tab slider sub product  =======*/}
-                        {/*=======  tab slider sub product  =======*/}
                         <div className="gf-product tab-slider-sub-product">
                           <div className="image">
                             <a href="single-product.html">
@@ -596,11 +551,8 @@ class ProductHighlights extends Component {
                             </div>
                           </div>
                         </div>
-                        {/*=======  End of tab slider sub product  =======*/}
                       </div>
-                      {/*=======  End of single tab slider product  =======*/}
                     </div>
-                    {/*=======  End of tab slider container  =======*/}
                   </div>
                 </div>
               </div>
