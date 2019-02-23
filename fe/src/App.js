@@ -16,6 +16,7 @@ import * as pageService from './services/page';
 import * as cartService from './services/cart';
 import * as categoryApi from './data/categories/api';
 import Landing from './components/Landing/Landing';
+import Checkout from './components/Checkout/Checkout';
 import Login from './components/Login';
 import qs from 'query-string';
 import _ from 'lodash';
@@ -190,6 +191,16 @@ class App extends Component {
     );
   }
 
+  renderCheckout = (routeProps) => {
+    return (
+      <Checkout
+        {...routeProps}
+        authenticated={this.props.tokens.authenticated}
+        customer={this.props.customer}
+      />
+    );
+  }
+
   renderDefault = (props) => {
     return(
       <React.Fragment>
@@ -232,6 +243,16 @@ class App extends Component {
                 <React.Fragment>
                   {this.renderHeader(props)}
                   {this.renderProducts(props)}
+                </React.Fragment>
+              }
+            />
+            <Route
+              path={"/:locale/:currency/Checkout"}
+              exact={true}
+              render={(props) =>
+                <React.Fragment>
+                  {this.renderHeader(props)}
+                  {this.renderCheckout(props)}
                 </React.Fragment>
               }
             />

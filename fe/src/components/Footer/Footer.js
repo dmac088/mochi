@@ -4,60 +4,41 @@ import React from 'react';
 const Footer = (props) =>{
     return(
       <footer>
-        <!--=======  newsletter section  =======-->
-
         <div className="newsletter-section pt-50 pb-50">
           <div className="container">
             <div className="row">
               <div className="col-lg-4 col-md-12 col-sm-12 mb-sm-20 mb-xs-20">
-                <!--=======  newsletter title =======-->
-
                 <div className="newsletter-title">
                   <h1>
-                    <img src="assets/images/icon-newsletter.png" alt="">
+                    <img src="assets/images/icon-newsletter.png" alt="" />
                     Send Newsletter
                   </h1>
                 </div>
-
-                <!--=======  End of newsletter title  =======-->
               </div>
 
               <div className="col-lg-8 col-md-12 col-sm-12">
-                <!--=======  subscription-form wrapper  =======-->
-
                 <div className="subscription-form-wrapper d-flex flex-wrap flex-sm-nowrap">
                   <p className="mb-xs-20">Sign up for our newsletter to get up-to-date from us</p>
                   <div className="subscription-form">
                     <form  id="mc-form" className="mc-form subscribe-form">
-                      <input type="email" id="mc-email" autocomplete="off" placeholder="Your email address">
+                      <input type="email" id="mc-email" autocomplete="off" placeholder="Your email address" />
                       <button id="mc-submit" type="submit"> subscribe!</button>
                     </form>
-
-                    <!-- mailchimp-alerts Start -->
                     <div className="mailchimp-alerts">
-                      <div className="mailchimp-submitting"></div><!-- mailchimp-submitting end -->
-                      <div className="mailchimp-success"></div><!-- mailchimp-success end -->
-                      <div className="mailchimp-error"></div><!-- mailchimp-error end -->
-                    </div><!-- mailchimp-alerts end -->
+                      <div className="mailchimp-submitting"></div>
+                      <div className="mailchimp-success"></div>
+                      <div className="mailchimp-error"></div>
+                    </div>
                   </div>
                 </div>
-
-                <!--=======  End of subscription-form wrapper  =======-->
               </div>
             </div>
           </div>
         </div>
-
-        <!--=======  End of newsletter section  =======-->
-
-        <!--=======  social contact section  =======-->
-
         <div className="social-contact-section pt-50 pb-50">
           <div className="container">
             <div className="row">
               <div className="col-lg-4 col-md-12 order-2 order-md-2 order-sm-2 order-lg-1">
-                <!--=======  social media links  =======-->
-
                 <div className="social-media-section">
                   <h2>Follow us</h2>
                   <div className="social-links">
@@ -68,21 +49,11 @@ const Footer = (props) =>{
                     <a className="rss" href="http://www.rss.com" data-tooltip="RSS"><i className="fa fa-rss"></i></a>
                   </div>
                 </div>
-
-                <!--=======  End of social media links  =======-->
-
               </div>
               <div className="col-lg-8 col-md-12 order-1 order-md-1 order-sm-1 order-lg-2  mb-sm-50 mb-xs-50">
-                <!--=======  contact summery  =======-->
-
                 <div className="contact-summery">
                   <h2>Contact us</h2>
-
-                  <!--=======  contact segments  =======-->
-
                   <div className="contact-segments d-flex justify-content-between flex-wrap flex-lg-nowrap">
-                    <!--=======  single contact  =======-->
-
                     <div className="single-contact d-flex mb-xs-20">
                       <div className="icon">
                         <span className="icon_pin_alt"></span>
@@ -91,10 +62,6 @@ const Footer = (props) =>{
                         <p>Address: <span>123 New Design Str, Melbourne, Australia</span></p>
                       </div>
                     </div>
-
-                    <!--=======  End of single contact  =======-->
-                    <!--=======  single contact  =======-->
-
                     <div className="single-contact d-flex mb-xs-20">
                       <div className="icon">
                         <span className="icon_mobile"></span>
@@ -103,10 +70,6 @@ const Footer = (props) =>{
                         <p>Phone: <span>1-888-123-456-89</span></p>
                       </div>
                     </div>
-
-                    <!--=======  End of single contact  =======-->
-                    <!--=======  single contact  =======-->
-
                     <div className="single-contact d-flex">
                       <div className="icon">
                         <span className="icon_mail_alt"></span>
@@ -115,33 +78,16 @@ const Footer = (props) =>{
                         <p>Email: <span>support@hastech.company</span></p>
                       </div>
                     </div>
-
-                    <!--=======  End of single contact  =======-->
                   </div>
-
-                  <!--=======  End of contact segments  =======-->
-
-
-
                 </div>
-
-                <!--=======  End of contact summery  =======-->
-
               </div>
             </div>
           </div>
         </div>
-
-        <!--=======  End of social contact section  =======-->
-
-        <!--=======  footer navigation  =======-->
-
         <div className="footer-navigation-section pt-40 pb-40">
           <div className="container">
             <div className="row">
               <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12 mb-xs-30">
-                <!--=======  single navigation section  =======-->
-
                 <div className="single-navigation-section">
                   <h3 className="nav-section-title">INFORMATION</h3>
                   <ul>
@@ -151,12 +97,8 @@ const Footer = (props) =>{
                     <li> <a href="#">Terms & Condition</a></li>
                   </ul>
                 </div>
-
-                <!--=======  End of single navigation section  =======-->
               </div>
               <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12 mb-xs-30">
-                <!--=======  single navigation section  =======-->
-
                 <div className="single-navigation-section">
                   <h3 className="nav-section-title">MY ACCOUNT</h3>
                   <ul>
@@ -166,12 +108,8 @@ const Footer = (props) =>{
                     <li> <a href="#">Newsletter</a></li>
                   </ul>
                 </div>
-
-                <!--=======  End of single navigation section  =======-->
               </div>
               <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12 mb-xs-30">
-                <!--=======  single navigation section  =======-->
-
                 <div className="single-navigation-section">
                   <h3 className="nav-section-title">CUSTOMER SERVICE</h3>
                   <ul>
@@ -181,12 +119,8 @@ const Footer = (props) =>{
                     <li> <a href="#">SITE MAP</a></li>
                   </ul>
                 </div>
-
-                <!--=======  End of single navigation section  =======-->
               </div>
               <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <!--=======  single navigation section  =======-->
-
                 <div className="single-navigation-section">
                   <h3 className="nav-section-title">Extras</h3>
                   <ul>
@@ -196,24 +130,14 @@ const Footer = (props) =>{
                     <li> <a href="#">SPECIALS</a></li>
                   </ul>
                 </div>
-
-                <!--=======  End of single navigation section  =======-->
               </div>
             </div>
           </div>
         </div>
-
-        <!--=======  End of footer navigation  =======-->
-
-
-        <!--=======  copyright section  =======-->
-
         <div className="copyright-section pt-35 pb-35">
           <div className="container">
             <div className="row align-items-md-center align-items-sm-center">
               <div className="col-lg-4 col-md-6 col-sm-12 col-xs-12 text-center text-md-left">
-                <!--=======  copyright text	  =======-->
-
                 <div className="copyright-segment">
                   <p>
                     <a href="#">Privacy Policy</a>
@@ -222,25 +146,15 @@ const Footer = (props) =>{
                   </p>
                   <p className="copyright-text">&copy; 2018 <a href="/">Greenfarm</a>. All Rights Reserved</p>
                 </div>
-
-                <!--=======  End of copyright text	  =======-->
-
               </div>
               <div className="col-lg-8 col-md-6 col-sm-12 col-xs-12">
-                <!--=======  payment info  =======-->
-
                 <div className="payment-info text-center text-md-right">
-                  <p>Allow payment base on <img src="assets/images/payment-icon.png" className="img-fluid" alt=""></p>
+                  <p>Allow payment base on <img src="assets/images/payment-icon.png" className="img-fluid" alt="" /></p>
                 </div>
-
-                <!--=======  End of payment info  =======-->
-
               </div>
             </div>
           </div>
         </div>
-
-        <!--=======  End of copyright section  =======-->
       </footer>
     )
 };

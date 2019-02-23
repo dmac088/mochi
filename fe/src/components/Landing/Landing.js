@@ -6,7 +6,7 @@ import BestSeller from './BestSeller';
 import BlogPosts from './BlogPosts';
 import BrandSlider from './BrandSlider';
 import CategoryPreview from './CategoryPreview';
-import Footer from './Footer';
+import Footer from '../Footer/Footer';
 import ProductHighlights from './ProductHighlights';
 import ProductQuickView from './ProductQuickView';
 import { withRouter } from 'react-router-dom';
