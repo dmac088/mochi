@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Slider from "react-slick";
 const $ = window.$;
 
 class TabSliderContiner extends Component {
