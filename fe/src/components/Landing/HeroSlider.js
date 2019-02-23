@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import CategoryMenuContainer from './CategoryNavigation/CategoryMenuContainer';
+import CategoryMenuContainer from './CategoryMenuContainer';
 import { connect } from 'react-redux';
 const $ = window.$;
 
