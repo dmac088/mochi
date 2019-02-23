@@ -65,6 +65,12 @@ class Header extends Component {
     this.props.history.push('/' + locale + '/' + currency + '/Wishlist');
   }
 
+  contact = (e) => {
+    e.preventDefault();
+    const { locale, currency } = this.props.match.params;
+    this.props.history.push('/' + locale + '/' + currency + '/Contact');
+  }
+
   render() {
     const { locale, currency } = this.props.match.params;
     return(
@@ -193,7 +199,7 @@ class Header extends Component {
                           <li><a href="#">Column Three</a>
                             <ul>
                               <li><a href="compare.html">Compare</a></li>
-                              <li><a href="contact.html">Contact</a></li>
+                              <li><a onClick={this.contact} href="#">Contact</a></li>
                             </ul>
                           </li>
                         </ul>
