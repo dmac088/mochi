@@ -20,6 +20,7 @@ import Checkout from './components/Checkout/Checkout';
 import Cart from './components/Cart/Cart';
 import Account from './components/Account/Account';
 import Wishlist from './components/Wishlist/Wishlist';
+import Contact from './components/Contact/Contact';
 import Login from './components/Login';
 import qs from 'query-string';
 import _ from 'lodash';
@@ -249,6 +250,15 @@ class App extends Component {
           );
   }
 
+  renderContact = (routeProps) => {
+    return (
+              <Contact
+                {...routeProps}
+              />
+          );
+  }
+
+
   render() {
     //console.log("render App");
     return (
@@ -314,6 +324,17 @@ class App extends Component {
                 <React.Fragment>
                   {this.renderHeader(props)}
                   {this.renderWishlist(props)}
+                </React.Fragment>
+              }
+            />
+
+            <Route
+              path={"/:locale/:currency/Contact"}
+              exact={true}
+              render={(props) =>
+                <React.Fragment>
+                  {this.renderHeader(props)}
+                  {this.renderContact(props)}
                 </React.Fragment>
               }
             />
