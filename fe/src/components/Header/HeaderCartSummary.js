@@ -34,10 +34,16 @@ class HeaderCartSummary extends Component {
     }, 500);
   }
 
+  viewCart = (e) => {
+    e.preventDefault();
+    const { locale, currency } = this.props.match.params;
+    this.props.history.push('/' + locale + '/' + currency + '/Cart');
+  }
+
   render() {
     return(
       <div onMouseEnter={this.setinContainer} onMouseLeave={this.setNotinContainer} className="shopping-cart" id="shopping-cart">
-          <a href="cart.html">
+          <a onClick={this.viewCart} href="#">
             <div className="cart-icon d-inline-block">
               <span className="icon_bag_alt" />
             </div>
@@ -51,6 +57,7 @@ class HeaderCartSummary extends Component {
          </a>
         <ReactTransitionGroup>
           { this.state.visible ? <Accordion
+                                    match={this.props.match}
                                     history={this.props.history}
                                     location={this.props.location}
                                 /> : null }
@@ -78,14 +85,14 @@ class HeaderCartSummary extends Component {
 
     checkout = (e) => {
       e.preventDefault();
-      const url = this.props.location.pathname;
-      this.props.history.push(url + '/Checkout');
+      const { locale, currency } = this.props.match.params;
+      this.props.history.push('/' + locale + '/' + currency + '/Checkout');
     }
 
     viewCart = (e) => {
       e.preventDefault();
-      const url = this.props.location.pathname;
-      this.props.history.push(url + '/Checkout');
+      const { locale, currency } = this.props.match.params;
+      this.props.history.push('/' + locale + '/' + currency + '/Cart');
     }
 
   	render() {
@@ -118,8 +125,8 @@ class HeaderCartSummary extends Component {
             <p className="total">Subtotal <span>$22</span></p>
           </div>
           <div className="floating-cart-btn text-center">
-            <a onClick={this.checkout}href="#">Checkout</a>
-            <a onClick={this.viewCart}href="#">View Cart</a>
+            <a onClick={this.checkout} href="#">Checkout</a>
+            <a onClick={this.viewCart} href="#">View Cart</a>
           </div>
         </div>
       </div>
