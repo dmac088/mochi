@@ -49,32 +49,30 @@ class Header extends Component {
 
   checkout = (e) => {
     e.preventDefault();
-    const url = this.props.location.pathname;
-    this.props.history.push(url + '/Checkout');
+    const { locale, currency } = this.props.match.params;
+    this.props.history.push('/' + locale + '/' + currency + '/Checkout');
   }
 
   account = (e) => {
     e.preventDefault();
-    const url = this.props.location.pathname;
-    this.props.history.push(url + '/Account');
+    const { locale, currency } = this.props.match.params;
+    this.props.history.push('/' + locale + '/' + currency + '/Account');
   }
 
   wishlist = (e) => {
     e.preventDefault();
-    const url = this.props.location.pathname;
-    this.props.history.push(url + '/Wishlist');
+    const { locale, currency } = this.props.match.params;
+    this.props.history.push('/' + locale + '/' + currency + '/Wishlist');
   }
 
   render() {
     const { locale, currency } = this.props.match.params;
     return(
       <header>
-        {/*=======  header top  =======*/}
         <div className="header-top pt-10 pb-10 pt-lg-10 pb-lg-10 pt-md-10 pb-md-10">
           <div className="container">
             <div className="row">
               <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-center text-sm-left">
-                {/* currncy language dropdown */}
                 <div className="lang-currency-dropdown">
                   <ul>
                     <li> <a onClick={(e) => e.preventDefault()} href="#">Language <i className="fa fa-chevron-down" /></a>
@@ -85,10 +83,8 @@ class Header extends Component {
                     </li>
                   </ul>
                 </div>
-                {/* end of currncy language dropdown */}
               </div>
               <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  text-center text-sm-right">
-                {/* header top menu */}
                 <div className="header-top-menu">
                   <ul>
                     <li><a onClick={this.account} href="#">My account</a></li>
@@ -96,13 +92,10 @@ class Header extends Component {
                     <li><a onClick={this.checkout} href="#">Checkout</a></li>
                   </ul>
                 </div>
-                {/* end of header top menu */}
               </div>
             </div>
           </div>
         </div>
-        {/*=======  End of header top  =======*/}
-        {/*=======  header bottom  =======*/}
         <div className={
                           "header-bottom header-bottom-one header-sticky "
                           + ((this.state.theposition >= 300) ? "is-sticky" : "")
@@ -110,20 +103,17 @@ class Header extends Component {
           <div className="container">
             <div className="row">
               <div className="col-md-3 col-sm-12 col-xs-12 text-lg-left text-md-center text-sm-center">
-                {/* logo */}
                 <div className="logo mt-15 mb-15">
                   <Link to={'/'+ locale + '/'+ currency} >
                     <img src="assets/images/logo.png" className="img-fluid" alt="" />
                   </Link>
                 </div>
-                {/* end of logo */}
               </div>
               <div className="col-md-9 col-sm-12 col-xs-12">
                 <div className={
                                 "menubar-top justify-content-between align-items-center flex-sm-wrap flex-md-wrap flex-lg-nowrap mt-sm-15"
                                 + ((this.state.theposition >= 300) ? " d-none" : " d-flex")
                               }>
-                  {/* header phone number */}
                   <div className="header-contact d-flex">
                     <div className="phone-icon">
                       <img src="assets/images/icon-phone.png" className="img-fluid" alt="" />
@@ -132,18 +122,13 @@ class Header extends Component {
                       Phone: <span className="number">1-888-123-456-89</span>
                     </div>
                   </div>
-                  {/* end of header phone number */}
-                  {/* search bar */}
                   <Search/>
-                  {/* end of search bar */}
-                  {/* shopping cart */}
                   <HeaderCartSummary
                     match={this.props.match}
                     location={this.props.location}
                     history={this.props.history}
                   />
                 </div>
-                {/* navigation section */}
                 <div className="main-menu">
                   <nav>
                     <ul>
@@ -232,16 +217,13 @@ class Header extends Component {
                     </ul>
                   </nav>
                 </div>
-                {/* end of navigation section */}
               </div>
               <div className="col-12">
-                {/* Mobile Menu */}
                 <div className="mobile-menu d-block d-lg-none" />
               </div>
             </div>
           </div>
         </div>
-        {/*=======  End of header bottom  =======*/}
       </header>
     );
   }
