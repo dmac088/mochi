@@ -219,7 +219,7 @@ class Header extends Component {
                           <li><a href="blog-post-video-format.html">Blog Post Video Format</a></li>
                         </ul>
                       </li>
-                      <li><a href="contact.html">CONTACT</a></li>
+                      <li><a onClick={this.contact} href="#">CONTACT</a></li>
                     </ul>
                   </nav>
                 </div>
