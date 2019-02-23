@@ -62,7 +62,11 @@ class Header extends Component {
   account = (e) => {
     e.preventDefault();
     const { locale, currency } = this.props.match.params;
-    this.props.history.push('/' + locale + '/' + currency + '/Account');
+    if (this.props.authenticated) {
+      this.props.history.push('/' + locale + '/' + currency + '/Account');
+    } else {
+      this.props.history.push('/' + locale + '/' + currency + '/Login');
+    }
   }
 
   wishlist = (e) => {

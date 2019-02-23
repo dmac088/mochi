@@ -21,7 +21,7 @@ import Cart from './components/Cart/Cart';
 import Account from './components/Account/Account';
 import Wishlist from './components/Wishlist/Wishlist';
 import Contact from './components/Contact/Contact';
-import Login from './components/Login';
+import Login from './components/Login/Login';
 import qs from 'query-string';
 import _ from 'lodash';
 import './../public/assets/scss/main.scss';
@@ -335,6 +335,17 @@ class App extends Component {
                 <React.Fragment>
                   {this.renderHeader(props)}
                   {this.renderContact(props)}
+                </React.Fragment>
+              }
+            />
+
+            <Route
+              path={"/:locale/:currency/Login"}
+              exact={true}
+              render={(props) =>
+                <React.Fragment>
+                  {this.renderHeader(props)}
+                  {this.renderLogin(props)}
                 </React.Fragment>
               }
             />
