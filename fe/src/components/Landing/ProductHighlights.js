@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-
+import TabSliderContiner from './TabSliderContiner';
 
 class ProductHighlights extends Component {
-
-
   render() {
     return (
       <div className="slider tab-slider mb-35">
