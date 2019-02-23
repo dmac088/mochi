@@ -5,6 +5,10 @@ class Login extends Component {
 
   render() {
     return(
+      <React.Fragment>
+      <BreadCrumb
+        match={this.props.match}
+        page={"Login"}/>
       <div className="page-content mb-50">
         <div className="container">
           <div className="row">
@@ -82,6 +86,7 @@ class Login extends Component {
           </div>
         </div>
       </div>
+      </React.Fragment>
     )
   }
 }
