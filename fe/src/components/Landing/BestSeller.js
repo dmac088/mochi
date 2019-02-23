@@ -20,8 +20,8 @@ initBestSeller = () => {
     dots: false,
     infinite: false,
     slidesToShow: 3,
-    prevArrow: '<button type="button" className="slick-prev"><i className="fa fa-caret-left"></i></button>',
-    nextArrow: '<button type="button" className="slick-next"><i className="fa fa-caret-right"></i></button>',
+    prevArrow: '<button type="button" class="slick-prev"><i class="fa fa-caret-left"></i></button>',
+    nextArrow: '<button type="button" class="slick-next"><i class="fa fa-caret-right"></i></button>',
     responsive: [{
       breakpoint: 1499,
       settings: {
@@ -69,18 +69,14 @@ render() {
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
-            {/*=======  category slider section title  =======*/}
             <div className="section-title">
               <h3>best seller</h3>
             </div>
-            {/*=======  End of category slider section title  =======*/}
           </div>
         </div>
         <div className="row">
           <div className="col-lg-12">
-            {/*=======  best seller slider container  =======*/}
             <div className="best-seller-slider-container pt-15 pb-15">
-              {/*=======  single best seller product  =======*/}
               <div className="col">
                 <div className="single-best-seller-item">
                   <div className="best-seller-sub-product">
@@ -133,8 +129,6 @@ render() {
                   </div>
                 </div>
               </div>
-              {/*=======  End of single best seller product  =======*/}
-              {/*=======  single best seller product  =======*/}
               <div className="col">
                 <div className="single-best-seller-item">
                   <div className="best-seller-sub-product">
@@ -187,8 +181,6 @@ render() {
                   </div>
                 </div>
               </div>
-              {/*=======  End of single best seller product  =======*/}
-              {/*=======  single best seller product  =======*/}
               <div className="col">
                 <div className="single-best-seller-item">
                   <div className="best-seller-sub-product">
@@ -241,8 +233,6 @@ render() {
                   </div>
                 </div>
               </div>
-              {/*=======  End of single best seller product  =======*/}
-              {/*=======  single best seller product  =======*/}
               <div className="col">
                 <div className="single-best-seller-item">
                   <div className="best-seller-sub-product">
@@ -295,8 +285,6 @@ render() {
                   </div>
                 </div>
               </div>
-              {/*=======  End of single best seller product  =======*/}
-              {/*=======  single best seller product  =======*/}
               <div className="col">
                 <div className="single-best-seller-item">
                   <div className="best-seller-sub-product">
@@ -349,8 +337,6 @@ render() {
                   </div>
                 </div>
               </div>
-              {/*=======  End of single best seller product  =======*/}
-              {/*=======  single best seller product  =======*/}
               <div className="col">
                 <div className="single-best-seller-item">
                   <div className="best-seller-sub-product">
@@ -403,9 +389,7 @@ render() {
                   </div>
                 </div>
               </div>
-              {/*=======  End of single best seller product  =======*/}
             </div>
-            {/*=======  End of best seller slider container  =======*/}
           </div>
         </div>
       </div>
