@@ -47,6 +47,11 @@ class Header extends Component {
     });
   }
 
+  checkout = (e) => {
+    const url = this.props.location.pathname;
+    this.props.history.push(url + '/Checkout');
+  }
+
   render() {
     const { locale, currency } = this.props.match.params;
     return(
@@ -75,7 +80,7 @@ class Header extends Component {
                   <ul>
                     <li><a href="my-account.html">My account</a></li>
                     <li><a href="wishlist.html">Wishlist</a></li>
-                    <li><a href="checkout.html">Checkout</a></li>
+                    <li><a onClick={this.checkout} >Checkout</a></li>
                   </ul>
                 </div>
                 {/* end of header top menu */}
