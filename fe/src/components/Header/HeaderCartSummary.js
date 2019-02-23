@@ -50,7 +50,10 @@ class HeaderCartSummary extends Component {
             </div>
          </a>
         <ReactTransitionGroup>
-          { this.state.visible ? <Accordion /> : null }
+          { this.state.visible ? <Accordion
+                                    history={this.props.history}
+                                    location={this.props.location}
+                                /> : null }
         </ReactTransitionGroup>
       </div>
     );
@@ -72,6 +75,18 @@ class HeaderCartSummary extends Component {
   	setContainer = (c) => {
   		this.container = c;
   	}
+
+    checkout = (e) => {
+      e.preventDefault();
+      const url = this.props.location.pathname;
+      this.props.history.push(url + '/Checkout');
+    }
+
+    viewCart = (e) => {
+      e.preventDefault();
+      const url = this.props.location.pathname;
+      this.props.history.push(url + '/Checkout');
+    }
 
   	render() {
   		return (
@@ -103,8 +118,8 @@ class HeaderCartSummary extends Component {
             <p className="total">Subtotal <span>$22</span></p>
           </div>
           <div className="floating-cart-btn text-center">
-            <a href="checkout.html">Checkout</a>
-            <a href="cart.html">View Cart</a>
+            <a onClick={this.checkout}href="#">Checkout</a>
+            <a onClick={this.viewCart}href="#">View Cart</a>
           </div>
         </div>
       </div>

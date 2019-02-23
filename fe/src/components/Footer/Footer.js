@@ -21,7 +21,7 @@ const Footer = (props) =>{
                   <p className="mb-xs-20">Sign up for our newsletter to get up-to-date from us</p>
                   <div className="subscription-form">
                     <form  id="mc-form" className="mc-form subscribe-form">
-                      <input type="email" id="mc-email" autocomplete="off" placeholder="Your email address" />
+                      <input type="email" id="mc-email" autoComplete="off" placeholder="Your email address" />
                       <button id="mc-submit" type="submit"> subscribe!</button>
                     </form>
                     <div className="mailchimp-alerts">
