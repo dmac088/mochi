@@ -138,68 +138,28 @@ class Header extends Component {
                 <div className="main-menu">
                   <nav>
                     <ul>
-                      <li className="active menu-item-has-children"><a href="#">HOME</a>
-                        <ul className="sub-menu">
-                          <li><a href="index.html">Home Shop 1</a></li>
-                          <li><a href="index-2.html">Home Shop 2</a></li>
-                          <li><a href="index-3.html">Home Shop 3</a></li>
-                          <li><a href="index-4.html">Home Shop 4</a></li>
-                        </ul>
+                      <li className="active"><a href="#">HOME</a>
                       </li>
-                      <li className="menu-item-has-children"><a href="shop-left-sidebar.html">Shop</a>
-                        <ul className="sub-menu">
-                          <li className="menu-item-has-children"><a href="shop-4-column.html">shop grid</a>
-                            <ul className="sub-menu">
-                              <li><a href="shop-3-column.html">shop 3 column</a></li>
-                              <li><a href="shop-4-column.html">shop 4 column</a></li>
-                              <li><a href="shop-left-sidebar.html">shop left sidebar</a></li>
-                              <li><a href="shop-right-sidebar.html">shop right sidebar</a></li>
-                            </ul>
-                          </li>
-                          <li className="menu-item-has-children"><a href="shop-list.html">shop List</a>
-                            <ul className="sub-menu">
-                              <li><a href="shop-list.html">shop List</a></li>
-                              <li><a href="shop-list-left-sidebar.html">shop List Left Sidebar</a></li>
-                              <li><a href="shop-list-right-sidebar.html">shop List Right Sidebar</a></li>
-                            </ul>
-                          </li>
-                          <li className="menu-item-has-children"><a href="single-product.html">Single Product</a>
-                            <ul className="sub-menu">
-                              <li><a href="single-product.html">Single Product</a></li>
-                              <li><a href="single-product-letiable.html">Single Product letiable</a></li>
-                              <li><a href="single-product-affiliate.html">Single Product affiliate</a></li>
-                              <li><a href="single-product-group.html">Single Product group</a></li>
-                              <li><a href="single-product-tabstyle-2.html">Tab Style 2</a></li>
-                              <li><a href="single-product-tabstyle-3.html">Tab Style 3</a></li>
-                              <li><a href="single-product-gallery-left.html">Gallery Left</a></li>
-                              <li><a href="single-product-gallery-right.html">Gallery Right</a></li>
-                              <li><a href="single-product-sticky-left.html">Sticky Left</a></li>
-                              <li><a href="single-product-sticky-right.html">Sticky Right</a></li>
-                              <li><a href="single-product-slider-box.html">Slider Box</a></li>
-                            </ul>
-                          </li>
-                        </ul>
-                      </li>
-                      <li className="menu-item-has-children"><a href="#">PAGES</a>
+                      <li className="menu-item-has-children"><a href="#">Brands</a>
                         <ul className="mega-menu three-column">
-                          <li><a href="#">Column One</a>
+                          <li>
                             <ul>
-                              <li><a href="cart.html">Cart</a></li>
-                              <li><a href="checkout.html">Checkout</a></li>
-                              <li><a href="wishlist.html">Wishlist</a></li>
+                              <li><a href="#">Comvia</a></li>
+                              <li><a href="#">Airborne</a></li>
+                              <li><a href="#">Happy Bee</a></li>
                             </ul>
                           </li>
-                          <li><a href="#">Column Two</a>
+                          <li>
                             <ul>
-                              <li><a href="my-account.html">My Account</a></li>
-                              <li><a href="login-register.html">Login Register</a></li>
-                              <li><a href="faq.html">FAQ</a></li>
+                              <li><a href="#">Antipodes</a></li>
+                              <li><a href="#">Wild Ferns</a></li>
+                              <li><a href="#">Trilogy</a></li>
                             </ul>
                           </li>
-                          <li><a href="#">Column Three</a>
+                          <li>
                             <ul>
-                              <li><a href="compare.html">Compare</a></li>
-                              <li><a onClick={this.contact} href="#">Contact</a></li>
+                              <li><a href="#">Anchor</a></li>
+                              <li><a onClick={this.contact} href="#">Mainland</a></li>
                             </ul>
                           </li>
                         </ul>
