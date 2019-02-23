@@ -30,7 +30,7 @@ class Login extends Component {
 
                       <div className="check-box d-inline-block ml-0 ml-md-2 mt-10">
                         <input type="checkbox" id="remember_me" />
-                        <label for="remember_me">Remember me</label>
+                        <label htmlFor="remember_me">Remember me</label>
                       </div>
 
                     </div>
