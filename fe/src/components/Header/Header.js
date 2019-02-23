@@ -16,7 +16,7 @@ class Header extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { theposition: 0};
+    this.state = { theposition: 0 };
   }
 
   componentDidMount() {
