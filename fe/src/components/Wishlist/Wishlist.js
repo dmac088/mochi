@@ -71,3 +71,5 @@ class Wishlist extends Component {
       )
     }
 }
+
+export default Wishlist;
