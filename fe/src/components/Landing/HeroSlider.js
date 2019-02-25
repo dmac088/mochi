@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import CategoryMenuContainer from './CategoryMenuContainer';
 import Slider from "react-slick";
-import { SlickArrowLeft, SlickArrowRight } from '../../../services/helpers/ScreenHelper';
+import { SlickArrowLeft, SlickArrowRight } from '../../services/helpers/ScreenHelper';
 import { connect } from 'react-redux';
 const $ = window.$;
 
