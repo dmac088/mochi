@@ -23,8 +23,8 @@ class OnSale extends Component {
     };
     return(
         <div className="tab-slider-container">
-          <button onClick={this.previous} type="button" class="slick-arrow slick-prev"><i class="fa fa-caret-left"></i></button>
-          <button onClick={this.next} type="button" class="slick-arrow slick-next"><i class="fa fa-caret-right"></i></button>
+          <button onClick={this.previous} type="button" className="slick-arrow slick-prev"><i className="fa fa-caret-left"></i></button>
+          <button onClick={this.next} type="button" className="slick-arrow slick-next"><i className="fa fa-caret-right"></i></button>
           <Slider ref={c => (this.slider = c)} {...settings}>
             <div className="single-tab-slider-item">
               <div className="gf-product tab-slider-sub-product">
