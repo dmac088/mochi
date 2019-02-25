@@ -1,3 +1,4 @@
+import React from 'react';
 import ReactDOM from 'react-dom';
 import Velocity from 'velocity-animate';
 import qs from 'query-string';
@@ -20,3 +21,33 @@ export const updateParams = (search, params) => {
   let mergedParams = Object.assign(urlParams, params);
   return qs.stringify(mergedParams);
 }
+
+export const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
+      <button
+        {...props}
+        className={
+          "slick-prev slick-arrow" +
+          (currentSlide === 0 ? " slick-disabled" : "")
+        }
+        aria-label="Previous"
+        aria-disabled={currentSlide === 0 ? true : false}
+        type="button"
+      >
+        <i className="fa fa-caret-left"></i>
+      </button>
+    );
+
+export const SlickArrowRight = ({ currentSlide, slideCount, ...props }) => (
+      <button
+        {...props}
+        className={
+          "slick-next slick-arrow" +
+          (currentSlide === slideCount - 1 ? " slick-disabled" : "")
+        }
+        aria-label="Next"
+        aria-disabled={currentSlide === slideCount - 1 ? true : false}
+        type="button"
+      >
+        <i className="fa fa-caret-right"></i>
+      </button>
+    );
