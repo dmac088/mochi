@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Slider from "react-slick";
-import { SlickArrowLeft, SlickArrowRight } from '../../../services/helpers/ScreenHelper';
+import { SlickArrowLeft, SlickArrowRight } from '../../../services/helpers/Helper';
 const $ = window.$;
 
 class TabSliderContiner extends Component {
