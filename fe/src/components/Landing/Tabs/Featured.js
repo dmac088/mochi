@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Slider from "react-slick";
 const $ = window.$;
 
-class TabSliderContiner extends Component {
+class Featured extends Component {
 
 
   next = () => {
@@ -287,4 +287,4 @@ class TabSliderContiner extends Component {
   }
 }
 
-export default TabSliderContiner;
+export default Featured;
