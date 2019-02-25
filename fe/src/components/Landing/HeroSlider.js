@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import CategoryMenuContainer from './CategoryMenuContainer';
+import Slider from "react-slick";
+import { SlickArrowLeft, SlickArrowRight } from '../../../services/helpers/ScreenHelper';
 import { connect } from 'react-redux';
 const $ = window.$;
 
@@ -68,18 +70,14 @@ class HeroSlider extends Component {
         <div className="container">
           <div className="row">
             <div className="col-lg-3 col-md-12">
-              {/*=======  slider left category  =======*/}
               <CategoryMenuContainer
                 match={this.props.match}
                 categoryList={this.props.categoryList}
               />
             </div>
             <div className="col-lg-6 col-md-12">
-              {/*=======  slider container  =======*/}
               <div className="slider-container">
-                {/*=======  Slider area  =======*/}
                 <div className="hero-slider-three">
-                  {/*=======  hero slider item  =======*/}
                   <div className="hero-slider-item slider-bg-5">
                     <div className="slider-content">
                       <h1>Organic<span>vegetables</span></h1>
@@ -90,8 +88,6 @@ class HeroSlider extends Component {
                       <a href="shop-left-sidebar.html" className="slider-two-btn mt-20">start at $9</a>
                     </div>
                   </div>
-                  {/*=======  End of hero slider item  =======*/}
-                  {/*=======  Hero slider item  =======*/}
                   <div className="hero-slider-item slider-bg-6">
                     <div className="slider-content">
                       <h1>Organic<span>vegetables</span></h1>
@@ -102,17 +98,12 @@ class HeroSlider extends Component {
                       <a href="shop-left-sidebar.html" className="slider-two-btn mt-20">start at $9</a>
                     </div>
                   </div>
-                  {/*=======  End of Hero slider item  =======*/}
                 </div>
-                {/*=======  End of Slider area  =======*/}
               </div>
-              {/*=======  End of slider container  =======*/}
             </div>
             <div className="col-lg-3 col-md-12">
-              {/*=======  slider side banner container  =======*/}
               <div className="slider-side-banner-container">
                 <div className="row">
-                  {/*=======  single banner  =======*/}
                   <div className="col-lg-12 col-sm-6">
                     <div className="slider-side-banner mb-20 mb-sm-0 mb-xs-0">
                       <a href="shop-left-sidebar.html">
@@ -120,8 +111,6 @@ class HeroSlider extends Component {
                       </a>
                     </div>
                   </div>
-                  {/*=======  End of single banner  =======*/}
-                  {/*=======  single banner  =======*/}
                   <div className="col-lg-12 col-sm-6">
                     <div className="slider-side-banner mb-0 mb-sm-0 mb-xs-0">
                       <a href="shop-left-sidebar.html">
@@ -129,10 +118,8 @@ class HeroSlider extends Component {
                       </a>
                     </div>
                   </div>
-                  {/*=======  End of single banner  =======*/}
                 </div>
               </div>
-              {/*=======  End of slider side banner container  =======*/}
             </div>
           </div>
         </div>
