@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Slider from "react-slick";
+import { SlickArrowLeft, SlickArrowRight } from '../../../services/helpers/ScreenHelper';
 const $ = window.$;
 
 class Featured extends Component {
@@ -21,8 +22,8 @@ class Featured extends Component {
       dots: false,
       infinite: true,
       slidesToShow: 4,
-      prevArrow: <button type="button" className="slick-arrow slick-prev"><i className="fa fa-caret-left"></i></button>,
-      nextArrow: <button type="button" className="slick-arrow slick-next"><i className="fa fa-caret-right"></i></button>
+      prevArrow: <SlickArrowLeft />,
+      nextArrow: <SlickArrowRight />
     };
     return(
         <div className="tab-slider-container">
