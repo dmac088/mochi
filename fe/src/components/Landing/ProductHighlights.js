@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Featured from './Tabs/Featured';
 import NewArrival from './Tabs/NewArrival';
-import OnSale from './Tabs/NewArrival';
+import OnSale from './Tabs/OnSale';
 
 class ProductHighlights extends Component {
   render() {
