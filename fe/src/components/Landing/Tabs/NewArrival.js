@@ -5,7 +5,6 @@ const $ = window.$;
 
 class TabSliderContiner extends Component {
 
-
   next = () => {
     this.slider.slickNext();
   }

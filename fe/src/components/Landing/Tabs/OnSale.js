@@ -26,10 +26,7 @@ class OnSale extends Component {
           <button onClick={this.previous} type="button" class="slick-arrow slick-prev"><i class="fa fa-caret-left"></i></button>
           <button onClick={this.next} type="button" class="slick-arrow slick-next"><i class="fa fa-caret-right"></i></button>
           <Slider ref={c => (this.slider = c)} {...settings}>
-          <div className="tab-slider-container">
-
             <div className="single-tab-slider-item">
-
               <div className="gf-product tab-slider-sub-product">
                 <div className="image">
                   <a href="single-product.html">
@@ -284,7 +281,7 @@ class OnSale extends Component {
               </div>
             </div>
           </Slider>
-        </div>
+      </div>
     )
   }
 }
