@@ -65,7 +65,6 @@ initBannerSlider = () => {
 render() {
   return (
     <div className="banner-slider-container">
-      {/*=======  single banner slider product  =======*/}
       <div className="gf-product banner-slider-product">
         <div className="image">
           <a href="single-product.html">
@@ -88,8 +87,6 @@ render() {
           </div>
         </div>
       </div>
-      {/*=======  End of single banner slider product =======*/}
-      {/*=======  single banner slider product  =======*/}
       <div className="gf-product banner-slider-product">
         <div className="image">
           <a href="single-product.html">
@@ -112,8 +109,6 @@ render() {
           </div>
         </div>
       </div>
-      {/*=======  End of single banner slider product =======*/}
-      {/*=======  single banner slider product  =======*/}
       <div className="gf-product  banner-slider-product">
         <div className="image">
           <a href="single-product.html">
@@ -136,8 +131,6 @@ render() {
           </div>
         </div>
       </div>
-      {/*=======  End of single banner slider product =======*/}
-      {/*=======  single banner slider product  =======*/}
       <div className="gf-product  banner-slider-product">
         <div className="image">
           <a href="single-product.html">
@@ -160,8 +153,6 @@ render() {
           </div>
         </div>
       </div>
-      {/*=======  End of single banner slider product =======*/}
-      {/*=======  single banner slider product  =======*/}
       <div className="gf-product  banner-slider-product">
         <div className="image">
           <a href="single-product.html">
@@ -184,7 +175,6 @@ render() {
           </div>
         </div>
       </div>
-      {/*=======  End of single banner slider product =======*/}
     </div>
   )
 }
