@@ -23,43 +23,43 @@ class Featured extends Component {
       infinite: true,
       slidesToShow: 4,
       prevArrow: <SlickArrowLeft />,
-    nextArrow: <SlickArrowRight />,
-    responsive: [{
-      breakpoint: 1499,
-      settings: {
-        slidesToShow: 4,
+      nextArrow: <SlickArrowRight />,
+      responsive: [{
+        breakpoint: 1499,
+        settings: {
+          slidesToShow: 4,
+        }
+      },
+      {
+        breakpoint: 1199,
+        settings: {
+          slidesToShow: 4,
+        }
+      },
+      {
+        breakpoint: 991,
+        settings: {
+          slidesToShow: 2,
+        }
+      },
+      {
+        breakpoint: 767,
+        settings: {
+          slidesToShow: 2,
+        }
+      },
+      {
+        breakpoint: 575,
+        settings: {
+          slidesToShow: 2,
+        }
+      },
+      {
+        breakpoint: 479,
+        settings: {
+          slidesToShow: 1,
+        }
       }
-    },
-    {
-      breakpoint: 1199,
-      settings: {
-        slidesToShow: 4,
-      }
-    },
-    {
-      breakpoint: 991,
-      settings: {
-        slidesToShow: 2,
-      }
-    },
-    {
-      breakpoint: 767,
-      settings: {
-        slidesToShow: 2,
-      }
-    },
-    {
-      breakpoint: 575,
-      settings: {
-        slidesToShow: 2,
-      }
-    },
-    {
-      breakpoint: 479,
-      settings: {
-        slidesToShow: 1,
-      }
-    }
     ]};
     return(
         <div className="tab-slider-container">
