@@ -7,6 +7,37 @@ const $ = window.$;
 
 class HeroSlider extends Component {
 
+  componentDidMount() {
+    // built-in feature, for more info check the [doc](http://kenwheeler.github.io/slick/)
+
+    let element = document.querySelector('.slick-slider');
+    console.log(element);
+
+    element.addEventListener('afterChange', function(event, slick, direction) {
+      console.log("slide");
+        //reinitSlick();
+    });
+    //
+    // $('.slick-prev, .slick-next').on('click', function(){
+    //     reinitSlick();
+    // });
+    //
+    // var reinitSlick = function() {
+    //     $slick.slick('slickSetOption', {
+    //       'autoplay': false
+    //     }, false);
+    // }
+
+
+    // var element = document.querySelector('.slick-slide');
+    // element.on('afterChange', function(event, slick, currentSlide){
+    //   console.log(currentSlide);
+    // });
+    //element.classList.add("hero-slider-item");
+    //element.classList.add("slider-bg-5");
+  }
+
+
   render() {
     const hs1_settings = {
   		arrows: true,
@@ -43,7 +74,8 @@ class HeroSlider extends Component {
       pauseOnHover: false,
       fade: true,
       infinite: true,
-      slidesToShow: 1
+      slidesToShow: 1,
+      class: "hero-slider-item"
     }
 
 
@@ -61,7 +93,7 @@ class HeroSlider extends Component {
               <div className="slider-container">
                 <div className="hero-slider-three">
                   <Slider {...hs3_settings}>
-                    <div className="hero-slider-item slider-bg-5">
+                    <div className="slider-bg-5" >
                       <div className="slider-content">
                         <h1>Organic<span>vegetables</span></h1>
                         <h1 className="change-text">Up to <span>50% off</span></h1>
@@ -71,7 +103,7 @@ class HeroSlider extends Component {
                         <a href="shop-left-sidebar.html" className="slider-two-btn mt-20">start at $9</a>
                       </div>
                     </div>
-                    <div className="hero-slider-item slider-bg-6">
+                    <div className="slider-bg-6">
                       <div className="slider-content">
                         <h1>Organic<span>vegetables</span></h1>
                         <h1 className="change-text">Up to <span>50% off</span></h1>
