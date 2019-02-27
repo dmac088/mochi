@@ -5,64 +5,58 @@ import { HsSlickArrowLeft, HsSlickArrowRight } from '../../services/helpers/Help
 import { connect } from 'react-redux';
 const $ = window.$;
 
+
+
+
 class HeroSlider extends Component {
 
   componentDidMount() {
-    // built-in feature, for more info check the [doc](http://kenwheeler.github.io/slick/)
-
-    // let element = document.querySelector('#zzz');
-    // console.log(element);
-    //
-    // element.addEventListener('beforeChange', function(event, slick, direction) {
-    //   console.log("slide");
-    //     //reinitSlick();
-    // });
-    //
-    // $('.slick-prev, .slick-next').on('click', function(){
-    //     reinitSlick();
-    // });
-    //
-    // var reinitSlick = function() {
-    //     $slick.slick('slickSetOption', {
-    //       'autoplay': false
-    //     }, false);
-    // }
-
-
-    // var element = document.querySelector('.slick-slide');
-    // element.on('afterChange', function(event, slick, currentSlide){
-    //   console.log(currentSlide);
-    // });
-    //element.classList.add("hero-slider-item");
-    //element.classList.add("slider-bg-5");
+    this.styleSlider(0,1);
   }
 
 
+  styleSlider = (current, next) => {
+    console.log("styleSlider");
+    console.log(current);
+    let element = document.querySelector("div.hero-slider-three > div.slick-slider > div.slick-list > div.slick-track > div.slick-slide[data-index='"+current+"']");
+    let newElement = element.cloneNode(true);
+    newElement.classList.add("hero-slider-item", "slider-bg-5");
+    element.parentNode.replaceChild(newElement, element);
+
+    let element2 = document.querySelector("div.hero-slider-three > div.slick-slider > div.slick-list > div.slick-track > div.slick-slide[data-index]:not([data-index='"+current+"'])");
+    console.log(element2);
+    let newElement2 = element2.cloneNode(true);
+    newElement2.classList.remove("hero-slider-item", "slider-bg-5");
+    element2.parentNode.replaceChild(newElement2, element2);
+    // console.log(element);
+  }
+
   render() {
+
     const hs1_settings = {
-  		arrows: true,
-  		autoplay: true,
-  		autoplaySpeed: 8000,
-  		dots: false,
-  		pauseOnFocus: false,
-  		pauseOnHover: false,
-  		fade: true,
-  		infinite: true,
-  		slidesToShow: 1,
+      arrows: true,
+      autoplay: true,
+      autoplaySpeed: 8000,
+      dots: false,
+      pauseOnFocus: false,
+      pauseOnHover: false,
+      fade: true,
+      infinite: true,
+      slidesToShow: 1,
       prevArrow: <HsSlickArrowLeft />,
       nextArrow: <HsSlickArrowRight />,
-  	};
+    };
 
     const hs2_settings = {
       arrows: false,
-  		autoplay: true,
-  		autoplaySpeed: 10000,
-  		dots: true,
-  		pauseOnFocus: false,
-  		pauseOnHover: false,
-  		fade: true,
-  		infinite: true,
-  		slidesToShow: 1
+      autoplay: true,
+      autoplaySpeed: 10000,
+      dots: true,
+      pauseOnFocus: false,
+      pauseOnHover: false,
+      fade: true,
+      infinite: true,
+      slidesToShow: 1
     }
 
     const hs3_settings = {
@@ -75,19 +69,10 @@ class HeroSlider extends Component {
       fade: true,
       infinite: true,
       slidesToShow: 1,
-      class: "hero-slider-item",
-      beforeChange: (current, next) => {
-        // current is always undefined
-        console.log(current, next);
-        let element = document.querySelector('.slick-slide');
-        // element.on('afterChange', function(event, slick, currentSlide){
-        //   console.log(currentSlide);
-        // });
-        //element.classList.add("hero-slider-item");
-        //element.classList.add("slider-bg-5");
+      afterChange: (current, next) => {
+        this.styleSlider(current, next);
       }
     }
-
 
     return(
       <div className="hero-slider-with-category-container mt-35 mb-35">
@@ -103,7 +88,6 @@ class HeroSlider extends Component {
               <div className="slider-container">
                 <div className="hero-slider-three">
                   <Slider {...hs3_settings}>
-                    <div  className="slider-bg-5" >
                       <div className="slider-content">
                         <h1>Organic<span>vegetables</span></h1>
                         <h1 className="change-text">Up to <span>50% off</span></h1>
@@ -112,8 +96,6 @@ class HeroSlider extends Component {
                         <p><img src="assets/images/icon-slider.png" alt="" /> <span>return in 24 hours</span></p>
                         <a href="shop-left-sidebar.html" className="slider-two-btn mt-20">start at $9</a>
                       </div>
-                    </div>
-                    <div className="slider-bg-6">
                       <div className="slider-content">
                         <h1>Organic<span>vegetables</span></h1>
                         <h1 className="change-text">Up to <span>50% off</span></h1>
@@ -122,7 +104,6 @@ class HeroSlider extends Component {
                         <p><img src="assets/images/icon-slider.png" alt="" /> <span>return in 24 hours</span></p>
                         <a href="shop-left-sidebar.html" className="slider-two-btn mt-20">start at $9</a>
                       </div>
-                    </div>
                   </Slider>
                 </div>
               </div>
