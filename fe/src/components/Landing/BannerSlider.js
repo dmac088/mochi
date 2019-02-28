@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Slider from "react-slick";
+import { SlickArrowLeft, SlickArrowRight } from '../../services/helpers/Helper';
 const $ = window.$;
 
 
@@ -13,6 +15,7 @@ initBannerSlider = () => {
   /*--
   Banner slider active
   -----------------------------------*/
+  /*
   let bannerSlider = $('.banner-slider-container');
   bannerSlider.slick({
     arrows: true,
@@ -60,6 +63,7 @@ initBannerSlider = () => {
     }
     ]
   });
+  */
 }
 
 render() {
