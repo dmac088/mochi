@@ -14,7 +14,6 @@ class HeroSlider extends Component {
     this.styleSlider(0);
   }
 
-
   styleSlider = (index) => {
     let element = document.querySelector("div.hero-slider-three > div.slick-slider > div.slick-list > div.slick-track > div.slick-slide[data-index='"+index+"']");
     let newElement = element.cloneNode(true);
@@ -27,7 +26,6 @@ class HeroSlider extends Component {
   }
 
   render() {
-
     const hs1_settings = {
       arrows: true,
       autoplay: true,
