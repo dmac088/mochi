@@ -11,24 +11,23 @@ const $ = window.$;
 class HeroSlider extends Component {
 
   componentDidMount() {
-    this.styleSlider(0,1);
+    this.styleSlider(0);
   }
 
 
   styleSlider = (index) => {
-    console.log("styleSlider");
-    console.log(index);
+    //console.log("styleSlider");
+    //console.log(index);
     let element = document.querySelector("div.hero-slider-three > div.slick-slider > div.slick-list > div.slick-track > div.slick-slide[data-index='"+index+"']");
     let newElement = element.cloneNode(true);
-    element.classList.add("hero-slider-item", "slider-bg-5");
+    newElement.classList.add("hero-slider-item", "slider-bg-5");
     element.parentNode.replaceChild(newElement, element);
-    console.log(element);
+    //console.log(newElement);
 
     let element2 = document.querySelector("div.hero-slider-three > div.slick-slider > div.slick-list > div.slick-track > div.slick-slide[data-index]:not([data-index='"+index+"'])");
     let newElement2 = element2.cloneNode(true);
-    newElement2.classList.remove("hero-slider-item", "slider-bg-5");
     element2.parentNode.replaceChild(newElement2, element2);
-    console.log(element2);
+    //console.log(newElement2);
     // console.log(element);
   }
 
