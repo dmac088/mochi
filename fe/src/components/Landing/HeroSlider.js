@@ -17,7 +17,7 @@ class HeroSlider extends Component {
   styleSlider = (index) => {
     let element = document.querySelector("div.hero-slider-three > div.slick-slider > div.slick-list > div.slick-track > div.slick-slide[data-index='"+index+"']");
     let newElement = element.cloneNode(true);
-    newElement.classList.add("hero-slider-item", "slider-bg-5");
+    newElement.classList.add("hero-slider-item");
     element.parentNode.replaceChild(newElement, element);
 
     let element2 = document.querySelector("div.hero-slider-three > div.slick-slider > div.slick-list > div.slick-track > div.slick-slide[data-index]:not([data-index='"+index+"'])");
