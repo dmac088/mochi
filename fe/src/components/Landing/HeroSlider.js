@@ -16,19 +16,14 @@ class HeroSlider extends Component {
 
 
   styleSlider = (index) => {
-    //console.log("styleSlider");
-    //console.log(index);
     let element = document.querySelector("div.hero-slider-three > div.slick-slider > div.slick-list > div.slick-track > div.slick-slide[data-index='"+index+"']");
     let newElement = element.cloneNode(true);
     newElement.classList.add("hero-slider-item", "slider-bg-5");
     element.parentNode.replaceChild(newElement, element);
-    //console.log(newElement);
 
     let element2 = document.querySelector("div.hero-slider-three > div.slick-slider > div.slick-list > div.slick-track > div.slick-slide[data-index]:not([data-index='"+index+"'])");
     let newElement2 = element2.cloneNode(true);
     element2.parentNode.replaceChild(newElement2, element2);
-    //console.log(newElement2);
-    // console.log(element);
   }
 
   render() {
