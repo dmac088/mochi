@@ -30,14 +30,14 @@ class Header extends Component {
 
   mountMobileMenu = () => {
     let mainMenuNav = $('.main-menu nav');
-    mainMenuNav.meanmenu({
-        meanScreenWidth: '991',
-        meanMenuContainer: '.mobile-menu',
-        meanMenuClose: '<span className="menu-close"></span>',
-        meanMenuOpen: '<span className="menu-bar"></span>',
-        meanRevealPosition: 'right',
-        meanMenuCloseSize: '0',
-    });
+  		mainMenuNav.meanmenu({
+  			meanScreenWidth: '991',
+  			meanMenuContainer: '.mobile-menu',
+  			meanMenuClose: '<span class="menu-close"></span>',
+  			meanMenuOpen: '<span class="menu-bar"></span>',
+  			meanRevealPosition: 'right',
+  			meanMenuCloseSize: '0',
+  		});
   }
 
   listenToScroll = () => {
@@ -150,31 +150,20 @@ class Header extends Component {
                     <ul>
                       <li className="active"><a onClick={this.home} href="#">HOME</a>
                       </li>
-                      <li className="menu-item-has-children"><a href="#">Brands</a>
-                        <ul className="mega-menu three-column">
-                          <li>
-                            <ul>
-                              <li><a href="#">Comvia</a></li>
-                              <li><a href="#">Airborne</a></li>
-                              <li><a href="#">Happy Bee</a></li>
-                            </ul>
-                          </li>
-                          <li>
-                            <ul>
-                              <li><a href="#">Antipodes</a></li>
-                              <li><a href="#">Wild Ferns</a></li>
-                              <li><a href="#">Trilogy</a></li>
-                            </ul>
-                          </li>
-                          <li>
-                            <ul>
-                              <li><a href="#">Anchor</a></li>
-                              <li><a onClick={this.contact} href="#">Mainland</a></li>
-                            </ul>
-                          </li>
+                      <li className="menu-item-has-children">
+                        <a href="#">Brands</a>
+                        <ul className="sub-menu mega-menu three-column">
+                          <li><a href="#">Comvita</a></li>
+                          <li><a href="#">Airborne</a></li>
+                          <li><a href="#">Happy Bee</a></li>
+                          <li><a href="#">Antipodes</a></li>
+                          <li><a href="#">Wild Ferns</a></li>
+                          <li><a href="#">Trilogy</a></li>
+                          <li><a href="#">Anchor</a></li>
                         </ul>
                       </li>
-                      <li className="menu-item-has-children"><a href="#">BLOG</a>
+                      <li className="menu-item-has-children">
+                        <a href="#">BLOG</a>
                         <ul className="sub-menu">
                           <li><a href="blog-3-column.html">Blog 3 column</a></li>
                           <li><a href="blog-grid-left-sidebar.html">Blog Grid Left Sidebar</a></li>
