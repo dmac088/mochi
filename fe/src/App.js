@@ -21,7 +21,7 @@ import Cart from './components/Cart/Cart';
 import Account from './components/Account/Account';
 import Wishlist from './components/Wishlist/Wishlist';
 import Contact from './components/Contact/Contact';
-import Product from './components/Products/Product';
+import Product from './components/Products/Product/Product';
 import Login from './components/Login/Login';
 import qs from 'query-string';
 import _ from 'lodash';
