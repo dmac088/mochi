@@ -21,6 +21,7 @@ import Cart from './components/Cart/Cart';
 import Account from './components/Account/Account';
 import Wishlist from './components/Wishlist/Wishlist';
 import Contact from './components/Contact/Contact';
+import Product from './components/Products/Product';
 import Login from './components/Login/Login';
 import qs from 'query-string';
 import _ from 'lodash';
@@ -100,9 +101,9 @@ class App extends Component {
   }
 
   componentWillMount(prevProps, prevState, snapshot) {
-    if(this.props.match.params.locale === undefined) {
-      this.props.history.push('/' + this.state.lang  + "/" + this.state.currency);
-    }
+    // if(this.props.match.params.locale === undefined) {
+    //   this.props.history.push('/' + this.state.lang  + "/" + this.state.currency);
+    // }
     this.refreshData(prevState);
   }
 
@@ -258,6 +259,14 @@ class App extends Component {
           );
   }
 
+  renderProduct = (routeProps) => {
+    return (
+              <Product
+                {...routeProps}
+              />
+          );
+  }
+
 
   render() {
     //console.log("render App");
@@ -346,6 +355,17 @@ class App extends Component {
                 <React.Fragment>
                   {this.renderHeader(props)}
                   {this.renderLogin(props)}
+                </React.Fragment>
+              }
+            />
+
+            <Route
+              path={"/:locale/:currency/Product/:productid"}
+              exact={true}
+              render={(props) =>
+                <React.Fragment>
+                  {this.renderHeader(props)}
+                  {this.renderProduct(props)}
                 </React.Fragment>
               }
             />
