@@ -9,10 +9,6 @@
     var sticky = $('.header-sticky');
     var menubarTop = $('.menubar-top');
 
-
-
-
-
 	/*--
 	Hero slider one active
 	-----------------------------------*/
