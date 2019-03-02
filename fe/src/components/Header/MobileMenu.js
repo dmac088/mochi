@@ -66,8 +66,7 @@ class MobileMenu extends Component {
                 <a href="#">HOME</a>
               </li>
               <li className="menu-item-has-children">
-                <a onClick={this.toggleBrandMenu}
-                   href="#">Brands</a>
+                <a href="#">Brands</a>
                 <ul className="sub-menu mega-menu three-column" style={(this.state.revealBrandMenu) ? {display: 'block'} : {display: 'none'}}>
                   <li><a href="#">Comvita</a></li>
                   <li><a href="#">Airborne</a></li>
@@ -85,8 +84,7 @@ class MobileMenu extends Component {
                 </a>
               </li>
               <li className="menu-item-has-children">
-                <a  onClick={this.toggleBlogMenu}
-                    href="#">BLOG</a>
+                <a href="#">BLOG</a>
                 <ul className="sub-menu"
                     style={(this.state.revealBlogMenu) ? {display: 'block'} : {display: 'none'}}>
                   <li><a href="blog-3-column.html">Blog 3 column</a></li>
