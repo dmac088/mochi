@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Greeting from './Greeting';
 import Search from './Search';
 import MainMenu from './MainMenu';
+import MainMenuMobile from './MainMenuMobile';
 import HeaderCartSummary from './HeaderCartSummary';
 import LanguageSelector from './LanguageSelector';
 import CurrencySelector from './CurrencySelector';
@@ -30,15 +31,15 @@ class Header extends Component {
   }
 
   mountMobileMenu = () => {
-    let mainMenuNav = $('.main-menu nav');
-  		mainMenuNav.meanmenu({
-  			meanScreenWidth: '991',
-  			meanMenuContainer: '.mobile-menu',
-  			meanMenuClose: '<span class="menu-close"></span>',
-  			meanMenuOpen: '<span class="menu-bar"></span>',
-  			meanRevealPosition: 'right',
-  			meanMenuCloseSize: '0',
-  		});
+    // let mainMenuNav = $('.main-menu nav');
+  	// 	mainMenuNav.meanmenu({
+  	// 		meanScreenWidth: '991',
+  	// 		meanMenuContainer: '.mobile-menu',
+  	// 		meanMenuClose: '<span class="menu-close"></span>',
+  	// 		meanMenuOpen: '<span class="menu-bar"></span>',
+  	// 		meanRevealPosition: 'right',
+  	// 		meanMenuCloseSize: '0',
+  	// 	});
   }
 
   listenToScroll = () => {
@@ -134,7 +135,7 @@ class Header extends Component {
                     history={this.props.history}
                   />
                 </div>
-                <MainMenu
+                <MainMenuMobile
                   match={this.props.match}
                   location={this.props.location}
                   history={this.props.history}
