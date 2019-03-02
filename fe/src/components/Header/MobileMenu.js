@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 
-class MainMenuMobile extends Component {
+class MobileMenu extends Component {
 
 
   home = (e) => {
@@ -65,4 +65,4 @@ class MainMenuMobile extends Component {
   }
 }
 
-export default MainMenuMobile;
+export default MobileMenu;
