@@ -7,6 +7,7 @@ import MobileMenu from './MobileMenu';
 import HeaderCartSummary from './HeaderCartSummary';
 import LanguageSelector from './LanguageSelector';
 import CurrencySelector from './CurrencySelector';
+import { isMobile } from '../../services/helpers/Helper';
 import { Link } from 'react-router-dom';
 const $ = window.$;
 
@@ -18,28 +19,27 @@ class Header extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { theposition: 0 };
+    this.state = {
+      theposition: 0,
+      renderMobile: false,
+    };
   }
 
   componentDidMount() {
     window.addEventListener('scroll', this.listenToScroll, { passive: true })
-    this.mountMobileMenu();
+    window.addEventListener('resize', this.renderMenu , { passive: true });
+    this.renderMenu();
   }
 
   componentWillUnmount() {
     window.removeEventListener('scroll', this.listenToScroll, { passive: true })
+    window.removeEventListener('resize', this.renderMenu , { passive: true });
   }
 
-  mountMobileMenu = () => {
-    // let mainMenuNav = $('.main-menu nav');
-  	// 	mainMenuNav.meanmenu({
-  	// 		meanScreenWidth: '991',
-  	// 		meanMenuContainer: '.mobile-menu',
-  	// 		meanMenuClose: '<span class="menu-close"></span>',
-  	// 		meanMenuOpen: '<span class="menu-bar"></span>',
-  	// 		meanRevealPosition: 'right',
-  	// 		meanMenuCloseSize: '0',
-  	// 	});
+  renderMenu = () => {
+    this.setState({
+      renderMobile: isMobile(),
+    });
   }
 
   listenToScroll = () => {
@@ -135,11 +135,18 @@ class Header extends Component {
                     history={this.props.history}
                   />
                 </div>
-                <MobileMenu
-                  match={this.props.match}
-                  location={this.props.location}
-                  history={this.props.history}
-                />
+                {(this.state.renderMobile) ?
+                  <MobileMenu
+                    match={this.props.match}
+                    location={this.props.location}
+                    history={this.props.history}
+                  /> :
+                  <Menu
+                    match={this.props.match}
+                    location={this.props.location}
+                    history={this.props.history}
+                  />
+                }
               </div>
               <div className="col-12">
                 <div className="mobile-menu d-block d-lg-none" />
