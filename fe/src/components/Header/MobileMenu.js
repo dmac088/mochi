@@ -3,6 +3,10 @@ import React, { Component } from 'react';
 
 class MobileMenu extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = { revealMenu: false };
+  }
 
   home = (e) => {
     e.preventDefault();
@@ -10,11 +14,17 @@ class MobileMenu extends Component {
     this.props.history.push('/' + locale + '/' + currency);
   }
 
-
   contact = (e) => {
     e.preventDefault();
     const { locale, currency } = this.props.match.params;
     this.props.history.push('/' + locale + '/' + currency + '/Contact');
+  }
+
+  toggleMobileMenu = (e) => {
+    e.preventDefault();
+    this.setState({
+      revealMenu: !this.state.revealMenu,
+    })
   }
 
 
@@ -22,9 +32,18 @@ class MobileMenu extends Component {
     return (
       <div className="mobile-menu d-block d-lg-none mean-container">
         <div className="mean-bar">
-          <a href="#nav" className="meanmenu-reveal" style={{background: '', color: '', right: 0, left: 'auto'}}><span className="menu-bar" /></a>
+          <a  onClick={this.toggleMobileMenu}
+              href="#nav"
+              className={"meanmenu-reveal " + ((this.state.revealMenu) ? "meanclose" : "")}
+              style={{background: '',
+                      color: '',
+                      right: 0,
+                      left: 'auto'}}>
+
+          <span className={(this.state.revealMenu) ? "menu-close" : "menu-bar"} />
+          </a>
           <nav className="mean-nav">
-            <ul style={{display: 'none'}}>
+            <ul style={ (this.state.revealMenu) ? {display: 'block'} : {display: 'none'}}>
               <li className="active"><a href="#">HOME</a></li>
               <li className="menu-item-has-children">
                 <a href="#">Brands</a>
