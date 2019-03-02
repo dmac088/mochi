@@ -2,8 +2,8 @@
 import React, { Component } from 'react';
 import Greeting from './Greeting';
 import Search from './Search';
-import MainMenu from './MainMenu';
-import MainMenuMobile from './MainMenuMobile';
+import Menu from './Menu';
+import MobileMenu from './MobileMenu';
 import HeaderCartSummary from './HeaderCartSummary';
 import LanguageSelector from './LanguageSelector';
 import CurrencySelector from './CurrencySelector';
@@ -135,7 +135,7 @@ class Header extends Component {
                     history={this.props.history}
                   />
                 </div>
-                <MainMenuMobile
+                <MobileMenu
                   match={this.props.match}
                   location={this.props.location}
                   history={this.props.history}
