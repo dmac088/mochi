@@ -60,8 +60,7 @@ render() {
         </div>
         <div className="row">
           <div className="col-lg-12">
-            <div className="blog-slider-container pt-30 pb-30 pr-30 pl-30">
-              <Slider ref={c => (this.slider = c)} {...settings}>
+              <Slider className="blog-slider-container pt-30 pb-30 pr-30 pl-30" ref={c => (this.slider = c)} {...settings}>
                 <div className="col">
                   <div className="single-post-wrapper">
                     <div className="post-thumb">
@@ -127,7 +126,6 @@ render() {
                   </div>
                 </div>
               </Slider>
-            </div>
           </div>
         </div>
       </div>

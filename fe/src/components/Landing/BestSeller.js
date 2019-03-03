@@ -66,8 +66,7 @@ render() {
         </div>
         <div className="row">
           <div className="col-lg-12">
-            <div className="best-seller-slider-container pt-15 pb-15">
-              <Slider ref={c => (this.slider = c)} {...settings}>
+              <Slider className="best-seller-slider-container pt-15 pb-15" ref={c => (this.slider = c)} {...settings}>
                 <div className="col">
                   <div className="single-best-seller-item">
                     <div className="best-seller-sub-product">
@@ -381,7 +380,6 @@ render() {
                   </div>
                 </div>
               </Slider>
-            </div>
           </div>
         </div>
       </div>
