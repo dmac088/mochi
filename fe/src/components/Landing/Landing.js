@@ -11,7 +11,7 @@ import ProductHighlights from './ProductHighlights';
 import ProductQuickView from './ProductQuickView';
 import { withRouter } from 'react-router-dom';
 import ReactTransitionGroup from 'react-addons-transition-group';
-const $ = window.$;
+//const $ = window.$;
 
 
 
@@ -43,11 +43,11 @@ class Landing extends Component {
   }
 
   animateScroll = (e) => {
-    if(!(e === undefined)) {e.preventDefault()}
-    $('.scroll-top').click(() => {
-        $('html,body')
-    			.velocity("scroll", { duration: 1000 });
-    });
+     if(!(e === undefined)) {e.preventDefault()}
+     const body = document.querySelector('html,body');
+     document.querySelector('.scroll-top').onclick = () => {
+       Velocity(body, 'scroll', { duration: 1000 });
+     };
   }
 
 
