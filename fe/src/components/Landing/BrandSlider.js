@@ -61,8 +61,7 @@ class BrandSlider extends Component {
           </div>
           <div className="row">
             <div className="col-lg-12">
-              <div className="brand-logo-wrapper pt-20 pb-20">
-                <Slider ref={c => (this.slider = c)} {...settings}>
+                <Slider className="brand-logo-wrapper pt-20 pb-20" ref={c => (this.slider = c)} {...settings}>
                   <div className="col">
                     <div className="single-brand-logo">
                       <a href="#">
@@ -106,7 +105,6 @@ class BrandSlider extends Component {
                     </div>
                   </div>
                 </Slider>
-              </div>
             </div>
           </div>
         </div>
