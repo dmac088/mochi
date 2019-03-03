@@ -23,10 +23,11 @@ class Landing extends Component {
         theposition: 0,
         showScroller: false
     };
-  }
+  } 
 
   componentDidMount() {
     window.addEventListener('scroll', this.listenToScroll, { passive: true });
+    this.animateScroll();
   }
 
   componentWillUnmount() {
@@ -51,13 +52,6 @@ class Landing extends Component {
 
 
   render() {
-    let scrollTop = ((this.state.theposition >= 400) ? <a onClick={this.animateScroll}
-                                                          href="#"
-                                                          className="scroll-top fadeIn"
-                                                      /> :
-                                                      <a  href="#"
-                                                          className="scroll-top fadeOut"
-                                                      />);
 
     return(
       <div>
@@ -74,10 +68,10 @@ class Landing extends Component {
         <BrandSlider />
         <Footer />
         <ProductQuickView />
-        <ReactTransitionGroup
-          component={React.Fragment}>
-          {scrollTop}
-        </ReactTransitionGroup>
+            <a  onClick={this.animateScroll}
+                href="#"
+                className={"scroll-top " + ((this.state.theposition >= 400) ? "fadeIn" : "fadeOut")}
+            />
       </div>
       );
   }
