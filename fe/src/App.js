@@ -22,7 +22,7 @@ import Account from './components/Account/Account';
 import Wishlist from './components/Wishlist/Wishlist';
 import Contact from './components/Contact/Contact';
 import Product from './components/Products/Product/Product';
-import Login from './components/Login/Login';
+import Auth from './components/Login/Auth';
 import qs from 'query-string';
 import _ from 'lodash';
 import './../public/assets/scss/main.scss';
@@ -235,9 +235,9 @@ class App extends Component {
     )
   }
 
-  renderLogin = (routeProps) => {
+  renderAuth = (routeProps) => {
     return (
-              <Login
+              <Auth
                 {...routeProps}
               />
           );
@@ -349,12 +349,12 @@ class App extends Component {
             />
 
             <Route
-              path={"/:locale/:currency/Login"}
+              path={"/:locale/:currency/Auth"}
               exact={true}
               render={(props) =>
                 <React.Fragment>
                   {this.renderHeader(props)}
-                  {this.renderLogin(props)}
+                  {this.renderAuth(props)}
                 </React.Fragment>
               }
             />
