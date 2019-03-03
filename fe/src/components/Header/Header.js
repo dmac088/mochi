@@ -61,7 +61,7 @@ class Header extends Component {
     if (this.props.authenticated) {
       this.props.history.push('/' + locale + '/' + currency + '/Account');
     } else {
-      this.props.history.push('/' + locale + '/' + currency + '/Login');
+      this.props.history.push('/' + locale + '/' + currency + '/Auth');
     }
   }
 
