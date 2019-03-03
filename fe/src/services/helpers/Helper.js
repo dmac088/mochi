@@ -29,8 +29,8 @@ export const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
           "slick-prev slick-arrow" +
           (currentSlide === 0 ? " slick-disabled" : "")
         }
-        aria-label="Previous"
         aria-disabled={currentSlide === 0 ? true : false}
+        style={{}}
         type="button"
       >
         <i className="fa fa-caret-left"></i>
@@ -44,8 +44,8 @@ export const SlickArrowRight = ({ currentSlide, slideCount, ...props }) => (
           "slick-next slick-arrow" +
           (currentSlide === slideCount - 1 ? " slick-disabled" : "")
         }
-        aria-label="Next"
         aria-disabled={currentSlide === slideCount - 1 ? true : false}
+        style={{'top':'-45px'}}
         type="button"
       >
         <i className="fa fa-caret-right"></i>
