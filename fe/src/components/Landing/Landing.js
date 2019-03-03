@@ -27,7 +27,6 @@ class Landing extends Component {
 
   componentDidMount() {
     window.addEventListener('scroll', this.listenToScroll, { passive: true });
-    this.animateScroll();
   }
 
   componentWillUnmount() {
@@ -45,7 +44,7 @@ class Landing extends Component {
   animateScroll = (e) => {
      if(!(e === undefined)) {e.preventDefault()}
      const body = document.querySelector('html,body');
-     document.querySelector('.scroll-top').onclick = () => {
+     document.querySelector('.scroll-top').onclick = function() {
        Velocity(body, 'scroll', { duration: 1000 });
      };
   }
@@ -75,7 +74,8 @@ class Landing extends Component {
         <BrandSlider />
         <Footer />
         <ProductQuickView />
-        <ReactTransitionGroup>
+        <ReactTransitionGroup
+          component={React.Fragment}>
           {scrollTop}
         </ReactTransitionGroup>
       </div>
