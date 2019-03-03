@@ -45,7 +45,7 @@ export const SlickArrowRight = ({ currentSlide, slideCount, ...props }) => (
           (currentSlide === slideCount - 1 ? " slick-disabled" : "")
         }
         aria-disabled={currentSlide === slideCount - 1 ? true : false}
-        style={{'top':'-45px'}}
+        style={{}}
         type="button"
       >
         <i className="fa fa-caret-right"></i>
