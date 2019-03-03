@@ -15,7 +15,7 @@ render() {
     infinite: true,
     slidesToShow: 3,
     prevArrow: <SlickArrowLeft />,
-    nextArrow: <SlickArrowRight />,
+    nextArrow: <SlickArrowRight style={{'top':'-45px'}}/>,
     responsive: [{
       breakpoint: 1499,
       settings: {
