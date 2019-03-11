@@ -14,7 +14,7 @@ class BannerSliderProduct extends Component {
         <div className="image">
           <a href="single-product.html">
             <span className="onsale">Sale!</span>
-            <img src="assets/images/products/product01.jpg" className="img-fluid" alt="" />
+            <img src={product.productImage} className="img-fluid" alt="" />
           </a>
           <div className="product-hover-icons">
             <a href="#" data-tooltip="Quick view" data-toggle="modal" data-target="#quick-view-modal-container"> <span className="icon_search" /> </a>
