@@ -4,13 +4,14 @@ import BannerSlider from '../Landing/BannerSlider';
 class PreviewCategory extends Component {
 
   render() {
+    const { category } = this.props;
     return (
-        <div className="slider slider-with-banner mb-35">
+        <div key={category.categoryId} className="slider slider-with-banner mb-35">
           <div className="container">
             <div className="row">
               <div className="col-lg-12">
                 <div className="section-title">
-                  <h3>vegetable &amp; fruit</h3>
+                  <h3>{category.categoryDesc}</h3>
                 </div>
               </div>
             </div>

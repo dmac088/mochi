@@ -5,26 +5,42 @@ import * as categoryApi from '../../data/categories/api';
 class PreviewCategoryContainer extends Component {
 
 
-getCategories = (lang = "en-GB", preview = 1) =>
-  categoryApi.findAllPreview(lang, preview)
-  .then((response) => {
-      return response.text();
-  })
-  .then((responseText) => {
-      return JSON.parse(responseText);
-  })
-  .then((responseJSON) => {
-      return responseJSON
-  })
-  .catch(()=>{
-      console.log('getCategories failed!');
+  constructor(props) {
+    super(props);
+      this.state = {
+                     categories: [],
+                   };
+  }
+
+  getCategories = (lang = "en-GB", preview = 1) =>
+    categoryApi.findAllPreview(lang, preview)
+    .then((response) => {
+        return response.text();
+    })
+    .then((responseText) => {
+        return JSON.parse(responseText);
+    })
+    .then((responseJSON) => {
+        this.setState({
+          categories: responseJSON,
+        })
+    })
+    .catch(()=>{
+        console.log('getCategories failed!');
   });
 
+  componentWillMount() {
+    this.getCategories();
+  }
 
   render() {
-    return (
-        <PreviewCategory />
-    )
+    const { categories } = this.state;
+    return categories.map(category => {
+      return (
+          <PreviewCategory
+            category={category}/>
+      )
+    });
   }
 }
 

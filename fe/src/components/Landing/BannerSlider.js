@@ -64,8 +64,7 @@ render() {
     ]
   };
   return (
-    <div className="banner-slider-container">
-      <Slider ref={c => (this.slider = c)} {...settings}>
+      <Slider className="banner-slider-container" ref={c => (this.slider = c)} {...settings}>
         <div className="gf-product banner-slider-product">
           <div className="image">
             <a href="single-product.html">
@@ -177,7 +176,6 @@ render() {
           </div>
         </div>
       </Slider>
-    </div>
   )
 }
 
