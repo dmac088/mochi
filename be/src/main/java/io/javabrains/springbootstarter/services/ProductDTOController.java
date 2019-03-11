@@ -1,4 +1,6 @@
 package io.javabrains.springbootstarter.services;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +27,11 @@ public class ProductDTOController {
     @GetMapping("/Product/{lcl}/cat/{cat}/page/{page}/size/{size}/sortBy/{sortBy}")
     public Page<ProductDTO> getProducts(@PathVariable String lcl,@PathVariable Long cat, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy) {
     	return productService.getAllProductsForCategory(lcl, cat, page, size, sortBy);
+    }
+    
+    @GetMapping("/Product/{lcl}/cat/{cat}/preview")
+    public List<ProductDTO> getProducts(@PathVariable String lcl, @PathVariable Long cat) {
+    	return productService.getPreviewProductsForCategory(lcl, cat);
     }
     
 }

@@ -37,6 +37,9 @@ public class Product {
 	@Column(name="prd_crtd_dt")
 	private Date productCreateDt;
 	
+	@Column(name="prd_prev_flg")
+	private Long previewFlag;
+	
 	@ManyToMany(mappedBy = "products")
 	@IndexedEmbedded
 	@JsonIgnore
@@ -49,7 +52,7 @@ public class Product {
 	public Long getProductId() {
 		return productId;
 	}
-	
+
 	public Collection<ProductCategory> getCategories() {
 		return this.categories;
 	}
@@ -85,6 +88,14 @@ public class Product {
 
 	public void setProductCreateDt(Date productCreateDt) {
 		this.productCreateDt = productCreateDt;
+	}
+	
+	public Long getPreviewFlag() {
+		return previewFlag;
+	}
+
+	public void setPreviewFlag(Long previewFlag) {
+		this.previewFlag = previewFlag;
 	}
 			
 }

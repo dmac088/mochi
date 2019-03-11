@@ -15,7 +15,9 @@ public class ProductDTO {
 	
 	private double productRrp;
 	
-	private String ProductImage;
+	private String productImage;
+	
+	private Long productPreview;
 	
 	private String lclCd;
 	
@@ -61,15 +63,23 @@ public class ProductDTO {
 	}
 
 	public String getProductImage() {
-		return ProductImage;
+		return productImage;
 	}
 
 	public void setProductImage(String productImage) {
-		ProductImage = productImage;
+		this.productImage = productImage;
 	}
 
 	public String getLclCd() {
 		return lclCd;
+	}
+
+	public Long getProductPreview() {
+		return productPreview;
+	}
+
+	public void setProductPreview(Long productPreview) {
+		this.productPreview = productPreview;
 	}
 
 	public void setLclCd(String lclCd) {
@@ -79,8 +89,14 @@ public class ProductDTO {
 	@Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("ProductDto [productId=").append(productId).append(", productUPC=").append(productUPC).append(", productCreateDt=").append(productCreateDt).append(", productDesc=").append(productDesc).append(", productRrp=").append(productRrp)
-                .append(", ProductImage=").append(ProductImage).append(", lclCd=").append(lclCd);
+        builder.append("ProductDto [productId=").append(productId)
+        		.append(", productUPC=").append(productUPC)
+        		.append(", productCreateDt=").append(productCreateDt)
+        		.append(", productDesc=").append(productDesc)
+        		.append(", productRrp=").append(productRrp)
+                .append(", ProductImage=").append(productImage)
+                .append(", PreviewFlag=").append(productPreview)
+                .append(", lclCd=").append(lclCd);
         return builder.toString();
     }
 

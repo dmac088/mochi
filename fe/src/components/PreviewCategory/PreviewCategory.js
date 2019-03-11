@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import BannerSlider from '../Landing/BannerSlider';
+import BannerSlider from '../BannerSlider/BannerSlider';
 
 class PreviewCategory extends Component {
 
@@ -27,7 +27,9 @@ class PreviewCategory extends Component {
                       </div>
                     </div>
                     <div className="col-lg-8 col-md-8 col-sm-12">
-                      <BannerSlider />
+                      <BannerSlider
+                        categoryId={category.categoryId}
+                      />
                       <div className="row no-gutters">
                         <div className="col-lg-6 col-md-6 col-sm-6">
                           <div className="slider-banner">
