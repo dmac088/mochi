@@ -22,8 +22,7 @@ class BannerSliderProduct extends Component {
         </div>
         <div className="product-content">
           <div className="product-categories">
-            <a href="shop-left-sidebar.html">Fast Foods</a>,
-            <a href="shop-left-sidebar.html">Vegetables</a>
+            <a href="shop-left-sidebar.html">{this.props.categoryDesc}</a>
           </div>
           <h3 className="product-title"><a href="single-product.html">{product.productDesc}</a></h3>
           <div className="price-box">

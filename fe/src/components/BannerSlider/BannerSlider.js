@@ -18,7 +18,7 @@ class BannerSlider extends Component {
 
   componentWillMount() {
     console.log("coponentWillMount");
-    this.getProducts("en-GB", this.props.categoryId);
+    this.getProducts("en-GB", this.props.category.categoryId);
   }
 
   getProducts = (lang = "en-GB", categoryId) =>
@@ -48,10 +48,12 @@ class BannerSlider extends Component {
 
   renderProducts = () => {
     const { products } = this.state;
+    const { category } = this.props;
     return products.map(product => {
       return (
           <BannerSliderProduct
             product={product}
+            categoryDesc={category.categoryDesc}
           />
         )
     });
