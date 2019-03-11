@@ -7,7 +7,7 @@ import BlogPosts from './BlogPosts';
 import BrandSlider from './BrandSlider';
 import PreviewCategoryContainer from '../PreviewCategory/PreviewCategoryContainer';
 import Footer from '../Footer/Footer';
-import ProductHighlights from './ProductHighlights';
+import Highlights from '../Highlights/Highlights';
 import ProductQuickView from './ProductQuickView';
 import { withRouter } from 'react-router-dom';
 import ReactTransitionGroup from 'react-addons-transition-group';
@@ -60,7 +60,7 @@ class Landing extends Component {
           categoryList={this.props.categoryList}
         />
         <Policy />
-        <ProductHighlights />
+        <Highlights />
         <Banner />
         <PreviewCategoryContainer />
         <BestSeller />

@@ -17,8 +17,12 @@ class BannerSlider extends Component {
   }
 
   componentWillMount() {
-    console.log("coponentWillMount");
+    console.log("componentWillMount");
     this.getProducts("en-GB", this.props.category.categoryId);
+  }
+
+  componentDidMount() {
+    console.log("componentDidMount");
   }
 
   getProducts = (lang = "en-GB", categoryId) =>
