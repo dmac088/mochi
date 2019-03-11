@@ -28,7 +28,7 @@ class PreviewCategory extends Component {
                     </div>
                     <div className="col-lg-8 col-md-8 col-sm-12">
                       <BannerSlider
-                        categoryId={category.categoryId}
+                        category={category}
                       />
                       <div className="row no-gutters">
                         <div className="col-lg-6 col-md-6 col-sm-6">
