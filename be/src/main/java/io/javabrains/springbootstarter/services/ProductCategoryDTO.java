@@ -14,6 +14,8 @@ public class ProductCategoryDTO {
 	private String categoryDesc;
 
 	private Long categoryLevel;
+	
+	private Long categoryPreview;
 
 	private String lclCd;
 	
@@ -65,6 +67,14 @@ public class ProductCategoryDTO {
 	public void setLclCd(String lclCd) {
 		this.lclCd = lclCd;
 	}
+	
+	public Long getCategoryPreview() {
+		return categoryPreview;
+	}
+
+	public void setCategoryPreview(Long categoryPreview) {
+		this.categoryPreview = categoryPreview;
+	}
 
 	public ProductCategoryDTO getParent() {
 		return parent;
@@ -101,7 +111,12 @@ public class ProductCategoryDTO {
 	@Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("CategoryDto [categoryId=").append(categoryId).append(", categoryCode=").append(categoryCode).append(", categoryDesc=").append(categoryDesc).append(", lclCd=").append(lclCd);
+        builder.append("CategoryDto [categoryId=")
+        .append(categoryId)
+        .append(", categoryCode=").append(categoryCode)
+        .append(", categoryDesc=").append(categoryDesc)
+        .append(", categoryPreview=").append(categoryPreview)
+        .append(", lclCd=").append(lclCd);
         return builder.toString();
     }
 }

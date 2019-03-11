@@ -19,3 +19,11 @@ export const findAllForLevel = (locale, level) => 	fetchApi(
 																			 		'GET',
 																			 		{}
 																			 	);
+
+export const findAllPreview = (locale, level) => 	fetchApi(
+																					endPoints.get + locale + '/preview/',
+																					{},
+																					{},
+																					'GET',
+																					{}
+																					);
