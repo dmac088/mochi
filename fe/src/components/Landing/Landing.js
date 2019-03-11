@@ -5,7 +5,7 @@ import Banner from './Banner';
 import BestSeller from './BestSeller';
 import BlogPosts from './BlogPosts';
 import BrandSlider from './BrandSlider';
-import CategoryPreview from './CategoryPreview';
+import PreviewCategoryContainer from '../PreviewCategory/PreviewCategoryContainer';
 import Footer from '../Footer/Footer';
 import ProductHighlights from './ProductHighlights';
 import ProductQuickView from './ProductQuickView';
@@ -23,7 +23,7 @@ class Landing extends Component {
         theposition: 0,
         showScroller: false
     };
-  } 
+  }
 
   componentDidMount() {
     window.addEventListener('scroll', this.listenToScroll, { passive: true });
@@ -62,7 +62,7 @@ class Landing extends Component {
         <Policy />
         <ProductHighlights />
         <Banner />
-        <CategoryPreview />
+        <PreviewCategoryContainer />
         <BestSeller />
         <BlogPosts />
         <BrandSlider />
