@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { HighlightedProduct } from './HighlightedProduct';
+import HighlightedProduct from './HighlightedProduct';
 const $ = window.$;
 
 class HighlightedColumn extends Component {
@@ -11,6 +11,8 @@ class HighlightedColumn extends Component {
   render() {
     return (
       <div className="single-tab-slider-item">
+        <HighlightedProduct />
+        <HighlightedProduct />
         <HighlightedProduct />
       </div>
     )
