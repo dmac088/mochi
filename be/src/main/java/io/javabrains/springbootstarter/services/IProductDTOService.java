@@ -16,6 +16,8 @@ public interface IProductDTOService {
 	 
 	 Page<ProductDTO> getAllProductsForCategory(String lcl, Long categoryId, int page, int size, String sortBy);
 	 
+	 List<ProductDTO> getPreviewProductsForCategory(String lcl, Long categoryId);
+	 
 	 public void recurseCategories(List<ProductCategory> pcl, ProductCategory pc);
 	 
 }

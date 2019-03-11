@@ -1,6 +1,7 @@
 package io.javabrains.springbootstarter.services;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import io.javabrains.springbootstarter.domain.ProductAttribute;
 import io.javabrains.springbootstarter.domain.ProductAttributePagingAndSortingRepository;
+import io.javabrains.springbootstarter.domain.ProductAttributeRepository;
 import io.javabrains.springbootstarter.domain.ProductCategory;
 import io.javabrains.springbootstarter.domain.ProductCategoryRepository;
 
@@ -25,6 +27,8 @@ public class ProductDTOService implements IProductDTOService {
     @Autowired
     private ProductCategoryRepository productCategoryRepository;
     
+    @Autowired
+    private ProductAttributeRepository productAttributeRepository;
     // API
     //This method should accept a DTO and return a DTO
     //The DTO is coarse grained and contains a flat structure of properties
@@ -59,6 +63,19 @@ public class ProductDTOService implements IProductDTOService {
  		Page<ProductDTO> pp = ppa.map(pa -> ProductDTOService.convertToProductDto(pa));
  		return pp;
  	}	
+    
+    @Override
+  	@Transactional
+  	public List<ProductDTO> getPreviewProductsForCategory(String lcl, Long categoryId) {
+     	//get a list of category ids for the current category and its child categories
+     	List<ProductCategory> pcl = new ArrayList<ProductCategory>();
+     	ProductCategory pc = productCategoryRepository.findByCategoryId(categoryId).get();
+     	recurseCategories(pcl, pc);
+     	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
+  		Collection<ProductAttribute> ppa = productAttributeRepository.findDistinctByLclCdAndProductCategoriesCategoryIdInAndProductPreviewFlag(lcl, categoryIds, new Long(1));
+  		List<ProductDTO> pp = ppa.stream().map(pa -> ProductDTOService.convertToProductDto(pa)).collect(Collectors.toList());;
+  		return pp;
+  	}	
     
     public void recurseCategories(List<ProductCategory> pcl, ProductCategory pc) {
     	pcl.add(pc);
