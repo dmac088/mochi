@@ -1,12 +1,40 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import HighlightedColumn from '../HighlightedColumn';
+import * as productApi from '../../../data/products/api';
 import Slider from "react-slick";
 import { SlickArrowLeft, SlickArrowRight } from '../../../services/helpers/Helper';
 const $ = window.$;
 
 class Featured extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      products: [],
+    };
+  }
+
+  componentWillMount() {
+    this.getProducts();
+  }
+
+  getProducts= (lang = "en-GB", featured = 1) =>
+    productApi.findAllFeatured(lang, featured)
+    .then((response) => {
+        return response.text();
+    })
+    .then((responseText) => {
+        return JSON.parse(responseText);
+    })
+    .then((responseJSON) => {
+        this.setState({
+          products: responseJSON,
+        })
+    })
+    .catch(()=>{
+        console.log('getProducts failed!');
+  });
 
   next = () => {
     this.slider.slickNext();
@@ -62,6 +90,7 @@ class Featured extends Component {
         }
       }
     ]};
+    console.log(this.state.products);
     return(
         <div className="tab-slider-container">
           <Slider ref={c => (this.slider = c)} {...settings}>

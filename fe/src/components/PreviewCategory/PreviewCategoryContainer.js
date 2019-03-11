@@ -4,12 +4,11 @@ import * as categoryApi from '../../data/categories/api';
 
 class PreviewCategoryContainer extends Component {
 
-
   constructor(props) {
     super(props);
-      this.state = {
-                     categories: [],
-                   };
+    this.state = {
+      categories: [],
+    };
   }
 
   getCategories = (lang = "en-GB", preview = 1) =>
