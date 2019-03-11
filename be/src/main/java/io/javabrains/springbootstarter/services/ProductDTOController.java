@@ -34,4 +34,9 @@ public class ProductDTOController {
     	return productService.getPreviewProductsForCategory(lcl, cat);
     }
     
+    @GetMapping("/Product/{lcl}/featured")
+    public List<ProductDTO> getProducts(@PathVariable String lcl) {
+    	return productService.getFeaturedProducts(lcl);
+    }
+    
 }
