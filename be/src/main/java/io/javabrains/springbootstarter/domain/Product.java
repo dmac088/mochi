@@ -39,6 +39,9 @@ public class Product {
 	
 	@Column(name="prd_prev_flg")
 	private Long previewFlag;
+
+	@Column(name="prd_feat_flg")
+	private Long featuredFlag;
 	
 	@ManyToMany(mappedBy = "products")
 	@IndexedEmbedded
@@ -97,5 +100,14 @@ public class Product {
 	public void setPreviewFlag(Long previewFlag) {
 		this.previewFlag = previewFlag;
 	}
+	
+	public Long getFeaturedFlag() {
+		return featuredFlag;
+	}
+
+	public void setFeaturedFlag(Long featuredFlag) {
+		this.featuredFlag = featuredFlag;
+	}
+
 			
 }

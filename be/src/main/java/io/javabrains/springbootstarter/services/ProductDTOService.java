@@ -67,7 +67,6 @@ public class ProductDTOService implements IProductDTOService {
     @Override
   	@Transactional
   	public List<ProductDTO> getPreviewProductsForCategory(String lcl, Long categoryId) {
-     	//get a list of category ids for the current category and its child categories
      	List<ProductCategory> pcl = new ArrayList<ProductCategory>();
      	ProductCategory pc = productCategoryRepository.findByCategoryId(categoryId).get();
      	recurseCategories(pcl, pc);
@@ -76,6 +75,13 @@ public class ProductDTOService implements IProductDTOService {
   		List<ProductDTO> pp = ppa.stream().map(pa -> ProductDTOService.convertToProductDto(pa)).collect(Collectors.toList());;
   		return pp;
   	}	
+    
+	@Override
+	public List<ProductDTO> getFeaturedProducts(String lcl) {
+  		Collection<ProductAttribute> ppa = productAttributeRepository.findDistinctByLclCdAndProductFeaturedFlag(lcl, new Long(1));
+  		List<ProductDTO> pp = ppa.stream().map(pa -> ProductDTOService.convertToProductDto(pa)).collect(Collectors.toList());;
+  		return pp;
+	}
     
     public void recurseCategories(List<ProductCategory> pcl, ProductCategory pc) {
     	pcl.add(pc);
@@ -98,4 +104,6 @@ public class ProductDTOService implements IProductDTOService {
         productDto.setLclCd(productAttribute.getLclCd());
         return productDto;
     }
+
+
 }
