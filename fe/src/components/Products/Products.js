@@ -10,7 +10,6 @@ import BreadCrumb from '../BreadCrumb';
 import ShopHeader from './ShopHeader';
 import Pagination from './Pagination';
 import NoResults from "../../empty-states/NoResults";
-import ReactCSSTransitionGroup from 'react-addons-transition-group';
 
 
 class Products extends Component {
