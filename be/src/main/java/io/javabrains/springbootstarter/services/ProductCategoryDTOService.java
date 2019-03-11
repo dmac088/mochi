@@ -71,6 +71,20 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
     
     @Override
   	@Transactional
+  	public List<ProductCategoryDTO> getPreviewProductCategories(final String lcl, final Long previewFlag) {
+     	
+     	List<ProductCategory> lpc = productCategoryRepository.findByPreviewFlag(previewFlag);
+     	
+ 		final List<ProductCategoryDTO> lpcDTO = new ArrayList<ProductCategoryDTO>();
+ 		
+ 		for(ProductCategory pc : lpc) {
+         	lpcDTO.add(convertToProductCategoryDto(pc, lcl));
+         }
+ 		return lpcDTO;
+  	}
+    
+    @Override
+  	@Transactional
   	public ProductCategoryDTO getProductCategory(final String lcl, final Long categoryId) {
      	ProductCategory pc = productCategoryRepository.findByCategoryId(categoryId).get();
      	return	convertToProductCategoryDto(pc, lcl);

@@ -46,6 +46,9 @@ public class ProductCategory {
 	@Field
 	private String categoryCode;
 	
+	@Column(name="cat_prev_flg")
+	private Long previewFlag;
+
 	@Column(name="cat_lvl")
 	private Long categoryLevel;
 
@@ -101,6 +104,14 @@ public class ProductCategory {
 
 	public void setCategoryLevel(Long categoryLevel) {
 		this.categoryLevel = categoryLevel;
+	}
+	
+	public Long getPreviewFlag() {
+		return previewFlag;
+	}
+
+	public void setPreviewFlag(Long previewFlag) {
+		this.previewFlag = previewFlag;
 	}
 	
 	public Collection<Product> getProducts() {
