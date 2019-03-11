@@ -1372,66 +1372,66 @@ COPY product (prd_id, upc_cd, prd_crtd_dt, prd_prev_flg) FROM stdin;
 --
 
 COPY product_attr_lcl (prd_lcl_id, prd_id, prd_desc, prd_img_pth, prd_rrp, lcl_cd) FROM stdin;
-2	1	芒果	images/mango.jpg	75	zh-HK
-4	2	橙子	images/orange.jpg	75	zh-HK
-6	3	西兰花	images/broccoli.jpg	120	zh-HK
-8	4	菜花	images/cauliflower.jpg	60	zh-HK
-10	5	黄瓜	images/cucumber.jpg	48	zh-HK
-12	6	红菜头	images/beetroot.jpg	32	zh-HK
-14	7	胡萝卜	images/carrots.jpg	56	zh-HK
-16	8	番茄	images/tomato.jpg	16	zh-HK
-18	9	豆子	images/beans.jpg	82	zh-HK
-20	10	茄子	images/brinjal.jpg	35	zh-HK
-22	11	辣椒	images/capsicum.jpg	60	zh-HK
-24	12	蘑菇	images/button-mushroom.jpg	60	zh-HK
-26	13	土豆	images/potato.jpg	22	zh-HK
-28	14	南瓜	images/pumpkin.jpg	48	zh-HK
-30	15	玉米	images/corn.jpg	75	zh-HK
-32	16	洋蔥	images/onion.jpg	16	zh-HK
-34	17	蘋果	images/apple.jpg	72	zh-HK
-36	18	香蕉	images/banana.jpg	45	zh-HK
-38	19	葡萄	images/grapes.jpg	60	zh-HK
-40	20	麝香甜瓜	images/musk-melon.jpg	36	zh-HK
-42	21	梨	images/pears.jpg	69	zh-HK
-44	22	石榴	images/pomegranate.jpg	95	zh-HK
-46	23	覆盆子	images/raspberry.jpg	160	zh-HK
-48	24	草莓	images/strawberry.jpg	180	zh-HK
-50	25	西瓜	images/water-melon.jpg	28	zh-HK
-52	26	杏仁	images/almonds.jpg	200	zh-HK
-54	27	開心果	images/pistachio.jpg	190	zh-HK
-56	28	堅果混合物	images/nuts-mixture.jpg	950	zh-HK
-58	29	腰果	images/cashews.jpg	650	zh-HK
-60	30	核桃	images/walnuts.jpg	170	zh-HK
-1	1	mango	images/mango.jpg	75	en-GB
-3	2	orange	images/orange.jpg	75	en-GB
-5	3	brocolli	images/broccoli.jpg	120	en-GB
-7	4	cauliflower	images/cauliflower.jpg	60	en-GB
-9	5	cucumber	images/cucumber.jpg	48	en-GB
-11	6	beetroot	images/beetroot.jpg	32	en-GB
-13	7	carrot	images/carrots.jpg	56	en-GB
-15	8	tomato	images/tomato.jpg	16	en-GB
-17	9	beans	images/beans.jpg	82	en-GB
-19	10	brinjal	images/brinjal.jpg	35	en-GB
-21	11	capsicum	images/capsicum.jpg	60	en-GB
-23	12	mushroom	images/button-mushroom.jpg	60	en-GB
-25	13	potato	images/potato.jpg	22	en-GB
-27	14	Pumpkin	images/pumpkin.jpg	48	en-GB
-29	15	Corn	images/corn.jpg	75	en-GB
-31	16	Onion	images/onion.jpg	16	en-GB
-33	17	Apple	images/apple.jpg	72	en-GB
-35	18	Banana	images/banana.jpg	45	en-GB
-37	19	Grapes	images/grapes.jpg	60	en-GB
-39	20	Musk Melon	images/musk-melon.jpg	36	en-GB
-41	21	Pears	images/pears.jpg	69	en-GB
-43	22	Pomegranate	images/pomegranate.jpg	95	en-GB
-45	23	Raspberry	images/raspberry.jpg	160	en-GB
-47	24	Strawberry	images/strawberry.jpg	180	en-GB
-49	25	Water Melon	images/water-melon.jpg	28	en-GB
-51	26	Almonds	images/almonds.jpg	200	en-GB
-53	27	Pistachio	images/pistachio.jpg	190	en-GB
-55	28	Nuts Mixture	images/nuts-mixture.jpg	950	en-GB
-57	29	Cashews	images/cashews.jpg	650	en-GB
-59	30	Walnuts	images/walnuts.jpg	170	en-GB
+2	1	芒果	assets/images/products/mango.jpg	75	zh-HK
+4	2	橙子	assets/images/products/orange.jpg	75	zh-HK
+6	3	西兰花	assets/images/products/broccoli.jpg	120	zh-HK
+8	4	菜花	assets/images/products/cauliflower.jpg	60	zh-HK
+10	5	黄瓜	assets/images/products/cucumber.jpg	48	zh-HK
+12	6	红菜头	assets/images/products/beetroot.jpg	32	zh-HK
+14	7	胡萝卜	assets/images/products/carrots.jpg	56	zh-HK
+16	8	番茄	assets/images/products/tomato.jpg	16	zh-HK
+18	9	豆子	assets/images/products/beans.jpg	82	zh-HK
+20	10	茄子	assets/images/products/brinjal.jpg	35	zh-HK
+22	11	辣椒	assets/images/products/capsicum.jpg	60	zh-HK
+24	12	蘑菇	assets/images/products/button-mushroom.jpg	60	zh-HK
+26	13	土豆	assets/images/products/potato.jpg	22	zh-HK
+28	14	南瓜	assets/images/products/pumpkin.jpg	48	zh-HK
+30	15	玉米	assets/images/products/corn.jpg	75	zh-HK
+32	16	洋蔥	assets/images/products/onion.jpg	16	zh-HK
+34	17	蘋果	assets/images/products/apple.jpg	72	zh-HK
+36	18	香蕉	assets/images/products/banana.jpg	45	zh-HK
+38	19	葡萄	assets/images/products/grapes.jpg	60	zh-HK
+40	20	麝香甜瓜	assets/images/products/musk-melon.jpg	36	zh-HK
+42	21	梨	assets/images/products/pears.jpg	69	zh-HK
+44	22	石榴	assets/images/products/pomegranate.jpg	95	zh-HK
+46	23	覆盆子	assets/images/products/raspberry.jpg	160	zh-HK
+48	24	草莓	assets/images/products/strawberry.jpg	180	zh-HK
+50	25	西瓜	assets/images/products/water-melon.jpg	28	zh-HK
+52	26	杏仁	assets/images/products/almonds.jpg	200	zh-HK
+54	27	開心果	assets/images/products/pistachio.jpg	190	zh-HK
+56	28	堅果混合物	assets/images/products/nuts-mixture.jpg	950	zh-HK
+58	29	腰果	assets/images/products/cashews.jpg	650	zh-HK
+60	30	核桃	assets/images/products/walnuts.jpg	170	zh-HK
+1	1	mango	assets/images/products/mango.jpg	75	en-GB
+3	2	orange	assets/images/products/orange.jpg	75	en-GB
+5	3	brocolli	assets/images/products/broccoli.jpg	120	en-GB
+7	4	cauliflower	assets/images/products/cauliflower.jpg	60	en-GB
+9	5	cucumber	assets/images/products/cucumber.jpg	48	en-GB
+11	6	beetroot	assets/images/products/beetroot.jpg	32	en-GB
+13	7	carrot	assets/images/products/carrots.jpg	56	en-GB
+15	8	tomato	assets/images/products/tomato.jpg	16	en-GB
+17	9	beans	assets/images/products/beans.jpg	82	en-GB
+19	10	brinjal	assets/images/products/brinjal.jpg	35	en-GB
+21	11	capsicum	assets/images/products/capsicum.jpg	60	en-GB
+23	12	mushroom	assets/images/products/button-mushroom.jpg	60	en-GB
+25	13	potato	assets/images/products/potato.jpg	22	en-GB
+27	14	Pumpkin	assets/images/products/pumpkin.jpg	48	en-GB
+29	15	Corn	assets/images/products/corn.jpg	75	en-GB
+31	16	Onion	assets/images/products/onion.jpg	16	en-GB
+33	17	Apple	assets/images/products/apple.jpg	72	en-GB
+35	18	Banana	assets/images/products/banana.jpg	45	en-GB
+37	19	Grapes	assets/images/products/grapes.jpg	60	en-GB
+39	20	Musk Melon	assets/images/products/musk-melon.jpg	36	en-GB
+41	21	Pears	assets/images/products/pears.jpg	69	en-GB
+43	22	Pomegranate	assets/images/products/pomegranate.jpg	95	en-GB
+45	23	Raspberry	assets/images/products/raspberry.jpg	160	en-GB
+47	24	Strawberry	assets/images/products/strawberry.jpg	180	en-GB
+49	25	Water Melon	assets/images/products/water-melon.jpg	28	en-GB
+51	26	Almonds	assets/images/products/almonds.jpg	200	en-GB
+53	27	Pistachio	assets/images/products/pistachio.jpg	190	en-GB
+55	28	Nuts Mixture	assets/images/products/nuts-mixture.jpg	950	en-GB
+57	29	Cashews	assets/images/products/cashews.jpg	650	en-GB
+59	30	Walnuts	assets/images/products/walnuts.jpg	170	en-GB
 \.
 
 

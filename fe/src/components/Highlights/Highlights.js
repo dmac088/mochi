@@ -3,7 +3,7 @@ import Featured from './Tabs/Featured';
 import NewArrival from './Tabs/NewArrival';
 import OnSale from './Tabs/OnSale';
 
-class ProductHighlights extends Component {
+class Highlights extends Component {
 
   constructor(props) {
     super(props);
@@ -15,15 +15,14 @@ class ProductHighlights extends Component {
     };
   }
 
-
-   showTab = (e) => {
+  showTab = (e) => {
      e.preventDefault();
      this.setState({
-       showFeatured: e.target.id === "featured-tab",
-       showArrival: e.target.id === "new-arrival-tab",
-       showOnSale: e.target.id === "nav-onsale-tab",
-     });
-   }
+     showFeatured: e.target.id === "featured-tab",
+     showArrival: e.target.id === "new-arrival-tab",
+     showOnSale: e.target.id === "nav-onsale-tab",
+   });
+  }
 
    render() {
     const { showFeatured, showArrival,  showOnSale } = this.state;
@@ -60,4 +59,4 @@ class ProductHighlights extends Component {
   }
 }
 
-export default ProductHighlights;
+export default Highlights;
