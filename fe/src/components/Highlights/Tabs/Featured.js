@@ -36,6 +36,22 @@ class Featured extends Component {
         console.log('getProducts failed!');
   });
 
+  chunkArray = (inputArray) => {
+    const perChunk = 2; // items per chunk
+
+    inputArray.reduce((resultArray, item, index) => {
+      const chunkIndex = Math.floor(index/perChunk)
+
+      if(!resultArray[chunkIndex]) {
+        resultArray[chunkIndex] = [] // start a new chunk
+      }
+
+      resultArray[chunkIndex].push(item);
+
+      return resultArray;
+    }, []);
+  }
+
   next = () => {
     this.slider.slickNext();
   }
@@ -45,6 +61,8 @@ class Featured extends Component {
   }
 
   render() {
+  console.log('testing');
+    this.chunkArray(this.state.products);
     const settings = {
       arrows: true,
       autoplay: false,
