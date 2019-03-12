@@ -44,6 +44,17 @@ class Featured extends Component {
     this.slider.slickPrev();
   }
 
+  renderColumns = (columns) => {
+    return columns.map(column => {
+      return (
+        <HighlightedColumn
+          key={columns.indexOf(column)}
+          products={column}
+        />
+      )
+    })
+  }
+
   render() {
     const settings = {
       arrows: true,
@@ -90,26 +101,11 @@ class Featured extends Component {
         }
       }
     ]};
-    const ca = chunkArray(this.state.products, 3);
+    const columns = chunkArray(this.state.products, 3);
     return(
         <div key={0} className="tab-slider-container">
           <Slider ref={c => (this.slider = c)} {...settings}>
-            <HighlightedColumn
-              products={ca[0]}
-              key={0}
-            />
-            <HighlightedColumn
-              products={ca[1]}
-              key={1}
-            />
-            <HighlightedColumn
-              products={ca[2]}
-              key={2}
-            />
-            <HighlightedColumn
-              products={ca[3]}
-              key={3}
-            />
+            {this.renderColumns(columns)}
           </Slider>
         </div>
     )
