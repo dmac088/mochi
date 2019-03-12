@@ -34,7 +34,7 @@ class App extends Component {
   constructor(props) {
     super(props);
       this.state = {
-                     lang: "en-GB",
+                     locale: "en-GB",
                      currency: "USD",
                      categoryList: [],
                      modalActive: false,
@@ -43,23 +43,8 @@ class App extends Component {
                    };
   }
 
-  getCategories = (lang = "en-GB", level = 1) =>
-    categoryApi.findAllForLevel(lang, level)
-    .then((response) => {
-      return response.text();
-    })
-    .then((responseText) => {
-      return JSON.parse(responseText);
-    })
-    .then((responseJSON) => {
-      return responseJSON
-    })
-    .catch(()=>{
-      console.log('getCategories failed!');
-    });
-
   getProducts = (queryParams) =>
-    pageService.findAll(queryParams.lang,
+    pageService.findAll(queryParams.locale,
                         queryParams.category,
                         queryParams.term,
                         queryParams.page,
@@ -77,32 +62,32 @@ class App extends Component {
     //let mergedParams = Object.assign(_.cloneDeep(stateParams), urlParams);
 
     //let productPromise  = this.getProducts(mergedParams);
-    //let categoryPromise = this.getCategories(mergedParam.lang);
-    let categoryPromise = this.getCategories(this.state.lang);
+    //let categoryPromise = this.getCategories(mergedParam.locale);
+    //let categoryPromise = this.getCategories(this.state.locale);
 
     //fetch the data and set the state
-    Promise.all([/*productPromise,*/categoryPromise])
-    .then((values) => {
-         this.setState({
-                         /*queryParams:   mergedParams,
-                         pagedItems:    values[0],*/
-                         categoryList:  values[0],
-                         isMounted: 1,
-                       }, () => {
-                          //also set the URL state, since they need to be in sync
-                          // this.props.history.push({
-                          //       "pathname": '/Search',
-                          //       "search": qs.stringify(mergedParams),
-                          // });
-
-
-                       });
-      });
+    // Promise.all([/*productPromise,*/categoryPromise])
+    // .then((values) => {
+    //      this.setState({
+    //                      /*queryParams:   mergedParams,
+    //                      pagedItems:    values[0],*/
+    //                      categoryList:  values[0],
+    //                      isMounted: 1,
+    //                    }, () => {
+    //                       //also set the URL state, since they need to be in sync
+    //                       // this.props.history.push({
+    //                       //       "pathname": '/Search',
+    //                       //       "search": qs.stringify(mergedParams),
+    //                       // });
+    //
+    //
+    //                    });
+    //   });
   }
 
   componentWillMount(prevProps, prevState, snapshot) {
     // if(this.props.match.params.locale === undefined) {
-    //   this.props.history.push('/' + this.state.lang  + "/" + this.state.currency);
+    //   this.props.history.push('/' + this.state.locale  + "/" + this.state.currency);
     // }
     this.refreshData(prevState);
   }
@@ -164,7 +149,7 @@ class App extends Component {
     return (
       <Landing
         {...routeProps}
-        lang={this.state.lang}
+        locale={this.state.locale}
         currency={this.state.currency}
         openModal={this.openModal}
         pagedItems={this.state.pagedItems}
@@ -177,7 +162,7 @@ class App extends Component {
     return (
       <Products
         {...routeProps}
-        lang={this.state.lang}
+        locale={this.state.locale}
         currency={this.state.currency}
         openModal={this.openModal}
         pagedItems={this.state.pagedItems}
