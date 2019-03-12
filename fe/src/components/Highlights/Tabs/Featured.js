@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import HighlightedColumn from '../HighlightedColumn';
 import * as productApi from '../../../data/products/api';
 import Slider from "react-slick";
-import { SlickArrowLeft, SlickArrowRight } from '../../../services/helpers/Helper';
+import { SlickArrowLeft, SlickArrowRight, chunkArray } from '../../../services/helpers/Helper';
 const $ = window.$;
 
 class Featured extends Component {
@@ -36,22 +36,6 @@ class Featured extends Component {
         console.log('getProducts failed!');
   });
 
-  chunkArray = (inputArray) => {
-    const perChunk = 2; // items per chunk
-
-    inputArray.reduce((resultArray, item, index) => {
-      const chunkIndex = Math.floor(index/perChunk)
-
-      if(!resultArray[chunkIndex]) {
-        resultArray[chunkIndex] = [] // start a new chunk
-      }
-
-      resultArray[chunkIndex].push(item);
-
-      return resultArray;
-    }, []);
-  }
-
   next = () => {
     this.slider.slickNext();
   }
@@ -61,8 +45,6 @@ class Featured extends Component {
   }
 
   render() {
-  console.log('testing');
-    this.chunkArray(this.state.products);
     const settings = {
       arrows: true,
       autoplay: false,
@@ -108,15 +90,26 @@ class Featured extends Component {
         }
       }
     ]};
-    console.log(this.state.products);
+    const ca = chunkArray(this.state.products, 3);
     return(
-        <div className="tab-slider-container">
+        <div key={0} className="tab-slider-container">
           <Slider ref={c => (this.slider = c)} {...settings}>
-            <HighlightedColumn />
-            <HighlightedColumn />
-            <HighlightedColumn />
-            <HighlightedColumn />
-            <HighlightedColumn />
+            <HighlightedColumn
+              products={ca[0]}
+              key={0}
+            />
+            <HighlightedColumn
+              products={ca[1]}
+              key={1}
+            />
+            <HighlightedColumn
+              products={ca[2]}
+              key={2}
+            />
+            <HighlightedColumn
+              products={ca[3]}
+              key={3}
+            />
           </Slider>
         </div>
     )

@@ -6,7 +6,7 @@ class PreviewCategory extends Component {
   render() {
     const { category } = this.props;
     return (
-        <div key={category.categoryId} className="slider slider-with-banner mb-35">
+        <div className="slider slider-with-banner mb-35">
           <div className="container">
             <div className="row">
               <div className="col-lg-12">
