@@ -19,12 +19,22 @@ class CategoryMenuContainer extends Component {
 
   componentWillMount() {
     const { locale } = this.props.match.params;
-    this.getCategories(locale, 1);
+    this.updateMenu(1);
   }
 
   componentDidMount() {
     this.renderMenu(true);
     window.addEventListener('resize', this.renderMenu , { passive: true });
+  }
+
+  updateMenu = (isMounting = 0) => {
+    const { locale } = this.props.match.params;
+    if(locale === this.state.locale && isMounting === 0) {return;}
+    this.getCategories(locale, 1);
+  }
+
+  componentDidUpdate() {
+    this.updateMenu(0);
   }
 
   renderMenu = (isMounting = false) => {
@@ -49,6 +59,7 @@ class CategoryMenuContainer extends Component {
     .then((responseJSON) => {
       this.setState({
         categoryList: responseJSON,
+        locale: locale,
       });
     })
     .catch(()=>{
