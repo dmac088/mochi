@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import ReactTransitionGroup from 'react-addons-transition-group';
+import * as categoryApi from '../../data/categories/api';
 import { isMobile, slide, updateParams } from '../../services/helpers/Helper';
 import 'velocity-animate/velocity.ui';
 
@@ -16,13 +17,18 @@ class CategoryMenuContainer extends Component {
     };
   }
 
+  componentWillMount() {
+    const { locale } = this.props.match.params;
+    this.getCategories(locale, 1);
+  }
+
   componentDidMount() {
     this.renderMenu(true);
     window.addEventListener('resize', this.renderMenu , { passive: true });
   }
 
   renderMenu = (isMounting = false) => {
-    if(isMobile() && !this.state.isMobile) { this.setState({isMobile: true, menuVisible: (isMounting) ? false : true}) }
+    if(isMobile() && !this.state.isMobile) { this.setState({isMobile: true, menuVisible: (!isMounting)}) }
     if(!isMobile() && this.state.isMobile) { this.setState({isMobile: false, menuVisible: true}) }
   }
 
@@ -31,6 +37,23 @@ class CategoryMenuContainer extends Component {
       menuVisible: !prevState.menuVisible
     }));
   }
+
+  getCategories = (locale = "en-GB", level = 1) =>
+    categoryApi.findAllForLevel(locale, level)
+    .then((response) => {
+      return response.text();
+    })
+    .then((responseText) => {
+      return JSON.parse(responseText);
+    })
+    .then((responseJSON) => {
+      this.setState({
+        categoryList: responseJSON,
+      });
+    })
+    .catch(()=>{
+      console.log('getCategories failed!');
+  });
 
   render() {
     return (
@@ -42,7 +65,7 @@ class CategoryMenuContainer extends Component {
           {
           ((this.state.menuVisible)
           ? <CategoryMenu
-              categoryList={this.props.categoryList}
+              categoryList={this.state.categoryList}
               isMobile={this.state.isMobile}
               history={this.props.history}
               match={this.props.match}
