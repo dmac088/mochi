@@ -1,6 +1,7 @@
 package io.javabrains.springbootstarter.services;
 
 import java.util.Date;
+import java.util.List;
 
 
 public class ProductDTO {
@@ -21,6 +22,8 @@ public class ProductDTO {
 	
 	private String lclCd;
 	
+	private List<ProductCategoryDTO> categories;
+
 
 	public Long getProductId() {
 		return productId;
@@ -84,6 +87,14 @@ public class ProductDTO {
 
 	public void setLclCd(String lclCd) {
 		this.lclCd = lclCd;
+	}
+	
+	public List<ProductCategoryDTO> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<ProductCategoryDTO> categories) {
+		this.categories = categories;
 	}
 
 	@Override

@@ -8,12 +8,13 @@ class HighlightedProduct extends Component {
   }
 
   render() {
+    const { product } = this.props;
     return (
       <div className="gf-product tab-slider-sub-product">
         <div className="image">
           <a href="single-product.html">
             <span className="onsale">Sale!</span>
-            <img src="assets/images/products/product01.jpg" className="img-fluid" alt="" />
+            <img src={product.productImage} className="img-fluid" alt="" />
           </a>
           <div className="product-hover-icons">
             <a className="active" href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
@@ -27,9 +28,9 @@ class HighlightedProduct extends Component {
             <a href="shop-left-sidebar.html">Fast Foods</a>,
             <a href="shop-left-sidebar.html">Vegetables</a>
           </div>
-          <h3 className="product-title"><a href="single-product.html">Sed tempor ehicula non commodo</a></h3>
+          <h3 className="product-title"><a href="single-product.html">{product.productDesc}</a></h3>
           <div className="price-box">
-            <span className="main-price">$89.00</span>
+            <span className="main-price">${product.productRrp}</span>
             <span className="discounted-price">$80.00</span>
           </div>
         </div>

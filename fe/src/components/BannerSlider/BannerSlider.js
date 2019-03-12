@@ -50,12 +50,11 @@ class BannerSlider extends Component {
     this.slider.slickPrev();
   }
 
-  renderProducts = () => {
-    const { products } = this.state;
-    const { category } = this.props;
+  renderProducts = (category, products) => {
     return products.map(product => {
       return (
           <BannerSliderProduct
+            key={product.productId}
             product={product}
             categoryDesc={category.categoryDesc}
           />
@@ -64,7 +63,8 @@ class BannerSlider extends Component {
   }
 
   render() {
-    console.log(this.state.products);
+    const { products } = this.state;
+    const { category } = this.props;
     const settings = {
       arrows: true,
       autoplay: false,
@@ -114,7 +114,7 @@ class BannerSlider extends Component {
 
     return (
       <Slider className="banner-slider-container" ref={c => (this.slider = c)} {...settings}>
-        {this.renderProducts()}
+        {this.renderProducts(category, products)}
       </Slider>
     )
   }

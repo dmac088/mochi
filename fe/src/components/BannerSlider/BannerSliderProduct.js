@@ -10,7 +10,7 @@ class BannerSliderProduct extends Component {
   render() {
     const { product } = this.props;
     return (
-        <div className="gf-product banner-slider-product">
+        <div key={product.productId} className="gf-product banner-slider-product">
           <div className="image">
             <a href="single-product.html">
               <span className="onsale">Sale!</span>

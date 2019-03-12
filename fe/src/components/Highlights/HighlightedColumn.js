@@ -8,12 +8,23 @@ class HighlightedColumn extends Component {
     super(props);
   }
 
+  renderProducts = (products) => {
+    if (products === undefined) { return; }
+    return products.map(product => {
+      return (
+          <HighlightedProduct
+            key={product.productId}
+            product={product}
+          />
+        )
+    });
+  }
+
   render() {
+    const { products, key } = this.props;
     return (
-      <div className="single-tab-slider-item">
-        <HighlightedProduct />
-        <HighlightedProduct />
-        <HighlightedProduct />
+      <div key={key} className="single-tab-slider-item">
+        {this.renderProducts(products)}
       </div>
     )
   }
