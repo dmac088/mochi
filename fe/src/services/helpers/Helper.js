@@ -95,4 +95,4 @@ export const chunkArray = (inputArray, perChunk) => {
 
             return resultArray;
           }, []);
-        }
+        };
