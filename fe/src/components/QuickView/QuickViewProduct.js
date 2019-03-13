@@ -1,6 +1,11 @@
 import React, {Component} from 'react';
 import {findDOMNode} from 'react-dom';
 import Slider from "react-slick";
+import {
+	SlickArrowPrevFullScreen,
+	SlickArrowNextFullScreen,
+	SlickArrowPrevMobile,
+	SlickArrowNextMobile } from './Helper';
 import * as productApi from '../../data/products/api';
 
 class QuickViewProduct extends Component{
@@ -51,13 +56,15 @@ class QuickViewProduct extends Component{
     });
   }
 
+
+
   render(){
 		const { isShowing } = this.props;
 		const { product } = this.state;
 		if(product === null) {return null;}
 		const settings = {
-			prevArrow: '<i class="fa fa-angle-up"></i>',
-			nextArrow: '<i class="fa fa-angle-down slick-next-btn"></i>',
+			prevArrow: <SlickArrowPrevFullScreen />,
+			nextArrow: <SlickArrowNextFullScreen />,
 			slidesToShow: 3,
 			vertical: true,
 			responsive: [{
@@ -85,8 +92,8 @@ class QuickViewProduct extends Component{
 
 				breakpoint: 480,
 				settings: {
-					prevArrow: '<i class="fa fa-angle-left"></i>',
-					nextArrow: '<i class="fa fa-angle-right slick-next-btn"></i>',
+					prevArrow: <SlickArrowPrevMobile />,
+					nextArrow: <SlickArrowNextMobile />,
 					vertical: false,
 					slidesToShow: 2,
 					slidesToScroll: 1
