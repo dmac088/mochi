@@ -34,7 +34,7 @@ class Landing extends Component {
 
   toggleQuickView = () => {
     this.setState({
-      showQVModal: !showQVModal
+      showQVModal: !this.state.showQVModal
     });
   }
 

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {findDOMNode} from 'react-dom';
+import Slider from "react-slick";
 import * as productApi from '../../data/products/api';
 
 class QuickViewProduct extends Component{
@@ -69,7 +70,7 @@ class QuickViewProduct extends Component{
 				<div className="modal-dialog modal-dialog-centered" role="document">
 					<div className="modal-content">
 						<div className="modal-header">
-							<button type="button" className="close" data-dismiss="modal" aria-label="Close">
+							<button onClick={this.props.toggleQuickView} type="button" className="close" data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
@@ -99,26 +100,26 @@ class QuickViewProduct extends Component{
 												</div>
 											</div>
 										</div>
-										<div className="product-small-image-list">
+										<Slider className="product-small-image-list">
 											<div className="nav small-image-slider" role="tablist">
 												<div className="single-small-image img-full">
-													<a data-toggle="tab" id="single-slide-tab-1" href="#single-slide1"><img src="assets/images/products/product01.jpg"
+													<a data-toggle="tab" id="single-slide-tab-1" href="#single-slide1"><img src={product.productImage}
 														className="img-fluid" alt="" /></a>
 												</div>
 												<div className="single-small-image img-full">
-													<a data-toggle="tab" id="single-slide-tab-2" href="#single-slide2"><img src="assets/images/products/product02.jpg"
+													<a data-toggle="tab" id="single-slide-tab-2" href="#single-slide2"><img src={product.productImage}
 														className="img-fluid" alt="" /></a>
 												</div>
 												<div className="single-small-image img-full">
-													<a data-toggle="tab" id="single-slide-tab-3" href="#single-slide3"><img src="assets/images/products/product03.jpg"
+													<a data-toggle="tab" id="single-slide-tab-3" href="#single-slide3"><img src={product.productImage}
 														className="img-fluid" alt="" /></a>
 												</div>
 												<div className="single-small-image img-full">
-													<a data-toggle="tab" id="single-slide-tab-4" href="#single-slide4"><img src="assets/images/products/product04.jpg"
+													<a data-toggle="tab" id="single-slide-tab-4" href="#single-slide4"><img src={product.productImage}
 														alt="" /></a>
 												</div>
 											</div>
-										</div>
+										</Slider>
 									</div>
 								</div>
 								<div className="col-lg-7 col-md-6 col-xs-12">
