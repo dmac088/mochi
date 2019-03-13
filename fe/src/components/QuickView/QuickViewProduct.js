@@ -55,6 +55,44 @@ class QuickViewProduct extends Component{
 		const { isShowing } = this.props;
 		const { product } = this.state;
 		if(product === null) {return null;}
+		const settings = {
+			prevArrow: '<i class="fa fa-angle-up"></i>',
+			nextArrow: '<i class="fa fa-angle-down slick-next-btn"></i>',
+			slidesToShow: 3,
+			vertical: true,
+			responsive: [{
+				breakpoint: 1200,
+				settings: {
+					slidesToShow: 3,
+					slidesToScroll: 1
+				}
+			},
+			{
+				breakpoint: 991,
+				settings: {
+					slidesToShow: 3,
+					slidesToScroll: 1
+				}
+			},
+			{
+				breakpoint: 767,
+				settings: {
+					slidesToShow: 3,
+					slidesToScroll: 3
+				}
+			},
+			{
+
+				breakpoint: 480,
+				settings: {
+					prevArrow: '<i class="fa fa-angle-left"></i>',
+					nextArrow: '<i class="fa fa-angle-right slick-next-btn"></i>',
+					vertical: false,
+					slidesToShow: 2,
+					slidesToScroll: 1
+				}
+			}
+			]};
     return(
 			<div className={"modal fade quick-view-modal-container "
 									+ ((isShowing) ? " show" : "")}
@@ -100,8 +138,8 @@ class QuickViewProduct extends Component{
 												</div>
 											</div>
 										</div>
-										<Slider className="product-small-image-list">
-											<div className="nav small-image-slider" role="tablist">
+										<div className="product-small-image-list">
+											<Slider className="nav small-image-slider" role="tablist" {...settings}>
 												<div className="single-small-image img-full">
 													<a data-toggle="tab" id="single-slide-tab-1" href="#single-slide1"><img src={product.productImage}
 														className="img-fluid" alt="" /></a>
@@ -118,8 +156,8 @@ class QuickViewProduct extends Component{
 													<a data-toggle="tab" id="single-slide-tab-4" href="#single-slide4"><img src={product.productImage}
 														alt="" /></a>
 												</div>
-											</div>
-										</Slider>
+											</Slider>
+										</div>
 									</div>
 								</div>
 								<div className="col-lg-7 col-md-6 col-xs-12">
