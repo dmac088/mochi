@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-const $ = window.$;
+
 
 class HighlightedProduct extends Component {
 
@@ -20,7 +20,9 @@ class HighlightedProduct extends Component {
             <a className="active" href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
             <a href="#" data-tooltip="Add to wishlist"> <span className="icon_heart_alt" /> </a>
             <a href="#" data-tooltip="Compare"> <span className="arrow_left-right_alt" /> </a>
-            <a href="#" data-tooltip="Quick view" data-toggle="modal" data-target="#quick-view-modal-container"> <span className="icon_search" /> </a>
+            <a id={product.productId} onClick={this.props.setCurrentProductId} href="#" data-tooltip="Quick view" data-toggle="modal" data-target={"#modal-" + product.productId} >
+              <span id={product.productId} className="icon_search" />
+            </a>
           </div>
         </div>
         <div className="product-content">

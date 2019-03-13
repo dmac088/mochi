@@ -8,12 +8,9 @@ import BrandSlider from './BrandSlider';
 import PreviewCategoryContainer from '../PreviewCategory/PreviewCategoryContainer';
 import Footer from '../Footer/Footer';
 import Highlights from '../Highlights/Highlights';
-import ProductQuickView from './ProductQuickView';
+import QuickViewProduct from '../QuickView/QuickViewProduct';
 import { withRouter } from 'react-router-dom';
 import ReactTransitionGroup from 'react-addons-transition-group';
-//const $ = window.$;
-
-
 
 class Landing extends Component {
 
@@ -21,8 +18,24 @@ class Landing extends Component {
     super(props);
     this.state = {
         theposition: 0,
-        showScroller: false
+        showScroller: false,
+        showQVModal: false,
+        currentProductId: null,
     };
+  }
+
+  setCurrentProductId = (e) => {
+    e.preventDefault();
+    console.log(e.target.id);
+    this.setState({
+      currentProductId: e.target.id,
+    });
+  }
+
+  toggleQuickView = () => {
+    this.setState({
+      showQVModal: !showQVModal
+    });
   }
 
   componentDidMount() {
@@ -36,7 +49,6 @@ class Landing extends Component {
 
   listenToScroll = () => {
     let scroll = document.documentElement.scrollTop;
-
     this.setState({
       theposition: scroll,
     })
@@ -62,6 +74,7 @@ class Landing extends Component {
         <Policy />
         <Highlights
           {...this.props}
+          setCurrentProductId={this.setCurrentProductId}
         />
         <Banner />
         <PreviewCategoryContainer
@@ -71,11 +84,17 @@ class Landing extends Component {
         <BlogPosts />
         <BrandSlider />
         <Footer />
-        <ProductQuickView />
-            <a  onClick={this.animateScroll}
-                href="#"
-                className={"scroll-top " + ((this.state.theposition >= 400) ? "fadeIn" : "fadeOut")}
-            />
+        <QuickViewProduct
+          {...this.props}
+          productId={this.state.currentProductId}
+          isShowing={this.state.showQVModal}
+          toggleQuickView={this.toggleQuickView}
+        />
+        <a
+          onClick={this.animateScroll}
+          href="#"
+          className={"scroll-top " + ((this.state.theposition >= 400) ? "fadeIn" : "fadeOut")}
+        />
       </div>
       );
   }

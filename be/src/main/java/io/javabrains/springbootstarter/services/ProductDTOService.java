@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -41,6 +40,14 @@ public class ProductDTOService implements IProductDTOService {
 		Page<ProductAttribute> ppa = productAttributePagingAndSortingRepository.findByLclCd(lcl, PageRequest.of(page, size, Sort.by(sortBy).descending()));
 		Page<ProductDTO> pp = ppa.map(pa -> ProductDTOService.convertToProductDto(pa));
 		return pp;
+	}	
+    
+    @Override
+	@Transactional
+	public ProductDTO getProduct(String lcl, Long id) {
+		ProductAttribute pa = productAttributeRepository.findByLclCdAndProductId(lcl, id).get();
+		ProductDTO p = ProductDTOService.convertToProductDto(pa);
+		return p;
 	}	
     
     @Override

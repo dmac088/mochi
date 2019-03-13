@@ -27,7 +27,6 @@ class BannerSlider extends Component {
     this.updateData(locale,0);
   }
 
-
   updateData = (locale = "en-GB", isMounting = 0) => {
     if(locale === this.state.locale && isMounting === 0) {return;}
     this.getProducts(locale, this.props.category.categoryId)
