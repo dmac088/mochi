@@ -11,36 +11,45 @@ class BannerSlider extends Component {
 
   constructor(props) {
     super(props);
-      this.state = {
-                     products: [],
-                   };
-  }
-
-  componentWillMount() {
-    console.log("componentWillMount");
-    this.getProducts("en-GB", this.props.category.categoryId);
+    const { locale } = this.props.match.params;
+    this.state = {
+                   locale: locale,
+                   products: [],
+                 };
   }
 
   componentDidMount() {
-    console.log("componentDidMount");
+    this.updateData(this.state.locale,1);
   }
 
-  getProducts = (lang = "en-GB", categoryId) =>
-    productApi.findPreviewByCategory(lang, categoryId)
+  componentDidUpdate() {
+    const { locale } = this.props.match.params;
+    this.updateData(locale,0);
+  }
+
+
+  updateData = (locale = "en-GB", isMounting = 0) => {
+    if(locale === this.state.locale && isMounting === 0) {return;}
+    this.getProducts(locale, this.props.category.categoryId)
+    .then((responseJSON) => {
+      this.setState({
+        products: responseJSON,
+        locale: locale,
+      });
+    });
+  }
+
+  getProducts = (locale = "en-GB", categoryId) =>
+    productApi.findPreviewByCategory(locale, categoryId)
     .then((response) => {
         return response.text();
     })
     .then((responseText) => {
         return JSON.parse(responseText);
     })
-    .then((responseJSON) => {
-        this.setState({
-          products: responseJSON,
-        })
-    })
     .catch(()=>{
         console.log('getProducts failed!');
-  });
+    });
 
   next = () => {
     this.slider.slickNext();

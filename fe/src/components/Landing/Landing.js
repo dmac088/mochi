@@ -56,7 +56,7 @@ class Landing extends Component {
     return(
       <div>
         <HeroSlider
-          match={this.props.match}
+          {...this.props}
           categoryList={this.props.categoryList}
         />
         <Policy />
@@ -64,7 +64,9 @@ class Landing extends Component {
           {...this.props}
         />
         <Banner />
-        <PreviewCategoryContainer />
+        <PreviewCategoryContainer
+          {...this.props}
+        />
         <BestSeller />
         <BlogPosts />
         <BrandSlider />
