@@ -171,8 +171,7 @@ class CategoryMenu extends Component {
           ((categoryList.length > 8 && !showMore)
           ? <li>
               <a onClick={this.showMore} href="#" id="more-btn">
-                <span className="icon_plus_alt2" />
-                {langSelector[locale].moreCategories}
+                <span className="icon_plus_alt2" /> {langSelector[locale].moreCategories}
               </a>
             </li>
           : <li>
