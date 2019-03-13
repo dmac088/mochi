@@ -42,17 +42,17 @@ class Highlights extends Component {
                   <div className="tab-content" id="nav-tabContent">
                     <div className={"tab-pane fade " + ((showFeatured) ? "show active" : "")} id="featured" role="tabpanel" aria-labelledby="featured-tab">
                       <Featured
-                        match={this.props.match}
+                        {...this.props}
                       />
                     </div>
                     <div className={"tab-pane fade " + ((showArrival) ? "show active" : "")} id="new-arrivals" role="tabpanel" aria-labelledby="new-arrival-tab">
                       <NewArrival
-                        match={this.props.match}
+                        {...this.props}
                       />
                     </div>
                     <div className={"tab-pane fade " + ((showOnSale)? "show active" : "")} id="on-sale" role="tabpanel" aria-labelledby="nav-onsale-tab">
                       <OnSale
-                        match={this.props.match}
+                        {...this.props}
                       />
                     </div>
                   </div>
