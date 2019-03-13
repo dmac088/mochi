@@ -91,7 +91,7 @@ class CategoryMenuContainer extends Component {
       </div>
     )
   }
-  }
+}
 
 
 class CategoryMenu extends Component {
