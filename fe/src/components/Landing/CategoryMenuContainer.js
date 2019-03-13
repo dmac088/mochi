@@ -21,17 +21,17 @@ class CategoryMenuContainer extends Component {
   }
 
   componentDidMount() {
-    this.updateMenu(1);
+    this.updateMenu(this.state.locale,1);
     this.renderMenu(true);
     window.addEventListener('resize', this.renderMenu , { passive: true });
   }
 
   componentDidUpdate() {
-    this.updateMenu(0);
+    const { locale } = this.props.match.params;
+    this.updateMenu(locale, 0);
   }
 
-  updateMenu = (isMounting = 0) => {
-    const { locale } = this.props.match.params;
+  updateMenu = (locale = "en-GB", isMounting = 0) => {
     if(locale === this.state.locale && isMounting === 0) {return;}
     this.getCategories(locale, 1)
     .then((responseJSON) => {
@@ -63,7 +63,7 @@ class CategoryMenuContainer extends Component {
     })
     .catch(()=>{
       console.log('getCategories failed!');
-    });
+  });
 
   render() {
     const { locale } = this.props.match.params;
