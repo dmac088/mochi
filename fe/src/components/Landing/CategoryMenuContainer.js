@@ -18,16 +18,19 @@ class CategoryMenuContainer extends Component {
     };
   }
 
+  componentWillMount() {
+    this.updateMenu(1);
+    this.renderMenu(true);
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.renderMenu , { passive: true });
+  }
+
   updateMenu = (isMounting = 0) => {
     const { locale } = this.props.match.params;
     if(locale === this.state.locale && isMounting === 0) {return;}
     this.getCategories(locale, 1);
-  }
-
-  componentWilMount() {
-    this.updateMenu(1);
-    this.renderMenu(true);
-    window.addEventListener('resize', this.renderMenu , { passive: true });
   }
 
   componentDidUpdate() {
