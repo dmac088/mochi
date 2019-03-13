@@ -20,6 +20,7 @@ class QuickViewProduct extends Component{
   componentDidUpdate() {
     const { locale } = this.props.match.params;
 		const { productId } = this.props;
+		if(productId === null) {return;}
     this.updateData(locale, productId);
   }
 
@@ -36,7 +37,6 @@ class QuickViewProduct extends Component{
     });
 
   updateData = (locale = "en-GB", productId, isMounting = 0) => {
-		if(productId === null) {return;}
     if(locale === this.state.locale
 			&& productId === this.state.productId
 			&& isMounting === 0) {return;}
