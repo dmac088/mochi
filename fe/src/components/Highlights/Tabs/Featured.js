@@ -10,13 +10,14 @@ class Featured extends Component {
 
   constructor(props) {
     super(props);
+    const { locale } = this.props.match.params;
     this.state = {
-      locale: "en-GB",
+      locale: locale,
       products: [],
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.updateData(1);
   }
 
@@ -27,7 +28,13 @@ class Featured extends Component {
   updateData = (isMounting = 0) => {
     const { locale } = this.props.match.params;
     if(locale === this.state.locale && isMounting === 0) {return;}
-    this.getProducts(locale, 1);
+    this.getProducts(locale, 1)
+    .then((responseJSON) => {
+      this.setState({
+        products: responseJSON,
+        locale: locale,
+      });
+    });
   }
 
   getProducts= (locale = "en-GB", featured = 1) =>
@@ -37,12 +44,6 @@ class Featured extends Component {
     })
     .then((responseText) => {
         return JSON.parse(responseText);
-    })
-    .then((responseJSON) => {
-        this.setState({
-          products: responseJSON,
-          locale: locale,
-        })
     })
     .catch(()=>{
         console.log('getProducts failed!');

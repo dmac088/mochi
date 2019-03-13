@@ -61,7 +61,7 @@ class Landing extends Component {
         />
         <Policy />
         <Highlights
-          match={this.props.match}
+          {...this.props}
         />
         <Banner />
         <PreviewCategoryContainer />
