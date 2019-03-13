@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import ReactTransitionGroup from 'react-addons-transition-group';
 import * as categoryApi from '../../data/categories/api';
 import { isMobile, slide, updateParams } from '../../services/helpers/Helper';
+import langSelector from '../../config/lang/selector';
 import 'velocity-animate/velocity.ui';
 
 
@@ -17,20 +18,16 @@ class CategoryMenuContainer extends Component {
     };
   }
 
-  componentWillMount() {
-    const { locale } = this.props.match.params;
-    this.updateMenu(1);
-  }
-
-  componentDidMount() {
-    this.renderMenu(true);
-    window.addEventListener('resize', this.renderMenu , { passive: true });
-  }
-
   updateMenu = (isMounting = 0) => {
     const { locale } = this.props.match.params;
     if(locale === this.state.locale && isMounting === 0) {return;}
     this.getCategories(locale, 1);
+  }
+
+  componentWilMount() {
+    this.updateMenu(1);
+    this.renderMenu(true);
+    window.addEventListener('resize', this.renderMenu , { passive: true });
   }
 
   componentDidUpdate() {
@@ -67,10 +64,13 @@ class CategoryMenuContainer extends Component {
   });
 
   render() {
+    const { locale } = this.props.match.params;
     return (
       <div className="hero-side-category">
         <div className="category-toggle-wrap">
-          <button onClick={this.toggleVisible} className="category-toggle"> <span className="arrow_carrot-right_alt2 mr-2" /> All Categories</button>
+          <button onClick={this.toggleVisible} className="category-toggle"> <span className="arrow_carrot-right_alt2 mr-2" />
+           {langSelector[locale].categoryMenuHeading}
+          </button>
         </div>
         <ReactTransitionGroup component="nav" className="category-menu">
           {
@@ -156,6 +156,7 @@ class CategoryMenu extends Component {
   }
 
   render() {
+    const { locale } = this.props.match.params;
     let categoryList = this.props.categoryList;
     let showMore = this.state.showMore;
     return(
@@ -163,8 +164,17 @@ class CategoryMenu extends Component {
         {this.renderCategoryListItems(categoryList, true, this.changeCategory, 0)}
         {
           ((categoryList.length > 8 && !showMore)
-          ? <li><a onClick={this.showMore} href="#" id="more-btn"><span className="icon_plus_alt2" /> More Categories</a></li>
-          : <li><a onClick={this.showLess} href="#" id="less-btn"><span className="icon_minus_alt2" /> Less Categories</a></li>)
+          ? <li>
+              <a onClick={this.showMore} href="#" id="more-btn">
+                <span className="icon_plus_alt2" />
+                {langSelector[locale].moreCategories}
+              </a>
+            </li>
+          : <li>
+              <a onClick={this.showLess} href="#" id="less-btn">
+                <span className="icon_minus_alt2" /> {langSelector[locale].lessCategories}
+              </a>
+            </li>)
         }
       </ul>
     )
