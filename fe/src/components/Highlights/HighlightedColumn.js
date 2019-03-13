@@ -15,6 +15,7 @@ class HighlightedColumn extends Component {
           <HighlightedProduct
             key={product.productId}
             product={product}
+            setCurrentProductId={this.props.setCurrentProductId}
           />
         )
     });

@@ -63,6 +63,7 @@ class Featured extends Component {
         <HighlightedColumn
           key={columns.indexOf(column)}
           products={column}
+          setCurrentProductId={this.props.setCurrentProductId}
         />
       )
     })

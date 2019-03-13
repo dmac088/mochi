@@ -1,33 +1,62 @@
 import React, {Component} from 'react';
 import {findDOMNode} from 'react-dom';
+import * as productApi from '../../data/products/api';
 
-class QuickView extends Component{
+class QuickViewProduct extends Component{
+
 	constructor(props){
 		super(props);
+    const { locale } = this.props.match.params;
+    this.state = {
+      locale: locale,
+      product: { productId: null },
+    }
 	}
+
   componentDidMount() {
-		document.addEventListener('click', this.handleClickOutside.bind(this), { passive: true });
-	}
+    this.updateData(this.state.locale);
+  }
 
-	componentWillUnmount() {
-		document.removeEventListener('click', this.handleClickOutside.bind(this), { passive: true });
-	}
+  componentDidUpdate() {
+    const { locale } = this.props.match.params;
+    this.updateData(locale);
+  }
 
-	handleClickOutside(event) {
-    const domNode = findDOMNode(this.refs.modal);
-		if (!domNode || !domNode.contains(event.target)) {
-			this.props.closeModal();
-		}
-	}
+  getProduct = (id) =>
+    productApi.findById(id)
+    .then((response) => {
+        return response.text();
+    })
+    .then((responseText) => {
+        return JSON.parse(responseText);
+    })
+    .catch(()=>{
+        console.log('getProducts failed!');
+    });
 
-	handleClose(){
-	    this.props.closeModal();
-	}
+  updateData = (locale = "en-GB", isMounting = 0) => {
+    const { productId } = this.props;
+    if(locale === this.state.locale && isMounting === 0) {return;}
+    this.getProduct(locale, productId)
+    .then((responseJSON) => {
+      this.setState({
+        product: responseJSON[0],
+        locale: locale,
+      });
+    });
+  }
 
   render(){
-
+    const { product } = this.state;
     return(
-			<div className="modal fade quick-view-modal-container" id="quick-view-modal-container" tabindex="-1" role="dialog" aria-hidden="true">
+      <div className="modal fade quick-view-modal-container show"
+      id={"modal-" + this.props.productId}
+      tabIndex="-1"
+      role="dialog"
+      style={{"display": "block"},
+             {"padding-right": "17px"}}
+      >
+
 				<div className="modal-dialog modal-dialog-centered" role="document">
 					<div className="modal-content">
 						<div className="modal-header">
@@ -42,22 +71,22 @@ class QuickView extends Component{
 										<div className="tab-content product-large-image-list" id="myTabContent">
 											<div className="tab-pane fade show active" id="single-slide1" role="tabpanel" aria-labelledby="single-slide-tab-1">
 												<div className="single-product-img img-full">
-													<img src="assets/images/products/product01.jpg" className="img-fluid" alt="">
+													<img src="assets/images/products/product01.jpg" className="img-fluid" alt="" />
 												</div>
 											</div>
 											<div className="tab-pane fade" id="single-slide2" role="tabpanel" aria-labelledby="single-slide-tab-2">
 												<div className="single-product-img img-full">
-													<img src="assets/images/products/product02.jpg" className="img-fluid" alt="">
+													<img src="assets/images/products/product02.jpg" className="img-fluid" alt="" />
 												</div>
 											</div>
 											<div className="tab-pane fade" id="single-slide3" role="tabpanel" aria-labelledby="single-slide-tab-3">
 												<div className="single-product-img img-full">
-													<img src="assets/images/products/product03.jpg" className="img-fluid" alt="">
+													<img src="assets/images/products/product03.jpg" className="img-fluid" alt="" />
 												</div>
 											</div>
 											<div className="tab-pane fade" id="single-slide4" role="tabpanel" aria-labelledby="single-slide-tab-4">
 												<div className="single-product-img img-full">
-													<img src="assets/images/products/product04.jpg" className="img-fluid" alt="">
+													<img src="assets/images/products/product04.jpg" className="img-fluid" alt="" />
 												</div>
 											</div>
 										</div>
@@ -65,19 +94,19 @@ class QuickView extends Component{
 											<div className="nav small-image-slider" role="tablist">
 												<div className="single-small-image img-full">
 													<a data-toggle="tab" id="single-slide-tab-1" href="#single-slide1"><img src="assets/images/products/product01.jpg"
-														className="img-fluid" alt=""></a>
+														className="img-fluid" alt="" /></a>
 												</div>
 												<div className="single-small-image img-full">
 													<a data-toggle="tab" id="single-slide-tab-2" href="#single-slide2"><img src="assets/images/products/product02.jpg"
-														className="img-fluid" alt=""></a>
+														className="img-fluid" alt="" /></a>
 												</div>
 												<div className="single-small-image img-full">
 													<a data-toggle="tab" id="single-slide-tab-3" href="#single-slide3"><img src="assets/images/products/product03.jpg"
-														className="img-fluid" alt=""></a>
+														className="img-fluid" alt="" /></a>
 												</div>
 												<div className="single-small-image img-full">
 													<a data-toggle="tab" id="single-slide-tab-4" href="#single-slide4"><img src="assets/images/products/product04.jpg"
-														alt=""></a>
+														alt="" /></a>
 												</div>
 											</div>
 										</div>
@@ -93,7 +122,7 @@ class QuickView extends Component{
 										<p className="product-description mb-20">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco,Proin lectus ipsum, gravida et mattis vulputate, tristique ut lectus</p>
 										<div className="cart-buttons mb-20">
 											<div className="pro-qty mr-10">
-												<input type="text" value="1">
+												<input type="text" value="1" />
 											</div>
 											<div className="add-to-cart-btn">
 												<a href="#"><i className="fa fa-shopping-cart"></i> Add to Cart</a>
@@ -119,4 +148,4 @@ class QuickView extends Component{
   }
 }
 
-export default QuickView;
+export default QuickViewProduct;
