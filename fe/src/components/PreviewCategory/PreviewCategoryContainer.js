@@ -37,6 +37,7 @@ class PreviewCategoryContainer extends Component {
     return categories.map(category => {
       return (
           <PreviewCategory
+            {...this.props}
              key={category.categoryId}
              category={category}
           />
