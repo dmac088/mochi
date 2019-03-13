@@ -18,15 +18,15 @@ class Featured extends Component {
   }
 
   componentDidMount() {
-    this.updateData(1);
+    this.updateData(this.state.locale, 1);
   }
 
   componentDidUpdate() {
-    this.updateData(0);
+    const { locale } = this.props.match.params;
+    this.updateData(locale, 0);
   }
 
-  updateData = (isMounting = 0) => {
-    const { locale } = this.props.match.params;
+  updateData = (locale = "en-GB", isMounting = 0) => {
     if(locale === this.state.locale && isMounting === 0) {return;}
     this.getProducts(locale, 1)
     .then((responseJSON) => {
