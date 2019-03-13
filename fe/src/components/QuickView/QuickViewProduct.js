@@ -40,7 +40,7 @@ class QuickViewProduct extends Component{
     this.getProduct(locale, productId)
     .then((responseJSON) => {
       this.setState({
-        product: responseJSON[0],
+        product: responseJSON,
         locale: locale,
       });
     });
@@ -53,8 +53,8 @@ class QuickViewProduct extends Component{
       id={"modal-" + this.props.productId}
       tabIndex="-1"
       role="dialog"
-      style={{"display": "block"},
-             {"padding-right": "17px"}}
+      style={{"display": "block",
+             "padding-right": "17px"}}
       >
 
 				<div className="modal-dialog modal-dialog-centered" role="document">
