@@ -26,9 +26,9 @@ class Landing extends Component {
 
   setCurrentProductId = (e) => {
     e.preventDefault();
-    console.log(e.target.id);
     this.setState({
       currentProductId: e.target.id,
+      showQVModal: true,
     });
   }
 

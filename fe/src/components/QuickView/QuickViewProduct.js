@@ -9,21 +9,22 @@ class QuickViewProduct extends Component{
     const { locale } = this.props.match.params;
     this.state = {
       locale: locale,
-      product: { productId: null },
+      productId: null,
+			product: null
     }
 	}
 
   componentDidMount() {
-    this.updateData(this.state.locale);
   }
 
   componentDidUpdate() {
     const { locale } = this.props.match.params;
-    this.updateData(locale);
+		const { productId } = this.props;
+    this.updateData(locale, productId);
   }
 
-  getProduct = (id) =>
-    productApi.findById(id)
+  getProduct = (locale, id) =>
+    productApi.findById(locale, id)
     .then((response) => {
         return response.text();
     })
@@ -34,12 +35,14 @@ class QuickViewProduct extends Component{
         console.log('getProducts failed!');
     });
 
-  updateData = (locale = "en-GB", isMounting = 0) => {
-    const { productId } = this.props;
-    if(locale === this.state.locale && isMounting === 0) {return;}
+  updateData = (locale = "en-GB", productId, isMounting = 0) => {
+    if(locale === this.state.locale
+			&& productId === this.state.productId
+			&& isMounting === 0) {return;}
     this.getProduct(locale, productId)
     .then((responseJSON) => {
       this.setState({
+				productId: productId,
         product: responseJSON,
         locale: locale,
       });
@@ -47,16 +50,21 @@ class QuickViewProduct extends Component{
   }
 
   render(){
-    const { product } = this.state;
+		const { isShowing } = this.props;
+		const { product } = this.state;
+		if(product === null) {return null;}
     return(
-      <div className="modal fade quick-view-modal-container show"
-      id={"modal-" + this.props.productId}
-      tabIndex="-1"
-      role="dialog"
-      style={{"display": "block",
-             "padding-right": "17px"}}
-      >
-
+			<div className={"modal fade quick-view-modal-container "
+									+ ((isShowing) ? " show" : "")}
+				id={"modal-" + product.productId}
+				tabIndex="-1"
+				role="dialog"
+				style={ (!isShowing)
+							? {"display": "none"}
+							: {"display": "block",
+							 	 "paddingRight": "17px"}}
+				aria-hidden={!isShowing}
+				>
 				<div className="modal-dialog modal-dialog-centered" role="document">
 					<div className="modal-content">
 						<div className="modal-header">
@@ -71,22 +79,22 @@ class QuickViewProduct extends Component{
 										<div className="tab-content product-large-image-list" id="myTabContent">
 											<div className="tab-pane fade show active" id="single-slide1" role="tabpanel" aria-labelledby="single-slide-tab-1">
 												<div className="single-product-img img-full">
-													<img src="assets/images/products/product01.jpg" className="img-fluid" alt="" />
+													<img src={product.productImage} className="img-fluid" alt="" />
 												</div>
 											</div>
 											<div className="tab-pane fade" id="single-slide2" role="tabpanel" aria-labelledby="single-slide-tab-2">
 												<div className="single-product-img img-full">
-													<img src="assets/images/products/product02.jpg" className="img-fluid" alt="" />
+													<img src={product.productImage} className="img-fluid" alt="" />
 												</div>
 											</div>
 											<div className="tab-pane fade" id="single-slide3" role="tabpanel" aria-labelledby="single-slide-tab-3">
 												<div className="single-product-img img-full">
-													<img src="assets/images/products/product03.jpg" className="img-fluid" alt="" />
+													<img src={product.productImage} className="img-fluid" alt="" />
 												</div>
 											</div>
 											<div className="tab-pane fade" id="single-slide4" role="tabpanel" aria-labelledby="single-slide-tab-4">
 												<div className="single-product-img img-full">
-													<img src="assets/images/products/product04.jpg" className="img-fluid" alt="" />
+													<img src={product.productImage} className="img-fluid" alt="" />
 												</div>
 											</div>
 										</div>
@@ -114,7 +122,7 @@ class QuickViewProduct extends Component{
 								</div>
 								<div className="col-lg-7 col-md-6 col-xs-12">
 									<div className="product-feature-details">
-										<h2 className="product-title mb-15">Kaoreet lobortis sagittis laoreet</h2>
+										<h2 className="product-title mb-15">{product.productDesc}</h2>
 										<h2 className="product-price mb-15">
 											<span className="main-price">$12.90</span>
 											<span className="discounted-price"> $10.00</span>
