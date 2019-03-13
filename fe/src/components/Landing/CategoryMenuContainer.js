@@ -71,7 +71,8 @@ class CategoryMenuContainer extends Component {
     return (
       <div className="hero-side-category">
         <div className="category-toggle-wrap">
-          <button onClick={this.toggleVisible} className="category-toggle"> <span className="arrow_carrot-right_alt2 mr-2" />
+          <button onClick={this.toggleVisible} className="category-toggle">
+           <span className="arrow_carrot-right_alt2 mr-2" />
            {langSelector[locale].categoryMenuHeading}
           </button>
         </div>
