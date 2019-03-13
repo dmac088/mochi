@@ -60,7 +60,9 @@ class Landing extends Component {
           categoryList={this.props.categoryList}
         />
         <Policy />
-        <Highlights />
+        <Highlights
+          match={this.props.match}
+        />
         <Banner />
         <PreviewCategoryContainer />
         <BestSeller />

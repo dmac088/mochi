@@ -12,6 +12,7 @@ class CategoryMenuContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      locale: "en-GB",
       menuVisible: true,
       isMobile: false,
       categoryList: [],
@@ -27,14 +28,14 @@ class CategoryMenuContainer extends Component {
     window.addEventListener('resize', this.renderMenu , { passive: true });
   }
 
+  componentDidUpdate() {
+    this.updateMenu(0);
+  }
+
   updateMenu = (isMounting = 0) => {
     const { locale } = this.props.match.params;
     if(locale === this.state.locale && isMounting === 0) {return;}
     this.getCategories(locale, 1);
-  }
-
-  componentDidUpdate() {
-    this.updateMenu(0);
   }
 
   renderMenu = (isMounting = false) => {

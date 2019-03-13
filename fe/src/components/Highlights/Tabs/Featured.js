@@ -11,16 +11,27 @@ class Featured extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      locale: "en-GB",
       products: [],
     };
   }
 
   componentWillMount() {
-    this.getProducts();
+    this.updateData(1);
   }
 
-  getProducts= (lang = "en-GB", featured = 1) =>
-    productApi.findAllFeatured(lang, featured)
+  componentDidUpdate() {
+    this.updateData(0);
+  }
+
+  updateData = (isMounting = 0) => {
+    const { locale } = this.props.match.params;
+    if(locale === this.state.locale && isMounting === 0) {return;}
+    this.getProducts(locale, 1);
+  }
+
+  getProducts= (locale = "en-GB", featured = 1) =>
+    productApi.findAllFeatured(locale, featured)
     .then((response) => {
         return response.text();
     })
@@ -30,6 +41,7 @@ class Featured extends Component {
     .then((responseJSON) => {
         this.setState({
           products: responseJSON,
+          locale: locale,
         })
     })
     .catch(()=>{
