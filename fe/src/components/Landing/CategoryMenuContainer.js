@@ -11,20 +11,18 @@ class CategoryMenuContainer extends Component {
 
   constructor(props) {
     super(props);
+    const { locale } = this.props.match.params;
     this.state = {
-      locale: "en-GB",
+      locale: locale,
       menuVisible: true,
       isMobile: false,
       categoryList: [],
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.updateMenu(1);
     this.renderMenu(true);
-  }
-
-  componentDidMount() {
     window.addEventListener('resize', this.renderMenu , { passive: true });
   }
 
@@ -35,7 +33,13 @@ class CategoryMenuContainer extends Component {
   updateMenu = (isMounting = 0) => {
     const { locale } = this.props.match.params;
     if(locale === this.state.locale && isMounting === 0) {return;}
-    this.getCategories(locale, 1);
+    this.getCategories(locale, 1)
+    .then((responseJSON) => {
+      this.setState({
+        categoryList: responseJSON,
+        locale: locale,
+      });
+    });
   }
 
   renderMenu = (isMounting = false) => {
@@ -57,15 +61,9 @@ class CategoryMenuContainer extends Component {
     .then((responseText) => {
       return JSON.parse(responseText);
     })
-    .then((responseJSON) => {
-      this.setState({
-        categoryList: responseJSON,
-        locale: locale,
-      });
-    })
     .catch(()=>{
       console.log('getCategories failed!');
-  });
+    });
 
   render() {
     const { locale } = this.props.match.params;
