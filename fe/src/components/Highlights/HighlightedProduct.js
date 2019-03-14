@@ -1,10 +1,26 @@
 import React, { Component } from 'react';
-
+import * as cartService from '../../services/cart';
+import * as cartSelector from '../../services/cart/selectors';
+import * as productApi from '../../data/products/api';
 
 class HighlightedProduct extends Component {
 
-  constructor(props) {
-    super(props);
+  constructor(props){
+		super(props);
+    const { product } = this.props;
+    this.state = {
+			"product": product,
+			"quantity": 1,
+    }
+	}
+
+  addToCart = (e) => {
+    e.preventDefault();
+    const { product, quantity } = this.state;
+    product.quantity = quantity;
+    cartService.addToCart(cartSelector.get(),
+                          product,
+                          ()=>{console.log("addToCart complete!")});
   }
 
   render() {
@@ -17,7 +33,7 @@ class HighlightedProduct extends Component {
             <img src={product.productImage} className="img-fluid" alt="" />
           </a>
           <div className="product-hover-icons">
-            <a className="active" href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
+            <a onClick={this.addToCart} className="active" href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
             <a href="#" data-tooltip="Add to wishlist"> <span className="icon_heart_alt" /> </a>
             <a href="#" data-tooltip="Compare"> <span className="arrow_left-right_alt" /> </a>
             <a id={product.productId} onClick={this.props.setCurrentProductId} href="#" data-tooltip="Quick view" data-toggle="modal" data-target={"#modal-" + product.productId} >
