@@ -18,7 +18,7 @@ export const reducer = (state = initialState, action) => {
 			return cartClone;
 		case actionTypes.REMOVE_ITEM:
 			cartClone.items = cartClone.items.filter(function(value, index, arr){
-															return value.productDTO.productId !== action.productId;
+															return value.productId !== action.productId;
 												});
 			return cartClone;
 		case actionTypes.UPDATE_CART_TOTALS:
