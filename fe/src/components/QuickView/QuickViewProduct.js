@@ -196,23 +196,32 @@ class QuickViewProduct extends Component{
 											<Slider role="tablist" className="nav small-image-slider" ref={c => (this.slider = c)} {...settings}>
 												<div className="single-small-image img-full">
 													<a data-toggle="tab" id="single-slide-tab-1" href="#single-slide1"><img src={product.productImage}
-														className="img-fluid" alt="" /></a>
+														className="img-fluid" alt="" />
+													</a>
 												</div>
 												<div className="single-small-image img-full">
-													<a data-toggle="tab" id="single-slide-tab-2" href="#single-slide2"><img src="assets/images/products/grapes.jpg"
-														className="img-fluid" alt="" /></a>
+													<a data-toggle="tab" id="single-slide-tab-2" href="#single-slide2">
+														<img src="assets/images/products/grapes.jpg"
+														className="img-fluid" alt="" />
+													</a>
 												</div>
 												<div className="single-small-image img-full">
-													<a data-toggle="tab" id="single-slide-tab-3" href="#single-slide3"><img src={product.productImage}
-														className="img-fluid" alt="" /></a>
+													<a data-toggle="tab" id="single-slide-tab-3" href="#single-slide3">
+														<img src={product.productImage}
+														className="img-fluid" alt="" />
+													</a>
 												</div>
 												<div className="single-small-image img-full">
-													<a data-toggle="tab" id="single-slide-tab-4" href="#single-slide4"><img src={product.productImage}
-														alt="" /></a>
+													<a data-toggle="tab" id="single-slide-tab-4" href="#single-slide4">
+														<img src={product.productImage}
+														alt="" />
+													</a>
 												</div>
 												<div className="single-small-image img-full">
-													<a data-toggle="tab" id="single-slide-tab-2" href="#single-slide2"><img src="assets/images/products/pistachio.jpg"
-														className="img-fluid" alt="" /></a>
+													<a data-toggle="tab" id="single-slide-tab-2" href="#single-slide2">
+														<img src="assets/images/products/pistachio.jpg"
+														className="img-fluid" alt="" />
+													</a>
 												</div>
 											</Slider>
 										</div>
