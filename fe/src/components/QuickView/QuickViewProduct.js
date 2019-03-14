@@ -2,10 +2,8 @@ import React, {Component} from 'react';
 import {findDOMNode} from 'react-dom';
 import Slider from "react-slick";
 import {
-	SlickArrowPrevFullScreen,
-	SlickArrowNextFullScreen,
-	SlickArrowPrevMobile,
-	SlickArrowNextMobile } from './Helper';
+	SlickArrowPrev,
+	SlickArrowNext } from './Helper';
 import * as productApi from '../../data/products/api';
 
 class QuickViewProduct extends Component{
@@ -56,29 +54,34 @@ class QuickViewProduct extends Component{
     });
   }
 
+	next = () => {
+    this.slider.slickNext();
+  }
 
+  previous = () => {
+    this.slider.slickPrev();
+  }
 
   render(){
 		const { isShowing } = this.props;
 		const { product } = this.state;
 		if(product === null) {return null;}
 		const settings = {
-			prevArrow: <SlickArrowPrevFullScreen />,
-			nextArrow: <SlickArrowNextFullScreen />,
+			prevArrow: <SlickArrowPrev />,
+			nextArrow: <SlickArrowNext />,
 			slidesToShow: 3,
-			vertical: true,
 			responsive: [{
 				breakpoint: 1200,
 				settings: {
 					slidesToShow: 3,
-					slidesToScroll: 1
+					slidesToScroll: 3
 				}
 			},
 			{
 				breakpoint: 991,
 				settings: {
-					slidesToShow: 3,
-					slidesToScroll: 1
+					slidesToShow: 2,
+					slidesToScroll: 2
 				}
 			},
 			{
@@ -89,17 +92,13 @@ class QuickViewProduct extends Component{
 				}
 			},
 			{
-
 				breakpoint: 480,
 				settings: {
-					prevArrow: <SlickArrowPrevMobile />,
-					nextArrow: <SlickArrowNextMobile />,
-					vertical: false,
-					slidesToShow: 2,
-					slidesToScroll: 1
+					slidesToShow: 3,
+					slidesToScroll: 3
 				}
 			}
-			]};
+		]};
     return(
 			<div className={"modal fade quick-view-modal-container "
 									+ ((isShowing) ? " show" : "")}
@@ -146,13 +145,13 @@ class QuickViewProduct extends Component{
 											</div>
 										</div>
 										<div className="product-small-image-list">
-											<Slider className="nav small-image-slider" role="tablist" {...settings}>
+											<Slider role="tablist" className="nav small-image-slider" ref={c => (this.slider = c)} {...settings}>
 												<div className="single-small-image img-full">
 													<a data-toggle="tab" id="single-slide-tab-1" href="#single-slide1"><img src={product.productImage}
 														className="img-fluid" alt="" /></a>
 												</div>
 												<div className="single-small-image img-full">
-													<a data-toggle="tab" id="single-slide-tab-2" href="#single-slide2"><img src={product.productImage}
+													<a data-toggle="tab" id="single-slide-tab-2" href="#single-slide2"><img src="assets/images/products/grapes.jpg"
 														className="img-fluid" alt="" /></a>
 												</div>
 												<div className="single-small-image img-full">
@@ -162,6 +161,10 @@ class QuickViewProduct extends Component{
 												<div className="single-small-image img-full">
 													<a data-toggle="tab" id="single-slide-tab-4" href="#single-slide4"><img src={product.productImage}
 														alt="" /></a>
+												</div>
+												<div className="single-small-image img-full">
+													<a data-toggle="tab" id="single-slide-tab-2" href="#single-slide2"><img src="assets/images/products/pistachio.jpg"
+														className="img-fluid" alt="" /></a>
 												</div>
 											</Slider>
 										</div>

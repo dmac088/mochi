@@ -9,7 +9,6 @@ export const isMobile = () => {
             || document.body.clientWidth) <= 991);
 }
 
-
 export const slide = (container, direction, params = { duration: 500}, callback) => {
   let element = ReactDOM.findDOMNode(container);
   if(element === undefined) {return}
