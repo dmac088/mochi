@@ -72,6 +72,10 @@ class QuickViewProduct extends Component{
 		});
 	}
 
+	updateQuantity = (e) => {
+		console.log(e.target.value);
+	}
+
   getProduct = (locale, id) =>
     productApi.findById(locale, id)
     .then((response) => {
@@ -224,7 +228,7 @@ class QuickViewProduct extends Component{
 										<p className="product-description mb-20">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco,Proin lectus ipsum, gravida et mattis vulputate, tristique ut lectus</p>
 										<div className="cart-buttons mb-20">
 											<div className="pro-qty mr-10">
-												<input type="text" defaultValue="1" value={this.state.quantity} />
+												<input onChange={this.updateQuantity} type="text" value={this.state.quantity} />
 												<a onClick={this.incrementQuantity} href="#" className="inc qty-btn">+</a>
 												<a onClick={this.decrementQuantity} href="#" className="dec qty-btn">-</a>
 											</div>
