@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {findDOMNode} from 'react-dom';
 import Slider from "react-slick";
+import * as cartSelector from '../../services/cart/selectors';
+import * as cartService from '../../services/cart';
 import {
 	SlickArrowPrev,
 	SlickArrowNext } from './Helper';
@@ -12,9 +14,10 @@ class QuickViewProduct extends Component{
 		super(props);
     const { locale } = this.props.match.params;
     this.state = {
-      locale: locale,
-      productId: null,
-			product: null
+      "locale": locale,
+      "productId": null,
+			"product": {},
+			"quantity": 1,
     }
 	}
 
@@ -27,6 +30,47 @@ class QuickViewProduct extends Component{
 		if(productId === null) {return;}
     this.updateData(locale, productId);
   }
+
+	updateState = () => {
+		this.setState({
+			"isAdded": true,
+		}), () => {
+								setTimeout(() => {
+									this.setState({
+										"isAdded": false,
+									});
+								}, 3500);
+							}
+	}
+
+	addToCart = (e) => {
+		e.preventDefault();
+		const { product, quantity } = this.state;
+		product.quantity = quantity;
+		cartService.addToCart(cartSelector.get(),
+													product,
+													this.updateState);
+	}
+
+	incrementQuantity = (e) => {
+		e.preventDefault();
+		this.setState((prevState) => ({
+			 "quantity": prevState.quantity + 1
+		}));
+	}
+
+	decrementQuantity = (e) => {
+		e.preventDefault();
+		this.setState((prevState) => ({
+			 "quantity": prevState.quantity - 1
+		}));
+	}
+
+	resetQuantity = () => {
+		this.setState({
+			"quantity": 1
+		});
+	}
 
   getProduct = (locale, id) =>
     productApi.findById(locale, id)
@@ -174,16 +218,18 @@ class QuickViewProduct extends Component{
 									<div className="product-feature-details">
 										<h2 className="product-title mb-15">{product.productDesc}</h2>
 										<h2 className="product-price mb-15">
-											<span className="main-price">$12.90</span>
+											<span className="main-price">$ {product.productRrp}</span>
 											<span className="discounted-price"> $10.00</span>
 										</h2>
 										<p className="product-description mb-20">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco,Proin lectus ipsum, gravida et mattis vulputate, tristique ut lectus</p>
 										<div className="cart-buttons mb-20">
 											<div className="pro-qty mr-10">
-												<input type="text" defaultValue="1" />
+												<input type="text" defaultValue="1" value={this.state.quantity} />
+												<a onClick={this.incrementQuantity} href="#" className="inc qty-btn">+</a>
+												<a onClick={this.decrementQuantity} href="#" className="dec qty-btn">-</a>
 											</div>
 											<div className="add-to-cart-btn">
-												<a href="#"><i className="fa fa-shopping-cart"></i> Add to Cart</a>
+												<a onClick={this.addToCart} href="#"><i className="fa fa-shopping-cart"></i> Add to Cart</a>
 											</div>
 										</div>
 										<div className="social-share-buttons">

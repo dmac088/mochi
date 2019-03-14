@@ -37,15 +37,15 @@ import * as cartSelector from './selectors';
 
 	const checkProduct = (cart, productID) => {
 		return cart.items.some(function(item) {
-			return item.productDTO.productId === productID;
+			return item.productId === productID;
 		});
 	}
 
-	export const addToCart = (cart, selectedProduct) => {
-		let productId = selectedProduct.productDTO.productId;
+	export const addToCart = (cart, selectedProduct, callback) => {
+		let productId = selectedProduct.productId;
 		let productQty = selectedProduct.quantity;
 		if (checkProduct(cart, productId)) {
-	    let index = cart.items.findIndex(x => x.productDTO.productId === productId);
+	    let index = cart.items.findIndex(x => x.productId === productId);
 			let updatedItem = _.cloneDeep(cart.items[index]);
 			updatedItem.quantity = updatedItem.quantity + Number(productQty);
 			updateCartItem(cart, index, updatedItem);
@@ -54,6 +54,7 @@ import * as cartSelector from './selectors';
 			addCartItem(cart, selectedProduct);
 	  };
 		updateCartTotals();
+		callback();
 	}
 
 	export const removeFromCart = (cart, productId) => {
@@ -64,7 +65,7 @@ import * as cartSelector from './selectors';
 	}
 
 	export const updateQuantity = (cart, productId, qty) => {
-		let index = cart.items.findIndex(x => x.productDTO.productId === Number(productId));
+		let index = cart.items.findIndex(x => x.productId === Number(productId));
 		let updatedItem =  _.cloneDeep(cart.items[index]);
 		updatedItem.quantity = Number(cart.items[index].quantity) + Number(qty);
 		updateCartItem(cart, index, updatedItem);
@@ -80,7 +81,7 @@ import * as cartSelector from './selectors';
   export const sumTotalAmount = (items) => {
 	  let total = 0;
 	  for (var i = 0; i < items.length; i++) {
-	  total += items[i].productDTO.productRrp * parseInt(items[i].quantity);
+	  total += items[i].productRrp * parseInt(items[i].quantity);
 	  }
 	  return total;
  	}
