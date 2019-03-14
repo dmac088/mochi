@@ -180,7 +180,7 @@ class QuickViewProduct extends Component{
 										<p className="product-description mb-20">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco,Proin lectus ipsum, gravida et mattis vulputate, tristique ut lectus</p>
 										<div className="cart-buttons mb-20">
 											<div className="pro-qty mr-10">
-												<input type="text" value="1" />
+												<input type="text" defaultValue="1" />
 											</div>
 											<div className="add-to-cart-btn">
 												<a href="#"><i className="fa fa-shopping-cart"></i> Add to Cart</a>
