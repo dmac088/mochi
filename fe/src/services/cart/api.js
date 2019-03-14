@@ -5,9 +5,9 @@ const endPoints = {
 };
 
 export const findByUserName = (userName) => fetchApi(
-																																endPoints.get + userName,
-																																{},
-																																{},
-																																'GET',
-																																{}
-																															);
+																										endPoints.get + userName,
+																										{},
+																										{},
+																										'GET',
+																										{}
+																										);
