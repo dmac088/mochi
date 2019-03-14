@@ -129,16 +129,16 @@ class Accordion extends React.Component {
         <div className="cart-floating-box" id="cart-floating-box" ref={this.setContainer}>
           <div className="cart-items">
             {this.renderCartItems(cart)}
+          </div>
           <div className="cart-calculation">
             <div className="calculation-details">
-              <p className="total">Subtotal <span>$22</span></p>
+              <p className="total">Subtotal <span>${cart.totalAmount}</span></p>
             </div>
             <div className="floating-cart-btn text-center">
               <a onClick={this.checkout} href="#">Checkout</a>
               <a onClick={this.viewCart} href="#">View Cart</a>
             </div>
           </div>
-        </div>
       </div>
       )
   	}
