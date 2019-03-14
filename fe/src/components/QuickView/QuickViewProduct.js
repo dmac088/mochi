@@ -178,49 +178,63 @@ class QuickViewProduct extends Component{
 											</div>
 											<div className="tab-pane fade" id="single-slide2" role="tabpanel" aria-labelledby="single-slide-tab-2">
 												<div className="single-product-img img-full">
-													<img src={product.productImage} className="img-fluid" alt="" />
+													<img src={product.productImage}
+															 className="img-fluid"
+															 alt=""
+													/>
 												</div>
 											</div>
 											<div className="tab-pane fade" id="single-slide3" role="tabpanel" aria-labelledby="single-slide-tab-3">
 												<div className="single-product-img img-full">
-													<img src={product.productImage} className="img-fluid" alt="" />
+													<img src="assets/images/products/grapes.jpg"
+														className="img-fluid"
+														alt=""
+													/>
 												</div>
 											</div>
 											<div className="tab-pane fade" id="single-slide4" role="tabpanel" aria-labelledby="single-slide-tab-4">
 												<div className="single-product-img img-full">
-													<img src={product.productImage} className="img-fluid" alt="" />
+													<img 	src="assets/images/products/pistachio.jpg"
+																className="img-fluid"
+																alt=""
+													/>
 												</div>
 											</div>
 										</div>
 										<div className="product-small-image-list">
 											<Slider role="tablist" className="nav small-image-slider" ref={c => (this.slider = c)} {...settings}>
 												<div className="single-small-image img-full">
-													<a data-toggle="tab" id="single-slide-tab-1" href="#single-slide1"><img src={product.productImage}
-														className="img-fluid" alt="" />
+													<a data-toggle="tab" id="single-slide-tab-1" href="#single-slide1">
+														<img 	src={product.productImage}
+																	className="img-fluid"
+																	alt="" />
 													</a>
 												</div>
 												<div className="single-small-image img-full">
 													<a data-toggle="tab" id="single-slide-tab-2" href="#single-slide2">
-														<img src="assets/images/products/grapes.jpg"
-														className="img-fluid" alt="" />
+														<img 	src="assets/images/products/grapes.jpg"
+																	className="img-fluid"
+																	alt="" />
 													</a>
 												</div>
 												<div className="single-small-image img-full">
 													<a data-toggle="tab" id="single-slide-tab-3" href="#single-slide3">
-														<img src={product.productImage}
-														className="img-fluid" alt="" />
+														<img 	src={product.productImage}
+																	className="img-fluid"
+																	alt="" />
 													</a>
 												</div>
 												<div className="single-small-image img-full">
 													<a data-toggle="tab" id="single-slide-tab-4" href="#single-slide4">
-														<img src={product.productImage}
-														alt="" />
+														<img 	src={product.productImage}
+																	alt="" />
 													</a>
 												</div>
 												<div className="single-small-image img-full">
 													<a data-toggle="tab" id="single-slide-tab-2" href="#single-slide2">
 														<img src="assets/images/products/pistachio.jpg"
-														className="img-fluid" alt="" />
+																 className="img-fluid"
+																 alt="" />
 													</a>
 												</div>
 											</Slider>
