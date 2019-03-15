@@ -18,6 +18,7 @@ class QuickViewProduct extends Component{
       "productId": null,
 			"product": {},
 			"quantity": 1,
+			"currentImage": "",
     }
 	}
 
@@ -112,7 +113,9 @@ class QuickViewProduct extends Component{
 
 	changeImage = (e) => {
 		e.preventDefault();
-		console.log("changeImage");
+		this.setState({
+			"currentImage": e.target.src,
+		});
 	}
 
   render(){
