@@ -13,7 +13,7 @@ class QuickViewProduct extends Component{
 
 	constructor(props){
 		super(props);
-    const { locale } = this.props.match.params;
+    const { locale } = this.props;
 
     this.state = {
       "locale": locale,
@@ -28,8 +28,7 @@ class QuickViewProduct extends Component{
   }
 
   componentDidUpdate() {
-    const { locale } = this.props.match.params;
-		const { productId } = this.props;
+    const { locale, productId } = this.props;
 		if(productId === null) {return;}
     this.updateData(locale, productId);
   }

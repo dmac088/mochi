@@ -86,7 +86,7 @@ class Landing extends Component {
         <BrandSlider />
         <Footer />
         <QuickViewProduct
-          {...this.props}
+          locale={this.props.match.params.locale}
           productId={this.state.currentProductId}
           isShowing={this.state.showQVModal}
           toggleQuickView={this.toggleQuickView}
