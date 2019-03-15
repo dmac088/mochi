@@ -30,6 +30,7 @@ class PreviewCategory extends Component {
                       <BannerSlider
                         {...this.props}
                         category={category}
+                        setCurrentProductId={this.props.setCurrentProductId}
                       />
                       <div className="row no-gutters">
                         <div className="col-lg-6 col-md-6 col-sm-6">

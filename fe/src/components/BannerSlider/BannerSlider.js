@@ -65,6 +65,7 @@ class BannerSlider extends Component {
             key={product.productId}
             product={product}
             categoryDesc={category.categoryDesc}
+            setCurrentProductId={this.props.setCurrentProductId}
           />
         )
     });

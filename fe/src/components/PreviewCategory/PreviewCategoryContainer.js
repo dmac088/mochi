@@ -40,6 +40,7 @@ class PreviewCategoryContainer extends Component {
             {...this.props}
              key={category.categoryId}
              category={category}
+             setCurrentProductId={this.props.setCurrentProductId}
           />
       )
     });
