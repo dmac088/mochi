@@ -11,7 +11,7 @@ class BannerSlider extends Component {
 
   constructor(props) {
     super(props);
-    const { locale } = this.props.match.params;
+    const { locale } = this.props.locale;
     this.state = {
                    locale: locale,
                    products: [],
@@ -23,7 +23,7 @@ class BannerSlider extends Component {
   }
 
   componentDidUpdate() {
-    const { locale } = this.props.match.params;
+    const { locale } = this.props.locale;
     this.updateData(locale,0);
   }
 
@@ -62,7 +62,7 @@ class BannerSlider extends Component {
     return products.map(product => {
       return (
           <BannerSliderProduct
-            {...this.props}
+            locale={this.props.locale}
             key={product.productId}
             product={product}
             categoryDesc={category.categoryDesc}
