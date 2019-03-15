@@ -78,7 +78,7 @@ class Landing extends Component {
         />
         <Banner />
         <PreviewCategoryContainer
-          {...this.props}
+          locale={this.props.match.params.locale}
           setCurrentProductId={this.setCurrentProductId}
         />
         <BestSeller />

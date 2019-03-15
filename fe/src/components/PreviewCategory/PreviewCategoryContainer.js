@@ -28,7 +28,7 @@ class PreviewCategoryContainer extends Component {
         console.log('getCategories failed!');
   });
 
-  componentWillMount() {
+  componentDidMount() {
     this.getCategories();
   }
 
@@ -37,7 +37,7 @@ class PreviewCategoryContainer extends Component {
     return categories.map(category => {
       return (
           <PreviewCategory
-            {...this.props}
+             locale={this.props.locale}
              key={category.categoryId}
              category={category}
              setCurrentProductId={this.props.setCurrentProductId}

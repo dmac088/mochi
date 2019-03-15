@@ -12,51 +12,22 @@ class BannerSliderProduct extends Component {
 
   constructor(props){
     super(props);
-    const { locale } = this.props.match.params;
     this.state = {
-      "productId": null,
-      "locale": locale,
-			"product": {},
-			"currentImage": "",
+      "product": null,
     }
   }
 
-  componentDidUpdate() {
-    const { locale } = this.props.match.params;
-    const { productId } = this.props;
-    if(productId === null) {return;}
-    this.updateData(locale, productId);
-  }
-
-  getProduct = (locale, id) =>
-    productApi.findById(locale, id)
-    .then((response) => {
-        return response.text();
-    })
-    .then((responseText) => {
-        return JSON.parse(responseText);
-    })
-    .catch(()=>{
-        console.log('getProducts failed!');
-    });
-
-  updateData = (locale = "en-GB", productId, isMounting = 0) => {
-    if(locale === this.state.locale
-      && productId === this.state.productId
-      && isMounting === 0) {return;}
-    this.getProduct(locale, productId)
-    .then((responseJSON) => {
-      this.setState({
-        locale: locale,
-        productId: productId,
-        product: responseJSON,
-        currentImage: responseJSON.productImage,
-      });
+  componentDidMount() {
+    const { product } = this.props;
+    this.setState({
+      "product": product,
     });
   }
 
   render() {
-    const { product } = this.props;
+    const { product } = this.state;
+    console.log(product);
+    if(product === null) {return null;}
     return (
         <div key={product.productId} className="gf-product banner-slider-product">
           <div className="image">
