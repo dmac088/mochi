@@ -2,10 +2,48 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Slider from "react-slick";
 import { SlickArrowLeft, SlickArrowRight } from '../../services/helpers/Helper';
+import * as cartSelector from '../../services/cart/selectors';
+import * as cartService from '../../services/cart';
+import * as productApi from '../../data/products/api';
 const $ = window.$;
 
 
 class BannerSliderProduct extends Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+      "productId": null,
+			"product": {},
+			"currentImage": "",
+    }
+  }
+
+  getProduct = (locale, id) =>
+    productApi.findById(locale, id)
+    .then((response) => {
+        return response.text();
+    })
+    .then((responseText) => {
+        return JSON.parse(responseText);
+    })
+    .catch(()=>{
+        console.log('getProducts failed!');
+    });
+
+  updateData = (locale = "en-GB", productId, isMounting = 0) => {
+    if(locale === this.state.locale
+      && productId === this.state.productId
+      && isMounting === 0) {return;}
+    this.getProduct(locale, productId)
+    .then((responseJSON) => {
+      this.setState({
+        productId: productId,
+        product: responseJSON,
+        currentImage: responseJSON.productImage,
+      });
+    });
+  }
 
   render() {
     const { product } = this.props;
@@ -17,7 +55,7 @@ class BannerSliderProduct extends Component {
               <img src={product.productImage} className="img-fluid" alt="" />
             </a>
             <div className="product-hover-icons">
-              <a href="#" data-tooltip="Quick view" data-toggle="modal" data-target="#quick-view-modal-container">
+              <a id={product.productId} onClick={this.props.setCurrentProductId} href="#" data-tooltip="Quick view" data-toggle="modal" data-target="#quick-view-modal-container">
                 <span className="icon_search" />
               </a>
             </div>

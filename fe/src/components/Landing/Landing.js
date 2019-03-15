@@ -79,6 +79,7 @@ class Landing extends Component {
         <Banner />
         <PreviewCategoryContainer
           {...this.props}
+          setCurrentProductId={this.setCurrentProductId}
         />
         <BestSeller />
         <BlogPosts />
