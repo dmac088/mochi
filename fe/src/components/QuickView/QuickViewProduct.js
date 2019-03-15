@@ -5,7 +5,8 @@ import * as cartSelector from '../../services/cart/selectors';
 import * as cartService from '../../services/cart';
 import {
 	SlickArrowPrev,
-	SlickArrowNext } from './Helper';
+	SlickArrowNext
+} from './Helper';
 import * as productApi from '../../data/products/api';
 
 class QuickViewProduct extends Component{
