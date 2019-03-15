@@ -30,7 +30,7 @@ class Cart extends Component {
               </div>
             </td>
             <td className="pro-subtotal">
-              <span>$29.00</span>
+              <span>${product.quantity * product.productRrp}</span>
             </td>
             <td className="pro-remove">
               <a href="#">
