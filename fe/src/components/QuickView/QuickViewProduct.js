@@ -200,8 +200,8 @@ class QuickViewProduct extends Component{
 											<div className="tab-pane fade" id="single-slide3" role="tabpanel" aria-labelledby="single-slide-tab-3">
 												<div className="single-product-img img-full">
 													<img src="assets/images/products/grapes.jpg"
-														className="img-fluid"
-														alt=""
+															 className="img-fluid"
+															 alt=""
 													/>
 												</div>
 											</div>
