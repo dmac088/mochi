@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
+import * as cartSelector from '../../services/cart/selectors';
+import * as cartService from '../../services/cart';
 import BreadCrumb from '../BreadCrumb';
 
 class Cart extends Component {
 
   constructor(props) {
 		super(props);
+  }
+
+  removeItem = (e) => {
+    e.preventDefault();
+    console.log(e.target.id);
+    cartService.removeFromCart(cartSelector.get(), Number(e.target.id));
   }
 
   renderCartProducts = (cart) => {
@@ -33,7 +41,7 @@ class Cart extends Component {
               <span>${product.quantity * product.productRrp}</span>
             </td>
             <td className="pro-remove">
-              <a href="#">
+              <a id={product.productId} onClick={this.removeItem} href="#">
                 <i className="fa fa-trash-o"></i>
               </a>
             </td>
