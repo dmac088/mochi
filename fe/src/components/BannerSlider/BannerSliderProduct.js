@@ -26,7 +26,6 @@ class BannerSliderProduct extends Component {
 
   render() {
     const { product } = this.state;
-    console.log(product);
     if(product === null) {return null;}
     return (
         <div key={product.productId} className="gf-product banner-slider-product">
@@ -37,7 +36,7 @@ class BannerSliderProduct extends Component {
             </a>
             <div className="product-hover-icons">
               <a id={product.productId} onClick={this.props.setCurrentProductId} href="#" data-tooltip="Quick view" data-toggle="modal" data-target="#quick-view-modal-container">
-                <span className="icon_search" />
+                <span id={product.productId} className="icon_search" />
               </a>
             </div>
           </div>
