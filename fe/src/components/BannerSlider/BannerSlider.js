@@ -62,6 +62,7 @@ class BannerSlider extends Component {
     return products.map(product => {
       return (
           <BannerSliderProduct
+            {...this.props}
             key={product.productId}
             product={product}
             categoryDesc={category.categoryDesc}

@@ -12,11 +12,20 @@ class BannerSliderProduct extends Component {
 
   constructor(props){
     super(props);
+    const { locale } = this.props.match.params;
     this.state = {
       "productId": null,
+      "locale": locale,
 			"product": {},
 			"currentImage": "",
     }
+  }
+
+  componentDidUpdate() {
+    const { locale } = this.props.match.params;
+    const { productId } = this.props;
+    if(productId === null) {return;}
+    this.updateData(locale, productId);
   }
 
   getProduct = (locale, id) =>
@@ -38,6 +47,7 @@ class BannerSliderProduct extends Component {
     this.getProduct(locale, productId)
     .then((responseJSON) => {
       this.setState({
+        locale: locale,
         productId: productId,
         product: responseJSON,
         currentImage: responseJSON.productImage,
@@ -66,7 +76,7 @@ class BannerSliderProduct extends Component {
             </div>
             <h3 className="product-title"><a href="single-product.html">{product.productDesc}</a></h3>
             <div className="price-box">
-              <span className="main-price">$89.00</span>
+              <span className="main-price">${product.productRrp}</span>
               <span className="discounted-price">$80.00</span>
             </div>
           </div>
