@@ -13,6 +13,7 @@ class QuickViewProduct extends Component{
 	constructor(props){
 		super(props);
     const { locale } = this.props.match.params;
+
     this.state = {
       "locale": locale,
       "productId": null,
@@ -99,6 +100,7 @@ class QuickViewProduct extends Component{
 				productId: productId,
         product: responseJSON,
         locale: locale,
+				currentImage: responseJSON.productImage,
       });
     });
   }
@@ -120,7 +122,7 @@ class QuickViewProduct extends Component{
 
   render(){
 		const { isShowing } = this.props;
-		const { product } = this.state;
+		const { product, currentImage } = this.state;
 		if(product === null) {return null;}
 		const settings = {
 			prevArrow: <SlickArrowPrev />,
@@ -181,7 +183,10 @@ class QuickViewProduct extends Component{
 										<div className="tab-content product-large-image-list" id="myTabContent">
 											<div className="tab-pane fade show active" id="single-slide1" role="tabpanel" aria-labelledby="single-slide-tab-1">
 												<div className="single-product-img img-full">
-													<img src={product.productImage} className="img-fluid" alt="" />
+													<img src={currentImage}
+															 className="img-fluid"
+															 alt=""
+													/>
 												</div>
 											</div>
 											<div className="tab-pane fade" id="single-slide2" role="tabpanel" aria-labelledby="single-slide-tab-2">
