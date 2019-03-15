@@ -197,6 +197,7 @@ class App extends Component {
         {...routeProps}
         authenticated={this.props.tokens.authenticated}
         customer={this.props.customer}
+        cart={this.props.cart}
       />
     );
   }
@@ -363,6 +364,7 @@ class App extends Component {
 //on a dispatch call from anywhere in the application
 //this function will fire and update authenticated
 export default withRouter(connect(state => ({
+    cart: state.services.cart,
     tokens:   state.services.session.tokens,
     customer: state.services.customer.customer
 }), dispatch => ({
