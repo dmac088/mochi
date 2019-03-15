@@ -18,7 +18,7 @@ class Cart extends Component {
   renderCartProducts = (cart) => {
     return cart.items.map(product => {
         return(
-          <tr>
+          <tr key={product.productId}>
             <td className="pro-thumbnail">
               <a href="#">
                 <img src={product.productImage} className="img-fluid" alt="Product" />
@@ -34,7 +34,7 @@ class Cart extends Component {
             </td>
             <td className="pro-quantity">
               <div className="pro-qty">
-                <input type="text" value={product.quantity} />
+                <input type="text" defaultValue={product.quantity} />
               </div>
             </td>
             <td className="pro-subtotal">
@@ -109,7 +109,7 @@ class Cart extends Component {
                                                   <input type="text" placeholder="Postcode / Zip" />
                                               </div>
                                               <div className="col-md-6 col-12 mb-25">
-                                                  <input type="submit" value="Estimate" />
+                                                  <input type="submit" defaultValue="Estimate" />
                                               </div>
                                           </div>
                                       </form>
@@ -122,7 +122,7 @@ class Cart extends Component {
                                                   <input type="text" placeholder="Coupon Code" />
                                               </div>
                                               <div className="col-md-6 col-12 mb-25">
-                                                  <input type="submit" value="Apply Code" />
+                                                  <input type="submit" defaultValue="Apply Code" />
                                               </div>
                                           </div>
                                       </form>
