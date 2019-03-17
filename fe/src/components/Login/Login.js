@@ -1,6 +1,33 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as tokensActionCreators from '../../services/session/actions';
+import * as customerActionCreators from '../../services/customer/actions';
+import { initialState } from '../../services/customer/reducer';
+import { withRouter } from "react-router-dom";
 
 class Login extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = initialState;
+  }
+
+  routeLanding = (props = this.props) => {
+    props.history.push('/');
+  }
+
+  routeLogin = () => {
+    this.props.history.push({
+      "pathname": '/Login'
+    });
+  }
+
+  loginClick = () => {
+    session.authenticate(customerSelector.get(),
+                          this.routeLanding,
+                          this.routeLogin);
+  }
 
   render() {
     return(
@@ -35,4 +62,11 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default withRouter(connect(state => ({
+    tokens: state.services.session.tokens,
+}), dispatch => ({
+	actions: {
+		tokens: bindActionCreators(tokensActionCreators, dispatch),
+    customer: bindActionCreators(customerActionCreators, dispatch),
+	},
+}))(Login));
