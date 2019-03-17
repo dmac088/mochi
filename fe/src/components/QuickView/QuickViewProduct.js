@@ -94,15 +94,22 @@ class QuickViewProduct extends Component{
     if(locale === this.state.locale
 			&& productId === this.state.productId
 			&& isMounting === 0) {return;}
-    this.getProduct(locale, productId)
-    .then((responseJSON) => {
-      this.setState({
-				productId: productId,
-        product: responseJSON,
-        locale: locale,
-				currentImage: responseJSON.productImage,
-      });
-    });
+		this.setState({
+			productId: productId,
+			locale: locale,
+			product: {},
+			currentImage: null,
+		}, () => {
+	    this.getProduct(locale, productId)
+	    .then((responseJSON) => {
+	      this.setState({
+					productId: productId,
+	        product: responseJSON,
+	        locale: locale,
+					currentImage: responseJSON.productImage,
+	      });
+	    });
+		});
   }
 
 	next = () => {
