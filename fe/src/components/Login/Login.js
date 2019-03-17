@@ -34,7 +34,6 @@ class Login extends Component {
   }
 
   changeUserName = (e) => {
-    console.log(e.target.value);
     const customer = {...this.state.customer};
     customer.userName = e.target.value;
     this.setState({
@@ -43,7 +42,6 @@ class Login extends Component {
   }
 
   changePassword = (e) => {
-    console.log(e.target.value);
     const customer = {...this.state.customer};
     customer.password = e.target.value;
     this.setState({
@@ -52,7 +50,6 @@ class Login extends Component {
   }
 
   render() {
-    console.log(this.state);
     return(
       <form action="#" >
         <div className="login-form">
