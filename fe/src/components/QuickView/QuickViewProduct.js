@@ -97,17 +97,19 @@ class QuickViewProduct extends Component{
 		this.setState({
 			productId: productId,
 			locale: locale,
-			product: {},
-			currentImage: null,
+			product: {productImage: 'assets/images/spinners/default.gif'},
+			currentImage: 'assets/images/spinners/default.gif',
 		}, () => {
 	    this.getProduct(locale, productId)
 	    .then((responseJSON) => {
-	      this.setState({
-					productId: productId,
-	        product: responseJSON,
-	        locale: locale,
-					currentImage: responseJSON.productImage,
-	      });
+				setTimeout(() => {
+					this.setState({
+						productId: productId,
+						product: responseJSON,
+						locale: locale,
+						currentImage: responseJSON.productImage,
+					});
+				}, 3000);
 	    });
 		});
   }
