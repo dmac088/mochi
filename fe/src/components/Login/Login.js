@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import * as session from '../../services/session';
 import * as tokensActionCreators from '../../services/session/actions';
 import * as customerActionCreators from '../../services/customer/actions';
+import * as customerSelector from '../../services/customer/selectors';
 import { initialState } from '../../services/customer/reducer';
 import { withRouter } from "react-router-dom";
 
@@ -14,22 +16,43 @@ class Login extends Component {
   }
 
   routeLanding = (props = this.props) => {
-    props.history.push('/');
+    const { locale, currency } = this.props.match.params;
+    this.props.history.push('/' + locale + '/' + currency);
   }
 
   routeLogin = () => {
-    this.props.history.push({
-      "pathname": '/Login'
-    });
+    const { locale, currency } = this.props.match.params;
+    this.props.history.push('/' + locale + '/' + currency + '/Auth');
+
   }
 
-  loginClick = () => {
-    session.authenticate(customerSelector.get(),
+  loginClick = (e) => {
+    e.preventDefault();
+    session.authenticate( this.state.customer,
                           this.routeLanding,
                           this.routeLogin);
   }
 
+  changeUserName = (e) => {
+    console.log(e.target.value);
+    const customer = {...this.state.customer};
+    customer.userName = e.target.value;
+    this.setState({
+      "customer": customer,
+    });
+  }
+
+  changePassword = (e) => {
+    console.log(e.target.value);
+    const customer = {...this.state.customer};
+    customer.password = e.target.value;
+    this.setState({
+      "customer": customer,
+    });
+  }
+
   render() {
+    console.log(this.state);
     return(
       <form action="#" >
         <div className="login-form">
@@ -37,11 +60,11 @@ class Login extends Component {
           <div className="row">
             <div className="col-md-12 col-12 mb-20">
               <label>Email Address*</label>
-              <input className="mb-0" type="email" placeholder="Email Address" />
+              <input  onChange={this.changeUserName} className="mb-0" type="email" placeholder="Email Address" />
             </div>
             <div className="col-12 mb-20">
               <label>Password</label>
-              <input className="mb-0" type="password" placeholder="Password" />
+              <input onChange={this.changePassword} className="mb-0" type="password" placeholder="Password" />
             </div>
             <div className="col-md-8">
               <div className="check-box d-inline-block ml-0 ml-md-2 mt-10">
@@ -53,7 +76,7 @@ class Login extends Component {
               <a href="#"> Forgotten pasward?</a>
             </div>
             <div className="col-md-12">
-              <button className="register-button mt-0">Login</button>
+              <button onClick={this.loginClick} className="register-button mt-0">Login</button>
             </div>
           </div>
         </div>
