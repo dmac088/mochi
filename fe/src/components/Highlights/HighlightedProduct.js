@@ -7,12 +7,20 @@ class HighlightedProduct extends Component {
 
   constructor(props){
 		super(props);
-    const { product } = this.props;
     this.state = {
-			"product": product,
+			"product": {},
 			"quantity": 1,
+      "currentImage": 'assets/images/spinners/default.gif',
     }
 	}
+
+  componentDidMount() {
+    const { product } = this.props;
+    setTimeout(() => this.setState({
+                      "product": product,
+                      "currentImage": product.productImage,
+                    }), 1000);
+  }
 
   addToCart = (e) => {
     e.preventDefault();
@@ -25,12 +33,13 @@ class HighlightedProduct extends Component {
 
   render() {
     const { product } = this.props;
+    const { currentImage } = this.state;
     return (
       <div className="gf-product tab-slider-sub-product">
         <div className="image">
           <a href="single-product.html">
             <span className="onsale">Sale!</span>
-            <img src={product.productImage} className="img-fluid" alt="" />
+            <img src={currentImage} className="img-fluid" alt="" />
           </a>
           <div className="product-hover-icons">
             <a onClick={this.addToCart} className="active" href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
