@@ -139,7 +139,6 @@ class QuickViewProduct extends Component{
   render(){
 		const { isShowing } = this.props;
 		const { product, currentImage } = this.state;
-		if(product === null) {return null;}
 		const settings = {
 			prevArrow: <SlickArrowPrev />,
 			nextArrow: <SlickArrowNext />,
