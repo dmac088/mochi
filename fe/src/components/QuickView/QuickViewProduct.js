@@ -165,7 +165,6 @@ class QuickViewProduct extends Component{
 				}
 			}
 		]};
-			console.log(this.state.isShowing);
     return(
 			<div className={"modal fade quick-view-modal-container "
 									+ ((isShowing) ? " show" : "")}
