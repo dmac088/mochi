@@ -42,7 +42,7 @@ class QuickViewProduct extends Component{
 	}
 
 	toggle = () => {
-		const {toggleQuickView} = this.props;
+		const { toggleQuickView } = this.props;
 		this.setState({
 			"product": {"productImage": 'assets/images/spinners/default.gif'},
 			"currentImage": 'assets/images/spinners/default.gif',
