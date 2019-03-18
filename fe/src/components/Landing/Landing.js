@@ -19,7 +19,6 @@ class Landing extends Component {
     this.state = {
         theposition: 0,
         showScroller: false,
-        showQVModal: false,
         currentProductId: null,
     };
   }
@@ -28,13 +27,6 @@ class Landing extends Component {
     e.preventDefault();
     this.setState({
       currentProductId: e.target.id,
-      showQVModal: true,
-    });
-  }
-
-  toggleQuickView = () => {
-    this.setState({
-      "showQVModal": !this.state.showQVModal,
     });
   }
 
@@ -88,7 +80,6 @@ class Landing extends Component {
         <QuickViewProduct
           locale={locale}
           productId={this.state.currentProductId}
-          isShowing={this.state.showQVModal}
           toggleQuickView={this.toggleQuickView}
         />
         <a
