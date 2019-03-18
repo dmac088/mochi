@@ -17,9 +17,8 @@ class QuickViewProduct extends Component{
     this.state = {
       "locale": locale,
       "productId": null,
-			"product": {},
-			"quantity": 1,
-			"currentImage": "",
+			"product": {"productImage": 'assets/images/spinners/default.gif'},
+			"currentImage": "assets/images/spinners/default.gif",
     }
 	}
 
@@ -42,6 +41,15 @@ class QuickViewProduct extends Component{
 									});
 								}, 1000);
 							}
+	}
+
+	toggle = () => {
+		const {toggleQuickView} = this.props;
+		this.setState({
+			product: {productImage: 'assets/images/spinners/default.gif'},
+			currentImage: 'assets/images/spinners/default.gif',
+		}, toggleQuickView);
+
 	}
 
 	addToCart = (e) => {
@@ -96,8 +104,6 @@ class QuickViewProduct extends Component{
 		this.setState({
 			productId: productId,
 			locale: locale,
-			product: {productImage: 'assets/images/spinners/default.gif'},
-			currentImage: 'assets/images/spinners/default.gif',
 		}, () => {
 	    this.getProduct(locale, productId)
 	    .then((responseJSON) => {
@@ -180,7 +186,7 @@ class QuickViewProduct extends Component{
 				<div className="modal-dialog modal-dialog-centered" role="document">
 					<div className="modal-content">
 						<div className="modal-header">
-							<button onClick={this.props.toggleQuickView} type="button" className="close" data-dismiss="modal" aria-label="Close">
+							<button onClick={this.toggle} type="button" className="close" data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
