@@ -23,9 +23,6 @@ class QuickViewProduct extends Component{
     }
 	}
 
-  componentDidMount() {
-  }
-
   componentDidUpdate() {
     const { locale, productId } = this.props;
 		if(productId === null) {return;}
