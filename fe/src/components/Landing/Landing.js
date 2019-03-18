@@ -88,7 +88,7 @@ class Landing extends Component {
         <QuickViewProduct
           locale={locale}
           productId={this.state.currentProductId}
-          showQVModal={this.state.showQVModal}
+          isShowing={this.state.showQVModal}
           toggleQuickView={this.toggleQuickView}
         />
         <a

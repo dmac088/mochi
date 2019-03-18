@@ -20,19 +20,14 @@ class QuickViewProduct extends Component{
 			"product": {"productImage": 'assets/images/spinners/default.gif'},
 			"currentImage": "assets/images/spinners/default.gif",
 			"quantity": 1,
-			"isShowing": false,
+			"isDirty": true,
     }
 	}
 
   componentDidUpdate() {
     const { locale, productId, showQVModal } = this.props;
-		if(showQVModal === this.state.isShowing) {return;}
 		if(!productId) {return;}
-		this.setState({
-			"isShowing": showQVModal,
-		}, () => {
-			this.updateData(locale, productId);
-		});
+		this.updateData(locale, productId);
   }
 
 	updateState = () => {
@@ -52,6 +47,7 @@ class QuickViewProduct extends Component{
 		this.setState({
 			"currentImage": 'assets/images/spinners/default.gif',
 			"quantity": 1,
+			"isDirty": true,
 		}, toggleQuickView);
 	}
 
@@ -131,7 +127,8 @@ class QuickViewProduct extends Component{
 	}
 
   render(){
-		const { product, currentImage, isShowing } = this.state;
+		const { product, currentImage } = this.state;
+		const { isShowing } = this.props;
 		const settings = {
 			prevArrow: <SlickArrowPrev />,
 			nextArrow: <SlickArrowNext />,
