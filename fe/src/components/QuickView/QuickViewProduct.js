@@ -14,7 +14,6 @@ class QuickViewProduct extends Component{
 	constructor(props){
 		super(props);
     const { locale } = this.props;
-
     this.state = {
       "locale": locale,
       "productId": null,
