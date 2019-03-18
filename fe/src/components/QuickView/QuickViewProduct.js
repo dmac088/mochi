@@ -13,21 +13,27 @@ class QuickViewProduct extends Component{
 
 	constructor(props){
 		super(props);
-    const { locale } = this.props;
     this.state = {
-      "locale": locale,
+      "locale": "en-GB",
       "productId": null,
 			"product": {"productImage": 'assets/images/spinners/default.gif'},
 			"currentImage": "assets/images/spinners/default.gif",
-			"quantity": 1,
-			"isDirty": true,
+			"quantity": 1
     }
 	}
 
   componentDidUpdate() {
-    const { locale, productId, showQVModal } = this.props;
+    const { locale, productId } = this.props;
 		if(!productId) {return;}
-		this.updateData(locale, productId);
+		if(locale === this.state.locale
+			&& productId === this.state.productId) {return;}
+		this.setState({
+			"locale": locale,
+			"productId": productId,
+		}, () => {
+		this.updateData(locale, productId)
+		});
+
   }
 
 	updateState = () => {
@@ -47,7 +53,6 @@ class QuickViewProduct extends Component{
 		this.setState({
 			"currentImage": 'assets/images/spinners/default.gif',
 			"quantity": 1,
-			"isDirty": true,
 		}, toggleQuickView);
 	}
 
@@ -97,15 +102,12 @@ class QuickViewProduct extends Component{
     });
 
   updateData = (locale = "en-GB", productId) => {
-			if(locale === this.state.locale && productId === this.state.productId) {return;}
 	    this.getProduct(locale, productId)
 	    .then((responseJSON) => {
 				setTimeout(() => {
 					this.setState({
-						"locale": locale,
-						"productId": productId,
 						"product": responseJSON,
-						"currentImage": responseJSON.productImage,
+						"currentImage": responseJSON.productImage
 					});
 				}, 1000);
 	    });
