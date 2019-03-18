@@ -116,7 +116,7 @@ class QuickViewProduct extends Component{
 						locale: locale,
 						currentImage: responseJSON.productImage,
 					});
-				}, 3000);
+				}, 1000);
 	    });
 		});
   }
