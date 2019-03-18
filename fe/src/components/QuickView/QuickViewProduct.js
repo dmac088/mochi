@@ -25,9 +25,14 @@ class QuickViewProduct extends Component{
 	}
 
   componentDidUpdate() {
-    const { locale, productId, showQVModal} = this.props;
+    const { locale, productId, showQVModal } = this.props;
+		if(showQVModal === this.state.isShowing) {return;}
 		if(!productId) {return;}
-    this.updateData(locale, productId, showQVModal);
+		this.setState({
+			"isShowing": showQVModal,
+		}, () => {
+			this.updateData(locale, productId);
+		});
   }
 
 	updateState = () => {
@@ -43,12 +48,11 @@ class QuickViewProduct extends Component{
 	}
 
 	closeModal = () => {
+		const { toggleQuickView } = this.props;
 		this.setState({
-			"product": {"productImage": 'assets/images/spinners/default.gif'},
 			"currentImage": 'assets/images/spinners/default.gif',
 			"quantity": 1,
-			"isShowing": false,
-		});
+		}, toggleQuickView);
 	}
 
 	addToCart = (e) => {
@@ -96,27 +100,19 @@ class QuickViewProduct extends Component{
         console.log('getProducts failed!');
     });
 
-  updateData = (locale = "en-GB", productId, isShowing, isMounting = 0) => {
-    if(locale === this.state.locale
-			&& productId === this.state.productId
-			&& isMounting === 0) {return;}
-		this.setState({
-			"productId": productId,
-			"locale": locale,
-			"isShowing": isShowing,
-		}, () => {
+  updateData = (locale = "en-GB", productId) => {
+			if(locale === this.state.locale && productId === this.state.productId) {return;}
 	    this.getProduct(locale, productId)
 	    .then((responseJSON) => {
 				setTimeout(() => {
 					this.setState({
+						"locale": locale,
 						"productId": productId,
 						"product": responseJSON,
-						"locale": locale,
 						"currentImage": responseJSON.productImage,
 					});
 				}, 1000);
 	    });
-		});
   }
 
 	next = () => {
@@ -169,6 +165,7 @@ class QuickViewProduct extends Component{
 				}
 			}
 		]};
+			console.log(this.state.isShowing);
     return(
 			<div className={"modal fade quick-view-modal-container "
 									+ ((isShowing) ? " show" : "")}
