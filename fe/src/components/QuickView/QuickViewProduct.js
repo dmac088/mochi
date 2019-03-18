@@ -20,13 +20,14 @@ class QuickViewProduct extends Component{
 			"product": {"productImage": 'assets/images/spinners/default.gif'},
 			"currentImage": "assets/images/spinners/default.gif",
 			"quantity": 1,
+			"isShowing": false,
     }
 	}
 
   componentDidUpdate() {
-    const { locale, productId } = this.props;
+    const { locale, productId, showQVModal} = this.props;
 		if(!productId) {return;}
-    this.updateData(locale, productId);
+    this.updateData(locale, productId, showQVModal);
   }
 
 	updateState = () => {
@@ -41,14 +42,13 @@ class QuickViewProduct extends Component{
 							}
 	}
 
-	toggle = () => {
-		const { toggleQuickView } = this.props;
+	closeModal = () => {
 		this.setState({
 			"product": {"productImage": 'assets/images/spinners/default.gif'},
 			"currentImage": 'assets/images/spinners/default.gif',
 			"quantity": 1,
-		}, toggleQuickView);
-
+			"isShowing": false,
+		});
 	}
 
 	addToCart = (e) => {
@@ -96,22 +96,23 @@ class QuickViewProduct extends Component{
         console.log('getProducts failed!');
     });
 
-  updateData = (locale = "en-GB", productId, isMounting = 0) => {
+  updateData = (locale = "en-GB", productId, isShowing, isMounting = 0) => {
     if(locale === this.state.locale
 			&& productId === this.state.productId
 			&& isMounting === 0) {return;}
 		this.setState({
-			productId: productId,
-			locale: locale,
+			"productId": productId,
+			"locale": locale,
+			"isShowing": isShowing,
 		}, () => {
 	    this.getProduct(locale, productId)
 	    .then((responseJSON) => {
 				setTimeout(() => {
 					this.setState({
-						productId: productId,
-						product: responseJSON,
-						locale: locale,
-						currentImage: responseJSON.productImage,
+						"productId": productId,
+						"product": responseJSON,
+						"locale": locale,
+						"currentImage": responseJSON.productImage,
 					});
 				}, 1000);
 	    });
@@ -134,8 +135,7 @@ class QuickViewProduct extends Component{
 	}
 
   render(){
-		const { isShowing } = this.props;
-		const { product, currentImage } = this.state;
+		const { product, currentImage, isShowing } = this.state;
 		const settings = {
 			prevArrow: <SlickArrowPrev />,
 			nextArrow: <SlickArrowNext />,
@@ -184,7 +184,7 @@ class QuickViewProduct extends Component{
 				<div className="modal-dialog modal-dialog-centered" role="document">
 					<div className="modal-content">
 						<div className="modal-header">
-							<button onClick={this.toggle} type="button" className="close" data-dismiss="modal" aria-label="Close">
+							<button onClick={this.closeModal} type="button" className="close" data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>

@@ -64,7 +64,7 @@ class Landing extends Component {
 
 
   render() {
-
+    const { locale } = this.props.match.params;
     return(
       <div>
         <HeroSlider
@@ -78,7 +78,7 @@ class Landing extends Component {
         />
         <Banner />
         <PreviewCategoryContainer
-          locale={this.props.match.params.locale}
+          locale={locale}
           setCurrentProductId={this.setCurrentProductId}
         />
         <BestSeller />
@@ -86,9 +86,9 @@ class Landing extends Component {
         <BrandSlider />
         <Footer />
         <QuickViewProduct
-          locale={this.props.match.params.locale}
+          locale={locale}
           productId={this.state.currentProductId}
-          isShowing={this.state.showQVModal}
+          showQVModal={this.state.showQVModal}
           toggleQuickView={this.toggleQuickView}
         />
         <a
