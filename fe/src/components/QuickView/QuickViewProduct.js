@@ -19,6 +19,7 @@ class QuickViewProduct extends Component{
       "productId": null,
 			"product": {"productImage": 'assets/images/spinners/default.gif'},
 			"currentImage": "assets/images/spinners/default.gif",
+			"quantity": 1,
     }
 	}
 
@@ -46,8 +47,9 @@ class QuickViewProduct extends Component{
 	toggle = () => {
 		const {toggleQuickView} = this.props;
 		this.setState({
-			product: {productImage: 'assets/images/spinners/default.gif'},
-			currentImage: 'assets/images/spinners/default.gif',
+			"product": {"productImage": 'assets/images/spinners/default.gif'},
+			"currentImage": 'assets/images/spinners/default.gif',
+			"quantity": 1,
 		}, toggleQuickView);
 
 	}
