@@ -40,7 +40,7 @@ class QuickViewProduct extends Component{
 									this.setState({
 										"isAdded": false,
 									});
-								}, 3500);
+								}, 1000);
 							}
 	}
 
