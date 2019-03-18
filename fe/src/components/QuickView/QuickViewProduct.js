@@ -9,31 +9,35 @@ import {
 } from './Helper';
 import * as productApi from '../../data/products/api';
 
+const initialState = {
+	"locale": "en-GB",
+	"productId": null,
+	"product": {"productImage": 'assets/images/spinners/default.gif'},
+	"currentImage": "assets/images/spinners/default.gif",
+	"quantity": 1,
+	"isShowing": false,
+};
+
 class QuickViewProduct extends Component{
 
 	constructor(props){
 		super(props);
-    this.state = {
-      "locale": "en-GB",
-      "productId": null,
-			"product": {"productImage": 'assets/images/spinners/default.gif'},
-			"currentImage": "assets/images/spinners/default.gif",
-			"quantity": 1
-    }
+    this.state = initialState;
 	}
 
   componentDidUpdate() {
-    const { locale, productId } = this.props;
+    const { locale, productId, isShowing } = this.props;
 		if(!productId) {return;}
 		if(locale === this.state.locale
 			&& productId === this.state.productId) {return;}
+
 		this.setState({
 			"locale": locale,
 			"productId": productId,
-		}, () => {
-		this.updateData(locale, productId)
-		});
-
+			"product": {"productImage": 'assets/images/spinners/default.gif'},
+			"currentImage": "assets/images/spinners/default.gif",
+			"isShowing": isShowing,
+		}, this.updateData(locale, productId));
   }
 
 	updateState = () => {
@@ -48,12 +52,12 @@ class QuickViewProduct extends Component{
 							}
 	}
 
+
 	closeModal = () => {
 		const { toggleQuickView } = this.props;
 		this.setState({
-			"currentImage": 'assets/images/spinners/default.gif',
-			"quantity": 1,
-		}, toggleQuickView);
+			"isShowing": false,
+		}, toggleQuickView());
 	}
 
 	addToCart = (e) => {
@@ -129,8 +133,8 @@ class QuickViewProduct extends Component{
 	}
 
   render(){
-		const { product, currentImage } = this.state;
-		const { isShowing } = this.props;
+		if(this.props.productId === null) {return null;}
+		const { product, currentImage, isShowing} = this.state;
 		const settings = {
 			prevArrow: <SlickArrowPrev />,
 			nextArrow: <SlickArrowNext />,
