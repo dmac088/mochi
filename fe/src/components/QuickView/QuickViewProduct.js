@@ -25,7 +25,7 @@ class QuickViewProduct extends Component{
 
   componentDidUpdate() {
     const { locale, productId } = this.props;
-		if(productId === null) {return;}
+		if(!productId) {return;}
     this.updateData(locale, productId);
   }
 
