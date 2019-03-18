@@ -28,8 +28,9 @@ class QuickViewProduct extends Component{
   componentDidUpdate() {
     const { locale, productId, isShowing } = this.props;
 		if(!productId) {return;}
-		if(locale === this.state.locale
-			&& productId === this.state.productId) {return;}
+		if((locale === this.state.locale
+			&& productId === this.state.productId
+			&& isShowing === this.state.isShowing)) {return;}
 
 		this.setState({
 			"locale": locale,
@@ -37,7 +38,10 @@ class QuickViewProduct extends Component{
 			"product": {"productImage": 'assets/images/spinners/default.gif'},
 			"currentImage": "assets/images/spinners/default.gif",
 			"isShowing": isShowing,
-		}, this.updateData(locale, productId));
+		},  () => {
+				if(!isShowing) {return;}
+				this.updateData(locale, productId);
+		});
   }
 
 	updateState = () => {
@@ -54,9 +58,8 @@ class QuickViewProduct extends Component{
 
 
 	closeModal = () => {
-		this.setState({
-			"isShowing": false,
-		});
+		const { toggleQuickView } = this.props;
+		toggleQuickView();
 	}
 
 	addToCart = (e) => {
