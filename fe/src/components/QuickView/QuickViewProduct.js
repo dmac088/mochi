@@ -3,11 +3,12 @@ import {findDOMNode} from 'react-dom';
 import Slider from "react-slick";
 import * as cartSelector from '../../services/cart/selectors';
 import * as cartService from '../../services/cart';
+import * as productApi from '../../data/products/api';
 import {
 	SlickArrowPrev,
 	SlickArrowNext
 } from './Helper';
-import * as productApi from '../../data/products/api';
+
 
 const initialState = {
 	"locale": "en-GB",

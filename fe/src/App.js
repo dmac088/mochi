@@ -346,7 +346,7 @@ class App extends Component {
             />
 
             <Route
-              path={"/:locale/:currency/Product/:productid"}
+              path={"/:locale/:currency/Product/:productId"}
               exact={true}
               render={(props) =>
                 <React.Fragment>
