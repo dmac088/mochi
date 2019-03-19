@@ -10,7 +10,7 @@ class HighlightedProduct extends Component {
     this.state = {
 			"product": {},
 			"quantity": 1,
-      "currentImage": 'assets/images/spinners/default.gif',
+      "currentImage": 'assets/images/spinners/spinner_small.gif',
     }
 	}
 
