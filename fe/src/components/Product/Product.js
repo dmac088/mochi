@@ -86,6 +86,21 @@ class Product extends Component {
 													this.updateState);
 	}
 
+
+  	incrementQuantity = (e) => {
+  		e.preventDefault();
+  		this.setState((prevState) => ({
+  			 "quantity": prevState.quantity + 1
+  		}));
+  	}
+
+  	decrementQuantity = (e) => {
+  		e.preventDefault();
+  		this.setState((prevState) => ({
+  			 "quantity": prevState.quantity - 1
+  		}));
+  	}
+
   renderSpinner = () => {
 		return (
 			<div className="row justify-content-center">
@@ -267,7 +282,7 @@ class Product extends Component {
                   </p>
 
                   <h2 className="product-price mb-15">
-                    <span className="main-price">{product.productRrp}</span>
+                    <span className="main-price">${product.productRrp}</span>
                     <span className="discounted-price"> $10.00</span>
                   </h2>
 
