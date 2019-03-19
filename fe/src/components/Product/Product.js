@@ -569,7 +569,9 @@ class Product extends Component {
           {...this.props}
           page={"Product"}
         />
-      {this.renderContent(currentImage, product)}
+      		{((!isLoading)
+            ? this.renderContent(currentImage, product)
+            : this.renderSpinner())}
       </React.Fragment>
       );
     }
