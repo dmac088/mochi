@@ -12,17 +12,17 @@ cart={this.props.cart}
 class ManageCart extends Component {
 
     removeItem = (event) => {
-      cartService.removeFromCart(cartSelector.get(), Number(event.target.id));
+      cartService.removeFromCart(cartSelector.get(), Number(event.currentTarget.id));
     }
 
     incrementQuantity = (e) => {
       //update the redux state to increase the quantity by 1
-      cartService.updateQuantity(cartSelector.get(), e.target.id, 1)
+      cartService.updateQuantity(cartSelector.get(), e.currentTarget.id, 1)
     }
 
     decrementQuantity = (e) => {
       //update the redux state to reduce the quantity by 1
-      cartService.updateQuantity(cartSelector.get(), e.target.id, -1)
+      cartService.updateQuantity(cartSelector.get(), e.currentTarget.id, -1)
     }
 
     renderCartItems = () => {

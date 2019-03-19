@@ -17,12 +17,12 @@ class ManageCart extends Component {
 
     incrementQuantity = (e) => {
       //update the redux state to increase the quantity by 1
-      cartService.updateQuantity(cartSelector.get(), e.target.id, 1)
+      cartService.updateQuantity(cartSelector.get(), e.currentTarget.id, 1)
     }
 
     decrementQuantity = (e) => {
       //update the redux state to reduce the quantity by 1
-      cartService.updateQuantity(cartSelector.get(), e.target.id, -1)
+      cartService.updateQuantity(cartSelector.get(), e.currentTarget.id, -1)
     }
 
     renderCartItems = () => {

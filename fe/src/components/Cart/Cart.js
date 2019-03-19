@@ -11,8 +11,7 @@ class Cart extends Component {
 
   removeItem = (e) => {
     e.preventDefault();
-    console.log(e.target.id);
-    cartService.removeFromCart(cartSelector.get(), Number(e.target.id));
+    cartService.removeFromCart(cartSelector.get(), Number(e.currentTarget.id));
   }
 
   renderCartProducts = (cart) => {
