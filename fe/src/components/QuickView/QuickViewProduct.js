@@ -322,7 +322,7 @@ class QuickViewProduct extends Component{
 						<div className="modal-body">
 								{((!isLoading)
 								? this.renderModal(currentImage, product, settings)
-								: this.renderSpinner(currentImage))}
+								: this.renderSpinner())}
 						</div>
 					</div>
 				</div>
