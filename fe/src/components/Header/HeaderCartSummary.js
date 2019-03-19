@@ -98,8 +98,7 @@ class Accordion extends React.Component {
 
   removeItem = (e) => {
     e.preventDefault();
-    console.log(e.target.id);
-    cartService.removeFromCart(cartSelector.get(), Number(e.target.id));
+    cartService.removeFromCart(cartSelector.get(), Number(e.currentTarget.id));
   }
 
   renderCartItems = (cart) => {
@@ -107,8 +106,8 @@ class Accordion extends React.Component {
           return(
             <div key={product.productId} className="cart-float-single-item d-flex">
               <span className="remove-item">
-                <a onClick={this.removeItem}  href="#">
-                  <i id={product.productId} className="fa fa-times" />
+                <a id={product.productId} onClick={this.removeItem}  href="#">
+                  <i className="fa fa-times" />
                 </a>
               </span>
               <div className="cart-float-single-item-image">
