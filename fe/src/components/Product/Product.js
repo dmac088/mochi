@@ -4,9 +4,9 @@ import BreadCrumb from '../BreadCrumb';
 const initialState = {
 	"locale": "en-GB",
 	"productId": null,
-	"product": {"productImage": 'assets/images/spinners/default.gif'},
-	"currentImage": "assets/images/spinners/default.gif",
-	"spinnerImage": "assets/images/spinners/default.gif",
+	"product": {"productImage": 'assets/images/spinners/spinner_large.gif'},
+	"currentImage": "assets/images/spinners/spinner_large.gif",
+	"spinnerImage": "assets/images/spinners/spinner_large.gif",
 	"quantity": 1,
 	"isShowing": false,
 	"isLoading": false,
