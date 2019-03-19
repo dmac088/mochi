@@ -97,7 +97,7 @@ class Product extends Component {
                           href="#single-slide1"
                         >
                           <img
-                            src="assets/images/big-product-image/product04.jpg"
+                            src={"assets/images/big-product-image/product04.jpg"}
                             className="img-fluid"
                             alt=""
                           />
@@ -153,7 +153,7 @@ class Product extends Component {
                     >
                       <div className="single-product-img easyzoom img-full">
                         <img
-                          src="assets/images/big-product-image/product04.jpg"
+                          src={product.productImage}
                           className="img-fluid"
                           alt=""
                         />
