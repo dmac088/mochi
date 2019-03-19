@@ -13,9 +13,9 @@ class HighlightedColumn extends Component {
     return products.map(product => {
       return (
           <HighlightedProduct
+            {...this.props}
             key={product.productId}
             product={product}
-            setCurrentProductId={this.props.setCurrentProductId}
           />
         )
     });

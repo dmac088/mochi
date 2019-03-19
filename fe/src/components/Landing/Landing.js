@@ -9,7 +9,6 @@ import PreviewCategoryContainer from '../PreviewCategory/PreviewCategoryContaine
 import Footer from '../Footer/Footer';
 import Highlights from '../Highlights/Highlights';
 import QuickViewProduct from '../QuickView/QuickViewProduct';
-import { withRouter } from 'react-router-dom';
 import ReactTransitionGroup from 'react-addons-transition-group';
 
 class Landing extends Component {
@@ -86,7 +85,7 @@ class Landing extends Component {
         <BrandSlider />
         <Footer />
         <QuickViewProduct
-          locale={locale}
+          {...this.props}
           productId={this.state.currentProductId}
           isShowing={this.state.showQVModal}
           toggleQuickView={this.toggleQuickView}
@@ -101,4 +100,4 @@ class Landing extends Component {
   }
 }
 
-export default withRouter(Landing);
+export default Landing;
