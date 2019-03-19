@@ -130,7 +130,9 @@ class QuickViewProduct extends Component{
 	}
 
 	updateQuantity = (e) => {
-		console.log(e.target.value);
+		this.setState({
+			"quantity": e.target.value,
+		})
 	}
 
   getProduct = (locale, id) =>

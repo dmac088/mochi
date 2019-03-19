@@ -64,7 +64,6 @@ class Product extends Component {
       });
   }
 
-
   updateState = () => {
   	this.setState({
   		"isAdded": true,
@@ -87,19 +86,25 @@ class Product extends Component {
 	}
 
 
-  	incrementQuantity = (e) => {
-  		e.preventDefault();
-  		this.setState((prevState) => ({
-  			 "quantity": prevState.quantity + 1
-  		}));
-  	}
+	incrementQuantity = (e) => {
+		e.preventDefault();
+		this.setState((prevState) => ({
+			 "quantity": prevState.quantity + 1
+		}));
+	}
 
-  	decrementQuantity = (e) => {
-  		e.preventDefault();
-  		this.setState((prevState) => ({
-  			 "quantity": prevState.quantity - 1
-  		}));
-  	}
+	decrementQuantity = (e) => {
+		e.preventDefault();
+		this.setState((prevState) => ({
+			 "quantity": prevState.quantity - 1
+		}));
+	}
+
+  updateQuantity = (e) => {
+  	this.setState({
+  		"quantity": e.target.value,
+  	});
+  }
 
   renderSpinner = () => {
 		return (
@@ -295,7 +300,9 @@ class Product extends Component {
 
                   <div className="cart-buttons mb-20">
                     <div className="pro-qty mr-20 mb-xs-20">
-                      <input type="text" defaultValue="1" />
+                      <input onChange={this.updateQuantity} type="text" value={this.state.quantity} />
+                        <a onClick={this.incrementQuantity} href="#" className="inc qty-btn">+</a>
+                        <a onClick={this.decrementQuantity} href="#" className="dec qty-btn">-</a>
                     </div>
                     <div className="add-to-cart-btn">
                       <a onClick={this.addToCart} href="#">
