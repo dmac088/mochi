@@ -61,9 +61,9 @@ class Featured extends Component {
     return columns.map(column => {
       return (
         <HighlightedColumn
+          {...this.props}
           key={columns.indexOf(column)}
           products={column}
-          setCurrentProductId={this.props.setCurrentProductId}
         />
       )
     })
