@@ -64,6 +64,28 @@ class Product extends Component {
       });
   }
 
+
+  updateState = () => {
+  	this.setState({
+  		"isAdded": true,
+  	}), () => {
+  							setTimeout(() => {
+  								this.setState({
+  									"isAdded": false,
+  								});
+  							}, 1000);
+  						}
+  }
+
+  addToCart = (e) => {
+		e.preventDefault();
+		const { product, quantity } = this.state;
+		product.quantity = quantity;
+		cartService.addToCart(cartSelector.get(),
+													product,
+													this.updateState);
+	}
+
   renderSpinner = () => {
 		return (
 			<div className="row justify-content-center">
@@ -245,7 +267,7 @@ class Product extends Component {
                   </p>
 
                   <h2 className="product-price mb-15">
-                    <span className="main-price">$12.90</span>
+                    <span className="main-price">{product.productRrp}</span>
                     <span className="discounted-price"> $10.00</span>
                   </h2>
 
@@ -261,7 +283,7 @@ class Product extends Component {
                       <input type="text" defaultValue="1" />
                     </div>
                     <div className="add-to-cart-btn">
-                      <a href="#">
+                      <a onClick={this.addToCart} href="#">
                         <i className="fa fa-shopping-cart" /> Add to Cart
                       </a>
                     </div>
