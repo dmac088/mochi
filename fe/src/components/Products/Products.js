@@ -15,6 +15,7 @@ import NoResults from "../../empty-states/NoResults";
 
 class Products extends Component {
   render() {
+      console.log(this.props);
 				return(
           <React.Fragment>
             <Header
@@ -38,7 +39,7 @@ class Products extends Component {
                   <div className="col-lg-9 order-1 order-lg-2 mb-sm-35 mb-xs-35">
                     <ShopBanner/>
                     <ShopHeader/>
-                    <div className="shop-product-wrap list row no-gutters mb-35">
+                    <div className="shop-product-wrap grid row no-gutters mb-35">
                       <Product/>
                     </div>
                     <Pagination/>
