@@ -121,9 +121,6 @@ class Product extends Component {
   renderContent = (currentImage, product) => {
 		return(
 			<React.Fragment>
-				<Header
-					{...this.props}
-				/>
 	      <div className="single-product-content ">
 	        <div className="container">
 	          <div className="single-product-content-container mb-35">
@@ -613,6 +610,9 @@ class Product extends Component {
     const { product, currentImage, isShowing, isLoading} = this.state;
     return (
       <React.Fragment>
+				<Header
+					{...this.props}
+				/>
         <BreadCrumb
           {...this.props}
           page={"Product"}
