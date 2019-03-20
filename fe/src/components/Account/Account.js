@@ -1,7 +1,15 @@
 import React, { Component } from 'react';
+import * as sessionService from '../../services/session';
 import BreadCrumb from '../BreadCrumb';
 
 class Account extends Component {
+
+
+  logoutClick = (e) => {
+    e.preventDefault();
+    sessionService.clearSession();
+  }
+
 
   render() {
     const { givenName, familyName } = this.props.customer;
@@ -33,7 +41,7 @@ class Account extends Component {
 
                       <a href="#account-info" data-toggle="tab"><i className="fa fa-user"></i> Account Details</a>
 
-                      <a href="login-register.html"><i className="fa fa-sign-out"></i> Logout</a>
+                      <a onClick={this.logoutClick} href="#"><i className="fa fa-sign-out"></i> Logout</a>
                     </div>
                   </div>
 
