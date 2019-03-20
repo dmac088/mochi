@@ -1,6 +1,38 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as customerService from '../../services/customer';
+import store from '../../store';
+import { deepValue } from '../../services/helpers/Helper';
+import { initialState } from '../../services/customer/reducer';
+import { bindActionCreators } from 'redux';
+import * as tokensActionCreators from '../../services/session/actions';
+import * as customerActionCreators from '../../services/customer/actions';
+
 
 class Register extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = initialState;
+    store.subscribe(this.reduxSubscribedFunction);
+  }
+
+  reduxSubscribedFunction = () => {
+  }
+
+  updateCustomerState = (event) =>  {
+    let newstate = {...this.state};
+    deepValue(newstate, event.target.id, event.target.value);
+    this.setState(newstate);
+  }
+
+  registerClick = (event) => {
+      this.setState({
+        isLoading: true,
+        error: '',
+      });
+      customerService.createNewCustomer(this.state.customer);
+  }
 
   render() {
     return(
@@ -10,26 +42,26 @@ class Register extends Component {
           <div className="row">
             <div className="col-md-6 col-12 mb-20">
               <label>First Name</label>
-              <input className="mb-0" type="text" placeholder="First Name" />
+              <input id="customer.givenName" onChange={this.updateCustomerState} className="mb-0" type="text" placeholder="Given Name" />
             </div>
             <div className="col-md-6 col-12 mb-20">
               <label>Last Name</label>
-              <input className="mb-0" type="text" placeholder="Last Name" />
+              <input  id="customer.familyName" onChange={this.updateCustomerState} className="mb-0" type="text" placeholder="Family Name" />
             </div>
             <div className="col-md-12 mb-20">
               <label>Email Address*</label>
-              <input className="mb-0" type="email" placeholder="Email Address" />
+              <input id="customer.userName" className="mb-0" type="email" placeholder="Email Address" />
             </div>
             <div className="col-md-6 mb-20">
               <label>Password</label>
-              <input className="mb-0" type="password" placeholder="Password" />
+              <input id="customer.password" className="mb-0" type="password" placeholder="Password" />
             </div>
             <div className="col-md-6 mb-20">
               <label>Confirm Password</label>
               <input className="mb-0" type="password" placeholder="Confirm Password" />
             </div>
             <div className="col-12">
-              <button className="register-button mt-0">Register</button>
+              <button className="register-button mt-0" onClick={this.registerClick}>Register</button>
             </div>
           </div>
         </div>
@@ -38,4 +70,12 @@ class Register extends Component {
   }
 }
 
-export default Register;
+export default connect(state => ({
+    tokens: state.services.session.tokens,
+    customer: state.services.session.customer,
+}), dispatch => ({
+	actions: {
+		tokens: bindActionCreators(tokensActionCreators, dispatch),
+    customer: bindActionCreators(customerActionCreators, dispatch),
+	},
+}))(Register);
