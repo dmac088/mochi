@@ -143,23 +143,20 @@ class App extends Component {
 
 
   render() {
-    //console.log("render App");
     return (
-          <React.Fragment>
-            <Switch>
-                <Route path={"/:locale/:currency"} exact={true} render={(props)                     => this.renderLanding(props)}     />
-                <Route path={"/:locale/:currency/(Category|Search)/:term"} render={(props)          => this.renderProducts(props)}    />
-                <Route path={"/:locale/:currency/Checkout"} exact={true} render={(props)            => this.renderCheckout(props)}    />
-                <Route path={"/:locale/:currency/Cart"} exact={true} render={(props)                => this.renderCart(props)}        />
-                <Route path={"/:locale/:currency/Account"} exact={true} render={(props)             => this.renderAccount(props)}     />
-                <Route path={"/:locale/:currency/Wishlist"} exact={true} render={(props)            => this.renderWishlist(props)}    />
-                <Route path={"/:locale/:currency/Contact"} exact={true} render={(props)             => this.renderContact(props)}     />
-                <Route path={"/:locale/:currency/Auth"} exact={true} render={(props)                => this.renderAuth(props)}        />
-                <Route path={"/:locale/:currency/Product/:productId"} exact={true} render={(props)  => this.renderProduct(props)}     />
-                <Redirect from="/" to="/en-GB/HKD" />
-                <Route render={(props)                                                              => this.renderLanding(props)}     />
-            </Switch>
-          </React.Fragment>
+      <Switch>
+        <Route path={"/:locale/:currency"} exact={true} render={(props)                     => this.renderLanding(props)}     />
+        <Route path={"/:locale/:currency/(Category|Search)/:term"} render={(props)          => this.renderProducts(props)}    />
+        <Route path={"/:locale/:currency/Checkout"} exact={true} render={(props)            => this.renderCheckout(props)}    />
+        <Route path={"/:locale/:currency/Cart"} exact={true} render={(props)                => this.renderCart(props)}        />
+        <Route path={"/:locale/:currency/Account"} exact={true} render={(props)             => this.renderAccount(props)}     />
+        <Route path={"/:locale/:currency/Wishlist"} exact={true} render={(props)            => this.renderWishlist(props)}    />
+        <Route path={"/:locale/:currency/Contact"} exact={true} render={(props)             => this.renderContact(props)}     />
+        <Route path={"/:locale/:currency/Auth"} exact={true} render={(props)                => this.renderAuth(props)}        />
+        <Route path={"/:locale/:currency/Product/:productId"} exact={true} render={(props)  => this.renderProduct(props)}     />
+        <Redirect from="/" to="/en-GB/HKD" />
+        <Route render={(props)                                                              => this.renderLanding(props)}     />
+      </Switch>
     );
   }
 }
