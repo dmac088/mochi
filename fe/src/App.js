@@ -4,7 +4,8 @@ import { bindActionCreators } from 'redux';
 import {
   withRouter,
   Route,
-  Redirect
+  Redirect,
+  Switch,
 } from 'react-router-dom';
 import store from './store';
 import Header from './components/Header/Header';
@@ -171,10 +172,9 @@ class App extends Component {
     );
   }
 
-  renderHeader = (routeProps) => {
+  renderHeader = () => {
     return (
       <Header
-        {...routeProps}
         authenticated={this.props.tokens.authenticated}
         customer={this.props.customer}
       />
@@ -210,15 +210,6 @@ class App extends Component {
         customer={this.props.customer}
       />
     );
-  }
-
-  renderDefault = (props) => {
-    return(
-      <React.Fragment>
-        {this.renderHeader(props)}
-        {this.renderLanding(props)}
-      </React.Fragment>
-    )
   }
 
   renderAuth = (routeProps) => {
@@ -258,103 +249,20 @@ class App extends Component {
     //console.log("render App");
     return (
           <React.Fragment>
-            <Route
-              path={"/:locale/:currency"}
-              exact={true}
-              render={(props) => this.renderDefault(props)}
-            />
-            <Route
-              path={"/:locale/:currency/Search"}
-              exact={true}
-              render={(props) =>
-                <React.Fragment>
-                  {this.renderHeader(props)}
-                  {this.renderProducts(props)}
-                </React.Fragment>
-              }
-            />
-            <Route
-              path={"/:locale/:currency/category/:category"}
-              render={(props) =>
-                <React.Fragment>
-                  {this.renderHeader(props)}
-                  {this.renderProducts(props)}
-                </React.Fragment>
-              }
-            />
-            <Route
-              path={"/:locale/:currency/Checkout"}
-              exact={true}
-              render={(props) =>
-                <React.Fragment>
-                  {this.renderHeader(props)}
-                  {this.renderCheckout(props)}
-                </React.Fragment>
-              }
-            />
-            <Route
-              path={"/:locale/:currency/Cart"}
-              exact={true}
-              render={(props) =>
-                <React.Fragment>
-                  {this.renderHeader(props)}
-                  {this.renderCart(props)}
-                </React.Fragment>
-              }
-            />
-            <Route
-              path={"/:locale/:currency/Account"}
-              exact={true}
-              render={(props) =>
-                <React.Fragment>
-                  {this.renderHeader(props)}
-                  {this.renderAccount(props)}
-                </React.Fragment>
-              }
-            />
-            <Route
-              path={"/:locale/:currency/Wishlist"}
-              exact={true}
-              render={(props) =>
-                <React.Fragment>
-                  {this.renderHeader(props)}
-                  {this.renderWishlist(props)}
-                </React.Fragment>
-              }
-            />
-
-            <Route
-              path={"/:locale/:currency/Contact"}
-              exact={true}
-              render={(props) =>
-                <React.Fragment>
-                  {this.renderHeader(props)}
-                  {this.renderContact(props)}
-                </React.Fragment>
-              }
-            />
-
-            <Route
-              path={"/:locale/:currency/Auth"}
-              exact={true}
-              render={(props) =>
-                <React.Fragment>
-                  {this.renderHeader(props)}
-                  {this.renderAuth(props)}
-                </React.Fragment>
-              }
-            />
-
-            <Route
-              path={"/:locale/:currency/Product/:productId"}
-              exact={true}
-              render={(props) =>
-                <React.Fragment>
-                  {this.renderHeader(props)}
-                  {this.renderProduct(props)}
-                </React.Fragment>
-              }
-            />
+            {this.renderHeader()}
+            <Switch>
+                <Route path={"/:locale/:currency"} exact={true} render={(props)                     => this.renderLanding(props)}     />
+                <Route path={"/:locale/:currency/(Category|Search)/:term"} render={(props)          => this.renderProducts(props)}    />
+                <Route path={"/:locale/:currency/Checkout"} exact={true} render={(props)            => this.renderCheckout(props)}    />
+                <Route path={"/:locale/:currency/Cart"} exact={true} render={(props)                => this.renderCart(props)}        />
+                <Route path={"/:locale/:currency/Account"} exact={true} render={(props)             => this.renderAccount(props)}     />
+                <Route path={"/:locale/:currency/Wishlist"} exact={true} render={(props)            => this.renderWishlist(props)}    />
+                <Route path={"/:locale/:currency/Contact"} exact={true} render={(props)             => this.renderContact(props)}     />
+                <Route path={"/:locale/:currency/Auth"} exact={true} render={(props)                => this.renderAuth(props)}        />
+                <Route path={"/:locale/:currency/Product/:productId"} exact={true} render={(props)  => this.renderProduct(props)}     />
+                <Redirect from="/" to="/en-GB/HKD" />
+                <Route render={(props)                                                              => this.renderLanding(props)}     />
+            </Switch>
           </React.Fragment>
     );
   }
