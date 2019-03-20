@@ -10,8 +10,6 @@ import {
 	spinner,
 } from '../../services/helpers/Helper';
 
-
-
 class Product extends Component {
 
   constructor(props){
