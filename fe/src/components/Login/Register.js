@@ -14,10 +14,6 @@ class Register extends Component {
   constructor(props) {
     super(props);
     this.state = initialState;
-    store.subscribe(this.reduxSubscribedFunction);
-  }
-
-  reduxSubscribedFunction = () => {
   }
 
   updateCustomerState = (event) =>  {
@@ -30,11 +26,13 @@ class Register extends Component {
       this.setState({
         isLoading: true,
         error: '',
+      }, () => {
+        customerService.createNewCustomer(this.state.customer);
       });
-      customerService.createNewCustomer(this.state.customer);
   }
 
   render() {
+    console.log(store.getState());
     return(
       <form action="#">
         <div className="login-form">
@@ -46,15 +44,15 @@ class Register extends Component {
             </div>
             <div className="col-md-6 col-12 mb-20">
               <label>Last Name</label>
-              <input  id="customer.familyName" onChange={this.updateCustomerState} className="mb-0" type="text" placeholder="Family Name" />
+              <input id="customer.familyName" onChange={this.updateCustomerState} className="mb-0" type="text" placeholder="Family Name" />
             </div>
             <div className="col-md-12 mb-20">
               <label>Email Address*</label>
-              <input id="customer.userName" className="mb-0" type="email" placeholder="Email Address" />
+              <input id="customer.userName" onChange={this.updateCustomerState} className="mb-0" type="email" placeholder="Email Address" />
             </div>
             <div className="col-md-6 mb-20">
               <label>Password</label>
-              <input id="customer.password" className="mb-0" type="password" placeholder="Password" />
+              <input id="customer.password" onChange={this.updateCustomerState} className="mb-0" type="password" placeholder="Password" />
             </div>
             <div className="col-md-6 mb-20">
               <label>Confirm Password</label>

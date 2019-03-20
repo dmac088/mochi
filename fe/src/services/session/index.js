@@ -29,7 +29,7 @@ export const authenticate = (customer, onSuccess, onFailure) => {
 				//we force the catch when the username or password are invalid
 				//but the message could/should come from the server
 				onFailure();
-				throw response
+				throw response;
 			};
 			return response.text()
 		})
