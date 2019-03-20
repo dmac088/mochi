@@ -22,21 +22,22 @@ export const findById = (locale, productId) => fetchApi(
 																				{}
 																				);
 
-export const findByCategory = (locale, categoryId) => fetchApi(
-																				endPoints.get + locale + '/' + categoryId,
+
+export const findPreviewByCategory = (locale, categoryId) => fetchApi(
+																				endPoints.get + locale + '/categoryId/' + categoryId + '/preview',
 																				{},
 																				{},
 																				'GET',
 																				{}
 																				);
 
-export const findPreviewByCategory = (locale, categoryId) => fetchApi(
-																				endPoints.get + locale + '/cat/' + categoryId + '/preview',
+export const findByCategory = (locale, categoryName) => fetchApi(
+																				endPoints.get + locale + '/categoryName/' + categoryName,
 																				{},
 																				{},
 																				'GET',
 																				{}
-																				);
+																			);
 
 export const findAllFeatured = (locale) => fetchApi(
 																				endPoints.get + locale + '/featured',

@@ -84,6 +84,18 @@ public class ProductDTOService implements IProductDTOService {
   	}	
     
 	@Override
+	public List<ProductDTO> getProductsForCategory(String lcl, String categoryDesc) {
+		List<ProductCategory> pcl = new ArrayList<ProductCategory>();
+     	ProductCategory pc = productCategoryRepository.findByProductCategoryAttributeLclCdAndProductCategoryAttributeCategoryDesc(lcl, categoryDesc);
+     	recurseCategories(pcl, pc);
+     	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
+  		Collection<ProductAttribute> ppa = productAttributeRepository.findDistinctByLclCdAndProductCategoriesCategoryIdInAndProductPreviewFlag(lcl, categoryIds, new Long(1));
+  		List<ProductDTO> pp = ppa.stream().map(pa -> ProductDTOService.convertToProductDto(pa)).collect(Collectors.toList());;
+  		return pp;
+	}
+
+    
+	@Override
 	public List<ProductDTO> getFeaturedProducts(String lcl) {
   		Collection<ProductAttribute> ppa = productAttributeRepository.findDistinctByLclCdAndProductFeaturedFlag(lcl, new Long(1));
   		List<ProductDTO> pp = ppa.stream().map(pa -> ProductDTOService.convertToProductDto(pa)).collect(Collectors.toList());;
@@ -111,6 +123,7 @@ public class ProductDTOService implements IProductDTOService {
         productDto.setLclCd(productAttribute.getLclCd());
         return productDto;
     }
+
 
 
 }
