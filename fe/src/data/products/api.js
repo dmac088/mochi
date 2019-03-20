@@ -31,8 +31,8 @@ export const findPreviewByCategory = (locale, categoryId) => fetchApi(
 																				{}
 																				);
 
-export const findByCategory = (locale, categoryName) => fetchApi(
-																				endPoints.get + locale + '/categoryName/' + categoryName,
+export const findByCategory = (locale, categoryDesc) => fetchApi(
+																				endPoints.get + locale + '/categoryDesc/' + categoryDesc,
 																				{},
 																				{},
 																				'GET',
