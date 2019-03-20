@@ -37,7 +37,7 @@ class Products extends Component {
     this.getProducts(locale, term, 1)
     .then((responseJSON) => {
       this.setState({
-        products: responseJSON,
+        products: responseJSON.content,
         locale: locale,
       });
     });
