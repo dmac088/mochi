@@ -3,13 +3,14 @@ import React, { Component } from 'react';
 class Product extends Component {
 
   render() {
+    const { product } = this.props;
     return (
         <div className="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
           <div className="gf-product shop-grid-view-product">
             <div className="image">
               <a href="single-product.html">
                 <span className="onsale">Sale!</span>
-                <img src="assets/images/products/product03.jpg" className="img-fluid" alt />
+                <img src={product.productImage} className="img-fluid" alt />
               </a>
               <div className="product-hover-icons">
                 <a href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
@@ -23,9 +24,9 @@ class Product extends Component {
                 <a href="shop-left-sidebar.html">Fast Foods</a>,
                 <a href="shop-left-sidebar.html">Vegetables</a>
               </div>
-              <h3 className="product-title"><a href="single-product.html">Ornare sed consequat nisl eget</a></h3>
+              <h3 className="product-title"><a href="#">{product.productDesc}</a></h3>
               <div className="price-box">
-                <span className="main-price">$89.00</span>
+                <span className="main-price">{product.productRrp}</span>
                 <span className="discounted-price">$80.00</span>
               </div>
             </div>

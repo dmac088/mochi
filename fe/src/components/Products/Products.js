@@ -57,6 +57,7 @@ class Products extends Component {
 
   render() {
       const { products } = this.state;
+      console.log(this.state);
 				return(
           <React.Fragment>
             <Header
@@ -82,7 +83,8 @@ class Products extends Component {
                     <ShopHeader/>
                     <div className="shop-product-wrap grid row no-gutters mb-35">
                       {products.map(product => {
-                          return <Product key={product.productId}/>
+                          return <Product key={product.productId}
+                                          product={product}/>
                       })}
 
                     </div>

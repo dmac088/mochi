@@ -39,9 +39,9 @@ public class ProductDTOController {
     	return productService.getPreviewProductsForCategory(lcl, cat);
     }
     
-    @GetMapping("/Product/{lcl}/categoryDesc/{cat}")
-    public List<ProductDTO> getProducts(@PathVariable String lcl, @PathVariable String cat) {
-    	return productService.getProductsForCategory(lcl, cat);
+    @GetMapping("/Product/{lcl}/categoryDesc/{cat}/page/{page}/size/{size}/sortBy/{sortBy}")
+    public Page<ProductDTO> getProducts(@PathVariable String lcl, @PathVariable String cat, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy) {
+    	return productService.getProductsForCategory(lcl, cat, page, size, sortBy);
     }
     
     @GetMapping("/Product/{lcl}/featured")

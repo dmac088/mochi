@@ -13,5 +13,5 @@ public interface ProductAttributePagingAndSortingRepository extends PagingAndSor
 	Page<ProductAttribute> findByLclCdAndProductCategoriesCategoryId(String lcl, Long categoryId, Pageable pageable);
 	
 	Page<ProductAttribute> findDistinctByLclCdAndProductCategoriesCategoryIdIn(String lcl, List<Long> categoryIds, Pageable pageable);
-
+	
 }
