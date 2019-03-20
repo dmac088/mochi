@@ -249,7 +249,6 @@ class App extends Component {
     //console.log("render App");
     return (
           <React.Fragment>
-            {this.renderHeader()}
             <Switch>
                 <Route path={"/:locale/:currency"} exact={true} render={(props)                     => this.renderLanding(props)}     />
                 <Route path={"/:locale/:currency/(Category|Search)/:term"} render={(props)          => this.renderProducts(props)}    />

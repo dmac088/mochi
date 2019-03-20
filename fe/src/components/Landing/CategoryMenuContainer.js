@@ -68,7 +68,6 @@ class CategoryMenuContainer extends Component {
 
   render() {
     const { locale } = this.props.match.params;
-    console.log(this.state)
     return (
       <div className="hero-side-category">
         <div className="category-toggle-wrap">

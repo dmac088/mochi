@@ -6,6 +6,7 @@ import BestSeller from './BestSeller';
 import BlogPosts from './BlogPosts';
 import BrandSlider from './BrandSlider';
 import PreviewCategoryContainer from '../PreviewCategory/PreviewCategoryContainer';
+import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Highlights from '../Highlights/Highlights';
 import QuickViewProduct from '../QuickView/QuickViewProduct';
@@ -66,6 +67,9 @@ class Landing extends Component {
     const { locale } = this.props.match.params;
     return(
       <div>
+        <Header
+          {...this.props}
+        />
         <HeroSlider
           {...this.props}
           categoryList={this.props.categoryList}
