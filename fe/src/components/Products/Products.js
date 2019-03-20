@@ -18,23 +18,23 @@ class Products extends Component {
     super(props);
     const { locale } = this.props.match.params;
     this.state = {
-      locale: locale,
       products: [],
     };
   }
 
   componentDidMount() {
-    this.updateData(this.state.locale, 1);
+    const { locale, term } = this.props.match.params;
+    this.updateData(this.state.locale, term, 1);
   }
 
   componentDidUpdate() {
     const { locale } = this.props.match.params;
-    this.updateData(locale, 0);
+    //this.updateData(locale, 0);
   }
 
-  updateData = (locale = "en-GB", isMounting = 0) => {
+  updateData = (locale = "en-GB", term="All", isMounting = 0) => {
     if(locale === this.state.locale && isMounting === 0) {return;}
-    this.getProducts(locale, 1)
+    this.getProducts(locale, term, 1)
     .then((responseJSON) => {
       this.setState({
         products: responseJSON,
@@ -56,7 +56,7 @@ class Products extends Component {
   });
 
   render() {
-      console.log(this.props);
+      console.log(this.state);
 				return(
           <React.Fragment>
             <Header
