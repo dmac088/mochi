@@ -16,20 +16,21 @@ class Products extends Component {
 
   constructor(props) {
     super(props);
-    const { locale } = this.props.match.params;
     this.state = {
-      products: [],
+      "locale": "en-GB",
+      "products": [],
     };
   }
 
   componentDidMount() {
     const { locale, term } = this.props.match.params;
-    this.updateData(this.state.locale, term, 1);
+    this.updateData(locale, term, 1);
   }
 
   componentDidUpdate() {
-    const { locale } = this.props.match.params;
-    //this.updateData(locale, 0);
+    const { locale, term } = this.props.match.params;
+    console.log(locale);
+    this.updateData(locale, term, 0);
   }
 
   updateData = (locale = "en-GB", term="All", isMounting = 0) => {
