@@ -4,18 +4,13 @@ import * as cartSelector from '../../services/cart/selectors';
 import * as cartService from '../../services/cart';
 import * as productApi from '../../data/products/api';
 import {
+	initialState,
+} from './Helper';
+import {
 	spinner,
 } from '../../services/helpers/Helper';
 
-const initialState = {
-	"locale": "en-GB",
-	"productId": null,
-	"product": {"productImage": 'assets/images/spinners/spinner_large.gif'},
-	"currentImage": "assets/images/spinners/spinner_large.gif",
-	"quantity": 1,
-	"isShowing": false,
-	"isLoading": false,
-};
+
 
 class Product extends Component {
 
@@ -24,9 +19,16 @@ class Product extends Component {
     this.state = initialState;
 	}
 
-  componentDidMount() {
-    console.log(this.props.match.params);
-    const { locale, currency, productId } = this.props.match.params;
+	componentDidMount() {
+		this.loadState();
+	}
+
+  componentDidUpdate() {
+    this.loadState();
+  }
+
+	loadState = () => {
+		const { locale, currency, productId } = this.props.match.params;
 		if(locale === this.state.locale
 			&& productId === this.state.productId) {return;}
 		this.setState({
@@ -38,7 +40,7 @@ class Product extends Component {
 		},  () => {
 				this.updateData(locale, productId);
 		});
-  }
+	}
 
   getProduct = (locale, id) =>
     productApi.findById(locale, id)

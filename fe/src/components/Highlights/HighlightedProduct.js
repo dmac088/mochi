@@ -31,7 +31,6 @@ class HighlightedProduct extends Component {
   }
 
   addToCart = (e) => {
-
     e.preventDefault();
     const { product, quantity } = this.state;
     product.quantity = quantity;
