@@ -7,6 +7,7 @@ import MobileMenu from './MobileMenu';
 import HeaderCartSummary from './HeaderCartSummary';
 import LanguageSelector from './LanguageSelector';
 import CurrencySelector from './CurrencySelector';
+import { withRouter } from 'react-router-dom';
 import { isMobile } from '../../services/helpers/Helper';
 import { Link } from 'react-router-dom';
 
@@ -21,6 +22,7 @@ class Header extends Component {
   }
 
   componentDidMount() {
+    console.log(this.props);
     window.addEventListener('scroll', this.listenToScroll, { passive: true })
     window.addEventListener('resize', this.renderMenu , { passive: true });
     this.renderMenu();
@@ -154,4 +156,4 @@ class Header extends Component {
   }
 }
 
-export default Header;
+export default withRouter(Header);

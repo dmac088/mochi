@@ -14,6 +14,7 @@ import NoResults from "../../empty-states/NoResults";
 
 class Products extends Component {
   render() {
+    console.log(this.props);
 				return(
             <div className="shop-page-container mb-50">
               <div className="container">
