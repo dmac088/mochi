@@ -41,69 +41,6 @@ class App extends Component {
                    };
   }
 
-  getProducts = (queryParams) =>
-    pageService.findAll(queryParams.locale,
-                        queryParams.category,
-                        queryParams.term,
-                        queryParams.page,
-                        queryParams.size,
-                        queryParams.sort);
-
-
-
-  refreshData = (prevState) => {
-    //let urlParams = (qs.parse(search));
-    //let stateParams = (qs.parse(qs.stringify(this.state.queryParams)));
-
-    //if the local state and url parameters match then no need to reload data
-    //if (_.isEqual(stateParams, urlParams) && this.state.isMounted === 1) {return null;}
-    //let mergedParams = Object.assign(_.cloneDeep(stateParams), urlParams);
-
-    //let productPromise  = this.getProducts(mergedParams);
-    //let categoryPromise = this.getCategories(mergedParam.locale);
-    //let categoryPromise = this.getCategories(this.state.locale);
-
-    //fetch the data and set the state
-    // Promise.all([/*productPromise,*/categoryPromise])
-    // .then((values) => {
-    //      this.setState({
-    //                      /*queryParams:   mergedParams,
-    //                      pagedItems:    values[0],*/
-    //                      categoryList:  values[0],
-    //                      isMounted: 1,
-    //                    }, () => {
-    //                       //also set the URL state, since they need to be in sync
-    //                       // this.props.history.push({
-    //                       //       "pathname": '/Search',
-    //                       //       "search": qs.stringify(mergedParams),
-    //                       // });
-    //
-    //
-    //                    });
-    //   });
-  }
-
-  componentWillMount(prevProps, prevState, snapshot) {
-    // if(this.props.match.params.locale === undefined) {
-    //   this.props.history.push('/' + this.state.locale  + "/" + this.state.currency);
-    // }
-    this.refreshData(prevState);
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    //return;
-    ///this.refreshData(prevState);
-    //if(!this.shouldRefreshdata(this.props.location)) {return(null);}
-    /*this.refreshData(this.props.location.search);*/
-  }
-
-  shouldRefreshdata = (location) => {
-    return (location.pathname === "/Search"
-         || location.pathname === "/");
-  }
-
-
-
   autoLogin = () =>  {
     sessionService.refreshToken().then(() => {
    //this.setState({ initialRoute: routeStack[0] });
@@ -114,122 +51,94 @@ class App extends Component {
   }
 
   componentDidMount() {
-    //console.log("componentDidMount");
 		const unsubscribe = store.subscribe(() => {
                         			if (store.getState().services.persist.isHydrated) {
                         				unsubscribe(); //call unsubscribe again! wait! what!?
                         				this.autoLogin();
                         			}
 		                    });
-		store.subscribe(this.reduxSubscribedFunction);
 	}
-
-  reduxSubscribedFunction = () => {
-  }
 
   emptyCart = () => {
     cartService.emptyCart();
   }
 
-  printState = () => {
-    console.log(store.getState());
-  }
-
-  printLocalState = () => {
-    console.log(this.state);
-  }
-
-  printProps = () => {
-    console.log(this.props);
-  }
-
   renderLanding = (routeProps) => {
+    const { locale, currency, pagedItems, categoryList } = this.state;
     return (
       <Landing
         {...routeProps}
-        locale={this.state.locale}
-        currency={this.state.currency}
+        locale={locale}
+        currency={currency}
         openModal={this.openModal}
-        pagedItems={this.state.pagedItems}
-        categoryList={this.state.categoryList}
+        pagedItems={pagedItems}
+        categoryList={categoryList}
       />
     );
   }
 
   renderProducts = (routeProps) => {
+    const { locale, currency, pagedItems, categoryList } = this.state;
     return (
       <Products
         {...routeProps}
-        locale={this.state.locale}
-        currency={this.state.currency}
+        locale={locale}
+        currency={currency}
         openModal={this.openModal}
-        pagedItems={this.state.pagedItems}
-        categoryList={this.state.categoryList}
+        pagedItems={pagedItems}
+        categoryList={categoryList}
       />
     );
   }
 
   renderCheckout = (routeProps) => {
+    const { tokens, customer } = this.props;
     return (
       <Checkout
         {...routeProps}
-        authenticated={this.props.tokens.authenticated}
-        customer={this.props.customer}
+        authenticated={tokens.authenticated}
+        customer={customer}
       />
     );
   }
 
   renderCart = (routeProps) => {
+    const { tokens, customer, cart } = this.props;
     return (
       <Cart
         {...routeProps}
-        authenticated={this.props.tokens.authenticated}
-        customer={this.props.customer}
-        cart={this.props.cart}
+        authenticated={tokens.authenticated}
+        customer={customer}
+        cart={cart}
       />
     );
   }
 
   renderAccount = (routeProps) => {
+    const { tokens, customer } = this.props;
     return (
       <Account
         {...routeProps}
-        authenticated={this.props.tokens.authenticated}
-        customer={this.props.customer}
+        authenticated={tokens.authenticated}
+        customer={customer}
       />
     );
   }
 
   renderAuth = (routeProps) => {
-    return (
-              <Auth
-                {...routeProps}
-              />
-          );
+    return (<Auth {...routeProps} />);
   }
 
   renderWishlist = (routeProps) => {
-    return (
-              <Wishlist
-                {...routeProps}
-              />
-          );
+    return (<Wishlist {...routeProps} />);
   }
 
   renderContact = (routeProps) => {
-    return (
-              <Contact
-                {...routeProps}
-              />
-          );
+    return (<Contact {...routeProps} />);
   }
 
   renderProduct = (routeProps) => {
-    return (
-              <Product
-                {...routeProps}
-              />
-          );
+    return (<Product {...routeProps} />);
   }
 
 
