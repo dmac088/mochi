@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Header from '../Header/Header';
 import BreadCrumb from '../BreadCrumb';
 import { google } from 'google-maps';
 
@@ -208,6 +209,9 @@ class Contact extends Component {
   render() {
 			return(
         <React.Fragment>
+          <Header
+            {...this.props}
+          />
           <BreadCrumb
             match={this.props.match}
             page={"Contact"}/>

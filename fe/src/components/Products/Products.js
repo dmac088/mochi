@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Header from '../Header/Header';
 import Product from './Product';
 import CategorySidebar from './Sidebars/CategorySidebar';
 import BrandSidebar from './Sidebars/BrandSidebar';
@@ -14,8 +15,11 @@ import NoResults from "../../empty-states/NoResults";
 
 class Products extends Component {
   render() {
-    console.log(this.props);
 				return(
+          <React.Fragment>
+            <Header
+              {...this.props}
+            />
             <div className="shop-page-container mb-50">
               <div className="container">
                 <BreadCrumb
@@ -42,6 +46,7 @@ class Products extends Component {
                 </div>
               </div>
             </div>
+          </React.Fragment>
 					)
 				}
 }
