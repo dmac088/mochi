@@ -32,7 +32,6 @@ class Register extends Component {
   }
 
   render() {
-    console.log(store.getState());
     return(
       <form action="#">
         <div className="login-form">
