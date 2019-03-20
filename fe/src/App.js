@@ -70,7 +70,6 @@ class App extends Component {
         {...routeProps}
         locale={locale}
         currency={currency}
-        openModal={this.openModal}
         pagedItems={pagedItems}
         categoryList={categoryList}
       />
@@ -82,11 +81,6 @@ class App extends Component {
     return (
       <Products
         {...routeProps}
-        locale={locale}
-        currency={currency}
-        openModal={this.openModal}
-        pagedItems={pagedItems}
-        categoryList={categoryList}
       />
     );
   }

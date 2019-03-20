@@ -5,6 +5,7 @@ class Product extends Component {
 
   render() {
     return (
+        <div className="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
           <div className="gf-product shop-grid-view-product">
             <div className="image">
               <a href="single-product.html">
@@ -30,6 +31,7 @@ class Product extends Component {
               </div>
             </div>
           </div>
+        </div>
       );
     }
 }
