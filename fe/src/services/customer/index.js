@@ -14,7 +14,7 @@ import { initialState } from './reducer';
 	export const createNewCustomer = (customer) => {
 		 api.createNewCustomer(customer)
 			.then(() => {
-					session.authenticate(customer)
+					session.authenticate(customer, onRequestFailed)
 			})
 			.then(onRequestSuccess)
 			.catch(onRequestFailed);
