@@ -8,8 +8,6 @@ import {
   Switch,
 } from 'react-router-dom';
 import store from './store';
-import Header from './components/Header/Header';
-import Products from './components/Products/Products';
 import * as tokensActionCreators from './services/session/actions';
 import * as customerActionCreators from './services/customer/actions';
 import * as sessionService from './services/session';
@@ -17,6 +15,7 @@ import * as pageService from './services/page';
 import * as cartService from './services/cart';
 import * as categoryApi from './data/categories/api';
 import Landing from './components/Landing/Landing';
+import Products from './components/Products/Products';
 import Checkout from './components/Checkout/Checkout';
 import Cart from './components/Cart/Cart';
 import Account from './components/Account/Account';
@@ -24,8 +23,6 @@ import Wishlist from './components/Wishlist/Wishlist';
 import Contact from './components/Contact/Contact';
 import Product from './components/Product/Product';
 import Auth from './components/Login/Auth';
-import qs from 'query-string';
-import _ from 'lodash';
 import './../public/assets/scss/main.scss';
 
 
@@ -168,15 +165,6 @@ class App extends Component {
         openModal={this.openModal}
         pagedItems={this.state.pagedItems}
         categoryList={this.state.categoryList}
-      />
-    );
-  }
-
-  renderHeader = () => {
-    return (
-      <Header
-        authenticated={this.props.tokens.authenticated}
-        customer={this.props.customer}
       />
     );
   }
