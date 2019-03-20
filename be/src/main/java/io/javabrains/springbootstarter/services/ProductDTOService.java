@@ -79,18 +79,18 @@ public class ProductDTOService implements IProductDTOService {
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
   		Collection<ProductAttribute> ppa = productAttributeRepository.findDistinctByLclCdAndProductCategoriesCategoryIdInAndProductPreviewFlag(lcl, categoryIds, new Long(1));
-  		List<ProductDTO> pp = ppa.stream().map(pa -> ProductDTOService.convertToProductDto(pa)).collect(Collectors.toList());;
+  		List<ProductDTO> pp = ppa.stream().map(pa -> ProductDTOService.convertToProductDto(pa)).collect(Collectors.toList());
   		return pp;
   	}	
     
 	@Override
-	public List<ProductDTO> getProductsForCategory(String lcl, String categoryDesc) {
+	public Page<ProductDTO> getProductsForCategory(String lcl, String categoryDesc, int page, int size, String sortBy) {
 		List<ProductCategory> pcl = new ArrayList<ProductCategory>();
      	ProductCategory pc = productCategoryRepository.findByProductCategoryAttributeLclCdAndProductCategoryAttributeCategoryDesc(lcl, categoryDesc);
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
-  		Collection<ProductAttribute> ppa = productAttributeRepository.findDistinctByLclCdAndProductCategoriesCategoryIdInAndProductPreviewFlag(lcl, categoryIds, new Long(1));
-  		List<ProductDTO> pp = ppa.stream().map(pa -> ProductDTOService.convertToProductDto(pa)).collect(Collectors.toList());;
+  		Page<ProductAttribute> ppa = productAttributePagingAndSortingRepository.findDistinctByLclCdAndProductCategoriesCategoryIdIn(lcl, categoryIds, PageRequest.of(page, size, Sort.by(sortBy).descending()));
+ 		Page<ProductDTO> pp = ppa.map(pa -> ProductDTOService.convertToProductDto(pa));
   		return pp;
 	}
 
@@ -98,7 +98,7 @@ public class ProductDTOService implements IProductDTOService {
 	@Override
 	public List<ProductDTO> getFeaturedProducts(String lcl) {
   		Collection<ProductAttribute> ppa = productAttributeRepository.findDistinctByLclCdAndProductFeaturedFlag(lcl, new Long(1));
-  		List<ProductDTO> pp = ppa.stream().map(pa -> ProductDTOService.convertToProductDto(pa)).collect(Collectors.toList());;
+  		List<ProductDTO> pp = ppa.stream().map(pa -> ProductDTOService.convertToProductDto(pa)).collect(Collectors.toList());
   		return pp;
 	}
     
@@ -123,7 +123,5 @@ public class ProductDTOService implements IProductDTOService {
         productDto.setLclCd(productAttribute.getLclCd());
         return productDto;
     }
-
-
 
 }

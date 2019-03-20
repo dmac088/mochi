@@ -17,10 +17,10 @@ public interface IProductDTOService {
 	 
 	 Page<ProductDTO> getAllProductsForCategory(String lcl, Long categoryId, int page, int size, String sortBy);
 	 
+	 Page<ProductDTO> getProductsForCategory(String lcl, String categoryDesc, int page, int size, String sortBy);
+	 
 	 List<ProductDTO> getPreviewProductsForCategory(String lcl, Long categoryId);
-	 
-	 List<ProductDTO> getProductsForCategory(String lcl, String categoryDesc);
-	 
+	
 	 List<ProductDTO> getFeaturedProducts(String lcl);
 	 
 	 public void recurseCategories(List<ProductCategory> pcl, ProductCategory pc);
