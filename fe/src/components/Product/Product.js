@@ -3,6 +3,9 @@ import BreadCrumb from '../BreadCrumb';
 import * as cartSelector from '../../services/cart/selectors';
 import * as cartService from '../../services/cart';
 import * as productApi from '../../data/products/api';
+import {
+	spinner,
+} from '../../services/helpers/Helper';
 
 const initialState = {
 	"locale": "en-GB",
@@ -13,17 +16,6 @@ const initialState = {
 	"isShowing": false,
 	"isLoading": false,
 };
-
-
-const spinner = () => {
-	return (
-		<div className="d-flex justify-content-center">
-			<div className="spinner-border text-success" role="status">
-				<span className="sr-only">Loading...</span>
-			</div>
-		</div>
-	);
-}
 
 class Product extends Component {
 
@@ -37,12 +29,11 @@ class Product extends Component {
     const { locale, currency, productId } = this.props.match.params;
 		if(locale === this.state.locale
 			&& productId === this.state.productId) {return;}
-    console.log("we made it!")
 		this.setState({
 			"locale": locale,
 			"productId": productId,
-			"product": {"productImage": 'assets/images/spinners/spinner_large.gif'},
-			"currentImage": "assets/images/spinners/spinner_large.gif",
+			"product": {},
+			"currentImage": "",
 			"isLoading": true,
 		},  () => {
 				this.updateData(locale, productId);
