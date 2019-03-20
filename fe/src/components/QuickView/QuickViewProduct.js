@@ -10,12 +10,21 @@ import {
 } from './Helper';
 
 
+const spinner = () => {
+	return (
+		<div className="d-flex justify-content-center">
+		  <div className="spinner-border" role="status">
+		    <span className="sr-only">Loading...</span>
+		  </div>
+		</div>
+	);
+}
+
 const initialState = {
 	"locale": "en-GB",
 	"productId": null,
 	"product": {"productImage": 'assets/images/spinners/spinner_large.gif'},
 	"currentImage": "assets/images/spinners/spinner_large.gif",
-	"spinnerImage": "assets/images/spinners/spinner_large.gif",
 	"quantity": 1,
 	"isShowing": false,
 	"isLoading": false,
@@ -179,10 +188,7 @@ class QuickViewProduct extends Component{
 		return (
 			<div className="row justify-content-center">
 				<div className="col-lg-5 col-md-6 col-xs-12">
-					<img src={this.state.spinnerImage}
-							 className="img-fluid"
-							 alt=""
-					/>
+					{spinner()}
 				</div>
 			</div>
 		)
