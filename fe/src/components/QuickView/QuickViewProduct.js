@@ -27,7 +27,6 @@ class QuickViewProduct extends Component{
 		if((locale === this.state.locale
 			&& productId === this.state.productId
 			&& isShowing === this.state.isShowing)) {return;}
-
 		this.setState({
 			"locale": locale,
 			"productId": productId,
