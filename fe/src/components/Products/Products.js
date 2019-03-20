@@ -43,8 +43,8 @@ class Products extends Component {
     });
   }
 
-  getProducts= (locale = "en-GB", categoryName = "All") =>
-    productApi.findByCategory(locale, categoryName)
+  getProducts= (locale = "en-GB", categoryDesc = "All") =>
+    productApi.findByCategory(locale, categoryDesc)
     .then((response) => {
         return response.text();
     })
