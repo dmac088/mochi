@@ -2,16 +2,9 @@ import React, { Component } from 'react';
 import * as cartService from '../../services/cart';
 import * as cartSelector from '../../services/cart/selectors';
 import * as productApi from '../../data/products/api';
-
-const spinner = () => {
-	return (
-		<div className="d-flex justify-content-center">
-			<div className="spinner-border text-success" role="status">
-				<span className="sr-only">Loading...</span>
-			</div>
-		</div>
-	);
-}
+import {
+	spinner,
+} from '../../services/helpers/Helper';
 
 class HighlightedProduct extends Component {
 
