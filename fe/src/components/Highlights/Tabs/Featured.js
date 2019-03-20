@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import HighlightedColumn from '../HighlightedColumn';
 import * as productApi from '../../../data/products/api';
 import Slider from "react-slick";

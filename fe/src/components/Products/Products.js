@@ -10,10 +10,51 @@ import ShopBanner from './ShopBanner';
 import BreadCrumb from '../BreadCrumb';
 import ShopHeader from './ShopHeader';
 import Pagination from './Pagination';
-import NoResults from "../../empty-states/NoResults";
-
+import * as productApi from '../../data/products/api';
 
 class Products extends Component {
+
+  constructor(props) {
+    super(props);
+    const { locale } = this.props.match.params;
+    this.state = {
+      locale: locale,
+      products: [],
+    };
+  }
+
+  componentDidMount() {
+    this.updateData(this.state.locale, 1);
+  }
+
+  componentDidUpdate() {
+    const { locale } = this.props.match.params;
+    this.updateData(locale, 0);
+  }
+
+  updateData = (locale = "en-GB", isMounting = 0) => {
+    if(locale === this.state.locale && isMounting === 0) {return;}
+    this.getProducts(locale, 1)
+    .then((responseJSON) => {
+      this.setState({
+        products: responseJSON,
+        locale: locale,
+      });
+    });
+  }
+
+  getProducts= (locale = "en-GB", categoryName = "All") =>
+    productApi.findByCategory(locale, categoryName)
+    .then((response) => {
+        return response.text();
+    })
+    .then((responseText) => {
+        return JSON.parse(responseText);
+    })
+    .catch(()=>{
+        console.log('getProducts failed!');
+  });
+
   render() {
       console.log(this.props);
 				return(

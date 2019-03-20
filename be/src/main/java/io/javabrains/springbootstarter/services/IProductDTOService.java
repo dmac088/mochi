@@ -19,6 +19,8 @@ public interface IProductDTOService {
 	 
 	 List<ProductDTO> getPreviewProductsForCategory(String lcl, Long categoryId);
 	 
+	 List<ProductDTO> getProductsForCategory(String lcl, String categoryDesc);
+	 
 	 List<ProductDTO> getFeaturedProducts(String lcl);
 	 
 	 public void recurseCategories(List<ProductCategory> pcl, ProductCategory pc);
