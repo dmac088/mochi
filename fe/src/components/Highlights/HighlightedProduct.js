@@ -3,6 +3,16 @@ import * as cartService from '../../services/cart';
 import * as cartSelector from '../../services/cart/selectors';
 import * as productApi from '../../data/products/api';
 
+const spinner = () => {
+	return (
+		<div className="d-flex justify-content-center">
+			<div className="spinner-border" role="status">
+				<span className="sr-only">Loading...</span>
+			</div>
+		</div>
+	);
+}
+
 class HighlightedProduct extends Component {
 
   constructor(props){
@@ -10,15 +20,20 @@ class HighlightedProduct extends Component {
     this.state = {
 			"product": {},
 			"quantity": 1,
-      "currentImage": 'assets/images/spinners/spinner_small.gif',
+      "currentImage": "",
+      "isLoading": false,
     }
 	}
 
   componentDidMount() {
     const { product } = this.props;
+    this.setState({
+      "isLoading": true,
+    });
     setTimeout(() => this.setState({
                       "product": product,
                       "currentImage": product.productImage,
+                      "isLoading": false,
                     }), 1000);
   }
 
@@ -38,11 +53,9 @@ class HighlightedProduct extends Component {
     this.props.history.push('/' + locale + '/' + currency + '/Product/' + e.currentTarget.id);
   }
 
-  render() {
-    const { product, setCurrentProductId } = this.props;
-    const { currentImage } = this.state;
+  renderProduct = (product, currentImage, setCurrentProductId) => {
     return (
-      <div className="gf-product tab-slider-sub-product">
+      <React.Fragment>
         <div className="image">
           <a id={product.productId} onClick={this.routeSingleProduct} href="#">
             <span className="onsale">Sale!</span>
@@ -72,8 +85,18 @@ class HighlightedProduct extends Component {
             <span className="discounted-price">$80.00</span>
           </div>
         </div>
-      </div>
-    )
+      </React.Fragment>
+    );
+  }
+
+  render() {
+    const { product, setCurrentProductId } = this.props;
+    const { isLoading } = this.state;
+    return (
+        <div className="gf-product tab-slider-sub-product">
+          {(isLoading) ? spinner() : this.renderProduct(product, product.productImage, setCurrentProductId)}
+        </div>
+    );
   }
 }
 

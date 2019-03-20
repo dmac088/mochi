@@ -23,8 +23,8 @@ const spinner = () => {
 const initialState = {
 	"locale": "en-GB",
 	"productId": null,
-	"product": {"productImage": 'assets/images/spinners/spinner_large.gif'},
-	"currentImage": "assets/images/spinners/spinner_large.gif",
+	"product": {"productImage": ""},
+	"currentImage": "",
 	"quantity": 1,
 	"isShowing": false,
 	"isLoading": false,
