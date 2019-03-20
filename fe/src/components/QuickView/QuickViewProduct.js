@@ -6,63 +6,13 @@ import * as cartService from '../../services/cart';
 import * as productApi from '../../data/products/api';
 import {
 	SlickArrowPrev,
-	SlickArrowNext
+	SlickArrowNext,
+	initialState,
+	settings
 } from './Helper';
-
-
-const spinner = () => {
-	return (
-		<div className="d-flex justify-content-center">
-		  <div className="spinner-border text-success" role="status">
-		    <span className="sr-only">Loading...</span>
-		  </div>
-		</div>
-	);
-}
-
-const initialState = {
-	"locale": "en-GB",
-	"productId": null,
-	"product": {"productImage": ""},
-	"currentImage": "",
-	"quantity": 1,
-	"isShowing": false,
-	"isLoading": false,
-};
-
-const settings = {
-	prevArrow: <SlickArrowPrev />,
-	nextArrow: <SlickArrowNext />,
-	slidesToShow: 3,
-	responsive: [{
-		breakpoint: 1200,
-		settings: {
-			slidesToShow: 3,
-			slidesToScroll: 3
-		}
-	},
-	{
-		breakpoint: 991,
-		settings: {
-			slidesToShow: 2,
-			slidesToScroll: 2
-		}
-	},
-	{
-		breakpoint: 767,
-		settings: {
-			slidesToShow: 3,
-			slidesToScroll: 3
-		}
-	},
-	{
-		breakpoint: 480,
-		settings: {
-			slidesToShow: 3,
-			slidesToScroll: 3
-		}
-	}
-]};
+import {
+	spinner,
+} from '../../services/helpers/Helper';
 
 class QuickViewProduct extends Component{
 
@@ -81,8 +31,8 @@ class QuickViewProduct extends Component{
 		this.setState({
 			"locale": locale,
 			"productId": productId,
-			"product": {"productImage": 'assets/images/spinners/spinner_large.gif'},
-			"currentImage": "assets/images/spinners/spinner_large.gif",
+			"product": {},
+			"currentImage": "",
 			"isShowing": isShowing,
 			"isLoading": true,
 		},  () => {
@@ -130,12 +80,6 @@ class QuickViewProduct extends Component{
 		this.setState((prevState) => ({
 			 "quantity": prevState.quantity - 1
 		}));
-	}
-
-	resetQuantity = () => {
-		this.setState({
-			"quantity": 1
-		});
 	}
 
 	updateQuantity = (e) => {
@@ -306,8 +250,7 @@ class QuickViewProduct extends Component{
 		);
 	}
 
-  render(){
-		if(this.props.productId === null) {return null;}
+  render() {
 		const { product, currentImage, isShowing, isLoading} = this.state;
     return(
 			<div className={"modal fade quick-view-modal-container "
