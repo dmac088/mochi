@@ -61,7 +61,7 @@ class Products extends Component {
         "locale":       locale,
         "term":         term,
         "products":     responseJSON.content,
-        "params":  params,
+        "params":       params,
       }, () => {
         this.props.history.push({
               "pathname": pathname,
