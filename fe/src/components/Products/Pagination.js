@@ -6,11 +6,12 @@ class Pagination extends Component {
 
   changePage = (e) => {
     e.preventDefault();
-    const { callback } = this.props;
+    const page = e.currentTarget.id;
+    if(Number(page) > Number(e.currentTarget.getAttribute("pages"))-1) { return; }
     const { pathname, search } = this.props.location;
-    const urlParams = (qs.parse(this.props.history.location.search));
-    const mergedParams = Object.assign(urlParams, { page: e.currentTarget.id });
-    const searchString = qs.stringify(mergedParams);
+    const urlParams = qs.parse(search);
+    const searchString = qs.stringify(Object.assign(urlParams, { page: page }));
+
     this.props.history.push({
       "pathname": pathname,
       "search": searchString,
@@ -18,13 +19,14 @@ class Pagination extends Component {
   }
 
   renderPaginator = (pages, current) => {
-    return Array.apply(null, {length: pages-1}).map(Number.call,page => {
+    return Array.apply(null, {length: pages}).map(Number.call,page => {
       return (
         <li key={page}>
-          <a 
+          <a
               id={page}
               href="#"
               className={(Number(page) ===  Number(current)) ?  "active" : ""}
+              pages={pages}
               onClick={this.changePage}>
             {page+1}
           </a>
@@ -43,7 +45,7 @@ class Pagination extends Component {
               <div className="pagination-content text-center">
                 <ul>
                   {this.renderPaginator(totalPages, currentPage)}
-                  <li><a href="#"><i className="fa fa-angle-right"></i></a></li>
+                  <li><a onClick={this.changePage} id={Number(currentPage)+1} pages={totalPages} href="#"><i className="fa fa-angle-right"></i></a></li>
                 </ul>
               </div>
             </div>
