@@ -5,12 +5,7 @@ import { updateParams } from '../../services/helpers/Helper';
 class LanguageSelector extends Component {
 
   changeLang = (e) => {
-
-    const url = this.props.location.pathname;
-        console.log(this.props)
-    const search = this.props.location.search;
-    const { locale } = this.props.match.params;
-    this.props.history.push('/' + event.target.id + '/HKD');
+    this.props.history.push('/' + e.currentTarget.id + '/HKD');
   }
 
   render() {

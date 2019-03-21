@@ -22,7 +22,8 @@ class QuickViewProduct extends Component{
 	}
 
   componentDidUpdate() {
-    const { locale, productId, isShowing } = this.props;
+    const { productId, isShowing } = this.props;
+		const { locale } = this.props.match.params;
 		if(!productId) {return;}
 		if((locale === this.state.locale
 			&& productId === this.state.productId
