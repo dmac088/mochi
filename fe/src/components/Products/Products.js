@@ -49,8 +49,6 @@ class Products extends Component {
   updateData = (locale = "en-GB", pathname, term="All", params, isMounting = 0) => {
     if(!params) {return;}
     const { page, size, sort } = params;
-    console.log("params page = " + page);
-    console.log("state page = " + this.state.params.page);
     if(   locale === this.state.locale
       &&  term === this.state.term
       &&  page === this.state.params.page
@@ -60,7 +58,6 @@ class Products extends Component {
     ) {return;}
     this.getProducts(locale, term, page, size, sort)
     .then((responseJSON) => {
-      console.log(responseJSON);
       this.setState({
         "locale":       locale,
         "term":         term,
@@ -123,7 +120,6 @@ class Products extends Component {
                     <Pagination
                       totalPages={totalPages}
                       currentPage={page}
-                      callback={this.refresh}
                     />
                   </div>
                 </div>

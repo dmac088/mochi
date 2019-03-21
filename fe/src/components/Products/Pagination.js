@@ -4,11 +4,6 @@ import qs from 'query-string';
 
 class Pagination extends Component {
 
-
-  componentDidUpdate() {
-    console.log("componentDidUpdate");
-  }
-
   changePage = (e) => {
     e.preventDefault();
     const { callback } = this.props;
@@ -20,12 +15,10 @@ class Pagination extends Component {
       "pathname": pathname,
       "search": searchString,
     });
-    callback();
   }
 
   renderPaginator = (pages, current) => {
     return Array.apply(null, {length: pages-1}).map(Number.call,page => {
-      console.log(page)
       return (
         <li>
           <a  key={page}
