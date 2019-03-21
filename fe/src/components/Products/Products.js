@@ -22,6 +22,7 @@ class Products extends Component {
       "locale":   "en-GB",
       "term":     "",
       "products": [],
+      "totalPages": 0,
       "params":  {
                         "page": 0,
                         "size": 10,
@@ -40,14 +41,16 @@ class Products extends Component {
 
   refresh = (isMounting) => {
     const { pathname, search } = this.props.location;
-    const { params } = this.state;
+    const params = {...this.state.params};
     const { locale, currency, term } = this.props.match.params;
-    this.updateData(locale, pathname, term, Object.assign(params,qs.parse(search)), isMounting);
+    this.updateData(locale, pathname, term, Object.assign(params, qs.parse(search)), isMounting);
   }
 
   updateData = (locale = "en-GB", pathname, term="All", params, isMounting = 0) => {
     if(!params) {return;}
     const { page, size, sort } = params;
+    console.log("params page = " + page);
+    console.log("state page = " + this.state.params.page);
     if(   locale === this.state.locale
       &&  term === this.state.term
       &&  page === this.state.params.page
@@ -57,10 +60,12 @@ class Products extends Component {
     ) {return;}
     this.getProducts(locale, term, page, size, sort)
     .then((responseJSON) => {
+      console.log(responseJSON);
       this.setState({
         "locale":       locale,
         "term":         term,
         "products":     responseJSON.content,
+        "totalPages":   responseJSON.totalPages,
         "params":       params,
       }, () => {
         this.props.history.push({
@@ -84,7 +89,8 @@ class Products extends Component {
   });
 
   render() {
-      const { products } = this.state;
+      const { products, totalPages } = this.state;
+      const { page } = this.state.params;
 				return(
           <React.Fragment>
             <Header
@@ -114,7 +120,11 @@ class Products extends Component {
                                           product={product}/>
                       })}
                     </div>
-                    <Pagination/>
+                    <Pagination
+                      totalPages={totalPages}
+                      currentPage={page}
+                      callback={this.refresh}
+                    />
                   </div>
                 </div>
               </div>
