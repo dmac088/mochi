@@ -20,8 +20,8 @@ class Pagination extends Component {
   renderPaginator = (pages, current) => {
     return Array.apply(null, {length: pages-1}).map(Number.call,page => {
       return (
-        <li>
-          <a  key={page}
+        <li key={page}>
+          <a 
               id={page}
               href="#"
               className={(Number(page) ===  Number(current)) ?  "active" : ""}
