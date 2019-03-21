@@ -39,13 +39,13 @@ class Products extends Component {
   }
 
   refresh = (isMounting) => {
-    const { search } = this.props.location;
+    const { pathname } = this.props.location;
     const { queryParams } = this.state;
     const { locale, currency, term } = this.props.match.params;
-    this.updateData(locale, search, term, Object.assign(search, queryParams), isMounting);
+    this.updateData(locale, pathname, term, Object.assign(search, queryParams), isMounting);
   }
 
-  updateData = (locale = "en-GB", search, term="All", params, isMounting = 0) => {
+  updateData = (locale = "en-GB", pathname, term="All", params, isMounting = 0) => {
     if(!params) {return;}
     const { page, size, sort } = params;
     if(   locale === this.state.locale
@@ -63,9 +63,8 @@ class Products extends Component {
         "products":     responseJSON.content,
         "queryParams":  params,
       }, () => {
-        const path = this.props.location.pathname;
         this.props.history.push({
-              "pathname": path,
+              "pathname": pathname,
               "search": qs.stringify(params),
         });
       });
