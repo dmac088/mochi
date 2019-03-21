@@ -10,7 +10,7 @@ class LanguageSelector extends Component {
         console.log(this.props)
     const search = this.props.location.search;
     const { locale } = this.props.match.params;
-    this.props.history.push('/' + event.target.id + '/USD');
+    this.props.history.push('/' + event.target.id + '/HKD');
   }
 
   render() {
