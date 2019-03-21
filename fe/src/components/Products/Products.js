@@ -22,7 +22,7 @@ class Products extends Component {
       "locale":   "en-GB",
       "term":     "",
       "products": [],
-      "queryParams":  {
+      "params":  {
                         "page": 0,
                         "size": 10,
                         "sort": "productRrp",
@@ -40,9 +40,9 @@ class Products extends Component {
 
   refresh = (isMounting) => {
     const { pathname, search } = this.props.location;
-    const { queryParams } = this.state;
+    const { params } = this.state;
     const { locale, currency, term } = this.props.match.params;
-    this.updateData(locale, pathname, term, Object.assign(queryParams,qs.parse(search)), isMounting);
+    this.updateData(locale, pathname, term, Object.assign(params,qs.parse(search)), isMounting);
   }
 
   updateData = (locale = "en-GB", pathname, term="All", params, isMounting = 0) => {
@@ -50,9 +50,9 @@ class Products extends Component {
     const { page, size, sort } = params;
     if(   locale === this.state.locale
       &&  term === this.state.term
-      &&  page === this.state.queryParams.page
-      &&  size === this.state.queryParams.size
-      &&  sort === this.state.queryParams.sort
+      &&  page === this.state.params.page
+      &&  size === this.state.params.size
+      &&  sort === this.state.params.sort
       &&  isMounting === 0
     ) {return;}
     this.getProducts(locale, term, page, size, sort)
@@ -61,7 +61,7 @@ class Products extends Component {
         "locale":       locale,
         "term":         term,
         "products":     responseJSON.content,
-        "queryParams":  params,
+        "params":  params,
       }, () => {
         this.props.history.push({
               "pathname": pathname,
