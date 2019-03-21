@@ -11,41 +11,69 @@ import BreadCrumb from '../BreadCrumb';
 import ShopHeader from './ShopHeader';
 import Pagination from './Pagination';
 import * as productApi from '../../data/products/api';
+import { updateParams } from '../../services/helpers/Helper';
+import qs from 'query-string';
 
 class Products extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      "locale": "en-GB",
+      "locale":   "en-GB",
+      "term":     ""
       "products": [],
+      "queryParams":  {
+                        "page": 0,
+                        "size": 10,
+                        "sort": "productRrp",
+                      }
     };
   }
 
   componentDidMount() {
-    const { locale, term } = this.props.match.params;
-    this.updateData(locale, term, 1);
+    this.refresh(1);
   }
 
   componentDidUpdate() {
-    const { locale, term } = this.props.match.params;
-    console.log(locale);
-    this.updateData(locale, term, 0);
+    this.refresh(0);
   }
 
-  updateData = (locale = "en-GB", term="All", isMounting = 0) => {
-    if(locale === this.state.locale && isMounting === 0) {return;}
-    this.getProducts(locale, term, 1)
+  refresh = (isMounting) => {
+    const { search } = this.props.location;
+    const { queryParams } = this.state;
+    const { locale, currency, term } = this.props.match.params;
+    this.updateData(locale, search, term, Object.assign(search, queryParams), isMounting);
+  }
+
+  updateData = (locale = "en-GB", search, term="All", params, isMounting = 0) => {
+    if(!params) {return;}
+    const { page, size, sort } = params;
+    if(   locale === this.state.locale
+      &&  term === this.state.term
+      &&  page === this.state.queryParams.page
+      &&  size === this.state.queryParams.size
+      &&  sort === this.state.queryParams.sort
+      &&  isMounting === 0
+    ) {return;}
+    this.getProducts(locale, term, page, size, sort)
     .then((responseJSON) => {
       this.setState({
-        products: responseJSON.content,
-        locale: locale,
+        "locale":       locale,
+        "term":         term,
+        "products":     responseJSON.content,
+        "queryParams":  params,
+      }, () => {
+        const path = this.props.location.pathname;
+        this.props.history.push({
+              "pathname": path,
+              "search": qs.stringify(params),
+        });
       });
     });
   }
 
-  getProducts= (locale = "en-GB", categoryDesc = "All") =>
-    productApi.findByCategory(locale, categoryDesc)
+  getProducts= (locale = "en-GB", categoryDesc = "All", page, size, sort) =>
+    productApi.findByCategory(locale, categoryDesc, page, size, sort)
     .then((response) => {
         return response.text();
     })
@@ -58,7 +86,6 @@ class Products extends Component {
 
   render() {
       const { products } = this.state;
-      console.log(this.state);
 				return(
           <React.Fragment>
             <Header
@@ -87,7 +114,6 @@ class Products extends Component {
                           return <Product key={product.productId}
                                           product={product}/>
                       })}
-
                     </div>
                     <Pagination/>
                   </div>
