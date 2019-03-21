@@ -39,7 +39,7 @@ class Products extends Component {
   }
 
   refresh = (isMounting) => {
-    const { pathname } = this.props.location;
+    const { pathname, search } = this.props.location;
     const { queryParams } = this.state;
     const { locale, currency, term } = this.props.match.params;
     this.updateData(locale, pathname, term, Object.assign(search, queryParams), isMounting);
