@@ -20,7 +20,7 @@ class Products extends Component {
     super(props);
     this.state = {
       "locale":   "en-GB",
-      "term":     ""
+      "term":     "",
       "products": [],
       "queryParams":  {
                         "page": 0,
