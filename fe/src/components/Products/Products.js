@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Header from '../Header/Header';
 import Product from './Product';
+import QuickViewProduct from '../QuickView/QuickViewProduct';
 import CategorySidebar from './Sidebars/CategorySidebar';
 import BrandSidebar from './Sidebars/BrandSidebar';
 import PriceSidebar from './Sidebars/PriceSidebar';
@@ -90,6 +91,7 @@ class Products extends Component {
   });
 
   render() {
+      const { toggleQuickView, setCurrentProductId, showQVModal, currentProductId } = this.props;
       const { products, totalPages, totalElements, numberOfElements } = this.state;
       const { page, size } = this.state.params;
 				return(
@@ -124,12 +126,19 @@ class Products extends Component {
                     <div className="shop-product-wrap grid row no-gutters mb-35">
                       {products.map(product => {
                           return <Product key={product.productId}
-                                          product={product}/>
+                                          product={product}
+                                          setCurrentProductId={setCurrentProductId}/>
                       })}
                     </div>
                     <Pagination
                       totalPages={totalPages}
                       currentPage={page}
+                    />
+                    <QuickViewProduct
+                      {...this.props}
+                      productId={currentProductId}
+                      isShowing={showQVModal}
+                      toggleQuickView={toggleQuickView}
                     />
                   </div>
                 </div>
