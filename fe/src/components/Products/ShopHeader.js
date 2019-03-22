@@ -3,15 +3,15 @@ import React, { Component } from 'react';
 class ShopHeader extends Component {
 
   render() {
-    const { toggleGrid, toggleList } = this.props;
-    const { currentPage, totalPages, totalElements, numberOfElements, size } = this.props;
+    const { toggleGrid, toggleList, currentPage, totalPages, totalElements, numberOfElements, size, isGrid } = this.props;
+
     return (
       <div className="shop-header mb-35">
         <div className="row">
           <div className="col-lg-4 col-md-4 col-sm-12 d-flex align-items-center">
             <div className="view-mode-icons mb-xs-10">
-              <a onClick={toggleGrid} className="active" href="#" data-target="grid"><i className="fa fa-th"></i></a>
-              <a onClick={toggleList} href="#" data-target="list"><i className="fa fa-list"></i></a>
+              <a onClick={toggleGrid} className={(isGrid) ? "active" : ""} href="#" data-target="grid"><i className="fa fa-th"></i></a>
+              <a onClick={toggleList} href="#" data-target="list"><i className={(!isGrid) ? "active fa fa-list" : "fa fa-list"}></i></a>
             </div>
           </div>
           <div className="col-lg-8 col-md-8 col-sm-12 d-flex flex-column flex-sm-row justify-content-between align-items-left align-items-sm-center">
