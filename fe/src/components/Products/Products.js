@@ -140,6 +140,7 @@ class Products extends Component {
                         size={size}
                         toggleGrid={this.toggleGrid}
                         toggleList={this.toggleList}
+                        isGrid={isGrid}
                       />
                     <div className=
                               {(isGrid)
