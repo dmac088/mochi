@@ -23,6 +23,8 @@ class Products extends Component {
       "term":     "",
       "products": [],
       "totalPages": 0,
+      "totalElements": 0,
+      "numberOfElements": 0,
       "params":  {
                         "page": 0,
                         "size": 10,
@@ -59,11 +61,13 @@ class Products extends Component {
     this.getProducts(locale, term, page, size, sort)
     .then((responseJSON) => {
       this.setState({
-        "locale":       locale,
-        "term":         term,
-        "products":     responseJSON.content,
-        "totalPages":   responseJSON.totalPages,
-        "params":       params,
+        "locale":           locale,
+        "term":             term,
+        "products":         responseJSON.content,
+        "totalPages":       responseJSON.totalPages,
+        "totalElements":    responseJSON.totalElements,
+        "numberOfElements": responseJSON.numberOfElements,
+        "params":           params,
       }, () => {
         this.props.history.push({
               "pathname": pathname,
@@ -86,8 +90,8 @@ class Products extends Component {
   });
 
   render() {
-      const { products, totalPages } = this.state;
-      const { page } = this.state.params;
+      const { products, totalPages, totalElements, numberOfElements } = this.state;
+      const { page, size } = this.state.params;
 				return(
           <React.Fragment>
             <Header
@@ -110,7 +114,13 @@ class Products extends Component {
                   </div>
                   <div className="col-lg-9 order-1 order-lg-2 mb-sm-35 mb-xs-35">
                     <ShopBanner/>
-                    <ShopHeader/>
+                    <ShopHeader
+                        totalPages={totalPages}
+                        totalElements={totalElements}
+                        numberOfElements={numberOfElements}
+                        currentPage={page}
+                        size={size}
+                      />
                     <div className="shop-product-wrap grid row no-gutters mb-35">
                       {products.map(product => {
                           return <Product key={product.productId}
