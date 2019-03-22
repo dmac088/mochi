@@ -135,7 +135,6 @@ class Products extends Component {
                       totalPages={totalPages}
                       currentPage={page}
                     />
-                  <Footer />
                     <QuickViewProduct
                       {...this.props}
                       productId={currentProductId}
@@ -146,6 +145,7 @@ class Products extends Component {
                 </div>
               </div>
             </div>
+            <Footer />
           </React.Fragment>
 					)
 				}
