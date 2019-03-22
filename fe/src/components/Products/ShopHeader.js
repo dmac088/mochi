@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { withRouter } from "react-router-dom";
 
 class ShopHeader extends Component {
 
   render() {
+    const { currentPage, totalPages, totalElements, numberOfElements, size } = this.props;
     return (
       <div className="shop-header mb-35">
         <div className="row">
@@ -24,7 +24,7 @@ class ShopHeader extends Component {
                 <option value="0">Sort By Price: High to Low</option>
               </select>
             </div>
-            <p className="result-show-message">Showing 1–12 of 41 results</p>
+            <p className="result-show-message">Showing {((currentPage)*size)+1}–{((currentPage)*size)+Number(numberOfElements)} of {totalElements} results</p>
           </div>
         </div>
       </div>
