@@ -4,7 +4,7 @@ import BannerSlider from '../BannerSlider/BannerSlider';
 class PreviewCategory extends Component {
 
   render() {
-    const { category } = this.props;
+    const { category, locale, setCurrentProductId } = this.props;
     return (
         <div className="slider slider-with-banner mb-35">
           <div className="container">
@@ -28,9 +28,9 @@ class PreviewCategory extends Component {
                     </div>
                     <div className="col-lg-8 col-md-8 col-sm-12">
                       <BannerSlider
-                        locale={this.props.locale}
+                        locale={locale}
                         category={category}
-                        setCurrentProductId={this.props.setCurrentProductId}
+                        setCurrentProductId={setCurrentProductId}
                       />
                       <div className="row no-gutters">
                         <div className="col-lg-6 col-md-6 col-sm-6">

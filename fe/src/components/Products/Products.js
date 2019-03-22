@@ -11,6 +11,7 @@ import ShopBanner from './ShopBanner';
 import BreadCrumb from '../BreadCrumb';
 import ShopHeader from './ShopHeader';
 import Pagination from './Pagination';
+import Footer from '../Footer/Footer';
 import * as productApi from '../../data/products/api';
 import { updateParams } from '../../services/helpers/Helper';
 import qs from 'query-string';
@@ -134,6 +135,7 @@ class Products extends Component {
                       totalPages={totalPages}
                       currentPage={page}
                     />
+                  <Footer />
                     <QuickViewProduct
                       {...this.props}
                       productId={currentProductId}

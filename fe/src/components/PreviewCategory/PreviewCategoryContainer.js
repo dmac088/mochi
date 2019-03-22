@@ -34,13 +34,14 @@ class PreviewCategoryContainer extends Component {
 
   render() {
     const { categories } = this.state;
+    const { locale, setCurrentProductId } = this.props;
     return categories.map(category => {
       return (
           <PreviewCategory
-             locale={this.props.locale}
+             locale={locale}
              key={category.categoryId}
              category={category}
-             setCurrentProductId={this.props.setCurrentProductId}
+             setCurrentProductId={setCurrentProductId}
           />
       )
     });

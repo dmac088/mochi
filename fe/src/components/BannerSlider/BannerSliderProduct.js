@@ -26,6 +26,7 @@ class BannerSliderProduct extends Component {
 
   render() {
     const { product } = this.state;
+    const { setCurrentProductId } = this.props;
     if(product === null) {return null;}
     return (
         <div key={product.productId} className="gf-product banner-slider-product">
@@ -35,7 +36,7 @@ class BannerSliderProduct extends Component {
               <img src={product.productImage} className="img-fluid" alt="" />
             </a>
             <div className="product-hover-icons">
-              <a id={product.productId} onClick={this.props.setCurrentProductId} href="#" data-tooltip="Quick view" data-toggle="modal" data-target="#quick-view-modal-container">
+              <a id={product.productId} onClick={setCurrentProductId} href="#" data-tooltip="Quick view" data-toggle="modal" data-target="#quick-view-modal-container">
                 <span id={product.productId} className="icon_search" />
               </a>
             </div>
@@ -44,7 +45,8 @@ class BannerSliderProduct extends Component {
             <div className="product-categories">
               <a href="shop-left-sidebar.html">{this.props.categoryDesc}</a>
             </div>
-            <h3 className="product-title"><a href="single-product.html">{product.productDesc}</a></h3>
+            <h3 className="product-title">
+              <a href="single-product.html">{product.productDesc}</a></h3>
             <div className="price-box">
               <span className="main-price">${product.productRrp}</span>
               <span className="discounted-price">$80.00</span>
