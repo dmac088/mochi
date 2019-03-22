@@ -68,12 +68,13 @@ class App extends Component {
   }
 
   componentDidMount() {
-		const unsubscribe = store.subscribe(() => {
-                        			if (store.getState().services.persist.isHydrated) {
-                        				unsubscribe(); //call unsubscribe again! wait! what!?
-                        				this.autoLogin();
-                        			}
-		                    });
+    //set
+		// const unsubscribe = store.subscribe(() => {
+    //                     			if (store.getState().services.persist.isHydrated) {
+    //                     				unsubscribe(); //call
+    //                     				this.autoLogin();
+    //                     			}
+		//                     });
 	}
 
   emptyCart = () => {
