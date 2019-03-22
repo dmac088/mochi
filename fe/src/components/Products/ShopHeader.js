@@ -11,7 +11,7 @@ class ShopHeader extends Component {
           <div className="col-lg-4 col-md-4 col-sm-12 d-flex align-items-center">
             <div className="view-mode-icons mb-xs-10">
               <a onClick={toggleGrid} className={(isGrid) ? "active" : ""} href="#" data-target="grid"><i className="fa fa-th"></i></a>
-              <a onClick={toggleList} href="#" data-target="list"><i className={(!isGrid) ? "active fa fa-list" : "fa fa-list"}></i></a>
+              <a onClick={toggleList} className={(isGrid) ? "active" : ""} href="#" data-target="list" ><i className="fa fa-list"></i></a>
             </div>
           </div>
           <div className="col-lg-8 col-md-8 col-sm-12 d-flex flex-column flex-sm-row justify-content-between align-items-left align-items-sm-center">
