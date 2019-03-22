@@ -38,6 +38,8 @@ class App extends Component {
                      modalActive: false,
                      pagedItems: {content:[]},
                      isMounted: 0,
+                     showQVModal: false,
+                     currentProductId: null,
                    };
   }
 
@@ -47,6 +49,20 @@ class App extends Component {
     }).catch(() => {
    //move to error
    //this.setState({ initialRoute: routeStack[0] });
+    });
+  }
+
+  toggleQuickView = () => {
+    this.setState({
+      "showQVModal": !this.state.showQVModal,
+    });
+  }
+
+  setCurrentProductId = (e) => {
+    e.preventDefault();
+    this.setState({
+      currentProductId: e.currentTarget.id,
+      showQVModal: true,
     });
   }
 
@@ -64,7 +80,7 @@ class App extends Component {
   }
 
   renderLanding = (routeProps) => {
-    const { locale, currency, pagedItems, categoryList } = this.state;
+    const { locale, currency, pagedItems, categoryList, currentProductId, showQVModal } = this.state;
     return (
       <Landing
         {...routeProps}
@@ -72,15 +88,22 @@ class App extends Component {
         currency={currency}
         pagedItems={pagedItems}
         categoryList={categoryList}
+        showQVModal={showQVModal}
+        setCurrentProductId={this.setCurrentProductId}
+        currentProductId={currentProductId}
       />
     );
   }
 
   renderProducts = (routeProps) => {
-    const { locale, currency, pagedItems, categoryList } = this.state;
+    const { locale, currency, pagedItems, categoryList, showQVModal, currentProductId } = this.state;
     return (
       <Products
         {...routeProps}
+        toggleQuickView={this.toggleQuickView}
+        showQVModal={showQVModal}
+        setCurrentProductId={this.setCurrentProductId}
+        currentProductId={currentProductId}
       />
     );
   }

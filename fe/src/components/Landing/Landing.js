@@ -19,24 +19,10 @@ class Landing extends Component {
     this.state = {
         theposition: 0,
         showScroller: false,
-        showQVModal: false,
-        currentProductId: null,
     };
   }
 
-  setCurrentProductId = (e) => {
-    e.preventDefault();
-    this.setState({
-      currentProductId: e.currentTarget.id,
-      showQVModal: true,
-    });
-  }
 
-  toggleQuickView = () => {
-    this.setState({
-      "showQVModal": !this.state.showQVModal,
-    });
-  }
 
   componentDidMount() {
     window.addEventListener('scroll', this.listenToScroll, { passive: true });
@@ -65,6 +51,8 @@ class Landing extends Component {
 
   render() {
     const { locale } = this.props.match.params;
+    const { setCurrentProductId, currentProductId, showQVModal, toggleQuickView } = this.props;
+
     return(
       <div>
         <Header
@@ -72,17 +60,15 @@ class Landing extends Component {
         />
         <HeroSlider
           {...this.props}
-          categoryList={this.props.categoryList}
         />
         <Policy />
         <Highlights
           {...this.props}
-          setCurrentProductId={this.setCurrentProductId}
         />
         <Banner />
         <PreviewCategoryContainer
           locale={locale}
-          setCurrentProductId={this.setCurrentProductId}
+          setCurrentProductId={setCurrentProductId}
         />
         <BestSeller />
         <BlogPosts />
@@ -90,9 +76,9 @@ class Landing extends Component {
         <Footer />
         <QuickViewProduct
           {...this.props}
-          productId={this.state.currentProductId}
-          isShowing={this.state.showQVModal}
-          toggleQuickView={this.toggleQuickView}
+          productId={currentProductId}
+          isShowing={showQVModal}
+          toggleQuickView={toggleQuickView}
         />
         <a
           onClick={this.animateScroll}
