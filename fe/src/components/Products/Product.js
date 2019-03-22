@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class Product extends Component {
 
   render() {
-    const { product } = this.props;
+    const { product, setCurrentProductId } = this.props;
     return (
         <div className="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
           <div className="gf-product shop-grid-view-product">
@@ -16,7 +16,13 @@ class Product extends Component {
                 <a href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
                 <a href="#" data-tooltip="Add to wishlist"> <span className="icon_heart_alt" /> </a>
                 <a href="#" data-tooltip="Compare"> <span className="arrow_left-right_alt" /> </a>
-                <a href="#" data-tooltip="Quick view" data-toggle="modal" data-target="#quick-view-modal-container"> <span className="icon_search" /> </a>
+                <a  id={product.productId}
+                    onClick={setCurrentProductId}
+                    href="#"
+                    data-tooltip="Quick view"
+                    data-toggle="modal"
+                    data-target="#quick-view-modal-container"> <span className="icon_search" />
+                </a>
               </div>
             </div>
             <div className="product-content">

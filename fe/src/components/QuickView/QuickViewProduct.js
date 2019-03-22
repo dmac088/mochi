@@ -53,9 +53,9 @@ class QuickViewProduct extends Component{
 							}
 	}
 
-	closeModal = () => {
+	closeModal = (e) => {
 		const { toggleQuickView } = this.props;
-		toggleQuickView();
+		toggleQuickView(e);
 	}
 
 	addToCart = (e) => {

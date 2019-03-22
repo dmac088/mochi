@@ -22,8 +22,6 @@ class Landing extends Component {
     };
   }
 
-
-
   componentDidMount() {
     window.addEventListener('scroll', this.listenToScroll, { passive: true });
     this.animateScroll();

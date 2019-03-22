@@ -52,7 +52,8 @@ class App extends Component {
     });
   }
 
-  toggleQuickView = () => {
+  toggleQuickView = (e) => {
+    e.preventDefault();
     this.setState({
       "showQVModal": !this.state.showQVModal,
     });
@@ -61,8 +62,8 @@ class App extends Component {
   setCurrentProductId = (e) => {
     e.preventDefault();
     this.setState({
-      currentProductId: e.currentTarget.id,
-      showQVModal: true,
+      "currentProductId": e.currentTarget.id,
+      "showQVModal": true,
     });
   }
 
@@ -91,6 +92,7 @@ class App extends Component {
         showQVModal={showQVModal}
         setCurrentProductId={this.setCurrentProductId}
         currentProductId={currentProductId}
+        toggleQuickView={this.toggleQuickView}
       />
     );
   }
