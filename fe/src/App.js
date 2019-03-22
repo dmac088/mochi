@@ -133,19 +133,18 @@ class App extends Component {
     );
   }
 
-  renderAccount = (routeProps) => {
-    const { tokens, customer } = this.props;
-    return (
-      <Account
-        {...routeProps}
-        authenticated={tokens.authenticated}
-        customer={customer}
-      />
-    );
-  }
-
   renderAuth = (routeProps) => {
-    return (<Auth {...routeProps} />);
+    const { tokens, customer } = this.props;
+    console.log(tokens);
+      return(
+         (!tokens.authenticated)
+      ?  (<Auth {...routeProps} />)
+      :  (<Account
+                  {...routeProps}
+                  authenticated={tokens.authenticated}
+                  customer={customer}
+                />)
+      )
   }
 
   renderWishlist = (routeProps) => {
@@ -168,7 +167,7 @@ class App extends Component {
         <Route path={"/:locale/:currency/(Category|Search)/:term"} render={(props)          => this.renderProducts(props)}    />
         <Route path={"/:locale/:currency/Checkout"} exact={true} render={(props)            => this.renderCheckout(props)}    />
         <Route path={"/:locale/:currency/Cart"} exact={true} render={(props)                => this.renderCart(props)}        />
-        <Route path={"/:locale/:currency/Account"} exact={true} render={(props)             => this.renderAccount(props)}     />
+        <Route path={"/:locale/:currency/Account"} exact={true} render={(props)             => this.renderAuth(props)}     />
         <Route path={"/:locale/:currency/Wishlist"} exact={true} render={(props)            => this.renderWishlist(props)}    />
         <Route path={"/:locale/:currency/Contact"} exact={true} render={(props)             => this.renderContact(props)}     />
         <Route path={"/:locale/:currency/Auth"} exact={true} render={(props)                => this.renderAuth(props)}        />
