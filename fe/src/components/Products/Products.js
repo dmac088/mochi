@@ -27,11 +27,12 @@ class Products extends Component {
       "totalPages": 0,
       "totalElements": 0,
       "numberOfElements": 0,
+      "isGrid": true,
       "params":  {
-                        "page": 0,
-                        "size": 10,
-                        "sort": "productRrp",
-                      }
+                  "page": 0,
+                  "size": 10,
+                  "sort": "productRrp",
+                 }
     };
   }
 
@@ -91,9 +92,23 @@ class Products extends Component {
         console.log('getProducts failed!');
   });
 
+  toggleGrid = (e) => {
+    e.preventDefault();
+    this.setState({
+      "isGrid": true,
+    })
+  }
+
+  toggleList= (e) => {
+    e.preventDefault();
+    this.setState({
+      "isGrid": false,
+    })
+  }
+
   render() {
       const { toggleQuickView, setCurrentProductId, showQVModal, currentProductId } = this.props;
-      const { products, totalPages, totalElements, numberOfElements } = this.state;
+      const { products, totalPages, totalElements, numberOfElements, isGrid } = this.state;
       const { page, size } = this.state.params;
 				return(
           <React.Fragment>
@@ -123,12 +138,19 @@ class Products extends Component {
                         numberOfElements={numberOfElements}
                         currentPage={page}
                         size={size}
+                        toggleGrid={this.toggleGrid}
+                        toggleList={this.toggleList}
                       />
-                    <div className="shop-product-wrap grid row no-gutters mb-35">
+                    <div className=
+                              {(isGrid)
+                                ? "shop-product-wrap grid row no-gutters mb-35"
+                                : "shop-product-wrap row no-gutters mb-35"}
+                    >
                       {products.map(product => {
                           return <Product key={product.productId}
                                           product={product}
-                                          setCurrentProductId={setCurrentProductId}/>
+                                          setCurrentProductId={setCurrentProductId}
+                                          isGrid={isGrid}/>
                       })}
                     </div>
                     <Pagination
