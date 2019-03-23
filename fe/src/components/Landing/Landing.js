@@ -15,10 +15,6 @@ import ReactTransitionGroup from 'react-addons-transition-group';
 
 class Landing extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { locale } = this.props.match.params;
     const { setCurrentProductId, currentProductId, showQVModal, toggleQuickView } = this.props;
