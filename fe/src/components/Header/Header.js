@@ -67,6 +67,7 @@ class Header extends Component {
   }
 
   render() {
+    
     const { locale, currency } = this.props.match.params;
     return(
       <header>

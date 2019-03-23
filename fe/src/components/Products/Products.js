@@ -113,9 +113,6 @@ class Products extends Component {
       const { page, size } = this.state.params;
 				return(
           <React.Fragment>
-            <Header
-              {...this.props}
-            />
             <div className="shop-page-container mb-50">
               <div className="container">
                 <BreadCrumb
@@ -171,8 +168,6 @@ class Products extends Component {
                 </div>
               </div>
             </div>
-            <Scroller />
-            <Footer />
           </React.Fragment>
 					)
 				}
