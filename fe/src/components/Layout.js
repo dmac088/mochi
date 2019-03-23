@@ -29,5 +29,5 @@ export const LayoutBC = (props) => {
         <Scroller />
       <Footer />
     </React.Fragment>
-  )
-}
+  );
+};
