@@ -15,7 +15,7 @@ class Scroller extends Component {
     window.addEventListener('scroll', this.listenToScroll, { passive: true });
   }
 
-  componentDidUnmount() {
+  componentWillUnmount() {
     window.removeEventListener('scroll', this.listenToScroll, { passive: true });
   }
 
