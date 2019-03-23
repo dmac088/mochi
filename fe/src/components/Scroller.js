@@ -6,7 +6,6 @@ class Scroller extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        "position": 0,
         "showScroller": false,
         "body": null,
     };
@@ -25,8 +24,10 @@ class Scroller extends Component {
 
   listenToScroll = () => {
     const scroll = document.documentElement.scrollTop;
+    const { showScroller } = this.state;
+    if(showScroller === (scroll >= 400)) {return;}
     this.setState({
-      position: scroll,
+      "showScroller": (scroll >= 400),
     });
   }
 
@@ -37,12 +38,12 @@ class Scroller extends Component {
   }
 
   render() {
-    const { position } = this.state;
+    const { showScroller } = this.state;
     return (
       <React.Fragment>
         <a href="#"
            onClick={this.animate}
-           className={"scroll-top " + ((position >= 400) ? "fadeIn" : "fadeOut")}
+           className={"scroll-top " + ((showScroller) ? "fadeIn" : "fadeOut")}
         />
       </React.Fragment>
     )
