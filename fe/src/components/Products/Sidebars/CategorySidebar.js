@@ -17,10 +17,7 @@ class CategorySidebar extends Component {
       this.setState({
         "category": responseJSON,
       });
-    })
-    .then(() => {
-        console.log(this.state.category);
-    })
+    });
     // this.updateMenu(locale, 1);
     // this.renderMenu(true);
     // window.addEventListener('resize', this.renderMenu , { passive: true });
@@ -41,18 +38,19 @@ class CategorySidebar extends Component {
   });
 
   render() {
+    const { category } = this.state;
     return (
       <div className="sidebar mb-35">
         <h3 className="sidebar-title">PRODUCT CATEGORIES</h3>
         <ul className="product-categories">
-          <li><a className="active" href="shop-left-sidebar.html">Beans</a></li>
-          <li><a href="shop-left-sidebar.html">Bread</a></li>
-          <li><a href="shop-left-sidebar.html">Eggs</a></li>
-          <li><a href="shop-left-sidebar.html">Fruits</a></li>
-          <li><a href="shop-left-sidebar.html">Salads</a></li>
-          <li><a href="shop-left-sidebar.html">Fast Foods</a></li>
-          <li><a href="shop-left-sidebar.html">Fish & Meats</a></li>
-          <li><a href="shop-left-sidebar.html">Uncategorized</a></li>
+          <li><a className="active" href="#">Beans</a></li>
+          <li><a href="#">Bread</a></li>
+          <li><a href="#">Eggs</a></li>
+          <li><a href="#">Fruits</a></li>
+          <li><a href="#">Salads</a></li>
+          <li><a href="#">Fast Foods</a></li>
+          <li><a href="#">Fish & Meats</a></li>
+          <li><a href="#">Uncategorized</a></li>
         </ul>
       </div>
     );
