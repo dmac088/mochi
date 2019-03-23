@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import * as sessionService from '../../services/session';
-import Header from '../Header/Header';
 import BreadCrumb from '../BreadCrumb';
 
 class Account extends Component {
@@ -16,9 +15,6 @@ class Account extends Component {
     const { givenName, familyName } = this.props.customer;
     return(
       <React.Fragment>
-        <Header
-          {...this.props}
-        />
         <BreadCrumb
           match={this.props.match}
           page={"Checkout"}/>

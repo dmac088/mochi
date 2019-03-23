@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Header from '../Header/Header';
 import BreadCrumb from '../BreadCrumb';
 import * as cartSelector from '../../services/cart/selectors';
 import * as cartService from '../../services/cart';
@@ -610,9 +609,6 @@ class Product extends Component {
     const { product, currentImage, isShowing, isLoading} = this.state;
     return (
       <React.Fragment>
-				<Header
-					{...this.props}
-				/>
         <BreadCrumb
           {...this.props}
           page={"Product"}

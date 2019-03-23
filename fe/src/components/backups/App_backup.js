@@ -6,7 +6,6 @@ import {
   withRouter
 } from 'react-router-dom';
 import store from './store';
-import Header from './components/Header';
 import Signup from './components/Signup';
 import ManageCart from './components/ManageCart';
 import Paginator from './components/Paginator';
@@ -20,7 +19,6 @@ import * as cartService from './services/cart';
 import * as categoryApi from './data/categories/api';
 import Landing from './components/Landing';
 import Login from './components/Login';
-import Footer from './components/Footer';
 import './scss/main.scss';
 import CategoryNavigator from './components/CategoryNavigator'
 import qs from 'query-string';
@@ -182,11 +180,6 @@ class App extends Component {
       <div>
         <div className="row">
           <div className="col-sm-12">
-            <Header
-              authenticated={this.props.tokens.authenticated}
-              customer={this.props.customer}
-              lang={this.state.queryParams.lang}
-              />
           </div>
         </div>
         <div className="row">
@@ -228,7 +221,6 @@ class App extends Component {
         </div>
       </div>
       <ManageCart/>
-      <Footer/>
       <button onClick={this.printState}>
         Print Redux State
       </button>
