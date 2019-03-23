@@ -18,7 +18,6 @@ export const Layout = (props) => {
 };
 
 export const LayoutBC = (props) => {
-  console.log(props)
   return(
     <React.Fragment>
       <Header
