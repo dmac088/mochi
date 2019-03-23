@@ -124,7 +124,9 @@ class Products extends Component {
                 <div className="row">
                   <div className="col-lg-3 order-2 order-lg-1">
                     <div className="sidebar-area">
-                      <CategorySidebar/>
+                      <CategorySidebar
+                        {...this.props}
+                      />
                       <BrandSidebar/>
                       <PriceSidebar/>
                       <TopRatedSidebar/>
