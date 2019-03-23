@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Header from '../Header/Header';
 import Register from './Register';
 import Login from './Login';
 import BreadCrumb from '../BreadCrumb';
@@ -9,9 +8,6 @@ class Auth extends Component {
   render() {
     return(
       <React.Fragment>
-      <Header
-        {...this.props}
-      />
       <BreadCrumb
         match={this.props.match}
         page={"Login"}/>

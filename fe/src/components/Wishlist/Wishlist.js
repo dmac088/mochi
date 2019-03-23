@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Header from '../Header/Header';
 import BreadCrumb from '../BreadCrumb';
 
 
@@ -7,9 +6,6 @@ class Wishlist extends Component {
   render() {
 			return(
         <React.Fragment>
-          <Header
-            {...this.props}
-          />
           <BreadCrumb
             match={this.props.match}
             page={"Wishlist"}/>

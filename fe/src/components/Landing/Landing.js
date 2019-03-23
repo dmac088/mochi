@@ -6,11 +6,8 @@ import BestSeller from './BestSeller';
 import BlogPosts from './BlogPosts';
 import BrandSlider from './BrandSlider';
 import PreviewCategoryContainer from '../PreviewCategory/PreviewCategoryContainer';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
 import Highlights from '../Highlights/Highlights';
 import QuickViewProduct from '../QuickView/QuickViewProduct';
-import Scroller from '../Scroller';
 import ReactTransitionGroup from 'react-addons-transition-group';
 
 class Landing extends Component {
