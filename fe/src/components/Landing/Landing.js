@@ -10,42 +10,14 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Highlights from '../Highlights/Highlights';
 import QuickViewProduct from '../QuickView/QuickViewProduct';
+import Scroller from '../Scroller';
 import ReactTransitionGroup from 'react-addons-transition-group';
 
 class Landing extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-        theposition: 0,
-        showScroller: false,
-    };
   }
-
-  componentDidMount() {
-    window.addEventListener('scroll', this.listenToScroll, { passive: true });
-    this.animateScroll();
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.listenToScroll, { passive: true });
-  }
-
-  listenToScroll = () => {
-    let scroll = document.documentElement.scrollTop;
-    this.setState({
-      theposition: scroll,
-    })
-  }
-
-  animateScroll = (e) => {
-     if(!(e === undefined)) {e.preventDefault()}
-     const body = document.querySelector('html,body');
-     document.querySelector('.scroll-top').onclick = function() {
-       Velocity(body, 'scroll', { duration: 1000 });
-     };
-  }
-
 
   render() {
     const { locale } = this.props.match.params;
@@ -78,11 +50,7 @@ class Landing extends Component {
           isShowing={showQVModal}
           toggleQuickView={toggleQuickView}
         />
-        <a
-          onClick={this.animateScroll}
-          href="#"
-          className={"scroll-top " + ((this.state.theposition >= 400) ? "fadeIn" : "fadeOut")}
-        />
+      <Scroller />
       </div>
       );
   }
