@@ -84,7 +84,6 @@ class App extends Component {
 
   renderLayout = (routeProps, contentCallback) => {
     const { locale, currency, pagedItems, categoryList, currentProductId, showQVModal } = this.state;
-    console.log(routeProps);
     return (
       <Layout {...routeProps}>
           {contentCallback(routeProps)}
