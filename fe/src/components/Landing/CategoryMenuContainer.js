@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
 import ReactTransitionGroup from 'react-addons-transition-group';
 import * as categoryApi from '../../data/categories/api';
 import { isMobile, slide, updateParams } from '../../services/helpers/Helper';
@@ -67,6 +66,7 @@ class CategoryMenuContainer extends Component {
   });
 
   render() {
+
     const { locale } = this.props.match.params;
     return (
       <div className="hero-side-category">
@@ -140,29 +140,31 @@ class CategoryMenu extends Component {
   renderCategoryListItems = (categoryList, isRootList, changeCategory, itemCounter) => {
     return categoryList.map(category => {
         if(isRootList) {itemCounter+=1};
-        let categoryId = category.categoryId;
-        let isMobile = this.props.isMobile;
-        let showMore = this.state.showMore;
-      return(
-            <ReactTransitionGroup
-                  key={categoryId}
-                  component={CategoryMenuItem}
-                  category={category}
-                  renderCategoryListItems={this.renderCategoryListItems}
-                  isRootList={isRootList}
-                  changeCategory={changeCategory}
-                  itemCounter={itemCounter}
-                  isMobile={isMobile}
-                  showMore={showMore}>
-            </ReactTransitionGroup>
-      )
+        const { isMobile }  = this.props;
+        const { showMore }  = this.state
+        const categoryId    = category.categoryId;
+
+        return(
+              <ReactTransitionGroup
+                    key={categoryId}
+                    component={CategoryMenuItem}
+                    category={category}
+                    renderCategoryListItems={this.renderCategoryListItems}
+                    isRootList={isRootList}
+                    changeCategory={changeCategory}
+                    itemCounter={itemCounter}
+                    isMobile={isMobile}
+                    showMore={showMore}>
+              </ReactTransitionGroup>
+        )
     });
   }
 
   render() {
-    const { locale } = this.props.match.params;
-    const { categoryList } = this.props;
-    const { showMore } = this.state;
+    const { locale }        = this.props.match.params;
+    const { categoryList }  = this.props;
+    const { showMore }      = this.state;
+
     return(
       <ul ref={this.setContainer}>
         {this.renderCategoryListItems(categoryList, true, this.changeCategory, 0)}
@@ -189,9 +191,11 @@ class CategoryMenuItem extends Component {
 
   constructor(props) {
     super(props);
+    const { childCategoryCount } = this.props.category;
+    const { isMobile } = this.props;
     this.state = {
-      hasChildren: this.props.category.childCategoryCount > 0,
-      expand: ((this.props.isMobile) ? false : true),
+      hasChildren: childCategoryCount > 0,
+      expand: ((isMobile) ? false : true),
     }
   }
 
@@ -209,18 +213,9 @@ class CategoryMenuItem extends Component {
   }
 
   render() {
-    let catlvl = this.props.category.categoryLevel;
-    let catId = this.props.category.categoryId;
-    let catCode = this.props.category.categoryCode;
-    let catDesc = this.props.category.categoryDesc;
-    let hasChildren = this.state.hasChildren;
-    let itemCount = this.props.itemCounter;
-    let rootList = this.props.isRootList;
-    let isMobile = this.props.isMobile;
-    let expand = this.state.expand;
-    let changeCategory = this.props.changeCategory;
-    let showMore = this.props.showMore;
-    let children = this.props.category.children;
+    const { categoryLevel, categoryId, categoryCode, categoryDesc, children } = this.props.category;
+    const { itemCounter, isRootList, isMobile, changeCategory, showMore } = this.props;
+    const { hasChildren, expand } = this.state;
 
     return (
         <li
@@ -229,24 +224,24 @@ class CategoryMenuItem extends Component {
                     ? "menu-item-has-children"
                     : "")
                     +
-                    ((itemCount > 8)
+                    ((itemCounter > 8)
                     ? " hidden"
                     : "")
           }
           style={
-            (rootList && itemCount > 8 && !showMore)
+            (isRootList && itemCounter > 8 && !showMore)
             ? {"display": "none"}
-            : {"--my-left-indent": this.getIndent(catlvl,10)}
+            : {"--my-left-indent": this.getIndent(categoryLevel,10)}
           }
           >
-          <a  id={catCode}
+          <a  id={categoryCode}
               onClick={changeCategory}
               className={"megamenu-head"}
               style={(isMobile)
-                     ? {"--my-cat-indent": this.getIndent(catlvl)}
+                     ? {"--my-cat-indent": this.getIndent(categoryLevel)}
                       : {"":""}}
               href="shop-left-sidebar.html">
-            {catDesc}
+            {categoryDesc}
 
             {(hasChildren && isMobile)
               ? <span>
@@ -262,9 +257,9 @@ class CategoryMenuItem extends Component {
               ? <CategoryMenuItemSubList
                   renderCategoryListItems={this.props.renderCategoryListItems}
                   children={children}
-                  categoryLevel={catlvl}
+                  categoryLevel={categoryLevel}
                   changeCategory={changeCategory}
-                  itemCounter={itemCount}
+                  itemCounter={itemCounter}
                 />
               : null)}
           </ReactTransitionGroup>
@@ -289,17 +284,15 @@ class CategoryMenuItemSubList extends Component {
   }
 
   render() {
-    let itemCount = this.props.itemCounter;
-    let changeCategory = this.props.changeCategory;
-    let children = this.props.children;
+    const { itemCounter, changeCategory, children } = this.props;
 
     return (
       <ul ref={this.setContainer}
           className="category-mega-menu">
-            {this.props.renderCategoryListItems(children, false, changeCategory, itemCount)}
+            {this.props.renderCategoryListItems(children, false, changeCategory, itemCounter)}
       </ul>
     )
   }
 }
 
-export default withRouter(CategoryMenuContainer);
+export default CategoryMenuContainer;
