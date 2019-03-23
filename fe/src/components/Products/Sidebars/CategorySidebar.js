@@ -20,8 +20,6 @@ class CategorySidebar extends Component {
     });
   }
 
-
-
   getCategories = (locale = "en-GB", desc = 'All') =>
     categoryApi.findByDesc(locale, desc)
     .then((response) => {
