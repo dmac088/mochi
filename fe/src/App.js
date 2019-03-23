@@ -15,7 +15,6 @@ import * as pageService from './services/page';
 import * as cartService from './services/cart';
 import * as categoryApi from './data/categories/api';
 import { Layout, LayoutBC } from './components/Layout';
-//import  from './components/Layout';
 import Landing from './components/Landing/Landing';
 import Products from './components/Products/Products';
 import Checkout from './components/Checkout/Checkout';
@@ -148,6 +147,7 @@ class App extends Component {
         authenticated={tokens.authenticated}
         customer={customer}
         cart={cart}
+        page="Cart"
       />
     );
   }
