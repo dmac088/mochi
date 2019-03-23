@@ -86,9 +86,15 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
     @Override
   	@Transactional
   	public ProductCategoryDTO getProductCategory(final String lcl, final Long categoryId) {
-     	ProductCategory pc = productCategoryRepository.findByCategoryId(categoryId).get();
+     	ProductCategory pc = productCategoryRepository.findByCategoryId(categoryId);
      	return	convertToProductCategoryDto(pc, lcl);
   	}
+    
+    @Override
+	public ProductCategoryDTO getProductCategory(String lcl, String categoryDesc) {
+     	ProductCategory pc = productCategoryRepository.findByProductCategoryAttributeLclCdAndProductCategoryAttributeCategoryDesc(lcl, categoryDesc);
+     	return	convertToProductCategoryDto(pc, lcl);
+	}
     
     private ProductCategoryDTO convertToProductCategoryDto(final ProductCategory pc, final String lcl) {
     	ProductCategoryAttribute pca = productCategoryAttributeRepository.findByLclCdAndCategoryId(lcl, pc.getCategoryId()).get();	
@@ -110,4 +116,5 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
         pcDto.setChildCategoryCount(new Long(pc.getChildren().size()));
         return pcDto;
     }
+	
 }

@@ -63,7 +63,7 @@ public class ProductDTOService implements IProductDTOService {
  	public Page<ProductDTO> getAllProductsForCategory(String lcl, Long categoryId, int page, int size, String sortBy) {
     	//get a list of category ids for the current category and its child categories
     	List<ProductCategory> pcl = new ArrayList<ProductCategory>();
-    	ProductCategory pc = productCategoryRepository.findByCategoryId(categoryId).get();
+    	ProductCategory pc = productCategoryRepository.findByCategoryId(categoryId);
     	recurseCategories(pcl, pc);
     	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
  		Page<ProductAttribute> ppa = productAttributePagingAndSortingRepository.findDistinctByLclCdAndProductCategoriesCategoryIdIn(lcl, categoryIds, PageRequest.of(page, size, Sort.by(sortBy).descending()));
@@ -75,7 +75,7 @@ public class ProductDTOService implements IProductDTOService {
   	@Transactional
   	public List<ProductDTO> getPreviewProductsForCategory(String lcl, Long categoryId) {
      	List<ProductCategory> pcl = new ArrayList<ProductCategory>();
-     	ProductCategory pc = productCategoryRepository.findByCategoryId(categoryId).get();
+     	ProductCategory pc = productCategoryRepository.findByCategoryId(categoryId);
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
   		Collection<ProductAttribute> ppa = productAttributeRepository.findDistinctByLclCdAndProductCategoriesCategoryIdInAndProductPreviewFlag(lcl, categoryIds, new Long(1));

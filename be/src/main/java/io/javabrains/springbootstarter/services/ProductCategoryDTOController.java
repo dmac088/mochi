@@ -43,4 +43,9 @@ public class ProductCategoryDTOController {
     public ProductCategoryDTO getProductCategory(@PathVariable String lcl, @PathVariable Long categoryId) {
     	return productCategoryService.getProductCategory(lcl, categoryId);
     }
+    
+    @GetMapping("/ProductCategory/{lcl}/desc/{categoryDesc}")
+    public ProductCategoryDTO getProductCategory(@PathVariable String lcl, @PathVariable String categoryDesc) {
+    	return productCategoryService.getProductCategory(lcl, categoryDesc);
+    }
 }

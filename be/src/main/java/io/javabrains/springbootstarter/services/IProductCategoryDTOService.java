@@ -14,5 +14,7 @@ public interface IProductCategoryDTOService {
 	 List<ProductCategoryDTO> getPreviewProductCategories(final String lcl, final Long previewFlag);
 	 
 	 ProductCategoryDTO getProductCategory(String lcl, Long categoryId);
+	 
+	 ProductCategoryDTO getProductCategory(String lcl, String categoryDesc);
 
 }
