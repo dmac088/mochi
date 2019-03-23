@@ -40,7 +40,8 @@ class Scroller extends Component {
     const { position } = this.state;
     return (
       <React.Fragment>
-        <a onClick={this.animate}
+        <a href="#"
+           onClick={this.animate}
            className={"scroll-top " + ((position >= 400) ? "fadeIn" : "fadeOut")}
         />
       </React.Fragment>
