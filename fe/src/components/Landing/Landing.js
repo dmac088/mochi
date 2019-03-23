@@ -20,10 +20,7 @@ class Landing extends Component {
     const { setCurrentProductId, currentProductId, showQVModal, toggleQuickView } = this.props;
 
     return(
-      <div>
-        <Header
-          {...this.props}
-        />
+      <React.Fragment>
         <HeroSlider
           {...this.props}
         />
@@ -39,16 +36,14 @@ class Landing extends Component {
         <BestSeller />
         <BlogPosts />
         <BrandSlider />
-        <Footer />
         <QuickViewProduct
           {...this.props}
           productId={currentProductId}
           isShowing={showQVModal}
           toggleQuickView={toggleQuickView}
         />
-      <Scroller />
-      </div>
-      );
+      </React.Fragment>
+    );
   }
 }
 
