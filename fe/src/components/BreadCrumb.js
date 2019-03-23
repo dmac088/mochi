@@ -5,7 +5,7 @@ class BreadCrumb extends Component {
 
   render() {
     const { locale, currency } = this.props.match.params;
-    const { page } =  this.props.children.props;
+    const { page } =  this.props;
     return (
       <div className="breadcrumb-area mb-50">
     		<div className="container">

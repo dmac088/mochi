@@ -24,7 +24,7 @@ export const LayoutBC = (props) => {
         {...props}
         />
         <BreadCrumb
-          {...props} />
+          {...props.children.props} />
         {props.children}
         <Scroller />
       <Footer />
