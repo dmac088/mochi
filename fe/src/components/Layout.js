@@ -2,17 +2,32 @@ import React from 'react';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import Scroller from './Scroller';
+import BreadCrumb from './BreadCrumb';
 
-const Layout = (props) => {
+export const Layout = (props) => {
     return (
       <React.Fragment>
         <Header
           {...props}
           />
           {props.children}
+          <Scroller />
         <Footer />
       </React.Fragment>
     );
 };
 
-export default Layout;
+export const LayoutBC = (props) => {
+  return(
+    <React.Fragment>
+      <Header
+        {...props}
+        />
+        <BreadCrumb
+          {...props} />
+        {props.children}
+        <Scroller />
+      <Footer />
+    </React.Fragment>
+  )
+}

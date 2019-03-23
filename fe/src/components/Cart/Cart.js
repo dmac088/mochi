@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import * as cartSelector from '../../services/cart/selectors';
 import * as cartService from '../../services/cart';
-import BreadCrumb from '../BreadCrumb';
 
 class Cart extends Component {
 
@@ -54,9 +53,6 @@ class Cart extends Component {
       const { cart } = this.props;
 			return(
         <React.Fragment>
-          <BreadCrumb
-            match={this.props.match}
-            page={"Cart"}/>
           <div className="page-section section mb-50">
               <div className="container">
                   <div className="row">

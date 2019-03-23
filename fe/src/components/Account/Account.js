@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import * as sessionService from '../../services/session';
-import BreadCrumb from '../BreadCrumb';
+
 
 class Account extends Component {
 
@@ -15,9 +15,6 @@ class Account extends Component {
     const { givenName, familyName } = this.props.customer;
     return(
       <React.Fragment>
-        <BreadCrumb
-          match={this.props.match}
-          page={"Checkout"}/>
         <div className="my-account-section section position-relative mb-50 fix">
           <div className="container">
             <div className="row">

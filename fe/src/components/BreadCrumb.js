@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { withRouter, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class BreadCrumb extends Component {
-
 
   render() {
     const { locale, currency } = this.props.match.params;
@@ -23,6 +22,6 @@ class BreadCrumb extends Component {
     	</div>
     );
   }
-
 }
+
 export default BreadCrumb;
