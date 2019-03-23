@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import BreadCrumb from '../BreadCrumb';
 import { google } from 'google-maps';
 
 class Contact extends Component {
@@ -208,9 +207,6 @@ class Contact extends Component {
   render() {
 			return(
         <React.Fragment>
-          <BreadCrumb
-            match={this.props.match}
-            page={"Contact"}/>
 
           <div className="page-content mb-50">
 

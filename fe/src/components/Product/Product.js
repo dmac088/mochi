@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import BreadCrumb from '../BreadCrumb';
 import * as cartSelector from '../../services/cart/selectors';
 import * as cartService from '../../services/cart';
 import * as productApi from '../../data/products/api';

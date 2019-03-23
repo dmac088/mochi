@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
-import BreadCrumb from '../BreadCrumb';
 
 class Checkout extends Component {
   render() {
     return(
       <React.Fragment>
-        <BreadCrumb
-          match={this.props.match}
-          page={"Checkout"}/>
         <div className="page-section section mb-50">
           <div className="container">
             <div className="row">

@@ -7,7 +7,6 @@ import PriceSidebar from './Sidebars/PriceSidebar';
 import TopRatedSidebar from './Sidebars/TopRatedSidebar';
 import TagSidebar from './Sidebars/TagSidebar';
 import ShopBanner from './ShopBanner';
-import BreadCrumb from '../BreadCrumb';
 import ShopHeader from './ShopHeader';
 import Pagination from './Pagination';
 import * as productApi from '../../data/products/api';
@@ -112,9 +111,6 @@ class Products extends Component {
           <React.Fragment>
             <div className="shop-page-container mb-50">
               <div className="container">
-                <BreadCrumb
-                  match={this.props.match}
-                  page="Shop"/>
                 <div className="row">
                   <div className="col-lg-3 order-2 order-lg-1">
                     <div className="sidebar-area">
