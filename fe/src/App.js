@@ -35,7 +35,6 @@ class App extends Component {
     this.state = {
                      locale: "en-GB",
                      currency: "USD",
-                     categoryList: [],
                      modalActive: false,
                      pagedItems: {content:[]},
                      isMounted: 0,
