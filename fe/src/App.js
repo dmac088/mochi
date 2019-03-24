@@ -54,18 +54,6 @@ class App extends Component {
     //                     });
   }
 
-  getCategories = (locale = "en-GB") =>
-    categoryApi.findAll(locale)
-    .then((response) => {
-      return response.text();
-    })
-    .then((responseText) => {
-      return JSON.parse(responseText);
-    })
-    .catch(()=>{
-      console.log('getCategories failed!');
-    });
-
   autoLogin = () =>  {
     sessionService.refreshToken().then(() => {
    //this.setState({ initialRoute: routeStack[0] });
