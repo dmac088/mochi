@@ -32,7 +32,7 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-      this.state = {
+    this.state = {
                      locale: "en-GB",
                      currency: "USD",
                      categoryList: [],
@@ -41,8 +41,30 @@ class App extends Component {
                      isMounted: 0,
                      showQVModal: false,
                      currentProductId: null,
-                   };
+                  };
   }
+
+
+  componentDidMount() {
+    // const unsubscribe = store.subscribe(() => {
+    //                     			if (store.getState().services.persist.isHydrated) {
+    //                     				unsubscribe(); //call
+    //                     				this.autoLogin();
+    //                     			}
+    //                     });
+  }
+
+  getCategories = (locale = "en-GB") =>
+    categoryApi.findAll(locale)
+    .then((response) => {
+      return response.text();
+    })
+    .then((responseText) => {
+      return JSON.parse(responseText);
+    })
+    .catch(()=>{
+      console.log('getCategories failed!');
+    });
 
   autoLogin = () =>  {
     sessionService.refreshToken().then(() => {
@@ -68,22 +90,12 @@ class App extends Component {
     });
   }
 
-  componentDidMount() {
-    //set
-		// const unsubscribe = store.subscribe(() => {
-    //                     			if (store.getState().services.persist.isHydrated) {
-    //                     				unsubscribe(); //call
-    //                     				this.autoLogin();
-    //                     			}
-		//                     });
-	}
-
   emptyCart = () => {
     cartService.emptyCart();
   }
 
   renderLayout = (routeProps, contentCallback) => {
-    const { locale, currency, pagedItems, categoryList, currentProductId, showQVModal } = this.state;
+    const { locale } = routeProps.match.params;
     return (
       <Layout {...routeProps}>
           {contentCallback(routeProps)}
@@ -92,7 +104,6 @@ class App extends Component {
   }
 
   renderLayoutBC = (routeProps, contentCallback) => {
-    const { locale, currency, pagedItems, categoryList, currentProductId, showQVModal } = this.state;
     return (
       <LayoutBC {...routeProps}>
           {contentCallback(routeProps)}
@@ -101,12 +112,13 @@ class App extends Component {
   }
 
   renderLanding = (routeProps) => {
-    const { locale, currency, currentProductId, showQVModal } = this.state;
+    const { locale, currency, currentProductId, showQVModal, categoryList } = this.state;
     return (
         <Landing
           {...routeProps}
           locale={locale}
           currency={currency}
+          categoryList={categoryList}
           showQVModal={showQVModal}
           setCurrentProductId={this.setCurrentProductId}
           currentProductId={currentProductId}
