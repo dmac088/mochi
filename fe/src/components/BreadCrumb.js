@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 class BreadCrumb extends Component {
 
   render() {
+    console.log(this.props.match)
     const { locale, currency } = this.props.match.params;
     const { page } =  this.props;
     return (
