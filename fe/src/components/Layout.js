@@ -19,15 +19,11 @@ export const Layout = (props) => {
 
 export const LayoutBC = (props) => {
   return(
-    <React.Fragment>
-      <Header
-        {...props}
-        />
-        <BreadCrumb
-          {...props.children.props} />
+    <Layout
+      {...props}>
+      <BreadCrumb
+        {...props.children.props} />
         {props.children}
-        <Scroller />
-      <Footer />
-    </React.Fragment>
+    </Layout>
   );
 };
