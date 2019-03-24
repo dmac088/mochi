@@ -15,31 +15,12 @@ class CategoryMenuContainer extends Component {
       locale: locale,
       menuVisible: true,
       isMobile: false,
-      categoryList: [],
     };
   }
 
   componentDidMount() {
-    const { locale } = this.props.match.params;
-    this.updateMenu(locale, 1);
     this.renderMenu(true);
     window.addEventListener('resize', this.renderMenu , { passive: true });
-  }
-
-  componentDidUpdate() {
-    const { locale } = this.props.match.params;
-    this.updateMenu(locale, 0);
-  }
-
-  updateMenu = (locale = "en-GB", isMounting = 0) => {
-    if(locale === this.state.locale && isMounting === 0) {return;}
-    this.getCategories(locale, 1)
-    .then((responseJSON) => {
-      this.setState({
-        categoryList: responseJSON,
-        locale: locale,
-      });
-    });
   }
 
   renderMenu = (isMounting = false) => {
@@ -53,21 +34,9 @@ class CategoryMenuContainer extends Component {
     }));
   }
 
-  getCategories = (locale = "en-GB", level = 1) =>
-    categoryApi.findAllForLevel(locale, level)
-    .then((response) => {
-      return response.text();
-    })
-    .then((responseText) => {
-      return JSON.parse(responseText);
-    })
-    .catch(()=>{
-      console.log('getCategories failed!');
-  });
-
   render() {
-
     const { locale } = this.props.match.params;
+    const { categoryList } = this.props;
     return (
       <div className="hero-side-category">
         <div className="category-toggle-wrap">
@@ -80,7 +49,7 @@ class CategoryMenuContainer extends Component {
           {
           ((this.state.menuVisible)
           ? <CategoryMenu
-              categoryList={this.state.categoryList}
+              categoryList={categoryList}
               isMobile={this.state.isMobile}
               history={this.props.history}
               match={this.props.match}

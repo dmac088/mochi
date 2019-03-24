@@ -9,9 +9,9 @@ export const Layout = (props) => {
       <React.Fragment>
         <Header
           {...props}
-          />
-          {props.children}
-          <Scroller />
+        />
+        {props.children}
+        <Scroller />
         <Footer />
       </React.Fragment>
     );
@@ -20,10 +20,12 @@ export const Layout = (props) => {
 export const LayoutBC = (props) => {
   return(
     <Layout
-      {...props}>
+      {...props}
+    >
       <BreadCrumb
-        {...props.children.props} />
-        {props.children}
+        {...props.children.props}
+      />
+      {props.children}
     </Layout>
   );
 };
