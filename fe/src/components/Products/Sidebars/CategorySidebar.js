@@ -33,25 +33,29 @@ class CategorySidebar extends Component {
   });
 
   renderCategoryListItems = (category) => {
-    if(!category) { return null; }
     return category.children.map(child => {
       return(
-            <li key={child.categoryId} >
-              <a id={child.categoryCode} href="#">
-                {child.categoryDesc}
-              </a>
-            </li>
+        <li style={{"textIndent" : "5px"}} key={child.categoryId} >
+          <a id={child.categoryCode} href="#">
+            {child.categoryDesc}
+          </a>
+        </li>
       )
     })
   }
 
   render() {
     const { category } = this.state;
-
+    if(!category) {return null;}
     return (
       <div className="sidebar mb-35">
         <h3 className="sidebar-title">PRODUCT CATEGORIES</h3>
         <ul className="product-categories">
+          <li key={category.categoryId} >
+            <a id={category.categoryCode} href="#">
+              {category.categoryDesc}
+            </a>
+          </li>
           {this.renderCategoryListItems(category)}
         </ul>
       </div>
