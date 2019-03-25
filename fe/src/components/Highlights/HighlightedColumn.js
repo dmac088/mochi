@@ -9,6 +9,7 @@ class HighlightedColumn extends Component {
   }
 
   renderProducts = (products) => {
+    const { category } = this.props;
     if (products === undefined) { return; }
     return products.map(product => {
       return (
@@ -16,6 +17,7 @@ class HighlightedColumn extends Component {
             {...this.props}
             key={product.productId}
             product={product}
+            category={category}
           />
         )
     });

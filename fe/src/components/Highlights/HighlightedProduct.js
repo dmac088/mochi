@@ -41,8 +41,9 @@ class HighlightedProduct extends Component {
 
   routeSingleProduct = (e) => {
     e.preventDefault();
+		const { category } = this.props;
     const { locale, currency } = this.props.match.params;
-    this.props.history.push('/' + locale + '/' + currency + '/Product/' + e.currentTarget.id);
+    this.props.history.push('/' + locale + '/' + currency + '/category/' + category + '/Product/' + e.currentTarget.id);
   }
 
   renderProduct = (product, currentImage, setCurrentProductId) => {
@@ -82,7 +83,7 @@ class HighlightedProduct extends Component {
   }
 
   render() {
-    const { product, setCurrentProductId } = this.props;
+    const { category, product, setCurrentProductId } = this.props;
     const { isLoading } = this.state;
     return (
         <div className="gf-product tab-slider-sub-product">
