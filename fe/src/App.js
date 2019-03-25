@@ -73,10 +73,11 @@ class App extends Component {
     .then((responseJSON) => {
         this.setState({
           "featuredProducts": responseJSON.content,
+          "locale": locale,
         })
     })
     .catch(()=>{
-        console.log('getCategories failed!');
+        console.log('refreshFeaturedProducts failed!');
     });
   }
 
@@ -92,10 +93,11 @@ class App extends Component {
     .then((responseJSON) => {
         this.setState({
           "categoryList": responseJSON,
+          "locale": locale,
         })
     })
     .catch(()=>{
-        console.log('getCategories failed!');
+        console.log('refreshCategoryList failed!');
     });
   }
 
