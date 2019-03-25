@@ -15,7 +15,14 @@ class CategoryMenuContainer extends Component {
       locale: locale,
       menuVisible: true,
       isMobile: false,
+      categories: null
     };
+  }
+
+  filterCategories = (categoryList) => {
+    return categoryList.filter(function(value, index, arr){
+      return value.categoryLevel === 1;
+    });
   }
 
   componentDidMount() {
@@ -36,7 +43,7 @@ class CategoryMenuContainer extends Component {
 
   render() {
     const { locale } = this.props.match.params;
-    const { categoryList } = this.props;
+    const categoryList = this.filterCategories(this.props.categoryList);
     return (
       <div className="hero-side-category">
         <div className="category-toggle-wrap">
