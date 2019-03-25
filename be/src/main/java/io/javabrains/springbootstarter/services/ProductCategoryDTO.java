@@ -2,8 +2,6 @@ package io.javabrains.springbootstarter.services;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 
 public class ProductCategoryDTO {
 	

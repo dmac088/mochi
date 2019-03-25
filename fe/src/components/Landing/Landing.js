@@ -14,8 +14,7 @@ class Landing extends Component {
 
   render() {
     const { locale } = this.props.match.params;
-    const { setCurrentProductId, currentProductId, showQVModal, toggleQuickView } = this.props;
-
+    const { setCurrentProductId, currentProductId, showQVModal, toggleQuickView, categoryList } = this.props;
     return(
       <React.Fragment>
         <HeroSlider
@@ -28,6 +27,7 @@ class Landing extends Component {
         <Banner />
         <PreviewCategoryContainer
           locale={locale}
+          categoryList={categoryList}
           setCurrentProductId={setCurrentProductId}
         />
         <BestSeller />

@@ -114,7 +114,7 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
         if(!(pc.getParent() == null)) {
         	pcDto.setParentId(pc.getParent().getCategoryId());
         }
-        //pcDto.setParent(convertToProductCategoryDto(pc.getParent(), lcl));
+        pcDto.setCategoryPreview(pc.getPreviewFlag());
         pcDto.setCategoryDesc(pca.getCategoryDesc());
         pcDto.setLclCd(pca.getLclCd());
         pcDto.setChildCategoryCount(new Long(pc.getChildren().size()));
