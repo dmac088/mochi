@@ -48,6 +48,9 @@ public class ProductCategory {
 	
 	@Column(name="cat_prev_flg")
 	private Long previewFlag;
+	
+	@Column(name="cat_menu_flg")
+	private Long menuDisplayFlag;
 
 	@Column(name="cat_lvl")
 	private Long categoryLevel;
@@ -112,6 +115,14 @@ public class ProductCategory {
 
 	public void setPreviewFlag(Long previewFlag) {
 		this.previewFlag = previewFlag;
+	}
+
+	public Long getMenuDisplayFlag() {
+		return menuDisplayFlag;
+	}
+
+	public void setMenuDisplayFlag(Long menuDisplayFlag) {
+		this.menuDisplayFlag = menuDisplayFlag;
 	}
 	
 	public Collection<Product> getProducts() {
