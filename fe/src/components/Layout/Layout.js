@@ -10,16 +10,24 @@ class Layout extends Component {
     super(props)
     this.state = {
                   "categoryList": [],
+                  "locale": "en-GB"
                  };
   }
 
   componentDidMount() {
     const { locale } = this.props.match.params;
-    this.getCategories(locale);
+    this.refreshData(locale, 1);
   }
 
-  getCategories = (locale) =>
-    categoryApi.findAll(locale)
+  componentDidUpdate() {
+    const { locale } = this.props.match.params;
+    this.refreshData(locale, 0);
+  }
+
+  refreshData = (locale, isMounting) => {
+    if(locale === this.state.locale
+      && isMounting === 0) {return;}
+    this.getCategories(locale)
     .then((response) => {
         return response.text();
     })
@@ -28,21 +36,24 @@ class Layout extends Component {
     })
     .then((responseJSON) => {
         this.setState({
-          categoryList: responseJSON,
+          "categoryList": responseJSON,
+          "locale": locale
         })
     })
     .catch(()=>{
         console.log('getCategories failed!');
     });
+  }
+
+  getCategories = (locale) =>
+    categoryApi.findAll(locale);
+
 
   changeCategory = (e) => {
     e.preventDefault();
     const url = this.props.location.pathname;
     const search = this.props.location.search;
     const { term } = this.props.match.params;
-    console.log(url);
-    console.log(search);
-    console.log(term);
     this.props.history.push(url.replace(term || '', event.target.id) + search);
   }
 
