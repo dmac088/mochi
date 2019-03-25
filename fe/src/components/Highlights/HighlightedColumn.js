@@ -9,7 +9,7 @@ class HighlightedColumn extends Component {
   }
 
   renderProducts = (products) => {
-    const { category } = this.props;
+    const { categoryDesc } = this.props;
     if (products === undefined) { return; }
     return products.map(product => {
       return (
