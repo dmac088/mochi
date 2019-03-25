@@ -47,6 +47,7 @@ class App extends Component {
 
 
   componentDidMount() {
+    console.log(this.props);
     // const unsubscribe = store.subscribe(() => {
     //                     			if (store.getState().services.persist.isHydrated) {
     //                     				unsubscribe(); //call

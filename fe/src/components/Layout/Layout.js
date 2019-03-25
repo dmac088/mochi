@@ -16,17 +16,11 @@ class Layout extends Component {
 
   componentDidMount() {
     const { locale } = this.props.match.params;
-    this.refreshData(locale, 1);
+    this.refreshData(locale);
   }
 
-  componentDidUpdate() {
-    const { locale } = this.props.match.params;
-    this.refreshData(locale, 0);
-  }
-
-  refreshData = (locale, isMounting) => {
-    if(locale === this.state.locale
-      && isMounting === 0) {return;}
+  refreshData = (locale) => {
+    if(locale === this.state.locale) {return;}
     categoryApi.findAll(locale)
     .then((response) => {
         return response.text();
