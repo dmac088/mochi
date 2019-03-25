@@ -608,10 +608,6 @@ class Product extends Component {
     const { product, currentImage, isShowing, isLoading} = this.state;
     return (
       <React.Fragment>
-        <BreadCrumb
-          {...this.props}
-          page={"Product"}
-        />
       		{((!isLoading)
             ? this.renderContent(currentImage, product)
             : this.renderSpinner())}
