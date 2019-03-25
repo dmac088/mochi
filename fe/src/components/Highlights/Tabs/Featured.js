@@ -24,7 +24,7 @@ class Featured extends Component {
         <HighlightedColumn
           {...this.props}
           key={columns.indexOf(column)}
-          category={"Featured"}
+          categoryDesc={"Featured"}
           products={column}
         />
       )

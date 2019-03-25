@@ -41,9 +41,9 @@ class HighlightedProduct extends Component {
 
   routeSingleProduct = (e) => {
     e.preventDefault();
-		const { category } = this.props;
+		const { categoryDesc } = this.props;
     const { locale, currency } = this.props.match.params;
-    this.props.history.push('/' + locale + '/' + currency + '/category/' + category + '/Product/' + e.currentTarget.id);
+    this.props.history.push('/' + locale + '/' + currency + '/category/' + categoryDesc + '/Product/' + e.currentTarget.id);
   }
 
   renderProduct = (product, currentImage, setCurrentProductId) => {
