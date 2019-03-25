@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import HighlightedColumn from '../HighlightedColumn';
-import * as productApi from '../../../data/products/api';
 import Slider from "react-slick";
 import { SlickArrowLeft, SlickArrowRight, chunkArray } from '../../../services/helpers/Helper';
 const $ = window.$;
@@ -9,44 +8,7 @@ class Featured extends Component {
 
   constructor(props) {
     super(props);
-    const { locale } = this.props.match.params;
-    this.state = {
-      locale: locale,
-      products: [],
-    };
   }
-
-  componentDidMount() {
-    this.updateData(this.state.locale, 1);
-  }
-
-  componentDidUpdate() {
-    const { locale } = this.props.match.params;
-    this.updateData(locale, 0);
-  }
-
-  updateData = (locale = "en-GB", isMounting = 0) => {
-    if(locale === this.state.locale && isMounting === 0) {return;}
-    this.getProducts(locale, 1)
-    .then((responseJSON) => {
-      this.setState({
-        products: responseJSON,
-        locale: locale,
-      });
-    });
-  }
-
-  getProducts= (locale = "en-GB", featured = 1) =>
-    productApi.findAllFeatured(locale, featured)
-    .then((response) => {
-        return response.text();
-    })
-    .then((responseText) => {
-        return JSON.parse(responseText);
-    })
-    .catch(()=>{
-        console.log('getProducts failed!');
-  });
 
   next = () => {
     this.slider.slickNext();
@@ -69,6 +31,7 @@ class Featured extends Component {
   }
 
   render() {
+
     const settings = {
       arrows: true,
       autoplay: false,
@@ -114,7 +77,9 @@ class Featured extends Component {
         }
       }
     ]};
-    const columns = chunkArray(this.state.products, 3);
+    const { featuredProducts } = this.props;
+    if(!featuredProducts) {return null;}
+    const columns = chunkArray(this.props.featuredProducts, 3);
     return(
         <div key={0} className="tab-slider-container">
           <Slider ref={c => (this.slider = c)} {...settings}>

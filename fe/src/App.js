@@ -14,6 +14,7 @@ import * as sessionService from './services/session';
 import * as pageService from './services/page';
 import * as cartService from './services/cart';
 import * as categoryApi from './data/categories/api';
+import * as productApi from './data/products/api';
 import Layout from './components/Layout/Layout';
 import LayoutBC from './components/Layout/LayoutBC';
 import Landing from './components/Landing/Landing';
@@ -34,16 +35,17 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-                     locale: null,
-                     currency: "USD",
-                     categoryList: [],
-                     showQVModal: false,
-                     currentProductId: null,
+                     "locale": null,
+                     "currency": "USD",
+                     "categoryList": [],
+                     "showQVModal": false,
+                     "currentProductId": null,
+                     "featuredProducts": [],
                   };
   }
 
   componentDidMount() {
-    this.refreshData(this.state.locale);
+    this.refreshCategoryList(this.state.locale);
     // const unsubscribe = store.subscribe(() => {
     //                     			if (store.getState().services.persist.isHydrated) {
     //                     				unsubscribe(); //call
@@ -54,12 +56,31 @@ class App extends Component {
 
   updateLocale = (locale) => {
     if(locale === this.state.locale) {return;}
-    this.refreshData(locale);
+    this.refreshCategoryList(locale);
+    this.refreshFeaturedProducts(locale);
   }
 
-  refreshData = (locale) => {
+  refreshFeaturedProducts = (locale) => {
     if(!locale) {return;}
-    console.log("refreshData");
+    productApi.findByCategory(locale, 'Featured', 0, 50)
+    .then((response) => {
+        return response.text();
+    })
+    .then((responseText) => {
+        return JSON.parse(responseText);
+    })
+    .then((responseJSON) => {
+        this.setState({
+          "featuredProducts": responseJSON.content,
+        })
+    })
+    .catch(()=>{
+        console.log('getCategories failed!');
+    });
+  }
+
+  refreshCategoryList = (locale) => {
+    if(!locale) {return;}
     categoryApi.findAll(locale)
     .then((response) => {
         return response.text();
@@ -70,7 +91,6 @@ class App extends Component {
     .then((responseJSON) => {
         this.setState({
           "categoryList": responseJSON,
-          "locale": locale,
         })
     })
     .catch(()=>{
@@ -131,7 +151,7 @@ class App extends Component {
   }
 
   renderLanding = (routeProps) => {
-    const { locale, currency, currentProductId, showQVModal } = this.state;
+    const { locale, currency, currentProductId, showQVModal, featuredProducts } = this.state;
     return (
         <Landing
           {...routeProps}
@@ -141,6 +161,7 @@ class App extends Component {
           setCurrentProductId={this.setCurrentProductId}
           currentProductId={currentProductId}
           toggleQuickView={this.toggleQuickView}
+          featuredProducts={featuredProducts}
         />
     );
   }
