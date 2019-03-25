@@ -46,6 +46,7 @@ class App extends Component {
 
   componentDidMount() {
     this.refreshCategoryList(this.state.locale);
+    this.refreshFeaturedProducts(this.state.locale);
     // const unsubscribe = store.subscribe(() => {
     //                     			if (store.getState().services.persist.isHydrated) {
     //                     				unsubscribe(); //call
