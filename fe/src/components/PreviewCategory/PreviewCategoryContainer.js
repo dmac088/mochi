@@ -12,7 +12,6 @@ class PreviewCategoryContainer extends Component {
 
   render() {
     const { locale, setCurrentProductId, categoryList } = this.props;
-    console.log(this.filterPreview(categoryList));
     return this.filterPreview(categoryList).map(category => {
       return (
           <PreviewCategory
