@@ -17,10 +17,11 @@ class CategorySidebar extends Component {
   }
 
   renderCategoryListItems = (category) => {
+    const { changeCategory } = this.props;
     return category.children.map(child => {
       return(
         <li key={child.categoryId} >
-          <a id={child.categoryCode} href="#">
+          <a onClick={changeCategory} id={child.categoryDesc} href="#">
             {child.categoryDesc}
           </a>
         </li>
@@ -32,6 +33,8 @@ class CategorySidebar extends Component {
     const { categoryList } = this.props;
     const { term } = this.props.match.params;
     const category = this.filterCategories(categoryList, term)[0];
+    if(!category) {return null;}
+    if(category.children.length === 0) {return null;}
 
     if(!category) {return null;}
     return (

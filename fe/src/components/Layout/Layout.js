@@ -35,10 +35,22 @@ class Layout extends Component {
         console.log('getCategories failed!');
     });
 
+  changeCategory = (e) => {
+    e.preventDefault();
+    const url = this.props.location.pathname;
+    const search = this.props.location.search;
+    const { term } = this.props.match.params;
+    console.log(url);
+    console.log(search);
+    console.log(term);
+    this.props.history.push(url.replace(term || '', event.target.id) + search);
+  }
+
   render() {
     const children = React.Children.map(this.props.children, child => {
      return React.cloneElement(child, {
-       categoryList: this.state.categoryList
+       categoryList: this.state.categoryList,
+       changeCategory: this.changeCategory,
      });
    });
     return (

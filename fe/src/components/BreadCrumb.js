@@ -34,6 +34,7 @@ class BreadCrumb extends Component {
   }
 
   renderCategoryLineage = (categoryList, term) => {
+    const { changeCategory } = this.props;
     const result = [];
     this.createLineage( categoryList,
                         this.findCategoryByName(categoryList, term).categoryId,
@@ -42,7 +43,7 @@ class BreadCrumb extends Component {
     return lineage.map(category => {
       return (
         <li key={category.categoryId} className="active">
-          <a id={category.categoryDesc} onClick={this.changeCategory} href="#">
+          <a id={category.categoryDesc} onClick={changeCategory} href="#">
             {category.categoryDesc}
           </a>
         </li>
@@ -56,14 +57,6 @@ class BreadCrumb extends Component {
           {page}
       </li>
     )
-  }
-
-  changeCategory = (e) => {
-    e.preventDefault();
-    const url = this.props.location.pathname;
-    const search = this.props.location.search;
-    const { category } = this.props.match.params;
-    this.props.history.push(url.replace(category || '', event.target.id) + search);
   }
 
   render() {
