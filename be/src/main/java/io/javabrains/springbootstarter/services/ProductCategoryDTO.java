@@ -14,6 +14,8 @@ public class ProductCategoryDTO {
 	private Long categoryLevel;
 	
 	private Long categoryPreview;
+	
+	private Long categoryMenu;
 
 	private String lclCd;
 	
@@ -72,6 +74,14 @@ public class ProductCategoryDTO {
 
 	public void setCategoryPreview(Long categoryPreview) {
 		this.categoryPreview = categoryPreview;
+	}
+	
+	public Long getCategoryMenu() {
+		return categoryMenu;
+	}
+
+	public void setCategoryMenu(Long categoryMenu) {
+		this.categoryMenu = categoryMenu;
 	}
 
 	public Long getParentId() {
