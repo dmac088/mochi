@@ -19,8 +19,8 @@ public class ProductCategoryDTO {
 
 	private String lclCd;
 	
-	@JsonIgnore
-	private ProductCategoryDTO parent;	
+	//@JsonIgnore
+	private Long parentId;	
 
 	private Long childCategoryCount;
 
@@ -76,12 +76,12 @@ public class ProductCategoryDTO {
 		this.categoryPreview = categoryPreview;
 	}
 
-	public ProductCategoryDTO getParent() {
-		return parent;
+	public Long getParentId() {
+		return parentId;
 	}
 
-	public void setParent(ProductCategoryDTO parent) {
-		this.parent = parent;
+	public void setParentId(Long parentId) {
+		this.parentId = parentId;
 	}
 	
 	public List<ProductCategoryDTO> getChildren() {
