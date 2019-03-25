@@ -11,34 +11,19 @@ class BannerSlider extends Component {
 
   constructor(props) {
     super(props);
-    const { locale } = this.props.locale;
     this.state = {
-                   locale: locale,
                    products: [],
                  };
   }
 
   componentDidMount() {
-    this.updateData(this.state.locale,1);
+    const { locale } = this.props;
+    console.log(locale);
+    this.getProducts(locale);
   }
 
-  componentDidUpdate() {
-    const { locale } = this.props.locale;
-    this.updateData(locale,0);
-  }
-
-  updateData = (locale = "en-GB", isMounting = 0) => {
-    if(locale === this.state.locale && isMounting === 0) {return;}
-    this.getProducts(locale, this.props.category.categoryId)
-    .then((responseJSON) => {
-      this.setState({
-        products: responseJSON,
-        locale: locale,
-      });
-    });
-  }
-
-  getProducts = (locale = "en-GB", categoryId) =>
+  getProducts = (locale) => {
+    const { categoryId } = this.props.category;
     productApi.findPreviewByCategory(locale, categoryId)
     .then((response) => {
         return response.text();
@@ -48,7 +33,13 @@ class BannerSlider extends Component {
     })
     .catch(()=>{
         console.log('getProducts failed!');
+    }).then((responseJSON) => {
+      this.setState({
+        products: responseJSON,
+        locale: locale,
+      });
     });
+  }
 
   next = () => {
     this.slider.slickNext();
