@@ -62,7 +62,6 @@ class BreadCrumb extends Component {
     const { locale, currency, term } = this.props.match.params;
     const type = this.props.match.params[0];
     const { page, categoryList } =  this.props;
-    console.log(this.props.match.params);
     return (
       <div className="breadcrumb-area mb-50">
     		<div className="container">
