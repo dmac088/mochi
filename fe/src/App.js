@@ -36,18 +36,14 @@ class App extends Component {
     this.state = {
                      locale: "en-GB",
                      currency: "USD",
-                     modalActive: false,
-                     pagedItems: {content:[]},
                      categoryList: [],
-                     isMounted: 0,
                      showQVModal: false,
                      currentProductId: null,
                   };
   }
 
-
   componentDidMount() {
-    console.log(this.props);
+    console.log("componentDidMount");
     // const unsubscribe = store.subscribe(() => {
     //                     			if (store.getState().services.persist.isHydrated) {
     //                     				unsubscribe(); //call

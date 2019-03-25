@@ -20,7 +20,7 @@ class Layout extends Component {
   }
 
   refreshData = (locale) => {
-    if(locale === this.state.locale) {return;}
+    //if(locale === this.state.locale) {return;}
     categoryApi.findAll(locale)
     .then((response) => {
         return response.text();
