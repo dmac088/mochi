@@ -39,8 +39,7 @@ class BreadCrumb extends Component {
     this.createLineage( categoryList,
                         this.findCategoryByName(categoryList, term).categoryId,
                         result);
-    const lineage = result.reverse();
-    return lineage.map(category => {
+    return result.reverse().map(category => {
       return (
         <li key={category.categoryId} className="active">
           <a id={category.categoryDesc} onClick={changeCategory} href="#">
@@ -63,6 +62,7 @@ class BreadCrumb extends Component {
     const { locale, currency, term } = this.props.match.params;
     const type = this.props.match.params[0];
     const { page, categoryList } =  this.props;
+    console.log(this.props.match.params);
     return (
       <div className="breadcrumb-area mb-50">
     		<div className="container">
@@ -71,7 +71,7 @@ class BreadCrumb extends Component {
     					<div className="breadcrumb-container">
     						<ul>
     							<li><Link to={'/'+ locale + '/' + currency}><i className="fa fa-home"></i> Home</Link></li>
-    							{(type === "category" && !(categoryList.length === 0))
+    							{(type.toLowerCase() === "category" && !(categoryList.length === 0))
                     ? this.renderCategoryLineage(categoryList, term)
                     : this.renderPage(page)}
     						</ul>

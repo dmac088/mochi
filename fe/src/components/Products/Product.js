@@ -2,11 +2,18 @@ import React, { Component } from 'react';
 
 class Product extends Component {
 
+  routeSingleProduct = (e) => {
+    e.preventDefault();
+    const { locale, currency, term } = this.props.match.params;
+    this.props.history.push('/' + locale + '/' + currency + '/category/' + term + '/product/' + e.currentTarget.id);
+  }
+
+
   renderLV = (product, setCurrentProductId, isGrid) => {
     return (
       <div className="gf-product shop-list-view-product">
         <div className="image">
-          <a href="single-product.html">
+          <a onClick={this.routeSingleProduct} id={product.productId} href="#">
             <span className="onsale">Sale!</span>
             <img src={product.productImage} className="img-fluid" alt />
           </a>
@@ -48,7 +55,7 @@ class Product extends Component {
       <div className="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
         <div className="gf-product shop-grid-view-product">
           <div className="image">
-            <a href="single-product.html">
+            <a onClick={this.routeSingleProduct} id={product.productId} href="#">
               <span className="onsale">Sale!</span>
               <img src={product.productImage} className="img-fluid" alt />
             </a>
