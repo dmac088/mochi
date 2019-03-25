@@ -27,7 +27,7 @@ class Layout extends Component {
   refreshData = (locale, isMounting) => {
     if(locale === this.state.locale
       && isMounting === 0) {return;}
-    this.getCategories(locale)
+    categoryApi.findAll(locale)
     .then((response) => {
         return response.text();
     })
@@ -44,10 +44,6 @@ class Layout extends Component {
         console.log('getCategories failed!');
     });
   }
-
-  getCategories = (locale) =>
-    categoryApi.findAll(locale);
-
 
   changeCategory = (e) => {
     e.preventDefault();
