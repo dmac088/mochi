@@ -10,27 +10,11 @@ class CategorySidebar extends Component {
     };
   }
 
-  componentDidMount() {
-    const { locale, term } = this.props.match.params;
-    this.getCategories(locale, term)
-    .then((responseJSON) => {
-      this.setState({
-        "category": responseJSON,
-      });
+  filterCategories = (categoryList, categoryDesc) => {
+    return categoryList.filter(function(value, index, arr){
+      return value.categoryDesc === categoryDesc;
     });
   }
-
-  getCategories = (locale = "en-GB", desc = 'All') =>
-    categoryApi.findByDesc(locale, desc)
-    .then((response) => {
-      return response.text();
-    })
-    .then((responseText) => {
-      return JSON.parse(responseText);
-    })
-    .catch(()=>{
-      console.log('getCategories failed!');
-  });
 
   renderCategoryListItems = (category) => {
     return category.children.map(child => {
@@ -45,7 +29,10 @@ class CategorySidebar extends Component {
   }
 
   render() {
-    const { category } = this.state;
+    const { categoryList } = this.props;
+    const { term } = this.props.match.params;
+    const category = this.filterCategories(categoryList, term)[0];
+
     if(!category) {return null;}
     return (
       <div className="sidebar mb-35">
