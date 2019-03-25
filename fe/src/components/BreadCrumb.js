@@ -42,7 +42,7 @@ class BreadCrumb extends Component {
     return lineage.map(category => {
       return (
         <li key={category.categoryId} className="active">
-          <a id={category.categoryId} onClick={this.changeCategory} href="#">
+          <a id={category.categoryDesc} onClick={this.changeCategory} href="#">
             {category.categoryDesc}
           </a>
         </li>
@@ -60,7 +60,10 @@ class BreadCrumb extends Component {
 
   changeCategory = (e) => {
     e.preventDefault();
-    console.log("changeCategory id = " + e.currentTarget.id);
+    const url = this.props.location.pathname;
+    const search = this.props.location.search;
+    const { category } = this.props.match.params;
+    this.props.history.push(url.replace(category || '', event.target.id) + search);
   }
 
   render() {
@@ -75,7 +78,7 @@ class BreadCrumb extends Component {
     					<div className="breadcrumb-container">
     						<ul>
     							<li><Link to={'/'+ locale + '/' + currency}><i className="fa fa-home"></i> Home</Link></li>
-    							{(!(categoryList.length === 0) && type === "category")
+    							{(type === "category" && !(categoryList.length === 0))
                     ? this.renderCategoryLineage(categoryList, term)
                     : this.renderPage(page)}
     						</ul>
