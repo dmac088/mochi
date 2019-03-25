@@ -8,35 +8,21 @@ class Layout extends Component {
 
   constructor(props) {
     super(props)
-    this.state = {
-                  "categoryList": [],
-                  "locale": "en-GB"
-                 };
   }
 
   componentDidMount() {
+    console.log(this.props);
     const { locale } = this.props.match.params;
-    this.refreshData(locale);
+    const { updateLocale } = this.props;
+    updateLocale(locale);
   }
 
-  refreshData = (locale) => {
-    //if(locale === this.state.locale) {return;}
-    categoryApi.findAll(locale)
-    .then((response) => {
-        return response.text();
-    })
-    .then((responseText) => {
-        return JSON.parse(responseText);
-    })
-    .then((responseJSON) => {
-        this.setState({
-          "categoryList": responseJSON,
-          "locale": locale
-        })
-    })
-    .catch(()=>{
-        console.log('getCategories failed!');
-    });
+  componentDidUpdate() {
+    const { locale } = this.props.match.params;
+    const { updateLocale } = this.props;
+    if(!(locale === this.props.locale)) {
+      updateLocale(locale);
+    }
   }
 
   changeCategory = (e) => {
@@ -50,7 +36,7 @@ class Layout extends Component {
   render() {
     const children = React.Children.map(this.props.children, child => {
      return React.cloneElement(child, {
-       categoryList: this.state.categoryList,
+       categoryList: this.props.categoryList,
        changeCategory: this.changeCategory,
      });
    });
