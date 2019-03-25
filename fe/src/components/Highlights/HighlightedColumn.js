@@ -17,7 +17,7 @@ class HighlightedColumn extends Component {
             {...this.props}
             key={product.productId}
             product={product}
-            category={category}
+            categoryDesc={categoryDesc}
           />
         )
     });
