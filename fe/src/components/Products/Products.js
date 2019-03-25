@@ -144,7 +144,9 @@ class Products extends Component {
                           return <Product key={product.productId}
                                           product={product}
                                           setCurrentProductId={setCurrentProductId}
-                                          isGrid={isGrid}/>
+                                          isGrid={isGrid}
+                                          match={this.props.match}
+                                          history={this.props.history}/>
                       })}
                     </div>
                     <Pagination
