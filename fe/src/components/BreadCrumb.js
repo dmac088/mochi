@@ -50,18 +50,30 @@ class BreadCrumb extends Component {
     });
   }
 
+  renderProduct = (productId) => {
+    if(!productId) {return;}
+    return (
+      <li key={productId} className="active">
+          {productId}
+      </li>
+    )
+  }
+
+
   renderPage = (page) => {
     return (
-      <li className="active">
+      <li>
           {page}
       </li>
     )
   }
 
   render() {
-    const { locale, currency, term } = this.props.match.params;
+    const { locale, currency, term, productId } = this.props.match.params;
     const type = this.props.match.params[0];
     const { page, categoryList } =  this.props;
+    const renderCategory = (type && type.toLowerCase() === "category" && !(categoryList.length === 0));
+    const renderProduct = renderCategory && productId;
     return (
       <div className="breadcrumb-area mb-50">
     		<div className="container">
@@ -70,9 +82,15 @@ class BreadCrumb extends Component {
     					<div className="breadcrumb-container">
     						<ul>
     							<li><Link to={'/'+ locale + '/' + currency}><i className="fa fa-home"></i> Home</Link></li>
-    							{(type.toLowerCase() === "category" && !(categoryList.length === 0))
-                    ? this.renderCategoryLineage(categoryList, term)
-                    : this.renderPage(page)}
+    							{(renderCategory)
+                   ? this.renderCategoryLineage(categoryList, term)
+                   : null}
+                  {(renderProduct)
+                    ? this.renderProduct(productId)
+                    : null}
+                  {(!renderProduct && !renderCategory)
+                    ? this.renderPage(page)
+                    : null}
     						</ul>
     					</div>
     				</div>
