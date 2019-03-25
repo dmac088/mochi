@@ -4,42 +4,20 @@ import * as categoryApi from '../../data/categories/api';
 
 class PreviewCategoryContainer extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      categories: [],
-    };
-  }
-
-  getCategories = (lang = "en-GB", preview = 1) =>
-    categoryApi.findAllPreview(lang, preview)
-    .then((response) => {
-        return response.text();
-    })
-    .then((responseText) => {
-        return JSON.parse(responseText);
-    })
-    .then((responseJSON) => {
-        this.setState({
-          categories: responseJSON,
-        })
-    })
-    .catch(()=>{
-        console.log('getCategories failed!');
-  });
-
-  componentDidMount() {
-    this.getCategories();
+  filterPreview = (categoryList) => {
+    return categoryList.filter(function(value, index, arr){
+      return value.categoryPreview === 1;
+    });
   }
 
   render() {
-    const { categories } = this.state;
-    const { locale, setCurrentProductId } = this.props;
-    return categories.map(category => {
+    const { locale, setCurrentProductId, categoryList } = this.props;
+    console.log(this.filterPreview(categoryList));
+    return this.filterPreview(categoryList).map(category => {
       return (
           <PreviewCategory
-             locale={locale}
              key={category.categoryId}
+             locale={locale}
              category={category}
              setCurrentProductId={setCurrentProductId}
           />

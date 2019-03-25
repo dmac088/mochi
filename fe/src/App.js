@@ -59,6 +59,7 @@ class App extends Component {
 
   refreshData = (locale) => {
     if(!locale) {return;}
+    console.log("refreshData");
     categoryApi.findAll(locale)
     .then((response) => {
         return response.text();
