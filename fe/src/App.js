@@ -14,7 +14,8 @@ import * as sessionService from './services/session';
 import * as pageService from './services/page';
 import * as cartService from './services/cart';
 import * as categoryApi from './data/categories/api';
-import { Layout, LayoutBC } from './components/Layout';
+import Layout from './components/Layout/Layout';
+import LayoutBC from './components/Layout/LayoutBC';
 import Landing from './components/Landing/Landing';
 import Products from './components/Products/Products';
 import Checkout from './components/Checkout/Checkout';
@@ -37,6 +38,7 @@ class App extends Component {
                      currency: "USD",
                      modalActive: false,
                      pagedItems: {content:[]},
+                     categoryList: [],
                      isMounted: 0,
                      showQVModal: false,
                      currentProductId: null,
