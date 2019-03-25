@@ -53,7 +53,7 @@ class BreadCrumb extends Component {
   renderProduct = (productId) => {
     if(!productId) {return;}
     return (
-      <li key={productId} className="active">
+      <li key={productId}>
           {productId}
       </li>
     )
