@@ -13,19 +13,11 @@ class BreadCrumb extends Component {
 
   }
 
-  changeCategory = () => {
-
-  }
-
-  getParentCategories = (categoryDesc) => {
-
-  }
-
-
   render() {
     const { locale, currency, term } = this.props.match.params;
     const type = this.props.match.params[0];
     const { page } =  this.props;
+    console.log(this.props);
     return (
       <div className="breadcrumb-area mb-50">
     		<div className="container">
