@@ -34,7 +34,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-                     locale: "en-GB",
+                     locale: null,
                      currency: "USD",
                      categoryList: [],
                      showQVModal: false,
@@ -43,13 +43,38 @@ class App extends Component {
   }
 
   componentDidMount() {
-    console.log("componentDidMount");
+    this.refreshData(this.state.locale);
     // const unsubscribe = store.subscribe(() => {
     //                     			if (store.getState().services.persist.isHydrated) {
     //                     				unsubscribe(); //call
     //                     				this.autoLogin();
     //                     			}
     //                     });
+  }
+
+  updateLocale = (locale) => {
+    if(locale === this.state.locale) {return;}
+    this.refreshData(locale);
+  }
+
+  refreshData = (locale) => {
+    if(!locale) {return;}
+    categoryApi.findAll(locale)
+    .then((response) => {
+        return response.text();
+    })
+    .then((responseText) => {
+        return JSON.parse(responseText);
+    })
+    .then((responseJSON) => {
+        this.setState({
+          "categoryList": responseJSON,
+          "locale": locale,
+        })
+    })
+    .catch(()=>{
+        console.log('getCategories failed!');
+    });
   }
 
   autoLogin = () =>  {
@@ -81,17 +106,24 @@ class App extends Component {
   }
 
   renderLayout = (routeProps, contentCallback) => {
-    const { locale } = routeProps.match.params;
+    const { categoryList } = this.state;
     return (
-      <Layout {...routeProps}>
+      <Layout {...routeProps}
+        locale={this.state.locale}
+        categoryList={categoryList}
+        updateLocale={this.updateLocale}>
           {contentCallback(routeProps)}
       </Layout>
     );
   }
 
   renderLayoutBC = (routeProps, contentCallback) => {
+    const { categoryList } = this.state;
     return (
-      <LayoutBC {...routeProps}>
+      <LayoutBC {...routeProps}
+          locale={this.state.locale}
+          categoryList={categoryList}
+          updateLocale={this.updateLocale}>
           {contentCallback(routeProps)}
       </LayoutBC>
     );
@@ -121,6 +153,7 @@ class App extends Component {
           showQVModal={showQVModal}
           setCurrentProductId={this.setCurrentProductId}
           currentProductId={currentProductId}
+          categoryList={categoryList}
           page="Products"
         />
     );
