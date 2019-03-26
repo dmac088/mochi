@@ -59,7 +59,6 @@ class BreadCrumb extends Component {
   }
 
   render() {
-    console.log(this.props);
     const { locale, currency, term, productId } = this.props.match.params;
     const type = this.props.match.params[0];
     const { page, categoryList } =  this.props;
