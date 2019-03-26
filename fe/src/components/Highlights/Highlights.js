@@ -6,31 +6,43 @@ class Highlights extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        showFeatured: true,
-        showArrival: false,
-        showOnSale: false,
+      "selectedCategory": null,
     };
+  }
+
+  componentDidUpdate() {
+    this.updateData();
+  }
+
+  updateData = () => {
+    const { landingCategories } = this.props;
+    if(!landingCategories) { return; }
+    if(landingCategories.length >= 0) { return; }
+    this.setState({
+      "selectedCategory": landingCategories[0].categoryDesc,
+    });
   }
 
   showTab = (e) => {
      e.preventDefault();
      this.setState({
-     showFeatured: e.target.id === "featured-tab",
-     showArrival: e.target.id === "new-arrival-tab",
-     showOnSale: e.target.id === "nav-onsale-tab",
-   });
-  }
-
-  filterLandingCategories = (categoryList) => {
-    return categoryList.filter(function(value, index, arr){
-      return value.landingDisplay === 1;
-    });
+       "selectedCategory": e.currentTarget.id,
+     }, () => {
+       console.log(this.state.selectedCategory);
+     });
   }
 
   renderTabHeaders = (categoryList) => {
     return categoryList.map(category => {
       return (
-        <a key={category.categoryId} onClick={this.showTab} className="nav-item nav-link active" id={category.categoryId} data-toggle="tab" href="#{category.categoryDesc}" role="tab" aria-selected="true">
+        <a  key={category.categoryId}
+            onClick={this.showTab}
+            className="nav-item nav-link active"
+            id={category.categoryDesc}
+            data-toggle="tab"
+            href="#{category.categoryDesc}"
+            role="tab"
+            aria-selected="true">
           {category.categoryDesc}
         </a>
       )
@@ -41,7 +53,11 @@ class Highlights extends Component {
     const { match, history, setCurrentProductId } = this.props;
     return categoryList.map(category => {
       return (
-        <div key={category.categoryId} className="tab-pane fade show active" id={category.categoryId} role="tabpanel" aria-labelledby="featured-tab">
+        <div key={category.categoryId}
+             className="tab-pane fade show active"
+             id={category.categoryDesc}
+             role="tabpanel"
+             aria-labelledby="featured-tab">
           <Category
             category={category}
             match={match}
