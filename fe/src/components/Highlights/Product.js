@@ -5,7 +5,7 @@ import {
 	spinner,
 } from '../../services/helpers/Helper';
 
-class HighlightedProduct extends Component {
+class Product extends Component {
 
   constructor(props){
 		super(props);
@@ -92,4 +92,4 @@ class HighlightedProduct extends Component {
   }
 }
 
-export default HighlightedProduct;
+export default Product;
