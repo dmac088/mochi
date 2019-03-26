@@ -45,8 +45,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.refreshCategoryList(this.state.locale);
-    this.refreshFeaturedProducts(this.state.locale);
     // const unsubscribe = store.subscribe(() => {
     //                     			if (store.getState().services.persist.isHydrated) {
     //                     				unsubscribe(); //call
@@ -57,12 +55,22 @@ class App extends Component {
 
   updateLocale = (locale) => {
     if(locale === this.state.locale) {return;}
-    this.refreshCategoryList(locale);
-    this.refreshFeaturedProducts(locale);
+    this.refreshData(locale);
   }
 
-  refreshFeaturedProducts = (locale) => {
-    if(!locale) {return;}
+  refreshData(locale) {
+    Promise.all([this.refreshCategoryList(locale),
+                 this.refreshFeaturedProducts(locale)])
+    .then((values) => {
+      this.setState({
+        "locale": locale,
+        "categoryList": values[0],
+        "featuredProducts": values[1].content,
+      });
+    });
+  }
+
+  refreshFeaturedProducts = (locale) =>
     productApi.findByCategory(locale, 'Featured', 0, 50)
     .then((response) => {
         return response.text();
@@ -71,18 +79,11 @@ class App extends Component {
         return JSON.parse(responseText);
     })
     .then((responseJSON) => {
-        this.setState({
-          "featuredProducts": responseJSON.content,
-          "locale": locale,
-        })
-    })
-    .catch(()=>{
-        console.log('refreshFeaturedProducts failed!');
+        return responseJSON;
     });
-  }
 
-  refreshCategoryList = (locale) => {
-    if(!locale) {return;}
+
+  refreshCategoryList = (locale) =>
     categoryApi.findAll(locale)
     .then((response) => {
         return response.text();
@@ -91,15 +92,8 @@ class App extends Component {
         return JSON.parse(responseText);
     })
     .then((responseJSON) => {
-        this.setState({
-          "categoryList": responseJSON,
-          "locale": locale,
-        })
-    })
-    .catch(()=>{
-        console.log('refreshCategoryList failed!');
+        return responseJSON;
     });
-  }
 
   autoLogin = () =>  {
     sessionService.refreshToken().then(() => {
