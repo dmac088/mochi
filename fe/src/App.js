@@ -60,6 +60,7 @@ class App extends Component {
     this.refreshData(locale);
   }
 
+  //we cache data in App to avoid refreshing on route changes (componentDidMount)
   refreshData(locale) {
     this.refreshCategoryList(locale)
     .then((categoryList) => {
@@ -107,6 +108,9 @@ class App extends Component {
           "previewCategories": value,
         });
       });
+    })
+    .catch((e) => {
+      console.log(e);
     });
   }
 
