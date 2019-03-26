@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import HighlightedColumn from '../HighlightedColumn';
+import Column from '../Column';
 import Slider from "react-slick";
 import { SlickArrowLeft, SlickArrowRight, chunkArray } from '../../../services/helpers/Helper';
 import { getValue } from '../../../config/lang/selector';
@@ -24,7 +24,7 @@ class Featured extends Component {
     console.log(locale);
     return columns.map(column => {
       return (
-        <HighlightedColumn
+        <Column
           {...this.props}
           key={columns.indexOf(column)}
           categoryDesc={getValue(locale).featuredCategory}

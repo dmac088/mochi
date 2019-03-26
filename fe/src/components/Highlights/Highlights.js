@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
-import Featured from './Tabs/Featured';
-import NewArrival from './Tabs/NewArrival';
-import OnSale from './Tabs/OnSale';
+import Category from './Tabs/Category';
 
 class Highlights extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-        theposition: 0,
         showFeatured: true,
         showArrival: false,
         showOnSale: false,
@@ -24,8 +21,37 @@ class Highlights extends Component {
    });
   }
 
-   render() {
-    const { showFeatured, showArrival,  showOnSale } = this.state;
+  filterLandingCategories = (categoryList) => {
+    return categoryList.filter(function(value, index, arr){
+      return value.landingDisplay === 1;
+    });
+  }
+
+  renderTabHeaders = (categoryList) => {
+    return this.filterLandingCategories(categoryList).map(category => {
+      return (
+        <a onClick={this.showTab} className="nav-item nav-link active" id={category.categoryId} data-toggle="tab" href="#{category.categoryDesc}" role="tab" aria-selected="true">
+          {category.categoryDesc}
+        </a>
+      )
+    });
+  }
+
+  renderTabs = (categoryList) => {
+    return this.filterLandingCategories(categoryList).map(category => {
+      return (
+        <div className="tab-pane fade show active" id={category.categoryId} role="tabpanel" aria-labelledby="featured-tab">
+          <Category
+            {...this.props}
+          />
+        </div>
+      )
+    });
+  }
+
+  render() {
+    const { showFeatured, showArrival, showOnSale } = this.state;
+    const { categoryList } = this.props;
     return (
       <div className="slider tab-slider mb-35">
         <div className="container">
@@ -34,27 +60,11 @@ class Highlights extends Component {
               <div className="tab-slider-wrapper">
                   <nav>
                     <div className="nav nav-tabs" id="nav-tab" role="tablist">
-                      <a onClick={this.showTab} className={"nav-item nav-link " + ((showFeatured) ? "active" : "")} id="featured-tab" data-toggle="tab" href="#featured" role="tab" aria-selected="true">Featured</a>
-                      <a onClick={this.showTab} className={"nav-item nav-link " + ((showArrival) ? "active" : "")} id="new-arrival-tab" data-toggle="tab" href="#new-arrivals" role="tab" aria-selected="false">New Arrival</a>
-                      <a onClick={this.showTab} className={"nav-item nav-link " + ((showOnSale)? "active" : "")} id="nav-onsale-tab" data-toggle="tab" href="#on-sale" role="tab" aria-selected="false">On Sale</a>
+                      {this.renderTabHeaders(categoryList)}
                     </div>
                   </nav>
                   <div className="tab-content" id="nav-tabContent">
-                    <div className={"tab-pane fade " + ((showFeatured) ? "show active" : "")} id="featured" role="tabpanel" aria-labelledby="featured-tab">
-                      <Featured
-                        {...this.props}
-                      />
-                    </div>
-                    <div className={"tab-pane fade " + ((showArrival) ? "show active" : "")} id="new-arrivals" role="tabpanel" aria-labelledby="new-arrival-tab">
-                      <NewArrival
-                        {...this.props}
-                      />
-                    </div>
-                    <div className={"tab-pane fade " + ((showOnSale)? "show active" : "")} id="on-sale" role="tabpanel" aria-labelledby="nav-onsale-tab">
-                      <OnSale
-                        {...this.props}
-                      />
-                    </div>
+                    {this.renderTabs(categoryList)}
                   </div>
                 </div>
               </div>

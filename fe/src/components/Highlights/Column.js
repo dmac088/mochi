@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import HighlightedProduct from './HighlightedProduct';
+import Product from './Product';
 const $ = window.$;
 
-class HighlightedColumn extends Component {
+class Column extends Component {
 
   constructor(props) {
     super(props);
@@ -13,7 +13,7 @@ class HighlightedColumn extends Component {
     if (products === undefined) { return; }
     return products.map(product => {
       return (
-          <HighlightedProduct
+          <Product
             {...this.props}
             key={product.productId}
             product={product}
@@ -33,4 +33,4 @@ class HighlightedColumn extends Component {
   }
 }
 
-export default HighlightedColumn;
+export default Column;
