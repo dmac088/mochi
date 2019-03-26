@@ -79,7 +79,6 @@ class Category extends Component {
       }
     ]};
     const { products } = this.props.category;
-    console.log(products);
     if(!products) {return null;}
     const columns = chunkArray(products, 3);
     return(
