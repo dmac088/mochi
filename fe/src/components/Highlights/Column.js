@@ -9,12 +9,14 @@ class Column extends Component {
   }
 
   renderProducts = (products) => {
-    const { categoryDesc } = this.props;
+    const { categoryDesc, match, history } = this.props;
     if (products === undefined) { return; }
     return products.map(product => {
       return (
           <Product
             key={product.productId}
+            match={match}
+            history={history}
             product={product}
             categoryDesc={categoryDesc}
           />

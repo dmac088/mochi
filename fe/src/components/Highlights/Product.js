@@ -42,7 +42,7 @@ class Product extends Component {
     e.preventDefault();
 		const { categoryDesc } = this.props;
     const { locale, currency } = this.props.match.params;
-    this.props.history.push('/' + locale + '/' + currency + '/category/' + categoryDesc + '/Product/' + e.currentTarget.id);
+    this.props.history.push('/' + locale + '/' + currency + '/category/' + categoryDesc + '/product/' + e.currentTarget.id);
   }
 
   renderProduct = (product, currentImage, setCurrentProductId) => {

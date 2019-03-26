@@ -20,11 +20,14 @@ class Category extends Component {
   }
 
   renderColumns = (columns) => {
+    const { category, match, history } = this.props;
     return columns.map(column => {
       return (
         <Column
+          match={match}
+          history={history}
           key={columns.indexOf(column)}
-          categoryDesc={columns.categoryDesc}
+          categoryDesc={category.categoryDesc}
           products={column}
         />
       )
