@@ -7,27 +7,11 @@ import * as cartService from '../../services/cart';
 import * as productApi from '../../data/products/api';
 const $ = window.$;
 
-
 class BannerSliderProduct extends Component {
 
-  constructor(props){
-    super(props);
-    this.state = {
-      "product": null,
-    }
-  }
-
-  componentDidMount() {
-    const { product } = this.props;
-    this.setState({
-      "product": product,
-    });
-  }
-
   render() {
-    const { product } = this.state;
-    const { setCurrentProductId } = this.props;
-    if(product === null) {return null;}
+    const { product, setCurrentProductId } = this.props;
+    if(!product) {return null;}
     return (
         <div key={product.productId} className="gf-product banner-slider-product">
           <div className="image">
