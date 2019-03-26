@@ -180,10 +180,11 @@ class App extends Component {
   }
 
   renderLayout = (routeProps, contentCallback) => {
-    const { categoryList } = this.state;
+    const { locale, currency, categoryList } = this.state;
     return (
       <Layout {...routeProps}
-        locale={this.state.locale}
+        locale={locale}
+        currency={currency}
         categoryList={categoryList}
         updateLocale={this.updateLocale}>
           {contentCallback(routeProps)}
@@ -192,10 +193,11 @@ class App extends Component {
   }
 
   renderLayoutBC = (routeProps, contentCallback) => {
-    const { categoryList } = this.state;
+    const { locale, currency, categoryList } = this.state;
     return (
       <LayoutBC {...routeProps}
-          locale={this.state.locale}
+          locale={locale}
+          currency={currency}
           categoryList={categoryList}
           updateLocale={this.updateLocale}>
           {contentCallback(routeProps)}
@@ -204,12 +206,10 @@ class App extends Component {
   }
 
   renderLanding = (routeProps) => {
-    const { locale, currency, currentProductId, showQVModal, landingCategories, previewCategories } = this.state;
+    const { currency, currentProductId, showQVModal, landingCategories, previewCategories } = this.state;
     return (
         <Landing
           {...routeProps}
-          locale={locale}
-          currency={currency}
           showQVModal={showQVModal}
           setCurrentProductId={this.setCurrentProductId}
           currentProductId={currentProductId}
