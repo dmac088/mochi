@@ -76,7 +76,8 @@ CREATE TABLE category (
     cat_prnt_id bigint,
     cat_lvl bigint,
     cat_prev_flg bigint,
-    cat_menu_flg bigint
+    cat_menu_flg bigint,
+    lnd_disp_flg bigint
 );
 
 
@@ -806,44 +807,44 @@ SET search_path = mochi, pg_catalog;
 -- Data for Name: category; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY category (cat_id, cat_cd, cat_prnt_id, cat_lvl, cat_prev_flg, cat_menu_flg) FROM stdin;
-2	ALL	\N	0	0	0
-5	DGV01	4	2	0	0
-6	ROV01	4	2	0	0
-7	BAP01	4	2	0	0
-8	SVG01	4	2	0	0
-9	OTH01	4	2	0	0
-10	POM01	3	2	0	0
-11	DRU01	3	2	0	0
-12	BER01	3	2	0	0
-13	MEL01	3	2	0	0
-14	CIT01	3	2	0	0
-15	TRO01	3	2	0	0
-17	PIS01	16	2	0	0
-18	HAZ01	16	2	0	0
-19	CAS01	16	2	0	0
-20	ALM01	16	2	0	0
-21	PEA01	16	2	0	0
-22	PEC01	16	2	0	0
-23	BRA01	16	2	0	0
-24	MAC01	16	2	0	0
-25	OFT01	3	2	0	0
-26	ONT01	16	2	0	0
-36	REV01	6	3	0	0
-37	ORV01	6	3	0	0
-35	DUM09	36	4	0	0
-38	FET01	2	1	0	0
-3	FRT01	2	1	1	1
-4	VEG01	2	1	1	1
-16	NUT01	2	1	0	1
-27	DUM01	2	1	0	1
-28	DUM02	2	1	0	1
-29	DUM03	2	1	0	1
-30	DUM04	2	1	0	1
-31	DUM05	2	1	0	1
-32	DUM06	2	1	0	1
-33	DUM07	2	1	0	1
-34	DUM08	2	1	0	1
+COPY category (cat_id, cat_cd, cat_prnt_id, cat_lvl, cat_prev_flg, cat_menu_flg, lnd_disp_flg) FROM stdin;
+2	ALL	\N	0	0	0	\N
+5	DGV01	4	2	0	0	\N
+6	ROV01	4	2	0	0	\N
+7	BAP01	4	2	0	0	\N
+8	SVG01	4	2	0	0	\N
+9	OTH01	4	2	0	0	\N
+10	POM01	3	2	0	0	\N
+11	DRU01	3	2	0	0	\N
+12	BER01	3	2	0	0	\N
+13	MEL01	3	2	0	0	\N
+14	CIT01	3	2	0	0	\N
+15	TRO01	3	2	0	0	\N
+17	PIS01	16	2	0	0	\N
+18	HAZ01	16	2	0	0	\N
+19	CAS01	16	2	0	0	\N
+20	ALM01	16	2	0	0	\N
+21	PEA01	16	2	0	0	\N
+22	PEC01	16	2	0	0	\N
+23	BRA01	16	2	0	0	\N
+24	MAC01	16	2	0	0	\N
+25	OFT01	3	2	0	0	\N
+26	ONT01	16	2	0	0	\N
+36	REV01	6	3	0	0	\N
+37	ORV01	6	3	0	0	\N
+35	DUM09	36	4	0	0	\N
+4	VEG01	2	1	1	1	\N
+16	NUT01	2	1	0	1	\N
+27	DUM01	2	1	0	1	\N
+28	DUM02	2	1	0	1	\N
+29	DUM03	2	1	0	1	\N
+30	DUM04	2	1	0	1	\N
+31	DUM05	2	1	0	1	\N
+32	DUM06	2	1	0	1	\N
+33	DUM07	2	1	0	1	\N
+34	DUM08	2	1	0	1	\N
+38	FET01	2	1	0	0	1
+3	FRT01	2	1	1	1	1
 \.
 
 
