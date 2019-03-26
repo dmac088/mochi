@@ -18,7 +18,7 @@ class BannerSlider extends Component {
   }
 
   renderProducts = (category) => {
-    const { setCurrentProductId } = this.props;
+    const { category, setCurrentProductId } = this.props;
     return category.products.map(product => {
       return (
           <BannerSliderProduct
@@ -33,8 +33,6 @@ class BannerSlider extends Component {
   }
 
   render() {
-
-
     const settings = {
       arrows: true,
       autoplay: false,
@@ -81,10 +79,9 @@ class BannerSlider extends Component {
       }
       ]
     };
-        const { category } = this.props;
     return (
       <Slider className="banner-slider-container" ref={c => (this.slider = c)} {...settings}>
-        {this.renderProducts(category)}
+        {this.renderProducts()}
       </Slider>
     )
   }
