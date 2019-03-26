@@ -10,14 +10,21 @@ class Highlights extends Component {
     };
   }
 
+  componentDidMount(){
+    this.updateData();
+  }
+
   componentDidUpdate() {
     this.updateData();
   }
 
   updateData = () => {
     const { landingCategories } = this.props;
+    const { selectedCategory } = this.state;
+    if(selectedCategory) { return; }
     if(!landingCategories) { return; }
-    if(landingCategories.length >= 0) { return; }
+    if(landingCategories.length === 0) { return; }
+    if(landingCategories[0].categoryDesc === selectedCategory) { return; }
     this.setState({
       "selectedCategory": landingCategories[0].categoryDesc,
     });
@@ -27,13 +34,10 @@ class Highlights extends Component {
      e.preventDefault();
      this.setState({
        "selectedCategory": e.currentTarget.id,
-     }, () => {
-       console.log(this.state.selectedCategory);
      });
   }
 
-  renderTabHeaders = (categoryList) => {
-    const { selectedCategory } = this.state;
+  renderTabHeaders = (categoryList, selectedCategory) => {
     return categoryList.map(category => {
       const isActive = (selectedCategory === category.categoryDesc);
       return (
@@ -51,9 +55,8 @@ class Highlights extends Component {
     });
   }
 
-  renderTabs = (categoryList) => {
+  renderTabs = (categoryList, selectedCategory) => {
     const { match, history, setCurrentProductId } = this.props;
-    const { selectedCategory } = this.state;
     return categoryList.map(category => {
       const isActive = (selectedCategory === category.categoryDesc);
       return (
@@ -74,7 +77,7 @@ class Highlights extends Component {
   }
 
   render() {
-    const { showFeatured, showArrival, showOnSale,  } = this.state;
+    const { showFeatured, showArrival, showOnSale, selectedCategory } = this.state;
     const { landingCategories } = this.props;
     return (
       <div className="slider tab-slider mb-35">
@@ -84,11 +87,11 @@ class Highlights extends Component {
               <div className="tab-slider-wrapper">
                   <nav>
                     <div className="nav nav-tabs" id="nav-tab" role="tablist">
-                      {this.renderTabHeaders(landingCategories)}
+                      {this.renderTabHeaders(landingCategories, selectedCategory)}
                     </div>
                   </nav>
                   <div className="tab-content" id="nav-tabContent">
-                    {this.renderTabs(landingCategories)}
+                    {this.renderTabs(landingCategories, selectedCategory)}
                   </div>
                 </div>
               </div>
