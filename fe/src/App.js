@@ -63,6 +63,7 @@ class App extends Component {
   refreshData(locale) {
     this.refreshCategoryList(locale)
     .then((categoryList) => {
+      //return a list of promises to the upper function
       return this.filterLandingCategories(categoryList).map(category => {
         //we must return the nested promise
         return this.getCategoryProducts(locale, category.categoryDesc)
