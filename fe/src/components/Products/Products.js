@@ -26,8 +26,8 @@ class Products extends Component {
       "numberOfElements": 0,
       "isGrid": true,
       "params":  {
-                  "page": 0,
-                  "size": 10,
+                  "page": "0",
+                  "size": "10",
                   "sort": "productRrp",
                  }
     };
