@@ -6,6 +6,7 @@ class Highlights extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      "locale": null,
       "selectedCategory": null,
     };
   }
@@ -19,13 +20,15 @@ class Highlights extends Component {
   }
 
   updateData = () => {
-    const { landingCategories } = this.props;
+    const { landingCategories, locale } = this.props;
     const { selectedCategory } = this.state;
-    if(selectedCategory) { return; }
+    if(selectedCategory
+       && locale === this.state.locale) { return; }
     if(!landingCategories) { return; }
     if(landingCategories.length === 0) { return; }
     if(landingCategories[0].categoryDesc === selectedCategory) { return; }
     this.setState({
+      "locale": locale,
       "selectedCategory": landingCategories[0].categoryDesc,
     });
   }

@@ -206,10 +206,12 @@ class App extends Component {
   }
 
   renderLanding = (routeProps) => {
-    const { currency, currentProductId, showQVModal, landingCategories, previewCategories } = this.state;
+    const { locale, currency, currentProductId, showQVModal, landingCategories, previewCategories } = this.state;
     return (
         <Landing
           {...routeProps}
+          locale={locale}
+          currency={currency}
           showQVModal={showQVModal}
           setCurrentProductId={this.setCurrentProductId}
           currentProductId={currentProductId}
