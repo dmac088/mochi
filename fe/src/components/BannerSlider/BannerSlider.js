@@ -17,7 +17,7 @@ class BannerSlider extends Component {
     this.slider.slickPrev();
   }
 
-  renderProducts = (category) => {
+  renderProducts = () => {
     const { category, setCurrentProductId } = this.props;
     return category.products.map(product => {
       return (
