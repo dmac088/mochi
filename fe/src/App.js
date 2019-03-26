@@ -27,7 +27,7 @@ import Contact from './components/Contact/Contact';
 import Product from './components/Product/Product';
 import Auth from './components/Login/Auth';
 import './../public/assets/scss/main.scss';
-
+import { getValue } from './config/lang/selector';
 
 
 class App extends Component {
@@ -71,7 +71,7 @@ class App extends Component {
   }
 
   refreshFeaturedProducts = (locale) =>
-    productApi.findByCategory(locale, 'Featured', 0, 50)
+    productApi.findByCategory(locale, getValue(locale).featuredCategory, 0, 50)
     .then((response) => {
         return response.text();
     })

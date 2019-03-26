@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import * as cartService from '../../services/cart';
 import * as cartSelector from '../../services/cart/selectors';
-import * as productApi from '../../data/products/api';
 import {
 	spinner,
 } from '../../services/helpers/Helper';
