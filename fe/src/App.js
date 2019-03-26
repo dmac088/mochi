@@ -41,6 +41,8 @@ class App extends Component {
                      "showQVModal": false,
                      "currentProductId": null,
                      "featuredProducts": [],
+                     "landingCategories": [],
+                     "previewCategories": [],
                   };
   }
 
@@ -59,19 +61,30 @@ class App extends Component {
   }
 
   refreshData(locale) {
-    Promise.all([this.refreshCategoryList(locale),
-                 this.refreshFeaturedProducts(locale)])
-    .then((values) => {
-      this.setState({
-        "locale": locale,
-        "categoryList": values[0],
-        "featuredProducts": values[1].content,
+    this.refreshCategoryList(locale)
+    .then((categoryList) => {
+      return this.filterLandingCategories(categoryList).map(category => {
+        //we must return the nested promise
+        return this.getCategoryProducts(locale, category.categoryDesc)
+        .then((response) => {
+          category["products"] = response;
+          return category;
+        });
+      });
+    })
+    .then((result) => {
+      Promise.all(result)
+      .then((value) => {
+        this.setState({
+          "locale": locale,
+          "landingCategories": value,
+        });
       });
     });
   }
 
-  refreshFeaturedProducts = (locale) =>
-    productApi.findByCategory(locale, getValue(locale).featuredCategory, 0, 50)
+  getCategoryProducts = (locale, category) =>
+    productApi.findByCategory(locale, category)
     .then((response) => {
         return response.text();
     })
@@ -94,6 +107,12 @@ class App extends Component {
     .then((responseJSON) => {
         return responseJSON;
     });
+
+  filterLandingCategories = (categoryList) => {
+    return categoryList.filter(function(value, index, arr){
+      return value.landingDisplay === 1;
+    });
+  }
 
   autoLogin = () =>  {
     sessionService.refreshToken().then(() => {
