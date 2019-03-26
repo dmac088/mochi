@@ -18,7 +18,6 @@ class BannerSlider extends Component {
 
   componentDidMount() {
     const { locale } = this.props;
-    console.log(locale);
     this.getProducts(locale);
   }
 
