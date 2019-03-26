@@ -5,7 +5,7 @@ import { SlickArrowLeft, SlickArrowRight, chunkArray } from '../../../services/h
 import { getValue } from '../../../config/lang/selector';
 const $ = window.$;
 
-class Featured extends Component {
+class Category extends Component {
 
   constructor(props) {
     super(props);
@@ -20,14 +20,11 @@ class Featured extends Component {
   }
 
   renderColumns = (columns) => {
-    const {locale} = this.props.match.params
-    console.log(locale);
     return columns.map(column => {
       return (
         <Column
-          {...this.props}
           key={columns.indexOf(column)}
-          categoryDesc={getValue(locale).featuredCategory}
+          categoryDesc={columns.categoryDesc}
           products={column}
         />
       )
@@ -81,9 +78,10 @@ class Featured extends Component {
         }
       }
     ]};
-    const { featuredProducts } = this.props;
-    if(!featuredProducts) {return null;}
-    const columns = chunkArray(featuredProducts, 3);
+    const { products } = this.props.category;
+    console.log(products);
+    if(!products) {return null;}
+    const columns = chunkArray(products, 3);
     return(
         <div key={0} className="tab-slider-container">
           <Slider ref={c => (this.slider = c)} {...settings}>
@@ -94,4 +92,4 @@ class Featured extends Component {
   }
 }
 
-export default Featured;
+export default Category;

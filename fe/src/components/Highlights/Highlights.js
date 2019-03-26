@@ -28,7 +28,7 @@ class Highlights extends Component {
   }
 
   renderTabHeaders = (categoryList) => {
-    return this.filterLandingCategories(categoryList).map(category => {
+    return categoryList.map(category => {
       return (
         <a onClick={this.showTab} className="nav-item nav-link active" id={category.categoryId} data-toggle="tab" href="#{category.categoryDesc}" role="tab" aria-selected="true">
           {category.categoryDesc}
@@ -38,11 +38,11 @@ class Highlights extends Component {
   }
 
   renderTabs = (categoryList) => {
-    return this.filterLandingCategories(categoryList).map(category => {
+    return categoryList.map(category => {
       return (
         <div className="tab-pane fade show active" id={category.categoryId} role="tabpanel" aria-labelledby="featured-tab">
           <Category
-            {...this.props}
+            category={category}
           />
         </div>
       )
@@ -51,7 +51,7 @@ class Highlights extends Component {
 
   render() {
     const { showFeatured, showArrival, showOnSale } = this.state;
-    const { categoryList } = this.props;
+    const { landingCategories } = this.props;
     return (
       <div className="slider tab-slider mb-35">
         <div className="container">
@@ -60,11 +60,11 @@ class Highlights extends Component {
               <div className="tab-slider-wrapper">
                   <nav>
                     <div className="nav nav-tabs" id="nav-tab" role="tablist">
-                      {this.renderTabHeaders(categoryList)}
+                      {this.renderTabHeaders(landingCategories)}
                     </div>
                   </nav>
                   <div className="tab-content" id="nav-tabContent">
-                    {this.renderTabs(categoryList)}
+                    {this.renderTabs(landingCategories)}
                   </div>
                 </div>
               </div>

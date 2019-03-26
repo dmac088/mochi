@@ -40,7 +40,6 @@ class App extends Component {
                      "categoryList": [],
                      "showQVModal": false,
                      "currentProductId": null,
-                     "featuredProducts": [],
                      "landingCategories": [],
                      "previewCategories": [],
                   };
@@ -123,7 +122,7 @@ class App extends Component {
         return JSON.parse(responseText);
     })
     .then((responseJSON) => {
-        return responseJSON;
+        return responseJSON.content;
     });
 
 
@@ -205,7 +204,7 @@ class App extends Component {
   }
 
   renderLanding = (routeProps) => {
-    const { locale, currency, currentProductId, showQVModal, featuredProducts } = this.state;
+    const { locale, currency, currentProductId, showQVModal, landingCategories, previewCategories } = this.state;
     return (
         <Landing
           {...routeProps}
@@ -215,7 +214,8 @@ class App extends Component {
           setCurrentProductId={this.setCurrentProductId}
           currentProductId={currentProductId}
           toggleQuickView={this.toggleQuickView}
-          featuredProducts={featuredProducts}
+          landingCategories={landingCategories}
+          previewCategories={previewCategories}
         />
     );
   }
