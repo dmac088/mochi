@@ -63,7 +63,14 @@ class App extends Component {
   refreshData(locale) {
     this.refreshCategoryList(locale)
     .then((categoryList) => {
-      //return a list of promises to the upper function
+      this.setState({
+        "locale": locale,
+        "categoryList": categoryList,
+      });
+    })
+    .then(() => {
+      const { categoryList } = this.state;
+      //return an array of promises to the next in chain
       return this.filterLandingCategories(categoryList).map(category => {
         //we must return the nested promise
         return this.getCategoryProducts(locale, category.categoryDesc)
@@ -73,12 +80,31 @@ class App extends Component {
         });
       });
     })
-    .then((result) => {
-      Promise.all(result)
+    .then((promiseArray) => {
+      Promise.all(promiseArray)
       .then((value) => {
         this.setState({
-          "locale": locale,
           "landingCategories": value,
+        });
+      });
+    })
+    .then(() => {
+      const { categoryList } = this.state;
+      //return an array of promises to the next in chain
+      return this.filterPreviewCategories(categoryList).map(category => {
+        //we must return the nested promise
+        return this.getCategoryProducts(locale, category.categoryDesc)
+        .then((response) => {
+          category["products"] = response;
+          return category;
+        });
+      });
+    })
+    .then((promiseArray) => {
+      Promise.all(promiseArray)
+      .then((value) => {
+        this.setState({
+          "previewCategories": value,
         });
       });
     });
@@ -112,6 +138,13 @@ class App extends Component {
   filterLandingCategories = (categoryList) => {
     return categoryList.filter(function(value, index, arr){
       return value.landingDisplay === 1;
+    });
+  }
+
+
+  filterPreviewCategories = (categoryList) => {
+    return categoryList.filter(function(value, index, arr){
+      return value.categoryPreview === 1;
     });
   }
 
