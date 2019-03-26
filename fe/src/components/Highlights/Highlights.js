@@ -33,11 +33,13 @@ class Highlights extends Component {
   }
 
   renderTabHeaders = (categoryList) => {
+    const { selectedCategory } = this.state;
     return categoryList.map(category => {
+      const isActive = (selectedCategory === category.categoryDesc);
       return (
         <a  key={category.categoryId}
             onClick={this.showTab}
-            className="nav-item nav-link active"
+            className={"nav-item nav-link " + ((isActive) ? "active" : "")}
             id={category.categoryDesc}
             data-toggle="tab"
             href="#{category.categoryDesc}"
@@ -51,10 +53,12 @@ class Highlights extends Component {
 
   renderTabs = (categoryList) => {
     const { match, history, setCurrentProductId } = this.props;
+    const { selectedCategory } = this.state;
     return categoryList.map(category => {
+      const isActive = (selectedCategory === category.categoryDesc);
       return (
         <div key={category.categoryId}
-             className="tab-pane fade show active"
+             className={"tab-pane fade show " + ((isActive) ? "active" : "")}
              id={category.categoryDesc}
              role="tabpanel"
              aria-labelledby="featured-tab">
@@ -70,7 +74,7 @@ class Highlights extends Component {
   }
 
   render() {
-    const { showFeatured, showArrival, showOnSale } = this.state;
+    const { showFeatured, showArrival, showOnSale,  } = this.state;
     const { landingCategories } = this.props;
     return (
       <div className="slider tab-slider mb-35">
