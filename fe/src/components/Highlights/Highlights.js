@@ -38,7 +38,7 @@ class Highlights extends Component {
   }
 
   renderTabs = (categoryList) => {
-    const { match, history } = this.props;
+    const { match, history, setCurrentProductId } = this.props;
     return categoryList.map(category => {
       return (
         <div key={category.categoryId} className="tab-pane fade show active" id={category.categoryId} role="tabpanel" aria-labelledby="featured-tab">
@@ -46,6 +46,7 @@ class Highlights extends Component {
             category={category}
             match={match}
             history={history}
+            setCurrentProductId={setCurrentProductId}
           />
         </div>
       )

@@ -9,7 +9,7 @@ class Column extends Component {
   }
 
   renderProducts = (products) => {
-    const { categoryDesc, match, history } = this.props;
+    const { categoryDesc, match, history, setCurrentProductId } = this.props;
     if (products === undefined) { return; }
     return products.map(product => {
       return (
@@ -19,6 +19,7 @@ class Column extends Component {
             history={history}
             product={product}
             categoryDesc={categoryDesc}
+            setCurrentProductId={setCurrentProductId}
           />
         )
     });
