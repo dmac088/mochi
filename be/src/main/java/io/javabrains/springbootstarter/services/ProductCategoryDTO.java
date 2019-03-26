@@ -16,6 +16,8 @@ public class ProductCategoryDTO {
 	private Long categoryPreview;
 	
 	private Long categoryMenu;
+	
+	private Long landingDisplay;
 
 	private String lclCd;
 	
@@ -24,7 +26,8 @@ public class ProductCategoryDTO {
 
 	private Long childCategoryCount;
 
-	private Long productCount; 
+	private Long productCount;
+	
 	
 	private List<ProductCategoryDTO> children;
 	
@@ -82,6 +85,14 @@ public class ProductCategoryDTO {
 
 	public void setCategoryMenu(Long categoryMenu) {
 		this.categoryMenu = categoryMenu;
+	}
+	
+	public Long getLandingDisplay() {
+		return landingDisplay;
+	}
+
+	public void setLandingDisplay(Long landingDisplay) {
+		this.landingDisplay = landingDisplay;
 	}
 
 	public Long getParentId() {

@@ -116,6 +116,7 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
         }
         pcDto.setCategoryPreview(pc.getPreviewFlag());
         pcDto.setCategoryMenu(pc.getMenuDisplayFlag());
+        pcDto.setLandingDisplay(pc.getLandingDisplayFlag());
         pcDto.setCategoryDesc(pca.getCategoryDesc());
         pcDto.setLclCd(pca.getLclCd());
         pcDto.setChildCategoryCount(new Long(pc.getChildren().size()));
