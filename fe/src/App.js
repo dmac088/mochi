@@ -173,7 +173,6 @@ class App extends Component {
           setCurrentProductId={this.setCurrentProductId}
           currentProductId={currentProductId}
           categoryList={categoryList}
-          page="Products"
         />
     );
   }
