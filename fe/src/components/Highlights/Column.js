@@ -14,7 +14,6 @@ class Column extends Component {
     return products.map(product => {
       return (
           <Product
-            {...this.props}
             key={product.productId}
             product={product}
             categoryDesc={categoryDesc}
