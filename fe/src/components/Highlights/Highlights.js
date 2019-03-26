@@ -12,14 +12,14 @@ class Highlights extends Component {
   }
 
   componentDidMount(){
-    this.updateData();
+    this.updateForNull();
   }
 
   componentDidUpdate() {
-    this.updateData();
+    this.updateForNull();
   }
 
-  updateData = () => {
+  updateForNull = () => {
     const { landingCategories, locale } = this.props;
     const { selectedCategory } = this.state;
     if(selectedCategory
