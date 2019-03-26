@@ -3,11 +3,6 @@ import { Link } from "react-router-dom";
 
 class BreadCrumb extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {}
-  }
-
   findCategoryByName = (categoryList, term) => {
     return categoryList.filter(function(value, index, arr){
       return value.categoryDesc === term;
@@ -49,7 +44,7 @@ class BreadCrumb extends Component {
     if(!productId) {return;}
     return (
       <li key={productId}>
-          {productId}
+          Product ID: {productId}
       </li>
     )
   }
@@ -64,6 +59,7 @@ class BreadCrumb extends Component {
   }
 
   render() {
+    console.log(this.props);
     const { locale, currency, term, productId } = this.props.match.params;
     const type = this.props.match.params[0];
     const { page, categoryList } =  this.props;
