@@ -7,6 +7,7 @@ const lang = {
 	categoryMenuHeading: "所有類別",
 	moreCategories: "更多類別",
 	lessCategories: "少類別",
+	featuredCategory: "精選",
 };
 
 export default lang;

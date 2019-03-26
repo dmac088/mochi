@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import HighlightedColumn from '../HighlightedColumn';
 import Slider from "react-slick";
 import { SlickArrowLeft, SlickArrowRight, chunkArray } from '../../../services/helpers/Helper';
+import { getValue } from '../../../config/lang/selector';
 const $ = window.$;
 
 class Featured extends Component {
@@ -19,12 +20,14 @@ class Featured extends Component {
   }
 
   renderColumns = (columns) => {
+    const {locale} = this.props.match.params
+    console.log(locale);
     return columns.map(column => {
       return (
         <HighlightedColumn
           {...this.props}
           key={columns.indexOf(column)}
-          categoryDesc={"Featured"}
+          categoryDesc={getValue(locale).featuredCategory}
           products={column}
         />
       )
@@ -80,7 +83,7 @@ class Featured extends Component {
     ]};
     const { featuredProducts } = this.props;
     if(!featuredProducts) {return null;}
-    const columns = chunkArray(this.props.featuredProducts, 3);
+    const columns = chunkArray(featuredProducts, 3);
     return(
         <div key={0} className="tab-slider-container">
           <Slider ref={c => (this.slider = c)} {...settings}>

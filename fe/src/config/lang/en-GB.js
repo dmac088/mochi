@@ -7,6 +7,7 @@ const lang = {
 	categoryMenuHeading: "All Categories",
 	moreCategories: "More Categories",
 	lessCategories: "Less Categories",
+	featuredCategory: "Featured",
 };
 
 export default lang;
