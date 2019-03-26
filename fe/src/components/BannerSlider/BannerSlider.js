@@ -9,37 +9,6 @@ const $ = window.$;
 
 class BannerSlider extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-                   products: [],
-                 };
-  }
-
-  componentDidMount() {
-    const { locale } = this.props;
-    this.getProducts(locale);
-  }
-
-  getProducts = (locale) => {
-    const { categoryId } = this.props.category;
-    productApi.findPreviewByCategory(locale, categoryId)
-    .then((response) => {
-        return response.text();
-    })
-    .then((responseText) => {
-        return JSON.parse(responseText);
-    })
-    .catch(()=>{
-        console.log('getProducts failed!');
-    }).then((responseJSON) => {
-      this.setState({
-        products: responseJSON,
-        locale: locale,
-      });
-    });
-  }
-
   next = () => {
     this.slider.slickNext();
   }
@@ -48,9 +17,9 @@ class BannerSlider extends Component {
     this.slider.slickPrev();
   }
 
-  renderProducts = (category, products) => {
+  renderProducts = (category) => {
     const { setCurrentProductId } = this.props;
-    return products.map(product => {
+    return category.products.map(product => {
       return (
           <BannerSliderProduct
             locale={this.props.locale}
@@ -64,8 +33,8 @@ class BannerSlider extends Component {
   }
 
   render() {
-    const { products } = this.state;
-    const { category } = this.props;
+
+
     const settings = {
       arrows: true,
       autoplay: false,
@@ -112,10 +81,10 @@ class BannerSlider extends Component {
       }
       ]
     };
-
+        const { category } = this.props;
     return (
       <Slider className="banner-slider-container" ref={c => (this.slider = c)} {...settings}>
-        {this.renderProducts(category, products)}
+        {this.renderProducts(category)}
       </Slider>
     )
   }
