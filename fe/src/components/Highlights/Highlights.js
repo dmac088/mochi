@@ -30,7 +30,7 @@ class Highlights extends Component {
   renderTabHeaders = (categoryList) => {
     return categoryList.map(category => {
       return (
-        <a onClick={this.showTab} className="nav-item nav-link active" id={category.categoryId} data-toggle="tab" href="#{category.categoryDesc}" role="tab" aria-selected="true">
+        <a key={category.categoryId} onClick={this.showTab} className="nav-item nav-link active" id={category.categoryId} data-toggle="tab" href="#{category.categoryDesc}" role="tab" aria-selected="true">
           {category.categoryDesc}
         </a>
       )
@@ -38,11 +38,14 @@ class Highlights extends Component {
   }
 
   renderTabs = (categoryList) => {
+    const { match, history } = this.props;
     return categoryList.map(category => {
       return (
-        <div className="tab-pane fade show active" id={category.categoryId} role="tabpanel" aria-labelledby="featured-tab">
+        <div key={category.categoryId} className="tab-pane fade show active" id={category.categoryId} role="tabpanel" aria-labelledby="featured-tab">
           <Category
             category={category}
+            match={match}
+            history={history}
           />
         </div>
       )
