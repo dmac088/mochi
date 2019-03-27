@@ -10,12 +10,6 @@ class Layout extends Component {
     super(props)
   }
 
-  componentDidMount() {
-    const { locale } = this.props.match.params;
-    const { updateLocale } = this.props;
-    updateLocale(locale);
-  }
-
   componentDidUpdate() {
     const { locale } = this.props.match.params;
     const { updateLocale } = this.props;
