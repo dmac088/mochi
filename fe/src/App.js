@@ -196,11 +196,11 @@ class App extends Component {
     const { locale, currency, categoryList } = this.state;
     return (
       <LayoutBC {...routeProps}
-          locale={locale}
-          currency={currency}
-          categoryList={categoryList}
-          updateLocale={this.updateLocale}>
-          {contentCallback(routeProps)}
+        locale={locale}
+        currency={currency}
+        categoryList={categoryList}
+        updateLocale={this.updateLocale}>
+        {contentCallback(routeProps)}
       </LayoutBC>
     );
   }
@@ -208,31 +208,31 @@ class App extends Component {
   renderLanding = (routeProps) => {
     const { locale, currency, currentProductId, showQVModal, landingCategories, previewCategories } = this.state;
     return (
-        <Landing
-          {...routeProps}
-          locale={locale}
-          currency={currency}
-          showQVModal={showQVModal}
-          setCurrentProductId={this.setCurrentProductId}
-          currentProductId={currentProductId}
-          toggleQuickView={this.toggleQuickView}
-          landingCategories={landingCategories}
-          previewCategories={previewCategories}
-        />
+      <Landing
+        {...routeProps}
+        locale={locale}
+        currency={currency}
+        showQVModal={showQVModal}
+        setCurrentProductId={this.setCurrentProductId}
+        currentProductId={currentProductId}
+        toggleQuickView={this.toggleQuickView}
+        landingCategories={landingCategories}
+        previewCategories={previewCategories}
+      />
     );
   }
 
   renderProducts = (routeProps) => {
     const { locale, currency, pagedItems, categoryList, showQVModal, currentProductId } = this.state;
     return (
-        <Products
-          {...routeProps}
-          toggleQuickView={this.toggleQuickView}
-          showQVModal={showQVModal}
-          setCurrentProductId={this.setCurrentProductId}
-          currentProductId={currentProductId}
-          categoryList={categoryList}
-        />
+      <Products
+        {...routeProps}
+        toggleQuickView={this.toggleQuickView}
+        showQVModal={showQVModal}
+        setCurrentProductId={this.setCurrentProductId}
+        currentProductId={currentProductId}
+        categoryList={categoryList}
+      />
     );
   }
 
