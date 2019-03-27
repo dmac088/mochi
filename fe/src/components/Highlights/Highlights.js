@@ -31,6 +31,7 @@ class Highlights extends Component {
     const { selectedCategory } = this.state;
     if(landingCategories.length === 0) {return;}
     if(selectedCategory) { return; }
+    //reset the current category to first in array
     this.setState({
       "selectedCategory": landingCategories[0].categoryCode,
     });
@@ -78,8 +79,8 @@ class Highlights extends Component {
 
   render() {
     const { landingCategories } = this.props;
-    if(landingCategories.length === 0) { return null; }
     const { selectedCategory } = this.state;
+    if(landingCategories.length === 0) { return null; }
     return (
       <div className="slider tab-slider mb-35">
         <div className="container">
