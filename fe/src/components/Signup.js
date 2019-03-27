@@ -19,13 +19,13 @@ class Signup extends Component {
   reduxSubscribedFunction = () => {
   }
 
-  updateCustomerState = (event) =>  {
+  updateCustomerState = (e) =>  {
     let newstate = {...this.state};
-    deepValue(newstate, event.target.id, event.target.value);
+    deepValue(newstate, e.currentTartget.id, e.currentTartget.value);
     this.setState(newstate);
   }
 
-  signupClick = (event) => {
+  signupClick = (e) => {
       this.setState({
         isLoading: true,
         error: '',

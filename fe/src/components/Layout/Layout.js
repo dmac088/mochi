@@ -20,10 +20,10 @@ class Layout extends Component {
 
   changeCategory = (e) => {
     e.preventDefault();
-    const url = this.props.location.pathname;
-    const search = this.props.location.search;
+    const { search } = this.props.location;
     const { locale, currency, term } = this.props.match.params;
-    this.props.history.push('/'+ locale + '/' + currency + '/category/' + event.target.id + search);
+    console.log('/'+ locale + '/' + currency + '/category/' + e.currentTarget.id + search);
+    this.props.history.push('/'+ locale + '/' + currency + '/category/' + e.currentTarget.id + search);
   }
 
   render() {

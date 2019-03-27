@@ -21,10 +21,9 @@ class Search extends Component {
     });
   }
 
-  updateSearch = (event) => {
-    console.log(event.target.value);
+  updateSearch = (e) => {
     this.setState({
-      inputTerm: event.target.value
+      inputTerm: e.currentTarget.value
     });
   }
 

@@ -16,13 +16,13 @@ class Register extends Component {
     this.state = initialState;
   }
 
-  updateCustomerState = (event) =>  {
+  updateCustomerState = (e) =>  {
     let newstate = {...this.state};
-    deepValue(newstate, event.target.id, event.target.value);
+    deepValue(newstate, e.currentTarget.id, e.currentTarget.value);
     this.setState(newstate);
   }
 
-  registerClick = (event) => {
+  registerClick = (e) => {
       this.setState({
         isLoading: true,
         error: '',
