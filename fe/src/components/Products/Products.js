@@ -138,16 +138,20 @@ class Products extends Component {
                     <div className=
                               {(isGrid)
                                 ? "shop-product-wrap grid row no-gutters mb-35"
-                                : "shop-product-wrap row no-gutters mb-35"}
+                                : "shop-product-wrap row no-gutters mb-35 list"}
                     >
-                      {products.map(product => {
-                          return <Product key={product.productId}
-                                          product={product}
-                                          setCurrentProductId={setCurrentProductId}
-                                          isGrid={isGrid}
-                                          match={this.props.match}
-                                          history={this.props.history}/>
-                      })}
+
+                        {products.map(product => {
+                            return (
+                                        <Product key={product.productId}
+                                            product={product}
+                                            setCurrentProductId={setCurrentProductId}
+                                            isGrid={isGrid}
+                                            match={this.props.match}
+                                            history={this.props.history}/>
+                                   )
+                        })}
+
                     </div>
                     <Pagination
                       totalPages={totalPages}
