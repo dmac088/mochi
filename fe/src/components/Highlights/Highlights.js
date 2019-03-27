@@ -3,53 +3,42 @@ import Category from './Tabs/Category';
 
 class Highlights extends Component {
 
+
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      "locale": null,
       "selectedCategory": null,
-    };
-  }
-
-  componentDidMount(){
-    this.updateForNull();
-  }
-
-  componentDidUpdate() {
-    this.updateForNull();
-  }
-
-  updateForNull = () => {
-    const { landingCategories, locale } = this.props;
-    const { selectedCategory } = this.state;
-    if(selectedCategory
-       && locale === this.state.locale) { return; }
-    if(!landingCategories) { return; }
-    if(landingCategories.length === 0) { return; }
-    if(landingCategories[0].categoryDesc === selectedCategory) { return; }
-    this.setState({
-      "locale": locale,
-      "selectedCategory": landingCategories[0].categoryDesc,
-    });
+    }
   }
 
   showTab = (e) => {
      e.preventDefault();
      this.setState({
        "selectedCategory": e.currentTarget.id,
-     });
+     })
   }
+
+  componentDidUpdate() {
+    const { landingCategories } = this.props;
+    const { selectedCategory } = this.state;
+    if(landingCategories.length === 0) {return;}
+    if(selectedCategory) { return; }
+    this.setState({
+      "selectedCategory": landingCategories[0].categoryCode,
+    });
+  }
+
 
   renderTabHeaders = (categoryList, selectedCategory) => {
     return categoryList.map(category => {
-      const isActive = (selectedCategory === category.categoryDesc);
+      const isActive = (category.categoryCode === selectedCategory);
       return (
         <a  key={category.categoryId}
             onClick={this.showTab}
-            className={"nav-item nav-link " + ((isActive) ? "active" : "")}
-            id={category.categoryDesc}
+            className={"nav-item nav-link " + ((isActive) ? " active" : "")}
+            id={category.categoryCode}
             data-toggle="tab"
-            href="#{category.categoryDesc}"
+            href="#{category.categoryCode}"
             role="tab"
             aria-selected="true">
           {category.categoryDesc}
@@ -61,11 +50,11 @@ class Highlights extends Component {
   renderTabs = (categoryList, selectedCategory) => {
     const { match, history, setCurrentProductId } = this.props;
     return categoryList.map(category => {
-      const isActive = (selectedCategory === category.categoryDesc);
+      const isActive = (category.categoryCode === selectedCategory);
       return (
         <div key={category.categoryId}
-             className={"tab-pane fade show " + ((isActive) ? "active" : "")}
-             id={category.categoryDesc}
+             className={"tab-pane fade "  + ((isActive) ? " show active" : "")}
+             id={category.categoryCode}
              role="tabpanel"
              aria-labelledby="featured-tab">
           <Category
@@ -80,8 +69,9 @@ class Highlights extends Component {
   }
 
   render() {
-    const { showFeatured, showArrival, showOnSale, selectedCategory } = this.state;
     const { landingCategories } = this.props;
+    if(landingCategories.length === 0) { return null; }
+    const { selectedCategory } = this.state;
     return (
       <div className="slider tab-slider mb-35">
         <div className="container">
