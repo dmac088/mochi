@@ -45,7 +45,8 @@ class Products extends Component {
     const { pathname, search } = this.props.location;
     const params = {...this.state.params};
     const { locale, currency, term } = this.props.match.params;
-    this.updateData(locale, pathname, term, Object.assign(params, qs.parse(search)), isMounting);
+    console.log(this.props.match.params);
+    //this.updateData(locale, pathname, term, Object.assign(params, qs.parse(search)), isMounting);
   }
 
   updateData = (locale = "en-GB", pathname, term="All", params, isMounting = 0) => {

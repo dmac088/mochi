@@ -16,7 +16,6 @@ class Search extends Component {
 
   componentWillMount() {
     const urlParams = (qs.parse(this.props.history.location.search));
-    console.log(this.props.history.location.search);
     this.setState({
       inputTerm: urlParams.term
     });
@@ -33,11 +32,8 @@ class Search extends Component {
   handleSearch = (e) => {
     if(!e) {return}
     e.preventDefault();
-    const { locale, currency } = this.props.match.params;
-    this.props.history.push({
-      "pathname": '/' + locale + '/' + currency + '/search',
-      "search": updateParams(this.props.history.location.search, {term: this.state.inputTerm, page: 0}, this.props.history),
-     });
+    const { locale, currency, term } = this.props.match.params;
+    this.props.history.push('/' + locale + '/' + currency + '/search/' + this.state.inputTerm);
   }
 
   handleKeyPress = (target) => {
