@@ -56,7 +56,6 @@ class Highlights extends Component {
   }
 
   renderTabs = (categoryList, selectedCategory) => {
-    console.log("render");
     const { match, history, setCurrentProductId } = this.props;
     return categoryList.map(category => {
       const isActive = (category.categoryCode === selectedCategory);
