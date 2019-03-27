@@ -55,6 +55,7 @@ class App extends Component {
   }
 
   updateLocale = (locale) => {
+    console.log("updateLocale");
     if(locale === this.state.locale) {return;}
     this.refreshData(locale);
   }
