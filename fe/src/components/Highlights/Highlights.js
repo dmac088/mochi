@@ -18,7 +18,15 @@ class Highlights extends Component {
      })
   }
 
+  componentDidMount() {
+    this.reset();
+  }
+
   componentDidUpdate() {
+    this.reset();
+  }
+
+  reset = () => {
     const { landingCategories } = this.props;
     const { selectedCategory } = this.state;
     if(landingCategories.length === 0) {return;}
@@ -48,6 +56,7 @@ class Highlights extends Component {
   }
 
   renderTabs = (categoryList, selectedCategory) => {
+    console.log("render");
     const { match, history, setCurrentProductId } = this.props;
     return categoryList.map(category => {
       const isActive = (category.categoryCode === selectedCategory);
