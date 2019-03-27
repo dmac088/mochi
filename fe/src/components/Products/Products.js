@@ -11,6 +11,7 @@ import ShopHeader from './ShopHeader';
 import Pagination from './Pagination';
 import * as productApi from '../../data/products/api';
 import { updateParams } from '../../services/helpers/Helper';
+import * as pageService from '../../services/page';
 import qs from 'query-string';
 
 class Products extends Component {
@@ -47,11 +48,25 @@ class Products extends Component {
     const { locale, currency, term } = this.props.match.params;
     const type = this.props.match.params[0];
     if(type==="category") {
-      this.updateData(locale, pathname, term, Object.assign(params, qs.parse(search)), isMounting);
+      this.updateForCategory(locale, pathname, term, Object.assign(params, qs.parse(search)), isMounting);
     }
   }
 
-  updateData = (locale = "en-GB", pathname, term="All", params, isMounting = 0) => {
+  updateForSearch = (locale = "en-GB", pathname, term="All", params, isMounting = 0) => {
+    if(!params) {return;}
+    const { page, size, sort } = params;
+    if(   locale === this.state.locale
+      &&  term === this.state.term
+      &&  page === this.state.params.page
+      &&  size === this.state.params.size
+      &&  sort === this.state.params.sort
+      &&  isMounting === 0
+    ) {return;}
+
+
+  }
+
+  updateForCategory = (locale = "en-GB", pathname, term="All", params, isMounting = 0) => {
     if(!params) {return;}
     const { page, size, sort } = params;
     if(   locale === this.state.locale
@@ -79,6 +94,19 @@ class Products extends Component {
       });
     });
   }
+
+  // findProducts= (locale = "en-GB", searchTerm = "All", page, size, sort) =>
+  //   productApi.
+  //   .then((response) => {
+  //       return response.text();
+  //   })
+  //   .then((responseText) => {
+  //       return JSON.parse(responseText);
+  //   })
+  //   .catch(()=>{
+  //       console.log('getProducts failed!');
+  // });
+
 
   getProducts= (locale = "en-GB", categoryDesc = "All", page, size, sort) =>
     productApi.findByCategory(locale, categoryDesc, page, size, sort)

@@ -11,8 +11,6 @@ import store from './store';
 import * as tokensActionCreators from './services/session/actions';
 import * as customerActionCreators from './services/customer/actions';
 import * as sessionService from './services/session';
-import * as pageService from './services/page';
-import * as cartService from './services/cart';
 import * as categoryApi from './data/categories/api';
 import * as productApi from './data/products/api';
 import Layout from './components/Layout/Layout';
@@ -175,9 +173,6 @@ class App extends Component {
     });
   }
 
-  emptyCart = () => {
-    cartService.emptyCart();
-  }
 
   renderLayout = (routeProps, contentCallback) => {
     const { locale, currency, categoryList } = this.state;
