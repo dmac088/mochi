@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from "react-redux";
 import store from './store';
 import App from './App';
+import 'react-app-polyfill/ie9';
 import registerServiceWorker from './registerServiceWorker';
 
 import {
