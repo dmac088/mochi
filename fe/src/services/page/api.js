@@ -9,18 +9,13 @@ const endPoints = {
 	sort: '/SortBy/',
 };
 
-const sortSelector = {
-        1:"productDesc",
-        2:"productRrp"
-      };
-
 export const findAll = (locale, category, searchTerm, page, size, sort) => fetchApi(
 																																	endPoints.get + locale
 																																+ endPoints.category + category
 																																+ endPoints.search + searchTerm
 																																+ endPoints.page + page
 																																+ endPoints.size + size
-																																+ endPoints.sort + sortSelector[sort],
+																																+ endPoints.sort + sort,
 																																{},
 																																{},
 																																'GET',

@@ -31,7 +31,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Indexed
 @Table(name = "product_attr_lcl", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "prd_lcl_id")
-@AnalyzerDef(name = "ENG",
+@AnalyzerDef(name = "en-GB",
 tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
 filters = {
   @TokenFilterDef(factory = LowerCaseFilterFactory.class),
@@ -39,7 +39,7 @@ filters = {
 	      @Parameter(name = "language", value = "English")
   })
 })
-@AnalyzerDef(name = "HKG",
+@AnalyzerDef(name = "zh-HK",
 tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
 filters = {
   @TokenFilterDef(factory = CJKWidthFilterFactory.class),
