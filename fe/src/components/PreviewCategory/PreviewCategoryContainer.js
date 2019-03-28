@@ -9,6 +9,7 @@ class PreviewCategoryContainer extends Component {
     return previewCategories.map(category => {
       return (
           <PreviewCategory
+             key={category.categoryId}
              category={category}
              {...this.props}
           />
