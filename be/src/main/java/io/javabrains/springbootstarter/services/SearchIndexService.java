@@ -36,9 +36,6 @@ public class SearchIndexService {
 
 	public Page<ProductDTO> findProduct(String lcl, String categoryDesc, String searchTerm, int page, int size, String sortBy) {
 
-		System.out.println(lcl);
-		System.out.println(categoryDesc);
-		
 		PageableUtil pageableUtil = new PageableUtil();
 		
 		FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
@@ -98,11 +95,6 @@ public class SearchIndexService {
 		
 		@SuppressWarnings("unchecked")
 		List<ProductAttribute> results =  Collections.checkedList(jpaQuery.getResultList(), ProductAttribute.class);
-		
-		System.out.println("result size = " + results.size());
-		for(ProductAttribute pa: results) {
-			System.out.println(pa.getProductDesc());
-		}
 		
 		List<ProductDTO> lp = results.stream().map(pa -> ProductDTOService.convertToProductDto(pa)).collect(Collectors.toList());
 
