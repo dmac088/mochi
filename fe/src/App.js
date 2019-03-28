@@ -274,7 +274,10 @@ class App extends Component {
   }
 
   renderWishlist = (routeProps) => {
-    return (<Wishlist {...routeProps} />);
+    return (<Wishlist
+              {...routeProps}
+              page={"Wishlist"}
+            />);
   }
 
   renderContact = (routeProps) => {
