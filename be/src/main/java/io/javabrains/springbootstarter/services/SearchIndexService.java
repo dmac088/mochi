@@ -47,6 +47,7 @@ public class SearchIndexService {
 				  .overridesForField("productDesc", lcl)
 				  .overridesForField("product.categories.productCategoryAttribute.categoryDesc", lcl)
 				  .overridesForField("product.categories.parent.productCategoryAttribute.categoryDesc", lcl)
+				  .overridesForField("product.categories.parent.parent.productCategoryAttribute.categoryDesc", lcl)
 				  .get();
 		
 		org.apache.lucene.search.Query searchQuery = productAttributeQueryBuilder.keyword()
@@ -67,7 +68,7 @@ public class SearchIndexService {
 			.matching(lcl)
 		    .createQuery())
 			.must(productAttributeQueryBuilder.keyword()
-			.onFields("product.categories.categoryCode", "product.categories.parent.categoryCode")
+			.onFields("product.categories.categoryCode", "product.categories.parent.categoryCode", "product.categories.parent.parent.categoryCode")
 			.matching(categoryCode)
 			.createQuery())
 			.must(productAttributeQueryBuilder.keyword()
@@ -90,6 +91,11 @@ public class SearchIndexService {
 		
 		@SuppressWarnings("unchecked")
 		List<ProductAttribute> results =  Collections.checkedList(jpaQuery.getResultList(), ProductAttribute.class);
+		
+		System.out.println("result size = " + results.size());
+		for(ProductAttribute pa: results) {
+			System.out.println(pa.getProductDesc());
+		}
 		
 		List<ProductDTO> lp = results.stream().map(pa -> ProductDTOService.convertToProductDto(pa)).collect(Collectors.toList());
 
