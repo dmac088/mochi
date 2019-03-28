@@ -35,6 +35,9 @@ public class SearchIndexService {
 	}
 
 	public Page<ProductDTO> findProduct(String lcl, String categoryDesc, String searchTerm, int page, int size, String sortBy) {
+
+		System.out.println(lcl);
+		System.out.println(categoryDesc);
 		
 		PageableUtil pageableUtil = new PageableUtil();
 		
@@ -45,19 +48,15 @@ public class SearchIndexService {
 				  .buildQueryBuilder()
 				  .forEntity(ProductAttribute.class)
 				  .overridesForField("productDesc", lcl)
-				  .overridesForField("product.categories.productCategoryAttribute.categoryDesc", lcl)
-				  .overridesForField("product.categories.parent.productCategoryAttribute.categoryDesc", lcl)
-				  .overridesForField("product.categories.parent.parent.productCategoryAttribute.categoryDesc", lcl)
-				  .overridesForField("product.categories.parent.parent.parent.productCategoryAttribute.categoryDesc", lcl)
+				  .overridesForField("categoryDesc", lcl)
 				  .get();
 		
 		org.apache.lucene.search.Query searchQuery = productAttributeQueryBuilder.keyword()
-												
-													.onFields(	"productDesc", 
-																"product.categories.productCategoryAttribute.categoryDesc",
-																"product.categories.parent.productCategoryAttribute.categoryDesc",
-																"product.categories.parent.parent.productCategoryAttribute.categoryDesc",
-																"product.categories.parent.parent.parent.productCategoryAttribute.categoryDesc")
+													.onFields(
+															"product.categories.parent.productCategoryAttribute.categoryDesc",
+															"product.categories.productCategoryAttribute.categoryDesc",
+															"productDesc"
+													)
 													.matching(searchTerm)
 													 .createQuery();
 				
@@ -70,16 +69,12 @@ public class SearchIndexService {
 			)
 			.must(productAttributeQueryBuilder.keyword()
 			.onFields(	"product.categories.productCategoryAttribute.lclCd",
-						"product.categories.parent.productCategoryAttribute.lclCd",
-						"product.categories.parent.parent.productCategoryAttribute.lclCd",
-						"product.categories.parent.parent.parent.productCategoryAttribute.lclCd")
+						"product.categories.parent.productCategoryAttribute.lclCd")
 			.matching(lcl)
 		    .createQuery())
 			.must(productAttributeQueryBuilder.keyword()
 			.onFields(	"product.categories.productCategoryAttribute.categoryDesc", 
-						"product.categories.parent.productCategoryAttribute.categoryDesc", 
-						"product.categories.parent.parent.productCategoryAttribute.categoryDesc",
-						"product.categories.parent.parent.parent.productCategoryAttribute.categoryDesc")
+						"product.categories.parent.productCategoryAttribute.categoryDesc")
 			.matching(categoryDesc)
 			.createQuery())
 			.must(productAttributeQueryBuilder.keyword()
