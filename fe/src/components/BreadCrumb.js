@@ -49,6 +49,15 @@ class BreadCrumb extends Component {
     )
   }
 
+  renderSearch = (term) => {
+    if(!term) {return;}
+    return (
+      <li key={term}>
+          {term}
+      </li>
+    )
+  }
+
 
   renderPage = (page) => {
     return (
@@ -63,7 +72,8 @@ class BreadCrumb extends Component {
     const type = this.props.match.params[0];
     const { page, categoryList } =  this.props;
     const renderCategory = (type && type.toLowerCase() === "category" && !(categoryList.length === 0));
-    const renderProduct = renderCategory && productId;
+    const renderProduct = (renderCategory && productId);
+    const renderSearch = (type && type.toLowerCase() === "search")
     return (
       <div className="breadcrumb-area mb-50">
     		<div className="container">
@@ -78,7 +88,10 @@ class BreadCrumb extends Component {
                   {(renderProduct)
                     ? this.renderProduct(productId)
                     : null}
-                  {(!renderProduct && !renderCategory)
+                  {(renderSearch)
+                    ? this.renderSearch(term)
+                    : null}
+                  {(!renderProduct && !renderCategory && !renderSearch)
                     ? this.renderPage(page)
                     : null}
     						</ul>
