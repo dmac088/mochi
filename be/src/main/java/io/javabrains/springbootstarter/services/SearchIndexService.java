@@ -53,6 +53,7 @@ public class SearchIndexService {
 		
 		org.apache.lucene.search.Query searchQuery = productAttributeQueryBuilder.keyword()
 													.onFields(
+															"product.categories.parent.parent.productCategoryAttribute.categoryDesc",
 															"product.categories.parent.productCategoryAttribute.categoryDesc",
 															"product.categories.productCategoryAttribute.categoryDesc",
 															"productDesc"
@@ -69,12 +70,14 @@ public class SearchIndexService {
 			)
 			.must(productAttributeQueryBuilder.keyword()
 			.onFields(	"product.categories.productCategoryAttribute.lclCd",
-						"product.categories.parent.productCategoryAttribute.lclCd")
+						"product.categories.parent.productCategoryAttribute.lclCd",
+						"product.categories.parent.parent.productCategoryAttribute.lclCd")
 			.matching(lcl)
 		    .createQuery())
 			.must(productAttributeQueryBuilder.keyword()
 			.onFields(	"product.categories.productCategoryAttribute.categoryDesc", 
-						"product.categories.parent.productCategoryAttribute.categoryDesc")
+						"product.categories.parent.productCategoryAttribute.categoryDesc",
+						"product.categories.parent.parent.productCategoryAttribute.categoryDesc")
 			.matching(categoryDesc)
 			.createQuery())
 			.must(productAttributeQueryBuilder.keyword()
