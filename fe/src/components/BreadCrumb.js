@@ -41,6 +41,7 @@ class BreadCrumb extends Component {
   }
 
   renderProduct = (productId) => {
+    console.log('renderProduct');
     if(!productId) {return;}
     return (
       <li key={productId}>
@@ -53,13 +54,14 @@ class BreadCrumb extends Component {
     if(!term) {return;}
     return (
       <li key={term}>
-          {term}
+          {(term==="undefined") ? "All" : term}
       </li>
     )
   }
 
 
   renderPage = (page) => {
+    console.log('renderPage');
     return (
       <li>
           {page}
