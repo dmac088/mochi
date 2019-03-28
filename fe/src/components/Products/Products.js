@@ -52,11 +52,13 @@ class Products extends Component {
     const type = this.props.match.params[0];
     if(type==="category") {
       this.updateForCategory(locale, pathname, term, Object.assign(params, qs.parse(search)), isMounting);
+    } else if (type==="search") {
+        this.updateForSearch(locale, pathname, "All", term, Object.assign(params, qs.parse(search)), isMounting);
     }
   }
 
 
-  updateForSearch = (locale = "en-GB", pathname, term="All", params, isMounting = 0) => {
+  updateForSearch = (locale = "en-GB", pathname, category="All", term="All", params, isMounting = 0) => {
     if(!params) {return;}
     const { page, size, sort } = params;
     if(   locale === this.state.locale
@@ -66,7 +68,26 @@ class Products extends Component {
       &&  sort === this.state.params.sort
       &&  isMounting === 0
     ) {return;}
-
+    this.findProducts(locale, category, term, page, size, sort)
+    .then((responseJSON) => {
+      this.setState({
+        "locale":           locale,
+        "term":             term,
+        "products":         responseJSON.content,
+        "totalPages":       responseJSON.totalPages,
+        "totalElements":    responseJSON.totalElements,
+        "numberOfElements": responseJSON.numberOfElements,
+        "params":           params,
+      }, () => {
+        this.props.history.push({
+              "pathname": pathname,
+              "search": qs.stringify(params),
+        });
+      });
+    })
+    .catch(()=>{
+        console.log('findProducts failed!');
+    });
   }
 
   updateForCategory = (locale = "en-GB", pathname, term="All", params, isMounting = 0) => {
@@ -99,17 +120,9 @@ class Products extends Component {
   }
 
 
-  findProducts= (locale = "en-GB", ,searchTerm = "All", page, size, sort) =>
+  findProducts= (locale = "en-GB", category = "All", searchTerm = "All", page, size, sort) =>
     pageService.findAll(locale, category, searchTerm, page, size, sort)
-    .then((response) => {
-        return response.text();
-    })
-    .then((responseText) => {
-        return JSON.parse(responseText);
-    })
-    .catch(()=>{
-        console.log('getProducts failed!');
-  });
+
 
 
   getProducts= (locale = "en-GB", categoryDesc = "All", page, size, sort) =>
@@ -122,7 +135,7 @@ class Products extends Component {
     })
     .catch(()=>{
         console.log('getProducts failed!');
-  });
+    });
 
 
   toggleGrid = (e) => {
