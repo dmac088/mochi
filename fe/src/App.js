@@ -260,7 +260,10 @@ class App extends Component {
     const { tokens, customer } = this.props;
       return(
          (!tokens.authenticated)
-      ?  (<Auth {...routeProps} />)
+      ?  (<Auth
+            {...routeProps}
+            page={"Account"}
+          />)
       :  (<Account
                   {...routeProps}
                   authenticated={tokens.authenticated}
