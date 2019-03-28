@@ -9,10 +9,8 @@ class PreviewCategoryContainer extends Component {
     return previewCategories.map(category => {
       return (
           <PreviewCategory
-             key={category.categoryId}
-             locale={locale}
              category={category}
-             setCurrentProductId={setCurrentProductId}
+             {...this.props}
           />
       )
     });

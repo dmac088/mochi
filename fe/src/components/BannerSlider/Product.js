@@ -7,7 +7,14 @@ import * as cartService from '../../services/cart';
 import * as productApi from '../../data/products/api';
 const $ = window.$;
 
-class BannerSliderProduct extends Component {
+class Product extends Component {
+
+  routeSingleProduct = (e) => {
+    e.preventDefault();
+    const { categoryDesc } = this.props;
+    const { locale, currency } = this.props.match.params;
+    this.props.history.push('/' + locale + '/' + currency + '/category/' + categoryDesc + '/product/' + e.currentTarget.id);
+  }
 
   render() {
     const { product, setCurrentProductId } = this.props;
@@ -15,7 +22,7 @@ class BannerSliderProduct extends Component {
     return (
         <div key={product.productId} className="gf-product banner-slider-product">
           <div className="image">
-            <a href="single-product.html">
+            <a onClick={this.routeSingleProduct } href="#">
               <span className="onsale">Sale!</span>
               <img src={product.productImage} className="img-fluid" alt="" />
             </a>
@@ -41,4 +48,4 @@ class BannerSliderProduct extends Component {
   }
 }
 
-export default BannerSliderProduct;
+export default Product;
