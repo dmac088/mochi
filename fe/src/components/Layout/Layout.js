@@ -10,10 +10,19 @@ class Layout extends Component {
     super(props)
   }
 
-  componentDidUpdate() {
+  componentDidMount() {
     const { locale } = this.props.match.params;
     const { updateLocale } = this.props;
     if(!(locale === this.props.locale)) {
+      updateLocale(locale);
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { locale } = this.props.match.params;
+    const prevlocale = prevProps.match.params.locale;
+    const { updateLocale } = this.props;
+    if(!(locale === prevlocale)) {
       updateLocale(locale);
     }
   }
