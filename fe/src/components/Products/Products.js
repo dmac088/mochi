@@ -50,6 +50,7 @@ class Products extends Component {
     const params = {...this.state.params};
     const { locale, currency, term } = this.props.match.params;
     const type = this.props.match.params[0];
+    console.log(type);
     if(type==="category") {
       this.updateForCategory(locale, pathname, term, Object.assign(params, qs.parse(search)), isMounting);
     } else if (type==="search") {
@@ -120,7 +121,7 @@ class Products extends Component {
   }
 
 
-  findProducts= (locale = "en-GB", category = "All", searchTerm = "All", page, size, sort) =>
+  findProducts= (locale = "en-GB", category = "All", searchTerm = "", page, size, sort) =>
     pageService.findAll(locale, category, searchTerm, page, size, sort)
 
 

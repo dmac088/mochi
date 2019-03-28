@@ -41,7 +41,6 @@ class BreadCrumb extends Component {
   }
 
   renderProduct = (productId) => {
-    console.log('renderProduct');
     if(!productId) {return;}
     return (
       <li key={productId}>
@@ -51,11 +50,15 @@ class BreadCrumb extends Component {
   }
 
   renderSearch = (term) => {
-    if(!term) {return;}
     return (
-      <li key={term}>
-          {(term==="undefined") ? "All" : term}
-      </li>
+      <React.Fragment>
+        <li className="active" key={0}>
+            Search
+        </li>
+        <li key={term}>
+            {(term==="undefined") ? "All" : term}
+        </li>
+      </React.Fragment>
     )
   }
 
