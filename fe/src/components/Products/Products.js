@@ -34,13 +34,16 @@ class Products extends Component {
     };
   }
 
+
   componentDidMount() {
     this.refresh(1);
   }
 
+
   componentDidUpdate() {
     this.refresh(0);
   }
+
 
   refresh = (isMounting) => {
     const { pathname, search } = this.props.location;
@@ -52,6 +55,7 @@ class Products extends Component {
     }
   }
 
+
   updateForSearch = (locale = "en-GB", pathname, term="All", params, isMounting = 0) => {
     if(!params) {return;}
     const { page, size, sort } = params;
@@ -62,7 +66,6 @@ class Products extends Component {
       &&  sort === this.state.params.sort
       &&  isMounting === 0
     ) {return;}
-
 
   }
 
@@ -95,17 +98,18 @@ class Products extends Component {
     });
   }
 
-  // findProducts= (locale = "en-GB", searchTerm = "All", page, size, sort) =>
-  //   productApi.
-  //   .then((response) => {
-  //       return response.text();
-  //   })
-  //   .then((responseText) => {
-  //       return JSON.parse(responseText);
-  //   })
-  //   .catch(()=>{
-  //       console.log('getProducts failed!');
-  // });
+
+  findProducts= (locale = "en-GB", ,searchTerm = "All", page, size, sort) =>
+    pageService.findAll(locale, category, searchTerm, page, size, sort)
+    .then((response) => {
+        return response.text();
+    })
+    .then((responseText) => {
+        return JSON.parse(responseText);
+    })
+    .catch(()=>{
+        console.log('getProducts failed!');
+  });
 
 
   getProducts= (locale = "en-GB", categoryDesc = "All", page, size, sort) =>
@@ -120,6 +124,7 @@ class Products extends Component {
         console.log('getProducts failed!');
   });
 
+
   toggleGrid = (e) => {
     e.preventDefault();
     this.setState({
@@ -127,12 +132,14 @@ class Products extends Component {
     })
   }
 
+
   toggleList= (e) => {
     e.preventDefault();
     this.setState({
       "isGrid": false,
     })
   }
+
 
   render() {
       const { toggleQuickView, setCurrentProductId, showQVModal, currentProductId } = this.props;
