@@ -49,7 +49,7 @@ class BreadCrumb extends Component {
     )
   }
 
-  renderSearch = (term) => {
+  renderSearch = (term) => { 
     return (
       <React.Fragment>
         <li className="active" key={0}>
