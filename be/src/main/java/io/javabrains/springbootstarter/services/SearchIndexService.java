@@ -65,6 +65,7 @@ public class SearchIndexService {
 		org.apache.lucene.search.Query query = 
 			productAttributeQueryBuilder
 			.bool()
+			.must(searchQuery)
 			.must(productAttributeQueryBuilder.keyword()
 			.onFields(	"product.categories.productCategoryAttribute.lclCd",
 						"product.categories.parent.productCategoryAttribute.lclCd",
