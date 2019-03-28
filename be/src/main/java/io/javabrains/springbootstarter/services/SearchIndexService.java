@@ -51,7 +51,7 @@ public class SearchIndexService {
 				  .get();
 		
 		org.apache.lucene.search.Query searchQuery = productAttributeQueryBuilder.keyword()
-													.fuzzy()
+												
 													.onFields("productDesc", "product.categories.productCategoryAttribute.categoryDesc")
 													.matching(searchTerm)
 													 .createQuery();
