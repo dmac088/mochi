@@ -47,12 +47,13 @@ public class SearchIndexService {
 				  .overridesForField("productDesc", lcl)
 				  .overridesForField("product.categories.productCategoryAttribute.categoryDesc", lcl)
 				  .overridesForField("product.categories.parent.productCategoryAttribute.categoryDesc", lcl)
-				  .overridesForField("product.categories.parent.parent.productCategoryAttribute.categoryDesc", lcl)
 				  .get();
 		
 		org.apache.lucene.search.Query searchQuery = productAttributeQueryBuilder.keyword()
 												
-													.onFields("productDesc", "product.categories.productCategoryAttribute.categoryDesc")
+													.onFields(	"productDesc", 
+																"product.categories.productCategoryAttribute.categoryDesc",
+																"product.categories.parent.productCategoryAttribute.categoryDesc")
 													.matching(searchTerm)
 													 .createQuery();
 				
@@ -64,11 +65,13 @@ public class SearchIndexService {
 				(!(searchTerm.equals("-Z")) ? searchQuery : null)
 			)
 			.must(productAttributeQueryBuilder.keyword()
-			.onField("product.categories.parent.productCategoryAttribute.lclCd")
+			.onFields("product.categories.parent.productCategoryAttribute.lclCd")
 			.matching(lcl)
 		    .createQuery())
 			.must(productAttributeQueryBuilder.keyword()
-			.onFields("product.categories.categoryCode", "product.categories.parent.categoryCode", "product.categories.parent.parent.categoryCode")
+			.onFields(	"product.categories.categoryCode", 
+						"product.categories.parent.categoryCode", 
+						"product.categories.parent.parent.categoryCode")
 			.matching(categoryCode)
 			.createQuery())
 			.must(productAttributeQueryBuilder.keyword()
