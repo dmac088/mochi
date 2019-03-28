@@ -4,8 +4,10 @@ class Product extends Component {
 
   routeSingleProduct = (e) => {
     e.preventDefault();
+    console.log(this.props);
     const { locale, currency, term } = this.props.match.params;
-    this.props.history.push('/' + locale + '/' + currency + '/category/' + term + '/product/' + e.currentTarget.id);
+    const type = this.props.match.params[0];
+    this.props.history.push('/' + locale + '/' + currency + '/' + type + '/' + term + '/product/' + e.currentTarget.id);
   }
 
 
