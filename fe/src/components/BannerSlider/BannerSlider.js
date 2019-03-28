@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as productApi from '../../data/products/api';
 import Slider from "react-slick";
-import BannerSliderProduct from './BannerSliderProduct';
+import Product from './Product';
 import { SlickArrowLeft, SlickArrowRight } from '../../services/helpers/Helper';
 const $ = window.$;
 
@@ -21,12 +21,9 @@ class BannerSlider extends Component {
     const { category, setCurrentProductId } = this.props;
     return category.products.map(product => {
       return (
-          <BannerSliderProduct
-            locale={this.props.locale}
+          <Product
             key={product.productId}
-            product={product}
-            categoryDesc={category.categoryDesc}
-            setCurrentProductId={setCurrentProductId}
+            {...this.props}
           />
         )
     });
