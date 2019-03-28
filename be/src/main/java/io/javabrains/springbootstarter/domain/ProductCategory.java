@@ -61,7 +61,7 @@ public class ProductCategory {
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional=false)
 	@JoinColumn(name="cat_prnt_id", nullable=false)
-	@IndexedEmbedded(depth = 3)
+	@IndexedEmbedded(depth = 4)
 	private ProductCategory parent;
 	
 	@OneToMany(mappedBy="productCategory",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
