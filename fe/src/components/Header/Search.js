@@ -33,7 +33,8 @@ class Search extends Component {
     if(!e) {return}
     e.preventDefault();
     const { locale, currency, term } = this.props.match.params;
-    this.props.history.push('/' + locale + '/' + currency + '/search/' + this.state.inputTerm);
+    const { inputTerm } = this.state;
+    this.props.history.push('/' + locale + '/' + currency + '/search/' + ((!inputTerm) ? "" : inputTerm));
   }
 
   handleKeyPress = (target) => {
