@@ -11,11 +11,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonBackReference;
 import org.hibernate.search.annotations.IndexedEmbedded;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -51,6 +54,12 @@ public class Product {
 	@OneToMany(mappedBy="product",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonManagedReference
 	private List<ProductAttribute> productAttribute;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@IndexedEmbedded
+	@JoinColumn(name="bnd_id", insertable=false, updatable=false)
+	@JsonBackReference
+	private Brand brand;
 
 	public Long getProductId() {
 		return productId;
@@ -109,5 +118,12 @@ public class Product {
 		this.featuredFlag = featuredFlag;
 	}
 
+//	public Brand getBrand() {
+//		return brand;
+//	}
+//
+//	public void setBrand(Brand brand) {
+//		this.brand = brand;
+//	}
 			
 }

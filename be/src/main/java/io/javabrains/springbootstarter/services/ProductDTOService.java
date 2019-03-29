@@ -10,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import io.javabrains.springbootstarter.domain.BrandAttributeRepository;
 import io.javabrains.springbootstarter.domain.ProductAttribute;
 import io.javabrains.springbootstarter.domain.ProductAttributePagingAndSortingRepository;
 import io.javabrains.springbootstarter.domain.ProductAttributeRepository;
@@ -28,6 +30,9 @@ public class ProductDTOService implements IProductDTOService {
     
     @Autowired
     private ProductAttributeRepository productAttributeRepository;
+    
+    @Autowired
+    private BrandAttributeRepository brandAttributeRepository;
     // API
     //This method should accept a DTO and return a DTO
     //The DTO is coarse grained and contains a flat structure of properties
