@@ -50,7 +50,6 @@ class Products extends Component {
     const params = {...this.state.params};
     const { locale, currency, term } = this.props.match.params;
     const type = this.props.match.params[0];
-    console.log(type);
     if(type==="category") {
       this.updateForCategory(locale, pathname, term, Object.assign(params, qs.parse(search)), isMounting);
     } else if (type==="search") {
@@ -154,11 +153,19 @@ class Products extends Component {
     })
   }
 
+  filterSubCategories = (categoryList, categoryDesc) => {
+    return categoryList.filter(function(value, index, arr){
+      return value.categoryDesc === categoryDesc;
+    });
+  }
+
 
   render() {
-      const { toggleQuickView, setCurrentProductId, showQVModal, currentProductId } = this.props;
-      const { products, totalPages, totalElements, numberOfElements, isGrid } = this.state;
+      const { toggleQuickView, setCurrentProductId, showQVModal, currentProductId, categoryList } = this.props;
+      const { products, totalPages, totalElements, numberOfElements, isGrid, term } = this.state;
       const { page, size } = this.state.params;
+      const category = this.filterSubCategories(categoryList, term)[0];
+      if(!category) { return null; }
 				return(
           <React.Fragment>
             <div className="shop-page-container mb-50">
@@ -167,9 +174,11 @@ class Products extends Component {
                   <div className="col-lg-3 order-2 order-lg-1">
                     <div className="sidebar-area">
                       <CategorySidebar
-                        {...this.props}
+                        category={category}
                       />
-                      <BrandSidebar/>
+                      <BrandSidebar
+                        brands={category.categoryBrands}
+                      />
                       <PriceSidebar/>
                       <TopRatedSidebar/>
                       <TagSidebar/>
