@@ -161,7 +161,7 @@ class Products extends Component {
 
 
   render() {
-      const { toggleQuickView, setCurrentProductId, showQVModal, currentProductId, categoryList } = this.props;
+      const { toggleQuickView, setCurrentProductId, showQVModal, currentProductId, categoryList, changeCategory } = this.props;
       const { products, totalPages, totalElements, numberOfElements, isGrid, term } = this.state;
       const { page, size } = this.state.params;
       const category = this.filterSubCategories(categoryList, term)[0];
@@ -174,6 +174,7 @@ class Products extends Component {
                   <div className="col-lg-3 order-2 order-lg-1">
                     <div className="sidebar-area">
                       <CategorySidebar
+                        changeCategory={changeCategory}
                         category={category}
                       />
                       <BrandSidebar
