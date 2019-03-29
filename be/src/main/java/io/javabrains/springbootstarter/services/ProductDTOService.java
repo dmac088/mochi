@@ -11,6 +11,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import io.javabrains.springbootstarter.domain.Brand;
+import io.javabrains.springbootstarter.domain.BrandAttribute;
 import io.javabrains.springbootstarter.domain.BrandAttributeRepository;
 import io.javabrains.springbootstarter.domain.ProductAttribute;
 import io.javabrains.springbootstarter.domain.ProductAttributePagingAndSortingRepository;
@@ -42,8 +44,9 @@ public class ProductDTOService implements IProductDTOService {
     @Override
 	@Transactional
 	public Page<ProductDTO> getProducts(String lcl, int page, int size, String sortBy) {
+    	Page<ProductDTO> pp;
 		Page<ProductAttribute> ppa = productAttributePagingAndSortingRepository.findByLclCd(lcl, PageRequest.of(page, size, Sort.by(sortBy).descending()));
-		Page<ProductDTO> pp = ppa.map(pa -> ProductDTOService.convertToProductDto(pa));
+		pp = ppa.map(pa -> ProductDTOService.convertToProductDto(pa));
 		return pp;
 	}	
     
@@ -54,14 +57,7 @@ public class ProductDTOService implements IProductDTOService {
 		ProductDTO p = ProductDTOService.convertToProductDto(pa);
 		return p;
 	}	
-    
-    @Override
- 	@Transactional
- 	public Page<ProductDTO> getProductsForCategory(String lcl, Long categoryId, int page, int size, String sortBy) {
- 		Page<ProductAttribute> ppa = productAttributePagingAndSortingRepository.findByLclCdAndProductCategoriesCategoryId(lcl, categoryId, PageRequest.of(page, size, Sort.by(sortBy).descending()));
- 		Page<ProductDTO> pp = ppa.map(pa -> ProductDTOService.convertToProductDto(pa));
- 		return pp;
- 	}	
+
     
     @Override
   	@Transactional
@@ -82,7 +78,7 @@ public class ProductDTOService implements IProductDTOService {
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
   		Page<ProductAttribute> ppa = productAttributePagingAndSortingRepository.findDistinctByLclCdAndProductCategoriesCategoryIdIn(lcl, categoryIds, PageRequest.of(page, size, Sort.by(sortBy).descending()));
- 		Page<ProductDTO> pp = ppa.map(pa -> ProductDTOService.convertToProductDto(pa));
+  		Page<ProductDTO> pp = ppa.map(pa -> ProductDTOService.convertToProductDto(pa));
   		return pp;
 	}
 
@@ -113,6 +109,8 @@ public class ProductDTOService implements IProductDTOService {
         productDto.setProductRrp(productAttribute.getProductRrp());
         productDto.setProductImage(productAttribute.getProductImage());
         productDto.setLclCd(productAttribute.getLclCd());
+        productDto.setBrandDesc(productAttribute.getProduct().getBrand().getBrandAttributes().stream()
+        .filter( ba -> ba.getLclCd().equals(productAttribute.getLclCd())).collect(Collectors.toList()).get(0).getbrandDesc());
         return productDto;
     }
 
