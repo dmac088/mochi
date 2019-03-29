@@ -14,6 +14,8 @@ public class ProductDTO {
 
 	private String productDesc;
 	
+	private String brandDesc;
+
 	private double productRrp;
 	
 	private String productImage;
@@ -96,6 +98,14 @@ public class ProductDTO {
 	public void setCategories(List<ProductCategoryDTO> categories) {
 		this.categories = categories;
 	}
+	
+	public String getBrandDesc() {
+		return brandDesc;
+	}
+
+	public void setBrandDesc(String brandDesc) {
+		this.brandDesc = brandDesc;
+	}
 
 	@Override
     public String toString() {
@@ -104,6 +114,7 @@ public class ProductDTO {
         		.append(", productUPC=").append(productUPC)
         		.append(", productCreateDt=").append(productCreateDt)
         		.append(", productDesc=").append(productDesc)
+        		.append(", brandDesc=").append(brandDesc)
         		.append(", productRrp=").append(productRrp)
                 .append(", ProductImage=").append(productImage)
                 .append(", PreviewFlag=").append(productPreview)
