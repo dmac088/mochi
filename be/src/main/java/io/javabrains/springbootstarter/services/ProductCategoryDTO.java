@@ -2,6 +2,8 @@ package io.javabrains.springbootstarter.services;
 
 import java.util.List;
 
+import io.javabrains.springbootstarter.domain.BrandAttribute;
+
 
 public class ProductCategoryDTO {
 	
@@ -28,7 +30,8 @@ public class ProductCategoryDTO {
 
 	private Long productCount;
 	
-	
+	private List<BrandAttribute> categoryBrands;
+
 	private List<ProductCategoryDTO> children;
 	
 	public Long getCategoryId() {
@@ -125,6 +128,15 @@ public class ProductCategoryDTO {
 
 	public void setProductCount(Long productCount) {
 		this.productCount = productCount;
+	}
+	
+
+	public List<BrandAttribute> getCategoryBrands() {
+		return categoryBrands;
+	}
+
+	public void setCategoryBrands(List<BrandAttribute> categoryBrands) {
+		this.categoryBrands = categoryBrands;
 	}
 
 	@Override
