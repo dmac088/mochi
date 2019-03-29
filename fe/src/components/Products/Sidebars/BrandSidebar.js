@@ -4,7 +4,6 @@ import { withRouter } from "react-router-dom";
 class BrandSidebar extends Component {
 
   renderBrandListItems = (brands, currentBrand, changeBrand) => {
-
     return brands.map(brand => {
       const isActive = (currentBrand === brand.brandDesc)
       return(
@@ -16,22 +15,30 @@ class BrandSidebar extends Component {
       )
     })
   }
+ 
+  renderAll = (brands, isActive, changeBrand) => {
+      if(brands.length <= 1) {return}
+      return (
+        <li>
+          <a className={(isActive) ? "active" : ""} onClick={changeBrand} id={"All"} href="#">
+            All
+          </a>
+        </li>
+      )
+  }
+
 
   render() {
     const { brands, changeBrand } = this.props;
     const currentBrand = this.props.match.params.brand;
     const isActive = (!currentBrand);
-
     if (!brands) { return null; }
+    if(brands.length <= 1) {return null; }
     return (
         <div className="sidebar mb-35">
           <h3 className="sidebar-title">Filter By Brand</h3>
           <ul className="product-categories">
-            <li>
-              <a className={(isActive) ? "active" : ""} onClick={changeBrand} id={"All"} href="#">
-                All
-              </a>
-            </li>
+            {this.renderAll(brands, isActive, changeBrand)}
             {this.renderBrandListItems(brands,  currentBrand, changeBrand)}
           </ul>
         </div>
