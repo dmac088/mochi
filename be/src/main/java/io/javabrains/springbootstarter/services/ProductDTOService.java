@@ -64,19 +64,6 @@ public class ProductDTOService implements IProductDTOService {
  	}	
     
     @Override
- 	@Transactional
- 	public Page<ProductDTO> getAllProductsForCategory(String lcl, Long categoryId, int page, int size, String sortBy) {
-    	//get a list of category ids for the current category and its child categories
-    	List<ProductCategory> pcl = new ArrayList<ProductCategory>();
-    	ProductCategory pc = productCategoryRepository.findByCategoryId(categoryId);
-    	recurseCategories(pcl, pc);
-    	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
- 		Page<ProductAttribute> ppa = productAttributePagingAndSortingRepository.findDistinctByLclCdAndProductCategoriesCategoryIdIn(lcl, categoryIds, PageRequest.of(page, size, Sort.by(sortBy).descending()));
- 		Page<ProductDTO> pp = ppa.map(pa -> ProductDTOService.convertToProductDto(pa));
- 		return pp;
- 	}	
-    
-    @Override
   	@Transactional
   	public List<ProductDTO> getPreviewProductsForCategory(String lcl, Long categoryId) {
      	List<ProductCategory> pcl = new ArrayList<ProductCategory>();
