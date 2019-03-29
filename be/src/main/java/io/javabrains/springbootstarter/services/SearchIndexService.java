@@ -46,6 +46,7 @@ public class SearchIndexService {
 				  .forEntity(ProductAttribute.class)
 				  .overridesForField("productDesc", lcl)
 				  .overridesForField("categoryDesc", lcl)
+				  .overridesForField("brandDesc", lcl)
 				  .get();
 		
 		org.apache.lucene.search.Query searchQuery = productAttributeQueryBuilder.keyword()
@@ -53,6 +54,7 @@ public class SearchIndexService {
 															"product.categories.parent.parent.productCategoryAttribute.categoryDesc",
 															"product.categories.parent.productCategoryAttribute.categoryDesc",
 															"product.categories.productCategoryAttribute.categoryDesc",
+															"product.brand.brandAttribute.brandDesc",
 															"productDesc"
 													)
 													.matching(searchTerm)
