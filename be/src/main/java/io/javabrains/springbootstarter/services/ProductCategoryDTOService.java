@@ -2,6 +2,8 @@ package io.javabrains.springbootstarter.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -97,7 +99,7 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
 	}
     
     private ProductCategoryDTO convertToProductCategoryDto(final ProductCategory pc, final String lcl) {
-    	ProductCategoryAttribute pca = productCategoryAttributeRepository.findByLclCdAndCategoryId(lcl, pc.getCategoryId()).get();	
+    	
         final ProductCategoryDTO pcDto = new ProductCategoryDTO();
         pcDto.setProductCount(new Long(pc.getProducts().size()));
         pcDto.setCategoryId(pc.getCategoryId());
@@ -117,9 +119,13 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
         pcDto.setCategoryPreview(pc.getPreviewFlag());
         pcDto.setCategoryMenu(pc.getMenuDisplayFlag());
         pcDto.setLandingDisplay(pc.getLandingDisplayFlag());
-        pcDto.setCategoryDesc(pca.getCategoryDesc());
-        pcDto.setLclCd(pca.getLclCd());
+        pcDto.setCategoryDesc(pc.getProductCategoryAttribute().stream()
+        		.filter( pa -> pa.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getCategoryDesc());
+        pcDto.setLclCd(lcl);
         pcDto.setChildCategoryCount(new Long(pc.getChildren().size()));
+        pcDto.setCategoryBrands(pc.getProducts().stream()
+        	.map(p -> p.getBrand().getBrandAttributes().stream()
+        			.filter(ba -> ba.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0)).collect(Collectors.toList()));
         return pcDto;
     }
 	
