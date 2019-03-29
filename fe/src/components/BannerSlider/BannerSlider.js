@@ -23,6 +23,7 @@ class BannerSlider extends Component {
       return (
           <Product
             key={product.productId}
+            product={product}
             {...this.props}
           />
         )
