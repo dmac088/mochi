@@ -28,9 +28,15 @@ class Layout extends Component {
   changeCategory = (e) => {
     e.preventDefault();
     const { search } = this.props.location;
-    const { locale, currency, term } = this.props.match.params;
-    console.log('/'+ locale + '/' + currency + '/category/' + e.currentTarget.id + search);
+    const { locale, currency } = this.props.match.params;
     this.props.history.push('/'+ locale + '/' + currency + '/category/' + e.currentTarget.id + search);
+  }
+
+  changeBrand = (e) => {
+    e.preventDefault();
+    const { search } = this.props.location;
+    const { locale, currency, term } = this.props.match.params;
+    this.props.history.push('/'+ locale + '/' + currency + '/category/' + term + '/brand/' + e.currentTarget.id + search);
   }
 
   render() {
@@ -38,6 +44,7 @@ class Layout extends Component {
      return React.cloneElement(child, {
        categoryList: this.props.categoryList,
        changeCategory: this.changeCategory,
+       changeBrand: this.changeBrand,
      });
    });
     return (
