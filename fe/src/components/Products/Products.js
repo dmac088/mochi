@@ -21,6 +21,7 @@ class Products extends Component {
     this.state = {
       "locale":   "en-GB",
       "term":     "",
+      "brand":    "",
       "products": [],
       "totalPages": 0,
       "totalElements": 0,
@@ -48,10 +49,11 @@ class Products extends Component {
   refresh = (isMounting) => {
     const { pathname, search } = this.props.location;
     const params = {...this.state.params};
-    const { locale, currency, term } = this.props.match.params;
+    const { locale, currency, term, brand } = this.props.match.params;
+
     const type = this.props.match.params[0];
     if(type==="category") {
-      this.updateForCategory(locale, pathname, term, Object.assign(params, qs.parse(search)), isMounting);
+      this.updateForCategory(locale, pathname, term, ((!brand) ? "" : brand), Object.assign(params, qs.parse(search)), isMounting);
     } else if (type==="search") {
         this.updateForSearch(locale, pathname, "All", term, Object.assign(params, qs.parse(search)), isMounting);
     }
@@ -90,21 +92,25 @@ class Products extends Component {
     });
   }
 
-  updateForCategory = (locale = "en-GB", pathname, term="All", params, isMounting = 0) => {
+  updateForCategory = (locale = "en-GB", pathname, term="All", brand="", params, isMounting = 0) => {
+
     if(!params) {return;}
     const { page, size, sort } = params;
     if(   locale === this.state.locale
       &&  term === this.state.term
+      &&  brand === this.state.brand
       &&  page === this.state.params.page
       &&  size === this.state.params.size
       &&  sort === this.state.params.sort
       &&  isMounting === 0
     ) {return;}
-    this.getProducts(locale, term, page, size, sort)
+
+    this.getProducts(locale, term, brand, page, size, sort)
     .then((responseJSON) => {
       this.setState({
         "locale":           locale,
         "term":             term,
+        "brand":            brand,
         "products":         responseJSON.content,
         "totalPages":       responseJSON.totalPages,
         "totalElements":    responseJSON.totalElements,
@@ -125,8 +131,8 @@ class Products extends Component {
 
 
 
-  getProducts= (locale = "en-GB", categoryDesc = "All", page, size, sort) =>
-    productApi.findByCategory(locale, categoryDesc, page, size, sort)
+  getProducts= (locale = "en-GB", categoryDesc = "All", brand, page, size, sort) =>
+    productApi.findByCategory(locale, categoryDesc, brand, page, size, sort)
     .then((response) => {
         return response.text();
     })
@@ -161,6 +167,7 @@ class Products extends Component {
 
 
   render() {
+
       const { toggleQuickView, setCurrentProductId, showQVModal, currentProductId, categoryList, changeCategory, changeBrand } = this.props;
       const { products, totalPages, totalElements, numberOfElements, isGrid, term } = this.state;
       const { page, size } = this.state.params;

@@ -75,6 +75,17 @@ public class ProductDTOService implements IProductDTOService {
   		Page<ProductDTO> pp = ppa.map(pa -> ProductDTOService.convertToProductDto(pa));
   		return pp;
 	}
+	
+	@Override
+	public Page<ProductDTO> getProductsForCategoryAndBrand(String lcl, String categoryDesc, String brandDesc, int page, int size, String sortBy) {
+		List<ProductCategory> pcl = new ArrayList<ProductCategory>();
+     	ProductCategory pc = productCategoryRepository.findByProductCategoryAttributeLclCdAndProductCategoryAttributeCategoryDesc(lcl, categoryDesc);
+     	recurseCategories(pcl, pc);
+     	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
+  		Page<ProductAttribute> ppa = productAttributePagingAndSortingRepository.findDistinctByLclCdAndProductCategoriesCategoryIdInAndProductBrandBrandAttributesBrandDesc(lcl, categoryIds, brandDesc,PageRequest.of(page, size, Sort.by(sortBy).descending()));
+  		Page<ProductDTO> pp = ppa.map(pa -> ProductDTOService.convertToProductDto(pa));
+  		return pp;
+	}
 
     
 	@Override

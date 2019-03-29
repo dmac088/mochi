@@ -14,4 +14,6 @@ public interface ProductAttributePagingAndSortingRepository extends PagingAndSor
 	
 	Page<ProductAttribute> findDistinctByLclCdAndProductCategoriesCategoryIdIn(String lcl, List<Long> categoryIds, Pageable pageable);
 	
+	Page<ProductAttribute> findDistinctByLclCdAndProductCategoriesCategoryIdInAndProductBrandBrandAttributesBrandDesc(String lcl, List<Long> categoryIds, String brandDesc, Pageable pageable);
+	
 }
