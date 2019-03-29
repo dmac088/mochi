@@ -294,6 +294,7 @@ class App extends Component {
         <Switch>
           <Route path={"/:locale/:currency"} exact={true}                                             render={(props)   => this.renderLayout(props, this.renderLanding)}        />
           <Route path={"/:locale/:currency/(category|search)/:term/product/:productId"} exact={true}  render={(props)   => this.renderLayoutBC(props, this.renderProduct)}      />
+          <Route path={"/:locale/:currency/(category|search)/:term/brand/:brand"}                     render={(props)   => this.renderLayoutBC(props, this.renderProducts)}     />
           <Route path={"/:locale/:currency/(category|search)/:term"}                                  render={(props)   => this.renderLayoutBC(props, this.renderProducts)}     />
           <Route path={"/:locale/:currency/(search)"}                                                 render={(props)   => this.renderLayoutBC(props, this.renderProducts)}     />
           <Route path={"/:locale/:currency/Checkout"} exact={true}                                    render={(props)   => this.renderLayoutBC(props, this.renderCheckout)}     />

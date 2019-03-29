@@ -23,17 +23,11 @@ export const findById = (locale, productId) => fetchApi(
 																				);
 
 
-export const findPreviewByCategory = (locale, categoryId) => fetchApi(
-																				endPoints.get + locale + '/categoryId/' + categoryId + '/preview',
-																				{},
-																				{},
-																				'GET',
-																				{}
-																				);
-
-export const findByCategory = (locale, categoryDesc, page = 0, size = 10, sortBy = 'productRrp') => fetchApi(
+export const findByCategory = (locale, category, brand, page = 0, size = 10, sortBy = 'productRrp') => fetchApi(
 																				endPoints.get + locale +
-																				'/categoryDesc/' + categoryDesc +
+																				'/categoryDesc/' + category +
+																				((brand) ? '/brand/' : '') +
+																				((brand) ? brand : '') +	
 																				'/page/' + page +
 																				'/size/' + size +
 																				'/sortBy/' + sortBy,
