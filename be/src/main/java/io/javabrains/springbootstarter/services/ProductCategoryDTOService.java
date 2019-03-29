@@ -8,16 +8,11 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import io.javabrains.springbootstarter.domain.ProductCategory;
-import io.javabrains.springbootstarter.domain.ProductCategoryAttribute;
-import io.javabrains.springbootstarter.domain.ProductCategoryAttributeRepository;
 import io.javabrains.springbootstarter.domain.ProductCategoryRepository;
 
 @Service
 @Transactional
 public class ProductCategoryDTOService implements IProductCategoryDTOService {
-
-    @Autowired
-    private ProductCategoryAttributeRepository productCategoryAttributeRepository;
     
     @Autowired
     private ProductCategoryRepository productCategoryRepository;
