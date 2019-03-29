@@ -3,14 +3,12 @@ import { withRouter } from "react-router-dom";
 
 class BrandSidebar extends Component {
 
-  renderBrandListItems = (brands, changeBrand) => {
-    const currentBrand = this.props.match.params.brand;
-    console.log(currentBrand);
+  renderBrandListItems = (brands, currentBrand, changeBrand) => {
 
     return brands.map(brand => {
       const isActive = (currentBrand === brand.brandDesc)
       return(
-        <li key={brand.brandId} >
+        <li key={brand.brandId}>
           <a className={(isActive) ? "active" : ""} onClick={changeBrand} id={brand.brandDesc} href="#">
             {brand.brandDesc}
           </a>
@@ -21,12 +19,20 @@ class BrandSidebar extends Component {
 
   render() {
     const { brands, changeBrand } = this.props;
+    const currentBrand = this.props.match.params.brand;
+    const isActive = (!currentBrand);
+
     if (!brands) { return null; }
     return (
         <div className="sidebar mb-35">
           <h3 className="sidebar-title">Filter By Brand</h3>
           <ul className="product-categories">
-            {this.renderBrandListItems(brands, changeBrand)}
+            <li>
+              <a className={(isActive) ? "active" : ""} onClick={changeBrand} id={"All"} href="#">
+                All
+              </a>
+            </li>
+            {this.renderBrandListItems(brands,  currentBrand, changeBrand)}
           </ul>
         </div>
       );

@@ -36,7 +36,12 @@ class Layout extends Component {
     e.preventDefault();
     const { search } = this.props.location;
     const { locale, currency, term } = this.props.match.params;
-    this.props.history.push('/'+ locale + '/' + currency + '/category/' + term + '/brand/' + e.currentTarget.id + search);
+    const value = e.currentTarget.id;
+    if(value === 'All') {
+      this.props.history.push('/'+ locale + '/' + currency + '/category/' + term + search);
+    } else {
+      this.props.history.push('/'+ locale + '/' + currency + '/category/' + term + '/brand/' + value + search);
+    }
   }
 
   render() {
