@@ -54,7 +54,7 @@ public class SearchIndexService {
 															"product.categories.parent.parent.productCategoryAttribute.categoryDesc",
 															"product.categories.parent.productCategoryAttribute.categoryDesc",
 															"product.categories.productCategoryAttribute.categoryDesc",
-															"product.brand.brandAttribute.brandDesc",
+															"product.brand.brandAttributes.brandDesc",
 															"productDesc"
 													)
 													.matching(searchTerm)
