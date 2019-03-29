@@ -118,12 +118,12 @@ public class Product {
 		this.featuredFlag = featuredFlag;
 	}
 
-//	public Brand getBrand() {
-//		return brand;
-//	}
-//
-//	public void setBrand(Brand brand) {
-//		this.brand = brand;
-//	}
+	public Brand getBrand() {
+		return brand;
+	}
+
+	public void setBrand(Brand brand) {
+		this.brand = brand;
+	}
 			
 }
