@@ -15,8 +15,6 @@ public interface IProductDTOService {
 	 
 	 Page<ProductDTO> getProductsForCategory(String lcl, Long categoryId, int page, int size, String sortBy);
 	 
-	 Page<ProductDTO> getAllProductsForCategory(String lcl, Long categoryId, int page, int size, String sortBy);
-	 
 	 Page<ProductDTO> getProductsForCategory(String lcl, String categoryDesc, int page, int size, String sortBy);
 	 
 	 List<ProductDTO> getPreviewProductsForCategory(String lcl, Long categoryId);
