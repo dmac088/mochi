@@ -1,12 +1,15 @@
 package io.javabrains.springbootstarter.services;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import io.javabrains.springbootstarter.domain.BrandAttribute;
 import io.javabrains.springbootstarter.domain.ProductCategory;
 import io.javabrains.springbootstarter.domain.ProductCategoryRepository;
 
@@ -100,14 +103,27 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
         pcDto.setCategoryId(pc.getCategoryId());
         pcDto.setCategoryCode(pc.getCategoryCode());
         pcDto.setCategoryLevel(pc.getCategoryLevel());
+        
+        //set the brand attributes of all products within the category, to the localized version
+        HashSet<BrandAttribute> hba = new HashSet<BrandAttribute>(
+						        		pc.getProducts().stream()
+						            	.map(p -> p.getBrand().getBrandAttributes().stream()
+						            			.filter(ba -> ba.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0)).collect(Collectors.toList()));
+        					
+       
         List<ProductCategoryDTO> pcDTOl = new ArrayList<ProductCategoryDTO>();
+        
         for(ProductCategory pc1 : pc.getChildren()) {
         	ProductCategoryDTO pcchild = convertToProductCategoryDto(pc1, lcl);
+        	hba.addAll(pcchild.getCategoryBrands());
         	pcDto.setProductCount(pcDto.getProductCount() + pc.getProducts().size() + pc1.getProducts().size());
         	pcchild.setProductCount(new Long(pc1.getProducts().size()));
         	pcDTOl.add(pcchild);
         }
         pcDto.setChildren(pcDTOl);
+        pcDto.setCategoryBrands(hba);
+  
+        //set the parentId
         if(!(pc.getParent() == null)) {
         	pcDto.setParentId(pc.getParent().getCategoryId());
         }
@@ -118,9 +134,7 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
         		.filter( pa -> pa.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getCategoryDesc());
         pcDto.setLclCd(lcl);
         pcDto.setChildCategoryCount(new Long(pc.getChildren().size()));
-        pcDto.setCategoryBrands(pc.getProducts().stream()
-        	.map(p -> p.getBrand().getBrandAttributes().stream()
-        			.filter(ba -> ba.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0)).collect(Collectors.toList()));
+        
         return pcDto;
     }
 	
