@@ -159,10 +159,21 @@ class Products extends Component {
     })
   }
 
-  filterSubCategories = (categoryList, categoryDesc) => {
+  filterCategories = (categoryList, categoryDesc) => {
     return categoryList.filter(function(value, index, arr){
       return value.categoryDesc === categoryDesc;
     });
+  }
+
+  renderBrandSlider = (category, changeBrand) => {
+    if(!category) { return; }
+    return (
+      <BrandSidebar
+        changeBrand={changeBrand}
+        brands={category.categoryBrands}
+        match={this.props.match}
+      />
+    )
   }
 
 
@@ -171,8 +182,8 @@ class Products extends Component {
       const { toggleQuickView, setCurrentProductId, showQVModal, currentProductId, categoryList, changeCategory, changeBrand } = this.props;
       const { products, totalPages, totalElements, numberOfElements, isGrid, term } = this.state;
       const { page, size } = this.state.params;
-      const category = this.filterSubCategories(categoryList, term)[0];
-      if(!category) { return null; }
+      const category = this.filterCategories(categoryList, term)[0];
+
 				return(
           <React.Fragment>
             <div className="shop-page-container mb-50">
@@ -184,10 +195,7 @@ class Products extends Component {
                         changeCategory={changeCategory}
                         category={category}
                       />
-                      <BrandSidebar
-                        changeBrand={changeBrand}
-                        brands={category.categoryBrands}
-                      />
+                    {this.renderBrandSlider(category,changeBrand)}
                       <PriceSidebar/>
                       <TopRatedSidebar/>
                       <TagSidebar/>
