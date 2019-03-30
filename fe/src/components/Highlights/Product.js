@@ -20,13 +20,10 @@ class Product extends Component {
   componentDidMount() {
     const { product } = this.props;
     this.setState({
-      "isLoading": true,
+    	"product": product,
+      "currentImage": product.productImage,
+      "isLoading": false,
     });
-    setTimeout(() => this.setState({
-                      "product": product,
-                      "currentImage": product.productImage,
-                      "isLoading": false,
-                    }), 1000);
   }
 
   addToCart = (e) => {
