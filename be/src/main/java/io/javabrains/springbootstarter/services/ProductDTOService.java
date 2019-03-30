@@ -88,13 +88,6 @@ public class ProductDTOService implements IProductDTOService {
 	}
 
     
-	@Override
-	public List<ProductDTO> getFeaturedProducts(String lcl) {
-  		Collection<ProductAttribute> ppa = productAttributeRepository.findDistinctByLclCdAndProductFeaturedFlag(lcl, new Long(1));
-  		List<ProductDTO> pp = ppa.stream().map(pa -> ProductDTOService.convertToProductDto(pa)).collect(Collectors.toList());
-  		return pp;
-	}
-    
     public void recurseCategories(List<ProductCategory> pcl, ProductCategory pc) {
     	pcl.add(pc);
     	for(ProductCategory child : pc.getChildren()) {
