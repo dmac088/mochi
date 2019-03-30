@@ -11,9 +11,9 @@ class Product extends Component {
 
   routeSingleProduct = (e) => {
     e.preventDefault();
-    const { categoryDesc } = this.props;
+    const categoryDesc = this.props.category.categoryDesc;
     const { locale, currency } = this.props.match.params;
-    this.props.history.push('/' + locale + '/' + currency + '/category/' + categoryDesc + '/product/' + e.currentTarget.id);
+    this.props.history.push('/' + locale + '/' + currency + '/category/' + ((!categoryDesc) ? 'ALL' : categoryDesc) + '/product/' + e.currentTarget.id);
   }
 
   render() {
@@ -22,7 +22,7 @@ class Product extends Component {
     return (
         <div key={product.productId} className="gf-product banner-slider-product">
           <div className="image">
-            <a onClick={this.routeSingleProduct } href="#">
+            <a id={product.productId} onClick={this.routeSingleProduct} href="#">
               <span className="onsale">Sale!</span>
               <img src={product.productImage} className="img-fluid" alt="" />
             </a>
