@@ -18,8 +18,6 @@ public interface IProductDTOService {
 	 Page<ProductDTO> getProductsForCategoryAndBrand(String lcl, String categoryDesc, String brandDesc, int page, int size, String sortBy);
 	 
 	 List<ProductDTO> getPreviewProductsForCategory(String lcl, Long categoryId);
-	
-	 List<ProductDTO> getFeaturedProducts(String lcl);
 	 
 	 public void recurseCategories(List<ProductCategory> pcl, ProductCategory pc);
 	 
