@@ -1,9 +1,8 @@
 package io.javabrains.springbootstarter.services;
 
-import java.util.HashSet;
+import java.util.Set;
 import java.util.List;
-
-import io.javabrains.springbootstarter.domain.BrandAttribute;
+import java.util.Objects;
 
 
 public class ProductCategoryDTO {
@@ -31,7 +30,7 @@ public class ProductCategoryDTO {
 	
 	private Long productCount;
 	
-	private HashSet<BrandAttribute> categoryBrands;
+	private Set<BrandDTO> categoryBrands;
 
 	private List<ProductCategoryDTO> children;
 	
@@ -124,12 +123,12 @@ public class ProductCategoryDTO {
 	}
 	
 
-	public HashSet<BrandAttribute> getCategoryBrands() {
+	public Set<BrandDTO> getCategoryBrands() {
 		return categoryBrands;
 	}
 
-	public void setCategoryBrands(HashSet<BrandAttribute> hashSet) {
-		this.categoryBrands = hashSet;
+	public void setCategoryBrands(Set<BrandDTO> set) {
+		this.categoryBrands = set;
 	}
 	
 	public Long getProductCount() {
@@ -140,6 +139,18 @@ public class ProductCategoryDTO {
 		this.productCount = productCount;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		 if (this == o) return true;
+	     if (o == null || getClass() != o.getClass()) return false;
+	     ProductCategoryDTO pcDto = (ProductCategoryDTO) o;
+	     return this.categoryId == pcDto.categoryId;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(categoryId);
+	}
 
 	@Override
     public String toString() {

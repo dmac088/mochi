@@ -1,5 +1,7 @@
 package io.javabrains.springbootstarter.services;
 
+import java.util.Objects;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -35,7 +37,7 @@ public class CustomerDTO {
     private String password;
     
 	@NotNull
-    private String CustomerID;
+    private String customerId;
     
     //@NotNull
     //@Size(min = 1)
@@ -45,11 +47,11 @@ public class CustomerDTO {
     
     
     public String getCustomerID() {
-		return CustomerID;
+		return customerId;
 	}
 
-	public void setCustomerID(String customerID) {
-		CustomerID = customerID;
+	public void setCustomerID(String customerId) {
+		this.customerId = customerId;
 	}
 	
     public String getGivenName() {
@@ -101,6 +103,19 @@ public class CustomerDTO {
 		this.enabled = enabled;
 	}
     
+	@Override
+	public boolean equals(Object o) {
+		 if (this == o) return true;
+	     if (o == null || getClass() != o.getClass()) return false;
+	     CustomerDTO pcDto = (CustomerDTO) o;
+	     return this.customerId == pcDto.customerId;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(customerId);
+	}
+	
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();

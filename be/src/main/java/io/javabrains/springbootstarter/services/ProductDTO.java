@@ -2,6 +2,7 @@ package io.javabrains.springbootstarter.services;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 
 public class ProductDTO {
@@ -105,6 +106,19 @@ public class ProductDTO {
 
 	public void setBrandDesc(String brandDesc) {
 		this.brandDesc = brandDesc;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		 if (this == o) return true;
+	     if (o == null || getClass() != o.getClass()) return false;
+	     ProductDTO pcDto = (ProductDTO) o;
+	     return this.productId == pcDto.productId;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(productId);
 	}
 
 	@Override

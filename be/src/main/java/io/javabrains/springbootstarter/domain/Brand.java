@@ -32,7 +32,10 @@ public class Brand {
 	@IndexedEmbedded
 	private List<BrandAttribute> brandAttributes;
 	
-
+	public Long getBrandId() {
+		return this.brandId;
+	}
+	
 	public List<BrandAttribute> getBrandAttributes() {
 		return brandAttributes;
 	}

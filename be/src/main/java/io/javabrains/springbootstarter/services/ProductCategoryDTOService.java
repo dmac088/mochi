@@ -1,8 +1,6 @@
 package io.javabrains.springbootstarter.services;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashSet;
+import java.util.Set;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,7 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import io.javabrains.springbootstarter.domain.BrandAttribute;
+import io.javabrains.springbootstarter.domain.Brand;
 import io.javabrains.springbootstarter.domain.ProductCategory;
 import io.javabrains.springbootstarter.domain.ProductCategoryRepository;
 import io.javabrains.springbootstarter.domain.ProductRepository;
@@ -81,6 +79,17 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
      	return	convertToProductCategoryDto(pc, lcl);
 	}
     
+    private BrandDTO convertToBrandDto(final Brand b, final String lcl) {
+    	final BrandDTO bDto = new BrandDTO();
+    	bDto.setBrandId(b.getBrandId());
+    	bDto.setBrandDesc(
+	    	b.getBrandAttributes().stream()
+			.filter(ba -> ba.getLclCd().equals(lcl)
+			).collect(Collectors.toList()).get(0).getbrandDesc());
+    	
+    	return bDto;
+    }
+    
     private ProductCategoryDTO convertToProductCategoryDto(final ProductCategory pc, final String lcl) {
     	
         final ProductCategoryDTO pcDto = new ProductCategoryDTO();
@@ -92,14 +101,8 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
         pcDto.setProductCount(productRepository.countByCategoriesCategoryCode(pc.getCategoryCode()));
         
         //set the brand attributes of all products within the category, to the localized version
-        HashSet<BrandAttribute> hba = 
-        		new HashSet<BrandAttribute>(
-				pc.getProducts().stream().map(p -> 
-				p.getBrand().getBrandAttributes().stream()
-				.filter(ba -> ba.getLclCd().equals(lcl)
-				).collect(Collectors.toList()).get(0)).collect(Collectors.toList()));
+        Set<BrandDTO> hba = pc.getProducts().stream().map(p -> this.convertToBrandDto(p.getBrand(), lcl)).collect(Collectors.toSet());
         					
-      
         
         //create the child objects and add to children collection
         List<ProductCategoryDTO> pcDTOl =
