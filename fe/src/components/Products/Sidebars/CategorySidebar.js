@@ -9,7 +9,7 @@ class CategorySidebar extends Component {
       return(
         <li key={child.categoryId} >
           <a onClick={changeCategory} id={child.categoryDesc} href="#">
-            {child.categoryDesc}
+            {child.categoryDesc} <span className="badge badge-pill badge-secondary">{child.productCount}</span>
           </a>
         </li>
       )
