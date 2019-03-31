@@ -27,7 +27,12 @@ class Product extends Component {
               <img src={product.productImage} className="img-fluid" alt="" />
             </a>
             <div className="product-hover-icons">
-              <a id={product.productId} onClick={setCurrentProductId} href="#" data-tooltip="Quick view" data-toggle="modal" data-target="#quick-view-modal-container">
+              <a  id={product.productId}
+                  onClick={setCurrentProductId}
+                  href="#"
+                  data-tooltip="Quick view"
+                  data-toggle="modal"
+                  data-target="#quick-view-modal-container">
                 <span id={product.productId} className="icon_search" />
               </a>
             </div>
