@@ -92,7 +92,7 @@ class CategoryMenu extends Component {
     e.preventDefault();
     const { url } = this.props.match;
     const { locale, currency } = this.props.match.params;
-    this.props.history.push('/'+ locale + '/'+ currency + '/category/' + e.currentTarget.text);
+    this.props.history.push('/'+ locale + '/'+ currency + '/category/' + e.currentTarget.id);
   }
 
   setContainer = (c) => {
@@ -189,7 +189,7 @@ class CategoryMenuItem extends Component {
   }
 
   render() {
-    const { categoryLevel, categoryId, categoryCode, categoryDesc, children } = this.props.category;
+    const { categoryLevel, categoryId, categoryCode, categoryDesc, productCount, children } = this.props.category;
     const { itemCounter, isRootList, isMobile, changeCategory, showMore } = this.props;
     const { hasChildren, expand } = this.state;
 
@@ -210,7 +210,7 @@ class CategoryMenuItem extends Component {
             : {"--my-left-indent": this.getIndent(categoryLevel,10)}
           }
           >
-          <a  id={categoryCode}
+          <a  id={categoryDesc}
               onClick={changeCategory}
               className={"megamenu-head"}
               style={(isMobile)
@@ -218,7 +218,7 @@ class CategoryMenuItem extends Component {
                       : {"":""}}
               href="shop-left-sidebar.html">
             {categoryDesc}
-
+            <span class="badge badge-light">{productCount}</span>
             {(hasChildren && isMobile)
               ? <span>
                   <i onClick={this.expandCat}
