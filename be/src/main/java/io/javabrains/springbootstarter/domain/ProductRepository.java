@@ -16,5 +16,7 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 	
 	Long countByCategoriesCategoryCode(String categoryCode);
 	
+	Long countByCategoriesCategoryCodeAndBrandBrandCode(String categoryCode, String brandCode);
+	
 	Optional<Product> findByProductId(Long id);
 }
