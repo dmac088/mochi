@@ -13,6 +13,8 @@ import ReactTransitionGroup from 'react-addons-transition-group';
 class Landing extends Component {
 
   render() {
+    const { locale } = this.props.match.params;
+    const { setCurrentProductId, currentProductId, showQVModal, toggleQuickView, categoryList, previewCategories } = this.props;
     return(
       <React.Fragment>
         <HeroSlider
@@ -24,12 +26,18 @@ class Landing extends Component {
         />
         <Banner />
         <PreviewCategoryContainer
+          locale={locale}
+          previewCategories={previewCategories}
+          setCurrentProductId={setCurrentProductId}
           {...this.props}
         />
         <BestSeller />
         <BlogPosts />
         <BrandSlider />
         <QuickViewProduct
+          productId={currentProductId}
+          isShowing={showQVModal}
+          toggleQuickView={toggleQuickView}
           {...this.props}
         />
       </React.Fragment>
