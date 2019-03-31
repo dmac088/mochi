@@ -9,13 +9,13 @@ class BrandSidebar extends Component {
       return(
         <li key={brand.brandId}>
           <a className={(isActive) ? "active" : ""} onClick={changeBrand} id={brand.brandDesc} href="#">
-            {brand.brandDesc}
+            {brand.brandDesc} <span className="badge badge-pill badge-secondary">{brand.productCount}</span>
           </a>
         </li>
       )
     })
   }
- 
+
   renderAll = (brands, isActive, changeBrand) => {
       if(brands.length <= 1) {return}
       return (

@@ -121,7 +121,6 @@ public class ProductCategoryDTO {
 	public void setChildCategoryCount(Long childCategoryCount) {
 		this.childCategoryCount = childCategoryCount;
 	}
-	
 
 	public Set<BrandDTO> getCategoryBrands() {
 		return categoryBrands;

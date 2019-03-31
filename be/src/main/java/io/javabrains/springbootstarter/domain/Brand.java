@@ -24,6 +24,9 @@ public class Brand {
 	@Column(name="bnd_id")
 	private Long brandId;
 	
+	@Column(name="bnd_cd")
+	private String brandCode;
+
 	@OneToMany(mappedBy="brand", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonManagedReference
 	private List<Product> products;
@@ -34,6 +37,14 @@ public class Brand {
 	
 	public Long getBrandId() {
 		return this.brandId;
+	}
+
+	public String getBrandCode() {
+		return brandCode;
+	}
+
+	public void setBrandCode(String brandCode) {
+		this.brandCode = brandCode;
 	}
 	
 	public List<BrandAttribute> getBrandAttributes() {
