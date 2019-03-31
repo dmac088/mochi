@@ -1,6 +1,7 @@
 package io.javabrains.springbootstarter.services;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,58 +34,38 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
     @Override
 	@Transactional
 	public List<ProductCategoryDTO> getProductCategories(final String lcl) {
-    	
     	List<ProductCategory> lpc = productCategoryRepository.findAll();
-    	
-		final List<ProductCategoryDTO> lpcDTO = new ArrayList<ProductCategoryDTO>();
-		
-		for(ProductCategory pc : lpc) {
-        	lpcDTO.add(convertToProductCategoryDto(pc, lcl));
-        }
-		
-		return lpcDTO;
+    	return lpc.stream().map(pc -> convertToProductCategoryDto(pc, lcl))
+    			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
+    			.collect(Collectors.toList());
+    			
 	}	
     
     @Override
  	@Transactional
  	public List<ProductCategoryDTO> getProductCategoryParent(final String lcl, final Long parentCategoryId) {
-    	
     	List<ProductCategory> lpc = productCategoryRepository.findByParentCategoryId(parentCategoryId);
-    	
-		final List<ProductCategoryDTO> lpcDTO = new ArrayList<ProductCategoryDTO>();
-		
-		for(ProductCategory pc : lpc) {
-        	lpcDTO.add(convertToProductCategoryDto(pc, lcl));
-        }
-		return lpcDTO;
+    	return lpc.stream().map(pc -> convertToProductCategoryDto(pc, lcl))
+    			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
+    			.collect(Collectors.toList());
  	}
     
     @Override
   	@Transactional
   	public List<ProductCategoryDTO> getProductCategoriesForLevel(final String lcl, final Long level) {
-     	
      	List<ProductCategory> lpc = productCategoryRepository.findByCategoryLevel(level);
-     	
- 		final List<ProductCategoryDTO> lpcDTO = new ArrayList<ProductCategoryDTO>();
- 		
- 		for(ProductCategory pc : lpc) {
-         	lpcDTO.add(convertToProductCategoryDto(pc, lcl));
-         }
- 		return lpcDTO;
+     	return lpc.stream().map(pc -> convertToProductCategoryDto(pc, lcl))
+    			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
+    			.collect(Collectors.toList());
   	}	
     
     @Override
   	@Transactional
   	public List<ProductCategoryDTO> getPreviewProductCategories(final String lcl, final Long previewFlag) {
-     	
-     	List<ProductCategory> lpc = productCategoryRepository.findByPreviewFlag(previewFlag);
-     	
- 		final List<ProductCategoryDTO> lpcDTO = new ArrayList<ProductCategoryDTO>();
- 		
- 		for(ProductCategory pc : lpc) {
-         	lpcDTO.add(convertToProductCategoryDto(pc, lcl));
-         }
- 		return lpcDTO;
+        List<ProductCategory> lpc = productCategoryRepository.findByPreviewFlag(previewFlag);
+        return lpc.stream().map(pc -> convertToProductCategoryDto(pc, lcl))
+    			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
+    			.collect(Collectors.toList());
   	}
     
     @Override
@@ -131,11 +112,7 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
         pcDto.setChildren(pcDTOl);
         pcDto.setCategoryBrands(hba);
         //all the children now have their product count set
-      
-        //set the product count to include the countt of all children
-//        Long productCount = productRepository.countByCategoriesCategoryCode(pc.getCategoryCode())
-//        + pc.getChildren().stream().mapToLong(p -> productRepository.countByCategoriesCategoryCode(p.getCategoryCode())).sum(); 
-//        pcDto.setProductCount(productCount);			 
+     			 
         		
         //set the parentId
         if(!(pc.getParent() == null)) {
