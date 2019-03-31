@@ -79,7 +79,7 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
      	return	convertToProductCategoryDto(pc, lcl);
 	}
     
-    private BrandDTO convertToBrandDto(final Brand b, String categoryCode, final String lcl) {
+    private BrandDTO convertToBrandDto(final Brand b, final String lcl) {
     	final BrandDTO bDto = new BrandDTO();
     	bDto.setBrandId(b.getBrandId());
     	bDto.setBrandCode(b.getBrandCode());
@@ -87,9 +87,6 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
 	    	b.getBrandAttributes().stream()
 			.filter(ba -> ba.getLclCd().equals(lcl)
 			).collect(Collectors.toList()).get(0).getbrandDesc());
-    	bDto.setProductCount(
-    			productRepository.countByCategoriesCategoryCodeAndBrandBrandCode(categoryCode, b.getBrandCode())
-    	);
     	return bDto;
     }
     
@@ -104,7 +101,7 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
         pcDto.setProductCount(productRepository.countByCategoriesCategoryCode(pc.getCategoryCode()));
         
         //set the brand attributes of all products within the category, to the localized version
-        Set<BrandDTO> hba = pc.getProducts().stream().map(p -> this.convertToBrandDto(p.getBrand(), pc.getCategoryCode(), lcl)).collect(Collectors.toSet());
+        Set<BrandDTO> hba = pc.getProducts().stream().map(p -> this.convertToBrandDto(p.getBrand(), lcl)).collect(Collectors.toSet());
         					
         
         //create the child objects and add to children collection
