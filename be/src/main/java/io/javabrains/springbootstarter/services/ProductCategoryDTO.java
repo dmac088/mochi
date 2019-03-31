@@ -28,7 +28,7 @@ public class ProductCategoryDTO {
 	private Long parentId;	
 
 	private Long childCategoryCount;
-
+	
 	private Long productCount;
 	
 	private HashSet<BrandAttribute> categoryBrands;
@@ -123,14 +123,6 @@ public class ProductCategoryDTO {
 		this.childCategoryCount = childCategoryCount;
 	}
 	
-	public Long getProductCount() {
-		return productCount;
-	}
-
-	public void setProductCount(Long productCount) {
-		this.productCount = productCount;
-	}
-	
 
 	public HashSet<BrandAttribute> getCategoryBrands() {
 		return categoryBrands;
@@ -139,6 +131,15 @@ public class ProductCategoryDTO {
 	public void setCategoryBrands(HashSet<BrandAttribute> hashSet) {
 		this.categoryBrands = hashSet;
 	}
+	
+	public Long getProductCount() {
+		return productCount;
+	}
+
+	public void setProductCount(Long productCount) {
+		this.productCount = productCount;
+	}
+
 
 	@Override
     public String toString() {

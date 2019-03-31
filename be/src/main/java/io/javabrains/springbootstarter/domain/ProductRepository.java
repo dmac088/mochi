@@ -14,5 +14,7 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 	
 	List<Product> findByPreviewFlag(Long previewFlag);
 	
+	Long countByCategoriesCategoryCode(String categoryCode);
+	
 	Optional<Product> findByProductId(Long id);
 }
