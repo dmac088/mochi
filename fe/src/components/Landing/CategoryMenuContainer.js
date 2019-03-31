@@ -217,8 +217,7 @@ class CategoryMenuItem extends Component {
                      ? {"--my-cat-indent": this.getIndent(categoryLevel)}
                       : {"":""}}
               href="shop-left-sidebar.html">
-            {categoryDesc}
-            <span class="badge badge-light">{productCount}</span>
+            {categoryDesc} <span class="badge badge-secondary">{productCount}</span>
             {(hasChildren && isMobile)
               ? <span>
                   <i onClick={this.expandCat}
