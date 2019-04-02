@@ -1,6 +1,5 @@
 package io.javabrains.springbootstarter.services;
 
-import java.util.Set;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -87,9 +86,6 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
 	    	b.getBrandAttributes().stream()
 			.filter(ba -> ba.getLclCd().equals(lcl)
 			).collect(Collectors.toList()).get(0).getbrandDesc());
-    	bDto.setProductCount(
-    			productRepository.countByCategoriesCategoryCodeAndBrandBrandCode(categoryCode, b.getBrandCode())
-    	);
     	return bDto;
     }
     
@@ -104,22 +100,20 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
         pcDto.setProductCount(productRepository.countByCategoriesCategoryCode(pc.getCategoryCode()));
         
         //set the brand attributes of all products within the category, to the localized version
-        Set<BrandDTO> hba = pc.getProducts().stream().map(p -> this.convertToBrandDto(p.getBrand(), pc.getCategoryCode(), lcl)).collect(Collectors.toSet());
-        					
+        pcDto.setCategoryBrands(pc.getProducts().stream().map(p -> this.convertToBrandDto(p.getBrand(), pc.getCategoryCode(), lcl)).collect(Collectors.toSet()));
+       		
         
         //create the child objects and add to children collection
         List<ProductCategoryDTO> pcDTOl =
         pc.getChildren().stream().map(pc1 -> {
         	ProductCategoryDTO pcchild = convertToProductCategoryDto(pc1, lcl);
-        	pcDto.setProductCount(pcDto.getProductCount() + pcchild.getProductCount());
-        	hba.addAll(pcchild.getCategoryBrands());
+        	pcDto.getCategoryBrands().addAll(pcchild.getCategoryBrands());
         	return pcchild;
         }).collect(Collectors.toList());
         pcDto.setChildren(pcDTOl);
-        pcDto.setCategoryBrands(hba);
-        //all the children now have their product count set
-     			 
-        		
+        
+        pcDto.getCategoryBrands().forEach(b -> b.setProductCount(productRepository.countByCategoriesCategoryCodeAndBrandBrandCode(pcDto.getCategoryCode(), b.getBrandCode())));
+        
         //set the parentId
         if(!(pc.getParent() == null)) {
         	pcDto.setParentId(pc.getParent().getCategoryId());
