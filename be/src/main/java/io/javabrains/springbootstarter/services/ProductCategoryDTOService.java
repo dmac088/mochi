@@ -1,6 +1,7 @@
 package io.javabrains.springbootstarter.services;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -100,19 +101,20 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
         pcDto.setProductCount(productRepository.countByCategoriesCategoryCode(pc.getCategoryCode()));
         
         //set the brand attributes of all products within the category, to the localized version
-        pcDto.setCategoryBrands(pc.getProducts().stream().map(p -> this.convertToBrandDto(p.getBrand(), pc.getCategoryCode(), lcl)).collect(Collectors.toSet()));
+        Set<BrandDTO> catBrands = pc.getProducts().stream().map(p -> this.convertToBrandDto(p.getBrand(), pc.getCategoryCode(), lcl)).collect(Collectors.toSet());
        		
         
         //create the child objects and add to children collection
         List<ProductCategoryDTO> pcDTOl =
         pc.getChildren().stream().map(pc1 -> {
         	ProductCategoryDTO pcchild = convertToProductCategoryDto(pc1, lcl);
-        	pcDto.getCategoryBrands().addAll(pcchild.getCategoryBrands());
+        	catBrands.addAll(pcchild.getCategoryBrands());
         	return pcchild;
         }).collect(Collectors.toList());
         pcDto.setChildren(pcDTOl);
         
-        pcDto.getCategoryBrands().forEach(b -> b.setProductCount(productRepository.countByCategoriesCategoryCodeAndBrandBrandCode(pcDto.getCategoryCode(), b.getBrandCode())));
+        catBrands.forEach(b -> b.setProductCount(productRepository.countByCategoriesCategoryCodeAndBrandBrandCode(pcDto.getCategoryCode(), b.getBrandCode())));
+        pcDto.setCategoryBrands(catBrands);
         
         //set the parentId
         if(!(pc.getParent() == null)) {
