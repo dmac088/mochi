@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import * as cartService from '../../services/cart';
+import * as cartSelector from '../../services/cart/selectors';
 
 class Product extends Component {
 
@@ -7,6 +9,15 @@ class Product extends Component {
     const { locale, currency, term } = this.props.match.params;
     const type = this.props.match.params[0];
     this.props.history.push('/' + locale + '/' + currency + '/' + type + '/' + term + '/product/' + e.currentTarget.id);
+  }
+
+  addToCart = (e) => {
+    e.preventDefault();
+    const { product, quantity } = this.state;
+    product.quantity = quantity;
+    cartService.addToCart(cartSelector.get(),
+                          product,
+                          ()=>{console.log("addToCart complete!")});
   }
 
 
@@ -42,7 +53,7 @@ class Product extends Component {
             </div>
             <p className="product-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere esse tempora magnam dolorem tenetur eos eligendi non temporibus qui enim. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam, magni.</p>
             <div className="list-product-icons">
-              <a href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
+              <a onClick={this.addToCart} href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
               <a href="#" data-tooltip="Add to wishlist"> <span className="icon_heart_alt" /> </a>
               <a href="#" data-tooltip="Compare"> <span className="arrow_left-right_alt" /> </a>
             </div>
