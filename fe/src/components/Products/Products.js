@@ -21,6 +21,7 @@ class Products extends Component {
     this.state = {
       "locale":   "en-GB",
       "currency": "HKD",
+      "category": "",
       "term":     "",
       "brand":    "",
       "products": [],
@@ -51,10 +52,11 @@ class Products extends Component {
     const { pathname, search } = this.props.location;
     const params = {...this.state.params};
     const { locale, currency, term, brand } = this.props.match.params;
+
     const type = this.props.match.params[0];
 
     if(type==="category") {
-      this.update(locale, currency, pathname, term, ((!brand) ? "" : brand), Object.assign(params, qs.parse(search)), isMounting, this.getProducts);
+      this.update(locale, currency, pathname, term, brand, Object.assign(params, qs.parse(search)), isMounting, this.getProducts);
     }
     if (type==="search") {
       this.update(locale, currency, pathname, "All", term, Object.assign(params, qs.parse(search)), isMounting, pageService.findAll);
@@ -67,6 +69,7 @@ class Products extends Component {
     const { page, size, sort } = params;
     if(   locale === this.state.locale
       &&  currency === this.state.currency
+      &&  category === this.state.category
       &&  term === this.state.term
       &&  page === this.state.params.page
       &&  size === this.state.params.size
@@ -78,6 +81,7 @@ class Products extends Component {
       this.setState({
         "locale":           locale,
         "currency":         currency,
+        "category":         category,
         "term":             term,
         "products":         responseJSON.content,
         "totalPages":       responseJSON.totalPages,
@@ -96,8 +100,8 @@ class Products extends Component {
     });
   }
 
-  getProducts = (locale, currency, categoryDesc, brand, page, size, sort) =>
-    productApi.findByCategory(locale, currency, categoryDesc, brand, page, size, sort)
+  getProducts = (locale, currency, category, brand, page, size, sort) =>
+    productApi.findByCategory(locale, currency, category, brand, page, size, sort)
     .then((response) => {
         return response.text();
     })
@@ -142,9 +146,9 @@ class Products extends Component {
   render() {
 
       const { toggleQuickView, setCurrentProductId, showQVModal, currentProductId, categoryList, changeCategory, changeBrand } = this.props;
-      const { products, totalPages, totalElements, numberOfElements, isGrid, term } = this.state;
+      const { products, totalPages, totalElements, numberOfElements, isGrid, term, category } = this.state;
       const { page, size } = this.state.params;
-      const category = this.filterCategories(categoryList, term)[0];
+      const cat = this.filterCategories(categoryList, category)[0];
 
 				return(
           <React.Fragment>
@@ -155,9 +159,9 @@ class Products extends Component {
                     <div className="sidebar-area">
                       <CategorySidebar
                         changeCategory={changeCategory}
-                        category={category}
+                        category={cat}
                       />
-                    {this.renderBrandSlider(category,changeBrand)}
+                    {this.renderBrandSlider(cat,changeBrand)}
                       <PriceSidebar/>
                       <TopRatedSidebar/>
                       <TagSidebar/>
