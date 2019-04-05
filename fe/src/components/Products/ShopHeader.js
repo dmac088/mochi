@@ -4,7 +4,6 @@ import qs from 'query-string';
 class ShopHeader extends Component {
 
   changeSort = (e) => {
-    console.log(e.target.value);
     //get the query parameters
     const { location } = this.props.history;
     console.log(location);
