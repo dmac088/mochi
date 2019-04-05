@@ -9,8 +9,9 @@ const endPoints = {
 	sort: '/SortBy/',
 };
 
-export const findAll = (locale, category, searchTerm, page, size, sort) => fetchApi(
+export const findAll = (locale, currency, category, searchTerm, page, size, sort) => fetchApi(
 																																	endPoints.get + locale
+																																+ '/' + currency 
 																																+ endPoints.category + category
 																																+ endPoints.search + searchTerm
 																																+ endPoints.page + page
