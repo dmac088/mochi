@@ -77,7 +77,7 @@ public class ProductDTOService implements IProductDTOService {
 	}
 	
 	@Override
-	public Page<ProductDTO> getProductsForCategoryAndBrand(String lcl, String categoryDesc, String currency, String brandDesc, int page, int size, String sortBy) {
+	public Page<ProductDTO> getProductsForCategoryAndBrand(String lcl, String currency, String categoryDesc, String brandDesc, int page, int size, String sortBy) {
 		List<ProductCategory> pcl = new ArrayList<ProductCategory>();
      	ProductCategory pc = productCategoryRepository.findByProductCategoryAttributeLclCdAndProductCategoryAttributeCategoryDesc(lcl, categoryDesc);
      	recurseCategories(pcl, pc);
@@ -90,15 +90,14 @@ public class ProductDTOService implements IProductDTOService {
     
     public void recurseCategories(List<ProductCategory> pcl, ProductCategory pc) {
     	pcl.add(pc);
-    	for(ProductCategory child : pc.getChildren()) {
-    		recurseCategories(pcl, child);
-    	}
+    	pc.getChildren().forEach(child -> recurseCategories(pcl, child));
     }
     
 	
     public static ProductDTO convertToProductDto(final ProductAttribute productAttribute, String currency) {
         //get values from contact entity and set them in contactDto
         //e.g. contactDto.setContactId(contact.getContactId());
+    	System.out.println(productAttribute.getProduct().getProductId());
         final ProductDTO productDto = new ProductDTO();
         productDto.setProductId(productAttribute.getProduct().getProductId());
         productDto.setProductCreateDt(productAttribute.getProduct().getProductCreateDt());
