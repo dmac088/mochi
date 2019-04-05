@@ -33,7 +33,7 @@ class BrandSidebar extends Component {
     const currentBrand = this.props.match.params.brand;
     const isActive = (!currentBrand);
     if (!brands) { return null; }
-    //if(brands.length <= 1) {return null; }
+    if(brands.length <= 1) {return null; }
     return (
         <div className="sidebar mb-35">
           <h3 className="sidebar-title">Filter By Brand</h3>
