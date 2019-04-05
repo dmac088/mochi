@@ -168,7 +168,7 @@ CREATE TABLE category_attr_lcl (
 ALTER TABLE category_attr_lcl OWNER TO mochidb_owner;
 
 --
--- Name: currency; Type: TABLE; Schema: mochi; Owner: postgres
+-- Name: currency; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
 CREATE TABLE currency (
@@ -177,7 +177,7 @@ CREATE TABLE currency (
 );
 
 
-ALTER TABLE currency OWNER TO postgres;
+ALTER TABLE currency OWNER TO mochidb_owner;
 
 --
 -- Name: customer_cst_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
@@ -418,7 +418,7 @@ CREATE SEQUENCE price_prc_id_seq
 ALTER TABLE price_prc_id_seq OWNER TO mochidb_owner;
 
 --
--- Name: price; Type: TABLE; Schema: mochi; Owner: postgres
+-- Name: price; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
 CREATE TABLE price (
@@ -432,10 +432,10 @@ CREATE TABLE price (
 );
 
 
-ALTER TABLE price OWNER TO postgres;
+ALTER TABLE price OWNER TO mochidb_owner;
 
 --
--- Name: price_type; Type: TABLE; Schema: mochi; Owner: postgres
+-- Name: price_type; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
 CREATE TABLE price_type (
@@ -444,7 +444,7 @@ CREATE TABLE price_type (
 );
 
 
-ALTER TABLE price_type OWNER TO postgres;
+ALTER TABLE price_type OWNER TO mochidb_owner;
 
 --
 -- Name: product; Type: TABLE; Schema: mochi; Owner: mochidb_owner
@@ -1186,7 +1186,7 @@ SELECT pg_catalog.setval('category_cat_id_seq', 4, true);
 
 
 --
--- Data for Name: currency; Type: TABLE DATA; Schema: mochi; Owner: postgres
+-- Data for Name: currency; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
 COPY currency (ccy_id, ccy_cd) FROM stdin;
@@ -1577,7 +1577,7 @@ SELECT pg_catalog.setval('person_id_seq', 6, false);
 
 
 --
--- Data for Name: price; Type: TABLE DATA; Schema: mochi; Owner: postgres
+-- Data for Name: price; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
 COPY price (prc_id, prc_typ_id, prd_id, prc_val, prc_st_dt, prc_en_dt, ccy_id) FROM stdin;
@@ -1712,7 +1712,7 @@ SELECT pg_catalog.setval('price_prc_id_seq', 120, true);
 
 
 --
--- Data for Name: price_type; Type: TABLE DATA; Schema: mochi; Owner: postgres
+-- Data for Name: price_type; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
 COPY price_type (prc_typ_id, prc_typ_desc) FROM stdin;
@@ -2380,7 +2380,7 @@ ALTER TABLE ONLY category
 
 
 --
--- Name: currency currency_pkey; Type: CONSTRAINT; Schema: mochi; Owner: postgres
+-- Name: currency currency_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
 ALTER TABLE ONLY currency
@@ -2500,7 +2500,7 @@ ALTER TABLE ONLY locale
 
 
 --
--- Name: price price_pkey; Type: CONSTRAINT; Schema: mochi; Owner: postgres
+-- Name: price price_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
 ALTER TABLE ONLY price
@@ -2508,7 +2508,7 @@ ALTER TABLE ONLY price
 
 
 --
--- Name: price_type price_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: postgres
+-- Name: price_type price_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
 ALTER TABLE ONLY price_type
@@ -3014,6 +3014,13 @@ GRANT SELECT ON TABLE category_attr_lcl TO mochi_app;
 
 
 --
+-- Name: currency; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT ON TABLE currency TO mochi_app;
+
+
+--
 -- Name: customer_cst_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -3114,6 +3121,20 @@ GRANT SELECT,USAGE ON SEQUENCE person_id_seq TO mochi_app;
 --
 
 GRANT SELECT,USAGE ON SEQUENCE price_prc_id_seq TO mochi_app;
+
+
+--
+-- Name: price; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT ON TABLE price TO mochi_app;
+
+
+--
+-- Name: price_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT ON TABLE price_type TO mochi_app;
 
 
 --
