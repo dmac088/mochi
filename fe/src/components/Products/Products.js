@@ -55,8 +55,9 @@ class Products extends Component {
 
     if(type==="category") {
       this.update(locale, currency, pathname, term, ((!brand) ? "" : brand), Object.assign(params, qs.parse(search)), isMounting, this.getProducts);
-    } else if (type==="search") {
-      this.update(locale, currency, pathname, "All", term, Object.assign(params, qs.parse(search)), isMounting, this.findProducts);
+    }
+    if (type==="search") {
+      this.update(locale, currency, pathname, "All", term, Object.assign(params, qs.parse(search)), isMounting, pageService.findAll);
     }
   }
 
@@ -94,9 +95,6 @@ class Products extends Component {
         console.log('failed!');
     });
   }
-
-  findProducts = (locale, currency, category, searchTerm, page, size, sort) =>
-    pageService.findAll(locale, currency, category, searchTerm, page, size, sort)
 
   getProducts = (locale, currency, categoryDesc, brand, page, size, sort) =>
     productApi.findByCategory(locale, currency, categoryDesc, brand, page, size, sort)

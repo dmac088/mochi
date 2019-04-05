@@ -44,4 +44,8 @@ public class ProductDTOController {
     	return productService.getProductsForCategoryAndBrand(lcl, curr, category, brand, page, size, sortBy);
     }
     
+    @GetMapping("/Search/{lcl}/{curr}/Category/{categoryCode}/SearchTerm/{term}/Page/{page}/Size/{size}/SortBy/{sortBy}")
+    public Page<ProductDTO> search(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryCode,@PathVariable String term, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy) {
+    	return productService.findProduct(lcl, curr, categoryCode, term, page, size, sortBy);
+    }
 }
