@@ -4,7 +4,7 @@ const endPoints = {
 	get: '/api/Product/',
 };
 
-export const get = (locale) => 	fetchApi(
+export const get = (locale, currency) => 	fetchApi(
 																				 endPoints.get,
 																				 payload,
 																				 {},
@@ -14,8 +14,11 @@ export const get = (locale) => 	fetchApi(
 																				 }
 																			 );
 
-export const findById = (locale, productId) => fetchApi(
-																				endPoints.get + locale + '/id/' + productId,
+export const findById = (locale, currency, productId) => fetchApi(
+																				endPoints.get + 
+																				locale +
+																				'/' + currency +
+																				'/id/' + productId,
 																				{},
 																				{},
 																				'GET',
@@ -23,11 +26,13 @@ export const findById = (locale, productId) => fetchApi(
 																				);
 
 
-export const findByCategory = (locale, category, brand, page = 0, size = 10, sortBy = 'productRrp') => fetchApi(
-																				endPoints.get + locale +
+export const findByCategory = (locale, currency, category, brand, page = 0, size = 10, sortBy = 'productRrp') => fetchApi(
+																				endPoints.get +
+																				locale +
+																				'/' + currency +
 																				'/categoryDesc/' + category +
 																				((brand) ? '/brand/' : '') +
-																				((brand) ? brand : '') +	
+																				((brand) ? brand : '') +
 																				'/page/' + page +
 																				'/size/' + size +
 																				'/sortBy/' + sortBy,
@@ -37,8 +42,11 @@ export const findByCategory = (locale, category, brand, page = 0, size = 10, sor
 																				{}
 																			);
 
-export const findAllFeatured = (locale) => fetchApi(
-																				endPoints.get + locale + '/featured',
+export const findAllFeatured = (locale, currency) => fetchApi(
+																				endPoints.get +
+																				locale +
+																				'/' + currency +
+																				'/featured',
 																				{},
 																				{},
 																				'GET',

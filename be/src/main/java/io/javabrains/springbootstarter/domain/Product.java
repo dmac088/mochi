@@ -60,6 +60,10 @@ public class Product {
 	@JoinColumn(name="bnd_id", insertable=false, updatable=false)
 	@JsonBackReference
 	private Brand brand;
+	
+	@OneToMany(mappedBy="product",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonManagedReference
+	List<ProductPrice> productPrices;
 
 	public Long getProductId() {
 		return productId;
@@ -100,6 +104,14 @@ public class Product {
 
 	public void setProductCreateDt(Date productCreateDt) {
 		this.productCreateDt = productCreateDt;
+	}
+	
+	public List<ProductPrice> getProductPrices() {
+		return productPrices;
+	}
+
+	public void setProductPrices(List<ProductPrice> productPrices) {
+		this.productPrices = productPrices;
 	}
 	
 	public Long getPreviewFlag() {

@@ -20,6 +20,7 @@ class Products extends Component {
     super(props);
     this.state = {
       "locale":   "en-GB",
+      "currency": "HKD",
       "term":     "",
       "brand":    "",
       "products": [],
@@ -53,27 +54,29 @@ class Products extends Component {
 
     const type = this.props.match.params[0];
     if(type==="category") {
-      this.updateForCategory(locale, pathname, term, ((!brand) ? "" : brand), Object.assign(params, qs.parse(search)), isMounting);
+      this.updateForCategory(locale, currency, pathname, term, ((!brand) ? "" : brand), Object.assign(params, qs.parse(search)), isMounting);
     } else if (type==="search") {
-        this.updateForSearch(locale, pathname, "All", term, Object.assign(params, qs.parse(search)), isMounting);
+        this.updateForSearch(locale, currency, pathname, "All", term, Object.assign(params, qs.parse(search)), isMounting);
     }
   }
 
 
-  updateForSearch = (locale = "en-GB", pathname, category="All", term="All", params, isMounting = 0) => {
+  updateForSearch = (locale = "en-GB", currency = "HKD", pathname, category="All", term="All", params, isMounting = 0) => {
     if(!params) {return;}
     const { page, size, sort } = params;
     if(   locale === this.state.locale
+      &&  currency === this.state.currency
       &&  term === this.state.term
       &&  page === this.state.params.page
       &&  size === this.state.params.size
       &&  sort === this.state.params.sort
       &&  isMounting === 0
     ) {return;}
-    this.findProducts(locale, category, term, page, size, sort)
+    this.findProducts(locale, currency, category, term, page, size, sort)
     .then((responseJSON) => {
       this.setState({
         "locale":           locale,
+        "currency":         currency,
         "term":             term,
         "products":         responseJSON.content,
         "totalPages":       responseJSON.totalPages,
@@ -92,11 +95,12 @@ class Products extends Component {
     });
   }
 
-  updateForCategory = (locale = "en-GB", pathname, term="All", brand="", params, isMounting = 0) => {
+  updateForCategory = (locale = "en-GB", currency = "HKD", pathname, term="All", brand="", params, isMounting = 0) => {
 
     if(!params) {return;}
     const { page, size, sort } = params;
     if(   locale === this.state.locale
+      &&  currency === this.state.currency
       &&  term === this.state.term
       &&  brand === this.state.brand
       &&  page === this.state.params.page
@@ -105,10 +109,11 @@ class Products extends Component {
       &&  isMounting === 0
     ) {return;}
 
-    this.getProducts(locale, term, brand, page, size, sort)
+    this.getProducts(locale, currency, term, brand, page, size, sort)
     .then((responseJSON) => {
       this.setState({
         "locale":           locale,
+        "currency":         currency,
         "term":             term,
         "brand":            brand,
         "products":         responseJSON.content,
@@ -126,13 +131,11 @@ class Products extends Component {
   }
 
 
-  findProducts= (locale = "en-GB", category = "All", searchTerm = "", page, size, sort) =>
-    pageService.findAll(locale, category, searchTerm, page, size, sort)
+  findProducts= (locale = "en-GB", currency = "HKD", category = "All", searchTerm = "", page, size, sort) =>
+    pageService.findAll(locale, currency, category, searchTerm, page, size, sort)
 
-
-
-  getProducts= (locale = "en-GB", categoryDesc = "All", brand, page, size, sort) =>
-    productApi.findByCategory(locale, categoryDesc, brand, page, size, sort)
+  getProducts= (locale = "en-GB", currency = "HKD", categoryDesc = "All", brand, page, size, sort) =>
+    productApi.findByCategory(locale, currency, categoryDesc, brand, page, size, sort)
     .then((response) => {
         return response.text();
     })
