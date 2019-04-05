@@ -17,11 +17,12 @@ class Layout extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { locale } = this.props.match.params;
-    const prevlocale = prevProps.match.params.locale;
+    const { locale, currency } = this.props.match.params;
+    const prevLocale = prevProps.match.params.locale;
+    const prevCurrency = prevProps.match.params.currency;
     const { updateLocale } = this.props;
-    if(!(locale === prevlocale)) {
-      updateLocale(locale);
+    if(!(locale === prevLocale && currency === prevCurrency)) {
+      updateLocale(locale, currency);
     }
   }
 
