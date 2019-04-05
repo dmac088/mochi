@@ -51,17 +51,17 @@ class Products extends Component {
     const { pathname, search } = this.props.location;
     const params = {...this.state.params};
     const { locale, currency, term, brand } = this.props.match.params;
-
     const type = this.props.match.params[0];
+
     if(type==="category") {
-      this.updateForCategory(locale, currency, pathname, term, ((!brand) ? "" : brand), Object.assign(params, qs.parse(search)), isMounting);
+      this.update(locale, currency, pathname, term, ((!brand) ? "" : brand), Object.assign(params, qs.parse(search)), isMounting, this.getProducts);
     } else if (type==="search") {
-        this.updateForSearch(locale, currency, pathname, "All", term, Object.assign(params, qs.parse(search)), isMounting);
+      this.update(locale, currency, pathname, "All", term, Object.assign(params, qs.parse(search)), isMounting, this.findProducts);
     }
   }
 
 
-  updateForSearch = (locale = "en-GB", currency = "HKD", pathname, category="All", term="All", params, isMounting = 0) => {
+  update = (locale = "en-GB", currency = "HKD", pathname, category="All", term="All", params, isMounting = 0, callback) => {
     if(!params) {return;}
     const { page, size, sort } = params;
     if(   locale === this.state.locale
@@ -72,7 +72,7 @@ class Products extends Component {
       &&  sort === this.state.params.sort
       &&  isMounting === 0
     ) {return;}
-    this.findProducts(locale, currency, category, term, page, size, sort)
+    callback(locale, currency, category, term, page, size, sort)
     .then((responseJSON) => {
       this.setState({
         "locale":           locale,
@@ -91,50 +91,14 @@ class Products extends Component {
       });
     })
     .catch(()=>{
-        console.log('findProducts failed!');
+        console.log('failed!');
     });
   }
 
-  updateForCategory = (locale = "en-GB", currency = "HKD", pathname, term="All", brand="", params, isMounting = 0) => {
-
-    if(!params) {return;}
-    const { page, size, sort } = params;
-    if(   locale === this.state.locale
-      &&  currency === this.state.currency
-      &&  term === this.state.term
-      &&  brand === this.state.brand
-      &&  page === this.state.params.page
-      &&  size === this.state.params.size
-      &&  sort === this.state.params.sort
-      &&  isMounting === 0
-    ) {return;}
-
-    this.getProducts(locale, currency, term, brand, page, size, sort)
-    .then((responseJSON) => {
-      this.setState({
-        "locale":           locale,
-        "currency":         currency,
-        "term":             term,
-        "brand":            brand,
-        "products":         responseJSON.content,
-        "totalPages":       responseJSON.totalPages,
-        "totalElements":    responseJSON.totalElements,
-        "numberOfElements": responseJSON.numberOfElements,
-        "params":           params,
-      }, () => {
-        this.props.history.push({
-              "pathname": pathname,
-              "search": qs.stringify(params),
-        });
-      });
-    });
-  }
-
-
-  findProducts= (locale = "en-GB", currency = "HKD", category = "All", searchTerm = "", page, size, sort) =>
+  findProducts = (locale = "en-GB", currency = "HKD", category = "All", searchTerm = "", page, size, sort) =>
     pageService.findAll(locale, currency, category, searchTerm, page, size, sort)
 
-  getProducts= (locale = "en-GB", currency = "HKD", categoryDesc = "All", brand, page, size, sort) =>
+  getProducts = (locale = "en-GB", currency = "HKD", categoryDesc = "All", brand, page, size, sort) =>
     productApi.findByCategory(locale, currency, categoryDesc, brand, page, size, sort)
     .then((response) => {
         return response.text();
