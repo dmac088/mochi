@@ -115,7 +115,7 @@ class Accordion extends React.Component {
               </div>
               <div className="cart-float-single-item-desc">
                 <p className="product-title"> <a href="single-product.html">{product.productDesc} </a></p>
-                <p className="price"><span className="count">{product.quantity}x</span> ${product.productRetail}</p>
+                <p className="price"><span className="count">{product.quantity}x</span> ${product.productMarkdown}</p>
               </div>
             </div>
           )
