@@ -15,7 +15,7 @@ export const get = (locale, currency) => 	fetchApi(
 																			 );
 
 export const findById = (locale, currency, productId) => fetchApi(
-																				endPoints.get + 
+																				endPoints.get +
 																				locale +
 																				'/' + currency +
 																				'/id/' + productId,

@@ -53,10 +53,11 @@ class Header extends Component {
   account = (e) => {
     e.preventDefault();
     const { locale, currency } = this.props.match.params;
-    if (this.props.authenticated) {
-      this.props.history.push('/' + locale + '/' + currency + '/Account');
+    const { authenticated, history } = this.props;
+    if (authenticated) {
+      history.push('/' + locale + '/' + currency + '/Account');
     } else {
-      this.props.history.push('/' + locale + '/' + currency + '/Auth');
+      history.push('/' + locale + '/' + currency + '/Auth');
     }
   }
 
@@ -67,8 +68,9 @@ class Header extends Component {
   }
 
   render() {
-    
-    const { locale, currency } = this.props.match.params;
+    const { location, history, match } = this.props;
+    const { locale, currency } = match;
+
     return(
       <header>
         <div className="header-top pt-10 pb-10 pt-lg-10 pb-lg-10 pt-md-10 pb-md-10">
@@ -126,21 +128,21 @@ class Header extends Component {
                   </div>
                   <Search/>
                   <HeaderCartSummary
-                    match={this.props.match}
-                    location={this.props.location}
-                    history={this.props.history}
+                    match={match}
+                    location={location}
+                    history={history}
                   />
                 </div>
                 {(this.state.renderMobile) ?
                   <MobileMenu
-                    match={this.props.match}
-                    location={this.props.location}
-                    history={this.props.history}
+                    match={match}
+                    location={location}
+                    history={history}
                   /> :
                   <Menu
-                    match={this.props.match}
-                    location={this.props.location}
-                    history={this.props.history}
+                    match={match}
+                    location={location}
+                    history={history}
                   />
                 }
               </div>

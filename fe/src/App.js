@@ -126,8 +126,8 @@ class App extends Component {
     });
 
 
-  refreshCategoryList = (locale, currency) =>
-    categoryApi.findAll(locale, currency)
+  refreshCategoryList = (locale) =>
+    categoryApi.findAll(locale)
     .then((response) => {
         return response.text();
     })

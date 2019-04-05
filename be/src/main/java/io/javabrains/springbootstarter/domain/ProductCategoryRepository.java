@@ -1,13 +1,11 @@
 package io.javabrains.springbootstarter.domain;
 
-
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 
 public interface ProductCategoryRepository extends CrudRepository<ProductCategory, Long> {
 
-	ArrayList<ProductCategory> findAll();
+	List<ProductCategory> findAll();
 	
 	ProductCategory findByCategoryId(Long id);
 	

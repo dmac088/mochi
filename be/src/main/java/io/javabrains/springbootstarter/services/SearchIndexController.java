@@ -1,8 +1,7 @@
 package io.javabrains.springbootstarter.services;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,8 +22,5 @@ public class SearchIndexController {
     	return "Search Index Created!";
     }
     
-    @GetMapping("/Search/{lcl}/{curr}/Category/{categoryCode}/SearchTerm/{term}/Page/{page}/Size/{size}/SortBy/{sortBy}")
-    public Page<ProductDTO> search(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryCode,@PathVariable String term, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy) {
-    	return searchIndexService.findProduct(lcl, curr, categoryCode, term, page, size, sortBy);
-    }
+    
 }
