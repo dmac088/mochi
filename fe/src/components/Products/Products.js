@@ -212,6 +212,7 @@ class Products extends Component {
                         toggleGrid={this.toggleGrid}
                         toggleList={this.toggleList}
                         isGrid={isGrid}
+                        history={this.props.history}
                       />
                     <div className=
                               {(isGrid)
