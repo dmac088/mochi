@@ -61,7 +61,7 @@ class Products extends Component {
   }
 
 
-  update = (locale = "en-GB", currency = "HKD", pathname, category="All", term="All", params, isMounting = 0, callback) => {
+  update = (locale, currency, pathname, category, term, params, isMounting = 0, callback) => {
     if(!params) {return;}
     const { page, size, sort } = params;
     if(   locale === this.state.locale
@@ -95,10 +95,10 @@ class Products extends Component {
     });
   }
 
-  findProducts = (locale = "en-GB", currency = "HKD", category = "All", searchTerm = "", page, size, sort) =>
+  findProducts = (locale, currency, category, searchTerm, page, size, sort) =>
     pageService.findAll(locale, currency, category, searchTerm, page, size, sort)
 
-  getProducts = (locale = "en-GB", currency = "HKD", categoryDesc = "All", brand, page, size, sort) =>
+  getProducts = (locale, currency, categoryDesc, brand, page, size, sort) =>
     productApi.findByCategory(locale, currency, categoryDesc, brand, page, size, sort)
     .then((response) => {
         return response.text();

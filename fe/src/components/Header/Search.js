@@ -24,8 +24,6 @@ class Search extends Component {
   updateSearch = (e) => {
     this.setState({
       inputTerm: e.currentTarget.value
-    }, () => {
-      console.log(this.state.inputTerm);
     });
   }
 
