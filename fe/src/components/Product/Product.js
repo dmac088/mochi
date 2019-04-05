@@ -27,20 +27,22 @@ class Product extends Component {
 	loadState = () => {
 		const { locale, currency, productId } = this.props.match.params;
 		if(locale === this.state.locale
+			&& currency === this.state.currency
 			&& productId === this.state.productId) {return;}
 		this.setState({
 			"locale": locale,
+			"currency": currency,
 			"productId": productId,
 			"product": {},
 			"currentImage": "",
 			"isLoading": true,
 		},  () => {
-				this.updateData(locale, productId);
+				this.updateData(locale, currency, productId);
 		});
 	}
 
-  getProduct = (locale, id) =>
-    productApi.findById(locale, id)
+  getProduct = (locale, currency, id) =>
+    productApi.findById(locale, currency, id)
     .then((response) => {
         return response.text();
     })
@@ -51,8 +53,8 @@ class Product extends Component {
         console.log('getProducts failed!');
     });
 
-  updateData = (locale = "en-GB", productId) => {
-      this.getProduct(locale, productId)
+  updateData = (locale = "en-GB", currency = "HKD", productId) => {
+      this.getProduct(locale, currency, productId)
       .then((responseJSON) => {
         setTimeout(() => {
           this.setState({

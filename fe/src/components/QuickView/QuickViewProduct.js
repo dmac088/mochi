@@ -23,13 +23,15 @@ class QuickViewProduct extends Component{
 
   componentDidUpdate() {
     const { productId, isShowing } = this.props;
-		const { locale } = this.props.match.params;
+		const { locale, currency } = this.props.match.params;
 		if(!productId) {return;}
 		if((locale === this.state.locale
+			&& currency === this.state.currency
 			&& productId === this.state.productId
 			&& isShowing === this.state.isShowing)) {return;}
 		this.setState({
 			"locale": locale,
+			"currency": currency,
 			"productId": productId,
 			"product": {},
 			"currentImage": "",
@@ -37,7 +39,7 @@ class QuickViewProduct extends Component{
 			"isLoading": true,
 		},  () => {
 				if(!isShowing) {return;}
-				this.updateData(locale, productId);
+				this.updateData(locale, currency, productId);
 		});
   }
 
@@ -87,8 +89,8 @@ class QuickViewProduct extends Component{
 		})
 	}
 
-  getProduct = (locale, id) =>
-    productApi.findById(locale, id)
+  getProduct = (locale, currency, id) =>
+    productApi.findById(locale, currency, id)
     .then((response) => {
         return response.text();
     })
@@ -99,8 +101,9 @@ class QuickViewProduct extends Component{
         console.log('getProducts failed!');
     });
 
-  updateData = (locale = "en-GB", productId) => {
-	    this.getProduct(locale, productId)
+  updateData = (locale = "en-GB", currency = "HKD", productId) => {
+
+	    this.getProduct(locale, currency, productId)
 	    .then((responseJSON) => {
 				setTimeout(() => {
 					this.setState({
@@ -220,8 +223,8 @@ class QuickViewProduct extends Component{
 								<div className="product-feature-details">
 									<h2 className="product-title mb-15">{product.productDesc}</h2>
 									<h2 className="product-price mb-15">
-										<span className="main-price">$ {product.productRrp}</span>
-										<span className="discounted-price"> $10.00</span>
+										<span className="main-price">${product.productRetail}</span>
+										<span className="discounted-price"> ${product.productMarkdown}</span>
 									</h2>
 									<p className="product-description mb-20">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco,Proin lectus ipsum, gravida et mattis vulputate, tristique ut lectus</p>
 									<div className="cart-buttons mb-20">

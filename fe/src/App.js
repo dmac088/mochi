@@ -34,7 +34,7 @@ class App extends Component {
     super(props);
     this.state = {
                      "locale": null,
-                     "currency": "USD",
+                     "currency": "HKD",
                      "categoryList": [],
                      "showQVModal": false,
                      "currentProductId": null,
@@ -52,17 +52,19 @@ class App extends Component {
     //                     });
   }
 
-  updateLocale = (locale) => {
-    if(locale === this.state.locale) {return;}
-    this.refreshData(locale);
+  updateLocale = (locale, currency) => {
+    if(locale === this.state.locale
+       && currency === this.state.currency) {return;}
+    this.refreshData(locale, currency);
   }
 
   //we cache data in App to avoid refreshing on route changes (componentDidMount)
-  refreshData(locale) {
-    this.refreshCategoryList(locale)
+  refreshData(locale, currency) {
+    this.refreshCategoryList(locale, currency)
     .then((categoryList) => {
       this.setState({
         "locale": locale,
+        "currency": currency,
         "categoryList": categoryList,
       });
     })
@@ -71,7 +73,7 @@ class App extends Component {
       //return an array of promises to the next in chain
       return this.filterLandingCategories(categoryList).map(category => {
         //we must return the nested promise
-        return this.getCategoryProducts(locale, category.categoryDesc)
+        return this.getCategoryProducts(locale, currency, category.categoryDesc)
         .then((response) => {
           category["products"] = response;
           return category;
@@ -91,7 +93,7 @@ class App extends Component {
       //return an array of promises to the next in chain
       return this.filterPreviewCategories(categoryList).map(category => {
         //we must return the nested promise
-        return this.getCategoryProducts(locale, category.categoryDesc)
+        return this.getCategoryProducts(locale, currency ,category.categoryDesc)
         .then((response) => {
           category["products"] = response;
           return category;
@@ -111,8 +113,8 @@ class App extends Component {
     });
   }
 
-  getCategoryProducts = (locale, category) =>
-    productApi.findByCategory(locale, category, "", 0, 50)
+  getCategoryProducts = (locale, currency, category) =>
+    productApi.findByCategory(locale, currency, category, "", 0, 50)
     .then((response) => {
         return response.text();
     })
@@ -124,8 +126,8 @@ class App extends Component {
     });
 
 
-  refreshCategoryList = (locale) =>
-    categoryApi.findAll(locale)
+  refreshCategoryList = (locale, currency) =>
+    categoryApi.findAll(locale, currency)
     .then((response) => {
         return response.text();
     })
