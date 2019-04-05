@@ -39,7 +39,7 @@ class Search extends Component {
 
   handleKeyPress = (target) => {
     if(target.charCode === 13){
-            this.handleSearch();
+      this.handleSearch();
     }
   }
 
