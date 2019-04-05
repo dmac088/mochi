@@ -39,7 +39,7 @@ public class ProductDTOService implements IProductDTOService {
 	@Transactional
 	public Page<ProductDTO> getProducts(String lcl, int page, int size, String sortBy) {
     	Page<ProductDTO> pp;
-		Page<ProductAttribute> ppa = productAttributePagingAndSortingRepository.findByLclCd(lcl, PageRequest.of(page, size, Sort.by(sortBy).descending()));
+		Page<ProductAttribute> ppa = productAttributePagingAndSortingRepository.findByLclCd(lcl, PageRequest.of(page, size, this.sortByParam(sortBy)));
 		pp = ppa.map(pa -> ProductDTOService.convertToProductDto(pa));
 		return pp;
 	}	
@@ -71,7 +71,7 @@ public class ProductDTOService implements IProductDTOService {
      	ProductCategory pc = productCategoryRepository.findByProductCategoryAttributeLclCdAndProductCategoryAttributeCategoryDesc(lcl, categoryDesc);
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
-  		Page<ProductAttribute> ppa = productAttributePagingAndSortingRepository.findDistinctByLclCdAndProductCategoriesCategoryIdIn(lcl, categoryIds, PageRequest.of(page, size, Sort.by(sortBy).descending()));
+  		Page<ProductAttribute> ppa = productAttributePagingAndSortingRepository.findDistinctByLclCdAndProductCategoriesCategoryIdIn(lcl, categoryIds, PageRequest.of(page, size, this.sortByParam(sortBy)));
   		Page<ProductDTO> pp = ppa.map(pa -> ProductDTOService.convertToProductDto(pa));
   		return pp;
 	}
@@ -82,7 +82,7 @@ public class ProductDTOService implements IProductDTOService {
      	ProductCategory pc = productCategoryRepository.findByProductCategoryAttributeLclCdAndProductCategoryAttributeCategoryDesc(lcl, categoryDesc);
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
-  		Page<ProductAttribute> ppa = productAttributePagingAndSortingRepository.findDistinctByLclCdAndProductCategoriesCategoryIdInAndProductBrandBrandAttributesBrandDesc(lcl, categoryIds, brandDesc,PageRequest.of(page, size, Sort.by(sortBy).descending()));
+  		Page<ProductAttribute> ppa = productAttributePagingAndSortingRepository.findDistinctByLclCdAndProductCategoriesCategoryIdInAndProductBrandBrandAttributesBrandDesc(lcl, categoryIds, brandDesc,PageRequest.of(page, size, this.sortByParam(sortBy)));
   		Page<ProductDTO> pp = ppa.map(pa -> ProductDTOService.convertToProductDto(pa));
   		return pp;
 	}
@@ -110,6 +110,14 @@ public class ProductDTOService implements IProductDTOService {
         productDto.setBrandDesc(productAttribute.getProduct().getBrand().getBrandAttributes().stream()
         .filter( ba -> ba.getLclCd().equals(productAttribute.getLclCd())).collect(Collectors.toList()).get(0).getbrandDesc());
         return productDto;
+    }
+    
+    private Sort sortByParam(String param) {
+    	switch (param) {
+    	case "priceAsc": return new Sort(Sort.Direction.ASC, "productRrp");
+    	case "priceDesc": return new Sort(Sort.Direction.DESC, "productRrp");
+    	default: return new Sort(Sort.Direction.ASC, "productDesc");
+    	}
     }
 
 }
