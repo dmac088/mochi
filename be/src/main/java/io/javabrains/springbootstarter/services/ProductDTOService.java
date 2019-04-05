@@ -116,6 +116,7 @@ public class ProductDTOService implements IProductDTOService {
     	switch (param) {
     	case "priceAsc": return new Sort(Sort.Direction.ASC, "productRrp");
     	case "priceDesc": return new Sort(Sort.Direction.DESC, "productRrp");
+    	case "nameAsc": return new Sort(Sort.Direction.ASC, "productDesc");
     	default: return new Sort(Sort.Direction.ASC, "productDesc");
     	}
     }

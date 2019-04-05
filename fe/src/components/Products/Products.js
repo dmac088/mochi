@@ -30,7 +30,7 @@ class Products extends Component {
       "params":  {
                   "page": "0",
                   "size": "10",
-                  "sort": "productRrp",
+                  "sort": "nameAsc",
                  }
     };
   }
