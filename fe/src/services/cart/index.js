@@ -81,7 +81,7 @@ import * as cartSelector from './selectors';
   export const sumTotalAmount = (items) => {
 	  let total = 0;
 	  for (var i = 0; i < items.length; i++) {
-	  total += items[i].productRrp * parseInt(items[i].quantity);
+	  total += items[i].productMarkdown * parseInt(items[i].quantity);
 	  }
 	  return total;
  	}
