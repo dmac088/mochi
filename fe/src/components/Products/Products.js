@@ -105,9 +105,6 @@ class Products extends Component {
     })
     .then((responseText) => {
         return JSON.parse(responseText);
-    })
-    .catch(()=>{
-        console.log('getProducts failed!');
     });
 
 
