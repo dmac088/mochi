@@ -19,29 +19,29 @@ public class ProductDTOController {
         super();
     }
     
-    @GetMapping("/Product/{lcl}/id/{id}")
-    public ProductDTO getProduct(@PathVariable String lcl, @PathVariable Long id) {
-    	return productService.getProduct(lcl, id);
+    @GetMapping("/Product/{lcl}/{curr}/id/{id}")
+    public ProductDTO getProduct(@PathVariable String lcl, @PathVariable String curr, @PathVariable Long id) {
+    	return productService.getProduct(lcl, curr, id);
     }
     
-    @GetMapping("/Product/{lcl}/page/{page}/size/{size}/sortBy/{sortBy}")
-    public Page<ProductDTO> getProducts(@PathVariable String lcl,@PathVariable int page, @PathVariable int size, @PathVariable String sortBy) {
-    	return productService.getProducts(lcl, page, size, sortBy);
+    @GetMapping("/Product/{lcl}/{curr}/page/{page}/size/{size}/sortBy/{sortBy}")
+    public Page<ProductDTO> getProducts(@PathVariable String lcl, @PathVariable String curr, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy) {
+    	return productService.getProducts(lcl, curr, page, size, sortBy);
     }
     
-    @GetMapping("/Product/{lcl}/categoryId/{cat}/preview")
-    public List<ProductDTO> getProducts(@PathVariable String lcl, @PathVariable Long cat) {
-    	return productService.getPreviewProductsForCategory(lcl, cat);
+    @GetMapping("/Product/{lcl}/{curr}/categoryId/{cat}/preview")
+    public List<ProductDTO> getProducts(@PathVariable String lcl, @PathVariable String curr, @PathVariable Long cat) {
+    	return productService.getPreviewProductsForCategory(lcl, curr, cat);
     }
     
-    @GetMapping("/Product/{lcl}/categoryDesc/{category}/page/{page}/size/{size}/sortBy/{sortBy}")
-    public Page<ProductDTO> getProducts(@PathVariable String lcl, @PathVariable String category, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy) {
-    	return productService.getProductsForCategory(lcl, category, page, size, sortBy);
+    @GetMapping("/Product/{lcl}/{curr}/categoryDesc/{category}/page/{page}/size/{size}/sortBy/{sortBy}")
+    public Page<ProductDTO> getProducts(@PathVariable String lcl, @PathVariable String curr, @PathVariable String category, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy) {
+    	return productService.getProductsForCategory(lcl, curr, category, page, size, sortBy);
     }
     
-    @GetMapping("/Product/{lcl}/categoryDesc/{category}/brand/{brand}/page/{page}/size/{size}/sortBy/{sortBy}")
-    public Page<ProductDTO> getProducts(@PathVariable String lcl, @PathVariable String category, @PathVariable String brand, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy) {
-    	return productService.getProductsForCategoryAndBrand(lcl, category, brand, page, size, sortBy);
+    @GetMapping("/Product/{lcl}/{curr}/categoryDesc/{category}/brand/{brand}/page/{page}/size/{size}/sortBy/{sortBy}")
+    public Page<ProductDTO> getProducts(@PathVariable String lcl, @PathVariable String curr, @PathVariable String category, @PathVariable String brand, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy) {
+    	return productService.getProductsForCategoryAndBrand(lcl, curr, category, brand, page, size, sortBy);
     }
     
 }

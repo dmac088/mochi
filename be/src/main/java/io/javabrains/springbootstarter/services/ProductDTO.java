@@ -17,7 +17,9 @@ public class ProductDTO {
 	
 	private String brandDesc;
 
-	private double productRrp;
+	private double productRetail;
+	
+	private double productMarkdown;
 	
 	private String productImage;
 	
@@ -60,12 +62,20 @@ public class ProductDTO {
 		this.productDesc = productDesc;
 	}
 
-	public double getProductRrp() {
-		return productRrp;
+	public double getProductRetail() {
+		return productRetail;
 	}
 
-	public void setProductRrp(double productRrp) {
-		this.productRrp = productRrp;
+	public void setProductRetail(double productRetail) {
+		this.productRetail = productRetail;
+	}
+
+	public double getProductMarkdown() {
+		return productMarkdown;
+	}
+
+	public void setProductMarkdown(double productMarkdown) {
+		this.productMarkdown = productMarkdown;
 	}
 
 	public String getProductImage() {
@@ -129,7 +139,8 @@ public class ProductDTO {
         		.append(", productCreateDt=").append(productCreateDt)
         		.append(", productDesc=").append(productDesc)
         		.append(", brandDesc=").append(brandDesc)
-        		.append(", productRrp=").append(productRrp)
+        		.append(", productRetail=").append(productRetail)
+        		.append(", productMarkdown=").append(productMarkdown)
                 .append(", ProductImage=").append(productImage)
                 .append(", PreviewFlag=").append(productPreview)
                 .append(", lclCd=").append(lclCd);

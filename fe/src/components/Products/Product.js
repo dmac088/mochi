@@ -48,8 +48,8 @@ class Product extends Component {
             </div>
             <h3 className="product-title"><a href="single-product.html">{product.productDesc}</a></h3>
             <div className="price-box mb-20">
-              <span className="main-price">{product.productRrp}</span>
-              <span className="discounted-price">$80.00</span>
+              <span className="main-price">${product.productRetail}</span>
+              <span className="discounted-price">${product.productMarkdown}</span>
             </div>
             <p className="product-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere esse tempora magnam dolorem tenetur eos eligendi non temporibus qui enim. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam, magni.</p>
             <div className="list-product-icons">
@@ -93,8 +93,8 @@ class Product extends Component {
             </div>
             <h3 className="product-title"><a href="#">{product.productDesc}</a></h3>
             <div className="price-box">
-              <span className="main-price">{product.productRrp}</span>
-              <span className="discounted-price">$80.00</span>
+              <span className="main-price">${product.productRetail}</span>
+              <span className="discounted-price">${product.productMarkdown}</span>
             </div>
           </div>
         </div>

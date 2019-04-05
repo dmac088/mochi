@@ -285,8 +285,8 @@ class Product extends Component {
 	                  </p>
 
 	                  <h2 className="product-price mb-15">
-	                    <span className="main-price">${product.productRrp}</span>
-	                    <span className="discounted-price"> $10.00</span>
+	                    <span className="main-price">${product.productRetail}</span>
+	                    <span className="discounted-price"> ${product.productMarkdown}</span>
 	                  </h2>
 
 	                  <p className="product-description mb-20">

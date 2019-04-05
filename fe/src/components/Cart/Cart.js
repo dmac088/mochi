@@ -28,7 +28,7 @@ class Cart extends Component {
               </a>
             </td>
             <td className="pro-price">
-              <span>${product.productRrp}</span>
+              <span>${product.productRetail}</span>
             </td>
             <td className="pro-quantity">
               <div className="pro-qty">
@@ -36,7 +36,7 @@ class Cart extends Component {
               </div>
             </td>
             <td className="pro-subtotal">
-              <span>${product.quantity * product.productRrp}</span>
+              <span>${product.quantity * product.productRetail}</span>
             </td>
             <td className="pro-remove">
               <a id={product.productId} onClick={this.removeItem} href="#">

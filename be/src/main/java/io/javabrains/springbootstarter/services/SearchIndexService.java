@@ -34,7 +34,7 @@ public class SearchIndexService {
 		}
 	}
 
-	public Page<ProductDTO> findProduct(String lcl, String categoryDesc, String searchTerm, int page, int size, String sortBy) {
+	public Page<ProductDTO> findProduct(String lcl, String currency, String categoryDesc, String searchTerm, int page, int size, String sortBy) {
 
 		PageableUtil pageableUtil = new PageableUtil();
 		
@@ -98,7 +98,7 @@ public class SearchIndexService {
 		@SuppressWarnings("unchecked")
 		List<ProductAttribute> results =  Collections.checkedList(jpaQuery.getResultList(), ProductAttribute.class);
 		
-		List<ProductDTO> lp = results.stream().map(pa -> ProductDTOService.convertToProductDto(pa)).collect(Collectors.toList());
+		List<ProductDTO> lp = results.stream().map(pa -> ProductDTOService.convertToProductDto(pa, currency)).collect(Collectors.toList());
 
 		Page<ProductDTO> pp = new PageImpl<ProductDTO>(lp, pageable, jpaQuery.getResultSize());
 		return pp;

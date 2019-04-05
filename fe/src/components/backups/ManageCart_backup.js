@@ -51,7 +51,7 @@ class ManageCart extends Component {
                   </td>
                   <td>
                     <div className="price-wrap">
-                      <p className="product-price">{product.productDTO.productRrp}</p>
+                      <p className="product-price">{product.productDTO.productRetail}</p>
                       <small className="text-muted"></small>
                     </div> {/* price-wrap .// */}
                   </td>

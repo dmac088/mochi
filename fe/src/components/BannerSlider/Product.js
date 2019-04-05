@@ -44,8 +44,8 @@ class Product extends Component {
             <h3 className="product-title">
               <a href="single-product.html">{product.productDesc}</a></h3>
             <div className="price-box">
-              <span className="main-price">${product.productRrp}</span>
-              <span className="discounted-price">$80.00</span>
+              <span className="main-price">${product.productRetail}</span>
+              <span className="discounted-price">${product.productMarkdown}</span>
             </div>
           </div>
         </div>
