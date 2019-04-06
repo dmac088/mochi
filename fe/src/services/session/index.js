@@ -15,7 +15,8 @@ const setSessionTimeout = (duration) => {
 	clearTimeout(sessionTimeout);
 	sessionTimeout = setTimeout(
 		refreshToken, // eslint-disable-line no-use-before-define
-		(duration - SESSION_TIMEOUT_THRESHOLD) * 1000
+		duration
+		//(duration - SESSION_TIMEOUT_THRESHOLD) * 1000
 	);
 };
 
@@ -63,7 +64,8 @@ export const authenticate = (customer, onSuccess, onFailure) => {
 
 	export const  persistTokens = (tokens) => {
 	 	store.dispatch(tokenActionCreators.update({"tokens": tokens }));
-	 	setSessionTimeout(tokens.expires_in);
+	 	//setSessionTimeout(tokens.expires_in);
+		setSessionTimeout(2000);
 	}
 
 	export const revoke = () => {
