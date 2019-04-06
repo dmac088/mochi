@@ -29,6 +29,7 @@ public class CustomTokenEnhancer implements TokenEnhancer {
         additionalInfo.put("accessTokenExpiryDate", expiryDate);
         
         ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
+        
         return accessToken;
     }
 

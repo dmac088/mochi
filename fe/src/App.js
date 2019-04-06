@@ -305,12 +305,17 @@ class App extends Component {
           <Route path={"/:locale/:currency/Wishlist"} exact={true}                                    render={(props)   => this.renderLayoutBC(props, this.renderWishlist)}     />
           <Route path={"/:locale/:currency/Contact"} exact={true}                                     render={(props)   => this.renderLayoutBC(props, this.renderContact)}      />
           <Route path={"/:locale/:currency/Auth"} exact={true}                                        render={(props)   => this.renderLayoutBC(props, this.renderAuth)}         />
-          <Redirect from="/" to="/en-GB/HKD" />
-          <Route                                                                                      render={(props)   => this.renderLayout(props, this.renderLanding)}        />
-        </Switch>
+          </Switch>
     );
   }
 }
+
+/*
+
+<Redirect from="/" to="/en-GB/HKD" />
+<Route                                                                                      render={(props)   => this.renderLayout(props, this.renderLanding)}        />
+
+*/
 
 
 //on a dispatch call from anywhere in the application

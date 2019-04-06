@@ -73,6 +73,7 @@ public class CustomerDTOService implements ICustomerDTOService {
     @Override
 	@Transactional
     public void registerNewCustomer(final CustomerDTO customer) {
+    	System.out.println("username=" + customer.getUserName());
         if (customerExist(customer.getUserName())) {
             throw new CustomerAlreadyExistException("There is an account with that username: " + customer.getUserName());
         }

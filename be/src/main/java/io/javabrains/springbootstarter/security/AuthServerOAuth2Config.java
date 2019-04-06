@@ -78,6 +78,7 @@ public class AuthServerOAuth2Config extends AuthorizationServerConfigurerAdapter
 
         endpoints
         	.tokenStore(tokenStore())
+        	.reuseRefreshTokens(true)
         	.tokenEnhancer(tokenEnhancer())
         	.accessTokenConverter(accessTokenConverter())
         	.authenticationManager(authenticationManager)

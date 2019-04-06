@@ -29,6 +29,7 @@ export const getParams = (method, headers) => {
 }
 
 export const fetchApi = (endPoint, payload = {}, formData = {}, method = 'get', headers = {}) => {
+
 	let formBody = [];
 		for (const property in formData) {
 				const encodedKey = encodeURIComponent(property);
@@ -39,6 +40,8 @@ export const fetchApi = (endPoint, payload = {}, formData = {}, method = 'get', 
 	(method.toLowerCase() === 'post') ? formBody.push(JSON.stringify(payload)) : formBody.push(null);
 	formBody = formBody.join("&");
 
+	console.log(formBody);
+	
 	let params = getParams(method, headers);
 	Object.assign(params, (method.toLowerCase() === 'post') && { body: formBody })
 	console.log(apiConfig.url+endPoint);
