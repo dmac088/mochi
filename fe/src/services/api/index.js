@@ -17,17 +17,7 @@ export const exceptionExtractError = (exception) => {
 };
 
 
-export  getParams = (method, headers, accessToken) => {
-	return {
-		method: method,
-		headers:  _.pickBy({
-														...(sessionSelectors.get().tokens.access_token ? {
-															Authorization: `Bearer ${sessionSelectors.get().tokens.access_token}`,
-														} : {}),
-														...headers,
-													}, item => !_.isEmpty(item)),
-	 };
-}
+
 
 export const fetchApi = (endPoint, payload = {}, formData = {}, method = 'get', headers = {}) => {
 	const accessToken = sessionSelectors.get().tokens.access_token;
@@ -62,7 +52,15 @@ export const fetchApi = (endPoint, payload = {}, formData = {}, method = 'get', 
 						console.log("hello 401");
 						return refreshToken()
 						.then(() => {
-
+							params = {
+								method: method,
+							  headers:  _.pickBy({
+																				...(sessionSelectors.get().tokens.access_token ? {
+																					Authorization: `Bearer ${sessionSelectors.get().tokens.access_token}`,
+																				} : {}),
+																				...headers,
+																			}, item => !_.isEmpty(item)),
+							 };
 							return fetch(apiConfig.url+endPoint, params);
 						});
 					}
