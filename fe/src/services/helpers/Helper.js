@@ -109,9 +109,9 @@ export const chunkArray = (inputArray, perChunk) => {
         };
 
 export const deepValue = (obj, path, value)  => {
-    const parts = path.split('.');
-    const curr = obj;
-    for(const i=0;i<parts.length-1;i++)
+    let parts = path.split('.');
+    let curr = obj;
+    for(let i=0;i<parts.length-1;i++)
       curr = curr[parts[i]] || {};
       curr[parts[parts.length-1]] = value;
 }
