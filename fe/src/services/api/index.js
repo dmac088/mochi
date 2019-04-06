@@ -18,13 +18,13 @@ export const exceptionExtractError = (exception) => {
 
 export const getParams = (method, headers) => {
 	return {
-													method: method,
-													headers:  _.pickBy({
-														...(sessionSelectors.get().tokens.access_token ? {
-															Authorization: `Bearer ${sessionSelectors.get().tokens.access_token}`,
-														} : {}),
-														...headers,
-													}, item => !_.isEmpty(item)),
+					method: method,
+					headers:  _.pickBy({
+																...(sessionSelectors.get().tokens.access_token ? {
+																			Authorization: `Bearer ${sessionSelectors.get().tokens.access_token}`,
+																} : {}),
+																			...headers,
+														 }, item => !_.isEmpty(item)),
 	 }
 }
 
