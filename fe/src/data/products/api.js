@@ -26,7 +26,7 @@ export const findById = (locale, currency, productId) => fetchApi(
 																				);
 
 
-export const findByCategory = (locale, currency, category, brand, page = 0, size = 10, sortBy = 'productRrp') => fetchApi(
+export const findByCategory = (locale, currency, category, brand, page = 0, size = 10, sortBy = 'priceAsc') => fetchApi(
 																				endPoints.get +
 																				locale +
 																				'/' + currency +

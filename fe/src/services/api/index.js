@@ -2,7 +2,8 @@
 
 import _ from 'lodash';
 import apiConfig from './config';
-import * as sessionSelectors from '../session/selectors'
+import { refreshToken } from '../session';
+import * as sessionSelectors from '../session/selectors';
 
 
 export const exceptionExtractError = (exception) => {
@@ -15,10 +16,21 @@ export const exceptionExtractError = (exception) => {
 	return error;
 };
 
+
+export const getParams = (method, headers, item) => {
+	return {
+		method: method,
+		headers:  _.pickBy({
+													...(sessionSelectors.get().tokens.access_token ? {
+													Authorization: `Bearer ${sessionSelectors.get().tokens.access_token}`,
+												 } : {}),
+													...headers,
+											 }, item => !_.isEmpty(item)),
+	 };
+}
+
 export const fetchApi = (endPoint, payload = {}, formData = {}, method = 'get', headers = {}) => {
 	const accessToken = sessionSelectors.get().tokens.access_token;
-	console.log("access token = " + accessToken);
-	console.log(sessionSelectors.get().tokens);
 	let formBody = [];
 		for (const property in formData) {
 				const encodedKey = encodeURIComponent(property);
@@ -30,17 +42,17 @@ export const fetchApi = (endPoint, payload = {}, formData = {}, method = 'get', 
 
 	formBody = formBody.join("&");
 
-	let params = {
-		method: method,
-	  headers:  _.pickBy({
-														...(accessToken ? {
-															Authorization: `Bearer ${accessToken}`,
-														} : {}),
-														...headers,
-													}, item => !_.isEmpty(item)),
-	 };
+	Object.assign(getParams(method, headers, null), (method.toLowerCase() === 'post') && { body: formBody });
 
-	Object.assign(params, (method.toLowerCase() === 'post') && { body: formBody })
 	console.log(apiConfig.url+endPoint);
-	return fetch(apiConfig.url+endPoint, params);
+	return fetch(apiConfig.url+endPoint, getParams(method, headers, null))
+				.then((response) => {
+					if(response.status === 401) {
+						return refreshToken()
+						.then(() => {
+							return fetch(apiConfig.url+endPoint, getParams(method, headers, null));
+						});
+					}
+					return response;
+				});
 }
