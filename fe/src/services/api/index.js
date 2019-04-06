@@ -17,11 +17,12 @@ export const exceptionExtractError = (exception) => {
 };
 
 export const getParams = (method, headers) => {
+	const { access_token } = sessionSelectors.get().tokens;
 	return {
 					method: method,
 					headers:  _.pickBy({
-																...(sessionSelectors.get().tokens.access_token ? {
-																			Authorization: `Bearer ${sessionSelectors.get().tokens.access_token}`,
+																...(access_token ? {
+																			Authorization: `Bearer ${access_token}`,
 																} : {}),
 																			...headers,
 														 }, item => !_.isEmpty(item)),
