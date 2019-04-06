@@ -11,14 +11,14 @@ const SESSION_TIMEOUT_THRESHOLD = 300; // Will refresh the access token 5 minute
 
 let sessionTimeout = null;
 
-const setSessionTimeout = (duration) => {
-	clearTimeout(sessionTimeout);
-	sessionTimeout = setTimeout(
-		refreshToken, // eslint-disable-line no-use-before-define
-		duration
-		//(duration - SESSION_TIMEOUT_THRESHOLD) * 1000
-	);
-};
+// const setSessionTimeout = (duration) => {
+// 	clearTimeout(sessionTimeout);
+// 	sessionTimeout = setTimeout(
+// 		refreshToken, // eslint-disable-line no-use-before-define
+// 		duration
+// 		//(duration - SESSION_TIMEOUT_THRESHOLD) * 1000
+// 	);
+// };
 
 
 export const authenticate = (customer, onSuccess, onFailure) => {
@@ -65,7 +65,7 @@ export const authenticate = (customer, onSuccess, onFailure) => {
 	export const  persistTokens = (tokens) => {
 	 	store.dispatch(tokenActionCreators.update({"tokens": tokens }));
 	 	//setSessionTimeout(tokens.expires_in);
-		setSessionTimeout(20000);
+		//setSessionTimeout(20000);
 	}
 
 	export const revoke = () => {
