@@ -16,13 +16,20 @@ export const exceptionExtractError = (exception) => {
 	return error;
 };
 
-
-
+export const getParams = (method, headers) => {
+	return {
+													method: method,
+													headers:  _.pickBy({
+														...(sessionSelectors.get().tokens.access_token ? {
+															Authorization: `Bearer ${sessionSelectors.get().tokens.access_token}`,
+														} : {}),
+														...headers,
+													}, item => !_.isEmpty(item)),
+	 }
+}
 
 export const fetchApi = (endPoint, payload = {}, formData = {}, method = 'get', headers = {}) => {
 	const accessToken = sessionSelectors.get().tokens.access_token;
-	console.log("access token = " + accessToken);
-	console.log(Date.parse(sessionSelectors.get().tokens.accessTokenExpiryDate));
 	let formBody = [];
 		for (const property in formData) {
 				const encodedKey = encodeURIComponent(property);
@@ -31,37 +38,18 @@ export const fetchApi = (endPoint, payload = {}, formData = {}, method = 'get', 
 		}
 
 	(method.toLowerCase() === 'post') ? formBody.push(JSON.stringify(payload)) : formBody.push(null);
-
 	formBody = formBody.join("&");
 
-	let params = {
-		method: method,
-	  headers:  _.pickBy({
-														...(accessToken ? {
-															Authorization: `Bearer ${accessToken}`,
-														} : {}),
-														...headers,
-													}, item => !_.isEmpty(item)),
-	 };
-
+	let params = getParams(method, headers);
 	Object.assign(params, (method.toLowerCase() === 'post') && { body: formBody })
 	console.log(apiConfig.url+endPoint);
 	return fetch(apiConfig.url+endPoint, params)
 				.then((response) => {
 					if(response.status === 401) {
-						console.log("hello 401");
+						console.log("Error: 401");
 						return refreshToken()
 						.then(() => {
-							params = {
-								method: method,
-							  headers:  _.pickBy({
-																				...(sessionSelectors.get().tokens.access_token ? {
-																					Authorization: `Bearer ${sessionSelectors.get().tokens.access_token}`,
-																				} : {}),
-																				...headers,
-																			}, item => !_.isEmpty(item)),
-							 };
-							return fetch(apiConfig.url+endPoint, params);
+							return fetch(apiConfig.url+endPoint, getParams(method, headers));
 						});
 					}
 					return response;
