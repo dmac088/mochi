@@ -8,12 +8,11 @@ import * as sessionSelectors from '../session/selectors';
 
 export const exceptionExtractError = (exception) => {
 	if (!exception.Errors) return false;
-	let error = false;
 	const errorKeys = Object.keys(exception.Errors);
 	if (errorKeys.length > 0) {
-		error = exception.Errors[errorKeys[0]][0].message;
+		return exception.Errors[errorKeys[0]][0].message;
 	}
-	return error;
+	return false;
 };
 
 export const getParams = (method, headers) => {
