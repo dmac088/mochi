@@ -17,20 +17,22 @@ export const exceptionExtractError = (exception) => {
 };
 
 
-export const getParams = (method, headers, item) => {
+export  getParams = (method, headers, accessToken) => {
 	return {
 		method: method,
 		headers:  _.pickBy({
-													...(sessionSelectors.get().tokens.access_token ? {
-													Authorization: `Bearer ${sessionSelectors.get().tokens.access_token}`,
-												 } : {}),
-													...headers,
-											 }, item => !_.isEmpty(item)),
+														...(sessionSelectors.get().tokens.access_token ? {
+															Authorization: `Bearer ${sessionSelectors.get().tokens.access_token}`,
+														} : {}),
+														...headers,
+													}, item => !_.isEmpty(item)),
 	 };
 }
 
 export const fetchApi = (endPoint, payload = {}, formData = {}, method = 'get', headers = {}) => {
 	const accessToken = sessionSelectors.get().tokens.access_token;
+	console.log("access token = " + accessToken);
+	console.log(Date.parse(sessionSelectors.get().tokens.accessTokenExpiryDate));
 	let formBody = [];
 		for (const property in formData) {
 				const encodedKey = encodeURIComponent(property);
@@ -42,16 +44,26 @@ export const fetchApi = (endPoint, payload = {}, formData = {}, method = 'get', 
 
 	formBody = formBody.join("&");
 
-	Object.assign(getParams(method, headers, null), (method.toLowerCase() === 'post') && { body: formBody });
+	let params = {
+		method: method,
+	  headers:  _.pickBy({
+														...(accessToken ? {
+															Authorization: `Bearer ${accessToken}`,
+														} : {}),
+														...headers,
+													}, item => !_.isEmpty(item)),
+	 };
 
+	Object.assign(params, (method.toLowerCase() === 'post') && { body: formBody })
 	console.log(apiConfig.url+endPoint);
-	return fetch(apiConfig.url+endPoint, getParams(method, headers, null))
+	return fetch(apiConfig.url+endPoint, params)
 				.then((response) => {
 					if(response.status === 401) {
-						console.log("Error: 401")
+						console.log("hello 401");
 						return refreshToken()
 						.then(() => {
-							return fetch(apiConfig.url+endPoint, getParams(method, headers, null));
+
+							return fetch(apiConfig.url+endPoint, params);
 						});
 					}
 					return response;
