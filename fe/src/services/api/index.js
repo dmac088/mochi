@@ -29,7 +29,6 @@ export const getParams = (method, headers) => {
 }
 
 export const fetchApi = (endPoint, payload = {}, formData = {}, method = 'get', headers = {}) => {
-	const accessToken = sessionSelectors.get().tokens.access_token;
 	let formBody = [];
 		for (const property in formData) {
 				const encodedKey = encodeURIComponent(property);
