@@ -3,6 +3,7 @@ import * as actionTypes from './actionTypes';
 export const initialState = {
                               tokens: {
                                 access_token: null,
+                                accessTokenExpiryDate: null,
                                 token_type: null,
                                 refresh_token: null,
                                 expires_in: null,

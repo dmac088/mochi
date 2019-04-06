@@ -18,6 +18,7 @@ export const exceptionExtractError = (exception) => {
 export const fetchApi = (endPoint, payload = {}, formData = {}, method = 'get', headers = {}) => {
 	const accessToken = sessionSelectors.get().tokens.access_token;
 	console.log("access token = " + accessToken);
+	console.log(sessionSelectors.get().tokens);
 	let formBody = [];
 		for (const property in formData) {
 				const encodedKey = encodeURIComponent(property);

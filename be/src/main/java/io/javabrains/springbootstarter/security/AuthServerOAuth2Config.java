@@ -75,12 +75,14 @@ public class AuthServerOAuth2Config extends AuthorizationServerConfigurerAdapter
    
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
+
         endpoints
         	.tokenStore(tokenStore())
         	.tokenEnhancer(tokenEnhancer())
         	.accessTokenConverter(accessTokenConverter())
         	.authenticationManager(authenticationManager)
         	.userDetailsService(userDetailsService);
+        	
     }
    
 }

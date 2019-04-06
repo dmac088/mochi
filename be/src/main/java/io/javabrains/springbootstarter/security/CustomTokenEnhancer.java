@@ -1,5 +1,7 @@
 package io.javabrains.springbootstarter.security;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
@@ -16,9 +18,17 @@ public class CustomTokenEnhancer implements TokenEnhancer {
 
         additionalInfo.put("userName", user.getUsername());
         additionalInfo.put("authenticated", true);
-
-        ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
         
+        SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss.sssZ"); 
+        Calendar calendar = Calendar.getInstance(); // gets a calendar using the default time zone and locale.
+        calendar.add(Calendar.SECOND, 10);
+        
+        ((DefaultOAuth2AccessToken) accessToken).setExpiration(calendar.getTime());
+        String expiryDate = formatter.format(calendar.getTime());
+        
+        additionalInfo.put("accessTokenExpiryDate", expiryDate);
+        
+        ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
         return accessToken;
     }
 
