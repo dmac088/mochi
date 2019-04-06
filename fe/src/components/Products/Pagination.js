@@ -35,8 +35,22 @@ class Pagination extends Component {
     });
   }
 
+  renderNext = (pages, currentPage) => {
+    return (
+      <li>
+        <a  onClick={this.changePage}
+            id={Number(currentPage)+1}
+            pages={pages}
+            href="#">
+        <i className="fa fa-angle-right"></i>
+        </a>
+      </li>
+    );
+  }
+
   render() {
-    const { totalPages, currentPage } = this.props;
+    const {totalPages, currentPage } = this.props;
+    if (totalPages <= 1 ) { return null }
 		return (
       <div className="pagination-container">
         <div className="container">
@@ -45,7 +59,7 @@ class Pagination extends Component {
               <div className="pagination-content text-center">
                 <ul>
                   {this.renderPaginator(totalPages, currentPage)}
-                  <li><a onClick={this.changePage} id={Number(currentPage)+1} pages={totalPages} href="#"><i className="fa fa-angle-right"></i></a></li>
+                  {this.renderNext(totalPages, currentPage)}
                 </ul>
               </div>
             </div>
