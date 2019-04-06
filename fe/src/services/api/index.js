@@ -40,8 +40,6 @@ export const fetchApi = (endPoint, payload = {}, formData = {}, method = 'get', 
 	(method.toLowerCase() === 'post') ? formBody.push(JSON.stringify(payload)) : formBody.push(null);
 	formBody = formBody.join("&");
 
-	console.log(formBody);
-	
 	let params = getParams(method, headers);
 	Object.assign(params, (method.toLowerCase() === 'post') && { body: formBody })
 	console.log(apiConfig.url+endPoint);
