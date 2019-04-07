@@ -15,7 +15,11 @@ public interface IProductDTOService {
 	 
 	 Page<ProductDTO> getProductsForCategory(String lcl, String currency, String categoryDesc, int page, int size, String sortBy);
 	 
+	 Page<ProductDTO> getProductsForCategory(String lcl, String currency, String categoryDesc, Long price, int page, int size, String sortBy);
+	 
 	 Page<ProductDTO> getProductsForCategoryAndBrand(String lcl, String currency, String categoryDesc, String brandDesc, int page, int size, String sortBy);
+	 
+	 Page<ProductDTO> getProductsForCategoryAndBrandAndPrice(String lcl, String currency, String categoryDesc, String brandDesc, Long price, int page, int size, String sortBy);
 	 
 	 Page<ProductDTO> findProduct(String lcl, String currency, String categoryCode, String term, int page, int size, String sortBy);
 	 

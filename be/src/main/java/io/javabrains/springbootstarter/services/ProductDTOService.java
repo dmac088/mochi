@@ -61,7 +61,7 @@ public class ProductDTOService implements IProductDTOService {
 	public Page<ProductDTO> getProducts(String lcl, String currency, int page, int size, String sortBy) {
     	Page<ProductDTO> pp;
 		Page<ProductAttribute> ppa = productAttributePagingAndSortingRepository.findByLclCd(lcl, PageRequest.of(page, size, this.sortByParam(sortBy)));
-		pp = ppa.map(pa -> this.convertToProductDto(pa, currency));
+		pp = ppa.map(pa -> this.convertToProductDto(pa, lcl, currency));
 		return pp;
 	}	
     
@@ -69,7 +69,7 @@ public class ProductDTOService implements IProductDTOService {
 	@Transactional
 	public ProductDTO getProduct(String lcl, String currency, Long id) {
 		ProductAttribute pa = productAttributeRepository.findByLclCdAndProductId(lcl, id).get();
-		ProductDTO p = this.convertToProductDto(pa, currency);
+		ProductDTO p = this.convertToProductDto(pa, lcl, currency);
 		return p;
 	}	
 
@@ -82,7 +82,7 @@ public class ProductDTOService implements IProductDTOService {
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
   		Collection<ProductAttribute> ppa = productAttributeRepository.findDistinctByLclCdAndProductCategoriesCategoryIdInAndProductPreviewFlag(lcl, categoryIds, new Long(1));
-  		List<ProductDTO> pp = ppa.stream().map(pa -> this.convertToProductDto(pa, currency)).collect(Collectors.toList());
+  		List<ProductDTO> pp = ppa.stream().map(pa -> this.convertToProductDto(pa, lcl, currency)).collect(Collectors.toList());
   		return pp;
   	}	
     
@@ -93,7 +93,18 @@ public class ProductDTOService implements IProductDTOService {
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
   		Page<ProductAttribute> ppa = productAttributePagingAndSortingRepository.findDistinctByLclCdAndProductCategoriesCategoryIdIn(lcl, categoryIds, PageRequest.of(page, size, this.sortByParam(sortBy)));
-  		Page<ProductDTO> pp = ppa.map(pa -> this.convertToProductDto(pa, currency));
+  		Page<ProductDTO> pp = ppa.map(pa -> this.convertToProductDto(pa, lcl, currency));
+  		return pp;
+	}
+	
+	@Override
+	public Page<ProductDTO> getProductsForCategory(String lcl, String currency, String categoryDesc, Long price, int page, int size, String sortBy) {
+		List<ProductCategory> pcl = new ArrayList<ProductCategory>();
+     	ProductCategory pc = productCategoryRepository.findByProductCategoryAttributeLclCdAndProductCategoryAttributeCategoryDesc(lcl, categoryDesc);
+     	recurseCategories(pcl, pc);
+     	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
+  		Page<ProductAttribute> ppa = productAttributePagingAndSortingRepository.findDistinctByLclCdAndProductCategoriesCategoryIdInAndProductPricesPriceValueBetween(lcl, categoryIds, new Long(0), price, PageRequest.of(page, size, this.sortByParam(sortBy)));
+  		Page<ProductDTO> pp = ppa.map(pa -> this.convertToProductDto(pa, lcl, currency));
   		return pp;
 	}
 	
@@ -104,7 +115,18 @@ public class ProductDTOService implements IProductDTOService {
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
   		Page<ProductAttribute> ppa = productAttributePagingAndSortingRepository.findDistinctByLclCdAndProductCategoriesCategoryIdInAndProductBrandBrandAttributesBrandDesc(lcl, categoryIds, brandDesc,PageRequest.of(page, size, this.sortByParam(sortBy)));
-  		Page<ProductDTO> pp = ppa.map(pa -> this.convertToProductDto(pa, currency));
+  		Page<ProductDTO> pp = ppa.map(pa -> this.convertToProductDto(pa, lcl, currency));
+  		return pp;
+	}
+	
+	@Override
+	public Page<ProductDTO> getProductsForCategoryAndBrandAndPrice(String lcl, String currency, String categoryDesc, String brandDesc, Long price, int page, int size, String sortBy) {
+		List<ProductCategory> pcl = new ArrayList<ProductCategory>();
+     	ProductCategory pc = productCategoryRepository.findByProductCategoryAttributeLclCdAndProductCategoryAttributeCategoryDesc(lcl, categoryDesc);
+     	recurseCategories(pcl, pc);
+     	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
+  		Page<ProductAttribute> ppa = productAttributePagingAndSortingRepository.findDistinctByLclCdAndProductCategoriesCategoryIdInAndProductBrandBrandAttributesBrandDescAndProductPricesPriceValueBetween(lcl, categoryIds, brandDesc, new Long(0), price, PageRequest.of(page, size, this.sortByParam(sortBy)));
+  		Page<ProductDTO> pp = ppa.map(pa -> this.convertToProductDto(pa, lcl, currency));
   		return pp;
 	}
 
@@ -172,7 +194,7 @@ public class ProductDTOService implements IProductDTOService {
 		@SuppressWarnings("unchecked")
 		List<ProductAttribute> results =  Collections.checkedList(jpaQuery.getResultList(), ProductAttribute.class);
 		
-		List<ProductDTO> lp = results.stream().map(pa -> this.convertToProductDto(pa, currency)).collect(Collectors.toList());
+		List<ProductDTO> lp = results.stream().map(pa -> this.convertToProductDto(pa, lcl, currency)).collect(Collectors.toList());
 
 		Page<ProductDTO> pp = new PageImpl<ProductDTO>(lp, pageable, jpaQuery.getResultSize());
 		return pp;
@@ -214,7 +236,7 @@ public class ProductDTOService implements IProductDTOService {
     }
     
 	
-    public ProductDTO convertToProductDto(final ProductAttribute productAttribute, String currency) {
+    public ProductDTO convertToProductDto(final ProductAttribute productAttribute, String lcl, String currency) {
         //get values from contact entity and set them in contactDto
         //e.g. contactDto.setContactId(contact.getContactId());
         final ProductDTO productDto = new ProductDTO();
@@ -231,9 +253,9 @@ public class ProductDTOService implements IProductDTOService {
         productDto.setProductMarkdown(productPriceRepository.findByProductProductIdAndPriceTypePriceTypeDescAndPriceStartDateLessThanEqualAndPriceEndDateGreaterThanEqualAndPriceCurrencyCurrencyCode(productDto.getProductId(), "markdown", new Date(), new Date(), currency).getPriceValue());
         
         productDto.setProductImage(productAttribute.getProductImage());
-        productDto.setLclCd(productAttribute.getLclCd());
+        productDto.setLclCd(lcl);
         productDto.setBrandDesc(productAttribute.getProduct().getBrand().getBrandAttributes().stream()
-        .filter( ba -> ba.getLclCd().equals(productAttribute.getLclCd())).collect(Collectors.toList()).get(0).getbrandDesc());
+        .filter( ba -> ba.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getbrandDesc());
         return productDto;
     }
     

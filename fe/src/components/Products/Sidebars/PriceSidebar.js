@@ -13,14 +13,13 @@ class PriceSidebar extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    const { updateMaxPrice } = this.props;
     if(!prevProps.category || !this.props.category) { return }
     if(prevProps.category.categoryCode === this.props.category.categoryCode
       && prevProps.brand === this.props.brand) { return }
     const { category, brand } = this.props;
     const maxPrice = this.getMaxBrandPrice(category.categoryBrands, brand);
-    this.setState({
-      "value": maxPrice,
-    })
+    updateMaxPrice(maxPrice);
   }
 
   getMaxBrandPrice = (brands, currentBrand) => {
@@ -33,32 +32,18 @@ class PriceSidebar extends Component {
     return maxPrice;
   }
 
-  changeValue = (value) => {
-    const { pathname, search } = this.props.location;
-    const { locale, currency } = this.props.match.params;
-    const urlParams = qs.parse(search);
-    const searchString = qs.stringify(Object.assign(urlParams, { "maxPrice": value }));
-
-    this.props.history.push({
-      "pathname": pathname,
-      "search": searchString,
-    });
-
-    this.setState({
-      "value": value,
-    });
-  }
 
   render() {
-    const { category, brand } = this.props;
+    const { category, brand, updateMaxPrice, currentMaxPrice } = this.props;
     if(!category) { return null }
     const maxPrice = ((!brand) ? category.maxMarkDownPrice : this.getMaxBrandPrice(category.categoryBrands, brand));
+
     return (
       <div className="sidebar mb-35">
         <h3 className="sidebar-title">Filter By Price</h3>
-        <p>Value: {(!this.state.value) ? maxPrice : this.state.value}</p>
+        <p>Value: {(!currentMaxPrice) ? maxPrice : currentMaxPrice}</p>
           <Slider
-            onChange={this.changeValue}
+            onChange={(value) => updateMaxPrice(value)}
             defaultValue={30}
             trackStyle={{ backgroundColor: '#80bb01', height: 10 }}
             handleStyle={{
@@ -72,7 +57,7 @@ class PriceSidebar extends Component {
             min={0}
             max={maxPrice}
             defaultValue={maxPrice}
-            value={(!this.state.value) ? maxPrice : this.state.value}
+            value={(!currentMaxPrice) ? maxPrice : currentMaxPrice}
             railStyle={{ height: 10 }}/>
 
       </div>
