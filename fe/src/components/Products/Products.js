@@ -162,6 +162,7 @@ class Products extends Component {
                       />
                     {this.renderBrandSlider(cat,changeBrand)}
                       <PriceSidebar
+                        {...this.props}
                         category={cat}
                         brand={term}/>
                       <TopRatedSidebar/>
