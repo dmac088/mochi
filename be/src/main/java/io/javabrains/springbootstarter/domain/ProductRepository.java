@@ -2,7 +2,6 @@ package io.javabrains.springbootstarter.domain;
 
 
 import java.util.List;
-import java.util.Optional;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -15,6 +14,11 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 	List<Product> findAll(Specification<Product> spec);
 	
 	List<Product> findByPreviewFlag(Long previewFlag);
+	
+	List<Product> findByCategoriesCategoryIdIn(List<Long> id);
+	
+	Product findByProductId(Long id);
+
 	
 	@Query(
 			value = "WITH RECURSIVE MyCTE AS ( SELECT cat_id, cat_cd FROM mochi.category "
@@ -89,6 +93,4 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 	Long maxMarkDownPriceByCategoriesCategoryCodeAndBrandBrandCodeAndPriceCurrencyCode(@Param("categoryCode") String categoryCode, @Param("brandCode") String brandCode, @Param("currencyCode") String currencyCode);
 
 	
-	
-	Optional<Product> findByProductId(Long id);
 }

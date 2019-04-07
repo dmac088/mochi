@@ -61,11 +61,6 @@ public class ProductAttribute {
 	@Column(name="prd_desc")
 	private String productDesc;
 	
-	@SortableField
-	@Field
-	@Column(name="prd_rrp")
-	private double productRrp;
-	
 	@Column(name="prd_img_pth")
 	private String ProductImage;
 	
@@ -107,14 +102,6 @@ public class ProductAttribute {
 
 	public void setLclCd(String lclCd) {
 		this.lclCd = lclCd;
-	}
-	
-	public double getProductRrp() {
-		return productRrp;
-	}
-
-	public void setProductRrp(double productRrp) {
-		this.productRrp = productRrp;
 	}
 
 	public String getProductImage() {
