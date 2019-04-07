@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Slider, { Range } from 'rc-slider';
+import qs from 'query-string';
 import 'rc-slider/assets/index.css';
 
 class PriceSidebar extends Component {
@@ -33,9 +34,19 @@ class PriceSidebar extends Component {
   }
 
   changeValue = (value) => {
+    const { pathname, search } = this.props.location;
+    const { locale, currency } = this.props.match.params;
+    const urlParams = qs.parse(search);
+    const searchString = qs.stringify(Object.assign(urlParams, { "maxPrice": value }));
+
+    this.props.history.push({
+      "pathname": pathname,
+      "search": searchString,
+    });
+
     this.setState({
       "value": value,
-    })
+    });
   }
 
   render() {
