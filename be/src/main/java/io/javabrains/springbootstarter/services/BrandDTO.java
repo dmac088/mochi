@@ -11,6 +11,8 @@ public class BrandDTO {
 	private String brandDesc;
 	
 	private Long productCount;
+	
+	private Long maxMarkDownPrice;
 
 	public Long getBrandId() {
 		return brandId;
@@ -42,6 +44,14 @@ public class BrandDTO {
 
 	public void setProductCount(Long productCount) {
 		this.productCount = productCount;
+	}
+	
+	public Long getMaxMarkDownPrice() {
+		return maxMarkDownPrice;
+	}
+
+	public void setMaxMarkDownPrice(Long maxMarkDownPrice) {
+		this.maxMarkDownPrice = maxMarkDownPrice;
 	}
 	
 	@Override

@@ -5,16 +5,16 @@ import java.util.List;
 
 public interface IProductCategoryDTOService {
 	 
-	 List<ProductCategoryDTO> getProductCategories(String lcl);
+	 List<ProductCategoryDTO> getProductCategories(String lcl, String currency);
 	 
-	 List<ProductCategoryDTO> getProductCategoriesForLevel(String lcl, Long level);
+	 List<ProductCategoryDTO> getProductCategoriesForLevel(String lcl, String currency, Long level);
 	 
-	 List<ProductCategoryDTO> getProductCategoryParent(String lcl, Long parentCategoryId);
+	 List<ProductCategoryDTO> getProductCategoryParent(String lcl, String currency, Long parentCategoryId);
 	 
-	 List<ProductCategoryDTO> getPreviewProductCategories(final String lcl, final Long previewFlag);
+	 List<ProductCategoryDTO> getPreviewProductCategories(final String lcl, String currency, final Long previewFlag);
 	 
-	 ProductCategoryDTO getProductCategory(String lcl, Long categoryId);
+	 ProductCategoryDTO getProductCategory(String lcl, String currency, Long categoryId);
 	 
-	 ProductCategoryDTO getProductCategory(String lcl, String categoryDesc);
+	 ProductCategoryDTO getProductCategory(String lcl, String currency, String categoryDesc);
 
 }

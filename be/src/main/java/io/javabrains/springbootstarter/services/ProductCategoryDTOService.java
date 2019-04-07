@@ -31,9 +31,9 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
     
     @Override
 	@Transactional
-	public List<ProductCategoryDTO> getProductCategories(final String lcl) {
+	public List<ProductCategoryDTO> getProductCategories(final String lcl, String currency) {
     	List<ProductCategory> lpc = productCategoryRepository.findAll();
-    	return lpc.stream().map(pc -> convertToProductCategoryDto(pc, lcl))
+    	return lpc.stream().map(pc -> convertToProductCategoryDto(pc, lcl, currency))
     			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
     			
@@ -41,42 +41,42 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
     
     @Override
  	@Transactional
- 	public List<ProductCategoryDTO> getProductCategoryParent(final String lcl, final Long parentCategoryId) {
+ 	public List<ProductCategoryDTO> getProductCategoryParent(final String lcl, String currency, final Long parentCategoryId) {
     	List<ProductCategory> lpc = productCategoryRepository.findByParentCategoryId(parentCategoryId);
-    	return lpc.stream().map(pc -> convertToProductCategoryDto(pc, lcl))
+    	return lpc.stream().map(pc -> convertToProductCategoryDto(pc, lcl, currency))
     			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
  	}
     
     @Override
   	@Transactional
-  	public List<ProductCategoryDTO> getProductCategoriesForLevel(final String lcl, final Long level) {
+  	public List<ProductCategoryDTO> getProductCategoriesForLevel(final String lcl, String currency, final Long level) {
      	List<ProductCategory> lpc = productCategoryRepository.findByCategoryLevel(level);
-     	return lpc.stream().map(pc -> convertToProductCategoryDto(pc, lcl))
+     	return lpc.stream().map(pc -> convertToProductCategoryDto(pc, lcl, currency))
     			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
   	}	
     
     @Override
   	@Transactional
-  	public List<ProductCategoryDTO> getPreviewProductCategories(final String lcl, final Long previewFlag) {
+  	public List<ProductCategoryDTO> getPreviewProductCategories(final String lcl, String currency, final Long previewFlag) {
         List<ProductCategory> lpc = productCategoryRepository.findByPreviewFlag(previewFlag);
-        return lpc.stream().map(pc -> convertToProductCategoryDto(pc, lcl))
+        return lpc.stream().map(pc -> convertToProductCategoryDto(pc, lcl, currency))
     			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
   	}
     
     @Override
   	@Transactional
-  	public ProductCategoryDTO getProductCategory(final String lcl, final Long categoryId) {
+  	public ProductCategoryDTO getProductCategory(final String lcl, String currency, final Long categoryId) {
      	ProductCategory pc = productCategoryRepository.findByCategoryId(categoryId);
-     	return	convertToProductCategoryDto(pc, lcl);
+     	return	convertToProductCategoryDto(pc, lcl, currency);
   	}
     
     @Override
-	public ProductCategoryDTO getProductCategory(String lcl, String categoryDesc) {
+	public ProductCategoryDTO getProductCategory(String lcl, String currency, String categoryDesc) {
      	ProductCategory pc = productCategoryRepository.findByProductCategoryAttributeLclCdAndProductCategoryAttributeCategoryDesc(lcl, categoryDesc);
-     	return	convertToProductCategoryDto(pc, lcl);
+     	return	convertToProductCategoryDto(pc, lcl, currency);
 	}
     
     private BrandDTO convertToBrandDto(final Brand b, String categoryCode, final String lcl) {
@@ -90,7 +90,7 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
     	return bDto;
     }
     
-    private ProductCategoryDTO convertToProductCategoryDto(final ProductCategory pc, final String lcl) {
+    private ProductCategoryDTO convertToProductCategoryDto(final ProductCategory pc, final String lcl, final String currency) {
     	
         final ProductCategoryDTO pcDto = new ProductCategoryDTO();
         pcDto.setCategoryId(pc.getCategoryId());
@@ -99,6 +99,7 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
         
         //get product count and set it
         pcDto.setProductCount(productRepository.countByCategoriesCategoryCode(pc.getCategoryCode()));
+        pcDto.setMaxMarkDownPrice(productRepository.maxMarkDownPriceByCategoriesCategoryCodeAndPriceCurrencyCode(pc.getCategoryCode(), currency));
         
         //set the brand attributes of all products within the category, to the localized version
         Set<BrandDTO> catBrands = pc.getProducts().stream().map(p -> this.convertToBrandDto(p.getBrand(), pc.getCategoryCode(), lcl)).collect(Collectors.toSet());
@@ -107,15 +108,17 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
         //create the child objects and add to children collection
         List<ProductCategoryDTO> pcDTOl =
         pc.getChildren().stream().map(pc1 -> {
-        	ProductCategoryDTO pcchild = convertToProductCategoryDto(pc1, lcl);
+        	ProductCategoryDTO pcchild = convertToProductCategoryDto(pc1, lcl, currency);
         	catBrands.addAll(pcchild.getCategoryBrands());
         	return pcchild;
         }).collect(Collectors.toList());
         pcDto.setChildren(pcDTOl);
         
         catBrands.forEach(b -> b.setProductCount(productRepository.countByCategoriesCategoryCodeAndBrandBrandCode(pcDto.getCategoryCode(), b.getBrandCode())));
+       // catBrands.forEach(b -> b.setMaxMarkDownPrice(productRepository.maxMarkDownPriceByCategoriesCategoryCodeAndBrandBrandCodeAndPriceCurrencyCode(pcDto.getCategoryCode(), b.getBrandCode(), currency)));
         pcDto.setCategoryBrands(catBrands);
         
+       
         //set the parentId
         if(!(pc.getParent() == null)) {
         	pcDto.setParentId(pc.getParent().getCategoryId());

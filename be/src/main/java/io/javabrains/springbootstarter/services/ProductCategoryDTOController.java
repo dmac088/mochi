@@ -19,33 +19,33 @@ public class ProductCategoryDTOController {
         super();
     }
     
-    @GetMapping("/ProductCategory/{lcl}")
-    public List<ProductCategoryDTO> getProductCategories(@PathVariable String lcl) {
-    	return productCategoryService.getProductCategories(lcl);
+    @GetMapping("/ProductCategory/{lcl}/{curr}")
+    public List<ProductCategoryDTO> getProductCategories(@PathVariable String lcl, @PathVariable String curr) {
+    	return productCategoryService.getProductCategories(lcl, curr);
     }
     
-    @GetMapping("/ProductCategory/{lcl}/ParentCategory/{parentCat}")
-    public List<ProductCategoryDTO> getProductCategories(@PathVariable String lcl,@PathVariable Long parentCat) {
-    	return productCategoryService.getProductCategoryParent(lcl, parentCat);
+    @GetMapping("/ProductCategory/{lcl}/{curr}/ParentCategory/{parentCat}")
+    public List<ProductCategoryDTO> getProductCategories(@PathVariable String lcl, @PathVariable String curr, @PathVariable Long parentCat) {
+    	return productCategoryService.getProductCategoryParent(lcl, curr, parentCat);
     }
     
-    @GetMapping("/ProductCategory/{lcl}/level/{level}")
-    public List<ProductCategoryDTO> getProductCategoriesForLevel(@PathVariable String lcl,@PathVariable Long level) {
-    	return productCategoryService.getProductCategoriesForLevel(lcl, level);
+    @GetMapping("/ProductCategory/{lcl}/{curr}/level/{level}")
+    public List<ProductCategoryDTO> getProductCategoriesForLevel(@PathVariable String lcl, @PathVariable String curr, @PathVariable Long level) {
+    	return productCategoryService.getProductCategoriesForLevel(lcl, curr, level);
     }
     
-    @GetMapping("/ProductCategory/{lcl}/preview")
-    public List<ProductCategoryDTO> getProductCategoriesForLevel(@PathVariable String lcl) {
-    	return productCategoryService.getPreviewProductCategories(lcl, new Long(1));
+    @GetMapping("/ProductCategory/{lcl}/{curr}/preview")
+    public List<ProductCategoryDTO> getProductCategoriesForLevel(@PathVariable String lcl, @PathVariable String curr) {
+    	return productCategoryService.getPreviewProductCategories(lcl, curr, new Long(1));
     }
 
-    @GetMapping("/ProductCategory/{lcl}/id/{categoryId}")
-    public ProductCategoryDTO getProductCategory(@PathVariable String lcl, @PathVariable Long categoryId) {
-    	return productCategoryService.getProductCategory(lcl, categoryId);
+    @GetMapping("/ProductCategory/{lcl}/{curr}/id/{categoryId}")
+    public ProductCategoryDTO getProductCategory(@PathVariable String lcl, @PathVariable String curr, @PathVariable Long categoryId) {
+    	return productCategoryService.getProductCategory(lcl, curr, categoryId);
     }
     
-    @GetMapping("/ProductCategory/{lcl}/desc/{categoryDesc}")
-    public ProductCategoryDTO getProductCategory(@PathVariable String lcl, @PathVariable String categoryDesc) {
-    	return productCategoryService.getProductCategory(lcl, categoryDesc);
+    @GetMapping("/ProductCategory/{lcl}/{curr}/desc/{categoryDesc}")
+    public ProductCategoryDTO getProductCategory(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc) {
+    	return productCategoryService.getProductCategory(lcl, curr, categoryDesc);
     }
 }
