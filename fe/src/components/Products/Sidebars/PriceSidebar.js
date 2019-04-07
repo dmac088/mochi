@@ -40,10 +40,8 @@ class PriceSidebar extends Component {
 
   render() {
     const { category, brand } = this.props;
-    console.log(brand);
     if(!category) { return null }
     const maxPrice = ((!brand) ? category.maxMarkDownPrice : this.getMaxBrandPrice(category.categoryBrands, brand));
-    console.log(this.state.value)
     return (
       <div className="sidebar mb-35">
         <h3 className="sidebar-title">Filter By Price</h3>
