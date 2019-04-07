@@ -30,6 +30,8 @@ public class ProductCategoryDTO {
 	
 	private Long productCount;
 	
+	private Long maxMarkDownPrice;
+
 	private Set<BrandDTO> categoryBrands;
 
 	private List<ProductCategoryDTO> children;
@@ -136,6 +138,14 @@ public class ProductCategoryDTO {
 
 	public void setProductCount(Long productCount) {
 		this.productCount = productCount;
+	}
+	
+	public Long getMaxMarkDownPrice() {
+		return maxMarkDownPrice;
+	}
+
+	public void setMaxMarkDownPrice(Long maxMarkDownPrice) {
+		this.maxMarkDownPrice = maxMarkDownPrice;
 	}
 
 	@Override
