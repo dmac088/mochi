@@ -8,6 +8,9 @@ class Layout extends Component {
 
   constructor(props) {
     super(props)
+    this.state = {
+      "currentMaxPrice": 0,
+    }
   }
 
   componentDidMount() {
@@ -45,12 +48,22 @@ class Layout extends Component {
     }
   }
 
+  updateMaxPrice = (value) => {
+    this.setState({
+      "currentMaxPrice": value,
+    })
+  }
+
+
   render() {
     const children = React.Children.map(this.props.children, child => {
      return React.cloneElement(child, {
        categoryList: this.props.categoryList,
        changeCategory: this.changeCategory,
        changeBrand: this.changeBrand,
+       changePrice: this.updateMaxPrice,
+       updateMaxPrice: this.updateMaxPrice,
+       currentMaxPrice: this.state.currentMaxPrice,
      });
    });
     return (

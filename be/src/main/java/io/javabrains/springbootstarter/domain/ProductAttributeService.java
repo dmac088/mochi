@@ -20,7 +20,7 @@ public class ProductAttributeService {
 		return productAttributeRepository.findByLclCd(lcl);
 	}
 	
-	public Optional<ProductAttribute> getProductAttribute(String lcl, Long id) {
+	public ProductAttribute getProductAttribute(String lcl, Long id) {
 		return productAttributeRepository.findByLclCdAndProductId(lcl, id);
 	}
 	

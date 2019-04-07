@@ -1,7 +1,6 @@
 package io.javabrains.springbootstarter.services;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -24,25 +23,30 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Sort;
 
 import io.javabrains.springbootstarter.domain.PageableUtil;
+import io.javabrains.springbootstarter.domain.Product;
 import io.javabrains.springbootstarter.domain.ProductAttribute;
-import io.javabrains.springbootstarter.domain.ProductAttributePagingAndSortingRepository;
 import io.javabrains.springbootstarter.domain.ProductAttributeRepository;
 import io.javabrains.springbootstarter.domain.ProductCategory;
 import io.javabrains.springbootstarter.domain.ProductCategoryRepository;
+import io.javabrains.springbootstarter.domain.ProductPagingAndSortingRepository;
 import io.javabrains.springbootstarter.domain.ProductPriceRepository;
+import io.javabrains.springbootstarter.domain.ProductRepository;
 
 @Service
 @Transactional
 public class ProductDTOService implements IProductDTOService {
 
     @Autowired
-    private ProductAttributePagingAndSortingRepository productAttributePagingAndSortingRepository;
+    private ProductPagingAndSortingRepository productPagingAndSortingRepository;
     
     @Autowired
-    private ProductCategoryRepository productCategoryRepository;
+    private ProductRepository productRepository;
     
     @Autowired
     private ProductAttributeRepository productAttributeRepository;
+    
+    @Autowired
+    private ProductCategoryRepository productCategoryRepository;
     
     @Autowired
     private ProductPriceRepository productPriceRepository;
@@ -60,7 +64,7 @@ public class ProductDTOService implements IProductDTOService {
 	@Transactional
 	public Page<ProductDTO> getProducts(String lcl, String currency, int page, int size, String sortBy) {
     	Page<ProductDTO> pp;
-		Page<ProductAttribute> ppa = productAttributePagingAndSortingRepository.findByLclCd(lcl, PageRequest.of(page, size, this.sortByParam(sortBy)));
+		Page<Product> ppa = productPagingAndSortingRepository.findAll(PageRequest.of(page, size, this.sortByParam(sortBy)));
 		pp = ppa.map(pa -> this.convertToProductDto(pa, lcl, currency));
 		return pp;
 	}	
@@ -68,7 +72,7 @@ public class ProductDTOService implements IProductDTOService {
     @Override
 	@Transactional
 	public ProductDTO getProduct(String lcl, String currency, Long id) {
-		ProductAttribute pa = productAttributeRepository.findByLclCdAndProductId(lcl, id).get();
+		Product pa = productRepository.findById(id).get();
 		ProductDTO p = this.convertToProductDto(pa, lcl, currency);
 		return p;
 	}	
@@ -81,7 +85,7 @@ public class ProductDTOService implements IProductDTOService {
      	ProductCategory pc = productCategoryRepository.findByCategoryId(categoryId);
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
-  		Collection<ProductAttribute> ppa = productAttributeRepository.findDistinctByLclCdAndProductCategoriesCategoryIdInAndProductPreviewFlag(lcl, categoryIds, new Long(1));
+  		List<Product> ppa = productRepository.findByCategoriesCategoryIdIn(categoryIds);
   		List<ProductDTO> pp = ppa.stream().map(pa -> this.convertToProductDto(pa, lcl, currency)).collect(Collectors.toList());
   		return pp;
   	}	
@@ -92,7 +96,7 @@ public class ProductDTOService implements IProductDTOService {
      	ProductCategory pc = productCategoryRepository.findByProductCategoryAttributeLclCdAndProductCategoryAttributeCategoryDesc(lcl, categoryDesc);
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
-  		Page<ProductAttribute> ppa = productAttributePagingAndSortingRepository.findDistinctByLclCdAndProductCategoriesCategoryIdIn(lcl, categoryIds, PageRequest.of(page, size, this.sortByParam(sortBy)));
+  		Page<Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdIn(categoryIds, PageRequest.of(page, size, this.sortByParam(sortBy)));
   		Page<ProductDTO> pp = ppa.map(pa -> this.convertToProductDto(pa, lcl, currency));
   		return pp;
 	}
@@ -103,7 +107,7 @@ public class ProductDTOService implements IProductDTOService {
      	ProductCategory pc = productCategoryRepository.findByProductCategoryAttributeLclCdAndProductCategoryAttributeCategoryDesc(lcl, categoryDesc);
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
-  		Page<ProductAttribute> ppa = productAttributePagingAndSortingRepository.findDistinctByLclCdAndProductCategoriesCategoryIdInAndProductPricesPriceValueBetween(lcl, categoryIds, new Long(0), price, PageRequest.of(page, size, this.sortByParam(sortBy)));
+  		Page<Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndPricesPriceValueBetween(categoryIds, new Long(0), price, PageRequest.of(page, size, this.sortByParam(sortBy)));
   		Page<ProductDTO> pp = ppa.map(pa -> this.convertToProductDto(pa, lcl, currency));
   		return pp;
 	}
@@ -114,7 +118,7 @@ public class ProductDTOService implements IProductDTOService {
      	ProductCategory pc = productCategoryRepository.findByProductCategoryAttributeLclCdAndProductCategoryAttributeCategoryDesc(lcl, categoryDesc);
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
-  		Page<ProductAttribute> ppa = productAttributePagingAndSortingRepository.findDistinctByLclCdAndProductCategoriesCategoryIdInAndProductBrandBrandAttributesBrandDesc(lcl, categoryIds, brandDesc,PageRequest.of(page, size, this.sortByParam(sortBy)));
+  		Page<Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndBrandBrandAttributesBrandDesc(categoryIds, brandDesc,PageRequest.of(page, size, this.sortByParam(sortBy)));
   		Page<ProductDTO> pp = ppa.map(pa -> this.convertToProductDto(pa, lcl, currency));
   		return pp;
 	}
@@ -125,7 +129,7 @@ public class ProductDTOService implements IProductDTOService {
      	ProductCategory pc = productCategoryRepository.findByProductCategoryAttributeLclCdAndProductCategoryAttributeCategoryDesc(lcl, categoryDesc);
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
-  		Page<ProductAttribute> ppa = productAttributePagingAndSortingRepository.findDistinctByLclCdAndProductCategoriesCategoryIdInAndProductBrandBrandAttributesBrandDescAndProductPricesPriceValueBetween(lcl, categoryIds, brandDesc, new Long(0), price, PageRequest.of(page, size, this.sortByParam(sortBy)));
+  		Page<Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndBrandBrandAttributesBrandDescAndPricesPriceValueBetween(categoryIds, brandDesc, new Long(0), price, PageRequest.of(page, size, this.sortByParam(sortBy)));
   		Page<ProductDTO> pp = ppa.map(pa -> this.convertToProductDto(pa, lcl, currency));
   		return pp;
 	}
@@ -192,7 +196,7 @@ public class ProductDTOService implements IProductDTOService {
 		jpaQuery.setSort(sort);
 		
 		@SuppressWarnings("unchecked")
-		List<ProductAttribute> results =  Collections.checkedList(jpaQuery.getResultList(), ProductAttribute.class);
+		List<Product> results =  Collections.checkedList(jpaQuery.getResultList(), Product.class);
 		
 		List<ProductDTO> lp = results.stream().map(pa -> this.convertToProductDto(pa, lcl, currency)).collect(Collectors.toList());
 
@@ -236,35 +240,38 @@ public class ProductDTOService implements IProductDTOService {
     }
     
 	
-    public ProductDTO convertToProductDto(final ProductAttribute productAttribute, String lcl, String currency) {
+    public ProductDTO convertToProductDto(final Product product, String lcl, String currency) {
         //get values from contact entity and set them in contactDto
         //e.g. contactDto.setContactId(contact.getContactId());
+    	
+    	ProductAttribute pa = productAttributeRepository.findByLclCdAndProductId(lcl, product.getProductId());
+    	
         final ProductDTO productDto = new ProductDTO();
-        productDto.setProductId(productAttribute.getProduct().getProductId());
-        productDto.setProductCreateDt(productAttribute.getProduct().getProductCreateDt());
-        productDto.setProductUPC(productAttribute.getProduct().getProductUPC());
-        productDto.setProductDesc(productAttribute.getProductDesc());
+        productDto.setProductId(product.getProductId());
+        productDto.setProductCreateDt(product.getProductCreateDt());
+        productDto.setProductUPC(product.getProductUPC());
+        productDto.setProductDesc(pa.getProductDesc());
         
         /*instead of filtering the stream use JPA queries*/
         //productDto.setProductRetail(productAttribute.getProduct().getProductPrices().stream().filter(p -> p.getPriceCurrency().getCurrencyCode().equals(currency) && p.getPriceType().getPriceTypeDesc().equals("retail")).collect(Collectors.toList()).get(0).getPriceValue());
         //productDto.setProductMarkdown(productAttribute.getProduct().getProductPrices().stream().filter(p -> p.getPriceCurrency().getCurrencyCode().equals(currency) && p.getPriceType().getPriceTypeDesc().equals("markdown")).collect(Collectors.toList()).get(0).getPriceValue());
                 
-        productDto.setProductRetail(productPriceRepository.findByProductProductIdAndPriceTypePriceTypeDescAndPriceStartDateLessThanEqualAndPriceEndDateGreaterThanEqualAndPriceCurrencyCurrencyCode(productDto.getProductId(), "retail", new Date(), new Date(), currency).getPriceValue());
-        productDto.setProductMarkdown(productPriceRepository.findByProductProductIdAndPriceTypePriceTypeDescAndPriceStartDateLessThanEqualAndPriceEndDateGreaterThanEqualAndPriceCurrencyCurrencyCode(productDto.getProductId(), "markdown", new Date(), new Date(), currency).getPriceValue());
+        productDto.setProductRetail(productPriceRepository.findByProductProductIdAndPriceTypePriceTypeDescAndPriceStartDateLessThanEqualAndPriceEndDateGreaterThanEqualAndPriceCurrencyCurrencyCode(product.getProductId(), "retail", new Date(), new Date(), currency).getPriceValue());
+        productDto.setProductMarkdown(productPriceRepository.findByProductProductIdAndPriceTypePriceTypeDescAndPriceStartDateLessThanEqualAndPriceEndDateGreaterThanEqualAndPriceCurrencyCurrencyCode(product.getProductId(), "markdown", new Date(), new Date(), currency).getPriceValue());
         
-        productDto.setProductImage(productAttribute.getProductImage());
+        productDto.setProductImage(pa.getProductImage());
         productDto.setLclCd(lcl);
-        productDto.setBrandDesc(productAttribute.getProduct().getBrand().getBrandAttributes().stream()
+        productDto.setBrandDesc(product.getBrand().getBrandAttributes().stream()
         .filter( ba -> ba.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getbrandDesc());
         return productDto;
     }
     
     private Sort sortByParam(String param) {
     	switch (param) {
-    	case "priceAsc": return new Sort(Sort.Direction.ASC, "productRrp");
-    	case "priceDesc": return new Sort(Sort.Direction.DESC, "productRrp");
-    	case "nameAsc": return new Sort(Sort.Direction.ASC, "productDesc");
-    	default: return new Sort(Sort.Direction.ASC, "productDesc");
+    	case "priceAsc": return new Sort(Sort.Direction.ASC, "Prices.PriceValue");
+    	case "priceDesc": return new Sort(Sort.Direction.DESC, "Prices.PriceValue");
+    	case "nameAsc": return new Sort(Sort.Direction.ASC, "ProductAttribute.productDesc");
+    	default: return new Sort(Sort.Direction.ASC, "ProductAttribute.productDesc");
     	}
     }
 

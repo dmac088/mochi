@@ -33,7 +33,7 @@ class Products extends Component {
                   "size": "10",
                   "sort": "nameAsc",
                 },
-      "currentMaxPrice": 0,
+      "currentMaxPrice": null,
     };
   }
 
@@ -44,6 +44,7 @@ class Products extends Component {
 
 
   componentDidUpdate() {
+    console.log("componentDidUpdate");
     this.refresh(0);
   }
 
@@ -51,16 +52,16 @@ class Products extends Component {
   refresh = (isMounting) => {
     const { pathname, search } = this.props.location;
     const params = {...this.state.params};
-    const { currentMaxPrice } = this.state;
+    const { currentMaxPrice } = this.props;
     const { locale, currency, term, brand } = this.props.match.params;
 
     const type = this.props.match.params[0];
-
+    console.log(currentMaxPrice);
     if(type==="category") {
       this.update(locale, currency, pathname, term, brand, Object.assign(params, qs.parse(search)), currentMaxPrice, isMounting, this.getProducts);
     }
     if (type==="search") {
-      this.update(locale, currency, pathname, "All", term, Object.assign(params, qs.parse(search)), currentMaxPrice,isMounting, pageService.findAll);
+      this.update(locale, currency, pathname, "All", term, Object.assign(params, qs.parse(search)), currentMaxPrice, isMounting, pageService.findAll);
     }
   }
 
@@ -73,11 +74,12 @@ class Products extends Component {
       &&  category === this.state.category
       &&  term === this.state.term
       &&  page === this.state.params.page
-      &&  size === this.state.params.size
+      &&  size === this.state.params.size 
       &&  sort === this.state.params.sort
       &&  maxPrice === this.state.currentMaxPrice
       &&  isMounting === 0
     ) {return;}
+    console.log("made it");
     callback(locale, currency, category, term, maxPrice, page, size, sort)
     .then((responseJSON) => {
       this.setState({
@@ -145,16 +147,10 @@ class Products extends Component {
     )
   }
 
-  updateMaxPrice = (value) => {
-    this.setState({
-      "currentMaxPrice": value,
-    })
-  }
-
 
   render() {
 
-      const { toggleQuickView, setCurrentProductId, showQVModal, currentProductId, categoryList, changeCategory, changeBrand } = this.props;
+      const { toggleQuickView, setCurrentProductId, showQVModal, currentProductId, categoryList, changeCategory, changeBrand, updateMaxPrice, currentMaxPrice} = this.props;
       const { products, totalPages, totalElements, numberOfElements, isGrid, term, category } = this.state;
       const { page, size } = this.state.params;
       const cat = this.filterCategories(categoryList, category)[0];
@@ -172,8 +168,8 @@ class Products extends Component {
                       />
                     {this.renderBrandSlider(cat,changeBrand)}
                       <PriceSidebar
-                        updateMaxPrice={this.updateMaxPrice}
-                        currentMaxPrice={this.state.currentMaxPrice}
+                        updateMaxPrice={updateMaxPrice}
+                        currentMaxPrice={currentMaxPrice}
                         category={cat}
                         brand={term}/>
                       <TopRatedSidebar/>
