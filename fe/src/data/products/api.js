@@ -26,13 +26,14 @@ export const findById = (locale, currency, productId) => fetchApi(
 																				);
 
 
-export const findByCategory = (locale, currency, category, brand, page = 0, size = 10, sortBy = 'priceAsc') => fetchApi(
+export const findByCategory = (locale, currency, category, brand, maxPrice, page = 0, size = 10, sortBy = 'priceAsc') => fetchApi(
 																				endPoints.get +
 																				locale +
 																				'/' + currency +
 																				'/categoryDesc/' + category +
 																				((brand) ? '/brand/' : '') +
 																				((brand) ? brand : '') +
+																				'/maxPrice/' + maxPrice +
 																				'/page/' + page +
 																				'/size/' + size +
 																				'/sortBy/' + sortBy,

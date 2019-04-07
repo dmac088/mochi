@@ -63,7 +63,7 @@ public class Product {
 	
 	@OneToMany(mappedBy="product",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonManagedReference
-	List<ProductPrice> productPrices;
+	List<ProductPrice> prices;
 
 	public Long getProductId() {
 		return productId;
@@ -107,11 +107,11 @@ public class Product {
 	}
 	
 	public List<ProductPrice> getProductPrices() {
-		return productPrices;
+		return this.prices;
 	}
 
 	public void setProductPrices(List<ProductPrice> productPrices) {
-		this.productPrices = productPrices;
+		this.prices = productPrices;
 	}
 	
 	public Long getPreviewFlag() {

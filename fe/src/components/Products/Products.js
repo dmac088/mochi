@@ -32,7 +32,8 @@ class Products extends Component {
                   "page": "0",
                   "size": "10",
                   "sort": "nameAsc",
-                 }
+                },
+      "currentMaxPrice": 0,
     };
   }
 
@@ -50,20 +51,21 @@ class Products extends Component {
   refresh = (isMounting) => {
     const { pathname, search } = this.props.location;
     const params = {...this.state.params};
+    const { currentMaxPrice } = this.state;
     const { locale, currency, term, brand } = this.props.match.params;
 
     const type = this.props.match.params[0];
 
     if(type==="category") {
-      this.update(locale, currency, pathname, term, brand, Object.assign(params, qs.parse(search)), isMounting, this.getProducts);
+      this.update(locale, currency, pathname, term, brand, Object.assign(params, qs.parse(search)), currentMaxPrice, isMounting, this.getProducts);
     }
     if (type==="search") {
-      this.update(locale, currency, pathname, "All", term, Object.assign(params, qs.parse(search)), isMounting, pageService.findAll);
+      this.update(locale, currency, pathname, "All", term, Object.assign(params, qs.parse(search)), currentMaxPrice,isMounting, pageService.findAll);
     }
   }
 
 
-  update = (locale, currency, pathname, category, term, params, isMounting = 0, callback) => {
+  update = (locale, currency, pathname, category, term, params, maxPrice, isMounting = 0, callback) => {
     if(!params) {return;}
     const { page, size, sort } = params;
     if(   locale === this.state.locale
@@ -73,9 +75,10 @@ class Products extends Component {
       &&  page === this.state.params.page
       &&  size === this.state.params.size
       &&  sort === this.state.params.sort
+      &&  maxPrice === this.state.currentMaxPrice
       &&  isMounting === 0
     ) {return;}
-    callback(locale, currency, category, term, page, size, sort)
+    callback(locale, currency, category, term, maxPrice, page, size, sort)
     .then((responseJSON) => {
       this.setState({
         "locale":           locale,
@@ -86,6 +89,7 @@ class Products extends Component {
         "totalPages":       responseJSON.totalPages,
         "totalElements":    responseJSON.totalElements,
         "numberOfElements": responseJSON.numberOfElements,
+        "currentMaxPrice":  maxPrice,
         "params":           params,
       }, () => {
         this.props.history.push({
@@ -99,8 +103,8 @@ class Products extends Component {
     });
   }
 
-  getProducts = (locale, currency, category, brand, page, size, sort) =>
-    productApi.findByCategory(locale, currency, category, brand, page, size, sort)
+  getProducts = (locale, currency, category, brand, maxPrice, page, size, sort) =>
+    productApi.findByCategory(locale, currency, category, brand, maxPrice, page, size, sort)
     .then((response) => {
         return response.text();
     })
@@ -141,6 +145,12 @@ class Products extends Component {
     )
   }
 
+  updateMaxPrice = (value) => {
+    this.setState({
+      "currentMaxPrice": value,
+    })
+  }
+
 
   render() {
 
@@ -162,7 +172,8 @@ class Products extends Component {
                       />
                     {this.renderBrandSlider(cat,changeBrand)}
                       <PriceSidebar
-                        {...this.props}
+                        updateMaxPrice={this.updateMaxPrice}
+                        currentMaxPrice={this.state.currentMaxPrice}
                         category={cat}
                         brand={term}/>
                       <TopRatedSidebar/>

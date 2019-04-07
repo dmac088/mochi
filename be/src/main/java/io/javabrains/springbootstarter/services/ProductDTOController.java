@@ -34,6 +34,11 @@ public class ProductDTOController {
     	return productService.getPreviewProductsForCategory(lcl, curr, cat);
     }
     
+    @GetMapping("/Product/{lcl}/{curr}/categoryDesc/{category}/maxPrice/{price}/page/{page}/size/{size}/sortBy/{sortBy}")
+    public Page<ProductDTO> getProducts(@PathVariable String lcl, @PathVariable String curr, @PathVariable String category, @PathVariable Long price, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy) {
+    	return productService.getProductsForCategory(lcl, curr, category, price, page, size, sortBy);
+    }
+    
     @GetMapping("/Product/{lcl}/{curr}/categoryDesc/{category}/page/{page}/size/{size}/sortBy/{sortBy}")
     public Page<ProductDTO> getProducts(@PathVariable String lcl, @PathVariable String curr, @PathVariable String category, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy) {
     	return productService.getProductsForCategory(lcl, curr, category, page, size, sortBy);
@@ -42,6 +47,11 @@ public class ProductDTOController {
     @GetMapping("/Product/{lcl}/{curr}/categoryDesc/{category}/brand/{brand}/page/{page}/size/{size}/sortBy/{sortBy}")
     public Page<ProductDTO> getProducts(@PathVariable String lcl, @PathVariable String curr, @PathVariable String category, @PathVariable String brand, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy) {
     	return productService.getProductsForCategoryAndBrand(lcl, curr, category, brand, page, size, sortBy);
+    }
+    
+    @GetMapping("/Product/{lcl}/{curr}/categoryDesc/{category}/brand/{brand}/maxPrice/{price}/page/{page}/size/{size}/sortBy/{sortBy}")
+    public Page<ProductDTO> getProducts(@PathVariable String lcl, @PathVariable String curr, @PathVariable String category, @PathVariable String brand, @PathVariable Long price, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy) {
+    	return productService.getProductsForCategoryAndBrandAndPrice(lcl, curr, category, brand, price, page, size, sortBy);
     }
     
     @GetMapping("/Search/{lcl}/{curr}/Category/{categoryCode}/SearchTerm/{term}/Page/{page}/Size/{size}/SortBy/{sortBy}")
