@@ -23,7 +23,6 @@ class Products extends Component {
       "currency": "HKD",
       "category": "",
       "term":     "",
-      "brand":    "",
       "products": [],
       "totalPages": 0,
       "totalElements": 0,
@@ -163,7 +162,8 @@ class Products extends Component {
                       />
                     {this.renderBrandSlider(cat,changeBrand)}
                       <PriceSidebar
-                        category={cat}/>
+                        category={cat}
+                        brand={term}/>
                       <TopRatedSidebar/>
                       <TagSidebar/>
                     </div>
