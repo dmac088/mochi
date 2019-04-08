@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import ReactTransitionGroup from 'react-addons-transition-group';
@@ -143,6 +144,6 @@ class Accordion extends React.Component {
   	}
 }
 
-export default connect(state => ({
+export default withRouter(connect(state => ({
     cart: state.services.cart,
-}))(HeaderCartSummary);
+}))(HeaderCartSummary));

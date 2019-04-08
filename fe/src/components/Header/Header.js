@@ -1,5 +1,6 @@
 
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import Greeting from './Greeting';
 import Search from './Search';
 import Menu from './Menu';
@@ -127,23 +128,11 @@ class Header extends Component {
                     </div>
                   </div>
                   <Search/>
-                  <HeaderCartSummary
-                    match={match}
-                    location={location}
-                    history={history}
-                  />
+                  <HeaderCartSummary/>
                 </div>
                 {(this.state.renderMobile) ?
-                  <MobileMenu
-                    match={match}
-                    location={location}
-                    history={history}
-                  /> :
-                  <Menu
-                    match={match}
-                    location={location}
-                    history={history}
-                  />
+                  <MobileMenu /> :
+                  <Menu />
                 }
               </div>
               <div className="col-12">
@@ -157,4 +146,4 @@ class Header extends Component {
   }
 }
 
-export default Header;
+export default withRouter(Header);

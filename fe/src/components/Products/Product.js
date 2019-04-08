@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import * as cartService from '../../services/cart';
 import * as cartSelector from '../../services/cart/selectors';
 
@@ -116,4 +117,4 @@ class Product extends Component {
   }
 }
 
-export default Product;
+export default withRouter(Product);

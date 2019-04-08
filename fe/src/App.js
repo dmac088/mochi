@@ -176,28 +176,28 @@ class App extends Component {
   }
 
 
-  renderLayout = (routeProps, contentCallback) => {
+  renderLayout = (contentCallback) => {
     const { locale, currency, categoryList } = this.state;
     return (
-      <Layout {...routeProps}
+      <Layout
         locale={locale}
         currency={currency}
         categoryList={categoryList}
         updateLocale={this.updateLocale}>
-          {contentCallback(routeProps)}
+          {contentCallback()}
       </Layout>
     );
   }
 
-  renderLayoutBC = (routeProps, contentCallback) => {
+  renderLayoutBC = (contentCallback) => {
     const { locale, currency, categoryList } = this.state;
     return (
-      <LayoutBC {...routeProps}
+      <LayoutBC
         locale={locale}
         currency={currency}
         categoryList={categoryList}
         updateLocale={this.updateLocale}>
-        {contentCallback(routeProps)}
+        {contentCallback()}
       </LayoutBC>
     );
   }
@@ -206,7 +206,6 @@ class App extends Component {
     const { locale, currency, currentProductId, showQVModal, landingCategories, previewCategories } = this.state;
     return (
       <Landing
-        {...routeProps}
         locale={locale}
         currency={currency}
         showQVModal={showQVModal}
@@ -219,11 +218,10 @@ class App extends Component {
     );
   }
 
-  renderProducts = (routeProps) => {
+  renderProducts = () => {
     const { locale, currency, pagedItems, categoryList, showQVModal, currentProductId } = this.state;
     return (
       <Products
-        {...routeProps}
         toggleQuickView={this.toggleQuickView}
         showQVModal={showQVModal}
         setCurrentProductId={this.setCurrentProductId}
@@ -233,11 +231,10 @@ class App extends Component {
     );
   }
 
-  renderCheckout = (routeProps) => {
+  renderCheckout = () => {
     const { tokens, customer } = this.props;
     return (
       <Checkout
-        {...routeProps}
         authenticated={tokens.authenticated}
         customer={customer}
         page="Checkout"
@@ -245,11 +242,10 @@ class App extends Component {
     );
   }
 
-  renderCart = (routeProps) => {
+  renderCart = () => {
     const { tokens, customer, cart } = this.props;
     return (
       <Cart
-        {...routeProps}
         authenticated={tokens.authenticated}
         customer={customer}
         cart={cart}
@@ -258,16 +254,14 @@ class App extends Component {
     );
   }
 
-  renderAuth = (routeProps) => {
+  renderAuth = () => {
     const { tokens, customer } = this.props;
       return(
          (!tokens.authenticated)
       ?  (<Auth
-            {...routeProps}
             page={"Account"}
           />)
       :  (<Account
-                  {...routeProps}
                   authenticated={tokens.authenticated}
                   customer={customer}
                   page={"Account"}
@@ -275,38 +269,37 @@ class App extends Component {
       )
   }
 
-  renderWishlist = (routeProps) => {
+  renderWishlist = () => {
     return (<Wishlist
-              {...routeProps}
               page={"Wishlist"}
             />);
   }
 
-  renderContact = (routeProps) => {
-    return (<Contact {...routeProps} />);
+  renderContact = () => {
+    return (<Contact />);
   }
 
-  renderProduct = (routeProps) => {
-    return (<Product {...routeProps} />);
+  renderProduct = () => {
+    return (<Product />);
   }
 
 
   render() {
     return (
         <Switch>
-          <Route path={"/:locale/:currency"} exact={true}                                             render={(props)   => this.renderLayout(props, this.renderLanding)}        />
-          <Route path={"/:locale/:currency/(category|search)/:term/product/:productId"} exact={true}  render={(props)   => this.renderLayoutBC(props, this.renderProduct)}      />
-          <Route path={"/:locale/:currency/(category|search)/:term/brand/:brand"}                     render={(props)   => this.renderLayoutBC(props, this.renderProducts)}     />
-          <Route path={"/:locale/:currency/(category|search)/:term"}                                  render={(props)   => this.renderLayoutBC(props, this.renderProducts)}     />
-          <Route path={"/:locale/:currency/(search)"}                                                 render={(props)   => this.renderLayoutBC(props, this.renderProducts)}     />
-          <Route path={"/:locale/:currency/Checkout"} exact={true}                                    render={(props)   => this.renderLayoutBC(props, this.renderCheckout)}     />
-          <Route path={"/:locale/:currency/Cart"} exact={true}                                        render={(props)   => this.renderLayoutBC(props, this.renderCart)}         />
-          <Route path={"/:locale/:currency/Account"} exact={true}                                     render={(props)   => this.renderLayoutBC(props, this.renderAuth)}         />
-          <Route path={"/:locale/:currency/Wishlist"} exact={true}                                    render={(props)   => this.renderLayoutBC(props, this.renderWishlist)}     />
-          <Route path={"/:locale/:currency/Contact"} exact={true}                                     render={(props)   => this.renderLayoutBC(props, this.renderContact)}      />
-          <Route path={"/:locale/:currency/Auth"} exact={true}                                        render={(props)   => this.renderLayoutBC(props, this.renderAuth)}         />
+          <Route path={"/:locale/:currency"} exact={true}                                             render={(props)   => this.renderLayout(this.renderLanding)}        />
+          <Route path={"/:locale/:currency/(category|search)/:term/product/:productId"} exact={true}  render={(props)   => this.renderLayoutBC(this.renderProduct)}      />
+          <Route path={"/:locale/:currency/(category|search)/:term/brand/:brand"}                     render={(props)   => this.renderLayoutBC(this.renderProducts)}     />
+          <Route path={"/:locale/:currency/(category|search)/:term"}                                  render={(props)   => this.renderLayoutBC(this.renderProducts)}     />
+          <Route path={"/:locale/:currency/(search)"}                                                 render={(props)   => this.renderLayoutBC(this.renderProducts)}     />
+          <Route path={"/:locale/:currency/Checkout"} exact={true}                                    render={(props)   => this.renderLayoutBC(this.renderCheckout)}     />
+          <Route path={"/:locale/:currency/Cart"} exact={true}                                        render={(props)   => this.renderLayoutBC(this.renderCart)}         />
+          <Route path={"/:locale/:currency/Account"} exact={true}                                     render={(props)   => this.renderLayoutBC(this.renderAuth)}         />
+          <Route path={"/:locale/:currency/Wishlist"} exact={true}                                    render={(props)   => this.renderLayoutBC(this.renderWishlist)}     />
+          <Route path={"/:locale/:currency/Contact"} exact={true}                                     render={(props)   => this.renderLayoutBC(this.renderContact)}      />
+          <Route path={"/:locale/:currency/Auth"} exact={true}                                        render={(props)   => this.renderLayoutBC(this.renderAuth)}         />
           <Redirect from="/" to="/en-GB/HKD" />
-          <Route                                                                                      render={(props)   => this.renderLayout(props, this.renderLanding)}        />
+          <Route                                                                                      render={(props)   => this.renderLayout(this.renderLanding)}        />
 
           </Switch>
     );

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import * as categoryApi from '../../data/categories/api';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
@@ -80,4 +81,4 @@ class Layout extends Component {
 }
 
 
-export default Layout;
+export default withRouter(Layout);
