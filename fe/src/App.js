@@ -114,7 +114,7 @@ class App extends Component {
   }
 
   getCategoryProducts = (locale, currency, category) =>
-    productApi.findByCategory(locale, currency, category, "", 0, 50)
+    productApi.findByCategory(locale, currency, category, "", 500, 0, 50)
     .then((response) => {
         return response.text();
     })
