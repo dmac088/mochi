@@ -74,7 +74,7 @@ class Products extends Component {
       &&  category === this.state.category
       &&  term === this.state.term
       &&  page === this.state.params.page
-      &&  size === this.state.params.size 
+      &&  size === this.state.params.size
       &&  sort === this.state.params.sort
       &&  maxPrice === this.state.currentMaxPrice
       &&  isMounting === 0
@@ -154,7 +154,6 @@ class Products extends Component {
       const { products, totalPages, totalElements, numberOfElements, isGrid, term, category } = this.state;
       const { page, size } = this.state.params;
       const cat = this.filterCategories(categoryList, category)[0];
-
 				return(
           <React.Fragment>
             <div className="shop-page-container mb-50">

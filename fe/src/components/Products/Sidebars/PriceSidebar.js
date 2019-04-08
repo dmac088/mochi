@@ -12,6 +12,10 @@ class PriceSidebar extends Component {
     };
   }
 
+  componentDidMount() {
+    console.log("componentDidMount");
+  }
+
   componentDidUpdate(prevProps) {
     const { updateMaxPrice } = this.props;
     if(!prevProps.category || !this.props.category) { return }
@@ -41,7 +45,7 @@ class PriceSidebar extends Component {
     return (
       <div className="sidebar mb-35">
         <h3 className="sidebar-title">Filter By Price</h3>
-        <p>Value: {(!currentMaxPrice) ? maxPrice : currentMaxPrice}</p>
+        <p>Value: {(!currentMaxPrice) ? maxPrice+1 : currentMaxPrice}</p>
           <Slider
             onChange={(value) => updateMaxPrice(value)}
             defaultValue={30}
@@ -55,9 +59,9 @@ class PriceSidebar extends Component {
               backgroundColor: 'grey',
             }}
             min={0}
-            max={maxPrice}
-            defaultValue={maxPrice}
-            value={(!currentMaxPrice) ? maxPrice : currentMaxPrice}
+            max={maxPrice+1}
+            defaultValue={maxPrice+1}
+            value={(!currentMaxPrice) ? maxPrice+1 : currentMaxPrice}
             railStyle={{ height: 10 }}/>
 
       </div>
