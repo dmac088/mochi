@@ -53,7 +53,7 @@ public class Product {
 
 	@OneToMany(mappedBy="product",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonManagedReference
-	private List<ProductAttribute> productAttribute;
+	private List<ProductAttribute> attributes;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@IndexedEmbedded
@@ -74,12 +74,12 @@ public class Product {
 	}
 	
 	
-	public List<ProductAttribute> getProductAttribute() {
-		return productAttribute;
+	public List<ProductAttribute> getAttributes() {
+		return attributes;
 	}
 
-	public void setProductAttribute(List<ProductAttribute> productAttribute) {
-		this.productAttribute = productAttribute;
+	public void setAttributes(List<ProductAttribute> productAttributes) {
+		this.attributes = productAttributes;
 	}
 
 	public void setCategories(List<ProductCategory> categories) {
@@ -106,11 +106,11 @@ public class Product {
 		this.productCreateDt = productCreateDt;
 	}
 	
-	public List<ProductPrice> getProductPrices() {
+	public List<ProductPrice> getPrices() {
 		return this.prices;
 	}
 
-	public void setProductPrices(List<ProductPrice> productPrices) {
+	public void setPrices(List<ProductPrice> productPrices) {
 		this.prices = productPrices;
 	}
 	

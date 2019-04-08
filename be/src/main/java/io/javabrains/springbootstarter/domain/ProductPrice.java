@@ -26,29 +26,29 @@ public class ProductPrice {
 	private Long priceValue;
 	
 	@Column(name="prc_st_dt")
-	private Date priceStartDate;
+	private Date startDate;
 	
 	@Column(name="prc_en_dt")
-	private Date priceEndDate; 
+	private Date endDate; 
 
 	@ManyToOne
 	@JoinColumn(name="prc_typ_id", nullable=false, updatable = false, insertable = true)
-	private ProductPriceType priceType;
+	private ProductPriceType type;
 	
 	@ManyToOne
 	@JoinColumn(name="ccy_id", nullable=false, updatable = false, insertable = true)
-	private Currency priceCurrency;
+	private Currency currency;
 	
 	@ManyToOne
 	@JoinColumn(name="prd_id", nullable=false, updatable = false, insertable = true)
 	private Product product;
 
-	public ProductPriceType getPriceType() {
-		return priceType;
+	public ProductPriceType getType() {
+		return this.type;
 	}
 
-	public void setPriceType(ProductPriceType priceType) {
-		this.priceType = priceType;
+	public void setType(ProductPriceType priceType) {
+		this.type = priceType;
 	}
 
 	public Long getPriceValue() {
@@ -59,28 +59,28 @@ public class ProductPrice {
 		this.priceValue = priceValue;
 	}
 	
-	public Currency getPriceCurrency() {
-		return priceCurrency;
+	public Currency getCurrency() {
+		return currency;
 	}
 
-	public void setPriceCurrency(Currency priceCurrency) {
-		this.priceCurrency = priceCurrency;
+	public void setCurrency(Currency priceCurrency) {
+		this.currency = priceCurrency;
 	}
 	
-	public Date getPriceStartDate() {
-		return priceStartDate;
+	public Date getStartDate() {
+		return startDate;
 	}
 
-	public void setPriceStartDate(Date priceStartDate) {
-		this.priceStartDate = priceStartDate;
+	public void setStartDate(Date priceStartDate) {
+		this.startDate = priceStartDate;
 	}
 
-	public Date getPriceEndDate() {
-		return priceEndDate;
+	public Date getEndDate() {
+		return endDate;
 	}
 
-	public void setPriceEndDate(Date priceEndDate) {
-		this.priceEndDate = priceEndDate;
+	public void setEndDate(Date priceEndDate) {
+		this.endDate = priceEndDate;
 	}
 	
 }

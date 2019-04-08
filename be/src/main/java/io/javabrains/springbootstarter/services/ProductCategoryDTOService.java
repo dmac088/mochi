@@ -75,7 +75,7 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
     
     @Override
 	public ProductCategoryDTO getProductCategory(String lcl, String currency, String categoryDesc) {
-     	ProductCategory pc = productCategoryRepository.findByProductCategoryAttributeLclCdAndProductCategoryAttributeCategoryDesc(lcl, categoryDesc);
+     	ProductCategory pc = productCategoryRepository.findByProductCategoryAttributeCategoryDesc(categoryDesc);
      	return	convertToProductCategoryDto(pc, lcl, currency);
 	}
     
