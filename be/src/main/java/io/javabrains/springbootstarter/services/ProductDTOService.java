@@ -29,7 +29,6 @@ import io.javabrains.springbootstarter.domain.ProductAttributeRepository;
 import io.javabrains.springbootstarter.domain.ProductCategory;
 import io.javabrains.springbootstarter.domain.ProductCategoryRepository;
 import io.javabrains.springbootstarter.domain.ProductPagingAndSortingRepository;
-import io.javabrains.springbootstarter.domain.ProductPriceRepository;
 import io.javabrains.springbootstarter.domain.ProductRepository;
 
 @Service
@@ -47,9 +46,6 @@ public class ProductDTOService implements IProductDTOService {
     
     @Autowired
     private ProductCategoryRepository productCategoryRepository;
-    
-    @Autowired
-    private ProductPriceRepository productPriceRepository;
     
 	@PersistenceContext(unitName = "mochiEntityManagerFactory")
 	private EntityManager em;
@@ -132,7 +128,7 @@ public class ProductDTOService implements IProductDTOService {
      	ProductCategory pc = productCategoryRepository.findByProductCategoryAttributeCategoryDesc(categoryDesc);
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
-  		Page<Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndPricesPriceValueBetweenAndPricesTypeDescAndPricesCurrencyAndPricesStartDateLessThanAndPricesEndDateGreaterThan(categoryIds, new Long(0), price, "markdown", "HKD", new Date(), new Date(),PageRequest.of(page, size, this.sortByParam(sortBy)));
+  		Page<Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndPricesPriceValueBetweenAndPricesTypeDescAndPricesCurrencyCodeAndPricesStartDateLessThanAndPricesEndDateGreaterThan(categoryIds, new Long(0), price, "markdown", "HKD", new Date(), new Date(),PageRequest.of(page, size, this.sortByParam(sortBy)));
   		Page<ProductDTO> pp = ppa.map(pa -> this.convertToProductDto(pa, lcl, currency));
   		return pp;
 	}
