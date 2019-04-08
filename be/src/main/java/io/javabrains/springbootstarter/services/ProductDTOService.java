@@ -29,6 +29,7 @@ import io.javabrains.springbootstarter.domain.ProductAttributeRepository;
 import io.javabrains.springbootstarter.domain.ProductCategory;
 import io.javabrains.springbootstarter.domain.ProductCategoryRepository;
 import io.javabrains.springbootstarter.domain.ProductPagingAndSortingRepository;
+import io.javabrains.springbootstarter.domain.ProductPriceRepository;
 import io.javabrains.springbootstarter.domain.ProductRepository;
 
 @Service
@@ -40,6 +41,8 @@ public class ProductDTOService implements IProductDTOService {
     
     @Autowired
     private ProductRepository productRepository;
+    
+    @Autowired ProductPriceRepository productPriceRepository;
     
     @Autowired
     private ProductAttributeRepository productAttributeRepository;
@@ -268,8 +271,8 @@ public class ProductDTOService implements IProductDTOService {
         //productDto.setProductRetail(productAttribute.getProduct().getProductPrices().stream().filter(p -> p.getPriceCurrency().getCurrencyCode().equals(currency) && p.getPriceType().getPriceTypeDesc().equals("retail")).collect(Collectors.toList()).get(0).getPriceValue());
         //productDto.setProductMarkdown(productAttribute.getProduct().getProductPrices().stream().filter(p -> p.getPriceCurrency().getCurrencyCode().equals(currency) && p.getPriceType().getPriceTypeDesc().equals("markdown")).collect(Collectors.toList()).get(0).getPriceValue());
                 
-        //productDto.setProductRetail(productPriceRepository.findByProductProductIdAndTypePriceTypeDescAndStartDateLessThanEqualAndEndDateGreaterThanEqualAndCurrencyCurrencyCode(product.getProductId(), "retail", new Date(), new Date(), currency).getPriceValue());
-        //productDto.setProductMarkdown(productPriceRepository.findByProductProductIdAndTypePriceTypeDescAndStartDateLessThanEqualAndEndDateGreaterThanEqualAndCurrencyCurrencyCode(product.getProductId(), "markdown", new Date(), new Date(), currency).getPriceValue());
+        productDto.setProductRetail(productPriceRepository.findByProductProductIdAndTypeDescAndStartDateLessThanEqualAndEndDateGreaterThanEqualAndCurrencyCode(product.getProductId(), "retail", new Date(), new Date(), currency).getPriceValue());
+        productDto.setProductMarkdown(productPriceRepository.findByProductProductIdAndTypeDescAndStartDateLessThanEqualAndEndDateGreaterThanEqualAndCurrencyCode(product.getProductId(), "markdown", new Date(), new Date(), currency).getPriceValue());
         
         productDto.setProductImage(pa.getProductImage());
         productDto.setLclCd(lcl);
