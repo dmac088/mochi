@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import Product from './Product';
 import QuickViewProduct from '../QuickView/QuickViewProduct';
 import CategorySidebar from './Sidebars/CategorySidebar';
@@ -44,7 +45,6 @@ class Products extends Component {
 
 
   componentDidUpdate() {
-    console.log("componentDidUpdate");
     this.refresh(0);
   }
 
@@ -79,7 +79,6 @@ class Products extends Component {
       &&  maxPrice === this.state.currentMaxPrice
       &&  isMounting === 0
     ) {return;}
-    console.log("made it");
     callback(locale, currency, category, term, maxPrice, page, size, sort)
     .then((responseJSON) => {
       this.setState({
@@ -95,8 +94,8 @@ class Products extends Component {
         "params":           params,
       }, () => {
         this.props.history.push({
-              "pathname": pathname,
-              "search": qs.stringify(params),
+          "pathname": pathname,
+          "search": qs.stringify(params),
         });
       });
     })
@@ -142,7 +141,6 @@ class Products extends Component {
       <BrandSidebar
         changeBrand={changeBrand}
         brands={category.categoryBrands}
-        match={this.props.match}
       />
     )
   }
@@ -186,7 +184,6 @@ class Products extends Component {
                         toggleGrid={this.toggleGrid}
                         toggleList={this.toggleList}
                         isGrid={isGrid}
-                        history={this.props.history}
                       />
                     <div className=
                               {(isGrid)
@@ -200,8 +197,7 @@ class Products extends Component {
                                             product={product}
                                             setCurrentProductId={setCurrentProductId}
                                             isGrid={isGrid}
-                                            match={this.props.match}
-                                            history={this.props.history}/>
+                                        />
                                    )
                         })}
 
@@ -226,4 +222,4 @@ class Products extends Component {
 }
 
 
-export default Products;
+export default withRouter(Products);

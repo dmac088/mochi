@@ -68,8 +68,6 @@ class Highlights extends Component {
              aria-labelledby="featured-tab">
           <Category
             category={category}
-            match={match}
-            history={history}
             setCurrentProductId={setCurrentProductId}
           />
         </div>

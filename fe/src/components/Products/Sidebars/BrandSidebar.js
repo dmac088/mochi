@@ -46,4 +46,4 @@ class BrandSidebar extends Component {
   }
 }
 
-export default BrandSidebar;
+export default withRouter(BrandSidebar);

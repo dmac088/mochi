@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import Column from '../Column';
 import Slider from "react-slick";
 import { SlickArrowLeft, SlickArrowRight, chunkArray } from '../../../services/helpers/Helper';
@@ -24,8 +25,6 @@ class Category extends Component {
     return columns.map(column => {
       return (
         <Column
-          match={match}
-          history={history}
           key={columns.indexOf(column)}
           categoryDesc={category.categoryDesc}
           products={column}
@@ -95,4 +94,4 @@ class Category extends Component {
   }
 }
 
-export default Category;
+export default withRouter(Category);

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import Product from './Product';
 const $ = window.$;
 
@@ -15,8 +16,6 @@ class Column extends Component {
       return (
           <Product
             key={product.productId}
-            match={match}
-            history={history}
             product={product}
             categoryDesc={categoryDesc}
             setCurrentProductId={setCurrentProductId}
@@ -35,4 +34,4 @@ class Column extends Component {
   }
 }
 
-export default Column;
+export default withRouter(Column);

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { Link } from "react-router-dom";
 
 class BreadCrumb extends Component {
@@ -49,7 +50,7 @@ class BreadCrumb extends Component {
     )
   }
 
-  renderSearch = (term) => { 
+  renderSearch = (term) => {
     return (
       <React.Fragment>
         <li className="active" key={0}>
@@ -73,6 +74,7 @@ class BreadCrumb extends Component {
   }
 
   render() {
+    console.log(this.props);
     const { locale, currency, term, productId } = this.props.match.params;
     const type = this.props.match.params[0];
     const { page, categoryList } =  this.props;
@@ -109,4 +111,4 @@ class BreadCrumb extends Component {
   }
 }
 
-export default BreadCrumb;
+export default withRouter(BreadCrumb);

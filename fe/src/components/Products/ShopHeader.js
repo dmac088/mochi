@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import qs from 'query-string';
 
 class ShopHeader extends Component {
@@ -48,4 +49,4 @@ class ShopHeader extends Component {
   }
 }
 
-export default ShopHeader;
+export default withRouter(ShopHeader);

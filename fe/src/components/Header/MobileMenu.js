@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { isMobile, slide, updateParams } from '../../services/helpers/Helper';
 import ReactTransitionGroup from 'react-addons-transition-group';
 
@@ -176,4 +177,4 @@ class BlogMenu extends Component {
   }
 }
 
-export default MobileMenu;
+export default withRouter(MobileMenu);
