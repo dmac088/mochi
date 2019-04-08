@@ -14,14 +14,14 @@ public class ProductPriceType {
 	private Long priceTypeId;
 	
 	@Column(name="prc_typ_desc")
-	private String priceTypeDesc;
+	private String desc;
 
-	public String getPriceTypeDesc() {
-		return priceTypeDesc;
+	public String getDesc() {
+		return desc;
 	}
 
-	public void setPriceTypeDesc(String priceTypeDesc) {
-		this.priceTypeDesc = priceTypeDesc;
+	public void setDesc(String priceTypeDesc) {
+		this.desc = priceTypeDesc;
 	}
 	
 }

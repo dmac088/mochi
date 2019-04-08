@@ -1,7 +1,6 @@
 package io.javabrains.springbootstarter.domain;
 
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,7 +31,7 @@ public class ProductAttributeController {
 	
 	@ResponseBody
 	@RequestMapping("/ProductAttribute/lcl/{id}")
-	public Optional<ProductAttribute> getProductAttribute(@PathVariable String lcl, @PathVariable Long id) {
+	public ProductAttribute getProductAttribute(@PathVariable String lcl, @PathVariable Long id) {
 		return productAttributeService.getProductAttribute(lcl, id);
 	}
 	

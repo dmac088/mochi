@@ -14,14 +14,14 @@ public class Currency {
 	private Long currencyId;
 
 	@Column(name="ccy_cd")
-	private String currencyCode;
+	private String code;
 
-	public String getCurrencyCode() {
-		return currencyCode;
+	public String getCode() {
+		return code;
 	}
 
-	public void setCurrencyCode(String currencyCode) {
-		this.currencyCode = currencyCode;
+	public void setCode(String currencyCode) {
+		this.code = currencyCode;
 	}
 	
 }

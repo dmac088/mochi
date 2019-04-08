@@ -15,5 +15,5 @@ public interface ProductCategoryRepository extends CrudRepository<ProductCategor
 	
 	List<ProductCategory> findByParentCategoryId(Long categoryId);
 
-	ProductCategory findByProductCategoryAttributeLclCdAndProductCategoryAttributeCategoryDesc(String lcl, String categoryDesc);
+	ProductCategory findByProductCategoryAttributeCategoryDesc(String categoryDesc);
 }

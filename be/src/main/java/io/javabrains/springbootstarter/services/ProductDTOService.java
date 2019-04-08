@@ -93,7 +93,7 @@ public class ProductDTOService implements IProductDTOService {
 	@Override
 	public Page<ProductDTO> getProductsForCategory(String lcl, String currency, String categoryDesc, int page, int size, String sortBy) {
 		List<ProductCategory> pcl = new ArrayList<ProductCategory>();
-     	ProductCategory pc = productCategoryRepository.findByProductCategoryAttributeLclCdAndProductCategoryAttributeCategoryDesc(lcl, categoryDesc);
+     	ProductCategory pc = productCategoryRepository.findByProductCategoryAttributeCategoryDesc(categoryDesc);
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
   		Page<Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdIn(categoryIds, PageRequest.of(page, size, this.sortByParam(sortBy)));
@@ -103,8 +103,9 @@ public class ProductDTOService implements IProductDTOService {
 	
 	@Override
 	public Page<ProductDTO> getProductsForCategory(String lcl, String currency, String categoryDesc, Long price, int page, int size, String sortBy) {
+		System.out.println("getProductsForCategory");
 		List<ProductCategory> pcl = new ArrayList<ProductCategory>();
-     	ProductCategory pc = productCategoryRepository.findByProductCategoryAttributeLclCdAndProductCategoryAttributeCategoryDesc(lcl, categoryDesc);
+     	ProductCategory pc = productCategoryRepository.findByProductCategoryAttributeCategoryDesc(categoryDesc);
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
   		Page<Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndPricesPriceValueBetween(categoryIds, new Long(0), price, PageRequest.of(page, size, this.sortByParam(sortBy)));
@@ -114,22 +115,37 @@ public class ProductDTOService implements IProductDTOService {
 	
 	@Override
 	public Page<ProductDTO> getProductsForCategoryAndBrand(String lcl, String currency, String categoryDesc, String brandDesc, int page, int size, String sortBy) {
+		System.out.println("getProductsForCategoryAndBrand");
 		List<ProductCategory> pcl = new ArrayList<ProductCategory>();
-     	ProductCategory pc = productCategoryRepository.findByProductCategoryAttributeLclCdAndProductCategoryAttributeCategoryDesc(lcl, categoryDesc);
+     	ProductCategory pc = productCategoryRepository.findByProductCategoryAttributeCategoryDesc(categoryDesc);
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
-  		Page<Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndBrandBrandAttributesBrandDesc(categoryIds, brandDesc,PageRequest.of(page, size, this.sortByParam(sortBy)));
+  		Page<Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndBrandBrandAttributesBrandDesc(categoryIds, brandDesc,PageRequest.of(page, size, this.sortByParam(sortBy)));		
   		Page<ProductDTO> pp = ppa.map(pa -> this.convertToProductDto(pa, lcl, currency));
   		return pp;
 	}
 	
 	@Override
-	public Page<ProductDTO> getProductsForCategoryAndBrandAndPrice(String lcl, String currency, String categoryDesc, String brandDesc, Long price, int page, int size, String sortBy) {
+	public Page<ProductDTO> getProductsForCategoryAndPrice(String lcl, String currency, String categoryDesc, Long price, int page, int size, String sortBy) {
+		System.out.println("getProductsForCategoryAndBrandAndPrice");
 		List<ProductCategory> pcl = new ArrayList<ProductCategory>();
-     	ProductCategory pc = productCategoryRepository.findByProductCategoryAttributeLclCdAndProductCategoryAttributeCategoryDesc(lcl, categoryDesc);
+     	ProductCategory pc = productCategoryRepository.findByProductCategoryAttributeCategoryDesc(categoryDesc);
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
-  		Page<Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndBrandBrandAttributesBrandDescAndPricesPriceValueBetween(categoryIds, brandDesc, new Long(0), price, PageRequest.of(page, size, this.sortByParam(sortBy)));
+  		Page<Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndPricesPriceValueBetweenAndPricesTypeDescAndPricesCurrencyAndPricesStartDateLessThanAndPricesEndDateGreaterThan(categoryIds, new Long(0), price, "markdown", "HKD", new Date(), new Date(),PageRequest.of(page, size, this.sortByParam(sortBy)));
+  		Page<ProductDTO> pp = ppa.map(pa -> this.convertToProductDto(pa, lcl, currency));
+  		return pp;
+	}
+
+	
+	@Override
+	public Page<ProductDTO> getProductsForCategoryAndBrandAndPrice(String lcl, String currency, String categoryDesc, String brandDesc, Long price, int page, int size, String sortBy) {
+		System.out.println("getProductsForCategoryAndBrandAndPrice");
+		List<ProductCategory> pcl = new ArrayList<ProductCategory>();
+     	ProductCategory pc = productCategoryRepository.findByProductCategoryAttributeCategoryDesc(categoryDesc);
+     	recurseCategories(pcl, pc);
+     	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
+  		Page<Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndBrandBrandAttributesBrandDescAndPricesPriceValueBetweenAndPricesTypeDescAndPricesCurrencyCodeAndPricesStartDateLessThanAndPricesEndDateGreaterThan(categoryIds, brandDesc, new Long(0), price, "markdown", "HKD", new Date(), new Date(),PageRequest.of(page, size, this.sortByParam(sortBy)));
   		Page<ProductDTO> pp = ppa.map(pa -> this.convertToProductDto(pa, lcl, currency));
   		return pp;
 	}
@@ -256,8 +272,8 @@ public class ProductDTOService implements IProductDTOService {
         //productDto.setProductRetail(productAttribute.getProduct().getProductPrices().stream().filter(p -> p.getPriceCurrency().getCurrencyCode().equals(currency) && p.getPriceType().getPriceTypeDesc().equals("retail")).collect(Collectors.toList()).get(0).getPriceValue());
         //productDto.setProductMarkdown(productAttribute.getProduct().getProductPrices().stream().filter(p -> p.getPriceCurrency().getCurrencyCode().equals(currency) && p.getPriceType().getPriceTypeDesc().equals("markdown")).collect(Collectors.toList()).get(0).getPriceValue());
                 
-        productDto.setProductRetail(productPriceRepository.findByProductProductIdAndPriceTypePriceTypeDescAndPriceStartDateLessThanEqualAndPriceEndDateGreaterThanEqualAndPriceCurrencyCurrencyCode(product.getProductId(), "retail", new Date(), new Date(), currency).getPriceValue());
-        productDto.setProductMarkdown(productPriceRepository.findByProductProductIdAndPriceTypePriceTypeDescAndPriceStartDateLessThanEqualAndPriceEndDateGreaterThanEqualAndPriceCurrencyCurrencyCode(product.getProductId(), "markdown", new Date(), new Date(), currency).getPriceValue());
+        //productDto.setProductRetail(productPriceRepository.findByProductProductIdAndTypePriceTypeDescAndStartDateLessThanEqualAndEndDateGreaterThanEqualAndCurrencyCurrencyCode(product.getProductId(), "retail", new Date(), new Date(), currency).getPriceValue());
+        //productDto.setProductMarkdown(productPriceRepository.findByProductProductIdAndTypePriceTypeDescAndStartDateLessThanEqualAndEndDateGreaterThanEqualAndCurrencyCurrencyCode(product.getProductId(), "markdown", new Date(), new Date(), currency).getPriceValue());
         
         productDto.setProductImage(pa.getProductImage());
         productDto.setLclCd(lcl);
@@ -270,8 +286,8 @@ public class ProductDTOService implements IProductDTOService {
     	switch (param) {
     	case "priceAsc": return new Sort(Sort.Direction.ASC, "Prices.PriceValue");
     	case "priceDesc": return new Sort(Sort.Direction.DESC, "Prices.PriceValue");
-    	case "nameAsc": return new Sort(Sort.Direction.ASC, "ProductAttribute.productDesc");
-    	default: return new Sort(Sort.Direction.ASC, "ProductAttribute.productDesc");
+    	case "nameAsc": return new Sort(Sort.Direction.ASC, "Attributes.productDesc");
+    	default: return new Sort(Sort.Direction.ASC, "Attributes.productDesc");
     	}
     }
 
