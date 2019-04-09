@@ -43,12 +43,16 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // const unsubscribe = store.subscribe(() => {
-    //                     			if (store.getState().services.persist.isHydrated) {
-    //                     				unsubscribe(); //call
-    //                     				this.autoLogin();
-    //                     			}
-    //                     });
+    // Note that subscribe() returns a function for unregistering the listener
+    const unsubscribe = store.subscribe(() => {
+                                              			if (store.getState().services.persist.isHydrated) {
+                                                      console.log("unregister the listener");
+                                              				unsubscribe(); //call
+                                                      console.log("call autoLogin");
+                                              				this.autoLogin();
+                                              			}
+                                              });
+
     const match = matchPath(this.props.location.pathname, {path:'/:locale/:currency', exact: false, strict: false,});
     if(!match) { return }
     const { locale, currency } = match.params;
