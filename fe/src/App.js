@@ -185,7 +185,7 @@ class App extends Component {
     const { categoryList } = this.state;
     return (
       <Layout
-        categoryList={categoryList} >
+        categoryList={categoryList}>
           {contentCallback()}
       </Layout>
     );
@@ -262,7 +262,7 @@ class App extends Component {
                   authenticated={tokens.authenticated}
                   customer={customer}
                   page={"Account"}
-                />)
+          />)
       )
   }
 
