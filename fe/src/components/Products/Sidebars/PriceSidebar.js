@@ -5,12 +5,6 @@ import 'rc-slider/assets/index.css';
 
 class PriceSidebar extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      "value": null,
-    };
-  }
 
   componentDidMount() {
     console.log("componentDidMount");
@@ -23,12 +17,13 @@ class PriceSidebar extends Component {
       && prevProps.brand === this.props.brand) { return }
     const { category, brand } = this.props;
     const maxPrice = this.getMaxBrandPrice(category.categoryBrands, brand);
-    updateMaxPrice(maxPrice);
+    updateMaxPrice(maxPrice+1);
   }
 
-  getMaxBrandPrice = (brands, currentBrand) => {
-    let maxPrice = 0;
-    brands.map(brand => {
+  getMaxBrandPrice = (category, currentBrand) => {
+    let maxPrice = category.maxMarkDownPrice;
+    if(!category.categoryBrands) {return maxPrice}
+    category.categoryBrands.map(brand => {
       if (currentBrand === brand.brandDesc) {
           maxPrice = brand.maxMarkDownPrice;
       }
@@ -40,8 +35,8 @@ class PriceSidebar extends Component {
   render() {
     const { category, brand, updateMaxPrice, currentMaxPrice } = this.props;
     if(!category) { return null }
-    const maxPrice = ((!brand) ? category.maxMarkDownPrice : this.getMaxBrandPrice(category.categoryBrands, brand));
-
+    const maxPrice = ((!brand) ? category.maxMarkDownPrice : this.getMaxBrandPrice(category, brand));
+    if(!currentMaxPrice) { updateMaxPrice(maxPrice+1) }
     return (
       <div className="sidebar mb-35">
         <h3 className="sidebar-title">Filter By Price</h3>
