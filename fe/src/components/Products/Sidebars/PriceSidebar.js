@@ -16,7 +16,7 @@ class PriceSidebar extends Component {
     if(prevProps.category.categoryCode === this.props.category.categoryCode
       && prevProps.brand === this.props.brand) { return }
     const { category, brand } = this.props;
-    const maxPrice = this.getMaxBrandPrice(category.categoryBrands, brand);
+    const maxPrice = ((!brand) ? category.maxMarkDownPrice : this.getMaxBrandPrice(category, brand));
     updateMaxPrice(maxPrice+1);
   }
 
