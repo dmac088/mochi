@@ -39,28 +39,30 @@ class App extends Component {
                      "currentProductId": null,
                      "landingCategories": [],
                      "previewCategories": [],
-                  };
+                 };
   }
 
   componentDidMount() {
-    const unsubscribe = store.subscribe(() => {
-                        			if (store.getState().services.persist.isHydrated) {
-                        				unsubscribe(); //call
-                        				this.autoLogin();
-                        			}
-                        });
-  }
-
-  componentDidMount() {
-    const { locale, currency } = matchPath(this.props.location.pathname, {path:'/:locale/:currency', exact: false, strict: false,}).params;
+    // const unsubscribe = store.subscribe(() => {
+    //                     			if (store.getState().services.persist.isHydrated) {
+    //                     				unsubscribe(); //call
+    //                     				this.autoLogin();
+    //                     			}
+    //                     });
+    const match = matchPath(this.props.location.pathname, {path:'/:locale/:currency', exact: false, strict: false,});
+    if(!match) { return }
+    const { locale, currency } = match.params;
     this.refreshData(locale, currency);
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const prevParams = matchPath(prevProps.location.pathname, {path:'/:locale/:currency', exact: false, strict: false,}).params;
-    const prevLocale = prevParams.locale;
-    const { locale, currency } = matchPath(this.props.location.pathname, {path:'/:locale/:currency', exact: false, strict: false,}).params;
-    if(locale === prevParams.locale
+    const prevMatch = matchPath(prevProps.location.pathname, {path:'/:locale/:currency', exact: false, strict: false,});
+    const match = matchPath(this.props.location.pathname, {path:'/:locale/:currency', exact: false, strict: false,});
+    const prevParams = (prevMatch) ? prevMatch.params : null;
+    const prevLocale = (prevLocale) ? prevParams.locale : null;
+    const { locale, currency } = match.params;
+    if(prevParams
+      && locale === prevParams.locale
        && currency === prevParams.currency) {return;}
     this.refreshData(locale, currency);
   }
