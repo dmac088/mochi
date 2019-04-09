@@ -302,7 +302,7 @@ class App extends Component {
           <Route path={"/:locale/:currency/Contact"} exact={true}                                     render={()   => this.renderLayoutBC(this.renderContact)}      />
           <Route path={"/:locale/:currency/Auth"} exact={true}                                        render={()   => this.renderLayoutBC(this.renderAuth)}         />
           <Redirect from="/" to="/en-GB/HKD" />
-          <Route                                                                                      render={(props)   => this.renderLayout(this.renderLanding)}   />
+          <Route                                                                                      render={()   => this.renderLayout(this.renderLanding)}   />
         </Switch>
     );
   }
