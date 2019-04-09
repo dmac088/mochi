@@ -56,7 +56,6 @@ class Products extends Component {
     const { locale, currency, term, brand } = this.props.match.params;
 
     const type = this.props.match.params[0];
-    console.log(currentMaxPrice);
     if(type==="category") {
       this.update(locale, currency, pathname, term, brand, Object.assign(params, qs.parse(search)), currentMaxPrice, isMounting, this.getProducts);
     }
@@ -145,12 +144,24 @@ class Products extends Component {
     )
   }
 
+  renderProducts = (products, setCurrentProductId, isGrid) => {
+    if(!products) {return}
+    return products.map(product => {
+        return (
+                    <Product key={product.productId}
+                        product={product}
+                        setCurrentProductId={setCurrentProductId}
+                        isGrid={isGrid}
+                    />
+               )
+    })
+  }
 
   render() {
-
       const { toggleQuickView, setCurrentProductId, showQVModal, currentProductId, categoryList, changeCategory, changeBrand, updateMaxPrice, currentMaxPrice} = this.props;
       const { products, totalPages, totalElements, numberOfElements, isGrid, term, category } = this.state;
       const { page, size } = this.state.params;
+    //  if(!products) { return null }
       const cat = this.filterCategories(categoryList, category)[0];
 				return(
           <React.Fragment>
@@ -190,17 +201,7 @@ class Products extends Component {
                                 ? "shop-product-wrap grid row no-gutters mb-35"
                                 : "shop-product-wrap row no-gutters mb-35 list"}
                     >
-
-                        {products.map(product => {
-                            return (
-                                        <Product key={product.productId}
-                                            product={product}
-                                            setCurrentProductId={setCurrentProductId}
-                                            isGrid={isGrid}
-                                        />
-                                   )
-                        })}
-
+                      {this.renderProducts(products, setCurrentProductId, isGrid)}
                     </div>
                     <Pagination
                       totalPages={totalPages}
