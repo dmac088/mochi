@@ -34,8 +34,6 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-                     "locale": null,
-                     "currency": "HKD",
                      "categoryList": [],
                      "showQVModal": false,
                      "currentProductId": null,
@@ -53,21 +51,17 @@ class App extends Component {
                         });
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    console.log("componentDidUpdate");
-    const prevLocation = prevProps.location;
-    const prevParams = matchPath(prevLocation.pathname, {path:'/:locale/:currency', exact: true,strict: false,}).params;
-    const prevLocale = prevParams.locale;
-    const prevCurrency = prevParams.currency;
-    const { location } = this.props;
-    const { locale, currency } = matchPath(location.pathname, {path:'/:locale/:currency', exact: true,strict: false,}).params;
-    console.log(prevParams);
-    console.log(matchPath(location.pathname, {path:'/:locale/:currency', exact: true,strict: false,}).params);
+  componentDidMount() {
+    const { locale, currency } = matchPath(this.props.location.pathname, {path:'/:locale/:currency', exact: false, strict: false,}).params;
+    this.refreshData(locale, currency);
   }
 
-  updateLocale = (locale, currency) => {
-    if(locale === this.state.locale
-       && currency === this.state.currency) {return;}
+  componentDidUpdate(prevProps, prevState) {
+    const prevParams = matchPath(prevProps.location.pathname, {path:'/:locale/:currency', exact: false, strict: false,}).params;
+    const prevLocale = prevParams.locale;
+    const { locale, currency } = matchPath(this.props.location.pathname, {path:'/:locale/:currency', exact: false, strict: false,}).params;
+    if(locale === prevParams.locale
+       && currency === prevParams.currency) {return;}
     this.refreshData(locale, currency);
   }
 
@@ -76,8 +70,6 @@ class App extends Component {
     this.refreshCategoryList(locale, currency)
     .then((categoryList) => {
       this.setState({
-        "locale": locale,
-        "currency": currency,
         "categoryList": categoryList,
       });
     })
@@ -190,37 +182,29 @@ class App extends Component {
 
 
   renderLayout = (contentCallback) => {
-    const { locale, currency, categoryList } = this.state;
+    const { categoryList } = this.state;
     return (
       <Layout
-        locale={locale}
-        currency={currency}
-        categoryList={categoryList}
-        updateLocale={this.updateLocale}>
+        categoryList={categoryList} >
           {contentCallback()}
       </Layout>
     );
   }
 
   renderLayoutBC = (contentCallback) => {
-    const { locale, currency, categoryList } = this.state;
+    const { categoryList } = this.state;
     return (
       <LayoutBC
-        locale={locale}
-        currency={currency}
-        categoryList={categoryList}
-        updateLocale={this.updateLocale}>
+        categoryList={categoryList}>
         {contentCallback()}
       </LayoutBC>
     );
   }
 
   renderLanding = (routeProps) => {
-    const { locale, currency, currentProductId, showQVModal, landingCategories, previewCategories } = this.state;
+    const { currentProductId, showQVModal, landingCategories, previewCategories } = this.state;
     return (
       <Landing
-        locale={locale}
-        currency={currency}
         showQVModal={showQVModal}
         setCurrentProductId={this.setCurrentProductId}
         currentProductId={currentProductId}
@@ -232,7 +216,7 @@ class App extends Component {
   }
 
   renderProducts = () => {
-    const { locale, currency, pagedItems, categoryList, showQVModal, currentProductId } = this.state;
+    const { pagedItems, categoryList, showQVModal, currentProductId } = this.state;
     return (
       <Products
         toggleQuickView={this.toggleQuickView}

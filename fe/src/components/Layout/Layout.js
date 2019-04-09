@@ -14,22 +14,6 @@ class Layout extends Component {
     }
   }
 
-  componentDidMount() {
-    const { locale, currency } = this.props.match.params;
-    const { updateLocale } = this.props;
-    updateLocale(locale, currency);
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    const { locale, currency } = this.props.match.params;
-    const prevLocale = prevProps.match.params.locale;
-    const prevCurrency = prevProps.match.params.currency;
-    const { updateLocale } = this.props;
-    if(!(locale === prevLocale && currency === prevCurrency)) {
-      updateLocale(locale, currency);
-    }
-  }
-
   changeCategory = (e) => {
     e.preventDefault();
     const { search } = this.props.location;
