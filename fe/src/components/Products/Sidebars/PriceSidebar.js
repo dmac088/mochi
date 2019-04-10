@@ -6,10 +6,7 @@ import 'rc-slider/assets/index.css';
 class PriceSidebar extends Component {
 
   render() {
-
     const { maxPrice, selectedPrice, updateMaxPrice } = this.props;
-    //if(!maxPrice) { return null }
-      console.log(maxPrice);
     return (
       <div className="sidebar mb-35">
         <h3 className="sidebar-title">Filter By Price</h3>
