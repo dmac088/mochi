@@ -34,7 +34,8 @@ class Products extends Component {
                   "size": "10",
                   "sort": "nameAsc",
                 },
-      "currentMaxPrice": null,
+      "maxPrice": null,
+      "selectedPrice": null,
     };
   }
 
@@ -44,31 +45,45 @@ class Products extends Component {
   }
 
 
-  componentDidUpdate() {
-    this.refresh(0);
+  componentDidUpdate(prevProps, prevState) {
+    this.refresh(0, prevState);
   }
 
 
-  refresh = (isMounting) => {
-    const { pathname, search } = this.props.location;
-    const params = {...this.state.params};
-    const { currentMaxPrice } = this.state;
-    const maxPrice = (!currentMaxPrice) ? 500 : currentMaxPrice;
+  refresh = (isMounting, prevState) => {
+    const { pathname, search }              = this.props.location;
+    const { categoryList }                  = this.props;
+    const  params                           = {...this.state.params};
     const { locale, currency, term, brand } = this.props.match.params;
+    const type                              = this.props.match.params[0];
 
-    const type = this.props.match.params[0];
     if(type==="category") {
-      this.update(locale, currency, pathname, term, brand, Object.assign(params, qs.parse(search)), maxPrice, isMounting, this.getProducts);
+      const { selectedPrice } = this.state;
+      const maxPrice = Number(this.getMaxPrice((this.filterCategories(categoryList, term)[0]), brand));
+
+      const prevSelectedPrice = (prevState) ? prevState.selectedPrice : null;
+      const prevMaxPrice = (prevState) ? prevState.maxPrice : null;
+
+      const price = (selectedPrice) ? selectedPrice : maxPrice;
+      const prevPrice = (prevSelectedPrice) ? (prevSelectedPrice) : ((prevMaxPrice) ? prevMaxPrice : 0) ;
+
+      console.log(price);
+      console.log(prevPrice);
+      this.update(locale, currency, pathname, term, brand, Object.assign(params, qs.parse(search)), price, prevPrice, maxPrice, isMounting, this.getProducts);
     }
     if (type==="search") {
-      this.update(locale, currency, pathname, "All", term, Object.assign(params, qs.parse(search)), maxPrice, isMounting, pageService.findAll);
+      this.update(locale, currency, pathname, "All", term, Object.assign(params, qs.parse(search)), price, prevPrice, maxPrice, isMounting, pageService.findAll);
     }
   }
 
 
-  update = (locale, currency, pathname, category, term, params, maxPrice, isMounting = 0, callback) => {
+  update = (locale, currency, pathname, category, term, params, price, prevPrice, maxPrice, isMounting = 0, callback) => {
     if(!params) {return;}
     const { page, size, sort } = params;
+    const resetPrice = (!(  locale === this.state.locale
+                        &&  currency === this.state.currency
+                        &&  category === this.state.category
+                        &&  term === this.state.term));
     if(   locale === this.state.locale
       &&  currency === this.state.currency
       &&  category === this.state.category
@@ -76,9 +91,10 @@ class Products extends Component {
       &&  page === this.state.params.page
       &&  size === this.state.params.size
       &&  sort === this.state.params.sort
+      &&  price === prevPrice
       &&  isMounting === 0
     ) {return;}
-    callback(locale, currency, category, term, maxPrice, page, size, sort)
+    callback(locale, currency, category, term, price+1, page, size, sort)
     .then((responseJSON) => {
       this.setState({
         "locale":           locale,
@@ -90,6 +106,8 @@ class Products extends Component {
         "totalElements":    responseJSON.totalElements,
         "numberOfElements": responseJSON.numberOfElements,
         "params":           params,
+        "maxPrice":         maxPrice,
+        "selectedPrice":    ((resetPrice) ? maxPrice : price),
       }, () => {
         this.props.history.push({
           "pathname": pathname,
@@ -133,6 +151,24 @@ class Products extends Component {
     });
   }
 
+  getMaxPrice = (category, currentBrand) => {
+    if(!category) { return }
+    console.log("category=" + category.categoryDesc);
+    console.log("brand=" + currentBrand);
+
+    let maxPrice = category.maxMarkDownPrice;
+
+    if(!category.categoryBrands) {return maxPrice}
+    if(!currentBrand) {return maxPrice}
+    category.categoryBrands.map(brand => {
+      if (currentBrand === brand.brandDesc) {
+          maxPrice = brand.maxMarkDownPrice;
+      }
+    });
+
+    return maxPrice;
+  }
+
   renderBrandSlider = (category, changeBrand) => {
     if(!category) { return; }
     return (
@@ -158,14 +194,14 @@ class Products extends Component {
 
   updateMaxPrice = (value) => {
     this.setState({
-      "currentMaxPrice": value,
+      "selectedPrice": value,
     })
   }
 
 
   render() {
       const { toggleQuickView, setCurrentProductId, showQVModal, currentProductId, categoryList, changeCategory, changeBrand} = this.props;
-      const { products, totalPages, totalElements, numberOfElements, isGrid, term, category, currentMaxPrice } = this.state;
+      const { products, totalPages, totalElements, numberOfElements, isGrid, term, category, maxPrice, selectedPrice } = this.state;
       const { page, size } = this.state.params;
     //  if(!products) { return null }
       const cat = this.filterCategories(categoryList, category)[0];
@@ -183,8 +219,8 @@ class Products extends Component {
                     {this.renderBrandSlider(cat,changeBrand)}
                       <PriceSidebar
                         updateMaxPrice={this.updateMaxPrice}
-                        category={cat}
-                        brand={term}/>
+                        maxPrice={maxPrice}
+                        selectedPrice={selectedPrice}/>
                       <TopRatedSidebar/>
                       <TagSidebar/>
                     </div>
