@@ -5,11 +5,6 @@ import 'rc-slider/assets/index.css';
 
 class PriceSidebar extends Component {
 
-
-  componentDidMount() {
-    console.log("componentDidMount");
-  }
-
   componentDidUpdate(prevProps) {
     const { updateMaxPrice, category, brand  } = this.props;
     if(!category) { return }
