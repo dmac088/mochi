@@ -5,41 +5,15 @@ import 'rc-slider/assets/index.css';
 
 class PriceSidebar extends Component {
 
-  componentDidUpdate(prevProps) {
-    const { updateMaxPrice, category, brand  } = this.props;
-    if(!category) { return }
-    if(prevProps.category
-      && prevProps.category.categoryCode === category.categoryCode
-      && prevProps.brand === brand) { return }
-    const maxPrice = ((!brand) ? category.maxMarkDownPrice : this.getMaxBrandPrice(category, brand));
-    console.log((prevProps.category) ? prevProps.category.categoryDesc : null);
-    console.log(this.props.category.categoryDesc);
-    console.log(prevProps.brand);
-    console.log(this.props.brand);
-    updateMaxPrice(maxPrice+1);
-  }
-
-  getMaxBrandPrice = (category, currentBrand) => {
-    if(!category) { return }
-    let maxPrice = category.maxMarkDownPrice;
-    if(!category.categoryBrands) {return maxPrice}
-    category.categoryBrands.map(brand => {
-      if (currentBrand === brand.brandDesc) {
-          maxPrice = brand.maxMarkDownPrice;
-      }
-    });
-    return maxPrice;
-  }
-
-
   render() {
-    const { category, brand, updateMaxPrice, currentMaxPrice } = this.props;
-    if(!category) { return null }
-    const maxPrice = ((!brand) ? category.maxMarkDownPrice : this.getMaxBrandPrice(category, brand))+1;
+
+    const { maxPrice, selectedPrice, updateMaxPrice } = this.props;
+    //if(!maxPrice) { return null }
+      console.log(maxPrice);
     return (
       <div className="sidebar mb-35">
         <h3 className="sidebar-title">Filter By Price</h3>
-        <p>Value: {(!currentMaxPrice) ? maxPrice : currentMaxPrice}</p>
+        <p>Value: {(selectedPrice) ? selectedPrice : maxPrice}</p>
           <Slider
             onChange={(value) => updateMaxPrice(value)}
             trackStyle={{ backgroundColor: '#80bb01', height: 10 }}
@@ -54,7 +28,7 @@ class PriceSidebar extends Component {
             min={0}
             max={maxPrice}
             defaultValue={maxPrice}
-            value={(!currentMaxPrice) ? maxPrice : currentMaxPrice}
+            value={(selectedPrice) ? selectedPrice : maxPrice}
             railStyle={{ height: 10 }}/>
 
       </div>
