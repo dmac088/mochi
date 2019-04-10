@@ -53,7 +53,7 @@ class Products extends Component {
   refresh = (isMounting, prevState) => {
     const { pathname, search }              = this.props.location;
     const { categoryList }                  = this.props;
-    const  params                           = {...this.state.params};
+    const params                            = {...this.state.params};
     const { locale, currency, term, brand } = this.props.match.params;
     const type                              = this.props.match.params[0];
 
@@ -67,8 +67,6 @@ class Products extends Component {
       const price = (selectedPrice) ? selectedPrice : maxPrice;
       const prevPrice = (prevSelectedPrice) ? (prevSelectedPrice) : ((prevMaxPrice) ? prevMaxPrice : 0) ;
 
-      console.log(price);
-      console.log(prevPrice);
       this.update(locale, currency, pathname, term, brand, Object.assign(params, qs.parse(search)), price, prevPrice, maxPrice, isMounting, this.getProducts);
     }
     if (type==="search") {
@@ -153,11 +151,7 @@ class Products extends Component {
 
   getMaxPrice = (category, currentBrand) => {
     if(!category) { return }
-    console.log("category=" + category.categoryDesc);
-    console.log("brand=" + currentBrand);
-
     let maxPrice = category.maxMarkDownPrice;
-
     if(!category.categoryBrands) {return maxPrice}
     if(!currentBrand) {return maxPrice}
     category.categoryBrands.map(brand => {
