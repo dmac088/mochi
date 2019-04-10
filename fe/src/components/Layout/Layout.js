@@ -9,9 +9,6 @@ class Layout extends Component {
 
   constructor(props) {
     super(props)
-    this.state = {
-      "currentMaxPrice": 0,
-    }
   }
 
   changeCategory = (e) => {
@@ -33,11 +30,6 @@ class Layout extends Component {
     }
   }
 
-  updateMaxPrice = (value) => {
-    this.setState({
-      "currentMaxPrice": value,
-    })
-  }
 
 
   render() {
@@ -46,9 +38,6 @@ class Layout extends Component {
        categoryList: this.props.categoryList,
        changeCategory: this.changeCategory,
        changeBrand: this.changeBrand,
-       changePrice: this.updateMaxPrice,
-       updateMaxPrice: this.updateMaxPrice,
-       currentMaxPrice: this.state.currentMaxPrice,
      });
    });
     return (
