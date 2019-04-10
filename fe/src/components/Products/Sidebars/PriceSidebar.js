@@ -37,7 +37,6 @@ class PriceSidebar extends Component {
         <p>Value: {(!currentMaxPrice) ? maxPrice : currentMaxPrice}</p>
           <Slider
             onChange={(value) => updateMaxPrice(value)}
-            defaultValue={30}
             trackStyle={{ backgroundColor: '#80bb01', height: 10 }}
             handleStyle={{
               borderColor: '#80bb01',
