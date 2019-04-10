@@ -30,11 +30,11 @@ class PriceSidebar extends Component {
   render() {
     const { category, brand, updateMaxPrice, currentMaxPrice } = this.props;
     if(!category) { return null }
-    const maxPrice = ((!brand) ? category.maxMarkDownPrice : this.getMaxBrandPrice(category, brand));
+    const maxPrice = ((!brand) ? category.maxMarkDownPrice : this.getMaxBrandPrice(category, brand))+1;
     return (
       <div className="sidebar mb-35">
         <h3 className="sidebar-title">Filter By Price</h3>
-        <p>Value: {(!currentMaxPrice) ? maxPrice+1 : currentMaxPrice}</p>
+        <p>Value: {(!currentMaxPrice) ? maxPrice : currentMaxPrice}</p>
           <Slider
             onChange={(value) => updateMaxPrice(value)}
             defaultValue={30}
@@ -48,9 +48,9 @@ class PriceSidebar extends Component {
               backgroundColor: 'grey',
             }}
             min={0}
-            max={maxPrice+1}
-            defaultValue={maxPrice+1}
-            value={(!currentMaxPrice) ? maxPrice+1 : currentMaxPrice}
+            max={maxPrice}
+            defaultValue={maxPrice}
+            value={(!currentMaxPrice) ? maxPrice : currentMaxPrice}
             railStyle={{ height: 10 }}/>
 
       </div>
