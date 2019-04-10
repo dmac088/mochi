@@ -12,8 +12,9 @@ class PriceSidebar extends Component {
 
   componentDidUpdate(prevProps) {
     const { updateMaxPrice } = this.props;
-    if(!prevProps.category || !this.props.category) { return }
-    if(prevProps.category.categoryCode === this.props.category.categoryCode
+    if(!this.props.category) { return }
+    if(prevProps.category
+      && prevProps.category.categoryCode === this.props.category.categoryCode
       && prevProps.brand === this.props.brand) { return }
     const { category, brand } = this.props;
     const maxPrice = ((!brand) ? category.maxMarkDownPrice : this.getMaxBrandPrice(category, brand));
@@ -36,7 +37,6 @@ class PriceSidebar extends Component {
     const { category, brand, updateMaxPrice, currentMaxPrice } = this.props;
     if(!category) { return null }
     const maxPrice = ((!brand) ? category.maxMarkDownPrice : this.getMaxBrandPrice(category, brand));
-    if(!currentMaxPrice) { updateMaxPrice(maxPrice+1) }
     return (
       <div className="sidebar mb-35">
         <h3 className="sidebar-title">Filter By Price</h3>
