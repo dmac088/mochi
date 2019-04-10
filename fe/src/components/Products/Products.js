@@ -52,15 +52,16 @@ class Products extends Component {
   refresh = (isMounting) => {
     const { pathname, search } = this.props.location;
     const params = {...this.state.params};
-    const { currentMaxPrice } = this.props;
+    const { currentMaxPrice } = this.state;
+    const maxPrice = (!currentMaxPrice) ? 500 : currentMaxPrice;
     const { locale, currency, term, brand } = this.props.match.params;
 
     const type = this.props.match.params[0];
     if(type==="category") {
-      this.update(locale, currency, pathname, term, brand, Object.assign(params, qs.parse(search)), currentMaxPrice, isMounting, this.getProducts);
+      this.update(locale, currency, pathname, term, brand, Object.assign(params, qs.parse(search)), maxPrice, isMounting, this.getProducts);
     }
     if (type==="search") {
-      this.update(locale, currency, pathname, "All", term, Object.assign(params, qs.parse(search)), currentMaxPrice, isMounting, pageService.findAll);
+      this.update(locale, currency, pathname, "All", term, Object.assign(params, qs.parse(search)), maxPrice, isMounting, pageService.findAll);
     }
   }
 
@@ -75,7 +76,6 @@ class Products extends Component {
       &&  page === this.state.params.page
       &&  size === this.state.params.size
       &&  sort === this.state.params.sort
-      &&  maxPrice === this.state.currentMaxPrice
       &&  isMounting === 0
     ) {return;}
     callback(locale, currency, category, term, maxPrice, page, size, sort)
@@ -89,7 +89,6 @@ class Products extends Component {
         "totalPages":       responseJSON.totalPages,
         "totalElements":    responseJSON.totalElements,
         "numberOfElements": responseJSON.numberOfElements,
-        "currentMaxPrice":  maxPrice,
         "params":           params,
       }, () => {
         this.props.history.push({
@@ -157,9 +156,16 @@ class Products extends Component {
     })
   }
 
+  updateMaxPrice = (value) => {
+    this.setState({
+      "currentMaxPrice": value,
+    })
+  }
+
+
   render() {
-      const { toggleQuickView, setCurrentProductId, showQVModal, currentProductId, categoryList, changeCategory, changeBrand, updateMaxPrice, currentMaxPrice} = this.props;
-      const { products, totalPages, totalElements, numberOfElements, isGrid, term, category } = this.state;
+      const { toggleQuickView, setCurrentProductId, showQVModal, currentProductId, categoryList, changeCategory, changeBrand} = this.props;
+      const { products, totalPages, totalElements, numberOfElements, isGrid, term, category, currentMaxPrice } = this.state;
       const { page, size } = this.state.params;
     //  if(!products) { return null }
       const cat = this.filterCategories(categoryList, category)[0];
@@ -176,8 +182,7 @@ class Products extends Component {
                       />
                     {this.renderBrandSlider(cat,changeBrand)}
                       <PriceSidebar
-                        updateMaxPrice={updateMaxPrice}
-                        currentMaxPrice={currentMaxPrice}
+                        updateMaxPrice={this.updateMaxPrice}
                         category={cat}
                         brand={term}/>
                       <TopRatedSidebar/>
