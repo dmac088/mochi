@@ -11,12 +11,11 @@ class PriceSidebar extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { updateMaxPrice } = this.props;
-    if(!this.props.category) { return }
+    const { updateMaxPrice, category, brand  } = this.props;
+    if(!category) { return }
     if(prevProps.category
-      && prevProps.category.categoryCode === this.props.category.categoryCode
-      && prevProps.brand === this.props.brand) { return }
-    const { category, brand } = this.props;
+      && prevProps.category.categoryCode === category.categoryCode
+      && prevProps.brand === brand) { return }
     const maxPrice = ((!brand) ? category.maxMarkDownPrice : this.getMaxBrandPrice(category, brand));
     updateMaxPrice(maxPrice+1);
   }
