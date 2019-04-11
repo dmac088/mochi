@@ -127,14 +127,12 @@ class Products extends Component {
         return JSON.parse(responseText);
     });
 
-
   toggleGrid = (e) => {
     e.preventDefault();
     this.setState({
       "isGrid": true,
     })
   }
-
 
   toggleList= (e) => {
     e.preventDefault();
