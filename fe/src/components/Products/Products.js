@@ -153,7 +153,6 @@ class Products extends Component {
     console.log("getMaxPrice");
     if(!category) { return }
     let maxPrice = category.maxMarkDownPrice;
-    console.log(maxPrice);
     if(!category.categoryBrands) {return maxPrice}
     if(!currentBrand) {return maxPrice}
     category.categoryBrands.map(brand => {
@@ -161,7 +160,7 @@ class Products extends Component {
           maxPrice = brand.maxMarkDownPrice;
       }
     });
-
+        console.log(maxPrice);
     return maxPrice;
   }
 
@@ -170,7 +169,8 @@ class Products extends Component {
     return (
       <BrandSidebar
         changeBrand={changeBrand}
-        brands={category.categoryBrands}
+        getMaxPrice={this.getMaxPrice}
+        category={category}
       />
     )
   }
