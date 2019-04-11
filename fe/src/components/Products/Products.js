@@ -200,7 +200,8 @@ class Products extends Component {
       const { toggleQuickView, setCurrentProductId, showQVModal, currentProductId, categoryList, changeCategory, changeBrand} = this.props;
       const { products, totalPages, totalElements, numberOfElements, isGrid, term, category, maxPrice, selectedPrice } = this.state;
       const { page, size } = this.state.params;
-    //  if(!products) { return null }
+
+      if(!products) { return null }
       const cat = this.filterCategories(categoryList, category)[0];
 				return(
           <React.Fragment>
