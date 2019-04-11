@@ -3,12 +3,12 @@ import { withRouter } from "react-router-dom";
 
 class BrandSidebar extends Component {
 
-  renderBrandListItems = (brands, currentBrand, changeBrand) => {
-    return brands.map(brand => {
+  renderBrandListItems = (category, currentBrand, changeBrand, getMaxPrice) => {
+    return category.categoryBrands.map(brand => {
       const isActive = (currentBrand === brand.brandDesc)
       return(
         <li key={brand.brandId}>
-          <a className={(isActive) ? "active" : ""} onClick={changeBrand} id={brand.brandDesc} href="#">
+          <a className={(isActive) ? "active" : ""} onClick={(e) => changeBrand(e, ()  => getMaxPrice(category, brand))} id={brand.brandDesc} href="#">
             {brand.brandDesc} <span className="badge badge-pill badge-secondary">{brand.productCount}</span>
           </a>
         </li>
@@ -16,11 +16,11 @@ class BrandSidebar extends Component {
     })
   }
 
-  renderAll = (brands, isActive, changeBrand) => {
-      if(brands.length <= 1) {return}
+  renderAll = (category, isActive, changeBrand, getMaxPrice) => {
+      if(category.categoryBrands.length <= 1) {return}
       return (
         <li>
-          <a className={(isActive) ? "active" : ""} onClick={changeBrand} id={"All"} href="#">
+          <a className={(isActive) ? "active" : ""} onClick={(e) => changeBrand(e)} id={"All"} href="#">
             All
           </a>
         </li>
@@ -29,17 +29,17 @@ class BrandSidebar extends Component {
 
 
   render() {
-    const { brands, changeBrand } = this.props;
+    const { category, changeBrand, getMaxPrice } = this.props;
     const currentBrand = this.props.match.params.brand;
     const isActive = (!currentBrand);
-    if (!brands) { return null; }
-    if(brands.length <= 1) {return null; }
+    if (!category.categoryBrands) { return null; }
+    if(category.categoryBrands.length <= 1) {return null; }
     return (
         <div className="sidebar mb-35">
           <h3 className="sidebar-title">Filter By Brand</h3>
           <ul className="product-categories">
-            {this.renderAll(brands, isActive, changeBrand)}
-            {this.renderBrandListItems(brands,  currentBrand, changeBrand)}
+            {this.renderAll(category, isActive, changeBrand, getMaxPrice)}
+            {this.renderBrandListItems(category,  currentBrand, changeBrand, getMaxPrice)}
           </ul>
         </div>
       );

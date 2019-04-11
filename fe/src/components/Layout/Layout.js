@@ -19,7 +19,7 @@ class Layout extends Component {
     if(callback) { callback() }
   }
 
-  changeBrand = (e) => {
+  changeBrand = (e, callback) => {
     e.preventDefault();
     const { search } = this.props.location;
     const { locale, currency, term } = this.props.match.params;
@@ -29,6 +29,7 @@ class Layout extends Component {
     } else {
       this.props.history.push('/'+ locale + '/' + currency + '/category/' + term + '/brand/' + value + search);
     }
+    if(callback) { callback() }
   }
 
 
