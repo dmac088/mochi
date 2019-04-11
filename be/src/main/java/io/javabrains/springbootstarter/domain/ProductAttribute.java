@@ -10,41 +10,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-import org.hibernate.search.annotations.AnalyzerDef;
 import org.hibernate.search.annotations.AnalyzerDiscriminator;
-import org.hibernate.search.annotations.TokenizerDef;
-import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.Parameter;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.TermVector;
-import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
-import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
-import org.apache.lucene.analysis.snowball.SnowballPorterFilterFactory;
-import org.apache.lucene.analysis.cjk.CJKWidthFilterFactory;
-import org.apache.lucene.analysis.cjk.CJKBigramFilterFactory;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-@Indexed
 @Table(name = "product_attr_lcl", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "prd_lcl_id")
-@AnalyzerDef(name = "en-GB",
-tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
-filters = {
-  @TokenFilterDef(factory = LowerCaseFilterFactory.class),
-  @TokenFilterDef(factory = SnowballPorterFilterFactory.class, params = {
-	      @Parameter(name = "language", value = "English")
-  })
-})
-@AnalyzerDef(name = "zh-HK",
-tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
-filters = {
-  @TokenFilterDef(factory = CJKWidthFilterFactory.class),
-  @TokenFilterDef(factory = LowerCaseFilterFactory.class),
-  @TokenFilterDef(factory = CJKBigramFilterFactory.class)
-})
 public class ProductAttribute {
 
 	@Id
