@@ -188,7 +188,7 @@ class Products extends Component {
     })
   }
 
-  updateMaxPrice = (value) => {
+  updateSelectedPrice = (value) => {
     this.setState({
       "selectedPrice": value,
     })
@@ -215,7 +215,7 @@ class Products extends Component {
                       />
                     {this.renderBrandSlider(cat,changeBrand)}
                       <PriceSidebar
-                        updateMaxPrice={this.updateMaxPrice}
+                        updateSelectedPrice={this.updateSelectedPrice}
                         maxPrice={maxPrice}
                         selectedPrice={selectedPrice}/>
                       <TopRatedSidebar/>
