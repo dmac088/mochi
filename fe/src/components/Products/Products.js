@@ -159,7 +159,6 @@ class Products extends Component {
           maxPrice = brand.maxMarkDownPrice;
       }
     });
-
     return maxPrice;
   }
 
