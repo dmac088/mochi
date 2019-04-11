@@ -150,8 +150,10 @@ class Products extends Component {
   }
 
   getMaxPrice = (category, currentBrand) => {
+    console.log("getMaxPrice");
     if(!category) { return }
     let maxPrice = category.maxMarkDownPrice;
+    console.log(maxPrice);
     if(!category.categoryBrands) {return maxPrice}
     if(!currentBrand) {return maxPrice}
     category.categoryBrands.map(brand => {
@@ -159,6 +161,7 @@ class Products extends Component {
           maxPrice = brand.maxMarkDownPrice;
       }
     });
+
     return maxPrice;
   }
 
@@ -207,6 +210,7 @@ class Products extends Component {
                     <div className="sidebar-area">
                       <CategorySidebar
                         changeCategory={changeCategory}
+                        getMaxPrice={this.getMaxPrice}
                         category={cat}
                       />
                     {this.renderBrandSlider(cat,changeBrand)}

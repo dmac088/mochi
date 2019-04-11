@@ -11,11 +11,12 @@ class Layout extends Component {
     super(props)
   }
 
-  changeCategory = (e) => {
+  changeCategory = (e, callback) => {
     e.preventDefault();
     const { search } = this.props.location;
     const { locale, currency } = this.props.match.params;
     this.props.history.push('/'+ locale + '/' + currency + '/category/' + e.currentTarget.id + search);
+    if(callback) { callback() }
   }
 
   changeBrand = (e) => {

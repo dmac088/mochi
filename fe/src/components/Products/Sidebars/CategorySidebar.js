@@ -4,11 +4,11 @@ import * as categoryApi from '../../../data/categories/api';
 class CategorySidebar extends Component {
 
   renderCategoryListItems = (category) => {
-    const { changeCategory } = this.props;
+    const { changeCategory, getMaxPrice } = this.props;
     return category.children.map(child => {
       return(
         <li key={child.categoryId} >
-          <a onClick={(e) => changeCategory(e)} id={child.categoryDesc} href="#">
+          <a onClick={(e) => changeCategory(e, (category, brand=null) => getMaxPrice(category, brand) )} id={child.categoryDesc} href="#">
             {child.categoryDesc} <span className="badge badge-pill badge-secondary">{child.productCount}</span>
           </a>
         </li>
