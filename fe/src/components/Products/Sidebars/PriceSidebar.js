@@ -6,13 +6,13 @@ import 'rc-slider/assets/index.css';
 class PriceSidebar extends Component {
 
   render() {
-    const { maxPrice, selectedPrice, updateMaxPrice } = this.props;
+    const { maxPrice, selectedPrice, updateSelectedPrice } = this.props;
     return (
       <div className="sidebar mb-35">
         <h3 className="sidebar-title">Filter By Price</h3>
         <p>Value: {(selectedPrice) ? selectedPrice : maxPrice}</p>
           <Slider
-            onChange={(value) => updateMaxPrice(value)}
+            onChange={(value) => updateSelectedPrice(value)}
             trackStyle={{ backgroundColor: '#80bb01', height: 10 }}
             handleStyle={{
               borderColor: '#80bb01',
