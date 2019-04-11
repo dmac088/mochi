@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import * as categoryApi from '../../../data/categories/api';
+import { changeCategory } from '../../../services/helpers/routeHelper';
 
 class CategorySidebar extends Component {
 
   renderCategoryListItems = (category) => {
-    const { changeCategory, getMaxPrice } = this.props;
+    const { getMaxPrice, location, match, history } = this.props;
     return category.children.map(child => {
       return(
         <li key={child.categoryId} >
-          <a onClick={(e) => changeCategory(e, (category) => getMaxPrice(category) )} id={child.categoryDesc} href="#">
+          <a onClick={(e) => changeCategory(e, location, match, history)} id={child.categoryDesc} href="#">
             {child.categoryDesc} <span className="badge badge-pill badge-secondary">{child.productCount}</span>
           </a>
         </li>
@@ -31,4 +33,4 @@ class CategorySidebar extends Component {
   }
 }
 
-export default CategorySidebar;
+export default withRouter(CategorySidebar);

@@ -31,8 +31,6 @@ export const spinner = () => {
 	);
 }
 
-
-
 export const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
       <button
         {...props}
