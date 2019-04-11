@@ -42,13 +42,11 @@ class Products extends Component {
 
 
   componentDidMount() {
-    console.log("componentDidMount");
     this.refresh(1);
   }
 
 
   componentDidUpdate(prevProps) {
-    console.log("componentDidUpdate");
     this.refresh(0);
   }
 
