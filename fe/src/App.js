@@ -136,7 +136,6 @@ class App extends Component {
         return responseJSON.content;
     });
 
-
   refreshCategoryList = (locale, currency) =>
     categoryApi.findAll(locale, currency)
     .then((response) => {
@@ -154,7 +153,6 @@ class App extends Component {
       return value.landingDisplay === 1;
     });
   }
-
 
   filterPreviewCategories = (categoryList) => {
     return categoryList.filter(function(value, index, arr){

@@ -11,27 +11,6 @@ class Layout extends Component {
     super(props)
   }
 
-  changeCategory = (e, callback) => {
-    e.preventDefault();
-    const { search } = this.props.location;
-    const { locale, currency } = this.props.match.params;
-    this.props.history.push('/'+ locale + '/' + currency + '/category/' + e.currentTarget.id + search);
-    if(callback) { callback() }
-  }
-
-  changeBrand = (e, callback) => {
-    e.preventDefault();
-    const { search } = this.props.location;
-    const { locale, currency, term } = this.props.match.params;
-    const value = e.currentTarget.id;
-    if(value === 'All') {
-      this.props.history.push('/'+ locale + '/' + currency + '/category/' + term + search);
-    } else {
-      this.props.history.push('/'+ locale + '/' + currency + '/category/' + term + '/brand/' + value + search);
-    }
-    if(callback) { callback() }
-  }
-
   render() {
     const children = React.Children.map(this.props.children, child => {
      return React.cloneElement(child, {

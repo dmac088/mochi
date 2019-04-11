@@ -59,14 +59,26 @@ class Products extends Component {
 
     if(type==="category") {
       const { selectedPrice } = this.state;
+      console.log(term);
+      console.log(brand);
       const maxPrice = Number(this.getMaxPrice((this.filterCategories(categoryList, term)[0]), brand));
+      console.log(maxPrice);
 
       const prevSelectedPrice = (prevState) ? prevState.selectedPrice : null;
       const prevMaxPrice = (prevState) ? prevState.maxPrice : null;
 
-      const price = (selectedPrice) ? selectedPrice : maxPrice;
-      const prevPrice = (prevSelectedPrice) ? (prevSelectedPrice) : ((prevMaxPrice) ? prevMaxPrice : 0) ;
+      //we are setting the wrong price here, for cateogry change, or brand change, of course there will be a valid previous price (not null)
+      const price = ( selectedPrice
+                      && prevState
+                      && term === this.state.category
+                      && brand === this.state.brand
+                    ) ? selectedPrice : maxPrice;
+      console.log(price);
+      const prevPrice = (prevSelectedPrice) //? (prevSelectedPrice) : ((prevMaxPrice) ? prevMaxPrice : 0);
 
+
+      // console.log(brand);
+      // console.log(maxPrice);
       this.update(locale, currency, pathname, term, brand, Object.assign(params, qs.parse(search)), price, prevPrice, maxPrice, isMounting, this.getProducts);
     }
     if (type==="search") {
@@ -158,16 +170,13 @@ class Products extends Component {
           maxPrice = brand.maxMarkDownPrice;
       }
     });
-        console.log(maxPrice);
     return maxPrice;
   }
 
-  renderBrandSlider = (category, changeBrand) => {
+  renderBrandSlider = (category) => {
     if(!category) { return; }
     return (
       <BrandSidebar
-        changeBrand={changeBrand}
-        getMaxPrice={this.getMaxPrice}
         category={category}
       />
     )
@@ -213,7 +222,6 @@ class Products extends Component {
                     <div className="sidebar-area">
                       <CategorySidebar
                         changeCategory={changeCategory}
-                        getMaxPrice={this.getMaxPrice}
                         category={cat}
                       />
                     {this.renderBrandSlider(cat,changeBrand)}

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import ReactTransitionGroup from 'react-addons-transition-group';
+import { withRouter } from 'react-router-dom';
 import * as categoryApi from '../../data/categories/api';
 import { isMobile, slide, updateParams } from '../../services/helpers/Helper';
+import { changeCategory } from '../../services/helpers/routeHelper';
 import { getValue } from '../../config/lang/selector';
 import 'velocity-animate/velocity.ui';
 
@@ -60,6 +62,7 @@ class CategoryMenuContainer extends Component {
               isMobile={this.state.isMobile}
               history={this.props.history}
               match={this.props.match}
+              location={this.props.location}
             />
           : null)
           }
@@ -87,14 +90,6 @@ class CategoryMenu extends Component {
     slide(this.container, 'slideUp', null, callback);
   }
 
-  changeCategory = (e) => {
-    if(e.target.tagName === "I") {return}
-    e.preventDefault();
-    const { url } = this.props.match;
-    const { locale, currency } = this.props.match.params;
-    this.props.history.push('/'+ locale + '/'+ currency + '/category/' + e.currentTarget.id);
-  }
-
   setContainer = (c) => {
     this.container = c;
   }
@@ -116,7 +111,7 @@ class CategoryMenu extends Component {
   renderCategoryListItems = (categoryList, isRootList, changeCategory, itemCounter) => {
     return categoryList.map(category => {
         if(isRootList) {itemCounter+=1};
-        const { isMobile }  = this.props;
+        const { isMobile, location, match, history }  = this.props;
         const { showMore }  = this.state
         const categoryId    = category.categoryId;
 
@@ -130,7 +125,10 @@ class CategoryMenu extends Component {
                     changeCategory={changeCategory}
                     itemCounter={itemCounter}
                     isMobile={isMobile}
-                    showMore={showMore}>
+                    showMore={showMore}
+                    history={history}
+                    match={match}
+                    location={location}>
               </ReactTransitionGroup>
         )
     });
@@ -143,7 +141,7 @@ class CategoryMenu extends Component {
 
     return(
       <ul ref={this.setContainer}>
-        {this.renderCategoryListItems(categoryList, true, this.changeCategory, 0)}
+        {this.renderCategoryListItems(categoryList, true, changeCategory, 0)}
         {
           ((categoryList.length > 8 && !showMore)
           ? <li>
@@ -190,7 +188,7 @@ class CategoryMenuItem extends Component {
 
   render() {
     const { categoryLevel, categoryId, categoryCode, categoryDesc, productCount, children } = this.props.category;
-    const { itemCounter, isRootList, isMobile, changeCategory, showMore } = this.props;
+    const { itemCounter, isRootList, isMobile, showMore, location, match, history } = this.props;
     const { hasChildren, expand } = this.state;
 
     return (
@@ -211,7 +209,7 @@ class CategoryMenuItem extends Component {
           }
           >
           <a  id={categoryDesc}
-              onClick={changeCategory}
+              onClick={(e) => changeCategory(e, location, match, history )}
               className={"megamenu-head"}
               style={(isMobile)
                      ? {"--my-cat-indent": this.getIndent(categoryLevel)}
@@ -259,8 +257,7 @@ class CategoryMenuItemSubList extends Component {
   }
 
   render() {
-    const { itemCounter, changeCategory, children } = this.props;
-
+    const { itemCounter, children } = this.props;
     return (
       <ul ref={this.setContainer}
           className="category-mega-menu">
@@ -270,4 +267,4 @@ class CategoryMenuItemSubList extends Component {
   }
 }
 
-export default CategoryMenuContainer;
+export default withRouter(CategoryMenuContainer);
