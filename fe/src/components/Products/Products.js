@@ -36,21 +36,24 @@ class Products extends Component {
                 },
       "maxPrice": null,
       "selectedPrice": null,
+      "prevPrice": null,
     };
   }
 
 
   componentDidMount() {
+    console.log("componentDidMount");
     this.refresh(1);
   }
 
 
-  componentDidUpdate(prevProps, prevState) {
-    this.refresh(0, prevState);
+  componentDidUpdate(prevProps) {
+    console.log("componentDidUpdate");
+    this.refresh(0);
   }
 
 
-  refresh = (isMounting, prevState) => {
+  refresh = (isMounting) => {
     const { pathname, search }              = this.props.location;
     const { categoryList }                  = this.props;
     const params                            = {...this.state.params};
@@ -58,51 +61,38 @@ class Products extends Component {
     const type                              = this.props.match.params[0];
 
     if(type==="category") {
+      //get the currenct selected price
       const { selectedPrice } = this.state;
-      console.log(term);
-      console.log(brand);
+
+      //get the max price for our new props
       const maxPrice = Number(this.getMaxPrice((this.filterCategories(categoryList, term)[0]), brand));
-      console.log(maxPrice);
 
-      const prevSelectedPrice = (prevState) ? prevState.selectedPrice : null;
-      const prevMaxPrice = (prevState) ? prevState.maxPrice : null;
+      //the incoming props are different to the local state
+      const isDifferent = (!(term === this.state.category
+                            && brand === this.state.term));
 
-      //we are setting the wrong price here, for cateogry change, or brand change, of course there will be a valid previous price (not null)
-      const price = ( selectedPrice
-                      && prevState
-                      && term === this.state.category
-                      && brand === this.state.brand
-                    ) ? selectedPrice : maxPrice;
-      console.log(price);
-      const prevPrice = (prevSelectedPrice) //? (prevSelectedPrice) : ((prevMaxPrice) ? prevMaxPrice : 0);
+      const price = (isDifferent) ? maxPrice : selectedPrice;
 
-
-      // console.log(brand);
-      // console.log(maxPrice);
-      this.update(locale, currency, pathname, term, brand, Object.assign(params, qs.parse(search)), price, prevPrice, maxPrice, isMounting, this.getProducts);
+      this.update(locale, currency, pathname, term, brand, Object.assign(params, qs.parse(search)), price, maxPrice, isMounting, this.getProducts);
     }
-    if (type==="search") {
-      this.update(locale, currency, pathname, "All", term, Object.assign(params, qs.parse(search)), price, prevPrice, maxPrice, isMounting, pageService.findAll);
+    if (type === "search") {
+      this.update(locale, currency, pathname, "All", term, Object.assign(params, qs.parse(search)), price, maxPrice, isMounting, pageService.findAll);
     }
   }
 
 
-  update = (locale, currency, pathname, category, term, params, price, prevPrice, maxPrice, isMounting = 0, callback) => {
+  update = (locale, currency, pathname, category, term, params, price, maxPrice, isMounting = 0, callback) => {
     if(!params) {return;}
     const { page, size, sort } = params;
-    const resetPrice = (!(  locale === this.state.locale
-                        &&  currency === this.state.currency
-                        &&  category === this.state.category
-                        &&  term === this.state.term));
-    if(   locale === this.state.locale
-      &&  currency === this.state.currency
-      &&  category === this.state.category
-      &&  term === this.state.term
-      &&  page === this.state.params.page
-      &&  size === this.state.params.size
-      &&  sort === this.state.params.sort
-      &&  price === prevPrice
-      &&  isMounting === 0
+    if(   locale      === this.state.locale
+      &&  currency    === this.state.currency
+      &&  category    === this.state.category
+      &&  term        === this.state.term
+      &&  page        === this.state.params.page
+      &&  size        === this.state.params.size
+      &&  sort        === this.state.params.sort
+      &&  price       === this.state.prevPrice
+      &&  isMounting  === 0
     ) {return;}
     callback(locale, currency, category, term, price+1, page, size, sort)
     .then((responseJSON) => {
@@ -117,13 +107,15 @@ class Products extends Component {
         "numberOfElements": responseJSON.numberOfElements,
         "params":           params,
         "maxPrice":         maxPrice,
-        "selectedPrice":    ((resetPrice) ? maxPrice : price),
-      }, () => {
+        "selectedPrice":    price,
+        "prevPrice":        price,
+      });
+     })
+      .then(() => {
         this.props.history.push({
           "pathname": pathname,
           "search": qs.stringify(params),
         });
-      });
     })
     .catch(()=>{
         console.log('failed!');
@@ -160,7 +152,6 @@ class Products extends Component {
   }
 
   getMaxPrice = (category, currentBrand) => {
-    console.log("getMaxPrice");
     if(!category) { return }
     let maxPrice = category.maxMarkDownPrice;
     if(!category.categoryBrands) {return maxPrice}
