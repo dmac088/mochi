@@ -194,6 +194,11 @@ class Products extends Component {
     })
   }
 
+  updateMaxPrice = (category, brand) => {
+    this.setState({
+      "maxPrice": value,
+    })
+  }
 
   render() {
       const { toggleQuickView, setCurrentProductId, showQVModal, currentProductId, categoryList, changeCategory, changeBrand} = this.props;

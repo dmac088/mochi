@@ -32,8 +32,6 @@ class Layout extends Component {
     if(callback) { callback() }
   }
 
-
-
   render() {
     const children = React.Children.map(this.props.children, child => {
      return React.cloneElement(child, {
