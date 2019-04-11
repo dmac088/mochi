@@ -19,12 +19,14 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonBackReference;
+import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
+@Indexed
 @Table(name = "product", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "prd_id")
 public class Product {
@@ -52,6 +54,7 @@ public class Product {
 	private List<ProductCategory> categories;
 
 	@OneToMany(mappedBy="product",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@IndexedEmbedded
 	@JsonManagedReference
 	private List<ProductAttribute> attributes;
 	

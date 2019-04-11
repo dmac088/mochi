@@ -16,7 +16,6 @@ import org.hibernate.search.annotations.TokenizerDef;
 import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Parameter;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.TermVector;
@@ -70,7 +69,6 @@ public class ProductAttribute {
 	private String lclCd;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@IndexedEmbedded
 	@JoinColumn(name="prd_id", insertable=false, updatable=false)
 	@JsonBackReference
 	private Product product;

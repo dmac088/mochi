@@ -43,6 +43,7 @@ class App extends Component {
   }
 
   componentDidMount() {
+    console.log("componentDidMount");
     // Note that subscribe() returns a function for unregistering the listener
     const unsubscribe = store.subscribe(() => {
                                               			if (store.getState().services.persist.isHydrated) {

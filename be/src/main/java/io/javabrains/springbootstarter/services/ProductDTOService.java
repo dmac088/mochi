@@ -155,52 +155,52 @@ public class ProductDTOService implements IProductDTOService {
 		
 		FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
 				
-		QueryBuilder productAttributeQueryBuilder = 
+		QueryBuilder productQueryBuilder = 
 				fullTextEntityManager.getSearchFactory()
 				  .buildQueryBuilder()
-				  .forEntity(ProductAttribute.class)
-				  .overridesForField("productDesc", lcl)
-				  .overridesForField("categoryDesc", lcl)
-				  .overridesForField("brandDesc", lcl)
+				  .forEntity(Product.class)
+				  .overridesForField("attributes.productDesc", lcl)
+				  .overridesForField("attributes.categoryDesc", lcl)
+				  .overridesForField("attributes.brandDesc", lcl)
 				  .get();
 		
-		org.apache.lucene.search.Query searchQuery = productAttributeQueryBuilder.keyword()
+		org.apache.lucene.search.Query searchQuery = productQueryBuilder.keyword()
 													.onFields(
-															"product.categories.parent.parent.productCategoryAttribute.categoryDesc",
-															"product.categories.parent.productCategoryAttribute.categoryDesc",
-															"product.categories.productCategoryAttribute.categoryDesc",
-															"product.brand.brandAttributes.brandDesc",
-															"productDesc"
+															"categories.parent.parent.productCategoryAttribute.categoryDesc",
+															"categories.parent.productCategoryAttribute.categoryDesc",
+															"categories.productCategoryAttribute.categoryDesc",
+															"brand.brandAttributes.brandDesc",
+															"attributes.productDesc"
 													)
 													.matching(searchTerm)
 													 .createQuery();
 				
 		
 		org.apache.lucene.search.Query query = 
-			productAttributeQueryBuilder
+			productQueryBuilder
 			.bool()
 			.must(searchQuery)
-			.must(productAttributeQueryBuilder.keyword()
-			.onFields(	"product.categories.productCategoryAttribute.lclCd",
-						"product.categories.parent.productCategoryAttribute.lclCd",
-						"product.categories.parent.parent.productCategoryAttribute.lclCd")
+			.must(productQueryBuilder.keyword()
+			.onFields(	"categories.productCategoryAttribute.lclCd",
+						"categories.parent.productCategoryAttribute.lclCd",
+						"categories.parent.parent.productCategoryAttribute.lclCd")
 			.matching(lcl)
 		    .createQuery())
-			.must(productAttributeQueryBuilder.keyword()
-			.onFields(	"product.categories.productCategoryAttribute.categoryDesc", 
-						"product.categories.parent.productCategoryAttribute.categoryDesc",
-						"product.categories.parent.parent.productCategoryAttribute.categoryDesc")
+			.must(productQueryBuilder.keyword()
+			.onFields(	"categories.productCategoryAttribute.categoryDesc", 
+						"categories.parent.productCategoryAttribute.categoryDesc",
+						"categories.parent.parent.productCategoryAttribute.categoryDesc")
 			.matching(categoryDesc)
 			.createQuery())
-			.must(productAttributeQueryBuilder.keyword()
-			.onField("lclCd")
+			.must(productQueryBuilder.keyword()
+			.onField("attributes.lclCd")
 			.matching(lcl)
 			.createQuery())
 			.createQuery();
 		
 		
 		org.hibernate.search.jpa.FullTextQuery jpaQuery
-		  = fullTextEntityManager.createFullTextQuery(query, ProductAttribute.class);
+		  = fullTextEntityManager.createFullTextQuery(query, Product.class);
 		
 		Pageable pageable = PageRequest.of(page, size);
 		jpaQuery.setFirstResult(pageableUtil.getStartPosition(pageable));
@@ -222,15 +222,15 @@ public class ProductDTOService implements IProductDTOService {
 	private String getSortField(String field) {
 		switch(field) {
 		case "description":
-			return "productDesc";
+			return "attributes.productDesc";
 		case "price":
-			return "productRrp";
+			return "prices.priceValue";
 		case "productDesc":
-			return "productDesc";
+			return "attributes.productDesc";
 		case "productRrp":
-			return "productRrp";
+			return "prices.priceValue";
 		default: 
-			return "productDesc";
+			return "attributes.productDesc";
 		}
 	}
 	
@@ -283,10 +283,10 @@ public class ProductDTOService implements IProductDTOService {
     
     private Sort sortByParam(String param) {
     	switch (param) {
-    	case "priceAsc": return new Sort(Sort.Direction.ASC, "Prices.PriceValue");
-    	case "priceDesc": return new Sort(Sort.Direction.DESC, "Prices.PriceValue");
-    	case "nameAsc": return new Sort(Sort.Direction.ASC, "Attributes.productDesc");
-    	default: return new Sort(Sort.Direction.ASC, "Attributes.productDesc");
+    	case "priceAsc": return new Sort(Sort.Direction.ASC, "prices.PriceValue");
+    	case "priceDesc": return new Sort(Sort.Direction.DESC, "prices.PriceValue");
+    	case "nameAsc": return new Sort(Sort.Direction.ASC, "attributes.productDesc");
+    	default: return new Sort(Sort.Direction.ASC, "attributes.productDesc");
     	}
     }
 
