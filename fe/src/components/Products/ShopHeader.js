@@ -7,7 +7,6 @@ class ShopHeader extends Component {
   changeSort = (e) => {
     //get the query parameters
     const { location } = this.props.history;
-    console.log(location);
     const urlParams = (qs.parse(location.search));
     const mergedParams = Object.assign(urlParams, {
                                                     sort: e.target.value

@@ -4,7 +4,6 @@ import qs from 'query-string';
 
 export const changeCategory = (e, location, match, history) => {
   e.preventDefault();
-  console.log(location);
   const { search } = location;
   const { locale, currency } = match.params;
   history.push('/'+ locale + '/' + currency + '/category/' + e.currentTarget.id + search);
