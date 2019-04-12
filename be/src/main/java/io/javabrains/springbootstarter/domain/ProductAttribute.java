@@ -10,6 +10,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.AnalyzerDiscriminator;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.SortableField;
@@ -29,10 +32,15 @@ public class ProductAttribute {
 	@Column(name="prd_id")
 	private Long productId;
 	
-	@SortableField
-	@Field(termVector = TermVector.YES)
+	
+	@Field(termVector = TermVector.YES, analyze = Analyze.YES)
 	@Column(name="prd_desc")
 	private String productDesc;
+	
+	@Transient
+	@Field(analyze = Analyze.NO)
+	@SortableField
+	private String productSortDesc;
 	
 	@Column(name="prd_img_pth")
 	private String ProductImage;
@@ -66,8 +74,13 @@ public class ProductAttribute {
 
 	public void setProductDesc(String productDesc) {
 		this.productDesc = productDesc;
+		this.productSortDesc = productDesc;
 	}
 	
+	public String getProductSortDesc() {
+		return productSortDesc;
+	}
+
 	public String getLclCd() {
 		return lclCd;
 	}
