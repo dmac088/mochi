@@ -8,8 +8,6 @@ import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-
-import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.SortField;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
@@ -160,9 +158,6 @@ public class ProductDTOService implements IProductDTOService {
 				fullTextEntityManager.getSearchFactory()
 				  .buildQueryBuilder()
 				  .forEntity(Product.class)
-				  .overridesForField("attributes.productDesc", lcl)
-				  .overridesForField("categories.productCategoryAttribute.categoryDesc", lcl)
-				  .overridesForField("brand.brandAttributes.brandDesc", lcl)
 				  .get();
 		
 		

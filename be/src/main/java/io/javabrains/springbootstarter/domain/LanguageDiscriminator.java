@@ -8,7 +8,7 @@ public class LanguageDiscriminator implements Discriminator {
         if ( value == null || !( entity instanceof ProductAttribute || entity instanceof ProductCategoryAttribute || entity instanceof BrandAttribute)) {
             return null;
         }
-        System.out.println(field);
+        //if(!value.equals("en-GB")) { return null; } 
         return (String) value;
     }
 }
