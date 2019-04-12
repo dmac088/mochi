@@ -5,11 +5,11 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
+import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.SortField;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
@@ -21,7 +21,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Sort;
-
 import io.javabrains.springbootstarter.domain.PageableUtil;
 import io.javabrains.springbootstarter.domain.Product;
 import io.javabrains.springbootstarter.domain.ProductAttribute;
@@ -151,6 +150,8 @@ public class ProductDTOService implements IProductDTOService {
 
 	public Page<ProductDTO> findProduct(String lcl, String currency, String categoryDesc, String searchTerm, int page, int size, String sortBy) {
 
+		System.out.println(lcl);
+		
 		PageableUtil pageableUtil = new PageableUtil();
 		
 		FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
@@ -164,6 +165,9 @@ public class ProductDTOService implements IProductDTOService {
 				  .overridesForField("brand.brandAttributes.brandDesc", lcl)
 				  .get();
 		
+		
+		
+		//this is a lucene query using the lucene apu
 		org.apache.lucene.search.Query searchQuery = productQueryBuilder.keyword()
 													.onFields(
 															"categories.parent.parent.productCategoryAttribute.categoryDesc",
@@ -174,33 +178,10 @@ public class ProductDTOService implements IProductDTOService {
 													)
 													.matching(searchTerm)
 													 .createQuery();
-				
-		
-		org.apache.lucene.search.Query query = 
-			productQueryBuilder
-			.bool()
-			.must(searchQuery)
-			.must(productQueryBuilder.keyword()
-			.onFields(	"categories.productCategoryAttribute.lclCd",
-						"categories.parent.productCategoryAttribute.lclCd",
-						"categories.parent.parent.productCategoryAttribute.lclCd")
-			.matching(lcl)
-		    .createQuery())
-			.must(productQueryBuilder.keyword()
-			.onFields(	"categories.productCategoryAttribute.categoryDesc", 
-						"categories.parent.productCategoryAttribute.categoryDesc",
-						"categories.parent.parent.productCategoryAttribute.categoryDesc")
-			.matching(categoryDesc)
-			.createQuery())
-			.must(productQueryBuilder.keyword()
-			.onField("attributes.lclCd")
-			.matching(lcl)
-			.createQuery())
-			.createQuery();
 		
 		
 		org.hibernate.search.jpa.FullTextQuery jpaQuery
-		  = fullTextEntityManager.createFullTextQuery(query, Product.class);
+		  = fullTextEntityManager.createFullTextQuery(searchQuery, Product.class);
 		
 		Pageable pageable = PageRequest.of(page, size);
 		jpaQuery.setFirstResult(pageableUtil.getStartPosition(pageable));
