@@ -50,15 +50,15 @@ public class Brand {
 	public List<BrandAttribute> getBrandAttributes() {
 		return brandAttributes;
 	}
-
-	public void setProducts(List<Product> products) {
-		this.products = products;
-	}
 	
 	public void setBrandAttributes(List<BrandAttribute> brandAttributes) {
 		this.brandAttributes = brandAttributes;
 	}
 
+	public void setProducts(List<Product> products) {
+		this.products = products;
+	}
+	
 	public List<Product> getProducts() {
 		return products;
 	}

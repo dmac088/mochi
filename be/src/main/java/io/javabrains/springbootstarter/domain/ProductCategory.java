@@ -43,7 +43,6 @@ public class ProductCategory {
 	private Long categoryId;
 
 	@Column(name="cat_cd")
-	@Field
 	private String categoryCode;
 	
 	@Column(name="cat_prev_flg")
