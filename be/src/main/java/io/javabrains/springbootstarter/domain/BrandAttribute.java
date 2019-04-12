@@ -11,9 +11,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.AnalyzerDiscriminator;
 import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.TermVector;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -30,7 +30,7 @@ public class BrandAttribute {
 	private Long brandId;
 
 	@Column(name="bnd_desc")
-	@Field(termVector = TermVector.YES)
+	@Field(analyze = Analyze.YES)
 	private String brandDesc;
 	
 	@Column(name="lcl_cd")	

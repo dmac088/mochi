@@ -16,7 +16,6 @@ import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.AnalyzerDiscriminator;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.SortableField;
-import org.hibernate.search.annotations.TermVector;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
@@ -33,7 +32,7 @@ public class ProductAttribute {
 	private Long productId;
 	
 	
-	@Field(termVector = TermVector.YES, analyze = Analyze.YES)
+	@Field(analyze = Analyze.YES)
 	@Column(name="prd_desc")
 	private String productDesc;
 	
