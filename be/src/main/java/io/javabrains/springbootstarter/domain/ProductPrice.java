@@ -12,6 +12,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.SortableField;
+
 @Entity
 @Table(name = "price", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "prc_id")
@@ -22,6 +26,8 @@ public class ProductPrice {
 	@Column(name="prc_id")
 	private Long id;
 	
+	@Field(analyze = Analyze.NO)
+	@SortableField
 	@Column(name="prc_val")
 	private Long priceValue;
 	
