@@ -160,8 +160,8 @@ public class ProductDTOService implements IProductDTOService {
 				  .buildQueryBuilder()
 				  .forEntity(Product.class)
 				  .overridesForField("attributes.productDesc", lcl)
-				  .overridesForField("attributes.categoryDesc", lcl)
-				  .overridesForField("attributes.brandDesc", lcl)
+				  .overridesForField("categories.productCategoryAttribute.categoryDesc", lcl)
+				  .overridesForField("brand.brandAttributes.brandDesc", lcl)
 				  .get();
 		
 		org.apache.lucene.search.Query searchQuery = productQueryBuilder.keyword()
