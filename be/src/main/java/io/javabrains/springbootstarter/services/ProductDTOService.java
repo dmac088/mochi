@@ -218,14 +218,14 @@ public class ProductDTOService implements IProductDTOService {
 	
 	private String getSortField(String field) {
 		switch(field) {
-		case "description":
+		case "name":
 			return "productSortDesc";
 		case "price":
-			return "prices.priceValue";
+			return "product.prices.priceValue";
 		case "productDesc":
 			return "productSortDesc";
-		case "productRrp":
-			return "prices.priceValue";
+		case "priceAsc":
+			return "product.prices.priceValue";
 		default: 
 			return "productSortDesc";
 		}

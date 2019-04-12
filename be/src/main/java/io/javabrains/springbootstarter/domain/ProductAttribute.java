@@ -46,7 +46,6 @@ filters = {
 tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
 filters = {
   @TokenFilterDef(factory = CJKWidthFilterFactory.class),
-  @TokenFilterDef(factory = LowerCaseFilterFactory.class),
   @TokenFilterDef(factory = CJKBigramFilterFactory.class)
 })
 public class ProductAttribute {
