@@ -157,26 +157,33 @@ public class ProductDTOService implements IProductDTOService {
 		QueryBuilder productQueryBuilder = 
 				fullTextEntityManager.getSearchFactory()
 				  .buildQueryBuilder()
-				  .forEntity(Product.class)
+				  .forEntity(ProductAttribute.class)
+				  .overridesForField("productDesc", lcl)
 				  .get();
 		
 		
 		
 		//this is a lucene query using the lucene apu
-		org.apache.lucene.search.Query searchQuery = productQueryBuilder.keyword()
+		org.apache.lucene.search.Query searchQuery = productQueryBuilder
+													.bool()
+													.must(productQueryBuilder.keyword()
 													.onFields(
-															"categories.parent.parent.productCategoryAttribute.categoryDesc",
-															"categories.parent.productCategoryAttribute.categoryDesc",
-															"categories.productCategoryAttribute.categoryDesc",
-															"brand.brandAttributes.brandDesc",
-															"attributes.productDesc"
-													)
-													.matching(searchTerm)
-													 .createQuery();
-		
-		
+															"product.categories.parent.parent.productCategoryAttribute.categoryDesc",
+															"product.categories.parent.productCategoryAttribute.categoryDesc",
+															"product.categories.productCategoryAttribute.categoryDesc",
+															"product.brand.brandAttributes.brandDesc",
+															"productDesc")
+													.matching(searchTerm)													
+													.createQuery())
+													.must(productQueryBuilder.keyword()
+													.onFields("lclCd")
+													.matching(lcl)
+													.createQuery())
+													.createQuery();
+			
 		org.hibernate.search.jpa.FullTextQuery jpaQuery
-		  = fullTextEntityManager.createFullTextQuery(searchQuery, Product.class);
+		  = fullTextEntityManager.createFullTextQuery(searchQuery, ProductAttribute.class);
+		
 		
 		Pageable pageable = PageRequest.of(page, size);
 		jpaQuery.setFirstResult(pageableUtil.getStartPosition(pageable));
@@ -187,9 +194,11 @@ public class ProductDTOService implements IProductDTOService {
 		jpaQuery.setSort(sort);
 		
 		@SuppressWarnings("unchecked")
-		List<Product> results =  Collections.checkedList(jpaQuery.getResultList(), Product.class);
+		List<ProductAttribute> results =  Collections.checkedList(jpaQuery.getResultList(), ProductAttribute.class);
 		
-		List<ProductDTO> lp = results.stream().map(pa -> this.convertToProductDto(pa, lcl, currency)).collect(Collectors.toList());
+		System.out.println(results.size());
+		
+		List<ProductDTO> lp = results.stream().map(pa -> this.convertToProductDto(pa.getProduct(), lcl, currency)).collect(Collectors.toList());
 
 		Page<ProductDTO> pp = new PageImpl<ProductDTO>(lp, pageable, jpaQuery.getResultSize());
 		return pp;
@@ -198,15 +207,15 @@ public class ProductDTOService implements IProductDTOService {
 	private String getSortField(String field) {
 		switch(field) {
 		case "description":
-			return "attributes.productSortDesc";
+			return "productSortDesc";
 		case "price":
 			return "prices.priceValue";
 		case "productDesc":
-			return "attributes.productSortDesc";
+			return "productSortDesc";
 		case "productRrp":
 			return "prices.priceValue";
 		default: 
-			return "attributes.productSortDesc";
+			return "productSortDesc";
 		}
 	}
 	
