@@ -40,18 +40,18 @@ public class CategoryAttribute {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="cat_id", insertable=false, updatable=false)
 	@JsonBackReference
-	private Category productCategory;
+	private Category category;
 	
 	public Long getCategoryId() {
 		return categoryId;
 	}
 	
-	public Category getProductCategory() {
-		return productCategory;
+	public Category getCategory() {
+		return category;
 	}
 
-	public void setProductCategory(Category productCategory) {
-		this.productCategory = productCategory;
+	public void seCategory(Category productCategory) {
+		this.category = productCategory;
 	}
 
 	public String getCategoryDesc() {
