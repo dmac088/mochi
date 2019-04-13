@@ -59,18 +59,19 @@ class Products extends Component {
     const type                              = this.props.match.params[0];
 
     if(type==="category") {
-      //get the currenct selected price
-      const { selectedPrice } = this.state;
 
       //get the max price for our new props
       const maxPrice = Number(this.getMaxPrice((this.filterCategories(categoryList, term)[0]), brand));
+      if(Number.isNaN(maxPrice)) { return }
+
+      //get the currenct selected price
+      const { selectedPrice } = this.state;
 
       //the incoming props are different to the local state
       const isDifferent = (!(term === this.state.category
                             && brand === this.state.term));
 
       const price = (isDifferent) ? maxPrice : selectedPrice;
-
       this.update(locale, currency, pathname, term, brand, Object.assign(params, qs.parse(search)), price, maxPrice, isMounting, this.getProducts);
     }
     if (type === "search") {
