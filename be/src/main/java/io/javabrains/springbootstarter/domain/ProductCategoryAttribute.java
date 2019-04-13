@@ -11,10 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.AnalyzerDiscriminator;
 import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Index;
-import org.hibernate.search.annotations.Store;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
@@ -31,10 +29,12 @@ public class ProductCategoryAttribute {
 	private Long categoryId;
 
 	@Column(name="cat_desc")
-	@Field(analyze = Analyze.YES, store = Store.YES, index = Index.YES)
+	@Field(analyze = Analyze.YES)
 	private String categoryDesc;
 	
 	@Column(name="lcl_cd")	
+	@Field
+	@AnalyzerDiscriminator(impl = LanguageDiscriminator.class)
 	private String lclCd;
 
 	@ManyToOne(fetch = FetchType.LAZY)

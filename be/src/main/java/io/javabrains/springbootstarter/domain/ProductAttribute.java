@@ -20,12 +20,10 @@ import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.AnalyzerDef;
 import org.hibernate.search.annotations.AnalyzerDiscriminator;
 import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Parameter;
 import org.hibernate.search.annotations.SortableField;
-import org.hibernate.search.annotations.Store;
 import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -59,7 +57,7 @@ public class ProductAttribute {
 	private Long productId;
 	
 	
-	@Field(analyze = Analyze.YES, store = Store.YES, index = Index.YES)
+	@Field(analyze = Analyze.YES)
 	@Column(name="prd_desc")
 	private String productDesc;
 	
@@ -72,7 +70,7 @@ public class ProductAttribute {
 	private String ProductImage;
 	
 	@Column(name="lcl_cd")
-	@Field(analyze = Analyze.YES, store = Store.YES, index = Index.YES)
+	@Field()
 	@AnalyzerDiscriminator(impl = LanguageDiscriminator.class)
 	private String lclCd;
 	
