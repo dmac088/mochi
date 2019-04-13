@@ -34,12 +34,6 @@ public class Category {
 
 	@Column(name="cat_cd")
 	private String categoryCode;
-	
-	@Column(name="cat_prev_flg")
-	private Long previewFlag;
-	
-	@Column(name="lnd_disp_flg")
-	private Long landingDisplayFlag;
 
 	@Column(name="cat_lvl")
 	private Long categoryLevel;
@@ -124,22 +118,6 @@ public class Category {
 
 	public void setCategoryLevel(Long categoryLevel) {
 		this.categoryLevel = categoryLevel;
-	}
-	
-	public Long getPreviewFlag() {
-		return previewFlag;
-	}
-
-	public void setPreviewFlag(Long previewFlag) {
-		this.previewFlag = previewFlag;
-	}
-	
-	public Long getLandingDisplayFlag() {
-		return landingDisplayFlag;
-	}
-
-	public void setLandingDisplayFlag(Long landingDisplayFlag) {
-		this.landingDisplayFlag = landingDisplayFlag;
 	}
 	
 	public Collection<Product> getProducts() {

@@ -38,7 +38,7 @@ class CategoryMenuContainer extends Component {
 
   render() {
     const { locale } = this.props.match.params;
-    const categoryList = filterCategories(this.props.categoryList);
+    const categoryList = filterCategories(this.props.categoryList, 'LNDMM01');
     return (
       <div className="hero-side-category">
         <div className="category-toggle-wrap">

@@ -8,10 +8,6 @@ class LayoutBC extends Component {
     super(props)
   }
 
-  componentDidMount() {
-
-  }
-  
   render() {
     return(
       <Layout
