@@ -65,10 +65,10 @@ public class Category {
 	@IndexedEmbedded(depth = 5)
 	private Category parent;
 	
-	@OneToMany(mappedBy="productCategory",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="Category",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@IndexedEmbedded
 	@JsonIgnore
-	private List<CategoryAttribute> productCategoryAttribute;
+	private List<CategoryAttribute> attributes;
 
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumns({
@@ -93,12 +93,12 @@ public class Category {
 		this.parent = parent;
 	}
 	
-	public List<CategoryAttribute> getProductCategoryAttribute() {
-		return productCategoryAttribute;
+	public List<CategoryAttribute> getAttributes() {
+		return attributes;
 	}
 
-	public void setProductCategoryAttribute(List<CategoryAttribute> productCategoryAttribute) {
-		this.productCategoryAttribute = productCategoryAttribute;
+	public void setAttribute(List<CategoryAttribute> categoryAttributes) {
+		this.attributes = categoryAttributes;
 	}
 
 	public Long getCategoryId() {
@@ -152,5 +152,14 @@ public class Category {
 	public Long getProductCount() {
 		return new Long(products.size());
 	}
+	
+	public CategoryType getCategoryType() {
+		return categoryType;
+	}
+
+	public void setCategoryType(CategoryType categoryType) {
+		this.categoryType = categoryType;
+	}
+
 	
 }
