@@ -1311,6 +1311,8 @@ COPY category_attr_lcl (cat_lcl_id, cat_id, cat_desc, cat_img_pth, lcl_cd) FROM 
 89	41	推薦品牌	\N	zh-HK
 90	42	Other Brands	\N	en-GB
 99	42	其他品牌	\N	zh-HK
+100	43	Best Sellers	\N	en-GB
+101	43	最暢銷	\N	zh-HK
 \.
 
 
