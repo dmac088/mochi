@@ -27,14 +27,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @PrimaryKeyJoinColumn(name = "cat_id")
 public class Category {
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "product_category", schema="mochi", 
-    		   joinColumns 			= @JoinColumn(name = "cat_id"), 
-    		   inverseJoinColumns 	= @JoinColumn(name = "prd_id"))
-    @OrderBy
-    @JsonIgnore
-    private List<Product> products;
 
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="cat_id")
@@ -52,6 +46,22 @@ public class Category {
 	@Column(name="cat_lvl")
 	private Long categoryLevel;
 	
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "product_category", schema="mochi", 
+    		   joinColumns 			= @JoinColumn(name = "cat_id"), 
+    		   inverseJoinColumns 	= @JoinColumn(name = "prd_id"))
+    @OrderBy
+    @JsonIgnore
+    private List<Product> products;
+	
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "brand_category", schema="mochi", 
+    		   joinColumns 			= @JoinColumn(name = "cat_id"), 
+    		   inverseJoinColumns 	= @JoinColumn(name = "bnd_id"))
+    @OrderBy
+    @JsonIgnore
+    private List<Brand> brands;
+    
 	@ManyToOne
 	@JoinColumn(name="cat_typ_id", nullable=false, updatable = false, insertable = true)
 	private CategoryType categoryType;

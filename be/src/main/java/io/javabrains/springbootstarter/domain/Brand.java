@@ -9,9 +9,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.hibernate.search.annotations.IndexedEmbedded;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
@@ -31,6 +34,10 @@ public class Brand {
 	@JsonManagedReference
 	private List<Product> products;
 	
+	@ManyToMany(mappedBy = "brands")
+	@JsonIgnore
+	private List<Category> categories;
+
 	@OneToMany(mappedBy="brand",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@IndexedEmbedded
 	private List<BrandAttribute> brandAttributes;
