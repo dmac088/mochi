@@ -1198,6 +1198,7 @@ COPY category (cat_id, cat_cd, cat_prnt_id, cat_lvl, cat_typ_id) FROM stdin;
 22	PEC01	16	2	2
 23	BRA01	16	2	2
 2	PRM01	\N	0	2
+43	BSP01	39	1	1
 39	PRM02	\N	0	1
 38	FET01	39	1	1
 40	BND01	\N	0	2
@@ -1420,6 +1421,7 @@ COPY layout (lay_id, lay_cd, lay_desc) FROM stdin;
 1	LNDMM01	landing main menu 01
 2	LNDHC01	landing highlighted categories 01
 3	LNDPC01	landing preview categories 01
+4	LNDBS01	landing best selling products 01
 \.
 
 
@@ -1442,6 +1444,7 @@ COPY layout_category (lay_cat_id, lay_id, cat_id) FROM stdin;
 12	2	38
 13	3	4
 14	3	3
+15	4	43
 \.
 
 
@@ -2089,6 +2092,16 @@ COPY product_category (prd_cat_id, prd_id, cat_id) FROM stdin;
 78	24	38
 79	27	38
 80	29	38
+81	2	43
+82	14	43
+83	18	43
+84	22	43
+85	12	43
+86	16	43
+87	26	43
+88	6	43
+89	20	43
+90	5	43
 \.
 
 
@@ -2096,7 +2109,7 @@ COPY product_category (prd_cat_id, prd_id, cat_id) FROM stdin;
 -- Name: product_category_prd_cat_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('product_category_prd_cat_id_seq', 80, true);
+SELECT pg_catalog.setval('product_category_prd_cat_id_seq', 90, true);
 
 
 --
