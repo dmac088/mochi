@@ -33,11 +33,6 @@ public class CategoryDTOController {
     public List<CategoryDTO> getCategoriesForLevel(@PathVariable String lcl, @PathVariable String curr, @PathVariable Long level) {
     	return CategoryService.getCategoriesForLevel(lcl, curr, level);
     }
-    
-    @GetMapping("/Category/{lcl}/{curr}/preview")
-    public List<CategoryDTO> getCategoriesForLevel(@PathVariable String lcl, @PathVariable String curr) {
-    	return CategoryService.getPreviewCategories(lcl, curr, new Long(1));
-    }
 
     @GetMapping("/Category/{lcl}/{curr}/id/{categoryId}")
     public CategoryDTO getCategory(@PathVariable String lcl, @PathVariable String curr, @PathVariable Long categoryId) {
