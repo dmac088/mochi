@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Link } from "react-router-dom";
-import { changeCategory } from '../services/helpers/routeHelper';
+import { changeCategory } from '../services/helpers/RouteHelper';
 
 class BreadCrumb extends Component {
 

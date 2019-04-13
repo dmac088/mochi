@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from "react-router-dom";
-import { changeBrand } from '../../../services/helpers/routeHelper';
+import { changeBrand } from '../../../services/helpers/RouteHelper';
 
 class BrandSidebar extends Component {
 
