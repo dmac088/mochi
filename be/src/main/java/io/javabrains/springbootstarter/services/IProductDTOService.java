@@ -4,7 +4,7 @@ package io.javabrains.springbootstarter.services;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
-import io.javabrains.springbootstarter.domain.ProductCategory;
+import io.javabrains.springbootstarter.domain.Category;
 
 
 public interface IProductDTOService {
@@ -27,6 +27,6 @@ public interface IProductDTOService {
 	 
 	 List<ProductDTO> getPreviewProductsForCategory(String lcl, String currency, Long categoryId);
 	 
-	 public void recurseCategories(List<ProductCategory> pcl, ProductCategory pc);
+	 public void recurseCategories(List<Category> pcl, Category pc);
 	 
 }

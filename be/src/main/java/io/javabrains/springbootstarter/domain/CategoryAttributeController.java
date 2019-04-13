@@ -13,33 +13,33 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/api")
-public class ProductCategoryAttributeController {
+public class CategoryAttributeController {
 	
 	@Autowired
-	private ProductCategoryAttributeService productCategoryAttributeService;	
+	private CategoryAttributeService productCategoryAttributeService;	
 	
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.GET, value="/ProductCategoryAttribute/{lcl}")
-    public List<ProductCategoryAttribute> getAllProductCategoryAttributes(@PathVariable String lcl) {
+    public List<CategoryAttribute> getAllProductCategoryAttributes(@PathVariable String lcl) {
         return productCategoryAttributeService.getAllProductCategoryAttributes(lcl);	
     }	
 	
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.GET, value="/ProductCategoryAttribute/{lcl}/{id}")
-	public Optional<ProductCategoryAttribute> getProductCategoryAttribute(@PathVariable String lcl, @PathVariable Long id) {
+	public Optional<CategoryAttribute> getProductCategoryAttribute(@PathVariable String lcl, @PathVariable Long id) {
 		return productCategoryAttributeService.getProductCategoryAttribute(lcl, id);
 	}
 	
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.POST, value="/ProductCategoryAttribute")
-	public void addProductCategoryAttribute(ProductCategoryAttribute productCategoryAttribute) {	
+	public void addProductCategoryAttribute(CategoryAttribute productCategoryAttribute) {	
 		System.out.println("calling addProduct");
 		productCategoryAttributeService.addProductCategory(productCategoryAttribute);
 	}
 	
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.PUT, value="/ProductCategoryAttribute/{id}")
-	public void updateProductCategoryAttribute(@RequestBody ProductCategoryAttribute productCategoryAttribute, @PathVariable Long id) {
+	public void updateProductCategoryAttribute(@RequestBody CategoryAttribute productCategoryAttribute, @PathVariable Long id) {
 		System.out.println("calling updateProduct");
 		productCategoryAttributeService.updateProductCategory(id, productCategoryAttribute);
 	}

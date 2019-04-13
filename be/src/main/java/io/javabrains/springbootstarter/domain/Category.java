@@ -25,7 +25,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "category", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "cat_id")
-public class ProductCategory {
+public class Category {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "product_category", schema="mochi", 
@@ -59,41 +59,41 @@ public class ProductCategory {
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional=false)
 	@JoinColumn(name="cat_prnt_id", nullable=false)
 	@IndexedEmbedded(depth = 5)
-	private ProductCategory parent;
+	private Category parent;
 	
 	@OneToMany(mappedBy="productCategory",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@IndexedEmbedded
 	@JsonIgnore
-	private List<ProductCategoryAttribute> productCategoryAttribute;
+	private List<CategoryAttribute> productCategoryAttribute;
 
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumns({
 		@JoinColumn(name="cat_prnt_id")
 	})
-	private List<ProductCategory> children;	
+	private List<Category> children;	
 
 	
 	public Long getChildCategoryCount() {
 		return new Long(this.children.size());
 	}
 
-	public List<ProductCategory> getChildren() {
+	public List<Category> getChildren() {
 		return children;
 	}
 	
-	public ProductCategory getParent() {
+	public Category getParent() {
 		return parent;
 	}
 
-	public void setParent(ProductCategory parent) {
+	public void setParent(Category parent) {
 		this.parent = parent;
 	}
 	
-	public List<ProductCategoryAttribute> getProductCategoryAttribute() {
+	public List<CategoryAttribute> getProductCategoryAttribute() {
 		return productCategoryAttribute;
 	}
 
-	public void setProductCategoryAttribute(List<ProductCategoryAttribute> productCategoryAttribute) {
+	public void setProductCategoryAttribute(List<CategoryAttribute> productCategoryAttribute) {
 		this.productCategoryAttribute = productCategoryAttribute;
 	}
 
