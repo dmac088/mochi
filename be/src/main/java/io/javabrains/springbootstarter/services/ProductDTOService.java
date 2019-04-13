@@ -158,20 +158,14 @@ public class ProductDTOService implements IProductDTOService {
 				fullTextEntityManager.getSearchFactory()
 				  .buildQueryBuilder()
 				  .forEntity(ProductAttribute.class)
-				  //.overridesForField("productDesc", lcl)
-//				  .overridesForField("product.brand.brandAttributes.brandDesc", lcl)
-//				  .overridesForField("product.categories.parent.parent.productCategoryAttribute.categoryDesc", lcl)
-//				  .overridesForField("product.categories.parent.productCategoryAttribute.categoryDesc", lcl)
-//				  .overridesForField("product.categories.productCategoryAttribute.categoryDesc", lcl)
 				  .get();
-		
-		
 		
 		//this is a lucene query using the lucene apu
 		org.apache.lucene.search.Query searchQuery = productQueryBuilder
 													.bool()
 													.must(productQueryBuilder.keyword()
 													.onFields(
+																 "product.categories.parent.parent.parent.productCategoryAttribute.categoryDesc",
 																 "product.categories.parent.parent.productCategoryAttribute.categoryDesc",
 																 "product.categories.parent.productCategoryAttribute.categoryDesc",
 																 "product.categories.productCategoryAttribute.categoryDesc",

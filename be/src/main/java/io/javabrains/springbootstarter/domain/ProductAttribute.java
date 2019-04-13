@@ -70,7 +70,7 @@ public class ProductAttribute {
 	private String ProductImage;
 	
 	@Column(name="lcl_cd")
-	@Field()
+	@Field
 	@AnalyzerDiscriminator(impl = LanguageDiscriminator.class)
 	private String lclCd;
 	
