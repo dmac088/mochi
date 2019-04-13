@@ -157,8 +157,6 @@ CREATE TABLE category (
     cat_cd character varying(5) NOT NULL,
     cat_prnt_id bigint,
     cat_lvl bigint,
-    cat_prev_flg bigint,
-    lnd_disp_flg bigint,
     cat_typ_id bigint
 );
 
@@ -299,6 +297,60 @@ CREATE SEQUENCE hibernate_sequence
 
 
 ALTER TABLE hibernate_sequence OWNER TO mochidb_owner;
+
+--
+-- Name: layout_lay_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE SEQUENCE layout_lay_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE layout_lay_id_seq OWNER TO mochidb_owner;
+
+--
+-- Name: layout; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE layout (
+    lay_id bigint DEFAULT nextval('layout_lay_id_seq'::regclass) NOT NULL,
+    lay_cd character varying(10) NOT NULL,
+    lay_desc character varying(100) NOT NULL
+);
+
+
+ALTER TABLE layout OWNER TO mochidb_owner;
+
+--
+-- Name: layout_category_lay_cat_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE SEQUENCE layout_category_lay_cat_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE layout_category_lay_cat_id_seq OWNER TO mochidb_owner;
+
+--
+-- Name: layout_category; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE layout_category (
+    lay_cat_id bigint DEFAULT nextval('layout_category_lay_cat_id_seq'::regclass) NOT NULL,
+    lay_id bigint,
+    cat_id bigint
+);
+
+
+ALTER TABLE layout_category OWNER TO mochidb_owner;
 
 --
 -- Name: locale; Type: TABLE; Schema: mochi; Owner: mochidb_owner
@@ -1126,48 +1178,48 @@ SELECT pg_catalog.setval('brand_category_bnd_cat_id_seq', 10, true);
 -- Data for Name: category; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY category (cat_id, cat_cd, cat_prnt_id, cat_lvl, cat_prev_flg, lnd_disp_flg, cat_typ_id) FROM stdin;
-39	PRM02	\N	0	0	\N	1
-38	FET01	39	1	0	1	1
-40	BND01	\N	0	0	0	2
-41	FET02	40	1	0	0	2
-42	OTH02	40	1	0	0	2
-5	DGV01	4	2	0	\N	3
-6	ROV01	4	2	0	\N	3
-7	BAP01	4	2	0	\N	3
-8	SVG01	4	2	0	\N	3
-9	OTH01	4	2	0	\N	3
-10	POM01	3	2	0	\N	3
-11	DRU01	3	2	0	\N	3
-12	BER01	3	2	0	\N	3
-13	MEL01	3	2	0	\N	3
-14	CIT01	3	2	0	\N	3
-15	TRO01	3	2	0	\N	3
-17	PIS01	16	2	0	\N	3
-18	HAZ01	16	2	0	\N	3
-19	CAS01	16	2	0	\N	3
-20	ALM01	16	2	0	\N	3
-21	PEA01	16	2	0	\N	3
-22	PEC01	16	2	0	\N	3
-23	BRA01	16	2	0	\N	3
-2	PRM01	\N	0	0	\N	3
-24	MAC01	16	2	0	\N	3
-25	OFT01	3	2	0	\N	3
-26	ONT01	16	2	0	\N	3
-36	REV01	6	3	0	\N	3
-37	ORV01	6	3	0	\N	3
-35	DUM09	36	4	0	\N	3
-4	VEG01	2	1	1	\N	3
-16	NUT01	2	1	0	\N	3
-27	DUM01	2	1	0	\N	3
-28	DUM02	2	1	0	\N	3
-29	DUM03	2	1	0	\N	3
-30	DUM04	2	1	0	\N	3
-31	DUM05	2	1	0	\N	3
-32	DUM06	2	1	0	\N	3
-33	DUM07	2	1	0	\N	3
-34	DUM08	2	1	0	\N	3
-3	FRT01	2	1	1	1	3
+COPY category (cat_id, cat_cd, cat_prnt_id, cat_lvl, cat_typ_id) FROM stdin;
+5	DGV01	4	2	2
+6	ROV01	4	2	2
+7	BAP01	4	2	2
+8	SVG01	4	2	2
+9	OTH01	4	2	2
+10	POM01	3	2	2
+11	DRU01	3	2	2
+12	BER01	3	2	2
+13	MEL01	3	2	2
+14	CIT01	3	2	2
+15	TRO01	3	2	2
+17	PIS01	16	2	2
+18	HAZ01	16	2	2
+19	CAS01	16	2	2
+20	ALM01	16	2	2
+21	PEA01	16	2	2
+22	PEC01	16	2	2
+23	BRA01	16	2	2
+2	PRM01	\N	0	2
+39	PRM02	\N	0	1
+38	FET01	39	1	1
+40	BND01	\N	0	2
+41	FET02	40	1	2
+42	OTH02	40	1	2
+24	MAC01	16	2	2
+25	OFT01	3	2	2
+26	ONT01	16	2	2
+36	REV01	6	3	2
+37	ORV01	6	3	2
+35	DUM09	36	4	2
+4	VEG01	2	1	2
+16	NUT01	2	1	2
+27	DUM01	2	1	2
+28	DUM02	2	1	2
+29	DUM03	2	1	2
+30	DUM04	2	1	2
+31	DUM05	2	1	2
+32	DUM06	2	1	2
+33	DUM07	2	1	2
+34	DUM08	2	1	2
+3	FRT01	2	1	2
 \.
 
 
@@ -1282,7 +1334,6 @@ SELECT pg_catalog.setval('category_cat_id_seq', 6, true);
 COPY category_type (cat_typ_id, cat_typ_cd, cat_typ_desc) FROM stdin;
 1	PRD01	product
 2	BND01	brand
-3	PRD02	product menu
 \.
 
 
@@ -1359,6 +1410,53 @@ COPY discount_type (dis_typ_id, dis_typ_desc) FROM stdin;
 --
 
 SELECT pg_catalog.setval('hibernate_sequence', 232259, true);
+
+
+--
+-- Data for Name: layout; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+COPY layout (lay_id, lay_cd, lay_desc) FROM stdin;
+1	LNDMM01	landing main menu 01
+2	LNDHC01	landing highlighted categories 01
+3	LNDPC01	landing preview categories 01
+\.
+
+
+--
+-- Data for Name: layout_category; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+COPY layout_category (lay_cat_id, lay_id, cat_id) FROM stdin;
+1	1	4
+2	1	16
+3	1	27
+4	1	28
+5	1	29
+6	1	30
+7	1	31
+8	1	32
+9	1	33
+10	1	34
+11	1	3
+12	2	38
+13	3	4
+14	3	3
+\.
+
+
+--
+-- Name: layout_category_lay_cat_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
+--
+
+SELECT pg_catalog.setval('layout_category_lay_cat_id_seq', 14, true);
+
+
+--
+-- Name: layout_lay_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
+--
+
+SELECT pg_catalog.setval('layout_lay_id_seq', 3, true);
 
 
 --
@@ -2554,6 +2652,22 @@ ALTER TABLE ONLY discount_type
 
 
 --
+-- Name: layout_category layout_category_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY layout_category
+    ADD CONSTRAINT layout_category_pkey PRIMARY KEY (lay_cat_id);
+
+
+--
+-- Name: layout layout_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY layout
+    ADD CONSTRAINT layout_pkey PRIMARY KEY (lay_id);
+
+
+--
 -- Name: order_line order_line_ord_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -2794,6 +2908,30 @@ ALTER TABLE ONLY category_type
 
 
 --
+-- Name: layout uc_lay_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY layout
+    ADD CONSTRAINT uc_lay_cd UNIQUE (lay_cd);
+
+
+--
+-- Name: layout uc_lay_desc; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY layout
+    ADD CONSTRAINT uc_lay_desc UNIQUE (lay_desc);
+
+
+--
+-- Name: layout_category uc_layout_category; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY layout_category
+    ADD CONSTRAINT uc_layout_category UNIQUE (lay_id, cat_id);
+
+
+--
 -- Name: product_attr_lcl uc_prd_lcl_1; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -2978,6 +3116,22 @@ ALTER TABLE ONLY category_attr_lcl
 
 ALTER TABLE ONLY customer
     ADD CONSTRAINT customer_role_id_fkey FOREIGN KEY (rle_id) REFERENCES role(rle_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: layout_category layout_category_cat_id_category_cat_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY layout_category
+    ADD CONSTRAINT layout_category_cat_id_category_cat_id_fkey FOREIGN KEY (cat_id) REFERENCES category(cat_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: layout_category layout_category_lay_id_layout_lay_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY layout_category
+    ADD CONSTRAINT layout_category_lay_id_layout_lay_id_fkey FOREIGN KEY (lay_id) REFERENCES layout(lay_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
@@ -3228,6 +3382,20 @@ GRANT SELECT ON TABLE customer TO security_app;
 --
 
 GRANT SELECT,USAGE ON SEQUENCE hibernate_sequence TO mochi_app;
+
+
+--
+-- Name: layout; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT ON TABLE layout TO mochi_app;
+
+
+--
+-- Name: layout_category; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT ON TABLE layout_category TO mochi_app;
 
 
 --

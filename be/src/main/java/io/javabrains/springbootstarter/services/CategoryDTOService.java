@@ -123,8 +123,6 @@ public class CategoryDTOService implements ICategoryDTOService {
         if(!(pc.getParent() == null)) {
         	pcDto.setParentId(pc.getParent().getCategoryId());
         }
-        pcDto.setCategoryPreview(pc.getPreviewFlag());
-        pcDto.setLandingDisplay(pc.getLandingDisplayFlag());
         pcDto.setCategoryDesc(pc.getAttributes().stream()
         		.filter( pa -> pa.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getCategoryDesc());
         pcDto.setLclCd(lcl);

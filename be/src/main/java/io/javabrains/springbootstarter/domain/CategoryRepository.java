@@ -11,8 +11,6 @@ public interface CategoryRepository extends CrudRepository<Category, Long> {
 	
 	List<Category> findByCategoryLevelAndCategoryTypeCode(Long level, String categoryTypeCode);
 	
-	List<Category> findByPreviewFlag(Long previewFlag);
-	
 	List<Category> findByParentCategoryId(Long categoryId);
 
 	Category findByAttributesCategoryDesc(String categoryDesc);

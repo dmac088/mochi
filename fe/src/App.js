@@ -27,6 +27,7 @@ import Product from './components/Product/Product';
 import Auth from './components/Login/Auth';
 import './../public/assets/scss/main.scss';
 import { getValue } from './config/lang/selector';
+import { filterCategories } from './services/helpers/FilterHelper';
 
 
 class App extends Component {
@@ -83,7 +84,7 @@ class App extends Component {
     .then(() => {
       const { categoryList } = this.state;
       //return an array of promises to the next in chain
-      return this.filterLandingCategories(categoryList).map(category => {
+      return filterCategories(categoryList, 'LNDHC01').map(category => {
         //we must return the nested promise
         return this.getCategoryProducts(locale, currency, category.categoryDesc)
         .then((response) => {
@@ -103,7 +104,7 @@ class App extends Component {
     .then(() => {
       const { categoryList } = this.state;
       //return an array of promises to the next in chain
-      return this.filterPreviewCategories(categoryList).map(category => {
+      return filterCategories(categoryList, 'LNDPC01').map(category => {
         //we must return the nested promise
         return this.getCategoryProducts(locale, currency ,category.categoryDesc)
         .then((response) => {
@@ -149,11 +150,6 @@ class App extends Component {
         return responseJSON;
     });
 
-  filterLandingCategories = (categoryList) => {
-    return categoryList.filter(function(value, index, arr){
-      return value.landingDisplay === 1;
-    });
-  }
 
   filterPreviewCategories = (categoryList) => {
     return categoryList.filter(function(value, index, arr){
