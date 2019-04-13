@@ -204,12 +204,12 @@ public class ProductDTOService implements IProductDTOService {
 	
 	private String getSortField(String field) {
 		switch(field) {
-		case "name":
+		case "nameAsc":
 			return "productSortDesc";
-		case "price":
+		case "nameDesc":
+			return "productSortDesc";
+		case "priceDesc":
 			return "product.prices.priceValue";
-		case "productDesc":
-			return "productSortDesc";
 		case "priceAsc":
 			return "product.prices.priceValue";
 		default: 
@@ -219,18 +219,25 @@ public class ProductDTOService implements IProductDTOService {
 	
 	private SortField.Type getSortFieldType(String field) {
 		switch(field) {
-		case "productDesc":
+		case "nameAsc":
 			return SortField.Type.STRING;
-		case "description":
-			return SortField.Type.STRING;
-		case "price":
+		case "priceAsc":
 			return SortField.Type.DOUBLE;
-		case "productRrp":
+		case "priceDesc":
 			return SortField.Type.DOUBLE;
 		default: 
 			return SortField.Type.STRING;
 		}
 	}
+	
+	private Sort sortByParam(String param) {
+    	switch (param) {
+    	case "priceAsc": return new Sort(Sort.Direction.ASC, "prices.PriceValue");
+    	case "priceDesc": return new Sort(Sort.Direction.DESC, "prices.PriceValue");
+    	case "nameAsc": return new Sort(Sort.Direction.ASC, "attributes.productDesc");
+    	default: return new Sort(Sort.Direction.ASC, "attributes.productDesc");
+    	}
+    }
     
     public void recurseCategories(List<Category> pcl, Category pc) {
     	pcl.add(pc);
@@ -264,13 +271,6 @@ public class ProductDTOService implements IProductDTOService {
         return productDto;
     }
     
-    private Sort sortByParam(String param) {
-    	switch (param) {
-    	case "priceAsc": return new Sort(Sort.Direction.ASC, "prices.PriceValue");
-    	case "priceDesc": return new Sort(Sort.Direction.DESC, "prices.PriceValue");
-    	case "nameAsc": return new Sort(Sort.Direction.ASC, "attributes.productDesc");
-    	default: return new Sort(Sort.Direction.ASC, "attributes.productDesc");
-    	}
-    }
+    
 
 }
