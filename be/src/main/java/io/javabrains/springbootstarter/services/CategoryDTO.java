@@ -20,6 +20,8 @@ public class CategoryDTO {
 	private Long categoryMenu;
 	
 	private Long landingDisplay;
+	
+	private String categoryType;
 
 	private String lclCd;
 	
@@ -146,6 +148,14 @@ public class CategoryDTO {
 
 	public void setMaxMarkDownPrice(Long maxMarkDownPrice) {
 		this.maxMarkDownPrice = maxMarkDownPrice;
+	}
+	
+	public String getCategoryType() {
+		return categoryType;
+	}
+	
+	public void setCategoryType(String categoryType) {
+		this.categoryType = categoryType;
 	}
 
 	@Override

@@ -129,6 +129,7 @@ public class CategoryDTOService implements ICategoryDTOService {
         		.filter( pa -> pa.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getCategoryDesc());
         pcDto.setLclCd(lcl);
         pcDto.setChildCategoryCount(new Long(pc.getChildren().size()));
+        pcDto.setCategoryType(pc.getCategoryType().getCode());
         
         return pcDto;
     }
