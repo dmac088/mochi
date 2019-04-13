@@ -54,6 +54,10 @@ public class Category {
 
 	@Column(name="cat_lvl")
 	private Long categoryLevel;
+	
+	@ManyToOne
+	@JoinColumn(name="cat_typ_id", nullable=false, updatable = false, insertable = true)
+	private CategoryType categoryType;
 
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional=false)
