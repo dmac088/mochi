@@ -27,8 +27,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @PrimaryKeyJoinColumn(name = "cat_id")
 public class Category {
 
-
-	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="cat_id")
@@ -62,6 +60,14 @@ public class Category {
     @JsonIgnore
     private List<Brand> brands;
     
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "layout_category", schema="mochi", 
+    		   joinColumns 			= @JoinColumn(name = "cat_id"), 
+    		   inverseJoinColumns 	= @JoinColumn(name = "lay_id"))
+    @OrderBy
+    @JsonIgnore
+    private List<Layout> layouts;
+
 	@ManyToOne
 	@JoinColumn(name="cat_typ_id", nullable=false, updatable = false, insertable = true)
 	private CategoryType categoryType;
@@ -160,5 +166,11 @@ public class Category {
 		this.categoryType = categoryType;
 	}
 
-	
+	public List<Layout> getLayouts() {
+		return layouts;
+	}
+
+	public void setLayouts(List<Layout> layouts) {
+		this.layouts = layouts;
+	}
 }

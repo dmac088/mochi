@@ -1,6 +1,9 @@
 package io.javabrains.springbootstarter.services;
 
 import java.util.Set;
+
+import io.javabrains.springbootstarter.domain.Layout;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -24,6 +27,8 @@ public class CategoryDTO {
 	private String categoryType;
 
 	private String lclCd;
+	
+	private List<Layout> layouts;
 	
 	//@JsonIgnore
 	private Long parentId;	
@@ -156,6 +161,14 @@ public class CategoryDTO {
 	
 	public void setCategoryType(String categoryType) {
 		this.categoryType = categoryType;
+	}
+	
+	public List<Layout> getLayouts() {
+		return layouts;
+	}
+
+	public void setLayouts(List<Layout> layouts) {
+		this.layouts = layouts;
 	}
 
 	@Override

@@ -23,8 +23,9 @@ class CategoryMenuContainer extends Component {
 
   filterCategories = (categoryList) => {
     return categoryList.filter(function(value, index, arr){
-      return value.categoryLevel === 1
-      && value.categoryType === 'PRD02';
+      return value.layouts.filter(function(value, index, arr){
+        return value.code === 'LNDMM01';
+      }).length > 0;
     });
   }
 
