@@ -177,18 +177,6 @@ public class ProductDTOService implements IProductDTOService {
 													.onFields(	 "lclCd")
 													.matching(lcl)
 													.createQuery())
-//													.must(productQueryBuilder.keyword()
-//													.onFields(	 "product.categories.productCategoryAttribute.lclCd",
-//															     "product.categories.parent.productCategoryAttribute.lclCd",
-//															     "product.categories.parent.parent.productCategoryAttribute.lclCd")
-//													.matching(lcl)
-//													.createQuery())
-//													.must(productQueryBuilder.keyword()
-//													.onFields(	"product.categories.productCategoryAttribute.categoryDesc", 
-//																"product.categories.parent.productCategoryAttribute.categoryDesc",
-//																"product.categories.parent.parent.productCategoryAttribute.categoryDesc")
-//													.matching(categoryDesc)
-//													.createQuery())
 													.createQuery();
 			
 		org.hibernate.search.jpa.FullTextQuery jpaQuery
