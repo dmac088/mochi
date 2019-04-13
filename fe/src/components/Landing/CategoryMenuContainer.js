@@ -13,9 +13,7 @@ class CategoryMenuContainer extends Component {
 
   constructor(props) {
     super(props);
-    const { locale } = this.props.match.params;
     this.state = {
-      locale: locale,
       menuVisible: true,
       isMobile: false,
       categories: null
