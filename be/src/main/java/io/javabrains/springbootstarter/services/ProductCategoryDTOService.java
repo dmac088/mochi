@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import io.javabrains.springbootstarter.domain.Brand;
-import io.javabrains.springbootstarter.domain.ProductCategory;
-import io.javabrains.springbootstarter.domain.ProductCategoryRepository;
+import io.javabrains.springbootstarter.domain.Category;
+import io.javabrains.springbootstarter.domain.CategoryRepository;
 import io.javabrains.springbootstarter.domain.ProductRepository;
 
 @Service
@@ -18,7 +18,7 @@ import io.javabrains.springbootstarter.domain.ProductRepository;
 public class ProductCategoryDTOService implements IProductCategoryDTOService {
     
     @Autowired
-    private ProductCategoryRepository productCategoryRepository;
+    private CategoryRepository productCategoryRepository;
     
     @Autowired
     private ProductRepository productRepository;
@@ -32,7 +32,7 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
     @Override
 	@Transactional
 	public List<ProductCategoryDTO> getProductCategories(final String lcl, String currency) {
-    	List<ProductCategory> lpc = productCategoryRepository.findAll();
+    	List<Category> lpc = productCategoryRepository.findAll();
     	return lpc.stream().map(pc -> convertToProductCategoryDto(pc, lcl, currency))
     			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
@@ -42,7 +42,7 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
     @Override
  	@Transactional
  	public List<ProductCategoryDTO> getProductCategoryParent(final String lcl, String currency, final Long parentCategoryId) {
-    	List<ProductCategory> lpc = productCategoryRepository.findByParentCategoryId(parentCategoryId);
+    	List<Category> lpc = productCategoryRepository.findByParentCategoryId(parentCategoryId);
     	return lpc.stream().map(pc -> convertToProductCategoryDto(pc, lcl, currency))
     			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
@@ -51,7 +51,7 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
     @Override
   	@Transactional
   	public List<ProductCategoryDTO> getProductCategoriesForLevel(final String lcl, String currency, final Long level) {
-     	List<ProductCategory> lpc = productCategoryRepository.findByCategoryLevel(level);
+     	List<Category> lpc = productCategoryRepository.findByCategoryLevel(level);
      	return lpc.stream().map(pc -> convertToProductCategoryDto(pc, lcl, currency))
     			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
@@ -60,7 +60,7 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
     @Override
   	@Transactional
   	public List<ProductCategoryDTO> getPreviewProductCategories(final String lcl, String currency, final Long previewFlag) {
-        List<ProductCategory> lpc = productCategoryRepository.findByPreviewFlag(previewFlag);
+        List<Category> lpc = productCategoryRepository.findByPreviewFlag(previewFlag);
         return lpc.stream().map(pc -> convertToProductCategoryDto(pc, lcl, currency))
     			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
@@ -69,13 +69,13 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
     @Override
   	@Transactional
   	public ProductCategoryDTO getProductCategory(final String lcl, String currency, final Long categoryId) {
-     	ProductCategory pc = productCategoryRepository.findByCategoryId(categoryId);
+     	Category pc = productCategoryRepository.findByCategoryId(categoryId);
      	return	convertToProductCategoryDto(pc, lcl, currency);
   	}
     
     @Override
 	public ProductCategoryDTO getProductCategory(String lcl, String currency, String categoryDesc) {
-     	ProductCategory pc = productCategoryRepository.findByProductCategoryAttributeCategoryDesc(categoryDesc);
+     	Category pc = productCategoryRepository.findByProductCategoryAttributeCategoryDesc(categoryDesc);
      	return	convertToProductCategoryDto(pc, lcl, currency);
 	}
     
@@ -90,7 +90,7 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
     	return bDto;
     }
     
-    private ProductCategoryDTO convertToProductCategoryDto(final ProductCategory pc, final String lcl, final String currency) {
+    private ProductCategoryDTO convertToProductCategoryDto(final Category pc, final String lcl, final String currency) {
     	
         final ProductCategoryDTO pcDto = new ProductCategoryDTO();
         pcDto.setCategoryId(pc.getCategoryId());

@@ -11,21 +11,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/api")
-public class ProductCategoryController {
+public class CategoryController {
 	
 	@Autowired
-	private ProductCategoryService productCategoryService;	
+	private CategoryService productCategoryService;	
 	
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.POST, value="/ProductCategory")
-	public void addProductCategory(ProductCategory productCategory) {	
+	public void addProductCategory(Category productCategory) {	
 		System.out.println("calling addProduct");
 		productCategoryService.addProductCategory(productCategory);
 	}
 	
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.PUT, value="/ProductCategory/{id}")
-	public void updateProductCategory(@RequestBody ProductCategory productCategory, @PathVariable Long id) {
+	public void updateProductCategory(@RequestBody Category productCategory, @PathVariable Long id) {
 		System.out.println("calling updateProduct");
 		productCategoryService.updateProductCategory(id, productCategory);
 	}

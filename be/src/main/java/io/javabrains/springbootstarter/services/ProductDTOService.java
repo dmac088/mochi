@@ -23,8 +23,8 @@ import io.javabrains.springbootstarter.domain.PageableUtil;
 import io.javabrains.springbootstarter.domain.Product;
 import io.javabrains.springbootstarter.domain.ProductAttribute;
 import io.javabrains.springbootstarter.domain.ProductAttributeRepository;
-import io.javabrains.springbootstarter.domain.ProductCategory;
-import io.javabrains.springbootstarter.domain.ProductCategoryRepository;
+import io.javabrains.springbootstarter.domain.Category;
+import io.javabrains.springbootstarter.domain.CategoryRepository;
 import io.javabrains.springbootstarter.domain.ProductPagingAndSortingRepository;
 import io.javabrains.springbootstarter.domain.ProductPriceRepository;
 import io.javabrains.springbootstarter.domain.ProductRepository;
@@ -45,7 +45,7 @@ public class ProductDTOService implements IProductDTOService {
     private ProductAttributeRepository productAttributeRepository;
     
     @Autowired
-    private ProductCategoryRepository productCategoryRepository;
+    private CategoryRepository productCategoryRepository;
     
 	@PersistenceContext(unitName = "mochiEntityManagerFactory")
 	private EntityManager em;
@@ -77,8 +77,8 @@ public class ProductDTOService implements IProductDTOService {
     @Override
   	@Transactional
   	public List<ProductDTO> getPreviewProductsForCategory(String lcl, String currency, Long categoryId) {
-     	List<ProductCategory> pcl = new ArrayList<ProductCategory>();
-     	ProductCategory pc = productCategoryRepository.findByCategoryId(categoryId);
+     	List<Category> pcl = new ArrayList<Category>();
+     	Category pc = productCategoryRepository.findByCategoryId(categoryId);
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
   		List<Product> ppa = productRepository.findByCategoriesCategoryIdIn(categoryIds);
@@ -88,8 +88,8 @@ public class ProductDTOService implements IProductDTOService {
     
 	@Override
 	public Page<ProductDTO> getProductsForCategory(String lcl, String currency, String categoryDesc, int page, int size, String sortBy) {
-		List<ProductCategory> pcl = new ArrayList<ProductCategory>();
-     	ProductCategory pc = productCategoryRepository.findByProductCategoryAttributeCategoryDesc(categoryDesc);
+		List<Category> pcl = new ArrayList<Category>();
+     	Category pc = productCategoryRepository.findByProductCategoryAttributeCategoryDesc(categoryDesc);
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
   		Page<Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCd(categoryIds, lcl, PageRequest.of(page, size, this.sortByParam(sortBy)));
@@ -100,8 +100,8 @@ public class ProductDTOService implements IProductDTOService {
 	@Override
 	public Page<ProductDTO> getProductsForCategory(String lcl, String currency, String categoryDesc, Long price, int page, int size, String sortBy) {
 		System.out.println("getProductsForCategory");
-		List<ProductCategory> pcl = new ArrayList<ProductCategory>();
-     	ProductCategory pc = productCategoryRepository.findByProductCategoryAttributeCategoryDesc(categoryDesc);
+		List<Category> pcl = new ArrayList<Category>();
+     	Category pc = productCategoryRepository.findByProductCategoryAttributeCategoryDesc(categoryDesc);
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
   		Page<Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCdAndPricesPriceValueBetween(categoryIds, lcl, new Long(0), price, PageRequest.of(page, size, this.sortByParam(sortBy)));
@@ -112,8 +112,8 @@ public class ProductDTOService implements IProductDTOService {
 	@Override
 	public Page<ProductDTO> getProductsForCategoryAndBrand(String lcl, String currency, String categoryDesc, String brandDesc, int page, int size, String sortBy) {
 		System.out.println("getProductsForCategoryAndBrand");
-		List<ProductCategory> pcl = new ArrayList<ProductCategory>();
-     	ProductCategory pc = productCategoryRepository.findByProductCategoryAttributeCategoryDesc(categoryDesc);
+		List<Category> pcl = new ArrayList<Category>();
+     	Category pc = productCategoryRepository.findByProductCategoryAttributeCategoryDesc(categoryDesc);
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
   		Page<Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCdAndBrandBrandAttributesBrandDescAndBrandBrandAttributesLclCd(categoryIds, lcl, brandDesc, lcl, PageRequest.of(page, size, this.sortByParam(sortBy)));		
@@ -124,8 +124,8 @@ public class ProductDTOService implements IProductDTOService {
 	@Override
 	public Page<ProductDTO> getProductsForCategoryAndPrice(String lcl, String currency, String categoryDesc, Long price, int page, int size, String sortBy) {
 		System.out.println("getProductsForCategoryAndBrandAndPrice");
-		List<ProductCategory> pcl = new ArrayList<ProductCategory>();
-     	ProductCategory pc = productCategoryRepository.findByProductCategoryAttributeCategoryDesc(categoryDesc);
+		List<Category> pcl = new ArrayList<Category>();
+     	Category pc = productCategoryRepository.findByProductCategoryAttributeCategoryDesc(categoryDesc);
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
   		Page<Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCdAndPricesPriceValueBetweenAndPricesTypeDescAndPricesCurrencyCodeAndPricesStartDateLessThanAndPricesEndDateGreaterThan(categoryIds, lcl, new Long(0), price, "markdown", currency, new Date(), new Date(),PageRequest.of(page, size, this.sortByParam(sortBy)));
@@ -137,8 +137,8 @@ public class ProductDTOService implements IProductDTOService {
 	@Override
 	public Page<ProductDTO> getProductsForCategoryAndBrandAndPrice(String lcl, String currency, String categoryDesc, String brandDesc, Long price, int page, int size, String sortBy) {
 		System.out.println("getProductsForCategoryAndBrandAndPrice");
-		List<ProductCategory> pcl = new ArrayList<ProductCategory>();
-     	ProductCategory pc = productCategoryRepository.findByProductCategoryAttributeCategoryDesc(categoryDesc);
+		List<Category> pcl = new ArrayList<Category>();
+     	Category pc = productCategoryRepository.findByProductCategoryAttributeCategoryDesc(categoryDesc);
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
   		Page<Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCdAndBrandBrandAttributesBrandDescAndBrandBrandAttributesLclCdAndPricesPriceValueBetweenAndPricesTypeDescAndPricesCurrencyCodeAndPricesStartDateLessThanAndPricesEndDateGreaterThan(categoryIds, lcl, brandDesc, lcl, new Long(0), price, "markdown", currency, new Date(), new Date(),PageRequest.of(page, size, this.sortByParam(sortBy)));
@@ -232,7 +232,7 @@ public class ProductDTOService implements IProductDTOService {
 		}
 	}
     
-    public void recurseCategories(List<ProductCategory> pcl, ProductCategory pc) {
+    public void recurseCategories(List<Category> pcl, Category pc) {
     	pcl.add(pc);
     	pc.getChildren().forEach(child -> recurseCategories(pcl, child));
     }

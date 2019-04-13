@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Entity
 @Table(name = "category_attr_lcl", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "cat_lcl_id")
-public class ProductCategoryAttribute {
+public class CategoryAttribute {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -40,17 +40,17 @@ public class ProductCategoryAttribute {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="cat_id", insertable=false, updatable=false)
 	@JsonBackReference
-	private ProductCategory productCategory;
+	private Category productCategory;
 	
 	public Long getCategoryId() {
 		return categoryId;
 	}
 	
-	public ProductCategory getProductCategory() {
+	public Category getProductCategory() {
 		return productCategory;
 	}
 
-	public void setProductCategory(ProductCategory productCategory) {
+	public void setProductCategory(Category productCategory) {
 		this.productCategory = productCategory;
 	}
 
