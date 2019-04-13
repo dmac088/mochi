@@ -57,15 +57,7 @@ public class CategoryDTOService implements ICategoryDTOService {
     			.collect(Collectors.toList());
   	}	
     
-    @Override
-  	@Transactional
-  	public List<CategoryDTO> getPreviewCategories(final String lcl, String currency, final Long previewFlag) {
-        List<Category> lpc = CategoryRepository.findByPreviewFlag(previewFlag);
-        return lpc.stream().map(pc -> convertToCategoryDto(pc, lcl, currency))
-    			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
-    			.collect(Collectors.toList());
-  	}
-    
+  
     @Override
   	@Transactional
   	public CategoryDTO getCategory(final String lcl, String currency, final Long categoryId) {
