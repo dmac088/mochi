@@ -158,7 +158,11 @@ public class ProductDTOService implements IProductDTOService {
 				fullTextEntityManager.getSearchFactory()
 				  .buildQueryBuilder()
 				  .forEntity(ProductAttribute.class)
-				  .overridesForField("productDesc", lcl)
+				  //.overridesForField("productDesc", lcl)
+//				  .overridesForField("product.brand.brandAttributes.brandDesc", lcl)
+//				  .overridesForField("product.categories.parent.parent.productCategoryAttribute.categoryDesc", lcl)
+//				  .overridesForField("product.categories.parent.productCategoryAttribute.categoryDesc", lcl)
+//				  .overridesForField("product.categories.productCategoryAttribute.categoryDesc", lcl)
 				  .get();
 		
 		

@@ -59,7 +59,7 @@ public class Product {
 	private Brand brand;
 	
 	@OneToMany(mappedBy="product",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@IndexedEmbedded
+	//@IndexedEmbedded
 	@JsonManagedReference
 	List<ProductPrice> prices;
 
