@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import * as categoryApi from '../../../data/categories/api';
-import { changeCategory } from '../../../services/helpers/routeHelper';
+import { changeCategory } from '../../../services/helpers/RouteHelper';
 
 class CategorySidebar extends Component {
 

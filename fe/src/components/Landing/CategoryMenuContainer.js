@@ -3,7 +3,8 @@ import ReactTransitionGroup from 'react-addons-transition-group';
 import { withRouter } from 'react-router-dom';
 import * as categoryApi from '../../data/categories/api';
 import { isMobile, slide, updateParams } from '../../services/helpers/Helper';
-import { changeCategory } from '../../services/helpers/routeHelper';
+import { changeCategory } from '../../services/helpers/RouteHelper';
+import { filterCategories } from '../../services/helpers/FilterHelper';
 import { getValue } from '../../config/lang/selector';
 import 'velocity-animate/velocity.ui';
 
@@ -19,14 +20,6 @@ class CategoryMenuContainer extends Component {
       isMobile: false,
       categories: null
     };
-  }
-
-  filterCategories = (categoryList) => {
-    return categoryList.filter(function(value, index, arr){
-      return value.layouts.filter(function(value, index, arr){
-        return value.code === 'LNDMM01';
-      }).length > 0;
-    });
   }
 
   componentDidMount() {
@@ -47,7 +40,7 @@ class CategoryMenuContainer extends Component {
 
   render() {
     const { locale } = this.props.match.params;
-    const categoryList = this.filterCategories(this.props.categoryList);
+    const categoryList = filterCategories(this.props.categoryList);
     return (
       <div className="hero-side-category">
         <div className="category-toggle-wrap">
