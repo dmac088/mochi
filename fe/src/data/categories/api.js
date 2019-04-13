@@ -1,7 +1,7 @@
 import { fetchApi } from '../../services/api';
 
 const endPoints = {
-	get: '/api/ProductCategory/',
+	get: '/api/Category/',
 };
 
 export const findAll = (locale, currency) => 	fetchApi(

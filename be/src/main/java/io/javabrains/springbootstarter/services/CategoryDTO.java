@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 
-public class ProductCategoryDTO {
+public class CategoryDTO {
 	
 	private Long categoryId;
 	
@@ -34,7 +34,7 @@ public class ProductCategoryDTO {
 
 	private Set<BrandDTO> categoryBrands;
 
-	private List<ProductCategoryDTO> children;
+	private List<CategoryDTO> children;
 	
 	public Long getCategoryId() {
 		return categoryId;
@@ -108,11 +108,11 @@ public class ProductCategoryDTO {
 		this.parentId = parentId;
 	}
 	
-	public List<ProductCategoryDTO> getChildren() {
+	public List<CategoryDTO> getChildren() {
 		return children;
 	}
 
-	public void setChildren(List<ProductCategoryDTO> children) {
+	public void setChildren(List<CategoryDTO> children) {
 		this.children = children;
 	}
 	
@@ -152,7 +152,7 @@ public class ProductCategoryDTO {
 	public boolean equals(Object o) {
 		 if (this == o) return true;
 	     if (o == null || getClass() != o.getClass()) return false;
-	     ProductCategoryDTO pcDto = (ProductCategoryDTO) o;
+	     CategoryDTO pcDto = (CategoryDTO) o;
 	     return this.categoryId == pcDto.categoryId;
 	}
 

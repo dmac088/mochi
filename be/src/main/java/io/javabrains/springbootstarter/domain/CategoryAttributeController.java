@@ -16,32 +16,32 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class CategoryAttributeController {
 	
 	@Autowired
-	private CategoryAttributeService productCategoryAttributeService;	
+	private CategoryAttributeService categoryAttributeService;	
 	
 	@ResponseBody
-	@RequestMapping(method=RequestMethod.GET, value="/ProductCategoryAttribute/{lcl}")
-    public List<CategoryAttribute> getAllProductCategoryAttributes(@PathVariable String lcl) {
-        return productCategoryAttributeService.getAllProductCategoryAttributes(lcl);	
+	@RequestMapping(method=RequestMethod.GET, value="/CategoryAttribute/{lcl}")
+    public List<CategoryAttribute> getAllCategoryAttributes(@PathVariable String lcl) {
+        return categoryAttributeService.getAllCategoryAttributes(lcl);	
     }	
 	
 	@ResponseBody
-	@RequestMapping(method=RequestMethod.GET, value="/ProductCategoryAttribute/{lcl}/{id}")
-	public Optional<CategoryAttribute> getProductCategoryAttribute(@PathVariable String lcl, @PathVariable Long id) {
-		return productCategoryAttributeService.getProductCategoryAttribute(lcl, id);
+	@RequestMapping(method=RequestMethod.GET, value="/CategoryAttribute/{lcl}/{id}")
+	public Optional<CategoryAttribute> getCategoryAttribute(@PathVariable String lcl, @PathVariable Long id) {
+		return categoryAttributeService.getCategoryAttribute(lcl, id);
 	}
 	
 	@ResponseBody
-	@RequestMapping(method=RequestMethod.POST, value="/ProductCategoryAttribute")
-	public void addProductCategoryAttribute(CategoryAttribute productCategoryAttribute) {	
+	@RequestMapping(method=RequestMethod.POST, value="/CategoryAttribute")
+	public void addCategoryAttribute(CategoryAttribute CategoryAttribute) {	
 		System.out.println("calling addProduct");
-		productCategoryAttributeService.addProductCategory(productCategoryAttribute);
+		categoryAttributeService.addCategory(CategoryAttribute);
 	}
 	
 	@ResponseBody
-	@RequestMapping(method=RequestMethod.PUT, value="/ProductCategoryAttribute/{id}")
-	public void updateProductCategoryAttribute(@RequestBody CategoryAttribute productCategoryAttribute, @PathVariable Long id) {
+	@RequestMapping(method=RequestMethod.PUT, value="/CategoryAttribute/{id}")
+	public void updateCategoryAttribute(@RequestBody CategoryAttribute CategoryAttribute, @PathVariable Long id) {
 		System.out.println("calling updateProduct");
-		productCategoryAttributeService.updateProductCategory(id, productCategoryAttribute);
+		categoryAttributeService.updateCategory(id, CategoryAttribute);
 	}
 	
 }

@@ -15,10 +15,10 @@ import io.javabrains.springbootstarter.domain.ProductRepository;
 
 @Service
 @Transactional
-public class ProductCategoryDTOService implements IProductCategoryDTOService {
+public class CategoryDTOService implements ICategoryDTOService {
     
     @Autowired
-    private CategoryRepository productCategoryRepository;
+    private CategoryRepository CategoryRepository;
     
     @Autowired
     private ProductRepository productRepository;
@@ -31,9 +31,9 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
     
     @Override
 	@Transactional
-	public List<ProductCategoryDTO> getProductCategories(final String lcl, String currency) {
-    	List<Category> lpc = productCategoryRepository.findAll();
-    	return lpc.stream().map(pc -> convertToProductCategoryDto(pc, lcl, currency))
+	public List<CategoryDTO> getCategories(final String lcl, String currency) {
+    	List<Category> lpc = CategoryRepository.findAll();
+    	return lpc.stream().map(pc -> convertToCategoryDto(pc, lcl, currency))
     			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
     			
@@ -41,42 +41,42 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
     
     @Override
  	@Transactional
- 	public List<ProductCategoryDTO> getProductCategoryParent(final String lcl, String currency, final Long parentCategoryId) {
-    	List<Category> lpc = productCategoryRepository.findByParentCategoryId(parentCategoryId);
-    	return lpc.stream().map(pc -> convertToProductCategoryDto(pc, lcl, currency))
+ 	public List<CategoryDTO> getCategoryParent(final String lcl, String currency, final Long parentCategoryId) {
+    	List<Category> lpc = CategoryRepository.findByParentCategoryId(parentCategoryId);
+    	return lpc.stream().map(pc -> convertToCategoryDto(pc, lcl, currency))
     			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
  	}
     
     @Override
   	@Transactional
-  	public List<ProductCategoryDTO> getProductCategoriesForLevel(final String lcl, String currency, final Long level) {
-     	List<Category> lpc = productCategoryRepository.findByCategoryLevel(level);
-     	return lpc.stream().map(pc -> convertToProductCategoryDto(pc, lcl, currency))
+  	public List<CategoryDTO> getCategoriesForLevel(final String lcl, String currency, final Long level) {
+     	List<Category> lpc = CategoryRepository.findByCategoryLevelAndCategoryTypeCode(level, "PRD01");
+     	return lpc.stream().map(pc -> convertToCategoryDto(pc, lcl, currency))
     			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
   	}	
     
     @Override
   	@Transactional
-  	public List<ProductCategoryDTO> getPreviewProductCategories(final String lcl, String currency, final Long previewFlag) {
-        List<Category> lpc = productCategoryRepository.findByPreviewFlag(previewFlag);
-        return lpc.stream().map(pc -> convertToProductCategoryDto(pc, lcl, currency))
+  	public List<CategoryDTO> getPreviewCategories(final String lcl, String currency, final Long previewFlag) {
+        List<Category> lpc = CategoryRepository.findByPreviewFlag(previewFlag);
+        return lpc.stream().map(pc -> convertToCategoryDto(pc, lcl, currency))
     			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
   	}
     
     @Override
   	@Transactional
-  	public ProductCategoryDTO getProductCategory(final String lcl, String currency, final Long categoryId) {
-     	Category pc = productCategoryRepository.findByCategoryId(categoryId);
-     	return	convertToProductCategoryDto(pc, lcl, currency);
+  	public CategoryDTO getCategory(final String lcl, String currency, final Long categoryId) {
+     	Category pc = CategoryRepository.findByCategoryId(categoryId);
+     	return	convertToCategoryDto(pc, lcl, currency);
   	}
     
     @Override
-	public ProductCategoryDTO getProductCategory(String lcl, String currency, String categoryDesc) {
-     	Category pc = productCategoryRepository.findByProductCategoryAttributeCategoryDesc(categoryDesc);
-     	return	convertToProductCategoryDto(pc, lcl, currency);
+	public CategoryDTO getCategory(String lcl, String currency, String categoryDesc) {
+     	Category pc = CategoryRepository.findByAttributesCategoryDesc(categoryDesc);
+     	return	convertToCategoryDto(pc, lcl, currency);
 	}
     
     private BrandDTO convertToBrandDto(final Brand b, String categoryCode, final String lcl) {
@@ -90,9 +90,9 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
     	return bDto;
     }
     
-    private ProductCategoryDTO convertToProductCategoryDto(final Category pc, final String lcl, final String currency) {
+    private CategoryDTO convertToCategoryDto(final Category pc, final String lcl, final String currency) {
     	
-        final ProductCategoryDTO pcDto = new ProductCategoryDTO();
+        final CategoryDTO pcDto = new CategoryDTO();
         pcDto.setCategoryId(pc.getCategoryId());
         pcDto.setCategoryCode(pc.getCategoryCode());
         pcDto.setCategoryLevel(pc.getCategoryLevel());
@@ -106,9 +106,9 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
        		
         
         //create the child objects and add to children collection
-        List<ProductCategoryDTO> pcDTOl =
+        List<CategoryDTO> pcDTOl =
         pc.getChildren().stream().map(pc1 -> {
-        	ProductCategoryDTO pcchild = convertToProductCategoryDto(pc1, lcl, currency);
+        	CategoryDTO pcchild = convertToCategoryDto(pc1, lcl, currency);
         	catBrands.addAll(pcchild.getCategoryBrands());
         	return pcchild;
         }).collect(Collectors.toList());
@@ -126,7 +126,7 @@ public class ProductCategoryDTOService implements IProductCategoryDTOService {
         pcDto.setCategoryPreview(pc.getPreviewFlag());
         pcDto.setCategoryMenu(pc.getMenuDisplayFlag());
         pcDto.setLandingDisplay(pc.getLandingDisplayFlag());
-        pcDto.setCategoryDesc(pc.getProductCategoryAttribute().stream()
+        pcDto.setCategoryDesc(pc.getAttributes().stream()
         		.filter( pa -> pa.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getCategoryDesc());
         pcDto.setLclCd(lcl);
         pcDto.setChildCategoryCount(new Long(pc.getChildren().size()));

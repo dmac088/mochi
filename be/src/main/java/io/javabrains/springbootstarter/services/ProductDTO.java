@@ -27,7 +27,7 @@ public class ProductDTO {
 	
 	private String lclCd;
 	
-	private List<ProductCategoryDTO> categories;
+	private List<CategoryDTO> categories;
 
 
 	public Long getProductId() {
@@ -102,11 +102,11 @@ public class ProductDTO {
 		this.lclCd = lclCd;
 	}
 	
-	public List<ProductCategoryDTO> getCategories() {
+	public List<CategoryDTO> getCategories() {
 		return categories;
 	}
 
-	public void setCategories(List<ProductCategoryDTO> categories) {
+	public void setCategories(List<CategoryDTO> categories) {
 		this.categories = categories;
 	}
 	

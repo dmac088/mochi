@@ -11,27 +11,27 @@ import org.springframework.stereotype.Service;
 public class CategoryAttributeService {
 
 	@Autowired
-	private CategoryAttributeRepository productCategoryAttributeRepository; 
+	private CategoryAttributeRepository categoryAttributeRepository; 
 	
 	
-	public List<CategoryAttribute> getAllProductCategoryAttributes(String lcl) {
-		return productCategoryAttributeRepository.findByLclCd(lcl);
+	public List<CategoryAttribute> getAllCategoryAttributes(String lcl) {
+		return categoryAttributeRepository.findByLclCd(lcl);
 	}
 	
-	public Optional<CategoryAttribute> getProductCategoryAttribute(String lcl, Long id) {
-		return productCategoryAttributeRepository.findByLclCdAndCategoryId(lcl, id);
+	public Optional<CategoryAttribute> getCategoryAttribute(String lcl, Long id) {
+		return categoryAttributeRepository.findByLclCdAndCategoryId(lcl, id);
 	}
 	
-	public void addProductCategory(CategoryAttribute productCategoryAttribute) {
-		productCategoryAttributeRepository.save(productCategoryAttribute);
+	public void addCategory(CategoryAttribute CategoryAttribute) {
+		categoryAttributeRepository.save(CategoryAttribute);
 	}
 	
-	public void updateProductCategory(Long id, CategoryAttribute productCategoryAttribute) {
-		productCategoryAttributeRepository.save(productCategoryAttribute);
+	public void updateCategory(Long id, CategoryAttribute CategoryAttribute) {
+		categoryAttributeRepository.save(CategoryAttribute);
 	}
 	
-	public void deleteProductCategory(Long id) {
-		productCategoryAttributeRepository.deleteById(id);
+	public void deleteCategory(Long id) {
+		categoryAttributeRepository.deleteById(id);
 	}
 	
 }
