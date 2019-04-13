@@ -65,7 +65,7 @@ public class Category {
 	@IndexedEmbedded(depth = 5)
 	private Category parent;
 	
-	@OneToMany(mappedBy="Category",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="category",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@IndexedEmbedded
 	@JsonIgnore
 	private List<CategoryAttribute> attributes;
@@ -97,7 +97,7 @@ public class Category {
 		return attributes;
 	}
 
-	public void setAttribute(List<CategoryAttribute> categoryAttributes) {
+	public void setAttributes(List<CategoryAttribute> categoryAttributes) {
 		this.attributes = categoryAttributes;
 	}
 

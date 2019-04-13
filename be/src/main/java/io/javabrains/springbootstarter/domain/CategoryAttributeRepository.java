@@ -13,7 +13,7 @@ public interface CategoryAttributeRepository extends CrudRepository<CategoryAttr
 
 	Optional<CategoryAttribute> findByLclCdAndCategoryId(String lcl, Long categoryId);
 	
-	List<CategoryAttribute> findByLclCdAndProductCategoryParentCategoryId(String lcl, Long categoryId);
+	List<CategoryAttribute> findByLclCdAndCategoryParentCategoryId(String lcl, Long categoryId);
 
 	CategoryAttribute findByCategoryDesc(String categoryDesc);
 }

@@ -165,10 +165,10 @@ public class ProductDTOService implements IProductDTOService {
 													.bool()
 													.must(productQueryBuilder.keyword()
 													.onFields(
-																 "product.categories.parent.parent.parent.productCategoryAttribute.categoryDesc",
-																 "product.categories.parent.parent.productCategoryAttribute.categoryDesc",
-																 "product.categories.parent.productCategoryAttribute.categoryDesc",
-																 "product.categories.productCategoryAttribute.categoryDesc",
+																 "product.categories.parent.parent.parent.attributes.categoryDesc",
+																 "product.categories.parent.parent.attributes.categoryDesc",
+																 "product.categories.parent.attributes.categoryDesc",
+																 "product.categories.attributes.categoryDesc",
 																 "product.brand.brandAttributes.brandDesc",
 																 "productDesc")
 													.matching(searchTerm)													
