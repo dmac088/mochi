@@ -256,6 +256,7 @@ public class ProductDTOService implements IProductDTOService {
         productDto.setProductCreateDt(product.getProductCreateDt());
         productDto.setProductUPC(product.getProductUPC());
         productDto.setProductDesc(pa.getProductDesc());
+  
         
         /*instead of filtering the stream use JPA queries*/
         //productDto.setProductRetail(productAttribute.getProduct().getProductPrices().stream().filter(p -> p.getPriceCurrency().getCurrencyCode().equals(currency) && p.getPriceType().getPriceTypeDesc().equals("retail")).collect(Collectors.toList()).get(0).getPriceValue());
