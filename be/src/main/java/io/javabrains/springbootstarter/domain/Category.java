@@ -46,9 +46,6 @@ public class Category {
 	@Column(name="cat_prev_flg")
 	private Long previewFlag;
 	
-	@Column(name="cat_menu_flg")
-	private Long menuDisplayFlag;
-	
 	@Column(name="lnd_disp_flg")
 	private Long landingDisplayFlag;
 
@@ -119,14 +116,6 @@ public class Category {
 
 	public void setPreviewFlag(Long previewFlag) {
 		this.previewFlag = previewFlag;
-	}
-
-	public Long getMenuDisplayFlag() {
-		return menuDisplayFlag;
-	}
-
-	public void setMenuDisplayFlag(Long menuDisplayFlag) {
-		this.menuDisplayFlag = menuDisplayFlag;
 	}
 	
 	public Long getLandingDisplayFlag() {
