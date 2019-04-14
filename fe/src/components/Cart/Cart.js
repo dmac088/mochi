@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import * as cartSelector from '../../services/cart/selectors';
 import * as cartService from '../../services/cart';
+import { routeSingleProduct } from '../../services/helpers/RouteHelper';
 
 class Cart extends Component {
 
@@ -14,16 +16,17 @@ class Cart extends Component {
   }
 
   renderCartProducts = (cart) => {
+    const { match, history } = this.props;
     return cart.items.map(product => {
         return(
           <tr key={product.productId}>
             <td className="pro-thumbnail">
-              <a href="#">
+              <a id={product.productId} href="#" onClick={(e) => routeSingleProduct(e, match, history)}>
                 <img src={product.productImage} className="img-fluid" alt="Product" />
               </a>
             </td>
             <td className="pro-title">
-              <a href="#">
+              <a id={product.productId} href="#" onClick={(e) => routeSingleProduct(e, match, history)}>
                 {product.productDesc}
               </a>
             </td>
@@ -149,4 +152,4 @@ class Cart extends Component {
     }
   }
 
-export default Cart;
+export default withRouter(Cart);

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Slider from "react-slick";
+import { withRouter } from 'react-router-dom';
 import { SlickArrowLeft, SlickArrowRight } from '../../services/helpers/Helper';
 import * as cartSelector from '../../services/cart/selectors';
 import * as cartService from '../../services/cart';
@@ -11,12 +12,12 @@ const $ = window.$;
 class Product extends Component {
 
   render() {
-    const { category, product, setCurrentProductId } = this.props;
+    const { category, product, setCurrentProductId, match, history} = this.props;
     if(!product) {return null;}
     return (
         <div key={product.productId} className="gf-product banner-slider-product">
           <div className="image">
-            <a id={product.productId} onClick={(e) => routeSingleProduct(e, this.props.match, category.categoryDesc)} href="#">
+            <a id={product.productId} onClick={(e) => routeSingleProduct(e, match, history, category.categoryDesc)} href="#">
               <span className="onsale">Sale!</span>
               <img src={product.productImage} className="img-fluid" alt="" />
             </a>
@@ -47,4 +48,4 @@ class Product extends Component {
   }
 }
 
-export default Product;
+export default withRouter(Product);
