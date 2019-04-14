@@ -124,6 +124,7 @@ public class ProductDTOService implements IProductDTOService {
 	@Override
 	public Page<ProductDTO> getProductsForCategoryAndPrice(String lcl, String currency, String categoryDesc, Long price, int page, int size, String sortBy) {
 		System.out.println("getProductsForCategoryAndBrandAndPrice");
+		System.out.println(sortBy);
 		List<Category> pcl = new ArrayList<Category>();
      	Category pc = productCategoryRepository.findByAttributesCategoryDesc(categoryDesc);
      	recurseCategories(pcl, pc);
@@ -137,6 +138,7 @@ public class ProductDTOService implements IProductDTOService {
 	@Override
 	public Page<ProductDTO> getProductsForCategoryAndBrandAndPrice(String lcl, String currency, String categoryDesc, String brandDesc, Long price, int page, int size, String sortBy) {
 		System.out.println("getProductsForCategoryAndBrandAndPrice");
+		System.out.println(sortBy);
 		List<Category> pcl = new ArrayList<Category>();
      	Category pc = productCategoryRepository.findByAttributesCategoryDesc(categoryDesc);
      	recurseCategories(pcl, pc);
@@ -194,7 +196,7 @@ public class ProductDTOService implements IProductDTOService {
 		@SuppressWarnings("unchecked")
 		List<ProductAttribute> results =  Collections.checkedList(jpaQuery.getResultList(), ProductAttribute.class);
 		
-		System.out.println(results.size());
+		System.out.println("size = " + results.size());
 		
 		List<ProductDTO> lp = results.stream().map(pa -> this.convertToProductDto(pa.getProduct(), lcl, currency)).collect(Collectors.toList());
 
@@ -234,8 +236,9 @@ public class ProductDTOService implements IProductDTOService {
     	switch (param) {
     	case "priceAsc": return new Sort(Sort.Direction.ASC, "prices.PriceValue");
     	case "priceDesc": return new Sort(Sort.Direction.DESC, "prices.PriceValue");
-    	case "nameAsc": return new Sort(Sort.Direction.ASC, "attributes.productDesc");
-    	default: return new Sort(Sort.Direction.ASC, "attributes.productDesc");
+    	case "nameAsc": return Sort.by(new Sort.Order(Sort.Direction.ASC, "attributes.productDesc").ignoreCase()) ;
+    	case "nameDesc": return Sort.by(new Sort.Order(Sort.Direction.DESC, "attributes.productDesc").ignoreCase());
+    	default: return Sort.by(new Sort.Order(Sort.Direction.ASC, "attributes.productDesc").ignoreCase());
     	}
     }
     

@@ -79,7 +79,7 @@ class BreadCrumb extends Component {
     const type = this.props.match.params[0];
     const { page, categoryList } =  this.props;
     const renderCategory = (type && type.toLowerCase() === "category" && !(categoryList.length === 0));
-    const renderProduct = (renderCategory && productId);
+    const renderProduct = (productId);
     const renderSearch = (type && type.toLowerCase() === "search")
     return (
       <div className="breadcrumb-area mb-50">
