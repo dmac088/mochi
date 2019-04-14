@@ -13,6 +13,8 @@ import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -31,6 +33,7 @@ import io.javabrains.springbootstarter.domain.ProductRepository;
 
 @Service
 @Transactional
+@CacheConfig(cacheNames="products")
 public class ProductDTOService implements IProductDTOService {
 
     @Autowired
@@ -58,6 +61,7 @@ public class ProductDTOService implements IProductDTOService {
     
     @Override
 	@Transactional
+	@Cacheable
 	public Page<ProductDTO> getProducts(String lcl, String currency, int page, int size, String sortBy) {
     	Page<ProductDTO> pp;
 		Page<Product> ppa = productPagingAndSortingRepository.findAll(PageRequest.of(page, size, this.sortByParam(sortBy)));
@@ -67,6 +71,7 @@ public class ProductDTOService implements IProductDTOService {
     
     @Override
 	@Transactional
+	@Cacheable
 	public ProductDTO getProduct(String lcl, String currency, Long id) {
 		Product pa = productRepository.findById(id).get();
 		ProductDTO p = this.convertToProductDto(pa, lcl, currency);
@@ -76,6 +81,7 @@ public class ProductDTOService implements IProductDTOService {
     
     @Override
   	@Transactional
+  	@Cacheable
   	public List<ProductDTO> getPreviewProductsForCategory(String lcl, String currency, Long categoryId) {
      	List<Category> pcl = new ArrayList<Category>();
      	Category pc = productCategoryRepository.findByCategoryId(categoryId);
@@ -87,6 +93,7 @@ public class ProductDTOService implements IProductDTOService {
   	}	
     
 	@Override
+	@Cacheable
 	public Page<ProductDTO> getProductsForCategory(String lcl, String currency, String categoryDesc, int page, int size, String sortBy) {
 		List<Category> pcl = new ArrayList<Category>();
      	Category pc = productCategoryRepository.findByAttributesCategoryDesc(categoryDesc);
@@ -98,6 +105,7 @@ public class ProductDTOService implements IProductDTOService {
 	}
 	
 	@Override
+	@Cacheable
 	public Page<ProductDTO> getProductsForCategory(String lcl, String currency, String categoryDesc, Long price, int page, int size, String sortBy) {
 		System.out.println("getProductsForCategory");
 		List<Category> pcl = new ArrayList<Category>();
@@ -110,6 +118,7 @@ public class ProductDTOService implements IProductDTOService {
 	}
 	
 	@Override
+	@Cacheable
 	public Page<ProductDTO> getProductsForCategoryAndBrand(String lcl, String currency, String categoryDesc, String brandDesc, int page, int size, String sortBy) {
 		System.out.println("getProductsForCategoryAndBrand");
 		List<Category> pcl = new ArrayList<Category>();
@@ -122,6 +131,7 @@ public class ProductDTOService implements IProductDTOService {
 	}
 	
 	@Override
+ 	@Cacheable
 	public Page<ProductDTO> getProductsForCategoryAndPrice(String lcl, String currency, String categoryDesc, Long price, int page, int size, String sortBy) {
 		System.out.println("getProductsForCategoryAndBrandAndPrice");
 		System.out.println(sortBy);
@@ -136,6 +146,7 @@ public class ProductDTOService implements IProductDTOService {
 
 	
 	@Override
+	@Cacheable
 	public Page<ProductDTO> getProductsForCategoryAndBrandAndPrice(String lcl, String currency, String categoryDesc, String brandDesc, Long price, int page, int size, String sortBy) {
 		System.out.println("getProductsForCategoryAndBrandAndPrice");
 		System.out.println(sortBy);
@@ -242,12 +253,13 @@ public class ProductDTOService implements IProductDTOService {
     	}
     }
     
+ 	@Cacheable
     public void recurseCategories(List<Category> pcl, Category pc) {
     	pcl.add(pc);
     	pc.getChildren().forEach(child -> recurseCategories(pcl, child));
     }
     
-	
+    @Cacheable
     public ProductDTO convertToProductDto(final Product product, String lcl, String currency) {
         //get values from contact entity and set them in contactDto
         //e.g. contactDto.setContactId(contact.getContactId());
@@ -274,7 +286,4 @@ public class ProductDTOService implements IProductDTOService {
         .filter( ba -> ba.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getbrandDesc());
         return productDto;
     }
-    
-    
-
 }

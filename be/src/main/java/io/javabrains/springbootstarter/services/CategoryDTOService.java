@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import io.javabrains.springbootstarter.domain.Brand;
@@ -15,10 +17,11 @@ import io.javabrains.springbootstarter.domain.ProductRepository;
 
 @Service
 @Transactional
+@CacheConfig(cacheNames="categories")
 public class CategoryDTOService implements ICategoryDTOService {
     
     @Autowired
-    private CategoryRepository CategoryRepository;
+    private CategoryRepository categoryRepository;
     
     @Autowired
     private ProductRepository productRepository;
@@ -31,8 +34,9 @@ public class CategoryDTOService implements ICategoryDTOService {
     
     @Override
 	@Transactional
+	@Cacheable
 	public List<CategoryDTO> getCategories(final String lcl, String currency) {
-    	List<Category> lpc = CategoryRepository.findAll();
+    	List<Category> lpc = categoryRepository.findAll();
     	return lpc.stream().map(pc -> convertToCategoryDto(pc, lcl, currency))
     			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
@@ -41,8 +45,9 @@ public class CategoryDTOService implements ICategoryDTOService {
     
     @Override
  	@Transactional
+ 	@Cacheable
  	public List<CategoryDTO> getCategoryParent(final String lcl, String currency, final Long parentCategoryId) {
-    	List<Category> lpc = CategoryRepository.findByParentCategoryId(parentCategoryId);
+    	List<Category> lpc = categoryRepository.findByParentCategoryId(parentCategoryId);
     	return lpc.stream().map(pc -> convertToCategoryDto(pc, lcl, currency))
     			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
@@ -50,8 +55,9 @@ public class CategoryDTOService implements ICategoryDTOService {
     
     @Override
   	@Transactional
+  	@Cacheable
   	public List<CategoryDTO> getCategoriesForLevel(final String lcl, String currency, final Long level) {
-     	List<Category> lpc = CategoryRepository.findByCategoryLevelAndCategoryTypeCode(level, "PRD01");
+     	List<Category> lpc = categoryRepository.findByCategoryLevelAndCategoryTypeCode(level, "PRD01");
      	return lpc.stream().map(pc -> convertToCategoryDto(pc, lcl, currency))
     			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
@@ -60,17 +66,20 @@ public class CategoryDTOService implements ICategoryDTOService {
   
     @Override
   	@Transactional
+  	@Cacheable
   	public CategoryDTO getCategory(final String lcl, String currency, final Long categoryId) {
-     	Category pc = CategoryRepository.findByCategoryId(categoryId);
+     	Category pc = categoryRepository.findByCategoryId(categoryId);
      	return	convertToCategoryDto(pc, lcl, currency);
   	}
     
     @Override
+    @Cacheable
 	public CategoryDTO getCategory(String lcl, String currency, String categoryDesc) {
-     	Category pc = CategoryRepository.findByAttributesCategoryDesc(categoryDesc);
+     	Category pc = categoryRepository.findByAttributesCategoryDesc(categoryDesc);
      	return	convertToCategoryDto(pc, lcl, currency);
 	}
     
+ 	@Cacheable
     private BrandDTO convertToBrandDto(final Brand b, String categoryCode, final String lcl) {
     	final BrandDTO bDto = new BrandDTO();
     	bDto.setBrandId(b.getBrandId());
@@ -82,6 +91,7 @@ public class CategoryDTOService implements ICategoryDTOService {
     	return bDto;
     }
     
+ 	@Cacheable
     private CategoryDTO convertToCategoryDto(final Category pc, final String lcl, final String currency) {
     	
         final CategoryDTO pcDto = new CategoryDTO();
