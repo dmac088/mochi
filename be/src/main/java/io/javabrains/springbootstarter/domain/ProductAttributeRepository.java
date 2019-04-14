@@ -8,9 +8,7 @@ public interface ProductAttributeRepository extends CrudRepository<ProductAttrib
 	List<ProductAttribute> findAll();
 
 	List<ProductAttribute> findByLclCd(String lcl);
-	
-	List<ProductAttribute> findDistinctByLclCdAndProductCategoriesCategoryIdInAndProductPreviewFlag(String lcl, List<Long> categoryIds, Long previewFlag);
-	
+
 	ProductAttribute findByLclCdAndProductId(String lcl, Long id);
 
 }
