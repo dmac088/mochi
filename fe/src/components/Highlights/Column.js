@@ -10,14 +10,14 @@ class Column extends Component {
   }
 
   renderProducts = (products) => {
-    const { categoryDesc, match, history, setCurrentProductId } = this.props;
+    const { category, match, history, setCurrentProductId } = this.props;
     if (products === undefined) { return; }
     return products.map(product => {
       return (
           <Product
             key={product.productId}
             product={product}
-            categoryDesc={categoryDesc}
+            category={category}
             setCurrentProductId={setCurrentProductId}
           />
         )

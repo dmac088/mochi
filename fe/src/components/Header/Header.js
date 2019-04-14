@@ -9,6 +9,7 @@ import HeaderCartSummary from './HeaderCartSummary';
 import LanguageSelector from './LanguageSelector';
 import CurrencySelector from './CurrencySelector';
 import { isMobile } from '../../services/helpers/Helper';
+import { homeRouteString, routeContact, routeCheckout, routeAccount, routeWishlist } from '../../services/helpers/RouteHelper';
 import { Link } from 'react-router-dom';
 
 class Header extends Component {
@@ -45,33 +46,8 @@ class Header extends Component {
     });
   }
 
-  checkout = (e) => {
-    e.preventDefault();
-    const { locale, currency } = this.props.match.params;
-    this.props.history.push('/' + locale + '/' + currency + '/Checkout');
-  }
-
-  account = (e) => {
-    e.preventDefault();
-    const { locale, currency } = this.props.match.params;
-    const { authenticated, history } = this.props;
-    if (authenticated) {
-      history.push('/' + locale + '/' + currency + '/Account');
-    } else {
-      history.push('/' + locale + '/' + currency + '/Auth');
-    }
-  }
-
-  wishlist = (e) => {
-    e.preventDefault();
-    const { locale, currency } = this.props.match.params;
-    this.props.history.push('/' + locale + '/' + currency + '/Wishlist');
-  }
-
   render() {
-    const { location, history, match } = this.props;
-    const { locale, currency } = match;
-
+    const { location, history, match, authenticated } = this.props;
     return(
       <header>
         <div className="header-top pt-10 pb-10 pt-lg-10 pb-lg-10 pt-md-10 pb-md-10">
@@ -92,9 +68,9 @@ class Header extends Component {
               <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  text-center text-sm-right">
                 <div className="header-top-menu">
                   <ul>
-                    <li><a onClick={this.account} href="#">My account</a></li>
-                    <li><a onClick={this.wishlist} href="#">Wishlist</a></li>
-                    <li><a onClick={this.checkout} href="#">Checkout</a></li>
+                    <li><a onClick={(e) => routeAccount(e, match, history, authenticated)} href="#">My Account</a></li>
+                    <li><a onClick={(e) => routeWishlist(e, match, history)} href="#">Wishlist</a></li>
+                    <li><a onClick={(e) => routeCheckout(e, match, history)} href="#">Checkout</a></li>
                   </ul>
                 </div>
               </div>
@@ -109,7 +85,7 @@ class Header extends Component {
             <div className="row">
               <div className="col-md-3 col-sm-12 col-xs-12 text-lg-left text-md-center text-sm-center">
                 <div className="logo mt-15 mb-15">
-                  <Link to={'/'+ locale + '/'+ currency} >
+                  <Link to={homeRouteString(match)} >
                     <img src="assets/images/logo.png" className="img-fluid" alt="" />
                   </Link>
                 </div>

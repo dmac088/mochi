@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { withRouter } from "react-router-dom";
 import { isMobile, slide, updateParams } from '../../services/helpers/Helper';
+import { routeSearch } from '../../services/helpers/RouteHelper';
 import qs from 'query-string';
 import _ from 'lodash';
 
@@ -27,14 +28,6 @@ class Search extends Component {
     });
   }
 
-  handleSearch = (e) => {
-    if(!e) {return}
-    e.preventDefault();
-    const { locale, currency, term } = this.props.match.params;
-    const { inputTerm } = this.state;
-    this.props.history.push('/' + locale + '/' + currency + '/search/' + ((!inputTerm) ? "" : inputTerm));
-  }
-
   handleKeyPress = (target) => {
     if(target.charCode === 13){
       this.handleSearch();
@@ -42,11 +35,12 @@ class Search extends Component {
   }
 
   render() {
+      const { history, match } = this.props;
       return(
         <div className="header-advance-search">
           <form action="#">
             <input type="text" onChange={this.updateSearch} value={this.state.inputTerm} placeholder="Search your product" />
-            <button onClick={this.handleSearch}><span className="icon_search" /></button>
+            <button onClick={(e) => routeSearch(e, match, history, this.state.inputTerm)}><span className="icon_search" /></button>
           </form>
         </div>
       );

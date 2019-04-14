@@ -7,6 +7,7 @@ import Velocity from 'velocity-animate';
 import 'velocity-animate/velocity.ui';
 import * as cartSelector from '../../services/cart/selectors';
 import * as cartService from '../../services/cart';
+import { homeRouteString, routeCart, routeCheckout } from '../../services/helpers/RouteHelper';
 const $ = window.$;
 
 class HeaderCartSummary extends Component {
@@ -37,17 +38,11 @@ class HeaderCartSummary extends Component {
     }, 500);
   }
 
-  viewCart = (e) => {
-    e.preventDefault();
-    const { locale, currency } = this.props.match.params;
-    this.props.history.push('/' + locale + '/' + currency + '/Cart');
-  }
-
   render() {
-    const { cart } = this.props;
+    const { cart, match, history} = this.props;
     return(
       <div onMouseEnter={this.setinContainer} onMouseLeave={this.setNotinContainer} className="shopping-cart" id="shopping-cart">
-          <a onClick={this.viewCart} href="#">
+          <a onClick={(e) => routeCart(e, match, history)} href="#">
             <div className="cart-icon d-inline-block">
               <span className="icon_bag_alt" />
             </div>
@@ -85,18 +80,6 @@ class Accordion extends React.Component {
   	this.container = c;
   }
 
-  checkout = (e) => {
-    e.preventDefault();
-    const { locale, currency } = this.props.match.params;
-    this.props.history.push('/' + locale + '/' + currency + '/Checkout');
-  }
-
-  viewCart = (e) => {
-    e.preventDefault();
-    const { locale, currency } = this.props.match.params;
-    this.props.history.push('/' + locale + '/' + currency + '/Cart');
-  }
-
   removeItem = (e) => {
     e.preventDefault();
     cartService.removeFromCart(cartSelector.get(), Number(e.currentTarget.id));
@@ -124,7 +107,7 @@ class Accordion extends React.Component {
   }
 
   	render() {
-      const { cart } = this.props;
+      const { cart, match, history} = this.props;
   		return (
         <div className="cart-floating-box" id="cart-floating-box" ref={this.setContainer}>
           <div className="cart-items">
@@ -135,8 +118,8 @@ class Accordion extends React.Component {
               <p className="total">Subtotal <span>${cart.totalAmount}</span></p>
             </div>
             <div className="floating-cart-btn text-center">
-              <a onClick={this.checkout} href="#">Checkout</a>
-              <a onClick={this.viewCart} href="#">View Cart</a>
+              <a onClick={(e) => routeCheckout(e, match, history)} href="#">Checkout</a>
+              <a onClick={(e) => routeCart(e, match, history)} href="#">View Cart</a>
             </div>
           </div>
       </div>

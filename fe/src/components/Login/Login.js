@@ -7,6 +7,7 @@ import * as customerActionCreators from '../../services/customer/actions';
 import * as customerSelector from '../../services/customer/selectors';
 import { initialState } from '../../services/customer/reducer';
 import { withRouter } from "react-router-dom";
+import { routeHome, routeLogin } from '../../services/helpers/RouteHelper';
 
 class Login extends Component {
 
@@ -15,22 +16,12 @@ class Login extends Component {
     this.state = initialState;
   }
 
-  routeLanding = (props = this.props) => {
-    const { locale, currency } = this.props.match.params;
-    this.props.history.push('/' + locale + '/' + currency);
-  }
-
-  routeLogin = () => {
-    const { locale, currency } = this.props.match.params;
-    this.props.history.push('/' + locale + '/' + currency + '/Auth');
-
-  }
-
   loginClick = (e) => {
     e.preventDefault();
+    const { location, match, history } = this.props;
     session.authenticate( this.state.customer,
-                          this.routeLanding,
-                          this.routeLogin);
+                          (e) => routeHome(e, match, history),
+                          (e) => routeLogin(e, match, history));
   }
 
   changeUserName = (e) => {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Link } from "react-router-dom";
-import { changeCategory } from '../services/helpers/RouteHelper';
+import { changeCategory, homeRouteString } from '../services/helpers/RouteHelper';
 
 class BreadCrumb extends Component {
 
@@ -75,7 +75,7 @@ class BreadCrumb extends Component {
   }
 
   render() {
-    const { locale, currency, term, productId } = this.props.match.params;
+    const { term, productId } = this.props.match.params;
     const type = this.props.match.params[0];
     const { page, categoryList } =  this.props;
     const renderCategory = (type && type.toLowerCase() === "category" && !(categoryList.length === 0));
@@ -88,7 +88,7 @@ class BreadCrumb extends Component {
     				<div className="col">
     					<div className="breadcrumb-container">
     						<ul>
-    							<li><Link to={'/'+ locale + '/' + currency}><i className="fa fa-home"></i> Home</Link></li>
+    							<li><Link to={homeRouteString(this.props.match)}><i className="fa fa-home"></i> Home</Link></li>
     							{(renderCategory)
                    ? this.renderCategoryLineage(categoryList, term)
                    : null}

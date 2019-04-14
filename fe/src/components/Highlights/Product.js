@@ -5,6 +5,7 @@ import * as cartSelector from '../../services/cart/selectors';
 import {
 	spinner,
 } from '../../services/helpers/Helper';
+import { routeSingleProduct } from '../../services/helpers/RouteHelper';
 
 class Product extends Component {
 
@@ -36,18 +37,12 @@ class Product extends Component {
                           ()=>{console.log("addToCart complete!")});
   }
 
-  routeSingleProduct = (e) => {
-    e.preventDefault();
-		const { categoryDesc } = this.props;
-    const { locale, currency } = this.props.match.params;
-    this.props.history.push('/' + locale + '/' + currency + '/category/' + categoryDesc + '/product/' + e.currentTarget.id);
-  }
-
-  renderProduct = (product, currentImage, setCurrentProductId) => {
+  renderProduct = (category, product, currentImage, setCurrentProductId) => {
+		const { match, history } = this.props;
     return (
       <React.Fragment>
         <div className="image">
-          <a id={product.productId} onClick={this.routeSingleProduct} href="#">
+          <a id={product.productId} onClick={(e) => routeSingleProduct(e, match, history, category)} href="#">
             <span className="onsale">Sale!</span>
             <img src={currentImage} className="img-fluid" alt="" />
           </a>
@@ -62,11 +57,11 @@ class Product extends Component {
         </div>
         <div className="product-content">
           <div className="product-categories">
-            <a id={product.productId} href={this.routeSingleProduct} href="#">Fast Foods</a>,
-            <a id={product.productId} href={this.routeSingleProduct} href="#">Vegetables</a>
+            <a id={product.productId} href={(e) => routeSingleProduct(e, match, history, category)} href="#">Fast Foods</a>,
+            <a id={product.productId} href={(e) => routeSingleProduct(e, match, history, category)} href="#">Vegetables</a>
           </div>
           <h3 className="product-title">
-            <a id={product.productId} onClick={this.routeSingleProduct} href="#">
+            <a id={product.productId} onClick={(e) => routeSingleProduct(e, match, history, category)} href="#">
               {product.productDesc}
             </a>
           </h3>
@@ -84,7 +79,7 @@ class Product extends Component {
     const { isLoading } = this.state;
     return (
         <div className="gf-product tab-slider-sub-product">
-          {(isLoading) ? spinner() : this.renderProduct(product, product.productImage, setCurrentProductId)}
+          {(isLoading) ? spinner() : this.renderProduct(category, product, product.productImage, setCurrentProductId)}
         </div>
     );
   }

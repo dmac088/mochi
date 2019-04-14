@@ -2,15 +2,9 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import * as cartService from '../../services/cart';
 import * as cartSelector from '../../services/cart/selectors';
+import { routeSingleProduct } from '../../services/helpers/RouteHelper';
 
 class Product extends Component {
-
-  routeSingleProduct = (e) => {
-    e.preventDefault();
-    const { locale, currency, term } = this.props.match.params;
-    const type = this.props.match.params[0];
-    this.props.history.push('/' + locale + '/' + currency + '/' + type + '/' + term + '/product/' + e.currentTarget.id);
-  }
 
   addToCart = (e, product) => {
     e.preventDefault();
@@ -22,12 +16,13 @@ class Product extends Component {
   }
 
 
-  renderLV = (product, setCurrentProductId, isGrid) => {
+  renderLV = (category, product, setCurrentProductId, isGrid) => {
+    const { location, match, history } = this.props;
     return (
       <div className="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
         <div className="gf-product shop-list-view-product">
           <div className="image">
-            <a onClick={this.routeSingleProduct} id={product.productId} href="#">
+            <a onClick={(e) => routeSingleProduct(e, match, history, category)} id={product.productId} href="#">
               <span className="onsale">Sale!</span>
               <img src={product.productImage} className="img-fluid" alt />
             </a>
@@ -65,12 +60,13 @@ class Product extends Component {
   }
 
 
-  renderGV = (product, setCurrentProductId, isGrid) => {
+  renderGV = (category, product, setCurrentProductId, isGrid) => {
+    const { location, match, history } = this.props;
     return (
       <div className="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
         <div className="gf-product shop-grid-view-product">
           <div className="image">
-            <a onClick={this.routeSingleProduct} id={product.productId} href="#">
+            <a onClick={(e) => routeSingleProduct(e, match, history, category)} id={product.productId} href="#">
               <span className="onsale">Sale!</span>
               <img src={product.productImage} className="img-fluid" alt />
             </a>
@@ -104,13 +100,13 @@ class Product extends Component {
   }
 
   render() {
-    const { product, setCurrentProductId, isGrid } = this.props;
+    const { category, product, setCurrentProductId, isGrid } = this.props;
     return (
       <React.Fragment>
         {
           ((isGrid)
-          ? this.renderGV(product, setCurrentProductId, isGrid)
-          : this.renderLV(product, setCurrentProductId, isGrid))
+          ? this.renderGV(category, product, setCurrentProductId, isGrid)
+          : this.renderLV(category, product, setCurrentProductId, isGrid))
         }
       </React.Fragment>
     );
