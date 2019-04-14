@@ -253,13 +253,11 @@ public class ProductDTOService implements IProductDTOService {
     	}
     }
     
- 	@Cacheable
     public void recurseCategories(List<Category> pcl, Category pc) {
     	pcl.add(pc);
     	pc.getChildren().forEach(child -> recurseCategories(pcl, child));
     }
     
-    @Cacheable
     public ProductDTO convertToProductDto(final Product product, String lcl, String currency) {
         //get values from contact entity and set them in contactDto
         //e.g. contactDto.setContactId(contact.getContactId());
