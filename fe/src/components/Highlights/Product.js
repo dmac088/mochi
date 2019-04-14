@@ -42,7 +42,7 @@ class Product extends Component {
     return (
       <React.Fragment>
         <div className="image">
-          <a id={product.productId} onClick={(e) => routeSingleProduct(e, match, history, category)} href="#">
+          <a id={product.productId} onClick={(e) => routeSingleProduct(e, match, history, category.categoryDesc)} href="#">
             <span className="onsale">Sale!</span>
             <img src={currentImage} className="img-fluid" alt="" />
           </a>
@@ -57,11 +57,11 @@ class Product extends Component {
         </div>
         <div className="product-content">
           <div className="product-categories">
-            <a id={product.productId} href={(e) => routeSingleProduct(e, match, history, category)} href="#">Fast Foods</a>,
-            <a id={product.productId} href={(e) => routeSingleProduct(e, match, history, category)} href="#">Vegetables</a>
+            <a id={product.productId} href={(e) => routeSingleProduct(e, match, history, category.categoryDesc)} href="#">Fast Foods</a>,
+            <a id={product.productId} href={(e) => routeSingleProduct(e, match, history, category.categoryDesc)} href="#">Vegetables</a>
           </div>
           <h3 className="product-title">
-            <a id={product.productId} onClick={(e) => routeSingleProduct(e, match, history, category)} href="#">
+            <a id={product.productId} onClick={(e) => routeSingleProduct(e, match, history, category.categoryDesc)} href="#">
               {product.productDesc}
             </a>
           </h3>

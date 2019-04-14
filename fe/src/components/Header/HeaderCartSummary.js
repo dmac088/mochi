@@ -7,7 +7,7 @@ import Velocity from 'velocity-animate';
 import 'velocity-animate/velocity.ui';
 import * as cartSelector from '../../services/cart/selectors';
 import * as cartService from '../../services/cart';
-import { homeRouteString, routeCart, routeCheckout } from '../../services/helpers/RouteHelper';
+import { homeRouteString, routeCart, routeCheckout, routeSingleProduct } from '../../services/helpers/RouteHelper';
 const $ = window.$;
 
 class HeaderCartSummary extends Component {
@@ -86,6 +86,7 @@ class Accordion extends React.Component {
   }
 
   renderCartItems = (cart) => {
+      const { match, history} = this.props;
       return cart.items.map(product => {
           return(
             <div key={product.productId} className="cart-float-single-item d-flex">
@@ -95,10 +96,11 @@ class Accordion extends React.Component {
                 </a>
               </span>
               <div className="cart-float-single-item-image">
-                <a href="single-product.html"><img src={product.productImage} className="img-fluid" alt="" /></a>
+                <a id={product.productId} href="#" onClick={(e) => routeSingleProduct(e, match, history)}><img src={product.productImage} className="img-fluid" alt="" /></a>
               </div>
               <div className="cart-float-single-item-desc">
-                <p className="product-title"> <a href="single-product.html">{product.productDesc} </a></p>
+                <p className="product-title">
+                  <a id={product.productId} href="#" onClick={(e) => routeSingleProduct(e, match, history)}>{product.productDesc} </a></p>
                 <p className="price"><span className="count">{product.quantity}x</span> ${product.productMarkdown}</p>
               </div>
             </div>

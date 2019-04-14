@@ -16,7 +16,7 @@ class Product extends Component {
     return (
         <div key={product.productId} className="gf-product banner-slider-product">
           <div className="image">
-            <a id={product.productId} onClick={(e) => routeSingleProduct(e, this.props.match, category)} href="#">
+            <a id={product.productId} onClick={(e) => routeSingleProduct(e, this.props.match, category.categoryDesc)} href="#">
               <span className="onsale">Sale!</span>
               <img src={product.productImage} className="img-fluid" alt="" />
             </a>
