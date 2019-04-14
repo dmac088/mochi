@@ -26,7 +26,7 @@ class Category extends Component {
       return (
         <Column
           key={columns.indexOf(column)}
-          categoryDesc={category.categoryDesc}
+          category={category}
           products={column}
           setCurrentProductId={setCurrentProductId}
         />

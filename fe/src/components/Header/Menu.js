@@ -1,29 +1,15 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import { routeHome, routeContact } from '../../services/helpers/RouteHelper';
 
 class Menu extends Component {
-
-
-  home = (e) => {
-    e.preventDefault();
-    const { locale, currency } = this.props.match.params;
-    this.props.history.push('/' + locale + '/' + currency);
-  }
-
-
-  contact = (e) => {
-    e.preventDefault();
-    const { locale, currency } = this.props.match.params;
-    this.props.history.push('/' + locale + '/' + currency + '/Contact');
-  }
-
-
   render() {
+    const { match, history } = this.props;
     return (
       <div className="main-menu">
         <nav>
           <ul>
-            <li className="active"><a onClick={this.home} href="#">HOME</a>
+            <li className="active"><a onClick={(e) => routeHome(e, match, history)} href="#">HOME</a>
             </li>
             <li className="menu-item-has-children">
               <a href="#">Brands</a>
@@ -53,7 +39,7 @@ class Menu extends Component {
                 <li><a href="blog-post-video-format.html">Blog Post Video Format</a></li>
               </ul>
             </li>
-            <li><a onClick={this.contact} href="#">CONTACT</a></li>
+            <li><a onClick={(e) => routeContact(e, match, history)} href="#">CONTACT</a></li>
           </ul>
         </nav>
       </div>

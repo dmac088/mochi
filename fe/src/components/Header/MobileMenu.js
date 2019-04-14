@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { isMobile, slide, updateParams } from '../../services/helpers/Helper';
+import { homeRouteString, routeHome, routeContact } from '../../services/helpers/RouteHelper';
 import ReactTransitionGroup from 'react-addons-transition-group';
 
 class MobileMenu extends Component {
@@ -12,18 +13,6 @@ class MobileMenu extends Component {
       revealBrandMenu: false,
       revealBlogMenu: false,
     };
-  }
-
-  home = (e) => {
-    e.preventDefault();
-    const { locale, currency } = this.props.match.params;
-    this.props.history.push('/' + locale + '/' + currency);
-  }
-
-  contact = (e) => {
-    e.preventDefault();
-    const { locale, currency } = this.props.match.params;
-    this.props.history.push('/' + locale + '/' + currency + '/Contact');
   }
 
   toggleMobileMenu = (e) => {

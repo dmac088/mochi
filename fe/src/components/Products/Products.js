@@ -174,11 +174,12 @@ class Products extends Component {
     )
   }
 
-  renderProducts = (products, setCurrentProductId, isGrid) => {
+  renderProducts = (category, products, setCurrentProductId, isGrid) => {
     if(!products) {return}
     return products.map(product => {
         return (
                     <Product key={product.productId}
+                        category={category}
                         product={product}
                         setCurrentProductId={setCurrentProductId}
                         isGrid={isGrid}
@@ -243,7 +244,7 @@ class Products extends Component {
                                 ? "shop-product-wrap grid row no-gutters mb-35"
                                 : "shop-product-wrap row no-gutters mb-35 list"}
                     >
-                      {this.renderProducts(products, setCurrentProductId, isGrid)}
+                      {this.renderProducts(cat, products, setCurrentProductId, isGrid)}
                     </div>
                     <Pagination
                       totalPages={totalPages}
