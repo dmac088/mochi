@@ -45,7 +45,7 @@ import { changeCategory, homeRouteString, createRouteProps } from '../services/h
       <li key={productId}>
           Product ID: {productId}
       </li>
-    )
+    );
   }
 
   const renderSearch = (term) => {
@@ -75,9 +75,9 @@ import { changeCategory, homeRouteString, createRouteProps } from '../services/h
     const { term, productId } = routeProps.match.params;
     const type = routeProps.match.params[0];
     const { page, categoryList } =  props;
-    const renderCategory = (type && type.toLowerCase() === "category" && !(categoryList.length === 0));
-    const renderProduct = (productId);
-    const renderSearch = (type && type.toLowerCase() === "search")
+    const renderCategoryFlag = (type && type.toLowerCase() === "category");
+    const renderProductFlag = (productId);
+    const renderSearchFlag = (type && type.toLowerCase() === "search")
     return (
       <div className="breadcrumb-area mb-50">
     		<div className="container">
@@ -86,16 +86,16 @@ import { changeCategory, homeRouteString, createRouteProps } from '../services/h
     					<div className="breadcrumb-container">
     						<ul>
     							<li><Link to={homeRouteString(routeProps.match)}><i className="fa fa-home"></i> Home</Link></li>
-    							{(renderCategory)
+    							{(renderCategoryFlag)
                    ? renderCategoryLineage(categoryList, term, routeProps)
                    : null}
-                  {(renderProduct)
+                  {(renderProductFlag)
                     ? renderProduct(productId)
                     : null}
-                  {(renderSearch)
+                  {(renderSearchFlag)
                     ? renderSearch(term)
                     : null}
-                  {(!renderProduct && !renderCategory && !renderSearch)
+                  {(!renderProductFlag && !renderCategoryFlag && !renderSearchFlag)
                     ? renderPage(page)
                     : null}
     						</ul>
