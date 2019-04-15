@@ -6,6 +6,7 @@ import { isMobile, slide, updateParams } from '../../services/helpers/Helper';
 import { changeCategory } from '../../services/helpers/RouteHelper';
 import { filterCategories } from '../../services/helpers/FilterHelper';
 import { getValue } from '../../config/lang/selector';
+import { createRouteProps } from '../../services/helpers/RouteHelper';
 import 'velocity-animate/velocity.ui';
 
 
@@ -38,7 +39,7 @@ class CategoryMenuContainer extends Component {
 
   render() {
     const { menuVisible, isMobile } = this.state;
-    const routeProps = {"location":{...this.props.location}, "match":{...this.props.match}, "history":{...this.props.history}}
+    const routeProps = createRouteProps(this.props.history, this.props.match, this.props.location);
     const { locale } = routeProps.match.params;
 
     const categoryList = filterCategories(this.props.categoryList, 'LNDMM01');

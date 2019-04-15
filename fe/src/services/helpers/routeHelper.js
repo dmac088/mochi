@@ -2,6 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import qs from 'query-string';
 
+export const createRouteProps = (history, match, location) => {
+    return {"history":{...history}, "match":{...match}, "location":{...location}};
+}
+
 export const homeRouteString = (match) => {
   const { locale, currency } = match.params;
   return '/'+ locale + '/' + currency;

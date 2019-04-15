@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import * as cartService from '../../services/cart';
 import * as cartSelector from '../../services/cart/selectors';
-import { routeSingleProduct } from '../../services/helpers/RouteHelper';
+import { routeSingleProduct, createRouteProps } from '../../services/helpers/RouteHelper';
 
   const addToCart = (e, product) => {
     e.preventDefault();
@@ -57,7 +57,7 @@ import { routeSingleProduct } from '../../services/helpers/RouteHelper';
   }
 
 
-  const renderGV = (category, product, setCurrentProductId, isGrid, props, routeProps) => {
+  const renderGV = (category, product, setCurrentProductId, isGrid, routeProps) => {
     return (
       <div className="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
         <div className="gf-product shop-grid-view-product">
@@ -96,7 +96,7 @@ import { routeSingleProduct } from '../../services/helpers/RouteHelper';
   }
 
 export const Product = withRouter(({location, match, history, ...props}) => {
-    const routeProps = {"history":{...history}, "matcg":{...match}, "location":{...location}}
+    const routeProps = createRouteProps(history, match, location);
     const { category, product, setCurrentProductId, isGrid } = props;
     return (
       <React.Fragment>
