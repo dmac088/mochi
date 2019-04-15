@@ -62,5 +62,5 @@ export const WishList = (props) => {
             </div>
           </div>
         </React.Fragment>
-      )
+      );
     }

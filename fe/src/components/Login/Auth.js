@@ -9,12 +9,12 @@ export const Auth = (props) => {
             <div className="row">
               <div className="col-sm-12 col-md-12 col-xs-12 col-lg-6 mb-30">
                 <Login
-                  {props}
+                  {...props}
                 />
               </div>
               <div className="col-sm-12 col-md-12 col-xs-12 col-lg-6">
                 <Register
-                  {props}
+                  {...props}
                 />
               </div>
             </div>
