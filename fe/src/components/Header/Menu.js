@@ -1,10 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { routeHome, routeContact } from '../../services/helpers/RouteHelper';
 
-class Menu extends Component {
-  render() {
-    const { match, history } = this.props;
+export const Menu = withRouter(({history, match, ...props}) => {
     return (
       <div className="main-menu">
         <nav>
@@ -44,7 +42,4 @@ class Menu extends Component {
         </nav>
       </div>
     )
-  }
-}
-
-export default withRouter(Menu);
+  });
