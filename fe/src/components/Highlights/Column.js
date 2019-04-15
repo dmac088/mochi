@@ -3,14 +3,8 @@ import { withRouter } from 'react-router-dom';
 import Product from './Product';
 const $ = window.$;
 
-class Column extends Component {
-
-  constructor(props) {
-    super(props);
-  }
-
-  renderProducts = (products) => {
-    const { category, match, history, setCurrentProductId } = this.props;
+  const renderProducts = (props) => {
+    const { category, match, history, setCurrentProductId, products } = props;
     if (products === undefined) { return; }
     return products.map(product => {
       return (
@@ -24,14 +18,11 @@ class Column extends Component {
     });
   }
 
-  render() {
-    const { products, key } = this.props;
+export const Column = withRouter(({history, ...props}) => {
+    const { products, key } = props;
     return (
       <div key={key} className="single-tab-slider-item">
-        {this.renderProducts(products)}
+        {renderProducts(props)}
       </div>
     )
-  }
-}
-
-export default withRouter(Column);
+  });
