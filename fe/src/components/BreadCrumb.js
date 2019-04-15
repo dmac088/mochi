@@ -27,14 +27,13 @@ class BreadCrumb extends Component {
 
   renderCategoryLineage = (categoryList, term) => {
     const result = [];
-    const { location, match, history } = this.props;
     this.createLineage( categoryList,
                         this.findCategoryByName(categoryList, term).categoryId,
                         result);
     return result.reverse().map(category => {
       return (
         <li key={category.categoryId} className="active">
-          <a id={category.categoryDesc} onClick={(e) => changeCategory(e, location, match, history)} href="#">
+          <a id={category.categoryDesc} onClick={(e) => changeCategory(e, this.props)} href="#">
             {category.categoryDesc}
           </a>
         </li>

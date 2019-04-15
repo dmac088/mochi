@@ -52,10 +52,10 @@ export const routeSearch = (e, match, history, term) => {
   routePage(e, match, history, '/search/' + ((!term) ? "" : term));
 }
 
-export const changeCategory = (e, location, match, history) => {
+export const changeCategory = (e, routeProps) => {
   e.preventDefault();
-  const { search } = location;
-  history.push(homeRouteString(match) + '/category/' + e.currentTarget.id + search);
+  const { search } = routeProps.location;
+  routeProps.history.push(homeRouteString(routeProps.match) + '/category/' + e.currentTarget.id + search);
 }
 
 export const changeBrand = (e, location, match, history) => {
