@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import Column from '../Column';
+import { Column } from '../Column';
 import Slider from "react-slick";
 import { SlickArrowLeft, SlickArrowRight, chunkArray } from '../../../services/helpers/Helper';
 import { getValue } from '../../../config/lang/selector';
