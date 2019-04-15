@@ -1,12 +1,7 @@
 
-import React, { Component } from 'react';
-import { withRouter } from "react-router-dom";
+import React from 'react';
 
-class TopRatedSidebar extends Component {
-
-
-
-  render() {
+export const TopRatedSidebar = (props) => {
     return (
       <div className="sidebar mb-35">
         <h3 className="sidebar-title">Top rated products</h3>
@@ -84,6 +79,3 @@ class TopRatedSidebar extends Component {
       </div>
     );
   }
-}
-
-export default TopRatedSidebar;

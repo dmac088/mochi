@@ -1,9 +1,6 @@
-import React, { Component } from 'react';
-import { withRouter } from "react-router-dom";
+import React from 'react';
 
-class TagSidebar extends Component {
-
-  render() {
+  export const TagSidebar = (props) => {
     return (
       <div className="sidebar">
         <h3 className="sidebar-title">Product Tags</h3>
@@ -18,6 +15,3 @@ class TagSidebar extends Component {
       </div>
     );
   }
-}
-
-export default TagSidebar;

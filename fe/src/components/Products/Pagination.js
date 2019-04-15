@@ -2,23 +2,21 @@ import React, { Component } from 'react';
 import { withRouter } from "react-router-dom";
 import qs from 'query-string';
 
-class Pagination extends Component {
-
-  changePage = (e) => {
+  const changePage = (e, routeProps) => {
     e.preventDefault();
     const page = e.currentTarget.id;
     if(Number(page) > Number(e.currentTarget.getAttribute("pages"))-1) { return; }
-    const { pathname, search } = this.props.location;
+    const { pathname, search } = routeProps.location;
     const urlParams = qs.parse(search);
     const searchString = qs.stringify(Object.assign(urlParams, { page: page }));
 
-    this.props.history.push({
+    routeProps.history.push({
       "pathname": pathname,
       "search": searchString,
     });
   }
 
-  renderPaginator = (pages, current) => {
+  const renderPaginator = (pages, current, routeProps) => {
     return Array.apply(null, {length: pages}).map(Number.call,page => {
       return (
         <li key={page}>
@@ -27,7 +25,7 @@ class Pagination extends Component {
               href="#"
               className={(Number(page) ===  Number(current)) ?  "active" : ""}
               pages={pages}
-              onClick={this.changePage}>
+              onClick={(e) => changePage(e, routeProps)}>
             {page+1}
           </a>
         </li>
@@ -35,10 +33,10 @@ class Pagination extends Component {
     });
   }
 
-  renderNext = (pages, currentPage) => {
+  const renderNext = (pages, currentPage, routeProps) => {
     return (
       <li>
-        <a  onClick={this.changePage}
+        <a  onClick={(e) => changePage(e, routeProps)}
             id={Number(currentPage)+1}
             pages={pages}
             href="#">
@@ -48,8 +46,9 @@ class Pagination extends Component {
     );
   }
 
-  render() {
-    const {totalPages, currentPage } = this.props;
+  export const Pagination = withRouter(({history, match, location, ...props}) => {
+    const {totalPages, currentPage } = props;
+    const routeProps = {"history":{...history}, "matcg":{...match}, "location":{...location}}
     if (totalPages <= 1 ) { return null }
 		return (
       <div className="pagination-container">
@@ -58,16 +57,13 @@ class Pagination extends Component {
             <div className="col-lg-12">
               <div className="pagination-content text-center">
                 <ul>
-                  {this.renderPaginator(totalPages, currentPage)}
-                  {this.renderNext(totalPages, currentPage)}
+                  {renderPaginator(totalPages, currentPage, routeProps)}
+                  {renderNext(totalPages, currentPage, routeProps)}
                 </ul>
               </div>
             </div>
           </div>
         </div>
       </div>
-    )
-  }
-}
-
-export default withRouter(Pagination);
+    );
+  });
