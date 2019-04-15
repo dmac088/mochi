@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const WishList = (props) => {
+export const Wishlist = (props) => {
 			return(
         <React.Fragment>
           <div className="page-section section mb-50">
