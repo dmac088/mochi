@@ -4,7 +4,7 @@ import { HeroSlider } from './HeroSlider';
 import { Policy } from './Policy';
 import { Banner } from './Banner';
 import { BestSeller } from './BestSeller';
-import BlogPosts from './BlogPosts';
+import { BlogPosts } from './BlogPosts';
 import { BrandSlider } from './BrandSlider';
 import { PreviewCategoryContainer } from '../PreviewCategory/PreviewCategoryContainer';
 import Highlights from '../Highlights/Highlights';
