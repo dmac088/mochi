@@ -9,18 +9,18 @@ import { routeSingleProduct } from '../../services/helpers/RouteHelper';
     cartService.removeFromCart(cartSelector.get(), Number(e.currentTarget.id));
   }
 
-  const renderCartProducts = (props, cart) => {
+  const renderCartProducts = (routeProps, props, cart) => {
     const { match, history } = props;
     return cart.items.map(product => {
         return(
           <tr key={product.productId}>
             <td className="pro-thumbnail">
-              <a id={product.productId} href="#" onClick={(e) => routeSingleProduct(e, match, history)}>
+              <a id={product.productId} href="#" onClick={(e) => routeSingleProduct(e, routeProps.match, routeProps.history)}>
                 <img src={product.productImage} className="img-fluid" alt="Product" />
               </a>
             </td>
             <td className="pro-title">
-              <a id={product.productId} href="#" onClick={(e) => routeSingleProduct(e, match, history)}>
+              <a id={product.productId} href="#" onClick={(e) => routeSingleProduct(e, routeProps.match, routeProps.history)}>
                 {product.productDesc}
               </a>
             </td>
@@ -46,7 +46,7 @@ import { routeSingleProduct } from '../../services/helpers/RouteHelper';
   }
 
 
-  export const Cart = withRouter(({history, ...props}) => {
+  export const Cart = withRouter(({history, match, location, ...props}) => {
       const { cart } = props;
 			return(
         <React.Fragment>
@@ -68,7 +68,7 @@ import { routeSingleProduct } from '../../services/helpers/RouteHelper';
                                           </tr>
                                       </thead>
                                       <tbody>
-                                          {renderCartProducts(props, cart)}
+                                          {renderCartProducts({history, match, location}, props, cart)}
                                       </tbody>
                                   </table>
                               </div>
