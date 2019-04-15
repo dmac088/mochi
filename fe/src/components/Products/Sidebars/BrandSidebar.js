@@ -1,14 +1,13 @@
 import React from 'react';
 import { withRouter } from "react-router-dom";
-import { changeBrand } from '../../../services/helpers/RouteHelper';
+import { changeBrand, createRouteProps   } from '../../../services/helpers/RouteHelper';
 
-  const renderBrandListItems = (category, currentBrand, props) => {
-    const { location, match, history } = props;
+  const renderBrandListItems = (category, currentBrand, routeProps) => {
     return category.categoryBrands.map(brand => {
       const isActive = (currentBrand === brand.brandDesc)
       return(
         <li key={brand.brandId}>
-          <a className={(isActive) ? "active" : ""} onClick={(e) => changeBrand(e, location, match, history)} id={brand.brandDesc} href="#">
+          <a className={(isActive) ? "active" : ""} onClick={(e) => changeBrand(e, routeProps)} id={brand.brandDesc} href="#">
             {brand.brandDesc} <span className="badge badge-pill badge-secondary">{brand.productCount}</span>
           </a>
         </li>
@@ -16,21 +15,21 @@ import { changeBrand } from '../../../services/helpers/RouteHelper';
     })
   }
 
-  const renderAll = (category, isActive, props) => {
+  const renderAll = (category, isActive, routeProps) => {
       if(category.categoryBrands.length <= 1) {return}
-      const { location, match, history } = props;
       return (
         <li>
-          <a className={(isActive) ? "active" : ""} onClick={(e) => changeBrand(e, location, match, history)} id={"All"} href="#">
+          <a className={(isActive) ? "active" : ""} onClick={(e) => changeBrand(e, routeProps)} id={"All"} href="#">
             All
           </a>
         </li>
       )
   }
 
-  export const BrandSidebar = withRouter(({...props}) => {
+  export const BrandSidebar = withRouter(({history, match, location, ...props}) => {
     const { category } = props;
-    const currentBrand = props.match.params.brand;
+    const routeProps = createRouteProps(history, match, location);
+    const currentBrand = routeProps.match.params.brand;
     const isActive = (!currentBrand);
     if (!category.categoryBrands) { return null; }
     if(category.categoryBrands.length <= 1) {return null; }
@@ -38,8 +37,8 @@ import { changeBrand } from '../../../services/helpers/RouteHelper';
         <div className="sidebar mb-35">
           <h3 className="sidebar-title">Filter By Brand</h3>
           <ul className="product-categories">
-            {renderAll(category, isActive, props)}
-            {renderBrandListItems(category, currentBrand, props)}
+            {renderAll(category, isActive, routeProps)}
+            {renderBrandListItems(category, currentBrand, routeProps)}
           </ul>
         </div>
       );

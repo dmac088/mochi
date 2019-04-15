@@ -10,8 +10,8 @@ import { routeSingleProduct, createRouteProps } from '../../services/helpers/Rou
 const $ = window.$;
 
 
-  export const Product = withRouter(({history, ...props}) => {
-    const { category, product, setCurrentProductId, match, history, location } = props;
+  export const Product = withRouter(({history, match, location, ...props}) => {
+    const { category, product, setCurrentProductId } = props;
     const routeProps = createRouteProps(history, match, location);
     if(!product) {return null;}
     return (

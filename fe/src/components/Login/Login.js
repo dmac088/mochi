@@ -7,7 +7,7 @@ import * as customerActionCreators from '../../services/customer/actions';
 import * as customerSelector from '../../services/customer/selectors';
 import { initialState } from '../../services/customer/reducer';
 import { withRouter } from "react-router-dom";
-import { routeHome, routeLogin } from '../../services/helpers/RouteHelper';
+import { routeHome, routeLogin, createRouteProps } from '../../services/helpers/RouteHelper';
 
 class Login extends Component {
 
@@ -18,10 +18,10 @@ class Login extends Component {
 
   loginClick = (e) => {
     e.preventDefault();
-    const { location, match, history } = this.props;
+    const routeProps = createRouteProps(this.props.history, this.props.match, this.props.location);
     session.authenticate( this.state.customer,
-                          (e) => routeHome(e, match, history),
-                          (e) => routeLogin(e, match, history));
+                          (e) => routeHome(e, routeProps),
+                          (e) => routeLogin(e, routeProps));
   }
 
   changeUserName = (e) => {

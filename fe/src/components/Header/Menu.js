@@ -1,13 +1,14 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import { routeHome, routeContact } from '../../services/helpers/RouteHelper';
+import { routeHome, routeContact, createRouteProps } from '../../services/helpers/RouteHelper';
 
-export const Menu = withRouter(({history, match, ...props}) => {
+export const Menu = withRouter(({history, match, location, ...props}) => {
+    const routeProps = createRouteProps(history, match, location);
     return (
       <div className="main-menu">
         <nav>
           <ul>
-            <li className="active"><a onClick={(e) => routeHome(e, match, history)} href="#">HOME</a>
+            <li className="active"><a onClick={(e) => routeHome(e, routeProps)} href="#">HOME</a>
             </li>
             <li className="menu-item-has-children">
               <a href="#">Brands</a>
@@ -37,7 +38,7 @@ export const Menu = withRouter(({history, match, ...props}) => {
                 <li><a href="blog-post-video-format.html">Blog Post Video Format</a></li>
               </ul>
             </li>
-            <li><a onClick={(e) => routeContact(e, match, history)} href="#">CONTACT</a></li>
+            <li><a onClick={(e) => routeContact(e, routeProps)} href="#">CONTACT</a></li>
           </ul>
         </nav>
       </div>

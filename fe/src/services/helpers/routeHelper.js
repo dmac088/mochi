@@ -68,9 +68,9 @@ export const changeBrand = (e, routeProps) => {
   const { locale, currency, term } = routeProps.match.params;
   const value = e.currentTarget.id;
   if(value === 'All') {
-    history.push(homeRouteString(routeProps.match) + '/category/' + term + search);
+    routeProps.history.push(homeRouteString(routeProps.match) + '/category/' + term + search);
   } else {
-    history.push(homeRouteString(routeProps.match) + '/category/' + term + '/brand/' + value + search);
+    routeProps.history.push(homeRouteString(routeProps.match) + '/category/' + term + '/brand/' + value + search);
   }
 }
 
