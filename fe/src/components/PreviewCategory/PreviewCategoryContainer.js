@@ -1,21 +1,16 @@
 import React, { Component } from 'react';
-import PreviewCategory from './PreviewCategory';
+import { PreviewCategory } from './PreviewCategory';
 import * as categoryApi from '../../data/categories/api';
 
-class PreviewCategoryContainer extends Component {
-
-  render() {
-    const { locale, setCurrentProductId, previewCategories } = this.props;
+export const PreviewCategoryContainer = (props) => {
+    const { locale, setCurrentProductId, previewCategories } = props;
     return previewCategories.map(category => {
       return (
           <PreviewCategory
              key={category.categoryId}
              category={category}
-             {...this.props}
+             {...props}
           />
       )
     });
   }
-}
-
-export default PreviewCategoryContainer;

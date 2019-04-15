@@ -6,7 +6,7 @@ import Banner from './Banner';
 import BestSeller from './BestSeller';
 import BlogPosts from './BlogPosts';
 import BrandSlider from './BrandSlider';
-import PreviewCategoryContainer from '../PreviewCategory/PreviewCategoryContainer';
+import { PreviewCategoryContainer } from '../PreviewCategory/PreviewCategoryContainer';
 import Highlights from '../Highlights/Highlights';
 import QuickViewProduct from '../QuickView/QuickViewProduct';
 import ReactTransitionGroup from 'react-addons-transition-group';
