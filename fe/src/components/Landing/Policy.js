@@ -1,10 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 const $ = window.$;
 
-class Policy extends Component {
-
-  render() {
+  export const Policy = (props) => {
     return (
       <div className="policy-section mb-35">
         <div className="container">
@@ -29,8 +27,5 @@ class Policy extends Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
-}
-
-export default Policy;
