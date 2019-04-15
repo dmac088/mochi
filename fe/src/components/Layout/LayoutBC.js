@@ -1,25 +1,16 @@
-import React, { Component } from 'react';
-import Layout from './Layout';
-import BreadCrumb from '../BreadCrumb';
+import React from 'react';
+import { Layout } from './Layout';
+import { BreadCrumb } from '../BreadCrumb';
 
-class LayoutBC extends Component {
-
-  constructor(props) {
-    super(props)
-  }
-
-  render() {
+  export const LayoutBC = (props) => {
     return(
       <Layout
-        {...this.props}
+        {...props}
       >
         <BreadCrumb
-          {...this.props.children.props}
+          {...props.children.props}
         />
-        {this.props.children}
+        {props.children}
       </Layout>
     )
   }
-}
-
-export default LayoutBC;

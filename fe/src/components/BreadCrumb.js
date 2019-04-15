@@ -1,39 +1,37 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { Link } from "react-router-dom";
-import { changeCategory, homeRouteString } from '../services/helpers/RouteHelper';
+import { changeCategory, homeRouteString, createRouteProps } from '../services/helpers/RouteHelper';
 
-class BreadCrumb extends Component {
-
-  findCategoryByName = (categoryList, term) => {
+  const findCategoryByName = (categoryList, term) => {
     return categoryList.filter(function(value, index, arr){
       return value.categoryDesc === term;
     })[0];
   }
 
-  findCategoryById = (categoryList, categoryId) => {
+  const findCategoryById = (categoryList, categoryId) => {
     return categoryList.filter(function(value, index, arr){
       return value.categoryId === categoryId;
     })[0];
   }
 
-  createLineage = (categoryList, categoryId, result) => {
-    const category = this.findCategoryById(categoryList, categoryId);
+  const createLineage = (categoryList, categoryId, result) => {
+    const category = findCategoryById(categoryList, categoryId);
     if(category.categoryLevel === 0) {return;}
-    result.push(this.findCategoryById(categoryList, categoryId));
+    result.push(findCategoryById(categoryList, categoryId));
     if(!category.parentId) {return;}
-    this.createLineage(categoryList, category.parentId, result);
+    createLineage(categoryList, category.parentId, result);
   }
 
-  renderCategoryLineage = (categoryList, term) => {
+  const renderCategoryLineage = (categoryList, term, routeProps) => {
     const result = [];
-    this.createLineage( categoryList,
-                        this.findCategoryByName(categoryList, term).categoryId,
+    createLineage( categoryList,
+                        findCategoryByName(categoryList, term).categoryId,
                         result);
     return result.reverse().map(category => {
       return (
         <li key={category.categoryId} className="active">
-          <a id={category.categoryDesc} onClick={(e) => changeCategory(e, this.props)} href="#">
+          <a id={category.categoryDesc} onClick={(e) => changeCategory(e, routeProps)} href="#">
             {category.categoryDesc}
           </a>
         </li>
@@ -41,7 +39,7 @@ class BreadCrumb extends Component {
     });
   }
 
-  renderProduct = (productId) => {
+  const renderProduct = (productId) => {
     if(!productId) {return;}
     return (
       <li key={productId}>
@@ -50,7 +48,7 @@ class BreadCrumb extends Component {
     )
   }
 
-  renderSearch = (term) => {
+  const renderSearch = (term) => {
     return (
       <React.Fragment>
         <li className="active" key={0}>
@@ -64,8 +62,7 @@ class BreadCrumb extends Component {
   }
 
 
-  renderPage = (page) => {
-    console.log('renderPage');
+  const renderPage = (page) => {
     return (
       <li>
           {page}
@@ -73,10 +70,11 @@ class BreadCrumb extends Component {
     )
   }
 
-  render() {
-    const { term, productId } = this.props.match.params;
-    const type = this.props.match.params[0];
-    const { page, categoryList } =  this.props;
+  export const BreadCrumb = withRouter(({history, match, location, ...props}) => {
+    const routeProps = createRouteProps(history, match, location);
+    const { term, productId } = routeProps.match.params;
+    const type = routeProps.match.params[0];
+    const { page, categoryList } =  props;
     const renderCategory = (type && type.toLowerCase() === "category" && !(categoryList.length === 0));
     const renderProduct = (productId);
     const renderSearch = (type && type.toLowerCase() === "search")
@@ -87,18 +85,18 @@ class BreadCrumb extends Component {
     				<div className="col">
     					<div className="breadcrumb-container">
     						<ul>
-    							<li><Link to={homeRouteString(this.props.match)}><i className="fa fa-home"></i> Home</Link></li>
+    							<li><Link to={homeRouteString(routeProps.match)}><i className="fa fa-home"></i> Home</Link></li>
     							{(renderCategory)
-                   ? this.renderCategoryLineage(categoryList, term)
+                   ? renderCategoryLineage(categoryList, term, routeProps)
                    : null}
                   {(renderProduct)
-                    ? this.renderProduct(productId)
+                    ? renderProduct(productId)
                     : null}
                   {(renderSearch)
-                    ? this.renderSearch(term)
+                    ? renderSearch(term)
                     : null}
                   {(!renderProduct && !renderCategory && !renderSearch)
-                    ? this.renderPage(page)
+                    ? renderPage(page)
                     : null}
     						</ul>
     					</div>
@@ -107,7 +105,4 @@ class BreadCrumb extends Component {
     		</div>
     	</div>
     );
-  }
-}
-
-export default withRouter(BreadCrumb);
+  });
