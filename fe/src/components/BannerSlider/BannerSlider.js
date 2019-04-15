@@ -55,6 +55,7 @@ const $ = window.$;
 
   const renderProducts = (props, slider) => {
     const { category, setCurrentProductId } = props;
+    if(!category) { return }
     return category.products.map(product => {
       return (
           <Product

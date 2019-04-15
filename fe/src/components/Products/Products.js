@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import Product from './Product';
 import QuickViewProduct from '../QuickView/QuickViewProduct';
 import CategorySidebar from './Sidebars/CategorySidebar';
-import BrandSidebar from './Sidebars/BrandSidebar';
+import { BrandSidebar } from './Sidebars/BrandSidebar';
 import PriceSidebar from './Sidebars/PriceSidebar';
 import TopRatedSidebar from './Sidebars/TopRatedSidebar';
 import TagSidebar from './Sidebars/TagSidebar';
