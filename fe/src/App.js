@@ -16,7 +16,7 @@ import * as categoryApi from './data/categories/api';
 import * as productApi from './data/products/api';
 import Layout from './components/Layout/Layout';
 import LayoutBC from './components/Layout/LayoutBC';
-import Landing from './components/Landing/Landing';
+import { Landing } from './components/Landing/Landing';
 import Products from './components/Products/Products';
 import { Checkout } from './components/Checkout/Checkout';
 import { Cart } from './components/Cart/Cart';

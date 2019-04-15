@@ -3,8 +3,7 @@ import { PreviewCategory } from './PreviewCategory';
 import * as categoryApi from '../../data/categories/api';
 
 export const PreviewCategoryContainer = (props) => {
-    const { locale, setCurrentProductId, previewCategories } = props;
-    return previewCategories.map(category => {
+    return props.previewCategories.map(category => {
       return (
           <PreviewCategory
              key={category.categoryId}

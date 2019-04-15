@@ -11,26 +11,22 @@ import Highlights from '../Highlights/Highlights';
 import QuickViewProduct from '../QuickView/QuickViewProduct';
 import ReactTransitionGroup from 'react-addons-transition-group';
 
-class Landing extends Component {
-
-  render() {
-    const { locale } = this.props.match.params;
-    const { setCurrentProductId, currentProductId, showQVModal, toggleQuickView, categoryList, previewCategories } = this.props;
+  export const Landing = withRouter(({ history, ...props }) => {
+    const { setCurrentProductId, currentProductId, showQVModal, toggleQuickView, previewCategories } = props;
     return(
       <React.Fragment>
         <HeroSlider
-          {...this.props}
+          {...props}
         />
         <Policy />
         <Highlights
-          {...this.props}
+          {...props}
         />
         <Banner />
         <PreviewCategoryContainer
-          locale={locale}
           previewCategories={previewCategories}
           setCurrentProductId={setCurrentProductId}
-          {...this.props}
+          {...props}
         />
         <BestSeller />
         <BlogPosts />
@@ -39,11 +35,8 @@ class Landing extends Component {
           productId={currentProductId}
           isShowing={showQVModal}
           toggleQuickView={toggleQuickView}
-          {...this.props}
+          {...props}
         />
       </React.Fragment>
     );
-  }
-}
-
-export default withRouter(Landing);
+  });
