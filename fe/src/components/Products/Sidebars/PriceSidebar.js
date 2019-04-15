@@ -1,12 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Slider, { Range } from 'rc-slider';
 import qs from 'query-string';
 import 'rc-slider/assets/index.css';
 
-class PriceSidebar extends Component {
-
-  render() {
-    const { maxPrice, selectedPrice, updateSelectedPrice } = this.props;
+export const PriceSidebar = (props) => {
+    const { maxPrice, selectedPrice, updateSelectedPrice } = props;
     return (
       <div className="sidebar mb-35">
         <h3 className="sidebar-title">Filter By Price</h3>
@@ -27,10 +25,6 @@ class PriceSidebar extends Component {
             defaultValue={maxPrice}
             value={(selectedPrice) ? selectedPrice : maxPrice}
             railStyle={{ height: 10 }}/>
-
       </div>
     );
   }
-}
-
-export default PriceSidebar;

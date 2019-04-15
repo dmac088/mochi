@@ -1,9 +1,6 @@
-import React, { Component } from 'react';
-import { withRouter } from "react-router-dom";
+import React from 'react';
 
-class CompareSidebar extends Component {
-
-  render() {
+  export const CompareSidebar = (props) => {
     return (
       <div className="sidebar mb-35">
         <h3 className="sidebar-title">Compare</h3>
@@ -23,6 +20,3 @@ class CompareSidebar extends Component {
         </div>
       );
   }
-}
-
-export default CompareSidebar;
