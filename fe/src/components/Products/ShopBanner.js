@@ -1,10 +1,6 @@
+import React from 'react';
 
-import React, { Component } from 'react';
-import { withRouter } from "react-router-dom";
-
-class ShopBanner extends Component {
-
-  render() {
+  export const ShopBanner = (props) => {
     return (
       <div className="shop-page-banner mb-35">
         <a href="shop-left-sidebar.html">
@@ -13,6 +9,3 @@ class ShopBanner extends Component {
       </div>
     );
   }
-}
-
-export default ShopBanner;
