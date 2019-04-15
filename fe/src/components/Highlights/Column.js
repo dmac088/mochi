@@ -19,9 +19,8 @@ const $ = window.$;
   }
 
 export const Column = withRouter(({history, ...props}) => {
-    const { products, key } = props;
     return (
-      <div key={key} className="single-tab-slider-item">
+      <div className="single-tab-slider-item">
         {renderProducts(props)}
       </div>
     )
