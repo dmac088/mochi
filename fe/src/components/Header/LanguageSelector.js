@@ -1,22 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { withRouter } from "react-router-dom";
 import { updateParams } from '../../services/helpers/Helper';
 
-class LanguageSelector extends Component {
-
-  changeLang = (e) => {
-    this.props.history.push('/' + e.currentTarget.id + '/HKD');
+  const changeLang = (e, props, history) => {
+    history.push('/' + e.currentTarget.id + '/HKD');
   }
 
-  render() {
+  export const LanguageSelector = withRouter(({history, ...props}) => {
     return (
       <ul>
-        <li><a id="en-GB" onClick={this.changeLang}>English</a></li>
-        <li><a id="zh-HK" onClick={this.changeLang}>Chinese</a></li>
+        <li><a id="en-GB" onClick={(e) => changeLang(e, props, history)}>English</a></li>
+        <li><a id="zh-HK" onClick={(e) => changeLang(e, props, history)}>Chinese</a></li>
       </ul>
-    )
-  }
-}
-
-
-export default withRouter(LanguageSelector);
+    );
+  });

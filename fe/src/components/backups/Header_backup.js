@@ -5,7 +5,7 @@ import HeaderCartSummary from './HeaderCartSummary';
 import CartMenu from './CartMenu';
 import Selector from './Selector';
 import Search from './Search';
-import LanguageSelector from './LanguageSelector';
+import { LanguageSelector } from './LanguageSelector';
 import { Link } from 'react-router-dom';
 
 
