@@ -1,12 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { withRouter } from 'react-router-dom';
 import * as cartService from '../../services/cart';
 import * as cartSelector from '../../services/cart/selectors';
 import { routeSingleProduct } from '../../services/helpers/RouteHelper';
 
-class Product extends Component {
-
-  addToCart = (e, product) => {
+  const addToCart = (e, product) => {
     e.preventDefault();
     const quantity = 1;
     product.quantity = quantity;
@@ -16,13 +14,12 @@ class Product extends Component {
   }
 
 
-  renderLV = (category, product, setCurrentProductId, isGrid) => {
-    const { location, match, history } = this.props;
+  const renderLV = (category, product, setCurrentProductId, isGrid, routeProps) => {
     return (
       <div className="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
         <div className="gf-product shop-list-view-product">
           <div className="image">
-            <a onClick={(e) => routeSingleProduct(e, match, history, category.categoryDesc)} id={product.productId} href="#">
+            <a onClick={(e) => routeSingleProduct(e, category.categoryDesc, routeProps)} id={product.productId} href="#">
               <span className="onsale">Sale!</span>
               <img src={product.productImage} className="img-fluid" alt />
             </a>
@@ -49,7 +46,7 @@ class Product extends Component {
             </div>
             <p className="product-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere esse tempora magnam dolorem tenetur eos eligendi non temporibus qui enim. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam, magni.</p>
             <div className="list-product-icons">
-              <a onClick={(e) => this.addToCart(e, product)} href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
+              <a onClick={(e) => addToCart(e, product)} href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
               <a href="#" data-tooltip="Add to wishlist"> <span className="icon_heart_alt" /> </a>
               <a href="#" data-tooltip="Compare"> <span className="arrow_left-right_alt" /> </a>
             </div>
@@ -60,18 +57,17 @@ class Product extends Component {
   }
 
 
-  renderGV = (category, product, setCurrentProductId, isGrid) => {
-    const { location, match, history } = this.props;
+  const renderGV = (category, product, setCurrentProductId, isGrid, props, routeProps) => {
     return (
       <div className="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
         <div className="gf-product shop-grid-view-product">
           <div className="image">
-            <a onClick={(e) => routeSingleProduct(e, match, history, category.categoryDesc)} id={product.productId} href="#">
+            <a onClick={(e) => routeSingleProduct(e, category.categoryDesc, routeProps)} id={product.productId} href="#">
               <span className="onsale">Sale!</span>
               <img src={product.productImage} className="img-fluid" alt />
             </a>
             <div className="product-hover-icons">
-              <a onClick={(e) => this.addToCart(e, product)} href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
+              <a onClick={(e) => addToCart(e, product)} href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
               <a href="#" data-tooltip="Add to wishlist"> <span className="icon_heart_alt" /> </a>
               <a href="#" data-tooltip="Compare"> <span className="arrow_left-right_alt" /> </a>
               <a  id={product.productId}
@@ -99,18 +95,16 @@ class Product extends Component {
     )
   }
 
-  render() {
-    const { category, product, setCurrentProductId, isGrid } = this.props;
+export const Product = withRouter(({location, match, history, ...props}) => {
+    const routeProps = {"history":{...history}, "matcg":{...match}, "location":{...location}}
+    const { category, product, setCurrentProductId, isGrid } = props;
     return (
       <React.Fragment>
         {
           ((isGrid)
-          ? this.renderGV(category, product, setCurrentProductId, isGrid)
-          : this.renderLV(category, product, setCurrentProductId, isGrid))
+          ? renderGV(category, product, setCurrentProductId, isGrid, routeProps)
+          : renderLV(category, product, setCurrentProductId, isGrid, routeProps))
         }
       </React.Fragment>
     );
-  }
-}
-
-export default withRouter(Product);
+  });
