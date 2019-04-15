@@ -1,15 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { google } from 'google-maps';
 
-class Contact extends Component {
 
-  componentDidMount() {
-        // When the window has finished loading create our google map below
-      //  google.maps.event.addDomListener(window, 'load', this.mapInit);
 
-  }
-
-  mapInit = () => {
+  const mapInit = () => {
         // Basic options for a simple Google Map
         // For more options see: https://developers.google.com/maps/documentation/javascript/reference#MapOptions
         let mapOptions = {
@@ -204,10 +198,8 @@ class Contact extends Component {
 
   }
 
-  render() {
+  export const Contact = (props) => {
 			return(
-        <React.Fragment>
-
           <div className="page-content mb-50">
 
             <div className="google-map-container mb-70">
@@ -275,10 +267,5 @@ class Contact extends Component {
               </div>
             </div>
           </div>
-
-        </React.Fragment>
         )
       }
-}
-
-export default Contact;

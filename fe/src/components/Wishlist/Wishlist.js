@@ -1,8 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-
-class Wishlist extends Component {
-  render() {
+export const WishList = (props) => {
 			return(
         <React.Fragment>
           <div className="page-section section mb-50">
@@ -66,6 +64,3 @@ class Wishlist extends Component {
         </React.Fragment>
       )
     }
-}
-
-export default Wishlist;
