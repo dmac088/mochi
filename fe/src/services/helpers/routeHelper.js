@@ -13,7 +13,7 @@ export const homeRouteString = (match) => {
 
 export const routeHome = (e, routeProps) => {
   if (e) { e.preventDefault() }
-  history.push(homeRouteString(routeProps.match));
+  routeProps.history.push(homeRouteString(routeProps.match));
 }
 
 export const routePage = (e, routeProps, page) => {

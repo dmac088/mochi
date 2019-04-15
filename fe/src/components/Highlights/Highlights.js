@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Category from './Tabs/Category';
+import { Category } from './Tabs/Category';
 
 class Highlights extends Component {
 
