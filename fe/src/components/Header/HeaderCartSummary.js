@@ -7,7 +7,7 @@ import Velocity from 'velocity-animate';
 import 'velocity-animate/velocity.ui';
 import * as cartSelector from '../../services/cart/selectors';
 import * as cartService from '../../services/cart';
-import { homeRouteString, routeCart, routeCheckout, routeSingleProduct } from '../../services/helpers/RouteHelper';
+import { homeRouteString, routeCart, routeCheckout, routeSingleProduct, createRouteProps } from '../../services/helpers/RouteHelper';
 const $ = window.$;
 
 class HeaderCartSummary extends Component {
@@ -39,10 +39,11 @@ class HeaderCartSummary extends Component {
   }
 
   render() {
-    const { cart, match, history} = this.props;
+    const { cart, match, history, location} = this.props;
+    const routeProps = createRouteProps(history, match, location);
     return(
       <div onMouseEnter={this.setinContainer} onMouseLeave={this.setNotinContainer} className="shopping-cart" id="shopping-cart">
-          <a onClick={(e) => routeCart(e, match, history)} href="#">
+          <a onClick={(e) => routeCart(e, routeProps)} href="#">
             <div className="cart-icon d-inline-block">
               <span className="icon_bag_alt" />
             </div>
@@ -86,7 +87,7 @@ class Accordion extends React.Component {
   }
 
   renderCartItems = (cart) => {
-      const { match, history} = this.props;
+      const routeProps = createRouteProps(this.props.history, this.props.match, this.props.location);
       return cart.items.map(product => {
           return(
             <div key={product.productId} className="cart-float-single-item d-flex">
@@ -96,11 +97,11 @@ class Accordion extends React.Component {
                 </a>
               </span>
               <div className="cart-float-single-item-image">
-                <a id={product.productId} href="#" onClick={(e) => routeSingleProduct(e, match, history)}><img src={product.productImage} className="img-fluid" alt="" /></a>
+                <a id={product.productId} href="#" onClick={(e) => routeSingleProduct(e, null, routeProps)}><img src={product.productImage} className="img-fluid" alt="" /></a>
               </div>
               <div className="cart-float-single-item-desc">
                 <p className="product-title">
-                  <a id={product.productId} href="#" onClick={(e) => routeSingleProduct(e, match, history)}>{product.productDesc} </a></p>
+                  <a id={product.productId} href="#" onClick={(e) => routeSingleProduct(e, null, routeProps)}>{product.productDesc} </a></p>
                 <p className="price"><span className="count">{product.quantity}x</span> ${product.productMarkdown}</p>
               </div>
             </div>
@@ -109,7 +110,8 @@ class Accordion extends React.Component {
   }
 
   	render() {
-      const { cart, match, history} = this.props;
+      const { cart, match, history, location} = this.props;
+      const routeProps = createRouteProps(history, match, location);
   		return (
         <div className="cart-floating-box" id="cart-floating-box" ref={this.setContainer}>
           <div className="cart-items">
@@ -120,8 +122,8 @@ class Accordion extends React.Component {
               <p className="total">Subtotal <span>${cart.totalAmount}</span></p>
             </div>
             <div className="floating-cart-btn text-center">
-              <a onClick={(e) => routeCheckout(e, match, history)} href="#">Checkout</a>
-              <a onClick={(e) => routeCart(e, match, history)} href="#">View Cart</a>
+              <a onClick={(e) => routeCheckout(e, routeProps)} href="#">Checkout</a>
+              <a onClick={(e) => routeCart(e, routeProps)} href="#">View Cart</a>
             </div>
           </div>
       </div>

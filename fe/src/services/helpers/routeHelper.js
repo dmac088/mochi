@@ -11,49 +11,49 @@ export const homeRouteString = (match) => {
   return '/'+ locale + '/' + currency;
 }
 
-export const routeHome = (e, match, history) => {
+export const routeHome = (e, routeProps) => {
   if (e) { e.preventDefault() }
-  history.push(homeRouteString(match));
+  history.push(homeRouteString(routeProps.match));
 }
 
-export const routePage = (e, match, history, page) => {
+export const routePage = (e, routeProps, page) => {
   e.preventDefault();
-  console.log(homeRouteString(match) + page);
-  history.push(homeRouteString(match) + page);
+  console.log(homeRouteString(routeProps.match) + page);
+  routeProps.history.push(homeRouteString(routeProps.match) + page);
 }
 
-export const routeLogin = (e, match, history) => {
-   routePage(e, match, history, '/Auth');
+export const routeLogin = (e, routeProps) => {
+   routePage(e, routeProps, '/Auth');
 }
 
-export const routeContact = (e, match, history) => {
-  routePage(e, match, history, '/Contact');
+export const routeContact = (e, routeProps) => {
+  routePage(e, routeProps, '/Contact');
 }
 
-export const routeCheckout = (e, match, history) => {
-  routePage(e, match, history, '/Checkout');
+export const routeCheckout = (e, routeProps) => {
+  routePage(e, routeProps, '/Checkout');
 }
 
-export const routeAccount = (e, match, history, authenticated) => {
+export const routeAccount = (e, routeProps, authenticated) => {
   if (authenticated) {
-    routePage(e, match, history, '/Account');
+    routePage(e, routeProps, '/Account');
   } else {
-    routePage(e, match, history, '/Auth');
+    routePage(e, routeProps, '/Auth');
   }
 }
 
-export const routeWishlist = (e, match, history) => {
-  routePage(e, match, history, '/Wishlist');
+export const routeWishlist = (e, routeProps) => {
+  routePage(e, routeProps, '/Wishlist');
 }
 
-export const routeCart = (e, match, history) => {
-  routePage(e, match, history, '/Cart');
+export const routeCart = (e, routeProps) => {
+  routePage(e, routeProps, '/Cart');
 }
 
-export const routeSearch = (e, match, history, term) => {
+export const routeSearch = (e, routeProps, term) => {
   if(!e) {return}
   e.preventDefault();
-  routePage(e, match, history, '/search/' + ((!term) ? "" : term));
+  routePage(e, routeProps, '/search/' + ((!term) ? "" : term));
 }
 
 export const changeCategory = (e, routeProps) => {
@@ -62,22 +62,22 @@ export const changeCategory = (e, routeProps) => {
   routeProps.history.push(homeRouteString(routeProps.match) + '/category/' + e.currentTarget.id + search);
 }
 
-export const changeBrand = (e, location, match, history) => {
+export const changeBrand = (e, routeProps) => {
   e.preventDefault();
   const { search } = location;
-  const { locale, currency, term } = match.params;
+  const { locale, currency, term } = routeProps.match.params;
   const value = e.currentTarget.id;
   if(value === 'All') {
-    history.push(homeRouteString(match) + '/category/' + term + search);
+    history.push(homeRouteString(routeProps.match) + '/category/' + term + search);
   } else {
-    history.push(homeRouteString(match) + '/category/' + term + '/brand/' + value + search);
+    history.push(homeRouteString(routeProps.match) + '/category/' + term + '/brand/' + value + search);
   }
 }
 
 export const routeSingleProduct = (e, categoryDesc, routeProps) => {
   if(categoryDesc) {
-    routePage(e, routeProps.match, routeProps.history, '/category/' + ((!categoryDesc) ? 'ALL' : categoryDesc) + '/product/' + e.currentTarget.id);
+    routePage(e, routeProps, '/category/' + ((!categoryDesc) ? 'ALL' : categoryDesc) + '/product/' + e.currentTarget.id);
   } else {
-    routePage(e, routeProps.match, routeProps.history, '/product/' + e.currentTarget.id);
+    routePage(e, routeProps, '/product/' + e.currentTarget.id);
   }
 }
