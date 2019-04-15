@@ -70,10 +70,10 @@ export const changeBrand = (e, location, match, history) => {
   }
 }
 
-export const routeSingleProduct = (e, match, history, categoryDesc) => {
+export const routeSingleProduct = (e, categoryDesc, routeProps) => {
   if(categoryDesc) {
-    routePage(e, match, history, '/category/' + ((!categoryDesc) ? 'ALL' : categoryDesc) + '/product/' + e.currentTarget.id);
+    routePage(e, routeProps.match, routeProps.history, '/category/' + ((!categoryDesc) ? 'ALL' : categoryDesc) + '/product/' + e.currentTarget.id);
   } else {
-    routePage(e, match, history, '/product/' + e.currentTarget.id);
+    routePage(e, routeProps.match, routeProps.history, '/product/' + e.currentTarget.id);
   }
 }
