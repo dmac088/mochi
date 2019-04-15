@@ -8,7 +8,7 @@ import HeaderCartSummary from './HeaderCartSummary';
 import { LanguageSelector } from './LanguageSelector';
 import { CurrencySelector } from './CurrencySelector';
 import { isMobile } from '../../services/helpers/Helper';
-import { homeRouteString, routeContact, routeCheckout, routeAccount, routeWishlist } from '../../services/helpers/RouteHelper';
+import { homeRouteString, routeContact, routeCheckout, routeAccount, routeWishlist, createRouteProps } from '../../services/helpers/RouteHelper';
 import { Link } from 'react-router-dom';
 
 class Header extends Component {
@@ -47,6 +47,7 @@ class Header extends Component {
 
   render() {
     const { location, history, match, authenticated } = this.props;
+    const routeProps = createRouteProps(history, match, location);
     return(
       <header>
         <div className="header-top pt-10 pb-10 pt-lg-10 pb-lg-10 pt-md-10 pb-md-10">
@@ -67,9 +68,9 @@ class Header extends Component {
               <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  text-center text-sm-right">
                 <div className="header-top-menu">
                   <ul>
-                    <li><a onClick={(e) => routeAccount(e, match, history, authenticated)} href="#">My Account</a></li>
-                    <li><a onClick={(e) => routeWishlist(e, match, history)} href="#">Wishlist</a></li>
-                    <li><a onClick={(e) => routeCheckout(e, match, history)} href="#">Checkout</a></li>
+                    <li><a onClick={(e) => routeAccount(e, routeProps, authenticated)} href="#">My Account</a></li>
+                    <li><a onClick={(e) => routeWishlist(e, routeProps)} href="#">Wishlist</a></li>
+                    <li><a onClick={(e) => routeCheckout(e, routeProps)} href="#">Checkout</a></li>
                   </ul>
                 </div>
               </div>
@@ -84,7 +85,7 @@ class Header extends Component {
             <div className="row">
               <div className="col-md-3 col-sm-12 col-xs-12 text-lg-left text-md-center text-sm-center">
                 <div className="logo mt-15 mb-15">
-                  <Link to={homeRouteString(match)} >
+                  <Link to={homeRouteString(routeProps.match)} >
                     <img src="assets/images/logo.png" className="img-fluid" alt="" />
                   </Link>
                 </div>
