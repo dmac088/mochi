@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import BannerSlider from '../BannerSlider/BannerSlider';
 
-class PreviewCategory extends Component {
-
-  render() {
-    const { category, locale, setCurrentProductId } = this.props;
+export const PreviewCategory = (props) => {
+    const { category, locale, setCurrentProductId } = props;
     return (
         <div className="slider slider-with-banner mb-35">
           <div className="container">
@@ -28,7 +26,7 @@ class PreviewCategory extends Component {
                     </div>
                     <div className="col-lg-8 col-md-8 col-sm-12">
                       <BannerSlider
-                        {...this.props}
+                        {...props}
                       />
                       <div className="row no-gutters">
                         <div className="col-lg-6 col-md-6 col-sm-6">
@@ -55,6 +53,3 @@ class PreviewCategory extends Component {
         </div>
     )
   }
-}
-
-export default PreviewCategory;
