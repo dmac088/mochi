@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
-class Checkout extends Component {
-  render() {
+export const Checkout = (props) => {
     return(
       <React.Fragment>
         <div className="page-section section mb-50">
@@ -219,6 +218,3 @@ class Checkout extends Component {
       </React.Fragment>
     )
   }
-}
-
-export default Checkout;
