@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import BannerSlider from '../BannerSlider/BannerSlider';
+import { BannerSlider } from '../BannerSlider/BannerSlider';
 
 export const PreviewCategory = (props) => {
     const { category, locale, setCurrentProductId } = props;
