@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BannerSlider } from '../BannerSlider/BannerSlider';
 
 export const PreviewCategory = (props) => {
-    const { category, locale, setCurrentProductId } = props;
+    const { category } = props;
     return (
         <div className="slider slider-with-banner mb-35">
           <div className="container">
