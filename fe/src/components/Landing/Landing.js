@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import HeroSlider from './HeroSlider';
-import Policy from './Policy';
+import { Policy } from './Policy';
 import { Banner } from './Banner';
 import { BestSeller } from './BestSeller';
 import BlogPosts from './BlogPosts';
