@@ -15,12 +15,12 @@ import { routeSingleProduct } from '../../services/helpers/RouteHelper';
         return(
           <tr key={product.productId}>
             <td className="pro-thumbnail">
-              <a id={product.productId} href="#" onClick={(e) => routeSingleProduct(e, routeProps.match, routeProps.history)}>
+              <a id={product.productId} href="#" onClick={(e) => routeSingleProduct(e, null, routeProps)}>
                 <img src={product.productImage} className="img-fluid" alt="Product" />
               </a>
             </td>
             <td className="pro-title">
-              <a id={product.productId} href="#" onClick={(e) => routeSingleProduct(e, routeProps.match, routeProps.history)}>
+              <a id={product.productId} href="#" onClick={(e) => routeSingleProduct(e, null, routeProps)}>
                 {product.productDesc}
               </a>
             </td>

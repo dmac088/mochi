@@ -6,17 +6,18 @@ import { SlickArrowLeft, SlickArrowRight } from '../../services/helpers/Helper';
 import * as cartSelector from '../../services/cart/selectors';
 import * as cartService from '../../services/cart';
 import * as productApi from '../../data/products/api';
-import { routeSingleProduct } from '../../services/helpers/RouteHelper';
+import { routeSingleProduct, createRouteProps } from '../../services/helpers/RouteHelper';
 const $ = window.$;
 
 
   export const Product = withRouter(({history, ...props}) => {
-    const { category, product, setCurrentProductId, match } = props;
+    const { category, product, setCurrentProductId, match, history, location } = props;
+    const routeProps = createRouteProps(history, match, location);
     if(!product) {return null;}
     return (
         <div key={product.productId} className="gf-product banner-slider-product">
           <div className="image">
-            <a id={product.productId} onClick={(e) => routeSingleProduct(e, match, history, category.categoryDesc)} href="#">
+            <a id={product.productId} onClick={(e) => routeSingleProduct(e, category.categoryDesc, routeProps)} href="#">
               <span className="onsale">Sale!</span>
               <img src={product.productImage} className="img-fluid" alt="" />
             </a>
