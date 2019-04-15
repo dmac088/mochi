@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import Greeting from './Greeting';
 import Search from './Search';
-import Menu from './Menu';
+import { Menu } from './Menu';
 import MobileMenu from './MobileMenu';
 import HeaderCartSummary from './HeaderCartSummary';
 import { LanguageSelector } from './LanguageSelector';
