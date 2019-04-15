@@ -20,7 +20,7 @@ import Landing from './components/Landing/Landing';
 import Products from './components/Products/Products';
 import Checkout from './components/Checkout/Checkout';
 import Cart from './components/Cart/Cart';
-import Account from './components/Account/Account';
+import { Account } from './components/Account/Account';
 import Wishlist from './components/Wishlist/Wishlist';
 import Contact from './components/Contact/Contact';
 import Product from './components/Product/Product';

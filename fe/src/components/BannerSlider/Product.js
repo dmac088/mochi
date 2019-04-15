@@ -9,10 +9,9 @@ import * as productApi from '../../data/products/api';
 import { routeSingleProduct } from '../../services/helpers/RouteHelper';
 const $ = window.$;
 
-class Product extends Component {
 
-  render() {
-    const { category, product, setCurrentProductId, match, history} = this.props;
+  export const Product = withRouter(({history, ...props}) => {
+    const { category, product, setCurrentProductId, match } = props;
     if(!product) {return null;}
     return (
         <div key={product.productId} className="gf-product banner-slider-product">
@@ -34,7 +33,7 @@ class Product extends Component {
           </div>
           <div className="product-content">
             <div className="product-categories">
-              <a href="shop-left-sidebar.html">{this.props.categoryDesc}</a>
+              <a href="shop-left-sidebar.html">{props.categoryDesc}</a>
             </div>
             <h3 className="product-title">
               <a href="single-product.html">{product.productDesc}</a></h3>
@@ -44,8 +43,5 @@ class Product extends Component {
             </div>
           </div>
         </div>
-    )
-  }
-}
-
-export default withRouter(Product);
+      );
+  });
