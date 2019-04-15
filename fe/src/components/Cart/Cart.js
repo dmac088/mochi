@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { withRouter } from 'react-router-dom';
 import * as cartSelector from '../../services/cart/selectors';
 import * as cartService from '../../services/cart';
