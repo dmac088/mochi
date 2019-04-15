@@ -1,59 +1,59 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import Slider from "react-slick";
 import { SlickArrowLeft, SlickArrowRight } from '../../services/helpers/Helper';
 const $ = window.$;
 
 
-class BestSeller extends Component {
-
-render() {
-  const settings = {
-    arrows: true,
-    autoplay: false,
-    dots: false,
-    infinite: true,
-    slidesToShow: 3,
-    prevArrow: <SlickArrowLeft />,
-    nextArrow: <SlickArrowRight />,
-    responsive: [{
-      breakpoint: 1499,
-      settings: {
-        slidesToShow: 3,
-      }
-    },
-    {
-      breakpoint: 1199,
-      settings: {
-        slidesToShow: 3,
-      }
-    },
-    {
-      breakpoint: 991,
-      settings: {
-        slidesToShow: 3,
-      }
-    },
-    {
-      breakpoint: 767,
-      settings: {
-        slidesToShow: 2,
-      }
-    },
-    {
-      breakpoint: 575,
-      settings: {
-        slidesToShow: 2,
-      }
-    },
-    {
-      breakpoint: 479,
-      settings: {
-        slidesToShow: 1,
-      }
+const settings = {
+  arrows: true,
+  autoplay: false,
+  dots: false,
+  infinite: true,
+  slidesToShow: 3,
+  prevArrow: <SlickArrowLeft />,
+  nextArrow: <SlickArrowRight />,
+  responsive: [{
+    breakpoint: 1499,
+    settings: {
+      slidesToShow: 3,
     }
-    ]
-  };
+  },
+  {
+    breakpoint: 1199,
+    settings: {
+      slidesToShow: 3,
+    }
+  },
+  {
+    breakpoint: 991,
+    settings: {
+      slidesToShow: 3,
+    }
+  },
+  {
+    breakpoint: 767,
+    settings: {
+      slidesToShow: 2,
+    }
+  },
+  {
+    breakpoint: 575,
+    settings: {
+      slidesToShow: 2,
+    }
+  },
+  {
+    breakpoint: 479,
+    settings: {
+      slidesToShow: 1,
+    }
+  }
+  ]
+};
+
+export const  BestSeller = (props) => {
+  let slider;
   return (
     <div className="slider best-seller-slider mb-35">
       <div className="container">
@@ -66,7 +66,7 @@ render() {
         </div>
         <div className="row">
           <div className="col-lg-12">
-              <Slider className="best-seller-slider-container pt-15 pb-15" ref={c => (this.slider = c)} {...settings}>
+              <Slider className="best-seller-slider-container pt-15 pb-15" ref={c => (slider = c)} {...settings}>
                 <div className="col">
                   <div className="single-best-seller-item">
                     <div className="best-seller-sub-product">
@@ -386,7 +386,3 @@ render() {
     </div>
   )
 }
-
-}
-
-export default BestSeller;
