@@ -5,7 +5,7 @@ import Policy from './Policy';
 import { Banner } from './Banner';
 import { BestSeller } from './BestSeller';
 import BlogPosts from './BlogPosts';
-import BrandSlider from './BrandSlider';
+import { BrandSlider } from './BrandSlider';
 import { PreviewCategoryContainer } from '../PreviewCategory/PreviewCategoryContainer';
 import Highlights from '../Highlights/Highlights';
 import QuickViewProduct from '../QuickView/QuickViewProduct';
