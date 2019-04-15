@@ -1,36 +1,24 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { withRouter } from 'react-router-dom';
 import * as categoryApi from '../../data/categories/api';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Scroller from '../Scroller';
 
-class Layout extends Component {
-
-  constructor(props) {
-    super(props)
-  }
-
-  render() {
-    const children = React.Children.map(this.props.children, child => {
+export const Layout = withRouter(({history, match, location, ...props}) => {
+    const children = React.Children.map(props.children, child => {
      return React.cloneElement(child, {
-       categoryList: this.props.categoryList,
-       changeCategory: this.changeCategory,
-       changeBrand: this.changeBrand,
+       categoryList: props.categoryList
      });
    });
     return (
       <React.Fragment>
         <Header
-          {...this.props}
+          {...props}
         />
           {children}
         <Scroller />
         <Footer />
       </React.Fragment>
     )
-  }
-}
-
-
-export default withRouter(Layout);
+  });
