@@ -8,7 +8,7 @@ import { PriceSidebar } from './Sidebars/PriceSidebar';
 import { TopRatedSidebar } from './Sidebars/TopRatedSidebar';
 import { TagSidebar } from './Sidebars/TagSidebar';
 import ShopBanner from './ShopBanner';
-import ShopHeader from './ShopHeader';
+import { ShopHeader } from './ShopHeader';
 import { Pagination } from './Pagination';
 import * as productApi from '../../data/products/api';
 import { updateParams } from '../../services/helpers/Helper';
