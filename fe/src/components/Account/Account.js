@@ -2,17 +2,14 @@ import React, { Component } from 'react';
 import * as sessionService from '../../services/session';
 
 
-class Account extends Component {
-
-
-  logoutClick = (e) => {
+  const logoutClick = (e) => {
     e.preventDefault();
     sessionService.clearSession();
   }
 
 
-  render() {
-    const { givenName, familyName } = this.props.customer;
+  export const Account = (props) => {
+    const { givenName, familyName } = props.customer;
     return(
       <React.Fragment>
         <div className="my-account-section section position-relative mb-50 fix">
@@ -38,7 +35,7 @@ class Account extends Component {
 
                       <a href="#account-info" data-toggle="tab"><i className="fa fa-user"></i> Account Details</a>
 
-                      <a onClick={this.logoutClick} href="#"><i className="fa fa-sign-out"></i> Logout</a>
+                      <a onClick={logoutClick} href="#"><i className="fa fa-sign-out"></i> Logout</a>
                     </div>
                   </div>
 
@@ -218,6 +215,3 @@ class Account extends Component {
       </React.Fragment>
     )
   }
-}
-
-export default Account;
