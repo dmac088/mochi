@@ -1,27 +1,25 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { withRouter } from 'react-router-dom';
 import qs from 'query-string';
+import { routeSingleProduct, createRouteProps } from '../../services/helpers/RouteHelper';
 
-class ShopHeader extends Component {
-
-  changeSort = (e) => {
+  const changeSort = (e, routeProps) => {
     //get the query parameters
-    const { location } = this.props.history;
-    const urlParams = (qs.parse(location.search));
+    const urlParams = (qs.parse(routeProps.location.search));
     const mergedParams = Object.assign(urlParams, {
                                                     sort: e.target.value
                                                   });
     const searchString = qs.stringify(mergedParams);
-    this.props.history.push({
-      "pathname": location.pathname,
+    routeProps.history.push({
+      "pathname": routeProps.location.pathname,
       "search": searchString,
     });
   }
 
 
-  render() {
-    const { toggleGrid, toggleList, currentPage, totalPages, totalElements, numberOfElements, size, isGrid } = this.props;
-
+  export const ShopHeader = withRouter(({location, match, history, ...props}) => {
+    const { toggleGrid, toggleList, currentPage, totalPages, totalElements, numberOfElements, size, isGrid } = props;
+    const routeProps = createRouteProps(history, match, location);
     return (
       <div className="shop-header mb-35">
         <div className="row">
@@ -34,7 +32,7 @@ class ShopHeader extends Component {
           <div className="col-lg-8 col-md-8 col-sm-12 d-flex flex-column flex-sm-row justify-content-between align-items-left align-items-sm-center">
             <div className="sort-by-dropdown d-flex align-items-center mb-xs-10">
               <p className="mr-10">Sort By: </p>
-              <select onChange={this.changeSort} name="sort-by" id="sort-by" className="nice-select">
+              <select onChange={(e) => changeSort(e, routeProps)} name="sort-by" id="sort-by" className="nice-select">
                 <option value="nameAsc">Name</option>
                 <option value="priceAsc">Price: Low to High</option>
                 <option value="priceDesc">Price: High to Low</option>
@@ -45,7 +43,4 @@ class ShopHeader extends Component {
         </div>
       </div>
     );
-  }
-}
-
-export default withRouter(ShopHeader);
+  });
