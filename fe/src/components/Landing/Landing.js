@@ -11,7 +11,7 @@ import Highlights from '../Highlights/Highlights';
 import QuickViewProduct from '../QuickView/QuickViewProduct';
 import ReactTransitionGroup from 'react-addons-transition-group';
 
-  export const Landing = withRouter(({ history, ...props }) => {
+  export const Landing = withRouter(({ ...props }) => {
     const { setCurrentProductId, currentProductId, showQVModal, toggleQuickView, previewCategories } = props;
     return(
       <React.Fragment>

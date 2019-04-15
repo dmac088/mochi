@@ -6,11 +6,11 @@ import { changeCategory } from '../../../services/helpers/RouteHelper';
 class CategorySidebar extends Component {
 
   renderCategoryListItems = (category) => {
-    const { getMaxPrice, location, match, history } = this.props;
+    const { getMaxPrice } = this.props;
     return category.children.map(child => {
       return(
         <li key={child.categoryId} >
-          <a onClick={(e) => changeCategory(e, location, match, history)} id={child.categoryDesc} href="#">
+          <a onClick={(e) => changeCategory(e, this.props)} id={child.categoryDesc} href="#">
             {child.categoryDesc} <span className="badge badge-pill badge-secondary">{child.productCount}</span>
           </a>
         </li>

@@ -37,7 +37,10 @@ class CategoryMenuContainer extends Component {
   }
 
   render() {
-    const { locale } = this.props.match.params;
+    const { menuVisible, isMobile } = this.state;
+    const routeProps = {"location":{...this.props.location}, "match":{...this.props.match}, "history":{...this.props.history}}
+    const { locale } = routeProps.match.params;
+
     const categoryList = filterCategories(this.props.categoryList, 'LNDMM01');
     return (
       <div className="hero-side-category">
@@ -47,18 +50,17 @@ class CategoryMenuContainer extends Component {
            {getValue(locale).categoryMenuHeading}
           </button>
         </div>
-        <ReactTransitionGroup component="nav" className="category-menu">
-          {
-          ((this.state.menuVisible)
-          ? <CategoryMenu
-              categoryList={categoryList}
-              isMobile={this.state.isMobile}
-              history={this.props.history}
-              match={this.props.match}
-              location={this.props.location}
-            />
-          : null)
-          }
+        <ReactTransitionGroup
+          component="nav"
+          className="category-menu">
+            {((menuVisible)
+            ? <CategoryMenu
+                locale={locale}
+                categoryList={categoryList}
+                isMobile={isMobile}
+                routeProps={routeProps}
+              />
+            : null)}
         </ReactTransitionGroup>
       </div>
     )
@@ -101,10 +103,9 @@ class CategoryMenu extends Component {
     })
   }
 
-  renderCategoryListItems = (categoryList, isRootList, changeCategory, itemCounter) => {
+  renderCategoryListItems = (locale, isMobile, categoryList, isRootList, itemCounter, routeProps) => {
     return categoryList.map(category => {
         if(isRootList) {itemCounter+=1};
-        const { isMobile, location, match, history }  = this.props;
         const { showMore }  = this.state
         const categoryId    = category.categoryId;
 
@@ -112,29 +113,26 @@ class CategoryMenu extends Component {
               <ReactTransitionGroup
                     key={categoryId}
                     component={CategoryMenuItem}
-                    category={category}
-                    renderCategoryListItems={this.renderCategoryListItems}
-                    isRootList={isRootList}
-                    changeCategory={changeCategory}
-                    itemCounter={itemCounter}
+                    locale={locale}
                     isMobile={isMobile}
+                    category={category}
+                    isRootList={isRootList}
+                    itemCounter={itemCounter}
+                    routeProps={routeProps}
                     showMore={showMore}
-                    history={history}
-                    match={match}
-                    location={location}>
+                    renderCategoryListItems={this.renderCategoryListItems}>
               </ReactTransitionGroup>
         )
     });
   }
 
   render() {
-    const { locale }        = this.props.match.params;
-    const { categoryList }  = this.props;
-    const { showMore }      = this.state;
-
+    const { categoryList, isMobile, routeProps }  = this.props;
+    const { locale }                              = routeProps.match.params;
+    const { showMore }                            = this.state;
     return(
       <ul ref={this.setContainer}>
-        {this.renderCategoryListItems(categoryList, true, changeCategory, 0)}
+        {this.renderCategoryListItems(locale, isMobile, categoryList, true, 0, routeProps)}
         {
           ((categoryList.length > 8 && !showMore)
           ? <li>
@@ -180,10 +178,8 @@ class CategoryMenuItem extends Component {
   }
 
   render() {
-    const { categoryLevel, categoryId, categoryCode, categoryDesc, productCount, children } = this.props.category;
-    const { itemCounter, isRootList, isMobile, showMore, location, match, history } = this.props;
+    const { locale, itemCounter, isRootList, isMobile, showMore, renderCategoryListItems, category, routeProps } = this.props;
     const { hasChildren, expand } = this.state;
-
     return (
         <li
           className={
@@ -198,17 +194,17 @@ class CategoryMenuItem extends Component {
           style={
             (isRootList && itemCounter > 8 && !showMore)
             ? {"display": "none"}
-            : {"--my-left-indent": this.getIndent(categoryLevel,10)}
+            : {"--my-left-indent": this.getIndent(category.categoryLevel,10)}
           }
           >
-          <a  id={categoryDesc}
-              onClick={(e) => changeCategory(e, location, match, history )}
+          <a  id={category.categoryDesc}
+              onClick={(e) => changeCategory(e, routeProps )}
               className={"megamenu-head"}
               style={(isMobile)
-                     ? {"--my-cat-indent": this.getIndent(categoryLevel)}
+                     ? {"--my-cat-indent": this.getIndent(category.categoryLevel)}
                       : {"":""}}
               href="shop-left-sidebar.html">
-            {categoryDesc} <span className="badge badge-pill badge-secondary">{productCount}</span>
+            {category.categoryDesc} <span className="badge badge-pill badge-secondary">{category.productCount}</span>
             {(hasChildren && isMobile)
               ? <span>
                   <i onClick={this.expandCat}
@@ -221,11 +217,13 @@ class CategoryMenuItem extends Component {
           <ReactTransitionGroup component={React.Fragment}>
             {((hasChildren && (expand || !isMobile))
               ? <CategoryMenuItemSubList
-                  renderCategoryListItems={this.props.renderCategoryListItems}
-                  children={children}
-                  categoryLevel={categoryLevel}
-                  changeCategory={changeCategory}
+                  locale={locale}
+                  isMobile={isMobile}
+                  renderCategoryListItems={renderCategoryListItems}
+                  children={category.children}
+                  categoryLevel={category.categoryLevel}
                   itemCounter={itemCounter}
+                  routeProps={routeProps}
                 />
               : null)}
           </ReactTransitionGroup>
@@ -250,11 +248,11 @@ class CategoryMenuItemSubList extends Component {
   }
 
   render() {
-    const { itemCounter, children } = this.props;
+    const { locale, itemCounter, children, isMobile, routeProps } = this.props;
     return (
       <ul ref={this.setContainer}
           className="category-mega-menu">
-            {this.props.renderCategoryListItems(children, false, changeCategory, itemCounter)}
+            {this.props.renderCategoryListItems(locale, isMobile, children, false, itemCounter, routeProps)}
       </ul>
     )
   }
