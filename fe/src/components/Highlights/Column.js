@@ -18,7 +18,7 @@ const $ = window.$;
     });
   }
 
-export const Column = withRouter(({history, ...props}) => {
+  export const Column = withRouter(({history, ...props}) => {
     return (
       <div className="single-tab-slider-item">
         {renderProducts(props)}
