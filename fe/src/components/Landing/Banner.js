@@ -1,10 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 const $ = window.$;
 
-class Banner extends Component {
-
-  render() {
+  export const Banner = (props) => {
     return (
       <div className="double-banner-section mb-35">
         <div className="container">
@@ -28,6 +26,3 @@ class Banner extends Component {
       </div>
     )
   }
-}
-
-export default Banner;
