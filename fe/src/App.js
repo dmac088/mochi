@@ -24,7 +24,7 @@ import { Account } from './components/Account/Account';
 import Wishlist from './components/Wishlist/Wishlist';
 import Contact from './components/Contact/Contact';
 import Product from './components/Product/Product';
-import Auth from './components/Login/Auth';
+import { Auth } from './components/Login/Auth';
 import './../public/assets/scss/main.scss';
 import { getValue } from './config/lang/selector';
 import { filterCategories } from './services/helpers/FilterHelper';
