@@ -5,7 +5,7 @@ import * as cartSelector from '../../services/cart/selectors';
 import {
 	spinner,
 } from '../../services/helpers/Helper';
-import { routeSingleProduct } from '../../services/helpers/RouteHelper';
+import { routeSingleProduct, createRouteProps } from '../../services/helpers/RouteHelper';
 
 class Product extends Component {
 
@@ -38,11 +38,11 @@ class Product extends Component {
   }
 
   renderProduct = (category, product, currentImage, setCurrentProductId) => {
-		const { match, history } = this.props;
+		const routeProps = createRouteProps(this.props.history, this.props.match, this.props.location);
     return (
       <React.Fragment>
         <div className="image">
-          <a id={product.productId} onClick={(e) => routeSingleProduct(e, match, history, category.categoryDesc)} href="#">
+          <a id={product.productId} onClick={(e) => routeSingleProduct(e, category.categoryDesc, routeProps)} href="#">
             <span className="onsale">Sale!</span>
             <img src={currentImage} className="img-fluid" alt="" />
           </a>
@@ -57,11 +57,11 @@ class Product extends Component {
         </div>
         <div className="product-content">
           <div className="product-categories">
-            <a id={product.productId} href={(e) => routeSingleProduct(e, match, history, category.categoryDesc)} href="#">Fast Foods</a>,
-            <a id={product.productId} href={(e) => routeSingleProduct(e, match, history, category.categoryDesc)} href="#">Vegetables</a>
+            <a id={product.productId} href={(e) => routeSingleProduct(e, category.categoryDesc, routePropse, category.categoryDesc, routeProps)} href="#">Fast Foods</a>,
+            <a id={product.productId} href={(e) => routeSingleProduct(e, category.categoryDesc, routeProps)} href="#">Vegetables</a>
           </div>
           <h3 className="product-title">
-            <a id={product.productId} onClick={(e) => routeSingleProduct(e, match, history, category.categoryDesc)} href="#">
+            <a id={product.productId} onClick={(e) => routeSingleProduct(e, category.categoryDesc, routeProps)} href="#">
               {product.productDesc}
             </a>
           </h3>
