@@ -12,8 +12,6 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Index;
-import org.hibernate.search.annotations.Store;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
@@ -29,7 +27,7 @@ public class BrandAttribute {
 	private Long brandId;
 
 	@Column(name="bnd_desc")
-	@Field(analyze = Analyze.YES, store = Store.YES, index = Index.YES)
+	@Field(analyze = Analyze.YES)
 	private String brandDesc;
 	
 	@Column(name="lcl_cd")	
@@ -52,12 +50,8 @@ public class BrandAttribute {
 		this.brand = brand;
 	}
 
-	public String getbrandDesc() {
+	public String getBrandDesc() {
 		return brandDesc;
-	}
-
-	public void setbrandDesc(String brandDesc) {
-		this.brandDesc = brandDesc;
 	}
 	
 	public String getLclCd() {

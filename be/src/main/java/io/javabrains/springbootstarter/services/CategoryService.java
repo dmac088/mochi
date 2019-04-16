@@ -87,7 +87,7 @@ public class CategoryService implements ICategoryService {
     	bDto.setBrandDesc(
 	    	b.getBrandAttributes().stream()
 			.filter(ba -> ba.getLclCd().equals(lcl)
-			).collect(Collectors.toList()).get(0).getbrandDesc());
+			).collect(Collectors.toList()).get(0).getBrandDesc());
     	return bDto;
     }
     
@@ -131,6 +131,8 @@ public class CategoryService implements ICategoryService {
         pcDto.setChildCategoryCount(new Long(pc.getChildren().size()));
         pcDto.setCategoryType(pc.getCategoryType().getCode());
         pcDto.setLayouts(pc.getLayouts());
+        pcDto.setCategoryDescFacet(pc.getAttributes().stream()
+        		.filter( pa -> pa.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getCategoryDescFacet());
         return pcDto;
     }
 	

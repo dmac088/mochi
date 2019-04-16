@@ -12,6 +12,10 @@ import org.apache.lucene.search.SortField;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
+import org.hibernate.search.query.engine.spi.FacetManager;
+import org.hibernate.search.query.facet.Facet;
+import org.hibernate.search.query.facet.FacetSortOrder;
+import org.hibernate.search.query.facet.FacetingRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
@@ -173,7 +177,7 @@ public class ProductService implements IProductService {
 				  .forEntity(ProductAttribute.class)
 				  .get();
 		
-		//this is a lucene query using the lucene apu
+	//	this is a lucene query using the lucene apu
 		org.apache.lucene.search.Query searchQuery = productQueryBuilder
 													.bool()
 													.must(productQueryBuilder.keyword()
@@ -191,10 +195,28 @@ public class ProductService implements IProductService {
 													.matching(lcl)
 													.createQuery())
 													.createQuery();
-			
+		
+		
 		org.hibernate.search.jpa.FullTextQuery jpaQuery
 		  = fullTextEntityManager.createFullTextQuery(searchQuery, ProductAttribute.class);
 		
+		
+		FacetingRequest myFacetRequest = productQueryBuilder.facet()
+		.name("BrandDesc")
+		.onField("brandDesc")
+		.discrete()
+		.orderedBy(FacetSortOrder.COUNT_DESC)
+		.includeZeroCounts(true)
+		.maxFacetCount(3)
+		.createFacetingRequest();
+		
+		FacetManager facetMgr = jpaQuery.getFacetManager();
+		facetMgr.enableFaceting(myFacetRequest);
+		List<Facet> facets = facetMgr.getFacets("BrandDesc");
+		
+		facets.stream().forEach(f -> { 
+								System.out.println(f.getFacetingName());
+							});
 		
 		Pageable pageable = PageRequest.of(page, size);
 		jpaQuery.setFirstResult(pageableUtil.getStartPosition(pageable));
@@ -281,7 +303,7 @@ public class ProductService implements IProductService {
         productDto.setProductImage(pa.getProductImage());
         productDto.setLclCd(lcl);
         productDto.setBrandDesc(product.getBrand().getBrandAttributes().stream()
-        .filter( ba -> ba.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getbrandDesc());
+        .filter( ba -> ba.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getBrandDesc());
         return productDto;
     }
 }
