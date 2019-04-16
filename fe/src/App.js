@@ -274,7 +274,9 @@ class App extends Component {
   }
 
   renderContact = () => {
-    return (<Contact />);
+    return (<Contact
+              page={"Contact"}
+            />);
   }
 
   renderProduct = () => {
