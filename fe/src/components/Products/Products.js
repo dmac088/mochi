@@ -102,7 +102,7 @@ class Products extends Component {
         "currency":         currency,
         "category":         category,
         "term":             term,
-        "products":         responseJSON.content,
+        "products":         responseJSON.products.content,
         "totalPages":       responseJSON.totalPages,
         "totalElements":    responseJSON.totalElements,
         "numberOfElements": responseJSON.numberOfElements,

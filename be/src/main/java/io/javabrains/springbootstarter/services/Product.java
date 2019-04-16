@@ -16,7 +16,7 @@ public class Product {
 	private String productDesc;
 	
 	private String brandDesc;
-
+	
 	private double productRetail;
 	
 	private double productMarkdown;

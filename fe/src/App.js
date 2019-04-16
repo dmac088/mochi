@@ -135,7 +135,7 @@ class App extends Component {
         return JSON.parse(responseText);
     })
     .then((responseJSON) => {
-        return responseJSON.content;
+        return responseJSON.products.content;
     });
 
   refreshCategoryList = (locale, currency) =>
