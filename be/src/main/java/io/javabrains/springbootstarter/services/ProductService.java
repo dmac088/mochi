@@ -215,7 +215,7 @@ public class ProductService implements IProductService {
 		List<Facet> facets = facetMgr.getFacets("BrandDesc");
 		
 		facets.stream().forEach(f -> { 
-								System.out.println("Facet " + f.getFacetingName() + " - count = " + f.getCount());
+								System.out.println("Facet " + f.getValue() + " - count = " + f.getCount());
 							});
 		
 		Pageable pageable = PageRequest.of(page, size);
