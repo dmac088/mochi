@@ -10,15 +10,15 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import io.javabrains.springbootstarter.domain.Brand;
-import io.javabrains.springbootstarter.domain.Category;
+import io.javabrains.springbootstarter.services.Brand;
+import io.javabrains.springbootstarter.services.Category;
 import io.javabrains.springbootstarter.domain.CategoryRepository;
 import io.javabrains.springbootstarter.domain.ProductRepository;
 
 @Service
 @Transactional
 @CacheConfig(cacheNames="categories")
-public class CategoryDTOService implements ICategoryDTOService {
+public class CategoryService implements ICategoryService {
     
     @Autowired
     private CategoryRepository categoryRepository;
@@ -35,8 +35,8 @@ public class CategoryDTOService implements ICategoryDTOService {
     @Override
 	@Transactional
 	@Cacheable
-	public List<CategoryDTO> getCategories(final String lcl, String currency) {
-    	List<Category> lpc = categoryRepository.findAll();
+	public List<Category> getCategories(final String lcl, String currency) {
+    	List<io.javabrains.springbootstarter.domain.Category> lpc = categoryRepository.findAll();
     	return lpc.stream().map(pc -> convertToCategoryDto(pc, lcl, currency))
     			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
@@ -46,8 +46,8 @@ public class CategoryDTOService implements ICategoryDTOService {
     @Override
  	@Transactional
  	@Cacheable
- 	public List<CategoryDTO> getCategoryParent(final String lcl, String currency, final Long parentCategoryId) {
-    	List<Category> lpc = categoryRepository.findByParentCategoryId(parentCategoryId);
+ 	public List<Category> getCategoryParent(final String lcl, String currency, final Long parentCategoryId) {
+    	List<io.javabrains.springbootstarter.domain.Category> lpc = categoryRepository.findByParentCategoryId(parentCategoryId);
     	return lpc.stream().map(pc -> convertToCategoryDto(pc, lcl, currency))
     			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
@@ -56,8 +56,8 @@ public class CategoryDTOService implements ICategoryDTOService {
     @Override
   	@Transactional
   	@Cacheable
-  	public List<CategoryDTO> getCategoriesForLevel(final String lcl, String currency, final Long level) {
-     	List<Category> lpc = categoryRepository.findByCategoryLevelAndCategoryTypeCode(level, "PRD01");
+  	public List<Category> getCategoriesForLevel(final String lcl, String currency, final Long level) {
+     	List<io.javabrains.springbootstarter.domain.Category> lpc = categoryRepository.findByCategoryLevelAndCategoryTypeCode(level, "PRD01");
      	return lpc.stream().map(pc -> convertToCategoryDto(pc, lcl, currency))
     			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
@@ -67,21 +67,21 @@ public class CategoryDTOService implements ICategoryDTOService {
     @Override
   	@Transactional
   	@Cacheable
-  	public CategoryDTO getCategory(final String lcl, String currency, final Long categoryId) {
-     	Category pc = categoryRepository.findByCategoryId(categoryId);
+  	public Category getCategory(final String lcl, String currency, final Long categoryId) {
+    	io.javabrains.springbootstarter.domain.Category pc = categoryRepository.findByCategoryId(categoryId);
      	return	convertToCategoryDto(pc, lcl, currency);
   	}
     
     @Override
     @Cacheable
-	public CategoryDTO getCategory(String lcl, String currency, String categoryDesc) {
-     	Category pc = categoryRepository.findByAttributesCategoryDesc(categoryDesc);
+	public Category getCategory(String lcl, String currency, String categoryDesc) {
+    	io.javabrains.springbootstarter.domain.Category pc = categoryRepository.findByAttributesCategoryDesc(categoryDesc);
      	return	convertToCategoryDto(pc, lcl, currency);
 	}
     
  	@Cacheable
-    private BrandDTO convertToBrandDto(final Brand b, String categoryCode, final String lcl) {
-    	final BrandDTO bDto = new BrandDTO();
+    private Brand convertToBrandDto(final io.javabrains.springbootstarter.domain.Brand b, String categoryCode, final String lcl) {
+    	final Brand bDto = new Brand();
     	bDto.setBrandId(b.getBrandId());
     	bDto.setBrandCode(b.getBrandCode());
     	bDto.setBrandDesc(
@@ -92,9 +92,9 @@ public class CategoryDTOService implements ICategoryDTOService {
     }
     
  	@Cacheable
-    private CategoryDTO convertToCategoryDto(final Category pc, final String lcl, final String currency) {
+    private Category convertToCategoryDto(final io.javabrains.springbootstarter.domain.Category pc, final String lcl, final String currency) {
     	
-        final CategoryDTO pcDto = new CategoryDTO();
+        final Category pcDto = new Category();
         pcDto.setCategoryId(pc.getCategoryId());
         pcDto.setCategoryCode(pc.getCategoryCode());
         pcDto.setCategoryLevel(pc.getCategoryLevel());
@@ -104,13 +104,13 @@ public class CategoryDTOService implements ICategoryDTOService {
         pcDto.setMaxMarkDownPrice(productRepository.maxMarkDownPriceByCategoriesCategoryCodeAndPriceCurrencyCode(pc.getCategoryCode(), currency));
         
         //set the brand attributes of all products within the category, to the localized version
-        Set<BrandDTO> catBrands = pc.getProducts().stream().map(p -> this.convertToBrandDto(p.getBrand(), pc.getCategoryCode(), lcl)).collect(Collectors.toSet());
+        Set<Brand> catBrands = pc.getProducts().stream().map(p -> this.convertToBrandDto(p.getBrand(), pc.getCategoryCode(), lcl)).collect(Collectors.toSet());
        		
         
         //create the child objects and add to children collection
-        List<CategoryDTO> pcDTOl =
+        List<Category> pcDTOl =
         pc.getChildren().stream().map(pc1 -> {
-        	CategoryDTO pcchild = convertToCategoryDto(pc1, lcl, currency);
+        	Category pcchild = convertToCategoryDto(pc1, lcl, currency);
         	catBrands.addAll(pcchild.getCategoryBrands());
         	return pcchild;
         }).collect(Collectors.toList());

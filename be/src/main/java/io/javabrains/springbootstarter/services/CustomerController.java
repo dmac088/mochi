@@ -15,30 +15,30 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
-public class CustomerDTOController {
+public class CustomerController {
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private ICustomerDTOService customerService;
+    private ICustomerService customerService;
 
-    public CustomerDTOController() {
+    public CustomerController() {
         super();
     }
     
     @GetMapping("/Customers")
-    public List<CustomerDTO> getCustomers() {
+    public List<Customer> getCustomers() {
     	return customerService.getCustomers();
     }
     
     
     @GetMapping("/Customer/UserName/{userName}")
-    public CustomerDTO getCustomer(@PathVariable String userName) {
+    public Customer getCustomer(@PathVariable String userName) {
 		return customerService.getCustomer(userName);
     }
 
     //Registration
     @PostMapping("/Customer/Signup")
-    public GenericResponse registerNewPersonCustomer(@RequestBody final CustomerDTO customer) {
+    public GenericResponse registerNewPersonCustomer(@RequestBody final Customer customer) {
         LOGGER.debug("Registering user account with information: {}", customer);
         
         try {
