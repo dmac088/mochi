@@ -66,11 +66,13 @@ public class ProductService implements IProductService {
     @Override
 	@Transactional
 	@Cacheable
-	public Page<Product> getProducts(String lcl, String currency, int page, int size, String sortBy) {
+	public ResultContainer getProducts(String lcl, String currency, int page, int size, String sortBy) {
     	Page<Product> pp;
 		Page<io.javabrains.springbootstarter.domain.Product> ppa = productPagingAndSortingRepository.findAll(PageRequest.of(page, size, this.sortByParam(sortBy)));
-		pp = ppa.map(p -> this.convertToProductDto(p, lcl, currency));
-		return pp;
+		pp = ppa.map(p -> this.convertTopDto(p, lcl, currency));
+		ResultContainer rc = new ResultContainer();
+		rc.setProducts(pp);
+		return rc;
 	}	
     
     @Override
@@ -78,7 +80,7 @@ public class ProductService implements IProductService {
 	@Cacheable
 	public Product getProduct(String lcl, String currency, Long id) {
     	io.javabrains.springbootstarter.domain.Product pa = productRepository.findById(id).get();
-		Product p = this.convertToProductDto(pa, lcl, currency);
+		Product p = this.convertTopDto(pa, lcl, currency);
 		return p;
 	}	
 
@@ -92,51 +94,57 @@ public class ProductService implements IProductService {
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
   		List<io.javabrains.springbootstarter.domain.Product> ppa = productRepository.findByCategoriesCategoryIdIn(categoryIds);
-  		List<Product> pp = ppa.stream().map(pa -> this.convertToProductDto(pa, lcl, currency)).collect(Collectors.toList());
+  		List<Product> pp = ppa.stream().map(pa -> this.convertTopDto(pa, lcl, currency)).collect(Collectors.toList());
   		return pp;
   	}	
     
 	@Override
 	@Cacheable
-	public Page<Product> getProductsForCategory(String lcl, String currency, String categoryDesc, int page, int size, String sortBy) {
+	public ResultContainer getProductsForCategory(String lcl, String currency, String categoryDesc, int page, int size, String sortBy) {
 		List<Category> pcl = new ArrayList<Category>();
      	Category pc = productCategoryRepository.findByAttributesCategoryDesc(categoryDesc);
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
   		Page<io.javabrains.springbootstarter.domain.Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCd(categoryIds, lcl, PageRequest.of(page, size, this.sortByParam(sortBy)));
-  		Page<Product> pp = ppa.map(pa -> this.convertToProductDto(pa, lcl, currency));
-  		return pp;
+  		Page<Product> pp = ppa.map(pa -> this.convertTopDto(pa, lcl, currency));
+  		ResultContainer rc = new ResultContainer();
+		rc.setProducts(pp);
+		return rc;
 	}
 	
 	@Override
 	@Cacheable
-	public Page<Product> getProductsForCategory(String lcl, String currency, String categoryDesc, Long price, int page, int size, String sortBy) {
+	public ResultContainer getProductsForCategory(String lcl, String currency, String categoryDesc, Long price, int page, int size, String sortBy) {
 		System.out.println("getProductsForCategory");
 		List<Category> pcl = new ArrayList<Category>();
      	Category pc = productCategoryRepository.findByAttributesCategoryDesc(categoryDesc);
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
   		Page<io.javabrains.springbootstarter.domain.Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCdAndPricesPriceValueBetween(categoryIds, lcl, new Long(0), price, PageRequest.of(page, size, this.sortByParam(sortBy)));
-  		Page<Product> pp = ppa.map(pa -> this.convertToProductDto(pa, lcl, currency));
-  		return pp;
+  		Page<Product> pp = ppa.map(pa -> this.convertTopDto(pa, lcl, currency));
+  		ResultContainer rc = new ResultContainer();
+		rc.setProducts(pp);
+		return rc;
 	}
 	
 	@Override
 	@Cacheable
-	public Page<Product> getProductsForCategoryAndBrand(String lcl, String currency, String categoryDesc, String brandDesc, int page, int size, String sortBy) {
+	public ResultContainer getProductsForCategoryAndBrand(String lcl, String currency, String categoryDesc, String brandDesc, int page, int size, String sortBy) {
 		System.out.println("getProductsForCategoryAndBrand");
 		List<Category> pcl = new ArrayList<Category>();
      	Category pc = productCategoryRepository.findByAttributesCategoryDesc(categoryDesc);
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
   		Page<io.javabrains.springbootstarter.domain.Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCdAndBrandBrandAttributesBrandDescAndBrandBrandAttributesLclCd(categoryIds, lcl, brandDesc, lcl, PageRequest.of(page, size, this.sortByParam(sortBy)));		
-  		Page<Product> pp = ppa.map(pa -> this.convertToProductDto(pa, lcl, currency));
-  		return pp;
+  		Page<Product> pp = ppa.map(pa -> this.convertTopDto(pa, lcl, currency));
+  		ResultContainer rc = new ResultContainer();
+		rc.setProducts(pp);
+		return rc;
 	}
 	
 	@Override
  	@Cacheable
-	public Page<Product> getProductsForCategoryAndPrice(String lcl, String currency, String categoryDesc, Long price, int page, int size, String sortBy) {
+	public ResultContainer getProductsForCategoryAndPrice(String lcl, String currency, String categoryDesc, Long price, int page, int size, String sortBy) {
 		System.out.println("getProductsForCategoryAndBrandAndPrice");
 		System.out.println(sortBy);
 		List<Category> pcl = new ArrayList<Category>();
@@ -144,14 +152,16 @@ public class ProductService implements IProductService {
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
   		Page<io.javabrains.springbootstarter.domain.Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCdAndPricesPriceValueBetweenAndPricesTypeDescAndPricesCurrencyCodeAndPricesStartDateLessThanAndPricesEndDateGreaterThan(categoryIds, lcl, new Long(0), price, "markdown", currency, new Date(), new Date(),PageRequest.of(page, size, this.sortByParam(sortBy)));
-  		Page<Product> pp = ppa.map(pa -> this.convertToProductDto(pa, lcl, currency));
-  		return pp;
+  		Page<Product> pp = ppa.map(pa -> this.convertTopDto(pa, lcl, currency));
+  		ResultContainer rc = new ResultContainer();
+		rc.setProducts(pp);
+		return rc;
 	}
 
 	
 	@Override
 	@Cacheable
-	public Page<Product> getProductsForCategoryAndBrandAndPrice(String lcl, String currency, String categoryDesc, String brandDesc, Long price, int page, int size, String sortBy) {
+	public ResultContainer getProductsForCategoryAndBrandAndPrice(String lcl, String currency, String categoryDesc, String brandDesc, Long price, int page, int size, String sortBy) {
 		System.out.println("getProductsForCategoryAndBrandAndPrice");
 		System.out.println(sortBy);
 		List<Category> pcl = new ArrayList<Category>();
@@ -159,11 +169,13 @@ public class ProductService implements IProductService {
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
   		Page<io.javabrains.springbootstarter.domain.Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCdAndBrandBrandAttributesBrandDescAndBrandBrandAttributesLclCdAndPricesPriceValueBetweenAndPricesTypeDescAndPricesCurrencyCodeAndPricesStartDateLessThanAndPricesEndDateGreaterThan(categoryIds, lcl, brandDesc, lcl, new Long(0), price, "markdown", currency, new Date(), new Date(),PageRequest.of(page, size, this.sortByParam(sortBy)));
-  		Page<Product> pp = ppa.map(pa -> this.convertToProductDto(pa, lcl, currency));
-  		return pp;
+  		Page<Product> pp = ppa.map(pa -> this.convertTopDto(pa, lcl, currency));
+  		ResultContainer rc = new ResultContainer();
+		rc.setProducts(pp);
+		return rc;
 	}
 
-	public Page<Product> findProduct(String lcl, String currency, String categoryDesc, String searchTerm, int page, int size, String sortBy) {
+	public ResultContainer findProduct(String lcl, String currency, String categoryDesc, String searchTerm, int page, int size, String sortBy) {
 
 		System.out.println(lcl);
 		
@@ -218,10 +230,11 @@ public class ProductService implements IProductService {
 								System.out.println("Facet " + f.getValue() + " - count = " + f.getCount());
 							});
 		
+		
 		Pageable pageable = PageRequest.of(page, size);
 		jpaQuery.setFirstResult(pageableUtil.getStartPosition(pageable));
 		jpaQuery.setMaxResults(pageable.getPageSize());
-	
+			
 		//sorting
 		org.apache.lucene.search.Sort sort = new org.apache.lucene.search.Sort(new SortField(getSortField(sortBy), getSortFieldType(sortBy)));
 		jpaQuery.setSort(sort);
@@ -229,12 +242,20 @@ public class ProductService implements IProductService {
 		@SuppressWarnings("unchecked")
 		List<ProductAttribute> results =  Collections.checkedList(jpaQuery.getResultList(), ProductAttribute.class);
 		
-		System.out.println("size = " + results.size());
+		for (ProductAttribute p : results) {
+			  System.out.println(p);
+			}
 		
-		List<Product> lp = results.stream().map(pa -> this.convertToProductDto(pa.getProduct(), lcl, currency)).collect(Collectors.toList());
-
+		List<Product> lp = results.stream().map(pa -> this.convertTopDto(pa.getProduct(), lcl, currency)).collect(Collectors.toList());
+		
+		
 		Page<Product> pp = new PageImpl<Product>(lp, pageable, jpaQuery.getResultSize());
-		return pp;
+		
+		ResultContainer src = new ResultContainer();
+		src.setFacets(facets);
+		src.setProducts(pp);
+		
+		return src;
 	}
 	
 	private String getSortField(String field) {
@@ -280,30 +301,31 @@ public class ProductService implements IProductService {
     	pc.getChildren().forEach(child -> recurseCategories(pcl, child));
     }
     
-    public Product convertToProductDto(final io.javabrains.springbootstarter.domain.Product product, String lcl, String currency) {
+    public Product convertTopDto(final io.javabrains.springbootstarter.domain.Product product, String lcl, String currency) {
         //get values from contact entity and set them in contactDto
         //e.g. contactDto.setContactId(contact.getContactId());
     	
     	ProductAttribute pa = productAttributeRepository.findByLclCdAndProductId(lcl, product.getProductId());
     	
-        final Product productDto = new Product();
-        productDto.setProductId(product.getProductId());
-        productDto.setProductCreateDt(product.getProductCreateDt());
-        productDto.setProductUPC(product.getProductUPC());
-        productDto.setProductDesc(pa.getProductDesc());
+        final Product pDto = new Product();
+        pDto.setProductId(product.getProductId());
+        pDto.setProductCreateDt(product.getProductCreateDt());
+        pDto.setProductUPC(product.getProductUPC());
+        pDto.setProductDesc(pa.getProductDesc());
   
         
         /*instead of filtering the stream use JPA queries*/
-        //productDto.setProductRetail(productAttribute.getProduct().getProductPrices().stream().filter(p -> p.getPriceCurrency().getCurrencyCode().equals(currency) && p.getPriceType().getPriceTypeDesc().equals("retail")).collect(Collectors.toList()).get(0).getPriceValue());
-        //productDto.setProductMarkdown(productAttribute.getProduct().getProductPrices().stream().filter(p -> p.getPriceCurrency().getCurrencyCode().equals(currency) && p.getPriceType().getPriceTypeDesc().equals("markdown")).collect(Collectors.toList()).get(0).getPriceValue());
+        //pDto.setProductRetail(productAttribute.getProduct().getProductPrices().stream().filter(p -> p.getPriceCurrency().getCurrencyCode().equals(currency) && p.getPriceType().getPriceTypeDesc().equals("retail")).collect(Collectors.toList()).get(0).getPriceValue());
+        //pDto.setProductMarkdown(productAttribute.getProduct().getProductPrices().stream().filter(p -> p.getPriceCurrency().getCurrencyCode().equals(currency) && p.getPriceType().getPriceTypeDesc().equals("markdown")).collect(Collectors.toList()).get(0).getPriceValue());
                 
-        productDto.setProductRetail(productPriceRepository.findByProductProductIdAndTypeDescAndStartDateLessThanEqualAndEndDateGreaterThanEqualAndCurrencyCode(product.getProductId(), "retail", new Date(), new Date(), currency).getPriceValue());
-        productDto.setProductMarkdown(productPriceRepository.findByProductProductIdAndTypeDescAndStartDateLessThanEqualAndEndDateGreaterThanEqualAndCurrencyCode(product.getProductId(), "markdown", new Date(), new Date(), currency).getPriceValue());
+        pDto.setProductRetail(productPriceRepository.findByProductProductIdAndTypeDescAndStartDateLessThanEqualAndEndDateGreaterThanEqualAndCurrencyCode(product.getProductId(), "retail", new Date(), new Date(), currency).getPriceValue());
+        pDto.setProductMarkdown(productPriceRepository.findByProductProductIdAndTypeDescAndStartDateLessThanEqualAndEndDateGreaterThanEqualAndCurrencyCode(product.getProductId(), "markdown", new Date(), new Date(), currency).getPriceValue());
         
-        productDto.setProductImage(pa.getProductImage());
-        productDto.setLclCd(lcl);
-        productDto.setBrandDesc(product.getBrand().getBrandAttributes().stream()
+        pDto.setProductImage(pa.getProductImage());
+        pDto.setLclCd(lcl);
+        pDto.setBrandDesc(product.getBrand().getBrandAttributes().stream()
         .filter( ba -> ba.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getBrandDesc());
-        return productDto;
+        
+        return pDto;
     }
 }
