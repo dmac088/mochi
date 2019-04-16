@@ -14,6 +14,7 @@ import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.hibernate.search.query.engine.spi.FacetManager;
 import org.hibernate.search.query.facet.Facet;
+import org.hibernate.search.query.facet.FacetSelection;
 import org.hibernate.search.query.facet.FacetSortOrder;
 import org.hibernate.search.query.facet.FacetingRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -214,7 +215,7 @@ public class ProductService implements IProductService {
 		
 		
 		FacetingRequest myFacetRequest = productQueryBuilder.facet()
-		.name("BrandDesc")
+		.name("BrandDescFR")
 		.onField("brandDesc")
 		.discrete()
 		.orderedBy(FacetSortOrder.COUNT_DESC)
@@ -224,12 +225,16 @@ public class ProductService implements IProductService {
 		
 		FacetManager facetMgr = jpaQuery.getFacetManager();
 		facetMgr.enableFaceting(myFacetRequest);
-		List<Facet> facets = facetMgr.getFacets("BrandDesc");
+		List<Facet> facets = facetMgr.getFacets("BrandDescFR");
+		
+		
+		FacetSelection facetSelection = facetMgr.getFacetGroup("BrandDescFR");
+		Facet facet = facets.stream().filter(f -> f.getValue().equals("Driscolls")).collect(Collectors.toList()).get(0);
+		facetSelection.selectFacets(facet);
 		
 		facets.stream().forEach(f -> { 
 								System.out.println("Facet " + f.getValue() + " - count = " + f.getCount());
 							});
-		
 		
 		Pageable pageable = PageRequest.of(page, size);
 		jpaQuery.setFirstResult(pageableUtil.getStartPosition(pageable));
