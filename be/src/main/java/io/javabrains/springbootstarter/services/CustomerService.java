@@ -19,7 +19,7 @@ import io.javabrains.springbootstarter.security.UserRoleService;
 
 @Service
 @Transactional
-public class CustomerDTOService implements ICustomerDTOService {
+public class CustomerService implements ICustomerService {
 
     @Autowired
     private PartyRepository partyRepository;
@@ -41,11 +41,11 @@ public class CustomerDTOService implements ICustomerDTOService {
     
 	@Override
 	@Transactional
-	public List<CustomerDTO> getCustomers() {
-		List<CustomerDTO> cl = new ArrayList<CustomerDTO>();
+	public List<Customer> getCustomers() {
+		List<Customer> cl = new ArrayList<Customer>();
 		List<Party> pl = partyRepository.findAll();
 		for(Party p : pl) {
-			CustomerDTO c = new CustomerDTO();
+			Customer c = new Customer();
 			c.setCustomerID(((RoleCustomer)p.getPartyRole(PARTY_ROLE_NAME)).getCustomerNumber());
 			c.setGivenName(((PartyPerson)p).getGivenName());
 			c.setFamilyName(((PartyPerson)p).getFamilyName());
@@ -59,9 +59,9 @@ public class CustomerDTOService implements ICustomerDTOService {
 	
 	@Override
 	@Transactional
-	public CustomerDTO getCustomer(String userName) {
+	public Customer getCustomer(String userName) {
 		Optional<Party> pr1 = partyRepository.findByPartyUserUsername(userName);
-		CustomerDTO c1 = new CustomerDTO();
+		Customer c1 = new Customer();
 		c1.setGivenName(((PartyPerson)pr1.get()).getGivenName());
 		c1.setFamilyName(((PartyPerson)pr1.get()).getFamilyName());
 		c1.setUserName(((PartyPerson)pr1.get()).getPartyUser().getUsername());
@@ -72,7 +72,7 @@ public class CustomerDTOService implements ICustomerDTOService {
 	
     @Override
 	@Transactional
-    public void registerNewCustomer(final CustomerDTO customer) {
+    public void registerNewCustomer(final Customer customer) {
     	System.out.println("username=" + customer.getUserName());
         if (customerExist(customer.getUserName())) {
             throw new CustomerAlreadyExistException("There is an account with that username: " + customer.getUserName());

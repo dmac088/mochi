@@ -2,7 +2,7 @@ package io.javabrains.springbootstarter.services;
 
 import java.util.Objects;
 
-public class BrandDTO {
+public class Brand {
 
 	private Long brandId;
 	
@@ -58,7 +58,7 @@ public class BrandDTO {
 	public boolean equals(Object o) {
 		 if (this == o) return true;
 	     if (o == null || getClass() != o.getClass()) return false;
-	     BrandDTO pcDto = (BrandDTO) o;
+	     Brand pcDto = (Brand) o;
 	     return this.brandId == pcDto.brandId;
 	}
 

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 
-public class CategoryDTO {
+public class Category {
 	
 	private Long categoryId;
 	
@@ -39,9 +39,9 @@ public class CategoryDTO {
 	
 	private Long maxMarkDownPrice;
 
-	private Set<BrandDTO> categoryBrands;
+	private Set<Brand> categoryBrands;
 
-	private List<CategoryDTO> children;
+	private List<Category> children;
 	
 	public Long getCategoryId() {
 		return categoryId;
@@ -115,11 +115,11 @@ public class CategoryDTO {
 		this.parentId = parentId;
 	}
 	
-	public List<CategoryDTO> getChildren() {
+	public List<Category> getChildren() {
 		return children;
 	}
 
-	public void setChildren(List<CategoryDTO> children) {
+	public void setChildren(List<Category> children) {
 		this.children = children;
 	}
 	
@@ -131,11 +131,11 @@ public class CategoryDTO {
 		this.childCategoryCount = childCategoryCount;
 	}
 
-	public Set<BrandDTO> getCategoryBrands() {
+	public Set<Brand> getCategoryBrands() {
 		return categoryBrands;
 	}
 
-	public void setCategoryBrands(Set<BrandDTO> set) {
+	public void setCategoryBrands(Set<Brand> set) {
 		this.categoryBrands = set;
 	}
 	
@@ -175,7 +175,7 @@ public class CategoryDTO {
 	public boolean equals(Object o) {
 		 if (this == o) return true;
 	     if (o == null || getClass() != o.getClass()) return false;
-	     CategoryDTO pcDto = (CategoryDTO) o;
+	     Category pcDto = (Category) o;
 	     return this.categoryId == pcDto.categoryId;
 	}
 

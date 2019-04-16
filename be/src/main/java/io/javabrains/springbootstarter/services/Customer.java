@@ -19,7 +19,7 @@ import javax.validation.constraints.Size;
 
 //@JsonTypeName(value = "customer")
 //@JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.NAME)
-public class CustomerDTO {
+public class Customer {
     @NotNull
     @Size(min = 1, message = "{Size.userDto.firstName}")
     private String givenName;
@@ -107,7 +107,7 @@ public class CustomerDTO {
 	public boolean equals(Object o) {
 		 if (this == o) return true;
 	     if (o == null || getClass() != o.getClass()) return false;
-	     CustomerDTO pcDto = (CustomerDTO) o;
+	     Customer pcDto = (Customer) o;
 	     return this.customerId == pcDto.customerId;
 	}
 

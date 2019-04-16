@@ -1,16 +1,16 @@
 package io.javabrains.springbootstarter.services;
 import java.util.List;
 
-public interface ICustomerDTOService {
+public interface ICustomerService {
 
 	 boolean customerExist(final String username);
 
 	 //Method takes a customerDTO and input
 	 //The domain model is managed within the method
-	 void registerNewCustomer(final CustomerDTO customer);
+	 void registerNewCustomer(final Customer customer);
 	 
 	 
-	 List<CustomerDTO> getCustomers();
+	 List<Customer> getCustomers();
 	 
-	 CustomerDTO getCustomer(String userName);
+	 Customer getCustomer(String userName);
 }
