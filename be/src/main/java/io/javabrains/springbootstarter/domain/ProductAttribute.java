@@ -1,5 +1,7 @@
 package io.javabrains.springbootstarter.domain;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.persistence.Column;
@@ -89,6 +91,19 @@ public class ProductAttribute {
 	@Field(analyze = Analyze.NO)
 	public String getBrandDesc() {
 		return this.product.getBrand().getBrandAttributes().stream().filter(b -> b.getLclCd().equals(this.lclCd)).collect(Collectors.toList()).get(0).getBrandDesc();
+	}
+	
+	@Transient
+	@Facet(encoding = FacetEncodingType.STRING)
+	@Field(analyze = Analyze.NO)
+	public String getCategoryDesc() {
+		List<String> cats = new ArrayList<String>();
+		this.getProduct().getCategories().stream().forEach(c -> { 
+							cats.add(c.getAttributes().stream().filter(ca -> {
+									return ca.getLclCd().equals(this.lclCd);
+							}).collect(Collectors.toList()).get(0).getCategoryDesc());
+		});
+		return String.join(", ", cats);
 	}
 	
 	public Long getProductId() {
