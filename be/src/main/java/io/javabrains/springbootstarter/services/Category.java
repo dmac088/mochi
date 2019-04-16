@@ -1,9 +1,6 @@
 package io.javabrains.springbootstarter.services;
-
 import java.util.Set;
-
 import io.javabrains.springbootstarter.domain.Layout;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -15,6 +12,8 @@ public class Category {
 	private String categoryCode;
 	
 	private String categoryDesc;
+	
+	private String categoryDescFacet;
 
 	private Long categoryLevel;
 	
@@ -65,6 +64,14 @@ public class Category {
 
 	public void setCategoryDesc(String categoryDesc) {
 		this.categoryDesc = categoryDesc;
+	}
+	
+	public String getCategoryDescFacet() {
+		return categoryDescFacet;
+	}
+
+	public void setCategoryDescFacet(String categoryDescFacet) {
+		this.categoryDescFacet = categoryDescFacet;
 	}
 	
 	public Long getCategoryLevel() {
