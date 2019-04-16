@@ -216,7 +216,7 @@ public class ProductService implements IProductService {
 		
 		FacetingRequest myFacetRequest = productQueryBuilder.facet()
 		.name("BrandDescFR")
-		.onField("brandDesc")
+		.onField("categoryDesc")
 		.discrete()
 		.orderedBy(FacetSortOrder.COUNT_DESC)
 		.includeZeroCounts(true)
@@ -228,9 +228,9 @@ public class ProductService implements IProductService {
 		List<Facet> facets = facetMgr.getFacets("BrandDescFR");
 		
 		
-		FacetSelection facetSelection = facetMgr.getFacetGroup("BrandDescFR");
-		Facet facet = facets.stream().filter(f -> f.getValue().equals("Driscolls")).collect(Collectors.toList()).get(0);
-		facetSelection.selectFacets(facet);
+//		FacetSelection facetSelection = facetMgr.getFacetGroup("BrandDescFR");
+//		Facet facet = facets.stream().filter(f -> f.getValue().equals("Driscolls")).collect(Collectors.toList()).get(0);
+//		facetSelection.selectFacets(facet);
 		
 		facets.stream().forEach(f -> { 
 								System.out.println("Facet " + f.getValue() + " - count = " + f.getCount());
