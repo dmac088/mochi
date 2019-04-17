@@ -46,6 +46,7 @@ import { changeBrand, createRouteProps   } from '../../../services/helpers/Route
     const isActive = (!currentBrand);
     const isSearch = (match.params[0] === "search");
     const isCategory = (match.params[0] === "category");
+    if(isCategory && !category) { return null }
 
     return (
         <div className="sidebar mb-35">
