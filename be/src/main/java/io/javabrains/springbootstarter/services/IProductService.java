@@ -12,13 +12,13 @@ public interface IProductService {
 	 
 	 ResultContainer getProductsForCategory(String lcl, String currency, String categoryDesc, int page, int size, String sortBy);
 	 
-	 ResultContainer getProductsForCategory(String lcl, String currency, String categoryDesc, Long price, int page, int size, String sortBy);
+	 ResultContainer getProductsForCategory(String lcl, String currency, String categoryDesc, Double price, int page, int size, String sortBy);
 	 
 	 ResultContainer getProductsForCategoryAndBrand(String lcl, String currency, String categoryDesc, String brandDesc, int page, int size, String sortBy);
 	 
-	 ResultContainer getProductsForCategoryAndPrice(String lcl, String currency, String categoryDesc, Long price, int page, int size, String sortBy);
+	 ResultContainer getProductsForCategoryAndPrice(String lcl, String currency, String categoryDesc, Double price, int page, int size, String sortBy);
 	 
-	 ResultContainer getProductsForCategoryAndBrandAndPrice(String lcl, String currency, String categoryDesc, String brandDesc, Long price, int page, int size, String sortBy);
+	 ResultContainer getProductsForCategoryAndBrandAndPrice(String lcl, String currency, String categoryDesc, String brandDesc, Double price, int page, int size, String sortBy);
 	 
 	 ResultContainer findProduct(String lcl, String currency, String categoryCode, String term, int page, int size, String sortBy);
 	 

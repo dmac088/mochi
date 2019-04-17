@@ -44,12 +44,12 @@ public class ProductController {
     }
     
     @GetMapping("/Product/{lcl}/{curr}/categoryDesc/{category}/maxPrice/{price}/page/{page}/size/{size}/sortBy/{sortBy}")
-    public ResultContainer getProducts(@PathVariable String lcl, @PathVariable String curr, @PathVariable String category, @PathVariable Long price, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy) {
+    public ResultContainer getProducts(@PathVariable String lcl, @PathVariable String curr, @PathVariable String category, @PathVariable Double price, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy) {
     	return productService.getProductsForCategoryAndPrice(lcl, curr, category, price, page, size, sortBy);
     }
     
     @GetMapping("/Product/{lcl}/{curr}/categoryDesc/{category}/brand/{brand}/maxPrice/{price}/page/{page}/size/{size}/sortBy/{sortBy}")
-    public ResultContainer getProducts(@PathVariable String lcl, @PathVariable String curr, @PathVariable String category, @PathVariable String brand, @PathVariable Long price, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy) {
+    public ResultContainer getProducts(@PathVariable String lcl, @PathVariable String curr, @PathVariable String category, @PathVariable String brand, @PathVariable Double price, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy) {
     	return productService.getProductsForCategoryAndBrandAndPrice(lcl, curr, category, brand, price, page, size, sortBy);
     }
     

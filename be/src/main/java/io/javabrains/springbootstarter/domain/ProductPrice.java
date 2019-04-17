@@ -29,7 +29,7 @@ public class ProductPrice {
 	@Field(analyze = Analyze.NO)
 	@SortableField
 	@Column(name="prc_val")
-	private Long priceValue;
+	private Double priceValue	;
 	
 	@Column(name="prc_st_dt")
 	private Date startDate;
@@ -57,11 +57,11 @@ public class ProductPrice {
 		this.type = priceType;
 	}
 
-	public Long getPriceValue() {
+	public Double getPriceValue() {
 		return priceValue;
 	}
 
-	public void setPriceValue(Long priceValue) {
+	public void setPriceValue(Double priceValue) {
 		this.priceValue = priceValue;
 	}
 	
