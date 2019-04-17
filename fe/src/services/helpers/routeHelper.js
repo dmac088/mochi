@@ -57,6 +57,7 @@ export const routeSearch = (e, routeProps, term) => {
 }
 
 export const changeCategory = (e, routeProps) => {
+  console.log("changeCategory");
   e.preventDefault();
   const { search } = routeProps.location;
   routeProps.history.push(homeRouteString(routeProps.match) + '/category/' + e.currentTarget.id + search);
