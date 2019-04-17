@@ -131,8 +131,6 @@ public class CategoryService implements ICategoryService {
         pcDto.setChildCategoryCount(new Long(pc.getChildren().size()));
         pcDto.setCategoryType(pc.getCategoryType().getCode());
         pcDto.setLayouts(pc.getLayouts());
-        pcDto.setCategoryDescFacet(pc.getAttributes().stream()
-        		.filter( pa -> pa.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getCategoryDescFacet());
         return pcDto;
     }
 	
