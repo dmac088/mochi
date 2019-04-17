@@ -18,6 +18,7 @@ import { changeCategory, createRouteProps } from '../../../services/helpers/Rout
   }
 
   const renderCategoryFacets = (categoryFacets, props) => {
+    if(!categoryFacets) { return }
     return categoryFacets.map(categoryFacet => {
       return(
         <li key={categoryFacet.value} >
@@ -33,8 +34,8 @@ import { changeCategory, createRouteProps } from '../../../services/helpers/Rout
     //console.log(props);
     const { category, categoryFacets } = props;
     const routeProps = createRouteProps(history, match, location);
-    const isSearch = (match.params[0] === "search");
-    const isCategory = (match.params[0] === "category");
+    const isSearch = (match.params[0].toLowerCase() === "search");
+    const isCategory = (match.params[0].toLowerCase() === "category");
     if(isCategory && !category) {return null}
     if(isCategory && !(category.children)) {return null}
     return (
