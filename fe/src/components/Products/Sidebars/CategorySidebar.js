@@ -30,7 +30,6 @@ import { changeCategory, createRouteProps } from '../../../services/helpers/Rout
   }
 
   export const CategorySidebar = withRouter(({history, match, location, ...props}) => {
-    //console.log(props);
     const { category, categoryFacets } = props;
     const routeProps = createRouteProps(history, match, location);
     const isSearch = (match.params[0].toLowerCase() === "search");

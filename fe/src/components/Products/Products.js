@@ -196,7 +196,6 @@ class Products extends Component {
   }
 
   render() {
-      //console.log(this.props);
       const { toggleQuickView, setCurrentProductId, showQVModal, currentProductId, categoryList, changeCategory, changeBrand} = this.props;
       const { products, categoryFacets, brandFacets, totalPages, totalElements, numberOfElements, isGrid, term, category, maxPrice, selectedPrice } = this.state;
       const { page, size } = this.state.params;
