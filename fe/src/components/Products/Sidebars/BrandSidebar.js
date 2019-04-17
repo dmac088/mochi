@@ -16,6 +16,7 @@ import { changeBrand, createRouteProps   } from '../../../services/helpers/Route
   }
 
   const renderBrandFacets = (brandFacets, currentBrand, routeProps) => {
+    if(!brandFacets) {return}
     return brandFacets.map(brandFacet => {
       const isActive = (currentBrand === brandFacet.value)
       return(
