@@ -114,13 +114,13 @@ public class ProductService implements IProductService {
 	
 	@Override
 	@Cacheable
-	public ResultContainer getProductsForCategory(String lcl, String currency, String categoryDesc, Long price, int page, int size, String sortBy) {
+	public ResultContainer getProductsForCategory(String lcl, String currency, String categoryDesc, Double price, int page, int size, String sortBy) {
 		System.out.println("getProductsForCategory");
 		List<Category> pcl = new ArrayList<Category>();
      	Category pc = productCategoryRepository.findByAttributesCategoryDesc(categoryDesc);
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
-  		Page<io.javabrains.springbootstarter.domain.Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCdAndPricesPriceValueBetween(categoryIds, lcl, new Long(0), price, PageRequest.of(page, size, this.sortByParam(sortBy)));
+  		Page<io.javabrains.springbootstarter.domain.Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCdAndPricesPriceValueBetween(categoryIds, lcl, new Double(0), price, PageRequest.of(page, size, this.sortByParam(sortBy)));
   		Page<Product> pp = ppa.map(pa -> this.convertTopDto(pa, lcl, currency));
   		ResultContainer rc = new ResultContainer();
 		rc.setProducts(pp);
@@ -144,14 +144,14 @@ public class ProductService implements IProductService {
 	
 	@Override
  	@Cacheable
-	public ResultContainer getProductsForCategoryAndPrice(String lcl, String currency, String categoryDesc, Long price, int page, int size, String sortBy) {
+	public ResultContainer getProductsForCategoryAndPrice(String lcl, String currency, String categoryDesc, Double price, int page, int size, String sortBy) {
 		System.out.println("getProductsForCategoryAndBrandAndPrice");
 		System.out.println(sortBy);
 		List<Category> pcl = new ArrayList<Category>();
      	Category pc = productCategoryRepository.findByAttributesCategoryDesc(categoryDesc);
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
-  		Page<io.javabrains.springbootstarter.domain.Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCdAndPricesPriceValueBetweenAndPricesTypeDescAndPricesCurrencyCodeAndPricesStartDateLessThanAndPricesEndDateGreaterThan(categoryIds, lcl, new Long(0), price, "markdown", currency, new Date(), new Date(),PageRequest.of(page, size, this.sortByParam(sortBy)));
+  		Page<io.javabrains.springbootstarter.domain.Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCdAndPricesPriceValueBetweenAndPricesTypeDescAndPricesCurrencyCodeAndPricesStartDateLessThanAndPricesEndDateGreaterThan(categoryIds, lcl, new Double(0), price, "markdown", currency, new Date(), new Date(),PageRequest.of(page, size, this.sortByParam(sortBy)));
   		Page<Product> pp = ppa.map(pa -> this.convertTopDto(pa, lcl, currency));
   		ResultContainer rc = new ResultContainer();
 		rc.setProducts(pp);
@@ -161,14 +161,14 @@ public class ProductService implements IProductService {
 	
 	@Override
 	@Cacheable
-	public ResultContainer getProductsForCategoryAndBrandAndPrice(String lcl, String currency, String categoryDesc, String brandDesc, Long price, int page, int size, String sortBy) {
+	public ResultContainer getProductsForCategoryAndBrandAndPrice(String lcl, String currency, String categoryDesc, String brandDesc, Double price, int page, int size, String sortBy) {
 		System.out.println("getProductsForCategoryAndBrandAndPrice");
 		System.out.println(sortBy);
 		List<Category> pcl = new ArrayList<Category>();
      	Category pc = productCategoryRepository.findByAttributesCategoryDesc(categoryDesc);
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
-  		Page<io.javabrains.springbootstarter.domain.Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCdAndBrandBrandAttributesBrandDescAndBrandBrandAttributesLclCdAndPricesPriceValueBetweenAndPricesTypeDescAndPricesCurrencyCodeAndPricesStartDateLessThanAndPricesEndDateGreaterThan(categoryIds, lcl, brandDesc, lcl, new Long(0), price, "markdown", currency, new Date(), new Date(),PageRequest.of(page, size, this.sortByParam(sortBy)));
+  		Page<io.javabrains.springbootstarter.domain.Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCdAndBrandBrandAttributesBrandDescAndBrandBrandAttributesLclCdAndPricesPriceValueBetweenAndPricesTypeDescAndPricesCurrencyCodeAndPricesStartDateLessThanAndPricesEndDateGreaterThan(categoryIds, lcl, brandDesc, lcl, new Double(0), price, "markdown", currency, new Date(), new Date(),PageRequest.of(page, size, this.sortByParam(sortBy)));
   		Page<Product> pp = ppa.map(pa -> this.convertTopDto(pa, lcl, currency));
   		ResultContainer rc = new ResultContainer();
 		rc.setProducts(pp);
@@ -251,6 +251,8 @@ public class ProductService implements IProductService {
 		jpaQuery.setFirstResult(pageableUtil.getStartPosition(pageable));
 		jpaQuery.setMaxResults(pageable.getPageSize());
 			
+		System.out.println("sort field = " + getSortField(sortBy));
+		System.out.println("sort field type = " + getSortFieldType(sortBy).toString());
 		//sorting
 		org.apache.lucene.search.Sort sort = new org.apache.lucene.search.Sort(new SortField(getSortField(sortBy), getSortFieldType(sortBy)));
 		jpaQuery.setSort(sort);
@@ -294,6 +296,8 @@ public class ProductService implements IProductService {
 		switch(field) {
 		case "nameAsc":
 			return SortField.Type.STRING;
+		case "nameDesc":
+			return SortField.Type.STRING;
 		case "priceAsc":
 			return SortField.Type.DOUBLE;
 		case "priceDesc":
@@ -312,7 +316,7 @@ public class ProductService implements IProductService {
     	default: return Sort.by(new Sort.Order(Sort.Direction.ASC, "attributes.productDesc").ignoreCase());
     	}
     }
-    
+	
     public void recurseCategories(List<Category> pcl, Category pc) {
     	pcl.add(pc);
     	pc.getChildren().forEach(child -> recurseCategories(pcl, child));
