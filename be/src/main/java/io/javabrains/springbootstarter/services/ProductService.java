@@ -219,8 +219,8 @@ public class ProductService implements IProductService {
 		.onField("categoryDesc")
 		.discrete()
 		.orderedBy(FacetSortOrder.COUNT_DESC)
-		.includeZeroCounts(true)
-		.maxFacetCount(3)
+		.includeZeroCounts(false)
+		//.maxFacetCount(3)
 		.createFacetingRequest();
 		
 		FacetManager facetMgr = jpaQuery.getFacetManager();

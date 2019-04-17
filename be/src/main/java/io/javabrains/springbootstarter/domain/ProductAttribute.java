@@ -93,17 +93,21 @@ public class ProductAttribute {
 		return this.product.getBrand().getBrandAttributes().stream().filter(b -> b.getLclCd().equals(this.lclCd)).collect(Collectors.toList()).get(0).getBrandDesc();
 	}
 	
+	
+	//Primary category hierarchy
 	@Transient
 	@Facet(encoding = FacetEncodingType.STRING)
 	@Field(analyze = Analyze.NO)
 	public String getCategoryDesc() {
 		List<String> cats = new ArrayList<String>();
-		this.getProduct().getCategories().stream().forEach(c -> { 
+		this.getProduct().getCategories().stream().filter(c -> {
+							return c.getHierarchy().getHierarchyCode().equals("PRM01");
+						}).collect(Collectors.toList()).forEach(c -> {
 							cats.add(c.getAttributes().stream().filter(ca -> {
-									return ca.getLclCd().equals(this.lclCd);
+								return ca.getLclCd().equals(this.lclCd);
 							}).collect(Collectors.toList()).get(0).getCategoryDesc());
-		});
-		return String.join(", ", cats);
+						});
+		return String.join("/", cats);
 	}
 	
 	public Long getProductId() {
