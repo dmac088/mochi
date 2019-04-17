@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from "react-router-dom";
 import qs from 'query-string';
+import { createRouteProps } from '../../services/helpers/RouteHelper';
 
   const changePage = (e, routeProps) => {
     e.preventDefault();
@@ -47,8 +48,9 @@ import qs from 'query-string';
   }
 
   export const Pagination = withRouter(({history, match, location, ...props}) => {
+
     const {totalPages, currentPage } = props;
-    const routeProps = {"history":{...history}, "matcg":{...match}, "location":{...location}}
+    const routeProps = createRouteProps(history, match, location);
     if (totalPages <= 1 ) { return null }
 		return (
       <div className="pagination-container">
