@@ -166,6 +166,7 @@ class CategoryMenuItem extends Component {
   }
 
   expandCat = (e) => {
+
       e.preventDefault()
       this.setState(prevState => ({
         expand: !prevState.expand,
@@ -199,7 +200,10 @@ class CategoryMenuItem extends Component {
           }
           >
           <a  id={category.categoryDesc}
-              onClick={(e) => changeCategory(e, routeProps )}
+              onClick={(e) => {
+                          if ((e.target.tagName.toLowerCase() === "i")) {return}
+                          changeCategory(e, routeProps )
+                        }} 
               className={"megamenu-head"}
               style={(isMobile)
                      ? {"--my-cat-indent": this.getIndent(category.categoryLevel)}
