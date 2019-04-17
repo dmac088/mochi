@@ -18,7 +18,6 @@ import { changeCategory, createRouteProps } from '../../../services/helpers/Rout
   }
 
   const renderCategoryFacets = (categoryFacets, props) => {
-    if(!categoryFacets) { return }
     return categoryFacets.map(categoryFacet => {
       return(
         <li key={categoryFacet.value} >
@@ -38,6 +37,9 @@ import { changeCategory, createRouteProps } from '../../../services/helpers/Rout
     const isCategory = (match.params[0].toLowerCase() === "category");
     if(isCategory && !category) {return null}
     if(isCategory && !(category.children)) {return null}
+    if(isCategory && category.children.length === 0) { return null }
+    if(isSearch && !categoryFacets) { return null }
+
     return (
       <div className="sidebar mb-35">
         <h3 className="sidebar-title">PRODUCT CATEGORIES</h3>
