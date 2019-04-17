@@ -168,7 +168,7 @@ class Products extends Component {
     });
     return maxPrice;
   }
-  
+
   renderProducts = (category, products, setCurrentProductId, isGrid) => {
     if(!products) {return}
     return products.map(product => {
@@ -200,7 +200,6 @@ class Products extends Component {
       const { toggleQuickView, setCurrentProductId, showQVModal, currentProductId, categoryList, changeCategory, changeBrand} = this.props;
       const { products, categoryFacets, brandFacets, totalPages, totalElements, numberOfElements, isGrid, term, category, maxPrice, selectedPrice } = this.state;
       const { page, size } = this.state.params;
-      console.log(categoryFacets);
 
       if(!products) { return null }
       const cat = this.filterCategories(categoryList, category)[0];

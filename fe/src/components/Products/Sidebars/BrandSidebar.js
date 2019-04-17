@@ -2,13 +2,26 @@ import React from 'react';
 import { withRouter } from "react-router-dom";
 import { changeBrand, createRouteProps   } from '../../../services/helpers/RouteHelper';
 
-  const renderBrandListItems = (category, currentBrand, routeProps) => {
+  const renderBrandsForCategory = (category, currentBrand, routeProps) => {
     return category.categoryBrands.map(brand => {
       const isActive = (currentBrand === brand.brandDesc)
       return(
         <li key={brand.brandId}>
           <a className={(isActive) ? "active" : ""} onClick={(e) => changeBrand(e, routeProps)} id={brand.brandDesc} href="#">
             {brand.brandDesc} <span className="badge badge-pill badge-secondary">{brand.productCount}</span>
+          </a>
+        </li>
+      )
+    })
+  }
+
+  const renderBrandFacets = (brandFacets, currentBrand, routeProps) => {
+    return brandFacets.map(brandFacet => {
+      const isActive = (currentBrand === brandFacet.value)
+      return(
+        <li key={brandFacet.value}>
+          <a className={(isActive) ? "active" : ""} onClick={(e) => changeBrand(e, routeProps)} id={brandFacet.value} href="#">
+            {brandFacet.value} <span className="badge badge-pill badge-secondary">{brandFacet.count}</span>
           </a>
         </li>
       )
@@ -27,18 +40,21 @@ import { changeBrand, createRouteProps   } from '../../../services/helpers/Route
   }
 
   export const BrandSidebar = withRouter(({history, match, location, ...props}) => {
-    const { category } = props;
+    const { category, brandFacets } = props;
     const routeProps = createRouteProps(history, match, location);
     const currentBrand = routeProps.match.params.brand;
     const isActive = (!currentBrand);
-    if (!category.categoryBrands) { return null; }
-    if(category.categoryBrands.length <= 1) {return null; }
+    const isSearch = (match.params[0] === "search");
+    const isCategory = (match.params[0] === "category");
+
     return (
         <div className="sidebar mb-35">
           <h3 className="sidebar-title">Filter By Brand</h3>
           <ul className="product-categories">
-            {renderAll(category, isActive, routeProps)}
-            {renderBrandListItems(category, currentBrand, routeProps)}
+            {(isCategory) ? renderAll(category, isActive, routeProps) : null}
+            {(isCategory)
+              ? renderBrandsForCategory(category, currentBrand, routeProps)
+              : renderBrandFacets(brandFacets, currentBrand, routeProps)}
           </ul>
         </div>
       );
