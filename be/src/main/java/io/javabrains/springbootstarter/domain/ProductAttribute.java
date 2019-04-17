@@ -87,7 +87,11 @@ public class ProductAttribute {
 	private Product product;
 	
 	@Transient
-	@Facet(encoding = FacetEncodingType.STRING)
+	@Field(analyze = Analyze.NO)
+	private String primaryCategory;
+	
+	@Transient
+	@Facet
 	@Field(analyze = Analyze.NO)
 	public String getBrandDesc() {
 		return this.product.getBrand().getBrandAttributes().stream().filter(b -> b.getLclCd().equals(this.lclCd)).collect(Collectors.toList()).get(0).getBrandDesc();
@@ -99,15 +103,14 @@ public class ProductAttribute {
 	@Facet(encoding = FacetEncodingType.STRING)
 	@Field(analyze = Analyze.NO)
 	public String getCategoryDesc() {
-		List<String> cats = new ArrayList<String>();
 		this.getProduct().getCategories().stream().filter(c -> {
 							return c.getHierarchy().getHierarchyCode().equals("PRM01");
 						}).collect(Collectors.toList()).forEach(c -> {
-							cats.add(c.getAttributes().stream().filter(ca -> {
+							primaryCategory = (c.getAttributes().stream().filter(ca -> {
 								return ca.getLclCd().equals(this.lclCd);
 							}).collect(Collectors.toList()).get(0).getCategoryDesc());
 						});
-		return String.join("/", cats);
+		return primaryCategory;
 	}
 	
 	public Long getProductId() {
