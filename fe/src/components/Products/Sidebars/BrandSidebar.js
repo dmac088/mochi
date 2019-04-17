@@ -52,7 +52,9 @@ import { changeBrand, createRouteProps   } from '../../../services/helpers/Route
         <div className="sidebar mb-35">
           <h3 className="sidebar-title">Filter By Brand</h3>
           <ul className="product-categories">
-            {(isCategory) ? renderAll(category, isActive, routeProps) : null}
+            {(isCategory)
+              ? renderAll(category, isActive, routeProps)
+              : null}
             {(isCategory)
               ? renderBrandsForCategory(category, currentBrand, routeProps)
               : renderBrandFacets(brandFacets, currentBrand, routeProps)}
