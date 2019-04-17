@@ -231,22 +231,22 @@ public class ProductService implements IProductService {
 				.maxFacetCount(5)
 				.createFacetingRequest();
 		
-		List<Facet> facets = new ArrayList<Facet>(); 
+		List<Facet> categoryFacets = new ArrayList<Facet>(), brandFacets = new ArrayList<Facet>(); 
 		FacetManager facetMgr = jpaQuery.getFacetManager();
 		facetMgr.enableFaceting(categoryFacetRequest);
-		facets.addAll(facetMgr.getFacets("CategoryDescFR"));
+		categoryFacets.addAll(facetMgr.getFacets("CategoryDescFR"));
 		facetMgr.enableFaceting(brandFacetRequest);
-		facets.addAll(facetMgr.getFacets("BrandDescFR"));
+		brandFacets.addAll(facetMgr.getFacets("BrandDescFR"));
 		
 //		filtering on a specific facet is as easy as..... 
 //		FacetSelection facetSelection = facetMgr.getFacetGroup("BrandDescFR");
 //		Facet facet = facets.stream().filter(f -> f.getValue().equals("Driscolls")).collect(Collectors.toList()).get(0);
 //		facetSelection.selectFacets(facet);
 		
-		facets.stream().forEach(f -> { 
-								System.out.println("Facet field = " +  f.getFieldName() + " value = " + f.getValue() + " - count = " + f.getCount());
-							});
-		
+//		facets.stream().forEach(f -> { 
+//								System.out.println("Facet field = " +  f.getFieldName() + " value = " + f.getValue() + " - count = " + f.getCount());
+//							});
+//		
 		Pageable pageable = PageRequest.of(page, size);
 		jpaQuery.setFirstResult(pageableUtil.getStartPosition(pageable));
 		jpaQuery.setMaxResults(pageable.getPageSize());
@@ -268,7 +268,8 @@ public class ProductService implements IProductService {
 		Page<Product> pp = new PageImpl<Product>(lp, pageable, jpaQuery.getResultSize());
 		
 		ResultContainer src = new ResultContainer();
-		src.setFacets(facets);
+		src.setBrandFacets(brandFacets);
+		src.setCategoryFacets(categoryFacets);
 		src.setProducts(pp);
 		
 		return src;

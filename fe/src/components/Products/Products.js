@@ -25,6 +25,8 @@ class Products extends Component {
       "category": "",
       "term":     "",
       "products": [],
+      "categoryFacets": [],
+      "brandFacets": [],
       "totalPages": 0,
       "totalElements": 0,
       "numberOfElements": 0,
@@ -103,6 +105,8 @@ class Products extends Component {
         "category":         category,
         "term":             term,
         "products":         responseJSON.products.content,
+        "categoryFacets":   responseJSON.categoryFacets,
+        "brandFacets":      responseJSON.brandFacets,
         "totalPages":       responseJSON.totalPages,
         "totalElements":    responseJSON.totalElements,
         "numberOfElements": responseJSON.numberOfElements,
@@ -164,16 +168,7 @@ class Products extends Component {
     });
     return maxPrice;
   }
-
-  renderBrandSlider = (category) => {
-    if(!category) { return; }
-    return (
-      <BrandSidebar
-        category={category}
-      />
-    )
-  }
-
+  
   renderProducts = (category, products, setCurrentProductId, isGrid) => {
     if(!products) {return}
     return products.map(product => {
@@ -201,9 +196,11 @@ class Products extends Component {
   }
 
   render() {
+      //console.log(this.props);
       const { toggleQuickView, setCurrentProductId, showQVModal, currentProductId, categoryList, changeCategory, changeBrand} = this.props;
-      const { products, totalPages, totalElements, numberOfElements, isGrid, term, category, maxPrice, selectedPrice } = this.state;
+      const { products, categoryFacets, brandFacets, totalPages, totalElements, numberOfElements, isGrid, term, category, maxPrice, selectedPrice } = this.state;
       const { page, size } = this.state.params;
+      console.log(categoryFacets);
 
       if(!products) { return null }
       const cat = this.filterCategories(categoryList, category)[0];
@@ -215,10 +212,14 @@ class Products extends Component {
                   <div className="col-lg-3 order-2 order-lg-1">
                     <div className="sidebar-area">
                       <CategorySidebar
-                        changeCategory={changeCategory}
                         category={cat}
+                        categoryFacets={categoryFacets}
+                        changeCategory={changeCategory}
                       />
-                    {this.renderBrandSlider(cat,changeBrand)}
+                      <BrandSidebar
+                        category={cat}
+                        brandFacets={brandFacets}
+                      />
                       <PriceSidebar
                         updateSelectedPrice={this.updateSelectedPrice}
                         maxPrice={maxPrice}

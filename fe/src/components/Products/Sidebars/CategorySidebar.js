@@ -18,6 +18,7 @@ import { changeCategory } from '../../../services/helpers/RouteHelper';
   }
 
   export const CategorySidebar = withRouter(({...props}) => {
+    //console.log(props);
     const { category } = props;
     if(!category) {return null;}
     if(category.children.length === 0) {return null;}
