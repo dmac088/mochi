@@ -62,7 +62,7 @@ import { routeSingleProduct, createRouteProps } from '../../services/helpers/Rou
       <div className="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
         <div className="gf-product shop-grid-view-product">
           <div className="image">
-            <a onClick={(e) => routeSingleProduct(e, category.categoryDesc, routeProps)} id={product.productId} href="#">
+            <a onClick={(e) => routeSingleProduct(e, (category) ? category.categoryDesc : null, routeProps)} id={product.productId} href="#">
               <span className="onsale">Sale!</span>
               <img src={product.productImage} className="img-fluid" alt />
             </a>

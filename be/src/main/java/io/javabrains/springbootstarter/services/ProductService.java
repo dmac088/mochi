@@ -189,7 +189,7 @@ public class ProductService implements IProductService {
 				  .forEntity(ProductAttribute.class)
 				  .get();
 		
-	//	this is a lucene query using the lucene apu
+		//	this is a lucene query using the lucene api
 		org.apache.lucene.search.Query searchQuery = productQueryBuilder
 													.bool()
 													.must(productQueryBuilder.keyword()
