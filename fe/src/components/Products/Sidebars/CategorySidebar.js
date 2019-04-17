@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import * as categoryApi from '../../../data/categories/api';
-import { changeCategory } from '../../../services/helpers/RouteHelper';
+import { changeCategory, createRouteProps } from '../../../services/helpers/RouteHelper';
 
 
   const renderCategories = (category, props) => {
@@ -29,19 +29,21 @@ import { changeCategory } from '../../../services/helpers/RouteHelper';
     });
   }
 
-  export const CategorySidebar = withRouter(({match, ...props}) => {
+  export const CategorySidebar = withRouter(({history, match, location, ...props}) => {
     //console.log(props);
     const { category, categoryFacets } = props;
+    const routeProps = createRouteProps(history, match, location);
     const isSearch = (match.params[0] === "search");
     const isCategory = (match.params[0] === "category");
-    if(isCategory && !category && !(category.children)) {return null;}
+    if(isCategory && !category) {return null}
+    if(isCategory && !(category.children)) {return null}
     return (
       <div className="sidebar mb-35">
         <h3 className="sidebar-title">PRODUCT CATEGORIES</h3>
         <ul className="product-categories">
           {(isCategory)
-            ? renderCategories(category, props)
-            : renderCategoryFacets(categoryFacets,props)}
+            ? renderCategories(category, routeProps)
+            : renderCategoryFacets(categoryFacets, routeProps)}
         </ul>
       </div>
     );
