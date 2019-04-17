@@ -96,7 +96,7 @@ public class ProductAttribute {
 	@Field(analyze = Analyze.NO)
 	public String getPrimaryCategoryDesc() {
 		 return this.getProduct().getCategories().stream().filter(c -> {
-							return c.getHierarchy().getHierarchyCode().equals("PRM01");
+							return c.getHierarchy().getCode().equals("PRM01");
 						}).collect(Collectors.toList()).stream().map(c -> {
 							return c.getAttributes().stream().filter(ca -> {
 																				return ca.getLclCd().equals(this.lclCd);
