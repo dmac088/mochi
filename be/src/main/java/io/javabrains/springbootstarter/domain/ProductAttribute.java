@@ -1,9 +1,6 @@
 package io.javabrains.springbootstarter.domain;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -24,7 +21,6 @@ import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.AnalyzerDef;
 import org.hibernate.search.annotations.AnalyzerDiscriminator;
 import org.hibernate.search.annotations.Facet;
-import org.hibernate.search.annotations.FacetEncodingType;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
@@ -87,10 +83,6 @@ public class ProductAttribute {
 	private Product product;
 	
 	@Transient
-	@Field(analyze = Analyze.NO)
-	private String primaryCategory;
-	
-	@Transient
 	@Facet
 	@Field(analyze = Analyze.NO)
 	public String getBrandDesc() {
@@ -100,17 +92,17 @@ public class ProductAttribute {
 	
 	//Primary category hierarchy
 	@Transient
-	@Facet(encoding = FacetEncodingType.STRING)
+	@Facet
 	@Field(analyze = Analyze.NO)
-	public String getCategoryDesc() {
-		this.getProduct().getCategories().stream().filter(c -> {
+	public String getPrimaryCategoryDesc() {
+		 return this.getProduct().getCategories().stream().filter(c -> {
 							return c.getHierarchy().getHierarchyCode().equals("PRM01");
-						}).collect(Collectors.toList()).forEach(c -> {
-							primaryCategory = (c.getAttributes().stream().filter(ca -> {
-								return ca.getLclCd().equals(this.lclCd);
-							}).collect(Collectors.toList()).get(0).getCategoryDesc());
-						});
-		return primaryCategory;
+						}).collect(Collectors.toList()).stream().map(c -> {
+							return c.getAttributes().stream().filter(ca -> {
+																				return ca.getLclCd().equals(this.lclCd);
+																			}).collect(Collectors.toList()).get(0).getCategoryDesc();
+							
+						}).collect(Collectors.toList()).get(0);
 	}
 	
 	public Long getProductId() {

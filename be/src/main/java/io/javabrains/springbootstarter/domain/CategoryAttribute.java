@@ -34,11 +34,6 @@ public class CategoryAttribute {
 	@Column(name="cat_desc")
 	@Field(analyze = Analyze.YES)
 	private String categoryDesc;
-	
-	@Transient
-	@Facet
-	@Field(analyze = Analyze.NO)
-	private String categoryDescFacet;
 
 	@Column(name="lcl_cd")	
 	@Field
@@ -64,15 +59,6 @@ public class CategoryAttribute {
 
 	public String getCategoryDesc() {
 		return categoryDesc;
-	}
-
-	public void setCategoryDesc(String categoryDesc) {
-		this.categoryDesc = categoryDesc;
-		this.categoryDescFacet = categoryDesc;
-	}
-	
-	public String getCategoryDescFacet() {
-		return this.categoryDescFacet;
 	}
 	
 	public String getLclCd() {

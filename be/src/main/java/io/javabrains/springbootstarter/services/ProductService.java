@@ -14,7 +14,6 @@ import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.hibernate.search.query.engine.spi.FacetManager;
 import org.hibernate.search.query.facet.Facet;
-import org.hibernate.search.query.facet.FacetSelection;
 import org.hibernate.search.query.facet.FacetSortOrder;
 import org.hibernate.search.query.facet.FacetingRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -214,26 +213,37 @@ public class ProductService implements IProductService {
 		  = fullTextEntityManager.createFullTextQuery(searchQuery, ProductAttribute.class);
 		
 		
-		FacetingRequest myFacetRequest = productQueryBuilder.facet()
-		.name("BrandDescFR")
-		.onField("categoryDesc")
+		FacetingRequest categoryFacetRequest = productQueryBuilder.facet()
+		.name("CategoryDescFR")
+		.onField("primaryCategoryDesc")
 		.discrete()
 		.orderedBy(FacetSortOrder.COUNT_DESC)
 		.includeZeroCounts(false)
-		//.maxFacetCount(3)
+		.maxFacetCount(5)
 		.createFacetingRequest();
 		
-		FacetManager facetMgr = jpaQuery.getFacetManager();
-		facetMgr.enableFaceting(myFacetRequest);
-		List<Facet> facets = facetMgr.getFacets("BrandDescFR");
+		FacetingRequest brandFacetRequest = productQueryBuilder.facet()
+				.name("BrandDescFR")
+				.onField("brandDesc")
+				.discrete()
+				.orderedBy(FacetSortOrder.COUNT_DESC)
+				.includeZeroCounts(false)
+				.maxFacetCount(5)
+				.createFacetingRequest();
 		
+		List<Facet> facets = new ArrayList<Facet>(); 
+		FacetManager facetMgr = jpaQuery.getFacetManager();
+		facetMgr.enableFaceting(categoryFacetRequest);
+		facets.addAll(facetMgr.getFacets("CategoryDescFR"));
+		facetMgr.enableFaceting(brandFacetRequest);
+		facets.addAll(facetMgr.getFacets("BrandDescFR"));
 		
 //		FacetSelection facetSelection = facetMgr.getFacetGroup("BrandDescFR");
 //		Facet facet = facets.stream().filter(f -> f.getValue().equals("Driscolls")).collect(Collectors.toList()).get(0);
 //		facetSelection.selectFacets(facet);
 		
 		facets.stream().forEach(f -> { 
-								System.out.println("Facet " + f.getValue() + " - count = " + f.getCount());
+								System.out.println("Facet field = " +  f.getFieldName() + " value = " + f.getValue() + " - count = " + f.getCount());
 							});
 		
 		Pageable pageable = PageRequest.of(page, size);
@@ -247,9 +257,9 @@ public class ProductService implements IProductService {
 		@SuppressWarnings("unchecked")
 		List<ProductAttribute> results =  Collections.checkedList(jpaQuery.getResultList(), ProductAttribute.class);
 		
-		for (ProductAttribute p : results) {
-			  System.out.println(p);
-			}
+//		for (ProductAttribute p : results) {
+//			  System.out.println(p);
+//			}
 		
 		List<Product> lp = results.stream().map(pa -> this.convertTopDto(pa.getProduct(), lcl, currency)).collect(Collectors.toList());
 		

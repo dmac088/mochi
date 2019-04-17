@@ -13,8 +13,6 @@ public class Category {
 	
 	private String categoryDesc;
 	
-	private String categoryDescFacet;
-
 	private Long categoryLevel;
 	
 	private Long categoryPreview;
@@ -64,14 +62,6 @@ public class Category {
 
 	public void setCategoryDesc(String categoryDesc) {
 		this.categoryDesc = categoryDesc;
-	}
-	
-	public String getCategoryDescFacet() {
-		return categoryDescFacet;
-	}
-
-	public void setCategoryDescFacet(String categoryDescFacet) {
-		this.categoryDescFacet = categoryDescFacet;
 	}
 	
 	public Long getCategoryLevel() {
