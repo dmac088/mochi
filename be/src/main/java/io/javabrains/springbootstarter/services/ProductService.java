@@ -238,6 +238,7 @@ public class ProductService implements IProductService {
 		facetMgr.enableFaceting(brandFacetRequest);
 		facets.addAll(facetMgr.getFacets("BrandDescFR"));
 		
+//		filtering on a specific facet is as easy as..... 
 //		FacetSelection facetSelection = facetMgr.getFacetGroup("BrandDescFR");
 //		Facet facet = facets.stream().filter(f -> f.getValue().equals("Driscolls")).collect(Collectors.toList()).get(0);
 //		facetSelection.selectFacets(facet);
