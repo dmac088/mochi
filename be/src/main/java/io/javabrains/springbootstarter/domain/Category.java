@@ -20,6 +20,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import org.hibernate.search.annotations.IndexedEmbedded;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -38,7 +39,13 @@ public class Category {
 	@Column(name="cat_lvl")
 	private Long categoryLevel;
 	
-    @ManyToMany(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@IndexedEmbedded
+	@JoinColumn(name="hir_id", insertable=false, updatable=false)
+	@JsonBackReference
+	private Hierarchy hierarchy;
+
+	@ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "product_category", schema="mochi", 
     		   joinColumns 			= @JoinColumn(name = "cat_id"), 
     		   inverseJoinColumns 	= @JoinColumn(name = "prd_id"))
@@ -122,6 +129,14 @@ public class Category {
 	
 	public Collection<Product> getProducts() {
 		return products;
+	}
+	
+    public Hierarchy getHierarchy() {
+		return hierarchy;
+	}
+
+	public void setHierarchy(Hierarchy hierarchy) {
+		this.hierarchy = hierarchy;
 	}
 	
 	public String getCategoryCode() {
