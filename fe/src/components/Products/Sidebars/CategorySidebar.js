@@ -43,9 +43,28 @@ class CategorySidebar extends Component {
     }, () => {
         console.log(this.state.selectedFacets);
     });
-
   }
 
+  isActive = (categoryFacet, selectedFacets) => {
+    return (selectedFacets.find(o => o.value === categoryFacet.value));
+  }
+
+  renderCategoryFacets = (categoryFacets, selectedFacets, props) => {
+
+    return categoryFacets.map(categoryFacet => {
+
+      return(
+        <li key={categoryFacet.value}>
+          <a className={(this.isActive(categoryFacet, selectedFacets)) ? "active" : ""} onClick={(e) => {
+                                e.preventDefault();
+                                this.applyFacet(e, props);
+                             }} id={categoryFacet.value} href="#">
+            {categoryFacet.value} <span className="badge badge-pill badge-secondary">{categoryFacet.count}</span>
+          </a>
+        </li>
+      );
+    });
+  }
 
   renderCategories = (category, props) => {
     const { getMaxPrice } = props;
@@ -60,23 +79,9 @@ class CategorySidebar extends Component {
     });
   }
 
-  renderCategoryFacets = (categoryFacets, props) => {
-    return categoryFacets.map(categoryFacet => {
-      return(
-        <li key={categoryFacet.value} >
-          <a onClick={(e) => {
-                                e.preventDefault();
-                                this.applyFacet(e, props);
-                             }} id={categoryFacet.value} href="#">
-            {categoryFacet.value} <span className="badge badge-pill badge-secondary">{categoryFacet.count}</span>
-          </a>
-        </li>
-      );
-    });
-  }
-
   render() {
-    const { category, categoryFacets, history, match, location } = this.props;
+    const { category, history, match, location } = this.props;
+    const { categoryFacets, selectedFacets } = this.state;
     const routeProps = createRouteProps(history, match, location);
     const isSearch = (routeProps.match.params[0].toLowerCase() === "search");
     const isCategory = (routeProps.match.params[0].toLowerCase() === "category");
@@ -91,7 +96,7 @@ class CategorySidebar extends Component {
         <ul className="product-categories">
           {(isCategory)
             ? this.renderCategories(category, routeProps)
-            : this.renderCategoryFacets(categoryFacets, routeProps)}
+            : this.renderCategoryFacets(categoryFacets, selectedFacets, routeProps)}
         </ul>
       </div>
     );
