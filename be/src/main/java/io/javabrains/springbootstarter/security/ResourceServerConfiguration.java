@@ -33,6 +33,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
         		.antMatchers(HttpMethod.GET,"/images/**").permitAll()
         		.antMatchers(HttpMethod.GET,"/api/CreateSearchIndex").permitAll()
         		.antMatchers(HttpMethod.GET,"/api/Search/**").permitAll()
+        		.antMatchers(HttpMethod.POST,"/api/Search/**").permitAll()
         		.and().requestMatchers()
                 .antMatchers(SECURED_PATTERN).and().authorizeRequests()
                 .antMatchers(HttpMethod.POST, SECURED_PATTERN).access(SECURED_WRITE_SCOPE)
