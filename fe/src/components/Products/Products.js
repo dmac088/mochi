@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Product } from './Product';
 import QuickViewProduct from '../QuickView/QuickViewProduct';
-import { CategorySidebar } from './Sidebars/CategorySidebar';
+import CategorySidebar from './Sidebars/CategorySidebar';
 import { BrandSidebar } from './Sidebars/BrandSidebar';
 import { PriceSidebar } from './Sidebars/PriceSidebar';
 import { TopRatedSidebar } from './Sidebars/TopRatedSidebar';
