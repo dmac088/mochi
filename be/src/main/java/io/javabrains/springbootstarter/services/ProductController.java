@@ -62,8 +62,9 @@ public class ProductController {
     }
     
     @PostMapping("/Search/{lcl}/{curr}/Category/{categoryCode}/SearchTerm/{term}/Page/{page}/Size/{size}/SortBy/{sortBy}")
-    public ResultContainer search(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryCode,@PathVariable String term, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy, @RequestBody final CustomFacet[] facets) {
-    	System.out.println(facets.length);
+    public ResultContainer search(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryCode,@PathVariable String term, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy, @RequestBody final String[] selectedFacetIds) {
+    	System.out.println(selectedFacetIds[0]);
+    	//System.out.println(facets[1].getFieldName());
     	return null;
     	//return productService.findProduct(lcl, curr, categoryCode, term, page, size, sortBy, facets);
     }
