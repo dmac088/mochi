@@ -1,9 +1,12 @@
 package io.javabrains.springbootstarter.services;
 import java.util.List;
 
+import org.hibernate.search.query.facet.Facet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -56,5 +59,12 @@ public class ProductController {
     @GetMapping("/Search/{lcl}/{curr}/Category/{categoryCode}/SearchTerm/{term}/Page/{page}/Size/{size}/SortBy/{sortBy}")
     public ResultContainer search(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryCode,@PathVariable String term, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy) {
     	return productService.findProduct(lcl, curr, categoryCode, term, page, size, sortBy);
+    }
+    
+    @PostMapping("/Search/{lcl}/{curr}/Category/{categoryCode}/SearchTerm/{term}/Page/{page}/Size/{size}/SortBy/{sortBy}")
+    public ResultContainer search(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryCode,@PathVariable String term, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy, @RequestBody final CustomFacet[] facets) {
+    	System.out.println(facets.length);
+    	return null;
+    	//return productService.findProduct(lcl, curr, categoryCode, term, page, size, sortBy, facets);
     }
 }
