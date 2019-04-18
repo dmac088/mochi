@@ -10,7 +10,7 @@ class CategorySidebar extends Component {
     super(props);
     this.state = {
       "categoryFacets": null,
-      "selectedFacets": [],
+      "selectedFacets":  [],
     };
   }
 
@@ -28,16 +28,22 @@ class CategorySidebar extends Component {
   }
 
   applyFacet = (e, props) => {
-    console.log(e.currentTarget.id);
-    console.log(this.state.categoryFacets);
-    const selectedFacets = _.cloneDeep(this.state.selectedFacets, true);
-    if(this.state.selectedFacets.find(o => o.value === e.currentTarget.id)) { return }
-    selectedFacets.push(this.state.categoryFacets.find(o =>
-       o.value === e.currentTarget.id
-    ));
+    if(this.state.selectedFacets.find(o => o.value === e.currentTarget.id)) {
+        this.setState({
+          "selectedFacets": this.state.selectedFacets.filter(o => o.value !== e.currentTarget.id),
+        }, () => {
+          console.log(this.state.selectedFacets);
+        });
+        return;
+    }
+    const newSelectedFacets = _.cloneDeep(this.state.selectedFacets, true);
+    newSelectedFacets.push(this.state.categoryFacets.filter(o => o.value === e.currentTarget.id)[0]);
     this.setState({
-      "selectedFacets": selectedFacets,
+      "selectedFacets": newSelectedFacets,
+    }, () => {
+        console.log(this.state.selectedFacets);
     });
+
   }
 
 
