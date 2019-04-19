@@ -20,7 +20,7 @@ public interface IProductService {
 	 
 	 ResultContainer getProductsForCategoryAndBrandAndPrice(String lcl, String currency, String categoryDesc, String brandDesc, Double price, int page, int size, String sortBy);
 	 
-	 ResultContainer findProduct(String lcl, String currency, String categoryCode, String term, int page, int size, String sortBy);
+	 ResultContainer findProduct(String lcl, String currency, String categoryCode, String term, int page, int size, String sortBy, CustomFacet[] selectedFacets);
 	 
 	 List<Product> getPreviewProductsForCategory(String lcl, String currency, Long categoryId);
 	 
