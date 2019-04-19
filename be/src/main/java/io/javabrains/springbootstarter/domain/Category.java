@@ -18,6 +18,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Facet;
+import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.IndexedEmbedded;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -34,6 +38,8 @@ public class Category {
 	private Long categoryId;
 
 	@Column(name="cat_cd")
+	@Field(analyze = Analyze.NO)
+	@Facet
 	private String categoryCode;
 
 	@Column(name="cat_lvl")

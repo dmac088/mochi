@@ -1,7 +1,6 @@
 package io.javabrains.springbootstarter.services;
 import java.util.List;
 
-import org.hibernate.search.query.facet.Facet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
