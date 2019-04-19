@@ -90,20 +90,29 @@ public class ProductAttribute {
 	}
 	
 	
-	//Primary category hierarchy
 	@Transient
-	@Facet
-	@Field(analyze = Analyze.NO)
-	public String getPrimaryCategoryDesc() {
-		 return this.getProduct().getCategories().stream().filter(c -> {
-							return c.getHierarchy().getCode().equals("PRM01");
-						}).collect(Collectors.toList()).stream().map(c -> {
-							return c.getAttributes().stream().filter(ca -> {
-																				return ca.getLclCd().equals(this.lclCd);
-																			}).collect(Collectors.toList()).get(0).getCategoryDesc();
-							
-						}).collect(Collectors.toList()).get(0);
+	@IndexedEmbedded
+	public Category getPrimaryCategory() {
+		return this.getProduct().getCategories().stream().filter(c -> {
+			 return c.getHierarchy().getCode().equals("PRM01");
+		 		}).collect(Collectors.toList()).get(0);
 	}
+	
+	
+	//Primary category hierarchy
+//	@Transient
+//	@Facet
+//	@Field(analyze = Analyze.NO)
+//	public String getPrimaryCategoryDesc() {
+//		 return this.getProduct().getCategories().stream().filter(c -> {
+//							return c.getHierarchy().getCode().equals("PRM01");
+//						}).collect(Collectors.toList()).stream().map(c -> {
+//							return c.getAttributes().stream().filter(ca -> {
+//																				return ca.getLclCd().equals(this.lclCd);
+//																			}).collect(Collectors.toList()).get(0).getCategoryDesc();
+//							
+//						}).collect(Collectors.toList()).get(0);
+//	}
 	
 	public Long getProductId() {
 		return productId;

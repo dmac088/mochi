@@ -14,7 +14,6 @@ import javax.persistence.Transient;
 
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.AnalyzerDiscriminator;
-import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -35,6 +34,10 @@ public class CategoryAttribute {
 	@Field(analyze = Analyze.YES)
 	private String categoryDesc;
 
+	@Transient
+	@Field(analyze = Analyze.NO)
+	private String categoryDescFacet;
+	
 	@Column(name="lcl_cd")	
 	@Field
 	@AnalyzerDiscriminator(impl = LanguageDiscriminator.class)
@@ -59,6 +62,15 @@ public class CategoryAttribute {
 
 	public String getCategoryDesc() {
 		return categoryDesc;
+	}
+	
+	public void setCategoryDesc(String categoryDesc) {
+		this.categoryDesc = categoryDesc;
+		this.categoryDescFacet = categoryDesc;
+	}
+	
+	public String getCategoryDescFacet() {
+		return categoryDescFacet;
 	}
 	
 	public String getLclCd() {
