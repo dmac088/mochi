@@ -50,7 +50,7 @@ class CategorySidebar extends Component {
   }
 
   renderCategoryFacets = (categoryFacets, selectedFacets, props) => {
-
+    console.log(categoryFacets)
     return categoryFacets.map(categoryFacet => {
 
       return(
