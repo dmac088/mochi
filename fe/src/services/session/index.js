@@ -102,6 +102,7 @@ export const authenticate = (customer, onSuccess, onFailure) => {
 		.then ((responseJSON) => {
 			let newstate = _.cloneDeep(session.tokens);
 			newstate['access_token'] =  responseJSON.access_token;
+			newstate['refresh_token'] = responseJSON.refresh_token;
 			persistTokens(newstate);
 		})
 		.then(onRequestSuccess)
