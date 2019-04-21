@@ -21,7 +21,7 @@ public class CustomTokenEnhancer implements TokenEnhancer {
         
         SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss.sssZ"); 
         Calendar calendar = Calendar.getInstance(); // gets a calendar using the default time zone and locale.
-        calendar.add(Calendar.SECOND, 1800);
+        calendar.add(Calendar.SECOND, 30);
         
         ((DefaultOAuth2AccessToken) accessToken).setExpiration(calendar.getTime());
         String expiryDate = formatter.format(calendar.getTime());

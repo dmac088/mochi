@@ -23,6 +23,7 @@ import * as api from './api';
 
 	const onRequestFailed = (exception) => {
 		console.log('request failed!');
+		console.log(exception);
 		session.clearSession();
 		throw exception;
 	};

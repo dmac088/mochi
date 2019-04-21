@@ -215,7 +215,7 @@ public class ProductService implements IProductService {
 		
 		FacetingRequest categoryFacetRequest = productQueryBuilder.facet()
 		.name("CategoryDescFR")
-		.onField("primaryCategory.parent.parent.categoryToken")
+		.onField("primaryCategory.categoryToken")
 		.discrete()
 		.orderedBy(FacetSortOrder.COUNT_DESC)
 		.includeZeroCounts(false)
