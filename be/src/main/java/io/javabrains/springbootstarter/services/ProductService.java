@@ -215,7 +215,7 @@ public class ProductService implements IProductService {
 		
 		FacetingRequest categoryFacetRequest = productQueryBuilder.facet()
 		.name("CategoryDescFR")
-		.onField("primaryCategory.parent.categoryCode")
+		.onField("primaryCategory.parent.parent.categoryToken")
 		.discrete()
 		.orderedBy(FacetSortOrder.COUNT_DESC)
 		.includeZeroCounts(false)
@@ -262,7 +262,7 @@ public class ProductService implements IProductService {
 		
 //		for (ProductAttribute p : results) {
 //			  System.out.println(p);
-//			}
+//		}
 		
 		List<Product> lp = results.stream().map(pa -> this.convertTopDto(pa.getProduct(), lcl, currency)).collect(Collectors.toList());
 		

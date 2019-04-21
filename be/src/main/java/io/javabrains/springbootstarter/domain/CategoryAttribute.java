@@ -10,7 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.AnalyzerDiscriminator;
@@ -34,10 +33,6 @@ public class CategoryAttribute {
 	@Field(analyze = Analyze.YES)
 	private String categoryDesc;
 
-	@Transient
-	@Field(analyze = Analyze.NO)
-	private String categoryDescFacet;
-	
 	@Column(name="lcl_cd")	
 	@Field
 	@AnalyzerDiscriminator(impl = LanguageDiscriminator.class)
@@ -62,15 +57,6 @@ public class CategoryAttribute {
 
 	public String getCategoryDesc() {
 		return categoryDesc;
-	}
-	
-	public void setCategoryDesc(String categoryDesc) {
-		this.categoryDesc = categoryDesc;
-		this.categoryDescFacet = categoryDesc;
-	}
-	
-	public String getCategoryDescFacet() {
-		return categoryDescFacet;
 	}
 	
 	public String getLclCd() {

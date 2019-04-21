@@ -1,5 +1,6 @@
 package io.javabrains.springbootstarter.domain;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -26,6 +27,7 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.common.collect.Lists;
 
 @Entity
 @Table(name = "category", schema = "mochi")
@@ -96,6 +98,24 @@ public class Category {
 	})
 	private List<Category> children;	
 
+	
+	@Field(analyze = Analyze.NO)
+	@Facet
+	public String getCategoryToken() {
+		return createCategoryToken(this, new ArrayList<String>());
+	}
+	
+	
+	private String createCategoryToken(Category category, List<String> lc) {
+		lc.add(category.getCategoryCode());
+		if(category.getParent() == null) {
+			StringBuilder sb = new StringBuilder();
+			Lists.reverse(lc).stream().forEach(s -> sb.append("/").append(s));
+			return sb.toString();
+		}
+		return this.createCategoryToken(category.getParent(), lc);
+		
+	}
 	
 	public Long getChildCategoryCount() {
 		return new Long(this.children.size());
