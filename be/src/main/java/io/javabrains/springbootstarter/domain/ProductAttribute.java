@@ -1,5 +1,6 @@
 package io.javabrains.springbootstarter.domain;
 
+import java.util.List;
 import java.util.stream.Collectors;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -97,6 +98,7 @@ public class ProductAttribute {
 			 return c.getHierarchy().getCode().equals("PRM01");
 		 		}).collect(Collectors.toList()).get(0);
 	}
+	
 	
 	
 	//Primary category hierarchy
