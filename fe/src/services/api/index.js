@@ -16,7 +16,7 @@ export const exceptionExtractError = (exception) => {
 };
 
 export const getParams = (method, headers) => {
-	const { access_token } = sessionSelectors.get().tokens;
+	const { access_token, refresh_token } = sessionSelectors.get().tokens;
 	return {
 					method: method,
 					headers:  _.pickBy({
