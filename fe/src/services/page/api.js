@@ -19,8 +19,8 @@ export const findAll = (locale, currency, category, searchTerm, maxPrice, page, 
 																																+ endPoints.page + page
 																																+ endPoints.size + size
 																																+ endPoints.sort + sort,
+																																[],
 																																{},
-																																{},
-																																'GET',
-																																{}
+																																'POST',
+																																{"Content-Type": "application/json"}
 																															);
