@@ -60,6 +60,9 @@ public class ProductService implements IProductService {
     @Autowired
     private CategoryAttributeRepository productCategoryAttributeRepository;
     
+    @Autowired
+    private CategoryService categoryService;
+    
 	@PersistenceContext(unitName = "mochiEntityManagerFactory")
 	private EntityManager em;
     
@@ -283,8 +286,8 @@ public class ProductService implements IProductService {
 		ResultContainer src = new ResultContainer();
 		
 		//src.setBrandFacets(brandFacets);
-		src.setCategoryFacets(categoryFacets.stream().map(cf -> {
-																return this.convertToCategoryFacetDto(cf, lcl);
+		src.setCategories(categoryFacets.stream().map(cf -> {
+																return categoryService.convertToCategoryDto(productCategoryRepository.findByCategoryCode(cf.getValue()), lcl, currency);
 														}).collect(Collectors.toList())
 							 );
 		src.setProducts(pp);
@@ -346,6 +349,8 @@ public class ProductService implements IProductService {
     	s.remove(0);
     	s.stream().forEach(v -> { 
     								System.out.println(String.join("/", s.subList(0, s.indexOf(v)+1)) + " - " + v + " - " + productCategoryAttributeRepository.findByLclCdAndCategoryCategoryCode(lcl, v).getCategoryDesc());
+    								io.javabrains.springbootstarter.services.Category c = categoryService.convertToCategoryDto(productCategoryRepository.findByCategoryCode(v), lcl, "HKD");
+    								System.out.println(c.getCategoryDesc());
     							});
     	System.out.println("break");
     	return fDto;
