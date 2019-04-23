@@ -45,22 +45,28 @@ class App extends Component {
 
   componentDidMount() {
     console.log("componentDidMount");
-    // Note that subscribe() returns a function for unregistering the listener
     const unsubscribe = store.subscribe(() => {
                                               			if (store.getState().services.persist.isHydrated) {
-                                                      console.log("unregister the listener");
                                               				unsubscribe(); //call
-                                                      console.log("call autoLogin");
-                                              				this.autoLogin()
+                                              				this.autoLogin() //this is async so we need to wait for it, before loading data
+                                                                      //we need to try to login, and either on succeed or failure we load
                                                       .then(() => {
-                                                        const match = matchPath(this.props.location.pathname, {path:'/:locale/:currency', exact: false, strict: false,});
-                                                        //if(!match) { return }
-                                                        const { locale, currency } = match.params;
-                                                        console.log(locale + " - " +  currency)
-                                                        this.refreshData(locale, currency);
+                                                        console.log("autologin worked, refreshing data as with access token");
+                                                        this.initializeData();
+                                                      })
+                                                      .catch(() => {
+                                                        console.log("autologin didn't work, refreshing data as anonymous");
+                                                        this.initializeData();
                                                       });
                                               			}
                                               });
+  }
+
+  initializeData = () => {
+    const match = matchPath(this.props.location.pathname, {path:'/:locale/:currency', exact: false, strict: false,});
+    if(!match) { return }
+    const { locale, currency } = match.params;
+    this.refreshData(locale, currency);
   }
 
   componentDidUpdate(prevProps, prevState) {
