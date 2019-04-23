@@ -1,6 +1,5 @@
 package io.javabrains.springbootstarter.domain;
 
-import java.util.List;
 import java.util.stream.Collectors;
 import javax.persistence.Column;
 import javax.persistence.Entity;
