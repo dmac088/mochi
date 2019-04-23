@@ -58,7 +58,6 @@ public class ProductAttribute {
 	@Column(name="prd_id")
 	private Long productId;
 	
-	
 	@Field(analyze = Analyze.YES)
 	@Column(name="prd_desc")
 	private String productDesc;
@@ -89,7 +88,6 @@ public class ProductAttribute {
 		return this.product.getBrand().getBrandAttributes().stream().filter(b -> b.getLclCd().equals(this.lclCd)).collect(Collectors.toList()).get(0).getBrandDesc();
 	}
 	
-	
 	@Transient
 	@IndexedEmbedded
 	public Category getPrimaryCategory() {
@@ -109,7 +107,6 @@ public class ProductAttribute {
 	public void setProduct(Product product) {
 		this.product = product;
 	}
-
 	
 	public String getProductDesc() {
 		return productDesc;

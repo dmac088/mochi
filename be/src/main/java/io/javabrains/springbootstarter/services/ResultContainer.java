@@ -2,16 +2,16 @@ package io.javabrains.springbootstarter.services;
 
 import java.util.List;
 
-import org.hibernate.search.query.facet.Facet;
+import io.javabrains.springbootstarter.services.CategoryFacet;
 import org.springframework.data.domain.Page;
 
 public class ResultContainer {
 	
 	Page<Product> products;
 	
-	List<Facet> categoryFacets;
+	List<CategoryFacet> categoryFacets;
 	
-	List<Facet> brandFacets;
+	List<CategoryFacet> brandFacets;
 
 	public Page<Product> getProducts() {
 		return products;
@@ -21,22 +21,20 @@ public class ResultContainer {
 		this.products = products;
 	}
 
-	public List<Facet> getCategoryFacets() {
+	public List<CategoryFacet> getCategoryFacets() {
 		return categoryFacets;
 	}
 
-	public void setCategoryFacets(List<Facet> categoryFacets) {
+	public void setCategoryFacets(List<CategoryFacet> categoryFacets) {
 		this.categoryFacets = categoryFacets;
 	}
 
-	public List<Facet> getBrandFacets() {
+	public List<CategoryFacet> getBrandFacets() {
 		return brandFacets;
 	}
 
-	public void setBrandFacets(List<Facet> brandFacets) {
+	public void setBrandFacets(List<CategoryFacet> brandFacets) {
 		this.brandFacets = brandFacets;
 	}
-
-
 	
 }
