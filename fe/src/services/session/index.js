@@ -97,7 +97,6 @@ export const authenticate = (customer, onSuccess, onFailure) => {
 		})
 		.then ((responseJSON) => {
 			const newstate = _.cloneDeep(sessionSelectors.get().tokens);
-			console.log(responseJSON);
 			newstate['access_token'] =  responseJSON.access_token;
 			newstate['refresh_token'] = responseJSON.refresh_token;
 			newstate['authenticated'] = responseJSON.authenticated;
