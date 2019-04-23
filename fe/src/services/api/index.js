@@ -39,11 +39,9 @@ export const fetchApi = (endPoint, payload = {}, formData = {}, method = 'get', 
 
 	(method.toLowerCase() === 'post') ? formBody.push(JSON.stringify(payload)) : formBody.push(null);
 	formBody = formBody.join("&");
-
 	let params = getParams(method, headers);
 	Object.assign(params, (method.toLowerCase() === 'post') && { body: formBody })
 	console.log(apiConfig.url+endPoint);
-	console.log(params);
 	console.log("access_token = " + sessionSelectors.get().tokens.access_token);
 	console.log("refresh_token = " + sessionSelectors.get().tokens.refresh_token);
 	return fetch(apiConfig.url+endPoint, params)
