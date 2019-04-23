@@ -64,8 +64,6 @@ export const authenticate = (customer, onSuccess, onFailure) => {
 
 	export const  persistTokens = (tokens) => {
 	 	store.dispatch(tokenActionCreators.update({"tokens": tokens}));
-	 	//setSessionTimeout(tokens.expires_in);
-		//setSessionTimeout(20000);
 	}
 
 	export const revoke = () => {
