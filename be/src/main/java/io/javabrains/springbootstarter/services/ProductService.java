@@ -232,6 +232,9 @@ public class ProductService implements IProductService {
 				.createFacetingRequest();
 		
 		List<Facet> categoryFacets = new ArrayList<Facet>(), brandFacets = new ArrayList<Facet>(); 
+		//we can add metadata to our facets by converting them to FacetDTOs and enriching with other attributes
+		
+		
 		FacetManager facetMgr = jpaQuery.getFacetManager();
 		facetMgr.enableFaceting(categoryFacetRequest);
 		categoryFacets.addAll(facetMgr.getFacets("CategoryDescFR"));
