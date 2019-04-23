@@ -47,22 +47,23 @@ class App extends Component {
     console.log("componentDidMount");
     const unsubscribe = store.subscribe(() => {
                                               			if (store.getState().services.persist.isHydrated) {
-                                              				unsubscribe(); //call
-                                              				this.autoLogin() //this is async so we need to wait for it, before loading data
-                                                                      //we need to try to login, and either on succeed or failure we load
+                                              				unsubscribe();
+                                              				this.autoLogin()
                                                       .then(() => {
-                                                        console.log("autologin worked, refreshing data as with access token");
-                                                        this.initializeData();
+                                                        console.log("autologin worked, refreshing access token with found refresh token");
                                                       })
-                                                      .catch(() => {
-                                                        console.log("autologin didn't work, refreshing data as anonymous");
-                                                        this.initializeData();
+                                                      .catch((e) => {
+                                                        console.log("autologin didn't work, no refresh token found on the client!");
+
+                                                      })
+                                                      .finally(() => {
+                                                        this.initialize();
                                                       });
                                               			}
                                               });
   }
 
-  initializeData = () => {
+  initialize = () => {
     const match = matchPath(this.props.location.pathname, {path:'/:locale/:currency', exact: false, strict: false,});
     if(!match) { return }
     const { locale, currency } = match.params;
