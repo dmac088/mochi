@@ -1,7 +1,7 @@
 package io.javabrains.springbootstarter.services;
 
 
-public class CustomFacet {
+public class Facet {
 
 	private String facetingName;
 	
