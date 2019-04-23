@@ -101,6 +101,7 @@ export const authenticate = (customer, onSuccess, onFailure) => {
 			newstate['refresh_token'] = responseJSON.refresh_token;
 			newstate['authenticated'] = responseJSON.authenticated;
 			newstate['expires_in'] = responseJSON.expires_in;
+			newstate['token_type'] = responseJSON.token_type;
 			persistTokens(newstate);
 		})
 		.then(onRequestSuccess)
