@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
@@ -25,6 +26,9 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import com.google.common.collect.Lists;
+
 import org.springframework.data.domain.Sort;
 import io.javabrains.springbootstarter.domain.PageableUtil;
 import io.javabrains.springbootstarter.services.Product;
@@ -337,9 +341,11 @@ public class ProductService implements IProductService {
     	fDto.setFacetingName(f.getFacetingName());
     	fDto.setFacetFieldName(f.getFieldName());
     	fDto.setValue(f.getValue());
-    	List<String> s = new ArrayList<String>(Arrays.asList(f.getValue().split("/")));
-    	s.remove(s.get(0));
-    	s.stream().forEach(v -> System.out.println(v));
+    	List<String> s = new LinkedList<String>(Arrays.asList(f.getValue().split("/")));
+    	s.remove(0);
+    	Lists.reverse(s).stream().forEach(v -> { 
+    								System.out.println(v);
+    							});
     	return fDto;
     }
     
