@@ -2,8 +2,6 @@ package io.javabrains.springbootstarter.domain;
 
 
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +16,7 @@ public class CategoryAttributeService {
 		return categoryAttributeRepository.findByLclCd(lcl);
 	}
 	
-	public Optional<CategoryAttribute> getCategoryAttribute(String lcl, Long id) {
+	public CategoryAttribute getCategoryAttribute(String lcl, Long id) {
 		return categoryAttributeRepository.findByLclCdAndCategoryId(lcl, id);
 	}
 	
