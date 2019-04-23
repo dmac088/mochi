@@ -69,11 +69,13 @@ class Accordion extends React.Component {
 
   componentWillEnter (callback) {
     const element = ReactDOM.findDOMNode(this.container);
+    if(!element) { return }
     Velocity(element, 'slideDown', { duration: 1000 }).then(callback);
   }
 
   componentWillLeave (callback) {
     const element = ReactDOM.findDOMNode(this.container);
+    if(!element) { return }
     Velocity(element, 'slideUp', { duration: 1000 }).then(callback);
   }
 

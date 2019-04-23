@@ -99,10 +99,12 @@ class BrandMenu extends Component {
   }
 
   componentWillEnter (callback) {
+    if(!this.container) { return }
     slide(this.container, 'slideDown', null, callback);
   }
 
   componentWillLeave (callback) {
+    if(!this.container) { return }
     slide(this.container, 'slideUp', null, callback);
   }
 
