@@ -5,6 +5,7 @@ import * as sessionSelectors from './selectors';
 import * as tokenActionCreators from './actions';
 import * as customerActionCreators from '../customer/actions';
 import * as customerService from '../customer';
+import * as sessionReducer from './reducer';
 import _ from 'lodash';
 
 const SESSION_TIMEOUT_THRESHOLD = 300; // Will refresh the access token 5 minutes before it expires
@@ -25,10 +26,7 @@ export const authenticate = (customer, onSuccess, onFailure) => {
 		 api.authenticate(customer.userName, customer.password)
 		.then((response) => {
 			if(response.status === 400) {
-				console.log('Invalid username or password')
-
-				//we force the catch when the username or password are invalid
-				//but the message could/should come from the server
+				console.log('Invalid username or password');
 				onFailure();
 				throw response;
 			};
@@ -84,23 +82,26 @@ export const authenticate = (customer, onSuccess, onFailure) => {
 	};
 
 	export const refreshToken = () => {
-		const session = sessionSelectors.get();
+		console.log("refreshToken");
 
-		if (!session.tokens.refresh_token || !session.tokens.userName) {
+		if (!sessionSelectors.get().tokens.refresh_token || !sessionSelectors.get().tokens.userName) {
+			persistTokens(sessionReducer.initialState);
 			return Promise.reject();
 		}
-
-		return api.refresh(session.tokens.refresh_token)
+		return api.refresh(sessionSelectors.get().tokens.refresh_token)
 		.then((response) => {
-			return response.text()
+			return response.text();
 		})
 		.then((responseText) => {
 			 return JSON.parse(responseText);
 		})
 		.then ((responseJSON) => {
-			let newstate = _.cloneDeep(session.tokens);
+			const newstate = _.cloneDeep(sessionSelectors.get().tokens);
+			console.log(responseJSON);
 			newstate['access_token'] =  responseJSON.access_token;
 			newstate['refresh_token'] = responseJSON.refresh_token;
+			newstate['authenticated'] = responseJSON.authenticated;
+			newstate['expires_in'] = responseJSON.expires_in;
 			persistTokens(newstate);
 		})
 		.then(onRequestSuccess)

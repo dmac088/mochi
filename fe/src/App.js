@@ -51,14 +51,16 @@ class App extends Component {
                                                       console.log("unregister the listener");
                                               				unsubscribe(); //call
                                                       console.log("call autoLogin");
-                                              				this.autoLogin();
+                                              				this.autoLogin()
+                                                      .then(() => {
+                                                        const match = matchPath(this.props.location.pathname, {path:'/:locale/:currency', exact: false, strict: false,});
+                                                        //if(!match) { return }
+                                                        const { locale, currency } = match.params;
+                                                        console.log(locale + " - " +  currency)
+                                                        this.refreshData(locale, currency);
+                                                      });
                                               			}
                                               });
-
-    const match = matchPath(this.props.location.pathname, {path:'/:locale/:currency', exact: false, strict: false,});
-    if(!match) { return }
-    const { locale, currency } = match.params;
-    this.refreshData(locale, currency);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -157,14 +159,9 @@ class App extends Component {
     });
   }
 
-  autoLogin = () =>  {
-    sessionService.refreshToken().then(() => {
-   //this.setState({ initialRoute: routeStack[0] });
-    }).catch(() => {
-   //move to error
-   //this.setState({ initialRoute: routeStack[0] });
-    });
-  }
+  autoLogin = () =>
+    sessionService.refreshToken();
+
 
   toggleQuickView = (e) => {
     e.preventDefault();
