@@ -1,13 +1,15 @@
 package io.javabrains.springbootstarter.services;
 
 
-public class Facet {
+public class CategoryFacet {
 
 	private String facetingName;
 	
 	private String facetFieldName;
 
 	private String value;
+	
+	private CategoryFacet parent;
 
 	public String getFacetingName() {
 		return facetingName;
@@ -31,6 +33,14 @@ public class Facet {
 
 	public void setValue(String value) {
 		this.value = value;
+	}
+	
+	public CategoryFacet getParent() {
+		return parent;
+	}
+
+	public void setParent(CategoryFacet parent) {
+		this.parent = parent;
 	}
 
 }
