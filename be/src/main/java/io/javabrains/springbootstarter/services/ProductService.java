@@ -26,15 +26,13 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import com.google.common.collect.Lists;
-
 import org.springframework.data.domain.Sort;
 import io.javabrains.springbootstarter.domain.PageableUtil;
 import io.javabrains.springbootstarter.services.Product;
 import io.javabrains.springbootstarter.domain.ProductAttribute;
 import io.javabrains.springbootstarter.domain.ProductAttributeRepository;
 import io.javabrains.springbootstarter.domain.Category;
+import io.javabrains.springbootstarter.domain.CategoryAttributeRepository;
 import io.javabrains.springbootstarter.domain.CategoryRepository;
 import io.javabrains.springbootstarter.domain.ProductPagingAndSortingRepository;
 import io.javabrains.springbootstarter.domain.ProductPriceRepository;
@@ -58,6 +56,9 @@ public class ProductService implements IProductService {
     
     @Autowired
     private CategoryRepository productCategoryRepository;
+    
+    @Autowired
+    private CategoryAttributeRepository productCategoryAttributeRepository;
     
 	@PersistenceContext(unitName = "mochiEntityManagerFactory")
 	private EntityManager em;
@@ -283,7 +284,7 @@ public class ProductService implements IProductService {
 		
 		//src.setBrandFacets(brandFacets);
 		src.setCategoryFacets(categoryFacets.stream().map(cf -> {
-																return this.convertToCategoryFacetDto(cf);
+																return this.convertToCategoryFacetDto(cf, lcl);
 														}).collect(Collectors.toList())
 							 );
 		src.setProducts(pp);
@@ -336,16 +337,17 @@ public class ProductService implements IProductService {
     	pc.getChildren().forEach(child -> recurseCategories(pcl, child));
     }
     
-    public io.javabrains.springbootstarter.services.CategoryFacet convertToCategoryFacetDto(Facet f) {
+    public io.javabrains.springbootstarter.services.CategoryFacet convertToCategoryFacetDto(Facet f, String lcl) {
     	io.javabrains.springbootstarter.services.CategoryFacet fDto = new io.javabrains.springbootstarter.services.CategoryFacet();
     	fDto.setFacetingName(f.getFacetingName());
     	fDto.setFacetFieldName(f.getFieldName());
     	fDto.setValue(f.getValue());
     	List<String> s = new LinkedList<String>(Arrays.asList(f.getValue().split("/")));
     	s.remove(0);
-    	Lists.reverse(s).stream().forEach(v -> { 
-    								System.out.println(v);
+    	s.stream().forEach(v -> { 
+    								System.out.println(String.join("/", s.subList(0, s.indexOf(v)+1)) + " - " + v + " - " + productCategoryAttributeRepository.findByLclCdAndCategoryCategoryCode(lcl, v).getCategoryDesc());
     							});
+    	System.out.println("break");
     	return fDto;
     }
     

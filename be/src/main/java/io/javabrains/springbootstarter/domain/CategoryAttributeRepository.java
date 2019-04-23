@@ -2,7 +2,6 @@ package io.javabrains.springbootstarter.domain;
 
 
 import java.util.List;
-import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
 
 public interface CategoryAttributeRepository extends CrudRepository<CategoryAttribute, Long> {
@@ -11,7 +10,9 @@ public interface CategoryAttributeRepository extends CrudRepository<CategoryAttr
 	
 	List<CategoryAttribute> findByLclCd(String lcl);
 
-	Optional<CategoryAttribute> findByLclCdAndCategoryId(String lcl, Long categoryId);
+	CategoryAttribute findByLclCdAndCategoryId(String lcl, Long categoryId);
+	
+	CategoryAttribute findByLclCdAndCategoryCategoryCode(String lcl, String categoryCode);
 	
 	List<CategoryAttribute> findByLclCdAndCategoryParentCategoryId(String lcl, Long categoryId);
 
