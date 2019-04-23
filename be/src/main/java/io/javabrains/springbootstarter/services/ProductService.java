@@ -175,7 +175,7 @@ public class ProductService implements IProductService {
 		return rc;
 	}
 
-	public ResultContainer findProduct(String lcl, String currency, String categoryDesc, String searchTerm, int page, int size, String sortBy, CustomFacet[] selectedFacets) {
+	public ResultContainer findProduct(String lcl, String currency, String categoryDesc, String searchTerm, int page, int size, String sortBy, io.javabrains.springbootstarter.services.Facet[] selectedFacets) {
 
 		System.out.println(lcl);
 		
