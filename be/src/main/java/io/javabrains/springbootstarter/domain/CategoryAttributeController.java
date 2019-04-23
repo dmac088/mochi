@@ -26,7 +26,7 @@ public class CategoryAttributeController {
 	
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.GET, value="/CategoryAttribute/{lcl}/{id}")
-	public Optional<CategoryAttribute> getCategoryAttribute(@PathVariable String lcl, @PathVariable Long id) {
+	public CategoryAttribute getCategoryAttribute(@PathVariable String lcl, @PathVariable Long id) {
 		return categoryAttributeService.getCategoryAttribute(lcl, id);
 	}
 	
