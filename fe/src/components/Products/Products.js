@@ -117,11 +117,10 @@ class Products extends Component {
       });
      })
       .then(() => {
-        console.log(this.state.categoryFacets);
-        // this.props.history.push({
-        //   "pathname": pathname,
-        //   "search": qs.stringify(params),
-        // });
+        this.props.history.push({
+          "pathname": pathname,
+          "search": qs.stringify(params),
+        });
     })
     .catch(()=>{
         console.log('failed!');
