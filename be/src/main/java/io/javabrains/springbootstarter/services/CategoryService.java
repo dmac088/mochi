@@ -92,7 +92,7 @@ public class CategoryService implements ICategoryService {
     }
     
  	@Cacheable
-    private Category convertToCategoryDto(final io.javabrains.springbootstarter.domain.Category pc, final String lcl, final String currency) {
+    public Category convertToCategoryDto(final io.javabrains.springbootstarter.domain.Category pc, final String lcl, final String currency) {
     	
  		//create a new product DTO
         final Category pcDto = new Category();
@@ -120,7 +120,6 @@ public class CategoryService implements ICategoryService {
         catBrands.forEach(b -> b.setProductCount(productRepository.countByCategoriesCategoryCodeAndBrandBrandCode(pcDto.getCategoryCode(), b.getBrandCode())));
         catBrands.forEach(b -> b.setMaxMarkDownPrice(productRepository.maxMarkDownPriceByCategoriesCategoryCodeAndBrandBrandCodeAndPriceCurrencyCode(pcDto.getCategoryCode(), b.getBrandCode(), currency)));
         pcDto.setCategoryBrands(catBrands);
-        
        
         //set the parentId
         if(!(pc.getParent() == null)) {

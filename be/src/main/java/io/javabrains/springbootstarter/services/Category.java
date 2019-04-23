@@ -22,6 +22,8 @@ public class Category {
 	private Long landingDisplay;
 	
 	private String categoryType;
+	
+	private String categoryToken;
 
 	private String lclCd;
 	
@@ -166,6 +168,14 @@ public class Category {
 
 	public void setLayouts(List<Layout> layouts) {
 		this.layouts = layouts;
+	}
+	
+	public String getCategoryToken() {
+		return categoryToken;
+	}
+
+	public void setCategoryToken(String categoryToken) {
+		this.categoryToken = categoryToken;
 	}
 
 	@Override

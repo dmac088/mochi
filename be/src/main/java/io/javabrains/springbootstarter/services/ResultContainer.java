@@ -9,9 +9,9 @@ public class ResultContainer {
 	
 	Page<Product> products;
 	
-	List<CategoryFacet> categoryFacets;
+	List<Category> categories;
 	
-	List<CategoryFacet> brandFacets;
+	//List<CategoryFacet> brandFacets;
 
 	public Page<Product> getProducts() {
 		return products;
@@ -21,20 +21,12 @@ public class ResultContainer {
 		this.products = products;
 	}
 
-	public List<CategoryFacet> getCategoryFacets() {
-		return categoryFacets;
+	public List<Category> getCategories() {
+		return categories;
 	}
 
-	public void setCategoryFacets(List<CategoryFacet> categoryFacets) {
-		this.categoryFacets = categoryFacets;
-	}
-
-	public List<CategoryFacet> getBrandFacets() {
-		return brandFacets;
-	}
-
-	public void setBrandFacets(List<CategoryFacet> brandFacets) {
-		this.brandFacets = brandFacets;
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
 	}
 	
 }
