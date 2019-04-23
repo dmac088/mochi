@@ -94,6 +94,7 @@ public class CategoryService implements ICategoryService {
  	@Cacheable
     private Category convertToCategoryDto(final io.javabrains.springbootstarter.domain.Category pc, final String lcl, final String currency) {
     	
+ 		//create a new product DTO
         final Category pcDto = new Category();
         pcDto.setCategoryId(pc.getCategoryId());
         pcDto.setCategoryCode(pc.getCategoryCode());
@@ -106,7 +107,6 @@ public class CategoryService implements ICategoryService {
         //set the brand attributes of all products within the category, to the localized version
         Set<Brand> catBrands = pc.getProducts().stream().map(p -> this.convertToBrandDto(p.getBrand(), pc.getCategoryCode(), lcl)).collect(Collectors.toSet());
        		
-        
         //create the child objects and add to children collection
         List<Category> pcDTOl =
         pc.getChildren().stream().map(pc1 -> {
@@ -116,6 +116,7 @@ public class CategoryService implements ICategoryService {
         }).collect(Collectors.toList());
         pcDto.setChildren(pcDTOl);
         
+        //get the counts for the brands within the category
         catBrands.forEach(b -> b.setProductCount(productRepository.countByCategoriesCategoryCodeAndBrandBrandCode(pcDto.getCategoryCode(), b.getBrandCode())));
         catBrands.forEach(b -> b.setMaxMarkDownPrice(productRepository.maxMarkDownPriceByCategoriesCategoryCodeAndBrandBrandCodeAndPriceCurrencyCode(pcDto.getCategoryCode(), b.getBrandCode(), currency)));
         pcDto.setCategoryBrands(catBrands);
@@ -125,6 +126,7 @@ public class CategoryService implements ICategoryService {
         if(!(pc.getParent() == null)) {
         	pcDto.setParentId(pc.getParent().getCategoryId());
         }
+        
         pcDto.setCategoryDesc(pc.getAttributes().stream()
         		.filter( pa -> pa.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getCategoryDesc());
         pcDto.setLclCd(lcl);
