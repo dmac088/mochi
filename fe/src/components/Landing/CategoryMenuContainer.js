@@ -203,7 +203,7 @@ class CategoryMenuItem extends Component {
               onClick={(e) => {
                           if ((e.target.tagName.toLowerCase() === "i")) {return}
                           changeCategory(e, routeProps )
-                        }} 
+                        }}
               className={"megamenu-head"}
               style={(isMobile)
                      ? {"--my-cat-indent": this.getIndent(category.categoryLevel)}
@@ -241,10 +241,12 @@ class CategoryMenuItem extends Component {
 class CategoryMenuItemSubList extends Component {
 
   componentWillEnter (callback) {
+    if(!this.container) { return }
     slide(this.container, 'slideDown', { duration: 500 , "display":""}, callback);
   }
 
   componentWillLeave (callback) {
+    if(!this.container) { return }
     slide(this.container, 'slideUp', null, callback);
   }
 
