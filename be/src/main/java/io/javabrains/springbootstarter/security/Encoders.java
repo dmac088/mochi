@@ -11,13 +11,17 @@ public class Encoders {
 	public final static int userRounds = 8;
 	public final static int clientRounds = 4;
 	
+	private transient BCryptPasswordEncoder clientPasswordEncoder = new BCryptPasswordEncoder(clientRounds);
+	
+	private transient BCryptPasswordEncoder userPasswordEncoder = new BCryptPasswordEncoder(userRounds);
+	
     @Bean
     public PasswordEncoder oauthClientPasswordEncoder() {
-        return new BCryptPasswordEncoder(clientRounds);
+        return clientPasswordEncoder;
     }
     
     @Bean(name = "userPasswordEncoder")
     public PasswordEncoder userPasswordEncoder() {
-        return new BCryptPasswordEncoder(userRounds);
+        return userPasswordEncoder;
     }
 }  
