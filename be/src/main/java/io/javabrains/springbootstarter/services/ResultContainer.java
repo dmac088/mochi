@@ -1,8 +1,6 @@
 package io.javabrains.springbootstarter.services;
 
 import java.util.List;
-
-import io.javabrains.springbootstarter.services.CategoryFacet;
 import org.springframework.data.domain.Page;
 
 public class ResultContainer {
