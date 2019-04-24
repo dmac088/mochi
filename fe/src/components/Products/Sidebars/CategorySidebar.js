@@ -59,7 +59,7 @@ class CategorySidebar extends Component {
                                 e.preventDefault();
                                 this.applyFacet(e, props);
                              }} id={categoryFacet.categoryDesc} href="#">
-            {categoryFacet.categoryDesc} <span className="badge badge-pill badge-secondary">{categoryFacet.count}</span>
+            {categoryFacet.categoryDesc} <span className="badge badge-pill badge-secondary">{categoryFacet.facetCount}</span>
           </a>
         </li>
       );
