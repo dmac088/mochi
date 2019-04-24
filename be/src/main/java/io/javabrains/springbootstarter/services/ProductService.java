@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -32,7 +34,6 @@ import io.javabrains.springbootstarter.services.Product;
 import io.javabrains.springbootstarter.domain.ProductAttribute;
 import io.javabrains.springbootstarter.domain.ProductAttributeRepository;
 import io.javabrains.springbootstarter.domain.Category;
-import io.javabrains.springbootstarter.domain.CategoryAttributeRepository;
 import io.javabrains.springbootstarter.domain.CategoryRepository;
 import io.javabrains.springbootstarter.domain.ProductPagingAndSortingRepository;
 import io.javabrains.springbootstarter.domain.ProductPriceRepository;
@@ -56,9 +57,6 @@ public class ProductService implements IProductService {
     
     @Autowired
     private CategoryRepository productCategoryRepository;
-    
-    @Autowired
-    private CategoryAttributeRepository productCategoryAttributeRepository;
     
     @Autowired
     private CategoryService categoryService;
@@ -186,8 +184,6 @@ public class ProductService implements IProductService {
 
 	public ResultContainer findProduct(String lcl, String currency, String categoryDesc, String searchTerm, int page, int size, String sortBy, io.javabrains.springbootstarter.services.CategoryFacet[] selectedFacets) {
 
-		System.out.println(lcl);
-		
 		PageableUtil pageableUtil = new PageableUtil();
 		
 		FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
@@ -223,13 +219,13 @@ public class ProductService implements IProductService {
 		
 		
 		FacetingRequest categoryFacetRequest = productQueryBuilder.facet()
-		.name("CategoryDescFR")
-		.onField("primaryCategory.categoryToken")
-		.discrete()
-		.orderedBy(FacetSortOrder.COUNT_DESC)
-		.includeZeroCounts(false)
-		.maxFacetCount(5)
-		.createFacetingRequest();
+				.name("CategoryDescFR")
+				.onField("primaryCategory.categoryToken")
+				.discrete()
+				.orderedBy(FacetSortOrder.COUNT_DESC)
+				.includeZeroCounts(false)
+				.maxFacetCount(5)
+				.createFacetingRequest();
 		
 		FacetingRequest brandFacetRequest = productQueryBuilder.facet()
 				.name("BrandDescFR")
@@ -271,25 +267,19 @@ public class ProductService implements IProductService {
 		
 		@SuppressWarnings("unchecked")
 		List<ProductAttribute> results =  Collections.checkedList(jpaQuery.getResultList(), ProductAttribute.class);
-		
-//		for (ProductAttribute p : results) {
-//			  System.out.println(p);
-//		}
-		
+	
 		List<Product> lp = results.stream().map(pa -> this.convertToProductDto(pa.getProduct(), lcl, currency)).collect(Collectors.toList());
 		
-		
 		Page<Product> pp = new PageImpl<Product>(lp, pageable, jpaQuery.getResultSize());
-		
 		
 		//these need to be transformed into FacetDTOs
 		ResultContainer src = new ResultContainer();
 		
-		//src.setBrandFacets(brandFacets);
-		src.setCategories(categoryFacets.stream().map(cf -> {
-																return categoryService.convertToCategoryDto(productCategoryRepository.findByCategoryCode(cf.getValue()), lcl, currency);
-														}).collect(Collectors.toList())
-							 );
+		Set<io.javabrains.springbootstarter.services.Category> s = new HashSet<io.javabrains.springbootstarter.services.Category>();
+		categoryFacets.stream().forEach(cf -> s.addAll(convertToCategoryDtoSet(cf, lcl, currency)));
+		
+		src.setCategories(new ArrayList<io.javabrains.springbootstarter.services.Category>(s));
+		
 		src.setProducts(pp);
 		
 		return src;
@@ -340,20 +330,19 @@ public class ProductService implements IProductService {
     	pc.getChildren().forEach(child -> recurseCategories(pcl, child));
     }
     
-    public io.javabrains.springbootstarter.services.CategoryFacet convertToCategoryFacetDto(Facet f, String lcl) {
-    	io.javabrains.springbootstarter.services.CategoryFacet fDto = new io.javabrains.springbootstarter.services.CategoryFacet();
-    	fDto.setFacetingName(f.getFacetingName());
-    	fDto.setFacetFieldName(f.getFieldName());
-    	fDto.setValue(f.getValue());
+    public Set<io.javabrains.springbootstarter.services.Category> convertToCategoryDtoSet(Facet f, String lcl, String currency) {
+    	Set<io.javabrains.springbootstarter.services.Category> sc = new HashSet<io.javabrains.springbootstarter.services.Category>();
     	List<String> s = new LinkedList<String>(Arrays.asList(f.getValue().split("/")));
     	s.remove(0);
     	s.stream().forEach(v -> { 
-    								System.out.println(String.join("/", s.subList(0, s.indexOf(v)+1)) + " - " + v + " - " + productCategoryAttributeRepository.findByLclCdAndCategoryCategoryCode(lcl, v).getCategoryDesc());
-    								io.javabrains.springbootstarter.services.Category c = categoryService.convertToCategoryDto(productCategoryRepository.findByCategoryCode(v), lcl, "HKD");
-    								System.out.println(c.getCategoryDesc());
+    							io.javabrains.springbootstarter.services.Category c = categoryService.convertToCategoryDto(productCategoryRepository.findByCategoryCode(v), lcl, currency);
+    							//add the token to CategoryDTO
+    							c.setCategoryToken("/" + String.join("/", s.subList(0, s.indexOf(v)+1)));
+    							c.setFacet(true);
+    							sc.add(c);
     							});
-    	System.out.println("break");
-    	return fDto;
+
+    	return sc;
     }
     
     public Product convertToProductDto(final io.javabrains.springbootstarter.domain.Product product, String lcl, String currency) {

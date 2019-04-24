@@ -1,6 +1,5 @@
 package io.javabrains.springbootstarter.services;
 
-
 public class CategoryFacet {
 
 	private String facetingName;

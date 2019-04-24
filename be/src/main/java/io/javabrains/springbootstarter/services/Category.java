@@ -15,14 +15,10 @@ public class Category {
 	
 	private Long categoryLevel;
 	
-	private Long categoryPreview;
-	
-	private Long categoryMenu;
-	
-	private Long landingDisplay;
-	
 	private String categoryType;
 	
+	private boolean isFacet;
+
 	private String categoryToken;
 
 	private String lclCd;
@@ -80,30 +76,6 @@ public class Category {
 
 	public void setLclCd(String lclCd) {
 		this.lclCd = lclCd;
-	}
-	
-	public Long getCategoryPreview() {
-		return categoryPreview;
-	}
-
-	public void setCategoryPreview(Long categoryPreview) {
-		this.categoryPreview = categoryPreview;
-	}
-	
-	public Long getCategoryMenu() {
-		return categoryMenu;
-	}
-
-	public void setCategoryMenu(Long categoryMenu) {
-		this.categoryMenu = categoryMenu;
-	}
-	
-	public Long getLandingDisplay() {
-		return landingDisplay;
-	}
-
-	public void setLandingDisplay(Long landingDisplay) {
-		this.landingDisplay = landingDisplay;
 	}
 
 	public Long getParentId() {
@@ -177,6 +149,14 @@ public class Category {
 	public void setCategoryToken(String categoryToken) {
 		this.categoryToken = categoryToken;
 	}
+	
+	public boolean isFacet() {
+		return isFacet;
+	}
+
+	public void setFacet(boolean isFacet) {
+		this.isFacet = isFacet;
+	}
 
 	@Override
 	public boolean equals(Object o) {
@@ -198,7 +178,6 @@ public class Category {
         .append(categoryId)
         .append(", categoryCode=").append(categoryCode)
         .append(", categoryDesc=").append(categoryDesc)
-        .append(", categoryPreview=").append(categoryPreview)
         .append(", lclCd=").append(lclCd);
         return builder.toString();
     }
