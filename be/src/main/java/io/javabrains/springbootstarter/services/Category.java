@@ -19,7 +19,9 @@ public class Category {
 	
 	private boolean isFacet;
 
-	private String categoryToken;
+	private String categoryFacetToken;
+	
+	private Long categoryFacetCount;
 
 	private String lclCd;
 	
@@ -86,28 +88,12 @@ public class Category {
 		this.parentId = parentId;
 	}
 	
-	public List<Category> getChildren() {
-		return children;
-	}
-
-	public void setChildren(List<Category> children) {
-		this.children = children;
-	}
-	
 	public Long getChildCategoryCount() {
 		return childCategoryCount;
 	}
 
 	public void setChildCategoryCount(Long childCategoryCount) {
 		this.childCategoryCount = childCategoryCount;
-	}
-
-	public Set<Brand> getCategoryBrands() {
-		return categoryBrands;
-	}
-
-	public void setCategoryBrands(Set<Brand> set) {
-		this.categoryBrands = set;
 	}
 	
 	public Long getProductCount() {
@@ -142,12 +128,12 @@ public class Category {
 		this.layouts = layouts;
 	}
 	
-	public String getCategoryToken() {
-		return categoryToken;
+	public String getFacetToken() {
+		return categoryFacetToken;
 	}
 
-	public void setCategoryToken(String categoryToken) {
-		this.categoryToken = categoryToken;
+	public void setFacetToken(String categoryToken) {
+		this.categoryFacetToken = categoryToken;
 	}
 	
 	public boolean isFacet() {
@@ -156,6 +142,30 @@ public class Category {
 
 	public void setFacet(boolean isFacet) {
 		this.isFacet = isFacet;
+	}
+
+	public Long getFacetCount() {
+		return categoryFacetCount;
+	}
+
+	public void setFacetCount(Long categoryFacetCount) {
+		this.categoryFacetCount = categoryFacetCount;
+	}
+	
+	public List<Category> getChildren() {
+		return children;
+	}
+
+	public void setChildren(List<Category> children) {
+		this.children = children;
+	}
+	
+	public Set<Brand> getCategoryBrands() {
+		return categoryBrands;
+	}
+
+	public void setCategoryBrands(Set<Brand> set) {
+		this.categoryBrands = set;
 	}
 
 	@Override
