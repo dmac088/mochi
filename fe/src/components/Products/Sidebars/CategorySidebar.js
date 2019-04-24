@@ -54,12 +54,12 @@ class CategorySidebar extends Component {
     return categoryFacets.map(categoryFacet => {
 
       return(
-        <li key={categoryFacet.value}>
+        <li key={categoryFacet.categoryId}>
           <a className={(this.isActive(categoryFacet, selectedFacets)) ? "active" : ""} onClick={(e) => {
                                 e.preventDefault();
                                 this.applyFacet(e, props);
-                             }} id={categoryFacet.value} href="#">
-            {categoryFacet.value} <span className="badge badge-pill badge-secondary">{categoryFacet.count}</span>
+                             }} id={categoryFacet.categoryDesc} href="#">
+            {categoryFacet.categoryDesc} <span className="badge badge-pill badge-secondary">{categoryFacet.count}</span>
           </a>
         </li>
       );
