@@ -10,7 +10,7 @@ class CategorySidebar extends Component {
     super(props);
     this.state = {
       "categoryFacets": null,
-      "selectedFacets":  null,
+      "selectedFacets":  [],
     };
   }
 
@@ -28,7 +28,6 @@ class CategorySidebar extends Component {
   }
 
   applyFacet = (e, props) => {
-    if(!this.state.selectedFacets) { return }
     console.log(this.state.selectedFacets);
     if(this.state.selectedFacets.find(o => o.facetToken === e.currentTarget.facetToken)) {
         this.setState({
@@ -39,7 +38,7 @@ class CategorySidebar extends Component {
         return;
     }
     const newSelectedFacets = _.cloneDeep(this.state.selectedFacets, true);
-    newSelectedFacets.push(this.state.categoryFacets.filter(o => o.value === e.currentTarget.id)[0]);
+    newSelectedFacets.push(this.state.categoryFacets.filter(o => o.facetToken === e.currentTarget.id)[0]);
     this.setState({
       "selectedFacets": newSelectedFacets,
     }, () => {
@@ -48,15 +47,13 @@ class CategorySidebar extends Component {
   }
 
   isActive = (categoryFacet, selectedFacets) => {
-    if(!selectedFacets) { return }
-    if(!categoryFacet) { return }
+    //console.log(categoryFacet);
+    //console.log(selectedFacets);
     return (selectedFacets.find(o => o.facetToken === categoryFacet.facetToken));
   }
 
   renderCategoryFacets = (categoryFacets, selectedFacets, props) => {
-    console.log(categoryFacets)
     return categoryFacets.map(categoryFacet => {
-
       return(
         <li key={categoryFacet.categoryId}>
           <a className={(this.isActive(categoryFacet, selectedFacets)) ? "active" : ""} onClick={(e) => {
