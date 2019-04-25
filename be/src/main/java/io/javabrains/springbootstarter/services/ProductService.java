@@ -19,6 +19,7 @@ import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.hibernate.search.query.engine.spi.FacetManager;
 import org.hibernate.search.query.facet.Facet;
+import org.hibernate.search.query.facet.FacetSelection;
 import org.hibernate.search.query.facet.FacetSortOrder;
 import org.hibernate.search.query.facet.FacetingRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -182,6 +183,7 @@ public class ProductService implements IProductService {
 	}
 
 	//@Cacheable
+	@SuppressWarnings("unchecked")
 	public ResultContainer findProduct(String lcl, String currency, String categoryDesc, String searchTerm, int page, int size, String sortBy, CategoryFacet[] selectedFacets) {		
 		Arrays.asList(selectedFacets).stream().forEach(f -> {
 															System.out.println(f.getDesc());
@@ -220,38 +222,8 @@ public class ProductService implements IProductService {
 		org.hibernate.search.jpa.FullTextQuery jpaQuery
 		  = fullTextEntityManager.createFullTextQuery(searchQuery, ProductAttribute.class);
 		
-	
-//		FacetingRequest brandFacetRequest = productQueryBuilder.facet()
-//				.name("BrandDescFR")
-//				.onField("brandDesc")
-//				.discrete()
-//				.orderedBy(FacetSortOrder.COUNT_DESC)
-//				.includeZeroCounts(false)
-//				.maxFacetCount(5)
-//				.createFacetingRequest();
-		
-		
-
-		
-		//List<Facet> brandFacets = new ArrayList<Facet>();
-		//we can add metadata to our facets by converting them to FacetDTOs and enriching with other attributes
-		
-
-		//facetMgr.enableFaceting(brandFacetRequest);
-		//brandFacets.addAll(facetMgr.getFacets("BrandDescFR"));
-		
-//		filtering on a specific facet is as easy as..... 
-//		FacetSelection facetSelection = facetMgr.getFacetGroup("BrandDescFR");
-//		Facet facet = facets.stream().filter(f -> f.getValue().equals("Driscolls")).collect(Collectors.toList()).get(0);
-//		facetSelection.selectFacets(facet);
-		
-//		facets.stream().forEach(f -> { 
-//								System.out.println("Facet field = " +  f.getFieldName() + " value = " + f.getValue() + " - count = " + f.getCount());
-//							});
-//		
-		
-		//declare a list of facets
-		List<Facet> categoryFacets = new ArrayList<Facet>(); 
+		//declare a set of facets (we need to avoid Duplicates)
+		Set<Facet> categoryFacets = new HashSet<Facet>(); 
 		
 		//create a category faceting request for the base level 
 		FacetingRequest categoryFacetRequest = productQueryBuilder.facet()
@@ -262,30 +234,26 @@ public class ProductService implements IProductService {
 				.includeZeroCounts(false)
 				.maxFacetCount(5)
 				.createFacetingRequest();
+		
+		//add all the base level facets to categoryFacets List
 		FacetManager facetMgr = jpaQuery.getFacetManager();
 		facetMgr.enableFaceting(categoryFacetRequest);
 		categoryFacets.addAll(facetMgr.getFacets("CategoryDescFR"));
 		
-		
-		Pageable pageable = PageRequest.of(page, size);
-		jpaQuery.setFirstResult(pageableUtil.getStartPosition(pageable));
-		jpaQuery.setMaxResults(pageable.getPageSize());
-			
-		org.apache.lucene.search.Sort sort = new org.apache.lucene.search.Sort(new SortField(getSortField(sortBy), getSortFieldType(sortBy)));
-		jpaQuery.setSort(sort);
-		
+		//run the query and get the results
 		@SuppressWarnings("unchecked")
 		List<ProductAttribute> results =  Collections.checkedList(jpaQuery.getResultList(), ProductAttribute.class);
 	
+		//convert the results to product DTOs and store in a list
 		List<Product> lp = results.stream().map(pa -> this.convertToProductDto(pa.getProduct(), lcl, currency)).collect(Collectors.toList());
 		
-		Page<Product> pp = new PageImpl<Product>(lp, pageable, jpaQuery.getResultSize());
-		
-		//these need to be transformed into FacetDTOs
+		//create a results container to send back to the client 
 		ResultContainer src = new ResultContainer();
 		
+		//create a hashset of FacetDTOs to send back to the client, with additional metadata
 		Set<CategoryFacet> s = new HashSet<CategoryFacet>();
 		
+		//for each of the baseline facets (5x), convert them to Facet DTOs for the client and add them to "s" 
 		categoryFacets.stream().forEach(cf ->  {
 													String categoryCode = (new LinkedList<String>(Arrays.asList(cf.getValue().split("/")))).getLast();
 													CategoryFacet c
@@ -297,11 +265,30 @@ public class ProductService implements IProductService {
 													s.add(c);
 											   });
 		
-		//now we have added the baseline categories to "s" we need to add the parents also and compute their facets
-		//clone HashSet to resolve concurrency issues with recursion
+		//create parent category Facet DTOs
 		(new HashSet<CategoryFacet>(s)).stream().forEach(cf -> {
-			setParentCategoryFacetCount(s, cf, productQueryBuilder, jpaQuery, lcl, currency, cf.getLevel());
+			createParentCategoryFacets(categoryFacets, s, cf, productQueryBuilder, jpaQuery, lcl, currency, cf.getLevel());
 		});
+		
+		FacetSelection facetSelection = facetMgr.getFacetGroup("CategoryDesc");
+		System.out.println(categoryFacets.size());
+		List<Facet> lf = (new ArrayList<Facet>(categoryFacets));
+		for (Facet f:lf) {
+			System.out.println(lf.indexOf(f) + " - " + f.getValue());
+		}
+		
+		facetSelection.selectFacets( (new ArrayList<Facet>(categoryFacets)).get(1) );
+		
+		results =  Collections.checkedList(jpaQuery.getResultList(), ProductAttribute.class);
+		
+		Pageable pageable = PageRequest.of(page, size);
+		lp = results.stream().map(pa -> this.convertToProductDto(pa.getProduct(), lcl, currency)).collect(Collectors.toList());
+		Page<Product> pp = new PageImpl<Product>(lp, pageable, jpaQuery.getResultSize());
+		jpaQuery.setFirstResult(pageableUtil.getStartPosition(pageable));
+		jpaQuery.setMaxResults(pageable.getPageSize());
+			
+		org.apache.lucene.search.Sort sort = new org.apache.lucene.search.Sort(new SortField(getSortField(sortBy), getSortFieldType(sortBy)));
+		jpaQuery.setSort(sort);
 		
 		src.setCategoryFacets(new ArrayList<CategoryFacet>(s));
 		
@@ -322,14 +309,14 @@ public class ProductService implements IProductService {
     	return cf;		
     }
     
-    private void setParentCategoryFacetCount(Set<CategoryFacet> sc, CategoryFacet c, QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery q, String lcl, String currency, Long baseLevel) {
+    private void createParentCategoryFacets(Set<Facet> cfs, Set<CategoryFacet> sc, CategoryFacet c, QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery q, String lcl, String currency, Long baseLevel) {
     	if(c == null) { return; }
     	if(c.getParentId() == null) { return; }
     	
     	Category p = productCategoryRepository.findByCategoryId(c.getParentId());
     	CategoryFacet pcf = convertToCategoryFacet(p.getCategoryCode(), lcl, currency);
-    	
-    	String frName = "CategoryDescLvl" + p.getCategoryLevel() + "FR";
+    	//String frName = "CategoryDescLvl" + p.getCategoryLevel() + "FR";
+    	String frName = "CategoryDesc";
     	String frField = "primaryCategory" + StringUtils.repeat(".parent", baseLevel.intValue() - p.getCategoryLevel().intValue()) + ".categoryToken";
     		
     	FacetingRequest categoryFacetRequest = qb.facet()
@@ -342,13 +329,15 @@ public class ProductService implements IProductService {
     	.createFacetingRequest();
     		
     	FacetManager facetMgr = q.getFacetManager();
+    	//add parent facets to the facets set
+    	cfs.addAll(facetMgr.getFacets(frName));
     	facetMgr.enableFaceting(categoryFacetRequest);
     	pcf.setCount(new Long(facetMgr.getFacets(frName).stream().collect(Collectors.toList()).get(0).getCount()));
     	pcf.setToken(String.join("/", Arrays.copyOfRange(c.getToken().split("/"), 0, c.getLevel().intValue()+1)));
 		pcf.setName(facetMgr.getFacets(frName).stream().collect(Collectors.toList()).get(0).getFacetingName());
 		pcf.setFieldName(facetMgr.getFacets(frName).stream().collect(Collectors.toList()).get(0).getFieldName());
     	sc.add(pcf);
-    	this.setParentCategoryFacetCount(sc, pcf, qb, q, lcl, currency, baseLevel);
+    	this.createParentCategoryFacets(cfs, sc, pcf, qb, q, lcl, currency, baseLevel);
     }
     
     public Product convertToProductDto(final io.javabrains.springbootstarter.domain.Product product, String lcl, String currency) {
