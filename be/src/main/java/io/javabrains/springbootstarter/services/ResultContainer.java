@@ -9,7 +9,7 @@ public class ResultContainer {
 	
 	Page<Product> products;
 	
-	List<CategoryFacet> categories;
+	List<CategoryFacet> categoryFacets;
 	
 	//List<CategoryFacet> brandFacets;
 
@@ -21,12 +21,12 @@ public class ResultContainer {
 		this.products = products;
 	}
 
-	public List<CategoryFacet> getCategories() {
-		return categories;
+	public List<CategoryFacet> getCategoryFacets() {
+		return categoryFacets;
 	}
 
-	public void setCategories(List<CategoryFacet> categories) {
-		this.categories = categories;
+	public void setCategoryFacets(List<CategoryFacet> facets) {
+		this.categoryFacets = facets;
 	}
 	
 }
