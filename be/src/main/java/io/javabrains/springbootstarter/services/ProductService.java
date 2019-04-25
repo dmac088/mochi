@@ -291,7 +291,6 @@ public class ProductService implements IProductService {
 													c.setToken(cf.getValue());
 													c.setName(cf.getFacetingName());
 													c.setFieldName(cf.getFieldName());
-													c.setValue(cf.getValue());
 													s.add(c);
 											   });
 		
@@ -345,7 +344,6 @@ public class ProductService implements IProductService {
     	pcf.setToken(String.join("/", Arrays.copyOfRange(c.getToken().split("/"), 0, c.getCategoryLevel().intValue()+1)));
 		pcf.setName(facetMgr.getFacets(frName).stream().collect(Collectors.toList()).get(0).getFacetingName());
 		pcf.setFieldName(facetMgr.getFacets(frName).stream().collect(Collectors.toList()).get(0).getFieldName());
-		pcf.setValue(facetMgr.getFacets(frName).stream().collect(Collectors.toList()).get(0).getValue());
     	sc.add(pcf);
     	this.setParentCategoryFacetCount(sc, pcf, qb, q, lcl, currency, baseLevel);
     }
