@@ -182,7 +182,7 @@ public class ProductService implements IProductService {
 		return rc;
 	}
 
-	//@Cacheable
+	@Cacheable
 	@SuppressWarnings("unchecked")
 	public ResultContainer findProduct(String lcl, String currency, String categoryDesc, String searchTerm, int page, int size, String sortBy, List<CategoryFacet> receivedFacets) {		
 		
