@@ -32,7 +32,7 @@ class CategorySidebar extends Component {
         this.setState({
           "selectedFacets": this.state.selectedFacets.filter(o => o.token !== e.currentTarget.id),
         }, () => {
-          //console.log(this.state.selectedFacets);
+          console.log(this.state.selectedFacets);
           this.props.refresh(0, this.state.selectedFacets);
         });
         return;
@@ -42,7 +42,7 @@ class CategorySidebar extends Component {
     this.setState({
       "selectedFacets": newSelectedFacets,
     }, () => {
-        //console.log(this.state.selectedFacets);
+        console.log(this.state.selectedFacets);
         this.props.refresh(0, this.state.selectedFacets);
     });
   }
@@ -89,9 +89,6 @@ class CategorySidebar extends Component {
     if(isCategory && !(category.children)) {return null}
     if(isCategory && category.children.length === 0) { return null }
     if(isSearch && !categoryFacets) { return null }
-
-    console.log(categoryFacets);
-
     return (
       <div className="sidebar mb-35">
         <h3 className="sidebar-title">PRODUCT CATEGORIES</h3>
