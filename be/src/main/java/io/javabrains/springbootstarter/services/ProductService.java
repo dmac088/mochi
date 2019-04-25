@@ -276,28 +276,32 @@ public class ProductService implements IProductService {
 		//apply the selected facets to the facet selection object
 		facetSelection.selectFacets( lf.toArray(new Facet[0]) );
 		
+		//set pageable definition for jpaQuery
+		Pageable pageable = PageRequest.of(page, size);
+		PageableUtil pageableUtil = new PageableUtil();
+		jpaQuery.setFirstResult(pageableUtil.getStartPosition(pageable));
+		jpaQuery.setMaxResults(pageable.getPageSize());
+		
 		//get the results using jpaQuery object
 		results =  Collections.checkedList(jpaQuery.getResultList(), ProductAttribute.class);
 				
 		//convert the results of jpaQuery to product Data Transfer Objects 
 		List<Product> lp = results.stream().map(pa -> this.convertToProductDto(pa.getProduct(), lcl, currency)).collect(Collectors.toList());
 		
-		//set pageable objects
-		Pageable pageable = PageRequest.of(page, size);
-		PageableUtil pageableUtil = new PageableUtil();
-		
 		//create a paging object to hold the results of jpaQuery 
 		Page<Product> pp = new PageImpl<Product>(lp, pageable, jpaQuery.getResultSize());
 		
-		jpaQuery.setFirstResult(pageableUtil.getStartPosition(pageable));
-		jpaQuery.setMaxResults(pageable.getPageSize());
-			
 		org.apache.lucene.search.Sort sort = new org.apache.lucene.search.Sort(new SortField(getSortField(sortBy), getSortFieldType(sortBy)));
 		jpaQuery.setSort(sort);
 		
 		src.setCategoryFacets(new ArrayList<CategoryFacet>(s));
 		
 		src.setProducts(pp);
+		
+		System.out.println(lp.size());
+		System.out.println(pp.getSize());
+		System.out.println(src.getProducts().getSize());
+		System.out.println(src.getProducts().getContent().size());
 		
 		return src;
 	}

@@ -87,6 +87,7 @@ class Products extends Component {
 
 
   update = (locale, currency, pathname, category, term, params, price, maxPrice, isMounting = 0, selectedCategoryFacets = [], callback) => {
+    console.log(selectedCategoryFacets);
     if(!params) {return;}
     const { page, size, sort } = params;
     if(   locale      === this.state.locale
