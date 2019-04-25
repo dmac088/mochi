@@ -3,7 +3,7 @@ package io.javabrains.springbootstarter.services;
 
 import java.util.List;
 import io.javabrains.springbootstarter.domain.Category;
-import io.javabrains.springbootstarter.services.CategoryFacet;
+import io.javabrains.springbootstarter.facets.CategoryFacet;
 
 public interface IProductService {
 	

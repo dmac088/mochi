@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.javabrains.springbootstarter.facets.CategoryFacet;
+
 @RestController
 @RequestMapping("/api")
 public class ProductController {
@@ -58,7 +60,7 @@ public class ProductController {
     @PostMapping("/Search/{lcl}/{curr}/Category/{categoryCode}/SearchTerm/{term}/Page/{page}/Size/{size}/SortBy/{sortBy}")
     public ResultContainer search(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryCode,@PathVariable String term, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy, @RequestBody final CategoryFacet[] selectedFacets) {
     	if(selectedFacets.length > 0) {
-    		System.out.println("Facet Name = " + selectedFacets[0].getFacetFieldName());
+    		System.out.println("Facet Name = " + selectedFacets[0].getFieldName());
     	}
     	//System.out.println(facets[1].getFieldName());
     	return productService.findProduct(lcl, curr, categoryCode, term, page, size, sortBy, selectedFacets);
