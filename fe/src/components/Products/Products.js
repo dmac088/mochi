@@ -46,12 +46,12 @@ class Products extends Component {
 
 
   componentDidMount() {
-    this.refresh(1);
+    this.refresh(1, this.state.selectedCategoryFacets);
   }
 
 
   componentDidUpdate(prevProps) {
-    this.refresh(0);
+    this.refresh(0, this.state.selectedCategoryFacets);
   }
 
 
@@ -90,6 +90,7 @@ class Products extends Component {
     if(!params) {return;}
     console.log(selectedCategoryFacets);
     console.log(this.state.selectedCategoryFacets)
+    console.log(_.isEqual(selectedCategoryFacets, this.state.selectedCategoryFacets));
     const { page, size, sort } = params;
     if(   locale      === this.state.locale
       &&  currency    === this.state.currency
