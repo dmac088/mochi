@@ -210,6 +210,7 @@ class Products extends Component {
                   <div className="col-lg-3 order-2 order-lg-1">
                     <div className="sidebar-area">
                       <CategorySidebar
+                        refresh={this.refresh}
                         category={cat}
                         categoryFacets={categoryFacets}
                         changeCategory={changeCategory}

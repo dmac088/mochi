@@ -28,7 +28,6 @@ class CategorySidebar extends Component {
   }
 
   applyFacet = (e, props) => {
-    console.log(e.currentTarget.id);
     if(this.state.selectedFacets.find(o => o.facetToken === e.currentTarget.id)) {
         this.setState({
           "selectedFacets": this.state.selectedFacets.filter(o => o.facetToken !== e.currentTarget.id),
