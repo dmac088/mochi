@@ -185,9 +185,6 @@ public class ProductService implements IProductService {
 	//@Cacheable
 	@SuppressWarnings("unchecked")
 	public ResultContainer findProduct(String lcl, String currency, String categoryDesc, String searchTerm, int page, int size, String sortBy, List<CategoryFacet> receivedFacets) {		
-		receivedFacets.stream().forEach(f -> {
-												System.out.println(f.getDesc());
-											});
 		
 		FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
 				
@@ -285,7 +282,7 @@ public class ProductService implements IProductService {
 		//convert the results of jpaQuery to product Data Transfer Objects 
 		List<Product> lp = results.stream().map(pa -> this.convertToProductDto(pa.getProduct(), lcl, currency)).collect(Collectors.toList());
 		
-		//set pagable objects
+		//set pageable objects
 		Pageable pageable = PageRequest.of(page, size);
 		PageableUtil pageableUtil = new PageableUtil();
 		
