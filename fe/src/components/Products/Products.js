@@ -76,21 +76,20 @@ class Products extends Component {
                             && brand === this.state.term));
 
       const price = (isDifferent) ? maxPrice : selectedPrice;
-      this.update(type, locale, currency, pathname, term, brand, Object.assign(params, qs.parse(search)), price, maxPrice, isMounting, [], this.getProducts);
+      this.update(locale, currency, pathname, term, brand, Object.assign(params, qs.parse(search)), price, maxPrice, isMounting, [], this.getProducts);
     }
     if (type === "search") {
       const price = this.state.selectedPrice;
       const maxPrice = Number(this.getMaxPrice((this.filterCategories(categoryList, term)[0]), brand));
-      this.update(type, locale, currency, pathname, "All", term, Object.assign(params, qs.parse(search)), price, maxPrice, isMounting, selectedCategoryFacets, pageService.findAll);
+      this.update(locale, currency, pathname, "All", term, Object.assign(params, qs.parse(search)), price, maxPrice, isMounting, selectedCategoryFacets, pageService.findAll);
     }
   }
 
 
-  update = (type, locale, currency, pathname, category, term, params, price, maxPrice, isMounting = 0, selectedCategoryFacets, callback) => {
-    console.log("selectedCategoryFacets");
-    console.log(selectedCategoryFacets);
-  //  console.log(this.state.categoryFacets);
+  update = (locale, currency, pathname, category, term, params, price, maxPrice, isMounting = 0, selectedCategoryFacets = [], callback) => {
     if(!params) {return;}
+    console.log(selectedCategoryFacets);
+    console.log(this.state.selectedCategoryFacets)
     const { page, size, sort } = params;
     if(   locale      === this.state.locale
       &&  currency    === this.state.currency
@@ -106,21 +105,21 @@ class Products extends Component {
     callback(locale, currency, category, term, price+1, page, size, sort, selectedCategoryFacets)
     .then((responseJSON) => {
       this.setState({
-        "locale":           locale,
-        "currency":         currency,
-        "category":         category,
-        "term":             term,
-        "products":         responseJSON.products.content,
-        "categoryFacets":   responseJSON.categoryFacets,
+        "locale":                 locale,
+        "currency":               currency,
+        "category":               category,
+        "term":                   term,
+        "products":               responseJSON.products.content,
+        "categoryFacets":         responseJSON.categoryFacets,
         "selectedCategoryFacets": selectedCategoryFacets,
-        "brandFacets":      responseJSON.brandFacets,
-        "totalPages":       responseJSON.products.totalPages,
-        "totalElements":    responseJSON.products.totalElements,
-        "numberOfElements": responseJSON.products.numberOfElements,
-        "params":           params,
-        "maxPrice":         maxPrice,
-        "selectedPrice":    price,
-        "prevPrice":        price,
+        "brandFacets":            responseJSON.brandFacets,
+        "totalPages":             responseJSON.products.totalPages,
+        "totalElements":          responseJSON.products.totalElements,
+        "numberOfElements":       responseJSON.products.numberOfElements,
+        "params":                 params,
+        "maxPrice":               maxPrice,
+        "selectedPrice":          price,
+        "prevPrice":              price,
       });
      })
       .then(() => {

@@ -32,7 +32,7 @@ class CategorySidebar extends Component {
         this.setState({
           "selectedFacets": this.state.selectedFacets.filter(o => o.token !== e.currentTarget.id),
         }, () => {
-          console.log(this.state.selectedFacets);
+          //console.log(this.state.selectedFacets);
           this.props.refresh(0, this.state.selectedFacets);
         });
         return;
@@ -42,7 +42,7 @@ class CategorySidebar extends Component {
     this.setState({
       "selectedFacets": newSelectedFacets,
     }, () => {
-        console.log(this.state.selectedFacets);
+      //  console.log(this.state.selectedFacets);
         this.props.refresh(0, this.state.selectedFacets);
     });
   }

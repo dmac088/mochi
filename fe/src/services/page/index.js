@@ -1,8 +1,8 @@
 import * as session from '../session';
 import * as api from './api';
 
-	export const findAll = (locale, currency, category, term, maxPrice, page, size, sort) => {
-		return api.findAll(locale, currency, category, term, maxPrice, page, size, sort)
+	export const findAll = (locale, currency, category, term, maxPrice, page, size, sort, selectedCategoryFacets) => {
+		return api.findAll(locale, currency, category, term, maxPrice, page, size, sort, selectedCategoryFacets)
 		.then((response) => {
       return response.text();
     })
