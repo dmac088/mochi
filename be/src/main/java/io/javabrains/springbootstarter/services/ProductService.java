@@ -315,7 +315,6 @@ public class ProductService implements IProductService {
     	
     	Category p = productCategoryRepository.findByCategoryId(c.getParentId());
     	CategoryFacet pcf = convertToCategoryFacet(p.getCategoryCode(), lcl, currency);
-    	//String frName = "CategoryDescLvl" + p.getCategoryLevel() + "FR";
     	String frName = "CategoryDesc";
     	String frField = "primaryCategory" + StringUtils.repeat(".parent", baseLevel.intValue() - p.getCategoryLevel().intValue()) + ".categoryToken";
     		
@@ -329,7 +328,6 @@ public class ProductService implements IProductService {
     	.createFacetingRequest();
     		
     	FacetManager facetMgr = q.getFacetManager();
-    	//add parent facets to the facets set
     	cfs.addAll(facetMgr.getFacets(frName));
     	facetMgr.enableFaceting(categoryFacetRequest);
     	pcf.setCount(new Long(facetMgr.getFacets(frName).stream().collect(Collectors.toList()).get(0).getCount()));
