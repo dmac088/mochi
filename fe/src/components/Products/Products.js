@@ -53,7 +53,8 @@ class Products extends Component {
   }
 
 
-  refresh = (isMounting) => {
+  refresh = (isMounting, categoryFacets) => {
+    console.log(categoryFacets);
     const { pathname, search }              = this.props.location;
     const { categoryList }                  = this.props;
     const params                            = {...this.state.params};
@@ -74,17 +75,17 @@ class Products extends Component {
                             && brand === this.state.term));
 
       const price = (isDifferent) ? maxPrice : selectedPrice;
-      this.update(locale, currency, pathname, term, brand, Object.assign(params, qs.parse(search)), price, maxPrice, isMounting, this.getProducts);
+      this.update(locale, currency, pathname, term, brand, Object.assign(params, qs.parse(search)), price, maxPrice, isMounting, null, this.getProducts);
     }
     if (type === "search") {
       const price = this.state.selectedPrice;
       const maxPrice = Number(this.getMaxPrice((this.filterCategories(categoryList, term)[0]), brand));
-      this.update(locale, currency, pathname, "All", term, Object.assign(params, qs.parse(search)), price, maxPrice, isMounting, pageService.findAll);
+      this.update(locale, currency, pathname, "All", term, Object.assign(params, qs.parse(search)), price, maxPrice, isMounting, categoryFacets, pageService.findAll);
     }
   }
 
 
-  update = (locale, currency, pathname, category, term, params, price, maxPrice, isMounting = 0, callback) => {
+  update = (locale, currency, pathname, category, term, params, price, maxPrice, isMounting = 0, categoryFacets, callback) => {
     if(!params) {return;}
     const { page, size, sort } = params;
     if(   locale      === this.state.locale
