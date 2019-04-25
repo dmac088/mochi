@@ -298,11 +298,6 @@ public class ProductService implements IProductService {
 		
 		src.setProducts(pp);
 		
-		System.out.println(lp.size());
-		System.out.println(pp.getSize());
-		System.out.println(src.getProducts().getSize());
-		System.out.println(src.getProducts().getContent().size());
-		
 		return src;
 	}
 	
