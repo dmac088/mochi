@@ -333,12 +333,10 @@ public class ProductService implements IProductService {
     	cfs.addAll(facetMgr.getFacets(frName));
     	facetMgr.enableFaceting(categoryFacetRequest);
     	pcf.setToken(String.join("/", Arrays.copyOfRange(c.getToken().split("/"), 0, c.getLevel().intValue()+1)));
-    	pcf.setCount(new Long(facetMgr.getFacets(frName).stream().filter(f ->
-    				f.getValue().equals(pcf.getToken())
-    			).collect(Collectors.toList()).get(0).getCount()));
-    	
-		pcf.setName(facetMgr.getFacets(frName).stream().collect(Collectors.toList()).get(0).getFacetingName());
-		pcf.setFieldName(facetMgr.getFacets(frName).stream().collect(Collectors.toList()).get(0).getFieldName());
+    	Facet tmp = facetMgr.getFacets(frName).stream().filter(f -> f.getValue().equals(pcf.getToken())).collect(Collectors.toList()).get(0);
+    	pcf.setCount(new Long(tmp.getCount()));
+		pcf.setName(tmp.getFacetingName());
+		pcf.setFieldName(tmp.getFieldName());
     	sc.add(pcf);
     	this.createParentCategoryFacets(cfs, sc, pcf, qb, q, lcl, currency, baseLevel);
     }
