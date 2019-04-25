@@ -300,7 +300,7 @@ public class ProductService implements IProductService {
 			setParentCategoryFacetCount(s, cf, productQueryBuilder, jpaQuery, lcl, currency, cf.getLevel());
 		});
 		
-		src.setCategories(new ArrayList<CategoryFacet>(s));
+		src.setCategoryFacets(new ArrayList<CategoryFacet>(s));
 		
 		src.setProducts(pp);
 		
