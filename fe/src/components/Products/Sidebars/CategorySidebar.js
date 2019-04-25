@@ -48,7 +48,7 @@ class CategorySidebar extends Component {
   }
 
   isActive = (categoryFacet, selectedFacets) => {
-    return (selectedFacets.find(o => o.facetToken === categoryFacet.facetToken));
+    return (selectedFacets.find(o => o.token === categoryFacet.token));
   }
 
   renderCategoryFacets = (categoryFacets, selectedFacets, props) => {
