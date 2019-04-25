@@ -44,13 +44,14 @@ export const fetchApi = (endPoint, payload = {}, formData = {}, method = 'get', 
 	let params = getParams(method, headers);
 	Object.assign(params, (method.toLowerCase() === 'post') && { body: formBody })
 	console.log(apiConfig.url+endPoint);
+	console.log(headers);
 	return fetch(apiConfig.url+endPoint, params)
 				.then((response) => {
 					if(response.status === 401) {
-						console.log("Error: 401");
+						console.log("Error: " + response.status);
 						return refreshToken()
 						.then(() => {
-							return fetch(apiConfig.url + endPoint, getParams(method, headers));
+							return fetchApi(endPoint, payload, formData, method, headers);
 						});
 					}
 					return response;
