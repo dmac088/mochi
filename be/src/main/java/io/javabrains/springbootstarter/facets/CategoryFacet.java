@@ -8,8 +8,6 @@ public class CategoryFacet {
 	
 	private String facetFieldName;
 
-	private String value;
-	
 	private Long Id;
 	
 	private String catgoryDesc;
@@ -52,14 +50,6 @@ public class CategoryFacet {
 
 	public void setFieldName(String facetFieldName) {
 		this.facetFieldName = facetFieldName;
-	}
-
-	public String getValue() {
-		return value;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
 	}
 
 	public Long getCategoryLevel() {
