@@ -14,7 +14,7 @@ public class CategoryFacet {
 	
 	private String catgoryToken;
 	
-	private Long categoryLevel;
+	private Long level;
 	
 	private Long count;
 	
@@ -52,12 +52,12 @@ public class CategoryFacet {
 		this.facetFieldName = facetFieldName;
 	}
 
-	public Long getCategoryLevel() {
-		return categoryLevel;
+	public Long getLevel() {
+		return level;
 	}
 
-	public void setCategoryLevel(Long categoryLevel) {
-		this.categoryLevel = categoryLevel;
+	public void setLevel(Long categoryLevel) {
+		this.level = categoryLevel;
 	}
 
 	public String getDesc() {

@@ -297,7 +297,7 @@ public class ProductService implements IProductService {
 		//now we have added the baseline categories to "s" we need to add the parents also and compute their facets
 		//clone HashSet to resolve concurrency issues with recursion
 		(new HashSet<CategoryFacet>(s)).stream().forEach(cf -> {
-			setParentCategoryFacetCount(s, cf, productQueryBuilder, jpaQuery, lcl, currency, cf.getCategoryLevel());
+			setParentCategoryFacetCount(s, cf, productQueryBuilder, jpaQuery, lcl, currency, cf.getLevel());
 		});
 		
 		src.setCategories(new ArrayList<CategoryFacet>(s));
@@ -312,7 +312,7 @@ public class ProductService implements IProductService {
     	CategoryFacet cf = new CategoryFacet();
     	cf.setId(c.getCategoryId());
     	cf.setDesc(c.getAttributes().stream().filter(ca -> ca.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getCategoryDesc());
-    	cf.setCategoryLevel(c.getCategoryLevel());
+    	cf.setLevel(c.getCategoryLevel());
     	if(c.getParent() != null) {
     		cf.setParentId(c.getParent().getCategoryId());
     	}
@@ -341,7 +341,7 @@ public class ProductService implements IProductService {
     	FacetManager facetMgr = q.getFacetManager();
     	facetMgr.enableFaceting(categoryFacetRequest);
     	pcf.setCount(new Long(facetMgr.getFacets(frName).stream().collect(Collectors.toList()).get(0).getCount()));
-    	pcf.setToken(String.join("/", Arrays.copyOfRange(c.getToken().split("/"), 0, c.getCategoryLevel().intValue()+1)));
+    	pcf.setToken(String.join("/", Arrays.copyOfRange(c.getToken().split("/"), 0, c.getLevel().intValue()+1)));
 		pcf.setName(facetMgr.getFacets(frName).stream().collect(Collectors.toList()).get(0).getFacetingName());
 		pcf.setFieldName(facetMgr.getFacets(frName).stream().collect(Collectors.toList()).get(0).getFieldName());
     	sc.add(pcf);
