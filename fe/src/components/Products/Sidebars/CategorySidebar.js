@@ -54,12 +54,12 @@ class CategorySidebar extends Component {
   renderCategoryFacets = (categoryFacets, selectedFacets, props) => {
     return categoryFacets.map(categoryFacet => {
       return(
-        <li key={categoryFacet.categoryId}>
+        <li key={categoryFacet.id}>
           <a className={(this.isActive(categoryFacet, selectedFacets)) ? "active" : ""} onClick={(e) => {
                                 e.preventDefault();
                                 this.applyFacet(e, props);
-                             }} id={categoryFacet.facetToken} href="#">
-            {categoryFacet.categoryDesc} <span className="badge badge-pill badge-secondary">{categoryFacet.facetCount}</span>
+                             }} id={categoryFacet.token} href="#">
+            {categoryFacet.desc} <span className="badge badge-pill badge-secondary">{categoryFacet.count}</span>
           </a>
         </li>
       );
@@ -89,6 +89,8 @@ class CategorySidebar extends Component {
     if(isCategory && !(category.children)) {return null}
     if(isCategory && category.children.length === 0) { return null }
     if(isSearch && !categoryFacets) { return null }
+
+    console.log(categoryFacets);
 
     return (
       <div className="sidebar mb-35">
