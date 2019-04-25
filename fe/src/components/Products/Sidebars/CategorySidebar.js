@@ -28,9 +28,9 @@ class CategorySidebar extends Component {
   }
 
   applyFacet = (e, props) => {
-    if(this.state.selectedFacets.find(o => o.facetToken === e.currentTarget.id)) {
+    if(this.state.selectedFacets.find(o => o.token === e.currentTarget.id)) {
         this.setState({
-          "selectedFacets": this.state.selectedFacets.filter(o => o.facetToken !== e.currentTarget.id),
+          "selectedFacets": this.state.selectedFacets.filter(o => o.token !== e.currentTarget.id),
         }, () => {
           //console.log(this.state.selectedFacets);
           this.props.refresh(0, this.state.selectedFacets);
@@ -38,7 +38,7 @@ class CategorySidebar extends Component {
         return;
     }
     const newSelectedFacets = _.cloneDeep(this.state.selectedFacets, true);
-    newSelectedFacets.push(this.state.categoryFacets.filter(o => o.facetToken === e.currentTarget.id)[0]);
+    newSelectedFacets.push(this.state.categoryFacets.filter(o => o.token === e.currentTarget.id)[0]);
     this.setState({
       "selectedFacets": newSelectedFacets,
     }, () => {
