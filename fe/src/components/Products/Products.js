@@ -54,7 +54,6 @@ class Products extends Component {
 
 
   refresh = (isMounting, categoryFacets) => {
-    console.log(categoryFacets);
     const { pathname, search }              = this.props.location;
     const { categoryList }                  = this.props;
     const params                            = {...this.state.params};
@@ -106,7 +105,7 @@ class Products extends Component {
         "category":         category,
         "term":             term,
         "products":         responseJSON.products.content,
-        "categoryFacets":   responseJSON.categoryfacets,
+        "categoryFacets":   responseJSON.categoryFacets,
         "brandFacets":      responseJSON.brandFacets,
         "totalPages":       responseJSON.products.totalPages,
         "totalElements":    responseJSON.products.totalElements,
