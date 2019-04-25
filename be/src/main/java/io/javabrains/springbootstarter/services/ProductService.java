@@ -181,9 +181,12 @@ public class ProductService implements IProductService {
 		return rc;
 	}
 
-	@Cacheable
-	public ResultContainer findProduct(String lcl, String currency, String categoryDesc, String searchTerm, int page, int size, String sortBy, io.javabrains.springbootstarter.facets.CategoryFacet[] selectedFacets) {
-
+	//@Cacheable
+	public ResultContainer findProduct(String lcl, String currency, String categoryDesc, String searchTerm, int page, int size, String sortBy, CategoryFacet[] selectedFacets) {		
+		Arrays.asList(selectedFacets).stream().forEach(f -> {
+															System.out.println(f.getDesc());
+														});
+		
 		PageableUtil pageableUtil = new PageableUtil();
 		
 		FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
