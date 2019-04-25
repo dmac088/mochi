@@ -327,8 +327,6 @@ public class ProductService implements IProductService {
     	.onField(frField)
     	.discrete()
     	.orderedBy(FacetSortOrder.COUNT_DESC)
-    	.includeZeroCounts(false)
-    	.maxFacetCount(1)
     	.createFacetingRequest();
     		
     	FacetManager facetMgr = q.getFacetManager();
