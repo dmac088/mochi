@@ -183,7 +183,7 @@ public class ProductService implements IProductService {
 		return rc;
 	}
 
-	//@Cacheable
+	@Cacheable
 	public ResultContainer findProduct(String lcl, String currency, String categoryDesc, String searchTerm, int page, int size, String sortBy, io.javabrains.springbootstarter.services.CategoryFacet[] selectedFacets) {
 
 		PageableUtil pageableUtil = new PageableUtil();
