@@ -1,5 +1,7 @@
 package io.javabrains.springbootstarter.facets;
 
+import java.util.Objects;
+
 public class CategoryFacet {
 
 	private String facetingName;
@@ -8,7 +10,7 @@ public class CategoryFacet {
 
 	private String value;
 	
-	private Long id;
+	private Long Id;
 	
 	private String catgoryDesc;
 	
@@ -21,11 +23,11 @@ public class CategoryFacet {
 	private Long parentId;
 
 	public Long getId() {
-		return id;
+		return Id;
 	}
 
 	public void setId(Long id) {
-		this.id = id;
+		this.Id = id;
 	}
 	
 	public Long getParentId() {
@@ -91,4 +93,26 @@ public class CategoryFacet {
 	public void setCount(Long count) {
 		this.count = count;
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		 if (this == o) return true;
+	     if (o == null || getClass() != o.getClass()) return false;
+	     CategoryFacet pcf = (CategoryFacet) o;
+	     return this.Id == pcf.Id;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(Id);
+	}
+
+	@Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append("CategoryDto [categoryId=")
+        .append(Id)
+        .append(", categoryDesc=").append(catgoryDesc);
+        return builder.toString();
+    }
 }
