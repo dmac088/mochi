@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -13,7 +12,6 @@ import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.lucene.search.SortField;
 import org.hibernate.search.jpa.FullTextEntityManager;
@@ -185,6 +183,7 @@ public class ProductService implements IProductService {
 		return rc;
 	}
 
+	//@Cacheable
 	public ResultContainer findProduct(String lcl, String currency, String categoryDesc, String searchTerm, int page, int size, String sortBy, io.javabrains.springbootstarter.services.CategoryFacet[] selectedFacets) {
 
 		PageableUtil pageableUtil = new PageableUtil();
@@ -291,7 +290,6 @@ public class ProductService implements IProductService {
 		categoryFacets.stream().forEach(cf ->  {
 													io.javabrains.springbootstarter.services.Category c
 														= convertToCategoryDto(cf, lcl, currency);
-													c.setFacetCount(new Long(cf.getCount()));
 													s.add(c);
 											   });
 		
@@ -311,35 +309,39 @@ public class ProductService implements IProductService {
     public io.javabrains.springbootstarter.services.Category convertToCategoryDto(Facet f, String lcl, String currency) {
     	Category c = productCategoryRepository.findByCategoryCode((new LinkedList<String>(Arrays.asList(f.getValue().split("/")))).getLast());
     	io.javabrains.springbootstarter.services.Category cDto = categoryService.convertToCategoryDto(c, lcl, currency);
+    	cDto.setFacet(true);
     	cDto.setFacetCount(new Long(f.getCount()));
-    	return cDto;
+    	cDto.setFacetToken(f.getValue());
+    	return cDto;		
     }
     
     private void setParentCategoryFacetCount(Set<io.javabrains.springbootstarter.services.Category> sc, io.javabrains.springbootstarter.services.Category c, QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery q, String lcl, String currency, Long baseLevel) {
-    		if(c == null) { return; }
-    		if(c.getParentId() == null) { return; }
+    	if(c == null) { return; }
+    	if(c.getParentId() == null) { return; }
+    	
+    	
+    	
+    	Category p = productCategoryRepository.findByCategoryId(c.getParentId());
+    	io.javabrains.springbootstarter.services.Category cDto = categoryService.convertToCategoryDto(p, lcl, currency);
+    	
+    	String frName = "CategoryDescLvl" + p.getCategoryLevel() + "FR";
+    	String frField = "primaryCategory" + StringUtils.repeat(".parent", baseLevel.intValue() - p.getCategoryLevel().intValue()) + ".categoryToken";
     		
-    		Category p = productCategoryRepository.findByCategoryId(c.getParentId());
-    		io.javabrains.springbootstarter.services.Category cDto = categoryService.convertToCategoryDto(p, lcl, currency);
+    	FacetingRequest categoryFacetRequest = qb.facet()
+    	.name(frName)
+    	.onField(frField)
+    	.discrete()
+    	.orderedBy(FacetSortOrder.COUNT_DESC)
+    	.includeZeroCounts(false)
+    	.maxFacetCount(1)
+    	.createFacetingRequest();
     		
-    		String frName = "CategoryDescLvl" + p.getCategoryLevel() + "FR";
-    		String frField = "primaryCategory" + StringUtils.repeat(".parent", baseLevel.intValue() - p.getCategoryLevel().intValue()) + ".categoryToken";
-    			
-    		FacetingRequest categoryFacetRequest = qb.facet()
-    		.name(frName)
-    		.onField(frField)
-    		.discrete()
-    		.orderedBy(FacetSortOrder.COUNT_DESC)
-    		.includeZeroCounts(false)
-    		.maxFacetCount(1)
-    		.createFacetingRequest();
-    		
-    		FacetManager facetMgr = q.getFacetManager();
-    		facetMgr.enableFaceting(categoryFacetRequest);
-    		cDto.setFacetCount(new Long(facetMgr.getFacets(frName).stream().collect(Collectors.toList()).get(0).getCount()));
-    		
-    		sc.add(cDto);
-    		this.setParentCategoryFacetCount(sc, cDto, qb, q, lcl, currency, baseLevel);
+    	FacetManager facetMgr = q.getFacetManager();
+    	facetMgr.enableFaceting(categoryFacetRequest);
+    	cDto.setFacetCount(new Long(facetMgr.getFacets(frName).stream().collect(Collectors.toList()).get(0).getCount()));
+    	cDto.setFacetToken(String.join("/", Arrays.copyOfRange(c.getFacetToken().split("/"), 0, c.getCategoryLevel().intValue()+1)));
+    	sc.add(cDto);
+    	this.setParentCategoryFacetCount(sc, cDto, qb, q, lcl, currency, baseLevel);
     }
     
     public Product convertToProductDto(final io.javabrains.springbootstarter.domain.Product product, String lcl, String currency) {

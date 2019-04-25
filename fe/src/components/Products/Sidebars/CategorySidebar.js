@@ -10,7 +10,7 @@ class CategorySidebar extends Component {
     super(props);
     this.state = {
       "categoryFacets": null,
-      "selectedFacets":  [],
+      "selectedFacets":  null,
     };
   }
 
@@ -28,9 +28,11 @@ class CategorySidebar extends Component {
   }
 
   applyFacet = (e, props) => {
-    if(this.state.selectedFacets.find(o => o.value === e.currentTarget.id)) {
+    if(!this.state.selectedFacets) { return }
+    console.log(this.state.selectedFacets);
+    if(this.state.selectedFacets.find(o => o.facetToken === e.currentTarget.facetToken)) {
         this.setState({
-          "selectedFacets": this.state.selectedFacets.filter(o => o.value !== e.currentTarget.id),
+          "selectedFacets": this.state.selectedFacets.filter(o => o.facetToken !== e.currentTarget.facetToken),
         }, () => {
           console.log(this.state.selectedFacets);
         });
@@ -46,7 +48,9 @@ class CategorySidebar extends Component {
   }
 
   isActive = (categoryFacet, selectedFacets) => {
-    return (selectedFacets.find(o => o.value === categoryFacet.value));
+    if(!selectedFacets) { return }
+    if(!categoryFacet) { return }
+    return (selectedFacets.find(o => o.facetToken === categoryFacet.facetToken));
   }
 
   renderCategoryFacets = (categoryFacets, selectedFacets, props) => {
@@ -58,7 +62,7 @@ class CategorySidebar extends Component {
           <a className={(this.isActive(categoryFacet, selectedFacets)) ? "active" : ""} onClick={(e) => {
                                 e.preventDefault();
                                 this.applyFacet(e, props);
-                             }} id={categoryFacet.categoryDesc} href="#">
+                             }} id={categoryFacet.facetToken} href="#">
             {categoryFacet.categoryDesc} <span className="badge badge-pill badge-secondary">{categoryFacet.facetCount}</span>
           </a>
         </li>
