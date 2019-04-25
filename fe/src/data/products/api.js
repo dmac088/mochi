@@ -40,7 +40,7 @@ export const findByCategory = (locale, currency, category, brand, maxPrice, page
 																				'/sortBy/' + sortBy,
 																				{},
 																				{},
-																				'GET',
+																				'POST',
 																				{}
 																			);
 
