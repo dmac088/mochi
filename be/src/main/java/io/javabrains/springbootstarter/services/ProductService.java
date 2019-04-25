@@ -184,12 +184,10 @@ public class ProductService implements IProductService {
 
 	//@Cacheable
 	@SuppressWarnings("unchecked")
-	public ResultContainer findProduct(String lcl, String currency, String categoryDesc, String searchTerm, int page, int size, String sortBy, CategoryFacet[] selectedFacets) {		
-		Arrays.asList(selectedFacets).stream().forEach(f -> {
-															System.out.println(f.getDesc());
-														});
-		
-		PageableUtil pageableUtil = new PageableUtil();
+	public ResultContainer findProduct(String lcl, String currency, String categoryDesc, String searchTerm, int page, int size, String sortBy, List<CategoryFacet> receivedFacets) {		
+		receivedFacets.stream().forEach(f -> {
+												System.out.println(f.getDesc());
+											});
 		
 		FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
 				
@@ -241,11 +239,10 @@ public class ProductService implements IProductService {
 		categoryFacets.addAll(facetMgr.getFacets("CategoryDescFR"));
 		
 		//run the query and get the results
-		@SuppressWarnings("unchecked")
 		List<ProductAttribute> results =  Collections.checkedList(jpaQuery.getResultList(), ProductAttribute.class);
 	
 		//convert the results to product DTOs and store in a list
-		List<Product> lp = results.stream().map(pa -> this.convertToProductDto(pa.getProduct(), lcl, currency)).collect(Collectors.toList());
+		//List<Product> lp;// = results.stream().map(pa -> this.convertToProductDto(pa.getProduct(), lcl, currency)).collect(Collectors.toList());
 		
 		//create a results container to send back to the client 
 		ResultContainer src = new ResultContainer();
@@ -270,20 +267,31 @@ public class ProductService implements IProductService {
 			createParentCategoryFacets(categoryFacets, s, cf, productQueryBuilder, jpaQuery, lcl, currency, cf.getLevel());
 		});
 		
+		
 		FacetSelection facetSelection = facetMgr.getFacetGroup("CategoryDesc");
-		System.out.println(categoryFacets.size());
-		List<Facet> lf = (new ArrayList<Facet>(categoryFacets));
-		for (Facet f:lf) {
-			System.out.println(lf.indexOf(f) + " - " + f.getValue());
-		}
 		
-		facetSelection.selectFacets( (new ArrayList<Facet>(categoryFacets)).get(1) );
+		//get a list of facets that exist in the list of received facets
+		List<Facet> lf =
+		receivedFacets.stream().flatMap(x -> 
+			categoryFacets.stream().filter(y -> 
+				x.getToken().equals(y.getValue())).limit(1)).collect(Collectors.toList());
 		
+		//apply the selected facets to the facet selection object
+		facetSelection.selectFacets( lf.toArray(new Facet[0]) );
+		
+		//get the results using jpaQuery object
 		results =  Collections.checkedList(jpaQuery.getResultList(), ProductAttribute.class);
+				
+		//convert the results of jpaQuery to product Data Transfer Objects 
+		List<Product> lp = results.stream().map(pa -> this.convertToProductDto(pa.getProduct(), lcl, currency)).collect(Collectors.toList());
 		
+		//set pagable objects
 		Pageable pageable = PageRequest.of(page, size);
-		lp = results.stream().map(pa -> this.convertToProductDto(pa.getProduct(), lcl, currency)).collect(Collectors.toList());
+		PageableUtil pageableUtil = new PageableUtil();
+		
+		//create a paging object to hold the results of jpaQuery 
 		Page<Product> pp = new PageImpl<Product>(lp, pageable, jpaQuery.getResultSize());
+		
 		jpaQuery.setFirstResult(pageableUtil.getStartPosition(pageable));
 		jpaQuery.setMaxResults(pageable.getPageSize());
 			
