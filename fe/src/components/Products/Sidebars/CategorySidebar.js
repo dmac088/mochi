@@ -28,7 +28,6 @@ class CategorySidebar extends Component {
   }
 
   applyFacet = (e, props) => {
-    console.log(this.state.selectedFacets);
     if(this.state.selectedFacets.find(o => o.facetToken === e.currentTarget.facetToken)) {
         this.setState({
           "selectedFacets": this.state.selectedFacets.filter(o => o.facetToken !== e.currentTarget.facetToken),
@@ -47,8 +46,6 @@ class CategorySidebar extends Component {
   }
 
   isActive = (categoryFacet, selectedFacets) => {
-    //console.log(categoryFacet);
-    //console.log(selectedFacets);
     return (selectedFacets.find(o => o.facetToken === categoryFacet.facetToken));
   }
 
