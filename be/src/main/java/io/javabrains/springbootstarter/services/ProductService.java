@@ -332,8 +332,11 @@ public class ProductService implements IProductService {
     	FacetManager facetMgr = q.getFacetManager();
     	cfs.addAll(facetMgr.getFacets(frName));
     	facetMgr.enableFaceting(categoryFacetRequest);
-    	pcf.setCount(new Long(facetMgr.getFacets(frName).stream().collect(Collectors.toList()).get(0).getCount()));
     	pcf.setToken(String.join("/", Arrays.copyOfRange(c.getToken().split("/"), 0, c.getLevel().intValue()+1)));
+    	pcf.setCount(new Long(facetMgr.getFacets(frName).stream().filter(f ->
+    				f.getValue().equals(pcf.getToken())
+    			).collect(Collectors.toList()).get(0).getCount()));
+    	
 		pcf.setName(facetMgr.getFacets(frName).stream().collect(Collectors.toList()).get(0).getFacetingName());
 		pcf.setFieldName(facetMgr.getFacets(frName).stream().collect(Collectors.toList()).get(0).getFieldName());
     	sc.add(pcf);
