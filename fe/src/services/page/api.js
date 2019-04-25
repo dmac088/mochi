@@ -10,7 +10,8 @@ const endPoints = {
 	sort: '/SortBy/',
 };
 
-export const findAll = (locale, currency, category, searchTerm, maxPrice, page, size, sort, categoryFacets = []) => fetchApi(
+export const findAll = (locale, currency, category, searchTerm, maxPrice, page, size, sort, selectedCategoryFacets) => {
+																																return fetchApi(
 																																	endPoints.get + locale
 																																+ '/' + currency
 																																+ endPoints.category + category
@@ -19,8 +20,9 @@ export const findAll = (locale, currency, category, searchTerm, maxPrice, page, 
 																																+ endPoints.page + page
 																																+ endPoints.size + size
 																																+ endPoints.sort + sort,
-																																categoryFacets,
+																																selectedCategoryFacets,
 																																{},
 																																'POST',
 																																{"Content-Type": "application/json"}
-																															);
+																															)
+																														};
