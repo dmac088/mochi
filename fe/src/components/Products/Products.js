@@ -14,6 +14,7 @@ import * as productApi from '../../data/products/api';
 import { updateParams } from '../../services/helpers/Helper';
 import * as pageService from '../../services/page';
 import qs from 'query-string';
+import _ from 'lodash';
 
 class Products extends Component {
 
@@ -26,6 +27,7 @@ class Products extends Component {
       "term":     "",
       "products": [],
       "categoryFacets": [],
+      "selectedCategoryFacets": [],
       "brandFacets": [],
       "totalPages": 0,
       "totalElements": 0,
@@ -53,7 +55,7 @@ class Products extends Component {
   }
 
 
-  refresh = (isMounting, categoryFacets) => {
+  refresh = (isMounting, selectedCategoryFacets) => {
     const { pathname, search }              = this.props.location;
     const { categoryList }                  = this.props;
     const params                            = {...this.state.params};
@@ -74,17 +76,20 @@ class Products extends Component {
                             && brand === this.state.term));
 
       const price = (isDifferent) ? maxPrice : selectedPrice;
-      this.update(locale, currency, pathname, term, brand, Object.assign(params, qs.parse(search)), price, maxPrice, isMounting, null, this.getProducts);
+      this.update(type, locale, currency, pathname, term, brand, Object.assign(params, qs.parse(search)), price, maxPrice, isMounting, [], this.getProducts);
     }
     if (type === "search") {
       const price = this.state.selectedPrice;
       const maxPrice = Number(this.getMaxPrice((this.filterCategories(categoryList, term)[0]), brand));
-      this.update(locale, currency, pathname, "All", term, Object.assign(params, qs.parse(search)), price, maxPrice, isMounting, categoryFacets, pageService.findAll);
+      this.update(type, locale, currency, pathname, "All", term, Object.assign(params, qs.parse(search)), price, maxPrice, isMounting, selectedCategoryFacets, pageService.findAll);
     }
   }
 
 
-  update = (locale, currency, pathname, category, term, params, price, maxPrice, isMounting = 0, categoryFacets, callback) => {
+  update = (type, locale, currency, pathname, category, term, params, price, maxPrice, isMounting = 0, selectedCategoryFacets, callback) => {
+    console.log("selectedCategoryFacets");
+    console.log(selectedCategoryFacets);
+  //  console.log(this.state.categoryFacets);
     if(!params) {return;}
     const { page, size, sort } = params;
     if(   locale      === this.state.locale
@@ -95,9 +100,10 @@ class Products extends Component {
       &&  size        === this.state.params.size
       &&  sort        === this.state.params.sort
       &&  price       === this.state.prevPrice
+      &&  (_.isEqual(selectedCategoryFacets, this.state.selectedCategoryFacets))
       &&  isMounting  === 0
     ) {return;}
-    callback(locale, currency, category, term, price+1, page, size, sort)
+    callback(locale, currency, category, term, price+1, page, size, sort, selectedCategoryFacets)
     .then((responseJSON) => {
       this.setState({
         "locale":           locale,
@@ -106,6 +112,7 @@ class Products extends Component {
         "term":             term,
         "products":         responseJSON.products.content,
         "categoryFacets":   responseJSON.categoryFacets,
+        "selectedCategoryFacets": selectedCategoryFacets,
         "brandFacets":      responseJSON.brandFacets,
         "totalPages":       responseJSON.products.totalPages,
         "totalElements":    responseJSON.products.totalElements,
@@ -127,7 +134,7 @@ class Products extends Component {
     });
   }
 
-  getProducts = (locale, currency, category, brand, maxPrice, page, size, sort) =>
+  getProducts = (locale, currency, category, brand, maxPrice, page, size, sort, categoryFacets) =>
     productApi.findByCategory(locale, currency, category, brand, maxPrice, page, size, sort)
     .then((response) => {
         return response.text();
