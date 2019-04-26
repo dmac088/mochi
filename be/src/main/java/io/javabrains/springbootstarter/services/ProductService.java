@@ -382,7 +382,7 @@ public class ProductService implements IProductService {
 		case "nameDesc":
 			return new org.apache.lucene.search.Sort(new SortField(getSortFieldName(field), SortField.Type.STRING, true));
 		case "priceAsc":
-			return new org.apache.lucene.search.Sort(new SortedNumericSortField(getSortFieldName(field), SortField.Type.DOUBLE, false));
+			return new org.apache.lucene.search.Sort(new SortedNumericSortField(getSortFieldName(field), SortField.Type.DOUBLE, false	));
 		case "priceDesc":
 			return new org.apache.lucene.search.Sort(new SortedNumericSortField(getSortFieldName(field), SortField.Type.DOUBLE, true));
 		default: 
