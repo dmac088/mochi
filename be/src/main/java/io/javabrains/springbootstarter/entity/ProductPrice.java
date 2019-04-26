@@ -11,10 +11,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import io.javabrains.springbootstarter.helpers.DoubleNumericFieldBridge;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.FieldBridge;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.NumericField;
 import org.hibernate.search.annotations.SortableField;
+import org.hibernate.search.annotations.Store;
 
 @Entity
 @Table(name = "price", schema = "mochi")
@@ -26,11 +32,17 @@ public class ProductPrice {
 	@Column(name="prc_id")
 	private Long id;
 	
-	@Field(analyze = Analyze.NO)
-	@SortableField
+	@Field
+	@NumericField
 	@Column(name="prc_val")
-	private Double priceValue	;
+	private Double priceValue;
 	
+	@Field(store=Store.NO,index=Index.YES,analyze=Analyze.NO)
+	@Transient
+	@SortableField
+	@FieldBridge(impl = DoubleNumericFieldBridge.class)
+	private Double priceValueSort;
+
 	@Column(name="prc_st_dt")
 	private Date startDate;
 	
@@ -63,6 +75,11 @@ public class ProductPrice {
 
 	public void setPriceValue(Double priceValue) {
 		this.priceValue = priceValue;
+		this.priceValueSort = priceValue;
+	}
+	
+	public Double getPriceValueSort() {
+		return priceValueSort;
 	}
 	
 	public Currency getCurrency() {

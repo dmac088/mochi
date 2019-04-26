@@ -14,6 +14,7 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.lucene.search.SortField;
+import org.apache.lucene.search.SortedNumericSortField;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
@@ -276,12 +277,16 @@ public class ProductService implements IProductService {
 		
 		//apply the selected facets to the facet selection object
 		facetSelection.selectFacets( lf.toArray(new Facet[0]) );
-		
+		 
 		//set pageable definition for jpaQuery
 		Pageable pageable = PageRequest.of(page, size);
 		PageableUtil pageableUtil = new PageableUtil();
 		jpaQuery.setFirstResult(pageableUtil.getStartPosition(pageable));
 		jpaQuery.setMaxResults(pageable.getPageSize());
+		
+		//sort the results
+		org.apache.lucene.search.Sort sort = getSortField(sortBy);
+		jpaQuery.setSort(sort);
 		
 		//get the results using jpaQuery object
 		results =  Collections.checkedList(jpaQuery.getResultList(), ProductAttribute.class);
@@ -291,9 +296,6 @@ public class ProductService implements IProductService {
 		
 		//create a paging object to hold the results of jpaQuery 
 		Page<Product> pp = new PageImpl<Product>(lp, pageable, jpaQuery.getResultSize());
-		
-		org.apache.lucene.search.Sort sort = new org.apache.lucene.search.Sort(new SortField(getSortField(sortBy), getSortFieldType(sortBy)));
-		jpaQuery.setSort(sort);
 		
 		src.setCategoryFacets(new ArrayList<CategorySidebar>(s));
 		
@@ -358,33 +360,33 @@ public class ProductService implements IProductService {
         return pDto;
     }
     
-    private String getSortField(String field) {
+    private String getSortFieldName(String field) {
 		switch(field) {
 		case "nameAsc":
 			return "productSortDesc";
 		case "nameDesc":
 			return "productSortDesc";
 		case "priceDesc":
-			return "product.prices.priceValue";
+			return "product.prices.priceValueSort";
 		case "priceAsc":
-			return "product.prices.priceValue";
+			return "product.prices.priceValueSort";
 		default: 
 			return "productSortDesc";
 		}
 	}
 	
-	private SortField.Type getSortFieldType(String field) {
+	private org.apache.lucene.search.Sort getSortField(String field) {
 		switch(field) {
 		case "nameAsc":
-			return SortField.Type.STRING;
+			return new org.apache.lucene.search.Sort(new SortField(getSortFieldName(field), SortField.Type.STRING, true));
 		case "nameDesc":
-			return SortField.Type.STRING;
+			return new org.apache.lucene.search.Sort(new SortField(getSortFieldName(field), SortField.Type.STRING, true));
 		case "priceAsc":
-			return SortField.Type.DOUBLE;
+			return new org.apache.lucene.search.Sort(new SortedNumericSortField(getSortFieldName(field), SortField.Type.DOUBLE, true));
 		case "priceDesc":
-			return SortField.Type.DOUBLE;
+			return new org.apache.lucene.search.Sort(new SortedNumericSortField(getSortFieldName(field), SortField.Type.DOUBLE, true));
 		default: 
-			return SortField.Type.STRING;
+			return new org.apache.lucene.search.Sort(new SortField(getSortFieldName(field), SortField.Type.STRING, true));
 		}
 	}
 	
