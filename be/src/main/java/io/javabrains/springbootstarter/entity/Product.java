@@ -1,8 +1,12 @@
 package io.javabrains.springbootstarter.entity;
 
+import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,8 +20,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.codehaus.jackson.annotate.JsonBackReference;
+import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.SortableField;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -63,6 +72,19 @@ public class Product {
 	@JsonManagedReference
 	List<ProductPrice> prices;
 
+	@Field
+	@SortableField
+	@Transient
+	public Double getCurrentMarkdownPriceHKD() {
+		 return this.prices.stream().filter(p ->
+		 	p.getStartDate().before(Calendar.getInstance().getTime())
+		 	&& p.getEndDate().after(Calendar.getInstance().getTime())
+		 	&& p.getCurrency().getCode().equals("HKD")
+		 	&& p.getType().getDesc().equals("markdown")
+		 ).collect(Collectors.toList()).get(0).getPriceValue();     
+	}
+	
+	
 	public Long getProductId() {
 		return productId;
 	}

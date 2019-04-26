@@ -11,12 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Index;
-import org.hibernate.search.annotations.NumericField;
-import org.hibernate.search.annotations.SortableField;
-import org.hibernate.search.annotations.Store;
 
 @Entity
 @Table(name = "price", schema = "mochi")
@@ -29,9 +23,6 @@ public class ProductPrice {
 	private Long id;
 	
 	@Column(name="prc_val")
-	@Field(store=Store.NO,index=Index.YES,analyze=Analyze.NO)
-	@SortableField
-	@NumericField
 	private Double priceValue;
 
 	@Column(name="prc_st_dt")
