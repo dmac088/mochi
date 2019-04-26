@@ -367,9 +367,9 @@ public class ProductService implements IProductService {
 		case "nameDesc":
 			return "productSortDesc";
 		case "priceDesc":
-			return "product.prices.priceValueSort";
+			return "product.prices.priceValue";
 		case "priceAsc":
-			return "product.prices.priceValueSort";
+			return "product.prices.priceValue";
 		default: 
 			return "productSortDesc";
 		}
