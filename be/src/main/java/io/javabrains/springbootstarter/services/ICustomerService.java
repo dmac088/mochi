@@ -1,6 +1,8 @@
 package io.javabrains.springbootstarter.services;
 import java.util.List;
 
+import io.javabrains.springbootstarter.domain.Customer;
+
 public interface ICustomerService {
 
 	 boolean customerExist(final String username);

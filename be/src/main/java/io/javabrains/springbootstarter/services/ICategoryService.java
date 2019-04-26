@@ -3,6 +3,8 @@ package io.javabrains.springbootstarter.services;
 
 import java.util.List;
 
+import io.javabrains.springbootstarter.domain.Category;
+
 public interface ICategoryService {
 	 
 	 List<Category> getCategories(String lcl, String currency);

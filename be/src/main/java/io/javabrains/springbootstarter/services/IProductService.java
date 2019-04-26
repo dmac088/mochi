@@ -2,8 +2,10 @@ package io.javabrains.springbootstarter.services;
 
 
 import java.util.List;
-import io.javabrains.springbootstarter.domain.Category;
-import io.javabrains.springbootstarter.facets.CategoryFacet;
+
+import io.javabrains.springbootstarter.domain.Product;
+import io.javabrains.springbootstarter.dto.CategorySidebar;
+import io.javabrains.springbootstarter.entity.Category;
 
 public interface IProductService {
 	
@@ -21,7 +23,7 @@ public interface IProductService {
 	 
 	 ResultContainer getProductsForCategoryAndBrandAndPrice(String lcl, String currency, String categoryDesc, String brandDesc, Double price, int page, int size, String sortBy);
 	 
-	 ResultContainer findProduct(String lcl, String currency, String categoryCode, String term, int page, int size, String sortBy, List<CategoryFacet> selectedFacets);
+	 ResultContainer findProduct(String lcl, String currency, String categoryCode, String term, int page, int size, String sortBy, List<CategorySidebar> selectedFacets);
 	 
 	 List<Product> getPreviewProductsForCategory(String lcl, String currency, Long categoryId);
 	 
