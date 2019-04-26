@@ -9,8 +9,6 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.event.ContextRefreshedEvent;
 
-
-
 @SpringBootApplication
 @EnableCaching
 @ComponentScan({"io.javabrains.springbootstarter.domain",
