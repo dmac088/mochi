@@ -3,13 +3,14 @@ package io.javabrains.springbootstarter.services;
 import java.util.List;
 import org.springframework.data.domain.Page;
 
-import io.javabrains.springbootstarter.facets.CategoryFacet;
+import io.javabrains.springbootstarter.domain.Product;
+import io.javabrains.springbootstarter.dto.CategorySidebar;
 
 public class ResultContainer {
 	
 	Page<Product> products;
 	
-	List<CategoryFacet> categoryFacets;
+	List<CategorySidebar> categoryFacets;
 	
 	//List<CategoryFacet> brandFacets;
 
@@ -21,11 +22,11 @@ public class ResultContainer {
 		this.products = products;
 	}
 
-	public List<CategoryFacet> getCategoryFacets() {
+	public List<CategorySidebar> getCategoryFacets() {
 		return categoryFacets;
 	}
 
-	public void setCategoryFacets(List<CategoryFacet> facets) {
+	public void setCategoryFacets(List<CategorySidebar> facets) {
 		this.categoryFacets = facets;
 	}
 	

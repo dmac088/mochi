@@ -1,51 +1,27 @@
 package io.javabrains.springbootstarter.domain;
 
-import java.util.List;
+import java.util.Objects;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import org.hibernate.search.annotations.IndexedEmbedded;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-
-@Entity
-@Table(name = "brand", schema = "mochi")
 public class Brand {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="bnd_id")
 	private Long brandId;
 	
-	@Column(name="bnd_cd")
 	private String brandCode;
 
-	@OneToMany(mappedBy="brand", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JsonManagedReference
-	private List<Product> products;
+	private String brandDesc;
 	
-	@ManyToMany(mappedBy = "brands")
-	@JsonIgnore
-	private List<Category> categories;
+	private Long productCount;
+	
+	private Long maxMarkDownPrice;
 
-	@OneToMany(mappedBy="brand",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@IndexedEmbedded
-	private List<BrandAttribute> brandAttributes;
-	
 	public Long getBrandId() {
-		return this.brandId;
+		return brandId;
 	}
 
+	public void setBrandId(Long brandId) {
+		this.brandId = brandId;
+	}
+	
 	public String getBrandCode() {
 		return brandCode;
 	}
@@ -53,21 +29,42 @@ public class Brand {
 	public void setBrandCode(String brandCode) {
 		this.brandCode = brandCode;
 	}
-	
-	public List<BrandAttribute> getBrandAttributes() {
-		return brandAttributes;
-	}
-	
-	public void setBrandAttributes(List<BrandAttribute> brandAttributes) {
-		this.brandAttributes = brandAttributes;
+
+	public String getBrandDesc() {
+		return brandDesc;
 	}
 
-	public void setProducts(List<Product> products) {
-		this.products = products;
+	public void setBrandDesc(String brandDesc) {
+		this.brandDesc = brandDesc;
 	}
 	
-	public List<Product> getProducts() {
-		return products;
+	public Long getProductCount() {
+		return productCount;
 	}
 
+	public void setProductCount(Long productCount) {
+		this.productCount = productCount;
+	}
+	
+	public Long getMaxMarkDownPrice() {
+		return maxMarkDownPrice;
+	}
+
+	public void setMaxMarkDownPrice(Long maxMarkDownPrice) {
+		this.maxMarkDownPrice = maxMarkDownPrice;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		 if (this == o) return true;
+	     if (o == null || getClass() != o.getClass()) return false;
+	     Brand pcDto = (Brand) o;
+	     return this.brandId == pcDto.brandId;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(brandId);
+	}
+	
 }

@@ -16,7 +16,10 @@ import org.springframework.context.event.ContextRefreshedEvent;
 @ComponentScan({"io.javabrains.springbootstarter.domain",
 				"io.javabrains.springbootstarter.security",
 				"io.javabrains.springbootstarter.test",
-				"io.javabrains.springbootstarter.services"})
+				"io.javabrains.springbootstarter.services",
+				"io.javabrains.springbootstarter.dto",
+				"io.javabrains.springbootstarter.entity",
+				"io.javabrains.springbootstarter.controllers"})
 public class App {
 	
 	 private static final Logger LOG = LoggerFactory.getLogger(App.class);

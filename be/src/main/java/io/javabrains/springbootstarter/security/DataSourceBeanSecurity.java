@@ -46,7 +46,7 @@ public class DataSourceBeanSecurity {
 		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
 		properties.setProperty("hibernate.show_sql", "true");
 		
-		return properties;
+		return properties; 
 	} 
      
 	@Bean(name = "securityEntityManagerFactory") 
@@ -57,6 +57,7 @@ public class DataSourceBeanSecurity {
        em.setPackagesToScan(new String[] {
     		   								"io.javabrains.springbootstarter.security",
     		   								"io.javabrains.springbootstarter.domain",
+    		   								"io.javabrains.springbootstarter.entity",
     		   								"io.javabrains.springbootstarter.services"
     		   							 });
        JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();

@@ -1,87 +1,37 @@
 package io.javabrains.springbootstarter.domain;
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Table;
-import org.codehaus.jackson.annotate.JsonBackReference;
-import org.hibernate.search.annotations.IndexedEmbedded;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import java.util.Objects;
 
-@Entity
-@Table(name = "product", schema = "mochi")
-@PrimaryKeyJoinColumn(name = "prd_id")
+
 public class Product {
-	
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="prd_id")
+
 	private Long productId;
 
-	@Column(name="upc_cd")
 	private String productUPC;
 	
-	@Column(name="prd_crtd_dt")
 	private Date productCreateDt;
-	
-	@Column(name="prd_prev_flg")
-	private Long previewFlag;
 
-	@Column(name="prd_feat_flg")
-	private Long featuredFlag;
+	private String productDesc;
 	
-	@ManyToMany(mappedBy = "products")
-	@IndexedEmbedded
-	@JsonIgnore
+	private String brandDesc;
+	
+	private double productRetail;
+	
+	private double productMarkdown;
+	
+	private String productImage;
+	
+	private Long productPreview;
+	
+	private String lclCd;
+	
 	private List<Category> categories;
 
-	@OneToMany(mappedBy="product",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JsonManagedReference
-	private List<ProductAttribute> attributes;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@IndexedEmbedded
-	@JoinColumn(name="bnd_id", insertable=false, updatable=false)
-	@JsonBackReference
-	private Brand brand;
-	
-	@OneToMany(mappedBy="product",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@IndexedEmbedded
-	@JsonManagedReference
-	List<ProductPrice> prices;
 
 	public Long getProductId() {
 		return productId;
-	}
-
-	public Collection<Category> getCategories() {
-		return this.categories;
-	}
-	
-	
-	public List<ProductAttribute> getAttributes() {
-		return attributes;
-	}
-
-	public void setAttributes(List<ProductAttribute> productAttributes) {
-		this.attributes = productAttributes;
-	}
-
-	public void setCategories(List<Category> categories) {
-		this.categories = categories;
 	}
 
 	public void setProductId(Long productId) {
@@ -103,37 +53,98 @@ public class Product {
 	public void setProductCreateDt(Date productCreateDt) {
 		this.productCreateDt = productCreateDt;
 	}
+
+	public String getProductDesc() {
+		return productDesc;
+	}
+
+	public void setProductDesc(String productDesc) {
+		this.productDesc = productDesc;
+	}
+
+	public double getProductRetail() {
+		return productRetail;
+	}
+
+	public void setProductRetail(double productRetail) {
+		this.productRetail = productRetail;
+	}
+
+	public double getProductMarkdown() {
+		return productMarkdown;
+	}
+
+	public void setProductMarkdown(double productMarkdown) {
+		this.productMarkdown = productMarkdown;
+	}
+
+	public String getProductImage() {
+		return productImage;
+	}
+
+	public void setProductImage(String productImage) {
+		this.productImage = productImage;
+	}
+
+	public String getLclCd() {
+		return lclCd;
+	}
+
+	public Long getProductPreview() {
+		return productPreview;
+	}
+
+	public void setProductPreview(Long productPreview) {
+		this.productPreview = productPreview;
+	}
+
+	public void setLclCd(String lclCd) {
+		this.lclCd = lclCd;
+	}
 	
-	public List<ProductPrice> getPrices() {
-		return this.prices;
+	public List<Category> getCategories() {
+		return categories;
 	}
 
-	public void setPrices(List<ProductPrice> productPrices) {
-		this.prices = productPrices;
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
 	}
 	
-	public Long getPreviewFlag() {
-		return previewFlag;
+	public String getBrandDesc() {
+		return brandDesc;
 	}
 
-	public void setPreviewFlag(Long previewFlag) {
-		this.previewFlag = previewFlag;
+	public void setBrandDesc(String brandDesc) {
+		this.brandDesc = brandDesc;
 	}
 	
-	public Long getFeaturedFlag() {
-		return featuredFlag;
+	@Override
+	public boolean equals(Object o) {
+		 if (this == o) return true;
+	     if (o == null || getClass() != o.getClass()) return false;
+	     Product pcDto = (Product) o;
+	     return this.productId == pcDto.productId;
 	}
 
-	public void setFeaturedFlag(Long featuredFlag) {
-		this.featuredFlag = featuredFlag;
+	@Override
+	public int hashCode() {
+		return Objects.hash(productId);
 	}
 
-	public Brand getBrand() {
-		return brand;
-	}
+	@Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append("ProductDto [productId=").append(productId)
+        		.append(", productUPC=").append(productUPC)
+        		.append(", productCreateDt=").append(productCreateDt)
+        		.append(", productDesc=").append(productDesc)
+        		.append(", brandDesc=").append(brandDesc)
+        		.append(", productRetail=").append(productRetail)
+        		.append(", productMarkdown=").append(productMarkdown)
+                .append(", ProductImage=").append(productImage)
+                .append(", PreviewFlag=").append(productPreview)
+                .append(", lclCd=").append(lclCd);
+        return builder.toString();
+    }
 
-	public void setBrand(Brand brand) {
-		this.brand = brand;
-	}
-			
 }

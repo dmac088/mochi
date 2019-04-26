@@ -1,148 +1,69 @@
 package io.javabrains.springbootstarter.domain;
+import java.util.Set;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import io.javabrains.springbootstarter.entity.Layout;
+
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Table;
+import java.util.Objects;
 
-import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.Facet;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.IndexedEmbedded;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.google.common.collect.Lists;
-
-@Entity
-@Table(name = "category", schema = "mochi")
-@PrimaryKeyJoinColumn(name = "cat_id")
 public class Category {
-
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="cat_id")
+	
 	private Long categoryId;
-
-	@Column(name="cat_cd")
-	@Field(analyze = Analyze.NO)
-	@Facet
+	
 	private String categoryCode;
-
-	@Column(name="cat_lvl")
+	
+	private String categoryDesc;
+	
 	private Long categoryLevel;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@IndexedEmbedded
-	@JoinColumn(name="hir_id", insertable=false, updatable=false)
-	@JsonBackReference
-	private Hierarchy hierarchy;
-
-	@ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "product_category", schema="mochi", 
-    		   joinColumns 			= @JoinColumn(name = "cat_id"), 
-    		   inverseJoinColumns 	= @JoinColumn(name = "prd_id"))
-    @OrderBy
-    @JsonIgnore
-    private List<Product> products;
+	private String categoryType;
 	
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "brand_category", schema="mochi", 
-    		   joinColumns 			= @JoinColumn(name = "cat_id"), 
-    		   inverseJoinColumns 	= @JoinColumn(name = "bnd_id"))
-    @OrderBy
-    @JsonIgnore
-    private List<Brand> brands;
-    
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "layout_category", schema="mochi", 
-    		   joinColumns 			= @JoinColumn(name = "cat_id"), 
-    		   inverseJoinColumns 	= @JoinColumn(name = "lay_id"))
-    @OrderBy
-    @JsonIgnore
-    private List<Layout> layouts;
+	private boolean isFacet;
 
-	@ManyToOne
-	@JoinColumn(name="cat_typ_id", nullable=false, updatable = false, insertable = true)
-	private CategoryType categoryType;
-
-	@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional=false)
-	@JoinColumn(name="cat_prnt_id", nullable=false)
-	@IndexedEmbedded(depth = 5)
-	private Category parent;
+	private String categoryFacetToken;
 	
-	@OneToMany(mappedBy="category",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@IndexedEmbedded
-	@JsonIgnore
-	private List<CategoryAttribute> attributes;
+	private Long categoryFacetCount;
 
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumns({
-		@JoinColumn(name="cat_prnt_id")
-	})
-	private List<Category> children;	
+	private String lclCd;
+	
+	private List<Layout> layouts;
+	
+	//@JsonIgnore
+	private Long parentId;	
 
+	private Long childCategoryCount;
 	
-	@Field(analyze = Analyze.NO)
-	@Facet
-	public String getCategoryToken() {
-		return createCategoryToken(this, new ArrayList<String>());
-	}
+	private Long productCount;
 	
-	
-	private String createCategoryToken(Category category, List<String> lc) {
-		lc.add(category.getCategoryCode());
-		if(category.getParent() == null) {
-			StringBuilder sb = new StringBuilder();
-			Lists.reverse(lc).stream().forEach(s -> sb.append("/").append(s));
-			return sb.toString();
-		}
-		return this.createCategoryToken(category.getParent(), lc);
-		
-	}
-	
-	public Long getChildCategoryCount() {
-		return new Long(this.children.size());
-	}
+	private Long maxMarkDownPrice;
 
-	public List<Category> getChildren() {
-		return children;
-	}
+	private Set<Brand> categoryBrands;
+
+	private List<Category> children;
 	
-	public Category getParent() {
-		return parent;
-	}
-
-	public void setParent(Category parent) {
-		this.parent = parent;
-	}
-	
-	public List<CategoryAttribute> getAttributes() {
-		return attributes;
-	}
-
-	public void setAttributes(List<CategoryAttribute> categoryAttributes) {
-		this.attributes = categoryAttributes;
-	}
-
 	public Long getCategoryId() {
 		return categoryId;
+	}
+
+	public void setCategoryId(Long categoryId) {
+		this.categoryId = categoryId;
+	}
+
+	public String getCategoryCode() {
+		return categoryCode;
+	}
+
+	public void setCategoryCode(String categoryCode) {
+		this.categoryCode = categoryCode;
+	}
+
+	public String getCategoryDesc() {
+		return categoryDesc;
+	}
+
+	public void setCategoryDesc(String categoryDesc) {
+		this.categoryDesc = categoryDesc;
 	}
 	
 	public Long getCategoryLevel() {
@@ -152,39 +73,55 @@ public class Category {
 	public void setCategoryLevel(Long categoryLevel) {
 		this.categoryLevel = categoryLevel;
 	}
-	
-	public Collection<Product> getProducts() {
-		return products;
-	}
-	
-    public Hierarchy getHierarchy() {
-		return hierarchy;
+
+	public String getLclCd() {
+		return lclCd;
 	}
 
-	public void setHierarchy(Hierarchy hierarchy) {
-		this.hierarchy = hierarchy;
-	}
-	
-	public String getCategoryCode() {
-		return categoryCode;
+	public void setLclCd(String lclCd) {
+		this.lclCd = lclCd;
 	}
 
-	public void setCategoryCode(String categoryCode) {
-		this.categoryCode = categoryCode;
+	public Long getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(Long parentId) {
+		this.parentId = parentId;
+	}
+	
+	public Long getChildCategoryCount() {
+		return childCategoryCount;
+	}
+
+	public void setChildCategoryCount(Long childCategoryCount) {
+		this.childCategoryCount = childCategoryCount;
 	}
 	
 	public Long getProductCount() {
-		return new Long(products.size());
+		return productCount;
+	}
+
+	public void setProductCount(Long productCount) {
+		this.productCount = productCount;
 	}
 	
-	public CategoryType getCategoryType() {
+	public Long getMaxMarkDownPrice() {
+		return maxMarkDownPrice;
+	}
+
+	public void setMaxMarkDownPrice(Long maxMarkDownPrice) {
+		this.maxMarkDownPrice = maxMarkDownPrice;
+	}
+	
+	public String getCategoryType() {
 		return categoryType;
 	}
-
-	public void setCategoryType(CategoryType categoryType) {
+	
+	public void setCategoryType(String categoryType) {
 		this.categoryType = categoryType;
 	}
-
+	
 	public List<Layout> getLayouts() {
 		return layouts;
 	}
@@ -192,4 +129,68 @@ public class Category {
 	public void setLayouts(List<Layout> layouts) {
 		this.layouts = layouts;
 	}
+	
+	public String getFacetToken() {
+		return categoryFacetToken;
+	}
+
+	public void setFacetToken(String categoryToken) {
+		this.categoryFacetToken = categoryToken;
+	}
+	
+	public boolean isFacet() {
+		return isFacet;
+	}
+
+	public void setFacet(boolean isFacet) {
+		this.isFacet = isFacet;
+	}
+
+	public Long getFacetCount() {
+		return categoryFacetCount;
+	}
+
+	public void setFacetCount(Long categoryFacetCount) {
+		this.categoryFacetCount = categoryFacetCount;
+	}
+	
+	public List<Category> getChildren() {
+		return children;
+	}
+
+	public void setChildren(List<Category> children) {
+		this.children = children;
+	}
+	
+	public Set<Brand> getCategoryBrands() {
+		return categoryBrands;
+	}
+
+	public void setCategoryBrands(Set<Brand> set) {
+		this.categoryBrands = set;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		 if (this == o) return true;
+	     if (o == null || getClass() != o.getClass()) return false;
+	     Category pcDto = (Category) o;
+	     return this.categoryId == pcDto.categoryId;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(categoryId);
+	}
+
+	@Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append("CategoryDto [categoryId=")
+        .append(categoryId)
+        .append(", categoryCode=").append(categoryCode)
+        .append(", categoryDesc=").append(categoryDesc)
+        .append(", lclCd=").append(lclCd);
+        return builder.toString();
+    }
 }

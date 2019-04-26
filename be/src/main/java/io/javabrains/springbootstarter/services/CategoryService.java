@@ -10,10 +10,10 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import io.javabrains.springbootstarter.services.Brand;
-import io.javabrains.springbootstarter.services.Category;
-import io.javabrains.springbootstarter.domain.CategoryRepository;
-import io.javabrains.springbootstarter.domain.ProductRepository;
+import io.javabrains.springbootstarter.domain.Brand;
+import io.javabrains.springbootstarter.domain.Category;
+import io.javabrains.springbootstarter.entity.CategoryRepository;
+import io.javabrains.springbootstarter.entity.ProductRepository;
 
 @Service
 @Transactional
@@ -36,7 +36,7 @@ public class CategoryService implements ICategoryService {
 	@Transactional
 	@Cacheable
 	public List<Category> getCategories(final String lcl, String currency) {
-    	List<io.javabrains.springbootstarter.domain.Category> lpc = categoryRepository.findAll();
+    	List<io.javabrains.springbootstarter.entity.Category> lpc = categoryRepository.findAll();
     	return lpc.stream().map(pc -> convertToCategoryDto(pc, lcl, currency))
     			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
@@ -47,7 +47,7 @@ public class CategoryService implements ICategoryService {
  	@Transactional
  	@Cacheable
  	public List<Category> getCategoryParent(final String lcl, String currency, final Long parentCategoryId) {
-    	List<io.javabrains.springbootstarter.domain.Category> lpc = categoryRepository.findByParentCategoryId(parentCategoryId);
+    	List<io.javabrains.springbootstarter.entity.Category> lpc = categoryRepository.findByParentCategoryId(parentCategoryId);
     	return lpc.stream().map(pc -> convertToCategoryDto(pc, lcl, currency))
     			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
@@ -57,7 +57,7 @@ public class CategoryService implements ICategoryService {
   	@Transactional
   	@Cacheable
   	public List<Category> getCategoriesForLevel(final String lcl, String currency, final Long level) {
-     	List<io.javabrains.springbootstarter.domain.Category> lpc = categoryRepository.findByCategoryLevelAndCategoryTypeCode(level, "PRD01");
+     	List<io.javabrains.springbootstarter.entity.Category> lpc = categoryRepository.findByCategoryLevelAndCategoryTypeCode(level, "PRD01");
      	return lpc.stream().map(pc -> convertToCategoryDto(pc, lcl, currency))
     			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
@@ -68,19 +68,19 @@ public class CategoryService implements ICategoryService {
   	@Transactional
   	@Cacheable
   	public Category getCategory(final String lcl, String currency, final Long categoryId) {
-    	io.javabrains.springbootstarter.domain.Category pc = categoryRepository.findByCategoryId(categoryId);
+    	io.javabrains.springbootstarter.entity.Category pc = categoryRepository.findByCategoryId(categoryId);
      	return	convertToCategoryDto(pc, lcl, currency);
   	}
     
     @Override
     @Cacheable
 	public Category getCategory(String lcl, String currency, String categoryDesc) {
-    	io.javabrains.springbootstarter.domain.Category pc = categoryRepository.findByAttributesCategoryDesc(categoryDesc);
+    	io.javabrains.springbootstarter.entity.Category pc = categoryRepository.findByAttributesCategoryDesc(categoryDesc);
      	return	convertToCategoryDto(pc, lcl, currency);
 	}
     
  	@Cacheable
-    private Brand convertToBrandDto(final io.javabrains.springbootstarter.domain.Brand b, String categoryCode, final String lcl) {
+    private Brand convertToBrandDto(final io.javabrains.springbootstarter.entity.Brand b, String categoryCode, final String lcl) {
     	final Brand bDto = new Brand();
     	bDto.setBrandId(b.getBrandId());
     	bDto.setBrandCode(b.getBrandCode());
@@ -92,7 +92,7 @@ public class CategoryService implements ICategoryService {
     }
     
  	@Cacheable
-    public Category convertToCategoryDto(final io.javabrains.springbootstarter.domain.Category pc, final String lcl, final String currency) {
+    public Category convertToCategoryDto(final io.javabrains.springbootstarter.entity.Category pc, final String lcl, final String currency) {
     	
  		//create a new product DTO
         final Category pcDto = new Category();

@@ -25,8 +25,9 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.json.JSONObject;
-import io.javabrains.springbootstarter.domain.RoleCustomer;
-import io.javabrains.springbootstarter.domain.PartyPerson;
+
+import io.javabrains.springbootstarter.entity.PartyPerson;
+import io.javabrains.springbootstarter.entity.RoleCustomer;
 import io.javabrains.springbootstarter.security.Encoders;
 import io.javabrains.springbootstarter.security.User;
 import io.javabrains.springbootstarter.security.UserRoleService;
