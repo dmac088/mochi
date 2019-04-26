@@ -363,22 +363,22 @@ public class ProductService implements IProductService {
     private String getSortFieldName(String field) {
 		switch(field) {
 		case "nameAsc":
-			return "productSortDesc";
+			return "product.productDesc";
 		case "nameDesc":
-			return "productSortDesc";
+			return "product.productDesc";
 		case "priceDesc":
 			return "product.currentMarkdownPriceHKD";
 		case "priceAsc":
 			return "product.currentMarkdownPriceHKD";
 		default: 
-			return "productSortDesc";
+			return "product.productDesc";
 		}
 	}
 	
 	private org.apache.lucene.search.Sort getSortField(String field) {
 		switch(field) {
 		case "nameAsc":
-			return new org.apache.lucene.search.Sort(new SortField(getSortFieldName(field), SortField.Type.STRING, true));
+			return new org.apache.lucene.search.Sort(new SortField(getSortFieldName(field), SortField.Type.STRING, false));
 		case "nameDesc":
 			return new org.apache.lucene.search.Sort(new SortField(getSortFieldName(field), SortField.Type.STRING, true));
 		case "priceAsc":
@@ -394,9 +394,9 @@ public class ProductService implements IProductService {
     	switch (param) {
     	case "priceAsc": return new Sort(Sort.Direction.ASC, "prices.PriceValue");
     	case "priceDesc": return new Sort(Sort.Direction.DESC, "prices.PriceValue");
-    	case "nameAsc": return Sort.by(new Sort.Order(Sort.Direction.ASC, "attributes.productDesc").ignoreCase()) ;
-    	case "nameDesc": return Sort.by(new Sort.Order(Sort.Direction.DESC, "attributes.productDesc").ignoreCase());
-    	default: return Sort.by(new Sort.Order(Sort.Direction.ASC, "attributes.productDesc").ignoreCase());
+    	case "nameAsc": return Sort.by(new Sort.Order(Sort.Direction.ASC, "productDesc")) ;
+    	case "nameDesc": return Sort.by(new Sort.Order(Sort.Direction.DESC, "productDesc"));
+    	default: return Sort.by(new Sort.Order(Sort.Direction.ASC, "productDesc"));
     	}
     }
 	
