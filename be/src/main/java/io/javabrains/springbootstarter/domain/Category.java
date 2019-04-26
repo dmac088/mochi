@@ -1,11 +1,9 @@
 package io.javabrains.springbootstarter.domain;
+
 import java.util.Set;
-
 import io.javabrains.springbootstarter.entity.Layout;
-
 import java.util.List;
 import java.util.Objects;
-
 
 public class Category {
 	
@@ -29,7 +27,6 @@ public class Category {
 	
 	private List<Layout> layouts;
 	
-	//@JsonIgnore
 	private Long parentId;	
 
 	private Long childCategoryCount;
@@ -186,11 +183,21 @@ public class Category {
 	@Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("CategoryDto [categoryId=")
-        .append(categoryId)
+        builder.append("domain.Category [")
+        .append("categoryId=").append(categoryId)
         .append(", categoryCode=").append(categoryCode)
         .append(", categoryDesc=").append(categoryDesc)
-        .append(", lclCd=").append(lclCd);
+        .append(", categoryLevel=").append(categoryLevel)
+        .append(", categoryType=").append(categoryType)
+        .append(", isFacet=").append(isFacet)
+        .append(", categoryFacetToken=").append(categoryFacetToken)
+        .append(", categoryFacetCount=").append(categoryFacetCount)
+        .append(", parentId=").append(parentId)
+        .append(", childCategoryCount=").append(childCategoryCount)
+        .append(", productCount=").append(productCount)
+        .append(", maxMarkDownPrice=").append(maxMarkDownPrice)
+        .append(", lclCd=").append(lclCd)
+        .append("]");    	
         return builder.toString();
     }
 }
