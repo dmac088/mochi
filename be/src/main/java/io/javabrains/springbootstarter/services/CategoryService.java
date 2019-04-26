@@ -26,18 +26,12 @@ public class CategoryService implements ICategoryService {
     @Autowired
     private ProductRepository productRepository;
     
-    //API
-    //This method should accept a DTO and return a DTO
-    //The DTO is coarse grained and contains a flat structure of properties
-    //if we did not use a DTO we would have JSON nesting as per the domain model structure, which is hard to manage in our client views
-    //The DTO is simple and dumb, it is the service layer that manages the translation between DTO and domain objects
-    
     @Override
 	@Transactional
 	@Cacheable
 	public List<Category> getCategories(final String lcl, String currency) {
     	List<io.javabrains.springbootstarter.entity.Category> lpc = categoryRepository.findAll();
-    	return lpc.stream().map(pc -> convertToCategoryDto(pc, lcl, currency))
+    	return lpc.stream().map(pc -> createCategory(pc, lcl, currency))
     			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
     			
@@ -48,7 +42,7 @@ public class CategoryService implements ICategoryService {
  	@Cacheable
  	public List<Category> getCategoryParent(final String lcl, String currency, final Long parentCategoryId) {
     	List<io.javabrains.springbootstarter.entity.Category> lpc = categoryRepository.findByParentCategoryId(parentCategoryId);
-    	return lpc.stream().map(pc -> convertToCategoryDto(pc, lcl, currency))
+    	return lpc.stream().map(pc -> createCategory(pc, lcl, currency))
     			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
  	}
@@ -58,7 +52,7 @@ public class CategoryService implements ICategoryService {
   	@Cacheable
   	public List<Category> getCategoriesForLevel(final String lcl, String currency, final Long level) {
      	List<io.javabrains.springbootstarter.entity.Category> lpc = categoryRepository.findByCategoryLevelAndCategoryTypeCode(level, "PRD01");
-     	return lpc.stream().map(pc -> convertToCategoryDto(pc, lcl, currency))
+     	return lpc.stream().map(pc -> createCategory(pc, lcl, currency))
     			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
   	}	
@@ -69,18 +63,18 @@ public class CategoryService implements ICategoryService {
   	@Cacheable
   	public Category getCategory(final String lcl, String currency, final Long categoryId) {
     	io.javabrains.springbootstarter.entity.Category pc = categoryRepository.findByCategoryId(categoryId);
-     	return	convertToCategoryDto(pc, lcl, currency);
+     	return	createCategory(pc, lcl, currency);
   	}
     
     @Override
     @Cacheable
 	public Category getCategory(String lcl, String currency, String categoryDesc) {
     	io.javabrains.springbootstarter.entity.Category pc = categoryRepository.findByAttributesCategoryDesc(categoryDesc);
-     	return	convertToCategoryDto(pc, lcl, currency);
+     	return	createCategory(pc, lcl, currency);
 	}
     
  	@Cacheable
-    private Brand convertToBrandDto(final io.javabrains.springbootstarter.entity.Brand b, String categoryCode, final String lcl) {
+    private Brand createBrand(final io.javabrains.springbootstarter.entity.Brand b, String categoryCode, final String lcl) {
     	final Brand bDto = new Brand();
     	bDto.setBrandId(b.getBrandId());
     	bDto.setBrandCode(b.getBrandCode());
@@ -92,7 +86,7 @@ public class CategoryService implements ICategoryService {
     }
     
  	@Cacheable
-    public Category convertToCategoryDto(final io.javabrains.springbootstarter.entity.Category pc, final String lcl, final String currency) {
+    public Category createCategory(final io.javabrains.springbootstarter.entity.Category pc, final String lcl, final String currency) {
     	
  		//create a new product DTO
         final Category pcDto = new Category();
@@ -105,12 +99,12 @@ public class CategoryService implements ICategoryService {
         pcDto.setMaxMarkDownPrice(productRepository.maxMarkDownPriceByCategoriesCategoryCodeAndPriceCurrencyCode(pc.getCategoryCode(), currency));
         
         //set the brand attributes of all products within the category, to the localized version
-        Set<Brand> catBrands = pc.getProducts().stream().map(p -> this.convertToBrandDto(p.getBrand(), pc.getCategoryCode(), lcl)).collect(Collectors.toSet());
+        Set<Brand> catBrands = pc.getProducts().stream().map(p -> this.createBrand(p.getBrand(), pc.getCategoryCode(), lcl)).collect(Collectors.toSet());
        		
         //create the child objects and add to children collection
         List<Category> pcDTOl =
         pc.getChildren().stream().map(pc1 -> {
-        	Category pcchild = convertToCategoryDto(pc1, lcl, currency);
+        	Category pcchild = createCategory(pc1, lcl, currency);
         	catBrands.addAll(pcchild.getCategoryBrands());
         	return pcchild;
         }).collect(Collectors.toList());
