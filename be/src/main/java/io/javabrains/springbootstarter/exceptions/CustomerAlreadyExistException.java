@@ -1,4 +1,4 @@
-package io.javabrains.springbootstarter.errors;
+package io.javabrains.springbootstarter.exceptions;
 
 
 public final class CustomerAlreadyExistException extends RuntimeException {

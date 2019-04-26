@@ -14,7 +14,7 @@ import io.javabrains.springbootstarter.entity.PartyPersonRepository;
 import io.javabrains.springbootstarter.entity.PartyRepository;
 import io.javabrains.springbootstarter.entity.Role;
 import io.javabrains.springbootstarter.entity.RoleCustomer;
-import io.javabrains.springbootstarter.errors.CustomerAlreadyExistException;
+import io.javabrains.springbootstarter.exceptions.CustomerAlreadyExistException;
 import io.javabrains.springbootstarter.security.User;
 import io.javabrains.springbootstarter.security.UserRole;
 import io.javabrains.springbootstarter.security.UserRoleService;
