@@ -19,17 +19,28 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
+import org.apache.lucene.analysis.miscellaneous.ASCIIFoldingFilterFactory;
 import org.codehaus.jackson.annotate.JsonBackReference;
+import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.NormalizerDef;
 import org.hibernate.search.annotations.SortableField;
-
+import org.hibernate.search.annotations.TokenFilterDef;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "product", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "prd_id")
+@NormalizerDef(
+		name = "sortNormalizer",
+		filters = {
+			@TokenFilterDef(factory = ASCIIFoldingFilterFactory.class), // To handle diacritics such as "é"
+			@TokenFilterDef(factory = LowerCaseFilterFactory.class)
+		}
+)
 public class Product {
 	
 	@Id
@@ -79,6 +90,15 @@ public class Product {
 		 	&& p.getCurrency().getCode().equals("HKD")
 		 	&& p.getType().getDesc().equals("markdown")
 		 ).collect(Collectors.toList()).get(0).getPriceValue();     
+	}
+	
+	@Transient
+	@Field(analyze = Analyze.NO)
+	@SortableField
+	private String getProductDesc() {
+		return this.attributes.stream().filter(p ->
+	 	p.getLclCd().equals("en-GB")
+	 ).collect(Collectors.toList()).get(0).getProductDesc();  
 	}
 	
 	
