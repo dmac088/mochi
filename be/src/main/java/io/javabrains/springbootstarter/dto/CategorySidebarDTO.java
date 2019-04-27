@@ -2,7 +2,7 @@ package io.javabrains.springbootstarter.dto;
 
 import java.util.Objects;
 
-public class CategorySidebar {
+public class CategorySidebarDTO {
 
 	private String facetingName;
 	
@@ -88,7 +88,7 @@ public class CategorySidebar {
 	public boolean equals(Object o) {
 		 if (this == o) return true;
 	     if (o == null || getClass() != o.getClass()) return false;
-	     CategorySidebar pcf = (CategorySidebar) o;
+	     CategorySidebarDTO pcf = (CategorySidebarDTO) o;
 	     return this.Id == pcf.Id;
 	}
 
