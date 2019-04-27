@@ -394,14 +394,14 @@ public class ProductService implements IProductService {
     	switch (param) {
     	case "priceAsc": return new Sort(Sort.Direction.ASC, "prices.PriceValue");
     	case "priceDesc": return new Sort(Sort.Direction.DESC, "prices.PriceValue");
-    	case "nameAsc": return Sort.by(new Sort.Order(Sort.Direction.ASC, "productDesc")) ;
-    	case "nameDesc": return Sort.by(new Sort.Order(Sort.Direction.DESC, "productDesc"));
-    	default: return Sort.by(new Sort.Order(Sort.Direction.ASC, "productDesc"));
+    	case "nameAsc": return Sort.by(new Sort.Order(Sort.Direction.ASC, "attributes.ProductDesc").ignoreCase()) ;
+    	case "nameDesc": return Sort.by(new Sort.Order(Sort.Direction.DESC, "attributes.ProductDesc").ignoreCase());
+    	default: return Sort.by(new Sort.Order(Sort.Direction.ASC, "attributes.ProductDesc"));
     	}
     }
 	
     public void recurseCategories(List<Category> pcl, Category pc) {
-    	pcl.add(pc);
+    	pcl.add(pc); 
     	pc.getChildren().forEach(child -> recurseCategories(pcl, child));
     }
 }
