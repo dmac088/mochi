@@ -15,7 +15,6 @@ import javax.persistence.Transient;
 import org.apache.lucene.analysis.cjk.CJKBigramFilterFactory;
 import org.apache.lucene.analysis.cjk.CJKWidthFilterFactory;
 import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
-import org.apache.lucene.analysis.miscellaneous.ASCIIFoldingFilterFactory;
 import org.apache.lucene.analysis.snowball.SnowballPorterFilterFactory;
 import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
 import org.hibernate.search.annotations.Analyze;
@@ -25,8 +24,6 @@ import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
-import org.hibernate.search.annotations.Normalizer;
-import org.hibernate.search.annotations.NormalizerDef;
 import org.hibernate.search.annotations.Parameter;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.TokenFilterDef;
@@ -51,7 +48,6 @@ filters = {
   @TokenFilterDef(factory = CJKWidthFilterFactory.class),
   @TokenFilterDef(factory = CJKBigramFilterFactory.class)
 })
-
 public class ProductAttribute {
 
 	@Id
@@ -61,10 +57,11 @@ public class ProductAttribute {
 
 	@Column(name="prd_id")
 	private Long productId;
-	
+	 
 	@Field(analyze = Analyze.YES)
 	@Column(name="prd_desc")
 	private String productDesc;
+
 	
 	@Column(name="prd_img_pth")
 	private String ProductImage;
