@@ -10,9 +10,9 @@ public class CategorySidebar {
 
 	private Long Id;
 	
-	private String catgoryDesc;
+	private String categoryDesc;
 	
-	private String catgoryToken;
+	private String categoryToken;
 	
 	private Long level;
 	
@@ -61,19 +61,19 @@ public class CategorySidebar {
 	}
 
 	public String getDesc() {
-		return catgoryDesc;
+		return categoryDesc;
 	}
 
 	public void setDesc(String desc) {
-		this.catgoryDesc = desc;
+		this.categoryDesc = desc;
 	}
 	
 	public String getToken() {
-		return catgoryToken;
+		return categoryToken;
 	}
 
-	public void setToken(String catgoryToken) {
-		this.catgoryToken = catgoryToken;
+	public void setToken(String categoryToken) {
+		this.categoryToken = categoryToken;
 	}
 
 	public Long getCount() {
@@ -100,9 +100,15 @@ public class CategorySidebar {
 	@Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("CategoryDto [categoryId=")
+        builder.append("CategoryDto [Id=")
         .append(Id)
-        .append(", categoryDesc=").append(catgoryDesc);
+        .append(", categoryDesc=").append(categoryDesc)
+        .append(", categoryToken=").append(categoryToken)
+        .append(", facetingName=").append(facetingName)
+        .append(", facetFieldName=").append(facetFieldName)
+        .append(", count=").append(count)
+        .append(", parentId=").append(parentId)
+        .append("]");
         return builder.toString();
     }
 }
