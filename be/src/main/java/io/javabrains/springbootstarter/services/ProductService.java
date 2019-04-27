@@ -34,7 +34,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Sort;
 
 import io.javabrains.springbootstarter.domain.Product;
-import io.javabrains.springbootstarter.dto.CategorySidebarDTO;
+import io.javabrains.springbootstarter.dto.SidebarDTO;
 import io.javabrains.springbootstarter.entity.Category;
 import io.javabrains.springbootstarter.entity.CategoryRepository;
 import io.javabrains.springbootstarter.entity.PageableUtil;
@@ -186,7 +186,7 @@ public class ProductService implements IProductService {
 
 	@Cacheable
 	@SuppressWarnings("unchecked")
-	public ResultContainer findProduct(String lcl, String currency, String categoryDesc, String searchTerm, int page, int size, String sortBy, List<CategorySidebarDTO> receivedFacets) {		
+	public ResultContainer findProduct(String lcl, String currency, String categoryDesc, String searchTerm, int page, int size, String sortBy, List<SidebarDTO> receivedFacets) {		
 		
 		FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
 				
@@ -196,7 +196,7 @@ public class ProductService implements IProductService {
 				  .forEntity(ProductAttribute.class)
 				  .get();
 		
-		//	this is a lucene query using the lucene api
+		//this is a Lucene query using the Lucene api
 		org.apache.lucene.search.Query searchQuery = productQueryBuilder
 													.bool()
 													.must(productQueryBuilder.keyword()
@@ -220,12 +220,13 @@ public class ProductService implements IProductService {
 		  = fullTextEntityManager.createFullTextQuery(searchQuery, ProductAttribute.class);
 		
 		//declare a set of facets (we need to avoid Duplicates)
-		Set<Facet> categoryFacets = new HashSet<Facet>(); 
+		Set<Facet> categoryFacets = new HashSet<Facet>();
+		Set<Facet> brandFacets = new HashSet<Facet>(); 
 		
 		//create a category faceting request for the base level 
 		FacetingRequest categoryFacetRequest = productQueryBuilder.facet()
-				.name("CategoryDescFR")
-				.onField("primaryCategory.categoryToken")
+				.name("CategoryFR")
+				.onField("primaryCategory.categoryToken") //in category class
 				.discrete()
 				.orderedBy(FacetSortOrder.COUNT_DESC)
 				.includeZeroCounts(false)
@@ -235,7 +236,22 @@ public class ProductService implements IProductService {
 		//add all the base level facets to categoryFacets List
 		FacetManager facetMgr = jpaQuery.getFacetManager();
 		facetMgr.enableFaceting(categoryFacetRequest);
-		categoryFacets.addAll(facetMgr.getFacets("CategoryDescFR"));
+		categoryFacets.addAll(facetMgr.getFacets("CategoryFR"));
+		
+		//create a brand faceting request for the base level 
+		FacetingRequest brandFacetRequest = productQueryBuilder.facet()
+				.name("BrandFR")
+				.onField("BrandCode") //in product class
+				.discrete()
+				.orderedBy(FacetSortOrder.COUNT_DESC)
+				.includeZeroCounts(false)
+				.maxFacetCount(5)
+				.createFacetingRequest();
+		
+		//add all the base level facets to brandFacets List
+		facetMgr = jpaQuery.getFacetManager();
+		facetMgr.enableFaceting(brandFacetRequest);
+		brandFacets.addAll(facetMgr.getFacets("BrandFR"));
 		
 		//run the query and get the results
 		List<ProductAttribute> results =  Collections.checkedList(jpaQuery.getResultList(), ProductAttribute.class);
@@ -247,27 +263,37 @@ public class ProductService implements IProductService {
 		ResultContainer src = new ResultContainer();
 		
 		//create a hashset of FacetDTOs to send back to the client, with additional metadata
-		Set<CategorySidebarDTO> s = new HashSet<CategorySidebarDTO>();
+		Set<SidebarDTO> cs = new HashSet<SidebarDTO>();
+		Set<SidebarDTO> bs = new HashSet<SidebarDTO>();
 		
-		//for each of the baseline facets (5x), convert them to Facet DTOs for the client and add them to "s" 
+		//for each of the baseline facets, convert them to Facet DTOs for the client and add them to "s" 
 		categoryFacets.stream().forEach(cf ->  {
 													String categoryCode = (new LinkedList<String>(Arrays.asList(cf.getValue().split("/")))).getLast();
-													CategorySidebarDTO c
-														= convertToCategoryFacet(categoryCode, lcl, currency);
+													SidebarDTO c = convertToCategorySidebarDTO(categoryCode, lcl, currency);
 													c.setCount(new Long(cf.getCount()));
 													c.setToken(cf.getValue());
 													c.setName(cf.getFacetingName());
 													c.setFieldName(cf.getFieldName());
-													s.add(c);
+													cs.add(c);
 											   });
 		
+		
+		brandFacets.stream().forEach(bf ->  {
+													SidebarDTO bfDto = convertToBrandSidebarDTO(bf.getValue(), lcl, currency);
+													bfDto.setCount(new Long(bf.getCount()));
+													bfDto.setToken(bf.getValue());
+													bfDto.setName(bf.getFacetingName());
+													bfDto.setFieldName(bf.getFieldName());
+													bs.add(bfDto);
+		});
+		
 		//create parent category Facet DTOs
-		(new HashSet<CategorySidebarDTO>(s)).stream().forEach(cf -> {
-			createParentCategoryFacets(categoryFacets, s, cf, productQueryBuilder, jpaQuery, lcl, currency, cf.getLevel());
+		(new HashSet<SidebarDTO>(cs)).stream().forEach(cf -> {
+			createParentCategoryFacets(categoryFacets, cs, cf, productQueryBuilder, jpaQuery, lcl, currency, cf.getLevel());
 		});
 		
 		
-		FacetSelection facetSelection = facetMgr.getFacetGroup("CategoryDesc");
+		FacetSelection categoryFacetSelection = facetMgr.getFacetGroup("CategoryDesc");
 		
 		//get a list of facets that exist in the list of received facets
 		List<Facet> lf =
@@ -276,7 +302,7 @@ public class ProductService implements IProductService {
 				x.getToken().equals(y.getValue())).limit(1)).collect(Collectors.toList());
 		
 		//apply the selected facets to the facet selection object
-		facetSelection.selectFacets( lf.toArray(new Facet[0]) );
+		categoryFacetSelection.selectFacets( lf.toArray(new Facet[0]) );
 		 
 		//set pageable definition for jpaQuery
 		Pageable pageable = PageRequest.of(page, size);
@@ -297,16 +323,16 @@ public class ProductService implements IProductService {
 		//create a paging object to hold the results of jpaQuery 
 		Page<Product> pp = new PageImpl<Product>(lp, pageable, jpaQuery.getResultSize());
 		
-		src.setCategoryFacets(new ArrayList<CategorySidebarDTO>(s));
+		src.setCategoryFacets(new ArrayList<SidebarDTO>(cs));
 		
 		src.setProducts(pp);
 		
 		return src;
 	}
 	
-    public CategorySidebarDTO convertToCategoryFacet(String categoryCode, String lcl, String currency) {
+    public SidebarDTO convertToCategorySidebarDTO(String categoryCode, String lcl, String currency) {
     	Category c = productCategoryRepository.findByCategoryCode(categoryCode);
-    	CategorySidebarDTO cf = new CategorySidebarDTO();
+    	SidebarDTO cf = new SidebarDTO();
     	cf.setId(c.getCategoryId());
     	cf.setDesc(c.getAttributes().stream().filter(ca -> ca.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getCategoryDesc());
     	cf.setLevel(c.getCategoryLevel());
@@ -316,12 +342,16 @@ public class ProductService implements IProductService {
     	return cf;		
     }
     
-    private void createParentCategoryFacets(Set<Facet> cfs, Set<CategorySidebarDTO> sc, CategorySidebarDTO c, QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery q, String lcl, String currency, Long baseLevel) {
+    public SidebarDTO convertToBrandSidebarDTO(String brandCode, String lcl, String currency) {
+    	return null;
+    }
+    
+    private void createParentCategoryFacets(Set<Facet> cfs, Set<SidebarDTO> sc, SidebarDTO c, QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery q, String lcl, String currency, Long baseLevel) {
     	if(c == null) { return; }
     	if(c.getParentId() == null) { return; }
     	
     	Category p = productCategoryRepository.findByCategoryId(c.getParentId());
-    	CategorySidebarDTO pcf = convertToCategoryFacet(p.getCategoryCode(), lcl, currency);
+    	SidebarDTO pcf = convertToCategorySidebarDTO(p.getCategoryCode(), lcl, currency);
     	String frName = "CategoryDesc";
     	String frField = "primaryCategory" + StringUtils.repeat(".parent", baseLevel.intValue() - p.getCategoryLevel().intValue()) + ".categoryToken";
     		
@@ -355,7 +385,7 @@ public class ProductService implements IProductService {
         pDto.setProductMarkdown(productPriceRepository.findByProductProductIdAndTypeDescAndStartDateLessThanEqualAndEndDateGreaterThanEqualAndCurrencyCode(product.getProductId(), "markdown", new Date(), new Date(), currency).getPriceValue());
         pDto.setProductImage(pa.getProductImage());
         pDto.setLclCd(lcl);
-        pDto.setBrandDesc(product.getBrand().getBrandAttributes().stream()
+        pDto.setBrandDesc(product.getBrand().getAttributes().stream()
         .filter( ba -> ba.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getBrandDesc());
         return pDto;
     }

@@ -42,6 +42,7 @@ import { changeBrand, createRouteProps } from '../../../services/helpers/RouteHe
 
   export const BrandSideBarContainer = withRouter(({history, match, location, ...props}) => {
     const { category, brandFacets } = props;
+    console.log(brandFacets);
     const routeProps = createRouteProps(history, match, location);
     const currentBrand = routeProps.match.params.brand;
     const isActive = (!currentBrand);

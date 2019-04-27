@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.javabrains.springbootstarter.domain.Product;
-import io.javabrains.springbootstarter.dto.CategorySidebarDTO;
+import io.javabrains.springbootstarter.dto.SidebarDTO;
 import io.javabrains.springbootstarter.services.IProductService;
 import io.javabrains.springbootstarter.services.ResultContainer;
 
@@ -61,7 +61,7 @@ public class ProductController {
     }
     
     @PostMapping("/Search/{lcl}/{curr}/Category/{categoryCode}/SearchTerm/{term}/Page/{page}/Size/{size}/SortBy/{sortBy}")
-    public ResultContainer search(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryCode,@PathVariable String term, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy, @RequestBody final List<CategorySidebarDTO> selectedFacets) {
+    public ResultContainer search(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryCode,@PathVariable String term, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy, @RequestBody final List<SidebarDTO> selectedFacets) {
 //    	if(selectedFacets.length > 0) {
 //    		System.out.println("Facet Name = " + selectedFacets[0].getFieldName());
 //    	}
