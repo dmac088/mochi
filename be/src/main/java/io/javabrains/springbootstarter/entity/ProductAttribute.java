@@ -80,7 +80,7 @@ public class ProductAttribute {
 	@Facet
 	@Field(analyze = Analyze.NO)
 	public String getBrandDesc() {
-		return this.product.getBrand().getBrandAttributes().stream().filter(b -> b.getLclCd().equals(this.lclCd)).collect(Collectors.toList()).get(0).getBrandDesc();
+		return this.product.getBrand().getAttributes().stream().filter(b -> b.getLclCd().equals(this.lclCd)).collect(Collectors.toList()).get(0).getBrandDesc();
 	}
 	
 	@Transient

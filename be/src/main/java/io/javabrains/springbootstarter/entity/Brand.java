@@ -54,11 +54,11 @@ public class Brand {
 		this.brandCode = brandCode;
 	}
 	
-	public List<BrandAttribute> getBrandAttributes() {
+	public List<BrandAttribute> getAttributes() {
 		return brandAttributes;
 	}
 	
-	public void setBrandAttributes(List<BrandAttribute> brandAttributes) {
+	public void setAttributes(List<BrandAttribute> brandAttributes) {
 		this.brandAttributes = brandAttributes;
 	}
 
