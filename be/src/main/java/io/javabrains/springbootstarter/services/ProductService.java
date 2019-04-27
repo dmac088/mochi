@@ -34,7 +34,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Sort;
 
 import io.javabrains.springbootstarter.domain.Product;
-import io.javabrains.springbootstarter.dto.CategorySidebar;
+import io.javabrains.springbootstarter.dto.CategorySidebarDTO;
 import io.javabrains.springbootstarter.entity.Category;
 import io.javabrains.springbootstarter.entity.CategoryRepository;
 import io.javabrains.springbootstarter.entity.PageableUtil;
@@ -186,7 +186,7 @@ public class ProductService implements IProductService {
 
 	@Cacheable
 	@SuppressWarnings("unchecked")
-	public ResultContainer findProduct(String lcl, String currency, String categoryDesc, String searchTerm, int page, int size, String sortBy, List<CategorySidebar> receivedFacets) {		
+	public ResultContainer findProduct(String lcl, String currency, String categoryDesc, String searchTerm, int page, int size, String sortBy, List<CategorySidebarDTO> receivedFacets) {		
 		
 		FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
 				
@@ -247,12 +247,12 @@ public class ProductService implements IProductService {
 		ResultContainer src = new ResultContainer();
 		
 		//create a hashset of FacetDTOs to send back to the client, with additional metadata
-		Set<CategorySidebar> s = new HashSet<CategorySidebar>();
+		Set<CategorySidebarDTO> s = new HashSet<CategorySidebarDTO>();
 		
 		//for each of the baseline facets (5x), convert them to Facet DTOs for the client and add them to "s" 
 		categoryFacets.stream().forEach(cf ->  {
 													String categoryCode = (new LinkedList<String>(Arrays.asList(cf.getValue().split("/")))).getLast();
-													CategorySidebar c
+													CategorySidebarDTO c
 														= convertToCategoryFacet(categoryCode, lcl, currency);
 													c.setCount(new Long(cf.getCount()));
 													c.setToken(cf.getValue());
@@ -262,7 +262,7 @@ public class ProductService implements IProductService {
 											   });
 		
 		//create parent category Facet DTOs
-		(new HashSet<CategorySidebar>(s)).stream().forEach(cf -> {
+		(new HashSet<CategorySidebarDTO>(s)).stream().forEach(cf -> {
 			createParentCategoryFacets(categoryFacets, s, cf, productQueryBuilder, jpaQuery, lcl, currency, cf.getLevel());
 		});
 		
@@ -297,16 +297,16 @@ public class ProductService implements IProductService {
 		//create a paging object to hold the results of jpaQuery 
 		Page<Product> pp = new PageImpl<Product>(lp, pageable, jpaQuery.getResultSize());
 		
-		src.setCategoryFacets(new ArrayList<CategorySidebar>(s));
+		src.setCategoryFacets(new ArrayList<CategorySidebarDTO>(s));
 		
 		src.setProducts(pp);
 		
 		return src;
 	}
 	
-    public CategorySidebar convertToCategoryFacet(String categoryCode, String lcl, String currency) {
+    public CategorySidebarDTO convertToCategoryFacet(String categoryCode, String lcl, String currency) {
     	Category c = productCategoryRepository.findByCategoryCode(categoryCode);
-    	CategorySidebar cf = new CategorySidebar();
+    	CategorySidebarDTO cf = new CategorySidebarDTO();
     	cf.setId(c.getCategoryId());
     	cf.setDesc(c.getAttributes().stream().filter(ca -> ca.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getCategoryDesc());
     	cf.setLevel(c.getCategoryLevel());
@@ -316,12 +316,12 @@ public class ProductService implements IProductService {
     	return cf;		
     }
     
-    private void createParentCategoryFacets(Set<Facet> cfs, Set<CategorySidebar> sc, CategorySidebar c, QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery q, String lcl, String currency, Long baseLevel) {
+    private void createParentCategoryFacets(Set<Facet> cfs, Set<CategorySidebarDTO> sc, CategorySidebarDTO c, QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery q, String lcl, String currency, Long baseLevel) {
     	if(c == null) { return; }
     	if(c.getParentId() == null) { return; }
     	
     	Category p = productCategoryRepository.findByCategoryId(c.getParentId());
-    	CategorySidebar pcf = convertToCategoryFacet(p.getCategoryCode(), lcl, currency);
+    	CategorySidebarDTO pcf = convertToCategoryFacet(p.getCategoryCode(), lcl, currency);
     	String frName = "CategoryDesc";
     	String frField = "primaryCategory" + StringUtils.repeat(".parent", baseLevel.intValue() - p.getCategoryLevel().intValue()) + ".categoryToken";
     		
