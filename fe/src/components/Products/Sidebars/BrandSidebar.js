@@ -1,11 +1,11 @@
 import React from 'react';
-import BrandSideBarContainer from './BrandSideBarContainer';
+import { BrandSidebarContainer } from './BrandSideBarContainer';
 
   export const BrandSidebar = (props) => {
     return(
-      <BrandSideBarContainer
+      <BrandSidebarContainer
         {...props}>
         {props.children}
-      </BrandSideBarContainer>
+      </BrandSidebarContainer>
     )
   }

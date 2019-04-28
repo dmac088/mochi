@@ -379,7 +379,7 @@ public class ProductService implements IProductService {
     	
     	Category p = productCategoryRepository.findByCategoryId(c.getParentId());
     	SidebarFacetDTO pcf = convertToCategorySidebarDTO(p.getCategoryCode(), lcl, currency);
-    	String frName = "CategoryDesc";
+    	String frName = "CategoryFR";
     	String frField = "primaryCategory" + StringUtils.repeat(".parent", baseLevel.intValue() - p.getCategoryLevel().intValue()) + ".categoryToken";
     		
     	FacetingRequest categoryFacetRequest = qb.facet()

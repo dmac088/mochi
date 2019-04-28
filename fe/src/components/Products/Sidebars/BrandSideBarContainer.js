@@ -1,31 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { withRouter } from "react-router-dom";
 import { changeBrand, createRouteProps } from '../../../services/helpers/RouteHelper';
 
-class BrandSidebarContainer extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      "facets": null,
-      "selectedFacets":  [],
-    };
-  }
-
-  componentDidMount() {
-    this.setState({
-      "facets": this.props.facets,
-    });
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (_.isEqual(this.state.facets, this.props.facets)) {return}
-    this.setState({
-      "facets": this.props.facets,
-    });
-  }
-
-  renderBrandsForCategory = (category, selectedFacet, routeProps) => {
+  const renderBrandsForCategory = (category, selectedFacet, routeProps) => {
     return category.categoryBrands.map(brand => {
       const isActive = (selectedFacet === brand.brandDesc)
       return(
@@ -38,7 +15,7 @@ class BrandSidebarContainer extends Component {
     })
   }
 
-  renderAll = (category, isActive, routeProps) => {
+  const renderAll = (category, isActive, routeProps) => {
       if(category.categoryBrands.length <= 1) {return}
       return (
         <li>
@@ -49,39 +26,13 @@ class BrandSidebarContainer extends Component {
       )
   }
 
-  applyFacet = (e, props) => {
-    if(this.state.selectedFacets.find(o => o.token === e.currentTarget.id)) {
-        this.setState({
-          "selectedFacets": this.state.selectedFacets.filter(o => o.token !== e.currentTarget.id),
-        }, () => {
-          //console.log(this.state.selectedFacets);
-          this.props.refresh(0, this.state.selectedFacets);
-        });
-        return;
-    }
-    const newSelectedFacets = _.cloneDeep(this.state.selectedFacets, true);
-    newSelectedFacets.push(this.state.facets.filter(o => o.token === e.currentTarget.id)[0]);
-    this.setState({
-      "selectedFacets": newSelectedFacets,
-    }, () => {
-      //  console.log(this.state.selectedFacets);
-        this.props.refresh(0, this.state.selectedFacets);
-    });
-  }
-
-
-  isActive = (facet, selectedFacets) => {
-    return (selectedFacets.find(o => o.token === facet.token));
-  }
-
-
-  renderFacets = (facets, selectedFacets, props) => {
+  const renderFacets = (facets, selectedFacets, routeProps, props) => {
     return facets.map(facet => {
       return(
         <li key={facet.id}>
-          <a className={(this.isActive(facet, selectedFacets)) ? "active" : ""} onClick={(e) => {
+          <a className={(props.isActive(facet, selectedFacets)) ? "active" : ""} onClick={(e) => {
                                 e.preventDefault();
-                                this.applyFacet(e, props);
+                                props.applyFacet(e, routeProps);
                              }} id={facet.token} href="#">
             {facet.desc} <span className="badge badge-pill badge-secondary">{facet.count}</span>
           </a>
@@ -90,11 +41,9 @@ class BrandSidebarContainer extends Component {
     });
   }
 
-
-  render() {
-    const { brand, history, match, location } = this.props;
+  export const BrandSidebarContainer = withRouter(({location, match, history, ...props}) => {
+    const { category, facets, isActive, selectedFacets, brand } = props;
     const routeProps = createRouteProps(history, match, location);
-    const { facets, selectedFacets } = this.state;
     const isSearch = (match.params[0] === "search");
     const isCategory = (match.params[0] === "category");
     if(isCategory && !category) { return null }
@@ -107,12 +56,9 @@ class BrandSidebarContainer extends Component {
               ? renderAll(category, isActive, routeProps)
               : null}
             {(isCategory)
-              ? this.renderBrandsForCategory(category, selectedFacet, routeProps)
-              : this.renderFacets(facets, selectedFacets, routeProps)}
+              ? renderBrandsForCategory(category, selectedFacets, routeProps)
+              : renderFacets(facets, selectedFacets, routeProps, props)}
           </ul>
         </div>
       );
-  }
-}
-
-export default withRouter(BrandSidebarContainer);
+  });
