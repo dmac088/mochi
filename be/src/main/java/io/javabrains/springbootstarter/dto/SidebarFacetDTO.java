@@ -6,6 +6,8 @@ public class SidebarFacetDTO {
 
 	private Long Id;
 	
+	private String objectType;
+
 	private String facetingName;
 	
 	private String facetFieldName;
@@ -82,6 +84,14 @@ public class SidebarFacetDTO {
 
 	public void setCount(Long count) {
 		this.count = count;
+	}
+	
+	public String getObjectType() {
+		return objectType;
+	}
+
+	public void setObjectType(String objectType) {
+		this.objectType = objectType;
 	}
 	
 	@Override

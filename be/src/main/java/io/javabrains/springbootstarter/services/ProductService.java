@@ -359,6 +359,7 @@ public class ProductService implements IProductService {
     	cf.setId(c.getCategoryId());
     	cf.setDesc(c.getAttributes().stream().filter(ca -> ca.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getCategoryDesc());
     	cf.setLevel(c.getCategoryLevel());
+    	cf.setObjectType(c.getClass().getSimpleName());
     	if(c.getParent() != null) {
     		cf.setParentId(c.getParent().getCategoryId());
     	}
@@ -370,6 +371,7 @@ public class ProductService implements IProductService {
     	SidebarFacetDTO bf = new SidebarFacetDTO();
     	bf.setId(b.getBrandId());
     	bf.setDesc(b.getAttributes().stream().filter(ba -> ba.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getBrandDesc());
+    	bf.setObjectType(b.getClass().getSimpleName());
     	return bf;
     }
     
