@@ -239,7 +239,7 @@ class Products extends Component {
                         category={cat}
                         facets={facets.filter(function(value, index, arr){
                           console.log(value)
-                                          return value.objectType === "Category";
+                                          return value.facetingName === "CategoryFR";
                                         })}
                         isActive={this.isActive}
                         applyFacet={this.applyFacet}
@@ -249,7 +249,7 @@ class Products extends Component {
                         isActive={this.isActive}
                         category={cat}
                         facets={facets.filter(function(value, index, arr){
-                                          return value.objectType === "Brand";
+                                          return value.facetingName === "BrandFR";
                                         })}
                         applyFacet={this.applyFacet}
                       />
