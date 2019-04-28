@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrandSideBarContainer } from './BrandSideBarContainer';
+import BrandSideBarContainer from './BrandSideBarContainer';
 
   export const BrandSidebar = (props) => {
     return(

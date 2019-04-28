@@ -26,9 +26,9 @@ class Products extends Component {
       "category": "",
       "term":     "",
       "products": [],
-      "categoryFacets": [],
-      "selectedCategoryFacets": [],
+      "facets": [],
       "brandFacets": [],
+      "selectedFacets": [],
       "totalPages": 0,
       "totalElements": 0,
       "numberOfElements": 0,
@@ -46,16 +46,16 @@ class Products extends Component {
 
 
   componentDidMount() {
-    this.refresh(1, this.state.selectedCategoryFacets);
+    this.refresh(1, this.state.selectedFacets);
   }
 
 
   componentDidUpdate(prevProps) {
-    this.refresh(0, this.state.selectedCategoryFacets);
+    this.refresh(0, this.state.selectedFacets);
   }
 
 
-  refresh = (isMounting, selectedCategoryFacets) => {
+  refresh = (isMounting, selectedFacets) => {
     const { pathname, search }              = this.props.location;
     const { categoryList }                  = this.props;
     const params                            = {...this.state.params};
@@ -81,12 +81,12 @@ class Products extends Component {
     if (type === "search") {
       const price = this.state.selectedPrice;
       const maxPrice = Number(this.getMaxPrice((this.filterCategories(categoryList, term)[0]), brand));
-      this.update(locale, currency, pathname, "All", term, Object.assign(params, qs.parse(search)), price, maxPrice, isMounting, selectedCategoryFacets, pageService.findAll);
+      this.update(locale, currency, pathname, "All", term, Object.assign(params, qs.parse(search)), price, maxPrice, isMounting, selectedFacets, pageService.findAll);
     }
   }
 
 
-  update = (locale, currency, pathname, category, term, params, price, maxPrice, isMounting = 0, selectedCategoryFacets = [], callback) => {
+  update = (locale, currency, pathname, category, term, params, price, maxPrice, isMounting = 0, selectedFacets = [], callback) => {
     if(!params) {return;}
     const { page, size, sort } = params;
     if(   locale      === this.state.locale
@@ -97,10 +97,10 @@ class Products extends Component {
       &&  size        === this.state.params.size
       &&  sort        === this.state.params.sort
       &&  price       === this.state.prevPrice
-      &&  (_.isEqual(selectedCategoryFacets, this.state.selectedCategoryFacets))
+      &&  (_.isEqual(selectedFacets, this.state.selectedFacets))
       &&  isMounting  === 0
     ) {return;}
-    callback(locale, currency, category, term, price+1, page, size, sort, selectedCategoryFacets)
+    callback(locale, currency, category, term, price+1, page, size, sort, selectedFacets)
     .then((responseJSON) => {
       this.setState({
         "locale":                 locale,
@@ -108,8 +108,8 @@ class Products extends Component {
         "category":               category,
         "term":                   term,
         "products":               responseJSON.products.content,
-        "categoryFacets":         responseJSON.categoryFacets,
-        "selectedCategoryFacets": selectedCategoryFacets,
+        "facets":                 responseJSON.facets,
+        "selectedFacets":         selectedFacets,
         "brandFacets":            responseJSON.brandFacets,
         "totalPages":             responseJSON.products.totalPages,
         "totalElements":          responseJSON.products.totalElements,
@@ -131,7 +131,7 @@ class Products extends Component {
     });
   }
 
-  getProducts = (locale, currency, category, brand, maxPrice, page, size, sort, categoryFacets) =>
+  getProducts = (locale, currency, category, brand, maxPrice, page, size, sort, facets) =>
     productApi.findByCategory(locale, currency, category, brand, maxPrice, page, size, sort)
     .then((response) => {
         return response.text();
@@ -201,7 +201,7 @@ class Products extends Component {
 
   render() {
       const { toggleQuickView, setCurrentProductId, showQVModal, currentProductId, categoryList, changeCategory, changeBrand} = this.props;
-      const { products, categoryFacets, brandFacets, totalPages, totalElements, numberOfElements, isGrid, term, category, maxPrice, selectedPrice } = this.state;
+      const { products, facets, totalPages, totalElements, numberOfElements, isGrid, term, category, maxPrice, selectedPrice } = this.state;
       const { page, size } = this.state.params;
 
       if(!products) { return null }
@@ -216,12 +216,12 @@ class Products extends Component {
                       <CategorySidebar
                         refresh={this.refresh}
                         category={cat}
-                        categoryFacets={categoryFacets}
+                        facets={facets}
                         changeCategory={changeCategory}
                       />
                       <BrandSidebar
                         category={cat}
-                        brandFacets={brandFacets}
+                        facets={facets}
                       />
                       <PriceSidebar
                         updateSelectedPrice={this.updateSelectedPrice}
