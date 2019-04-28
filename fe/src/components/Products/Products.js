@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Product } from './Product';
 import QuickViewProduct from '../QuickView/QuickViewProduct';
-import CategorySidebar from './Sidebars/CategorySidebar';
+import { CategorySidebar } from './Sidebars/CategorySidebar';
 import { BrandSidebar } from './Sidebars/BrandSidebar';
 import { PriceSidebar } from './Sidebars/PriceSidebar';
 import { TopRatedSidebar } from './Sidebars/TopRatedSidebar';
@@ -29,6 +29,7 @@ class Products extends Component {
       "facets": [],
       "brandFacets": [],
       "selectedFacets": [],
+      "syncFacets": [],
       "totalPages": 0,
       "totalElements": 0,
       "numberOfElements": 0,
@@ -40,7 +41,7 @@ class Products extends Component {
                 },
       "maxPrice": null,
       "selectedPrice": null,
-      "prevPrice": null,
+      "syncPrice": null,
     };
   }
 
@@ -96,8 +97,8 @@ class Products extends Component {
       &&  page        === this.state.params.page
       &&  size        === this.state.params.size
       &&  sort        === this.state.params.sort
-      &&  price       === this.state.prevPrice
-      &&  (_.isEqual(selectedFacets, this.state.selectedFacets))
+      &&  price       === this.state.syncPrice
+      &&  (_.isEqual(selectedFacets, this.state.syncFacets))
       &&  isMounting  === 0
     ) {return;}
     callback(locale, currency, category, term, price+1, page, size, sort, selectedFacets)
@@ -110,6 +111,7 @@ class Products extends Component {
         "products":               responseJSON.products.content,
         "facets":                 responseJSON.facets,
         "selectedFacets":         selectedFacets,
+        "syncFacets":         selectedFacets,
         "brandFacets":            responseJSON.brandFacets,
         "totalPages":             responseJSON.products.totalPages,
         "totalElements":          responseJSON.products.totalElements,
@@ -117,7 +119,7 @@ class Products extends Component {
         "params":                 params,
         "maxPrice":               maxPrice,
         "selectedPrice":          price,
-        "prevPrice":              price,
+        "syncPrice":              price,
       });
      })
       .then(() => {
@@ -199,9 +201,28 @@ class Products extends Component {
     })
   }
 
+  applyFacet = (e, props) => {
+    if(this.state.selectedFacets.find(o => o.token === e.currentTarget.id)) {
+        this.setState({
+          "selectedFacets": this.state.selectedFacets.filter(o => o.token !== e.currentTarget.id),
+        });
+        return;
+    }
+    const newSelectedFacets = _.cloneDeep(this.state.selectedFacets, true);
+    newSelectedFacets.push(this.state.facets.filter(o => o.token === e.currentTarget.id)[0]);
+    this.setState({
+      "selectedFacets": newSelectedFacets,
+    });
+  }
+
+  isActive = (facet, selectedFacets) => {
+    return (selectedFacets.find(o => o.token === facet.token));
+  }
+
   render() {
+
       const { toggleQuickView, setCurrentProductId, showQVModal, currentProductId, categoryList, changeCategory, changeBrand} = this.props;
-      const { products, facets, totalPages, totalElements, numberOfElements, isGrid, term, category, maxPrice, selectedPrice } = this.state;
+      const { products, facets, selectedFacets, totalPages, totalElements, numberOfElements, isGrid, term, category, maxPrice, selectedPrice } = this.state;
       const { page, size } = this.state.params;
 
       if(!products) { return null }
@@ -214,15 +235,18 @@ class Products extends Component {
                   <div className="col-lg-3 order-2 order-lg-1">
                     <div className="sidebar-area">
                       <CategorySidebar
-                        refresh={this.refresh}
+                        selectedFacets={selectedFacets}
                         category={cat}
                         facets={facets}
-                        changeCategory={changeCategory}
+                        isActive={this.isActive}
+                        applyFacet={this.applyFacet}
                       />
                       <BrandSidebar
-                        refresh={this.refresh}
+                        selectedFacets={selectedFacets}
+                        isActive={this.isActive}
                         category={cat}
                         facets={facets}
+                        applyFacet={this.applyFacet}
                       />
                       <PriceSidebar
                         updateSelectedPrice={this.updateSelectedPrice}
