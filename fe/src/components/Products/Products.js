@@ -219,6 +219,13 @@ class Products extends Component {
     return (selectedFacets.find(o => o.token === facet.token));
   }
 
+  filterFacets = (facets, key) => {
+    if(!facets) { return }
+    facets.filter(function(value, index, arr){
+      return value.facetingName === key;
+    })
+  }
+
   render() {
 
       const { toggleQuickView, setCurrentProductId, showQVModal, currentProductId, categoryList, changeCategory, changeBrand} = this.props;
@@ -237,10 +244,7 @@ class Products extends Component {
                       <CategorySidebar
                         selectedFacets={selectedFacets}
                         category={cat}
-                        facets={facets.filter(function(value, index, arr){
-                          console.log(value)
-                                          return value.facetingName === "CategoryFR";
-                                        })}
+                        facets={() => { this.filterFacets(facets, "CategoryFR") }}
                         isActive={this.isActive}
                         applyFacet={this.applyFacet}
                       />
@@ -248,9 +252,7 @@ class Products extends Component {
                         selectedFacets={selectedFacets}
                         isActive={this.isActive}
                         category={cat}
-                        facets={facets.filter(function(value, index, arr){
-                                          return value.facetingName === "BrandFR";
-                                        })}
+                        facets={() => { this.filterFacets(facets, "BrandFR") }}
                         applyFacet={this.applyFacet}
                       />
                       <PriceSidebar
