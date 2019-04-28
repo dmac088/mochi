@@ -220,6 +220,7 @@ class Products extends Component {
                         changeCategory={changeCategory}
                       />
                       <BrandSidebar
+                        refresh={this.refresh}
                         category={cat}
                         facets={facets}
                       />
