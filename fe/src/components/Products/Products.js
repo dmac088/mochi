@@ -237,7 +237,10 @@ class Products extends Component {
                       <CategorySidebar
                         selectedFacets={selectedFacets}
                         category={cat}
-                        facets={facets}
+                        facets={facets.filter(function(value, index, arr){
+                          console.log(value)
+                                          return value.objectType === "Category";
+                                        })}
                         isActive={this.isActive}
                         applyFacet={this.applyFacet}
                       />
@@ -245,7 +248,9 @@ class Products extends Component {
                         selectedFacets={selectedFacets}
                         isActive={this.isActive}
                         category={cat}
-                        facets={facets}
+                        facets={facets.filter(function(value, index, arr){
+                                          return value.objectType === "Brand";
+                                        })}
                         applyFacet={this.applyFacet}
                       />
                       <PriceSidebar
