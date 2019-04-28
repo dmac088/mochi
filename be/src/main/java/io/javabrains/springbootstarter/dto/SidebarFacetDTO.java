@@ -2,17 +2,17 @@ package io.javabrains.springbootstarter.dto;
 
 import java.util.Objects;
 
-public class SidebarDTO {
+public class SidebarFacetDTO {
 
+	private Long Id;
+	
 	private String facetingName;
 	
 	private String facetFieldName;
 
-	private Long Id;
+	private String facetDesc;
 	
-	private String categoryDesc;
-	
-	private String categoryToken;
+	private String facetToken;
 	
 	private Long level;
 	
@@ -40,7 +40,7 @@ public class SidebarDTO {
 		return facetingName;
 	}
 
-	public void setName(String facetingName) {
+	public void setFacetingName(String facetingName) {
 		this.facetingName = facetingName;
 	}
 
@@ -56,24 +56,24 @@ public class SidebarDTO {
 		return level;
 	}
 
-	public void setLevel(Long categoryLevel) {
-		this.level = categoryLevel;
+	public void setLevel(Long facetLevel) {
+		this.level = facetLevel;
 	}
 
 	public String getDesc() {
-		return categoryDesc;
+		return facetDesc;
 	}
 
 	public void setDesc(String desc) {
-		this.categoryDesc = desc;
+		this.facetDesc = desc;
 	}
 	
 	public String getToken() {
-		return categoryToken;
+		return facetToken;
 	}
 
-	public void setToken(String categoryToken) {
-		this.categoryToken = categoryToken;
+	public void setToken(String facetToken) {
+		this.facetToken = facetToken;
 	}
 
 	public Long getCount() {
@@ -88,7 +88,7 @@ public class SidebarDTO {
 	public boolean equals(Object o) {
 		 if (this == o) return true;
 	     if (o == null || getClass() != o.getClass()) return false;
-	     SidebarDTO pcf = (SidebarDTO) o;
+	     SidebarFacetDTO pcf = (SidebarFacetDTO) o;
 	     return this.Id == pcf.Id;
 	}
 
@@ -102,8 +102,8 @@ public class SidebarDTO {
         final StringBuilder builder = new StringBuilder();
         builder.append("CategoryDto [Id=")
         .append(Id)
-        .append(", categoryDesc=").append(categoryDesc)
-        .append(", categoryToken=").append(categoryToken)
+        .append(", facetDesc=").append(facetDesc)
+        .append(", facetToken=").append(facetToken)
         .append(", facetingName=").append(facetingName)
         .append(", facetFieldName=").append(facetFieldName)
         .append(", count=").append(count)

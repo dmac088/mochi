@@ -79,7 +79,7 @@ public class CategoryService implements ICategoryService {
     	bDto.setBrandId(b.getBrandId());
     	bDto.setBrandCode(b.getBrandCode());
     	bDto.setBrandDesc(
-	    	b.getBrandAttributes().stream()
+	    	b.getAttributes().stream()
 			.filter(ba -> ba.getLclCd().equals(lcl)
 			).collect(Collectors.toList()).get(0).getBrandDesc());
     	return bDto;
