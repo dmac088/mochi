@@ -215,12 +215,26 @@ class Products extends Component {
     });
   }
 
+  getParents(facet, facets, parents) {
+    if(!facet) {return null}
+    if(facet.parentId === null) { return parents }
+    const pa = facets.filter(o => o.id === facet.parentId);
+    parents.push(pa[0])
+    return this.getParents(pa[0], facets, parents);
+  }
+
   isActive = (facet, selectedFacets, facets) => {
     if(!facet) { return }
-    const parent = facets.find(o => o.id === facet.parentId);
-    const hasParent = (parent) ? !(selectedFacets.findIndex(o => o.token === parent.token) === -1) : false;
+
+    //get a list of parents for the current facet
+    const parents = this.getParents(facet, facets, [])
+
+    const parentIsSelected =  (parents.filter(parent => {
+                                        return !(selectedFacets.findIndex(o => o.token === parent.token) === -1);
+                              }).length > 0);
+
     return !(selectedFacets.findIndex(o => o.token === facet.token) === -1)
-            || (hasParent)
+            || (parentIsSelected)
   }
 
   filterFacets = (facets, key) => {

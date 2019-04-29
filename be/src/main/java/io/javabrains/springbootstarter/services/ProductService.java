@@ -243,7 +243,7 @@ public class ProductService implements IProductService {
 				.name("CategoryFR")
 				.onField("primaryCategory.categoryToken") //in category class
 				.discrete()
-				.orderedBy(FacetSortOrder.COUNT_DESC)
+				.orderedBy(FacetSortOrder.FIELD_VALUE)
 				.includeZeroCounts(false)
 				.maxFacetCount(5)
 				.createFacetingRequest();
