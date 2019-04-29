@@ -33,7 +33,8 @@ import { routeSingleProduct, createRouteProps } from '../../services/helpers/Rou
             <div className="sort-by-dropdown d-flex align-items-center mb-xs-10">
               <p className="mr-10">Sort By: </p>
               <select onChange={(e) => changeSort(e, routeProps)} name="sort-by" id="sort-by" className="nice-select">
-                <option value="nameAsc">Name</option>
+                <option value="nameAsc">Name [A-Z]</option>
+                <option value="nameDesc">Name [Z-A]</option>
                 <option value="priceAsc">Price: Low to High</option>
                 <option value="priceDesc">Price: High to Low</option>
               </select>
