@@ -220,7 +220,7 @@ class Products extends Component {
 
     const addFacet = this.state.facets.find(o => o.token === e.currentTarget.id);
 
-    const addSet = [...newSelectedFacets, addFacet, ...(this.getChildren(addFacet, this.state.facets, []))];
+    const addSet = [...newSelectedFacets, addFacet, ...(this.getChildren(addFacet, this.state.facets, [])), ...(this.getParents(addFacet, this.state.facets, []))];
 
     this.setState({
       "selectedFacets": addSet,
@@ -259,7 +259,7 @@ class Products extends Component {
                               }).length > 0);
 
     return !(selectedFacets.findIndex(o => o.token === facet.token) === -1)
-            || (parentIsSelected)
+          //  || (parentIsSelected)
   }
 
   filterFacets = (facets, key) => {
