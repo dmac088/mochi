@@ -224,7 +224,7 @@ class Products extends Component {
     const addFacet = this.state.facets.find(o => o.token === e.currentTarget.id);
 
     const selectedSet = [...newSelectedFacets, addFacet, ...(this.getChildren(addFacet, this.state.facets, []))];
-    const displaySet = [...newSelectedFacets, addFacet, ...(this.getChildren(addFacet, this.state.facets, [])), ...(this.getParents(addFacet, this.state.facets, []))];
+    const displaySet = [...selectedSet, ...(this.getParents(addFacet, this.state.facets, []))];
 
     this.setState({
       "selectedFacets": selectedSet,
