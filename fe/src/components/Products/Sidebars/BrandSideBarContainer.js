@@ -8,7 +8,7 @@ import { changeBrand, createRouteProps } from '../../../services/helpers/RouteHe
       return(
         <li key={brand.brandId}>
           <a className={(isActive) ? "active" : ""} onClick={(e) => changeBrand(e, routeProps)} id={brand.brandDesc} href="#">
-            {brand.brandDesc} <span className="badge badge-pill badge-secondary">{brand.productCount}</span>
+            {brand.brandDesc} ({brand.productCount})
           </a>
         </li>
       )
@@ -34,7 +34,7 @@ import { changeBrand, createRouteProps } from '../../../services/helpers/RouteHe
                                 e.preventDefault();
                                 props.applyFacet(e, routeProps);
                              }} id={facet.token} href="#">
-            {facet.desc} <span className="badge badge-pill badge-secondary">{facet.count}</span>
+            {facet.desc} ({facet.count})
           </a>
         </li>
       );
