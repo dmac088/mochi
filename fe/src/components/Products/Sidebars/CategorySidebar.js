@@ -19,7 +19,7 @@ import _ from 'lodash';
 
   const renderFacets = (facets, selectedFacets, routeProps, props) => {
     return facets.map(facet => {
-      const margin = facet.level * 10;
+      const margin = facet.level * 15;
       return(
         <li key={facet.id}>
           <a className={(props.isActive(facet, selectedFacets, facets)) ? "active" : ""}
