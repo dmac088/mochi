@@ -198,20 +198,35 @@ class Products extends Component {
   updateMaxPrice = (category, brand) => {
     this.setState({
       "maxPrice": value,
-    })
+    });
   }
 
   applyFacet = (e, props) => {
-    if(this.state.selectedFacets.find(o => o.token === e.currentTarget.id)) {
+    const removeFacet = this.state.selectedFacets.find(o => o.token === e.currentTarget.id);
+    if(removeFacet) {
+        //remove the childrend of the deselected facet
+        const removalSet = [removeFacet, ...(this.getChildren(removeFacet, this.state.facets, []))];
         this.setState({
-          "selectedFacets": this.state.selectedFacets.filter(o => o.token !== e.currentTarget.id),
+          "selectedFacets": this.state.selectedFacets.filter(
+                                      o => !(removalSet.find(d => d.token === o.token))),
+        }, () => {
+          console.log("removing facet");
+          console.log(this.state.selectedFacets);
         });
         return;
     }
+
     const newSelectedFacets = _.cloneDeep(this.state.selectedFacets, true);
-    newSelectedFacets.push(this.state.facets.filter(o => o.token === e.currentTarget.id)[0]);
+
+    const addFacet = this.state.facets.find(o => o.token === e.currentTarget.id);
+
+    const addSet = [...newSelectedFacets, addFacet, ...(this.getChildren(addFacet, this.state.facets, []))];
+
     this.setState({
-      "selectedFacets": newSelectedFacets,
+      "selectedFacets": addSet,
+    }, () => {
+      console.log("adding facet");
+      console.log(this.state.selectedFacets);
     });
   }
 
@@ -224,15 +239,13 @@ class Products extends Component {
   }
 
   getChildren(parent, facets, children) {
-    if(!parent) { return children }
-    console.log(parent);
     const ch = facets.filter(o => o.parentId === parent.id);
-    //console.log(ch);
+    if (ch.length === 0) { return children }
     ch.map(c => {
-      //console.log(c);
       children.push(c);
       return this.getChildren(c, facets, children);
     });
+    return children;
   }
 
   isActive = (facet, selectedFacets, facets) => {

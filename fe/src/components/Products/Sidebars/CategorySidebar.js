@@ -10,7 +10,7 @@ import _ from 'lodash';
       return(
         <li key={child.categoryId} >
           <a onClick={(e) => changeCategory(e, props)} id={child.categoryDesc} href="#">
-            {child.categoryDesc} <span className="badge badge-pill badge-secondary">{child.productCount}</span>
+            {child.categoryDesc} ({child.productCount})
           </a>
         </li>
       );
@@ -29,7 +29,7 @@ import _ from 'lodash';
                              }}
              id={facet.token} href="#"
              style={{"marginLeft": margin}}>
-            {facet.desc} <span className="badge badge-pill badge-secondary">{facet.count}</span>
+            {facet.desc} ({facet.count})
           </a>
         </li>
       );
