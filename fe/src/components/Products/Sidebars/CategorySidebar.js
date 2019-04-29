@@ -28,7 +28,7 @@ import _ from 'lodash';
                                 props.applyFacet(e, routeProps);
                              }}
              id={facet.token} href="#"
-             style={{"margin-left": margin}}>
+             style={{"marginLeft": margin}}>
             {facet.desc} <span className="badge badge-pill badge-secondary">{facet.count}</span>
           </a>
         </li>
