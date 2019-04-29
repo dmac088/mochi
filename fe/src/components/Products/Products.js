@@ -215,8 +215,12 @@ class Products extends Component {
     });
   }
 
-  isActive = (facet, selectedFacets) => {
-    return (selectedFacets.find(o => o.token === facet.token));
+  isActive = (facet, selectedFacets, facets) => {
+    if(!facet) { return }
+    const parent = facets.find(o => o.id === facet.parentId);
+    const hasParent = (parent) ? !(selectedFacets.findIndex(o => o.token === parent.token) === -1) : false;
+    return !(selectedFacets.findIndex(o => o.token === facet.token) === -1)
+            || (hasParent)
   }
 
   filterFacets = (facets, key) => {
