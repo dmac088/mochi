@@ -19,12 +19,16 @@ import _ from 'lodash';
 
   const renderFacets = (facets, selectedFacets, routeProps, props) => {
     return facets.map(facet => {
+      const margin = facet.level * 10;
       return(
         <li key={facet.id}>
-          <a className={(props.isActive(facet, selectedFacets)) ? "active" : ""} onClick={(e) => {
+          <a className={(props.isActive(facet, selectedFacets)) ? "active" : ""}
+             onClick={(e) => {
                                 e.preventDefault();
                                 props.applyFacet(e, routeProps);
-                             }} id={facet.token} href="#">
+                             }}
+             id={facet.token} href="#"
+             style={{"margin-left": margin}}>
             {facet.desc} <span className="badge badge-pill badge-secondary">{facet.count}</span>
           </a>
         </li>

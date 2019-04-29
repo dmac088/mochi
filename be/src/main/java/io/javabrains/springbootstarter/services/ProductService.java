@@ -20,6 +20,7 @@ import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.hibernate.search.query.engine.spi.FacetManager;
 import org.hibernate.search.query.facet.Facet;
+import org.hibernate.search.query.facet.FacetCombine;
 import org.hibernate.search.query.facet.FacetSelection;
 import org.hibernate.search.query.facet.FacetSortOrder;
 import org.hibernate.search.query.facet.FacetingRequest;
@@ -224,7 +225,7 @@ public class ProductService implements IProductService {
 													.matching(searchTerm)													
 													.createQuery())
 													.must(productQueryBuilder.keyword()
-													.onFields(	 "lclCd")
+													.onFields("lclCd")
 													.matching(lcl)
 													.createQuery())
 													.createQuery();
@@ -283,12 +284,12 @@ public class ProductService implements IProductService {
 		//for each of the baseline facets, convert them to Facet DTOs for the client and add them to "s" 
 		categoryFacets.stream().forEach(cf ->  {
 													String categoryCode = (new LinkedList<String>(Arrays.asList(cf.getValue().split("/")))).getLast();
-													SidebarFacetDTO c = convertToCategorySidebarDTO(categoryCode, lcl, currency);
-													c.setCount(new Long(cf.getCount()));
-													c.setToken(cf.getValue());
-													c.setFacetingName(cf.getFacetingName());
-													c.setFieldName(cf.getFieldName());
-													cs.add(c);
+													SidebarFacetDTO cfDto = convertToCategorySidebarDTO(categoryCode, lcl, currency);
+													cfDto.setCount(new Long(cf.getCount()));
+													cfDto.setToken(cf.getValue());
+													cfDto.setFacetingName(cf.getFacetingName());
+													cfDto.setFieldName(cf.getFieldName());
+													cs.add(cfDto);
 											   });
 		
 		
@@ -310,6 +311,7 @@ public class ProductService implements IProductService {
 		FacetSelection categoryFacetSelection = facetMgr.getFacetGroup("CategoryFR");
 		FacetSelection brandFacetSelection = facetMgr.getFacetGroup("BrandFR");
 		
+		
 		//get a list of facets that exist in the list of received facets
 		List<Facet> lcf =
 		receivedCategoryFacets.stream().flatMap(x -> 
@@ -321,10 +323,10 @@ public class ProductService implements IProductService {
 			brandFacets.stream().filter(y -> 
 				x.getToken().equals(y.getValue())).limit(1)).collect(Collectors.toList());
 		
-		
+	
 		//Apply the selected facets to the facet selection object
-		categoryFacetSelection.selectFacets( lcf.toArray(new Facet[0]) );
-		brandFacetSelection.selectFacets( lbf.toArray(new Facet[0]) );
+		categoryFacetSelection.selectFacets(FacetCombine.OR, lcf.toArray(new Facet[0]));
+		brandFacetSelection.selectFacets(FacetCombine.OR, lbf.toArray(new Facet[0]));
 		
 		//set pageable definition for jpaQuery
 		Pageable pageable = PageRequest.of(page, size);
