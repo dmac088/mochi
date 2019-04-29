@@ -3,6 +3,7 @@ package io.javabrains.springbootstarter.services;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -33,7 +34,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Sort;
-
 import io.javabrains.springbootstarter.domain.Product;
 import io.javabrains.springbootstarter.dto.ProductsDTO;
 import io.javabrains.springbootstarter.dto.SidebarFacetDTO;
@@ -245,7 +245,7 @@ public class ProductService implements IProductService {
 				.discrete()
 				.orderedBy(FacetSortOrder.FIELD_VALUE)
 				.includeZeroCounts(false)
-				.maxFacetCount(5)
+				//.maxFacetCount(5)
 				.createFacetingRequest();
 		
 		//add all the base level facets to categoryFacets List
@@ -278,8 +278,8 @@ public class ProductService implements IProductService {
 		ProductsDTO src = new ProductsDTO();
 		
 		//create a hashset of FacetDTOs to send back to the client, with additional metadata
-		Set<SidebarFacetDTO> cs = new HashSet<SidebarFacetDTO>();
-		Set<SidebarFacetDTO> bs = new HashSet<SidebarFacetDTO>();
+		final Set<SidebarFacetDTO> cs = new HashSet<SidebarFacetDTO>();
+		final Set<SidebarFacetDTO> bs = new HashSet<SidebarFacetDTO>();
 		
 		//for each of the baseline facets, convert them to Facet DTOs for the client and add them to "s" 
 		categoryFacets.stream().forEach(cf ->  {
@@ -347,7 +347,9 @@ public class ProductService implements IProductService {
 		//create a paging object to hold the results of jpaQuery 
 		Page<Product> pp = new PageImpl<Product>(lp, pageable, jpaQuery.getResultSize());
 		
-		src.setFacets(new ArrayList<SidebarFacetDTO>(cs));
+		List<SidebarFacetDTO> css = cs.stream().sorted(Comparator.comparing(SidebarFacetDTO::getToken)).collect(Collectors.toList());
+		
+		src.setFacets(css);
 		src.getFacets().addAll(bs);
 		
 		src.setProducts(pp);
@@ -388,7 +390,7 @@ public class ProductService implements IProductService {
     	.name(frName)
     	.onField(frField)
     	.discrete()
-    	.orderedBy(FacetSortOrder.COUNT_DESC)
+    	.orderedBy(FacetSortOrder.FIELD_VALUE)
     	.createFacetingRequest();
     		
     	FacetManager facetMgr = q.getFacetManager();
