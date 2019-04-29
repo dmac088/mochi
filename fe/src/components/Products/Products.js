@@ -216,11 +216,23 @@ class Products extends Component {
   }
 
   getParents(facet, facets, parents) {
-    if(!facet) {return null}
+    if(!facet) { return null }
     if(facet.parentId === null) { return parents }
     const pa = facets.filter(o => o.id === facet.parentId);
     parents.push(pa[0])
     return this.getParents(pa[0], facets, parents);
+  }
+
+  getChildren(parent, facets, children) {
+    if(!parent) { return children }
+    console.log(parent);
+    const ch = facets.filter(o => o.parentId === parent.id);
+    //console.log(ch);
+    ch.map(c => {
+      //console.log(c);
+      children.push(c);
+      return this.getChildren(c, facets, children);
+    });
   }
 
   isActive = (facet, selectedFacets, facets) => {
