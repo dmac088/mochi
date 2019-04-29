@@ -22,7 +22,7 @@ import _ from 'lodash';
       const margin = facet.level * 10;
       return(
         <li key={facet.id}>
-          <a className={(props.isActive(facet, selectedFacets)) ? "active" : ""}
+          <a className={(props.isActive(facet, selectedFacets, facets)) ? "active" : ""}
              onClick={(e) => {
                                 e.preventDefault();
                                 props.applyFacet(e, routeProps);

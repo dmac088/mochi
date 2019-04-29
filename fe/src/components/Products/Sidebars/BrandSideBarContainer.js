@@ -30,7 +30,7 @@ import { changeBrand, createRouteProps } from '../../../services/helpers/RouteHe
     return facets.map(facet => {
       return(
         <li key={facet.id}>
-          <a className={(props.isActive(facet, selectedFacets)) ? "active" : ""} onClick={(e) => {
+          <a className={(props.isActive(facet, selectedFacets, facets)) ? "active" : ""} onClick={(e) => {
                                 e.preventDefault();
                                 props.applyFacet(e, routeProps);
                              }} id={facet.token} href="#">
