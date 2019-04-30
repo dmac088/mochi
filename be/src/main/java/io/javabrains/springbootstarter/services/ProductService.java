@@ -40,7 +40,6 @@ import io.javabrains.springbootstarter.dto.SidebarFacetDTO;
 import io.javabrains.springbootstarter.entity.Brand;
 import io.javabrains.springbootstarter.entity.BrandRepository;
 import io.javabrains.springbootstarter.entity.Category;
-import io.javabrains.springbootstarter.entity.CategoryAttribute;
 import io.javabrains.springbootstarter.entity.CategoryRepository;
 import io.javabrains.springbootstarter.entity.PageableUtil;
 import io.javabrains.springbootstarter.entity.ProductAttribute;
@@ -210,6 +209,12 @@ public class ProductService implements IProductService {
 				fullTextEntityManager.getSearchFactory()
 				  .buildQueryBuilder()
 				  .forEntity(ProductAttribute.class)
+				  .overridesForField("product.categories.parent.parent.parent.attributes.categoryDesc", lcl)
+				  .overridesForField("product.categories.parent.parent.attributes.categoryDesc", lcl)
+				  .overridesForField("product.categories.parent.attributes.categoryDesc", lcl)
+				  .overridesForField("product.categories.attributes.categoryDesc", lcl)
+				  .overridesForField("product.brand.brandAttributes.brandDesc", lcl)
+				  .overridesForField("productDesc", lcl)
 				  .get();
 		
 		//this is a Lucene query using the Lucene api
