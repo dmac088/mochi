@@ -40,6 +40,7 @@ import io.javabrains.springbootstarter.dto.SidebarFacetDTO;
 import io.javabrains.springbootstarter.entity.Brand;
 import io.javabrains.springbootstarter.entity.BrandRepository;
 import io.javabrains.springbootstarter.entity.Category;
+import io.javabrains.springbootstarter.entity.CategoryAttribute;
 import io.javabrains.springbootstarter.entity.CategoryRepository;
 import io.javabrains.springbootstarter.entity.PageableUtil;
 import io.javabrains.springbootstarter.entity.ProductAttribute;
@@ -85,7 +86,7 @@ public class ProductService implements IProductService {
 	public ProductsDTO getProducts(String lcl, String currency, int page, int size, String sortBy) {
     	Page<Product> pp;
 		Page<io.javabrains.springbootstarter.entity.Product> ppa = productPagingAndSortingRepository.findAll(PageRequest.of(page, size, this.sortByParam(sortBy)));
-		pp = ppa.map(p -> this.convertToProductDto(p, lcl, currency));
+		pp = ppa.map(p -> this.convertToProductDO(p, lcl, currency));
 		ProductsDTO rc = new ProductsDTO();
 		rc.setProducts(pp);
 		return rc;
@@ -96,7 +97,7 @@ public class ProductService implements IProductService {
 	@Cacheable
 	public Product getProduct(String lcl, String currency, Long id) {
     	io.javabrains.springbootstarter.entity.Product pa = productRepository.findById(id).get();
-		Product p = this.convertToProductDto(pa, lcl, currency);
+		Product p = this.convertToProductDO(pa, lcl, currency);
 		return p;
 	}	
 
@@ -110,7 +111,7 @@ public class ProductService implements IProductService {
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
   		List<io.javabrains.springbootstarter.entity.Product> ppa = productRepository.findByCategoriesCategoryIdIn(categoryIds);
-  		List<Product> pp = ppa.stream().map(pa -> this.convertToProductDto(pa, lcl, currency)).collect(Collectors.toList());
+  		List<Product> pp = ppa.stream().map(pa -> this.convertToProductDO(pa, lcl, currency)).collect(Collectors.toList());
   		return pp;
   	}	
     
@@ -122,7 +123,7 @@ public class ProductService implements IProductService {
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
   		Page<io.javabrains.springbootstarter.entity.Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCd(categoryIds, lcl, PageRequest.of(page, size, this.sortByParam(sortBy)));
-  		Page<Product> pp = ppa.map(pa -> this.convertToProductDto(pa, lcl, currency));
+  		Page<Product> pp = ppa.map(pa -> this.convertToProductDO(pa, lcl, currency));
   		ProductsDTO rc = new ProductsDTO();
 		rc.setProducts(pp);
 		return rc;
@@ -137,7 +138,7 @@ public class ProductService implements IProductService {
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
   		Page<io.javabrains.springbootstarter.entity.Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCdAndPricesPriceValueBetween(categoryIds, lcl, new Double(0), price, PageRequest.of(page, size, this.sortByParam(sortBy)));
-  		Page<Product> pp = ppa.map(pa -> this.convertToProductDto(pa, lcl, currency));
+  		Page<Product> pp = ppa.map(pa -> this.convertToProductDO(pa, lcl, currency));
   		ProductsDTO rc = new ProductsDTO();
 		rc.setProducts(pp);
 		return rc;
@@ -152,7 +153,7 @@ public class ProductService implements IProductService {
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
   		Page<io.javabrains.springbootstarter.entity.Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCdAndBrandBrandAttributesBrandDescAndBrandBrandAttributesLclCd(categoryIds, lcl, brandDesc, lcl, PageRequest.of(page, size, this.sortByParam(sortBy)));		
-  		Page<Product> pp = ppa.map(pa -> this.convertToProductDto(pa, lcl, currency));
+  		Page<Product> pp = ppa.map(pa -> this.convertToProductDO(pa, lcl, currency));
   		ProductsDTO rc = new ProductsDTO();
 		rc.setProducts(pp);
 		return rc;
@@ -168,7 +169,7 @@ public class ProductService implements IProductService {
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
   		Page<io.javabrains.springbootstarter.entity.Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCdAndPricesPriceValueBetweenAndPricesTypeDescAndPricesCurrencyCodeAndPricesStartDateLessThanAndPricesEndDateGreaterThan(categoryIds, lcl, new Double(0), price, "markdown", currency, new Date(), new Date(),PageRequest.of(page, size, this.sortByParam(sortBy)));
-  		Page<Product> pp = ppa.map(pa -> this.convertToProductDto(pa, lcl, currency));
+  		Page<Product> pp = ppa.map(pa -> this.convertToProductDO(pa, lcl, currency));
   		ProductsDTO rc = new ProductsDTO();
 		rc.setProducts(pp);
 		return rc;
@@ -185,7 +186,7 @@ public class ProductService implements IProductService {
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
   		Page<io.javabrains.springbootstarter.entity.Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCdAndBrandBrandAttributesBrandDescAndBrandBrandAttributesLclCdAndPricesPriceValueBetweenAndPricesTypeDescAndPricesCurrencyCodeAndPricesStartDateLessThanAndPricesEndDateGreaterThan(categoryIds, lcl, brandDesc, lcl, new Double(0), price, "markdown", currency, new Date(), new Date(),PageRequest.of(page, size, this.sortByParam(sortBy)));
-  		Page<Product> pp = ppa.map(pa -> this.convertToProductDto(pa, lcl, currency));
+  		Page<Product> pp = ppa.map(pa -> this.convertToProductDO(pa, lcl, currency));
   		ProductsDTO rc = new ProductsDTO();
 		rc.setProducts(pp);
 		return rc;
@@ -272,7 +273,7 @@ public class ProductService implements IProductService {
 		List<ProductAttribute> results =  Collections.checkedList(jpaQuery.getResultList(), ProductAttribute.class);
 	
 		//convert the results to product DTOs and store in a list
-		//List<Product> lp;// = results.stream().map(pa -> this.convertToProductDto(pa.getProduct(), lcl, currency)).collect(Collectors.toList());
+		//List<Product> lp;// = results.stream().map(pa -> this.convertToProductDO(pa.getProduct(), lcl, currency)).collect(Collectors.toList());
 		
 		//create a results container to send back to the client 
 		ProductsDTO src = new ProductsDTO();
@@ -342,7 +343,7 @@ public class ProductService implements IProductService {
 		results =  Collections.checkedList(jpaQuery.getResultList(), ProductAttribute.class);
 				
 		//convert the results of jpaQuery to product Data Transfer Objects 
-		List<Product> lp = results.stream().map(pa -> this.convertToProductDto(pa.getProduct(), lcl, currency)).collect(Collectors.toList());
+		List<Product> lp = results.stream().map(pa -> this.convertToProductDO(pa.getProduct(), lcl, currency)).collect(Collectors.toList());
 		
 		//create a paging object to hold the results of jpaQuery 
 		Page<Product> pp = new PageImpl<Product>(lp, pageable, jpaQuery.getResultSize());
@@ -405,20 +406,26 @@ public class ProductService implements IProductService {
     	this.createParentCategoryFacets(cfs, sc, pcf, qb, q, lcl, currency, baseLevel);
     }
     
-    public Product convertToProductDto(final io.javabrains.springbootstarter.entity.Product product, String lcl, String currency) {
+    public Product convertToProductDO(final io.javabrains.springbootstarter.entity.Product product, String lcl, String currency) {
     	ProductAttribute pa = productAttributeRepository.findByLclCdAndProductId(lcl, product.getProductId());
-        final Product pDto = new Product();
-        pDto.setProductId(product.getProductId());
-        pDto.setProductCreateDt(product.getProductCreateDt());
-        pDto.setProductUPC(product.getProductUPC());
-        pDto.setProductDesc(pa.getProductDesc());
-        pDto.setProductRetail(productPriceRepository.findByProductProductIdAndTypeDescAndStartDateLessThanEqualAndEndDateGreaterThanEqualAndCurrencyCode(product.getProductId(), "retail", new Date(), new Date(), currency).getPriceValue());
-        pDto.setProductMarkdown(productPriceRepository.findByProductProductIdAndTypeDescAndStartDateLessThanEqualAndEndDateGreaterThanEqualAndCurrencyCode(product.getProductId(), "markdown", new Date(), new Date(), currency).getPriceValue());
-        pDto.setProductImage(pa.getProductImage());
-        pDto.setLclCd(lcl);
-        pDto.setBrandDesc(product.getBrand().getAttributes().stream()
+        final Product pDo = new Product();
+        pDo.setProductId(product.getProductId());
+        pDo.setProductCreateDt(product.getProductCreateDt());
+        pDo.setProductUPC(product.getProductUPC());
+        pDo.setProductDesc(pa.getProductDesc());
+        pDo.setProductRetail(productPriceRepository.findByProductProductIdAndTypeDescAndStartDateLessThanEqualAndEndDateGreaterThanEqualAndCurrencyCode(product.getProductId(), "retail", new Date(), new Date(), currency).getPriceValue());
+        pDo.setProductMarkdown(productPriceRepository.findByProductProductIdAndTypeDescAndStartDateLessThanEqualAndEndDateGreaterThanEqualAndCurrencyCode(product.getProductId(), "markdown", new Date(), new Date(), currency).getPriceValue());
+        pDo.setProductImage(pa.getProductImage());
+        pDo.setLclCd(lcl);
+        pDo.setBrandDesc(product.getBrand().getAttributes().stream()
         .filter( ba -> ba.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getBrandDesc());
-        return pDto;
+        
+        StringBuilder sb = new StringBuilder();
+        product.getCategories().stream().filter(c -> {return c.getHierarchy().getCode().equals("PRM01");}).collect(Collectors.toList())
+        .stream().sorted(Comparator.comparingLong(Category::getCategoryLevel)).collect(Collectors.toList())
+        .stream().forEach(c -> sb.append(c.getAttributes().stream().filter(ca -> { return ca.getLclCd().equals(lcl);}).collect(Collectors.toList()).get(0).getCategoryDesc()));
+        pDo.setPrimaryCategoryPath(sb.toString());        
+        return pDo;
     }
     
     private String getSortFieldName(String field) {

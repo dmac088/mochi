@@ -36,8 +36,8 @@ import { routeSingleProduct, createRouteProps } from '../../services/helpers/Rou
           </div>
           <div className="product-content">
             <div className="product-categories">
-              <a href="shop-left-sidebar.html">Fast Foods</a>,
-              <a href="shop-left-sidebar.html">Vegetables</a>
+              <a href="shop-left-sidebar.html">{product.primaryCategoryPath}</a>,
+              <a href="shop-left-sidebar.html"> {product.brandDesc}</a>
             </div>
             <h3 className="product-title"><a href="single-product.html">{product.productDesc}</a></h3>
             <div className="price-box mb-20">
@@ -81,8 +81,8 @@ import { routeSingleProduct, createRouteProps } from '../../services/helpers/Rou
           </div>
           <div className="product-content">
             <div className="product-categories">
-              <a href="shop-left-sidebar.html">Fast Foods</a>,
-              <a href="shop-left-sidebar.html">Vegetables</a>
+              <a href="shop-left-sidebar.html">{product.primaryCategoryPath}</a>,
+              <a href="shop-left-sidebar.html"> {product.brandDesc}</a>
             </div>
             <h3 className="product-title"><a href="#">{product.productDesc}</a></h3>
             <div className="price-box">
