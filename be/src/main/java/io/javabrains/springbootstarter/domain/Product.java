@@ -1,7 +1,6 @@
 package io.javabrains.springbootstarter.domain;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 
@@ -27,7 +26,7 @@ public class Product {
 	
 	private String lclCd;
 	
-	private List<Category> categories;
+	private String primaryCategoryPath; 
 
 
 	public Long getProductId() {
@@ -102,20 +101,20 @@ public class Product {
 		this.lclCd = lclCd;
 	}
 	
-	public List<Category> getCategories() {
-		return categories;
-	}
-
-	public void setCategories(List<Category> categories) {
-		this.categories = categories;
-	}
-	
 	public String getBrandDesc() {
 		return brandDesc;
 	}
 
 	public void setBrandDesc(String brandDesc) {
 		this.brandDesc = brandDesc;
+	}
+	
+	public String getPrimaryCategoryPath() {
+		return primaryCategoryPath;
+	}
+
+	public void setPrimaryCategoryPath(String primaryCategoryPath) {
+		this.primaryCategoryPath = primaryCategoryPath;
 	}
 	
 	@Override
