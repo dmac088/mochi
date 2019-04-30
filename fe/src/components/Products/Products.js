@@ -111,7 +111,8 @@ class Products extends Component {
         "term":                   term,
         "products":               responseJSON.products.content,
         "facets":                 responseJSON.facets,
-        "selectedFacets":         selectedFacets,
+        "selectedFacets":         (term !== this.state.term) ? [] : selectedFacets,
+        "displayFacets":          (term !== this.state.term) ? [] : this.state.displayFacets,
         "syncFacets":             selectedFacets,
         "brandFacets":            responseJSON.brandFacets,
         "totalPages":             responseJSON.products.totalPages,
@@ -205,7 +206,7 @@ class Products extends Component {
   applyFacet = (e, props) => {
     const removeFacet = this.state.selectedFacets.find(o => o.token === e.currentTarget.id);
     if(removeFacet) {
-        //remove the childrend of the deselected facet
+        //remove the children of the deselected facet
         const removalSet = [removeFacet, ...(this.getChildren(removeFacet, this.state.facets, []))];
         this.setState({
           "selectedFacets": this.state.selectedFacets.filter(
