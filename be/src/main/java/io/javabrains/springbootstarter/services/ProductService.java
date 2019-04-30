@@ -210,13 +210,7 @@ public class ProductService implements IProductService {
 		QueryBuilder productQueryBuilder = 
 				fullTextEntityManager.getSearchFactory()
 				  .buildQueryBuilder()
-				  .forEntity(ProductAttribute.class)
-//				  .overridesForField("primaryCategory.parent.parent.parent." + "primaryCategoryDesc" + transLcl, lcl)
-//				  .overridesForField("primaryCategory.parent.parent." + "primaryCategoryDesc" + transLcl, lcl)
-//				  .overridesForField("primaryCategory.parent." + "primaryCategoryDesc" + transLcl, lcl)
-//				  .overridesForField("PrimaryCategory" + "primaryCategoryDesc" + transLcl, lcl)
-//				  .overridesForField("product.brand.brandAttributes.brandDesc" + transLcl, lcl)
-				  
+				  .forEntity(ProductAttribute.class)				  
 				  //language discriminator needed on productDesc
 				  .overridesForField("productDesc", lcl)
 				  .get();
@@ -230,7 +224,7 @@ public class ProductService implements IProductService {
 																 "primaryCategory.parent.parent." + "primaryCategoryDesc" + transLcl,
 																 "primaryCategory.parent." + "primaryCategoryDesc" + transLcl,
 																 "primaryCategory." + "primaryCategoryDesc" + transLcl,
-																 "product.brand.brandAttributes.brandDesc",
+																 "product.brand.brandDesc" + transLcl,
 																 "productDesc")
 													.matching(searchTerm)													
 													.createQuery())

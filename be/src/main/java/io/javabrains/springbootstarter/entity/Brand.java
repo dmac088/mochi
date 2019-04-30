@@ -1,6 +1,7 @@
 package io.javabrains.springbootstarter.entity;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,6 +13,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.IndexedEmbedded;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -41,6 +46,21 @@ public class Brand {
 	@OneToMany(mappedBy="brand",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@IndexedEmbedded
 	private List<BrandAttribute> brandAttributes;
+	
+	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = "en-GB"))
+	public String getBrandDescENGB() {
+		return this.getAttributes().stream().filter(ba -> {
+		 			return ba.getLclCd().equals("en-GB");
+		 		}).collect(Collectors.toList()).get(0).getBrandDesc();
+	}
+	
+	
+	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = "zh-HK"))
+	public String getBrandDescZHHK() {
+		return this.getAttributes().stream().filter(ca -> {
+		 			return ca.getLclCd().equals("zh-HK");
+		 		}).collect(Collectors.toList()).get(0).getBrandDesc();
+	}
 	
 	public Long getBrandId() {
 		return this.brandId;
