@@ -61,7 +61,6 @@ public class ProductAttribute {
 	@Column(name="prd_desc")
 	private String productDesc;
 
-	
 	@Column(name="prd_img_pth")
 	private String ProductImage;
 	
@@ -90,6 +89,7 @@ public class ProductAttribute {
 			 return c.getHierarchy().getCode().equals("PRM01");
 		 		}).collect(Collectors.toList()).get(0);
 	}
+	
 	
 	public Long getProductId() {
 		return productId;

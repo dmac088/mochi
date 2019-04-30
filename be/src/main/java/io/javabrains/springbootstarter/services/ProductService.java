@@ -205,15 +205,17 @@ public class ProductService implements IProductService {
 		
 		FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
 				
+		String transLcl = lcl.substring(0, 2).toUpperCase() + lcl.substring(3, 5).toUpperCase();
+		
 		QueryBuilder productQueryBuilder = 
 				fullTextEntityManager.getSearchFactory()
 				  .buildQueryBuilder()
 				  .forEntity(ProductAttribute.class)
-				  .overridesForField("product.categories.parent.parent.parent.attributes.categoryDesc", lcl)
-				  .overridesForField("product.categories.parent.parent.attributes.categoryDesc", lcl)
-				  .overridesForField("product.categories.parent.attributes.categoryDesc", lcl)
-				  .overridesForField("product.categories.attributes.categoryDesc", lcl)
-				  .overridesForField("product.brand.brandAttributes.brandDesc", lcl)
+				  .overridesForField("primaryCategory.parent.parent.parent." + "primaryCategoryDesc" + transLcl, lcl)
+				  .overridesForField("primaryCategory.parent.parent." + "primaryCategoryDesc" + transLcl, lcl)
+				  .overridesForField("primaryCategory.parent." + "primaryCategoryDesc" + transLcl, lcl)
+				  .overridesForField("PrimaryCategory" + "primaryCategoryDesc" + transLcl, lcl)
+				  .overridesForField("product.brand.brandAttributes.brandDesc" + transLcl, lcl)
 				  .overridesForField("productDesc", lcl)
 				  .get();
 		
@@ -222,10 +224,10 @@ public class ProductService implements IProductService {
 													.bool()
 													.must(productQueryBuilder.keyword()
 													.onFields(
-																 "product.categories.parent.parent.parent.attributes.categoryDesc",
-																 "product.categories.parent.parent.attributes.categoryDesc",
-																 "product.categories.parent.attributes.categoryDesc",
-																 "product.categories.attributes.categoryDesc",
+																 "primaryCategory.parent.parent.parent." + "primaryCategoryDesc" + transLcl,
+																 "primaryCategory.parent.parent." + "primaryCategoryDesc" + transLcl,
+																 "primaryCategory.parent." + "primaryCategoryDesc" + transLcl,
+																 "primaryCategory." + "primaryCategoryDesc" + transLcl,
 																 "product.brand.brandAttributes.brandDesc",
 																 "productDesc")
 													.matching(searchTerm)													

@@ -3,6 +3,8 @@ package io.javabrains.springbootstarter.entity;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,6 +21,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Facet;
@@ -88,7 +91,6 @@ public class Category {
 	private Category parent;
 	
 	@OneToMany(mappedBy="category",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@IndexedEmbedded
 	@JsonIgnore
 	private List<CategoryAttribute> attributes;
 
@@ -114,7 +116,20 @@ public class Category {
 			return sb.toString();
 		}
 		return this.createCategoryToken(category.getParent(), lc);
-		
+	}
+	
+	@Field(analyze = Analyze.YES)
+	public String getPrimaryCategoryDescENGB() {
+		return this.getAttributes().stream().filter(ca -> {
+		 			return ca.getLclCd().equals("en-GB");
+		 		}).collect(Collectors.toList()).get(0).getCategoryDesc();
+	}
+	
+	@Field(analyze = Analyze.YES)
+	public String getPrimaryCategoryDescZHHK() {
+		return this.getAttributes().stream().filter(ca -> {
+		 			return ca.getLclCd().equals("zh-HK");
+		 		}).collect(Collectors.toList()).get(0).getCategoryDesc();
 	}
 	
 	public Long getChildCategoryCount() {
