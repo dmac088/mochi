@@ -21,6 +21,7 @@ import javax.persistence.OrderBy;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.IndexedEmbedded;
@@ -114,14 +115,15 @@ public class Category {
 		return this.createCategoryToken(category.getParent(), lc);
 	}
 	
-	@Field(analyze = Analyze.YES)
+	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = "en-GB"))
 	public String getPrimaryCategoryDescENGB() {
 		return this.getAttributes().stream().filter(ca -> {
 		 			return ca.getLclCd().equals("en-GB");
 		 		}).collect(Collectors.toList()).get(0).getCategoryDesc();
 	}
 	
-	@Field(analyze = Analyze.YES)
+	
+	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = "zh-HK"))
 	public String getPrimaryCategoryDescZHHK() {
 		return this.getAttributes().stream().filter(ca -> {
 		 			return ca.getLclCd().equals("zh-HK");
