@@ -257,6 +257,7 @@ public class ProductService implements IProductService {
 		facetMgr.enableFaceting(categoryFacetRequest);
 		categoryFacets.addAll(facetMgr.getFacets("CategoryFR"));
 		
+		
 		FacetSelection categoryFacetSelection = facetMgr.getFacetGroup("CategoryFR");
 		
 		//create a brand faceting request for the base level 
