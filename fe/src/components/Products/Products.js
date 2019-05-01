@@ -103,13 +103,14 @@ class Products extends Component {
     ) {return;}
     callback(locale, currency, category, term, price+1, page, size, sort, selectedFacets)
     .then((responseJSON) => {
+      const facets = (responseJSON.facets) ? responseJSON.facets.filter(o => o.level !== 0) : null;
       this.setState({
         "locale":                 locale,
         "currency":               currency,
         "category":               category,
         "term":                   term,
         "products":               responseJSON.products.content,
-        "facets":                 responseJSON.facets,
+        "facets":                 facets,
         "selectedFacets":         (term !== this.state.term) ? [] : selectedFacets,
         "syncFacets":             selectedFacets,
         "brandFacets":            responseJSON.brandFacets,
@@ -251,9 +252,7 @@ class Products extends Component {
     //get a list of parents for the current facet
     const parents = this.getParents(facet, facets, [])
 
-    const parentIsSelected =  (parents.filter(parent => {
-                                        return !(selectedFacets.findIndex(o => o.token === parent.token) === -1);
-                              }).length > 0);
+    const parentIsSelected =  (parents) ? (parents.filter(parent => { return !(selectedFacets.findIndex(o => o.token === parent.token) === -1) }).length > 0) : false;
 
     return !(selectedFacets.findIndex(o => o.token === facet.token) === -1)
           //  || (parentIsSelected)
