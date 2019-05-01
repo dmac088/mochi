@@ -249,7 +249,7 @@ public class ProductService implements IProductService {
 				.discrete()
 				.orderedBy(FacetSortOrder.FIELD_VALUE)
 				.includeZeroCounts(false)
-				//.maxFacetCount(5)
+				.maxFacetCount(10)
 				.createFacetingRequest();
 		
 		//add all the base level facets to categoryFacets List
