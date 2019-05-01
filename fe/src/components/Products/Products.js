@@ -30,7 +30,6 @@ class Products extends Component {
       "brandFacets": [],
       "selectedFacets": [],
       "syncFacets": [],
-      "displayFacets": [],
       "totalPages": 0,
       "totalElements": 0,
       "numberOfElements": 0,
@@ -112,7 +111,6 @@ class Products extends Component {
         "products":               responseJSON.products.content,
         "facets":                 responseJSON.facets,
         "selectedFacets":         (term !== this.state.term) ? [] : selectedFacets,
-        "displayFacets":          (term !== this.state.term) ? [] : this.state.displayFacets,
         "syncFacets":             selectedFacets,
         "brandFacets":            responseJSON.brandFacets,
         "totalPages":             responseJSON.products.totalPages,
@@ -206,33 +204,27 @@ class Products extends Component {
   applyFacet = (e, props) => {
     const removeFacet = this.state.selectedFacets.find(o => o.token === e.currentTarget.id);
     if(removeFacet) {
-        //remove the children of the deselected facet
-        const removalSet = [removeFacet, ...(this.getChildren(removeFacet, this.state.facets, []))];
+        const removalSet        = [removeFacet];
+        const newSelectedFacets = this.state.selectedFacets.filter(
+                                    o => !(removalSet.find(d => d.token === o.token)))
+
         this.setState({
-          "selectedFacets": this.state.selectedFacets.filter(
-                                      o => !(removalSet.find(d => d.token === o.token))),
-          "displayFacets": this.state.displayFacets.filter(
-                                      o => !(removalSet.find(d => d.token === o.token)))
+          "selectedFacets": newSelectedFacets,
         }, () => {
           console.log("removing facet");
-          console.log(this.state.selectedFacets);
         });
         return;
     }
 
     const newSelectedFacets = _.cloneDeep(this.state.selectedFacets, true);
-
     const addFacet = this.state.facets.find(o => o.token === e.currentTarget.id);
-
-    const selectedSet = [...newSelectedFacets, addFacet, ...(this.getChildren(addFacet, this.state.facets, []))];
-    const displaySet = [...selectedSet, ...(this.getParents(addFacet, this.state.facets, []))];
+    const children = (this.getChildren(addFacet, this.state.facets, []));
+    const selectedSet = [...newSelectedFacets, addFacet];
 
     this.setState({
       "selectedFacets": selectedSet,
-      "displayFacets": displaySet,
     }, () => {
       console.log("adding facet");
-      console.log(this.state.selectedFacets);
     });
   }
 
@@ -278,7 +270,7 @@ class Products extends Component {
   render() {
 
       const { toggleQuickView, setCurrentProductId, showQVModal, currentProductId, categoryList, changeCategory, changeBrand} = this.props;
-      const { products, facets, selectedFacets, totalPages, totalElements, numberOfElements, isGrid, term, category, maxPrice, selectedPrice, displayFacets } = this.state;
+      const { products, facets, selectedFacets, totalPages, totalElements, numberOfElements, isGrid, term, category, maxPrice, selectedPrice } = this.state;
       const { page, size } = this.state.params;
 
       if(!products) { return null }
@@ -291,7 +283,7 @@ class Products extends Component {
                   <div className="col-lg-3 order-2 order-lg-1">
                     <div className="sidebar-area">
                       <CategorySidebar
-                        selectedFacets={displayFacets}
+                        selectedFacets={selectedFacets}
                         category={cat}
                         facets={this.filterFacets(facets, "CategoryFR")}
                         isActive={this.isActive}
