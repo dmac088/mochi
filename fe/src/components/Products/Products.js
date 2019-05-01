@@ -218,7 +218,6 @@ class Products extends Component {
 
     const newSelectedFacets = _.cloneDeep(this.state.selectedFacets, true);
     const addFacet = this.state.facets.find(o => o.token === e.currentTarget.id);
-    const children = (this.getChildren(addFacet, this.state.facets, []));
     const selectedSet = [...newSelectedFacets, addFacet];
 
     this.setState({
