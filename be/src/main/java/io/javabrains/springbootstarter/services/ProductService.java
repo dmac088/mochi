@@ -247,7 +247,7 @@ public class ProductService implements IProductService {
 				.name("CategoryFR")
 				.onField("primaryCategory.categoryToken") //in category class
 				.discrete()
-				.orderedBy(FacetSortOrder.FIELD_VALUE)
+				.orderedBy(FacetSortOrder.COUNT_DESC)
 				.includeZeroCounts(false)
 				.maxFacetCount(10)
 				.createFacetingRequest();
@@ -256,6 +256,8 @@ public class ProductService implements IProductService {
 		FacetManager facetMgr = jpaQuery.getFacetManager();
 		facetMgr.enableFaceting(categoryFacetRequest);
 		categoryFacets.addAll(facetMgr.getFacets("CategoryFR"));
+		
+		FacetSelection categoryFacetSelection = facetMgr.getFacetGroup("CategoryFR");
 		
 		//create a brand faceting request for the base level 
 		FacetingRequest brandFacetRequest = productQueryBuilder.facet()
@@ -266,11 +268,15 @@ public class ProductService implements IProductService {
 				.includeZeroCounts(false)
 				.maxFacetCount(5)
 				.createFacetingRequest();
+
 		
 		//add all the base level facets to brandFacets List
 		facetMgr = jpaQuery.getFacetManager();
 		facetMgr.enableFaceting(brandFacetRequest);
 		brandFacets.addAll(facetMgr.getFacets("BrandFR"));
+		
+		
+		FacetSelection brandFacetSelection = facetMgr.getFacetGroup("BrandFR");
 		
 		//run the query and get the results
 		List<ProductAttribute> results =  Collections.checkedList(jpaQuery.getResultList(), ProductAttribute.class);
@@ -310,10 +316,6 @@ public class ProductService implements IProductService {
 		(new HashSet<SidebarFacetDTO>(cs)).stream().forEach(cf -> {
 			createParentCategoryFacets(categoryFacets, cs, cf, productQueryBuilder, jpaQuery, lcl, currency, cf.getLevel());
 		});
-		
-		
-		FacetSelection categoryFacetSelection = facetMgr.getFacetGroup("CategoryFR");
-		FacetSelection brandFacetSelection = facetMgr.getFacetGroup("BrandFR");
 		
 		
 		//get a list of facets that exist in the list of received facets
