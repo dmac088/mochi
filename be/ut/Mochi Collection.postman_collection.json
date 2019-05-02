@@ -1,0 +1,320 @@
+{
+	"id": "2eeafe73-dd3e-8baa-eb5d-0a8cef0046d8",
+	"name": "Mochi Collection",
+	"description": null,
+	"order": [
+		"bd8fecc9-c367-6515-2261-7fb114cf1651",
+		"894de5ee-c6fd-be66-d89f-116fd3c6c5e2",
+		"a0f9f3b1-d733-5591-44db-c4885e88f507",
+		"829bb4d6-a50a-4c7c-0968-778514ab0acc",
+		"eb88e642-d46a-b3fe-e07a-9331902271d0",
+		"3a833025-6f5d-59e1-9207-d70669275266",
+		"e91c115a-0e01-cadd-37f3-4698259789a3"
+	],
+	"folders": [],
+	"folders_order": [],
+	"timestamp": 0,
+	"owner": "2579027",
+	"public": false,
+	"requests": [
+		{
+			"id": "3a833025-6f5d-59e1-9207-d70669275266",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "https://localhost:8090/api/Search/en-GB/HKD/Category/All/SearchTerm/fruit/Page/0/Size/10/SortBy/priceAsc",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "2eeafe73-dd3e-8baa-eb5d-0a8cef0046d8",
+			"data": [],
+			"dataMode": "raw",
+			"name": "SEARCH_FOR_PRODUCTS",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1556780622637,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "[\n{\n\"count\": \"12\",\n\"desc\": \"Fruit\",\n\"facetingName\": \"CategoryDescLvl1FR\",\n\"fieldName\": \"primaryCategory.categoryToken\",\n\"id\": \"2\",\n\"level\": \"0\",\n\"parentId\": null,\n\"token\": \"/PRM01/FRT01/POM01\"\n}\n]"
+		},
+		{
+			"id": "829bb4d6-a50a-4c7c-0968-778514ab0acc",
+			"headers": "//Content-Type: application/x-www-form-urlencoded\nAuthorization: Basic c3ByaW5nLXNlY3VyaXR5LW9hdXRoMi1yZWFkLXdyaXRlLWNsaWVudDpzcHJpbmctc2VjdXJpdHktb2F1dGgyLXJlYWQtd3JpdGUtY2xpZW50LXBhc3N3b3JkMTIzNA==\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/x-www-form-urlencoded",
+					"description": "",
+					"enabled": false
+				},
+				{
+					"key": "Authorization",
+					"value": "Basic c3ByaW5nLXNlY3VyaXR5LW9hdXRoMi1yZWFkLXdyaXRlLWNsaWVudDpzcHJpbmctc2VjdXJpdHktb2F1dGgyLXJlYWQtd3JpdGUtY2xpZW50LXBhc3N3b3JkMTIzNA==",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "https://localhost:8090/oauth/token",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [
+				{
+					"key": "refresh_token",
+					"value": "7af4ba50-3b4c-4bc1-af5f-7daef584819e",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "grant_type",
+					"value": "refresh_token",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "basicAuth",
+			"helperAttributes": {
+				"id": "basic",
+				"username": "spring-security-oauth2-read-write-client",
+				"password": "spring-security-oauth2-read-write-client-password1234",
+				"saveToRequest": true
+			},
+			"time": 1543897068256,
+			"name": "RENEW_ACCESS_TOKEN",
+			"description": "",
+			"collectionId": "2eeafe73-dd3e-8baa-eb5d-0a8cef0046d8",
+			"responses": []
+		},
+		{
+			"folder": null,
+			"id": "894de5ee-c6fd-be66-d89f-116fd3c6c5e2",
+			"name": "GET_NEW_ACCESS_TOKEN",
+			"dataMode": "params",
+			"data": [
+				{
+					"key": "username",
+					"value": "admin",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "password",
+					"value": "admin1234",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "client_id",
+					"value": "spring-security-oauth2-read-write-client",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "grant_type",
+					"value": "password",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "username",
+						"value": "spring-security-oauth2-read-write-client",
+						"type": "string"
+					},
+					{
+						"key": "password",
+						"value": "spring-security-oauth2-read-write-client-password1234",
+						"type": "string"
+					},
+					{
+						"key": "saveHelperData",
+						"value": true,
+						"type": "boolean"
+					},
+					{
+						"key": "showPassword",
+						"value": false,
+						"type": "boolean"
+					}
+				]
+			},
+			"events": null,
+			"rawModeData": null,
+			"descriptionFormat": "html",
+			"description": null,
+			"variables": null,
+			"headers": "//Content-Type: application/x-www-form-urlencoded\nAuthorization: Basic c3ByaW5nLXNlY3VyaXR5LW9hdXRoMi1yZWFkLXdyaXRlLWNsaWVudDpzcHJpbmctc2VjdXJpdHktb2F1dGgyLXJlYWQtd3JpdGUtY2xpZW50LXBhc3N3b3JkMTIzNA==\n",
+			"method": "POST",
+			"pathVariables": {},
+			"url": "https://localhost:8090/oauth/token",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": "basicAuth",
+			"helperAttributes": {
+				"id": "basic",
+				"username": "spring-security-oauth2-read-write-client",
+				"password": "spring-security-oauth2-read-write-client-password1234",
+				"saveToRequest": true
+			},
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/x-www-form-urlencoded",
+					"enabled": false
+				},
+				{
+					"key": "Authorization",
+					"value": "Basic c3ByaW5nLXNlY3VyaXR5LW9hdXRoMi1yZWFkLXdyaXRlLWNsaWVudDpzcHJpbmctc2VjdXJpdHktb2F1dGgyLXJlYWQtd3JpdGUtY2xpZW50LXBhc3N3b3JkMTIzNA==",
+					"enabled": true
+				}
+			],
+			"pathVariableData": [],
+			"collectionId": "2eeafe73-dd3e-8baa-eb5d-0a8cef0046d8"
+		},
+		{
+			"folder": null,
+			"id": "a0f9f3b1-d733-5591-44db-c4885e88f507",
+			"name": "GET_ALL_PARTY_CUSTOMERS",
+			"dataMode": "raw",
+			"data": [],
+			"auth": null,
+			"events": null,
+			"descriptionFormat": "html",
+			"description": null,
+			"variables": null,
+			"headers": "authorization: Bearer e61e7acc-7aaa-4222-ae1f-e856ddc9c151\nContent-Type: application/json\n",
+			"method": "GET",
+			"pathVariables": {},
+			"url": "https://localhost:8090/api/Party/Role/Customer",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": null,
+			"helperAttributes": null,
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "authorization",
+					"value": "Bearer e61e7acc-7aaa-4222-ae1f-e856ddc9c151",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"enabled": true
+				}
+			],
+			"pathVariableData": [],
+			"collectionId": "2eeafe73-dd3e-8baa-eb5d-0a8cef0046d8",
+			"rawModeData": "{\"@class\":\".Person\",\"partyId\":null,\"partyType\":{\"partyTypeDesc\":null,\"partyTypeId\":1},\"partyRoles\":[{\"@class\":\".Customer\",\"roleId\":null,\"roleType\":{\"roleTypeDesc\":\"Customer\",\"roleTypeId\":1},\"customerNumber\":\"0123765488\",\"roleStart\":1541330619173}],\"partyUser\":{\"username\":\"dmac198\",\"password\":\"$2a$08$0dgbDhwLCmbvuko4FAlk3uPGGgYW3k/p7MmkMKMgtEBlt7coPi6D6\",\"enabled\":true,\"accountNonExpired\":true,\"accountNonLocked\":true,\"credentialsNonExpired\":true},\"givenNameEn\":\"Daniel\",\"familyNameEn\":\"Mackie\",\"nameCn\":\"丹尼爾麥基\"}"
+		},
+		{
+			"folder": null,
+			"id": "bd8fecc9-c367-6515-2261-7fb114cf1651",
+			"name": "POST_NEW_PERSON_CUSTOMER",
+			"dataMode": "raw",
+			"data": [],
+			"auth": null,
+			"events": null,
+			"descriptionFormat": "html",
+			"description": null,
+			"variables": null,
+			"headers": "authorization: Bearer b888fa7d-2c7d-49e3-a49d-daed68d99f27\nContent-Type: application/json\n",
+			"method": "POST",
+			"pathVariables": {},
+			"url": "https://localhost:8090/api/Person",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": null,
+			"helperAttributes": null,
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "authorization",
+					"value": "Bearer b888fa7d-2c7d-49e3-a49d-daed68d99f27",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"pathVariableData": [],
+			"collectionId": "2eeafe73-dd3e-8baa-eb5d-0a8cef0046d8",
+			"rawModeData": " {\n        \"@class\": \".Person\",\n        \"partyRoles\": [\n            {\n                \"@class\": \".Customer\",\n                \"roleStart\": \"2018-11-14T16:00:00.000+0000\"\n            }\n        ],\n        \"partyUser\": {\n            \"username\": \"jane005\",\n            \"password\": \"admin1234\",\n            \"enabled\": true,\n            \"accountNonExpired\": true,\n            \"accountNonLocked\": true,\n            \"credentialsNonExpired\": true\n        },\n        \"givenNameEn\": \"Jane\",\n        \"familyNameEn\": \"Jones\",\n        \"nameCn\": \"丹尼爾麥基\"\n    }"
+		},
+		{
+			"id": "e91c115a-0e01-cadd-37f3-4698259789a3",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "https://localhost:8090/api/Product/en-GB/HKD/category/Fruit/maxPrice/1000/page/0/size/10/sortBy/nameAsc",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1556781232272,
+			"name": "POST_GET_PRODUCTS",
+			"description": "",
+			"collectionId": "2eeafe73-dd3e-8baa-eb5d-0a8cef0046d8",
+			"responses": [],
+			"rawModeData": "[\n\t{\n            \"facetingName\": \"BrandFR\",\n            \"level\": null,\n            \"count\": 2,\n            \"parentId\": null,\n            \"id\": 38,\n            \"fieldName\": \"brandCode\",\n            \"desc\": \"Glorys\",\n            \"token\": \"GLO01\"\n\t}\n]"
+		},
+		{
+			"id": "eb88e642-d46a-b3fe-e07a-9331902271d0",
+			"headers": "",
+			"headerData": [],
+			"url": "https://localhost:8090/api/Product/HKG",
+			"folder": null,
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1544429471435,
+			"name": "GET_ALL_PRODUCTS",
+			"description": null,
+			"collectionId": "2eeafe73-dd3e-8baa-eb5d-0a8cef0046d8",
+			"rawModeData": "{\"@class\":\".Person\",\"partyId\":null,\"partyType\":{\"partyTypeDesc\":null,\"partyTypeId\":1},\"partyRoles\":[{\"@class\":\".Customer\",\"roleId\":null,\"roleType\":{\"roleTypeDesc\":\"Customer\",\"roleTypeId\":1},\"customerNumber\":\"0123765488\",\"roleStart\":1541330619173}],\"partyUser\":{\"username\":\"dmac198\",\"password\":\"$2a$08$0dgbDhwLCmbvuko4FAlk3uPGGgYW3k/p7MmkMKMgtEBlt7coPi6D6\",\"enabled\":true,\"accountNonExpired\":true,\"accountNonLocked\":true,\"credentialsNonExpired\":true},\"givenNameEn\":\"Daniel\",\"familyNameEn\":\"Mackie\",\"nameCn\":\"丹尼爾麥基\"}"
+		}
+	]
+}
