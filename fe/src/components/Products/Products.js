@@ -130,16 +130,19 @@ class Products extends Component {
        console.log(newState.locale);
        console.log(newState.currency);
        console.log(newState.category);
-       console.log(brandApi.findByCategory(newState.locale, newState.currency, newState.category).text());
-       this.setState({
-         ...newState
-       });
+       brandApi.findByCategory(newState.locale, newState.currency, newState.category)
+       .then((response) => {
+         console.log(response.text());
+       })
+       // this.setState({
+       //   ...newState
+       // });
      })
      .then(() => {
-        this.props.history.push({
-          "pathname": pathname,
-          "search": qs.stringify(params),
-        });
+        // this.props.history.push({
+        //   "pathname": pathname,
+        //   "search": qs.stringify(params),
+        // });
     })
     .catch(()=>{
         console.log('failed reload of product data!');
