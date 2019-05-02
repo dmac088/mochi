@@ -8,6 +8,10 @@ public interface BrandRepository extends CrudRepository<Brand, Long> {
 
 	List<Brand> findAll();
 
+	Brand findByBrandId(Long brandId);
+	
 	Brand findByBrandCode(String brandCode);
+	
+	List<Brand> findByProductsCategoriesAttributesLclCdAndProductsCategoriesAttributesCategoryDesc(String lcl, String categoryDesc);
 	
 }
