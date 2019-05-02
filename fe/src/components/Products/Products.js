@@ -127,6 +127,9 @@ class Products extends Component {
       return newState;
      })
      .then((newState) => {
+       console.log(newState.locale);
+       console.log(newState.currency);
+       console.log(newState.category);
        console.log(brandApi.findByCategory(newState.locale, newState.currency, newState.category).text());
        this.setState({
          ...newState
