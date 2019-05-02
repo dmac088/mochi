@@ -28,6 +28,9 @@ public interface IProductService {
 	 
 	 List<Product> getPreviewProductsForCategory(String lcl, String currency, Long categoryId);
 	 
-	 public void recurseCategories(List<Category> pcl, Category pc);
+	 public static void recurseCategories(List<Category> pcl, Category pc) {
+	    pcl.add(pc); 
+	    pc.getChildren().forEach(child -> recurseCategories(pcl, child));
+	 }
 	 
 }

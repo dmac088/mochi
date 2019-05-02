@@ -107,7 +107,7 @@ public class ProductService implements IProductService {
   	public List<Product> getPreviewProductsForCategory(String lcl, String currency, Long categoryId) {
      	List<Category> pcl = new ArrayList<Category>();
      	Category pc = productCategoryRepository.findByCategoryId(categoryId);
-     	recurseCategories(pcl, pc);
+     	IProductService.recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
   		List<io.javabrains.springbootstarter.entity.Product> ppa = productRepository.findByCategoriesCategoryIdIn(categoryIds);
   		List<Product> pp = ppa.stream().map(pa -> this.convertToProductDO(pa, lcl, currency)).collect(Collectors.toList());
@@ -119,7 +119,7 @@ public class ProductService implements IProductService {
 	public ProductsDTO getProductsForCategory(String lcl, String currency, String categoryDesc, int page, int size, String sortBy) {
 		List<Category> pcl = new ArrayList<Category>();
      	Category pc = productCategoryRepository.findByAttributesCategoryDesc(categoryDesc);
-     	recurseCategories(pcl, pc);
+     	IProductService.recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
   		Page<io.javabrains.springbootstarter.entity.Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCd(categoryIds, lcl, PageRequest.of(page, size, this.sortByParam(sortBy)));
   		Page<Product> pp = ppa.map(pa -> this.convertToProductDO(pa, lcl, currency));
@@ -134,7 +134,7 @@ public class ProductService implements IProductService {
 		System.out.println("getProductsForCategory");
 		List<Category> pcl = new ArrayList<Category>();
      	Category pc = productCategoryRepository.findByAttributesCategoryDesc(categoryDesc);
-     	recurseCategories(pcl, pc);
+     	IProductService.recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
   		Page<io.javabrains.springbootstarter.entity.Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCdAndPricesPriceValueBetween(categoryIds, lcl, new Double(0), price, PageRequest.of(page, size, this.sortByParam(sortBy)));
   		Page<Product> pp = ppa.map(pa -> this.convertToProductDO(pa, lcl, currency));
@@ -149,7 +149,7 @@ public class ProductService implements IProductService {
 		System.out.println("getProductsForCategoryAndBrand");
 		List<Category> pcl = new ArrayList<Category>();
      	Category pc = productCategoryRepository.findByAttributesCategoryDesc(categoryDesc);
-     	recurseCategories(pcl, pc);
+     	IProductService.recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
   		Page<io.javabrains.springbootstarter.entity.Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCdAndBrandBrandAttributesBrandDescAndBrandBrandAttributesLclCd(categoryIds, lcl, brandDesc, lcl, PageRequest.of(page, size, this.sortByParam(sortBy)));		
   		Page<Product> pp = ppa.map(pa -> this.convertToProductDO(pa, lcl, currency));
@@ -165,7 +165,7 @@ public class ProductService implements IProductService {
 		System.out.println(sortBy);
 		List<Category> pcl = new ArrayList<Category>();
      	Category pc = productCategoryRepository.findByAttributesCategoryDesc(categoryDesc);
-     	recurseCategories(pcl, pc);
+     	IProductService.recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
   		Page<io.javabrains.springbootstarter.entity.Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCdAndPricesPriceValueBetweenAndPricesTypeDescAndPricesCurrencyCodeAndPricesStartDateLessThanAndPricesEndDateGreaterThan(categoryIds, lcl, new Double(0), price, "markdown", currency, new Date(), new Date(),PageRequest.of(page, size, this.sortByParam(sortBy)));
   		Page<Product> pp = ppa.map(pa -> this.convertToProductDO(pa, lcl, currency));
@@ -182,7 +182,7 @@ public class ProductService implements IProductService {
 		System.out.println(sortBy);
 		List<Category> pcl = new ArrayList<Category>();
      	Category pc = productCategoryRepository.findByAttributesCategoryDesc(categoryDesc);
-     	recurseCategories(pcl, pc);
+     	IProductService.recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
      	List<Long> brandIds = brandFacets.stream().map(b -> {return b.getId();}).collect(Collectors.toList());
      	Page<io.javabrains.springbootstarter.entity.Product> ppa;
@@ -481,8 +481,5 @@ public class ProductService implements IProductService {
     	}
     }
 	
-    public void recurseCategories(List<Category> pcl, Category pc) {
-    	pcl.add(pc); 
-    	pc.getChildren().forEach(child -> recurseCategories(pcl, child));
-    }
+
 }

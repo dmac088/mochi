@@ -1,5 +1,6 @@
 package io.javabrains.springbootstarter.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,6 +11,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import io.javabrains.springbootstarter.domain.Brand;
 import io.javabrains.springbootstarter.entity.BrandRepository;
+import io.javabrains.springbootstarter.entity.Category;
 import io.javabrains.springbootstarter.entity.CategoryAttributeRepository;
 import io.javabrains.springbootstarter.entity.ProductRepository;
 
@@ -47,10 +49,12 @@ public class BrandService implements IBrandService {
 
 	@Override
 	@Transactional
-	@Cacheable
+	//@Cacheable
 	public List<Brand> getBrandsForCategory(String lcl, String curr, String categoryDesc) {
-		List<io.javabrains.springbootstarter.entity.Brand> lpb = brandRepository.findByProductsCategoriesAttributesLclCdAndProductsCategoriesAttributesCategoryDesc(lcl, categoryDesc);
 		io.javabrains.springbootstarter.entity.CategoryAttribute ca = categoryAttributeRepository.findByLclCdAndCategoryDesc(lcl, categoryDesc);
+		List<Category> cl = new ArrayList<Category>();
+		IProductService.recurseCategories(cl, ca.getCategory());
+		List<io.javabrains.springbootstarter.entity.Brand> lpb = brandRepository.findByProductsCategoriesCategoryIdIn(cl.stream().map(c -> c.getCategoryId()).collect(Collectors.toList()));
 		List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, lcl, curr)).collect(Collectors.toList());
 		lb.stream().forEach(bDto -> {
 			bDto.setProductCount(productRepository.countByCategoriesCategoryCodeAndBrandBrandCode(ca.getCategory().getCategoryCode(), bDto.getBrandCode()));
@@ -58,7 +62,7 @@ public class BrandService implements IBrandService {
      	return lb;
 	}
     
- 	@Cacheable
+ 	//@Cacheable
     private Brand createBrandDO(final io.javabrains.springbootstarter.entity.Brand b, final String lcl, final String currency) {
     	final Brand bDto = new Brand();
     	bDto.setBrandId(b.getBrandId());

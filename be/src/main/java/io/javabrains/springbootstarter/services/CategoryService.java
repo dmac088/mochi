@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-
 import io.javabrains.springbootstarter.domain.Brand;
 import io.javabrains.springbootstarter.domain.Category;
 import io.javabrains.springbootstarter.entity.CategoryRepository;
