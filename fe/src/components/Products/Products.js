@@ -11,6 +11,7 @@ import { ShopBanner } from './ShopBanner';
 import { ShopHeader } from './ShopHeader';
 import { Pagination } from './Pagination';
 import * as productApi from '../../data/products/api';
+import * as brandApi from '../../data/brands/api';
 import { updateParams } from '../../services/helpers/Helper';
 import * as pageService from '../../services/page';
 import qs from 'query-string';
@@ -126,7 +127,7 @@ class Products extends Component {
       return newState;
      })
      .then((newState) => {
-
+       brandApi.findByCategory
 
 
 
