@@ -79,7 +79,7 @@ class Products extends Component {
       const price = (isDifferent) ? maxPrice : selectedPrice;
       this.update(locale, currency, pathname, term, brand, Object.assign(params, qs.parse(search)), price, maxPrice, isMounting, [], this.getProducts);
     }
-    
+
     if (type === "search") {
       const price = this.state.selectedPrice;
       const maxPrice = Number(this.getMaxPrice((this.filterCategories(categoryList, term)[0]), brand));
@@ -105,7 +105,7 @@ class Products extends Component {
     callback(locale, currency, category, term, price+1, page, size, sort, selectedFacets)
     .then((responseJSON) => {
       const facets = (responseJSON.facets) ? responseJSON.facets.filter(o => o.level !== 0) : null;
-      this.setState({
+      const newstate = {
         "locale":                 locale,
         "currency":               currency,
         "category":               category,
@@ -122,9 +122,15 @@ class Products extends Component {
         "maxPrice":               maxPrice,
         "selectedPrice":          price,
         "syncPrice":              price,
-      });
+      };
+      return newState;
      })
-      .then(() => {
+     .then((newState) => {
+       this.setState({
+         ...newState
+       });
+     })
+     .then(() => {
         this.props.history.push({
           "pathname": pathname,
           "search": qs.stringify(params),

@@ -105,7 +105,6 @@ public class CategoryService implements ICategoryService {
         List<Category> pcDTOl =
         pc.getChildren().stream().map(pc1 -> {
         	Category pcchild = createCategory(pc1, lcl, currency);
-        	catBrands.addAll(pcchild.getCategoryBrands());
         	return pcchild;
         }).collect(Collectors.toList());
         pcDto.setChildren(pcDTOl);
@@ -113,7 +112,6 @@ public class CategoryService implements ICategoryService {
         //get the counts for the brands within the category
         catBrands.forEach(b -> b.setProductCount(productRepository.countByCategoriesCategoryCodeAndBrandBrandCode(pcDto.getCategoryCode(), b.getBrandCode())));
         catBrands.forEach(b -> b.setMaxMarkDownPrice(productRepository.maxMarkDownPriceByCategoriesCategoryCodeAndBrandBrandCodeAndPriceCurrencyCode(pcDto.getCategoryCode(), b.getBrandCode(), currency)));
-        pcDto.setCategoryBrands(catBrands);
        
         //set the parentId
         if(!(pc.getParent() == null)) {
