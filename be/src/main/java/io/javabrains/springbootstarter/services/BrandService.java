@@ -53,8 +53,6 @@ public class BrandService implements IBrandService {
 	//@Cacheable
 	public List<SidebarFacetDTO> getBrandsForCategory(String hierarchyCode, String lcl, String curr, String categoryDesc) {
 		io.javabrains.springbootstarter.entity.CategoryAttribute ca = categoryAttributeRepository.findByCategoryHierarchyCodeAndLclCdAndCategoryDesc(hierarchyCode, lcl, categoryDesc);
-		System.out.println(categoryDesc);
-		System.out.println(ca.getCategoryDesc());
 		List<Category> cl = IProductService.recurseCategories(new ArrayList<Category>(), ca.getCategory());
 		List<io.javabrains.springbootstarter.entity.Brand> lpb = brandRepository.findDistinctByProductsCategoriesCategoryIdIn(cl.stream().map(c -> c.getCategoryId()).collect(Collectors.toList()));
 		List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, lcl, curr)).collect(Collectors.toList());
