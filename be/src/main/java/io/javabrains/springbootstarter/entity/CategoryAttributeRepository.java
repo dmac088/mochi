@@ -14,6 +14,8 @@ public interface CategoryAttributeRepository extends CrudRepository<CategoryAttr
 	
 	CategoryAttribute findByLclCdAndCategoryCategoryCode(String lcl, String categoryCode);
 	
+	CategoryAttribute findByLclCdAndCategoryDesc(String lcl, String categoryDesc);
+	
 	List<CategoryAttribute> findByLclCdAndCategoryParentCategoryId(String lcl, Long categoryId);
 
 	CategoryAttribute findByCategoryDesc(String categoryDesc);
