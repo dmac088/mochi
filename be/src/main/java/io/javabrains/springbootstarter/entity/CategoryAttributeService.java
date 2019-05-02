@@ -17,7 +17,7 @@ public class CategoryAttributeService {
 	}
 	
 	public CategoryAttribute getCategoryAttribute(String lcl, Long id) {
-		return categoryAttributeRepository.findByLclCdAndCategoryId(lcl, id);
+		return categoryAttributeRepository.findByCategoryHierarchyCodeAndLclCdAndCategoryId("PRM01",lcl, id);
 	}
 	
 	public void addCategory(CategoryAttribute CategoryAttribute) {

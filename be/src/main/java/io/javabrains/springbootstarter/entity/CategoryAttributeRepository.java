@@ -10,13 +10,12 @@ public interface CategoryAttributeRepository extends CrudRepository<CategoryAttr
 	
 	List<CategoryAttribute> findByLclCd(String lcl);
 
-	CategoryAttribute findByLclCdAndCategoryId(String lcl, Long categoryId);
+	CategoryAttribute findByCategoryHierarchyCodeAndLclCdAndCategoryId(String hierarchyCode, String lcl, Long categoryId);
 	
-	CategoryAttribute findByLclCdAndCategoryCategoryCode(String lcl, String categoryCode);
+	CategoryAttribute findByCategoryHierarchyCodeAndLclCdAndCategoryCategoryCode(String hierarchyCode, String lcl, String categoryCode);
 	
-	CategoryAttribute findByLclCdAndCategoryDesc(String lcl, String categoryDesc);
+	CategoryAttribute findByCategoryHierarchyCodeAndLclCdAndCategoryDesc(String hierarchyCode, String lcl, String categoryDesc);
 	
-	List<CategoryAttribute> findByLclCdAndCategoryParentCategoryId(String lcl, Long categoryId);
+	List<CategoryAttribute> findByCategoryHierarchyCodeAndLclCdAndCategoryParentCategoryId(String hierarchyCode, String lcl, Long categoryId);
 
-	CategoryAttribute findByCategoryDesc(String categoryDesc);
 }

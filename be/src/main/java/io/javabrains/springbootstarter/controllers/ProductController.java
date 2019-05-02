@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import io.javabrains.springbootstarter.domain.Product;
-import io.javabrains.springbootstarter.dto.ProductsDTO;
+import io.javabrains.springbootstarter.dto.SearchDTO;
 import io.javabrains.springbootstarter.dto.SidebarFacetDTO;
 import io.javabrains.springbootstarter.services.IProductService;
 
@@ -30,7 +30,7 @@ public class ProductController {
     }
     
     @GetMapping("/Product/{lcl}/{curr}/page/{page}/size/{size}/sortBy/{sortBy}")
-    public ProductsDTO getProducts(@PathVariable String lcl, @PathVariable String curr, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy) {
+    public SearchDTO getProducts(@PathVariable String lcl, @PathVariable String curr, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy) {
     	return productService.getProducts(lcl, curr, page, size, sortBy);
     }
     
@@ -40,22 +40,22 @@ public class ProductController {
     }
    
     @GetMapping("/Product/{lcl}/{curr}/category/{category}/page/{page}/size/{size}/sortBy/{sortBy}")
-    public ProductsDTO getProducts(@PathVariable String lcl, @PathVariable String curr, @PathVariable String category, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy) {
+    public SearchDTO getProducts(@PathVariable String lcl, @PathVariable String curr, @PathVariable String category, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy) {
     	return productService.getProductsForCategory(lcl, curr, category, page, size, sortBy);
     }
     
     @GetMapping("/Product/{lcl}/{curr}/category/{category}/brand/{brand}/page/{page}/size/{size}/sortBy/{sortBy}")
-    public ProductsDTO getProducts(@PathVariable String lcl, @PathVariable String curr, @PathVariable String category, @PathVariable String brand, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy) {
+    public SearchDTO getProducts(@PathVariable String lcl, @PathVariable String curr, @PathVariable String category, @PathVariable String brand, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy) {
     	return productService.getProductsForCategoryAndBrand(lcl, curr, category, brand, page, size, sortBy);
     }
     
     @PostMapping("/Product/{lcl}/{curr}/category/{category}/maxPrice/{price}/page/{page}/size/{size}/sortBy/{sortBy}")
-    public ProductsDTO getProducts(@PathVariable String lcl, @PathVariable String curr, @PathVariable String category, @PathVariable Double price, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy, @RequestBody final List<SidebarFacetDTO> selectedFacets) {
+    public SearchDTO getProducts(@PathVariable String lcl, @PathVariable String curr, @PathVariable String category, @PathVariable Double price, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy, @RequestBody final List<SidebarFacetDTO> selectedFacets) {
     	return productService.getProductsForCategoryAndBrandAndPrice(lcl, curr, category, price, page, size, sortBy, selectedFacets);
     }
     
     @PostMapping("/Search/{lcl}/{curr}/Category/{category}/SearchTerm/{term}/Page/{page}/Size/{size}/SortBy/{sortBy}")
-    public ProductsDTO search(@PathVariable String lcl, @PathVariable String curr, @PathVariable String category,@PathVariable String term, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy, @RequestBody final List<SidebarFacetDTO> selectedFacets) {
+    public SearchDTO search(@PathVariable String lcl, @PathVariable String curr, @PathVariable String category,@PathVariable String term, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy, @RequestBody final List<SidebarFacetDTO> selectedFacets) {
     	return productService.findProduct(lcl, curr, category, term, page, size, sortBy, selectedFacets);
     }
 }

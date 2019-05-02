@@ -5,13 +5,11 @@ import org.springframework.data.domain.Page;
 
 import io.javabrains.springbootstarter.domain.Product;
 
-public class ProductsDTO {
+public class SearchDTO {
 	
 	Page<Product> products;
 	
 	List<SidebarFacetDTO> Facets;
-	
-	//List<Facet> brandFacets;
 
 	public Page<Product> getProducts() {
 		return products;

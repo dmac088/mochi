@@ -127,18 +127,20 @@ class Products extends Component {
       return newState;
      })
      .then((newState) => {
-       console.log(newState.locale);
-       console.log(newState.currency);
-       console.log(newState.category);
+       console.log(newState.brandFacets);
        brandApi.findByCategory(newState.locale, newState.currency, newState.category)
        .then((response) => {
-         console.log(response.text());
+         return response.text();
        })
-       // this.setState({
-       //   ...newState
-       // });
+       .then((responseJSON) => {
+         console.log(responseJSON);
+       });
+       return newState;
      })
-     .then(() => {
+     .then((newState) => {
+       this.setState({
+         ...newState
+       });
         // this.props.history.push({
         //   "pathname": pathname,
         //   "search": qs.stringify(params),

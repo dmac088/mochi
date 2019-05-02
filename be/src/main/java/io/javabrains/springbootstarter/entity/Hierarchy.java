@@ -26,29 +26,29 @@ public class Hierarchy {
 	private Long hierarchyId;
 
 	@Column(name="hir_cd")
-	private String Code;
+	private String code;
 	
 	@Column(name="hir_desc")
-	private String Desc;
+	private String desc;
 	
 	@OneToMany(mappedBy="hierarchy",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonManagedReference
 	private List<Category> categories;
 
 	public String getCode() {
-		return Code;
+		return code;
 	}
 
 	public void setCode(String hierarchyCode) {
-		this.Code = hierarchyCode;
+		this.code = hierarchyCode;
 	}
 
 	public String getDesc() {
-		return Desc;
+		return desc;
 	}
 
 	public void setDesc(String hierarchyDesc) {
-		this.Desc = hierarchyDesc;
+		this.desc = hierarchyDesc;
 	}
 	
 	public List<Category> getCategories() {

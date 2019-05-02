@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import io.javabrains.springbootstarter.domain.Brand;
+import io.javabrains.springbootstarter.dto.SidebarFacetDTO;
 import io.javabrains.springbootstarter.services.IBrandService;
 
 @RestController
@@ -22,7 +23,7 @@ public class BrandController {
     }
     
     @GetMapping("/Brand/{lcl}/{curr}")
-    public List<Brand> getBrands(@PathVariable String lcl, @PathVariable String curr) {
+    public List<SidebarFacetDTO> getBrands(@PathVariable String lcl, @PathVariable String curr) {
     	return brandService.getBrands(lcl, curr);
     }
 
@@ -32,7 +33,7 @@ public class BrandController {
     }
     
     @GetMapping("/Brand/{lcl}/{curr}/category/{categoryDesc}")
-    public List<Brand> getBrand(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc) {
-    	return brandService.getBrandsForCategory(lcl, curr, categoryDesc);
+    public List<SidebarFacetDTO> getBrand(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc) {
+    	return brandService.getBrandsForCategory("PRM01", lcl, curr, categoryDesc);
     }
 }
