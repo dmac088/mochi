@@ -2,6 +2,7 @@ package io.javabrains.springbootstarter.services;
 
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import io.javabrains.springbootstarter.domain.Product;
 import io.javabrains.springbootstarter.dto.ProductsDTO;
@@ -28,9 +29,11 @@ public interface IProductService {
 	 
 	 List<Product> getPreviewProductsForCategory(String lcl, String currency, Long categoryId);
 	 
-	 public static void recurseCategories(List<Category> pcl, Category pc) {
+	 public static List<Category> recurseCategories(List<Category> pcl, Category pc) {
+		if(pc == null) { return pcl; }
 	    pcl.add(pc); 
-	    pc.getChildren().forEach(child -> recurseCategories(pcl, child));
+	    if(pc.getChildren().size() == 0) { return pcl; }
+	    return pc.getChildren().stream().map(child -> recurseCategories(pcl, child)).collect(Collectors.toList()).get(0);
 	 }
 	 
 }
