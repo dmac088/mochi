@@ -29,7 +29,6 @@ public class BrandService implements IBrandService {
     			.collect(Collectors.toList());
 	}	
 
-
 	@Override
 	@Transactional
 	@Cacheable
@@ -38,21 +37,18 @@ public class BrandService implements IBrandService {
      	return	createBrand(pb, lcl, curr);
 	}
 
-
 	@Override
 	@Transactional
 	@Cacheable
 	public List<Brand> getBrandsForCategory(String lcl, String curr, String categoryDesc) {
 		List<io.javabrains.springbootstarter.entity.Brand> lpb = brandRepository.findByProductsCategoriesAttributesLclCdAndProductsCategoriesAttributesCategoryDesc(lcl, categoryDesc);
      	return lpb.stream().map(pb -> createBrand(pb, lcl, curr))
-    			.sorted((pb1, pb2) -> pb2.getProductCount().compareTo(pb1.getProductCount()))
+    			//.sorted((pb1, pb2) -> pb2.getProductCount().compareTo(pb1.getProductCount()))
     			.collect(Collectors.toList());
 	}
     
-    
-    
  	@Cacheable
-    private Brand createBrand(final io.javabrains.springbootstarter.entity.Brand b, String categoryCode, final String lcl) {
+    private Brand createBrand(final io.javabrains.springbootstarter.entity.Brand b, final String lcl, final String currency) {
     	final Brand bDto = new Brand();
     	bDto.setBrandId(b.getBrandId());
     	bDto.setBrandCode(b.getBrandCode());
