@@ -34,14 +34,8 @@ public interface IProductService {
 	 public static List<Category> recurseCategories(List<Category> pcl, Category pc) {
 		if(pc == null) { return pcl; }
 	    pcl.add(pc);
-	    if(!pc.getChildren().stream().findFirst().isPresent()) { return pcl; }
+	    if(pc.getChildren().isEmpty()) { return pcl; }
 	    return recurseCategories(pcl, pc.getChildren().stream().findFirst().get());
-	 }
-	 
-	 public static Stream<Category> collectionToStream(Collection<Category> collection) {
-		    return Optional.ofNullable(collection)
-		      .map(Collection::stream)
-		      .orElseGet(Stream::empty);
 	 }
 	 
 }
