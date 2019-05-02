@@ -32,7 +32,7 @@ public class BrandService implements IBrandService {
 	@Cacheable
 	public List<Brand> getBrands(final String lcl, String currency) {
     	List<io.javabrains.springbootstarter.entity.Brand> lpb = brandRepository.findAll();
-    	return lpb.stream().map(pb -> createBrand(pb, lcl, currency))
+    	return lpb.stream().map(pb -> createBrandDO(pb, lcl, currency))
     			.sorted((pb1, pb2) -> pb2.getProductCount().compareTo(pb1.getProductCount()))
     			.collect(Collectors.toList());
 	}	
@@ -42,7 +42,7 @@ public class BrandService implements IBrandService {
 	@Cacheable
 	public Brand getBrand(String lcl, String curr, Long brandId) {
     	io.javabrains.springbootstarter.entity.Brand pb = brandRepository.findByBrandId(brandId);
-     	return	createBrand(pb, lcl, curr);
+     	return	createBrandDO(pb, lcl, curr);
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class BrandService implements IBrandService {
 	public List<Brand> getBrandsForCategory(String lcl, String curr, String categoryDesc) {
 		List<io.javabrains.springbootstarter.entity.Brand> lpb = brandRepository.findByProductsCategoriesAttributesLclCdAndProductsCategoriesAttributesCategoryDesc(lcl, categoryDesc);
 		io.javabrains.springbootstarter.entity.CategoryAttribute ca = categoryAttributeRepository.findByLclCdAndCategoryDesc(lcl, categoryDesc);
-		List<Brand> lb = lpb.stream().map(pb -> createBrand(pb, lcl, curr)).collect(Collectors.toList());
+		List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, lcl, curr)).collect(Collectors.toList());
 		lb.stream().forEach(bDto -> {
 			bDto.setProductCount(productRepository.countByCategoriesCategoryCodeAndBrandBrandCode(ca.getCategory().getCategoryCode(), bDto.getBrandCode()));
 		});
@@ -59,7 +59,7 @@ public class BrandService implements IBrandService {
 	}
     
  	@Cacheable
-    private Brand createBrand(final io.javabrains.springbootstarter.entity.Brand b, final String lcl, final String currency) {
+    private Brand createBrandDO(final io.javabrains.springbootstarter.entity.Brand b, final String lcl, final String currency) {
     	final Brand bDto = new Brand();
     	bDto.setBrandId(b.getBrandId());
     	bDto.setBrandCode(b.getBrandCode());
