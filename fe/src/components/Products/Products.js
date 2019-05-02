@@ -105,7 +105,7 @@ class Products extends Component {
     callback(locale, currency, category, term, price+1, page, size, sort, selectedFacets)
     .then((responseJSON) => {
       const facets = (responseJSON.facets) ? responseJSON.facets.filter(o => o.level !== 0) : null;
-      const newstate = {
+      const newState = {
         "locale":                 locale,
         "currency":               currency,
         "category":               category,
@@ -126,6 +126,10 @@ class Products extends Component {
       return newState;
      })
      .then((newState) => {
+
+
+
+
        this.setState({
          ...newState
        });
@@ -137,7 +141,7 @@ class Products extends Component {
         });
     })
     .catch(()=>{
-        console.log('failed!');
+        console.log('failed reload of product data!');
     });
   }
 
