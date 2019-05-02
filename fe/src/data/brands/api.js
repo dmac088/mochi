@@ -6,34 +6,32 @@ const endPoints = {
 };
 
 export const get = (locale, currency) => 	fetchApi(
-																				 endPoints.get,
-																				 payload,
-																				 {},
-																				 'GET',
-																				 {
-
-																				 }
-																			 );
+																						 endPoints.get,
+																						 payload,
+																						 {},
+																						 'GET',
+																						 {}
+																					);
 
 export const findById = (locale, currency, brandId) => fetchApi(
-																				endPoints.get +
-																				locale +
-																				'/' + currency +
-																				'/id/' + productId,
-																				{},
-																				{},
-																				'GET',
-																				{}
-																				);
+																													endPoints.get +
+																													locale +
+																													'/' + currency +
+																													'/id/' + productId,
+																													{},
+																													{},
+																													'GET',
+																													{}
+																											 );
 
 
 export const findByCategory = (locale, currency, category) => fetchApi(
-																				endPoints.get +
-																				locale +
-																				'/' + currency +
-																				'/category/' + category,
-																				{},
-																				{},
-																				'GET',
-																				{}
-																			);
+																																endPoints.get +
+																																locale +
+																																'/' + currency +
+																																'/category/' + category,
+																																{},
+																																{},
+																																'GET',
+																																{}
+																															);
