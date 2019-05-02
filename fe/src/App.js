@@ -294,7 +294,7 @@ class App extends Component {
           <Route path={"/:locale/:currency"} exact={true}                                             render={()   => this.renderLayout(this.renderLanding)}        />
           <Route path={"/:locale/:currency/(category|search)/:term/product/:productId"}               exact={true}  render={()   => this.renderLayoutBC(this.renderProduct)}      />
           <Route path={"/:locale/:currency/product/:productId"}                                       exact={true}  render={()   => this.renderLayoutBC(this.renderProduct)}      />
-          <Route path={"/:locale/:currency/(category|search)/:term/brand/:brand"}                     render={/*()   => this.renderLayoutBC(this.renderProducts)*/}     />
+          <Route path={"/:locale/:currency/(category|search)/:term/brand/:brand"}                     render={()   => this.renderLayoutBC(this.renderProducts)}     />
           <Route path={"/:locale/:currency/(category|search)/:term"}                                  render={()   => this.renderLayoutBC(this.renderProducts)}     />
           <Route path={"/:locale/:currency/(search)"}                                                 render={()   => this.renderLayoutBC(this.renderProducts)}     />
           <Route path={"/:locale/:currency/Checkout"} exact={true}                                    render={()   => this.renderLayoutBC(this.renderCheckout)}     />

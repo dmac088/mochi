@@ -35,8 +35,6 @@ public class Category {
 	
 	private Long maxMarkDownPrice;
 
-	private Set<Brand> categoryBrands;
-
 	private List<Category> children;
 	
 	public Long getCategoryId() {
@@ -157,14 +155,6 @@ public class Category {
 
 	public void setChildren(List<Category> children) {
 		this.children = children;
-	}
-	
-	public Set<Brand> getCategoryBrands() {
-		return categoryBrands;
-	}
-
-	public void setCategoryBrands(Set<Brand> set) {
-		this.categoryBrands = set;
 	}
 
 	@Override
