@@ -79,6 +79,7 @@ class Products extends Component {
       const price = (isDifferent) ? maxPrice : selectedPrice;
       this.update(locale, currency, pathname, term, brand, Object.assign(params, qs.parse(search)), price, maxPrice, isMounting, [], this.getProducts);
     }
+    
     if (type === "search") {
       const price = this.state.selectedPrice;
       const maxPrice = Number(this.getMaxPrice((this.filterCategories(categoryList, term)[0]), brand));
