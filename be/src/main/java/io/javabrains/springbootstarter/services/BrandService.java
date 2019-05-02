@@ -1,7 +1,6 @@
 package io.javabrains.springbootstarter.services;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -9,12 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-
 import io.javabrains.springbootstarter.domain.Brand;
-import io.javabrains.springbootstarter.domain.Category;
 import io.javabrains.springbootstarter.entity.BrandRepository;
-import io.javabrains.springbootstarter.entity.CategoryRepository;
-import io.javabrains.springbootstarter.entity.ProductRepository;
 
 @Service
 @Transactional
@@ -39,8 +34,8 @@ public class BrandService implements IBrandService {
 	@Transactional
 	@Cacheable
 	public Brand getBrand(String lcl, String curr, Long brandId) {
-		// TODO Auto-generated method stub
-		return null;
+    	io.javabrains.springbootstarter.entity.Brand pb = brandRepository.findByBrandId(brandId);
+     	return	createBrand(pb, lcl, curr);
 	}
 
 
@@ -48,8 +43,10 @@ public class BrandService implements IBrandService {
 	@Transactional
 	@Cacheable
 	public List<Brand> getBrandsForCategory(String lcl, String curr, String categoryDesc) {
-		// TODO Auto-generated method stub
-		return null;
+		List<io.javabrains.springbootstarter.entity.Brand> lpb = brandRepository.findByProductsCategoriesAttributesLclCdAndProductsCategoriesAttributesCategoryDesc(lcl, categoryDesc);
+     	return lpb.stream().map(pb -> createBrand(pb, lcl, curr))
+    			.sorted((pb1, pb2) -> pb2.getProductCount().compareTo(pb1.getProductCount()))
+    			.collect(Collectors.toList());
 	}
     
     
