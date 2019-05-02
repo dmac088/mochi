@@ -185,7 +185,13 @@ public class ProductService implements IProductService {
      	recurseCategories(pcl, pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
      	List<Long> brandIds = brandFacets.stream().map(b -> {return b.getId();}).collect(Collectors.toList());
-  		Page<io.javabrains.springbootstarter.entity.Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCdAndBrandBrandAttributesLclCdAndPricesPriceValueBetweenAndPricesTypeDescAndPricesCurrencyCodeAndPricesStartDateLessThanAndPricesEndDateGreaterThanAndBrandBrandIdIn(categoryIds, lcl, lcl, new Double(0), price, "markdown", currency, new Date(), new Date(),PageRequest.of(page, size, this.sortByParam(sortBy)), brandIds);
+     	Page<io.javabrains.springbootstarter.entity.Product> ppa;
+     	if(brandIds.size() > 0) {
+     		ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCdAndBrandBrandAttributesLclCdAndPricesPriceValueBetweenAndPricesTypeDescAndPricesCurrencyCodeAndPricesStartDateLessThanAndPricesEndDateGreaterThanAndBrandBrandIdIn(categoryIds, lcl, lcl, new Double(0), price, "markdown", currency, new Date(), new Date(),PageRequest.of(page, size, this.sortByParam(sortBy)), brandIds);
+     	} else {
+     		ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCdAndBrandBrandAttributesLclCdAndPricesPriceValueBetweenAndPricesTypeDescAndPricesCurrencyCodeAndPricesStartDateLessThanAndPricesEndDateGreaterThan(categoryIds, lcl, lcl, new Double(0), price, "markdown", currency, new Date(), new Date(),PageRequest.of(page, size, this.sortByParam(sortBy)));
+     	}
+  		 
   		Page<Product> pp = ppa.map(pa -> this.convertToProductDO(pa, lcl, currency));
   		ProductsDTO rc = new ProductsDTO();
 		rc.setProducts(pp);
