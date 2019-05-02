@@ -54,7 +54,7 @@ public class BrandService implements IBrandService {
 		io.javabrains.springbootstarter.entity.CategoryAttribute ca = categoryAttributeRepository.findByLclCdAndCategoryDesc(lcl, categoryDesc);
 		List<Category> cl = new ArrayList<Category>();
 		IProductService.recurseCategories(cl, ca.getCategory());
-		List<io.javabrains.springbootstarter.entity.Brand> lpb = brandRepository.findByProductsCategoriesCategoryIdIn(cl.stream().map(c -> c.getCategoryId()).collect(Collectors.toList()));
+		List<io.javabrains.springbootstarter.entity.Brand> lpb = brandRepository.findDistinctByProductsCategoriesCategoryIdIn(cl.stream().map(c -> c.getCategoryId()).collect(Collectors.toList()));
 		List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, lcl, curr)).collect(Collectors.toList());
 		lb.stream().forEach(bDto -> {
 			bDto.setProductCount(productRepository.countByCategoriesCategoryCodeAndBrandBrandCode(ca.getCategory().getCategoryCode(), bDto.getBrandCode()));
