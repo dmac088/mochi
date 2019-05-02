@@ -17,6 +17,7 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 	
 	Product findByProductId(Long id);
 
+	
 	@Query(
 			value = "WITH RECURSIVE MyCTE AS ( SELECT cat_id, cat_cd FROM mochi.category "
 					+ "WHERE cat_cd = :categoryCode UNION ALL "

@@ -10,6 +10,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import io.javabrains.springbootstarter.domain.Brand;
 import io.javabrains.springbootstarter.entity.BrandRepository;
+import io.javabrains.springbootstarter.entity.CategoryAttributeRepository;
+import io.javabrains.springbootstarter.entity.ProductRepository;
 
 @Service
 @Transactional
@@ -18,6 +20,12 @@ public class BrandService implements IBrandService {
     
     @Autowired
     private BrandRepository brandRepository;
+    
+    @Autowired
+    private ProductRepository productRepository;
+    
+    @Autowired
+    private CategoryAttributeRepository categoryAttributeRepository;
     
     @Override
 	@Transactional
@@ -42,9 +50,12 @@ public class BrandService implements IBrandService {
 	@Cacheable
 	public List<Brand> getBrandsForCategory(String lcl, String curr, String categoryDesc) {
 		List<io.javabrains.springbootstarter.entity.Brand> lpb = brandRepository.findByProductsCategoriesAttributesLclCdAndProductsCategoriesAttributesCategoryDesc(lcl, categoryDesc);
-     	return lpb.stream().map(pb -> createBrand(pb, lcl, curr))
-    			//.sorted((pb1, pb2) -> pb2.getProductCount().compareTo(pb1.getProductCount()))
-    			.collect(Collectors.toList());
+		io.javabrains.springbootstarter.entity.CategoryAttribute ca = categoryAttributeRepository.findByLclCdAndCategoryDesc(lcl, categoryDesc);
+		List<Brand> lb = lpb.stream().map(pb -> createBrand(pb, lcl, curr)).collect(Collectors.toList());
+		lb.stream().forEach(bDto -> {
+			bDto.setProductCount(productRepository.countByCategoriesCategoryCodeAndBrandBrandCode(ca.getCategory().getCategoryCode(), bDto.getBrandCode()));
+		});
+     	return lb;
 	}
     
  	@Cacheable
