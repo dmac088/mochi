@@ -1408,12 +1408,12 @@ COPY category_attr_lcl (cat_lcl_id, cat_id, cat_desc, cat_img_pth, lcl_cd) FROM 
 99	42	其他品牌	\N	zh-HK
 100	43	Best Sellers	\N	en-GB
 101	43	最暢銷	\N	zh-HK
-16	5	Dark Green 	\N	en-GB
-18	6	Red and Orange 	\N	en-GB
-22	8	Starchy 	\N	en-GB
-24	9	Other 	\N	en-GB
-78	36	Red 	\N	en-GB
-80	37	Orange 	\N	en-GB
+16	5	Dark Green	\N	en-GB
+18	6	Red and Orange	\N	en-GB
+22	8	Starchy	\N	en-GB
+24	9	Other	\N	en-GB
+78	36	Red	\N	en-GB
+80	37	Orange	\N	en-GB
 \.
 
 
