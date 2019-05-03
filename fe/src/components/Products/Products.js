@@ -78,7 +78,7 @@ class Products extends Component {
                             && brand === this.state.term));
 
       const price = (isDifferent) ? maxPrice : selectedPrice;
-      this.update(locale, currency, pathname, term, brand, Object.assign(params, qs.parse(search)), price, maxPrice, isMounting, [], this.getProducts);
+      this.update(locale, currency, pathname, term, brand, Object.assign(params, qs.parse(search)), price, maxPrice, isMounting, selectedFacets, this.getProducts);
     }
 
     if (type === "search") {
@@ -91,6 +91,9 @@ class Products extends Component {
 
   update = (locale, currency, pathname, category, term, params, price, maxPrice, isMounting = 0, selectedFacets = [], callback) => {
     if(!params) {return;}
+    console.log(this.state.selectedFacets);
+    console.log(this.state.syncFacets);
+    console.log(_.isEqual(selectedFacets, this.state.syncFacets));
     const { page, size, sort } = params;
     if(   locale      === this.state.locale
       &&  currency    === this.state.currency
@@ -142,18 +145,20 @@ class Products extends Component {
        this.setState({
          ...newState
        });
-        // this.props.history.push({
-        //   "pathname": pathname,
-        //   "search": qs.stringify(params),
-        // });
-    })
-    .catch(()=>{
-        console.log('failed reload of product data!');
-    });
+     })
+     .then(() => {
+        this.props.history.push({
+          "pathname": pathname,
+          "search": qs.stringify(params),
+        });
+     })
+     .catch(()=>{
+       console.log('failed reload of product data!');
+     });
   }
 
   getProducts = (locale, currency, category, brand, maxPrice, page, size, sort, facets) =>
-    productApi.findByCategory(locale, currency, category, brand, maxPrice, page, size, sort)
+    productApi.findByCategory(locale, currency, category, brand, maxPrice, page, size, sort, facets)
     .then((response) => {
         return response.text();
     })
@@ -229,8 +234,6 @@ class Products extends Component {
 
         this.setState({
           "selectedFacets": newSelectedFacets,
-        }, () => {
-          console.log("removing facet");
         });
         return;
     }
@@ -241,8 +244,6 @@ class Products extends Component {
 
     this.setState({
       "selectedFacets": selectedSet,
-    }, () => {
-      console.log("adding facet");
     });
   }
 
