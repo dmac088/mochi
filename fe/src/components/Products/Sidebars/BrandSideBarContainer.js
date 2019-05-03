@@ -1,20 +1,6 @@
 import React from 'react';
 import { withRouter } from "react-router-dom";
-import { changeBrand, createRouteProps } from '../../../services/helpers/RouteHelper';
-
-  const renderBrandsForCategory = (selectedBrands, routeProps) => {
-    return null;
-    // return category.categoryBrands.map(brand => {
-    //   const isActive = (selectedBrand === brand.brandDesc)
-    //   return(
-    //     <li key={brand.brandId}>
-    //       <a className={(isActive) ? "active" : ""} onClick={(e) => changeBrand(e, routeProps)} id={brand.brandDesc} href="#">
-    //         {brand.brandDesc} ({brand.productCount})
-    //       </a>
-    //     </li>
-    //   )
-    // })
-  }
+import { createRouteProps } from '../../../services/helpers/RouteHelper';
 
   const renderFacets = (facets, selectedFacets, routeProps, props) => {
     return facets.map(facet => {
