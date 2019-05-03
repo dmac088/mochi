@@ -1,11 +1,6 @@
 package io.javabrains.springbootstarter.services;
 
-
-import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
-
 import io.javabrains.springbootstarter.domain.Product;
 import io.javabrains.springbootstarter.dto.SearchDTO;
 import io.javabrains.springbootstarter.dto.SidebarFacetDTO;
@@ -31,11 +26,14 @@ public interface IProductService {
 	 
 	 List<Product> getPreviewProductsForCategory(String lcl, String currency, Long categoryId);
 	 
-	 public static List<Category> recurseCategories(List<Category> children, Category parent) {
-		children.add(parent);
-		if(!parent.getChildren().stream().findFirst().isPresent()) { return children; } 
-		children.addAll(parent.getChildren());
-		return recurseCategories(children, parent.getChildren().stream().findFirst().get());
+	 public static List<Category> recurseCategories(List<Category> list, Category category) {
+		list.add(category);
+		if(category.getChildren().isEmpty()) { return list; }
+		category.getChildren().stream().forEach(c -> {
+			list.add(c);
+			recurseCategories(list, c); 
+		});
+		return list; 
 	}
 	 
 }
