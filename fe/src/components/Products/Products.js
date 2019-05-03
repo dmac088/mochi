@@ -127,17 +127,18 @@ class Products extends Component {
       return newState;
      })
      .then((newState) => {
-       console.log(newState.brandFacets);
-       brandApi.findByCategory(newState.locale, newState.currency, newState.category)
+       return brandApi.findByCategory(newState.locale, newState.currency, newState.category)
        .then((response) => {
          return response.text();
        })
-       .then((responseJSON) => {
-         console.log(responseJSON);
+       .then((responseText) => {
+         newState["facets"] = [...JSON.parse(responseText)];
+         return newState;
        });
        return newState;
      })
      .then((newState) => {
+       console.log(newState);
        this.setState({
          ...newState
        });

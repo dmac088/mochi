@@ -36,15 +36,15 @@ import { changeBrand, createRouteProps } from '../../../services/helpers/RouteHe
     const routeProps = createRouteProps(history, match, location);
     const isSearch = (match.params[0] === "search");
     const isCategory = (match.params[0] === "category");
-    if(isCategory && !category) { return null }
+    //if(isCategory && !category) { return null }
     if(isSearch && !facets) { return null }
+
+    console.log("we made it!");
     return (
         <div className="sidebar mb-35">
           <h3 className="sidebar-title">Filter By Brand</h3>
           <ul className="product-categories">
-            {(isCategory)
-              ? renderBrandsForCategory(selectedFacets, routeProps)
-              : renderFacets(facets, selectedFacets, routeProps, props)}
+             {renderFacets(facets, selectedFacets, routeProps, props)}
           </ul>
         </div>
       );
