@@ -63,8 +63,8 @@ public class BrandService implements IBrandService {
      	return lb.stream().map(b -> createBrandDTO(b)).collect(Collectors.toList());
 	}
     
- 	//@Cacheable
-	//Create a domain object
+	
+ 	@Cacheable
     private Brand createBrandDO(final io.javabrains.springbootstarter.entity.Brand b, final String lcl, final String currency) {
     	final Brand bDO = new Brand();
     	bDO.setBrandId(b.getBrandId());
@@ -89,6 +89,4 @@ public class BrandService implements IBrandService {
 		return bDto;
     }
 
-
-	
 }
