@@ -262,7 +262,6 @@ public class ProductService implements IProductService {
 				.discrete()
 				.orderedBy(FacetSortOrder.COUNT_DESC)
 				.includeZeroCounts(false)
-				.maxFacetCount(5)
 				.createFacetingRequest();
 
 		
@@ -468,6 +467,5 @@ public class ProductService implements IProductService {
     	default: return Sort.by(new Sort.Order(Sort.Direction.ASC, "attributes.ProductDesc"));
     	}
     }
-	
 
 }

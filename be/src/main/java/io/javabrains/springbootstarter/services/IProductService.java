@@ -31,11 +31,11 @@ public interface IProductService {
 	 
 	 List<Product> getPreviewProductsForCategory(String lcl, String currency, Long categoryId);
 	 
-	 public static List<Category> recurseCategories(List<Category> pcl, Category pc) {
-		if(pc == null) { return pcl; }
-	    pcl.add(pc);
-	    if(pc.getChildren().isEmpty()) { return pcl; }
-	    return recurseCategories(pcl, pc.getChildren().stream().findFirst().get());
-	 }
+	 public static List<Category> recurseCategories(List<Category> children, Category parent) {
+		children.add(parent);
+		if(!parent.getChildren().stream().findFirst().isPresent()) { return children; } 
+		children.addAll(parent.getChildren());
+		return recurseCategories(children, parent.getChildren().stream().findFirst().get());
+	}
 	 
 }
