@@ -51,7 +51,7 @@ public class BrandService implements IBrandService {
  
 	@Override
 	@Transactional
-	//@Cacheable
+	@Cacheable
 	public List<SidebarFacetDTO> getBrandsForCategory(String hierarchyCode, String lcl, String curr, String categoryDesc) {
 		io.javabrains.springbootstarter.entity.CategoryAttribute ca = categoryAttributeRepository.findByCategoryHierarchyCodeAndLclCdAndCategoryDesc(hierarchyCode, lcl, categoryDesc);
 		List<Category> cl = IProductService.recurseCategories(new ArrayList<Category>(), ca.getCategory());
