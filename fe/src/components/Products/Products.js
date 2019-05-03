@@ -84,7 +84,7 @@ class Products extends Component {
     if (type === "search") {
       const price = this.state.selectedPrice;
       const maxPrice = Number(this.getMaxPrice((this.filterCategories(categoryList, term)[0]), brand));
-      this.update(locale, currency, pathname, "All", term, Object.assign(params, qs.parse(search)), price, maxPrice, isMounting, selectedFacets, pageService.findAll);
+      this.update(locale, currency, pathname, "ALL", term, Object.assign(params, qs.parse(search)), price, maxPrice, isMounting, selectedFacets, pageService.findAll);
     }
   }
 
@@ -138,7 +138,6 @@ class Products extends Component {
        return newState;
      })
      .then((newState) => {
-       console.log(newState);
        this.setState({
          ...newState
        });
