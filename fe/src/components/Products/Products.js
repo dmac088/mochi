@@ -144,12 +144,6 @@ class Products extends Component {
          ...newState
        });
      })
-     .then(() => {
-        // this.props.history.push({
-        //   "pathname": pathname,
-        //   "search": qs.stringify(params),
-        // });
-     })
      .catch(()=>{
        console.log('failed reload of product data!');
      });
