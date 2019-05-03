@@ -78,18 +78,18 @@ class Products extends Component {
                             && brand === this.state.term));
 
       const price = (isDifferent) ? maxPrice : selectedPrice;
-      this.update(locale, currency, pathname, term, brand, Object.assign(params, qs.parse(search)), price, maxPrice, isMounting, selectedFacets, this.getProducts);
+      this.update(type, locale, currency, pathname, term, brand, Object.assign(params, qs.parse(search)), price, maxPrice, isMounting, selectedFacets, this.getProducts);
     }
 
     if (type === "search") {
       const price = this.state.selectedPrice;
       const maxPrice = Number(this.getMaxPrice((this.filterCategories(categoryList, term)[0]), brand));
-      this.update(locale, currency, pathname, "ALL", term, Object.assign(params, qs.parse(search)), price, maxPrice, isMounting, selectedFacets, pageService.findAll);
+      this.update(type, locale, currency, pathname, "ALL", term, Object.assign(params, qs.parse(search)), price, maxPrice, isMounting, selectedFacets, pageService.findAll);
     }
   }
 
 
-  update = (locale, currency, pathname, category, term, params, price, maxPrice, isMounting = 0, selectedFacets = [], callback) => {
+  update = (type, locale, currency, pathname, category, term, params, price, maxPrice, isMounting = 0, selectedFacets = [], callback) => {
     if(!params) {return;}
     const { page, size, sort } = params;
     if(   locale      === this.state.locale
@@ -132,7 +132,9 @@ class Products extends Component {
          return response.text();
        })
        .then((responseText) => {
-         newState["facets"] = [...this.filterFacets(newState.facets, "CategoryFR"), ...JSON.parse(responseText)];
+         if(type === 'category') {
+            newState["facets"] = [...JSON.parse(responseText)];
+         }
          return newState;
        });
        return newState;
