@@ -186,8 +186,7 @@ public class ProductService implements IProductService {
 		return rc;
 	}
 
-	//@Cacheable
-	@SuppressWarnings("unchecked")
+	@Cacheable
 	public SearchDTO findProduct(String lcl, String currency, String categoryDesc, String searchTerm, int page, int size, String sortBy, List<SidebarFacetDTO> selectedFacets) {		
 		
 		List<SidebarFacetDTO> receivedCategoryFacets = selectedFacets.stream().filter(sf -> {
