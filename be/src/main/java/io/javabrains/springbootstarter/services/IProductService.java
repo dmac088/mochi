@@ -27,6 +27,7 @@ public interface IProductService {
 	 List<Product> getPreviewProductsForCategory(String lcl, String currency, Long categoryId);
 	 
 	 public static List<Category> recurseCategories(List<Category> list, Category category) {
+		if(category == null) { return list; }
 		list.add(category);
 		if(category.getChildren().isEmpty()) { return list; }
 		category.getChildren().stream().forEach(c -> {

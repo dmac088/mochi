@@ -1,5 +1,7 @@
 package io.javabrains.springbootstarter.entity;
 
+import java.util.Optional;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -46,12 +48,12 @@ public class CategoryAttribute {
 		return categoryId;
 	}
 	
-	public Category getCategory() {
-		return category;
+	public Optional<Category> getCategory() {
+		return Optional.ofNullable(category);
 	}
 
-	public void seCategory(Category productCategory) {
-		this.category = productCategory;
+	public void setCategory(Optional<Category> productCategory) {
+		this.category = productCategory.get();
 	}
 
 	public String getCategoryDesc() {

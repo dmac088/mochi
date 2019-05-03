@@ -63,18 +63,6 @@ export const changeCategory = (e, routeProps) => {
   routeProps.history.push(homeRouteString(routeProps.match) + '/category/' + e.currentTarget.id + search);
 }
 
-// export const changeBrand = (e, routeProps) => {
-//   e.preventDefault();
-//   const { search } = location;
-//   const { locale, currency, term } = routeProps.match.params;
-//   const value = e.currentTarget.id;
-//   if(value === 'All') {
-//     routeProps.history.push(homeRouteString(routeProps.match) + '/category/' + term + search);
-//   } else {
-//     routeProps.history.push(homeRouteString(routeProps.match) + '/category/' + term + '/brand/' + value + search);
-//   }
-// }
-
 export const routeSingleProduct = (e, categoryDesc, routeProps) => {
   if(categoryDesc) {
     routePage(e, routeProps, '/category/' + ((!categoryDesc) ? 'ALL' : categoryDesc) + '/product/' + e.currentTarget.id);
