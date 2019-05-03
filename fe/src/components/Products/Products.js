@@ -132,7 +132,7 @@ class Products extends Component {
          return response.text();
        })
        .then((responseText) => {
-         newState["facets"] = [...JSON.parse(responseText)];
+         newState["facets"] = [...this.filterFacets(newState.facets, "CategoryFR"), ...JSON.parse(responseText)];
          return newState;
        });
        return newState;
@@ -143,10 +143,10 @@ class Products extends Component {
        });
      })
      .then(() => {
-        this.props.history.push({
-          "pathname": pathname,
-          "search": qs.stringify(params),
-        });
+        // this.props.history.push({
+        //   "pathname": pathname,
+        //   "search": qs.stringify(params),
+        // });
      })
      .catch(()=>{
        console.log('failed reload of product data!');
