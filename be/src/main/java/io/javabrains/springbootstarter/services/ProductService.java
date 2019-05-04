@@ -116,7 +116,7 @@ public class ProductService implements IProductService {
 	@Override
 	@Cacheable
 	public SearchDTO getProductsForCategory(String lcl, String currency, String categoryDesc, int page, int size, String sortBy) {
-     	Category pc = productCategoryRepository.findByAttributesCategoryDesc(categoryDesc);
+     	Category pc = productCategoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, categoryDesc, "PRM01");
      	List<Category> pcl = IProductService.recurseCategories(new ArrayList<Category>(), pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
   		Page<io.javabrains.springbootstarter.entity.Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCd(categoryIds, lcl, PageRequest.of(page, size, this.sortByParam(sortBy)));
@@ -129,7 +129,7 @@ public class ProductService implements IProductService {
 	@Override
 	@Cacheable
 	public SearchDTO getProductsForCategory(String lcl, String currency, String categoryDesc, Double price, int page, int size, String sortBy) {
-     	Category pc = productCategoryRepository.findByAttributesCategoryDesc(categoryDesc);
+		Category pc = productCategoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, categoryDesc, "PRM01");
      	List<Category> pcl = IProductService.recurseCategories(new ArrayList<Category>(), pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
   		Page<io.javabrains.springbootstarter.entity.Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCdAndPricesPriceValueBetween(categoryIds, lcl, new Double(0), price, PageRequest.of(page, size, this.sortByParam(sortBy)));
@@ -142,7 +142,7 @@ public class ProductService implements IProductService {
 	@Override
 	@Cacheable
 	public SearchDTO getProductsForCategoryAndBrand(String lcl, String currency, String categoryDesc, String brandDesc, int page, int size, String sortBy) {
-     	Category pc = productCategoryRepository.findByAttributesCategoryDesc(categoryDesc);
+		Category pc = productCategoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, categoryDesc, "PRM01");
      	List<Category> pcl = IProductService.recurseCategories(new ArrayList<Category>(), pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
   		Page<io.javabrains.springbootstarter.entity.Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCdAndBrandBrandAttributesBrandDescAndBrandBrandAttributesLclCd(categoryIds, lcl, brandDesc, lcl, PageRequest.of(page, size, this.sortByParam(sortBy)));		
@@ -155,7 +155,7 @@ public class ProductService implements IProductService {
 	@Override
  	@Cacheable
 	public SearchDTO getProductsForCategoryAndPrice(String lcl, String currency, String categoryDesc, Double price, int page, int size, String sortBy) {
-     	Category pc = productCategoryRepository.findByAttributesCategoryDesc(categoryDesc);
+		Category pc = productCategoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, categoryDesc, "PRM01");
      	List<Category> pcl = IProductService.recurseCategories(new ArrayList<Category>(), pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
   		Page<io.javabrains.springbootstarter.entity.Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCdAndPricesPriceValueBetweenAndPricesTypeDescAndPricesCurrencyCodeAndPricesStartDateLessThanAndPricesEndDateGreaterThan(categoryIds, lcl, new Double(0), price, "markdown", currency, new Date(), new Date(),PageRequest.of(page, size, this.sortByParam(sortBy)));
@@ -168,12 +168,21 @@ public class ProductService implements IProductService {
 	
 	@Override
 	@Cacheable
-	public SearchDTO getProductsForCategoryAndBrandAndPrice(String lcl, String currency, String categoryDesc, Double price, int page, int size, String sortBy, List<SidebarFacetDTO> brandFacets) {
-     	Category pc = productCategoryRepository.findByAttributesCategoryDesc(categoryDesc);
-     	List<Category> pcl = IProductService.recurseCategories(new ArrayList<Category>(), pc);
-     	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
-     	List<Long> brandIds = brandFacets.stream().map(b -> {return b.getId();}).collect(Collectors.toList());
+	public SearchDTO getProductsForCategoryAndBrandAndPrice(String lcl, String currency, String categoryDesc, Double price, int page, int size, String sortBy, List<SidebarFacetDTO> selectedFacets) {
+	
+		List<Category> lpc = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals("CategoryFR");}).collect(Collectors.toList())
+										  .stream().map(f-> {return productCategoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, f.getDesc(), "PRM01");}).collect(Collectors.toList());
+		
+		List<Category> lpcf = new ArrayList<Category>();
+		lpc.stream().forEach(pc -> { lpcf.addAll(IProductService.recurseCategories(new ArrayList<Category>(), pc)); });
+
+     	List<Long> categoryIds = lpcf.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
+
+     	List<Long> brandIds =   selectedFacets.stream().filter(f -> {return f.getFacetingName().equals("BrandFR");}).collect(Collectors.toList())
+     										  .stream().map(b -> {return b.getId();}).collect(Collectors.toList());
+     	
      	Page<io.javabrains.springbootstarter.entity.Product> ppa;
+     	
      	if(brandIds.size() > 0) {
      		ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCdAndBrandBrandAttributesLclCdAndPricesPriceValueBetweenAndPricesTypeDescAndPricesCurrencyCodeAndPricesStartDateLessThanAndPricesEndDateGreaterThanAndBrandBrandIdIn(categoryIds, lcl, lcl, new Double(0), price, "markdown", currency, new Date(), new Date(),PageRequest.of(page, size, this.sortByParam(sortBy)), brandIds);
      	} else {

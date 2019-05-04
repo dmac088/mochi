@@ -82,7 +82,7 @@ public class BrandService implements IBrandService {
     private SidebarFacetDTO createBrandDTO(final Brand b) {
     	final SidebarFacetDTO bDto = new SidebarFacetDTO();
     	bDto.setFacetingName("BrandFR");
-    	bDto.setFieldName("brnadDesc");
+    	bDto.setFieldName("brandDesc");
     	bDto.setToken(b.getBrandCode());
     	bDto.setLevel(new Long(0));
     	bDto.setDesc(b.getBrandDesc());

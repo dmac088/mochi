@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import io.javabrains.springbootstarter.domain.Category;
+import io.javabrains.springbootstarter.dto.SidebarFacetDTO;
 import io.javabrains.springbootstarter.services.ICategoryService;
 
 @RestController
@@ -44,5 +45,10 @@ public class CategoryController {
     @GetMapping("/Category/{lcl}/{curr}/desc/{categoryDesc}")
     public Category getCategory(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc) {
     	return categoryService.getCategory(lcl, curr, categoryDesc);
+    }
+    
+    @GetMapping("/Category/{lcl}/{curr}/desc/{categoryDesc}/children")
+    public List<SidebarFacetDTO> getCategoryChildren(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc) {
+    	return categoryService.getCategoryChildren(lcl, curr, categoryDesc);
     }
 }
