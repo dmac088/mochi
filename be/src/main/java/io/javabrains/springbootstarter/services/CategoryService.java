@@ -85,22 +85,25 @@ public class CategoryService implements ICategoryService {
 	@Cacheable
 	public List<SidebarFacetDTO> getCategoryChildren(String hierarchyCode, String lcl, String currency, String categoryDesc, List<SidebarFacetDTO> brandFacets) {
     	
+    	CategoryAttribute ca = categoryAttributeRepository.findByCategoryHierarchyCodeAndLclCdAndCategoryDesc(hierarchyCode, lcl, categoryDesc);
+    	
     	List<Long> brandIds = brandFacets.stream().map(b -> { return b.getId(); }).collect(Collectors.toList());
     	
 		List<io.javabrains.springbootstarter.entity.Category> lc;
 		
-		if(brandIds.size() > 0) {
-			lc = categoryRepository.findDistinctByHierarchyCodeAndProductsBrandBrandIdIn(hierarchyCode, brandIds);
-		} else {
-			CategoryAttribute ca = categoryAttributeRepository.findByCategoryHierarchyCodeAndLclCdAndCategoryDesc(hierarchyCode, lcl, categoryDesc);
-			lc = categoryRepository.findByParentCategoryId(ca.getCategoryId());
-		}
-
+		lc = (brandIds.size() > 0) 
+		? categoryRepository.findDistinctByHierarchyCodeAndParentCategoryIdAndProductsBrandBrandIdIn(hierarchyCode, ca.getCategoryId(), brandIds)
+		: categoryRepository.findByParentCategoryId(ca.getCategoryId());
+		
 		List<Category> lcDO = lc.stream().map(c -> createCategory(c, lcl, currency)).collect(Collectors.toList());
 		
-//		lcDO.stream().forEach(cDO -> {
-//			cDO.setProductCount(productRepository.countByCategoriesCategoryCodeAndBrandBrandIdIn(cDO.getCategoryCode(), brandIds));
-//		});
+		lcDO.stream().forEach(cDO -> {
+			final Long count = 
+			(brandIds.size() > 0)		
+			? productRepository.countByCategoriesCategoryCodeAndBrandBrandIdIn(cDO.getCategoryCode(), brandIds)
+			: productRepository.countByCategoriesCategoryCode(cDO.getCategoryCode());		
+			cDO.setProductCount(count);
+		});	
 		
      	return lcDO.stream().map(c -> createCategoryDTO(c)).collect(Collectors.toList());
 	}
