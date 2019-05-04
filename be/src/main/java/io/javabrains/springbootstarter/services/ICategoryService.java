@@ -18,6 +18,7 @@ public interface ICategoryService {
 	 
 	Category getCategory(String lcl, String currency, String categoryDesc);
 
-	List<SidebarFacetDTO> getCategoryChildren(String lcl, String currency, String categoryDesc);
+	List<SidebarFacetDTO> getCategoryChildren(String lcl, String currency, String categoryDesc,
+			List<SidebarFacetDTO> brandFacets);
 
 }

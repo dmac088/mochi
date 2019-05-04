@@ -15,26 +15,26 @@ export const findAll = (locale, currency) => 	fetchApi(
 																						 );
 
 export const findAllForLevel = (locale, currency, level) => 	fetchApi(
-																					 		endPoints.get +
-																						  locale + '/' +
-		 																				  currency + '/level/' +
-																							level,
-																					 		{},
-																					 		{},
-																					 		'GET',
-																					 		{}
-																					 	);
+																						 		endPoints.get +
+																							  locale + '/' +
+			 																				  currency + '/level/' +
+																								level,
+																						 		{},
+																						 		{},
+																						 		'GET',
+																						 		{}
+																						 	);
 
-export const findAllChildren = (locale, currency, categoryDesc) => 	fetchApi(
-																							endPoints.get +
-																							locale + '/' +
-																							currency + '/desc/' +
-																							categoryDesc + '/children',
-																							{},
-																							{},
-																							'GET',
-																							{}
-																						);
+export const findAllChildren = (locale, currency, categoryDesc, selectedBrands = []) => 	fetchApi(
+																								endPoints.get +
+																								locale + '/' +
+																								currency + '/desc/' +
+																								categoryDesc + '/children',
+																								selectedBrands,
+																								{},
+																								'POST',
+																								{"Content-Type": "application/json"}
+																							);
 
 export const findAllPreview = (locale, currency) => 	fetchApi(
 																							endPoints.get +
@@ -47,11 +47,11 @@ export const findAllPreview = (locale, currency) => 	fetchApi(
 																						);
 
 export const findByDesc = (locale, currency, desc) => 	fetchApi(
-																					endPoints.get + '/' +
- 																				 	currency +
-																					'/desc/' + desc,
-																					{},
-																					{},
-																					'GET',
-																					{}
-																				);
+																							endPoints.get + '/' +
+		 																				 	currency +
+																							'/desc/' + desc,
+																							{},
+																							{},
+																							'GET',
+																							{}
+																						);
