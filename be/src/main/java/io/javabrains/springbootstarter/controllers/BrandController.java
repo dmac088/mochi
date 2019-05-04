@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import io.javabrains.springbootstarter.domain.Brand;
@@ -32,8 +34,8 @@ public class BrandController {
     	return brandService.getBrand(lcl, curr, brandId);
     }
     
-    @GetMapping("/Brand/{lcl}/{curr}/category/{categoryDesc}")
-    public List<SidebarFacetDTO> getBrand(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc) {
+    @PostMapping("/Brand/{lcl}/{curr}/category/{categoryDesc}")
+    public List<SidebarFacetDTO> getBrands(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody List<SidebarFacetDTO> selectedFacets) {
     	return brandService.getBrandsForCategory("PRM01", lcl, curr, categoryDesc);
     }
 }

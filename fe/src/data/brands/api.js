@@ -25,13 +25,13 @@ export const findById = (locale, currency, brandId) => fetchApi(
 																											 );
 
 
-export const findByCategory = (locale, currency, category) => fetchApi(
+export const findByCategory = (locale, currency, parentCategory, selectedCategories = []) => fetchApi(
 																																endPoints.get +
 																																locale +
 																																'/' + currency +
-																																'/category/' + category,
+																																'/category/' + parentCategory,
+																																selectedCategories,
 																																{},
-																																{},
-																																'GET',
-																																{}
+																																'POST',
+																																{"Content-Type": "application/json"}
 																															);
