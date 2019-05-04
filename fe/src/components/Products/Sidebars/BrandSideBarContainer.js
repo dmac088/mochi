@@ -6,10 +6,13 @@ import { createRouteProps } from '../../../services/helpers/RouteHelper';
     return facets.map(facet => {
       return(
         <li key={facet.id}>
-          <a className={(props.isActive(facet, selectedFacets, facets)) ? "active" : ""} onClick={(e) => {
+          <a  className={(props.isActive(facet, selectedFacets, facets)) ? "active" : ""}
+              onClick={(e) => {
                                 e.preventDefault();
                                 props.applyFacet(e, routeProps);
-                             }} id={facet.token} href="#">
+                              }}
+              id={facet.token}
+              href="#">
             {facet.desc} ({facet.count})
           </a>
         </li>

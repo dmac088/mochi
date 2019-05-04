@@ -3,7 +3,6 @@ package io.javabrains.springbootstarter.services;
 import java.util.List;
 //import java.util.Set;
 import java.util.stream.Collectors;
-
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -11,6 +10,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import io.javabrains.springbootstarter.domain.Brand;
 import io.javabrains.springbootstarter.domain.Category;
+import io.javabrains.springbootstarter.dto.SidebarFacetDTO;
 import io.javabrains.springbootstarter.entity.CategoryRepository;
 import io.javabrains.springbootstarter.entity.ProductRepository;
 
@@ -50,7 +50,7 @@ public class CategoryService implements ICategoryService {
   	@Transactional
   	@Cacheable
   	public List<Category> getCategoriesForLevel(final String lcl, String currency, final Long level) {
-     	List<io.javabrains.springbootstarter.entity.Category> lpc = categoryRepository.findByCategoryLevelAndCategoryTypeCode(level, "PRD01");
+     	List<io.javabrains.springbootstarter.entity.Category> lpc = categoryRepository.findByCategoryLevelAndCategoryTypeCodeAndHierarchyCode(level, "PRD01", "PRM01");
      	return lpc.stream().map(pc -> createCategory(pc, lcl, currency))
     			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
@@ -68,8 +68,18 @@ public class CategoryService implements ICategoryService {
     @Override
     @Cacheable
 	public Category getCategory(String lcl, String currency, String categoryDesc) {
-    	io.javabrains.springbootstarter.entity.Category pc = categoryRepository.findByAttributesCategoryDesc(categoryDesc);
+    	io.javabrains.springbootstarter.entity.Category pc = categoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, categoryDesc, "PRM01");
      	return	createCategory(pc, lcl, currency);
+	}
+    
+    @Override
+    @Cacheable
+	public List<SidebarFacetDTO> getCategoryChildren(String lcl, String currency, String categoryDesc) {
+    	io.javabrains.springbootstarter.entity.Category pc = categoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, categoryDesc, "PRM01");
+    	List<io.javabrains.springbootstarter.entity.Category> lc = categoryRepository.findByParentCategoryId(pc.getCategoryId());
+    	List<Category> lcdo = lc.stream().map(c -> { return createCategory(c, lcl, currency); }).collect(Collectors.toList());
+    	List<SidebarFacetDTO> lcsf = lcdo.stream().map(c -> { return createCategoryDTO(c); }).collect(Collectors.toList());
+    	return lcsf;
 	}
     
  	@Cacheable
@@ -124,6 +134,19 @@ public class CategoryService implements ICategoryService {
         pcDto.setCategoryType(pc.getCategoryType().getCode());
         pcDto.setLayouts(pc.getLayouts());
         return pcDto;
+    }
+ 	
+ 	 //Create a data transfer object
+    private SidebarFacetDTO createCategoryDTO(final Category c) {
+    	final SidebarFacetDTO cDto = new SidebarFacetDTO();
+    	cDto.setFacetingName("CategoryFR");
+    	cDto.setFieldName("categoryDesc");
+    	cDto.setToken(c.getCategoryCode());
+    	cDto.setLevel(new Long(0));
+    	cDto.setDesc(c.getCategoryDesc());
+    	cDto.setId(c.getCategoryId());
+    	cDto.setCount(c.getProductCount());
+		return cDto;
     }
 	
 }

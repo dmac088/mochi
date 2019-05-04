@@ -10,6 +10,7 @@ import { TagSidebar } from './Sidebars/TagSidebar';
 import { ShopBanner } from './ShopBanner';
 import { ShopHeader } from './ShopHeader';
 import { Pagination } from './Pagination';
+import * as categoryApi from '../../data/categories/api';
 import * as productApi from '../../data/products/api';
 import * as brandApi from '../../data/brands/api';
 import { updateParams } from '../../services/helpers/Helper';
@@ -28,9 +29,8 @@ class Products extends Component {
       "term":     "",
       "products": [],
       "facets": [],
-      "brandFacets": [],
-      "selectedFacets": [],
       "syncFacets": [],
+      "selectedFacets": [],
       "totalPages": 0,
       "totalElements": 0,
       "numberOfElements": 0,
@@ -113,9 +113,8 @@ class Products extends Component {
         "term":                   term,
         "products":               responseJSON.products.content,
         "facets":                 facets,
-        "selectedFacets":         (term !== this.state.term) ? [] : selectedFacets,
         "syncFacets":             selectedFacets,
-        "brandFacets":            responseJSON.brandFacets,
+        "selectedFacets":         (term !== this.state.term) ? [] : selectedFacets,
         "totalPages":             responseJSON.products.totalPages,
         "totalElements":          responseJSON.products.totalElements,
         "numberOfElements":       responseJSON.products.numberOfElements,
@@ -127,7 +126,8 @@ class Products extends Component {
       return newState;
      })
      .then((newState) => {
-       return brandApi.findByCategory(newState.locale, newState.currency, newState.category)
+       //add the category children to the facets array
+       return categoryApi.findAllChildren(newState.locale, newState.currency, newState.category)
        .then((response) => {
          return response.text();
        })
@@ -136,7 +136,22 @@ class Products extends Component {
             newState["facets"] = [...JSON.parse(responseText)];
          }
          return newState;
-       });
+       })
+       .catch(() => {console.log('failed to fetch category children')});
+       return newState;
+     })
+     .then((newState) => {
+       return brandApi.findByCategory(newState.locale, newState.currency, newState.category)
+       .then((response) => {
+         return response.text();
+       })
+       .then((responseText) => {
+         if(type === 'category') {
+            newState["facets"] = [...newState["facets"], ...JSON.parse(responseText)];
+         }
+         return newState;
+       })
+       .catch(() => {console.log('failed to fetch brands')});
        return newState;
      })
      .then((newState) => {
@@ -281,7 +296,7 @@ class Products extends Component {
       const { toggleQuickView, setCurrentProductId, showQVModal, currentProductId, categoryList, changeCategory, changeBrand} = this.props;
       const { products, facets, selectedFacets, totalPages, totalElements, numberOfElements, isGrid, term, category, maxPrice, selectedPrice } = this.state;
       const { page, size } = this.state.params;
-
+      console.log(selectedFacets);
       if(!products) { return null }
       const cat = this.filterCategories(categoryList, category)[0];
 				return(
