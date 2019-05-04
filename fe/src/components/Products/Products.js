@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Product } from './Product';
 import QuickViewProduct from '../QuickView/QuickViewProduct';
+import { SelectionSidebar } from './Sidebars/SelectionSidebar';
 import { CategorySidebar } from './Sidebars/CategorySidebar';
 import { BrandSidebar } from './Sidebars/BrandSidebar';
 import { PriceSidebar } from './Sidebars/PriceSidebar';
@@ -127,7 +128,7 @@ class Products extends Component {
      })
      .then((newState) => {
        //add the category children to the facets array
-       return categoryApi.findAllChildren(newState.locale, newState.currency, newState.category)
+       return categoryApi.findAllChildren(newState.locale, newState.currency, newState.category, newState.selectedFacets.filter(o => o.facetingName === "BrandFR"))
        .then((response) => {
          return response.text();
        })
@@ -306,6 +307,10 @@ class Products extends Component {
                 <div className="row">
                   <div className="col-lg-3 order-2 order-lg-1">
                     <div className="sidebar-area">
+                      <SelectionSidebar
+                        selectedFacets={selectedFacets}
+                        applyFacet={this.applyFacet}
+                      />
                       <CategorySidebar
                         selectedFacets={selectedFacets}
                         category={cat}

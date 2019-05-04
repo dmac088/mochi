@@ -74,7 +74,7 @@ public class CategoryService implements ICategoryService {
     
     @Override
     @Cacheable
-	public List<SidebarFacetDTO> getCategoryChildren(String lcl, String currency, String categoryDesc) {
+	public List<SidebarFacetDTO> getCategoryChildren(String lcl, String currency, String categoryDesc, List<SidebarFacetDTO> brandFacets) {
     	io.javabrains.springbootstarter.entity.Category pc = categoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, categoryDesc, "PRM01");
     	List<io.javabrains.springbootstarter.entity.Category> lc = categoryRepository.findByParentCategoryId(pc.getCategoryId());
     	List<Category> lcdo = lc.stream().map(c -> { return createCategory(c, lcl, currency); }).collect(Collectors.toList());
