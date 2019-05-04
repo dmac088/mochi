@@ -25,8 +25,12 @@ import _ from 'lodash';
   // }
 
   const renderFacets = (facets, selectedFacets, routeProps, props) => {
+    const minLevel = facets.reduce((acc, x) => {
+                    acc.min = Math.min(acc.min, x.level)
+                    return acc }, { min : Infinity}).min;
     return facets.map(facet => {
-      const margin = (facet.level) * 15;
+
+      const margin = (facet.level - minLevel) * 15;
       return(
         <li key={facet.id}>
           <a className={(props.isActive(facet, selectedFacets, facets)) ? "active" : ""}
