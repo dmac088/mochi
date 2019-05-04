@@ -141,7 +141,7 @@ class Products extends Component {
        return newState;
      })
      .then((newState) => {
-       return brandApi.findByCategory(newState.locale, newState.currency, newState.category)
+       return brandApi.findByCategory(newState.locale, newState.currency, newState.category, newState.selectedFacets.filter(o => o.facetingName === "CategoryFR"))
        .then((response) => {
          return response.text();
        })
