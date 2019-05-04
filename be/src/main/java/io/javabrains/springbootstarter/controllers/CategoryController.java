@@ -51,6 +51,6 @@ public class CategoryController {
     
     @PostMapping("/Category/{lcl}/{curr}/desc/{categoryDesc}/children")
     public List<SidebarFacetDTO> getCategoryChildren(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody List<SidebarFacetDTO> brandFacets) {
-    	return categoryService.getCategoryChildren(lcl, curr, categoryDesc, brandFacets);
+    	return categoryService.getCategoryChildren("PRM01", lcl, curr, categoryDesc, brandFacets);
     }
 }

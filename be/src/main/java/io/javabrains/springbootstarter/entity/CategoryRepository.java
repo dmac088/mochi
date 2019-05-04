@@ -14,6 +14,8 @@ public interface CategoryRepository extends CrudRepository<Category, Long> {
 	List<Category> findByCategoryLevelAndCategoryTypeCodeAndHierarchyCode(Long level, String categoryTypeCode, String hierarchyCode);
 	
 	List<Category> findByParentCategoryId(Long categoryId);
+	
+	List<Category> findDistinctByHierarchyCodeAndProductsBrandBrandIdIn(String hieararchyCode, List<Long> brandIds);
 
 	Category findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(String lcl, String categoryDesc, String hierarchyCode);
 }
