@@ -12,6 +12,7 @@ import io.javabrains.springbootstarter.domain.Brand;
 import io.javabrains.springbootstarter.dto.SidebarFacetDTO;
 import io.javabrains.springbootstarter.entity.BrandRepository;
 import io.javabrains.springbootstarter.entity.Category;
+import io.javabrains.springbootstarter.entity.CategoryAttribute;
 import io.javabrains.springbootstarter.entity.CategoryAttributeRepository;
 import io.javabrains.springbootstarter.entity.ProductRepository;
 
@@ -52,12 +53,22 @@ public class BrandService implements IBrandService {
 	@Override
 	@Transactional
 	@Cacheable
-	public List<SidebarFacetDTO> getBrandsForCategory(String hierarchyCode, String lcl, String curr, String categoryDesc) {
-		io.javabrains.springbootstarter.entity.CategoryAttribute ca = categoryAttributeRepository.findByCategoryHierarchyCodeAndLclCdAndCategoryDesc(hierarchyCode, lcl, categoryDesc);
+	public List<SidebarFacetDTO> getBrandsForCategory(String hierarchyCode, String lcl, String curr, String categoryDesc, List<SidebarFacetDTO> categoryFacets) {
+		
+		List<Long> selectedCategoryIds = categoryFacets.stream().map(c -> { return c.getId(); }).collect(Collectors.toList());
+		CategoryAttribute ca = categoryAttributeRepository.findByCategoryHierarchyCodeAndLclCdAndCategoryDesc(hierarchyCode, lcl, categoryDesc);
+		
 		if(ca == null) { return null; }
 		if(!ca.getCategory().isPresent()) { return null; }
-		List<Category> cl = IProductService.recurseCategories(new ArrayList<Category>(), ca.getCategory().get());
-		List<io.javabrains.springbootstarter.entity.Brand> lpb = brandRepository.findDistinctByProductsCategoriesCategoryIdIn(cl.stream().map(c -> c.getCategoryId()).collect(Collectors.toList()));
+		
+		List<Category> allChildCategories = IProductService.recurseCategories(new ArrayList<Category>(), ca.getCategory().get());
+		List<Long> allChildIds = allChildCategories.stream().map(c -> c.getCategoryId()).collect(Collectors.toList());
+		
+		
+		List<Long> categoryIds = (categoryFacets.size() > 0) ? selectedCategoryIds : allChildIds;
+		
+		List<io.javabrains.springbootstarter.entity.Brand> lpb = brandRepository.findDistinctByProductsCategoriesCategoryIdIn(categoryIds);
+
 		List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, lcl, curr)).collect(Collectors.toList());
 		lb.stream().forEach(bDO -> {
 			bDO.setProductCount(productRepository.countByCategoriesCategoryCodeAndBrandBrandCode(ca.getCategory().get().getCategoryCode(), bDO.getBrandCode()));
@@ -78,7 +89,7 @@ public class BrandService implements IBrandService {
     	return bDO;
     }
 
-    //Create a data transfer object
+ 	@Cacheable
     private SidebarFacetDTO createBrandDTO(final Brand b) {
     	final SidebarFacetDTO bDto = new SidebarFacetDTO();
     	bDto.setFacetingName("BrandFR");

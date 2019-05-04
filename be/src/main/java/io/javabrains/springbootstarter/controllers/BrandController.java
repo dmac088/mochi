@@ -35,7 +35,7 @@ public class BrandController {
     }
     
     @PostMapping("/Brand/{lcl}/{curr}/category/{categoryDesc}")
-    public List<SidebarFacetDTO> getBrands(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody List<SidebarFacetDTO> selectedFacets) {
-    	return brandService.getBrandsForCategory("PRM01", lcl, curr, categoryDesc);
+    public List<SidebarFacetDTO> getBrands(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody List<SidebarFacetDTO> categoryFacets) {
+    	return brandService.getBrandsForCategory("PRM01", lcl, curr, categoryDesc, categoryFacets);
     }
 }

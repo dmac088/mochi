@@ -10,7 +10,8 @@ public interface IBrandService {
 	Brand getBrand(String lcl, String curr, Long brandId);
 	
 	List<SidebarFacetDTO> getBrands(String lcl, String curr);
-	
-	List<SidebarFacetDTO> getBrandsForCategory(String lcl, String curr, String hierarchyCode, String categoryDesc);
+
+	List<SidebarFacetDTO> getBrandsForCategory(String hierarchyCode, String lcl, String curr, String categoryDesc,
+			List<SidebarFacetDTO> categoryFacets);
 
 }
