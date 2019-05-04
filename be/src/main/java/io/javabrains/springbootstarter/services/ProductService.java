@@ -170,21 +170,30 @@ public class ProductService implements IProductService {
 	@Cacheable
 	public SearchDTO getProductsForCategoryAndBrandAndPrice(String lcl, String currency, String categoryDesc, Double price, int page, int size, String sortBy, List<SidebarFacetDTO> selectedFacets) {
 	
-		List<Category> lpc = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals("CategoryFR");}).collect(Collectors.toList())
-										  .stream().map(f-> {return productCategoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, f.getDesc(), "PRM01");}).collect(Collectors.toList());
+		//SelectedCategory
+		Category parent = productCategoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, categoryDesc, "PRM01");
+		List<Category> allChildren = IProductService.recurseCategories(new ArrayList<Category>(), parent);
+		List<Long> allChildIds = allChildren.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
+		
+		
+		//Facets
+		List<SidebarFacetDTO> selectedCategories = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals("CategoryFR");}).collect(Collectors.toList());
+		List<Category> lpc = selectedCategories.stream().map(f-> {return productCategoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, f.getDesc(), "PRM01");}).collect(Collectors.toList());
 		
 		List<Category> lpcf = new ArrayList<Category>();
 		lpc.stream().forEach(pc -> { lpcf.addAll(IProductService.recurseCategories(new ArrayList<Category>(), pc)); });
 
-     	List<Long> categoryIds = lpcf.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
+     	List<Long> facetCategoryIds = lpcf.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
 
-     	List<Long> brandIds =   selectedFacets.stream().filter(f -> {return f.getFacetingName().equals("BrandFR");}).collect(Collectors.toList())
-     										  .stream().map(b -> {return b.getId();}).collect(Collectors.toList());
+     	List<SidebarFacetDTO> selectedBrands = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals("BrandFR");}).collect(Collectors.toList());
+     	List<Long> selectedBrandIds = selectedBrands.stream().map(b -> {return b.getId();}).collect(Collectors.toList());
+     	
+     	List<Long> categoryIds = (selectedCategories.size() > 0) ? facetCategoryIds : allChildIds;
      	
      	Page<io.javabrains.springbootstarter.entity.Product> ppa;
      	
-     	if(brandIds.size() > 0) {
-     		ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCdAndBrandBrandAttributesLclCdAndPricesPriceValueBetweenAndPricesTypeDescAndPricesCurrencyCodeAndPricesStartDateLessThanAndPricesEndDateGreaterThanAndBrandBrandIdIn(categoryIds, lcl, lcl, new Double(0), price, "markdown", currency, new Date(), new Date(),PageRequest.of(page, size, this.sortByParam(sortBy)), brandIds);
+     	if(selectedBrands.size() > 0) {
+     		ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCdAndBrandBrandAttributesLclCdAndPricesPriceValueBetweenAndPricesTypeDescAndPricesCurrencyCodeAndPricesStartDateLessThanAndPricesEndDateGreaterThanAndBrandBrandIdIn(categoryIds, lcl, lcl, new Double(0), price, "markdown", currency, new Date(), new Date(),PageRequest.of(page, size, this.sortByParam(sortBy)), selectedBrandIds);
      	} else {
      		ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCdAndBrandBrandAttributesLclCdAndPricesPriceValueBetweenAndPricesTypeDescAndPricesCurrencyCodeAndPricesStartDateLessThanAndPricesEndDateGreaterThan(categoryIds, lcl, lcl, new Double(0), price, "markdown", currency, new Date(), new Date(),PageRequest.of(page, size, this.sortByParam(sortBy)));
      	}
