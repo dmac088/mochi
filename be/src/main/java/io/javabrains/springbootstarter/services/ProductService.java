@@ -203,6 +203,7 @@ public class ProductService implements IProductService {
 		return rc;
 	}
 
+	@Override
 	@Cacheable
 	public SearchDTO findProduct(String lcl, String currency, String categoryDesc, String searchTerm, int page, int size, String sortBy, List<SidebarFacetDTO> selectedFacets) {		
 		
