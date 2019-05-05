@@ -42,8 +42,9 @@ import _ from 'lodash';
   }
 
   export const SelectionSidebar = withRouter(({location, match, history, ...props}) => {
-    const { category, facets, selectedFacets } = props;
+    const { selectedFacets } = props;
     const routeProps = createRouteProps(history, match, location);
+    if(!selectedFacets.length > 0 ) { return null }
     return (
       <div className="sidebar mb-35">
         <h3 className="sidebar-title">SELECTIONS</h3>
