@@ -73,7 +73,12 @@ public class BrandService implements IBrandService {
 		lb.stream().forEach(bDO -> {
 			bDO.setProductCount(productRepository.countByCategoriesCategoryCodeAndBrandBrandCode(ca.getCategory().get().getCategoryCode(), bDO.getBrandCode()));
 		});
-     	return lb.stream().map(b -> createBrandDTO(b)).collect(Collectors.toList());
+		
+		List<SidebarFacetDTO> lsfdto = lb.stream().map(b -> createBrandDTO(b)).collect(Collectors.toList())
+								.stream().sorted((o1, o2) -> o1.getDesc().compareTo(o2.getDesc()))
+								.collect(Collectors.toList());
+		
+     	return lsfdto;
 	}
     
 	
