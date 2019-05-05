@@ -34,7 +34,7 @@ import _ from 'lodash';
                                 props.applyFacet(e, routeProps);
                              }}
              id={facet.token} href="#">
-            {facet.desc} ({facet.count})
+            {facet.desc} ({facet.productCount})
           </a>
         </li>
       );

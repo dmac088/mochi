@@ -13,7 +13,7 @@ import { createRouteProps } from '../../../services/helpers/RouteHelper';
                               }}
               id={facet.token}
               href="#">
-            {facet.desc} ({facet.count})
+            {facet.desc} ({facet.productCount})
           </a>
         </li>
       );
@@ -21,7 +21,7 @@ import { createRouteProps } from '../../../services/helpers/RouteHelper';
   }
 
   export const BrandSidebarContainer = withRouter(({location, match, history, ...props}) => {
-    const { category, facets, isActive, selectedFacets } = props;
+    const { facets, selectedFacets } = props;
     const routeProps = createRouteProps(history, match, location);
     return (
         <div className="sidebar mb-35">

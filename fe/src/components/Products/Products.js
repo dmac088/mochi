@@ -275,14 +275,9 @@ class Products extends Component {
 
   isActive = (facet, selectedFacets, facets) => {
     if(!facet) { return }
-
-    //get a list of parents for the current facet
     const parents = this.getParents(facet, facets, [])
-
     const parentIsSelected =  (parents) ? (parents.filter(parent => { return !(selectedFacets.findIndex(o => o.token === parent.token) === -1) }).length > 0) : false;
-
     return !(selectedFacets.findIndex(o => o.token === facet.token) === -1)
-          //  || (parentIsSelected)
   }
 
   filterFacetsByName = (facets, name) => {
@@ -316,7 +311,6 @@ class Products extends Component {
                       />
                       <CategorySidebar
                         selectedFacets={selectedFacets}
-                        category={cat}
                         facets={this.filterFacetsUnselected(this.filterFacetsByName(facets, "CategoryFR"), selectedFacets)}
                         isActive={this.isActive}
                         applyFacet={this.applyFacet}
@@ -324,7 +318,6 @@ class Products extends Component {
                       <BrandSidebar
                         selectedFacets={selectedFacets}
                         isActive={this.isActive}
-                        category={cat}
                         facets={this.filterFacetsUnselected(this.filterFacetsByName(facets, "BrandFR"), selectedFacets)}
                         applyFacet={this.applyFacet}
                       />
