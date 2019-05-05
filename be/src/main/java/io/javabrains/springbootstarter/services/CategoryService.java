@@ -102,7 +102,11 @@ public class CategoryService implements ICategoryService {
 			cDO.setProductCount(count);
 		});	
 		
-     	return lcDO.stream().map(c -> createCategoryDTO(c)).collect(Collectors.toList());
+		List<SidebarFacetDTO> lsfdto = lcDO.stream().map(c -> createCategoryDTO(c)).collect(Collectors.toList())
+				.stream().sorted((o1, o2) -> o1.getDesc().compareTo(o2.getDesc()))
+				.collect(Collectors.toList());
+		
+     	return lsfdto;
 	}
     
 
