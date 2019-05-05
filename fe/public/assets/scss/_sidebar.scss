@@ -40,14 +40,14 @@
                         display: inline-block;
                         font-family: FontAwesome;
                         font-size: 0;
-                        height: 10px;
-                        line-height: 8px;
+                        height: 15px;
+                        line-height: 14px;
                         margin-right: 10px;
                         position: relative;
                         text-align: center;
                         top: -2px;
                         vertical-align: middle;
-                        width: 10px;
+                        width: 15px;
                     }
 
                     &:hover,
@@ -57,7 +57,47 @@
                         &:before {
                             border-color: $theme-color;
                             color: $theme-color;
-                            font-size: 8px;
+                            font-size: 15px;
+                        }
+                    }
+                }
+            }
+        }
+
+        ul.selected-categories {
+            li {
+                padding-right: 25px;
+                margin-bottom: 7px;
+
+                a {
+                    line-height: 27px;
+                    color: #323232;
+
+                    &:before {
+                        border: 0px solid #e0e0e0;
+                        color: #e0e0e0;
+                        content: '\f00d';
+                        display: inline-block;
+                        font-family: FontAwesome;
+                        font-size: 0;
+                        height: 15px;
+                        line-height: 14px;
+                        margin-right: 10px;
+                        position: relative;
+                        text-align: center;
+                        top: -2px;
+                        vertical-align: middle;
+                        width: 15px;
+                    }
+
+                    &:hover,
+                    &.active {
+                        color: $theme-color;
+
+                        &:before {
+                            border-color: $theme-color;
+                            color: $theme-color;
+                            font-size: 15px;
                         }
                     }
                 }
@@ -278,12 +318,12 @@
     padding: 15px 0;
 
     &:first-child{
-        padding-top:0; 
+        padding-top:0;
     }
 
     &:last-child{
         padding-bottom:0;
-        border-bottom: 0; 
+        border-bottom: 0;
     }
     .image{
         flex-basis: 100px;
@@ -300,7 +340,7 @@
                 border: 2px solid $theme-color;
             }
         }
-        
+
     }
 
     .content{
@@ -309,7 +349,7 @@
             margin-bottom: 0;
             font-weight: 500;
             font-size: 15px;
-            line-height: 20px; 
+            line-height: 20px;
             color: #323232;
 
             span{
@@ -354,7 +394,7 @@
 /*----------  Sidebar search box  ----------*/
 
 .sidebar-search-box{
-    border: 1px solid #e0e0e0; 
+    border: 1px solid #e0e0e0;
     position: relative;
     padding-right: 10px;
     input{

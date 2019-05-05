@@ -48,7 +48,7 @@ import _ from 'lodash';
     return (
       <div className="sidebar mb-35">
         <h3 className="sidebar-title">SELECTIONS</h3>
-        <ul className="product-categories">
+        <ul className="selected-categories">
           {renderFacets(selectedFacets, routeProps, props)}
         </ul>
       </div>
