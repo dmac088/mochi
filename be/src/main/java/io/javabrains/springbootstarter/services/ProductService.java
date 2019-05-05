@@ -2,7 +2,6 @@ package io.javabrains.springbootstarter.services;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
@@ -33,9 +32,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import com.google.common.collect.Lists;
-
 import org.springframework.data.domain.Sort;
 import io.javabrains.springbootstarter.domain.Product;
 import io.javabrains.springbootstarter.dto.SearchDTO;
@@ -203,6 +199,7 @@ public class ProductService implements IProductService {
 		return rc;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	@Cacheable
 	public SearchDTO findProduct(String lcl, String currency, String categoryDesc, String searchTerm, int page, int size, String sortBy, List<SidebarFacetDTO> selectedFacets) {		
@@ -291,7 +288,7 @@ public class ProductService implements IProductService {
 		FacetSelection brandFacetSelection = facetMgr.getFacetGroup("BrandFR");
 		
 		//run the query and get the results
-		List<ProductAttribute> results =  Collections.checkedList(jpaQuery.getResultList(), ProductAttribute.class);
+		List<ProductAttribute> results =  jpaQuery.getResultList();
 	
 		//convert the results to product DTOs and store in a list
 		//List<Product> lp;// = results.stream().map(pa -> this.convertToProductDO(pa.getProduct(), lcl, currency)).collect(Collectors.toList());
@@ -357,7 +354,7 @@ public class ProductService implements IProductService {
 		jpaQuery.setSort(sort);
 		
 		//get the results using jpaQuery object
-		results =  Collections.checkedList(jpaQuery.getResultList(), ProductAttribute.class);
+		results =  jpaQuery.getResultList();
 				
 		//convert the results of jpaQuery to product Data Transfer Objects 
 		List<Product> lp = results.stream().map(pa -> this.convertToProductDO(pa.getProduct(), lcl, currency)).collect(Collectors.toList());
