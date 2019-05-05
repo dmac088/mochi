@@ -24,6 +24,14 @@ import _ from 'lodash';
   //   });
   // }
 
+  const renderChevron = () => {
+    return (
+        <span>
+            <i style={{"marginLeft": "10px"}} className="fa fa-chevron-right"></i>
+        </span>
+    );
+  }
+
   const renderFacets = (facets, selectedFacets, routeProps, props) => {
     const minLevel = facets.reduce((acc, x) => {
                     acc.min = Math.min(acc.min, x.level)
@@ -42,6 +50,9 @@ import _ from 'lodash';
              style={{"marginLeft": margin}}>
             {facet.desc} ({facet.productCount})
           </a>
+            {(facet.parent)
+            ? renderChevron()
+            : null}
         </li>
       );
     });
