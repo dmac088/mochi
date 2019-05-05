@@ -1,6 +1,5 @@
 package io.javabrains.springbootstarter.services;
 
-import java.util.ArrayList;
 import java.util.List;
 //import java.util.Set;
 import java.util.stream.Collectors;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 import io.javabrains.springbootstarter.domain.Brand;
 import io.javabrains.springbootstarter.domain.Category;
 import io.javabrains.springbootstarter.dto.SidebarFacetDTO;
-import io.javabrains.springbootstarter.entity.BrandAttribute;
 import io.javabrains.springbootstarter.entity.CategoryAttribute;
 import io.javabrains.springbootstarter.entity.CategoryAttributeRepository;
 import io.javabrains.springbootstarter.entity.CategoryRepository;
