@@ -98,7 +98,7 @@ public class BrandService implements IBrandService {
     	bDto.setLevel(new Long(0));
     	bDto.setDesc(b.getBrandDesc());
     	bDto.setId(b.getBrandId());
-    	bDto.setCount(b.getProductCount());
+    	bDto.setProductCount(b.getProductCount());
 		return bDto;
     }
 

@@ -1,7 +1,6 @@
 package io.javabrains.springbootstarter.services;
 
 import java.util.List;
-//import java.util.Set;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -124,42 +123,42 @@ public class CategoryService implements ICategoryService {
     public Category createCategory(final io.javabrains.springbootstarter.entity.Category pc, final String lcl, final String currency) {
     	
  		//create a new product DTO
-        final Category pcDto = new Category();
-        pcDto.setCategoryId(pc.getCategoryId());
-        pcDto.setCategoryCode(pc.getCategoryCode());
-        pcDto.setCategoryLevel(pc.getCategoryLevel());
+        final Category cDO = new Category();
+        cDO.setCategoryId(pc.getCategoryId());
+        cDO.setCategoryCode(pc.getCategoryCode());
+        cDO.setCategoryLevel(pc.getCategoryLevel());
         
         //get product count and set it
-        pcDto.setProductCount(productRepository.countByCategoriesCategoryCode(pc.getCategoryCode()));
-        pcDto.setMaxMarkDownPrice(productRepository.maxMarkDownPriceByCategoriesCategoryCodeAndPriceCurrencyCode(pc.getCategoryCode(), currency));
+        cDO.setProductCount(productRepository.countByCategoriesCategoryCode(pc.getCategoryCode()));
+        cDO.setMaxMarkDownPrice(productRepository.maxMarkDownPriceByCategoriesCategoryCodeAndPriceCurrencyCode(pc.getCategoryCode(), currency));
         
         //set the brand attributes of all products within the category, to the localized version
         //Set<Brand> catBrands = pc.getProducts().stream().map(p -> this.createBrand(p.getBrand(), pc.getCategoryCode(), lcl)).collect(Collectors.toSet());
        		
         //create the child objects and add to children collection
-        List<Category> pcDTOl =
+        List<Category> cDOl =
         pc.getChildren().stream().map(pc1 -> {
         	Category pcchild = createCategory(pc1, lcl, currency);
         	return pcchild;
         }).collect(Collectors.toList());
-        pcDto.setChildren(pcDTOl);
+        cDO.setChildren(cDOl);
         
         //get the counts for the brands within the category
-        //catBrands.forEach(b -> b.setProductCount(productRepository.countByCategoriesCategoryCodeAndBrandBrandCode(pcDto.getCategoryCode(), b.getBrandCode())));
-        //catBrands.forEach(b -> b.setMaxMarkDownPrice(productRepository.maxMarkDownPriceByCategoriesCategoryCodeAndBrandBrandCodeAndPriceCurrencyCode(pcDto.getCategoryCode(), b.getBrandCode(), currency)));
+        //catBrands.forEach(b -> b.setProductCount(productRepository.countByCategoriesCategoryCodeAndBrandBrandCode(cDO.getCategoryCode(), b.getBrandCode())));
+        //catBrands.forEach(b -> b.setMaxMarkDownPrice(productRepository.maxMarkDownPriceByCategoriesCategoryCodeAndBrandBrandCodeAndPriceCurrencyCode(cDO.getCategoryCode(), b.getBrandCode(), currency)));
        
         //set the parentId
         if(!(pc.getParent() == null)) {
-        	pcDto.setParentId(pc.getParent().getCategoryId());
+        	cDO.setParentId(pc.getParent().getCategoryId());
         }
         
-        pcDto.setCategoryDesc(pc.getAttributes().stream()
+        cDO.setCategoryDesc(pc.getAttributes().stream()
         		.filter( pa -> pa.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getCategoryDesc());
-        pcDto.setLclCd(lcl);
-        pcDto.setChildCategoryCount(new Long(pc.getChildren().size()));
-        pcDto.setCategoryType(pc.getCategoryType().getCode());
-        pcDto.setLayouts(pc.getLayouts());
-        return pcDto;
+        cDO.setLclCd(lcl);
+        cDO.setChildCategoryCount(new Long(pc.getChildren().size()));
+        cDO.setCategoryType(pc.getCategoryType().getCode());
+        cDO.setLayouts(pc.getLayouts());
+        return cDO;
     }
  	
  	 //Create a data transfer object
@@ -171,7 +170,8 @@ public class CategoryService implements ICategoryService {
     	cDto.setLevel(new Long(0));
     	cDto.setDesc(c.getCategoryDesc());
     	cDto.setId(c.getCategoryId());
-    	cDto.setCount(c.getProductCount());
+    	cDto.setProductCount(c.getProductCount());
+    	cDto.setParent(c.getChildCategoryCount() > 0);
 		return cDto;
     }
 

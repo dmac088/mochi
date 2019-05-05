@@ -40,7 +40,7 @@ import _ from 'lodash';
                              }}
              id={facet.token} href="#"
              style={{"marginLeft": margin}}>
-            {facet.desc} ({facet.count})
+            {facet.desc} ({facet.productCount})
           </a>
         </li>
       );
@@ -48,9 +48,9 @@ import _ from 'lodash';
   }
 
   export const CategorySidebar = withRouter(({location, match, history, ...props}) => {
-    const { category, facets, selectedFacets } = props;
+    const { facets, selectedFacets } = props;
     const routeProps = createRouteProps(history, match, location);
-
+    if(!facets) { return }
     return (
       <div className="sidebar mb-35">
         <h3 className="sidebar-title">PRODUCT CATEGORIES</h3>

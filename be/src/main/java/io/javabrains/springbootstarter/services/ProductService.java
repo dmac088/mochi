@@ -304,7 +304,7 @@ public class ProductService implements IProductService {
 		categoryFacets.stream().forEach(cf ->  {
 													String categoryCode = (new LinkedList<String>(Arrays.asList(cf.getValue().split("/")))).getLast();
 													SidebarFacetDTO cfDto = convertToCategorySidebarDTO(categoryCode, lcl, currency);
-													cfDto.setCount(new Long(cf.getCount()));
+													cfDto.setProductCount(new Long(cf.getCount()));
 													cfDto.setToken(cf.getValue());
 													cfDto.setFacetingName(cf.getFacetingName());
 													cfDto.setFieldName(cf.getFieldName());
@@ -314,7 +314,7 @@ public class ProductService implements IProductService {
 		
 		brandFacets.stream().forEach(bf ->  {
 													SidebarFacetDTO bfDto = convertToBrandSidebarDTO(bf.getValue(), lcl, currency);
-													bfDto.setCount(new Long(bf.getCount()));
+													bfDto.setProductCount(new Long(bf.getCount()));
 													bfDto.setToken(bf.getValue());
 													bfDto.setFacetingName(bf.getFacetingName());
 													bfDto.setFieldName(bf.getFieldName());
@@ -413,7 +413,7 @@ public class ProductService implements IProductService {
     	facetMgr.enableFaceting(categoryFacetRequest);
     	pcf.setToken(String.join("/", Arrays.copyOfRange(c.getToken().split("/"), 0, c.getLevel().intValue()+1)));
     	Facet tmp = facetMgr.getFacets(frName).stream().filter(f -> f.getValue().equals(pcf.getToken())).collect(Collectors.toList()).get(0);
-    	pcf.setCount(new Long(tmp.getCount()));
+    	pcf.setProductCount(new Long(tmp.getCount()));
 		pcf.setFacetingName(tmp.getFacetingName());
 		pcf.setFieldName(tmp.getFieldName());
     	sc.add(pcf);

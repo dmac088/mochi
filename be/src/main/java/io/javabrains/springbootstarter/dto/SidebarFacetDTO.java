@@ -16,8 +16,10 @@ public class SidebarFacetDTO {
 	
 	private Long level;
 	
-	private Long count;
-	
+	private Long productCount;
+
+	private boolean parent;
+
 	private Long parentId;
 
 	public Long getId() {
@@ -76,12 +78,21 @@ public class SidebarFacetDTO {
 		this.facetToken = facetToken;
 	}
 
-	public Long getCount() {
-		return count;
+	public Long getProductCount() {
+		return productCount;
 	}
 
-	public void setCount(Long count) {
-		this.count = count;
+	public void setProductCount(Long productCount) {
+		this.productCount = productCount;
+	}
+	
+
+	public boolean isParent() {
+		return parent;
+	}
+
+	public void setParent(boolean parent) {
+		this.parent = parent;
 	}
 
 	@Override
@@ -106,7 +117,7 @@ public class SidebarFacetDTO {
         .append(", facetToken=").append(facetToken)
         .append(", facetingName=").append(facetingName)
         .append(", facetFieldName=").append(facetFieldName)
-        .append(", count=").append(count)
+        .append(", count=").append(productCount)
         .append(", parentId=").append(parentId)
         .append("]");
         return builder.toString();
