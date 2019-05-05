@@ -285,11 +285,15 @@ class Products extends Component {
           //  || (parentIsSelected)
   }
 
-  filterFacets = (facets, key) => {
+  filterFacetsByName = (facets, name) => {
     if(!facets) { return }
-    return facets.filter(function(value, index, arr){
-      return value.facetingName === key;
-    })
+    return facets.filter(o => o.facetingName === name);
+  }
+
+  filterFacetsUnselected = (facets, selectedFacets) => {
+    if(!facets) { return }
+    if(!selectedFacets) { return }
+    return facets.filter(facet => (selectedFacets.findIndex(o => o.token === facet.token) === -1))
   }
 
   render() {
@@ -314,7 +318,7 @@ class Products extends Component {
                       <CategorySidebar
                         selectedFacets={selectedFacets}
                         category={cat}
-                        facets={this.filterFacets(facets, "CategoryFR")}
+                        facets={this.filterFacetsUnselected(this.filterFacetsByName(facets, "CategoryFR"), selectedFacets)}
                         isActive={this.isActive}
                         applyFacet={this.applyFacet}
                       />
@@ -322,7 +326,7 @@ class Products extends Component {
                         selectedFacets={selectedFacets}
                         isActive={this.isActive}
                         category={cat}
-                        facets={this.filterFacets(facets, "BrandFR")}
+                        facets={this.filterFacetsUnselected(this.filterFacetsByName(facets, "BrandFR"), selectedFacets)}
                         applyFacet={this.applyFacet}
                       />
                       <PriceSidebar
