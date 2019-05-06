@@ -34,7 +34,7 @@ public class CategoryService implements ICategoryService {
 	@Cacheable
 	public List<Category> getCategories(final String lcl, String currency) {
     	List<io.javabrains.springbootstarter.entity.Category> lpc = categoryRepository.findAll();
-    	return lpc.stream().map(pc -> createCategory(pc, lcl, currency))
+    	return lpc.stream().map(pc -> createCategory("PRM01", pc, lcl, currency))
     			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
     			
@@ -45,7 +45,7 @@ public class CategoryService implements ICategoryService {
  	@Cacheable
  	public List<Category> getCategoryParent(final String lcl, String currency, final Long parentCategoryId) {
     	List<io.javabrains.springbootstarter.entity.Category> lpc = categoryRepository.findByParentCategoryId(parentCategoryId);
-    	return lpc.stream().map(pc -> createCategory(pc, lcl, currency))
+    	return lpc.stream().map(pc -> createCategory("PRM01", pc, lcl, currency))
     			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
  	}
@@ -55,7 +55,7 @@ public class CategoryService implements ICategoryService {
   	@Cacheable
   	public List<Category> getCategoriesForLevel(final String lcl, String currency, final Long level) {
      	List<io.javabrains.springbootstarter.entity.Category> lpc = categoryRepository.findByCategoryLevelAndCategoryTypeCodeAndHierarchyCode(level, "PRD01", "PRM01");
-     	return lpc.stream().map(pc -> createCategory(pc, lcl, currency))
+     	return lpc.stream().map(pc -> createCategory("PRM01", pc, lcl, currency))
     			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
   	}	
@@ -66,7 +66,7 @@ public class CategoryService implements ICategoryService {
   	@Cacheable
   	public Category getCategory(final String lcl, String currency, final Long categoryId) {
     	io.javabrains.springbootstarter.entity.Category pc = categoryRepository.findByCategoryId(categoryId);
-     	return	createCategory(pc, lcl, currency);
+     	return	createCategory("PRM01", pc, lcl, currency);
   	}
     
     @Override
@@ -74,7 +74,7 @@ public class CategoryService implements ICategoryService {
 	@Cacheable
 	public Category getCategory(String lcl, String currency, String categoryDesc) {
     	io.javabrains.springbootstarter.entity.Category pc = categoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, categoryDesc, "PRM01");
-     	return	createCategory(pc, lcl, currency);
+     	return	createCategory("PRM01", pc, lcl, currency);
 	}
     
     @Override
@@ -92,13 +92,13 @@ public class CategoryService implements ICategoryService {
 		? categoryRepository.findDistinctByHierarchyCodeAndParentCategoryIdAndProductsBrandBrandIdIn(hierarchyCode, ca.getCategoryId(), brandIds)
 		: categoryRepository.findByParentCategoryId(ca.getCategoryId());
 		
-		List<Category> lcDO = lc.stream().map(c -> createCategory(c, lcl, currency)).collect(Collectors.toList());
+		List<Category> lcDO = lc.stream().map(c -> createCategory(hierarchyCode, c, lcl, currency)).collect(Collectors.toList());
 		
 		lcDO.stream().forEach(cDO -> {
 			final Long count = 
 			(brandIds.size() > 0)		
-			? productRepository.countByCategoriesCategoryCodeAndBrandBrandIdIn(cDO.getCategoryCode(), brandIds)
-			: productRepository.countByCategoriesCategoryCode(cDO.getCategoryCode());		
+			? productRepository.countByCategoriesHierarchyCodeAndCategoriesCategoryCodeAndBrandBrandIdIn(hierarchyCode, cDO.getCategoryCode(), brandIds)
+			: productRepository.countByCategoriesHierarchyCodeAndCategoriesCategoryCode(hierarchyCode, cDO.getCategoryCode());		
 			cDO.setProductCount(count);
 		});	
 		
@@ -124,7 +124,7 @@ public class CategoryService implements ICategoryService {
     }
     
  	@Cacheable
-    public Category createCategory(final io.javabrains.springbootstarter.entity.Category pc, final String lcl, final String currency) {
+    public Category createCategory(final String hierarchyCode, final io.javabrains.springbootstarter.entity.Category pc, final String lcl, final String currency) {
     	
  		//create a new product DTO
         final Category cDO = new Category();
@@ -133,8 +133,8 @@ public class CategoryService implements ICategoryService {
         cDO.setCategoryLevel(pc.getCategoryLevel());
         
         //get product count and set it
-        cDO.setProductCount(productRepository.countByCategoriesCategoryCode(pc.getCategoryCode()));
-        cDO.setMaxMarkDownPrice(productRepository.maxMarkDownPriceByCategoriesCategoryCodeAndPriceCurrencyCode(pc.getCategoryCode(), currency));
+        cDO.setProductCount(productRepository.countByCategoriesHierarchyCodeAndCategoriesCategoryCode(hierarchyCode, pc.getCategoryCode()));
+        cDO.setMaxMarkDownPrice(productRepository.maxMarkDownPriceByCategoriesHierarchyCodeAndCategoriesCategoryCodeAndPriceCurrencyCode(hierarchyCode, pc.getCategoryCode(), currency));
         
         //set the brand attributes of all products within the category, to the localized version
         //Set<Brand> catBrands = pc.getProducts().stream().map(p -> this.createBrand(p.getBrand(), pc.getCategoryCode(), lcl)).collect(Collectors.toSet());
@@ -142,7 +142,7 @@ public class CategoryService implements ICategoryService {
         //create the child objects and add to children collection
         List<Category> cDOl =
         pc.getChildren().stream().map(pc1 -> {
-        	Category pcchild = createCategory(pc1, lcl, currency);
+        	Category pcchild = createCategory(hierarchyCode, pc1, lcl, currency);
         	return pcchild;
         }).collect(Collectors.toList());
         cDO.setChildren(cDOl);
