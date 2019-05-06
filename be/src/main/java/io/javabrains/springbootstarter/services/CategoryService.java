@@ -44,7 +44,7 @@ public class CategoryService implements ICategoryService {
  	@Transactional
  	@Cacheable
  	public List<Category> getCategoryParent(final String lcl, String currency, final Long parentCategoryId) {
-    	List<io.javabrains.springbootstarter.entity.Category> lpc = categoryRepository.findByParentCategoryId(parentCategoryId);
+    	List<io.javabrains.springbootstarter.entity.Category> lpc = categoryRepository.findByHierarchyCodeAndParentCategoryId("PRM01", parentCategoryId);
     	return lpc.stream().map(pc -> createCategory("PRM01", pc, lcl, currency))
     			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
@@ -89,8 +89,8 @@ public class CategoryService implements ICategoryService {
 		List<io.javabrains.springbootstarter.entity.Category> lc;
 		
 		lc = (brandIds.size() > 0) 
-		? categoryRepository.findDistinctByHierarchyCodeAndParentCategoryIdAndProductsBrandBrandIdIn(hierarchyCode, ca.getCategoryId(), brandIds)
-		: categoryRepository.findByParentCategoryId(ca.getCategoryId());
+		? categoryRepository.findByHierarchyCodeAndParentCategoryIdAndProductsBrandBrandIdIn(hierarchyCode, ca.getCategoryId(), brandIds)
+		: categoryRepository.findByHierarchyCodeAndParentCategoryId(hierarchyCode, ca.getCategoryId());
 		
 		List<Category> lcDO = lc.stream().map(c -> createCategory(hierarchyCode, c, lcl, currency)).collect(Collectors.toList());
 		
