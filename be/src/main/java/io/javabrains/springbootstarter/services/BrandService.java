@@ -52,7 +52,7 @@ public class BrandService implements IBrandService {
  
 	@Override
 	@Transactional
-	@Cacheable
+	//@Cacheable
 	public List<SidebarFacetDTO> getBrandsForCategory(String hierarchyCode, String lcl, String curr, String categoryDesc, List<SidebarFacetDTO> categoryFacets) {
 		
 		List<Long> selectedCategoryIds = categoryFacets.stream().map(c -> { return c.getId(); }).collect(Collectors.toList());
@@ -71,7 +71,7 @@ public class BrandService implements IBrandService {
 
 		List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, lcl, curr)).collect(Collectors.toList());
 		lb.stream().forEach(bDO -> {
-			bDO.setProductCount(productRepository.countByCategoriesCategoryCodeAndBrandBrandCode(ca.getCategory().get().getCategoryCode(), bDO.getBrandCode()));
+			bDO.setProductCount(productRepository.countByCategoriesHierarchyCodeAndCategoriesCategoryCodeAndBrandBrandCode(hierarchyCode, ca.getCategory().get().getCategoryCode(), bDO.getBrandCode()));
 		});
 		
 		List<SidebarFacetDTO> lsfdto = lb.stream().map(b -> createBrandDTO(b)).collect(Collectors.toList())
