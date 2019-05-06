@@ -52,18 +52,22 @@ public class BrandService implements IBrandService {
  
 	@Override
 	@Transactional
-	@Cacheable
+	//@Cacheable
 	public List<SidebarFacetDTO> getBrandsForCategory(String hierarchyCode, String lcl, String curr, String categoryDesc, List<SidebarFacetDTO> categoryFacets) {
 		
-		List<Long> selectedCategoryIds = categoryFacets.stream().map(c -> { return c.getId(); }).collect(Collectors.toList());
 		CategoryAttribute ca = categoryAttributeRepository.findByCategoryHierarchyCodeAndLclCdAndCategoryDesc(hierarchyCode, lcl, categoryDesc);
 		
+
 		if(ca == null) { return null; }
 		if(!ca.getCategory().isPresent()) { return null; }
 		
 		List<Category> allChildCategories = IProductService.recurseCategories(new ArrayList<Category>(), ca.getCategory().get());
 		List<Long> allChildIds = allChildCategories.stream().map(c -> c.getCategoryId()).collect(Collectors.toList());
 		
+		List<Long> selectedCategoryIds = 
+				(categoryFacets.size() > 0) 
+				? categoryFacets.stream().map(c -> { return c.getId(); }).collect(Collectors.toList())
+				: allChildIds;
 		
 		List<Long> categoryIds = (categoryFacets.size() > 0) ? selectedCategoryIds : allChildIds;
 		
@@ -72,9 +76,7 @@ public class BrandService implements IBrandService {
 		List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, lcl, curr)).collect(Collectors.toList());
 		lb.stream().forEach(bDO -> {
 			bDO.setProductCount(
-					(categoryFacets.size() > 0) 
-					? productRepository.countByCategoriesHierarchyCodeAndCategoriesCategoryCodeAndBrandBrandCode(hierarchyCode, ca.getCategory().get().getCategoryCode(), bDO.getBrandCode())
-					: productRepository.countByCategoriesHierarchyCodeAndCategoriesCategoryIdInAndBrandBrandCode(hierarchyCode, allChildIds, bDO.getBrandCode())
+					productRepository.countByCategoriesHierarchyCodeAndCategoriesCategoryIdInAndBrandBrandCode(hierarchyCode, selectedCategoryIds, bDO.getBrandCode())
 					);
 		});
 		
