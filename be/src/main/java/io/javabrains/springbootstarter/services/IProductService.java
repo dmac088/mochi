@@ -28,6 +28,7 @@ public interface IProductService {
 	 
 	 public static List<Category> recurseCategories(List<Category> list, Category category) {
 		if(category == null) { return list; }
+		list.add(category);
 		if(category.getChildren().isEmpty()) { return list; }
 		category.getChildren().stream().forEach(c -> {
 			list.add(c);
