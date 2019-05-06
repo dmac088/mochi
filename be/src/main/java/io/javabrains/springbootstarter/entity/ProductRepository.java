@@ -35,8 +35,10 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 					+ "AND h.hir_cd = :hierarchyCode) "
 					+ "SELECT count(p.prd_id) "
 					+ "FROM MyCTE c "
+					+ "inner join mochi.hierarchy h on c.hir_id = h.hir_id "
 					+ "inner join mochi.product_category pc on c.cat_id = pc.cat_id  "
-					+ "inner join mochi.product p  on pc.prd_id = p.prd_id",
+					+ "inner join mochi.product p  on pc.prd_id = p.prd_id "
+					+ "WHERE h.hir_cd = :hierarchyCode ",
 		nativeQuery = true)
 	Long countByCategoriesHierarchyCodeAndCategoriesCategoryCode(@Param("hierarchyCode") String hierarchyCode, @Param("categoryCode") String categoryCode);
 		
@@ -67,9 +69,9 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 					+ "WHERE pt.prc_typ_desc = 'markdown' "
 					+ "AND ccy.ccy_cd = :currencyCode "
 					+ "AND h.hir_cd = :hierarchyCode "
-					+ "AND now() BETWEEN prc.prc_st_dt AND prc.prc_en_dt",
+					+ "AND now() BETWEEN prc.prc_st_dt AND prc.prc_en_dt ",
 			nativeQuery = true)	
-	Long maxMarkDownPriceByCategoriesHierarchyCodeAndCategoriesCategoryCodeAndPriceCurrencyCode(@Param("hierarchyCode") String hierarchyCode,@Param("categoryCode") String categoryCode, @Param("currencyCode") String currencyCode);
+	Long maxMarkDownPriceByCategoriesHierarchyCodeAndCategoriesCategoryCodeAndPriceCurrencyCode(@Param("hierarchyCode") String hierarchyCode, @Param("categoryCode") String categoryCode, @Param("currencyCode") String currencyCode);
 
 	
 	@Query(
@@ -87,7 +89,8 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 				+ "WHERE c.cat_prnt_id IS NOT NULL "
 				+ "AND h.hir_cd = :hierarchyCode) "
 				+ "SELECT count(p.prd_id) "
-				+ "FROM MyCTE c inner join mochi.product_category pc on c.cat_id = pc.cat_id  "
+				+ "FROM MyCTE c "
+				+ "inner join mochi.product_category pc on c.cat_id = pc.cat_id  "
 				+ "inner join mochi.hierarchy h on c.hir_id = h.hir_id "
 				+ "inner join mochi.product p  on pc.prd_id = p.prd_id "
 				+ "inner join mochi.brand b on p.bnd_id = b.bnd_id "
@@ -109,13 +112,15 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 				+ "FROM mochi.category c "
 				+ "inner join mochi.hierarchy h on c.hir_id = h.hir_id "
 				+ "inner join MyCTE ON c.cat_prnt_id = MyCTE.cat_id "
-				+ "WHERE c.cat_prnt_id IS NOT NULL ) "
+				+ "WHERE c.cat_prnt_id IS NOT NULL "
+				+ "AND h.hir_cd = :hierarchyCode) "
 				+ "SELECT count(p.prd_id) "
 				+ "FROM MyCTE c inner join mochi.product_category pc on c.cat_id = pc.cat_id  "
 				+ "inner join mochi.hierarchy h on c.hir_id = h.hir_id "
 				+ "inner join mochi.product p  on pc.prd_id = p.prd_id "
 				+ "inner join mochi.brand b on p.bnd_id = b.bnd_id "
 				+ "WHERE b.bnd_id in :brandIds "
+				+ "AND c.cat_cd = :categoryCode "
 				+ "AND h.hir_cd = :hierarchyCode ",
 		nativeQuery = true)	
 	Long countByCategoriesHierarchyCodeAndCategoriesCategoryCodeAndBrandBrandIdIn(@Param("hierarchyCode") String hierarchyCode,@Param("categoryCode") String categoryCode, @Param("brandIds") List<Long> brandIds);
