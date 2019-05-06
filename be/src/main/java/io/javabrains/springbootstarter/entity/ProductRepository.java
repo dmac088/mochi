@@ -99,6 +99,34 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 		nativeQuery = true)	
 	Long countByCategoriesHierarchyCodeAndCategoriesCategoryCodeAndBrandBrandCode(@Param("hierarchyCode") String hierarchyCode,@Param("categoryCode") String categoryCode, @Param("brandCode") String brandCode);
 
+
+	@Query(
+			value = "WITH RECURSIVE MyCTE AS ( "
+					+ "SELECT cat_id, cat_cd, c.hir_id "
+					+ "FROM mochi.category c "
+					+ "inner join mochi.hierarchy h on c.hir_id = h.hir_id "
+					+ "WHERE cat_id in :categoryIds "
+					+ "AND h.hir_cd = :hierarchyCode  "
+					+ "UNION ALL "
+					+ "SELECT c.cat_id, c.cat_cd, c.hir_id "
+					+ "FROM mochi.category c "
+					+ "inner join mochi.hierarchy h on c.hir_id = h.hir_id "
+					+ "inner join MyCTE ON c.cat_prnt_id = MyCTE.cat_id "
+					+ "WHERE c.cat_prnt_id IS NOT NULL "
+					+ "AND h.hir_cd = :hierarchyCode "
+					+ "AND c.cat_id in :categoryIds) "
+					+ "SELECT count(p.prd_id) "
+					+ "FROM MyCTE c "
+					+ "inner join mochi.product_category pc on c.cat_id = pc.cat_id  "
+					+ "inner join mochi.hierarchy h on c.hir_id = h.hir_id "
+					+ "inner join mochi.product p  on pc.prd_id = p.prd_id "
+					+ "inner join mochi.brand b on p.bnd_id = b.bnd_id "
+					+ "WHERE b.bnd_cd = :brandCode "
+					+ "AND c.cat_id in :categoryIds "
+					+ "AND h.hir_cd = :hierarchyCode ",
+			nativeQuery = true)	
+		Long countByCategoriesHierarchyCodeAndCategoriesCategoryIdInAndBrandBrandCode(@Param("hierarchyCode") String hierarchyCode, @Param("categoryIds") List<Long> categoryIds, @Param("brandCode") String brandCode);
+
 	
 	@Query(
 		value = "WITH RECURSIVE MyCTE AS ( "
