@@ -11,11 +11,11 @@ public interface CategoryRepository extends CrudRepository<Category, Long> {
 	
 	Category findByCategoryCode(String categoryCode);
 	
-	List<Category> findByCategoryLevelAndCategoryTypeCodeAndHierarchyCode(Long level, String categoryTypeCode, String hierarchyCode);
+	List<Category> findDistinctByCategoryLevelAndCategoryTypeCodeAndHierarchyCode(Long level, String categoryTypeCode, String hierarchyCode);
 	
-	List<Category> findByHierarchyCodeAndParentCategoryId(String hieararchyCode, Long categoryId);
+	List<Category> findDistinctByHierarchyCodeAndParentCategoryId(String hieararchyCode, Long categoryId);
 	
-	List<Category> findByHierarchyCodeAndParentCategoryIdAndProductsBrandBrandIdIn(String hieararchyCode, Long parentCategoryId, List<Long> brandIds);
+	List<Category> findDistinctByHierarchyCodeAndParentCategoryIdAndProductsBrandBrandIdIn(String hieararchyCode, Long parentCategoryId, List<Long> brandIds);
 
 	Category findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(String lcl, String categoryDesc, String hierarchyCode);
 	

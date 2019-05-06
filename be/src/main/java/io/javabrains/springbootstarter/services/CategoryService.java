@@ -44,7 +44,7 @@ public class CategoryService implements ICategoryService {
  	@Transactional
  	@Cacheable
  	public List<Category> getCategoryParent(final String lcl, String currency, final Long parentCategoryId) {
-    	List<io.javabrains.springbootstarter.entity.Category> lpc = categoryRepository.findByHierarchyCodeAndParentCategoryId("PRM01", parentCategoryId);
+    	List<io.javabrains.springbootstarter.entity.Category> lpc = categoryRepository.findDistinctByHierarchyCodeAndParentCategoryId("PRM01", parentCategoryId);
     	return lpc.stream().map(pc -> createCategory("PRM01", pc, lcl, currency))
     			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
@@ -54,7 +54,7 @@ public class CategoryService implements ICategoryService {
   	@Transactional
   	@Cacheable
   	public List<Category> getCategoriesForLevel(final String lcl, String currency, final Long level) {
-     	List<io.javabrains.springbootstarter.entity.Category> lpc = categoryRepository.findByCategoryLevelAndCategoryTypeCodeAndHierarchyCode(level, "PRD01", "PRM01");
+     	List<io.javabrains.springbootstarter.entity.Category> lpc = categoryRepository.findDistinctByCategoryLevelAndCategoryTypeCodeAndHierarchyCode(level, "PRD01", "PRM01");
      	return lpc.stream().map(pc -> createCategory("PRM01", pc, lcl, currency))
     			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
@@ -89,8 +89,8 @@ public class CategoryService implements ICategoryService {
 		List<io.javabrains.springbootstarter.entity.Category> lc;
 		
 		lc = (brandIds.size() > 0) 
-		? categoryRepository.findByHierarchyCodeAndParentCategoryIdAndProductsBrandBrandIdIn(hierarchyCode, ca.getCategoryId(), brandIds)
-		: categoryRepository.findByHierarchyCodeAndParentCategoryId(hierarchyCode, ca.getCategoryId());
+		? categoryRepository.findDistinctByHierarchyCodeAndParentCategoryIdAndProductsBrandBrandIdIn(hierarchyCode, ca.getCategoryId(), brandIds)
+		: categoryRepository.findDistinctByHierarchyCodeAndParentCategoryId(hierarchyCode, ca.getCategoryId());
 		
 		List<Category> lcDO = lc.stream().map(c -> createCategory(hierarchyCode, c, lcl, currency)).collect(Collectors.toList());
 		
