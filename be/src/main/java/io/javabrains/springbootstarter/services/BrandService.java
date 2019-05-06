@@ -1,6 +1,7 @@
 package io.javabrains.springbootstarter.services;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
@@ -64,6 +65,11 @@ public class BrandService implements IBrandService {
 		List<Category> allChildCategories = IProductService.recurseCategories(new ArrayList<Category>(), ca.getCategory().get());
 		List<Long> allChildIds = allChildCategories.stream().map(c -> c.getCategoryId()).collect(Collectors.toList());
 		
+		allChildIds.stream().forEach(id -> 
+		{
+			System.out.println(id);
+		});
+		
 		List<Long> selectedCategoryIds = 
 				(categoryFacets.size() > 0) 
 				? categoryFacets.stream().map(c -> { return c.getId(); }).collect(Collectors.toList())
@@ -76,8 +82,7 @@ public class BrandService implements IBrandService {
 		List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, lcl, curr)).collect(Collectors.toList());
 		lb.stream().forEach(bDO -> {
 			bDO.setProductCount(
-					productRepository.countByCategoriesHierarchyCodeAndCategoriesCategoryIdInAndBrandBrandCode(hierarchyCode, selectedCategoryIds, bDO.getBrandCode())
-					);
+					productRepository.countByCategoriesHierarchyCodeAndCategoriesCategoryIdInAndBrandBrandCode(hierarchyCode, selectedCategoryIds, bDO.getBrandCode()));
 		});
 		
 		List<SidebarFacetDTO> lsfdto = lb.stream().map(b -> createBrandDTO(b)).collect(Collectors.toList())
