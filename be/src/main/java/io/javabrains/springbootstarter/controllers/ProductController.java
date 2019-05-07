@@ -29,7 +29,7 @@ public class ProductController {
     	return productService.getProduct(lcl, curr, id);
     }
     
-    @PostMapping("/Product/{lcl}/maxprice")
+    @PostMapping("/Product/{lcl}/{curr}/maxprice")
     public Double getMaxPrice(@PathVariable String lcl, @PathVariable String curr, @RequestBody final List<SidebarFacetDTO> selectedFacets) {
     	return productService.getMaxPrice(lcl, curr, selectedFacets);
     }
