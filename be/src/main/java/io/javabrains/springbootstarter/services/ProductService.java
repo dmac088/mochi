@@ -202,9 +202,17 @@ public class ProductService implements IProductService {
 	
 	@Override
 	public Double getMaxPrice(String lcl, String curr, List<SidebarFacetDTO> selectedFacets) {
-		// TODO Auto-generated method stub
 		
-		return null;
+		List<Long> brandIds = selectedFacets.stream().filter(f -> f.getFacetingName().equals("BrandFR")).collect(Collectors.toList()).stream().map(f-> f.getId()).collect(Collectors.toList());
+		
+		List<Long> categoryIds =  selectedFacets.stream().filter(f -> f.getFacetingName().equals("CategoryFR")).collect(Collectors.toList()).stream().map(f-> f.getId()).collect(Collectors.toList());
+
+		categoryIds.add(new Long(-1));
+		brandIds.add(new Long(-1));
+		
+		Double maxPrice = productRepository.maxPricesPriceValueByPriceCurrenciesCodeCategoriesHierarchyCodeAndCategoriesCategoryIdInAndBrandBrandIdIn(curr, CategoryVars.PRIMARY_HIERARCHY_CODE, categoryIds, brandIds);
+
+		return maxPrice;
 	}
 
 

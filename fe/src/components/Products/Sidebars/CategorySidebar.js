@@ -26,9 +26,7 @@ import _ from 'lodash';
 
   const renderChevron = () => {
     return (
-        <span>
-            <i style={{"marginLeft": "10px"}} className="fa fa-chevron-right"></i>
-        </span>
+      <i style={{"marginLeft": "10px"}} className="fa fa-chevron-right"></i>
     );
   }
 
