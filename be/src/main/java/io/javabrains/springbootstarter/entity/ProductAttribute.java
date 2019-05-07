@@ -29,6 +29,8 @@ import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import variables.CategoryVars;
+
 @Entity
 @Indexed
 @Table(name = "product_attr_lcl", schema = "mochi")
@@ -86,7 +88,7 @@ public class ProductAttribute {
 	@IndexedEmbedded
 	public Category getPrimaryCategory() {
 		return this.getProduct().getCategories().stream().filter(c -> {
-			 return c.getHierarchy().getCode().equals("PRM01");
+			 return c.getHierarchy().getCode().equals(CategoryVars.PRIMARY_HIERARCHY_CODE);
 		 		}).collect(Collectors.toList()).get(0);
 	}
 	

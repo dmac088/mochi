@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import variables.CategoryVars;
+
 @Service
 public class CategoryAttributeService {
 
@@ -17,7 +19,7 @@ public class CategoryAttributeService {
 	}
 	
 	public CategoryAttribute getCategoryAttribute(String lcl, Long id) {
-		return categoryAttributeRepository.findByCategoryHierarchyCodeAndLclCdAndCategoryId("PRM01",lcl, id);
+		return categoryAttributeRepository.findByCategoryHierarchyCodeAndLclCdAndCategoryId(CategoryVars.PRIMARY_HIERARCHY_CODE,lcl, id);
 	}
 	
 	public void addCategory(CategoryAttribute CategoryAttribute) {

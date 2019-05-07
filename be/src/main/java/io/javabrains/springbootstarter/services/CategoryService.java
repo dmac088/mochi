@@ -14,6 +14,7 @@ import io.javabrains.springbootstarter.entity.CategoryAttribute;
 import io.javabrains.springbootstarter.entity.CategoryAttributeRepository;
 import io.javabrains.springbootstarter.entity.CategoryRepository;
 import io.javabrains.springbootstarter.entity.ProductRepository;
+import variables.CategoryVars;
 
 @Service
 @Transactional
@@ -34,7 +35,7 @@ public class CategoryService implements ICategoryService {
 	@Cacheable
 	public List<Category> getCategories(final String lcl, String currency) {
     	List<io.javabrains.springbootstarter.entity.Category> lpc = categoryRepository.findAll();
-    	return lpc.stream().map(pc -> createCategory("PRM01", pc, lcl, currency))
+    	return lpc.stream().map(pc -> createCategory(CategoryVars.PRIMARY_HIERARCHY_CODE, pc, lcl, currency))
     			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
     			
@@ -44,8 +45,8 @@ public class CategoryService implements ICategoryService {
  	@Transactional
  	@Cacheable
  	public List<Category> getCategoryParent(final String lcl, String currency, final Long parentCategoryId) {
-    	List<io.javabrains.springbootstarter.entity.Category> lpc = categoryRepository.findDistinctByHierarchyCodeAndParentCategoryId("PRM01", parentCategoryId);
-    	return lpc.stream().map(pc -> createCategory("PRM01", pc, lcl, currency))
+    	List<io.javabrains.springbootstarter.entity.Category> lpc = categoryRepository.findDistinctByHierarchyCodeAndParentCategoryId(CategoryVars.PRIMARY_HIERARCHY_CODE, parentCategoryId);
+    	return lpc.stream().map(pc -> createCategory(CategoryVars.PRIMARY_HIERARCHY_CODE, pc, lcl, currency))
     			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
  	}
@@ -54,8 +55,8 @@ public class CategoryService implements ICategoryService {
   	@Transactional
   	@Cacheable
   	public List<Category> getCategoriesForLevel(final String lcl, String currency, final Long level) {
-     	List<io.javabrains.springbootstarter.entity.Category> lpc = categoryRepository.findDistinctByCategoryLevelAndCategoryTypeCodeAndHierarchyCode(level, "PRD01", "PRM01");
-     	return lpc.stream().map(pc -> createCategory("PRM01", pc, lcl, currency))
+     	List<io.javabrains.springbootstarter.entity.Category> lpc = categoryRepository.findDistinctByCategoryLevelAndCategoryTypeCodeAndHierarchyCode(level, "PRD01", CategoryVars.PRIMARY_HIERARCHY_CODE);
+     	return lpc.stream().map(pc -> createCategory(CategoryVars.PRIMARY_HIERARCHY_CODE, pc, lcl, currency))
     			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
   	}	
@@ -66,15 +67,15 @@ public class CategoryService implements ICategoryService {
   	@Cacheable
   	public Category getCategory(final String lcl, String currency, final Long categoryId) {
     	io.javabrains.springbootstarter.entity.Category pc = categoryRepository.findByCategoryId(categoryId);
-     	return	createCategory("PRM01", pc, lcl, currency);
+     	return	createCategory(CategoryVars.PRIMARY_HIERARCHY_CODE, pc, lcl, currency);
   	}
     
     @Override
 	@Transactional
 	@Cacheable
 	public Category getCategory(String lcl, String currency, String categoryDesc) {
-    	io.javabrains.springbootstarter.entity.Category pc = categoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, categoryDesc, "PRM01");
-     	return	createCategory("PRM01", pc, lcl, currency);
+    	io.javabrains.springbootstarter.entity.Category pc = categoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, categoryDesc, CategoryVars.PRIMARY_HIERARCHY_CODE);
+     	return	createCategory(CategoryVars.PRIMARY_HIERARCHY_CODE, pc, lcl, currency);
 	}
     
     @Override
