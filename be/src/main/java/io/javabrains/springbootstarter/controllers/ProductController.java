@@ -30,7 +30,7 @@ public class ProductController {
     }
     
     @PostMapping("/Product/{lcl}/maxprice")
-    public Long getMaxPrice(@PathVariable String lcl, @PathVariable String curr, @RequestBody final List<SidebarFacetDTO> selectedFacets) {
+    public Double getMaxPrice(@PathVariable String lcl, @PathVariable String curr, @RequestBody final List<SidebarFacetDTO> selectedFacets) {
     	return productService.getMaxPrice(lcl, curr, selectedFacets);
     }
     
