@@ -10,16 +10,14 @@ export const get = (locale, currency) => 	fetchApi(
 																					 payload,
 																					 {},
 																					 'GET',
-																					 {
-
-																					 }
+																					 {}
 																				 	);
 
 
 export const getMaxPrice(locale, currency, selectedFacets = [])  => fetchApi(
 																					locale +
 																					'/' + currency +
-																					'/maxprice' 
+																					'/maxprice'
 																					selectedFacets,
 																					{},
 																					'POST',
