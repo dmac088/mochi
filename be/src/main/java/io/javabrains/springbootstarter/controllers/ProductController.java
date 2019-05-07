@@ -29,6 +29,11 @@ public class ProductController {
     	return productService.getProduct(lcl, curr, id);
     }
     
+    @PostMapping("/Product/{lcl}/maxprice")
+    public Long getMaxPrice(@PathVariable String lcl, @PathVariable String curr, @RequestBody final List<SidebarFacetDTO> selectedFacets) {
+    	return productService.getMaxPrice(lcl, curr, selectedFacets);
+    }
+    
     @GetMapping("/Product/{lcl}/{curr}/page/{page}/size/{size}/sortBy/{sortBy}")
     public SearchDTO getProducts(@PathVariable String lcl, @PathVariable String curr, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy) {
     	return productService.getProducts(lcl, curr, page, size, sortBy);
