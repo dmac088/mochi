@@ -199,6 +199,15 @@ public class ProductService implements IProductService {
 		
 		return rc;
 	}
+	
+	@Override
+	public Long getMaxPrice(String lcl, String curr, List<SidebarFacetDTO> selectedFacets) {
+		// TODO Auto-generated method stub
+		
+		
+		return null;
+	}
+
 
 	@SuppressWarnings("unchecked")
 	@Override
