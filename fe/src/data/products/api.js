@@ -1,8 +1,7 @@
 import { fetchApi } from '../../services/api';
 
 const endPoints = {
-	get: '/api/Product/',
-	post: '/api/Product/',
+	get: '/api/Product/'
 };
 
 export const get = (locale, currency) => 	fetchApi(
@@ -15,6 +14,7 @@ export const get = (locale, currency) => 	fetchApi(
 
 
 export const getMaxPrice = (locale, currency, selectedFacets = [])  => fetchApi(
+																					endPoints.get+
 																					locale +
 																					'/' + currency +
 																					'/maxprice',
@@ -37,7 +37,7 @@ export const findById = (locale, currency, productId) => fetchApi(
 																					);
 
 export const findByCategory = (locale, currency, category, brand, maxPrice, page = 0, size = 10, sortBy = 'nameAsc', selectedFacets = []) => fetchApi(
-																					endPoints.post +
+																					endPoints.get +
 																					locale +
 																					'/' + currency +
 																					'/category/' + category +
