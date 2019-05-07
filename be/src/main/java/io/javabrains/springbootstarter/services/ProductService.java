@@ -201,9 +201,8 @@ public class ProductService implements IProductService {
 	}
 	
 	@Override
-	public Long getMaxPrice(String lcl, String curr, List<SidebarFacetDTO> selectedFacets) {
+	public Double getMaxPrice(String lcl, String curr, List<SidebarFacetDTO> selectedFacets) {
 		// TODO Auto-generated method stub
-		
 		
 		return null;
 	}
