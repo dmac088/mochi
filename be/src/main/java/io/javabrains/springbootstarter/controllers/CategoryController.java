@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.javabrains.springbootstarter.domain.Category;
 import io.javabrains.springbootstarter.dto.SidebarFacetDTO;
 import io.javabrains.springbootstarter.services.ICategoryService;
+import variables.CategoryVars;
 
 @RestController
 @RequestMapping("/api")
@@ -51,6 +52,6 @@ public class CategoryController {
     
     @PostMapping("/Category/{lcl}/{curr}/desc/{categoryDesc}/children")
     public List<SidebarFacetDTO> getCategoryChildren(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody List<SidebarFacetDTO> brandFacets) {
-    	return categoryService.getCategoryChildren("PRM01", lcl, curr, categoryDesc, brandFacets);
+    	return categoryService.getCategoryChildren(CategoryVars.PRIMARY_HIERARCHY_CODE, lcl, curr, categoryDesc, brandFacets);
     }
 }

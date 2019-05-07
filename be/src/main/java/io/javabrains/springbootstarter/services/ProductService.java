@@ -46,6 +46,7 @@ import io.javabrains.springbootstarter.entity.ProductAttributeRepository;
 import io.javabrains.springbootstarter.entity.ProductPagingAndSortingRepository;
 import io.javabrains.springbootstarter.entity.ProductPriceRepository;
 import io.javabrains.springbootstarter.entity.ProductRepository;
+import variables.CategoryVars;
 
 @Service
 @Transactional
@@ -115,7 +116,7 @@ public class ProductService implements IProductService {
 	@Override
 	@Cacheable
 	public SearchDTO getProductsForCategory(String lcl, String currency, String categoryDesc, int page, int size, String sortBy) {
-     	Category pc = categoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, categoryDesc, "PRM01");
+     	Category pc = categoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, categoryDesc, CategoryVars.PRIMARY_HIERARCHY_CODE);
      	List<Category> pcl = IProductService.recurseCategories(new ArrayList<Category>(), pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
   		Page<io.javabrains.springbootstarter.entity.Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCd(categoryIds, lcl, PageRequest.of(page, size, this.sortByParam(sortBy)));
@@ -128,7 +129,7 @@ public class ProductService implements IProductService {
 	@Override
 	@Cacheable
 	public SearchDTO getProductsForCategory(String lcl, String currency, String categoryDesc, Double price, int page, int size, String sortBy) {
-		Category pc = categoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, categoryDesc, "PRM01");
+		Category pc = categoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, categoryDesc, CategoryVars.PRIMARY_HIERARCHY_CODE);
      	List<Category> pcl = IProductService.recurseCategories(new ArrayList<Category>(), pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
   		Page<io.javabrains.springbootstarter.entity.Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCdAndPricesPriceValueBetween(categoryIds, lcl, new Double(0), price, PageRequest.of(page, size, this.sortByParam(sortBy)));
@@ -141,7 +142,7 @@ public class ProductService implements IProductService {
 	@Override
 	@Cacheable
 	public SearchDTO getProductsForCategoryAndBrand(String lcl, String currency, String categoryDesc, String brandDesc, int page, int size, String sortBy) {
-		Category pc = categoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, categoryDesc, "PRM01");
+		Category pc = categoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, categoryDesc, CategoryVars.PRIMARY_HIERARCHY_CODE);
      	List<Category> pcl = IProductService.recurseCategories(new ArrayList<Category>(), pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
   		Page<io.javabrains.springbootstarter.entity.Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCdAndBrandBrandAttributesBrandDescAndBrandBrandAttributesLclCd(categoryIds, lcl, brandDesc, lcl, PageRequest.of(page, size, this.sortByParam(sortBy)));		
@@ -154,7 +155,7 @@ public class ProductService implements IProductService {
 	@Override
  	@Cacheable
 	public SearchDTO getProductsForCategoryAndPrice(String lcl, String currency, String categoryDesc, Double price, int page, int size, String sortBy) {
-		Category pc = categoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, categoryDesc, "PRM01");
+		Category pc = categoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, categoryDesc, CategoryVars.PRIMARY_HIERARCHY_CODE);
      	List<Category> pcl = IProductService.recurseCategories(new ArrayList<Category>(), pc);
      	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
   		Page<io.javabrains.springbootstarter.entity.Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCdAndPricesPriceValueBetweenAndPricesTypeDescAndPricesCurrencyCodeAndPricesStartDateLessThanAndPricesEndDateGreaterThan(categoryIds, lcl, new Double(0), price, "markdown", currency, new Date(), new Date(),PageRequest.of(page, size, this.sortByParam(sortBy)));
@@ -176,7 +177,7 @@ public class ProductService implements IProductService {
 		
 		//Facets
 		List<SidebarFacetDTO> selectedCategories = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals("CategoryFR");}).collect(Collectors.toList());
-		List<Category> lpc = selectedCategories.stream().map(f-> {return categoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, f.getDesc(), "PRM01");}).collect(Collectors.toList());
+		List<Category> lpc = selectedCategories.stream().map(f-> {return categoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, f.getDesc(), CategoryVars.PRIMARY_HIERARCHY_CODE);}).collect(Collectors.toList());
 		
 		List<Category> lpcf = new ArrayList<Category>();
 		lpc.stream().forEach(pc -> { lpcf.addAll(IProductService.recurseCategories(new ArrayList<Category>(), pc)); });
@@ -435,7 +436,7 @@ public class ProductService implements IProductService {
         .filter( ba -> ba.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getBrandDesc());
         
         StringBuilder sb = new StringBuilder();
-        product.getCategories().stream().filter(c -> {return c.getHierarchy().getCode().equals("PRM01");}).collect(Collectors.toList())
+        product.getCategories().stream().filter(c -> {return c.getHierarchy().getCode().equals(CategoryVars.PRIMARY_HIERARCHY_CODE);}).collect(Collectors.toList())
         .stream().sorted(Comparator.comparingLong(Category::getCategoryLevel)).collect(Collectors.toList())
         .stream().forEach(c -> sb.append(c.getAttributes().stream().filter(ca -> { return ca.getLclCd().equals(lcl);}).collect(Collectors.toList()).get(0).getCategoryDesc()));
         pDo.setPrimaryCategoryPath(sb.toString());        

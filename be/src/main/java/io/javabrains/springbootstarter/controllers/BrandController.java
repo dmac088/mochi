@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.javabrains.springbootstarter.domain.Brand;
 import io.javabrains.springbootstarter.dto.SidebarFacetDTO;
 import io.javabrains.springbootstarter.services.IBrandService;
+import variables.CategoryVars;
 
 @RestController
 @RequestMapping("/api")
@@ -36,6 +37,6 @@ public class BrandController {
     
     @PostMapping("/Brand/{lcl}/{curr}/category/{categoryDesc}")
     public List<SidebarFacetDTO> getBrands(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody List<SidebarFacetDTO> categoryFacets) {
-    	return brandService.getBrandsForCategory("PRM01", lcl, curr, categoryDesc, categoryFacets);
+    	return brandService.getBrandsForCategory(CategoryVars.PRIMARY_HIERARCHY_CODE, lcl, curr, categoryDesc, categoryFacets);
     }
 }
