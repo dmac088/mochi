@@ -17,8 +17,31 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 	
 	Product findByProductId(Long id);
 
-	
-	Double maxPricesPriceValueBy
+	@Query(
+			value = "WITH RECURSIVE MyCTE AS ( "
+					+ "SELECT cat_id, cat_cd, c.hir_id "
+					+ "FROM mochi.category c "
+					+ "inner join mochi.hierarchy h on c.hir_id = h.hir_id "
+					+ "AND c.cat_id in :categoryIds "
+					+ "AND h.hir_cd = :hierarchyCode  "
+					+ "UNION ALL "
+					+ "SELECT c.cat_id, c.cat_cd, c.hir_id "
+					+ "FROM mochi.category c "
+					+ "inner join mochi.hierarchy h on c.hir_id = h.hir_id "
+					+ "inner join MyCTE ON c.cat_prnt_id = MyCTE.cat_id "
+					+ "WHERE c.cat_prnt_id IS NOT NULL "
+					+ "AND h.hir_cd = :hierarchyCode"
+					+ "AND c.cat_id in :categoryIds) "
+					+ "SELECT count(DISTINCT p.prd_id) "
+					+ "FROM MyCTE c inner join mochi.product_category pc on c.cat_id = pc.cat_id  "
+					+ "inner join mochi.hierarchy h on c.hir_id = h.hir_id "
+					+ "inner join mochi.product p  on pc.prd_id = p.prd_id "
+					+ "inner join mochi.brand b on p.bnd_id = b.bnd_id "
+					+ "WHERE b.bnd_id in :brandIds "
+					+ "AND c.cat_id in :categoryIds "
+					+ "AND h.hir_cd = :hierarchyCode ",
+			nativeQuery = true)	
+	Double maxPricesPriceValueByCategoriesHierarchyCodeAndCategoriesCategoryIdInAndBrandBrandIdIn(@Param("hierarchyCode") String hierarchyCode,@Param("categoryIds") List<Long> categoryIds, @Param("brandIds") List<Long> brandIds);
 	
 	
 	@Query(
