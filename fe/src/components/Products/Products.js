@@ -156,6 +156,17 @@ class Products extends Component {
        return newState;
      })
      .then((newState) => {
+       return  productApi.getMaxPrice(newState.locale, newState.currency, newState.selectedFacets)
+       .then((response) => {
+         return response.text();
+       })
+       .then((responseText) => {
+          newState["facets"] = [...newState["facets"], ...JSON.parse(responseText)];
+       })
+       .catch(() => {console.log('failed to fetch maxprice')});
+       return newState;;
+     })
+     .then((newState) => {
        this.setState({
          ...newState
        });

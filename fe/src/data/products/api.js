@@ -6,14 +6,25 @@ const endPoints = {
 };
 
 export const get = (locale, currency) => 	fetchApi(
-																				 endPoints.get,
-																				 payload,
-																				 {},
-																				 'GET',
-																				 {
+																					 endPoints.get,
+																					 payload,
+																					 {},
+																					 'GET',
+																					 {
 
-																				 }
-																			 );
+																					 }
+																				 );
+
+
+export const getMaxPrice(locale, currency, selectedFacets = [])  => fetchApi(
+																				locale +
+																				'/' + currency
+																				selectedFacets,
+																				{},
+																				'POST',
+																				{"Content-Type": "application/json"}
+																				);
+
 
 export const findById = (locale, currency, productId) => fetchApi(
 																				endPoints.get +
