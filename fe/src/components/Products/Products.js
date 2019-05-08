@@ -93,15 +93,16 @@ class Products extends Component {
   update = (type, locale, currency, pathname, category, term, params, price, maxPrice, isMounting = 0, selectedFacets = [], callback) => {
     if(!params) {return;}
     const { page, size, sort } = params;
+    const noChangePrice = ( currency === this.state.currency
+                            &&  (_.isEqual(selectedFacets, this.state.syncFacets)));
     if(   locale      === this.state.locale
-      &&  currency    === this.state.currency
+      &&  noChangePrice
       &&  category    === this.state.category
       &&  term        === this.state.term
       &&  page        === this.state.params.page
       &&  size        === this.state.params.size
       &&  sort        === this.state.params.sort
       &&  price       === this.state.syncPrice
-      &&  (_.isEqual(selectedFacets, this.state.syncFacets))
       &&  isMounting  === 0
     ) {return;}
     callback(locale, currency, category, term, price+1, page, size, sort, selectedFacets)
@@ -161,6 +162,7 @@ class Products extends Component {
        })
        .then((responseText) => {
           newState["maxPrice"] = JSON.parse(responseText);
+          if(!noChangePrice) {newState["selectedPrice"] = JSON.parse(responseText);}
           return newState;
        })
        .catch((e) => {console.log(e)});
