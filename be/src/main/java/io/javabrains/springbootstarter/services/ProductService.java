@@ -207,12 +207,13 @@ public class ProductService implements IProductService {
 		
 		List<Long> categoryIds =  selectedFacets.stream().filter(f -> f.getFacetingName().equals("CategoryFR")).collect(Collectors.toList()).stream().map(f-> f.getId()).collect(Collectors.toList());
 
-		categoryIds.add(new Long(-1));
-		brandIds.add(new Long(-1));
+		Category c = categoryRepository.findByCategoryCode(CategoryVars.PRIMARY_HIERARCHY_ROOT_CODE);
+		List<Long> bids = brandRepository.findAll().stream().map(b-> b.getBrandId()).collect(Collectors.toList());
+		
+		if (categoryIds.size() <= 0) {categoryIds.add(new Long(c.getCategoryId()));}
+		if(brandIds.size() <= 0) { brandIds.addAll(bids); }
 		
 		Double maxPrice = productRepository.maxPricesPriceValueByPriceCurrenciesCodeCategoriesHierarchyCodeAndCategoriesCategoryIdInAndBrandBrandIdIn(curr, CategoryVars.PRIMARY_HIERARCHY_CODE, categoryIds, brandIds);
-
-		System.out.println("maxPrice = " + maxPrice);
 		
 		return maxPrice;
 	}
