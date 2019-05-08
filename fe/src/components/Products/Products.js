@@ -170,8 +170,8 @@ class Products extends Component {
          ...newState
        });
      })
-     .catch(()=>{
-       console.log('failed reload of product data!');
+     .catch((e)=>{
+       console.log(e);
      });
   }
 
