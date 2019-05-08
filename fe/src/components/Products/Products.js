@@ -76,10 +76,10 @@ class Products extends Component {
 
       //the incoming props are different to the local state
       const isDifferent = (!(term === this.state.category
-                            && brand === this.state.term));
+                           && brand === this.state.term));
 
       const price = (isDifferent) ? maxPrice : selectedPrice;
-      this.update(type, locale, currency, pathname, term, brand, Object.assign(params, qs.parse(search)), price, maxPrice, isMounting, selectedFacets, this.getProducts);
+      this.update(type, locale, currency, pathname, term, brand, Object.assign(params, qs.parse(search)), price, 0, isMounting, selectedFacets, this.getProducts);
     }
 
     if (type === "search") {
@@ -155,7 +155,7 @@ class Products extends Component {
        .catch((e) => {console.log(e)});
      })
      .then((newState) => {
-       return  productApi.getMaxPrice(newState.locale, newState.currency, newState.selectedFacets)
+       return  productApi.getMaxPrice(newState.locale, newState.currency, newState.category, newState.selectedFacets)
        .then((response) => {
          return response.text();
        })

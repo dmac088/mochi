@@ -201,19 +201,20 @@ public class ProductService implements IProductService {
 	}
 	
 	@Override
-	public Double getMaxPrice(String lcl, String curr, List<SidebarFacetDTO> selectedFacets) {
+	public Double getMaxPrice(String lcl, String curr, String category, List<SidebarFacetDTO> selectedFacets) {
+		
+		Category c = categoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, category, CategoryVars.PRIMARY_HIERARCHY_ROOT_CODE);
 		
 		List<Long> brandIds = selectedFacets.stream().filter(f -> f.getFacetingName().equals("BrandFR")).collect(Collectors.toList()).stream().map(f-> f.getId()).collect(Collectors.toList());
 		
 		List<Long> categoryIds =  selectedFacets.stream().filter(f -> f.getFacetingName().equals("CategoryFR")).collect(Collectors.toList()).stream().map(f-> f.getId()).collect(Collectors.toList());
 
-		Category c = categoryRepository.findByCategoryCode(CategoryVars.PRIMARY_HIERARCHY_ROOT_CODE);
 		List<Long> bids = brandRepository.findAll().stream().map(b-> b.getBrandId()).collect(Collectors.toList());
 		
 		if (categoryIds.size() <= 0) {categoryIds.add(new Long(c.getCategoryId()));}
 		if(brandIds.size() <= 0) { brandIds.addAll(bids); }
 		
-		Double maxPrice = productRepository.maxPricesPriceValueByPriceCurrenciesCodeCategoriesHierarchyCodeAndCategoriesCategoryIdInAndBrandBrandIdIn(curr, CategoryVars.PRIMARY_HIERARCHY_CODE, categoryIds, brandIds);
+		Double maxPrice = productRepository.maxPricesPriceValueByPriceCurrenciesCodeAndPricePriceTypeDescAndCategoriesHierarchyCodeAndCategoriesCategoryIdInAndBrandBrandIdIn(curr, "markdown", CategoryVars.PRIMARY_HIERARCHY_CODE, categoryIds, brandIds);
 		
 		return maxPrice;
 	}

@@ -26,7 +26,7 @@ public interface IProductService {
 	 
 	 List<Product> getPreviewProductsForCategory(String lcl, String currency, Long categoryId);
 	
-	 Double getMaxPrice(String lcl, String curr, List<SidebarFacetDTO> selectedFacets);
+	 Double getMaxPrice(String lcl, String curr, String category, List<SidebarFacetDTO> selectedFacets);
 	 
 	 public static List<Category> recurseCategories(List<Category> list, Category category) {
 		if(category == null) { return list; }
@@ -38,6 +38,5 @@ public interface IProductService {
 		});
 		return list; 
 	}
-
 	
 }

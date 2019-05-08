@@ -24,7 +24,9 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 					+ "inner join mochi.hierarchy h on c.hir_id = h.hir_id "
 					+ "AND c.cat_id in :categoryIds "
 					+ "AND h.hir_cd = :hierarchyCode  "
+					
 					+ "UNION ALL "
+					
 					+ "SELECT c.cat_id, c.cat_cd, c.hir_id "
 					+ "FROM mochi.category c "
 					+ "inner join mochi.hierarchy h on c.hir_id = h.hir_id "
@@ -37,14 +39,16 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 					+ "inner join mochi.hierarchy h on c.hir_id = h.hir_id "
 					+ "inner join mochi.product p  on pc.prd_id = p.prd_id "
 					+ "inner join mochi.price prc  on p.prd_id 	= prc.prd_id "
+					+ "inner join mochi.price_type pt on prc.prc_typ_id = pt.prc_typ_id "
 					+ "inner join mochi.currency ccy on prc.ccy_id = ccy.ccy_id "
 					+ "inner join mochi.brand b on p.bnd_id = b.bnd_id "
 					+ "WHERE b.bnd_id in :brandIds "
 					+ "AND h.hir_cd = :hierarchyCode "
 					+ "AND now() between prc.prc_st_dt and prc.prc_en_dt "
+					+ "AND pt.prc_typ_desc = :priceType "
 					+ "AND ccy.ccy_cd = :currency ",
 			nativeQuery = true)	
-	Double maxPricesPriceValueByPriceCurrenciesCodeCategoriesHierarchyCodeAndCategoriesCategoryIdInAndBrandBrandIdIn(@Param("currency") String currency, @Param("hierarchyCode") String hierarchyCode, @Param("categoryIds") List<Long> categoryIds, @Param("brandIds") List<Long> brandIds);
+	Double maxPricesPriceValueByPriceCurrenciesCodeAndPricePriceTypeDescAndCategoriesHierarchyCodeAndCategoriesCategoryIdInAndBrandBrandIdIn(@Param("currency") String currency, @Param("priceType") String priceType, @Param("hierarchyCode") String hierarchyCode, @Param("categoryIds") List<Long> categoryIds, @Param("brandIds") List<Long> brandIds);
 	
 	
 	@Query(

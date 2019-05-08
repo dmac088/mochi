@@ -13,10 +13,11 @@ export const get = (locale, currency) => 	fetchApi(
 																				 	);
 
 
-export const getMaxPrice = (locale, currency, selectedFacets = [])  => fetchApi(
+export const getMaxPrice = (locale, currency, category, selectedFacets = [])  => fetchApi(
 																					endPoints.get+
 																					locale +
 																					'/' + currency +
+																					'/' + category +
 																					'/maxprice',
 																					selectedFacets,
 																					{},
