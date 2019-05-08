@@ -138,7 +138,7 @@ class Products extends Component {
          }
          return newState;
        })
-       .catch(() => {console.log('failed to fetch category children')});
+       .catch((e) => {console.log(e)});
        return newState;
      })
      .then((newState) => {
@@ -152,7 +152,7 @@ class Products extends Component {
          }
          return newState;
        })
-       .catch(() => {console.log('failed to fetch brands')});
+       .catch((e) => {console.log(e)});
        return newState;
      })
      .then((newState) => {
@@ -163,7 +163,7 @@ class Products extends Component {
        .then((responseText) => {
           newState["facets"] = [...newState["facets"], ...JSON.parse(responseText)];
        })
-       .catch(() => {console.log('failed to fetch maxprice')});
+       .catch((e) => {console.log(e)});
        return newState;;
      })
      .then((newState) => {
