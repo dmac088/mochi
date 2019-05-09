@@ -358,13 +358,13 @@ public class ProductService implements IProductService {
 											   });
 		
 		priceFacets.stream().forEach(pf ->     {
-			SidebarFacetDTO pfDto = new SidebarFacetDTO();
-			pfDto.setProductCount(new Long(pf.getCount()));
-			pfDto.setToken(pf.getValue());
-			pfDto.setFacetingName(pf.getFacetingName());
-			pfDto.setFieldName(pf.getFieldName());
-			ps.add(pfDto);
-		});
+													SidebarFacetDTO pfDto = new SidebarFacetDTO();
+													pfDto.setProductCount(new Long(pf.getCount()));
+													pfDto.setToken(pf.getValue());
+													pfDto.setFacetingName(pf.getFacetingName());
+													pfDto.setFieldName(pf.getFieldName());
+													ps.add(pfDto);
+											   });
 		
 		//create parent category Facet DTOs
 		(new HashSet<SidebarFacetDTO>(cs)).stream().forEach(cf -> {
