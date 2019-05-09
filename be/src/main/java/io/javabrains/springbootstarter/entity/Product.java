@@ -82,10 +82,29 @@ public class Product {
 		 ).collect(Collectors.toList()).get(0).getPriceValue();     
 	}
 	
+	@Field
+	@SortableField
+	@Transient
+	public Double getCurrentMarkdownPriceUSD() {
+		 return this.prices.stream().filter(p ->
+		 	p.getStartDate().before(Calendar.getInstance().getTime())
+		 	&& p.getEndDate().after(Calendar.getInstance().getTime())
+		 	&& p.getCurrency().getCode().equals("USD")
+		 	&& p.getType().getDesc().equals("markdown")
+		 ).collect(Collectors.toList()).get(0).getPriceValue();     
+	}
+	
 	@Facet
 	@Field(analyze=Analyze.NO)
 	@Transient
 	public Double getCurrentMarkdownPriceHKDFacet() {
+		return this.getCurrentMarkdownPriceHKD();
+	}
+	
+	@Facet
+	@Field(analyze=Analyze.NO)
+	@Transient
+	public Double getCurrentMarkdownPriceUSDFacet() {
 		return this.getCurrentMarkdownPriceHKD();
 	}
 	
