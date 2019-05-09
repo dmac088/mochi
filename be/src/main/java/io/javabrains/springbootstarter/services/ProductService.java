@@ -233,6 +233,10 @@ public class ProductService implements IProductService {
 			return sf.getFacetingName().equals("BrandFR");
 		}).collect(Collectors.toList());
 		
+		List<SidebarFacetDTO> receivedPriceFacets = selectedFacets.stream().filter(sf -> {
+			return sf.getFacetingName().equals("PriceFR");
+		}).collect(Collectors.toList());
+		
 		FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
 				
 		String transLcl = lcl.substring(0, 2).toUpperCase() + lcl.substring(3, 5).toUpperCase();
@@ -270,7 +274,8 @@ public class ProductService implements IProductService {
 		
 		//declare a set of facets (we need to avoid Duplicates)
 		Set<Facet> categoryFacets = new HashSet<Facet>();
-		Set<Facet> brandFacets = new HashSet<Facet>(); 
+		Set<Facet> brandFacets = new HashSet<Facet>();
+		Set<Facet> priceFacets = new HashSet<Facet>();
 		
 		//create a category faceting request for the base level 
 		FacetingRequest categoryFacetRequest = productQueryBuilder.facet()
@@ -286,9 +291,8 @@ public class ProductService implements IProductService {
 		FacetManager facetMgr = jpaQuery.getFacetManager();
 		facetMgr.enableFaceting(categoryFacetRequest);
 		categoryFacets.addAll(facetMgr.getFacets("CategoryFR"));
-		
-		
 		FacetSelection categoryFacetSelection = facetMgr.getFacetGroup("CategoryFR");
+		
 		
 		//create a brand faceting request for the base level 
 		FacetingRequest brandFacetRequest = productQueryBuilder.facet()
@@ -299,14 +303,24 @@ public class ProductService implements IProductService {
 				.includeZeroCounts(false)
 				.createFacetingRequest();
 
-		
 		//add all the base level facets to brandFacets List
-		facetMgr = jpaQuery.getFacetManager();
 		facetMgr.enableFaceting(brandFacetRequest);
 		brandFacets.addAll(facetMgr.getFacets("BrandFR"));
-		
-		
 		FacetSelection brandFacetSelection = facetMgr.getFacetGroup("BrandFR");
+		
+		
+		FacetingRequest priceFacetRequest = productQueryBuilder.facet()
+				.name("PriceFR")
+				.onField("product.currentMarkdownPriceHKD") //In product class
+				.range()
+				.below(1000)
+				.from(1001).to(1500)
+				.above(1500).excludeLimit()
+				.createFacetingRequest();
+		
+		facetMgr.enableFaceting(priceFacetRequest);
+		priceFacets.addAll(facetMgr.getFacets("PriceFR"));
+		FacetSelection priceFacetSelection = facetMgr.getFacetGroup("PriceFR");
 		
 		//run the query and get the results
 		List<ProductAttribute> results =  jpaQuery.getResultList();
@@ -320,6 +334,7 @@ public class ProductService implements IProductService {
 		//create a hashset of FacetDTOs to send back to the client, with additional metadata
 		final Set<SidebarFacetDTO> cs = new HashSet<SidebarFacetDTO>();
 		final Set<SidebarFacetDTO> bs = new HashSet<SidebarFacetDTO>();
+		final Set<SidebarFacetDTO> ps = new HashSet<SidebarFacetDTO>();
 		
 		//for each of the baseline facets, convert them to Facet DTOs for the client and add them to "s" 
 		categoryFacets.stream().forEach(cf ->  {
@@ -333,14 +348,14 @@ public class ProductService implements IProductService {
 											   });
 		
 		
-		brandFacets.stream().forEach(bf ->  {
+		brandFacets.stream().forEach(bf ->     {
 													SidebarFacetDTO bfDto = convertToBrandSidebarDTO(bf.getValue(), lcl, currency);
 													bfDto.setProductCount(new Long(bf.getCount()));
 													bfDto.setToken(bf.getValue());
 													bfDto.setFacetingName(bf.getFacetingName());
 													bfDto.setFieldName(bf.getFieldName());
 													bs.add(bfDto);
-		});
+											   });
 		
 		//create parent category Facet DTOs
 		(new HashSet<SidebarFacetDTO>(cs)).stream().forEach(cf -> {
@@ -359,10 +374,15 @@ public class ProductService implements IProductService {
 			brandFacets.stream().filter(y -> 
 				x.getToken().equals(y.getValue())).limit(1)).collect(Collectors.toList());
 		
-	
+		List<Facet> lpf = 
+				receivedPriceFacets.stream().flatMap(x -> 
+					priceFacets.stream().filter(y -> 
+						x.getToken().equals(y.getValue())).limit(1)).collect(Collectors.toList());
+		
 		//Apply the selected facets to the facet selection object
-		categoryFacetSelection.selectFacets(FacetCombine.OR, lcf.toArray(new Facet[0]));
-		brandFacetSelection.selectFacets(FacetCombine.OR, lbf.toArray(new Facet[0]));
+		categoryFacetSelection.selectFacets(FacetCombine.OR, 	lcf.toArray(new Facet[0]));
+		brandFacetSelection.selectFacets(FacetCombine.OR, 		lbf.toArray(new Facet[0]));
+		priceFacetSelection.selectFacets(FacetCombine.OR, 		lpf.toArray(new Facet[0]));
 		
 		//set pageable definition for jpaQuery
 		Pageable pageable = PageRequest.of(page, size);
@@ -387,7 +407,6 @@ public class ProductService implements IProductService {
 		
 		src.setFacets(css);
 		src.getFacets().addAll(bs);
-		
 		src.setProducts(pp);
 		
 		return src;
