@@ -311,11 +311,11 @@ public class ProductService implements IProductService {
 		
 		FacetingRequest priceFacetRequest = productQueryBuilder.facet()
 				.name("PriceFR")
-				.onField("product.currentMarkdownPriceHKD") //In product class
+				.onField("product.currentMarkdownPrice" + currency + "Facet") //In product class
 				.range()
-				.below(1000)
-				.from(1001).to(1500)
-				.above(1500).excludeLimit()
+				.below(100)
+				.from(101).to(200)
+				.above(200).excludeLimit()
 				.createFacetingRequest();
 		
 		facetMgr.enableFaceting(priceFacetRequest);
@@ -356,6 +356,15 @@ public class ProductService implements IProductService {
 													bfDto.setFieldName(bf.getFieldName());
 													bs.add(bfDto);
 											   });
+		
+		priceFacets.stream().forEach(pf ->     {
+			SidebarFacetDTO pfDto = new SidebarFacetDTO();
+			pfDto.setProductCount(new Long(pf.getCount()));
+			pfDto.setToken(pf.getValue());
+			pfDto.setFacetingName(pf.getFacetingName());
+			pfDto.setFieldName(pf.getFieldName());
+			ps.add(pfDto);
+		});
 		
 		//create parent category Facet DTOs
 		(new HashSet<SidebarFacetDTO>(cs)).stream().forEach(cf -> {
@@ -407,6 +416,7 @@ public class ProductService implements IProductService {
 		
 		src.setFacets(css);
 		src.getFacets().addAll(bs);
+		src.getFacets().addAll(ps);
 		src.setProducts(pp);
 		
 		return src;
