@@ -21,6 +21,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import org.codehaus.jackson.annotate.JsonBackReference;
 import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
@@ -80,7 +81,14 @@ public class Product {
 		 	&& p.getType().getDesc().equals("markdown")
 		 ).collect(Collectors.toList()).get(0).getPriceValue();     
 	}
-
+	
+	@Facet
+	@Field(analyze=Analyze.NO)
+	@Transient
+	public Double getCurrentMarkdownPriceHKDFacet() {
+		return this.getCurrentMarkdownPriceHKD();
+	}
+	
 	@Transient
 	@Field(analyze = Analyze.NO)
 	@SortableField
