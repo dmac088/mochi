@@ -313,7 +313,7 @@ public class ProductService implements IProductService {
 			cs.add(cfDto);
 		});
 		
-		//run the query for the first time
+		//run the query for the first time with category facets applied
 		List<ProductAttribute> results =  jpaQuery.getResultList();
 		
 		//create a brand faceting request for the base level 
@@ -341,8 +341,15 @@ public class ProductService implements IProductService {
 			bs.add(bfDto);
 		});
 		
+		//sort the results by price to get the max price
+		org.apache.lucene.search.Sort sort = getSortField("priceDesc");
+		jpaQuery.setSort(sort);
+		
 		//run the query again
 		results =  jpaQuery.getResultList();
+		
+		System.out.println("test");
+		System.out.println("the max price is = " + results.get(0).getProduct().getCurrentMarkdownPriceHKD());
 		
 		
 //		results.stream().sorted(Comparator.comparing(ProductAttribute::getProduct())
@@ -415,7 +422,7 @@ public class ProductService implements IProductService {
 		//Apply the selected facets to the facet selection object
 		
 		
-		priceFacetSelection.selectFacets(FacetCombine.OR, 		lpf.toArray(new Facet[0]));
+		//priceFacetSelection.selectFacets(FacetCombine.OR, 		lpf.toArray(new Facet[0]));
 		
 		//set pageable definition for jpaQuery
 		Pageable pageable = PageRequest.of(page, size);
@@ -424,7 +431,7 @@ public class ProductService implements IProductService {
 		jpaQuery.setMaxResults(pageable.getPageSize());
 		
 		//sort the results
-		org.apache.lucene.search.Sort sort = getSortField(sortBy);
+		sort = getSortField(sortBy);
 		jpaQuery.setSort(sort);
 		
 		//get the results using jpaQuery object
