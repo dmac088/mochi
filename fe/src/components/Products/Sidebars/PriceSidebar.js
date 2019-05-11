@@ -8,7 +8,7 @@ export const PriceSidebar = (props) => {
     return (
       <div className="sidebar mb-35">
         <h3 className="sidebar-title">Filter By Price</h3>
-        <p>Value: {(selectedPrice) ? selectedPrice : maxPrice}</p>
+        <p>Value less than: {(selectedPrice) ? selectedPrice : maxPrice}</p>
           <Slider
             onChange={(value) => updateSelectedPrice(value)}
             trackStyle={{ backgroundColor: '#80bb01', height: 10 }}
@@ -22,6 +22,7 @@ export const PriceSidebar = (props) => {
             }}
             min={0}
             max={maxPrice}
+            step={(maxPrice / 4)}
             defaultValue={maxPrice}
             value={(selectedPrice) ? selectedPrice : maxPrice}
             railStyle={{ height: 10 }}/>

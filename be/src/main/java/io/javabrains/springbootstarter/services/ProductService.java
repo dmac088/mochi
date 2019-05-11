@@ -211,6 +211,10 @@ public class ProductService implements IProductService {
 
 		List<Long> bids = brandRepository.findAll().stream().map(b-> b.getBrandId()).collect(Collectors.toList());
 		
+		if(categoryIds == null) { categoryIds = new ArrayList<Long>(); }
+		if(brandIds == null) 	{ brandIds = new ArrayList<Long>(); }
+		if(bids == null) 		{ bids = new ArrayList<Long>(); }
+		
 		if (categoryIds.size() <= 0) {categoryIds.add(new Long(c.getCategoryId()));}
 		if(brandIds.size() <= 0) { brandIds.addAll(bids); }
 		
@@ -314,9 +318,13 @@ public class ProductService implements IProductService {
 		System.out.println(categoryDesc);
 		System.out.println(searchTerm);
 		Double maxPrice = this.getMaxPrice(lcl, currency, 
-											(searchTerm == null) ? CategoryVars.PRIMARY_HIERARCHY_ROOT_DESC : searchTerm
+											categoryDesc
 										  , selectedFacets);
-		Double inc = maxPrice / 3; 
+		
+		System.out.println("maxPrice = " + maxPrice);
+		
+		Double inc = (maxPrice > 0) ? maxPrice / 3 : maxPrice; 
+		
 	
 		
 		Double below = inc, from = inc + new Double(0.01), to = inc * 2, above = to;
