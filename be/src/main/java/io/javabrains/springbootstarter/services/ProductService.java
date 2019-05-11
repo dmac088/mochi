@@ -313,6 +313,9 @@ public class ProductService implements IProductService {
 			cs.add(cfDto);
 		});
 		
+		//run the query for the first time
+		List<ProductAttribute> results =  jpaQuery.getResultList();
+		
 		//create a brand faceting request for the base level 
 		FacetingRequest brandFacetRequest = productQueryBuilder.facet()
 				.name("BrandFR")
@@ -338,8 +341,9 @@ public class ProductService implements IProductService {
 			bs.add(bfDto);
 		});
 		
+		//run the query again
+		results =  jpaQuery.getResultList();
 		
-		List<ProductAttribute> results =  jpaQuery.getResultList();
 		
 //		results.stream().sorted(Comparator.comparing(ProductAttribute::getProduct())
 //		we use the results of the query to get the price ranges
@@ -354,18 +358,18 @@ public class ProductService implements IProductService {
 //		System.out.println("above = " + above);
 		
 		
-		FacetingRequest priceFacetRequest = productQueryBuilder.facet()
-				.name("PriceFR")
-				.onField("product.currentMarkdownPrice" + currency + "Facet") //In product class
-				.range()
-				.below(below)
-				.from(from).to(to)
-				.above(above).excludeLimit()
-				.createFacetingRequest();
+//		FacetingRequest priceFacetRequest = productQueryBuilder.facet()
+//				.name("PriceFR")
+//				.onField("product.currentMarkdownPrice" + currency + "Facet") //In product class
+//				.range()
+//				.below(below)
+//				.from(from).to(to)
+//				.above(above).excludeLimit()
+//				.createFacetingRequest();
 		
-		facetMgr.enableFaceting(priceFacetRequest);
-		priceFacets.addAll(facetMgr.getFacets("PriceFR"));
-		FacetSelection priceFacetSelection = facetMgr.getFacetGroup("PriceFR");
+//		facetMgr.enableFaceting(priceFacetRequest);
+//		priceFacets.addAll(facetMgr.getFacets("PriceFR"));
+//		FacetSelection priceFacetSelection = facetMgr.getFacetGroup("PriceFR");
 		
 		//run the query and get the results
 		results =  jpaQuery.getResultList();
