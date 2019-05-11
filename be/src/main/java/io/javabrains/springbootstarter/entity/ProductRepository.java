@@ -43,12 +43,13 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 					+ "inner join mochi.currency ccy on prc.ccy_id = ccy.ccy_id "
 					+ "inner join mochi.brand b on p.bnd_id = b.bnd_id "
 					+ "WHERE b.bnd_id in :brandIds "
+					+ "AND pt.prc_typ_desc = 'markdown'"
 					+ "AND h.hir_cd = :hierarchyCode "
 					+ "AND now() between prc.prc_st_dt and prc.prc_en_dt "
 					+ "AND pt.prc_typ_desc = :priceType "
 					+ "AND ccy.ccy_cd = :currency ",
 			nativeQuery = true)	
-	Double maxPricesPriceValueByPriceCurrenciesCodeAndPricePriceTypeDescAndCategoriesHierarchyCodeAndCategoriesCategoryIdInAndBrandBrandIdIn(@Param("currency") String currency, @Param("priceType") String priceType, @Param("hierarchyCode") String hierarchyCode, @Param("categoryIds") List<Long> categoryIds, @Param("brandIds") List<Long> brandIds);
+	Double maxMarkdownPricesPriceValueByPriceCurrenciesCodeAndPricePriceTypeDescAndCategoriesHierarchyCodeAndCategoriesCategoryIdInAndBrandBrandIdIn(@Param("currency") String currency, @Param("priceType") String priceType, @Param("hierarchyCode") String hierarchyCode, @Param("categoryIds") List<Long> categoryIds, @Param("brandIds") List<Long> brandIds);
 	
 	
 	@Query(
