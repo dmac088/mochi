@@ -34,7 +34,7 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 					+ "WHERE c.cat_prnt_id IS NOT NULL "
 					+ "AND h.hir_cd = :hierarchyCode) "
 					
-					+ "SELECT MAX(prc.prc_val) "
+					+ "SELECT coalesce(MAX(prc.prc_val), 0) "
 					+ "FROM MyCTE c inner join mochi.product_category pc on c.cat_id = pc.cat_id  "
 					+ "inner join mochi.hierarchy h on c.hir_id = h.hir_id "
 					+ "inner join mochi.product p  on pc.prd_id = p.prd_id "
@@ -91,7 +91,7 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 				+ "inner join MyCTE ON c.cat_prnt_id = MyCTE.cat_id "
 				+ "WHERE c.cat_prnt_id IS NOT NULL "
 				+ "AND h.hir_cd = :hierarchyCode) "
-				+ "SELECT max(prc.prc_val) "
+				+ "SELECT coalesce(MAX(prc.prc_val), 0) "
 				+ "FROM MyCTE c "
 				+ "inner join mochi.hierarchy h on c.hir_id = h.hir_id "
 				+ "inner join mochi.product_category pc on c.cat_id = pc.cat_id  "
