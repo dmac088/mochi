@@ -234,7 +234,7 @@ public class ProductService implements IProductService {
 		
 		List<SidebarFacetDTO> receivedCategoryFacets = selectedFacets.stream().filter(sf -> {return sf.getFacetingName().equals("CategoryFR");}).collect(Collectors.toList());
 		List<SidebarFacetDTO> receivedBrandFacets = selectedFacets.stream().filter(sf -> {return sf.getFacetingName().equals("BrandFR");}).collect(Collectors.toList());
-		List<SidebarFacetDTO> receivedPriceFacets = selectedFacets.stream().filter(sf -> {return sf.getFacetingName().equals("PriceFR");}).collect(Collectors.toList());
+		//List<SidebarFacetDTO> receivedPriceFacets = selectedFacets.stream().filter(sf -> {return sf.getFacetingName().equals("PriceFR");}).collect(Collectors.toList());
 		
 		FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
 				
@@ -271,9 +271,16 @@ public class ProductService implements IProductService {
 		
 		//declare a set of facets (we need to avoid Duplicates)
 		Set<Facet> categoryFacets = new HashSet<Facet>();
+		Set<Facet> brandFacets = new HashSet<Facet>(); 
+		FacetingRequest facetRequest;
+		FacetManager facetMgr;
+		FacetSelection facetSelection;
+		final Set<SidebarFacetDTO> cs, bs;
+		List<ProductAttribute> results;
+		List<Facet> lcf, lbf;
 		
 		//create a category faceting request for the base level 
-		FacetingRequest categoryFacetRequest = productQueryBuilder.facet()
+		facetRequest = productQueryBuilder.facet()
 				.name("CategoryFR")
 				.onField("primaryCategory.categoryToken") //in category class
 				.discrete()
@@ -283,13 +290,13 @@ public class ProductService implements IProductService {
 				.createFacetingRequest();
 		
 		//add all the base level facets to categoryFacets List
-		FacetManager facetMgr = jpaQuery.getFacetManager();
-		facetMgr.enableFaceting(categoryFacetRequest);
+		facetMgr = jpaQuery.getFacetManager();
+		facetMgr.enableFaceting(facetRequest);
 		categoryFacets.addAll(facetMgr.getFacets("CategoryFR"));
-		FacetSelection categoryFacetSelection = facetMgr.getFacetGroup("CategoryFR");
-		List<Facet> lcf = receivedCategoryFacets.stream().flatMap(x -> categoryFacets.stream().filter(y -> x.getToken().equals(y.getValue())).limit(1)).collect(Collectors.toList());
+		facetSelection = facetMgr.getFacetGroup("CategoryFR");
+		lcf = receivedCategoryFacets.stream().flatMap(x -> categoryFacets.stream().filter(y -> x.getToken().equals(y.getValue())).limit(1)).collect(Collectors.toList());
 				
-		final Set<SidebarFacetDTO> cs = new HashSet<SidebarFacetDTO>();
+		cs = new HashSet<SidebarFacetDTO>();
 		categoryFacets.stream().forEach(cf ->  {
 			String categoryCode = (new LinkedList<String>(Arrays.asList(cf.getValue().split("/")))).getLast();
 			SidebarFacetDTO cfDto = convertToCategorySidebarDTO(categoryCode, lcl, currency);
@@ -300,18 +307,17 @@ public class ProductService implements IProductService {
 			cs.add(cfDto);
 		});
 		
-		categoryFacetSelection.selectFacets(FacetCombine.OR, lcf.toArray(new Facet[0]));
-		
 		//create parent category Facet DTOs
 		(new HashSet<SidebarFacetDTO>(cs)).stream().forEach(cf -> {
 			createParentCategoryFacets(categoryFacets, cs, cf, productQueryBuilder, jpaQuery, lcl, currency, cf.getLevel());
 		});
 		
-		//run the query for the first time with category facets applied
-		List<ProductAttribute> results =  jpaQuery.getResultList();
+		facetSelection.selectFacets(FacetCombine.OR, lcf.toArray(new Facet[0]));
 		
-		Set<Facet> brandFacets = new HashSet<Facet>(); 
-		FacetingRequest brandFacetRequest = productQueryBuilder.facet()
+		results =  jpaQuery.getResultList();
+		
+		
+		facetRequest = productQueryBuilder.facet()
 				.name("BrandFR")
 				.onField("brandCode") //in product class
 				.discrete()
@@ -320,11 +326,11 @@ public class ProductService implements IProductService {
 				.createFacetingRequest();
 
 		//add all the base level facets to brandFacets List
-		facetMgr.enableFaceting(brandFacetRequest);
+		facetMgr.enableFaceting(facetRequest);
 		brandFacets.addAll(facetMgr.getFacets("BrandFR"));
-		FacetSelection brandFacetSelection = facetMgr.getFacetGroup("BrandFR");
-		List<Facet> lbf = receivedBrandFacets.stream().flatMap(x -> brandFacets.stream().filter(y -> x.getToken().equals(y.getValue())).limit(1)).collect(Collectors.toList());
-		final Set<SidebarFacetDTO> bs = new HashSet<SidebarFacetDTO>();
+		facetSelection = facetMgr.getFacetGroup("BrandFR");
+		lbf = receivedBrandFacets.stream().flatMap(x -> brandFacets.stream().filter(y -> x.getToken().equals(y.getValue())).limit(1)).collect(Collectors.toList());
+		bs = new HashSet<SidebarFacetDTO>();
 		brandFacets.stream().forEach(bf ->     {
 			SidebarFacetDTO bfDto = convertToBrandSidebarDTO(bf.getValue(), lcl, currency);
 			bfDto.setProductCount(new Long(bf.getCount()));
@@ -334,7 +340,7 @@ public class ProductService implements IProductService {
 			bs.add(bfDto);
 		});
 		
-		brandFacetSelection.selectFacets(FacetCombine.OR, 		lbf.toArray(new Facet[0]));
+		facetSelection.selectFacets(FacetCombine.OR, 		lbf.toArray(new Facet[0]));
 		
 		//sort the results by price to get the max price
 		org.apache.lucene.search.Sort sort = getSortField("priceDesc");
