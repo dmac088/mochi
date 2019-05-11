@@ -315,25 +315,20 @@ public class ProductService implements IProductService {
 		brandFacets.addAll(facetMgr.getFacets("BrandFR"));
 		FacetSelection brandFacetSelection = facetMgr.getFacetGroup("BrandFR");
 		
-		System.out.println(categoryDesc);
-		System.out.println(searchTerm);
-		Double maxPrice = this.getMaxPrice(lcl, currency, 
-											categoryDesc
-										  , selectedFacets);
 		
-		System.out.println("maxPrice = " + maxPrice);
+		List<ProductAttribute> results =  jpaQuery.getResultList();
 		
-		Double inc = (maxPrice > 0) ? maxPrice / 3 : maxPrice; 
 		
-	
-		
-		Double below = inc, from = inc + new Double(0.01), to = inc * 2, above = to;
-		
-		System.out.println("maxPrice = " + maxPrice);
-		System.out.println("below = " + below);
-		System.out.println("from = " + from);
-		System.out.println("to = " + to);
-		System.out.println("above = " + above);
+//		we use the results of the query to get the price ranges
+//		Double inc = (maxPrice > 0) ? maxPrice / 3 : maxPrice; 
+//		
+//		Double below = inc, from = inc + new Double(0.01), to = inc * 2, above = to;
+//		
+//		System.out.println("maxPrice = " + maxPrice);
+//		System.out.println("below = " + below);
+//		System.out.println("from = " + from);
+//		System.out.println("to = " + to);
+//		System.out.println("above = " + above);
 		
 		
 		FacetingRequest priceFacetRequest = productQueryBuilder.facet()
@@ -350,7 +345,7 @@ public class ProductService implements IProductService {
 		FacetSelection priceFacetSelection = facetMgr.getFacetGroup("PriceFR");
 		
 		//run the query and get the results
-		List<ProductAttribute> results =  jpaQuery.getResultList();
+		results =  jpaQuery.getResultList();
 	
 		//convert the results to product DTOs and store in a list
 		//List<Product> lp;// = results.stream().map(pa -> this.convertToProductDO(pa.getProduct(), lcl, currency)).collect(Collectors.toList());
