@@ -214,17 +214,18 @@ public class ProductService implements IProductService {
 		if (categoryIds.size() <= 0) {categoryIds.add(new Long(c.getCategoryId()));}
 		if(brandIds.size() <= 0) { brandIds.addAll(bids); }
 		
-		Double maxPrice = productRepository.maxPricesPriceValueByPriceCurrenciesCodeAndPricePriceTypeDescAndCategoriesHierarchyCodeAndCategoriesCategoryIdInAndBrandBrandIdIn(curr, "markdown", CategoryVars.PRIMARY_HIERARCHY_CODE, categoryIds, brandIds);
+		Double maxPrice = productRepository.maxMarkdownPricesPriceValueByPriceCurrenciesCodeAndPricePriceTypeDescAndCategoriesHierarchyCodeAndCategoriesCategoryIdInAndBrandBrandIdIn(curr, "markdown", CategoryVars.PRIMARY_HIERARCHY_CODE, categoryIds, brandIds);
 		
 		maxPrice = (maxPrice == null) ? 0 : maxPrice;
 		
 		return maxPrice;
 	}
+	
 
 
 	@SuppressWarnings("unchecked")
 	@Override
-	@Cacheable
+	//@Cacheable
 	public SearchDTO findProduct(String lcl, String currency, String categoryDesc, String searchTerm, int page, int size, String sortBy, List<SidebarFacetDTO> selectedFacets) {		
 		
 		List<SidebarFacetDTO> receivedCategoryFacets = selectedFacets.stream().filter(sf -> {
@@ -310,14 +311,30 @@ public class ProductService implements IProductService {
 		brandFacets.addAll(facetMgr.getFacets("BrandFR"));
 		FacetSelection brandFacetSelection = facetMgr.getFacetGroup("BrandFR");
 		
+		System.out.println(categoryDesc);
+		System.out.println(searchTerm);
+		Double maxPrice = this.getMaxPrice(lcl, currency, 
+											(searchTerm == null) ? CategoryVars.PRIMARY_HIERARCHY_ROOT_DESC : searchTerm
+										  , selectedFacets);
+		Double inc = maxPrice / 3; 
+	
+		
+		Double below = inc, from = inc + new Double(0.01), to = inc * 2, above = to;
+		
+		System.out.println("maxPrice = " + maxPrice);
+		System.out.println("below = " + below);
+		System.out.println("from = " + from);
+		System.out.println("to = " + to);
+		System.out.println("above = " + above);
+		
 		
 		FacetingRequest priceFacetRequest = productQueryBuilder.facet()
 				.name("PriceFR")
 				.onField("product.currentMarkdownPrice" + currency + "Facet") //In product class
 				.range()
-				.below(100)
-				.from(101).to(200)
-				.above(200).excludeLimit()
+				.below(below)
+				.from(from).to(to)
+				.above(above).excludeLimit()
 				.createFacetingRequest();
 		
 		facetMgr.enableFaceting(priceFacetRequest);
@@ -336,7 +353,7 @@ public class ProductService implements IProductService {
 		//create a hashset of FacetDTOs to send back to the client, with additional metadata
 		final Set<SidebarFacetDTO> cs = new HashSet<SidebarFacetDTO>();
 		final Set<SidebarFacetDTO> bs = new HashSet<SidebarFacetDTO>();
-		final Set<SidebarFacetDTO> ps = new HashSet<SidebarFacetDTO>();
+		final List<SidebarFacetDTO> ps = new ArrayList<SidebarFacetDTO>();
 		
 		//for each of the baseline facets, convert them to Facet DTOs for the client and add them to "s" 
 		categoryFacets.stream().forEach(cf ->  {
@@ -386,9 +403,9 @@ public class ProductService implements IProductService {
 				x.getToken().equals(y.getValue())).limit(1)).collect(Collectors.toList());
 		
 		List<Facet> lpf = 
-				receivedPriceFacets.stream().flatMap(x -> 
-					priceFacets.stream().filter(y -> 
-						x.getToken().equals(y.getValue())).limit(1)).collect(Collectors.toList());
+		receivedPriceFacets.stream().flatMap(x -> 
+			priceFacets.stream().filter(y -> 
+				x.getToken().equals(y.getValue())).limit(1)).collect(Collectors.toList());
 		
 		//Apply the selected facets to the facet selection object
 		categoryFacetSelection.selectFacets(FacetCombine.OR, 	lcf.toArray(new Facet[0]));

@@ -112,9 +112,7 @@ public class Product {
 	@Field(analyze = Analyze.NO)
 	@SortableField
 	private String getProductDesc() {
-		return this.attributes.stream().filter(p ->
-	 	p.getLclCd().equals("en-GB")
-	 ).collect(Collectors.toList()).get(0).getProductDesc().toLowerCase();  
+		return this.attributes.stream().filter(p -> p.getLclCd().equals("en-GB")).collect(Collectors.toList()).get(0).getProductDesc().toLowerCase();  
 	}
 	
 	
