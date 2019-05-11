@@ -232,17 +232,9 @@ public class ProductService implements IProductService {
 	//@Cacheable
 	public SearchDTO findProduct(String lcl, String currency, String categoryDesc, String searchTerm, int page, int size, String sortBy, List<SidebarFacetDTO> selectedFacets) {		
 		
-		List<SidebarFacetDTO> receivedCategoryFacets = selectedFacets.stream().filter(sf -> {
-			return sf.getFacetingName().equals("CategoryFR");
-		}).collect(Collectors.toList());
-		
-		List<SidebarFacetDTO> receivedBrandFacets = selectedFacets.stream().filter(sf -> {
-			return sf.getFacetingName().equals("BrandFR");
-		}).collect(Collectors.toList());
-		
-		List<SidebarFacetDTO> receivedPriceFacets = selectedFacets.stream().filter(sf -> {
-			return sf.getFacetingName().equals("PriceFR");
-		}).collect(Collectors.toList());
+		List<SidebarFacetDTO> receivedCategoryFacets = selectedFacets.stream().filter(sf -> {return sf.getFacetingName().equals("CategoryFR");}).collect(Collectors.toList());
+		List<SidebarFacetDTO> receivedBrandFacets = selectedFacets.stream().filter(sf -> {return sf.getFacetingName().equals("BrandFR");}).collect(Collectors.toList());
+		List<SidebarFacetDTO> receivedPriceFacets = selectedFacets.stream().filter(sf -> {return sf.getFacetingName().equals("PriceFR");}).collect(Collectors.toList());
 		
 		FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
 				
@@ -275,8 +267,7 @@ public class ProductService implements IProductService {
 													.createQuery();
 		
 		
-		org.hibernate.search.jpa.FullTextQuery jpaQuery
-		  = fullTextEntityManager.createFullTextQuery(searchQuery, ProductAttribute.class);
+		org.hibernate.search.jpa.FullTextQuery jpaQuery = fullTextEntityManager.createFullTextQuery(searchQuery, ProductAttribute.class);
 		
 		//declare a set of facets (we need to avoid Duplicates)
 		Set<Facet> categoryFacets = new HashSet<Facet>();
