@@ -24,9 +24,16 @@ import _ from 'lodash';
   //   });
   // }
 
-  const renderChevron = () => {
+  const renderChevron = (facet, routeProps, props) => {
     return (
-      <i style={{"marginLeft": "10px"}} className="fa fa-chevron-right"></i>
+      <a
+        className="isParent"
+        id={facet.desc}
+        onClick={(e) => {
+                        e.preventDefault();
+                        changeCategory(e, routeProps);
+                      }}>
+      </a>
     );
   }
 
@@ -38,20 +45,20 @@ import _ from 'lodash';
 
       const margin = (facet.level - minLevel) * 15;
       return(
-        <li key={facet.id}>
-          <a className={(props.isActive(facet, selectedFacets, facets)) ? "active" : ""}
-             onClick={(e) => {
-                                e.preventDefault();
-                                props.applyFacet(e, routeProps);
-                             }}
-             id={facet.token} href="#"
-             style={{"marginLeft": margin}}>
-            {facet.desc} ({facet.productCount})
-          </a>
-            {(facet.parent)
-            ? renderChevron()
-            : null}
-        </li>
+        <React.Fragment>
+          <li key={facet.id}>
+            <a className={(props.isActive(facet, selectedFacets, facets)) ? "active" : ""}
+               onClick={(e) => {
+                                  e.preventDefault();
+                                  props.applyFacet(e, routeProps);
+                               }}
+               id={facet.token} href="#"
+               style={{"marginLeft": margin}}>
+              {facet.desc} ({facet.productCount})
+            </a>
+            {(facet.parent) ? renderChevron(facet, routeProps, props) : null}
+          </li>
+        </React.Fragment>
       );
     });
   }
