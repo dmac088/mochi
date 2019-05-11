@@ -50,6 +50,26 @@
                         width: 15px;
                     }
 
+                    &.isParent {
+                      &:before {
+                        border: 0px solid #e0e0e0;
+                        color: #e0e0e0;
+                        content: '\f054';
+                        display: inline-block;
+                        font-family: FontAwesome;
+                        font-size: 15px;
+                        height: 15px;
+                        line-height: 14px;
+                        margin-right: 10px;
+                        margin-left: 10px;
+                        position: relative;
+                        text-align: center;
+                        top: -2px;
+                        vertical-align: middle;
+                        width: 15px;
+                      }
+                    }
+
                     &:hover,
                     &.active {
                         color: $theme-color;
