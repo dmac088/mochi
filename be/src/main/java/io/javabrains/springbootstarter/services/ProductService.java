@@ -216,6 +216,8 @@ public class ProductService implements IProductService {
 		
 		Double maxPrice = productRepository.maxPricesPriceValueByPriceCurrenciesCodeAndPricePriceTypeDescAndCategoriesHierarchyCodeAndCategoriesCategoryIdInAndBrandBrandIdIn(curr, "markdown", CategoryVars.PRIMARY_HIERARCHY_CODE, categoryIds, brandIds);
 		
+		maxPrice = (maxPrice == null) ? 0 : maxPrice;
+		
 		return maxPrice;
 	}
 
