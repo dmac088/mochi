@@ -26,19 +26,40 @@ import _ from 'lodash';
 
   const renderFacets = (selectedFacets, routeProps, props) => {
     return selectedFacets.map(facet => {
-      return(
+      return (
         <li key={facet.id}>
           <a className="active"
              onClick={(e) => {
                                 e.preventDefault();
                                 props.applyFacet(e, routeProps);
                              }}
-             id={facet.token} href="#">
+             id={facet.token}
+             href="#">
             {facet.desc} ({facet.productCount})
           </a>
         </li>
       );
     });
+  }
+
+  const renderCategories = (categoryFacets, routeProps, props) => {
+    if(!categoryFacets) { return null }
+    return (
+      <React.Fragment>
+        <p>Categories</p>
+        {renderFacets(categoryFacets, routeProps, props)}
+      </React.Fragment>
+    );
+  }
+
+  const renderBrands = (brandFacets, routeProps, props) => {
+    if(!brandFacets) { return null }
+    return (
+      <React.Fragment>
+        <p>Brands</p>
+        {renderFacets(brandFacets, routeProps, props)}
+      </React.Fragment>
+    );
   }
 
   export const SelectionSidebar = withRouter(({location, match, history, ...props}) => {
@@ -49,7 +70,9 @@ import _ from 'lodash';
       <div className="sidebar mb-35">
         <h3 className="sidebar-title">SELECTIONS</h3>
         <ul className="selected-categories">
-          {renderFacets(selectedFacets, routeProps, props)}
+          {renderCategories(selectedFacets.filter(o => o.facetingName === "CategoryFR"), routeProps, props)}
+          <br/>
+          {renderBrands(selectedFacets.filter(o => o.facetingName === "BrandFR"), routeProps, props)}
         </ul>
       </div>
     );
