@@ -43,7 +43,7 @@ import _ from 'lodash';
   }
 
   const renderCategories = (categoryFacets, routeProps, props) => {
-    if(!categoryFacets) { return null }
+    if(categoryFacets.length === 0) { return null }
     return (
       <React.Fragment>
         <p>Categories</p>
@@ -53,7 +53,7 @@ import _ from 'lodash';
   }
 
   const renderBrands = (brandFacets, routeProps, props) => {
-    if(!brandFacets) { return null }
+    if(brandFacets.length === 0) { return null }
     return (
       <React.Fragment>
         <p>Brands</p>
