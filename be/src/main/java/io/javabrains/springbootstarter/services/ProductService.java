@@ -307,6 +307,7 @@ public class ProductService implements IProductService {
 			SidebarFacetDTO cfDto = convertToCategorySidebarDTO(categoryCode, lcl, currency);
 			cfDto.setProductCount(new Long(cf.getCount()));
 			cfDto.setToken(cf.getValue());
+			cfDto.setFacetType("discrete");
 			cfDto.setFacetingName(cf.getFacetingName());
 			cfDto.setFieldName(cf.getFieldName());
 			cs.add(cfDto);
@@ -339,6 +340,7 @@ public class ProductService implements IProductService {
 			SidebarFacetDTO bfDto = convertToBrandSidebarDTO(bf.getValue(), lcl, currency);
 			bfDto.setProductCount(new Long(bf.getCount()));
 			bfDto.setToken(bf.getValue());
+			bfDto.setFacetType("discrete");
 			bfDto.setFacetingName(bf.getFacetingName());
 			bfDto.setFieldName(bf.getFieldName());
 			bs.add(bfDto);
@@ -372,6 +374,7 @@ public class ProductService implements IProductService {
 			SidebarFacetDTO cfDto = convertToCategorySidebarDTO(categoryCode, lcl, currency);
 			cfDto.setProductCount(new Long(cf.getCount()));
 			cfDto.setToken(cf.getValue());
+			cfDto.setFacetType("discrete");
 			cfDto.setFacetingName(cf.getFacetingName());
 			cfDto.setFieldName(cf.getFieldName());
 			cs.add(cfDto);
@@ -445,6 +448,7 @@ public class ProductService implements IProductService {
 													SidebarFacetDTO pfDto = new SidebarFacetDTO();
 													pfDto.setProductCount(new Long(pf.getCount()));
 													pfDto.setToken(pf.getValue());
+													pfDto.setFacetType("range");
 													pfDto.setFacetingName(pf.getFacetingName());
 													pfDto.setFieldName(pf.getFieldName());
 													ps.add(pfDto);
@@ -526,6 +530,7 @@ public class ProductService implements IProductService {
     	cfs.addAll(facetMgr.getFacets(frName));
     	facetMgr.enableFaceting(categoryFacetRequest);
     	pcf.setToken(String.join("/", Arrays.copyOfRange(c.getToken().split("/"), 0, c.getLevel().intValue()+1)));
+    	pcf.setFacetType("discrete");
     	Facet tmp = facetMgr.getFacets(frName).stream().filter(f -> f.getValue().equals(pcf.getToken())).collect(Collectors.toList()).get(0);
     	pcf.setProductCount(new Long(tmp.getCount()));
 		pcf.setFacetingName(tmp.getFacetingName());

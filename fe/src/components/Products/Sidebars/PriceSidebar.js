@@ -4,7 +4,8 @@ import qs from 'query-string';
 import 'rc-slider/assets/index.css';
 
 export const PriceSidebar = (props) => {
-    const { maxPrice, selectedPrice, updateSelectedPrice } = props;
+    const { maxPrice, selectedPrice, updateSelectedPrice, facets } = props;
+    console.log(facets);
     return (
       <div className="sidebar mb-35">
         <h3 className="sidebar-title">Filter By Price</h3>
@@ -14,6 +15,7 @@ export const PriceSidebar = (props) => {
   }
 
 const priceSlider = (maxPrice, selectedPrice, updateSelectedPrice ) => {
+
   return (
     <React.Fragment>
       <p>Value less than: {(selectedPrice) ? selectedPrice : maxPrice}</p>
