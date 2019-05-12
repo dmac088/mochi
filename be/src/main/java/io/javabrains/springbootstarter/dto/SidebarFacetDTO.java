@@ -14,6 +14,8 @@ public class SidebarFacetDTO {
 	
 	private String facetToken;
 	
+	private String facetType;
+
 	private Long level;
 	
 	private Long productCount;
@@ -77,6 +79,14 @@ public class SidebarFacetDTO {
 	public void setToken(String facetToken) {
 		this.facetToken = facetToken;
 	}
+	
+	public String getFacetType() {
+		return facetType;
+	}
+
+	public void setFacetType(String facetType) {
+		this.facetType = facetType;
+	}
 
 	public Long getProductCount() {
 		return productCount;
@@ -85,7 +95,6 @@ public class SidebarFacetDTO {
 	public void setProductCount(Long productCount) {
 		this.productCount = productCount;
 	}
-	
 
 	public boolean isParent() {
 		return parent;

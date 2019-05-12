@@ -85,6 +85,8 @@ public class CategoryService implements ICategoryService {
     	
     	CategoryAttribute ca = categoryAttributeRepository.findByCategoryHierarchyCodeAndLclCdAndCategoryDesc(hierarchyCode, lcl, categoryDesc);
     	
+    	if(ca == null) {return null;}
+    	
     	List<Long> brandIds = brandFacets.stream().map(b -> { return b.getId(); }).collect(Collectors.toList());
     	
 		List<io.javabrains.springbootstarter.entity.Category> lc;
