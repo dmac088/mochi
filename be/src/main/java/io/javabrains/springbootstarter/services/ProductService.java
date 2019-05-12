@@ -1,5 +1,6 @@
 package io.javabrains.springbootstarter.services;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -32,6 +33,9 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import com.google.common.collect.Lists;
+
 import org.springframework.data.domain.Sort;
 import io.javabrains.springbootstarter.domain.Product;
 import io.javabrains.springbootstarter.dto.SearchDTO;
@@ -387,17 +391,36 @@ public class ProductService implements IProductService {
 		results =  jpaQuery.getResultList();
 		
 		Double maxPrice = results.get(0).getProduct().getCurrentMarkdownPriceHKD();
+		Double minPrice = Lists.reverse(results).get(0).getProduct().getCurrentMarkdownPriceHKD();
 		System.out.println("the max price is = " + maxPrice);
+		System.out.println("the min price is = " + minPrice);
 		
-		Double inc = (maxPrice > 0) ? maxPrice / 3 : maxPrice; 		
-		Double below = inc, from = inc + new Double(0.01), to = inc * 2, above = to;
+		Double inc = (maxPrice > 0) ? (maxPrice - 
+						((minPrice.equals(maxPrice)) ? 0 : minPrice)  
+				) / 4 : maxPrice;
+		
+		inc = new BigDecimal(inc).setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
+		
+		Double 	below 	= inc, 
+				froma 	= (new BigDecimal(inc + new Double(0.01)).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()), 
+				toa 	= (new BigDecimal(inc * 2).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()), 
+				fromb 	= (toa + new Double(0.01)),
+				tob 	= (new BigDecimal(inc * 4).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()),
+				above 	= tob;
+		
+		
+		System.out.println("below = " + below);
+		System.out.println("from = " + (froma + (new BigDecimal(0.01).setScale(2, BigDecimal.ROUND_DOWN).doubleValue())));
+		System.out.println("to = " + inc * 2);
+		System.out.println("above = " + toa);
 		
 		FacetingRequest priceFacetRequest = productQueryBuilder.facet()
 				.name("PriceFR")
 				.onField("product.currentMarkdownPrice" + currency + "Facet") //In product class
 				.range()
 				.below(below)
-				.from(from).to(to)
+				.from(froma).to(toa)
+				.from(fromb).to(tob)
 				.above(above).excludeLimit()
 				.createFacetingRequest();
 		
