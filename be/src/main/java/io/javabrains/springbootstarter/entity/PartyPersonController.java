@@ -19,25 +19,21 @@ public class PartyPersonController {
 	
 	@GetMapping("/Person")
     public List<PartyPerson> getAllPersons() {
-		System.out.println("calling getAllPersons");
         return personService.getAllPersons();
     }	
 	
 	@GetMapping("/Person/{id}")
 	public PartyPerson getPerson(@PathVariable Long id) {
-		System.out.println("calling getPerson");
 		return personService.getPerson(id);
 	}
 	
 	@PutMapping("/Person/{id}")
 	public void updatePerson(@RequestBody PartyPerson person, @PathVariable Long id) {
-		System.out.println("calling updatePerson");
 		personService.updatePerson(id, person);
 	}
 
 	@DeleteMapping("/Person/{id}")
 	public void deletePerson(@PathVariable Long id) { 
-		System.out.println("calling deletePerson");
 		personService.deletePerson(id);
 	}
 	

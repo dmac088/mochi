@@ -64,11 +64,6 @@ public class BrandService implements IBrandService {
 		List<Category> allChildCategories = IProductService.recurseCategories(new ArrayList<Category>(), ca.getCategory().get());
 		List<Long> allChildIds = allChildCategories.stream().map(c -> c.getCategoryId()).collect(Collectors.toList());
 		
-		allChildIds.stream().forEach(id -> 
-		{
-			System.out.println(id);
-		});
-		
 		List<Long> selectedCategoryIds = 
 				(categoryFacets.size() > 0) 
 				? categoryFacets.stream().map(c -> { return c.getId(); }).collect(Collectors.toList())

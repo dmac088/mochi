@@ -16,8 +16,6 @@ public class RoleCustomerCustomRepository implements RoleCustomerRepository {
 
 	@SuppressWarnings("unchecked")
 	public RoleCustomer save(RoleCustomer entity) {
-    	System.out.println("calling CustomCustomerRepository.save()");
-    	System.out.println("Customer Number = " + entity.getCustomerNumber());
     	customerRepository.save(entity);
     	return entity;
     }

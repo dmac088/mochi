@@ -18,7 +18,6 @@ public class UserController {
 	
 	@GetMapping("/User/{username}")
 	public UserDetails getUser(@PathVariable String username) {
-		System.out.println("calling getUser");
 		return userService.loadUserByUsername(username);
 	}
 	

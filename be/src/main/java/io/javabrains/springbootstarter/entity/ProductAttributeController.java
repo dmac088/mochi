@@ -38,14 +38,12 @@ public class ProductAttributeController {
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.POST, value="/ProductAttribute")
 	public void addProductAttribute(ProductAttribute product) {	
-		System.out.println("calling addProductAttribute");
 		productAttributeService.addProductAttribute(product);
 	}
 	
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.PUT, value="/ProductAttribute/{id}")
 	public void updateProductAttribute(@RequestBody ProductAttribute ProductAttribute, @PathVariable Long id) {
-		System.out.println("calling updateProductAttribute");
 		productAttributeService.updateProductAttribute(id, ProductAttribute);
 	}
 	

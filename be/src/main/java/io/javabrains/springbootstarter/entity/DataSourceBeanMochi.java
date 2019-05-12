@@ -35,8 +35,7 @@ public class DataSourceBeanMochi {
 	@Primary
 	@Bean(name = "mochiDataSource")
     public DataSource dataSource() {
-		System.out.println("calling getDataSource " + env.getProperty("spring.datasource.mochi.url"));
-        return DataSourceBuilder
+		return DataSourceBuilder
                 .create()
                 .url(env.getProperty("spring.datasource.mochi.url")) 
                 .username(env.getProperty("spring.datasource.mochi.username"))
