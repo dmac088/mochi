@@ -362,12 +362,12 @@ public class ProductService implements IProductService {
 		//add all the base level facets to categoryFacets List
 		facetMgr = jpaQuery.getFacetManager();
 		facetMgr.enableFaceting(facetRequest);
-		categoryFacets.removeAll(new HashSet<Facet>(categoryFacets));
+		categoryFacets.removeAll(categoryFacets);
 		categoryFacets.addAll(facetMgr.getFacets("CategoryFR"));
 		facetSelection = facetMgr.getFacetGroup("CategoryFR");
 		lcf = receivedCategoryFacets.stream().flatMap(x -> categoryFacets.stream().filter(y -> x.getToken().equals(y.getValue())).limit(1)).collect(Collectors.toList());
 				
-		cs.removeAll(new HashSet<SidebarFacetDTO>(cs));
+		cs.removeAll(cs);
 		categoryFacets.stream().forEach(cf ->  {
 			String categoryCode = (new LinkedList<String>(Arrays.asList(cf.getValue().split("/")))).getLast();
 			SidebarFacetDTO cfDto = convertToCategorySidebarDTO(categoryCode, lcl, currency);
