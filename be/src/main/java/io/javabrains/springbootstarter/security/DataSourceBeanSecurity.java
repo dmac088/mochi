@@ -29,8 +29,7 @@ public class DataSourceBeanSecurity {
 	
 	@Bean(name = "securityDataSource")
     public DataSource dataSource() {
-		System.out.println("calling getDataSource " + env.getProperty("spring.datasource.security.url"));
-        return DataSourceBuilder
+		return DataSourceBuilder
                 .create()
                 .url(env.getProperty("spring.datasource.security.url")) 
                 .username(env.getProperty("spring.datasource.security.username"))

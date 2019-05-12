@@ -25,31 +25,26 @@ public class RoleCustomerController {
 	
 	@GetMapping("/Customer")
     public List<RoleCustomer> getAllCustomers() {
-		System.out.println("calling getAllCustomers");
 		return customerService.getAllCustomers();
 	}	
 	
 	@GetMapping("/Customer/{userName}")
 	public RoleCustomer getCustomer(@PathVariable String userName) {
-		System.out.println("calling getCustomer");
 		return (RoleCustomer) customerService.getCustomer(userName).get();
 	}
 	
 	@PostMapping("/Customer")
 	public ResponseEntity<RoleCustomer> addCustomer(@RequestBody RoleCustomer customer) {
-		customerService.addCustomer(customer);
 		return new ResponseEntity<RoleCustomer>(customer, HttpStatus.OK);
 	}
 	
 	@PutMapping("/Customer/{id}")
 	public void updateCustomer(@RequestBody RoleCustomer Customer, @PathVariable Long id) {
-		System.out.println("calling updateCustomer");
 		customerService.updateCustomer(id, Customer);
 	}
 
 	@DeleteMapping("/Customer/{id}")
 	public void deleteCustomer(@PathVariable Long id) {
-		System.out.println("calling deleteCustomer");
 		//customerService.deleteCustomer(id);
 	}
 

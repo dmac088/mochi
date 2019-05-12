@@ -75,7 +75,6 @@ public class CustomerService implements ICustomerService {
     @Override
 	@Transactional
     public void registerNewCustomer(final Customer customer) {
-    	System.out.println("username=" + customer.getUserName());
         if (customerExist(customer.getUserName())) {
             throw new CustomerAlreadyExistException("There is an account with that username: " + customer.getUserName());
         }

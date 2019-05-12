@@ -32,14 +32,12 @@ public class CategoryAttributeController {
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.POST, value="/CategoryAttribute")
 	public void addCategoryAttribute(CategoryAttribute CategoryAttribute) {	
-		System.out.println("calling addProduct");
 		categoryAttributeService.addCategory(CategoryAttribute);
 	}
 	
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.PUT, value="/CategoryAttribute/{id}")
 	public void updateCategoryAttribute(@RequestBody CategoryAttribute CategoryAttribute, @PathVariable Long id) {
-		System.out.println("calling updateProduct");
 		categoryAttributeService.updateCategory(id, CategoryAttribute);
 	}
 	

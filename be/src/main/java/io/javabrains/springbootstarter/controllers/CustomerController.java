@@ -60,7 +60,6 @@ public class CustomerController {
     //Registration
     @GetMapping("/user/registration")
     public GenericResponse test() {
-    	System.out.println("called test");
         return new GenericResponse("success");
     }
 }
