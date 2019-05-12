@@ -54,10 +54,10 @@ public class DataSourceBeanSecurity {
          = new LocalContainerEntityManagerFactoryBean();
        em.setDataSource(this.dataSource());
        em.setPackagesToScan(new String[] {
-    		   								"io.javabrains.springbootstarter.security",
-    		   								"io.javabrains.springbootstarter.domain",
-    		   								"io.javabrains.springbootstarter.entity",
-    		   								"io.javabrains.springbootstarter.services"
+    		   								"io.nzbee.security",
+    		   								"io.nzbee.domain",
+    		   								"io.nzbee.entity",
+    		   								"io.nzbee.services"
     		   							 });
        JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
        em.setJpaVendorAdapter(vendorAdapter);
