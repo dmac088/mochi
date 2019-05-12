@@ -161,8 +161,10 @@ class Products extends Component {
          return response.text();
        })
        .then((responseText) => {
-          newState["maxPrice"] = JSON.parse(responseText);
-          if(!noChangePrice) {newState["selectedPrice"] = JSON.parse(responseText);}
+          if(type === 'category') {
+            newState["maxPrice"] = JSON.parse(responseText);
+            if(!noChangePrice) {newState["selectedPrice"] = JSON.parse(responseText);}
+          }
           return newState;
        })
        .catch((e) => {console.log(e)});

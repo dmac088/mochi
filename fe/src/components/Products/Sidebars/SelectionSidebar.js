@@ -4,26 +4,6 @@ import * as categoryApi from '../../../data/categories/api';
 import { changeCategory, createRouteProps } from '../../../services/helpers/RouteHelper';
 import _ from 'lodash';
 
-  // const renderCategories = (category, props) => {
-  //   const { getMaxPrice } = props;
-  //   return category.children.map(child => {
-  //     return(
-  //       <li key={child.categoryId} >
-  //         <a onClick={
-  //                     //(e) => changeCategory(e, props)
-  //                     (e) => {
-  //                                       e.preventDefault();
-  //                                       props.applyFacet(e, routeProps);
-  //                    }
-  //             id={child.categoryDesc}
-  //             href="#">
-  //           {child.categoryDesc} ({child.productCount})
-  //         </a>
-  //       </li>
-  //     );
-  //   });
-  // }
-
   const renderFacets = (selectedFacets, routeProps, props) => {
     return selectedFacets.map(facet => {
       return (
@@ -48,6 +28,7 @@ import _ from 'lodash';
       <React.Fragment>
         <p>Categories</p>
         {renderFacets(categoryFacets, routeProps, props)}
+        <br/>
       </React.Fragment>
     );
   }
@@ -71,7 +52,6 @@ import _ from 'lodash';
         <h3 className="sidebar-title">SELECTIONS</h3>
         <ul className="selected-categories">
           {renderCategories(selectedFacets.filter(o => o.facetingName === "CategoryFR"), routeProps, props)}
-          <br/>
           {renderBrands(selectedFacets.filter(o => o.facetingName === "BrandFR"), routeProps, props)}
         </ul>
       </div>
