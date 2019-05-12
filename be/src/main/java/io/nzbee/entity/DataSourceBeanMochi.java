@@ -58,10 +58,10 @@ public class DataSourceBeanMochi {
          = new LocalContainerEntityManagerFactoryBean();
        em.setDataSource(this.dataSource());
        em.setPackagesToScan(new String[] 
-    		   {"io.javabrains.springbootstarter.domain",
-    		    "io.javabrains.springbootstarter.security",
-				"io.javabrains.springbootstarter.services",
-				"io.javabrains.springbootstarter.entity"}
+    		   {"io.nzbee.domain",
+    		    "io.nzbee.security",
+				"io.nzbee.services",
+				"io.nzbee.entity"}
         );
        JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
        em.setJpaVendorAdapter(vendorAdapter);
