@@ -270,7 +270,7 @@ public class ProductService implements IProductService {
 		org.hibernate.search.jpa.FullTextQuery jpaQuery = fullTextEntityManager.createFullTextQuery(searchQuery, ProductAttribute.class);
 		
 		//declare a set of facets (we need to avoid Duplicates)
-		Set<Facet> categoryFacets = new HashSet<Facet>();
+		final Set<Facet> categoryFacets = new HashSet<Facet>();
 		Set<Facet> brandFacets = new HashSet<Facet>(); 
 		FacetingRequest facetRequest;
 		FacetManager facetMgr;
@@ -316,7 +316,6 @@ public class ProductService implements IProductService {
 		
 		results =  jpaQuery.getResultList();
 		
-		
 		facetRequest = productQueryBuilder.facet()
 				.name("BrandFR")
 				.onField("brandCode") //in product class
@@ -349,9 +348,47 @@ public class ProductService implements IProductService {
 		//run the query again
 		results =  jpaQuery.getResultList();
 		
-		System.out.println("test");
-		System.out.println("the max price is = " + results.get(0).getProduct().getCurrentMarkdownPriceHKD());
-		Set<Facet> priceFacets = new HashSet<Facet>();
+		
+		
+		facetRequest = productQueryBuilder.facet()
+				.name("CategoryFR")
+				.onField("primaryCategory.categoryToken") //in category class
+				.discrete()
+				.orderedBy(FacetSortOrder.COUNT_DESC)
+				.includeZeroCounts(false)
+				.maxFacetCount(10)
+				.createFacetingRequest();
+		
+		//add all the base level facets to categoryFacets List
+		facetMgr = jpaQuery.getFacetManager();
+		facetMgr.enableFaceting(facetRequest);
+		categoryFacets.removeAll(new HashSet<Facet>(categoryFacets));
+		categoryFacets.addAll(facetMgr.getFacets("CategoryFR"));
+		facetSelection = facetMgr.getFacetGroup("CategoryFR");
+		lcf = receivedCategoryFacets.stream().flatMap(x -> categoryFacets.stream().filter(y -> x.getToken().equals(y.getValue())).limit(1)).collect(Collectors.toList());
+				
+		cs.removeAll(new HashSet<SidebarFacetDTO>(cs));
+		categoryFacets.stream().forEach(cf ->  {
+			String categoryCode = (new LinkedList<String>(Arrays.asList(cf.getValue().split("/")))).getLast();
+			SidebarFacetDTO cfDto = convertToCategorySidebarDTO(categoryCode, lcl, currency);
+			cfDto.setProductCount(new Long(cf.getCount()));
+			cfDto.setToken(cf.getValue());
+			cfDto.setFacetingName(cf.getFacetingName());
+			cfDto.setFieldName(cf.getFieldName());
+			cs.add(cfDto);
+		});
+		
+		//create parent category Facet DTOs
+		(new HashSet<SidebarFacetDTO>(cs)).stream().forEach(cf -> {
+			createParentCategoryFacets(categoryFacets, cs, cf, productQueryBuilder, jpaQuery, lcl, currency, cf.getLevel());
+		});
+				
+		facetSelection.selectFacets(FacetCombine.OR, lcf.toArray(new Facet[0]));
+		
+		
+//		System.out.println("test");
+//		System.out.println("the max price is = " + results.get(0).getProduct().getCurrentMarkdownPriceHKD());
+//		Set<Facet> priceFacets = new HashSet<Facet>();
 		
 //		results.stream().sorted(Comparator.comparing(ProductAttribute::getProduct())
 //		we use the results of the query to get the price ranges
@@ -394,16 +431,16 @@ public class ProductService implements IProductService {
 		final List<SidebarFacetDTO> ps = new ArrayList<SidebarFacetDTO>();
 		
 		//for each of the baseline facets, convert them to Facet DTOs for the client and add them to "s" 
-		
-		priceFacets.stream().forEach(pf ->     {
-													SidebarFacetDTO pfDto = new SidebarFacetDTO();
-													pfDto.setProductCount(new Long(pf.getCount()));
-													pfDto.setToken(pf.getValue());
-													pfDto.setFacetingName(pf.getFacetingName());
-													pfDto.setFieldName(pf.getFieldName());
-													ps.add(pfDto);
-											   });
-		
+//		
+//		priceFacets.stream().forEach(pf ->     {
+//													SidebarFacetDTO pfDto = new SidebarFacetDTO();
+//													pfDto.setProductCount(new Long(pf.getCount()));
+//													pfDto.setToken(pf.getValue());
+//													pfDto.setFacetingName(pf.getFacetingName());
+//													pfDto.setFieldName(pf.getFieldName());
+//													ps.add(pfDto);
+//											   });
+//		
 		
 		
 		
