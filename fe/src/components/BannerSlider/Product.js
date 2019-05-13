@@ -7,6 +7,7 @@ import * as cartSelector from '../../services/cart/selectors';
 import * as cartService from '../../services/cart';
 import * as productApi from '../../data/products/api';
 import { routeSingleProduct, createRouteProps } from '../../services/helpers/RouteHelper';
+import { productImagePath } from '../../services/helpers/imageHelper';
 const $ = window.$;
 
 
@@ -19,7 +20,7 @@ const $ = window.$;
           <div className="image">
             <a id={product.productId} onClick={(e) => routeSingleProduct(e, category.categoryDesc, routeProps)} href="#">
               <span className="onsale">Sale!</span>
-              <img src={product.productImage} className="img-fluid" alt="" />
+              <img src={productImagePath + product.productImage} className="img-fluid" alt="" />
             </a>
             <div className="product-hover-icons">
               <a  id={product.productId}

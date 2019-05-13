@@ -9,6 +9,7 @@ import {
 import {
 	spinner,
 } from '../../services/helpers/Helper';
+import { productImagePath } from '../../services/helpers/imageHelper';
 
 class Product extends Component {
 

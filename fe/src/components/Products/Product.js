@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import * as cartService from '../../services/cart';
 import * as cartSelector from '../../services/cart/selectors';
 import { routeSingleProduct, createRouteProps } from '../../services/helpers/RouteHelper';
+import { productImagePath } from '../../services/helpers/imageHelper';
 
   const addToCart = (e, product) => {
     e.preventDefault();
@@ -21,7 +22,7 @@ import { routeSingleProduct, createRouteProps } from '../../services/helpers/Rou
           <div className="image">
             <a onClick={(e) => routeSingleProduct(e, category.categoryDesc, routeProps)} id={product.productId} href="#">
               <span className="onsale">Sale!</span>
-              <img src={product.productImage} className="img-fluid" alt />
+              <img src={productImagePath + product.productImage} className="img-fluid" alt />
             </a>
             <div className="product-hover-icons">
               <a id={product.productId}
@@ -64,7 +65,7 @@ import { routeSingleProduct, createRouteProps } from '../../services/helpers/Rou
           <div className="image">
             <a onClick={(e) => routeSingleProduct(e, (category) ? category.categoryDesc : null, routeProps)} id={product.productId} href="#">
               <span className="onsale">Sale!</span>
-              <img src={product.productImage} className="img-fluid" alt />
+              <img src={productImagePath + product.productImage} className="img-fluid" alt />
             </a>
             <div className="product-hover-icons">
               <a onClick={(e) => addToCart(e, product)} href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
