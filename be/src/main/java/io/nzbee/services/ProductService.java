@@ -348,7 +348,6 @@ public class ProductService implements IProductService {
 		org.hibernate.search.jpa.FullTextQuery jpaQuery = fullTextEntityManager.createFullTextQuery(searchQuery, ProductAttribute.class);
 		
 		final Set<Facet> allFacets = new HashSet<Facet>();
-		FacetingRequest facetRequest;
 		FacetManager facetMgr = jpaQuery.getFacetManager();
 		final Set<SidebarFacetDTO> cs, bs;
 		List<ProductAttribute> results;
@@ -358,19 +357,22 @@ public class ProductService implements IProductService {
 		allFacets.addAll(this.getBrandFacets(productQueryBuilder, jpaQuery));
 		allFacets.addAll(this.getPriceFacets(productQueryBuilder, jpaQuery, currency));
 		
+		System.out.println(selectedFacets.size());
+		System.out.println(allFacets.size());
+		
 		//filter to get the facets that are selected
 		List<Facet> lf = selectedFacets.stream().flatMap(x -> {
 			return allFacets.stream().filter(y -> 
 				x.getToken().equals(y.getValue()));
 		  }
-		).limit(1).collect(Collectors.toList());
+		).collect(Collectors.toList());
 		
 		
 		//now we have a list of facets in the order they were selected in object lf
 		//now we want to apply the facet selections
 		lf.stream().forEach(f -> {
-			FacetSelection facetSelection = facetMgr.getFacetGroup(f.getFacetingName());
-			facetSelection.selectFacets(FacetCombine.OR, f);
+			System.out.println(f.getFacetingName());
+			facetMgr.getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
 		});
 		
 		results = jpaQuery.getResultList();
@@ -422,9 +424,6 @@ public class ProductService implements IProductService {
 													ps.add(pfDto);
 											   });
 		
-		//convert the results to product DTOs and store in a list
-		List<Product> lp = results.stream().map(pa -> this.convertToProductDO(pa.getProduct(), lcl, currency)).collect(Collectors.toList());
-				
 		//create a results container to send back to the client 
 		SearchDTO src = new SearchDTO();
 		
@@ -439,11 +438,10 @@ public class ProductService implements IProductService {
 		jpaQuery.setSort(sort);
 		
 		//get the results using jpaQuery object
-		results.clear();
-		results.addAll(jpaQuery.getResultList());
+		results = jpaQuery.getResultList();
 				
 		//convert the results of jpaQuery to product Data Transfer Objects 
-		lp = results.stream().map(pa -> this.convertToProductDO(pa.getProduct(), lcl, currency)).collect(Collectors.toList());
+		List<Product> lp = results.stream().map(pa -> this.convertToProductDO(pa.getProduct(), lcl, currency)).collect(Collectors.toList());
 		
 		//create a paging object to hold the results of jpaQuery 
 		Page<Product> pp = new PageImpl<Product>(lp, pageable, jpaQuery.getResultSize());
