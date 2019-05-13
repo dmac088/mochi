@@ -4,18 +4,37 @@ import qs from 'query-string';
 import 'rc-slider/assets/index.css';
 
 export const PriceSidebar = (props) => {
-    const { maxPrice, selectedPrice, updateSelectedPrice, facets } = props;
-    console.log(facets);
+    const { maxPrice, selectedPrice, selectedFacets, updateSelectedPrice, facets, applyFacet } = props;
     return (
       <div className="sidebar mb-35">
         <h3 className="sidebar-title">Filter By Price</h3>
         {priceSlider(maxPrice, selectedPrice, updateSelectedPrice)}
+        {priceRanges(maxPrice, selectedFacets, applyFacet, facets, props)}
       </div>
     );
   }
 
-const priceSlider = (maxPrice, selectedPrice, updateSelectedPrice ) => {
+const priceRanges = (maxPrice, selectedFacets, applyFacet, facets, props) => {
+  console.log(facets);
+    return facets.map(facet => {
+      return(
+        <li key={facet.token}>
+          <a  className={(props.isActive(facet, selectedFacets, facets)) ? "active" : ""}
+              onClick={(e) => {
+                                e.preventDefault();
+                                props.applyFacet(e, props);
+                              }}
+              id={facet.token}
+              href="#">
+            {facet.desc} ({facet.productCount})
+          </a>
+        </li>
+      );
+    });
+}
 
+const priceSlider = (maxPrice, selectedPrice, updateSelectedPrice ) => {
+  const increment = Math.round((maxPrice / 4) * 100) / 100;
   return (
     <React.Fragment>
       <p>Value less than: {(selectedPrice) ? selectedPrice : maxPrice}</p>
@@ -30,9 +49,9 @@ const priceSlider = (maxPrice, selectedPrice, updateSelectedPrice ) => {
           marginTop: -9,
           backgroundColor: 'grey',
         }}
-        min={(maxPrice / 4)}
+        min={increment}
         max={maxPrice}
-        step={(maxPrice / 4)}
+        step={increment}
         defaultValue={maxPrice}
         value={(selectedPrice) ? selectedPrice : maxPrice}
         railStyle={{ height: 10 }}/>

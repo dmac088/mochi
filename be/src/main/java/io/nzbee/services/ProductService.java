@@ -450,6 +450,7 @@ public class ProductService implements IProductService {
 													pfDto.setProductCount(new Long(pf.getCount()));
 													pfDto.setToken(pf.getValue());
 													pfDto.setFacetType("range");
+													pfDto.setDesc(pf.getValue());
 													pfDto.setFacetingName(pf.getFacetingName());
 													pfDto.setFieldName(pf.getFieldName());
 													ps.add(pfDto);
