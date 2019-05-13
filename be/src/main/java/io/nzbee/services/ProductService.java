@@ -368,11 +368,9 @@ public class ProductService implements IProductService {
 		
 		//now we have a list of facets in the order they were selected in object lf
 		//now we want to apply the facet selections
-		
 		lf.stream().forEach(f -> {
 			FacetSelection facetSelection = facetMgr.getFacetGroup(f.getFacetingName());
-			facetSelection.selectFacets(FacetCombine.OR, lf.toArray(new Facet[lf.size()]));
-			jpaQuery.getResultList();
+			facetSelection.selectFacets(FacetCombine.OR, f);
 		});
 		
 		results = jpaQuery.getResultList();
