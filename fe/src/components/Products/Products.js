@@ -338,6 +338,9 @@ class Products extends Component {
                       <PriceSidebar
                         facets={this.filterFacetsUnselected(this.filterFacetsByName(facets, "PriceFR"), selectedFacets)}
                         updateSelectedPrice={this.updateSelectedPrice}
+                        applyFacet={this.applyFacet}
+                        isActive={this.isActive}
+                        selectedFacets={selectedFacets}
                         maxPrice={maxPrice}
                         selectedPrice={selectedPrice}/>
                       <TopRatedSidebar/>
