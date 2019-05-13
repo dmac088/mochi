@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import * as cartSelector from '../../services/cart/selectors';
 import * as cartService from '../../services/cart';
 import { routeSingleProduct } from '../../services/helpers/RouteHelper';
+import { productImagePath } from '../../services/helpers/imageHelper';
 
   const removeItem = (e) => {
     e.preventDefault();
@@ -16,7 +17,7 @@ import { routeSingleProduct } from '../../services/helpers/RouteHelper';
           <tr key={product.productId}>
             <td className="pro-thumbnail">
               <a id={product.productId} href="#" onClick={(e) => routeSingleProduct(e, null, routeProps)}>
-                <img src={product.productImage} className="img-fluid" alt="Product" />
+                <img src={productImagePath + product.productImage} className="img-fluid" alt="Product" />
               </a>
             </td>
             <td className="pro-title">

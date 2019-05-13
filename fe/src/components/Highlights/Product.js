@@ -6,6 +6,7 @@ import {
 	spinner,
 } from '../../services/helpers/Helper';
 import { routeSingleProduct, createRouteProps } from '../../services/helpers/RouteHelper';
+import { productImagePath } from '../../services/helpers/imageHelper';
 
 class Product extends Component {
 
@@ -23,7 +24,7 @@ class Product extends Component {
     const { product } = this.props;
     this.setState({
     	"product": product,
-      "currentImage": product.productImage,
+      "currentImage": productImagePath + product.productImage,
       "isLoading": false,
     });
   }
@@ -44,7 +45,7 @@ class Product extends Component {
         <div className="image">
           <a id={product.productId} onClick={(e) => routeSingleProduct(e, category.categoryDesc, routeProps)} href="#">
             <span className="onsale">Sale!</span>
-            <img src={currentImage} className="img-fluid" alt="" />
+            <img src={productImagePath + currentImage} className="img-fluid" alt="" />
           </a>
           <div className="product-hover-icons">
             <a onClick={this.addToCart} className="active" href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
