@@ -283,7 +283,7 @@ public class ProductService implements IProductService {
 		Double 	below 	= inc, 
 				froma 	= (new BigDecimal(inc + new Double(0.01)).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()), 
 				toa 	= (new BigDecimal(inc * 2).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()), 
-				fromb 	= (toa + new Double(0.01)),
+				fromb 	= (new BigDecimal(toa + new Double(0.01)).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()), 
 				tob 	= (new BigDecimal(inc * 4).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()),
 				above 	= tob;
 		
@@ -365,18 +365,21 @@ public class ProductService implements IProductService {
 																allFacets.removeAll(allFacets.stream().filter(b -> b.getFacetingName().equals("BrandFR")).collect(Collectors.toList()));
 																allFacets.removeAll(allFacets.stream().filter(p -> p.getFacetingName().equals("PriceFR")).collect(Collectors.toList()));
 																allFacets.addAll(this.getBrandFacets(productQueryBuilder, jpaQuery)); 
-																allFacets.addAll(this.getPriceFacets(productQueryBuilder, jpaQuery, currency));}
+																allFacets.addAll(this.getPriceFacets(productQueryBuilder, jpaQuery, currency));
+															}
 			
 			if(f.getFacetingName().equals("BrandFR")) 		{ 	
 																allFacets.removeAll(allFacets.stream().filter(c -> c.getFacetingName().equals("CategoryFR")).collect(Collectors.toList()));
 																allFacets.removeAll(allFacets.stream().filter(p -> p.getFacetingName().equals("PriceFR")).collect(Collectors.toList()));
 																allFacets.addAll(this.getCategoryFacets(productQueryBuilder, jpaQuery)); 
-																allFacets.addAll(this.getPriceFacets(productQueryBuilder, jpaQuery, currency)); }
+																allFacets.addAll(this.getPriceFacets(productQueryBuilder, jpaQuery, currency)); 
+															}
 			
 			if(f.getFacetingName().equals("PriceFR")) 		{ 	allFacets.removeAll(allFacets.stream().filter(c -> c.getFacetingName().equals("CategoryFR")).collect(Collectors.toList()));
 																allFacets.removeAll(allFacets.stream().filter(b -> b.getFacetingName().equals("BrandFR")).collect(Collectors.toList()));
 																allFacets.addAll(this.getCategoryFacets(productQueryBuilder, jpaQuery)); 
-																allFacets.addAll(this.getBrandFacets(productQueryBuilder, jpaQuery)); }
+																allFacets.addAll(this.getBrandFacets(productQueryBuilder, jpaQuery)); 
+															}
 		
 		});
 		
