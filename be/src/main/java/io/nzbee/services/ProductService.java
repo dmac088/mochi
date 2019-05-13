@@ -268,14 +268,17 @@ public class ProductService implements IProductService {
 	}
 	
 	
+	@SuppressWarnings("unchecked")
 	private List<Facet> getPriceFacets(QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery jpaQuery, String currency) {
 		FacetingRequest facetRequest;
 		FacetManager facetMgr = jpaQuery.getFacetManager();
 		
 		org.apache.lucene.search.Sort sort = getSortField("priceDesc");
 		jpaQuery.setSort(sort);
-		@SuppressWarnings("unchecked")
-		List<ProductAttribute> results =  jpaQuery.getResultList();
+		
+		List<ProductAttribute> results = jpaQuery.getResultList();
+		
+		if(results.size() <= 0) { return new ArrayList<Facet>(); }
 		
 		Double maxPrice = results.get(0).getProduct().getCurrentMarkdownPriceHKD();
 		Double minPrice = Lists.reverse(results).get(0).getProduct().getCurrentMarkdownPriceHKD();
@@ -304,7 +307,6 @@ public class ProductService implements IProductService {
 		
 		facetMgr.enableFaceting(facetRequest);
 		return facetMgr.getFacets("PriceFR");
-		
 	}
 	
 
