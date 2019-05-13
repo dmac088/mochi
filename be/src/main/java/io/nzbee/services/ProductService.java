@@ -357,9 +357,6 @@ public class ProductService implements IProductService {
 		allFacets.addAll(this.getBrandFacets(productQueryBuilder, jpaQuery));
 		allFacets.addAll(this.getPriceFacets(productQueryBuilder, jpaQuery, currency));
 		
-		System.out.println(selectedFacets.size());
-		System.out.println(allFacets.size());
-		
 		//filter to get the facets that are selected
 		List<Facet> lf = selectedFacets.stream().flatMap(x -> {
 			return allFacets.stream().filter(y -> 
@@ -367,9 +364,6 @@ public class ProductService implements IProductService {
 		  }
 		).collect(Collectors.toList());
 		
-		
-		//now we have a list of facets in the order they were selected in object lf
-		//now we want to apply the facet selections
 		lf.stream().forEach(f -> {
 			System.out.println(f.getFacetingName());
 			facetMgr.getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
