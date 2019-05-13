@@ -22,23 +22,13 @@ import _ from 'lodash';
     });
   }
 
-  const renderCategories = (categoryFacets, routeProps, props) => {
-    if(categoryFacets.length === 0) { return null }
+  const renderSection = (title, facets, routeProps, props) => {
+    if(facets.length === 0) { return null }
     return (
       <React.Fragment>
-        <p>Categories</p>
-        {renderFacets(categoryFacets, routeProps, props)}
+        <p>{title}</p>
+        {renderFacets(facets, routeProps, props)}
         <br/>
-      </React.Fragment>
-    );
-  }
-
-  const renderBrands = (brandFacets, routeProps, props) => {
-    if(brandFacets.length === 0) { return null }
-    return (
-      <React.Fragment>
-        <p>Brands</p>
-        {renderFacets(brandFacets, routeProps, props)}
       </React.Fragment>
     );
   }
@@ -51,8 +41,9 @@ import _ from 'lodash';
       <div className="sidebar mb-35">
         <h3 className="sidebar-title">SELECTIONS</h3>
         <ul className="selected-categories">
-          {renderCategories(selectedFacets.filter(o => o.facetingName === "CategoryFR"), routeProps, props)}
-          {renderBrands(selectedFacets.filter(o => o.facetingName === "BrandFR"), routeProps, props)}
+          {renderSection("Categories", selectedFacets.filter(o => o.facetingName === "CategoryFR"), routeProps, props)}
+          {renderSection("Brands", selectedFacets.filter(o => o.facetingName === "BrandFR"), routeProps, props)}
+          {renderSection("Price Ranges", selectedFacets.filter(o => o.facetingName === "PriceFR"), routeProps, props)}
         </ul>
       </div>
     );
