@@ -26,6 +26,7 @@ class Products extends Component {
     this.state = {
       "locale":   "en-GB",
       "currency": "HKD",
+      "type": "",
       "category": "",
       "term":     "",
       "products": [],
@@ -111,6 +112,7 @@ class Products extends Component {
       const newState = {
         "locale":                 locale,
         "currency":               currency,
+        "type":                   type,
         "category":               category,
         "term":                   term,
         "products":               responseJSON.products.content,
@@ -308,7 +310,7 @@ class Products extends Component {
   render() {
 
       const { toggleQuickView, setCurrentProductId, showQVModal, currentProductId, categoryList, changeCategory, changeBrand} = this.props;
-      const { products, facets, selectedFacets, totalPages, totalElements, numberOfElements, isGrid, term, category, maxPrice, selectedPrice } = this.state;
+      const { products, facets, selectedFacets, totalPages, totalElements, numberOfElements, isGrid, term, category, maxPrice, selectedPrice, type } = this.state;
       const { page, size } = this.state.params;
       if(!products) { return null }
       const cat = this.filterCategories(categoryList, category)[0];
@@ -336,6 +338,7 @@ class Products extends Component {
                         applyFacet={this.applyFacet}
                       />
                       <PriceSidebar
+                        type={type}
                         facets={this.filterFacetsUnselected(this.filterFacetsByName(facets, "PriceFR"), selectedFacets)}
                         updateSelectedPrice={this.updateSelectedPrice}
                         applyFacet={this.applyFacet}
