@@ -5,7 +5,8 @@ import { changeCategory, createRouteProps } from '../../../services/helpers/Rout
 import {
   PRIMARY_CATEGORY_FACET_NAME,
   SECONDARY_CATEGORY_FACET_NAME,
-  BRAND_FACET_NAME
+  BRAND_FACET_NAME,
+  PRICE_FACET_NAME
 } from '../../../services/helpers/facetHelper';
 import _ from 'lodash';
 
