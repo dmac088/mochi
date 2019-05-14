@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Slider from "react-slick";
+import { Product } from './BestSeller/Product';
 import { SlickArrowLeft, SlickArrowRight } from '../../services/helpers/Helper';
 const $ = window.$;
 
@@ -69,314 +70,38 @@ export const  BestSeller = (props) => {
               <Slider className="best-seller-slider-container pt-15 pb-15" ref={c => (slider = c)} {...settings}>
                 <div className="col">
                   <div className="single-best-seller-item">
-                    <div className="best-seller-sub-product">
-                      <div className="row">
-                        <div className="col-lg-4 pl-0 pr-0">
-                          <div className="image">
-                            <a href="single-product.html">
-                              <img src="assets/images/products/product01.jpg" className="img-fluid" alt="" />
-                            </a>
-                          </div>
-                        </div>
-                        <div className="col-lg-8 pl-0 pr-0">
-                          <div className="product-content">
-                            <div className="product-categories">
-                              <a href="shop-left-sidebar.html">Fast Foods</a>,
-                              <a href="shop-left-sidebar.html">Vegetables</a>
-                            </div>
-                            <h3 className="product-title"><a href="single-product.html">Sed tempor ehicula non commodo</a></h3>
-                            <div className="price-box">
-                              <span className="main-price">$89.00</span>
-                              <span className="discounted-price">$80.00</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="best-seller-sub-product">
-                      <div className="row">
-                        <div className="col-lg-4 pl-0 pr-0">
-                          <div className="image">
-                            <a href="single-product.html">
-                              <img src="assets/images/products/product02.jpg" className="img-fluid" alt="" />
-                            </a>
-                          </div>
-                        </div>
-                        <div className="col-lg-8 pl-0 pr-0">
-                          <div className="product-content">
-                            <div className="product-categories">
-                              <a href="shop-left-sidebar.html">Fast Foods</a>,
-                              <a href="shop-left-sidebar.html">Vegetables</a>
-                            </div>
-                            <h3 className="product-title"><a href="single-product.html">Officiis debitis varius risus</a></h3>
-                            <div className="price-box">
-                              <span className="main-price">$89.00</span>
-                              <span className="discounted-price">$80.00</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    <Product />
+                    <Product />
                   </div>
                 </div>
                 <div className="col">
                   <div className="single-best-seller-item">
-                    <div className="best-seller-sub-product">
-                      <div className="row">
-                        <div className="col-lg-4 pl-0 pr-0">
-                          <div className="image">
-                            <a href="single-product.html">
-                              <img src="assets/images/products/product03.jpg" className="img-fluid" alt="" />
-                            </a>
-                          </div>
-                        </div>
-                        <div className="col-lg-8 pl-0 pr-0">
-                          <div className="product-content">
-                            <div className="product-categories">
-                              <a href="shop-left-sidebar.html">Fast Foods</a>,
-                              <a href="shop-left-sidebar.html">Vegetables</a>
-                            </div>
-                            <h3 className="product-title"><a href="single-product.html">Phasellus vel hendrerit eget</a></h3>
-                            <div className="price-box">
-                              <span className="main-price">$89.00</span>
-                              <span className="discounted-price">$80.00</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="best-seller-sub-product">
-                      <div className="row">
-                        <div className="col-lg-4 pl-0 pr-0">
-                          <div className="image">
-                            <a href="single-product.html">
-                              <img src="assets/images/products/product04.jpg" className="img-fluid" alt="" />
-                            </a>
-                          </div>
-                        </div>
-                        <div className="col-lg-8 pl-0 pr-0">
-                          <div className="product-content">
-                            <div className="product-categories">
-                              <a href="shop-left-sidebar.html">Fast Foods</a>,
-                              <a href="shop-left-sidebar.html">Vegetables</a>
-                            </div>
-                            <h3 className="product-title"><a href="single-product.html">Ornare sed consequat nisl eget</a></h3>
-                            <div className="price-box">
-                              <span className="main-price">$89.00</span>
-                              <span className="discounted-price">$80.00</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    <Product />
+                    <Product />
                   </div>
                 </div>
                 <div className="col">
                   <div className="single-best-seller-item">
-                    <div className="best-seller-sub-product">
-                      <div className="row">
-                        <div className="col-lg-4 pl-0 pr-0">
-                          <div className="image">
-                            <a href="single-product.html">
-                              <img src="assets/images/products/product05.jpg" className="img-fluid" alt="" />
-                            </a>
-                          </div>
-                        </div>
-                        <div className="col-lg-8 pl-0 pr-0">
-                          <div className="product-content">
-                            <div className="product-categories">
-                              <a href="shop-left-sidebar.html">Fast Foods</a>,
-                              <a href="shop-left-sidebar.html">Vegetables</a>
-                            </div>
-                            <h3 className="product-title"><a href="single-product.html">Sed tempor ehicula non commodo</a></h3>
-                            <div className="price-box">
-                              <span className="main-price">$89.00</span>
-                              <span className="discounted-price">$80.00</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="best-seller-sub-product">
-                      <div className="row">
-                        <div className="col-lg-4 pl-0 pr-0">
-                          <div className="image">
-                            <a href="single-product.html">
-                              <img src="assets/images/products/product06.jpg" className="img-fluid" alt="" />
-                            </a>
-                          </div>
-                        </div>
-                        <div className="col-lg-8 pl-0 pr-0">
-                          <div className="product-content">
-                            <div className="product-categories">
-                              <a href="shop-left-sidebar.html">Fast Foods</a>,
-                              <a href="shop-left-sidebar.html">Vegetables</a>
-                            </div>
-                            <h3 className="product-title"><a href="single-product.html">Ornare sed consequat nisl eget</a></h3>
-                            <div className="price-box">
-                              <span className="main-price">$89.00</span>
-                              <span className="discounted-price">$80.00</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    <Product />
+                    <Product />
                   </div>
                 </div>
                 <div className="col">
                   <div className="single-best-seller-item">
-                    <div className="best-seller-sub-product">
-                      <div className="row">
-                        <div className="col-lg-4 pl-0 pr-0">
-                          <div className="image">
-                            <a href="single-product.html">
-                              <img src="assets/images/products/product07.jpg" className="img-fluid" alt="" />
-                            </a>
-                          </div>
-                        </div>
-                        <div className="col-lg-8 pl-0 pr-0">
-                          <div className="product-content">
-                            <div className="product-categories">
-                              <a href="shop-left-sidebar.html">Fast Foods</a>,
-                              <a href="shop-left-sidebar.html">Vegetables</a>
-                            </div>
-                            <h3 className="product-title"><a href="single-product.html">Sed tempor ehicula non commodo</a></h3>
-                            <div className="price-box">
-                              <span className="main-price">$89.00</span>
-                              <span className="discounted-price">$80.00</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="best-seller-sub-product">
-                      <div className="row">
-                        <div className="col-lg-4 pl-0 pr-0">
-                          <div className="image">
-                            <a href="single-product.html">
-                              <img src="assets/images/products/product08.jpg" className="img-fluid" alt="" />
-                            </a>
-                          </div>
-                        </div>
-                        <div className="col-lg-8 pl-0 pr-0">
-                          <div className="product-content">
-                            <div className="product-categories">
-                              <a href="shop-left-sidebar.html">Fast Foods</a>,
-                              <a href="shop-left-sidebar.html">Vegetables</a>
-                            </div>
-                            <h3 className="product-title"><a href="single-product.html">Ornare sed consequat nisl eget</a></h3>
-                            <div className="price-box">
-                              <span className="main-price">$89.00</span>
-                              <span className="discounted-price">$80.00</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    <Product />
+                    <Product />
                   </div>
                 </div>
                 <div className="col">
                   <div className="single-best-seller-item">
-                    <div className="best-seller-sub-product">
-                      <div className="row">
-                        <div className="col-lg-4 pl-0 pr-0">
-                          <div className="image">
-                            <a href="single-product.html">
-                              <img src="assets/images/products/product09.jpg" className="img-fluid" alt="" />
-                            </a>
-                          </div>
-                        </div>
-                        <div className="col-lg-8 pl-0 pr-0">
-                          <div className="product-content">
-                            <div className="product-categories">
-                              <a href="shop-left-sidebar.html">Fast Foods</a>,
-                              <a href="shop-left-sidebar.html">Vegetables</a>
-                            </div>
-                            <h3 className="product-title"><a href="single-product.html">Sed tempor ehicula non commodo</a></h3>
-                            <div className="price-box">
-                              <span className="main-price">$89.00</span>
-                              <span className="discounted-price">$80.00</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="best-seller-sub-product">
-                      <div className="row">
-                        <div className="col-lg-4 pl-0 pr-0">
-                          <div className="image">
-                            <a href="single-product.html">
-                              <img src="assets/images/products/product10.jpg" className="img-fluid" alt="" />
-                            </a>
-                          </div>
-                        </div>
-                        <div className="col-lg-8 pl-0 pr-0">
-                          <div className="product-content">
-                            <div className="product-categories">
-                              <a href="shop-left-sidebar.html">Fast Foods</a>,
-                              <a href="shop-left-sidebar.html">Vegetables</a>
-                            </div>
-                            <h3 className="product-title"><a href="single-product.html">Ornare sed consequat nisl eget</a></h3>
-                            <div className="price-box">
-                              <span className="main-price">$89.00</span>
-                              <span className="discounted-price">$80.00</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    <Product />
+                    <Product />
                   </div>
                 </div>
                 <div className="col">
                   <div className="single-best-seller-item">
-                    <div className="best-seller-sub-product">
-                      <div className="row">
-                        <div className="col-lg-4 pl-0 pr-0">
-                          <div className="image">
-                            <a href="single-product.html">
-                              <img src="assets/images/products/product11.jpg" className="img-fluid" alt="" />
-                            </a>
-                          </div>
-                        </div>
-                        <div className="col-lg-8 pl-0 pr-0">
-                          <div className="product-content">
-                            <div className="product-categories">
-                              <a href="shop-left-sidebar.html">Fast Foods</a>,
-                              <a href="shop-left-sidebar.html">Vegetables</a>
-                            </div>
-                            <h3 className="product-title"><a href="single-product.html">Sed tempor ehicula non commodo</a></h3>
-                            <div className="price-box">
-                              <span className="main-price">$89.00</span>
-                              <span className="discounted-price">$80.00</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="best-seller-sub-product">
-                      <div className="row">
-                        <div className="col-lg-4 pl-0 pr-0">
-                          <div className="image">
-                            <a href="single-product.html">
-                              <img src="assets/images/products/product12.jpg" className="img-fluid" alt="" />
-                            </a>
-                          </div>
-                        </div>
-                        <div className="col-lg-8 pl-0 pr-0">
-                          <div className="product-content">
-                            <div className="product-categories">
-                              <a href="shop-left-sidebar.html">Fast Foods</a>,
-                              <a href="shop-left-sidebar.html">Vegetables</a>
-                            </div>
-                            <h3 className="product-title"><a href="single-product.html">Ornare sed consequat nisl eget</a></h3>
-                            <div className="price-box">
-                              <span className="main-price">$89.00</span>
-                              <span className="discounted-price">$80.00</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    <Product />
+                    <Product />
                   </div>
                 </div>
               </Slider>

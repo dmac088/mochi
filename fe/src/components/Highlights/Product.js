@@ -58,8 +58,8 @@ class Product extends Component {
         </div>
         <div className="product-content">
           <div className="product-categories">
-            <a id={product.productId} href={(e) => routeSingleProduct(e, category.categoryDesc, routePropse, category.categoryDesc, routeProps)} href="#">Fast Foods</a>,
-            <a id={product.productId} href={(e) => routeSingleProduct(e, category.categoryDesc, routeProps)} href="#">Vegetables</a>
+            <a id={product.productId} href={(e) => routeSingleProduct(e, category.categoryDesc, routePropse, category.categoryDesc, routeProps)} href="#">{category.categoryDesc}</a>,<span> </span>
+            <a id={product.productId} href={(e) => routeSingleProduct(e, category.categoryDesc, routeProps)} href="#">{product.brandDesc}</a>
           </div>
           <h3 className="product-title">
             <a id={product.productId} onClick={(e) => routeSingleProduct(e, category.categoryDesc, routeProps)} href="#">
