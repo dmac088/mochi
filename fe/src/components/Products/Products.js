@@ -15,6 +15,11 @@ import * as categoryApi from '../../data/categories/api';
 import * as productApi from '../../data/products/api';
 import * as brandApi from '../../data/brands/api';
 import { updateParams } from '../../services/helpers/Helper';
+import {
+  PRIMARY_CATEGORY_FACET_NAME,
+  SECONDARY_CATEGORY_FACET_NAME,
+  BRAND_FACET_NAME
+} from '../../services/helpers/facetHelper';
 import * as pageService from '../../services/page';
 import qs from 'query-string';
 import _ from 'lodash';
@@ -131,7 +136,7 @@ class Products extends Component {
      })
      .then((newState) => {
        //add the category children to the facets array
-       return categoryApi.findAllChildren(newState.locale, newState.currency, newState.category, newState.selectedFacets.filter(o => o.facetingName === "BrandFR"))
+       return categoryApi.findAllChildren(newState.locale, newState.currency, newState.category, newState.selectedFacets.filter(o => o.facetingName === BRAND_FACET_NAME))
        .then((response) => {
          return response.text();
        })
@@ -145,7 +150,7 @@ class Products extends Component {
        return newState;
      })
      .then((newState) => {
-       return brandApi.findByCategory(newState.locale, newState.currency, newState.category, newState.selectedFacets.filter(o => o.facetingName === "CategoryFR"))
+       return brandApi.findByCategory(newState.locale, newState.currency, newState.category, newState.selectedFacets.filter(o => o.facetingName === PRIMARY_CATEGORY_FACET_NAME))
        .then((response) => {
          return response.text();
        })
@@ -327,14 +332,14 @@ class Products extends Component {
                       />
                       <CategorySidebar
                         selectedFacets={selectedFacets}
-                        facets={this.filterFacetsUnselected(this.filterFacetsByName(facets, "CategoryFR"), selectedFacets)}
+                        facets={this.filterFacetsUnselected(this.filterFacetsByName(facets, PRIMARY_CATEGORY_FACET_NAME), selectedFacets)}
                         isActive={this.isActive}
                         applyFacet={this.applyFacet}
                       />
                       <BrandSidebar
                         selectedFacets={selectedFacets}
                         isActive={this.isActive}
-                        facets={this.filterFacetsUnselected(this.filterFacetsByName(facets, "BrandFR"), selectedFacets)}
+                        facets={this.filterFacetsUnselected(this.filterFacetsByName(facets, BRAND_FACET_NAME), selectedFacets)}
                         applyFacet={this.applyFacet}
                       />
                       <PriceSidebar

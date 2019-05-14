@@ -28,6 +28,8 @@ import org.hibernate.search.annotations.SortableField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import io.nzbee.variables.ProductVars;
+
 @Entity
 @Table(name = "product", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "prd_id")
@@ -77,8 +79,8 @@ public class Product {
 		 return this.prices.stream().filter(p ->
 		 	p.getStartDate().before(Calendar.getInstance().getTime())
 		 	&& p.getEndDate().after(Calendar.getInstance().getTime())
-		 	&& p.getCurrency().getCode().equals("HKD")
-		 	&& p.getType().getDesc().equals("markdown")
+		 	&& p.getCurrency().getCode().equals(ProductVars.CURRENCY_HONG_KONG)
+		 	&& p.getType().getDesc().equals(ProductVars.MARKDOWN_SKU_DESCRIPTION)
 		 ).collect(Collectors.toList()).get(0).getPriceValue();     
 	}
 	
@@ -89,8 +91,8 @@ public class Product {
 		 return this.prices.stream().filter(p ->
 		 	p.getStartDate().before(Calendar.getInstance().getTime())
 		 	&& p.getEndDate().after(Calendar.getInstance().getTime())
-		 	&& p.getCurrency().getCode().equals("USD")
-		 	&& p.getType().getDesc().equals("markdown")
+		 	&& p.getCurrency().getCode().equals(ProductVars.CURRENCY_US)
+		 	&& p.getType().getDesc().equals(ProductVars.MARKDOWN_SKU_DESCRIPTION)
 		 ).collect(Collectors.toList()).get(0).getPriceValue();     
 	}
 	
@@ -107,14 +109,6 @@ public class Product {
 	public Double getCurrentMarkdownPriceUSDFacet() {
 		return this.getCurrentMarkdownPriceHKD();
 	}
-	
-	@Transient
-	@Field(analyze = Analyze.NO)
-	@SortableField
-	private String getProductDesc() {
-		return this.attributes.stream().filter(p -> p.getLclCd().equals("en-GB")).collect(Collectors.toList()).get(0).getProductDesc().toLowerCase();  
-	}
-	
 	
 	public Long getProductId() {
 		return productId;
