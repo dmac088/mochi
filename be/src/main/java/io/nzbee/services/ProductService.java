@@ -281,7 +281,7 @@ public class ProductService implements IProductService {
 	@SuppressWarnings("unchecked")
 	private List<Facet> getPriceFacets(QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery jpaQuery, String currency) {
 		
-		org.apache.lucene.search.Sort sort = getSortField("priceDesc");
+		org.apache.lucene.search.Sort sort = getSortField("priceDesc", currency);
 		jpaQuery.setSort(sort);
 		
 		List<ProductAttribute> results = jpaQuery.getResultList();
@@ -453,7 +453,7 @@ public class ProductService implements IProductService {
 		jpaQuery.setMaxResults(pageable.getPageSize());
 		
 		//sort the results
-		org.apache.lucene.search.Sort sort = getSortField(sortBy);
+		org.apache.lucene.search.Sort sort = getSortField(sortBy, currency);
 		jpaQuery.setSort(sort);
 		
 		//get the results using jpaQuery object
@@ -546,33 +546,33 @@ public class ProductService implements IProductService {
         return pDo;
     }
     
-    private String getSortFieldName(String field) {
+    private String getSortFieldName(String field, String currency) {
 		switch(field) {
 		case "nameAsc":
 			return "product.productDesc";
 		case "nameDesc":
 			return "product.productDesc";
 		case "priceDesc":
-			return "product.currentMarkdownPriceHKD";
+			return "product.currentMarkdownPrice" + currency;
 		case "priceAsc":
-			return "product.currentMarkdownPriceHKD";
+			return "product.currentMarkdownPrice" + currency;
 		default: 
 			return "product.productDesc";
 		}
 	}
 	
-	private org.apache.lucene.search.Sort getSortField(String field) {
+	private org.apache.lucene.search.Sort getSortField(String field, String currency) {
 		switch(field) {
 		case "nameAsc":
-			return new org.apache.lucene.search.Sort(new SortField(getSortFieldName(field), SortField.Type.STRING, false));
+			return new org.apache.lucene.search.Sort(new SortField(getSortFieldName(field, currency), SortField.Type.STRING, false));
 		case "nameDesc":
-			return new org.apache.lucene.search.Sort(new SortField(getSortFieldName(field), SortField.Type.STRING, true));
+			return new org.apache.lucene.search.Sort(new SortField(getSortFieldName(field, currency), SortField.Type.STRING, true));
 		case "priceAsc":
-			return new org.apache.lucene.search.Sort(new SortedNumericSortField(getSortFieldName(field), SortField.Type.DOUBLE, false	));
+			return new org.apache.lucene.search.Sort(new SortedNumericSortField(getSortFieldName(field, currency), SortField.Type.DOUBLE, false	));
 		case "priceDesc":
-			return new org.apache.lucene.search.Sort(new SortedNumericSortField(getSortFieldName(field), SortField.Type.DOUBLE, true));
+			return new org.apache.lucene.search.Sort(new SortedNumericSortField(getSortFieldName(field, currency), SortField.Type.DOUBLE, true));
 		default: 
-			return new org.apache.lucene.search.Sort(new SortField(getSortFieldName(field), SortField.Type.STRING, true));
+			return new org.apache.lucene.search.Sort(new SortField(getSortFieldName(field, currency), SortField.Type.STRING, true));
 		}
 	}
 	
