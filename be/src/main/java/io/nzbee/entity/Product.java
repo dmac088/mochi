@@ -28,6 +28,7 @@ import org.hibernate.search.annotations.SortableField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import io.nzbee.variables.GeneralVars;
 import io.nzbee.variables.ProductVars;
 
 @Entity
@@ -109,6 +110,14 @@ public class Product {
 	public Double getCurrentMarkdownPriceUSDFacet() {
 		return this.getCurrentMarkdownPriceHKD();
 	}
+	
+	@Transient
+	@Field(analyze = Analyze.NO)
+	@SortableField
+	private String getProductDesc() {
+		return this.attributes.stream().filter(p -> p.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH)).collect(Collectors.toList()).get(0).getProductDesc().toLowerCase();  
+	}
+	
 	
 	public Long getProductId() {
 		return productId;

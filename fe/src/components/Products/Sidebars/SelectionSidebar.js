@@ -2,6 +2,11 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import * as categoryApi from '../../../data/categories/api';
 import { changeCategory, createRouteProps } from '../../../services/helpers/RouteHelper';
+import {
+  PRIMARY_CATEGORY_FACET_NAME,
+  SECONDARY_CATEGORY_FACET_NAME,
+  BRAND_FACET_NAME
+} from '../../../services/helpers/facetHelper';
 import _ from 'lodash';
 
   const renderFacets = (selectedFacets, routeProps, props) => {
@@ -41,9 +46,9 @@ import _ from 'lodash';
       <div className="sidebar mb-35">
         <h3 className="sidebar-title">SELECTIONS</h3>
         <ul className="selected-categories">
-          {renderSection("Categories", selectedFacets.filter(o => o.facetingName === "CategoryFR"), routeProps, props)}
-          {renderSection("Brands", selectedFacets.filter(o => o.facetingName === "BrandFR"), routeProps, props)}
-          {renderSection("Price Ranges", selectedFacets.filter(o => o.facetingName === "PriceFR"), routeProps, props)}
+          {renderSection("Categories", selectedFacets.filter(o => o.facetingName === PRIMARY_CATEGORY_FACET_NAME), routeProps, props)}
+          {renderSection("Brands", selectedFacets.filter(o => o.facetingName === BRAND_FACET_NAME), routeProps, props)}
+          {renderSection("Price Ranges", selectedFacets.filter(o => o.facetingName === PRICE_FACET_NAME), routeProps, props)}
         </ul>
       </div>
     );
