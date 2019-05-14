@@ -3,6 +3,7 @@ import {findDOMNode} from 'react-dom';
 import Slider from "react-slick";
 import * as cartSelector from '../../services/cart/selectors';
 import * as cartService from '../../services/cart';
+import { productImagePath } from '../../services/helpers/imageHelper';
 import * as productApi from '../../data/products/api';
 import {
 	SlickArrowPrev,
@@ -108,7 +109,7 @@ class QuickViewProduct extends Component{
 				setTimeout(() => {
 					this.setState({
 						"product": responseJSON,
-						"currentImage": responseJSON.productImage,
+						"currentImage": productImagePath + responseJSON.productImage,
 						"isLoading": false,
 					});
 				}, 1000);
