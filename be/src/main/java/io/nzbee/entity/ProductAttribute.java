@@ -92,6 +92,14 @@ public class ProductAttribute {
 		 		}).collect(Collectors.toList()).get(0);
 	}
 	
+	@Transient
+	@IndexedEmbedded
+	public Category getSecondaryCategory() {
+		return this.getProduct().getCategories().stream().filter(c -> {
+			 return c.getHierarchy().getCode().equals(CategoryVars.SECONDARY_HIERARCHY_CODE);
+		 		}).collect(Collectors.toList()).get(0);
+	}
+	
 	
 	public Long getProductId() {
 		return productId;
