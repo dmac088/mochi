@@ -327,7 +327,7 @@ public class ProductService implements IProductService {
 																 "primaryCategory.parent.parent." + "primaryCategoryDesc" + transLcl,
 																 "primaryCategory.parent." + "primaryCategoryDesc" + transLcl,
 																 "primaryCategory." + "primaryCategoryDesc" + transLcl,
-//																 /"secondaryCategory.parent.parent.parent." + "secondaryCategoryDesc" + transLcl,
+																 //"secondaryCategory.parent.parent.parent." + "secondaryCategoryDesc" + transLcl,
 																 //"secondaryCategory.parent.parent." + "secondaryCategoryDesc" + transLcl,
 																 //"secondaryCategory.parent." + "secondaryCategoryDesc" + transLcl,
 																 //"secondaryCategory." + "secondaryCategoryDesc" + transLcl,
@@ -366,40 +366,40 @@ public class ProductService implements IProductService {
 		lf.stream().forEach(f -> {
 			facetMgr.getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
 			if(f.getFacetingName().equals("PrimaryCategoryFR")) 	{ 	
-																allFacets.removeAll(allFacets.stream().filter(c -> c.getFacetingName().equals("SecondaryCategoryFR")).collect(Collectors.toList()));
-																allFacets.removeAll(allFacets.stream().filter(b -> b.getFacetingName().equals("BrandFR")).collect(Collectors.toList()));
-																allFacets.removeAll(allFacets.stream().filter(p -> p.getFacetingName().equals("PriceFR")).collect(Collectors.toList()));
-																allFacets.addAll(this.getCategoryFacets(productQueryBuilder, jpaQuery, "SecondaryCategoryFR", "secondaryCategory.categoryToken"));
-																allFacets.addAll(this.getBrandFacets(productQueryBuilder, jpaQuery)); 
-																allFacets.addAll(this.getPriceFacets(productQueryBuilder, jpaQuery, currency));
-															}
+																		allFacets.removeAll(allFacets.stream().filter(c -> c.getFacetingName().equals("SecondaryCategoryFR")).collect(Collectors.toList()));
+																		allFacets.removeAll(allFacets.stream().filter(b -> b.getFacetingName().equals("BrandFR")).collect(Collectors.toList()));
+																		allFacets.removeAll(allFacets.stream().filter(p -> p.getFacetingName().equals("PriceFR")).collect(Collectors.toList()));
+																		allFacets.addAll(this.getCategoryFacets(productQueryBuilder, jpaQuery, "SecondaryCategoryFR", "secondaryCategory.categoryToken"));
+																		allFacets.addAll(this.getBrandFacets(productQueryBuilder, jpaQuery)); 
+																		allFacets.addAll(this.getPriceFacets(productQueryBuilder, jpaQuery, currency));
+																	}
 			
 			if(f.getFacetingName().equals("SecondaryCategoryFR")) 	{ 	
-																allFacets.removeAll(allFacets.stream().filter(c -> c.getFacetingName().equals("PrimaryCategoryFR")).collect(Collectors.toList()));
-																allFacets.removeAll(allFacets.stream().filter(b -> b.getFacetingName().equals("BrandFR")).collect(Collectors.toList()));
-																allFacets.removeAll(allFacets.stream().filter(p -> p.getFacetingName().equals("PriceFR")).collect(Collectors.toList()));
-																allFacets.addAll(this.getCategoryFacets(productQueryBuilder, jpaQuery, "PrimaryCategoryFR", "primaryCategory.categoryToken"));
-																allFacets.addAll(this.getBrandFacets(productQueryBuilder, jpaQuery)); 
-																allFacets.addAll(this.getPriceFacets(productQueryBuilder, jpaQuery, currency));
-			}
+																		allFacets.removeAll(allFacets.stream().filter(c -> c.getFacetingName().equals("PrimaryCategoryFR")).collect(Collectors.toList()));
+																		allFacets.removeAll(allFacets.stream().filter(b -> b.getFacetingName().equals("BrandFR")).collect(Collectors.toList()));
+																		allFacets.removeAll(allFacets.stream().filter(p -> p.getFacetingName().equals("PriceFR")).collect(Collectors.toList()));
+																		allFacets.addAll(this.getCategoryFacets(productQueryBuilder, jpaQuery, "PrimaryCategoryFR", "primaryCategory.categoryToken"));
+																		allFacets.addAll(this.getBrandFacets(productQueryBuilder, jpaQuery)); 
+																		allFacets.addAll(this.getPriceFacets(productQueryBuilder, jpaQuery, currency));
+																	}
 			
-			if(f.getFacetingName().equals("BrandFR")) 		{ 	
-																allFacets.removeAll(allFacets.stream().filter(c -> c.getFacetingName().equals("PrimaryCategoryFR")).collect(Collectors.toList()));
-																allFacets.removeAll(allFacets.stream().filter(c -> c.getFacetingName().equals("SecondaryCategoryFR")).collect(Collectors.toList()));
-																allFacets.removeAll(allFacets.stream().filter(p -> p.getFacetingName().equals("PriceFR")).collect(Collectors.toList()));
-																allFacets.addAll(this.getCategoryFacets(productQueryBuilder, jpaQuery, "PrimaryCategoryFR", "primaryCategory.categoryToken")); 
-																allFacets.addAll(this.getCategoryFacets(productQueryBuilder, jpaQuery, "SecondaryCategoryFR", "secondaryCategory.categoryToken"));
-																allFacets.addAll(this.getPriceFacets(productQueryBuilder, jpaQuery, currency)); 
-															}
+			if(f.getFacetingName().equals("BrandFR")) 				{ 	
+																		allFacets.removeAll(allFacets.stream().filter(c -> c.getFacetingName().equals("PrimaryCategoryFR")).collect(Collectors.toList()));
+																		allFacets.removeAll(allFacets.stream().filter(c -> c.getFacetingName().equals("SecondaryCategoryFR")).collect(Collectors.toList()));
+																		allFacets.removeAll(allFacets.stream().filter(p -> p.getFacetingName().equals("PriceFR")).collect(Collectors.toList()));
+																		allFacets.addAll(this.getCategoryFacets(productQueryBuilder, jpaQuery, "PrimaryCategoryFR", "primaryCategory.categoryToken")); 
+																		allFacets.addAll(this.getCategoryFacets(productQueryBuilder, jpaQuery, "SecondaryCategoryFR", "secondaryCategory.categoryToken"));
+																		allFacets.addAll(this.getPriceFacets(productQueryBuilder, jpaQuery, currency)); 
+																	}
 			
-			if(f.getFacetingName().equals("PriceFR")) 		{ 	allFacets.removeAll(allFacets.stream().filter(c -> c.getFacetingName().equals("PrimaryCategoryFR")).collect(Collectors.toList()));
-																allFacets.removeAll(allFacets.stream().filter(c -> c.getFacetingName().equals("SecondaryCategoryFR")).collect(Collectors.toList()));
-																allFacets.removeAll(allFacets.stream().filter(b -> b.getFacetingName().equals("BrandFR")).collect(Collectors.toList()));
-																allFacets.addAll(this.getCategoryFacets(productQueryBuilder, jpaQuery, "PrimaryCategoryFR", "primaryCategory.categoryToken")); 
-																allFacets.addAll(this.getCategoryFacets(productQueryBuilder, jpaQuery, "SecondaryCategoryFR", "secondaryCategory.categoryToken"));
-																allFacets.addAll(this.getBrandFacets(productQueryBuilder, jpaQuery)); 
-															}
-		
+			if(f.getFacetingName().equals("PriceFR")) 				{ 	
+																		allFacets.removeAll(allFacets.stream().filter(c -> c.getFacetingName().equals("PrimaryCategoryFR")).collect(Collectors.toList()));
+																		allFacets.removeAll(allFacets.stream().filter(c -> c.getFacetingName().equals("SecondaryCategoryFR")).collect(Collectors.toList()));
+																		allFacets.removeAll(allFacets.stream().filter(b -> b.getFacetingName().equals("BrandFR")).collect(Collectors.toList()));
+																		allFacets.addAll(this.getCategoryFacets(productQueryBuilder, jpaQuery, "PrimaryCategoryFR", "primaryCategory.categoryToken")); 
+																		allFacets.addAll(this.getCategoryFacets(productQueryBuilder, jpaQuery, "SecondaryCategoryFR", "secondaryCategory.categoryToken"));
+																		allFacets.addAll(this.getBrandFacets(productQueryBuilder, jpaQuery)); 
+																	}
 		});
 		
 		results = jpaQuery.getResultList();
