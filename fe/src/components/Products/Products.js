@@ -334,7 +334,7 @@ class Products extends Component {
                       />
                       <CategorySidebar
                         selectedFacets={selectedFacets}
-                        facets={this.filterFacetsUnselected(this.filterFacetsByName(facets, PRIMARY_CATEGORY_FACET_NAME), selectedFacets)}
+                        facets={this.filterFacetsUnselected([...this.filterFacetsByName(facets, PRIMARY_CATEGORY_FACET_NAME), ...this.filterFacetsByName(facets, SECONDARY_CATEGORY_FACET_NAME)], selectedFacets)}
                         isActive={this.isActive}
                         applyFacet={this.applyFacet}
                       />

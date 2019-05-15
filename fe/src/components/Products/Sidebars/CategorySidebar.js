@@ -38,6 +38,7 @@ import _ from 'lodash';
   }
 
   const renderFacets = (facets, selectedFacets, routeProps, props) => {
+      console.log(facets);
     const minLevel = facets.reduce((acc, x) => {
                     acc.min = Math.min(acc.min, x.level)
                     return acc }, { min : Infinity}).min;
