@@ -376,7 +376,7 @@ public class ProductService implements IProductService {
 		
 		lf.stream().forEach(f -> {
 			facetMgr.getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
-			reprocessFacets(allFacets, productQueryBuilder, jpaQuery, currency, f.getFacetingName(), (f.getFacetingName().equals("PriceFR")) ? "discrete" : "range"); 
+			reprocessFacets(allFacets, productQueryBuilder, jpaQuery, currency, f.getFacetingName(), (!f.getFacetingName().equals("PriceFR")) ? "discrete" : "range"); 
 		});
 		
 		results = jpaQuery.getResultList();
