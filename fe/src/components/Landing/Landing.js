@@ -29,7 +29,6 @@ import ReactTransitionGroup from 'react-addons-transition-group';
           {...props}
         />
         <BestSeller />
-        <BlogPosts />
         <BrandSlider />
         <QuickViewProduct
           productId={currentProductId}
