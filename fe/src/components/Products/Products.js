@@ -14,7 +14,7 @@ import { Pagination } from './Pagination';
 import * as categoryApi from '../../data/categories/api';
 import * as productApi from '../../data/products/api';
 import * as brandApi from '../../data/brands/api';
-import { updateParams } from '../../services/helpers/Helper';
+import { updateParams } from '../../services/helpers/functionHelper';
 import {
   PRIMARY_CATEGORY_FACET_NAME,
   SECONDARY_CATEGORY_FACET_NAME,

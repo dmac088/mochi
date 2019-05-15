@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import CategoryMenuContainer from './CategoryMenuContainer';
 import Slider from "react-slick";
-import { HsSlickArrowLeft, HsSlickArrowRight } from '../../services/helpers/Helper';
+import { HsSlickArrowLeft, HsSlickArrowRight } from '../../services/helpers/uiHelper';
 import { connect } from 'react-redux';
 const $ = window.$;
 const hs1_settings = {

@@ -2,9 +2,10 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { Column } from '../Column';
 import Slider from "react-slick";
-import { SlickArrowLeft, SlickArrowRight, chunkArray } from '../../../services/helpers/Helper';
+import { SlickArrowLeft, SlickArrowRight } from '../../../services/helpers/uiHelper';
+import { chunkArray } from '../../../services/helpers/functionHelper';
+import { createRouteProps } from '../../../services/helpers/routeHelper';
 import { getValue } from '../../../config/lang/selector';
-import { createRouteProps } from '../../../services/helpers/RouteHelper';
 const $ = window.$;
 const settings = {
   arrows: true,

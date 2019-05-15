@@ -7,8 +7,8 @@ import MobileMenu from './MobileMenu';
 import HeaderCartSummary from './HeaderCartSummary';
 import { LanguageSelector } from './LanguageSelector';
 import { CurrencySelector } from './CurrencySelector';
-import { isMobile } from '../../services/helpers/Helper';
-import { homeRouteString, routeContact, routeCheckout, routeAccount, routeWishlist, createRouteProps } from '../../services/helpers/RouteHelper';
+import { isMobile } from '../../services/helpers/uiHelper';
+import { homeRouteString, routeContact, routeCheckout, routeAccount, routeWishlist, createRouteProps } from '../../services/helpers/routeHelper';
 import { Link } from 'react-router-dom';
 
 class Header extends Component {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as customerService from '../../services/customer';
 import store from '../../store';
-import { deepValue } from '../../services/helpers/Helper';
+import { deepValue } from '../../services/helpers/functionHelper';
 import { initialState } from '../../services/customer/reducer';
 import { bindActionCreators } from 'redux';
 import * as tokensActionCreators from '../../services/session/actions';
