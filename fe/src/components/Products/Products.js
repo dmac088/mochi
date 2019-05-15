@@ -75,7 +75,7 @@ class Products extends Component {
 
       //get the max price for our new props
       const maxPrice = Number(this.getMaxPrice((this.filterCategories(categoryList, term)[0]), brand));
-      if(Number.isNaN(maxPrice)) { return }
+      //if(Number.isNaN(maxPrice)) { return }
 
       //get the currenct selected price
       const { selectedPrice } = this.state;

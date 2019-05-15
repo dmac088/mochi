@@ -44,7 +44,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-    console.log("componentDidMount");
     const unsubscribe = store.subscribe(() => {
                                               			if (store.getState().services.persist.isHydrated) {
                                               				unsubscribe();
@@ -56,7 +55,7 @@ class App extends Component {
                                                         console.log("autologin didn't work, no refresh token found on the client!");
 
                                                       })
-                                                      .finally(() => {
+                                                      .then(() => {
                                                         this.initialize();
                                                       });
                                               			}
