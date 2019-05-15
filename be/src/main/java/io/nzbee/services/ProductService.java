@@ -227,7 +227,7 @@ public class ProductService implements IProductService {
 	}
 	
 	
-	private List<Facet> getCategoryFacets(QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery jpaQuery, String facetingName, String fieldReference) {		
+	private List<Facet> getDiscreteFacets(QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery jpaQuery, String facetingName, String fieldReference) {		
 		//create a category faceting request for the base level 
 		FacetingRequest facetRequest = qb.facet()
 				.name(facetingName)
@@ -235,7 +235,6 @@ public class ProductService implements IProductService {
 				.discrete()
 				.orderedBy(FacetSortOrder.COUNT_DESC)
 				.includeZeroCounts(false)
-				.maxFacetCount(10)
 				.createFacetingRequest();
 		
 		//add all the base level facets to categoryFacets List
@@ -244,25 +243,25 @@ public class ProductService implements IProductService {
 	}
 	
 	
-	private List<Facet> getBrandFacets(QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery jpaQuery) {
-		
-		//create brand facets
-		FacetingRequest facetRequest = qb.facet()
-						.name("BrandFR")
-						.onField("brandCode") //in product class
-						.discrete()
-						.orderedBy(FacetSortOrder.COUNT_DESC)
-						.includeZeroCounts(false)
-						.createFacetingRequest();
-
-				//add all the base level facets to brandFacets List
-		jpaQuery.getFacetManager().enableFaceting(facetRequest);
-		return jpaQuery.getFacetManager().getFacets("BrandFR");
-	}
-	
+//	private List<Facet> getBrandFacets(QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery jpaQuery) {
+//		
+//		//create brand facets
+//		FacetingRequest facetRequest = qb.facet()
+//						.name("BrandFR")
+//						.onField("brandCode") //in product class
+//						.discrete()
+//						.orderedBy(FacetSortOrder.COUNT_DESC)
+//						.includeZeroCounts(false)
+//						.createFacetingRequest();
+//
+//				//add all the base level facets to brandFacets List
+//		jpaQuery.getFacetManager().enableFaceting(facetRequest);
+//		return jpaQuery.getFacetManager().getFacets("BrandFR");
+//	}
+//	
 	
 	@SuppressWarnings("unchecked")
-	private List<Facet> getPriceFacets(QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery jpaQuery, String currency) {
+	private List<Facet> getRangeFacets(QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery jpaQuery, String currency) {
 		
 		org.apache.lucene.search.Sort sort = getSortField("priceDesc", currency);
 		jpaQuery.setSort(sort);
@@ -301,6 +300,18 @@ public class ProductService implements IProductService {
 	}
 	
 
+	private void reprocessFacets(Set<Facet> allFacets, QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery jpaQuery, String currency, String facetingName, String facetType) {
+		List<Facet> processlf = allFacets.stream().filter(c -> !c.getFacetingName().equals(facetingName)).collect(Collectors.toList());
+		allFacets.removeAll(processlf);
+		processlf.stream().forEach(pf -> {
+			if(facetType.equals("discrete")) {
+				allFacets.addAll(this.getDiscreteFacets(qb, jpaQuery, pf.getFacetingName(), pf.getFieldName()));
+			} else {
+				allFacets.addAll(this.getRangeFacets(qb, jpaQuery, currency)); 
+			}
+		});
+	}
+	
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -350,10 +361,10 @@ public class ProductService implements IProductService {
 		List<ProductAttribute> results;
 		
 		//initialize the facets
-		allFacets.addAll(this.getCategoryFacets(productQueryBuilder, jpaQuery, "PrimaryCategoryFR", "primaryCategory.categoryToken"));
-		allFacets.addAll(this.getCategoryFacets(productQueryBuilder, jpaQuery, "SecondaryCategoryFR", "secondaryCategory.categoryToken"));
-		allFacets.addAll(this.getBrandFacets(productQueryBuilder, jpaQuery));
-		allFacets.addAll(this.getPriceFacets(productQueryBuilder, jpaQuery, currency));
+		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, jpaQuery, "PrimaryCategoryFR", "primaryCategory.categoryToken"));
+		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, jpaQuery, "SecondaryCategoryFR", "secondaryCategory.categoryToken"));
+		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, jpaQuery, "BrandFR", "brandCode"));
+		allFacets.addAll(this.getRangeFacets(productQueryBuilder, jpaQuery, currency));
 		
 		//filter to get the facets that are selected
 		List<Facet> lf = selectedFacets.stream().flatMap(x -> {
@@ -365,41 +376,7 @@ public class ProductService implements IProductService {
 		
 		lf.stream().forEach(f -> {
 			facetMgr.getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
-			if(f.getFacetingName().equals("PrimaryCategoryFR")) 	{ 	
-																		allFacets.removeAll(allFacets.stream().filter(c -> c.getFacetingName().equals("SecondaryCategoryFR")).collect(Collectors.toList()));
-																		allFacets.removeAll(allFacets.stream().filter(b -> b.getFacetingName().equals("BrandFR")).collect(Collectors.toList()));
-																		allFacets.removeAll(allFacets.stream().filter(p -> p.getFacetingName().equals("PriceFR")).collect(Collectors.toList()));
-																		allFacets.addAll(this.getCategoryFacets(productQueryBuilder, jpaQuery, "SecondaryCategoryFR", "secondaryCategory.categoryToken"));
-																		allFacets.addAll(this.getBrandFacets(productQueryBuilder, jpaQuery)); 
-																		allFacets.addAll(this.getPriceFacets(productQueryBuilder, jpaQuery, currency));
-																	}
-			
-			if(f.getFacetingName().equals("SecondaryCategoryFR")) 	{ 	
-																		allFacets.removeAll(allFacets.stream().filter(c -> c.getFacetingName().equals("PrimaryCategoryFR")).collect(Collectors.toList()));
-																		allFacets.removeAll(allFacets.stream().filter(b -> b.getFacetingName().equals("BrandFR")).collect(Collectors.toList()));
-																		allFacets.removeAll(allFacets.stream().filter(p -> p.getFacetingName().equals("PriceFR")).collect(Collectors.toList()));
-																		allFacets.addAll(this.getCategoryFacets(productQueryBuilder, jpaQuery, "PrimaryCategoryFR", "primaryCategory.categoryToken"));
-																		allFacets.addAll(this.getBrandFacets(productQueryBuilder, jpaQuery)); 
-																		allFacets.addAll(this.getPriceFacets(productQueryBuilder, jpaQuery, currency));
-																	}
-			
-			if(f.getFacetingName().equals("BrandFR")) 				{ 	
-																		allFacets.removeAll(allFacets.stream().filter(c -> c.getFacetingName().equals("PrimaryCategoryFR")).collect(Collectors.toList()));
-																		allFacets.removeAll(allFacets.stream().filter(c -> c.getFacetingName().equals("SecondaryCategoryFR")).collect(Collectors.toList()));
-																		allFacets.removeAll(allFacets.stream().filter(p -> p.getFacetingName().equals("PriceFR")).collect(Collectors.toList()));
-																		allFacets.addAll(this.getCategoryFacets(productQueryBuilder, jpaQuery, "PrimaryCategoryFR", "primaryCategory.categoryToken")); 
-																		allFacets.addAll(this.getCategoryFacets(productQueryBuilder, jpaQuery, "SecondaryCategoryFR", "secondaryCategory.categoryToken"));
-																		allFacets.addAll(this.getPriceFacets(productQueryBuilder, jpaQuery, currency)); 
-																	}
-			
-			if(f.getFacetingName().equals("PriceFR")) 				{ 	
-																		allFacets.removeAll(allFacets.stream().filter(c -> c.getFacetingName().equals("PrimaryCategoryFR")).collect(Collectors.toList()));
-																		allFacets.removeAll(allFacets.stream().filter(c -> c.getFacetingName().equals("SecondaryCategoryFR")).collect(Collectors.toList()));
-																		allFacets.removeAll(allFacets.stream().filter(b -> b.getFacetingName().equals("BrandFR")).collect(Collectors.toList()));
-																		allFacets.addAll(this.getCategoryFacets(productQueryBuilder, jpaQuery, "PrimaryCategoryFR", "primaryCategory.categoryToken")); 
-																		allFacets.addAll(this.getCategoryFacets(productQueryBuilder, jpaQuery, "SecondaryCategoryFR", "secondaryCategory.categoryToken"));
-																		allFacets.addAll(this.getBrandFacets(productQueryBuilder, jpaQuery)); 
-																	}
+			reprocessFacets(allFacets, productQueryBuilder, jpaQuery, currency, f.getFacetingName(), (f.getFacetingName().equals("PriceFR")) ? "discrete" : "range"); 
 		});
 		
 		results = jpaQuery.getResultList();
