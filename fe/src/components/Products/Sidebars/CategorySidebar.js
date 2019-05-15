@@ -4,26 +4,6 @@ import * as categoryApi from '../../../data/categories/api';
 import { changeCategory, createRouteProps } from '../../../services/helpers/routeHelper';
 import _ from 'lodash';
 
-  // const renderCategories = (category, props) => {
-  //   const { getMaxPrice } = props;
-  //   return category.children.map(child => {
-  //     return(
-  //       <li key={child.categoryId} >
-  //         <a onClick={
-  //                     //(e) => changeCategory(e, props)
-  //                     (e) => {
-  //                                       e.preventDefault();
-  //                                       props.applyFacet(e, routeProps);
-  //                    }
-  //             id={child.categoryDesc}
-  //             href="#">
-  //           {child.categoryDesc} ({child.productCount})
-  //         </a>
-  //       </li>
-  //     );
-  //   });
-  // }
-
   const renderChevron = (facet, routeProps, props) => {
     return (
       <a
