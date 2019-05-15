@@ -7,7 +7,7 @@ import * as customerActionCreators from '../../services/customer/actions';
 import * as customerSelector from '../../services/customer/selectors';
 import { initialState } from '../../services/customer/reducer';
 import { withRouter } from "react-router-dom";
-import { routeHome, routeLogin, createRouteProps } from '../../services/helpers/RouteHelper';
+import { routeHome, routeLogin, createRouteProps } from '../../services/helpers/routeHelper';
 
 class Login extends Component {
 

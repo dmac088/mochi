@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from "react-router-dom";
 import qs from 'query-string';
-import { createRouteProps } from '../../services/helpers/RouteHelper';
+import { createRouteProps } from '../../services/helpers/routeHelper';
 
   const changePage = (e, routeProps) => {
     e.preventDefault();

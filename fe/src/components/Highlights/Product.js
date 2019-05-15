@@ -5,7 +5,7 @@ import * as cartSelector from '../../services/cart/selectors';
 import {
 	spinner,
 } from '../../services/helpers/uiHelper';
-import { routeSingleProduct, createRouteProps } from '../../services/helpers/RouteHelper';
+import { routeSingleProduct, createRouteProps } from '../../services/helpers/routeHelper';
 import { productImagePath } from '../../services/helpers/imageHelper';
 
 class Product extends Component {

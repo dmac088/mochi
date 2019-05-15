@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { Link } from "react-router-dom";
-import { changeCategory, homeRouteString, createRouteProps } from '../services/helpers/RouteHelper';
+import { changeCategory, homeRouteString, createRouteProps } from '../services/helpers/routeHelper';
 
   const findCategoryByName = (categoryList, term) => {
     return categoryList.filter(function(value, index, arr){
@@ -26,7 +26,7 @@ import { changeCategory, homeRouteString, createRouteProps } from '../services/h
 
   const renderCategoryLineage = (categoryList, term, routeProps) => {
     const result = [];
-    const category = findCategoryByName(categoryList, term);    
+    const category = findCategoryByName(categoryList, term);
     if(!category) { return }
     createLineage( categoryList,
                         category.categoryId,

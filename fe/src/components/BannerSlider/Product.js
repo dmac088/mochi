@@ -6,7 +6,7 @@ import { SlickArrowLeft, SlickArrowRight } from '../../services/helpers/uiHelper
 import * as cartSelector from '../../services/cart/selectors';
 import * as cartService from '../../services/cart';
 import * as productApi from '../../data/products/api';
-import { routeSingleProduct, createRouteProps } from '../../services/helpers/RouteHelper';
+import { routeSingleProduct, createRouteProps } from '../../services/helpers/routeHelper';
 import { productImagePath } from '../../services/helpers/imageHelper';
 const $ = window.$;
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import { routeHome, routeContact, createRouteProps } from '../../services/helpers/RouteHelper';
+import { routeHome, routeContact, createRouteProps } from '../../services/helpers/routeHelper';
 
 export const Menu = withRouter(({history, match, location, ...props}) => {
     const routeProps = createRouteProps(history, match, location);

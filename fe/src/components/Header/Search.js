@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { withRouter } from "react-router-dom";
 import { isMobile, slide } from '../../services/helpers/uiHelper';
 import { updateParams } from '../../services/helpers/functionHelper';
-import { routeSearch, createRouteProps} from '../../services/helpers/RouteHelper';
+import { routeSearch, createRouteProps} from '../../services/helpers/routeHelper';
 import qs from 'query-string';
 import _ from 'lodash';
 

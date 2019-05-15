@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import * as categoryApi from '../../../data/categories/api';
-import { changeCategory, createRouteProps } from '../../../services/helpers/RouteHelper';
+import { changeCategory, createRouteProps } from '../../../services/helpers/routeHelper';
 import {
   PRIMARY_CATEGORY_FACET_NAME,
   SECONDARY_CATEGORY_FACET_NAME,
