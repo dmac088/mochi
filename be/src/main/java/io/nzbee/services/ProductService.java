@@ -300,11 +300,11 @@ public class ProductService implements IProductService {
 	}
 	
 
-	private void reprocessFacets(Set<Facet> allFacets, QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery jpaQuery, String currency, String facetingName, String facetType) {
+	private void reprocessFacets(Set<Facet> allFacets, QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery jpaQuery, String currency, String facetingName) {
 		List<Facet> processlf = allFacets.stream().filter(c -> !c.getFacetingName().equals(facetingName)).collect(Collectors.toList());
 		allFacets.removeAll(processlf);
 		processlf.stream().forEach(pf -> {
-			if(facetType.equals("discrete")) {
+			if(!pf.getFacetingName().equals("PriceFR")) {
 				allFacets.addAll(this.getDiscreteFacets(qb, jpaQuery, pf.getFacetingName(), pf.getFieldName()));
 			} else {
 				allFacets.addAll(this.getRangeFacets(qb, jpaQuery, currency)); 
@@ -376,7 +376,7 @@ public class ProductService implements IProductService {
 		
 		lf.stream().forEach(f -> {
 			facetMgr.getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
-			reprocessFacets(allFacets, productQueryBuilder, jpaQuery, currency, f.getFacetingName(), (!f.getFacetingName().equals("PriceFR")) ? "discrete" : "range"); 
+			reprocessFacets(allFacets, productQueryBuilder, jpaQuery, currency, f.getFacetingName()); 
 		});
 		
 		results = jpaQuery.getResultList();
