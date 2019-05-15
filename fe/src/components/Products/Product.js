@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import * as cartService from '../../services/cart';
 import * as cartSelector from '../../services/cart/selectors';
-import { routeSingleProduct, createRouteProps } from '../../services/helpers/RouteHelper';
+import { routeSingleProduct, createRouteProps } from '../../services/helpers/routeHelper';
 import { productImagePath } from '../../services/helpers/imageHelper';
 
   const addToCart = (e, product) => {

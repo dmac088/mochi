@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import * as cartSelector from '../../services/cart/selectors';
 import * as cartService from '../../services/cart';
-import { routeSingleProduct } from '../../services/helpers/RouteHelper';
+import { routeSingleProduct } from '../../services/helpers/routeHelper';
 import { productImagePath } from '../../services/helpers/imageHelper';
 
   const removeItem = (e) => {

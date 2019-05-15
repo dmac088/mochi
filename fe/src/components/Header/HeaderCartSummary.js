@@ -7,7 +7,7 @@ import Velocity from 'velocity-animate';
 import 'velocity-animate/velocity.ui';
 import * as cartSelector from '../../services/cart/selectors';
 import * as cartService from '../../services/cart';
-import { homeRouteString, routeCart, routeCheckout, routeSingleProduct, createRouteProps } from '../../services/helpers/RouteHelper';
+import { homeRouteString, routeCart, routeCheckout, routeSingleProduct, createRouteProps } from '../../services/helpers/routeHelper';
 const $ = window.$;
 
 class HeaderCartSummary extends Component {

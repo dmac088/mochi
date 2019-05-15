@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import qs from 'query-string';
-import { routeSingleProduct, createRouteProps } from '../../services/helpers/RouteHelper';
+import { routeSingleProduct, createRouteProps } from '../../services/helpers/routeHelper';
 
   const changeSort = (e, routeProps) => {
     //get the query parameters

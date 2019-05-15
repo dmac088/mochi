@@ -3,10 +3,10 @@ import ReactTransitionGroup from 'react-addons-transition-group';
 import { withRouter } from 'react-router-dom';
 import * as categoryApi from '../../data/categories/api';
 import { isMobile, slide, updateParams } from '../../services/helpers/uiHelper';
-import { changeCategory } from '../../services/helpers/RouteHelper';
+import { changeCategory } from '../../services/helpers/routeHelper';
 import { filterCategories } from '../../services/helpers/filterHelper';
 import { getValue } from '../../config/lang/selector';
-import { createRouteProps } from '../../services/helpers/RouteHelper';
+import { createRouteProps } from '../../services/helpers/routeHelper';
 import 'velocity-animate/velocity.ui';
 
 

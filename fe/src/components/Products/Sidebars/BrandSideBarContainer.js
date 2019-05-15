@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from "react-router-dom";
-import { createRouteProps } from '../../../services/helpers/RouteHelper';
+import { createRouteProps } from '../../../services/helpers/routeHelper';
 
   const renderFacets = (facets, selectedFacets, routeProps, props) => {
     return facets.map(facet => {
