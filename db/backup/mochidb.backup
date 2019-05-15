@@ -901,7 +901,7 @@ ALTER TABLE mochi.tag_tag_id_seq OWNER TO mochidb_owner;
 CREATE TABLE mochi.tag (
     tag_id bigint DEFAULT nextval('mochi.tag_tag_id_seq'::regclass) NOT NULL,
     tag_desc text NOT NULL,
-    lcl_cd character(3) NOT NULL
+    lcl_cd character(5) NOT NULL
 );
 
 
@@ -2413,6 +2413,10 @@ SELECT pg_catalog.setval('mochi.role_type_role_typ_id_seq', 1, false);
 --
 
 COPY mochi.tag (tag_id, tag_desc, lcl_cd) FROM stdin;
+15	Organic	en-GB
+16	有機	zh-HK
+17	Gluten Free	en-GB
+18	不含麩質	zh-HK
 \.
 
 
@@ -2420,7 +2424,7 @@ COPY mochi.tag (tag_id, tag_desc, lcl_cd) FROM stdin;
 -- Name: tag_tag_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('mochi.tag_tag_id_seq', 15, false);
+SELECT pg_catalog.setval('mochi.tag_tag_id_seq', 18, true);
 
 
 --
