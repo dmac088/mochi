@@ -182,6 +182,4 @@ public class CategoryService implements ICategoryService {
     	cDto.setParent(c.getChildCategoryCount() > 0);
 		return cDto;
     }
-
-	
 }

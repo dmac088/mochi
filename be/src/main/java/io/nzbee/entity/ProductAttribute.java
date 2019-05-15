@@ -1,5 +1,8 @@
 package io.nzbee.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,6 +33,7 @@ import org.hibernate.search.annotations.TokenizerDef;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import io.nzbee.variables.CategoryVars;
+import io.nzbee.variables.GeneralVars;
 
 @Entity
 @Indexed
@@ -89,17 +93,16 @@ public class ProductAttribute {
 	public Category getPrimaryCategory() {
 		return this.getProduct().getCategories().stream().filter(c -> {
 			 return c.getHierarchy().getCode().equals(CategoryVars.PRIMARY_HIERARCHY_CODE);
-		 		}).collect(Collectors.toList()).get(0);
+		 		}).collect(Collectors.toList()).stream().findFirst().get();
 	}
 	
 	@Transient
 	@IndexedEmbedded
 	public Category getSecondaryCategory() {
 		return this.getProduct().getCategories().stream().filter(c -> {
-			 return c.getHierarchy().getCode().equals(CategoryVars.SECONDARY_HIERARCHY_CODE);
-		 		}).collect(Collectors.toList()).get(0);
+			return c.getHierarchy().getCode().equals(CategoryVars.SECONDARY_HIERARCHY_CODE);
+		}).collect(Collectors.toList()).stream().findFirst().get();
 	}
-	
 	
 	public Long getProductId() {
 		return productId;

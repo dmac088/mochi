@@ -60,6 +60,10 @@ public class CategoryAttribute {
 		return categoryDesc;
 	}
 	
+	public void setCategoryDesc(String categoryDesc) {
+		this.categoryDesc = categoryDesc;
+	}
+	
 	public String getLclCd() {
 		return lclCd;
 	}

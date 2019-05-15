@@ -9,6 +9,8 @@ public class SidebarFacetDTO {
 	private String facetingName;
 	
 	private String facetFieldName;
+	
+	private String facetClassName;
 
 	private String facetDesc;
 	
@@ -46,6 +48,14 @@ public class SidebarFacetDTO {
 
 	public void setFacetingName(String facetingName) {
 		this.facetingName = facetingName;
+	}
+	
+	public String getFacetingClassName() {
+		return facetClassName;
+	}
+
+	public void setFacetingClassName(String facetingClassName) {
+		this.facetClassName = facetingClassName;
 	}
 
 	public String getFieldName() {

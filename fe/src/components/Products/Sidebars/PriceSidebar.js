@@ -14,7 +14,6 @@ export const PriceSidebar = (props) => {
   }
 
 const priceRanges = (maxPrice, selectedFacets, applyFacet, facets, props) => {
-  console.log(facets);
     return facets.map(facet => {
       return(
         <li key={facet.token}>
