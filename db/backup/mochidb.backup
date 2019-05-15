@@ -47,6 +47,21 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
 --
+-- Name: random_between(integer, integer); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.random_between(low integer, high integer) RETURNS integer
+    LANGUAGE plpgsql STRICT
+    AS $$
+BEGIN
+   RETURN floor(random()* (high-low + 1) + low);
+END;
+$$;
+
+
+ALTER FUNCTION public.random_between(low integer, high integer) OWNER TO postgres;
+
+--
 -- Name: brand_bnd_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -2265,6 +2280,16 @@ SELECT pg_catalog.setval('mochi.product_status_prd_sts_id_seq', 1, false);
 --
 
 COPY mochi.product_tag (prd_tag_id, prd_id, tag_id) FROM stdin;
+25	10	17
+26	11	15
+27	22	17
+28	7	18
+29	5	16
+30	7	17
+31	2	15
+32	5	17
+33	27	16
+34	13	17
 \.
 
 
@@ -2272,7 +2297,7 @@ COPY mochi.product_tag (prd_tag_id, prd_id, tag_id) FROM stdin;
 -- Name: product_tag_prd_tag_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('mochi.product_tag_prd_tag_id_seq', 25, false);
+SELECT pg_catalog.setval('mochi.product_tag_prd_tag_id_seq', 34, true);
 
 
 --
