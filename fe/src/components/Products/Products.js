@@ -18,7 +18,8 @@ import { updateParams } from '../../services/helpers/functionHelper';
 import {
   PRIMARY_CATEGORY_FACET_NAME,
   SECONDARY_CATEGORY_FACET_NAME,
-  BRAND_FACET_NAME
+  BRAND_FACET_NAME,
+  PRICE_FACET_NAME
 } from '../../services/helpers/facetHelper';
 import * as pageService from '../../services/page';
 import qs from 'query-string';
@@ -308,10 +309,12 @@ class Products extends Component {
     return facets.filter(o => o.facetingName === name);
   }
 
-  filterFacetsUnselected = (facets, selectedFacets) => {
+  filterFacetsUnselected = (facets, selectedFacets, facetingNames = []) => {
     if(!facets) { return }
     if(!selectedFacets) { return }
-    return facets.filter(facet => (selectedFacets.findIndex(o => o.token === facet.token) === -1))
+    return facets.filter(facet => (selectedFacets.findIndex(o => o.token === facet.token
+                                                         && facetingNames.includes(o.facetingName)
+                                                       ) === -1));
   }
 
   render() {
@@ -334,19 +337,23 @@ class Products extends Component {
                       />
                       <CategorySidebar
                         selectedFacets={selectedFacets}
-                        facets={this.filterFacetsUnselected([...this.filterFacetsByName(facets, PRIMARY_CATEGORY_FACET_NAME), ...this.filterFacetsByName(facets, SECONDARY_CATEGORY_FACET_NAME)], selectedFacets)}
+                        facets={this.filterFacetsUnselected([...this.filterFacetsByName(facets, PRIMARY_CATEGORY_FACET_NAME),
+                                                             ...this.filterFacetsByName(facets, SECONDARY_CATEGORY_FACET_NAME)],
+                                                            selectedFacets,
+                                                            [PRIMARY_CATEGORY_FACET_NAME, SECONDARY_CATEGORY_FACET_NAME])
+                                }
                         isActive={this.isActive}
                         applyFacet={this.applyFacet}
                       />
                       <BrandSidebar
                         selectedFacets={selectedFacets}
                         isActive={this.isActive}
-                        facets={this.filterFacetsUnselected(this.filterFacetsByName(facets, BRAND_FACET_NAME), selectedFacets)}
+                        facets={this.filterFacetsUnselected(this.filterFacetsByName(facets, BRAND_FACET_NAME), selectedFacets, BRAND_FACET_NAME)}
                         applyFacet={this.applyFacet}
                       />
                       <PriceSidebar
                         type={type}
-                        facets={this.filterFacetsUnselected(this.filterFacetsByName(facets, "PriceFR"), selectedFacets)}
+                        facets={this.filterFacetsUnselected(this.filterFacetsByName(facets, PRICE_FACET_NAME), selectedFacets, PRICE_FACET_NAME)}
                         updateSelectedPrice={this.updateSelectedPrice}
                         applyFacet={this.applyFacet}
                         isActive={this.isActive}
