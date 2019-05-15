@@ -519,15 +519,10 @@ public class ProductService implements IProductService {
     	if(c == null) { return; }
     	if(c.getParentId() == null) { return; }
     	
-    	System.out.println(c.getFacetingName());
-    	
     	Category p = categoryRepository.findByCategoryId(c.getParentId());
     	SidebarFacetDTO pcf = convertToCategorySidebarDTO(p.getCategoryCode(), lcl, currency);
     	String frName = c.getFacetingName();
     	String frField = c.getFacetingClassName() + StringUtils.repeat(".parent", baseLevel.intValue() - p.getCategoryLevel().intValue()) + ".categoryToken";
-    	
-    	System.out.println(frName);
-    	System.out.println(frField);
     	
     	FacetingRequest categoryFacetRequest = qb.facet()
     	.name(frName)
