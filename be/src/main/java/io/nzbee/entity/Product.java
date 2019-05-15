@@ -57,6 +57,11 @@ public class Product {
 	@IndexedEmbedded
 	@JsonIgnore
 	private List<Category> categories;
+	
+	@ManyToMany(mappedBy = "products")
+	@IndexedEmbedded
+	@JsonIgnore
+	private List<ProductTag> tags;
 
 	@OneToMany(mappedBy="product",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonManagedReference
@@ -127,6 +132,9 @@ public class Product {
 		return this.categories;
 	}
 	
+	public List<ProductTag> getTags() {
+		return tags;
+	}
 	
 	public List<ProductAttribute> getAttributes() {
 		return attributes;
