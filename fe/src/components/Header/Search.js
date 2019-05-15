@@ -1,7 +1,8 @@
 
 import React, { Component } from 'react';
 import { withRouter } from "react-router-dom";
-import { isMobile, slide, updateParams } from '../../services/helpers/Helper';
+import { isMobile, slide } from '../../services/helpers/uiHelper';
+import { updateParams } from '../../services/helpers/functionHelper';
 import { routeSearch, createRouteProps} from '../../services/helpers/RouteHelper';
 import qs from 'query-string';
 import _ from 'lodash';

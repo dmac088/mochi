@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Slider from "react-slick";
 import { Product } from './BestSeller/Product';
-import { SlickArrowLeft, SlickArrowRight } from '../../services/helpers/Helper';
+import { SlickArrowLeft, SlickArrowRight } from '../../services/helpers/uiHelper';
 const $ = window.$;
 
 

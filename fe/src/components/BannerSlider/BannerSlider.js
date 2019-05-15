@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import * as productApi from '../../data/products/api';
 import Slider from "react-slick";
 import { Product } from './Product';
-import { SlickArrowLeft, SlickArrowRight } from '../../services/helpers/Helper';
+import { SlickArrowLeft, SlickArrowRight } from '../../services/helpers/uiHelper';
 const $ = window.$;
 
   const settings = {

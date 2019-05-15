@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { isMobile, slide, updateParams } from '../../services/helpers/Helper';
+import { isMobile, slide } from '../../services/helpers/uiHelper';
+import { updateParams } from '../../services/helpers/functionHelper';
 import { homeRouteString, routeHome, routeContact } from '../../services/helpers/RouteHelper';
 import ReactTransitionGroup from 'react-addons-transition-group';
 

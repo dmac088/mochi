@@ -4,7 +4,7 @@ import * as cartService from '../../services/cart';
 import * as cartSelector from '../../services/cart/selectors';
 import {
 	spinner,
-} from '../../services/helpers/Helper';
+} from '../../services/helpers/uiHelper';
 import { routeSingleProduct, createRouteProps } from '../../services/helpers/RouteHelper';
 import { productImagePath } from '../../services/helpers/imageHelper';
 

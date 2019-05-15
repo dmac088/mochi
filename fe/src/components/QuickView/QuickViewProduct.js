@@ -13,7 +13,7 @@ import {
 } from './Helper';
 import {
 	spinner,
-} from '../../services/helpers/Helper';
+} from '../../services/helpers/uiHelper';
 
 class QuickViewProduct extends Component{
 

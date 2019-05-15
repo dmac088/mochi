@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Slider from "react-slick";
 import { withRouter } from 'react-router-dom';
-import { SlickArrowLeft, SlickArrowRight } from '../../services/helpers/Helper';
+import { SlickArrowLeft, SlickArrowRight } from '../../services/helpers/uiHelper';
 import * as cartSelector from '../../services/cart/selectors';
 import * as cartService from '../../services/cart';
 import * as productApi from '../../data/products/api';

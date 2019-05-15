@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Slider from "react-slick";
-import { SlickArrowLeft, SlickArrowRight } from '../../services/helpers/Helper';
+import { SlickArrowLeft, SlickArrowRight } from '../../services/helpers/uiHelper';
 const $ = window.$;
 
 const settings = {

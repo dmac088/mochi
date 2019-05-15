@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from "react-router-dom";
-import { updateParams } from '../../services/helpers/Helper';
+import { updateParams } from '../../services/helpers/functionHelper';
 
   const changeCurr = (e, props, routeProps) => {
     const url = routeProps.location.pathname;
