@@ -33,6 +33,9 @@ public class ProductTag {
     @JsonIgnore
     private List<Product> products;
 	
+	@Column(name="lcl_cd")
+	private String lclCd;
+
 	public Long getTagId() {
 		return productTagId;
 	}
@@ -47,5 +50,13 @@ public class ProductTag {
 
 	public void setTagDesc(String productTagDesc) {
 		this.productTagDesc = productTagDesc;
+	}
+	
+	public String getLclCd() {
+		return lclCd;
+	}
+
+	public void setLclCd(String lclCd) {
+		this.lclCd = lclCd;
 	}
 }
