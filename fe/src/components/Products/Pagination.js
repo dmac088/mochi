@@ -35,13 +35,14 @@ import { createRouteProps } from '../../services/helpers/routeHelper';
   }
 
   const renderNext = (pages, currentPage, routeProps) => {
+    if(Number(currentPage) === (Number(pages)-1)) { return null; }
     return (
       <li>
         <a  onClick={(e) => changePage(e, routeProps)}
             id={Number(currentPage)+1}
             pages={pages}
             href="#">
-        <i className="fa fa-angle-right"></i>
+            <i className="fa fa-angle-right"></i>
         </a>
       </li>
     );
@@ -50,6 +51,8 @@ import { createRouteProps } from '../../services/helpers/routeHelper';
   export const Pagination = withRouter(({history, match, location, ...props}) => {
 
     const {totalPages, currentPage } = props;
+    console.log(currentPage);
+    console.log(totalPages);
     const routeProps = createRouteProps(history, match, location);
     if (totalPages <= 1 ) { return null }
 		return (
