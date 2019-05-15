@@ -8,7 +8,7 @@ import {
 } from './Helper';
 import {
 	spinner,
-} from '../../services/helpers/Helper';
+} from '../../services/helpers/uiHelper';
 import { productImagePath } from '../../services/helpers/imageHelper';
 
 class Product extends Component {
