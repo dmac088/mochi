@@ -353,7 +353,6 @@ class Products extends Component {
                         selectedFacets={selectedFacets}
                         maxPrice={maxPrice}
                         selectedPrice={selectedPrice}/>
-                      <TopRatedSidebar/>
                       <TagSidebar/>
                     </div>
                   </div>
