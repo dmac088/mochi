@@ -100,14 +100,14 @@ class HeroSlider extends Component {
                   <div className="col-lg-12 col-sm-6">
                     <div className="slider-side-banner mb-20 mb-sm-0 mb-xs-0">
                       <a href="shop-left-sidebar.html">
-                        <img src="assets/images/banners/home3-banner1-1.jpg" className="img-fluid" alt="" />
+                        <img src="assets/images/landing/home3-banner1-1.jpg" className="img-fluid" alt="" />
                       </a>
                     </div>
                   </div>
                   <div className="col-lg-12 col-sm-6">
                     <div className="slider-side-banner mb-0 mb-sm-0 mb-xs-0">
                       <a href="shop-left-sidebar.html">
-                        <img src="assets/images/banners/home3-banner1-2.jpg" className="img-fluid" alt="" />
+                        <img src="assets/images/landing/home3-banner1-2.jpg" className="img-fluid" alt="" />
                       </a>
                     </div>
                   </div>
