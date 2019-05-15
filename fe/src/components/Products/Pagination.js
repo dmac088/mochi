@@ -49,10 +49,7 @@ import { createRouteProps } from '../../services/helpers/routeHelper';
   }
 
   export const Pagination = withRouter(({history, match, location, ...props}) => {
-
     const {totalPages, currentPage } = props;
-    console.log(currentPage);
-    console.log(totalPages);
     const routeProps = createRouteProps(history, match, location);
     if (totalPages <= 1 ) { return null }
 		return (
