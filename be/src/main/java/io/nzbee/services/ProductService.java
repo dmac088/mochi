@@ -341,9 +341,7 @@ public class ProductService implements IProductService {
 		org.hibernate.search.jpa.FullTextQuery jpaQuery = fullTextEntityManager.createFullTextQuery(searchQuery, ProductAttribute.class);
 		
 		final Set<Facet> allFacets = new HashSet<Facet>();
-		FacetManager facetMgr = jpaQuery.getFacetManager();
 		final Set<SidebarFacetDTO> cs, bs;
-		List<ProductAttribute> results;
 		
 		//initialize the facets
 		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, jpaQuery, "PrimaryCategoryFR", "primaryCategory.categoryToken"));
@@ -353,11 +351,19 @@ public class ProductService implements IProductService {
 		
 		allFacets.addAll(
 				 allFacets.stream().map(f -> {
-						return getParentCategoryFacets(new HashSet<Facet>(), f, productQueryBuilder, jpaQuery, lcl, currency);
+					 		Set<Facet> parents = getParentCategoryFacets(new HashSet<Facet>(), f, productQueryBuilder, jpaQuery, lcl, currency);
+					 	//	System.out.println("facet = " + f.getValue());
+//					 		parents.stream().forEach(a -> {
+//					 		//	System.out.println("parent = " + a.getValue());
+//					 		});
+						return parents;
 				}).collect(Collectors.toSet()).stream().flatMap(Set::stream).collect(Collectors.toSet()));
 		
+		
+
 		//filter to get the facets that are selected
 		List<Facet> lf = selectedFacets.stream().flatMap(x -> {
+			
 			return allFacets.stream().filter(y -> 
 				x.getToken().equals(y.getValue()));
 		  }
@@ -365,11 +371,20 @@ public class ProductService implements IProductService {
 		
 		cs = new HashSet<SidebarFacetDTO>();
 		//apply each facet selection then reprocess the facets
+		
+		//(new HashSet<Facet>(allFacets))
 		lf.stream().forEach(f -> {
-			facetMgr.getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
+			jpaQuery.getFacetManager().getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
 			reprocessFacets(allFacets, productQueryBuilder, jpaQuery, currency, f.getFacetingName()); 
 			allFacets.addAll(getParentCategoryFacets(new HashSet<Facet>(), f, productQueryBuilder, jpaQuery, lcl, currency));
 		});
+		
+//		allFacets.stream().forEach(f -> {
+//		if(f.getFacetingName().equals("PrimaryCategoryFR")) {
+//			System.out.println(f.getValue());
+//		}
+//		});
+	
 		
 		allFacets.stream().filter(f-> f.getFacetingName().equals("PrimaryCategoryFR")).collect(Collectors.toList()).stream().forEach(cf ->  		{
 													//System.out.println(cf.getFieldName());
@@ -421,7 +436,7 @@ public class ProductService implements IProductService {
 		jpaQuery.setSort(sort);
 		
 		//get the results using jpaQuery object
-		results = jpaQuery.getResultList();
+		List<ProductAttribute> results = jpaQuery.getResultList();
 				
 		//convert the results of jpaQuery to product Data Transfer Objects 
 		List<Product> lp = results.stream().map(pa -> this.convertToProductDO(pa.getProduct(), lcl, currency)).collect(Collectors.toList());
@@ -470,14 +485,17 @@ public class ProductService implements IProductService {
     	if(!c.isPresent()) { return cfs; }
     	Optional<Category> parent = Optional.ofNullable(c.get().getParent());
     	if(!parent.isPresent()) { return cfs; }
+    	
     	//if we hit the root node, there are no parents
     	if(parent.get().getCategoryCode().equals(CategoryVars.PRIMARY_HIERARCHY_ROOT_CODE)) { return cfs; }
     	Long parentLevel = parent.get().getCategoryLevel();
+    	
     	String frName = sf.getFacetingName();
     	String frField = sf.getFieldName().split("\\.")[0] + StringUtils.repeat(".parent", c.get().getCategoryLevel().intValue() - parentLevel.intValue()) + ".categoryToken";
-    	Facet parentFacet = this.getDiscreteFacets(qb, q, frName, frField).stream().findFirst().get();
-    	cfs.add(parentFacet);
-    	return this.getParentCategoryFacets(cfs, parentFacet, qb, q, lcl, currency);
+
+    	Optional<Facet> parentFacet = this.getDiscreteFacets(qb, q, frName, frField).stream().filter(f -> f.getValue().equals(sf.getValue().replace("/" + categoryCode, ""))).findFirst();
+    	if(parentFacet.isPresent()) { cfs.add(parentFacet.get()); } else { return cfs; }
+    	return this.getParentCategoryFacets(cfs, parentFacet.get(), qb, q, lcl, currency);
     }
     
     public Product convertToProductDO(final io.nzbee.entity.Product product, String lcl, String currency) {
