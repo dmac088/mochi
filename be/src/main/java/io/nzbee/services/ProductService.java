@@ -357,7 +357,6 @@ public class ProductService implements IProductService {
 		  }
 		).collect(Collectors.toList());
 		
-		
 		lf.stream().forEach(f -> {
 			facetMgr.getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
 			reprocessFacets(allFacets, productQueryBuilder, jpaQuery, currency, f.getFacetingName()); 
@@ -365,9 +364,8 @@ public class ProductService implements IProductService {
 		
 		results = jpaQuery.getResultList();
 		
-		System.out.println(allFacets.size());
-		
 		cs = new HashSet<SidebarFacetDTO>();
+		
 		allFacets.stream().filter(f-> f.getFacetingName().equals("PrimaryCategoryFR")).collect(Collectors.toList()).stream().forEach(cf ->  		{
 													String categoryCode = (new LinkedList<String>(Arrays.asList(cf.getValue().split("/")))).getLast();
 													SidebarFacetDTO cfDto = convertToCategorySidebarDTO(categoryCode, lcl, currency);
@@ -393,9 +391,8 @@ public class ProductService implements IProductService {
 													cs.add(cfDto);
 		});
 		
-		System.out.println(cs.size());
-		
 		//create parent category Facet DTOs
+		//initialize parent category Facet DTOs
 		(new HashSet<SidebarFacetDTO>(cs)).stream().forEach(cf -> {
 			createParentCategoryFacets(allFacets, cs, cf, productQueryBuilder, jpaQuery, lcl, currency, cf.getLevel());
 		});
@@ -493,12 +490,7 @@ public class ProductService implements IProductService {
     	FacetManager facetMgr = q.getFacetManager();
     	pcf.setToken(String.join("/", Arrays.copyOfRange(c.getToken().split("/"), 0, c.getLevel().intValue()+1)));
     	pcf.setFacetType("discrete");
-    	facetMgr.getFacets(frName).stream().forEach(f -> {
-    		System.out.println(f.getValue());
-    		System.out.println(pcf.getToken());
-    	});
-    	
-    	Optional<Facet> tmp = facetMgr.getFacets(frName).stream().filter(f -> f.getValue().equals(pcf.getToken())).collect(Collectors.toList()).stream().findFirst();
+    	Optional<Facet> tmp = facetMgr.getFacets(frName).stream().findFirst();
     	if(!tmp.isPresent()) { return; }
     	pcf.setProductCount(new Long(tmp.get().getCount()));
 		pcf.setFacetingName(tmp.get().getFacetingName());
