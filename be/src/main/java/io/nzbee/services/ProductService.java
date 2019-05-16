@@ -277,7 +277,7 @@ public class ProductService implements IProductService {
 				.below(below)
 				.from(froma).to(toa)
 				.from(fromb).to(tob)
-				.above(above).excludeLimit()
+				.above(above)
 				.createFacetingRequest();
 		
 		jpaQuery.getFacetManager().enableFaceting(facetRequest);
@@ -366,10 +366,6 @@ public class ProductService implements IProductService {
 			processFacets(allFacets, productQueryBuilder, jpaQuery, currency, f.getFacetingName()); 
 			allFacets.addAll(getParentCategoryFacets(new HashSet<Facet>(), f, productQueryBuilder, jpaQuery, lcl, currency));
 		});
-		
-//		allFacets.stream().forEach(f-> {
-//			System.out.println(f.getFacetingName());
-//		});
 		
 		allFacets.stream().filter(f-> f.getFacetingName().equals("PrimaryCategoryFR")).collect(Collectors.toList()).stream().forEach(cf ->  		{
 													String categoryCode = (new LinkedList<String>(Arrays.asList(cf.getValue().split("/")))).getLast();
