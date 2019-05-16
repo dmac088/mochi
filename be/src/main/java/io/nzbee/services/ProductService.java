@@ -285,16 +285,15 @@ public class ProductService implements IProductService {
 	}
 	
 
-	private void processFacets(Set<Facet> allFacets, QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery jpaQuery, String currency, String facetingName) {
+	private Set<Facet> processFacets(Set<Facet> allFacets, QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery jpaQuery, String currency, String facetingName) {
 		List<Facet> processlf = allFacets.stream().filter(c -> !c.getFacetingName().equals(facetingName)).collect(Collectors.toList());
 		allFacets.removeAll(processlf);
-		processlf.stream().forEach(pf -> {
-			if(!pf.getFacetingName().equals("PriceFR")) {
-				allFacets.addAll(this.getDiscreteFacets(qb, jpaQuery, pf.getFacetingName(), pf.getFieldName()));
-			} else {
-				allFacets.addAll(this.getRangeFacets(qb, jpaQuery, currency)); 
-			}
-		});
+		allFacets.addAll(processlf.stream().map(pf -> {
+					return (!pf.getFacetingName().equals("PriceFR")) 
+					? this.getDiscreteFacets(qb, jpaQuery, pf.getFacetingName(), pf.getFieldName())
+					: this.getRangeFacets(qb, jpaQuery, currency);
+			}).collect(Collectors.toList()).stream().flatMap(List::stream).collect(Collectors.toSet()));
+		return allFacets;
 	}
 	
 
@@ -356,7 +355,6 @@ public class ProductService implements IProductService {
 		
 		//filter to get the facets that are selected
 		List<Facet> lf = selectedFacets.stream().flatMap(x -> {
-			
 			return allFacets.stream().filter(y -> 
 				x.getToken().equals(y.getValue()));
 		  }
@@ -369,9 +367,9 @@ public class ProductService implements IProductService {
 			allFacets.addAll(getParentCategoryFacets(new HashSet<Facet>(), f, productQueryBuilder, jpaQuery, lcl, currency));
 		});
 		
-		allFacets.stream().forEach(f-> {
-			System.out.println(f.getFacetingName());
-		});
+//		allFacets.stream().forEach(f-> {
+//			System.out.println(f.getFacetingName());
+//		});
 		
 		allFacets.stream().filter(f-> f.getFacetingName().equals("PrimaryCategoryFR")).collect(Collectors.toList()).stream().forEach(cf ->  		{
 													String categoryCode = (new LinkedList<String>(Arrays.asList(cf.getValue().split("/")))).getLast();
