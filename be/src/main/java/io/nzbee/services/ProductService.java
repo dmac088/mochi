@@ -292,6 +292,7 @@ public class ProductService implements IProductService {
 					return (pf.getFacetingName().equals("PriceFR")) 
 					? this.getRangeFacets(qb, jpaQuery, currency)
 					: this.getDiscreteFacets(qb, jpaQuery, pf.getFacetingName(), pf.getFieldName());
+					
 			}).collect(Collectors.toList()).stream().flatMap(List::stream).collect(Collectors.toSet()));
 		return allFacets;
 	}
@@ -307,7 +308,7 @@ public class ProductService implements IProductService {
 		String transLcl = lcl.substring(0, 2).toUpperCase() + lcl.substring(3, 5).toUpperCase();
 		
 		QueryBuilder productQueryBuilder = 
-				fullTextEntityManager.getSearchFactory()
+				  fullTextEntityManager.getSearchFactory()
 				  .buildQueryBuilder()
 				  .forEntity(ProductAttribute.class)				
 				  .overridesForField("productDesc", lcl)
@@ -348,17 +349,24 @@ public class ProductService implements IProductService {
 		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, jpaQuery, "BrandFR", "brandCode"));
 		allFacets.addAll(this.getRangeFacets(productQueryBuilder, jpaQuery, currency));
 		
-		allFacets.addAll(
-				 allFacets.stream().map(f -> {
-						return getParentCategoryFacets(new HashSet<Facet>(), f, productQueryBuilder, jpaQuery, lcl, currency);
-				}).collect(Collectors.toSet()).stream().flatMap(Set::stream).collect(Collectors.toSet()));
+		allFacets.addAll(allFacets.stream().map(f -> {
+								return getParentCategoryFacets(new HashSet<Facet>(), f, productQueryBuilder, jpaQuery, lcl, currency);
+		}).collect(Collectors.toSet()).stream().flatMap(Set::stream).collect(Collectors.toSet()));
+		
+		selectedFacets.stream().forEach(f -> {
+			System.out.println(f.getDesc());
+		});
 		
 		//filter to get the facets that are selected
 		List<Facet> lf = selectedFacets.stream().flatMap(x -> {
-			return allFacets.stream().filter(y -> 
-				x.getToken().equals(y.getValue()));
-		  }
-		).collect(Collectors.toList());
+			return allFacets.stream().filter(y -> x.getToken().equals(y.getValue()));
+		}).collect(Collectors.toList());
+		
+		System.out.println(".................");
+		
+		lf.stream().forEach(f -> {
+			System.out.println(f.getValue());
+		});
 		
 		cs = new HashSet<SidebarFacetDTO>();
 		lf.stream().forEach(f -> {
@@ -366,6 +374,8 @@ public class ProductService implements IProductService {
 			processFacets(allFacets, productQueryBuilder, jpaQuery, currency, f.getFacetingName()); 
 			allFacets.addAll(getParentCategoryFacets(new HashSet<Facet>(), f, productQueryBuilder, jpaQuery, lcl, currency));
 		});
+		
+
 		
 		allFacets.stream().filter(f-> f.getFacetingName().equals("PrimaryCategoryFR")).collect(Collectors.toList()).stream().forEach(cf ->  		{
 													String categoryCode = (new LinkedList<String>(Arrays.asList(cf.getValue().split("/")))).getLast();
