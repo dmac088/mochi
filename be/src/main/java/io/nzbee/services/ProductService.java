@@ -362,10 +362,12 @@ public class ProductService implements IProductService {
 		lf.stream().forEach(f -> {
 			facetMgr.getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
 			reprocessFacets(allFacets, productQueryBuilder, jpaQuery, currency, f.getFacetingName()); 
+			allFacets.addAll(getParentCategoryFacets(new HashSet<Facet>(), f, productQueryBuilder, jpaQuery, lcl, currency));
 		});
 	
 	
 		allFacets.stream().filter(f-> f.getFacetingName().equals("PrimaryCategoryFR")).collect(Collectors.toList()).stream().forEach(cf ->  		{
+													//System.out.println(cf.getFieldName());
 													String categoryCode = (new LinkedList<String>(Arrays.asList(cf.getValue().split("/")))).getLast();
 													SidebarFacetDTO cfDto = convertToCategorySidebarDTO(categoryCode, lcl, currency);
 													cfDto.setProductCount(new Long(cf.getCount()));
@@ -378,9 +380,9 @@ public class ProductService implements IProductService {
 		
 		//create parent category Facet DTOs
 		//initialize parent category Facet DTOs
-		(new HashSet<SidebarFacetDTO>(cs)).stream().forEach(cf -> {
-			createParentCategoryFacets(allFacets, cs, cf, productQueryBuilder, jpaQuery, lcl, currency, cf.getLevel());
-		});
+//		(new HashSet<SidebarFacetDTO>(cs)).stream().forEach(cf -> {
+//			createParentCategoryFacets(allFacets, cs, cf, productQueryBuilder, jpaQuery, lcl, currency, cf.getLevel());
+//		});
 					
 		
 		bs = new HashSet<SidebarFacetDTO>();
@@ -448,8 +450,9 @@ public class ProductService implements IProductService {
     			.stream().findFirst().get().getCategoryDesc());
     	
     	cf.setLevel(c.getCategoryLevel());
-    	if(c.getParent() != null) {
-    		cf.setParentId(c.getParent().getCategoryId());
+    	Optional<Category> parent = Optional.ofNullable(c.getParent());
+    	if(parent.isPresent()) {
+    		cf.setParentId(parent.get().getCategoryId());
     	}
     	return cf;		
     }
@@ -462,25 +465,21 @@ public class ProductService implements IProductService {
     	return bf;
     }
     
-    private void createParentCategoryFacets(Set<Facet> cfs, Set<SidebarFacetDTO> sc, SidebarFacetDTO c, QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery q, String lcl, String currency, Long baseLevel) {
-    	if(c == null) { return; }
-    	if(c.getParentId() == null) { return; }
-    	Category p = categoryRepository.findByCategoryId(c.getParentId());
-    	SidebarFacetDTO pcf = convertToCategorySidebarDTO(p.getCategoryCode(), lcl, currency);
-    	String frName = c.getFacetingName();
-    	String frField = c.getFieldName().split("\\.")[0] + StringUtils.repeat(".parent", baseLevel.intValue() - p.getCategoryLevel().intValue()) + ".categoryToken";
-    	cfs.addAll(this.getDiscreteFacets(qb, q, frName, frField));
-    	FacetManager facetMgr = q.getFacetManager();
-    	pcf.setToken(String.join("/", Arrays.copyOfRange(c.getToken().split("/"), 0, c.getLevel().intValue()+1)));
-    	pcf.setFacetType("discrete");
-    	Optional<Facet> tmp = facetMgr.getFacets(frName).stream().findFirst();
-    	if(!tmp.isPresent()) { return; }
-    	pcf.setProductCount(new Long(tmp.get().getCount()));
-		pcf.setFacetingName(tmp.get().getFacetingName());
-		pcf.setFieldName(tmp.get().getFieldName());
-		pcf.setFacetingClassName(c.getFacetingClassName());
-    	sc.add(pcf);
-    	this.createParentCategoryFacets(cfs, sc, pcf, qb, q, lcl, currency, baseLevel);
+    private Set<Facet> getParentCategoryFacets(Set<Facet> cfs, Facet sf, QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery q, String lcl, String currency) {
+    	if(sf == null) { return cfs; }
+    	String categoryCode = (new LinkedList<String>(Arrays.asList(sf.getValue().split("/")))).getLast();
+    	Category c = categoryRepository.findByCategoryCode(categoryCode);
+    	Optional<Category> parent = Optional.ofNullable(c.getParent());
+    	if(!parent.isPresent()) { return cfs; }
+    	//if we hit the root node, there are no parents
+    	if(parent.get().getCategoryCode().equals(CategoryVars.PRIMARY_HIERARCHY_ROOT_CODE)) { return cfs; }
+    	System.out.println(parent.get().getPrimaryCategoryDescENGB());
+    	Long parentLevel = parent.get().getCategoryLevel();
+    	String frName = sf.getFacetingName();
+    	String frField = sf.getFieldName().split("\\.")[0] + StringUtils.repeat(".parent", c.getCategoryLevel().intValue() - parentLevel.intValue()) + ".categoryToken";
+    	Facet parentFacet = this.getDiscreteFacets(qb, q, frName, frField).stream().findFirst().get();
+    	cfs.add(parentFacet);
+    	return this.getParentCategoryFacets(cfs, parentFacet, qb, q, lcl, currency);
     }
     
     public Product convertToProductDO(final io.nzbee.entity.Product product, String lcl, String currency) {

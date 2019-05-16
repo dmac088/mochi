@@ -1,6 +1,7 @@
 package io.nzbee.services;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -156,8 +157,9 @@ public class CategoryService implements ICategoryService {
         //catBrands.forEach(b -> b.setMaxMarkDownPrice(productRepository.maxMarkDownPriceByCategoriesCategoryCodeAndBrandBrandCodeAndPriceCurrencyCode(cDO.getCategoryCode(), b.getBrandCode(), currency)));
        
         //set the parentId
-        if(!(pc.getParent() == null)) {
-        	cDO.setParentId(pc.getParent().getCategoryId());
+        Optional<io.nzbee.entity.Category> parent = Optional.ofNullable(pc.getParent());
+        if(parent.isPresent()) {
+        	cDO.setParentId(parent.get().getCategoryId());
         }
         
         cDO.setCategoryDesc(pc.getAttributes().stream()
