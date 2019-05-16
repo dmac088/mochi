@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
@@ -243,23 +244,6 @@ public class ProductService implements IProductService {
 	}
 	
 	
-//	private List<Facet> getBrandFacets(QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery jpaQuery) {
-//		
-//		//create brand facets
-//		FacetingRequest facetRequest = qb.facet()
-//						.name("BrandFR")
-//						.onField("brandCode") //in product class
-//						.discrete()
-//						.orderedBy(FacetSortOrder.COUNT_DESC)
-//						.includeZeroCounts(false)
-//						.createFacetingRequest();
-//
-//				//add all the base level facets to brandFacets List
-//		jpaQuery.getFacetManager().enableFaceting(facetRequest);
-//		return jpaQuery.getFacetManager().getFacets("BrandFR");
-//	}
-//	
-	
 	@SuppressWarnings("unchecked")
 	private List<Facet> getRangeFacets(QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery jpaQuery, String currency) {
 		
@@ -381,6 +365,8 @@ public class ProductService implements IProductService {
 		
 		results = jpaQuery.getResultList();
 		
+		System.out.println(allFacets.size());
+		
 		cs = new HashSet<SidebarFacetDTO>();
 		allFacets.stream().filter(f-> f.getFacetingName().equals("PrimaryCategoryFR")).collect(Collectors.toList()).stream().forEach(cf ->  		{
 													String categoryCode = (new LinkedList<String>(Arrays.asList(cf.getValue().split("/")))).getLast();
@@ -407,9 +393,11 @@ public class ProductService implements IProductService {
 													cs.add(cfDto);
 		});
 		
+		System.out.println(cs.size());
+		
 		//create parent category Facet DTOs
 		(new HashSet<SidebarFacetDTO>(cs)).stream().forEach(cf -> {
-				createParentCategoryFacets(allFacets, cs, cf, productQueryBuilder, jpaQuery, lcl, currency, cf.getLevel());
+			createParentCategoryFacets(allFacets, cs, cf, productQueryBuilder, jpaQuery, lcl, currency, cf.getLevel());
 		});
 					
 		
@@ -501,22 +489,20 @@ public class ProductService implements IProductService {
     	String frName = c.getFacetingName();
     	String frField = c.getFacetingClassName() + StringUtils.repeat(".parent", baseLevel.intValue() - p.getCategoryLevel().intValue()) + ".categoryToken";
     	
-    	FacetingRequest categoryFacetRequest = qb.facet()
-    	.name(frName)
-    	.onField(frField)
-    	.discrete()
-    	.orderedBy(FacetSortOrder.FIELD_VALUE)
-    	.createFacetingRequest();
-    		
+    	cfs.addAll(this.getDiscreteFacets(qb, q, frName, frField));
     	FacetManager facetMgr = q.getFacetManager();
-    	cfs.addAll(facetMgr.getFacets(frName));
-    	facetMgr.enableFaceting(categoryFacetRequest);
     	pcf.setToken(String.join("/", Arrays.copyOfRange(c.getToken().split("/"), 0, c.getLevel().intValue()+1)));
     	pcf.setFacetType("discrete");
-    	Facet tmp = facetMgr.getFacets(frName).stream().filter(f -> f.getValue().equals(pcf.getToken())).collect(Collectors.toList()).get(0);
-    	pcf.setProductCount(new Long(tmp.getCount()));
-		pcf.setFacetingName(tmp.getFacetingName());
-		pcf.setFieldName(tmp.getFieldName());
+    	facetMgr.getFacets(frName).stream().forEach(f -> {
+    		System.out.println(f.getValue());
+    		System.out.println(pcf.getToken());
+    	});
+    	
+    	Optional<Facet> tmp = facetMgr.getFacets(frName).stream().filter(f -> f.getValue().equals(pcf.getToken())).collect(Collectors.toList()).stream().findFirst();
+    	if(!tmp.isPresent()) { return; }
+    	pcf.setProductCount(new Long(tmp.get().getCount()));
+		pcf.setFacetingName(tmp.get().getFacetingName());
+		pcf.setFieldName(tmp.get().getFieldName());
 		pcf.setFacetingClassName(c.getFacetingClassName());
     	sc.add(pcf);
     	this.createParentCategoryFacets(cfs, sc, pcf, qb, q, lcl, currency, baseLevel);
