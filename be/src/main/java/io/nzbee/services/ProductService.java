@@ -346,7 +346,7 @@ public class ProductService implements IProductService {
 		
 		//initialize the facets
 		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, jpaQuery, "PrimaryCategoryFR", "primaryCategory.categoryToken"));
-		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, jpaQuery, "SecondaryCategoryFR", "secondaryCategory.categoryToken"));
+		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, jpaQuery, "PrimaryCategoryFR", "secondaryCategory.categoryToken"));
 		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, jpaQuery, "BrandFR", "brandCode"));
 		allFacets.addAll(this.getRangeFacets(productQueryBuilder, jpaQuery, currency));
 		
@@ -357,15 +357,14 @@ public class ProductService implements IProductService {
 		  }
 		).collect(Collectors.toList());
 		
+		cs = new HashSet<SidebarFacetDTO>();
+		//apply each facet selection then reprocess the facets
 		lf.stream().forEach(f -> {
 			facetMgr.getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
 			reprocessFacets(allFacets, productQueryBuilder, jpaQuery, currency, f.getFacetingName()); 
 		});
-		
-		results = jpaQuery.getResultList();
-		
-		cs = new HashSet<SidebarFacetDTO>();
-		
+	
+	
 		allFacets.stream().filter(f-> f.getFacetingName().equals("PrimaryCategoryFR")).collect(Collectors.toList()).stream().forEach(cf ->  		{
 													String categoryCode = (new LinkedList<String>(Arrays.asList(cf.getValue().split("/")))).getLast();
 													SidebarFacetDTO cfDto = convertToCategorySidebarDTO(categoryCode, lcl, currency);
@@ -373,23 +372,9 @@ public class ProductService implements IProductService {
 													cfDto.setToken(cf.getValue());
 													cfDto.setFacetType("discrete");
 													cfDto.setFacetingName(cf.getFacetingName());
-													cfDto.setFacetingClassName("primaryCategory");
 													cfDto.setFieldName(cf.getFieldName());
 													cs.add(cfDto);
 												});
-		
-		allFacets.stream().filter(f-> f.getFacetingName().equals("SecondaryCategoryFR")).collect(Collectors.toList()).stream().forEach(cf ->  		{
-													//String categoryCode = cf.getValue();
-													String categoryCode = (new LinkedList<String>(Arrays.asList(cf.getValue().split("/")))).getLast();
-													SidebarFacetDTO cfDto = convertToCategorySidebarDTO(categoryCode, lcl, currency);
-													cfDto.setProductCount(new Long(cf.getCount()));
-													cfDto.setToken(cf.getValue());
-													cfDto.setFacetType("discrete");
-													cfDto.setFacetingName(cf.getFacetingName());
-													cfDto.setFacetingClassName("secondaryCategory");
-													cfDto.setFieldName(cf.getFieldName());
-													cs.add(cfDto);
-		});
 		
 		//create parent category Facet DTOs
 		//initialize parent category Facet DTOs
@@ -480,12 +465,10 @@ public class ProductService implements IProductService {
     private void createParentCategoryFacets(Set<Facet> cfs, Set<SidebarFacetDTO> sc, SidebarFacetDTO c, QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery q, String lcl, String currency, Long baseLevel) {
     	if(c == null) { return; }
     	if(c.getParentId() == null) { return; }
-    	
     	Category p = categoryRepository.findByCategoryId(c.getParentId());
     	SidebarFacetDTO pcf = convertToCategorySidebarDTO(p.getCategoryCode(), lcl, currency);
     	String frName = c.getFacetingName();
-    	String frField = c.getFacetingClassName() + StringUtils.repeat(".parent", baseLevel.intValue() - p.getCategoryLevel().intValue()) + ".categoryToken";
-    	
+    	String frField = c.getFieldName();
     	cfs.addAll(this.getDiscreteFacets(qb, q, frName, frField));
     	FacetManager facetMgr = q.getFacetManager();
     	pcf.setToken(String.join("/", Arrays.copyOfRange(c.getToken().split("/"), 0, c.getLevel().intValue()+1)));
