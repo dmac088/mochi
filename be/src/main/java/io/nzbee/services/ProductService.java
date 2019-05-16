@@ -246,7 +246,7 @@ public class ProductService implements IProductService {
 	
 	
 	@SuppressWarnings("unchecked")
-	private List<Facet> getRangeFacets(QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery jpaQuery, String currency) {
+	private List<Facet> getRangeFacets(QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery jpaQuery, String currency, String facetingName) {
 		
 		org.apache.lucene.search.Sort sort = getSortField("priceDesc", currency);
 		jpaQuery.setSort(sort);
@@ -271,7 +271,7 @@ public class ProductService implements IProductService {
 				above 	= tob;
 		
 		FacetingRequest facetRequest = qb.facet()
-				.name("PriceFR")
+				.name(facetingName)
 				.onField("product.currentMarkdownPrice" + currency + "Facet") //In product class
 				.range()
 				.below(below)
@@ -281,18 +281,18 @@ public class ProductService implements IProductService {
 				.createFacetingRequest();
 		
 		jpaQuery.getFacetManager().enableFaceting(facetRequest);
-		return jpaQuery.getFacetManager().getFacets("PriceFR");
+		return jpaQuery.getFacetManager().getFacets(facetingName);
 	}
 	
 
-	private void reprocessFacets(Set<Facet> allFacets, QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery jpaQuery, String currency, String facetingName) {
+	private void processFacets(Set<Facet> allFacets, QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery jpaQuery, String currency, String facetingName) {
 		List<Facet> processlf = allFacets.stream().filter(c -> !c.getFacetingName().equals(facetingName)).collect(Collectors.toList());
 		allFacets.removeAll(processlf);
 		processlf.stream().forEach(pf -> {
 			if(!pf.getFacetingName().equals("PriceFR")) {
 				allFacets.addAll(this.getDiscreteFacets(qb, jpaQuery, pf.getFacetingName(), pf.getFieldName()));
 			} else {
-				allFacets.addAll(this.getRangeFacets(qb, jpaQuery, currency)); 
+				allFacets.addAll(this.getRangeFacets(qb, jpaQuery, currency, facetingName)); 
 			}
 		});
 	}
@@ -347,7 +347,7 @@ public class ProductService implements IProductService {
 		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, jpaQuery, "PrimaryCategoryFR", "primaryCategory.categoryToken"));
 		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, jpaQuery, "PrimaryCategoryFR", "secondaryCategory.categoryToken"));
 		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, jpaQuery, "BrandFR", "brandCode"));
-		allFacets.addAll(this.getRangeFacets(productQueryBuilder, jpaQuery, currency));
+		allFacets.addAll(this.getRangeFacets(productQueryBuilder, jpaQuery, currency, "PriceFR"));
 		
 		allFacets.addAll(
 				 allFacets.stream().map(f -> {
@@ -363,17 +363,17 @@ public class ProductService implements IProductService {
 		).collect(Collectors.toList());
 		
 		cs = new HashSet<SidebarFacetDTO>();
-		//apply each facet selection then reprocess the facets
-		
-		//(new HashSet<Facet>(allFacets))
 		lf.stream().forEach(f -> {
 			jpaQuery.getFacetManager().getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
-			reprocessFacets(allFacets, productQueryBuilder, jpaQuery, currency, f.getFacetingName()); 
+			processFacets(allFacets, productQueryBuilder, jpaQuery, currency, f.getFacetingName()); 
 			allFacets.addAll(getParentCategoryFacets(new HashSet<Facet>(), f, productQueryBuilder, jpaQuery, lcl, currency));
 		});
 		
+		allFacets.stream().forEach(f-> {
+			System.out.println(f.getFacetingName());
+		});
+		
 		allFacets.stream().filter(f-> f.getFacetingName().equals("PrimaryCategoryFR")).collect(Collectors.toList()).stream().forEach(cf ->  		{
-													//System.out.println(cf.getFieldName());
 													String categoryCode = (new LinkedList<String>(Arrays.asList(cf.getValue().split("/")))).getLast();
 													SidebarFacetDTO cfDto = convertToCategorySidebarDTO(categoryCode, lcl, currency);
 													cfDto.setProductCount(new Long(cf.getCount()));
@@ -407,6 +407,8 @@ public class ProductService implements IProductService {
 													pfDto.setFieldName(pf.getFieldName());
 													ps.add(pfDto);
 											   });
+		
+		
 		
 		//create a results container to send back to the client 
 		SearchDTO src = new SearchDTO();
