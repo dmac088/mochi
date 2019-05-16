@@ -246,7 +246,7 @@ public class ProductService implements IProductService {
 	
 	
 	@SuppressWarnings("unchecked")
-	private List<Facet> getRangeFacets(QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery jpaQuery, String currency, String facetingName) {
+	private List<Facet> getRangeFacets(QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery jpaQuery, String currency) {
 		
 		org.apache.lucene.search.Sort sort = getSortField("priceDesc", currency);
 		jpaQuery.setSort(sort);
@@ -271,7 +271,7 @@ public class ProductService implements IProductService {
 				above 	= tob;
 		
 		FacetingRequest facetRequest = qb.facet()
-				.name(facetingName)
+				.name("PriceFR")
 				.onField("product.currentMarkdownPrice" + currency + "Facet") //In product class
 				.range()
 				.below(below)
@@ -281,7 +281,7 @@ public class ProductService implements IProductService {
 				.createFacetingRequest();
 		
 		jpaQuery.getFacetManager().enableFaceting(facetRequest);
-		return jpaQuery.getFacetManager().getFacets(facetingName);
+		return jpaQuery.getFacetManager().getFacets("PriceFR");
 	}
 	
 
@@ -292,7 +292,7 @@ public class ProductService implements IProductService {
 			if(!pf.getFacetingName().equals("PriceFR")) {
 				allFacets.addAll(this.getDiscreteFacets(qb, jpaQuery, pf.getFacetingName(), pf.getFieldName()));
 			} else {
-				allFacets.addAll(this.getRangeFacets(qb, jpaQuery, currency, facetingName)); 
+				allFacets.addAll(this.getRangeFacets(qb, jpaQuery, currency)); 
 			}
 		});
 	}
@@ -347,7 +347,7 @@ public class ProductService implements IProductService {
 		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, jpaQuery, "PrimaryCategoryFR", "primaryCategory.categoryToken"));
 		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, jpaQuery, "PrimaryCategoryFR", "secondaryCategory.categoryToken"));
 		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, jpaQuery, "BrandFR", "brandCode"));
-		allFacets.addAll(this.getRangeFacets(productQueryBuilder, jpaQuery, currency, "PriceFR"));
+		allFacets.addAll(this.getRangeFacets(productQueryBuilder, jpaQuery, currency));
 		
 		allFacets.addAll(
 				 allFacets.stream().map(f -> {
