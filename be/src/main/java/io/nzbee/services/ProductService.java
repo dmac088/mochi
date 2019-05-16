@@ -289,9 +289,9 @@ public class ProductService implements IProductService {
 		List<Facet> processlf = allFacets.stream().filter(c -> !c.getFacetingName().equals(facetingName)).collect(Collectors.toList());
 		allFacets.removeAll(processlf);
 		allFacets.addAll(processlf.stream().map(pf -> {
-					return (!pf.getFacetingName().equals("PriceFR")) 
-					? this.getDiscreteFacets(qb, jpaQuery, pf.getFacetingName(), pf.getFieldName())
-					: this.getRangeFacets(qb, jpaQuery, currency);
+					return (pf.getFacetingName().equals("PriceFR")) 
+					? this.getRangeFacets(qb, jpaQuery, currency)
+					: this.getDiscreteFacets(qb, jpaQuery, pf.getFacetingName(), pf.getFieldName());
 			}).collect(Collectors.toList()).stream().flatMap(List::stream).collect(Collectors.toSet()));
 		return allFacets;
 	}
