@@ -468,7 +468,7 @@ public class ProductService implements IProductService {
     	Category p = categoryRepository.findByCategoryId(c.getParentId());
     	SidebarFacetDTO pcf = convertToCategorySidebarDTO(p.getCategoryCode(), lcl, currency);
     	String frName = c.getFacetingName();
-    	String frField = c.getFieldName();
+    	String frField = c.getFieldName().split("\\.")[0] + StringUtils.repeat(".parent", baseLevel.intValue() - p.getCategoryLevel().intValue()) + ".categoryToken";
     	cfs.addAll(this.getDiscreteFacets(qb, q, frName, frField));
     	FacetManager facetMgr = q.getFacetManager();
     	pcf.setToken(String.join("/", Arrays.copyOfRange(c.getToken().split("/"), 0, c.getLevel().intValue()+1)));
