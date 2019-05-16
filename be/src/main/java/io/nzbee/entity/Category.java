@@ -112,12 +112,13 @@ public class Category {
 	
 	private String createCategoryToken(Category category, List<String> lc) {
 		lc.add(category.getCategoryCode());
-		if(category.getParent() == null) {
+		Optional<Category> parent = Optional.ofNullable(category.getParent());
+		if(!parent.isPresent()) {
 			StringBuilder sb = new StringBuilder();
 			Lists.reverse(lc).stream().forEach(s -> sb.append("/").append(s));
 			return sb.toString();
 		}
-		return this.createCategoryToken(category.getParent(), lc);
+		return this.createCategoryToken(parent.get(), lc);
 	}
 	
 	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_ENGLISH))
