@@ -466,15 +466,15 @@ public class ProductService implements IProductService {
     private Set<Facet> getParentCategoryFacets(Set<Facet> cfs, Facet sf, QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery q, String lcl, String currency) {
     	if(sf == null) { return cfs; }
     	String categoryCode = (new LinkedList<String>(Arrays.asList(sf.getValue().split("/")))).getLast();
-    	Category c = categoryRepository.findByCategoryCode(categoryCode);
-    	if(c == null ) { return cfs; }
-    	Optional<Category> parent = Optional.ofNullable(c.getParent());
+    	Optional<Category> c = Optional.ofNullable(categoryRepository.findByCategoryCode(categoryCode));
+    	if(!c.isPresent()) { return cfs; }
+    	Optional<Category> parent = Optional.ofNullable(c.get().getParent());
     	if(!parent.isPresent()) { return cfs; }
     	//if we hit the root node, there are no parents
     	if(parent.get().getCategoryCode().equals(CategoryVars.PRIMARY_HIERARCHY_ROOT_CODE)) { return cfs; }
     	Long parentLevel = parent.get().getCategoryLevel();
     	String frName = sf.getFacetingName();
-    	String frField = sf.getFieldName().split("\\.")[0] + StringUtils.repeat(".parent", c.getCategoryLevel().intValue() - parentLevel.intValue()) + ".categoryToken";
+    	String frField = sf.getFieldName().split("\\.")[0] + StringUtils.repeat(".parent", c.get().getCategoryLevel().intValue() - parentLevel.intValue()) + ".categoryToken";
     	Facet parentFacet = this.getDiscreteFacets(qb, q, frName, frField).stream().findFirst().get();
     	cfs.add(parentFacet);
     	return this.getParentCategoryFacets(cfs, parentFacet, qb, q, lcl, currency);
