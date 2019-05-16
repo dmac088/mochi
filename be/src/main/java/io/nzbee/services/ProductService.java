@@ -3,6 +3,7 @@ package io.nzbee.services;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
@@ -350,6 +351,11 @@ public class ProductService implements IProductService {
 		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, jpaQuery, "BrandFR", "brandCode"));
 		allFacets.addAll(this.getRangeFacets(productQueryBuilder, jpaQuery, currency));
 		
+		allFacets.addAll(
+				 allFacets.stream().map(f -> {
+						return getParentCategoryFacets(new HashSet<Facet>(), f, productQueryBuilder, jpaQuery, lcl, currency);
+				}).collect(Collectors.toSet()).stream().flatMap(Set::stream).collect(Collectors.toSet()));
+		
 		//filter to get the facets that are selected
 		List<Facet> lf = selectedFacets.stream().flatMap(x -> {
 			return allFacets.stream().filter(y -> 
@@ -364,7 +370,10 @@ public class ProductService implements IProductService {
 			reprocessFacets(allFacets, productQueryBuilder, jpaQuery, currency, f.getFacetingName()); 
 			allFacets.addAll(getParentCategoryFacets(new HashSet<Facet>(), f, productQueryBuilder, jpaQuery, lcl, currency));
 		});
-	
+		
+		allFacets.stream().forEach(c -> {
+			System.out.println(c.getValue());
+		});
 	
 		allFacets.stream().filter(f-> f.getFacetingName().equals("PrimaryCategoryFR")).collect(Collectors.toList()).stream().forEach(cf ->  		{
 													//System.out.println(cf.getFieldName());
@@ -377,13 +386,6 @@ public class ProductService implements IProductService {
 													cfDto.setFieldName(cf.getFieldName());
 													cs.add(cfDto);
 												});
-		
-		//create parent category Facet DTOs
-		//initialize parent category Facet DTOs
-//		(new HashSet<SidebarFacetDTO>(cs)).stream().forEach(cf -> {
-//			createParentCategoryFacets(allFacets, cs, cf, productQueryBuilder, jpaQuery, lcl, currency, cf.getLevel());
-//		});
-					
 		
 		bs = new HashSet<SidebarFacetDTO>();
 		allFacets.stream().filter(f-> f.getFacetingName().equals("BrandFR")).collect(Collectors.toList()).forEach(bf ->     {
@@ -466,14 +468,16 @@ public class ProductService implements IProductService {
     }
     
     private Set<Facet> getParentCategoryFacets(Set<Facet> cfs, Facet sf, QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery q, String lcl, String currency) {
+    	System.out.println("getParentCategoryFacets");
     	if(sf == null) { return cfs; }
     	String categoryCode = (new LinkedList<String>(Arrays.asList(sf.getValue().split("/")))).getLast();
     	Category c = categoryRepository.findByCategoryCode(categoryCode);
+    	if(c == null ) { return cfs; }
     	Optional<Category> parent = Optional.ofNullable(c.getParent());
     	if(!parent.isPresent()) { return cfs; }
     	//if we hit the root node, there are no parents
     	if(parent.get().getCategoryCode().equals(CategoryVars.PRIMARY_HIERARCHY_ROOT_CODE)) { return cfs; }
-    	System.out.println(parent.get().getPrimaryCategoryDescENGB());
+    	//System.out.println(parent.get().getPrimaryCategoryDescENGB());
     	Long parentLevel = parent.get().getCategoryLevel();
     	String frName = sf.getFacetingName();
     	String frField = sf.getFieldName().split("\\.")[0] + StringUtils.repeat(".parent", c.getCategoryLevel().intValue() - parentLevel.intValue()) + ".categoryToken";
