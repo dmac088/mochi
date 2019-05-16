@@ -371,10 +371,6 @@ public class ProductService implements IProductService {
 			allFacets.addAll(getParentCategoryFacets(new HashSet<Facet>(), f, productQueryBuilder, jpaQuery, lcl, currency));
 		});
 		
-		allFacets.stream().forEach(c -> {
-			System.out.println(c.getValue());
-		});
-	
 		allFacets.stream().filter(f-> f.getFacetingName().equals("PrimaryCategoryFR")).collect(Collectors.toList()).stream().forEach(cf ->  		{
 													//System.out.println(cf.getFieldName());
 													String categoryCode = (new LinkedList<String>(Arrays.asList(cf.getValue().split("/")))).getLast();
@@ -468,7 +464,6 @@ public class ProductService implements IProductService {
     }
     
     private Set<Facet> getParentCategoryFacets(Set<Facet> cfs, Facet sf, QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery q, String lcl, String currency) {
-    	System.out.println("getParentCategoryFacets");
     	if(sf == null) { return cfs; }
     	String categoryCode = (new LinkedList<String>(Arrays.asList(sf.getValue().split("/")))).getLast();
     	Category c = categoryRepository.findByCategoryCode(categoryCode);
@@ -477,7 +472,6 @@ public class ProductService implements IProductService {
     	if(!parent.isPresent()) { return cfs; }
     	//if we hit the root node, there are no parents
     	if(parent.get().getCategoryCode().equals(CategoryVars.PRIMARY_HIERARCHY_ROOT_CODE)) { return cfs; }
-    	//System.out.println(parent.get().getPrimaryCategoryDescENGB());
     	Long parentLevel = parent.get().getCategoryLevel();
     	String frName = sf.getFacetingName();
     	String frField = sf.getFieldName().split("\\.")[0] + StringUtils.repeat(".parent", c.getCategoryLevel().intValue() - parentLevel.intValue()) + ".categoryToken";
