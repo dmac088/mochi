@@ -351,16 +351,9 @@ public class ProductService implements IProductService {
 		
 		allFacets.addAll(
 				 allFacets.stream().map(f -> {
-					 		Set<Facet> parents = getParentCategoryFacets(new HashSet<Facet>(), f, productQueryBuilder, jpaQuery, lcl, currency);
-					 	//	System.out.println("facet = " + f.getValue());
-//					 		parents.stream().forEach(a -> {
-//					 		//	System.out.println("parent = " + a.getValue());
-//					 		});
-						return parents;
+						return getParentCategoryFacets(new HashSet<Facet>(), f, productQueryBuilder, jpaQuery, lcl, currency);
 				}).collect(Collectors.toSet()).stream().flatMap(Set::stream).collect(Collectors.toSet()));
 		
-		
-
 		//filter to get the facets that are selected
 		List<Facet> lf = selectedFacets.stream().flatMap(x -> {
 			
@@ -378,13 +371,6 @@ public class ProductService implements IProductService {
 			reprocessFacets(allFacets, productQueryBuilder, jpaQuery, currency, f.getFacetingName()); 
 			allFacets.addAll(getParentCategoryFacets(new HashSet<Facet>(), f, productQueryBuilder, jpaQuery, lcl, currency));
 		});
-		
-//		allFacets.stream().forEach(f -> {
-//		if(f.getFacetingName().equals("PrimaryCategoryFR")) {
-//			System.out.println(f.getValue());
-//		}
-//		});
-	
 		
 		allFacets.stream().filter(f-> f.getFacetingName().equals("PrimaryCategoryFR")).collect(Collectors.toList()).stream().forEach(cf ->  		{
 													//System.out.println(cf.getFieldName());
