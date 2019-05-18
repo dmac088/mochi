@@ -278,6 +278,7 @@ public class ProductService implements IProductService {
 				.from(froma).to(toa)
 				.from(fromb).to(tob)
 				.above(above)
+				.orderedBy(FacetSortOrder.RANGE_DEFINITION_ORDER)
 				.createFacetingRequest();
 		
 		jpaQuery.getFacetManager().enableFaceting(facetRequest);
@@ -400,6 +401,7 @@ public class ProductService implements IProductService {
 		//for each of the baseline facets, convert them to Facet DTOs for the client and add them to "s" 
 		final List<SidebarFacetDTO> ps = new ArrayList<SidebarFacetDTO>();
 		allFacets.stream().filter(f-> f.getFacetingName().equals("PriceFR")).collect(Collectors.toList()).forEach(pf ->     {
+													//pf.getValue();
 													SidebarFacetDTO pfDto = new SidebarFacetDTO();
 													pfDto.setProductCount(new Long(pf.getCount()));
 													pfDto.setToken(pf.getValue());
