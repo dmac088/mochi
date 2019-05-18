@@ -197,7 +197,7 @@ class Product extends Component {
 	                    >
 	                      <div className="single-product-img easyzoom img-full">
 	                        <img
-	                          src={product.productImage}
+	                          src={productImagePath + product.productImage}
 	                          className="img-fluid"
 	                          alt=""
 	                        />
