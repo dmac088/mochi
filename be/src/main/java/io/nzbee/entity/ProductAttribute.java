@@ -1,6 +1,7 @@
 package io.nzbee.entity;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -102,6 +103,17 @@ public class ProductAttribute {
 		return this.getProduct().getCategories().stream().filter(c -> {
 			return c.getHierarchy().getCode().equals(CategoryVars.SECONDARY_HIERARCHY_CODE);
 		}).collect(Collectors.toList()).stream().findFirst().get();
+	}
+	
+	public ProductTag getTagA() {
+		List<ProductTag> lpt = new ArrayList<ProductTag>(this.getProduct().getTags());
+		lpt.sort(Comparator.comparing(ProductTag::getTagDesc));
+		Optional<ProductTag> t = lpt.stream().findFirst();
+		if(t.isPresent()) {
+			lpt.remove(t.get());
+			return t.get();
+		} 
+		return null;
 	}
 	
 	public Long getProductId() {
