@@ -105,15 +105,15 @@ public class ProductAttribute {
 		}).collect(Collectors.toList()).stream().findFirst().get();
 	}
 	
-	public ProductTag getTagA() {
+	public String getTagA() {
 		List<ProductTag> lpt = new ArrayList<ProductTag>(this.getProduct().getTags());
 		lpt.sort(Comparator.comparing(ProductTag::getTagDesc));
 		Optional<ProductTag> t = lpt.stream().findFirst();
 		if(t.isPresent()) {
 			lpt.remove(t.get());
-			return t.get();
+			return t.get().getTagDesc();
 		} 
-		return null;
+		return "Unknown";
 	}
 	
 	public Long getProductId() {

@@ -8,6 +8,7 @@ import 'velocity-animate/velocity.ui';
 import * as cartSelector from '../../services/cart/selectors';
 import * as cartService from '../../services/cart';
 import { homeRouteString, routeCart, routeCheckout, routeSingleProduct, createRouteProps } from '../../services/helpers/routeHelper';
+import { productImagePath } from '../../services/helpers/imageHelper';
 const $ = window.$;
 
 class HeaderCartSummary extends Component {
@@ -99,7 +100,7 @@ class Accordion extends React.Component {
                 </a>
               </span>
               <div className="cart-float-single-item-image">
-                <a id={product.productId} href="#" onClick={(e) => routeSingleProduct(e, null, routeProps)}><img src={product.productImage} className="img-fluid" alt="" /></a>
+                <a id={product.productId} href="#" onClick={(e) => routeSingleProduct(e, null, routeProps)}><img src={productImagePath + product.productImage} className="img-fluid" alt="" /></a>
               </div>
               <div className="cart-float-single-item-desc">
                 <p className="product-title">
