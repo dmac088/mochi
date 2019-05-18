@@ -342,6 +342,7 @@ public class ProductService implements IProductService {
 		
 		final Set<Facet> allFacets = new HashSet<Facet>();
 		final Set<SidebarFacetDTO> cs, bs;
+		List<Facet> lf;
 		
 		//initialize the facets
 		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, 	jpaQuery, "PrimaryCategoryFR", "primaryCategory.categoryToken"));
@@ -355,7 +356,7 @@ public class ProductService implements IProductService {
 		}).collect(Collectors.toSet()).stream().flatMap(Set::stream).collect(Collectors.toSet()));
 		
 		//filter to get the facets that are selected
-		List<Facet> lf = selectedFacets.stream().flatMap(x -> {
+		lf = selectedFacets.stream().flatMap(x -> {
 			return allFacets.stream().filter(y -> x.getToken().equals(y.getValue()));
 		}).collect(Collectors.toList());
 		
@@ -366,15 +367,12 @@ public class ProductService implements IProductService {
 			allFacets.addAll(getParentCategoryFacets(new HashSet<Facet>(), f, productQueryBuilder, jpaQuery, lcl, currency));
 		});
 		
-		
 		lf = selectedFacets.stream().flatMap(x -> {
 			return allFacets.stream().filter(y -> x.getToken().equals(y.getValue()));
 		}).collect(Collectors.toList());
 		
 		lf.stream().forEach(f -> {
 			jpaQuery.getFacetManager().getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
-			processFacets(allFacets, productQueryBuilder, jpaQuery, currency, f.getFacetingName()); 
-			allFacets.addAll(getParentCategoryFacets(new HashSet<Facet>(), f, productQueryBuilder, jpaQuery, lcl, currency));
 		});
 		
 		allFacets.stream().filter(f-> f.getFacetingName().equals("PrimaryCategoryFR")).collect(Collectors.toList()).stream().forEach(cf ->  		{
