@@ -323,10 +323,10 @@ public class ProductService implements IProductService {
 																 "primaryCategory.parent.parent." + "primaryCategoryDesc" + transLcl,
 																 "primaryCategory.parent." + "primaryCategoryDesc" + transLcl,
 																 "primaryCategory." + "primaryCategoryDesc" + transLcl,
-																 //"secondaryCategory.parent.parent.parent." + "secondaryCategoryDesc" + transLcl,
-																 //"secondaryCategory.parent.parent." + "secondaryCategoryDesc" + transLcl,
-																 //"secondaryCategory.parent." + "secondaryCategoryDesc" + transLcl,
-																 //"secondaryCategory." + "secondaryCategoryDesc" + transLcl,
+																 "secondaryCategory.parent.parent.parent." + "secondaryCategoryDesc" + transLcl,
+																 "secondaryCategory.parent.parent." + "secondaryCategoryDesc" + transLcl,
+																 "secondaryCategory.parent." + "secondaryCategoryDesc" + transLcl,
+																 "secondaryCategory." + "secondaryCategoryDesc" + transLcl,
 																 "product.brand.brandDesc" + transLcl,
 																 "productDesc")
 													.matching(searchTerm)													
