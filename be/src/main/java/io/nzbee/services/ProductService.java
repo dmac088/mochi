@@ -350,6 +350,7 @@ public class ProductService implements IProductService {
 		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, 	jpaQuery, "PrimaryCategoryFR", "secondaryCategory.categoryToken"));
 		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, 	jpaQuery, "BrandFR", "brandCode"));
 		allFacets.addAll(this.getRangeFacets(productQueryBuilder, 		jpaQuery, currency));
+		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, 	jpaQuery, "TagFR", "tagAFacet"));
 		
 
 		allFacets.addAll(allFacets.stream().map(f -> {
@@ -413,6 +414,19 @@ public class ProductService implements IProductService {
 											   });
 		
 		
+		final List<SidebarFacetDTO> ts = new ArrayList<SidebarFacetDTO>();
+		allFacets.stream().filter(f-> f.getFacetingName().equals("TagFR")).collect(Collectors.toList()).forEach(tf ->     {
+													//pf.getValue();
+													SidebarFacetDTO tfDto = new SidebarFacetDTO();
+													tfDto.setProductCount(new Long(tf.getCount()));
+													tfDto.setToken(tf.getValue());
+													tfDto.setFacetType("discrete");
+													tfDto.setDesc(tf.getValue());
+													tfDto.setFacetingName(tf.getFacetingName());
+													tfDto.setFieldName(tf.getFieldName());
+													ts.add(tfDto);
+											   });
+		
 		
 		//create a results container to send back to the client 
 		SearchDTO src = new SearchDTO();
@@ -441,6 +455,7 @@ public class ProductService implements IProductService {
 		src.setFacets(css);
 		src.getFacets().addAll(bs);
 		src.getFacets().addAll(ps);
+		src.getFacets().addAll(ts);
 		src.setProducts(pp);
 		
 		return src;

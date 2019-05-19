@@ -117,6 +117,13 @@ public class ProductAttribute {
 		return "Empty";
 	}
 	
+	@Transient
+	@Facet
+	@Field(analyze = Analyze.NO)
+	public String getTagAFacet() { 
+		return this.getTagA();
+	}
+	
 	public Long getProductId() {
 		return productId;
 	}
