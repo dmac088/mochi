@@ -204,6 +204,8 @@ public class ProductService implements IProductService {
 	@Override
 	public Double getMaxPrice(String lcl, String curr, String category, List<SidebarFacetDTO> selectedFacets) {
 		
+		System.out.println(category);
+		
 		Category c = categoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, category, CategoryVars.PRIMARY_HIERARCHY_ROOT_CODE);
 		
 		List<Long> brandIds = selectedFacets.stream().filter(f -> f.getFacetingName().equals("BrandFR")).collect(Collectors.toList()).stream().map(f-> f.getId()).collect(Collectors.toList());
