@@ -22,6 +22,7 @@ import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
 import org.apache.lucene.analysis.snowball.SnowballPorterFilterFactory;
 import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
 import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.AnalyzerDef;
 import org.hibernate.search.annotations.AnalyzerDiscriminator;
 import org.hibernate.search.annotations.Facet;
@@ -33,6 +34,7 @@ import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.nzbee.variables.CategoryVars;
+import io.nzbee.variables.GeneralVars;
 
 @Entity
 @Indexed
@@ -102,6 +104,20 @@ public class ProductAttribute {
 			return c.getHierarchy().getCode().equals(CategoryVars.SECONDARY_HIERARCHY_CODE);
 		}).collect(Collectors.toList()).stream().findFirst().get();
 	}
+	
+	@Field(analyze = Analyze.YES)
+	public String getPrimaryCategoryDesc() {
+		Iterator<Category> i = this.getProduct().getCategories().stream().filter(c -> c.getHierarchy().getCode().equals(CategoryVars.SECONDARY_HIERARCHY_CODE)).iterator();
+		if(i.hasNext()) {  }
+		while(i.hasNext()) {
+			Optional<CategoryAttribute> ca = i.next().getAttributes().stream().filter(a -> {
+				return a.getLclCd().equals(this.getLclCd());
+			}).findFirst();
+			if(ca.isPresent()) { return ca.get().getCategoryDesc(); }
+		}
+		return "Unknown";
+	}
+	
 	
 	@Transient
 	@Field(analyze = Analyze.YES)
