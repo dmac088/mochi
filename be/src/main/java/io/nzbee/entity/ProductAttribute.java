@@ -32,9 +32,7 @@ import org.hibernate.search.annotations.Parameter;
 import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import io.nzbee.variables.CategoryVars;
-import io.nzbee.variables.GeneralVars;
 
 @Entity
 @Indexed
@@ -116,7 +114,7 @@ public class ProductAttribute {
 			lpt.remove(t.get());
 			return t.get().getTagDesc();
 		} 
-		return "Unknown";
+		return "Empty";
 	}
 	
 	public Long getProductId() {
