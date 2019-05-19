@@ -111,7 +111,7 @@ public class ProductAttribute {
 	public String getTagA() {
 		List<ProductTag> lpt = new ArrayList<ProductTag>(this.getProduct().getTags());
 		lpt.sort(Comparator.comparing(ProductTag::getTagDesc));
-		Optional<ProductTag> t = lpt.stream().findFirst();
+		Optional<ProductTag> t = lpt.stream().filter(pt -> pt.getLclCd().equals(this.getLclCd())).findFirst();
 		if(t.isPresent()) {
 			lpt.remove(t.get());
 			return t.get().getTagDesc();
