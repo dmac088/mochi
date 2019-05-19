@@ -104,15 +104,15 @@ public class ProductAttribute {
 	}
 	
 	@Transient
-	@Facet
-	@Field(analyze = Analyze.NO)
+	@Field(analyze = Analyze.YES)
 	public String getTagA() {
 		List<ProductTag> lpt = new ArrayList<ProductTag>(this.getProduct().getTags());
 		lpt.sort(Comparator.comparing(ProductTag::getTagDesc));
 		Optional<ProductTag> t = lpt.stream().filter(pt -> pt.getLclCd().equals(this.getLclCd())).findFirst();
 		if(t.isPresent()) {
+			String desc = t.get().getTagDesc();
 			lpt.remove(t.get());
-			return t.get().getTagDesc();
+			return desc;
 		} 
 		return "Empty";
 	}
