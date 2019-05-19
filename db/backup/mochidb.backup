@@ -933,12 +933,40 @@ ALTER TABLE tag_tag_id_seq OWNER TO mochidb_owner;
 
 CREATE TABLE tag (
     tag_id bigint DEFAULT nextval('tag_tag_id_seq'::regclass) NOT NULL,
-    tag_desc text NOT NULL,
-    lcl_cd character(5) NOT NULL
+    tag_cd character(5) NOT NULL
 );
 
 
 ALTER TABLE tag OWNER TO mochidb_owner;
+
+--
+-- Name: tag_attr_lcl_tag_id_seq; Type: SEQUENCE; Schema: mochi; Owner: postgres
+--
+
+CREATE SEQUENCE tag_attr_lcl_tag_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE tag_attr_lcl_tag_id_seq OWNER TO postgres;
+
+--
+-- Name: tag_attr_lcl; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE tag_attr_lcl (
+    tag_lcl_id bigint DEFAULT nextval('tag_attr_lcl_tag_id_seq'::regclass) NOT NULL,
+    tag_id bigint NOT NULL,
+    tag_desc character varying(100),
+    tag_img_pth character varying(100),
+    lcl_cd character varying(5) NOT NULL
+);
+
+
+ALTER TABLE tag_attr_lcl OWNER TO mochidb_owner;
 
 SET search_path = security, pg_catalog;
 
@@ -2309,12 +2337,9 @@ COPY product_tag (prd_tag_id, prd_id, tag_id) FROM stdin;
 25	10	17
 26	11	15
 27	22	17
-28	7	18
-29	5	16
 30	7	17
 31	2	15
 32	5	17
-33	27	16
 34	13	17
 \.
 
@@ -2470,12 +2495,29 @@ SELECT pg_catalog.setval('role_type_role_typ_id_seq', 1, false);
 -- Data for Name: tag; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY tag (tag_id, tag_desc, lcl_cd) FROM stdin;
-15	Organic	en-GB
-16	有機	zh-HK
-17	Gluten Free	en-GB
-18	不含麩質	zh-HK
+COPY tag (tag_id, tag_cd) FROM stdin;
+15	ORG01
+17	GFR01
 \.
+
+
+--
+-- Data for Name: tag_attr_lcl; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+COPY tag_attr_lcl (tag_lcl_id, tag_id, tag_desc, tag_img_pth, lcl_cd) FROM stdin;
+1	15	Organic	\N	en-GB
+3	17	Gluten Free	\N	en-GB
+2	15	有機	\N	zh-HK
+4	17	不含麩質	\N	zh-HK
+\.
+
+
+--
+-- Name: tag_attr_lcl_tag_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: postgres
+--
+
+SELECT pg_catalog.setval('tag_attr_lcl_tag_id_seq', 4, true);
 
 
 --
@@ -3133,6 +3175,14 @@ ALTER TABLE ONLY role_type
 
 
 --
+-- Name: tag_attr_lcl tag_attr_lcl_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY tag_attr_lcl
+    ADD CONSTRAINT tag_attr_lcl_pkey PRIMARY KEY (tag_lcl_id);
+
+
+--
 -- Name: tag tag_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -3282,6 +3332,22 @@ ALTER TABLE ONLY product_tag
 
 ALTER TABLE ONLY promotion_category
     ADD CONSTRAINT uc_promotion_category UNIQUE (prm_id, cat_id);
+
+
+--
+-- Name: tag_attr_lcl uc_tag_desc; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY tag_attr_lcl
+    ADD CONSTRAINT uc_tag_desc UNIQUE (tag_desc, lcl_cd);
+
+
+--
+-- Name: tag_attr_lcl uc_tag_lcl; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY tag_attr_lcl
+    ADD CONSTRAINT uc_tag_lcl UNIQUE (tag_id, lcl_cd);
 
 
 SET search_path = security, pg_catalog;
@@ -3597,6 +3663,22 @@ ALTER TABLE ONLY role
 
 ALTER TABLE ONLY role
     ADD CONSTRAINT role_role_typ_id_fkey FOREIGN KEY (rle_typ_id) REFERENCES role_type(rle_typ_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: tag_attr_lcl tag_attr_lcl_lcl_cd_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY tag_attr_lcl
+    ADD CONSTRAINT tag_attr_lcl_lcl_cd_fkey FOREIGN KEY (lcl_cd) REFERENCES locale(lcl_cd);
+
+
+--
+-- Name: tag_attr_lcl tag_attr_lcl_tag_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY tag_attr_lcl
+    ADD CONSTRAINT tag_attr_lcl_tag_id_fkey FOREIGN KEY (tag_id) REFERENCES tag(tag_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 SET search_path = security, pg_catalog;
@@ -3959,6 +4041,13 @@ GRANT SELECT,USAGE ON SEQUENCE role_type_role_typ_id_seq TO mochi_app;
 --
 
 GRANT SELECT ON TABLE tag TO mochi_app;
+
+
+--
+-- Name: tag_attr_lcl; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT ON TABLE tag_attr_lcl TO mochi_app;
 
 
 SET search_path = security, pg_catalog;
