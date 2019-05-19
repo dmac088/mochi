@@ -107,8 +107,12 @@ public class ProductAttribute {
 	@Transient
 	@Field(analyze = Analyze.YES)
 	public String getTagA() {
-		List<ProductTag> lpt = new ArrayList<ProductTag>(this.getProduct().getTags());
-		Iterator<ProductTag> i = lpt.stream().filter(pt -> pt.getLclCd().equals(this.getLclCd())).sorted(Comparator.comparing(ProductTag::getTagDesc)).iterator();
+		Optional<List<ProductTag>> lpt = Optional.ofNullable(this.getProduct().getTags());
+		if(!lpt.isPresent());
+		List<Optional<ProductTagAttribute>> lpa = lpt.get().stream().map(t -> {
+			return t.getAttributes().stream().filter(ta -> ta.getLclCd().equals(this.getLclCd())).findFirst();
+		}).collect(Collectors.toList());
+		Iterator<ProductTagAttribute> i = lpa.stream().filter(ta -> ta.isPresent()).map(t -> { return t.get();}).sorted(Comparator.comparing(ProductTagAttribute::getTagDesc)).iterator();
 		if(i.hasNext()) { return i.next().getTagDesc(); }
 		return "Empty";
 	}
@@ -116,8 +120,12 @@ public class ProductAttribute {
 	@Transient
 	@Field(analyze = Analyze.YES)
 	public String getTagB() {
-		List<ProductTag> lpt = new ArrayList<ProductTag>(this.getProduct().getTags());
-		Iterator<ProductTag> i = lpt.stream().filter(pt -> pt.getLclCd().equals(this.getLclCd())).sorted(Comparator.comparing(ProductTag::getTagDesc)).iterator();
+		Optional<List<ProductTag>> lpt = Optional.ofNullable(this.getProduct().getTags());
+		if(!lpt.isPresent());
+		List<Optional<ProductTagAttribute>> lpa = lpt.get().stream().map(t -> {
+			return t.getAttributes().stream().filter(ta -> ta.getLclCd().equals(this.getLclCd())).findFirst();
+		}).collect(Collectors.toList());
+		Iterator<ProductTagAttribute> i = lpa.stream().filter(ta -> ta.isPresent()).map(t -> { return t.get();}).sorted(Comparator.comparing(ProductTagAttribute::getTagDesc)).iterator();
 		if(i.hasNext()) { i.next(); }
 		if(i.hasNext()) { return i.next().getTagDesc(); }
 		return "Empty";
@@ -126,8 +134,12 @@ public class ProductAttribute {
 	@Transient
 	@Field(analyze = Analyze.YES)
 	public String getTagC() {
-		List<ProductTag> lpt = new ArrayList<ProductTag>(this.getProduct().getTags());
-		Iterator<ProductTag> i = lpt.stream().filter(pt -> pt.getLclCd().equals(this.getLclCd())).sorted(Comparator.comparing(ProductTag::getTagDesc)).iterator();
+		Optional<List<ProductTag>> lpt = Optional.ofNullable(this.getProduct().getTags());
+		if(!lpt.isPresent());
+		List<Optional<ProductTagAttribute>> lpa = lpt.get().stream().map(t -> {
+			return t.getAttributes().stream().filter(ta -> ta.getLclCd().equals(this.getLclCd())).findFirst();
+		}).collect(Collectors.toList());
+		Iterator<ProductTagAttribute> i = lpa.stream().filter(ta -> ta.isPresent()).map(t -> { return t.get();}).sorted(Comparator.comparing(ProductTagAttribute::getTagDesc)).iterator();
 		if(i.hasNext()) { i.next(); }
 		if(i.hasNext()) { i.next(); }
 		if(i.hasNext()) { return i.next().getTagDesc(); }
