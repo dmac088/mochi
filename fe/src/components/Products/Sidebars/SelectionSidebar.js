@@ -6,7 +6,8 @@ import {
   PRIMARY_CATEGORY_FACET_NAME,
   SECONDARY_CATEGORY_FACET_NAME,
   BRAND_FACET_NAME,
-  PRICE_FACET_NAME
+  PRICE_FACET_NAME,
+  TAG_FACET_NAME,
 } from '../../../services/helpers/facetHelper';
 import _ from 'lodash';
 
@@ -51,6 +52,7 @@ import _ from 'lodash';
           {renderSection("Categories", selectedFacets.filter(o => o.facetingName === PRIMARY_CATEGORY_FACET_NAME || o.facetingName === SECONDARY_CATEGORY_FACET_NAME), routeProps, props)}
           {renderSection("Brands", selectedFacets.filter(o => o.facetingName === BRAND_FACET_NAME), routeProps, props)}
           {renderSection("Price Ranges", selectedFacets.filter(o => o.facetingName === PRICE_FACET_NAME), routeProps, props)}
+          {renderSection("Tags", selectedFacets.filter(o => o.facetingName === TAG_FACET_NAME), routeProps, props)}
         </ul>
       </div>
     );
