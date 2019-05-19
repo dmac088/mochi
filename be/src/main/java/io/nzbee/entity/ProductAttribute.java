@@ -108,8 +108,7 @@ public class ProductAttribute {
 	@Field(analyze = Analyze.YES)
 	public String getTagA() {
 		List<ProductTag> lpt = new ArrayList<ProductTag>(this.getProduct().getTags());
-		lpt.sort(Comparator.comparing(ProductTag::getTagDesc));
-		Iterator<ProductTag> i = lpt.stream().filter(pt -> pt.getLclCd().equals(this.getLclCd())).iterator();
+		Iterator<ProductTag> i = lpt.stream().filter(pt -> pt.getLclCd().equals(this.getLclCd())).sorted(Comparator.comparing(ProductTag::getTagDesc)).iterator();
 		if(i.hasNext()) { return i.next().getTagDesc(); }
 		return "Empty";
 	}
@@ -118,8 +117,7 @@ public class ProductAttribute {
 	@Field(analyze = Analyze.YES)
 	public String getTagB() {
 		List<ProductTag> lpt = new ArrayList<ProductTag>(this.getProduct().getTags());
-		lpt.sort(Comparator.comparing(ProductTag::getTagDesc));
-		Iterator<ProductTag> i = lpt.stream().filter(pt -> pt.getLclCd().equals(this.getLclCd())).iterator();
+		Iterator<ProductTag> i = lpt.stream().filter(pt -> pt.getLclCd().equals(this.getLclCd())).sorted(Comparator.comparing(ProductTag::getTagDesc)).iterator();
 		if(i.hasNext()) { i.next(); }
 		if(i.hasNext()) { return i.next().getTagDesc(); }
 		return "Empty";
@@ -129,8 +127,7 @@ public class ProductAttribute {
 	@Field(analyze = Analyze.YES)
 	public String getTagC() {
 		List<ProductTag> lpt = new ArrayList<ProductTag>(this.getProduct().getTags());
-		lpt.sort(Comparator.comparing(ProductTag::getTagDesc));
-		Iterator<ProductTag> i = lpt.stream().filter(pt -> pt.getLclCd().equals(this.getLclCd())).iterator();
+		Iterator<ProductTag> i = lpt.stream().filter(pt -> pt.getLclCd().equals(this.getLclCd())).sorted(Comparator.comparing(ProductTag::getTagDesc)).iterator();
 		if(i.hasNext()) { i.next(); }
 		if(i.hasNext()) { i.next(); }
 		if(i.hasNext()) { return i.next().getTagDesc(); }
