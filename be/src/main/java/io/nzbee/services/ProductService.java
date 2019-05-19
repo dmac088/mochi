@@ -3,7 +3,6 @@ package io.nzbee.services;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
@@ -21,7 +20,6 @@ import org.apache.lucene.search.SortedNumericSortField;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
-import org.hibernate.search.query.engine.spi.FacetManager;
 import org.hibernate.search.query.facet.Facet;
 import org.hibernate.search.query.facet.FacetCombine;
 import org.hibernate.search.query.facet.FacetSortOrder;
@@ -313,6 +311,7 @@ public class ProductService implements IProductService {
 				  .buildQueryBuilder()
 				  .forEntity(ProductAttribute.class)				
 				  .overridesForField("productDesc", lcl)
+				  .overridesForField("tagA", lcl)
 				  .get();
 		
 		//this is a Lucene query using the Lucene api
@@ -329,7 +328,8 @@ public class ProductService implements IProductService {
 																 "secondaryCategory.parent." + "secondaryCategoryDesc" + transLcl,
 																 "secondaryCategory." + "secondaryCategoryDesc" + transLcl,
 																 "product.brand.brandDesc" + transLcl,
-																 "productDesc")
+																 "productDesc",
+																 "tagA")
 													.matching(searchTerm)													
 													.createQuery())
 													.must(productQueryBuilder.keyword()
