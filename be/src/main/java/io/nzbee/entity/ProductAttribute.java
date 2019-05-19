@@ -2,6 +2,7 @@ package io.nzbee.entity;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -108,12 +109,31 @@ public class ProductAttribute {
 	public String getTagA() {
 		List<ProductTag> lpt = new ArrayList<ProductTag>(this.getProduct().getTags());
 		lpt.sort(Comparator.comparing(ProductTag::getTagDesc));
-		Optional<ProductTag> t = lpt.stream().filter(pt -> pt.getLclCd().equals(this.getLclCd())).findFirst();
-		if(t.isPresent()) {
-			String desc = t.get().getTagDesc();
-			lpt.remove(t.get());
-			return desc;
-		} 
+		Iterator<ProductTag> i = lpt.stream().filter(pt -> pt.getLclCd().equals(this.getLclCd())).iterator();
+		if(i.hasNext()) { return i.next().getTagDesc(); }
+		return "Empty";
+	}
+	
+	@Transient
+	@Field(analyze = Analyze.YES)
+	public String getTagB() {
+		List<ProductTag> lpt = new ArrayList<ProductTag>(this.getProduct().getTags());
+		lpt.sort(Comparator.comparing(ProductTag::getTagDesc));
+		Iterator<ProductTag> i = lpt.stream().filter(pt -> pt.getLclCd().equals(this.getLclCd())).iterator();
+		if(i.hasNext()) { i.next(); }
+		if(i.hasNext()) { return i.next().getTagDesc(); }
+		return "Empty";
+	}
+	
+	@Transient
+	@Field(analyze = Analyze.YES)
+	public String getTagC() {
+		List<ProductTag> lpt = new ArrayList<ProductTag>(this.getProduct().getTags());
+		lpt.sort(Comparator.comparing(ProductTag::getTagDesc));
+		Iterator<ProductTag> i = lpt.stream().filter(pt -> pt.getLclCd().equals(this.getLclCd())).iterator();
+		if(i.hasNext()) { i.next(); }
+		if(i.hasNext()) { i.next(); }
+		if(i.hasNext()) { return i.next().getTagDesc(); }
 		return "Empty";
 	}
 	
@@ -122,6 +142,20 @@ public class ProductAttribute {
 	@Field(analyze = Analyze.NO)
 	public String getTagAFacet() { 
 		return this.getTagA();
+	}
+	
+	@Transient
+	@Facet
+	@Field(analyze = Analyze.NO)
+	public String getTagBFacet() { 
+		return this.getTagB();
+	}
+	
+	@Transient
+	@Facet
+	@Field(analyze = Analyze.NO)
+	public String getTagCFacet() { 
+		return this.getTagC();
 	}
 	
 	public Long getProductId() {
