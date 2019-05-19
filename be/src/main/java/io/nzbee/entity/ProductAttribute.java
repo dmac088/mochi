@@ -105,6 +105,9 @@ public class ProductAttribute {
 		}).collect(Collectors.toList()).stream().findFirst().get();
 	}
 	
+	@Transient
+	@Facet
+	@Field(analyze = Analyze.NO)
 	public String getTagA() {
 		List<ProductTag> lpt = new ArrayList<ProductTag>(this.getProduct().getTags());
 		lpt.sort(Comparator.comparing(ProductTag::getTagDesc));
