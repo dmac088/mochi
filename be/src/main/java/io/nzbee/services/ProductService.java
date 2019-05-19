@@ -312,6 +312,8 @@ public class ProductService implements IProductService {
 				  .forEntity(ProductAttribute.class)				
 				  .overridesForField("productDesc", lcl)
 				  .overridesForField("tagA", lcl)
+				  .overridesForField("tagB", lcl)
+				  .overridesForField("tagC", lcl)
 				  .get();
 		
 		//this is a Lucene query using the Lucene api
@@ -329,7 +331,9 @@ public class ProductService implements IProductService {
 																 "secondaryCategory." + "secondaryCategoryDesc" + transLcl,
 																 "product.brand.brandDesc" + transLcl,
 																 "productDesc",
-																 "tagA")
+																 "tagA",
+																 "tagB",
+																 "tagC")
 													.matching(searchTerm)													
 													.createQuery())
 													.must(productQueryBuilder.keyword()
@@ -351,6 +355,8 @@ public class ProductService implements IProductService {
 		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, 	jpaQuery, "BrandFR", "brandCode"));
 		allFacets.addAll(this.getRangeFacets(productQueryBuilder, 		jpaQuery, currency));
 		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, 	jpaQuery, "TagFR", "tagAFacet"));
+		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, 	jpaQuery, "TagFR", "tagBFacet"));
+		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, 	jpaQuery, "TagFR", "tagCFacet"));
 		
 
 		allFacets.addAll(allFacets.stream().map(f -> {
