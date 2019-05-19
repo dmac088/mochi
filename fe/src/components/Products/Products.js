@@ -19,7 +19,8 @@ import {
   PRIMARY_CATEGORY_FACET_NAME,
   SECONDARY_CATEGORY_FACET_NAME,
   BRAND_FACET_NAME,
-  PRICE_FACET_NAME
+  PRICE_FACET_NAME,
+  TAG_FACET_NAME
 } from '../../services/helpers/facetHelper';
 import * as pageService from '../../services/page';
 import qs from 'query-string';
@@ -360,7 +361,11 @@ class Products extends Component {
                         selectedFacets={selectedFacets}
                         maxPrice={maxPrice}
                         selectedPrice={selectedPrice}/>
-                      <TagSidebar/>
+                      <TagSidebar
+                        selectedFacets={selectedFacets}
+                        facets={this.filterFacetsUnselected(this.filterFacetsByName(facets, TAG_FACET_NAME),selectedFacets,TAG_FACET_NAME)}
+                        applyFacet={this.applyFacet}
+                        />
                     </div>
                   </div>
                   <div className="col-lg-9 order-1 order-lg-2 mb-sm-35 mb-xs-35">
