@@ -16,6 +16,38 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 	List<Product> findByCategoriesCategoryIdIn(List<Long> id);
 	
 	Product findByProductId(Long id);
+	
+	@Query(
+			value = "WITH RECURSIVE MyCTE AS ( "
+					+ "SELECT cat_id, cat_cd, c.hir_id "
+					+ "FROM mochi.category c "
+					+ "inner join mochi.hierarchy h on c.hir_id = h.hir_id "
+					+ "AND c.cat_id in :categoryIds "
+					+ "AND h.hir_cd = :hierarchyCode  "
+					
+					+ "UNION ALL "
+					
+					+ "SELECT c.cat_id, c.cat_cd, c.hir_id "
+					+ "FROM mochi.category c "
+					+ "inner join mochi.hierarchy h on c.hir_id = h.hir_id "
+					+ "inner join MyCTE ON c.cat_prnt_id = MyCTE.cat_id "
+					+ "WHERE c.cat_prnt_id IS NOT NULL "
+					+ "AND h.hir_cd = :hierarchyCode) "
+					
+					+ "SELECT coalesce(MAX(prc.prc_val), 0) "
+					+ "FROM MyCTE c inner join mochi.product_category pc on c.cat_id = pc.cat_id  "
+					+ "inner join mochi.hierarchy h on c.hir_id = h.hir_id "
+					+ "inner join mochi.product p  on pc.prd_id = p.prd_id "
+					+ "inner join mochi.price prc  on p.prd_id 	= prc.prd_id "
+					+ "inner join mochi.price_type pt on prc.prc_typ_id = pt.prc_typ_id "
+					+ "inner join mochi.currency ccy on prc.ccy_id = ccy.ccy_id "
+					+ "WHERE pt.prc_typ_desc = 'markdown' "
+					+ "AND h.hir_cd = :hierarchyCode "
+					+ "AND now() between prc.prc_st_dt and prc.prc_en_dt "
+					+ "AND pt.prc_typ_desc = :priceType "
+					+ "AND ccy.ccy_cd = :currency ",
+			nativeQuery = true)	
+	Double maxMarkdownPricesPriceValueByPriceCurrenciesCodeAndPricePriceTypeDescAndCategoriesHierarchyCodeAndCategoriesCategoryIdIn(@Param("currency") String currency, @Param("priceType") String priceType, @Param("hierarchyCode") String hierarchyCode, @Param("categoryIds") List<Long> categoryIds);
 
 	@Query(
 			value = "WITH RECURSIVE MyCTE AS ( "

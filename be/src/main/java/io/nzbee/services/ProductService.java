@@ -204,28 +204,43 @@ public class ProductService implements IProductService {
 	@Override
 	public Double getMaxPrice(String lcl, String curr, String category, List<SidebarFacetDTO> selectedFacets) {
 		
-		System.out.println(category);
-		
 		Category c = categoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, category, CategoryVars.PRIMARY_HIERARCHY_ROOT_CODE);
 		
-		List<Long> brandIds = selectedFacets.stream().filter(f -> f.getFacetingName().equals("BrandFR")).collect(Collectors.toList()).stream().map(f-> f.getId()).collect(Collectors.toList());
+		Optional<List<Long>> brandIds = Optional.ofNullable(selectedFacets.stream().filter(f -> f.getFacetingName().equals("BrandFR"))
+													.collect(Collectors.toList()).stream().map(f-> f.getId()).collect(Collectors.toList()));
 		
-		List<Long> categoryIds =  selectedFacets.stream().filter(f -> f.getFacetingName().equals("PrimaryCategoryFR")).collect(Collectors.toList()).stream().map(f-> f.getId()).collect(Collectors.toList());
+		Optional<List<Long>> categoryIds =  Optional.ofNullable(selectedFacets.stream().filter(f -> f.getFacetingName().equals("PrimaryCategoryFR"))
+													.collect(Collectors.toList()).stream().map(f-> f.getId()).collect(Collectors.toList()));
 
-		List<Long> bids = brandRepository.findAll().stream().map(b-> b.getBrandId()).collect(Collectors.toList());
+		if(!categoryIds.isPresent()) 		{ categoryIds = Optional.ofNullable(new ArrayList<Long>()); }
+		if(categoryIds.get().size() == 0) 	{ categoryIds.get().add(new Long(c.getCategoryId())); }
 		
-		if(categoryIds == null) { categoryIds = new ArrayList<Long>(); }
-		if(brandIds == null) 	{ brandIds = new ArrayList<Long>(); }
-		if(bids == null) 		{ bids = new ArrayList<Long>(); }
-		
-		if (categoryIds.size() <= 0) {categoryIds.add(new Long(c.getCategoryId()));}
-		if(brandIds.size() <= 0) { brandIds.addAll(bids); }
-		
-		Double maxPrice = productRepository.maxMarkdownPricesPriceValueByPriceCurrenciesCodeAndPricePriceTypeDescAndCategoriesHierarchyCodeAndCategoriesCategoryIdInAndBrandBrandIdIn(curr, "markdown", CategoryVars.PRIMARY_HIERARCHY_CODE, categoryIds, brandIds);
+		Double maxPrice =
+					(brandIds.isPresent() && (brandIds.get().size() > 0)) 
+					? productRepository.maxMarkdownPricesPriceValueByPriceCurrenciesCodeAndPricePriceTypeDescAndCategoriesHierarchyCodeAndCategoriesCategoryIdInAndBrandBrandIdIn(curr, "markdown", CategoryVars.PRIMARY_HIERARCHY_CODE, categoryIds.get(), brandIds.get())
+					: productRepository.maxMarkdownPricesPriceValueByPriceCurrenciesCodeAndPricePriceTypeDescAndCategoriesHierarchyCodeAndCategoriesCategoryIdIn(curr, "markdown", CategoryVars.PRIMARY_HIERARCHY_CODE, categoryIds.get());
 		
 		maxPrice = (maxPrice == null) ? 0 : maxPrice;
 		
 		return maxPrice;
+	}
+	
+	
+	@Override
+	public SearchDTO getProductTags(String lcl, String curr, String category, List<SidebarFacetDTO> selectedFacets) {
+		
+//		Category c = categoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, category, CategoryVars.PRIMARY_HIERARCHY_ROOT_CODE);
+//		
+//		List<Long> brandIds = selectedFacets.stream().filter(f -> f.getFacetingName().equals("BrandFR")).collect(Collectors.toList()).stream().map(f-> f.getId()).collect(Collectors.toList());
+//		
+//		List<Long> categoryIds =  selectedFacets.stream().filter(f -> f.getFacetingName().equals("PrimaryCategoryFR")).collect(Collectors.toList()).stream().map(f-> f.getId()).collect(Collectors.toList());
+//
+//		Long priceLT = new Long(selectedFacets.stream().filter(f -> f.getFacetingName().equals("PriceFR")).collect(Collectors.toList()).stream().findFirst().get().getToken());
+//		
+//		List<ProductAttribute> lpa  = productAttributeRepository.
+//		
+		SearchDTO sDto = new SearchDTO();
+		return sDto;
 	}
 	
 	
@@ -313,10 +328,6 @@ public class ProductService implements IProductService {
 				  .buildQueryBuilder()
 				  .forEntity(ProductAttribute.class)	
 				  .overridesForField("productDesc", lcl)
-				  //.overridesForField("primaryCategoryDesc", lcl)
-				  .overridesForField("tagA", lcl)
-				  .overridesForField("tagB", lcl)
-				  .overridesForField("tagC", lcl)
 				  .get();
 		
 		//this is a Lucene query using the Lucene api
