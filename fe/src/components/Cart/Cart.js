@@ -4,15 +4,19 @@ import * as cartSelector from '../../services/cart/selectors';
 import * as cartService from '../../services/cart';
 import { routeSingleProduct } from '../../services/helpers/routeHelper';
 import { productImagePath } from '../../services/helpers/imageHelper';
+import { findById } from '../../data/products/api';
 
   const removeItem = (e) => {
     e.preventDefault();
     cartService.removeFromCart(cartSelector.get(), Number(e.currentTarget.id));
   }
 
-  const renderCartProducts = (routeProps, props, cart) => {
-    const { match, history } = props;
+  const renderCartProducts = (routeProps, cart) => {
+    const { match, history } = routeProps;
+    const { locale, currency } = match.params;
     return cart.items.map(product => {
+      return getProductData(locale, currency, product.productId)
+      .then((product) => {
         return(
           <tr key={product.productId}>
             <td className="pro-thumbnail">
@@ -42,8 +46,20 @@ import { productImagePath } from '../../services/helpers/imageHelper';
               </a>
             </td>
           </tr>
-        )
+        );
       });
+    });
+  }
+
+  const getProductData = (locale, currency, productId) => {
+      return findById(locale, currency, productId)
+             .then((response) => {
+               return response.text();
+             })
+             .then((responseText) => {
+               console.log(responseText);
+               return JSON.parse(responseText);
+             });
   }
 
 
@@ -69,7 +85,7 @@ import { productImagePath } from '../../services/helpers/imageHelper';
                                           </tr>
                                       </thead>
                                       <tbody>
-                                          {renderCartProducts({history, match, location}, props, cart)}
+                                          {renderCartProducts({history, match, location}, cart)}
                                       </tbody>
                                   </table>
                               </div>
@@ -135,9 +151,7 @@ import { productImagePath } from '../../services/helpers/imageHelper';
                                       </div>
                                   </div>
                               </div>
-
                           </div>
-
                       </div>
                   </div>
               </div>
