@@ -1,5 +1,7 @@
 package io.nzbee.entity;
 
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -100,18 +102,17 @@ public class ProductAttribute {
 	@Transient
 	@IndexedEmbedded
 	public Category getSecondaryCategory() {
-		Optional<Collection<Category>> lc = Optional.ofNullable(this.getProduct().getCategories());
+		Optional<Collection<Optional<Category>>> lc = 
+		Optional.ofNullable(this.getProduct().getCategories().stream().map(a -> {return Optional.ofNullable(a);}).collect(Collectors.toList()));
 		if(lc.isPresent()) {
-			Iterator<Category> i = lc.get().stream().iterator();
-			if (i.hasNext()) {
-				Category c = i.next();
-				if (c.getHierarchy().getCode().equals(CategoryVars.SECONDARY_HIERARCHY_CODE)) {
-					return c;
-				}
-			}
+			Optional<Category> c = lc.get().stream().filter(b -> b.isPresent()).collect(Collectors.toList()).stream()
+					.map(d -> d.get()).collect(Collectors.toList())
+					.stream().filter(e -> e.getHierarchy().getCode().equals(CategoryVars.SECONDARY_HIERARCHY_CODE)).findFirst();
+			
+			if(c.isPresent()) { return c.get();}
 		}
 		
-		lc = Optional.ofNullable(new ArrayList<Category>());
+		lc = Optional.ofNullable(new ArrayList<Optional<Category>>());
 		Category c = new Category();
 		CategoryAttribute ca = new CategoryAttribute();
 		c.setCategoryCode("UNK01");
