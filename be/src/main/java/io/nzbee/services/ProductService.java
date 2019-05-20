@@ -218,9 +218,7 @@ public class ProductService implements IProductService {
 					(brandIds.isPresent() && (brandIds.get().size() > 0)) 
 					? productRepository.maxMarkdownPricesPriceValueByPriceCurrenciesCodeAndPricePriceTypeDescAndCategoriesHierarchyCodeAndCategoriesCategoryIdInAndBrandBrandIdIn(curr, "markdown", CategoryVars.PRIMARY_HIERARCHY_CODE, categoryIds.get(), brandIds.get())
 					: productRepository.maxMarkdownPricesPriceValueByPriceCurrenciesCodeAndPricePriceTypeDescAndCategoriesHierarchyCodeAndCategoriesCategoryIdIn(curr, "markdown", CategoryVars.PRIMARY_HIERARCHY_CODE, categoryIds.get());
-		
-		maxPrice = (maxPrice == null) ? 0 : maxPrice;
-		
+	
 		return maxPrice;
 	}
 	
