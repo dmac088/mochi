@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import * as cartSelector from '../../services/cart/selectors';
 import * as cartService from '../../services/cart';
@@ -6,12 +6,23 @@ import { routeSingleProduct } from '../../services/helpers/routeHelper';
 import { productImagePath } from '../../services/helpers/imageHelper';
 import { findById } from '../../data/products/api';
 
-  const removeItem = (e) => {
+
+
+class Products extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      product: null,
+    }
+  }
+
+  removeItem = (e) => {
     e.preventDefault();
     cartService.removeFromCart(cartSelector.get(), Number(e.currentTarget.id));
   }
 
-  const renderCartProducts = (routeProps, cart) => {
+  renderCartProducts = (routeProps, cart) => {
     const { match, history } = routeProps;
     const { locale, currency } = match.params;
     return cart.items.map(product => {
@@ -57,14 +68,15 @@ import { findById } from '../../data/products/api';
                return response.text();
              })
              .then((responseText) => {
-               console.log(responseText);
-               return JSON.parse(responseText);
+               this.setState({
+                 "product": JSON.parse(responseText),
+               });
              });
   }
 
 
-  export const Cart = withRouter(({history, match, location, ...props}) => {
-      const { cart } = props;
+  render() {
+      const { cart } = this.props;
 			return(
         <React.Fragment>
           <div className="page-section section mb-50">
@@ -85,7 +97,7 @@ import { findById } from '../../data/products/api';
                                           </tr>
                                       </thead>
                                       <tbody>
-                                          {renderCartProducts({history, match, location}, cart)}
+                                          {this.renderCartProducts({history, match, location}, cart)}
                                       </tbody>
                                   </table>
                               </div>
@@ -157,5 +169,6 @@ import { findById } from '../../data/products/api';
               </div>
           </div>
         </React.Fragment>
-      )
-    });
+      );
+    }
+}
