@@ -290,18 +290,18 @@ class App extends Component {
   render() {
     return (
         <Switch>
-          <Route path={"/:locale/:currency"} exact={true}                                             render={()   => this.renderLayout(this.renderLanding)}        />
-          <Route path={"/:locale/:currency/(category|search)/:term/product/:productId"}               exact={true}  render={()   => this.renderLayoutBC(this.renderProduct)}      />
-          <Route path={"/:locale/:currency/product/:productId"}                                       exact={true}  render={()   => this.renderLayoutBC(this.renderProduct)}      />
+          <Route path={"/:locale/:currency"}          exact={true}                                    render={()   => this.renderLayout(this.renderLanding)}        />
+          <Route path={"/:locale/:currency/(category|search)/:term/product/:productId"}               exact={true}  render={()   => this.renderLayoutBC(this.renderProduct)} />
+          <Route path={"/:locale/:currency/product/:productId"}                                       exact={true}  render={()   => this.renderLayoutBC(this.renderProduct)} />
           <Route path={"/:locale/:currency/(category|search)/:term/brand/:brand"}                     render={()   => this.renderLayoutBC(this.renderProducts)}     />
           <Route path={"/:locale/:currency/(category|search)/:term"}                                  render={()   => this.renderLayoutBC(this.renderProducts)}     />
           <Route path={"/:locale/:currency/(search)"}                                                 render={()   => this.renderLayoutBC(this.renderProducts)}     />
           <Route path={"/:locale/:currency/Checkout"} exact={true}                                    render={()   => this.renderLayoutBC(this.renderCheckout)}     />
-          <Route path={"/:locale/:currency/Cart"} exact={true}                                        render={()   => this.renderLayoutBC(this.renderCart)}         />
-          <Route path={"/:locale/:currency/Account"} exact={true}                                     render={()   => this.renderLayoutBC(this.renderAuth)}         />
+          <Route path={"/:locale/:currency/Cart"}     exact={true}                                    render={()   => this.renderLayoutBC(this.renderCart)}         />
+          <Route path={"/:locale/:currency/Account"}  exact={true}                                    render={()   => this.renderLayoutBC(this.renderAuth)}         />
           <Route path={"/:locale/:currency/Wishlist"} exact={true}                                    render={()   => this.renderLayoutBC(this.renderWishlist)}     />
-          <Route path={"/:locale/:currency/Contact"} exact={true}                                     render={()   => this.renderLayoutBC(this.renderContact)}      />
-          <Route path={"/:locale/:currency/Auth"} exact={true}                                        render={()   => this.renderLayoutBC(this.renderAuth)}         />
+          <Route path={"/:locale/:currency/Contact"}  exact={true}                                    render={()   => this.renderLayoutBC(this.renderContact)}      />
+          <Route path={"/:locale/:currency/Auth"}     exact={true}                                    render={()   => this.renderLayoutBC(this.renderAuth)}         />
           <Redirect from="/" to="/en-GB/HKD" />
           <Route                                                                                      render={()   => this.renderLayout(this.renderLanding)}   />
         </Switch>
@@ -312,7 +312,7 @@ class App extends Component {
 //on a dispatch call from anywhere in the application
 //this function will fire and update authenticated
 export default withRouter(connect(state => ({
-    cart: state.services.cart,
+    cart:     state.services.cart,
     tokens:   state.services.session.tokens,
     customer: state.services.customer.customer
 }), dispatch => ({

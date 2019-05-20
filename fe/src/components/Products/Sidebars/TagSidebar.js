@@ -22,7 +22,6 @@ import _ from 'lodash';
 
     export const TagSidebar = (props) => {
       const { facets, selectedFacets } = props;
-      console.log(facets);
       if(!(facets.length > 0)) { return null }
       return (
         <div className="sidebar">
