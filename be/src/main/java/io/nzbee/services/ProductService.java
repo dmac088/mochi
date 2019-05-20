@@ -313,7 +313,7 @@ public class ProductService implements IProductService {
 				  .buildQueryBuilder()
 				  .forEntity(ProductAttribute.class)	
 				  .overridesForField("productDesc", lcl)
-				  .overridesForField("primaryCategoryDesc", lcl)
+				  //.overridesForField("primaryCategoryDesc", lcl)
 				  .overridesForField("tagA", lcl)
 				  .overridesForField("tagB", lcl)
 				  .overridesForField("tagC", lcl)
@@ -327,7 +327,7 @@ public class ProductService implements IProductService {
 																 "primaryCategory.parent.parent.parent." + "primaryCategoryDesc" + transLcl,
 																 "primaryCategory.parent.parent." + "primaryCategoryDesc" + transLcl,
 																 "primaryCategory.parent." + "primaryCategoryDesc" + transLcl,
-																 "primaryCategoryDesc",
+																 "primaryCategory.primaryCategoryDesc" + transLcl,
 																 "secondaryCategory.parent.parent.parent." + "secondaryCategoryDesc" + transLcl,
 																 "secondaryCategory.parent.parent." + "secondaryCategoryDesc" + transLcl,
 																 "secondaryCategory.parent." + "secondaryCategoryDesc" + transLcl,
