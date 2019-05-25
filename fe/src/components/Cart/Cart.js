@@ -18,6 +18,20 @@ class Cart extends Component {
     }
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    const { locale, currency } = this.props.match.params;
+    if(locale           === this.state.locale
+       &&  currency     === this.state.currenct
+    ) {return;}
+    //this.updateProductData();
+  }
+
+  updateProductData = (locale, currency, productId) => {
+      //we will update redux here with the product array from the REST API
+      //cartService.
+
+  }
+
   removeItem = (e) => {
     e.preventDefault();
     cartService.removeFromCart(cartSelector.get(), Number(e.currentTarget.id));
@@ -60,16 +74,7 @@ class Cart extends Component {
     });
   }
 
-  getProductData = (locale, currency, productId) => {
-      return findById(locale, currency, productId)
-             .then((response) => {
-               return response.text();
-             })
-             .then((responseText) => {
-               //we will update redux here with the product array from the REST API
-               
-             });
-  }
+
 
 
   render() {
