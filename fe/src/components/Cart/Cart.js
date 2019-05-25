@@ -8,12 +8,13 @@ import { findById } from '../../data/products/api';
 
 
 
-class Products extends Component {
+class Cart extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      product: null,
+      locale: null,
+      currency: null,
     }
   }
 
@@ -26,8 +27,6 @@ class Products extends Component {
     const { match, history } = routeProps;
     const { locale, currency } = match.params;
     return cart.items.map(product => {
-      return getProductData(locale, currency, product.productId)
-      .then((product) => {
         return(
           <tr key={product.productId}>
             <td className="pro-thumbnail">
@@ -52,31 +51,29 @@ class Products extends Component {
               <span>${product.quantity * product.productMarkdown}</span>
             </td>
             <td className="pro-remove">
-              <a id={product.productId} onClick={removeItem} href="#">
+              <a id={product.productId} onClick={this.removeItem} href="#">
                 <i className="fa fa-trash-o"></i>
               </a>
             </td>
           </tr>
         );
-      });
     });
   }
 
-  const getProductData = (locale, currency, productId) => {
+  getProductData = (locale, currency, productId) => {
       return findById(locale, currency, productId)
              .then((response) => {
                return response.text();
              })
              .then((responseText) => {
-               this.setState({
-                 "product": JSON.parse(responseText),
-               });
+               //we will update redux here with the product array from the REST API
+               
              });
   }
 
 
   render() {
-      const { cart } = this.props;
+      const { cart, history, match, location } = this.props;
 			return(
         <React.Fragment>
           <div className="page-section section mb-50">
@@ -172,3 +169,5 @@ class Products extends Component {
       );
     }
 }
+
+export default withRouter(Cart);
