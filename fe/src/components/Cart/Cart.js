@@ -1,53 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { withRouter } from 'react-router-dom';
 import * as cartSelector from '../../services/cart/selectors';
 import * as cartService from '../../services/cart';
 import { routeSingleProduct } from '../../services/helpers/routeHelper';
 import { productImagePath } from '../../services/helpers/imageHelper';
-import { findById } from '../../data/products/api';
 
-
-
-class Cart extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      "locale": null,
-      "currency": null,
-    }
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    const { locale, currency } = this.props.match.params;
-    if(locale           === this.state.locale
-       &&  currency     === this.state.currency
-    ) {return;}
-    this.updateProductData(locale, currency, 1);
-  }
-
-  updateProductData = (locale, currency, productId) => {
-    console.log('locale = ' + locale + ', currency = ' + currency);
-      //we will update redux here with the product array from the REST API
-      //cartService.
-    const productIds = cartSelector.get().items.map(a => a.productId);
-    console.log(productIds);
-
-    //cartService.updateCartItems();
-    this.setState({
-      "locale": locale,
-      "currency": currency,
-    });
-  }
-
-  removeItem = (e) => {
+  const removeItem = (e) => {
     e.preventDefault();
     cartService.removeFromCart(cartSelector.get(), Number(e.currentTarget.id));
   }
 
-  renderCartProducts = (routeProps, cart) => {
-    const { match, history } = routeProps;
-    const { locale, currency } = match.params;
+  const renderCartProducts = (routeProps, props, cart) => {
+    const { match, history } = props;
     return cart.items.map(product => {
         return(
           <tr key={product.productId}>
@@ -73,20 +37,18 @@ class Cart extends Component {
               <span>${product.quantity * product.productMarkdown}</span>
             </td>
             <td className="pro-remove">
-              <a id={product.productId} onClick={this.removeItem} href="#">
+              <a id={product.productId} onClick={removeItem} href="#">
                 <i className="fa fa-trash-o"></i>
               </a>
             </td>
           </tr>
-        );
-    });
+        )
+      });
   }
 
 
-
-
-  render() {
-      const { cart, history, match, location } = this.props;
+  export const Cart = withRouter(({history, match, location, ...props}) => {
+      const { cart } = props;
 			return(
         <React.Fragment>
           <div className="page-section section mb-50">
@@ -107,7 +69,7 @@ class Cart extends Component {
                                           </tr>
                                       </thead>
                                       <tbody>
-                                          {this.renderCartProducts({history, match, location}, cart)}
+                                          {renderCartProducts({history, match, location}, props, cart)}
                                       </tbody>
                                   </table>
                               </div>
@@ -173,14 +135,13 @@ class Cart extends Component {
                                       </div>
                                   </div>
                               </div>
+
                           </div>
+
                       </div>
                   </div>
               </div>
           </div>
         </React.Fragment>
-      );
-    }
-}
-
-export default withRouter(Cart);
+      )
+    });
