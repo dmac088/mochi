@@ -13,15 +13,15 @@ class Cart extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      locale: null,
-      currency: null,
+      "locale": null,
+      "currency": null,
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
     const { locale, currency } = this.props.match.params;
     if(locale           === this.state.locale
-       &&  currency     === this.state.currenct
+       &&  currency     === this.state.currency
     ) {return;}
     this.updateProductData(locale, currency, 1);
   }
@@ -30,7 +30,10 @@ class Cart extends Component {
     console.log('locale = ' + locale + ', currency = ' + currency);
       //we will update redux here with the product array from the REST API
       //cartService.
-
+    this.setState({
+      "locale": locale,
+      "currency": currency,
+    });
   }
 
   removeItem = (e) => {
