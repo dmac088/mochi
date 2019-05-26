@@ -30,6 +30,12 @@ class Cart extends Component {
     console.log('locale = ' + locale + ', currency = ' + currency);
       //we will update redux here with the product array from the REST API
       //cartService.
+    const productIds = cartSelector.get().items.map(a => a.productId);
+    console.log(productIds);
+
+
+
+    //cartService.updateCartItems();
     this.setState({
       "locale": locale,
       "currency": currency,

@@ -30,9 +30,15 @@ import * as cartSelector from './selectors';
 	}
 
 	export const updateCartTotals = () => {
-			let cart = cartSelector.get();
-			store.dispatch(actionCreators.updateCartTotals(
+		const cart = cartSelector.get();
+		store.dispatch(actionCreators.updateCartTotals(
 								cart, sumTotalItems(cart.items), sumTotalAmount(cart.items)));
+	}
+
+	export const updateCartItems = (items) => {
+		const cart = cartSelector.get();
+		store.dispatch(actionCreators.updateCartItems(
+							  cart, items));
 	}
 
 	const checkProduct = (cart, productID) => {
@@ -58,10 +64,10 @@ import * as cartSelector from './selectors';
 	}
 
 	export const removeFromCart = (cart, productId) => {
-			if (checkProduct(cart, productId)) {
-				removeCartItem(cart, productId);
-			}
-			updateCartTotals();
+		if (checkProduct(cart, productId)) {
+			removeCartItem(cart, productId);
+		}
+		updateCartTotals();
 	}
 
 	export const updateQuantity = (cart, productId, qty) => {
