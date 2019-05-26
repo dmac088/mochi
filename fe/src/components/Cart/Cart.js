@@ -23,10 +23,11 @@ class Cart extends Component {
     if(locale           === this.state.locale
        &&  currency     === this.state.currenct
     ) {return;}
-    //this.updateProductData();
+    this.updateProductData(locale, currency, 1);
   }
 
   updateProductData = (locale, currency, productId) => {
+    console.log('locale = ' + locale + ', currency = ' + currency);
       //we will update redux here with the product array from the REST API
       //cartService.
 
