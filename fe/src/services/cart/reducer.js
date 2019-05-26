@@ -9,13 +9,16 @@ export const initialState = {
 
 export const reducer = (state = initialState, action) => {
   let cartClone = _.cloneDeep(action.cart);
+
 	switch (action.type) {
 		case actionTypes.ADD_ITEM:
 			cartClone.items.push(action.item);
 			return cartClone;
+
 		case actionTypes.UPDATE_ITEM:
 			cartClone.items[action.index] = action.item;
 			return cartClone;
+
 		case actionTypes.REMOVE_ITEM:
 			cartClone.items = cartClone.items.filter(function(value, index, arr){
 															return value.productId !== action.productId;
@@ -27,8 +30,12 @@ export const reducer = (state = initialState, action) => {
 			return cartClone;
 
 		case actionTypes.UPDATE_CART_ITEMS:
-			cartClone.items = action.items;
+			const newItems = cartClone.items.map(o => {
+				return Object.assign(o, 0, action.items.filter(i => i.productId === o.productId)[0]);
+			});
+			cartClone.items = newItems;
 			return cartClone;
+
 		default:
 			return state;
 	}
