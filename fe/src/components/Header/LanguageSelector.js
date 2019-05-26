@@ -2,19 +2,15 @@ import React from 'react';
 import { withRouter } from "react-router-dom";
 import { updateParams } from '../../services/helpers/functionHelper';
 
-  const changeLang = (e, props, history, location, match) => {
-    e.preventDefault();
-    const { pathname }  = location;
-    const { locale }    = match.params;
-    const newPathName   = pathname.replace(locale, e.currentTarget.id );
-    history.push(newPathName);
+  const changeLang = (e, props, history) => {
+    history.push('/' + e.currentTarget.id + '/HKD');
   }
 
-  export const LanguageSelector = withRouter(({history, location, match, ...props}) => {
+  export const LanguageSelector = withRouter(({history, ...props}) => {
     return (
       <ul>
-        <li><a id="en-GB" onClick={(e) => changeLang(e, props, history, location, match)}>English</a></li>
-        <li><a id="zh-HK" onClick={(e) => changeLang(e, props, history, location, match)}>Chinese</a></li>
+        <li><a id="en-GB" onClick={(e) => changeLang(e, props, history)}>English</a></li>
+        <li><a id="zh-HK" onClick={(e) => changeLang(e, props, history)}>Chinese</a></li>
       </ul>
     );
   });

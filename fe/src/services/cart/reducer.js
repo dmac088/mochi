@@ -25,6 +25,10 @@ export const reducer = (state = initialState, action) => {
 			cartClone.totalItems = action.totalItems;
 			cartClone.totalAmount = action.totalAmount;
 			return cartClone;
+
+		case actionTypes.UPDATE_CART_ITEMS:
+			cartClone.items = action.items;
+			return cartClone;
 		default:
 			return state;
 	}

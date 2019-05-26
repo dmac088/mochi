@@ -25,3 +25,9 @@ export const updateCartTotals = (cart, totalItems, totalAmount) => ({
 	totalItems,
 	totalAmount,
 });
+
+export const updateCartItems = (cart, items) => ({
+	type: actionTypes.UPDATE_CART_ITEMS,
+	cart,
+	items,
+});

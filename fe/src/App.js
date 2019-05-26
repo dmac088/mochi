@@ -12,6 +12,8 @@ import store from './store';
 import * as tokensActionCreators from './services/session/actions';
 import * as customerActionCreators from './services/customer/actions';
 import * as sessionService from './services/session';
+import * as cartService from './services/cart';
+import * as cartSelector from './services/cart/selectors';
 import * as categoryApi from './data/categories/api';
 import * as productApi from './data/products/api';
 import { Layout } from './components/Layout/Layout';
@@ -120,6 +122,14 @@ class App extends Component {
           return category;
         });
       });
+    })
+    .then(() => {
+      //update the cart products in redux store
+      const productIds = cartSelector.get().items.map(a => a.productId);
+      console.log(productIds);
+      //call the rest Api to apply new item array based on new language
+      
+      //cartService.updateCartItems(items);
     })
     .then((promiseArray) => {
       Promise.all(promiseArray)
