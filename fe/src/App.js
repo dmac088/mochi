@@ -116,7 +116,7 @@ class App extends Component {
       //return an array of promises to the next in chain
       return filterCategories(categoryList, 'LNDPC01').map(category => {
         //we must return the nested promise
-        return this.getCategoryProducts(locale, currency ,category.categoryDesc)
+        return this.getCategoryProducts(locale, currency, category.categoryDesc)
         .then((response) => {
           category["products"] = response;
           return category;
@@ -126,10 +126,18 @@ class App extends Component {
     .then(() => {
       //update the cart products in redux store
       const productIds = cartSelector.get().items.map(a => a.productId);
-      console.log(productIds);
+      //console.log(productIds);
       //call the rest Api to apply new item array based on new language
-      
-      //cartService.updateCartItems(items);
+      productApi.findByIds(locale, currency, productIds)
+      .then((response) => {
+        return response.text()
+      })
+      .then((responseText) => {
+        return JSON.parse(responseText);
+      })
+      .then((responseJSON) => {
+        cartService.updateCartItems(responseJSON);
+      });
     })
     .then((promiseArray) => {
       Promise.all(promiseArray)
