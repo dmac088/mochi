@@ -33,8 +33,6 @@ class Cart extends Component {
     const productIds = cartSelector.get().items.map(a => a.productId);
     console.log(productIds);
 
-
-
     //cartService.updateCartItems();
     this.setState({
       "locale": locale,
