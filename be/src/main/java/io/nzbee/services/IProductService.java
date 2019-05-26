@@ -27,6 +27,8 @@ public interface IProductService {
 	 
 	 SearchDTO getProductTags(String lcl, String curr, String category, List<SidebarFacetDTO> selectedFacets);
 	 
+	 List<Product> getProducts(String lcl, String currency, Long[] productIds);
+	 
 	 List<Product> getPreviewProductsForCategory(String lcl, String currency, Long categoryId);
 	
 	 Double getMaxPrice(String lcl, String curr, String category, List<SidebarFacetDTO> selectedFacets);
@@ -41,9 +43,5 @@ public interface IProductService {
 		});
 		return list; 
 	}
-
-	
-
-	
 	
 }

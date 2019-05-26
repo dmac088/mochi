@@ -44,6 +44,11 @@ public class ProductController {
     public List<Product> getProducts(@PathVariable String lcl, @PathVariable String curr, @PathVariable Long cat) {
     	return productService.getPreviewProductsForCategory(lcl, curr, cat);
     }
+    
+    @PostMapping("/Product/{lcl}/{curr}")
+    public List<Product> getProducts(@PathVariable String lcl, @PathVariable String curr, @RequestBody Long[] productIds) {
+    	return productService.getProducts(lcl, curr, productIds);
+    }
    
     @GetMapping("/Product/{lcl}/{curr}/category/{category}/page/{page}/size/{size}/sortBy/{sortBy}")
     public SearchDTO getProducts(@PathVariable String lcl, @PathVariable String curr, @PathVariable String category, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy) {
@@ -59,6 +64,7 @@ public class ProductController {
     public SearchDTO getProducts(@PathVariable String lcl, @PathVariable String curr, @PathVariable String category, @PathVariable Double price, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy, @RequestBody final List<SidebarFacetDTO> selectedFacets) {
     	return productService.getProductsForCategoryAndBrandAndPrice(lcl, curr, category, price, page, size, sortBy, selectedFacets);
     }
+ 
     
     @PostMapping("/Search/{lcl}/{curr}/Category/{category}/SearchTerm/{term}/Page/{page}/Size/{size}/SortBy/{sortBy}")
     public SearchDTO search(@PathVariable String lcl, @PathVariable String curr, @PathVariable String category,@PathVariable String term, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy, @RequestBody final List<SidebarFacetDTO> selectedFacets) {

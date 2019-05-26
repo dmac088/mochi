@@ -111,7 +111,16 @@ public class ProductService implements IProductService {
   		List<io.nzbee.entity.Product> ppa = productRepository.findByCategoriesCategoryIdIn(categoryIds);
   		List<Product> pp = ppa.stream().map(pa -> this.convertToProductDO(pa, lcl, currency)).collect(Collectors.toList());
   		return pp;
-  	}	
+  	}
+    
+    @Override
+  	@Transactional
+  	@Cacheable
+  	public List<Product> getProducts(String lcl, String currency, Long[] productIds) {
+     	List<io.nzbee.entity.Product> lp = productRepository.findByProductIdIn(productIds);
+     	List<Product> lpo = lp.stream().map(p -> this.convertToProductDO(p, lcl, currency)).collect(Collectors.toList());
+  		return lpo;
+  	}
     
 	@Override
 	@Cacheable
