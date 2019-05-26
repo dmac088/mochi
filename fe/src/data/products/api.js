@@ -37,10 +37,10 @@ export const findById = (locale, currency, productId) => fetchApi(
 																					{}
 																					);
 
-export const findById = (locale, currency, productIds = []) => fetchApi(
+export const findByIds = (locale, currency, productIds = []) => fetchApi(
 																					endPoints.get +
 																					locale +
-																					'/' + currency
+																					'/' + currency,
 																					productIds,
 																					{},
 																					'POST',
