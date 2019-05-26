@@ -15,6 +15,8 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 	
 	List<Product> findByCategoriesCategoryIdIn(List<Long> id);
 	
+	List<Product> findByProductIdIn(Long[] id);
+	
 	Product findByProductId(Long id);
 	
 	@Query(
