@@ -237,32 +237,30 @@ public class ProductService implements IProductService {
 	
 	
 	@Override
-	public SearchDTO getProductTags(String lcl, String curr, String category, List<SidebarFacetDTO> selectedFacets) {
+	public SearchDTO getProductTags(String lcl, String curr, String categoryDesc, List<SidebarFacetDTO> selectedFacets) {
 		
-		Category c = categoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, category, CategoryVars.PRIMARY_HIERARCHY_ROOT_CODE);
+		//SelectedCategory
+		Category parent = categoryRepository.findByAttributesLclCdAndAttributesCategoryDesc(lcl, categoryDesc);
+		List<Category> allCategories = IProductService.recurseCategories(new ArrayList<Category>(), parent);
+		List<Long> allCategoryIds = allCategories.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
+				
+		//Facets
+		List<SidebarFacetDTO> selectedCategories = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals("PrimaryCategoryFR");}).collect(Collectors.toList());
+		List<Category> lpc = selectedCategories.stream().map(f-> {return categoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, f.getDesc(), CategoryVars.PRIMARY_HIERARCHY_CODE);}).collect(Collectors.toList());
+				
+		List<Category> lpcf = new ArrayList<Category>();
+		lpc.stream().forEach(pc -> { lpcf.addAll(IProductService.recurseCategories(new ArrayList<Category>(), pc)); });
+
+		List<Long> facetCategoryIds = lpcf.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
+
+		List<SidebarFacetDTO> selectedBrands = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals("BrandFR");}).collect(Collectors.toList());
+		List<Long> selectedBrandIds = selectedBrands.stream().map(b -> {return b.getId();}).collect(Collectors.toList());
+		     	
+		List<Long> categoryIds = (selectedCategories.size() > 0) ? facetCategoryIds : allCategoryIds;
 		
-		Optional<List<Long>> brandIds = Optional.ofNullable(selectedFacets.stream().filter(f -> f.getFacetingName().equals("BrandFR"))
-													.collect(Collectors.toList()).stream().map(f-> f.getId()).collect(Collectors.toList()));
-		
-		Optional<List<Long>> categoryIds =  Optional.ofNullable(selectedFacets.stream().filter(f -> f.getFacetingName().equals("PrimaryCategoryFR"))
-													.collect(Collectors.toList()).stream().map(f-> f.getId()).collect(Collectors.toList()));
-		
-		//List<SidebarFacetDTO> lsf = new ArrayList<SidebarFacetDTO>();
-		
-		tagRepository.findByProductsPricesPriceValueByPriceCurrenciesCodeAndPricePriceTypeDescAndCategoriesHierarchyCodeAndCategoriesCategoryIdInAndBrandBrandIdIn(curr, "markdown", CategoryVars.PRIMARY_HIERARCHY_CODE, categoryIds.get(), brandIds.get());
-		
-		
-		
-		
-//		Category c = categoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, category, CategoryVars.PRIMARY_HIERARCHY_ROOT_CODE);
-//		
-//		List<Long> brandIds = selectedFacets.stream().filter(f -> f.getFacetingName().equals("BrandFR")).collect(Collectors.toList()).stream().map(f-> f.getId()).collect(Collectors.toList());
-//		
-//		List<Long> categoryIds =  selectedFacets.stream().filter(f -> f.getFacetingName().equals("PrimaryCategoryFR")).collect(Collectors.toList()).stream().map(f-> f.getId()).collect(Collectors.toList());
-//
-//		Long priceLT = new Long(selectedFacets.stream().filter(f -> f.getFacetingName().equals("PriceFR")).collect(Collectors.toList()).stream().findFirst().get().getToken());
-//		
-//		List<ProductAttribute> lpa  = productAttributeRepository.
+		List<io.nzbee.entity.ProductTag> ppa = (selectedBrands.size() > 0) 
+				? tagRepository.findByProductsPricesPriceValueLessThanEqualAndProductsPricesCurrencyCodeAndProductsPricesTypeDescAndProductsCategoriesHierarchyCodeAndProductsCategoriesCategoryIdInAndProductsBrandBrandIdIn(new Double(0), curr, "markdown", CategoryVars.PRIMARY_HIERARCHY_CODE, categoryIds, selectedBrandIds)
+				: tagRepository.findByProductsPricesPriceValueLessThanEqualAndProductsPricesCurrencyCodeAndProductsPricesTypeDescAndProductsCategoriesHierarchyCodeAndProductsCategoriesCategoryIdIn(new Double(0), curr, "markdown", CategoryVars.PRIMARY_HIERARCHY_CODE, categoryIds);
 
 		SearchDTO sDto = new SearchDTO();
 		
