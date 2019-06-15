@@ -47,6 +47,7 @@ import io.nzbee.entity.ProductAttributeRepository;
 import io.nzbee.entity.ProductPagingAndSortingRepository;
 import io.nzbee.entity.ProductPriceRepository;
 import io.nzbee.entity.ProductRepository;
+import io.nzbee.entity.ProductTagRepository;
 import io.nzbee.variables.CategoryVars;
 
 @Service
@@ -70,6 +71,9 @@ public class ProductService implements IProductService {
     
     @Autowired
     private BrandRepository brandRepository;
+    
+    @Autowired
+    private ProductTagRepository tagRepository;
     
 	@PersistenceContext(unitName = "mochiEntityManagerFactory")
 	private EntityManager em;
@@ -235,6 +239,21 @@ public class ProductService implements IProductService {
 	@Override
 	public SearchDTO getProductTags(String lcl, String curr, String category, List<SidebarFacetDTO> selectedFacets) {
 		
+		Category c = categoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, category, CategoryVars.PRIMARY_HIERARCHY_ROOT_CODE);
+		
+		Optional<List<Long>> brandIds = Optional.ofNullable(selectedFacets.stream().filter(f -> f.getFacetingName().equals("BrandFR"))
+													.collect(Collectors.toList()).stream().map(f-> f.getId()).collect(Collectors.toList()));
+		
+		Optional<List<Long>> categoryIds =  Optional.ofNullable(selectedFacets.stream().filter(f -> f.getFacetingName().equals("PrimaryCategoryFR"))
+													.collect(Collectors.toList()).stream().map(f-> f.getId()).collect(Collectors.toList()));
+		
+		//List<SidebarFacetDTO> lsf = new ArrayList<SidebarFacetDTO>();
+		
+		tagRepository.findByProductsPricesPriceValueByPriceCurrenciesCodeAndPricePriceTypeDescAndCategoriesHierarchyCodeAndCategoriesCategoryIdInAndBrandBrandIdIn(curr, "markdown", CategoryVars.PRIMARY_HIERARCHY_CODE, categoryIds.get(), brandIds.get());
+		
+		
+		
+		
 //		Category c = categoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, category, CategoryVars.PRIMARY_HIERARCHY_ROOT_CODE);
 //		
 //		List<Long> brandIds = selectedFacets.stream().filter(f -> f.getFacetingName().equals("BrandFR")).collect(Collectors.toList()).stream().map(f-> f.getId()).collect(Collectors.toList());
@@ -244,8 +263,9 @@ public class ProductService implements IProductService {
 //		Long priceLT = new Long(selectedFacets.stream().filter(f -> f.getFacetingName().equals("PriceFR")).collect(Collectors.toList()).stream().findFirst().get().getToken());
 //		
 //		List<ProductAttribute> lpa  = productAttributeRepository.
-//		
+
 		SearchDTO sDto = new SearchDTO();
+		
 		return sDto;
 	}
 	
