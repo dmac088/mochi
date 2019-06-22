@@ -40,6 +40,10 @@
 			<version>6.0.13.Final</version>
 		</dependency>
 		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-jpamodelgen</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 		</dependency>
@@ -75,10 +79,6 @@
 			<groupId>io.javabrains.springbootquickstart</groupId>
 			<artifactId>fe</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-jpamodelgen</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security.oauth</groupId>
@@ -165,6 +165,9 @@
 								</pluginExecution>
 							</pluginExecutions>
 						</lifecycleMappingMetadata>
+						<compilerArguments>
+                        	<processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
+                    	</compilerArguments>
 					</configuration>
 				</plugin>
 			</plugins>
