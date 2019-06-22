@@ -8,7 +8,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Root;
-import org.hibernate.query.Query;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -39,7 +38,6 @@ public class ProductDAO {
         //Predicate titlePredicate = cb.like(book.get("title"), "%" + title + "%");
 
 		return new PageImpl<Product>(query.getResultList(), pageable, query.getResultList().size());
-		
 		
     }
 	
