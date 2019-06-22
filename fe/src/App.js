@@ -143,6 +143,7 @@ class App extends Component {
       });
     })
     .then((promiseArray) => {
+      if(!promiseArray) { return }
       Promise.all(promiseArray)
       .then((value) => {
         this.setState({

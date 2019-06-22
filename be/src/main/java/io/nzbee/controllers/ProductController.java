@@ -65,7 +65,6 @@ public class ProductController {
     	return productService.getProductsForCategoryAndBrandAndPrice(lcl, curr, category, price, page, size, sortBy, selectedFacets);
     }
  
-    
     @PostMapping("/Search/{lcl}/{curr}/Category/{category}/SearchTerm/{term}/Page/{page}/Size/{size}/SortBy/{sortBy}")
     public SearchDTO search(@PathVariable String lcl, @PathVariable String curr, @PathVariable String category,@PathVariable String term, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy, @RequestBody final List<SidebarFacetDTO> selectedFacets) {
     	return productService.findProduct(lcl, curr, category, term, page, size, sortBy, selectedFacets);
