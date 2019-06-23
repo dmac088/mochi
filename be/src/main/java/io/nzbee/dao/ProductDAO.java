@@ -21,7 +21,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.query.QueryUtils;
 import org.springframework.stereotype.Component;
 import io.nzbee.entity.Brand;
@@ -157,11 +156,14 @@ public class ProductDAO implements Dao<Product> {
 		
 		Long resultCount = this.getResultCount(categoryIds, productlcl, brandlcl, priceStart, priceEnd, priceType, currency, priceDateStart, priceDateEnd, pageable, brandIds);
 		
+		List<org.springframework.data.domain.Sort.Order> ords = pageable.getSort().stream().map(o -> o.ignoreCase()).collect(Collectors.toList());
+		org.springframework.data.domain.Sort sort = new org.springframework.data.domain.Sort(ords);
+		
 		TypedQuery<Product> query = em.createQuery(cq
 				.select(root)
 				.where(conditions.toArray(new Predicate[] {}))
 				.distinct(false)
-				.orderBy(QueryUtils.toOrders(pageable.getSort(), root, cb))
+				.orderBy(QueryUtils.toOrders(sort, root, cb))
 				);
 
 		
