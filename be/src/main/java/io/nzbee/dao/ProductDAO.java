@@ -18,11 +18,22 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
+
+import io.nzbee.entity.Brand;
+import io.nzbee.entity.BrandAttribute;
+import io.nzbee.entity.BrandAttribute_;
+import io.nzbee.entity.Brand_;
 import io.nzbee.entity.Category;
 import io.nzbee.entity.CategoryAttribute;
 import io.nzbee.entity.CategoryAttribute_;
 import io.nzbee.entity.Category_;
+import io.nzbee.entity.Currency;
+import io.nzbee.entity.Currency_;
 import io.nzbee.entity.Product;
+import io.nzbee.entity.ProductPrice;
+import io.nzbee.entity.ProductPriceType;
+import io.nzbee.entity.ProductPriceType_;
+import io.nzbee.entity.ProductPrice_;
 import io.nzbee.entity.Product_;
 
 @Component
@@ -70,25 +81,40 @@ public class ProductDAO implements Dao<Product> {
 	
 	
 	public Page<Product> findByCategoryIdInAndLclCdAndPriceBetweenAndPricesTypeAndCurrencyCodeAndPriceStartAndPriceEndAndBrandIdIn(List<Long> categoryIds, String productlcl, String brandlcl, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, Pageable pageable, List<Long> brandIds) {
-	
-//		EntityManagerFactory emf = emflc.getNativeEntityManagerFactory();
-//		EntityManager em = emf.createEntityManager();
+		System.out.println("pow");
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 	
 		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
 		
 		Root<Product> root = cq.from(Product.class);
 		Join<Product, Category> category = root.join(Product_.categories);
+		Join<Product, Brand> brand = root.join(Product_.brand);
+		Join<Product, ProductPrice> price = root.join(Product_.prices);
+		Join<ProductPrice, ProductPriceType> type = price.join(ProductPrice_.type);
+		Join<ProductPrice, Currency> curr = price.join(ProductPrice_.currency);
+		Join<Brand, BrandAttribute> brandAttribute = brand.join(Brand_.brandAttributes);
 		Join<Category, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
-		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.categoryDesc), "Fruit"));
+		if(!categoryIds.isEmpty()) {
+			conditions.add(category.get(Category_.categoryId).in(categoryIds));
+		}
+		if(!brandIds.isEmpty()) {
+			conditions.add(brand.get(Brand_.brandId).in(brandIds));
+		}
+		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), brandlcl));
+		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), productlcl));
+		conditions.add(cb.equal(type.get(ProductPriceType_.desc), priceType));
+		conditions.add(cb.equal(curr.get(Currency_.code), currency));
+		conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.startDate), priceDateStart));
+		conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.endDate), priceDateEnd));
 		
 		TypedQuery<Product> query = em.createQuery(cq
 				.select(root)
 				.where(conditions.toArray(new Predicate[] {}))
-				.orderBy(cb.asc(root.get(Product_.productId)))
 				.distinct(false));
+		
+		System.out.println(query.getResultList().size());
 		
 		return new PageImpl<Product>(query.getResultList(), pageable, query.getResultList().size());
 		
