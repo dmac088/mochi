@@ -34,8 +34,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.google.common.collect.Lists;
 import org.springframework.data.domain.Sort;
-
-import io.nzbee.dao.Dao;
 import io.nzbee.dao.ProductDAO;
 import io.nzbee.domain.Product;
 import io.nzbee.dto.SearchDTO;
@@ -47,7 +45,6 @@ import io.nzbee.entity.CategoryRepository;
 import io.nzbee.entity.PageableUtil;
 import io.nzbee.entity.ProductAttribute;
 import io.nzbee.entity.ProductAttributeRepository;
-import io.nzbee.entity.ProductPagingAndSortingRepository;
 import io.nzbee.entity.ProductPriceRepository;
 import io.nzbee.entity.ProductRepository;
 import io.nzbee.entity.ProductTagRepository;
@@ -57,9 +54,6 @@ import io.nzbee.variables.CategoryVars;
 @Transactional
 @CacheConfig(cacheNames="products")
 public class ProductService implements IProductService {
-
-    @Autowired
-    private ProductPagingAndSortingRepository productPagingAndSortingRepository;
     
     @Autowired
     private ProductRepository productRepository;
@@ -85,23 +79,6 @@ public class ProductService implements IProductService {
 	@PersistenceContext(unitName = "mochiEntityManagerFactory")
 	private EntityManager em;
     
-    // API
-    //This method should accept a DTO and return a DTO
-    //The DTO is coarse grained and contains a flat structure of properties
-    //if we did not use a DTO we would have JSON nesting as per the domain model structure, which is hard to manage in our client views
-    //The DTO is simple and dumb, it is the service layer that manages the translation between DTO and domain objects
-    
-    @Override
-	@Transactional
-	@Cacheable
-	public SearchDTO getProducts(String lcl, String currency, int page, int size, String sortBy) {
-    	Page<Product> pp;
-		Page<io.nzbee.entity.Product> ppa = productPagingAndSortingRepository.findAll(PageRequest.of(page, size, this.sortByParam(sortBy)));
-		pp = ppa.map(p -> this.convertToProductDO(p, lcl, currency));
-		SearchDTO rc = new SearchDTO();
-		rc.setProducts(pp);
-		return rc;
-	}	
     
     @Override
 	@Transactional
@@ -112,87 +89,12 @@ public class ProductService implements IProductService {
 		return p;
 	}	
     
-    @Override
-  	@Transactional
-  	@Cacheable
-  	public List<Product> getPreviewProductsForCategory(String lcl, String currency, Long categoryId) {
-     	Category pc = categoryRepository.findByCategoryId(categoryId);
-     	List<Category> pcl = IProductService.recurseCategories(new ArrayList<Category>(), pc);
-     	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
-  		List<io.nzbee.entity.Product> ppa = productRepository.findByCategoriesCategoryIdIn(categoryIds);
-  		List<Product> pp = ppa.stream().map(pa -> this.convertToProductDO(pa, lcl, currency)).collect(Collectors.toList());
-  		return pp;
-  	}
-    
-    @Override
-  	@Transactional
-  	@Cacheable
-  	public List<Product> getProducts(String lcl, String currency, Long[] productIds) {
-     	List<io.nzbee.entity.Product> lp = productRepository.findByProductIdIn(productIds);
-     	List<Product> lpo = lp.stream().map(p -> this.convertToProductDO(p, lcl, currency)).collect(Collectors.toList());
-  		return lpo;
-  	}
-    
-	@Override
 	@Cacheable
-	public SearchDTO getProductsForCategory(String lcl, String currency, String categoryDesc, int page, int size, String sortBy) {
-     	Category pc = categoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, categoryDesc, CategoryVars.PRIMARY_HIERARCHY_CODE);
-     	List<Category> pcl = IProductService.recurseCategories(new ArrayList<Category>(), pc);
-     	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
-  		Page<io.nzbee.entity.Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCd(categoryIds, lcl, PageRequest.of(page, size, this.sortByParam(sortBy)));
-  		Page<Product> pp = ppa.map(pa -> this.convertToProductDO(pa, lcl, currency));
-  		SearchDTO rc = new SearchDTO();
-		rc.setProducts(pp);
-		return rc;
-	}
-	
-	@Override
-	@Cacheable
-	public SearchDTO getProductsForCategory(String lcl, String currency, String categoryDesc, Double price, int page, int size, String sortBy) {
-		Category pc = categoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, categoryDesc, CategoryVars.PRIMARY_HIERARCHY_CODE);
-     	List<Category> pcl = IProductService.recurseCategories(new ArrayList<Category>(), pc);
-     	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
-  		Page<io.nzbee.entity.Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCdAndPricesPriceValueBetween(categoryIds, lcl, new Double(0), price, PageRequest.of(page, size, this.sortByParam(sortBy)));
-  		Page<Product> pp = ppa.map(pa -> this.convertToProductDO(pa, lcl, currency));
-  		SearchDTO rc = new SearchDTO();
-		rc.setProducts(pp);
-		return rc;
-	}
-	
-	@Override
-	@Cacheable
-	public SearchDTO getProductsForCategoryAndBrand(String lcl, String currency, String categoryDesc, String brandDesc, int page, int size, String sortBy) {
-		Category pc = categoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, categoryDesc, CategoryVars.PRIMARY_HIERARCHY_CODE);
-     	List<Category> pcl = IProductService.recurseCategories(new ArrayList<Category>(), pc);
-     	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
-  		Page<io.nzbee.entity.Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCdAndBrandBrandAttributesBrandDescAndBrandBrandAttributesLclCd(categoryIds, lcl, brandDesc, lcl, PageRequest.of(page, size, this.sortByParam(sortBy)));		
-  		Page<Product> pp = ppa.map(pa -> this.convertToProductDO(pa, lcl, currency));
-  		SearchDTO rc = new SearchDTO();
-		rc.setProducts(pp);
-		return rc;
-	}
-	
-	@Override
- 	@Cacheable
-	public SearchDTO getProductsForCategoryAndPrice(String lcl, String currency, String categoryDesc, Double price, int page, int size, String sortBy) {
-		Category pc = categoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, categoryDesc, CategoryVars.PRIMARY_HIERARCHY_CODE);
-     	List<Category> pcl = IProductService.recurseCategories(new ArrayList<Category>(), pc);
-     	List<Long> categoryIds = pcl.stream().map(sc -> sc.getCategoryId()).collect(Collectors.toList());
-  		Page<io.nzbee.entity.Product> ppa = productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCdAndPricesPriceValueBetweenAndPricesTypeDescAndPricesCurrencyCodeAndPricesStartDateLessThanAndPricesEndDateGreaterThan(categoryIds, lcl, new Double(0), price, "markdown", currency, new Date(), new Date(),PageRequest.of(page, size, this.sortByParam(sortBy)));
-  		Page<Product> pp = ppa.map(pa -> this.convertToProductDO(pa, lcl, currency));
-  		SearchDTO rc = new SearchDTO();
-		rc.setProducts(pp);
-		return rc;
-	}
-
-	
-	@Override
-	@Cacheable
-	public SearchDTO getProductsForCategoryAndBrandAndPrice(String lcl, String currency, String categoryDesc, Double price, int page, int size, String sortBy, List<SidebarFacetDTO> selectedFacets) {
+	public SearchDTO getProducts(String lcl, String currency, String categoryDesc, Double price, int page, int size, String sortBy, List<SidebarFacetDTO> selectedFacets) {
 		
 		//SelectedCategory
 		Category parent = categoryRepository.findByAttributesLclCdAndAttributesCategoryDesc(lcl, categoryDesc);
-		List<Category> allCategories = IProductService.recurseCategories(new ArrayList<Category>(), parent);
+		List<Category> allCategories = recurseCategories(new ArrayList<Category>(), parent);
 		List<Long> allCategoryIds = allCategories.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
 		
 		//Facets
@@ -200,7 +102,7 @@ public class ProductService implements IProductService {
 		List<Category> lpc = selectedCategories.stream().map(f-> {return categoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, f.getDesc(), CategoryVars.PRIMARY_HIERARCHY_CODE);}).collect(Collectors.toList());
 		
 		List<Category> lpcf = new ArrayList<Category>();
-		lpc.stream().forEach(pc -> { lpcf.addAll(IProductService.recurseCategories(new ArrayList<Category>(), pc)); });
+		lpc.stream().forEach(pc -> { lpcf.addAll(recurseCategories(new ArrayList<Category>(), pc)); });
 
      	List<Long> facetCategoryIds = lpcf.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
 
@@ -210,7 +112,7 @@ public class ProductService implements IProductService {
      	List<Long> categoryIds = (selectedCategories.size() > 0) ? facetCategoryIds : allCategoryIds;
      	
      	Page<io.nzbee.entity.Product> ppa = 
-     			productDAO.findByCategoryIdInAndLclCdAndPriceBetweenAndPricesTypeAndCurrencyCodeAndPriceStartAndPriceEndAndBrandIdIn(categoryIds, lcl, lcl, new Double(0), price, "markdown", currency, new Date(), new Date(), PageRequest.of(page, size, this.sortByParam(sortBy)), selectedBrandIds);
+     			productDAO.getAll(categoryIds, lcl, lcl, new Double(0), price, "markdown", currency, new Date(), new Date(), PageRequest.of(page, size, this.sortByParam(sortBy)), selectedBrandIds);
      	
   		Page<Product> pp = ppa.map(pa -> this.convertToProductDO(pa, lcl, currency));
   		SearchDTO rc = new SearchDTO();
@@ -292,58 +194,6 @@ public class ProductService implements IProductService {
 	}
 	
 	
-	@SuppressWarnings("unchecked")
-	private List<Facet> getRangeFacets(QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery jpaQuery, String currency) {
-		
-		org.apache.lucene.search.Sort sort = getSortField("priceDesc", currency);
-		jpaQuery.setSort(sort);
-		
-		List<ProductAttribute> results = jpaQuery.getResultList();
-		
-		if(results.size() <= 0) { return new ArrayList<Facet>(); }
-		
-		Double maxPrice = results.get(0).getProduct().getCurrentMarkdownPriceHKD();
-		Double minPrice = Lists.reverse(results).get(0).getProduct().getCurrentMarkdownPriceHKD();
-		Double inc = (maxPrice > 0) ? (maxPrice - 
-						((minPrice.equals(maxPrice)) ? 0 : minPrice)  
-				) / 4 : maxPrice;
-		
-		inc = new BigDecimal(inc).setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
-		
-		Double 	below 	= inc, 
-				froma 	= (new BigDecimal(inc + new Double(0.01)).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()), 
-				toa 	= (new BigDecimal(inc * 2).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()), 
-				fromb 	= (new BigDecimal(toa + new Double(0.01)).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()), 
-				tob 	= (new BigDecimal(inc * 4).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()),
-				above 	= tob;
-		
-		FacetingRequest facetRequest = qb.facet()
-				.name("PriceFR")
-				.onField("product.currentMarkdownPrice" + currency + "Facet") //In product class
-				.range()
-				.below(below)
-				.from(froma).to(toa)
-				.from(fromb).to(tob)
-				.above(above)
-				.orderedBy(FacetSortOrder.RANGE_DEFINITION_ORDER)
-				.createFacetingRequest();
-		
-		jpaQuery.getFacetManager().enableFaceting(facetRequest);
-		return jpaQuery.getFacetManager().getFacets("PriceFR");
-	}
-	
-
-	private Set<Facet> processFacets(Set<Facet> allFacets, QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery jpaQuery, String currency, String facetingName) {
-		List<Facet> processlf = allFacets.stream().filter(c -> (!c.getFacetingName().equals(facetingName))).collect(Collectors.toList());
-		allFacets.removeAll(processlf);
-		allFacets.addAll(processlf.stream().map(pf -> {
-					return (pf.getFacetingName().equals("PriceFR")) 
-					? this.getRangeFacets(qb, jpaQuery, currency)
-					: this.getDiscreteFacets(qb, jpaQuery, pf.getFacetingName(), pf.getFieldName());
-					
-			}).collect(Collectors.toList()).stream().flatMap(List::stream).collect(Collectors.toSet()));
-		return allFacets;
-	}
 	
 
 	@SuppressWarnings("unchecked")
@@ -557,6 +407,59 @@ public class ProductService implements IProductService {
     	return this.getParentCategoryFacets(cfs, parentFacet.get(), qb, q, lcl, currency);
     }
     
+    @SuppressWarnings("unchecked")
+	private List<Facet> getRangeFacets(QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery jpaQuery, String currency) {
+		
+		org.apache.lucene.search.Sort sort = getSortField("priceDesc", currency);
+		jpaQuery.setSort(sort);
+		
+		List<ProductAttribute> results = jpaQuery.getResultList();
+		
+		if(results.size() <= 0) { return new ArrayList<Facet>(); }
+		
+		Double maxPrice = results.get(0).getProduct().getCurrentMarkdownPriceHKD();
+		Double minPrice = Lists.reverse(results).get(0).getProduct().getCurrentMarkdownPriceHKD();
+		Double inc = (maxPrice > 0) ? (maxPrice - 
+						((minPrice.equals(maxPrice)) ? 0 : minPrice)  
+				) / 4 : maxPrice;
+		
+		inc = new BigDecimal(inc).setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
+		
+		Double 	below 	= inc, 
+				froma 	= (new BigDecimal(inc + new Double(0.01)).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()), 
+				toa 	= (new BigDecimal(inc * 2).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()), 
+				fromb 	= (new BigDecimal(toa + new Double(0.01)).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()), 
+				tob 	= (new BigDecimal(inc * 4).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()),
+				above 	= tob;
+		
+		FacetingRequest facetRequest = qb.facet()
+				.name("PriceFR")
+				.onField("product.currentMarkdownPrice" + currency + "Facet") //In product class
+				.range()
+				.below(below)
+				.from(froma).to(toa)
+				.from(fromb).to(tob)
+				.above(above)
+				.orderedBy(FacetSortOrder.RANGE_DEFINITION_ORDER)
+				.createFacetingRequest();
+		
+		jpaQuery.getFacetManager().enableFaceting(facetRequest);
+		return jpaQuery.getFacetManager().getFacets("PriceFR");
+	}
+	
+
+	private Set<Facet> processFacets(Set<Facet> allFacets, QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery jpaQuery, String currency, String facetingName) {
+		List<Facet> processlf = allFacets.stream().filter(c -> (!c.getFacetingName().equals(facetingName))).collect(Collectors.toList());
+		allFacets.removeAll(processlf);
+		allFacets.addAll(processlf.stream().map(pf -> {
+					return (pf.getFacetingName().equals("PriceFR")) 
+					? this.getRangeFacets(qb, jpaQuery, currency)
+					: this.getDiscreteFacets(qb, jpaQuery, pf.getFacetingName(), pf.getFieldName());
+					
+			}).collect(Collectors.toList()).stream().flatMap(List::stream).collect(Collectors.toSet()));
+		return allFacets;
+	}
+	
     public Product convertToProductDO(final io.nzbee.entity.Product product, String lcl, String currency) {
     	ProductAttribute pa = productAttributeRepository.findByLclCdAndProductId(lcl, product.getProductId());
         final Product pDo = new Product();
@@ -618,5 +521,16 @@ public class ProductService implements IProductService {
     	default: return Sort.by(new Sort.Order(Sort.Direction.ASC, "attributes.ProductDesc"));
     	}
     }
+	
+	public static List<Category> recurseCategories(List<Category> list, Category category) {
+		if(category == null) { return list; }
+		list.add(category);
+		if(category.getChildren().isEmpty()) { return list; }
+		category.getChildren().stream().forEach(c -> {
+			list.add(c);
+			recurseCategories(list, c); 
+		});
+		return list; 
+	}
 
 }

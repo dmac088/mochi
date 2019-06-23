@@ -62,7 +62,7 @@ public class BrandService implements IBrandService {
 		if(ca == null) { return null; }
 		if(!ca.getCategory().isPresent()) { return null; }
 		
-		List<Category> allChildCategories = IProductService.recurseCategories(new ArrayList<Category>(), ca.getCategory().get());
+		List<Category> allChildCategories = ProductService.recurseCategories(new ArrayList<Category>(), ca.getCategory().get());
 		List<Long> allChildIds = allChildCategories.stream().map(c -> c.getCategoryId()).collect(Collectors.toList());
 		
 		List<Long> selectedCategoryIds = 
