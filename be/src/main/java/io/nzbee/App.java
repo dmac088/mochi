@@ -16,6 +16,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 				"io.nzbee.test",
 				"io.nzbee.services",
 				"io.nzbee.dto",
+				"io.nzbee.dao",
 				"io.nzbee.entity",
 				"io.nzbee.controllers"})
 public class App {

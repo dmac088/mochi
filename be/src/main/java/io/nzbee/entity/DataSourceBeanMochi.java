@@ -59,6 +59,7 @@ public class DataSourceBeanMochi {
        em.setDataSource(this.dataSource());
        em.setPackagesToScan(new String[] 
     		   {"io.nzbee.domain",
+    			"io.nzbee.dao",
     		    "io.nzbee.security",
 				"io.nzbee.services",
 				"io.nzbee.entity"}
