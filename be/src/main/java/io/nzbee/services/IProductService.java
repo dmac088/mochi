@@ -25,7 +25,7 @@ public interface IProductService {
 	 
 	 SearchDTO findProduct(String lcl, String currency, String categoryCode, String term, int page, int size, String sortBy, List<SidebarFacetDTO> selectedFacets);
 	 
-	 SearchDTO getProductTags(String lcl, String curr, String category, List<SidebarFacetDTO> selectedFacets);
+	 List<SidebarFacetDTO> getProductTags(String lcl, String curr, String category, List<SidebarFacetDTO> selectedFacets);
 	 
 	 List<Product> getProducts(String lcl, String currency, Long[] productIds);
 	 
