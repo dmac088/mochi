@@ -92,7 +92,7 @@ public class ProductService implements IProductService {
 	@Cacheable
 	public SearchDTO getProducts(String lcl, String currency, String categoryDesc, Double price, int page, int size, String sortBy, List<SidebarFacetDTO> selectedFacets) {
 		
-		//SelectedCategory
+		//all categories (if non selected in facets
 		Category parent = categoryRepository.findByAttributesLclCdAndAttributesCategoryDesc(lcl, categoryDesc);
 		List<Category> allCategories = recurseCategories(new ArrayList<Category>(), parent);
 		List<Long> allCategoryIds = allCategories.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
@@ -122,23 +122,28 @@ public class ProductService implements IProductService {
 	}
 	
 	@Override
-	public Double getMaxPrice(String lcl, String curr, String category, List<SidebarFacetDTO> selectedFacets) {
+	public Double getMaxPrice(String categoryDesc, String locale, String currency, List<SidebarFacetDTO> selectedFacets) {
 		
-		Category c = categoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, category, CategoryVars.PRIMARY_HIERARCHY_ROOT_CODE);
-		
-		Optional<List<Long>> brandIds = Optional.ofNullable(selectedFacets.stream().filter(f -> f.getFacetingName().equals("BrandFR"))
-													.collect(Collectors.toList()).stream().map(f-> f.getId()).collect(Collectors.toList()));
-		
-		Optional<List<Long>> categoryIds =  Optional.ofNullable(selectedFacets.stream().filter(f -> f.getFacetingName().equals("PrimaryCategoryFR"))
-													.collect(Collectors.toList()).stream().map(f-> f.getId()).collect(Collectors.toList()));
+		//all categories (if non selected in facets
+		Category parent = categoryRepository.findByAttributesLclCdAndAttributesCategoryDesc(locale, categoryDesc);
+		List<Category> allCategories = recurseCategories(new ArrayList<Category>(), parent);
+		List<Long> allCategoryIds = allCategories.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
+				
+		//Facets
+		List<SidebarFacetDTO> selectedCategories = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals("PrimaryCategoryFR");}).collect(Collectors.toList());
+		List<Category> lpc = selectedCategories.stream().map(f-> {return categoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(locale, f.getDesc(), CategoryVars.PRIMARY_HIERARCHY_CODE);}).collect(Collectors.toList());
+				
+		List<Category> lpcf = new ArrayList<Category>();
+		lpc.stream().forEach(pc -> { lpcf.addAll(recurseCategories(new ArrayList<Category>(), pc)); });
 
-		if(!categoryIds.isPresent()) 		{ categoryIds = Optional.ofNullable(new ArrayList<Long>()); }
-		if(categoryIds.get().size() == 0) 	{ categoryIds.get().add(new Long(c.getCategoryId())); }
-		
-		Double maxPrice =
-					(brandIds.isPresent() && (brandIds.get().size() > 0)) 
-					? productRepository.maxMarkdownPricesPriceValueByPriceCurrenciesCodeAndPricePriceTypeDescAndCategoriesHierarchyCodeAndCategoriesCategoryIdInAndBrandBrandIdIn(curr, "markdown", CategoryVars.PRIMARY_HIERARCHY_CODE, categoryIds.get(), brandIds.get())
-					: productRepository.maxMarkdownPricesPriceValueByPriceCurrenciesCodeAndPricePriceTypeDescAndCategoriesHierarchyCodeAndCategoriesCategoryIdIn(curr, "markdown", CategoryVars.PRIMARY_HIERARCHY_CODE, categoryIds.get());
+		List<Long> facetCategoryIds = lpcf.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
+
+		List<SidebarFacetDTO> selectedBrands = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals("BrandFR");}).collect(Collectors.toList());
+		List<Long> selectedBrandIds = selectedBrands.stream().map(b -> {return b.getId();}).collect(Collectors.toList());
+		     	
+		List<Long> categoryIds = (selectedCategories.size() > 0) ? facetCategoryIds : allCategoryIds;
+	
+		Double maxPrice = productDAO.getMaxPrice(categoryDesc, locale, "markdown", currency, categoryIds, selectedBrandIds);
 	
 		return maxPrice;
 	}
