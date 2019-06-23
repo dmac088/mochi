@@ -35,10 +35,10 @@ public class ProductController {
     	return productService.getMaxPrice(category, locale, currency, selectedFacets);
     }
   
-//    @PostMapping("/Product/{locale}/{currency}/category/{category}/maxPrice/{price}/page/{page}/size/{size}/sortBy/{sortBy}")
-//    public SearchDTO getProducts(@PathVariable String locale, @PathVariable String currency, @PathVariable String category, @PathVariable Double price, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy, @RequestBody final List<SidebarFacetDTO> selectedFacets) {
-//    	return productService.getProducts(locale, currency, category, price, page, size, sortBy, selectedFacets);
-//    }
+    @PostMapping("/Product/{locale}/{currency}/category/{category}/maxPrice/{price}/page/{page}/size/{size}/sortBy/{sortBy}")
+    public SearchDTO getProducts(@PathVariable String locale, @PathVariable String currency, @PathVariable String category, @PathVariable Double price, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy, @RequestBody final List<SidebarFacetDTO> selectedFacets) {
+    	return productService.getProducts(locale, currency, category, price, page, size, sortBy, selectedFacets);
+    }
  
     @PostMapping("/Search/{locale}/{currency}/Category/{category}/SearchTerm/{term}/Page/{page}/Size/{size}/SortBy/{sortBy}")
     public SearchDTO search(@PathVariable String locale, @PathVariable String currency, @PathVariable String category,@PathVariable String term, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy, @RequestBody final List<SidebarFacetDTO> selectedFacets) {

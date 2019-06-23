@@ -17,6 +17,4 @@ public interface IProductService {
 	 
 	 List<SidebarFacetDTO> getProductTags(String lcl, String curr, String category, List<SidebarFacetDTO> selectedFacets);
 	 
-	 
-	
 }
