@@ -34,6 +34,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.google.common.collect.Lists;
 import org.springframework.data.domain.Sort;
+
+import io.nzbee.dao.ProductDAO;
 import io.nzbee.domain.Product;
 import io.nzbee.dto.SearchDTO;
 import io.nzbee.dto.SidebarFacetDTO;
@@ -58,10 +60,14 @@ public class ProductService implements IProductService {
     @Autowired
     private ProductPagingAndSortingRepository productPagingAndSortingRepository;
     
+    
+    
+    
     @Autowired
     private ProductRepository productRepository;
     
-    @Autowired ProductPriceRepository productPriceRepository;
+    @Autowired 
+    private ProductPriceRepository productPriceRepository;
     
     @Autowired
     private ProductAttributeRepository productAttributeRepository;
@@ -183,6 +189,8 @@ public class ProductService implements IProductService {
 	@Cacheable
 	public SearchDTO getProductsForCategoryAndBrandAndPrice(String lcl, String currency, String categoryDesc, Double price, int page, int size, String sortBy, List<SidebarFacetDTO> selectedFacets) {
 		
+		ProductDAO pdao = new ProductDAO();
+		
 		//SelectedCategory
 		Category parent = categoryRepository.findByAttributesLclCdAndAttributesCategoryDesc(lcl, categoryDesc);
 		List<Category> allCategories = IProductService.recurseCategories(new ArrayList<Category>(), parent);
@@ -202,9 +210,8 @@ public class ProductService implements IProductService {
      	
      	List<Long> categoryIds = (selectedCategories.size() > 0) ? facetCategoryIds : allCategoryIds;
      	
-     	Page<io.nzbee.entity.Product> ppa = (selectedBrands.size() > 0)
-     	?	productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCdAndBrandBrandAttributesLclCdAndPricesPriceValueBetweenAndPricesTypeDescAndPricesCurrencyCodeAndPricesStartDateLessThanAndPricesEndDateGreaterThanAndBrandBrandIdIn(categoryIds, lcl, lcl, new Double(0), price, "markdown", currency, new Date(), new Date(),PageRequest.of(page, size, this.sortByParam(sortBy)), selectedBrandIds)
-     	:   productPagingAndSortingRepository.findByCategoriesCategoryIdInAndAttributesLclCdAndBrandBrandAttributesLclCdAndPricesPriceValueBetweenAndPricesTypeDescAndPricesCurrencyCodeAndPricesStartDateLessThanAndPricesEndDateGreaterThan(categoryIds, lcl, lcl, new Double(0), price, "markdown", currency, new Date(), new Date(), PageRequest.of(page, size, this.sortByParam(sortBy)));
+     	Page<io.nzbee.entity.Product> ppa = 
+     				pdao.findByCategoryIdInAndLclCdAndPriceBetweenAndPricesTypeAndCurrencyCodeAndPriceStartAndPriceEndAndBrandIdIn(categoryIds, lcl, lcl, new Double(0), price, "markdown", currency, new Date(), new Date(), PageRequest.of(page, size, this.sortByParam(sortBy)), selectedBrandIds);
      	
   		Page<Product> pp = ppa.map(pa -> this.convertToProductDO(pa, lcl, currency));
   		SearchDTO rc = new SearchDTO();
