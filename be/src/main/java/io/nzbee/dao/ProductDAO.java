@@ -122,8 +122,10 @@ public class ProductDAO implements Dao<Product> {
     }
 	
 	
-	public Double getMaxPrice(List<Long> categoryIds, String productlcl, String brandlcl, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, Pageable pageable, List<Long> brandIds) {
+	public Double getMaxPrice(String categoryDesc, String locale, String priceType, String currency, List<Long> categoryIds, List<Long> brandIds) {
 
+		System.out.println(brandIds.size());
+		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 	
 		CriteriaQuery<Double> cq = cb.createQuery(Double.class);
@@ -144,21 +146,17 @@ public class ProductDAO implements Dao<Product> {
 		if(!brandIds.isEmpty()) {
 			conditions.add(brand.get(Brand_.brandId).in(brandIds));
 		}
-		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), brandlcl));
-		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), productlcl));
+		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), locale));
+		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
 		conditions.add(cb.equal(type.get(ProductPriceType_.desc), priceType));
 		conditions.add(cb.equal(curr.get(Currency_.code), currency));
-		conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.priceValue), priceStart));
-		conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.priceValue), priceEnd));
-		conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.startDate), priceDateStart));
-		conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.endDate), priceDateEnd));
 		
 		TypedQuery<Double> query = em.createQuery(cq
 				.select(cb.max(price.<Double>get(ProductPrice_.priceValue)))
 				.where(conditions.toArray(new Predicate[] {}))
 				.distinct(false));
-		
-		return (double) query.getFirstResult();
+		 
+		return query.getSingleResult();
     }
 
 }

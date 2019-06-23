@@ -25,23 +25,23 @@ public class ProductController {
         super();
     }
     
-    @GetMapping("/Product/{lcl}/{curr}/id/{id}")
-    public Product getProduct(@PathVariable String lcl, @PathVariable String curr, @PathVariable Long id) {
-    	return productService.getProduct(lcl, curr, id);
+    @GetMapping("/Product/{locale}/{currency}/id/{id}")
+    public Product getProduct(@PathVariable String locale, @PathVariable String currency, @PathVariable Long id) {
+    	return productService.getProduct(locale, currency, id);
     }
     
-    @PostMapping("/Product/{lcl}/{curr}/{category}/maxprice")
-    public Double getMaxPrice(@PathVariable String lcl, @PathVariable String curr, @PathVariable String category, @RequestBody final List<SidebarFacetDTO> selectedFacets) {
-    	return productService.getMaxPrice(lcl, curr, category, selectedFacets);
+    @PostMapping("/Product/{locale}/{currency}/{category}/maxprice")
+    public Double getMaxPrice(@PathVariable String locale, @PathVariable String currency, @PathVariable String category, @RequestBody final List<SidebarFacetDTO> selectedFacets) {
+    	return productService.getMaxPrice(category, locale, currency, selectedFacets);
     }
   
-    @PostMapping("/Product/{lcl}/{curr}/category/{category}/maxPrice/{price}/page/{page}/size/{size}/sortBy/{sortBy}")
-    public SearchDTO getProducts(@PathVariable String lcl, @PathVariable String curr, @PathVariable String category, @PathVariable Double price, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy, @RequestBody final List<SidebarFacetDTO> selectedFacets) {
-    	return productService.getProducts(lcl, curr, category, price, page, size, sortBy, selectedFacets);
-    }
+//    @PostMapping("/Product/{locale}/{currency}/category/{category}/maxPrice/{price}/page/{page}/size/{size}/sortBy/{sortBy}")
+//    public SearchDTO getProducts(@PathVariable String locale, @PathVariable String currency, @PathVariable String category, @PathVariable Double price, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy, @RequestBody final List<SidebarFacetDTO> selectedFacets) {
+//    	return productService.getProducts(locale, currency, category, price, page, size, sortBy, selectedFacets);
+//    }
  
-    @PostMapping("/Search/{lcl}/{curr}/Category/{category}/SearchTerm/{term}/Page/{page}/Size/{size}/SortBy/{sortBy}")
-    public SearchDTO search(@PathVariable String lcl, @PathVariable String curr, @PathVariable String category,@PathVariable String term, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy, @RequestBody final List<SidebarFacetDTO> selectedFacets) {
-    	return productService.findProduct(lcl, curr, category, term, page, size, sortBy, selectedFacets);
+    @PostMapping("/Search/{locale}/{currency}/Category/{category}/SearchTerm/{term}/Page/{page}/Size/{size}/SortBy/{sortBy}")
+    public SearchDTO search(@PathVariable String locale, @PathVariable String currency, @PathVariable String category,@PathVariable String term, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy, @RequestBody final List<SidebarFacetDTO> selectedFacets) {
+    	return productService.findProduct(locale, currency, category, term, page, size, sortBy, selectedFacets);
     }
 }
