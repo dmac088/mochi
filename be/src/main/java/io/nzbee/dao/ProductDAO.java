@@ -156,17 +156,13 @@ public class ProductDAO implements Dao<Product> {
 		
 		Long resultCount = this.getResultCount(categoryIds, productlcl, brandlcl, priceStart, priceEnd, priceType, currency, priceDateStart, priceDateEnd, pageable, brandIds);
 		
-		List<org.springframework.data.domain.Sort.Order> ords = pageable.getSort().stream().map(o -> o.ignoreCase()).collect(Collectors.toList());
-		org.springframework.data.domain.Sort sort = new org.springframework.data.domain.Sort(ords);
-		
 		TypedQuery<Product> query = em.createQuery(cq
 				.select(root)
 				.where(conditions.toArray(new Predicate[] {}))
 				.distinct(false)
-				.orderBy(QueryUtils.toOrders(sort, root, cb))
+				.orderBy(QueryUtils.toOrders(pageable.getSort(), root, cb))
 				);
 
-		
 		PageableUtil pageableUtil = new PageableUtil();
 		query.setFirstResult(pageableUtil.getStartPosition(pageable));
 		query.setMaxResults(pageable.getPageSize());
