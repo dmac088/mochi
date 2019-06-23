@@ -78,6 +78,44 @@ public class ProductDAO implements Dao<Product> {
 		return null;
 	}
 	
+	public Long getResultCount(List<Long> categoryIds, String productlcl, String brandlcl, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, Pageable pageable, List<Long> brandIds) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+		
+		Root<Product> root = cq.from(Product.class);
+		Join<Product, Category> category = root.join(Product_.categories);
+		Join<Product, Brand> brand = root.join(Product_.brand);
+		Join<Product, ProductPrice> price = root.join(Product_.prices);
+		Join<ProductPrice, ProductPriceType> type = price.join(ProductPrice_.type);
+		Join<ProductPrice, Currency> curr = price.join(ProductPrice_.currency);
+		Join<Brand, BrandAttribute> brandAttribute = brand.join(Brand_.brandAttributes);
+		Join<Category, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
+		
+		List<Predicate> conditions = new ArrayList<Predicate>();
+		if(!categoryIds.isEmpty()) {
+			conditions.add(category.get(Category_.categoryId).in(categoryIds));
+		}
+		if(!brandIds.isEmpty()) {
+			conditions.add(brand.get(Brand_.brandId).in(brandIds));
+		}
+		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), brandlcl));
+		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), productlcl));
+		conditions.add(cb.equal(type.get(ProductPriceType_.desc), priceType));
+		conditions.add(cb.equal(curr.get(Currency_.code), currency));
+		conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.priceValue), priceStart));
+		conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.priceValue), priceEnd));
+		conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.startDate), priceDateStart));
+		conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.endDate), priceDateEnd));
+		
+		TypedQuery<Long> query = em.createQuery(cq
+				.select(cb.count(root.<Long>get(Product_.productId)))
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(false));
+		 
+		return query.getSingleResult();
+	}
+	
 	
 	public Page<Product> getAll(List<Long> categoryIds, String productlcl, String brandlcl, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, Pageable pageable, List<Long> brandIds) {
 	
@@ -110,15 +148,14 @@ public class ProductDAO implements Dao<Product> {
 		conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.startDate), priceDateStart));
 		conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.endDate), priceDateEnd));
 		
+		Long resultCount = this.getResultCount(categoryIds, productlcl, brandlcl, priceStart, priceEnd, priceType, currency, priceDateStart, priceDateEnd, pageable, brandIds);
+		
 		TypedQuery<Product> query = em.createQuery(cq
 				.select(root)
 				.where(conditions.toArray(new Predicate[] {}))
 				.distinct(false));
 		
-		System.out.println(query.getResultList().size());
-		
-		return new PageImpl<Product>(query.getResultList(), pageable, query.getResultList().size());
-		
+		return new PageImpl<Product>(query.getResultList(), pageable, resultCount);
     }
 	
 	
