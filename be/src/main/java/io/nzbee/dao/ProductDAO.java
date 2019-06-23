@@ -28,6 +28,7 @@ import io.nzbee.entity.CategoryAttribute_;
 import io.nzbee.entity.Category_;
 import io.nzbee.entity.Currency;
 import io.nzbee.entity.Currency_;
+import io.nzbee.entity.PageableUtil;
 import io.nzbee.entity.Product;
 import io.nzbee.entity.ProductPrice;
 import io.nzbee.entity.ProductPriceType;
@@ -155,6 +156,10 @@ public class ProductDAO implements Dao<Product> {
 				.where(conditions.toArray(new Predicate[] {}))
 				.distinct(false));
 		
+		PageableUtil pageableUtil = new PageableUtil();
+		query.setFirstResult(pageableUtil.getStartPosition(pageable));
+		query.setMaxResults(pageable.getPageSize());
+
 		return new PageImpl<Product>(query.getResultList(), pageable, resultCount);
     }
 	
