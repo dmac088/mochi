@@ -1,6 +1,7 @@
 package io.nzbee.dao;
 
 import java.util.ArrayList;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -11,10 +12,12 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 import io.nzbee.entity.Category;
 import io.nzbee.entity.CategoryAttribute;
 import io.nzbee.entity.CategoryAttribute_;
@@ -22,11 +25,12 @@ import io.nzbee.entity.Category_;
 import io.nzbee.entity.Product;
 import io.nzbee.entity.Product_;
 
-
-@Repository
+@Component
 public class ProductDAO implements Dao<Product> {
 
-	EntityManager em;
+	@Autowired
+	@Qualifier("mochiEntityManagerFactory")
+	private EntityManager em;
 
 	@Override
 	public Optional<Product> get(long id) {
@@ -66,7 +70,11 @@ public class ProductDAO implements Dao<Product> {
 	
 	
 	public Page<Product> findByCategoryIdInAndLclCdAndPriceBetweenAndPricesTypeAndCurrencyCodeAndPriceStartAndPriceEndAndBrandIdIn(List<Long> categoryIds, String productlcl, String brandlcl, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, Pageable pageable, List<Long> brandIds) {
+	
+//		EntityManagerFactory emf = emflc.getNativeEntityManagerFactory();
+//		EntityManager em = emf.createEntityManager();
 		CriteriaBuilder cb = em.getCriteriaBuilder();
+	
 		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
 		
 		Root<Product> root = cq.from(Product.class);
@@ -82,7 +90,6 @@ public class ProductDAO implements Dao<Product> {
 				.orderBy(cb.asc(root.get(Product_.productId)))
 				.distinct(false));
 		
-
 		return new PageImpl<Product>(query.getResultList(), pageable, query.getResultList().size());
 		
     }
