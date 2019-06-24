@@ -38,6 +38,9 @@ import io.nzbee.entity.Hierarchy;
 import io.nzbee.entity.Hierarchy_;
 import io.nzbee.entity.PageableUtil;
 import io.nzbee.entity.Product;
+import io.nzbee.entity.ProductAttribute;
+import io.nzbee.entity.ProductAttributeService;
+import io.nzbee.entity.ProductAttribute_;
 import io.nzbee.entity.ProductPrice;
 import io.nzbee.entity.ProductPriceType;
 import io.nzbee.entity.ProductPriceType_;
@@ -94,6 +97,7 @@ public class ProductDAO implements Dao<Product> {
 		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
 		
 		Root<Product> root = cq.from(Product.class);
+		Join<Product, ProductAttribute> productAttribute = root.join(Product_.attributes);
 		Join<Product, Category> category = root.join(Product_.categories);
 		Join<Product, Brand> brand = root.join(Product_.brand);
 		Join<Product, ProductPrice> price = root.join(Product_.prices);
@@ -112,6 +116,7 @@ public class ProductDAO implements Dao<Product> {
 		}
 		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), brandlcl));
 		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), productlcl));
+		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), productlcl));
 		conditions.add(cb.equal(type.get(ProductPriceType_.desc), priceType));
 		conditions.add(cb.equal(curr.get(Currency_.code), currency));
 		conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.priceValue), priceStart));
@@ -136,6 +141,7 @@ public class ProductDAO implements Dao<Product> {
 		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
 		
 		Root<Product> root = cq.from(Product.class);
+		Join<Product, ProductAttribute> productAttribute = root.join(Product_.attributes);
 		Join<Product, Category> category = root.join(Product_.categories);
 		Join<Product, Brand> brand = root.join(Product_.brand);
 		Join<Product, ProductPrice> price = root.join(Product_.prices);
@@ -153,6 +159,7 @@ public class ProductDAO implements Dao<Product> {
 			conditions.add(brand.get(Brand_.brandId).in(brandIds));
 		}
 		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), brandlcl));
+		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), productlcl));
 		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), productlcl));
 		conditions.add(cb.equal(type.get(ProductPriceType_.desc), priceType));
 		conditions.add(cb.equal(curr.get(Currency_.code), currency));
@@ -163,15 +170,18 @@ public class ProductDAO implements Dao<Product> {
 		conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), CategoryVars.PRIMARY_HIERARCHY_CODE));
 		
 		Long resultCount = this.getResultCount(categoryIds, productlcl, brandlcl, priceStart, priceEnd, priceType, currency, priceDateStart, priceDateEnd, pageable, brandIds);
-		
-		List<org.springframework.data.domain.Sort.Order> ords = pageable.getSort().stream().map(o -> o.ignoreCase()).collect(Collectors.toList());
+	
+		Order order = pageable.getSort().stream().map(o -> {
+			System.out.println(o.getProperty());
+			return this.getOrder(o.getProperty().replaceAll(".*\\.", ""), o.getDirection().toString(), cb, productAttribute, price);
+		}).collect(Collectors.toList()).get(0);
 		
 		TypedQuery<Product> query = em.createQuery(cq
 				.select(root)
 				.where(conditions.toArray(new Predicate[] {}))
 				.distinct(false)
-				.orderBy(QueryUtils.toOrders(Sort.by(ords), root, cb))
-				);
+				.orderBy(order)
+		);
 
 		PageableUtil pageableUtil = new PageableUtil();
 		query.setFirstResult(pageableUtil.getStartPosition(pageable));
@@ -181,16 +191,27 @@ public class ProductDAO implements Dao<Product> {
     }
 	
 	
+	private Order getOrder(String orderName, String orderDirection, CriteriaBuilder cb, Join attributeJoin, Join priceJoin) {
+		switch(orderName + orderDirection) {
+			case "ProductDescASC" : return cb.asc(cb.lower(attributeJoin.get(ProductAttribute_.productDesc.getName()))); 
+			case "ProductDescDESC" : return cb.desc(cb.lower(attributeJoin.get(ProductAttribute_.productDesc.getName())));
+			case "PriceValueASC" : return cb.asc(priceJoin.get(ProductPrice_.priceValue.getName()));
+			case "PriceValueDESC" : return cb.desc(priceJoin.get(ProductPrice_.priceValue.getName())); 
+			default: return cb.asc(cb.lower(attributeJoin.get(ProductAttribute_.productDesc.getName())));
+		}
+		
+	}
+	
 	public Double getMaxPrice(String categoryDesc, String locale, String priceType, String currency, List<Long> categoryIds, List<Long> brandIds) {
 
-		System.out.println(brandIds.size());
-		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 	
 		CriteriaQuery<Double> cq = cb.createQuery(Double.class);
 		
 		Root<Product> root = cq.from(Product.class);
+		
 		Join<Product, Category> category = root.join(Product_.categories);
+		Join<Product, ProductAttribute> productAttribute = root.join(Product_.attributes);
 		Join<Product, Brand> brand = root.join(Product_.brand);
 		Join<Product, ProductPrice> price = root.join(Product_.prices);
 		Join<ProductPrice, ProductPriceType> type = price.join(ProductPrice_.type);
@@ -207,6 +228,7 @@ public class ProductDAO implements Dao<Product> {
 			conditions.add(brand.get(Brand_.brandId).in(brandIds));
 		}
 		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), locale));
+		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale));
 		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
 		conditions.add(cb.equal(type.get(ProductPriceType_.desc), priceType));
 		conditions.add(cb.equal(curr.get(Currency_.code), currency));
