@@ -114,6 +114,7 @@ public class ProductDAO implements Dao<Product> {
 		if(!brandIds.isEmpty()) {
 			conditions.add(brand.get(Brand_.brandId).in(brandIds));
 		}
+		
 		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), brandlcl));
 		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), productlcl));
 		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), productlcl));
@@ -172,7 +173,7 @@ public class ProductDAO implements Dao<Product> {
 		Long resultCount = this.getResultCount(categoryIds, productlcl, brandlcl, priceStart, priceEnd, priceType, currency, priceDateStart, priceDateEnd, pageable, brandIds);
 	
 		Order order = pageable.getSort().stream().map(o -> {
-			return this.getOrder(o.getProperty().replaceAll(".*\\.", ""), o.getDirection().toString(), cb, productAttribute, price);
+			return this.getOrder(o.getProperty().replaceAll(".*\\.", ""), o.getDirection(), cb, productAttribute, price);
 		}).collect(Collectors.toList()).get(0);
 		
 		TypedQuery<Product> query = em.createQuery(cq
@@ -190,15 +191,19 @@ public class ProductDAO implements Dao<Product> {
     }
 	
 	
-	private Order getOrder(String orderName, String orderDirection, CriteriaBuilder cb, Join attributeJoin, Join priceJoin) {
-		switch(orderName + orderDirection) {
-			case "ProductDescASC" : return cb.asc(cb.lower(attributeJoin.get(ProductAttribute_.productDesc.getName()))); 
-			case "ProductDescDESC" : return cb.desc(cb.lower(attributeJoin.get(ProductAttribute_.productDesc.getName())));
-			case "PriceValueASC" : return cb.asc(priceJoin.get(ProductPrice_.priceValue.getName()));
-			case "PriceValueDESC" : return cb.desc(priceJoin.get(ProductPrice_.priceValue.getName())); 
-			default: return cb.asc(cb.lower(attributeJoin.get(ProductAttribute_.productDesc.getName())));
+	private Order getOrder(String orderName, Sort.Direction orderDirection, CriteriaBuilder cb, Join attributeJoin, Join priceJoin) {
+
+		if(orderName.toLowerCase().equals(ProductAttribute_.productDesc.getName().toLowerCase()) && orderDirection.equals(Sort.Direction.ASC)) {
+			return cb.asc(cb.lower(attributeJoin.get(ProductAttribute_.productDesc.getName())));
+		} else if (orderName.toLowerCase().equals(ProductAttribute_.productDesc.getName().toLowerCase()) && orderDirection.equals(Sort.Direction.DESC)) {
+		    return cb.desc(cb.lower(attributeJoin.get(ProductAttribute_.productDesc.getName())));
+		} else if (orderName.toLowerCase().equals(ProductPrice_.priceValue.getName().toLowerCase()) && orderDirection.equals(Sort.Direction.ASC)) {
+			return cb.asc(priceJoin.get(ProductPrice_.priceValue.getName()));
+		} else if (orderName.toLowerCase().equals(ProductPrice_.priceValue.getName().toLowerCase()) && orderDirection.equals(Sort.Direction.DESC)) {
+			return cb.desc(priceJoin.get(ProductPrice_.priceValue.getName())); 
 		}
 		
+		return cb.asc(cb.lower(attributeJoin.get(ProductAttribute_.productDesc.getName())));
 	}
 	
 	public Double getMaxPrice(String categoryDesc, String locale, String priceType, String currency, List<Long> categoryIds, List<Long> brandIds) {
