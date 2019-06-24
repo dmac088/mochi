@@ -5,10 +5,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
@@ -18,6 +21,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.query.QueryUtils;
 import org.springframework.stereotype.Component;
 import io.nzbee.entity.Brand;
 import io.nzbee.entity.BrandAttribute;
@@ -157,18 +162,17 @@ public class ProductDAO implements Dao<Product> {
 		conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.endDate), priceDateEnd));
 		conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), CategoryVars.PRIMARY_HIERARCHY_CODE));
 		
-		//List<Order> orderList = new ArrayList();
-		//orderList.add(cb.desc(root.get("date")));
-		//orderList.add(cb.desc(root.get("rating")));
-		
 		Long resultCount = this.getResultCount(categoryIds, productlcl, brandlcl, priceStart, priceEnd, priceType, currency, priceDateStart, priceDateEnd, pageable, brandIds);
+		
+		List<org.springframework.data.domain.Sort.Order> ords = pageable.getSort().stream().map(o -> o.ignoreCase()).collect(Collectors.toList());
 		
 		TypedQuery<Product> query = em.createQuery(cq
 				.select(root)
 				.where(conditions.toArray(new Predicate[] {}))
 				.distinct(false)
+				.orderBy(QueryUtils.toOrders(Sort.by(ords), root, cb))
 				);
-		
+
 		PageableUtil pageableUtil = new PageableUtil();
 		query.setFirstResult(pageableUtil.getStartPosition(pageable));
 		query.setMaxResults(pageable.getPageSize());
