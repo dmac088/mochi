@@ -172,7 +172,6 @@ public class ProductDAO implements Dao<Product> {
 		Long resultCount = this.getResultCount(categoryIds, productlcl, brandlcl, priceStart, priceEnd, priceType, currency, priceDateStart, priceDateEnd, pageable, brandIds);
 	
 		Order order = pageable.getSort().stream().map(o -> {
-			System.out.println(o.getProperty());
 			return this.getOrder(o.getProperty().replaceAll(".*\\.", ""), o.getDirection().toString(), cb, productAttribute, price);
 		}).collect(Collectors.toList()).get(0);
 		
