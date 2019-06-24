@@ -1,17 +1,14 @@
 package io.nzbee.dao;
 
 import java.util.ArrayList;
-
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
@@ -22,7 +19,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.query.QueryUtils;
 import org.springframework.stereotype.Component;
 import io.nzbee.entity.Brand;
 import io.nzbee.entity.BrandAttribute;
@@ -39,7 +35,6 @@ import io.nzbee.entity.Hierarchy_;
 import io.nzbee.entity.PageableUtil;
 import io.nzbee.entity.Product;
 import io.nzbee.entity.ProductAttribute;
-import io.nzbee.entity.ProductAttributeService;
 import io.nzbee.entity.ProductAttribute_;
 import io.nzbee.entity.ProductPrice;
 import io.nzbee.entity.ProductPriceType;
