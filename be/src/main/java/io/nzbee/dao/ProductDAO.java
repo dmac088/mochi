@@ -29,6 +29,8 @@ import io.nzbee.entity.CategoryAttribute_;
 import io.nzbee.entity.Category_;
 import io.nzbee.entity.Currency;
 import io.nzbee.entity.Currency_;
+import io.nzbee.entity.Hierarchy;
+import io.nzbee.entity.Hierarchy_;
 import io.nzbee.entity.PageableUtil;
 import io.nzbee.entity.Product;
 import io.nzbee.entity.ProductPrice;
@@ -36,6 +38,7 @@ import io.nzbee.entity.ProductPriceType;
 import io.nzbee.entity.ProductPriceType_;
 import io.nzbee.entity.ProductPrice_;
 import io.nzbee.entity.Product_;
+import io.nzbee.variables.CategoryVars;
 
 @Component
 public class ProductDAO implements Dao<Product> {
@@ -93,6 +96,7 @@ public class ProductDAO implements Dao<Product> {
 		Join<ProductPrice, Currency> curr = price.join(ProductPrice_.currency);
 		Join<Brand, BrandAttribute> brandAttribute = brand.join(Brand_.brandAttributes);
 		Join<Category, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
+		Join<Category, Hierarchy> categoryHierarchy = category.join(Category_.hierarchy);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		if(!categoryIds.isEmpty()) {
@@ -109,6 +113,7 @@ public class ProductDAO implements Dao<Product> {
 		conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.priceValue), priceEnd));
 		conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.startDate), priceDateStart));
 		conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.endDate), priceDateEnd));
+		conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), CategoryVars.PRIMARY_HIERARCHY_CODE));
 		
 		TypedQuery<Long> query = em.createQuery(cq
 				.select(cb.count(root.<Long>get(Product_.productId)))
@@ -133,6 +138,7 @@ public class ProductDAO implements Dao<Product> {
 		Join<ProductPrice, Currency> curr = price.join(ProductPrice_.currency);
 		Join<Brand, BrandAttribute> brandAttribute = brand.join(Brand_.brandAttributes);
 		Join<Category, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
+		Join<Category, Hierarchy> categoryHierarchy = category.join(Category_.hierarchy);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		if(!categoryIds.isEmpty()) {
@@ -149,6 +155,7 @@ public class ProductDAO implements Dao<Product> {
 		conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.priceValue), priceEnd));
 		conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.startDate), priceDateStart));
 		conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.endDate), priceDateEnd));
+		conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), CategoryVars.PRIMARY_HIERARCHY_CODE));
 		
 		//List<Order> orderList = new ArrayList();
 		//orderList.add(cb.desc(root.get("date")));
@@ -186,6 +193,7 @@ public class ProductDAO implements Dao<Product> {
 		Join<ProductPrice, Currency> curr = price.join(ProductPrice_.currency);
 		Join<Brand, BrandAttribute> brandAttribute = brand.join(Brand_.brandAttributes);
 		Join<Category, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
+		Join<Category, Hierarchy> categoryHierarchy = category.join(Category_.hierarchy);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		if(!categoryIds.isEmpty()) {
@@ -198,6 +206,7 @@ public class ProductDAO implements Dao<Product> {
 		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
 		conditions.add(cb.equal(type.get(ProductPriceType_.desc), priceType));
 		conditions.add(cb.equal(curr.get(Currency_.code), currency));
+		conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), CategoryVars.PRIMARY_HIERARCHY_CODE));
 		
 		TypedQuery<Double> query = em.createQuery(cq
 				.select(cb.max(price.<Double>get(ProductPrice_.priceValue)))
