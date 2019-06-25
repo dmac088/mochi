@@ -7,14 +7,14 @@ import io.nzbee.dto.SidebarFacetDTO;
 
 public interface IProductService {
 
-	 SearchDTO findProduct(String lcl, String currency, String categoryCode, String term, int page, int size, String sortBy, List<SidebarFacetDTO> selectedFacets);
+	 SearchDTO findProduct(String locale, String currency, String categoryCode, String term, int page, int size, String sortBy, List<SidebarFacetDTO> selectedFacets);
 	
-	 SearchDTO getProducts(String lcl, String currency, String categoryDesc, Double price, int page, int size, String sortBy, List<SidebarFacetDTO> selectedFacets);
+	 SearchDTO getProducts(String locale, String currency, String categoryDesc, Double price, int page, int size, String sortBy, List<SidebarFacetDTO> selectedFacets);
 	 
 	 Double getMaxPrice(String categoryDesc, String locale, String currency, List<SidebarFacetDTO> selectedFacets);
 	 
-	 Product getProduct(String lcl, String currency, Long id);
+	 Product getProduct(String locale, String currency, Long id);
 	 
-	 List<SidebarFacetDTO> getProductTags(String lcl, String curr, String category, List<SidebarFacetDTO> selectedFacets);
+	 List<SidebarFacetDTO> getProductTags(String locale, String currency, String categoryDesc, Double price, List<SidebarFacetDTO> selectedFacets);
 	 
 }

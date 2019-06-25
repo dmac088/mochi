@@ -35,6 +35,7 @@ import org.springframework.stereotype.Service;
 import com.google.common.collect.Lists;
 import org.springframework.data.domain.Sort;
 import io.nzbee.dao.ProductDAO;
+import io.nzbee.dao.ProductTagDAO;
 import io.nzbee.domain.Product;
 import io.nzbee.dto.SearchDTO;
 import io.nzbee.dto.SidebarFacetDTO;
@@ -47,8 +48,11 @@ import io.nzbee.entity.ProductAttribute;
 import io.nzbee.entity.ProductAttributeRepository;
 import io.nzbee.entity.ProductPriceRepository;
 import io.nzbee.entity.ProductRepository;
+import io.nzbee.entity.ProductTag;
+import io.nzbee.entity.ProductTagAttribute;
 import io.nzbee.entity.ProductTagRepository;
 import io.nzbee.variables.CategoryVars;
+import io.nzbee.variables.ProductVars;
 
 @Service
 @Transactional
@@ -71,7 +75,7 @@ public class ProductService implements IProductService {
     private BrandRepository brandRepository;
     
     @Autowired
-    private ProductTagRepository tagRepository;
+    private ProductTagDAO productTagDAO;
     
     @Autowired
     private ProductDAO productDAO;
@@ -90,16 +94,16 @@ public class ProductService implements IProductService {
 	}	
     
 	@Cacheable
-	public SearchDTO getProducts(String lcl, String currency, String categoryDesc, Double price, int page, int size, String sortBy, List<SidebarFacetDTO> selectedFacets) {
+	public SearchDTO getProducts(String locale, String currency, String categoryDesc, Double price, int page, int size, String sortBy, List<SidebarFacetDTO> selectedFacets) {
 		
 		//all categories (if non selected in facets
-		Category parent = categoryRepository.findByAttributesLclCdAndAttributesCategoryDesc(lcl, categoryDesc);
+		Category parent = categoryRepository.findByAttributesLclCdAndAttributesCategoryDesc(locale, categoryDesc);
 		List<Category> allCategories = recurseCategories(new ArrayList<Category>(), parent);
 		List<Long> allCategoryIds = allCategories.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
 		
 		//Facets
 		List<SidebarFacetDTO> selectedCategories = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals("PrimaryCategoryFR");}).collect(Collectors.toList());
-		List<Category> lpc = selectedCategories.stream().map(f-> {return categoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, f.getDesc(), CategoryVars.PRIMARY_HIERARCHY_CODE);}).collect(Collectors.toList());
+		List<Category> lpc = selectedCategories.stream().map(f-> {return categoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(locale, f.getDesc(), CategoryVars.PRIMARY_HIERARCHY_CODE);}).collect(Collectors.toList());
 		
 		List<Category> lpcf = new ArrayList<Category>();
 		lpc.stream().forEach(pc -> { lpcf.addAll(recurseCategories(new ArrayList<Category>(), pc)); });
@@ -112,9 +116,9 @@ public class ProductService implements IProductService {
      	List<Long> categoryIds = (selectedCategories.size() > 0) ? facetCategoryIds : allCategoryIds;
      	
      	Page<io.nzbee.entity.Product> ppa = 
-     			productDAO.getAll(categoryIds, lcl, lcl, new Double(0), price, "markdown", currency, new Date(), new Date(), PageRequest.of(page, size, this.sortByParam(sortBy)), selectedBrandIds);
+     			productDAO.getAll(categoryIds, locale, new Double(0), price, ProductVars.MARKDOWN_SKU_DESCRIPTION, currency, new Date(), new Date(), PageRequest.of(page, size, this.sortByParam(sortBy)), selectedBrandIds);
      	
-  		Page<Product> pp = ppa.map(pa -> this.convertToProductDO(pa, lcl, currency));
+  		Page<Product> pp = ppa.map(pa -> this.convertToProductDO(pa, locale, currency));
   		SearchDTO rc = new SearchDTO();
 		rc.setProducts(pp);
 		
@@ -143,43 +147,45 @@ public class ProductService implements IProductService {
 		     	
 		List<Long> categoryIds = (selectedCategories.size() > 0) ? facetCategoryIds : allCategoryIds;
 	
-		Double maxPrice = productDAO.getMaxPrice(categoryDesc, locale, "markdown", currency, categoryIds, selectedBrandIds);
+		Double maxPrice = productDAO.getMaxPrice(categoryDesc, locale, ProductVars.MARKDOWN_SKU_DESCRIPTION, currency, categoryIds, selectedBrandIds);
 	
 		return maxPrice;
 	}
 	
 	
 	@Override
-	public List<SidebarFacetDTO> getProductTags(String lcl, String curr, String categoryDesc, List<SidebarFacetDTO> selectedFacets) {
+	public List<SidebarFacetDTO> getProductTags(String locale, String currency, String categoryDesc, Double price, List<SidebarFacetDTO> selectedFacets) {
 		
-		//SelectedCategory
-//		Category parent = categoryRepository.findByAttributesLclCdAndAttributesCategoryDesc(lcl, categoryDesc);
-//		List<Category> allCategories = IProductService.recurseCategories(new ArrayList<Category>(), parent);
-//		List<Long> allCategoryIds = allCategories.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
-//				
-//		//Facets
-//		List<SidebarFacetDTO> selectedCategories = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals("PrimaryCategoryFR");}).collect(Collectors.toList());
-//		List<Category> lpc = selectedCategories.stream().map(f-> {return categoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, f.getDesc(), CategoryVars.PRIMARY_HIERARCHY_CODE);}).collect(Collectors.toList());
-//				
-//		List<Category> lpcf = new ArrayList<Category>();
-//		lpc.stream().forEach(pc -> { lpcf.addAll(IProductService.recurseCategories(new ArrayList<Category>(), pc)); });
-//
-//		List<Long> facetCategoryIds = lpcf.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
-//
-//		List<SidebarFacetDTO> selectedBrands = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals("BrandFR");}).collect(Collectors.toList());
-//		List<Long> selectedBrandIds = selectedBrands.stream().map(b -> {return b.getId();}).collect(Collectors.toList());
-//		     	
-//		List<Long> categoryIds = (selectedCategories.size() > 0) ? facetCategoryIds : allCategoryIds;
-//		
-//		List<io.nzbee.entity.ProductTag> ppa = (selectedBrands.size() > 0) 
-//				? tagRepository.findByProductsPricesPriceValueLessThanEqualAndProductsPricesCurrencyCodeAndProductsPricesTypeDescAndProductsCategoriesHierarchyCodeAndProductsCategoriesCategoryIdInAndProductsBrandBrandIdIn(new Double(0), curr, "markdown", CategoryVars.PRIMARY_HIERARCHY_CODE, categoryIds, selectedBrandIds)
-//				: tagRepository.findByProductsPricesPriceValueLessThanEqualAndProductsPricesCurrencyCodeAndProductsPricesTypeDescAndProductsCategoriesHierarchyCodeAndProductsCategoriesCategoryIdIn(new Double(0), curr, "markdown", CategoryVars.PRIMARY_HIERARCHY_CODE, categoryIds);
-//
-//		ppa.stream().map(pt -> pt.)
-//		//List<SidebarFacetDTO> lsf = 
-//		
-//		return sDto;
-		return new ArrayList<SidebarFacetDTO>();
+		//all categories (if non selected in facets
+		Category parent = categoryRepository.findByAttributesLclCdAndAttributesCategoryDesc(locale, categoryDesc);
+		List<Category> allCategories = recurseCategories(new ArrayList<Category>(), parent);
+		List<Long> allCategoryIds = allCategories.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
+						
+		//Facets
+		List<SidebarFacetDTO> selectedCategories = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals("PrimaryCategoryFR");}).collect(Collectors.toList());
+		List<Category> lpc = selectedCategories.stream().map(f-> {return categoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(locale, f.getDesc(), CategoryVars.PRIMARY_HIERARCHY_CODE);}).collect(Collectors.toList());
+							
+		List<Category> lpcf = new ArrayList<Category>();
+		lpc.stream().forEach(pc -> { lpcf.addAll(recurseCategories(new ArrayList<Category>(), pc)); });
+
+		List<Long> facetCategoryIds = lpcf.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
+
+		List<SidebarFacetDTO> selectedBrands = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals("BrandFR");}).collect(Collectors.toList());
+		List<Long> selectedBrandIds = selectedBrands.stream().map(b -> {return b.getId();}).collect(Collectors.toList());
+				     	
+		List<Long> categoryIds = (selectedCategories.size() > 0) ? facetCategoryIds : allCategoryIds;
+		
+		List<ProductTagAttribute> pt = productTagDAO.getAll(categoryIds, locale, new Double(0), price, ProductVars.MARKDOWN_SKU_DESCRIPTION, currency, new Date(), new Date(), selectedBrandIds);
+		
+		List<SidebarFacetDTO> lf = pt.stream().map(t -> {
+										SidebarFacetDTO f = new SidebarFacetDTO();
+										f.setFacetingName("TagFR");
+										f.setDesc(t.getTagDesc());
+										return f;
+									}).collect(Collectors.toList());
+		
+		return lf;
+			
 	}
 	
 	

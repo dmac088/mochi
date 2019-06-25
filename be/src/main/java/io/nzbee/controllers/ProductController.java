@@ -34,6 +34,12 @@ public class ProductController {
     public Double getMaxPrice(@PathVariable String locale, @PathVariable String currency, @PathVariable String category, @RequestBody final List<SidebarFacetDTO> selectedFacets) {
     	return productService.getMaxPrice(category, locale, currency, selectedFacets);
     }
+    
+    @PostMapping("/Product/{locale}/{currency}/{category}/{price}/tags")
+    public List<SidebarFacetDTO> getTags(@PathVariable String locale, @PathVariable String currency, @PathVariable String category, @PathVariable Double price, @RequestBody final List<SidebarFacetDTO> selectedFacets) {
+    	System.out.println("test");
+    	return productService.getProductTags(locale, currency, category, price, selectedFacets);
+    }
   
     @PostMapping("/Product/{locale}/{currency}/category/{category}/maxPrice/{price}/page/{page}/size/{size}/sortBy/{sortBy}")
     public SearchDTO getProducts(@PathVariable String locale, @PathVariable String currency, @PathVariable String category, @PathVariable Double price, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy, @RequestBody final List<SidebarFacetDTO> selectedFacets) {
@@ -44,4 +50,5 @@ public class ProductController {
     public SearchDTO search(@PathVariable String locale, @PathVariable String currency, @PathVariable String category,@PathVariable String term, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy, @RequestBody final List<SidebarFacetDTO> selectedFacets) {
     	return productService.findProduct(locale, currency, category, term, page, size, sortBy, selectedFacets);
     }
+    
 }

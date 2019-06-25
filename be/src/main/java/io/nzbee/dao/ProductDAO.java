@@ -89,7 +89,7 @@ public class ProductDAO implements Dao<Product> {
 		return null;
 	}
 	
-	public Long getResultCount(List<Long> categoryIds, String productlcl, String brandlcl, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, Pageable pageable, List<Long> brandIds) {
+	public Long getResultCount(List<Long> categoryIds, String locale, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, Pageable pageable, List<Long> brandIds) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
@@ -114,9 +114,9 @@ public class ProductDAO implements Dao<Product> {
 			conditions.add(brand.get(Brand_.brandId).in(brandIds));
 		}
 		
-		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), brandlcl));
-		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), productlcl));
-		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), productlcl));
+		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), locale));
+		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
+		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale));
 		conditions.add(cb.equal(type.get(ProductPriceType_.desc), priceType));
 		conditions.add(cb.equal(curr.get(Currency_.code), currency));
 		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
@@ -134,7 +134,7 @@ public class ProductDAO implements Dao<Product> {
 	}
 	
 	
-	public Page<Product> getAll(List<Long> categoryIds, String productlcl, String brandlcl, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, Pageable pageable, List<Long> brandIds) {
+	public Page<Product> getAll(List<Long> categoryIds, String locale, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, Pageable pageable, List<Long> brandIds) {
 	
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 	
@@ -159,9 +159,9 @@ public class ProductDAO implements Dao<Product> {
 		if(!brandIds.isEmpty()) {
 			conditions.add(brand.get(Brand_.brandId).in(brandIds));
 		}
-		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), brandlcl));
-		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), productlcl));
-		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), productlcl));
+		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), locale));
+		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale));
+		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
 		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
 		conditions.add(cb.equal(type.get(ProductPriceType_.desc), priceType));
 		conditions.add(cb.equal(curr.get(Currency_.code), currency));
@@ -170,7 +170,7 @@ public class ProductDAO implements Dao<Product> {
 		conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.startDate), priceDateStart));
 		conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.endDate), priceDateEnd));
 		
-		Long resultCount = this.getResultCount(categoryIds, productlcl, brandlcl, priceStart, priceEnd, priceType, currency, priceDateStart, priceDateEnd, pageable, brandIds);
+		Long resultCount = this.getResultCount(categoryIds, locale, priceStart, priceEnd, priceType, currency, priceDateStart, priceDateEnd, pageable, brandIds);
 	
 		Order order = pageable.getSort().stream().map(o -> {
 			return this.getOrder(o.getProperty().replaceAll(".*\\.", ""), o.getDirection(), cb, productAttribute, price);
