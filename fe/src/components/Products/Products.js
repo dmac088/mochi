@@ -140,7 +140,7 @@ class Products extends Component {
      })
      .then((newState) => {
        //add the category children to the facets array
-       return categoryApi.findAllChildren(newState.locale, newState.currency, newState.category, newState.selectedFacets.filter(o => o.facetingName === BRAND_FACET_NAME))
+       return categoryApi.findAllChildren(newState.locale, newState.currency, newState.category, newState.selectedFacets)
        .then((response) => {
          return response.text();
        })
@@ -154,7 +154,7 @@ class Products extends Component {
        return newState;
      })
      .then((newState) => {
-       return brandApi.findByCategory(newState.locale, newState.currency, newState.category, newState.selectedFacets.filter(o => o.facetingName === PRIMARY_CATEGORY_FACET_NAME))
+       return brandApi.findByCategory(newState.locale, newState.currency, newState.category, newState.selectedFacets)
        .then((response) => {
          return response.text();
        })
@@ -179,6 +179,18 @@ class Products extends Component {
           return newState;
        })
        .catch((e) => {console.log(e)});
+     })
+     .then((newState) => {
+       return productApi.getProductTags(newState.locale, newState.currency, newState.category, newState.maxPrice, newState.selectedFacets)
+       .then((response) => {
+         return response.text();
+       })
+       .then((responseText) => {
+         if(type === 'category') {
+           newState["facets"] = [...newState["facets"],...JSON.parse(responseText)];
+         }
+         return newState;
+       });
      })
      .then((newState) => {
        this.setState({

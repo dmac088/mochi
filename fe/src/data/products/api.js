@@ -12,7 +12,6 @@ export const get = (locale, currency) => 	fetchApi(
 																					 {}
 																				 	);
 
-
 export const getMaxPrice = (locale, currency, category, selectedFacets = [])  => fetchApi(
 																					endPoints.get+
 																					locale +
@@ -25,6 +24,18 @@ export const getMaxPrice = (locale, currency, category, selectedFacets = [])  =>
 																					{"Content-Type": "application/json"}
 																					);
 
+export const getProductTags = (locale, currency, category, price, selectedFacets = [])  => fetchApi(
+																					endPoints.get+
+																					locale +
+																					'/' + currency +
+																					'/' + category +
+																					'/' + price +
+																					'/tags',
+																					selectedFacets,
+																					{},
+																					'POST',
+																					{"Content-Type": "application/json"}
+																					);
 
 export const findById = (locale, currency, productId) => fetchApi(
 																					endPoints.get +
