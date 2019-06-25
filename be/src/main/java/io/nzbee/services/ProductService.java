@@ -191,6 +191,7 @@ public class ProductService implements IProductService {
 										f.setId(t.getTagId());
 										f.setToken(t.getTag().get().getCode());
 										f.setDesc(t.getTagDesc());
+										f.setProductCount(new Long(0));
 										return f;
 									}).collect(Collectors.toList());
 		
