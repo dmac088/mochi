@@ -97,7 +97,6 @@ public class ProductDAO implements Dao<Product> {
 		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
 		
 		Root<Product> root = cq.from(Product.class);
-		Join<Product, ProductTag> tag = root.join(Product_.tags);
 		Join<Product, ProductAttribute> productAttribute = root.join(Product_.attributes);
 		Join<Product, Category> category = root.join(Product_.categories);
 		Join<Product, Brand> brand = root.join(Product_.brand);
@@ -117,6 +116,7 @@ public class ProductDAO implements Dao<Product> {
 			conditions.add(brand.get(Brand_.brandId).in(brandIds));
 		}
 		if(!tagIds.isEmpty()) {
+			Join<Product, ProductTag> tag = root.join(Product_.tags);
 			conditions.add(tag.get(ProductTag_.productTagId).in(tagIds));
 		}
 		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), locale));
