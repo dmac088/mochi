@@ -127,7 +127,7 @@ public class ProductTagDAO  implements Dao<Product> {
 		TypedQuery<ProductTagAttribute> query = em.createQuery(cq
 				.select(root)
 				.where(conditions.toArray(new Predicate[] {}))
-				.distinct(false)
+				.distinct(true)
 		);
 		
 		return query.getResultList();
