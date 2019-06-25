@@ -48,9 +48,7 @@ import io.nzbee.entity.ProductAttribute;
 import io.nzbee.entity.ProductAttributeRepository;
 import io.nzbee.entity.ProductPriceRepository;
 import io.nzbee.entity.ProductRepository;
-import io.nzbee.entity.ProductTag;
 import io.nzbee.entity.ProductTagAttribute;
-import io.nzbee.entity.ProductTagRepository;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.ProductVars;
 
