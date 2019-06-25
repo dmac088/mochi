@@ -8,4 +8,6 @@ public class ProductVars {
 	
 	public static final String MARKDOWN_SKU_DESCRIPTION = "markdown";
 	
+	public static final String ACTIVE_SKU_CODE = "ACT01";
+	
 }

@@ -40,8 +40,11 @@ import io.nzbee.entity.ProductPrice;
 import io.nzbee.entity.ProductPriceType;
 import io.nzbee.entity.ProductPriceType_;
 import io.nzbee.entity.ProductPrice_;
+import io.nzbee.entity.ProductStatus;
+import io.nzbee.entity.ProductStatus_;
 import io.nzbee.entity.Product_;
 import io.nzbee.variables.CategoryVars;
+import io.nzbee.variables.ProductVars;
 
 @Component
 public class ProductDAO implements Dao<Product> {
@@ -95,6 +98,7 @@ public class ProductDAO implements Dao<Product> {
 		Join<Product, ProductAttribute> productAttribute = root.join(Product_.attributes);
 		Join<Product, Category> category = root.join(Product_.categories);
 		Join<Product, Brand> brand = root.join(Product_.brand);
+		Join<Product, ProductStatus> status = root.join(Product_.productStatus);
 		Join<Product, ProductPrice> price = root.join(Product_.prices);
 		Join<ProductPrice, ProductPriceType> type = price.join(ProductPrice_.type);
 		Join<ProductPrice, Currency> curr = price.join(ProductPrice_.currency);
@@ -115,6 +119,7 @@ public class ProductDAO implements Dao<Product> {
 		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), productlcl));
 		conditions.add(cb.equal(type.get(ProductPriceType_.desc), priceType));
 		conditions.add(cb.equal(curr.get(Currency_.code), currency));
+		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
 		conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.priceValue), priceStart));
 		conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.priceValue), priceEnd));
 		conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.startDate), priceDateStart));
@@ -139,6 +144,7 @@ public class ProductDAO implements Dao<Product> {
 		Join<Product, ProductAttribute> productAttribute = root.join(Product_.attributes);
 		Join<Product, Category> category = root.join(Product_.categories);
 		Join<Product, Brand> brand = root.join(Product_.brand);
+		Join<Product, ProductStatus> status = root.join(Product_.productStatus);
 		Join<Product, ProductPrice> price = root.join(Product_.prices);
 		Join<ProductPrice, ProductPriceType> type = price.join(ProductPrice_.type);
 		Join<ProductPrice, Currency> curr = price.join(ProductPrice_.currency);
@@ -156,6 +162,7 @@ public class ProductDAO implements Dao<Product> {
 		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), brandlcl));
 		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), productlcl));
 		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), productlcl));
+		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
 		conditions.add(cb.equal(type.get(ProductPriceType_.desc), priceType));
 		conditions.add(cb.equal(curr.get(Currency_.code), currency));
 		conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.priceValue), priceStart));
@@ -210,6 +217,7 @@ public class ProductDAO implements Dao<Product> {
 		Join<Product, Category> category = root.join(Product_.categories);
 		Join<Product, ProductAttribute> productAttribute = root.join(Product_.attributes);
 		Join<Product, Brand> brand = root.join(Product_.brand);
+		Join<Product, ProductStatus> status = root.join(Product_.productStatus);
 		Join<Product, ProductPrice> price = root.join(Product_.prices);
 		Join<ProductPrice, ProductPriceType> type = price.join(ProductPrice_.type);
 		Join<ProductPrice, Currency> curr = price.join(ProductPrice_.currency);
@@ -229,6 +237,7 @@ public class ProductDAO implements Dao<Product> {
 		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
 		conditions.add(cb.equal(type.get(ProductPriceType_.desc), priceType));
 		conditions.add(cb.equal(curr.get(Currency_.code), currency));
+		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
 		conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), CategoryVars.PRIMARY_HIERARCHY_CODE));
 		
 		TypedQuery<Double> query = em.createQuery(cq

@@ -73,6 +73,12 @@ public class Product {
 	@JsonBackReference
 	private Brand brand;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@IndexedEmbedded
+	@JoinColumn(name="prd_sts_id", insertable=false, updatable=false)
+	@JsonBackReference
+	private ProductStatus productStatus;
+
 	@OneToMany(mappedBy="product",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@IndexedEmbedded
 	@JsonManagedReference
@@ -198,6 +204,14 @@ public class Product {
 
 	public void setBrand(Brand brand) {
 		this.brand = brand;
+	}
+	
+	public ProductStatus getProductStatus() {
+		return productStatus;
+	}
+
+	public void setProductStatus(ProductStatus productStatus) {
+		this.productStatus = productStatus;
 	}
 			
 }
