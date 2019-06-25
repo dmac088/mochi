@@ -42,6 +42,8 @@ import io.nzbee.entity.ProductPriceType_;
 import io.nzbee.entity.ProductPrice_;
 import io.nzbee.entity.ProductStatus;
 import io.nzbee.entity.ProductStatus_;
+import io.nzbee.entity.ProductTag;
+import io.nzbee.entity.ProductTag_;
 import io.nzbee.entity.Product_;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.ProductVars;
@@ -89,12 +91,13 @@ public class ProductDAO implements Dao<Product> {
 		return null;
 	}
 	
-	public Long getResultCount(List<Long> categoryIds, String locale, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, Pageable pageable, List<Long> brandIds) {
+	public Long getResultCount(List<Long> categoryIds, String locale, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, Pageable pageable, List<Long> brandIds, List<Long> tagIds) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
 		
 		Root<Product> root = cq.from(Product.class);
+		Join<Product, ProductTag> tag = root.join(Product_.tags);
 		Join<Product, ProductAttribute> productAttribute = root.join(Product_.attributes);
 		Join<Product, Category> category = root.join(Product_.categories);
 		Join<Product, Brand> brand = root.join(Product_.brand);
@@ -113,7 +116,9 @@ public class ProductDAO implements Dao<Product> {
 		if(!brandIds.isEmpty()) {
 			conditions.add(brand.get(Brand_.brandId).in(brandIds));
 		}
-		
+		if(!tagIds.isEmpty()) {
+			conditions.add(tag.get(ProductTag_.productTagId).in(tagIds));
+		}
 		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), locale));
 		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
 		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale));
@@ -134,13 +139,14 @@ public class ProductDAO implements Dao<Product> {
 	}
 	
 	
-	public Page<Product> getAll(List<Long> categoryIds, String locale, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, Pageable pageable, List<Long> brandIds) {
+	public Page<Product> getAll(List<Long> categoryIds, String locale, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, Pageable pageable, List<Long> brandIds, List<Long> tagIds) {
 	
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 	
 		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
 		
 		Root<Product> root = cq.from(Product.class);
+		
 		Join<Product, ProductAttribute> productAttribute = root.join(Product_.attributes);
 		Join<Product, Category> category = root.join(Product_.categories);
 		Join<Product, Brand> brand = root.join(Product_.brand);
@@ -159,6 +165,10 @@ public class ProductDAO implements Dao<Product> {
 		if(!brandIds.isEmpty()) {
 			conditions.add(brand.get(Brand_.brandId).in(brandIds));
 		}
+		if(!tagIds.isEmpty()) {
+			Join<Product, ProductTag> tag = root.join(Product_.tags);
+			conditions.add(tag.get(ProductTag_.productTagId).in(tagIds));
+		}
 		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), locale));
 		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale));
 		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
@@ -170,7 +180,7 @@ public class ProductDAO implements Dao<Product> {
 		conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.startDate), priceDateStart));
 		conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.endDate), priceDateEnd));
 		
-		Long resultCount = this.getResultCount(categoryIds, locale, priceStart, priceEnd, priceType, currency, priceDateStart, priceDateEnd, pageable, brandIds);
+		Long resultCount = this.getResultCount(categoryIds, locale, priceStart, priceEnd, priceType, currency, priceDateStart, priceDateEnd, pageable, brandIds, tagIds);
 	
 		Order order = pageable.getSort().stream().map(o -> {
 			return this.getOrder(o.getProperty().replaceAll(".*\\.", ""), o.getDirection(), cb, productAttribute, price);
@@ -206,14 +216,13 @@ public class ProductDAO implements Dao<Product> {
 		return cb.asc(cb.lower(attributeJoin.get(ProductAttribute_.productDesc.getName())));
 	}
 	
-	public Double getMaxPrice(String categoryDesc, String locale, String priceType, String currency, List<Long> categoryIds, List<Long> brandIds) {
+	public Double getMaxPrice(String categoryDesc, String locale, String priceType, String currency, List<Long> categoryIds, List<Long> brandIds, List<Long> tagIds) {
 
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 	
 		CriteriaQuery<Double> cq = cb.createQuery(Double.class);
 		
 		Root<Product> root = cq.from(Product.class);
-		
 		Join<Product, Category> category = root.join(Product_.categories);
 		Join<Product, ProductAttribute> productAttribute = root.join(Product_.attributes);
 		Join<Product, Brand> brand = root.join(Product_.brand);
@@ -231,6 +240,10 @@ public class ProductDAO implements Dao<Product> {
 		}
 		if(!brandIds.isEmpty()) {
 			conditions.add(brand.get(Brand_.brandId).in(brandIds));
+		}
+		if(!tagIds.isEmpty()) {
+			Join<Product, ProductTag> tag = root.join(Product_.tags);
+			conditions.add(tag.get(ProductTag_.productTagId).in(tagIds));
 		}
 		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), locale));
 		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale));
