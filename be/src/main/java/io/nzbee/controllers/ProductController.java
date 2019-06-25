@@ -37,7 +37,6 @@ public class ProductController {
     
     @PostMapping("/Product/{locale}/{currency}/{category}/{price}/tags")
     public List<SidebarFacetDTO> getTags(@PathVariable String locale, @PathVariable String currency, @PathVariable String category, @PathVariable Double price, @RequestBody final List<SidebarFacetDTO> selectedFacets) {
-    	System.out.println("test");
     	return productService.getProductTags(locale, currency, category, price, selectedFacets);
     }
   
