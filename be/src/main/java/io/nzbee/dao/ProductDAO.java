@@ -107,7 +107,7 @@ public class ProductDAO implements Dao<Product> {
 		Join<ProductPrice, Currency> curr = price.join(ProductPrice_.currency);
 		Join<Brand, BrandAttribute> brandAttribute = brand.join(Brand_.brandAttributes);
 		Join<Category, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
-		Join<Category, Hierarchy> categoryHierarchy = category.join(Category_.hierarchy);
+		//Join<Category, Hierarchy> categoryHierarchy = category.join(Category_.hierarchy);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		if(!categoryIds.isEmpty()) {
@@ -156,7 +156,7 @@ public class ProductDAO implements Dao<Product> {
 		Join<ProductPrice, Currency> curr = price.join(ProductPrice_.currency);
 		Join<Brand, BrandAttribute> brandAttribute = brand.join(Brand_.brandAttributes);
 		Join<Category, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
-		Join<Category, Hierarchy> categoryHierarchy = category.join(Category_.hierarchy);
+		//Join<Category, Hierarchy> categoryHierarchy = category.join(Category_.hierarchy);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		if(!categoryIds.isEmpty()) {
@@ -201,7 +201,7 @@ public class ProductDAO implements Dao<Product> {
     }
 	
 	
-	private Order getOrder(String orderName, Sort.Direction orderDirection, CriteriaBuilder cb, Join attributeJoin, Join priceJoin) {
+	private Order getOrder(String orderName, Sort.Direction orderDirection, CriteriaBuilder cb, Join<Product, ProductAttribute> attributeJoin, Join<Product, ProductPrice> priceJoin) {
 
 		if(orderName.toLowerCase().equals(ProductAttribute_.productDesc.getName().toLowerCase()) && orderDirection.equals(Sort.Direction.ASC)) {
 			return cb.asc(cb.lower(attributeJoin.get(ProductAttribute_.productDesc.getName())));
