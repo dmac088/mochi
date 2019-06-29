@@ -1,6 +1,7 @@
 package io.nzbee.services;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
@@ -16,6 +17,8 @@ import io.nzbee.entity.Category;
 import io.nzbee.entity.CategoryAttribute;
 import io.nzbee.entity.CategoryAttributeRepository;
 import io.nzbee.entity.ProductRepository;
+import io.nzbee.variables.CategoryVars;
+import io.nzbee.variables.ProductVars;
 
 @Service
 @Transactional
@@ -54,9 +57,9 @@ public class BrandService implements IBrandService {
 	@Override
 	@Transactional
 	//@Cacheable
-	public List<SidebarFacetDTO> getBrandsForCategory(String hierarchyCode, String lcl, String curr, String categoryDesc, List<SidebarFacetDTO> categoryFacets) {
+	public List<SidebarFacetDTO> getBrandsForCategory(String hierarchyCode, String locale, String currency, String categoryDesc, List<SidebarFacetDTO> categoryFacets) {
 		
-		CategoryAttribute ca = categoryAttributeRepository.findByCategoryHierarchyCodeAndLclCdAndCategoryDesc(hierarchyCode, lcl, categoryDesc);
+		CategoryAttribute ca = categoryAttributeRepository.findByCategoryHierarchyCodeAndLclCdAndCategoryDesc(hierarchyCode, locale, categoryDesc);
 		
 
 		if(ca == null) { return null; }
@@ -74,10 +77,20 @@ public class BrandService implements IBrandService {
 		
 		List<io.nzbee.entity.Brand> lpb = brandRepository.findDistinctByProductsCategoriesCategoryIdIn(categoryIds);
 
-		List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, lcl, curr)).collect(Collectors.toList());
+		List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, locale, currency)).collect(Collectors.toList());
+		
 		lb.stream().forEach(bDO -> {
+			List<Long> lid = new ArrayList<Long>();
+			lid.add(bDO.getBrandId());
 			bDO.setProductCount(
-					productRepository.countByCategoriesHierarchyCodeAndCategoriesCategoryIdInAndBrandBrandCode(hierarchyCode, selectedCategoryIds, bDO.getBrandCode()));
+					productRepository.count(CategoryVars.PRIMARY_HIERARCHY_CODE, 
+											CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
+											categoryDesc, 
+											locale,
+											currency,
+											ProductVars.MARKDOWN_SKU_DESCRIPTION,
+											lid.size() == 0 ? Arrays.asList(new Long(1)) : lid ,
+											(lid.size() == 0 ? 0 : 1)));
 		});
 		
 		List<SidebarFacetDTO> lsfdto = lb.stream().map(b -> createBrandDTO(b)).collect(Collectors.toList())
