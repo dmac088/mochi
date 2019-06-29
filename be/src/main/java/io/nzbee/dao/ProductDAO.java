@@ -27,6 +27,8 @@ import io.nzbee.entity.Brand_;
 import io.nzbee.entity.Category;
 import io.nzbee.entity.CategoryAttribute;
 import io.nzbee.entity.CategoryAttribute_;
+import io.nzbee.entity.CategoryType;
+import io.nzbee.entity.CategoryType_;
 import io.nzbee.entity.Category_;
 import io.nzbee.entity.Currency;
 import io.nzbee.entity.Currency_;
@@ -135,6 +137,76 @@ public class ProductDAO implements Dao<Product> {
 				.where(conditions.toArray(new Predicate[] {}))
 				.distinct(false));
 		 
+		return query.getSingleResult();
+	}
+	
+	
+	public Long countByCateogryAndBrands(String hieararchyCode, String categoryTypeCode, String categoryDesc, List<Long> brandIds, String locale) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+		
+		Root<Product> root = cq.from(Product.class);
+		Join<Product, Category> product = root.join(Product_.categories);
+		Join<Category, CategoryType> categoryType = product.join(Category_.categoryType);
+		Join<Category, CategoryAttribute> categoryAttribute = product.join(Category_.attributes);
+		Join<Category, Hierarchy> categoryHierarchy = product.join(Category_.hierarchy);
+		Join<Product, ProductStatus> status = root.join(Product_.productStatus);
+		Join<Product, Brand> brand = root.join(Product_.brand);
+		
+		List<Predicate> conditions = new ArrayList<Predicate>();
+		conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), hieararchyCode));
+		conditions.add(cb.equal(categoryType.get(CategoryType_.code), categoryTypeCode));
+		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
+		if(!brandIds.isEmpty()) {
+			conditions.add(brand.get(Brand_.brandId).in(brandIds));
+		}
+		if(!(categoryDesc == null)) {
+			conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.categoryDesc), categoryDesc));
+		}
+		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
+		
+		TypedQuery<Long> query = em.createQuery(cq
+				.select(cb.count(root.<Long>get(Product_.productId)))
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(false));
+		
+		return query.getSingleResult();
+	}
+	
+	public Double maxMarkdownByCateogryAndBrands(String hieararchyCode, String categoryTypeCode, String categoryDesc, List<Long> brandIds, String locale, String currency) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<Double> cq = cb.createQuery(Double.class);
+		
+		Root<Product> root = cq.from(Product.class);
+		Join<Product, Category> product = root.join(Product_.categories);
+		Join<Category, CategoryType> categoryType = product.join(Category_.categoryType);
+		Join<Category, CategoryAttribute> categoryAttribute = product.join(Category_.attributes);
+		Join<Category, Hierarchy> categoryHierarchy = product.join(Category_.hierarchy);
+		Join<Product, Brand> brand = root.join(Product_.brand);
+		Join<Product, ProductStatus> status = root.join(Product_.productStatus);
+		Join<Product, ProductPrice> price = root.join(Product_.prices);
+		Join<ProductPrice, Currency> curr = price.join(ProductPrice_.currency);
+		
+		List<Predicate> conditions = new ArrayList<Predicate>();
+		conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), hieararchyCode));
+		conditions.add(cb.equal(categoryType.get(CategoryType_.code), categoryTypeCode));
+		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
+		conditions.add(cb.equal(curr.get(Currency_.code), currency));
+		if(!brandIds.isEmpty()) {
+			conditions.add(brand.get(Brand_.brandId).in(brandIds));
+		}
+		if(!(categoryDesc == null)) {
+			conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.categoryDesc), categoryDesc));
+		}
+		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
+		
+		TypedQuery<Double> query = em.createQuery(cq
+				.select(cb.max(price.<Double>get(ProductPrice_.priceValue)))
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(false));
+		
 		return query.getSingleResult();
 	}
 	
