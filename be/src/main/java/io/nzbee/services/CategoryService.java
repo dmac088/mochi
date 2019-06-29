@@ -1,5 +1,7 @@
 package io.nzbee.services;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -14,7 +16,9 @@ import io.nzbee.domain.Brand;
 import io.nzbee.domain.Category;
 import io.nzbee.dto.SidebarFacetDTO;
 import io.nzbee.entity.CategoryRepository;
+import io.nzbee.entity.ProductRepository;
 import io.nzbee.variables.CategoryVars;
+import io.nzbee.variables.ProductVars;
 
 @Service
 @Transactional
@@ -25,10 +29,10 @@ public class CategoryService implements ICategoryService {
     private CategoryRepository categoryRepository;
     
     @Autowired
-    private CategoryDAO categoryDAO;
+    private ProductRepository productRepository;
     
     @Autowired
-    private ProductDAO productDAO;
+    private CategoryDAO categoryDAO;
     
     @Override
 	@Transactional
@@ -94,11 +98,15 @@ public class CategoryService implements ICategoryService {
 		List<Category> lcDO = lc.stream().map(c -> createCategory(hierarchyCode, c, locale, currency)).collect(Collectors.toList());
 		
 		lcDO.stream().forEach(cDO -> {
-			final Long count = productDAO.countByCateogryAndBrands(	CategoryVars.PRIMARY_HIERARCHY_CODE, 
-																	CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
-																	categoryDesc, 
-																	brandIds,
-																	locale);			
+			final Long count = productRepository.count(CategoryVars.PRIMARY_HIERARCHY_CODE, 
+										CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
+										categoryDesc, 
+										locale,
+										currency,
+										ProductVars.MARKDOWN_SKU_DESCRIPTION,
+										brandIds.size() == 0 ? Arrays.asList(new Long(1)) : brandIds ,
+										(brandIds.size() == 0 ? 0 : 1));
+			
 			cDO.setProductCount(count);
 		});	
 		
@@ -133,20 +141,27 @@ public class CategoryService implements ICategoryService {
         cDO.setCategoryLevel(pc.getCategoryLevel());
         
         //get product count and set it
-        cDO.setProductCount(productDAO.countByCateogryAndBrands(CategoryVars.PRIMARY_HIERARCHY_CODE, 
-																CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
-																pc.getAttributes().stream().filter(ca -> ca.getLclCd().equals(locale)).findFirst().get().getCategoryDesc(), 
-																null,
-																locale));
+        cDO.setProductCount(	productRepository.count(CategoryVars.PRIMARY_HIERARCHY_CODE, 
+								CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
+								pc.getAttributes().stream().filter(ca -> ca.getLclCd().equals(locale)).findFirst().get().getCategoryDesc(), 
+								locale,
+								currency,
+								ProductVars.MARKDOWN_SKU_DESCRIPTION,
+								Arrays.asList(new Long(1)),
+								0));
         
         
-        cDO.setMaxMarkDownPrice(productDAO.maxMarkdownByCateogryAndBrands(CategoryVars.PRIMARY_HIERARCHY_CODE, 
-				CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
-				pc.getAttributes().stream().filter(ca -> ca.getLclCd().equals(locale)).findFirst().get().getCategoryDesc(), 
-				null,
-				locale,
-				currency));
-        
+        cDO.setMaxMarkDownPrice(
+        		productRepository.maxMarkDownPrice(
+        						CategoryVars.PRIMARY_HIERARCHY_CODE, 
+								CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
+								pc.getAttributes().stream().filter(ca -> ca.getLclCd().equals(locale)).findFirst().get().getCategoryDesc(), 
+								locale,
+								currency,
+								ProductVars.MARKDOWN_SKU_DESCRIPTION,
+								Arrays.asList(new Long(1)),
+								0));
+        		
         //set the brand attributes of all products within the category, to the localized version
         //Set<Brand> catBrands = pc.getProducts().stream().map(p -> this.createBrand(p.getBrand(), pc.getCategoryCode(), lcl)).collect(Collectors.toSet());
        		
