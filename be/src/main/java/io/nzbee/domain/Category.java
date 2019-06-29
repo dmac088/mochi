@@ -33,7 +33,7 @@ public class Category {
 	
 	private Long productCount;
 	
-	private Long maxMarkDownPrice;
+	private Double maxMarkDownPrice;
 
 	private List<Category> children;
 	
@@ -101,11 +101,11 @@ public class Category {
 		this.productCount = productCount;
 	}
 	
-	public Long getMaxMarkDownPrice() {
+	public Double getMaxMarkDownPrice() {
 		return maxMarkDownPrice;
 	}
 
-	public void setMaxMarkDownPrice(Long maxMarkDownPrice) {
+	public void setMaxMarkDownPrice(Double maxMarkDownPrice) {
 		this.maxMarkDownPrice = maxMarkDownPrice;
 	}
 	

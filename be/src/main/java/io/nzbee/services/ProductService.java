@@ -34,6 +34,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.google.common.collect.Lists;
 import org.springframework.data.domain.Sort;
+import io.nzbee.dao.CategoryDAO;
 import io.nzbee.dao.ProductDAO;
 import io.nzbee.dao.ProductTagDAO;
 import io.nzbee.domain.Product;
@@ -42,7 +43,6 @@ import io.nzbee.dto.SidebarFacetDTO;
 import io.nzbee.entity.Brand;
 import io.nzbee.entity.BrandRepository;
 import io.nzbee.entity.Category;
-import io.nzbee.entity.CategoryRepository;
 import io.nzbee.entity.PageableUtil;
 import io.nzbee.entity.ProductAttribute;
 import io.nzbee.entity.ProductAttributeRepository;
@@ -67,9 +67,6 @@ public class ProductService implements IProductService {
     private ProductAttributeRepository productAttributeRepository;
     
     @Autowired
-    private CategoryRepository categoryRepository;
-    
-    @Autowired
     private BrandRepository brandRepository;
     
     @Autowired
@@ -77,6 +74,9 @@ public class ProductService implements IProductService {
     
     @Autowired
     private ProductDAO productDAO;
+    
+    @Autowired
+    private CategoryDAO categoryDAO;
     
 	@PersistenceContext(unitName = "mochiEntityManagerFactory")
 	private EntityManager em;
@@ -95,13 +95,14 @@ public class ProductService implements IProductService {
 	public SearchDTO getProducts(String locale, String currency, String categoryDesc, Double price, int page, int size, String sortBy, List<SidebarFacetDTO> selectedFacets) {
 		
 		//all categories (if non selected in facets
-		Category parent = categoryRepository.findByAttributesLclCdAndAttributesCategoryDesc(locale, categoryDesc);
+		//Category parent = categoryRepository.findByAttributesLclCdAndAttributesCategoryDesc(locale, categoryDesc);
+		Category parent = categoryDAO.getByCategoryDesc(CategoryVars.PRIMARY_HIERARCHY_CODE, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, categoryDesc, locale);
 		List<Category> allCategories = recurseCategories(new ArrayList<Category>(), parent);
 		List<Long> allCategoryIds = allCategories.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
 		
 		//Category Facets
 		List<SidebarFacetDTO> selectedCategories = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals("PrimaryCategoryFR");}).collect(Collectors.toList());
-		List<Category> lpc = selectedCategories.stream().map(f-> {return categoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(locale, f.getDesc(), CategoryVars.PRIMARY_HIERARCHY_CODE);}).collect(Collectors.toList());
+		List<Category> lpc = selectedCategories.stream().map(f-> {return categoryDAO.getByCategoryDesc(CategoryVars.PRIMARY_HIERARCHY_CODE, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, f.getDesc(), locale);}).collect(Collectors.toList());
 						
 		List<Category> lpcf = new ArrayList<Category>();
 		lpc.stream().forEach(pc -> { lpcf.addAll(recurseCategories(new ArrayList<Category>(), pc)); });
@@ -131,13 +132,13 @@ public class ProductService implements IProductService {
 	public Double getMaxPrice(String categoryDesc, String locale, String currency, List<SidebarFacetDTO> selectedFacets) {
 		
 		//all categories (if non selected in facets
-		Category parent = categoryRepository.findByAttributesLclCdAndAttributesCategoryDesc(locale, categoryDesc);
+		Category parent = categoryDAO.getByCategoryDesc(CategoryVars.PRIMARY_HIERARCHY_CODE, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, categoryDesc, locale);
 		List<Category> allCategories = recurseCategories(new ArrayList<Category>(), parent);
 		List<Long> allCategoryIds = allCategories.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
 				
 		//Category Facets
 		List<SidebarFacetDTO> selectedCategories = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals("PrimaryCategoryFR");}).collect(Collectors.toList());
-		List<Category> lpc = selectedCategories.stream().map(f-> {return categoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(locale, f.getDesc(), CategoryVars.PRIMARY_HIERARCHY_CODE);}).collect(Collectors.toList());
+		List<Category> lpc = selectedCategories.stream().map(f-> {return categoryDAO.getByCategoryDesc(CategoryVars.PRIMARY_HIERARCHY_CODE, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, f.getDesc(), locale);}).collect(Collectors.toList());
 				
 		List<Category> lpcf = new ArrayList<Category>();
 		lpc.stream().forEach(pc -> { lpcf.addAll(recurseCategories(new ArrayList<Category>(), pc)); });
@@ -163,13 +164,13 @@ public class ProductService implements IProductService {
 	public List<SidebarFacetDTO> getProductTags(String locale, String currency, String categoryDesc, Double price, List<SidebarFacetDTO> selectedFacets) {
 		
 		//all categories (if non selected in facets
-		Category parent = categoryRepository.findByAttributesLclCdAndAttributesCategoryDesc(locale, categoryDesc);
+		Category parent = categoryDAO.getByCategoryDesc(CategoryVars.PRIMARY_HIERARCHY_CODE, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, categoryDesc, locale);
 		List<Category> allCategories = recurseCategories(new ArrayList<Category>(), parent);
 		List<Long> allCategoryIds = allCategories.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
 						
 		//Facets
 		List<SidebarFacetDTO> selectedCategories = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals("PrimaryCategoryFR");}).collect(Collectors.toList());
-		List<Category> lpc = selectedCategories.stream().map(f-> {return categoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(locale, f.getDesc(), CategoryVars.PRIMARY_HIERARCHY_CODE);}).collect(Collectors.toList());
+		List<Category> lpc = selectedCategories.stream().map(f-> {return categoryDAO.getByCategoryDesc(CategoryVars.PRIMARY_HIERARCHY_CODE, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, f.getDesc(), locale);}).collect(Collectors.toList());
 							
 		List<Category> lpcf = new ArrayList<Category>();
 		lpc.stream().forEach(pc -> { lpcf.addAll(recurseCategories(new ArrayList<Category>(), pc)); });
@@ -193,8 +194,7 @@ public class ProductService implements IProductService {
 										return f;
 									}).collect(Collectors.toList());
 		
-		return lf;
-			
+		return lf;	
 	}
 	
 	
@@ -213,9 +213,6 @@ public class ProductService implements IProductService {
 		return jpaQuery.getFacetManager().getFacets(facetingName);
 	}
 	
-	
-	
-
 	@SuppressWarnings("unchecked")
 	@Override
 	//@Cacheable
@@ -383,12 +380,12 @@ public class ProductService implements IProductService {
 		return src;
 	}
 	
-    public SidebarFacetDTO convertToCategorySidebarDTO(String categoryCode, String lcl, String currency) {
+    public SidebarFacetDTO convertToCategorySidebarDTO(String categoryCode, String locale, String currency) {
     	SidebarFacetDTO cf = new SidebarFacetDTO();
-    	Category c = categoryRepository.findByCategoryCode(categoryCode);
+    	Category c = categoryDAO.getByCategoryCode(CategoryVars.PRIMARY_HIERARCHY_CODE, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, categoryCode, locale);
     	if(c == null) { return cf; }
     	cf.setId(c.getCategoryId());
-    	cf.setDesc(c.getAttributes().stream().filter(ca -> ca.getLclCd().equals(lcl)).collect(Collectors.toList())
+    	cf.setDesc(c.getAttributes().stream().filter(ca -> ca.getLclCd().equals(locale)).collect(Collectors.toList())
     			.stream().findFirst().get().getCategoryDesc());
     	
     	cf.setLevel(c.getCategoryLevel());
@@ -407,10 +404,10 @@ public class ProductService implements IProductService {
     	return bf;
     }
     
-    private Set<Facet> getParentCategoryFacets(Set<Facet> cfs, Facet sf, QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery q, String lcl, String currency) {
+    private Set<Facet> getParentCategoryFacets(Set<Facet> cfs, Facet sf, QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery q, String locale, String currency) {
     	if(sf == null) { return cfs; }
     	String categoryCode = (new LinkedList<String>(Arrays.asList(sf.getValue().split("/")))).getLast();
-    	Optional<Category> c = Optional.ofNullable(categoryRepository.findByCategoryCode(categoryCode));
+    	Optional<Category> c = Optional.ofNullable(categoryDAO.getByCategoryCode(CategoryVars.PRIMARY_HIERARCHY_CODE, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, categoryCode, locale));
     	if(!c.isPresent()) { return cfs; }
     	Optional<Category> parent = Optional.ofNullable(c.get().getParent());
     	if(!parent.isPresent()) { return cfs; }
@@ -424,7 +421,7 @@ public class ProductService implements IProductService {
 
     	Optional<Facet> parentFacet = this.getDiscreteFacets(qb, q, frName, frField).stream().filter(f -> f.getValue().equals(sf.getValue().replace("/" + categoryCode, ""))).findFirst();
     	if(parentFacet.isPresent()) { cfs.add(parentFacet.get()); } else { return cfs; }
-    	return this.getParentCategoryFacets(cfs, parentFacet.get(), qb, q, lcl, currency);
+    	return this.getParentCategoryFacets(cfs, parentFacet.get(), qb, q, locale, currency);
     }
     
     @SuppressWarnings("unchecked")
@@ -467,7 +464,6 @@ public class ProductService implements IProductService {
 		return jpaQuery.getFacetManager().getFacets("PriceFR");
 	}
 	
-
 	private Set<Facet> processFacets(Set<Facet> allFacets, QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery jpaQuery, String currency, String facetingName) {
 		List<Facet> processlf = allFacets.stream().filter(c -> (!c.getFacetingName().equals(facetingName))).collect(Collectors.toList());
 		allFacets.removeAll(processlf);

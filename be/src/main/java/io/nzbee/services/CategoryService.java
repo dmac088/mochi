@@ -8,14 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-
+import io.nzbee.dao.CategoryDAO;
+import io.nzbee.dao.ProductDAO;
 import io.nzbee.domain.Brand;
 import io.nzbee.domain.Category;
 import io.nzbee.dto.SidebarFacetDTO;
-import io.nzbee.entity.CategoryAttribute;
-import io.nzbee.entity.CategoryAttributeRepository;
 import io.nzbee.entity.CategoryRepository;
-import io.nzbee.entity.ProductRepository;
 import io.nzbee.variables.CategoryVars;
 
 @Service
@@ -27,10 +25,10 @@ public class CategoryService implements ICategoryService {
     private CategoryRepository categoryRepository;
     
     @Autowired
-    private CategoryAttributeRepository categoryAttributeRepository;
+    private CategoryDAO categoryDAO;
     
     @Autowired
-    private ProductRepository productRepository;
+    private ProductDAO productDAO;
     
     @Override
 	@Transactional
@@ -46,9 +44,9 @@ public class CategoryService implements ICategoryService {
     @Override
  	@Transactional
  	@Cacheable
- 	public List<Category> getCategoryParent(final String lcl, String currency, final Long parentCategoryId) {
-    	List<io.nzbee.entity.Category> lpc = categoryRepository.findDistinctByHierarchyCodeAndParentCategoryId(CategoryVars.PRIMARY_HIERARCHY_CODE, parentCategoryId);
-    	return lpc.stream().map(pc -> createCategory(CategoryVars.PRIMARY_HIERARCHY_CODE, pc, lcl, currency))
+ 	public List<Category> getCategoryParent(final String locale, String currency, final Long parentCategoryId) {
+    	List<io.nzbee.entity.Category> lpc = categoryDAO.getByParent(CategoryVars.PRIMARY_HIERARCHY_CODE, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, parentCategoryId, locale);
+    	return lpc.stream().map(pc -> createCategory(CategoryVars.PRIMARY_HIERARCHY_CODE, pc, locale, currency))
     			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
  	}
@@ -56,9 +54,9 @@ public class CategoryService implements ICategoryService {
     @Override
   	@Transactional
   	@Cacheable
-  	public List<Category> getCategoriesForLevel(final String lcl, String currency, final Long level) {
-     	List<io.nzbee.entity.Category> lpc = categoryRepository.findDistinctByCategoryLevelAndCategoryTypeCodeAndHierarchyCode(level, "PRD01", CategoryVars.PRIMARY_HIERARCHY_CODE);
-     	return lpc.stream().map(pc -> createCategory(CategoryVars.PRIMARY_HIERARCHY_CODE, pc, lcl, currency))
+  	public List<Category> getCategoriesForLevel(final String locale, String currency, final Long level) {
+     	List<io.nzbee.entity.Category> lpc = categoryDAO.getByLevel(CategoryVars.PRIMARY_HIERARCHY_CODE, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, level, locale);
+     	return lpc.stream().map(pc -> createCategory(CategoryVars.PRIMARY_HIERARCHY_CODE, pc, locale, currency))
     			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
   	}	
@@ -75,35 +73,32 @@ public class CategoryService implements ICategoryService {
     @Override
 	@Transactional
 	@Cacheable
-	public Category getCategory(String lcl, String currency, String categoryDesc) {
-    	io.nzbee.entity.Category pc = categoryRepository.findByAttributesLclCdAndAttributesCategoryDescAndHierarchyCode(lcl, categoryDesc, CategoryVars.PRIMARY_HIERARCHY_CODE);
-     	return	createCategory(CategoryVars.PRIMARY_HIERARCHY_CODE, pc, lcl, currency);
+	public Category getCategory(String locale, String currency, String categoryDesc) {
+    	io.nzbee.entity.Category pc = categoryDAO.getByCategoryDesc(CategoryVars.PRIMARY_HIERARCHY_CODE, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, categoryDesc, locale);
+     	return	createCategory(CategoryVars.PRIMARY_HIERARCHY_CODE, pc, locale, currency);
 	}
     
     @Override
 	@Transactional
 	@Cacheable
-	public List<SidebarFacetDTO> getCategoryChildren(String hierarchyCode, String lcl, String currency, String categoryDesc, List<SidebarFacetDTO> brandFacets) {
-    	
-    	CategoryAttribute ca = categoryAttributeRepository.findByCategoryHierarchyCodeAndLclCdAndCategoryDesc(hierarchyCode, lcl, categoryDesc);
-    	
-    	if(ca == null) {return null;}
+	public List<SidebarFacetDTO> getCategoryChildren(String hierarchyCode, String locale, String currency, String categoryDesc, List<SidebarFacetDTO> brandFacets) {
     	
     	List<Long> brandIds = brandFacets.stream().map(b -> { return b.getId(); }).collect(Collectors.toList());
     	
-		List<io.nzbee.entity.Category> lc;
+		List<io.nzbee.entity.Category> lc = categoryDAO.getByParentAndBrands(CategoryVars.PRIMARY_HIERARCHY_CODE, 
+				 CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
+				 categoryDesc, 
+				 brandIds,  
+				 locale);
 		
-		lc = (brandIds.size() > 0) 
-		? categoryRepository.findDistinctByHierarchyCodeAndParentCategoryIdAndProductsBrandBrandIdIn(hierarchyCode, ca.getCategoryId(), brandIds)
-		: categoryRepository.findDistinctByHierarchyCodeAndParentCategoryId(hierarchyCode, ca.getCategoryId());
-		
-		List<Category> lcDO = lc.stream().map(c -> createCategory(hierarchyCode, c, lcl, currency)).collect(Collectors.toList());
+		List<Category> lcDO = lc.stream().map(c -> createCategory(hierarchyCode, c, locale, currency)).collect(Collectors.toList());
 		
 		lcDO.stream().forEach(cDO -> {
-			final Long count = 
-			(brandIds.size() > 0)		
-			? productRepository.countByCategoriesHierarchyCodeAndCategoriesCategoryCodeAndBrandBrandIdIn(hierarchyCode, cDO.getCategoryCode(), brandIds)
-			: productRepository.countByCategoriesHierarchyCodeAndCategoriesCategoryCode(hierarchyCode, cDO.getCategoryCode());		
+			final Long count = productDAO.countByCateogryAndBrands(	CategoryVars.PRIMARY_HIERARCHY_CODE, 
+																	CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
+																	categoryDesc, 
+																	brandIds,
+																	locale);			
 			cDO.setProductCount(count);
 		});	
 		
@@ -129,7 +124,7 @@ public class CategoryService implements ICategoryService {
     }
     
  	@Cacheable
-    public Category createCategory(final String hierarchyCode, final io.nzbee.entity.Category pc, final String lcl, final String currency) {
+    public Category createCategory(final String hierarchyCode, final io.nzbee.entity.Category pc, final String locale, final String currency) {
     	
  		//create a new product DTO
         final Category cDO = new Category();
@@ -138,8 +133,19 @@ public class CategoryService implements ICategoryService {
         cDO.setCategoryLevel(pc.getCategoryLevel());
         
         //get product count and set it
-        cDO.setProductCount(productRepository.countByCategoriesHierarchyCodeAndCategoriesCategoryCode(hierarchyCode, pc.getCategoryCode()));
-        cDO.setMaxMarkDownPrice(productRepository.maxMarkDownPriceByCategoriesHierarchyCodeAndCategoriesCategoryCodeAndPriceCurrencyCode(hierarchyCode, pc.getCategoryCode(), currency));
+        cDO.setProductCount(productDAO.countByCateogryAndBrands(CategoryVars.PRIMARY_HIERARCHY_CODE, 
+																CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
+																pc.getAttributes().stream().filter(ca -> ca.getLclCd().equals(locale)).findFirst().get().getCategoryDesc(), 
+																null,
+																locale));
+        
+        
+        cDO.setMaxMarkDownPrice(productDAO.maxMarkdownByCateogryAndBrands(CategoryVars.PRIMARY_HIERARCHY_CODE, 
+				CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
+				pc.getAttributes().stream().filter(ca -> ca.getLclCd().equals(locale)).findFirst().get().getCategoryDesc(), 
+				null,
+				locale,
+				currency));
         
         //set the brand attributes of all products within the category, to the localized version
         //Set<Brand> catBrands = pc.getProducts().stream().map(p -> this.createBrand(p.getBrand(), pc.getCategoryCode(), lcl)).collect(Collectors.toSet());
@@ -147,7 +153,7 @@ public class CategoryService implements ICategoryService {
         //create the child objects and add to children collection
         List<Category> cDOl =
         pc.getChildren().stream().map(pc1 -> {
-        	Category pcchild = createCategory(hierarchyCode, pc1, lcl, currency);
+        	Category pcchild = createCategory(hierarchyCode, pc1, locale, currency);
         	return pcchild;
         }).collect(Collectors.toList());
         cDO.setChildren(cDOl);
@@ -163,8 +169,8 @@ public class CategoryService implements ICategoryService {
         }
         
         cDO.setCategoryDesc(pc.getAttributes().stream()
-        		.filter( pa -> pa.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getCategoryDesc());
-        cDO.setLclCd(lcl);
+        		.filter( pa -> pa.getLclCd().equals(locale)).collect(Collectors.toList()).get(0).getCategoryDesc());
+        cDO.setLclCd(locale);
         cDO.setChildCategoryCount(new Long(pc.getChildren().size()));
         cDO.setCategoryType(pc.getCategoryType().getCode());
         cDO.setLayouts(pc.getLayouts());
