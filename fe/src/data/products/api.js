@@ -29,7 +29,6 @@ export const getProductTags = (locale, currency, category, price, selectedFacets
 																					locale +
 																					'/' + currency +
 																					'/' + category +
-																					'/' + price +
 																					'/tags',
 																					selectedFacets,
 																					{},
