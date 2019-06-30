@@ -24,9 +24,6 @@ import io.nzbee.variables.ProductVars;
 public class CategoryService implements ICategoryService {
     
     @Autowired
-    private CategoryRepository categoryRepository;
-    
-    @Autowired
     private ProductRepository productRepository;
     
     @Autowired
@@ -36,7 +33,7 @@ public class CategoryService implements ICategoryService {
 	@Transactional
 	@Cacheable
 	public List<Category> getCategories(final String lcl, String currency) {
-    	List<io.nzbee.entity.Category> lpc = categoryRepository.findAll();
+    	List<io.nzbee.entity.Category> lpc = categoryDAO.getAll();
     	return lpc.stream().map(pc -> createCategory(CategoryVars.PRIMARY_HIERARCHY_CODE, pc, lcl, currency))
     			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
@@ -68,7 +65,7 @@ public class CategoryService implements ICategoryService {
   	@Transactional
   	@Cacheable
   	public Category getCategory(final String lcl, String currency, final Long categoryId) {
-    	io.nzbee.entity.Category pc = categoryRepository.findByCategoryId(categoryId);
+    	io.nzbee.entity.Category pc = categoryDAO.get(categoryId).get();
      	return	createCategory(
      							CategoryVars.PRIMARY_HIERARCHY_CODE, 
      							pc, 
