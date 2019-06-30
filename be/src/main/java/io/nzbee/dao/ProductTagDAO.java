@@ -98,9 +98,8 @@ public class ProductTagDAO  implements Dao<Product> {
 		Join<Product, Category> category = product.join(Product_.categories);
 		Join<Product, Brand> brand = product.join(Product_.brand);
 		Join<Product, ProductStatus> status = product.join(Product_.productStatus);
-		Join<Product, ProductPrice> price = product.join(Product_.prices);
-		Join<ProductPrice, ProductPriceType> type = price.join(ProductPrice_.type);
-		Join<ProductPrice, Currency> curr = price.join(ProductPrice_.currency);
+		
+		
 		Join<Brand, BrandAttribute> brandAttribute = brand.join(Brand_.brandAttributes);
 		Join<Category, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
 		
@@ -111,18 +110,22 @@ public class ProductTagDAO  implements Dao<Product> {
 		if(!brandIds.isEmpty()) {
 			conditions.add(brand.get(Brand_.brandId).in(brandIds));
 		}
-		
+		if(!(priceStart == null && priceEnd ==null)) {
+			Join<Product, ProductPrice> price = product.join(Product_.prices);
+			Join<ProductPrice, ProductPriceType> type = price.join(ProductPrice_.type);
+			Join<ProductPrice, Currency> curr = price.join(ProductPrice_.currency);
+			conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.priceValue), priceStart));
+			conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.priceValue), priceEnd));
+			conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.startDate), priceDateStart));
+			conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.endDate), priceDateEnd));
+			conditions.add(cb.equal(type.get(ProductPriceType_.desc), priceType));
+			conditions.add(cb.equal(curr.get(Currency_.code), currency));
+		}
 		conditions.add(cb.equal(root.get(ProductTagAttribute_.lclCd), locale));
 		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), locale));
 		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale));
 		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
 		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
-		conditions.add(cb.equal(type.get(ProductPriceType_.desc), priceType));
-		conditions.add(cb.equal(curr.get(Currency_.code), currency));
-		conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.priceValue), priceStart));
-		conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.priceValue), priceEnd));
-		conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.startDate), priceDateStart));
-		conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.endDate), priceDateEnd));
 
 		TypedQuery<ProductTagAttribute> query = em.createQuery(cq
 				.select(root)
