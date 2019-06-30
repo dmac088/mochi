@@ -28,6 +28,7 @@ import io.nzbee.entity.Hierarchy;
 import io.nzbee.entity.Hierarchy_;
 import io.nzbee.entity.Product;
 import io.nzbee.entity.Product_;
+import io.nzbee.variables.CategoryVars;
 
 @Component
 public class CategoryDAO implements Dao<Category> {
@@ -38,14 +39,44 @@ public class CategoryDAO implements Dao<Category> {
 
 	@Override
 	public Optional<Category> get(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
+		
+		Root<Category> root = cq.from(Category.class);
+		
+		List<Predicate> conditions = new ArrayList<Predicate>();
+		conditions.add(cb.equal(root.get(Category_.categoryId), id));
+	
+		TypedQuery<Category> query = em.createQuery(cq
+				.select(root)
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(false)
+		);
+		
+		return Optional.ofNullable(query.getSingleResult());
 	}
 
 	@Override
 	public List<Category> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
+		
+		Root<Category> root = cq.from(Category.class);
+		
+		Join<Category, CategoryType> categoryType = root.join(Category_.categoryType);
+		
+		List<Predicate> conditions = new ArrayList<Predicate>();
+		conditions.add(cb.equal(categoryType.get(CategoryType_.code), CategoryVars.CATEGORY_TYPE_CODE_PRODUCT));
+		
+		TypedQuery<Category> query = em.createQuery(cq
+				.select(root)
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(true)
+		);
+		
+		return query.getResultList();
 	}
 
 	@Override
@@ -68,7 +99,6 @@ public class CategoryDAO implements Dao<Category> {
 
 	@Override
 	public Page<Category> findAll() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
@@ -108,10 +138,6 @@ public class CategoryDAO implements Dao<Category> {
 	}
 	
 	public Category getByCategoryDesc(String hieararchyCode, String categoryTypeCode, String categoryDesc, String locale) {
-		System.out.println(hieararchyCode);
-		System.out.println(categoryTypeCode);
-		System.out.println(categoryDesc);
-		System.out.println(locale);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
