@@ -94,9 +94,13 @@ public class CategoryService implements ICategoryService {
     @Override
 	@Transactional
 	@Cacheable
-	public List<SidebarFacetDTO> getCategoryChildren(String hierarchyCode, String locale, String currency, String categoryDesc, List<SidebarFacetDTO> brandFacets) {
+	public List<SidebarFacetDTO> getCategories(String hierarchyCode, String locale, String currency, String categoryDesc, List<SidebarFacetDTO> facets) {
     	
-    	List<Long> brandIds = brandFacets.stream().map(b -> { return b.getId(); }).collect(Collectors.toList());
+    	List<Long> brandIds = facets.stream().filter(f -> f.getFacetingName().equals(CategoryVars.BRAND_FACET_NAME)).collect(Collectors.toList()) 
+    			.stream().map(b -> { return b.getId(); }).collect(Collectors.toList());
+    	
+    	List<Long> tagIds = facets.stream().filter(f -> f.getFacetingName().equals(CategoryVars.TAG_FACET_NAME)).collect(Collectors.toList()) 
+    			.stream().map(b -> { return b.getId(); }).collect(Collectors.toList());
     	
 		List<io.nzbee.entity.Category> lc = categoryDAO.getByParentAndBrands(
 				 CategoryVars.PRIMARY_HIERARCHY_CODE, 
