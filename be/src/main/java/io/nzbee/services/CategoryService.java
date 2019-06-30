@@ -71,15 +71,30 @@ public class CategoryService implements ICategoryService {
   	@Cacheable
   	public Category getCategory(final String lcl, String currency, final Long categoryId) {
     	io.nzbee.entity.Category pc = categoryRepository.findByCategoryId(categoryId);
-     	return	createCategory(CategoryVars.PRIMARY_HIERARCHY_CODE, pc, lcl, currency);
+     	return	createCategory(
+     							CategoryVars.PRIMARY_HIERARCHY_CODE, 
+     							pc, 
+     							lcl, 
+     							currency
+     						  );
   	}
     
     @Override
 	@Transactional
 	@Cacheable
 	public Category getCategory(String locale, String currency, String categoryDesc) {
-    	io.nzbee.entity.Category pc = categoryDAO.getByCategoryDesc(CategoryVars.PRIMARY_HIERARCHY_CODE, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, categoryDesc, locale);
-     	return	createCategory(CategoryVars.PRIMARY_HIERARCHY_CODE, pc, locale, currency);
+    	io.nzbee.entity.Category pc = categoryDAO.getByCategoryDesc(
+						    										CategoryVars.PRIMARY_HIERARCHY_CODE, 
+						    										CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
+						    										categoryDesc, 
+						    										locale
+						    									   );
+     	return	createCategory( 
+     							CategoryVars.PRIMARY_HIERARCHY_CODE, 
+     							pc, 
+     							locale, 
+     							currency
+     						  );
 	}
     
     @Override
@@ -89,7 +104,8 @@ public class CategoryService implements ICategoryService {
     	
     	List<Long> brandIds = brandFacets.stream().map(b -> { return b.getId(); }).collect(Collectors.toList());
     	
-		List<io.nzbee.entity.Category> lc = categoryDAO.getByParentAndBrands(CategoryVars.PRIMARY_HIERARCHY_CODE, 
+		List<io.nzbee.entity.Category> lc = categoryDAO.getByParentAndBrands(
+				 CategoryVars.PRIMARY_HIERARCHY_CODE, 
 				 CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 				 categoryDesc, 
 				 brandIds,  

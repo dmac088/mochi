@@ -108,6 +108,11 @@ public class CategoryDAO implements Dao<Category> {
 	}
 	
 	public Category getByCategoryDesc(String hieararchyCode, String categoryTypeCode, String categoryDesc, String locale) {
+		System.out.println(hieararchyCode);
+		System.out.println(categoryTypeCode);
+		System.out.println(categoryDesc);
+		System.out.println(locale);
+		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
@@ -116,10 +121,10 @@ public class CategoryDAO implements Dao<Category> {
 		
 		Join<Category, CategoryType> categoryType = root.join(Category_.categoryType);
 		Join<Category, CategoryAttribute> categoryAttribute = root.join(Category_.attributes);
-		Join<Category, Hierarchy> categoryHierarchy = root.join(Category_.hierarchy);
+		//Join<Category, Hierarchy> categoryHierarchy = root.join(Category_.hierarchy);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
-		conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), hieararchyCode));
+		//conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), hieararchyCode));
 		conditions.add(cb.equal(categoryType.get(CategoryType_.code), categoryTypeCode));
 	
 		if(!(categoryDesc == null)) {
@@ -133,6 +138,9 @@ public class CategoryDAO implements Dao<Category> {
 				.where(conditions.toArray(new Predicate[] {}))
 				.distinct(false)
 		);
+		
+		System.out.println(query.toString());
+		
 		
 		return query.getSingleResult();
 	}
