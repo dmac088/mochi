@@ -319,7 +319,7 @@ public class ProductService implements IProductService {
 		}).collect(Collectors.toList());
 		
 		cs = new HashSet<SidebarFacetDTO>();
-		lf.stream().forEach(f -> {
+		lf.stream().filter(f -> f.getFacetingName().equals("PrimaryCategoryFR")).forEach(f -> {
 			jpaQuery.getFacetManager().getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
 			processFacets(allFacets, productQueryBuilder, jpaQuery, currency, f.getFacetingName()); 
 			allFacets.addAll(getParentCategoryFacets(new HashSet<Facet>(), f, productQueryBuilder, jpaQuery, lcl, currency));
