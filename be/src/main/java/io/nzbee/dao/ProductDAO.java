@@ -27,8 +27,6 @@ import io.nzbee.entity.Brand_;
 import io.nzbee.entity.Category;
 import io.nzbee.entity.CategoryAttribute;
 import io.nzbee.entity.CategoryAttribute_;
-import io.nzbee.entity.CategoryType;
-import io.nzbee.entity.CategoryType_;
 import io.nzbee.entity.Category_;
 import io.nzbee.entity.Currency;
 import io.nzbee.entity.Currency_;

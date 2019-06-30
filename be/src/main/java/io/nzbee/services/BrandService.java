@@ -10,6 +10,8 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import io.nzbee.dao.BrandDAO;
+import io.nzbee.dao.CategoryDAO;
 import io.nzbee.domain.Brand;
 import io.nzbee.dto.SidebarFacetDTO;
 import io.nzbee.entity.BrandRepository;
@@ -25,6 +27,12 @@ import io.nzbee.variables.ProductVars;
 @CacheConfig(cacheNames="brands")
 public class BrandService implements IBrandService {
     
+	@Autowired
+    private CategoryDAO categoryDAO;
+	
+	@Autowired
+    private BrandDAO brandDAO;
+	
     @Autowired
     private BrandRepository brandRepository;
     
@@ -57,26 +65,24 @@ public class BrandService implements IBrandService {
 	@Override
 	@Transactional
 	//@Cacheable
-	public List<SidebarFacetDTO> getBrandsForCategory(String hierarchyCode, String locale, String currency, String categoryDesc, List<SidebarFacetDTO> categoryFacets) {
+	public List<SidebarFacetDTO> getBrandsForCategory(String hierarchyCode, String locale, String currency, String categoryDesc, List<SidebarFacetDTO> facets) {
 		
-		CategoryAttribute ca = categoryAttributeRepository.findByCategoryHierarchyCodeAndLclCdAndCategoryDesc(hierarchyCode, locale, categoryDesc);
-		
+		CategoryAttribute ca = categoryDAO.getByCategoryDesc(CategoryVars.PRIMARY_HIERARCHY_ROOT_CODE, 
+									  CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
+									  categoryDesc, 
+									  locale).getAttributes().stream().filter(c -> c.getLclCd().equals(locale)).findFirst().get();
 
 		if(ca == null) { return null; }
 		if(!ca.getCategory().isPresent()) { return null; }
+				
+		List<Long> categoryIds = facets.stream().filter(c -> c.getFacetingName().equals(CategoryVars.PRIMARY_CATEGORY_FACET_NAME)).collect(Collectors.toList())
+				.stream().map(c -> { return c.getId(); }).collect(Collectors.toList());
 		
-		List<Category> allChildCategories = ProductService.recurseCategories(new ArrayList<Category>(), ca.getCategory().get());
-		List<Long> allChildIds = allChildCategories.stream().map(c -> c.getCategoryId()).collect(Collectors.toList());
+		List<Long> tagIds = facets.stream().filter(c -> c.getFacetingName().equals(CategoryVars.TAG_FACET_NAME)).collect(Collectors.toList())
+				.stream().map(t -> { return t.getId();}).collect(Collectors.toList());
+				
+		List<io.nzbee.entity.Brand> lpb = brandDAO.getAll(categoryIds, categoryDesc, locale, tagIds);
 		
-		List<Long> selectedCategoryIds = 
-				(categoryFacets.size() > 0) 
-				? categoryFacets.stream().map(c -> { return c.getId(); }).collect(Collectors.toList())
-				: allChildIds;
-		
-		List<Long> categoryIds = (categoryFacets.size() > 0) ? selectedCategoryIds : allChildIds;
-		
-		List<io.nzbee.entity.Brand> lpb = brandRepository.findDistinctByProductsCategoriesCategoryIdIn(categoryIds);
-
 		List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, locale, currency)).collect(Collectors.toList());
 		
 		lb.stream().forEach(bDO -> {
@@ -119,7 +125,7 @@ public class BrandService implements IBrandService {
  	@Cacheable
     private SidebarFacetDTO createBrandDTO(final Brand b) {
     	final SidebarFacetDTO bDto = new SidebarFacetDTO();
-    	bDto.setFacetingName("BrandFR");
+    	bDto.setFacetingName(CategoryVars.BRAND_FACET_NAME);
     	bDto.setFieldName("brandDesc");
     	bDto.setToken(b.getBrandCode());
     	bDto.setLevel(new Long(0));

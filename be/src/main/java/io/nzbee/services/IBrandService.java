@@ -13,6 +13,6 @@ public interface IBrandService {
 	List<SidebarFacetDTO> getBrands(String lcl, String curr);
 
 	List<SidebarFacetDTO> getBrandsForCategory(String hierarchyCode, String lcl, String curr, String categoryDesc,
-			List<SidebarFacetDTO> categoryFacets);
+			List<SidebarFacetDTO> facets);
 
 }

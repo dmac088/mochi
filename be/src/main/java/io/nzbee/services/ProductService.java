@@ -101,7 +101,7 @@ public class ProductService implements IProductService {
 		List<Long> allCategoryIds = allCategories.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
 		
 		//Category Facets
-		List<SidebarFacetDTO> selectedCategories = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals("PrimaryCategoryFR");}).collect(Collectors.toList());
+		List<SidebarFacetDTO> selectedCategories = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals(CategoryVars.PRIMARY_CATEGORY_FACET_NAME);}).collect(Collectors.toList());
 		List<Category> lpc = selectedCategories.stream().map(f-> {return categoryDAO.getByCategoryDesc(CategoryVars.PRIMARY_HIERARCHY_CODE, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, f.getDesc(), locale);}).collect(Collectors.toList());
 						
 		List<Category> lpcf = new ArrayList<Category>();
@@ -111,11 +111,11 @@ public class ProductService implements IProductService {
 		List<Long> categoryIds = (selectedCategories.size() > 0) ? facetCategoryIds : allCategoryIds;
 
 		//Brand Facets
-		List<SidebarFacetDTO> selectedBrands = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals("BrandFR");}).collect(Collectors.toList());
+		List<SidebarFacetDTO> selectedBrands = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals(CategoryVars.BRAND_FACET_NAME);}).collect(Collectors.toList());
 		List<Long> selectedBrandIds = selectedBrands.stream().map(b -> {return b.getId();}).collect(Collectors.toList());
 				
 		//Tag Facets
-		List<SidebarFacetDTO> selectedTags = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals("TagFR");}).collect(Collectors.toList());
+		List<SidebarFacetDTO> selectedTags = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals(CategoryVars.TAG_FACET_NAME);}).collect(Collectors.toList());
 		List<Long> selectedTagIds = selectedTags.stream().map(t -> {return t.getId();}).collect(Collectors.toList());
 			
      	Page<io.nzbee.entity.Product> ppa = 
@@ -137,7 +137,7 @@ public class ProductService implements IProductService {
 		List<Long> allCategoryIds = allCategories.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
 				
 		//Category Facets
-		List<SidebarFacetDTO> selectedCategories = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals("PrimaryCategoryFR");}).collect(Collectors.toList());
+		List<SidebarFacetDTO> selectedCategories = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals(CategoryVars.PRIMARY_CATEGORY_FACET_NAME);}).collect(Collectors.toList());
 		List<Category> lpc = selectedCategories.stream().map(f-> {return categoryDAO.getByCategoryDesc(CategoryVars.PRIMARY_HIERARCHY_CODE, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, f.getDesc(), locale);}).collect(Collectors.toList());
 				
 		List<Category> lpcf = new ArrayList<Category>();
@@ -147,11 +147,11 @@ public class ProductService implements IProductService {
 		List<Long> categoryIds = (selectedCategories.size() > 0) ? facetCategoryIds : allCategoryIds;
 
 		//Brand Facets
-		List<SidebarFacetDTO> selectedBrands = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals("BrandFR");}).collect(Collectors.toList());
+		List<SidebarFacetDTO> selectedBrands = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals(CategoryVars.BRAND_FACET_NAME);}).collect(Collectors.toList());
 		List<Long> selectedBrandIds = selectedBrands.stream().map(b -> {return b.getId();}).collect(Collectors.toList());
 		
 		//Tag Facets
-		List<SidebarFacetDTO> selectedTags = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals("TagFR");}).collect(Collectors.toList());
+		List<SidebarFacetDTO> selectedTags = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals(CategoryVars.TAG_FACET_NAME);}).collect(Collectors.toList());
 		List<Long> selectedTagIds = selectedTags.stream().map(t -> {return t.getId();}).collect(Collectors.toList());
 	
 		Double maxPrice = productDAO.getMaxPrice(categoryDesc, locale, ProductVars.MARKDOWN_SKU_DESCRIPTION, currency, categoryIds, selectedBrandIds, selectedTagIds);
@@ -168,7 +168,7 @@ public class ProductService implements IProductService {
 			List<Long> allCategoryIds = allCategories.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
 							
 			//Facets
-			List<SidebarFacetDTO> selectedCategories = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals("PrimaryCategoryFR");}).collect(Collectors.toList());
+			List<SidebarFacetDTO> selectedCategories = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals(CategoryVars.PRIMARY_CATEGORY_FACET_NAME);}).collect(Collectors.toList());
 			List<Category> lpc = selectedCategories.stream().map(f-> {return categoryDAO.getByCategoryDesc(CategoryVars.PRIMARY_HIERARCHY_CODE, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, f.getDesc(), locale);}).collect(Collectors.toList());
 								
 			List<Category> lpcf = new ArrayList<Category>();
@@ -176,7 +176,7 @@ public class ProductService implements IProductService {
 
 			List<Long> facetCategoryIds = lpcf.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
 
-			List<SidebarFacetDTO> selectedBrands = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals("BrandFR");}).collect(Collectors.toList());
+			List<SidebarFacetDTO> selectedBrands = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals(CategoryVars.BRAND_FACET_NAME);}).collect(Collectors.toList());
 			List<Long> selectedBrandIds = selectedBrands.stream().map(b -> {return b.getId();}).collect(Collectors.toList());
 					     	
 			List<Long> categoryIds = (selectedCategories.size() > 0) ? facetCategoryIds : allCategoryIds;
@@ -185,7 +185,7 @@ public class ProductService implements IProductService {
 			
 			List<SidebarFacetDTO> lf = pt.stream().map(t -> {
 											SidebarFacetDTO f = new SidebarFacetDTO();
-											f.setFacetingName("TagFR");
+											f.setFacetingName(CategoryVars.TAG_FACET_NAME);
 											f.setId(t.getTagId());
 											f.setToken(t.getTag().get().getCode());
 											f.setDesc(t.getTagDesc());
@@ -206,7 +206,7 @@ public class ProductService implements IProductService {
 		List<Long> allCategoryIds = allCategories.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
 						
 		//Facets
-		List<SidebarFacetDTO> selectedCategories = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals("PrimaryCategoryFR");}).collect(Collectors.toList());
+		List<SidebarFacetDTO> selectedCategories = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals(CategoryVars.PRIMARY_CATEGORY_FACET_NAME);}).collect(Collectors.toList());
 		List<Category> lpc = selectedCategories.stream().map(f-> {return categoryDAO.getByCategoryDesc(CategoryVars.PRIMARY_HIERARCHY_CODE, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, f.getDesc(), locale);}).collect(Collectors.toList());
 							
 		List<Category> lpcf = new ArrayList<Category>();
@@ -214,7 +214,7 @@ public class ProductService implements IProductService {
 
 		List<Long> facetCategoryIds = lpcf.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
 
-		List<SidebarFacetDTO> selectedBrands = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals("BrandFR");}).collect(Collectors.toList());
+		List<SidebarFacetDTO> selectedBrands = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals(CategoryVars.BRAND_FACET_NAME);}).collect(Collectors.toList());
 		List<Long> selectedBrandIds = selectedBrands.stream().map(b -> {return b.getId();}).collect(Collectors.toList());
 				     	
 		List<Long> categoryIds = (selectedCategories.size() > 0) ? facetCategoryIds : allCategoryIds;
@@ -223,7 +223,7 @@ public class ProductService implements IProductService {
 		
 		List<SidebarFacetDTO> lf = pt.stream().map(t -> {
 										SidebarFacetDTO f = new SidebarFacetDTO();
-										f.setFacetingName("TagFR");
+										f.setFacetingName(CategoryVars.TAG_FACET_NAME);
 										f.setId(t.getTagId());
 										f.setToken(t.getTag().get().getCode());
 										f.setDesc(t.getTagDesc());
@@ -300,16 +300,16 @@ public class ProductService implements IProductService {
 		List<Facet> lf;
 		
 		//initialize the facets
-		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, 	jpaQuery, "PrimaryCategoryFR", "primaryCategory.categoryToken"));
-		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, 	jpaQuery, "PrimaryCategoryFR", "secondaryCategory.categoryToken"));
-		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, 	jpaQuery, "BrandFR", "brandCode"));
+		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, 	jpaQuery, CategoryVars.PRIMARY_CATEGORY_FACET_NAME, "primaryCategory.categoryToken"));
+		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, 	jpaQuery, CategoryVars.PRIMARY_CATEGORY_FACET_NAME, "secondaryCategory.categoryToken"));
+		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, 	jpaQuery, CategoryVars.BRAND_FACET_NAME, "brandCode"));
 		allFacets.addAll(this.getRangeFacets(productQueryBuilder, 		jpaQuery, currency));
-		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, 	jpaQuery, "TagFR", "tagAFacet"));
-		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, 	jpaQuery, "TagFR", "tagBFacet"));
-		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, 	jpaQuery, "TagFR", "tagCFacet"));
+		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, 	jpaQuery, CategoryVars.TAG_FACET_NAME, "tagAFacet"));
+		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, 	jpaQuery, CategoryVars.TAG_FACET_NAME, "tagBFacet"));
+		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, 	jpaQuery, CategoryVars.TAG_FACET_NAME, "tagCFacet"));
 		
 
-		allFacets.addAll(allFacets.stream().filter(f -> f.getFacetingName().equals("PrimaryCategoryFR")).map(f -> {
+		allFacets.addAll(allFacets.stream().filter(f -> f.getFacetingName().equals(CategoryVars.PRIMARY_CATEGORY_FACET_NAME)).map(f -> {
 								return getParentCategoryFacets(new HashSet<Facet>(), f, productQueryBuilder, jpaQuery, lcl, currency);
 		}).collect(Collectors.toSet()).stream().flatMap(Set::stream).collect(Collectors.toSet()));
 		
@@ -319,7 +319,7 @@ public class ProductService implements IProductService {
 		}).collect(Collectors.toList());
 		
 		cs = new HashSet<SidebarFacetDTO>();
-		lf.stream().filter(f -> f.getFacetingName().equals("PrimaryCategoryFR")).forEach(f -> {
+		lf.stream().filter(f -> f.getFacetingName().equals(CategoryVars.PRIMARY_CATEGORY_FACET_NAME)).forEach(f -> {
 			jpaQuery.getFacetManager().getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
 			processFacets(allFacets, productQueryBuilder, jpaQuery, currency, f.getFacetingName()); 
 			allFacets.addAll(getParentCategoryFacets(new HashSet<Facet>(), f, productQueryBuilder, jpaQuery, lcl, currency));
@@ -333,7 +333,7 @@ public class ProductService implements IProductService {
 			jpaQuery.getFacetManager().getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
 		});
 		
-		allFacets.stream().filter(f-> f.getFacetingName().equals("PrimaryCategoryFR")).collect(Collectors.toList()).stream().forEach(cf ->  		{
+		allFacets.stream().filter(f-> f.getFacetingName().equals(CategoryVars.PRIMARY_CATEGORY_FACET_NAME)).collect(Collectors.toList()).stream().forEach(cf ->  		{
 													String categoryCode = (new LinkedList<String>(Arrays.asList(cf.getValue().split("/")))).getLast();
 													SidebarFacetDTO cfDto = convertToCategorySidebarDTO(categoryCode, lcl, currency);
 													cfDto.setProductCount(new Long(cf.getCount()));
@@ -345,7 +345,7 @@ public class ProductService implements IProductService {
 												});
 		
 		bs = new HashSet<SidebarFacetDTO>();
-		allFacets.stream().filter(f-> f.getFacetingName().equals("BrandFR")).collect(Collectors.toList()).forEach(bf ->     {
+		allFacets.stream().filter(f-> f.getFacetingName().equals(CategoryVars.BRAND_FACET_NAME)).collect(Collectors.toList()).forEach(bf ->     {
 													SidebarFacetDTO bfDto = convertToBrandSidebarDTO(bf.getValue(), lcl, currency);
 													bfDto.setProductCount(new Long(bf.getCount()));
 													bfDto.setToken(bf.getValue());
@@ -357,7 +357,7 @@ public class ProductService implements IProductService {
 		
 		//for each of the baseline facets, convert them to Facet DTOs for the client and add them to "s" 
 		final List<SidebarFacetDTO> ps = new ArrayList<SidebarFacetDTO>();
-		allFacets.stream().filter(f-> f.getFacetingName().equals("PriceFR")).collect(Collectors.toList()).forEach(pf ->     {
+		allFacets.stream().filter(f-> f.getFacetingName().equals(CategoryVars.PRICE_FACET_NAME)).collect(Collectors.toList()).forEach(pf ->     {
 													//pf.getValue();
 													SidebarFacetDTO pfDto = new SidebarFacetDTO();
 													pfDto.setProductCount(new Long(pf.getCount()));
@@ -371,7 +371,7 @@ public class ProductService implements IProductService {
 		
 		
 		final List<SidebarFacetDTO> ts = new ArrayList<SidebarFacetDTO>();
-		allFacets.stream().filter(f-> f.getFacetingName().equals("TagFR")).collect(Collectors.toList()).forEach(tf ->     {
+		allFacets.stream().filter(f-> f.getFacetingName().equals(CategoryVars.TAG_FACET_NAME)).collect(Collectors.toList()).forEach(tf ->     {
 													//pf.getValue();
 													SidebarFacetDTO tfDto = new SidebarFacetDTO();
 													tfDto.setProductCount(new Long(tf.getCount()));
@@ -419,7 +419,11 @@ public class ProductService implements IProductService {
 	
     public SidebarFacetDTO convertToCategorySidebarDTO(String categoryCode, String locale, String currency) {
     	SidebarFacetDTO cf = new SidebarFacetDTO();
-    	Category c = categoryDAO.getByCategoryCode(CategoryVars.PRIMARY_HIERARCHY_CODE, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, categoryCode, locale);
+    	Category c = categoryDAO.getByCategoryCode( CategoryVars.PRIMARY_HIERARCHY_CODE, 
+    												CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
+    												categoryCode, 
+    												locale
+    											   );
     	if(c == null) { return cf; }
     	cf.setId(c.getCategoryId());
     	cf.setDesc(c.getAttributes().stream().filter(ca -> ca.getLclCd().equals(locale)).collect(Collectors.toList())
@@ -492,7 +496,7 @@ public class ProductService implements IProductService {
 				above 	= tob;
 		
 		FacetingRequest facetRequest = qb.facet()
-				.name("PriceFR")
+				.name(CategoryVars.PRICE_FACET_NAME)
 				.onField("product.currentMarkdownPrice" + currency + "Facet") //In product class
 				.range()
 				.below(below)
@@ -503,14 +507,14 @@ public class ProductService implements IProductService {
 				.createFacetingRequest();
 		
 		jpaQuery.getFacetManager().enableFaceting(facetRequest);
-		return jpaQuery.getFacetManager().getFacets("PriceFR");
+		return jpaQuery.getFacetManager().getFacets(CategoryVars.PRICE_FACET_NAME);
 	}
 	
 	private Set<Facet> processFacets(Set<Facet> allFacets, QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery jpaQuery, String currency, String facetingName) {
 		List<Facet> processlf = allFacets.stream().filter(c -> (!c.getFacetingName().equals(facetingName))).collect(Collectors.toList());
 		allFacets.removeAll(processlf);
 		allFacets.addAll(processlf.stream().map(pf -> {
-					return (pf.getFacetingName().equals("PriceFR")) 
+					return (pf.getFacetingName().equals(CategoryVars.PRICE_FACET_NAME)) 
 					? this.getRangeFacets(qb, jpaQuery, currency)
 					: this.getDiscreteFacets(qb, jpaQuery, pf.getFacetingName(), pf.getFieldName());
 					
