@@ -149,15 +149,21 @@ public class CategoryDAO implements Dao<Category> {
 	public Category getByCategoryCode(String hieararchyCode, String categoryTypeCode, String categoryCode, String locale) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
+//		System.out.println(hieararchyCode);
+//		System.out.println(categoryTypeCode);
+//		System.out.println(categoryCode);
+//		System.out.println(locale);
+		
+		
 		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
 		
 		Root<Category> root = cq.from(Category.class);
 		Join<Category, CategoryType> categoryType = root.join(Category_.categoryType);
 		
-		Join<Category, Hierarchy> categoryHierarchy = root.join(Category_.hierarchy);
+		//Join<Category, Hierarchy> categoryHierarchy = root.join(Category_.hierarchy);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
-		conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), hieararchyCode));
+		//conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), hieararchyCode));
 		conditions.add(cb.equal(categoryType.get(CategoryType_.code), categoryTypeCode));
 	
 		if(!(categoryCode == null)) {
