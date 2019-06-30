@@ -98,14 +98,17 @@ public class CategoryService implements ICategoryService {
 		List<Category> lcDO = lc.stream().map(c -> createCategory(hierarchyCode, c, locale, currency)).collect(Collectors.toList());
 		
 		lcDO.stream().forEach(cDO -> {
-			final Long count = productRepository.count(CategoryVars.PRIMARY_HIERARCHY_CODE, 
+			final Long count = productRepository.count(
+										CategoryVars.PRIMARY_HIERARCHY_CODE, 
 										CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 										cDO.getCategoryDesc(), 
 										locale,
 										currency,
 										ProductVars.MARKDOWN_SKU_DESCRIPTION,
-										brandIds.size() == 0 ? Arrays.asList(new Long(1)) : brandIds ,
-										(brandIds.size() == 0 ? 0 : 1));
+										brandIds.size() == 0 ? Arrays.asList(new Long(-1)) : brandIds ,
+										(brandIds.size() == 0 ? 0 : 1),
+										Arrays.asList(new Long(-1)),
+										0);
 			
 			cDO.setProductCount(count);
 		});	
@@ -141,13 +144,16 @@ public class CategoryService implements ICategoryService {
         cDO.setCategoryLevel(pc.getCategoryLevel());
         
         //get product count and set it
-        cDO.setProductCount(	productRepository.count(CategoryVars.PRIMARY_HIERARCHY_CODE, 
+        cDO.setProductCount(	productRepository.count(
+        						CategoryVars.PRIMARY_HIERARCHY_CODE, 
 								CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 								pc.getAttributes().stream().filter(ca -> ca.getLclCd().equals(locale)).findFirst().get().getCategoryDesc(), 
 								locale,
 								currency,
 								ProductVars.MARKDOWN_SKU_DESCRIPTION,
-								Arrays.asList(new Long(1)),
+								Arrays.asList(new Long(-1)),
+								0,
+								Arrays.asList(new Long(-1)),
 								0));
         
         
@@ -159,7 +165,9 @@ public class CategoryService implements ICategoryService {
 								locale,
 								currency,
 								ProductVars.MARKDOWN_SKU_DESCRIPTION,
-								Arrays.asList(new Long(1)),
+								Arrays.asList(new Long(-1)),
+								0,
+								Arrays.asList(new Long(-1)),
 								0));
         		
         //set the brand attributes of all products within the category, to the localized version

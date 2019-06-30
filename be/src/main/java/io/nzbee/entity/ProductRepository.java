@@ -70,6 +70,11 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 				+ " OR "
 				+ " b.bnd_id in (:brandIds) "
 				+ ") "
+				+ "AND ("
+				+ "	:inHandlingCategories = 0 "
+				+ " OR "
+				+ " c.cat_id in (:categoryIds) "
+				+ ") "
 				+ "AND now() BETWEEN prc.prc_st_dt AND prc.prc_en_dt ",
 		nativeQuery = true)	
 	Double maxMarkDownPrice(@Param("hierarchyCode") 	String hierarchyCode, 
@@ -78,8 +83,10 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 							@Param("locale") 			String locale,
 							@Param("currencyCode") 		String currencyCode,
 							@Param("priceTypeDesc") 	String priceTypeDesc,
-							@Param("brandIds") 			List<Long> brandIds,
-							@Param("inHandlingBrands")	int inHandlingBrands);
+						   	@Param("brandIds") 				List<Long> brandIds,
+						   	@Param("inHandlingBrands")		int inHandlingBrands,
+						   	@Param("categoryIds") 			List<Long> categoryIds,
+						   	@Param("inHandlingCategories")	int inHandlingCategories);
 	
 	@Query(
 		value = "WITH RECURSIVE MyCTE AS ( "
@@ -132,16 +139,23 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 				+ " OR "
 				+ " b.bnd_id in (:brandIds) "
 				+ ") "
+				+ "AND ("
+				+ "	:inHandlingCategories = 0 "
+				+ " OR "
+				+ " c.cat_id in (:categoryIds) "
+				+ ") "
 				+ "AND now() BETWEEN prc.prc_st_dt AND prc.prc_en_dt ",
 		nativeQuery = true)	
-	Long count(	@Param("hierarchyCode") 	String hierarchyCode,
-			   	@Param("categoryTypeCode") 	String categoryTypeCode,
-			   	@Param("categoryDesc") 		String categoryDesc, 
-			   	@Param("locale") 			String locale,
-			   	@Param("currencyCode") 		String currencyCode,
-			   	@Param("priceTypeDesc") 	String priceTypeDesc,
-			   	@Param("brandIds") 			List<Long> brandIds,
-			   	@Param("inHandlingBrands")	int inHandlingBrands);
+	Long count(	@Param("hierarchyCode") 		String hierarchyCode,
+			   	@Param("categoryTypeCode") 		String categoryTypeCode,
+			   	@Param("categoryDesc") 			String categoryDesc, 
+			   	@Param("locale") 				String locale,
+			   	@Param("currencyCode") 			String currencyCode,
+			   	@Param("priceTypeDesc") 		String priceTypeDesc,
+			   	@Param("brandIds") 				List<Long> brandIds,
+			   	@Param("inHandlingBrands")		int inHandlingBrands,
+			   	@Param("categoryIds") 			List<Long> categoryIds,
+			   	@Param("inHandlingCategories")	int inHandlingCategories);
 	
 	
 }

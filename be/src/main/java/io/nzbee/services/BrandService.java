@@ -89,8 +89,11 @@ public class BrandService implements IBrandService {
 											locale,
 											currency,
 											ProductVars.MARKDOWN_SKU_DESCRIPTION,
-											lid.size() == 0 ? Arrays.asList(new Long(1)) : lid ,
-											(lid.size() == 0 ? 0 : 1)));
+											lid.size() == 0 ? Arrays.asList(new Long(-1)) : lid,
+											(lid.size() == 0 ? 0 : 1),
+											categoryIds.size() == 0 ? Arrays.asList(new Long(-1)) : categoryIds,
+											(categoryIds.size() == 0 ? 0 : 1)
+											));
 		});
 		
 		List<SidebarFacetDTO> lsfdto = lb.stream().map(b -> createBrandDTO(b)).collect(Collectors.toList())
