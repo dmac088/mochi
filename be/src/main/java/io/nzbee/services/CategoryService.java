@@ -13,7 +13,6 @@ import io.nzbee.dao.CategoryDAO;
 import io.nzbee.domain.Brand;
 import io.nzbee.domain.Category;
 import io.nzbee.dto.SidebarFacetDTO;
-import io.nzbee.entity.CategoryRepository;
 import io.nzbee.entity.ProductRepository;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.ProductVars;
