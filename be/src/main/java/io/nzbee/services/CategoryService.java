@@ -1,6 +1,5 @@
 package io.nzbee.services;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -11,7 +10,6 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import io.nzbee.dao.CategoryDAO;
-import io.nzbee.dao.ProductDAO;
 import io.nzbee.domain.Brand;
 import io.nzbee.domain.Category;
 import io.nzbee.dto.SidebarFacetDTO;
