@@ -272,7 +272,7 @@ public class ProductService implements IProductService {
 		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, 	jpaQuery, "TagFR", "tagCFacet"));
 		
 
-		allFacets.addAll(allFacets.stream().map(f -> {
+		allFacets.addAll(allFacets.stream().filter(f -> f.getFacetingName().equals("PrimaryCategoryFR")).map(f -> {
 								return getParentCategoryFacets(new HashSet<Facet>(), f, productQueryBuilder, jpaQuery, lcl, currency);
 		}).collect(Collectors.toSet()).stream().flatMap(Set::stream).collect(Collectors.toSet()));
 		
@@ -406,8 +406,13 @@ public class ProductService implements IProductService {
     
     private Set<Facet> getParentCategoryFacets(Set<Facet> cfs, Facet sf, QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery q, String locale, String currency) {
     	if(sf == null) { return cfs; }
+    	
     	String categoryCode = (new LinkedList<String>(Arrays.asList(sf.getValue().split("/")))).getLast();
-    	Optional<Category> c = Optional.ofNullable(categoryDAO.getByCategoryCode(CategoryVars.PRIMARY_HIERARCHY_CODE, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, categoryCode, locale));
+    	Optional<Category> c = Optional.ofNullable(categoryDAO.getByCategoryCode(
+    															CategoryVars.PRIMARY_HIERARCHY_CODE, 
+    															CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
+    															categoryCode, 
+    															locale));
     	if(!c.isPresent()) { return cfs; }
     	Optional<Category> parent = Optional.ofNullable(c.get().getParent());
     	if(!parent.isPresent()) { return cfs; }
