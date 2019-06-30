@@ -18,7 +18,6 @@ public interface ICategoryService {
 	 
 	Category getCategory(String lcl, String currency, String categoryDesc);
 
-	List<SidebarFacetDTO> getCategoryChildren(String hierarchyCode, String lcl, String currency, String categoryDesc, 
-			List<SidebarFacetDTO> brandFacets);
+	List<SidebarFacetDTO> getCategories(String hierarchyCode, String locale, String currency, String categoryDesc, List<SidebarFacetDTO> facets);
 
 }

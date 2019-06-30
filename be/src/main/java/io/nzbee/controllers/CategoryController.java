@@ -52,7 +52,7 @@ public class CategoryController {
     }
     
     @PostMapping("/Category/{lcl}/{curr}/desc/{categoryDesc}/children")
-    public List<SidebarFacetDTO> getCategoryChildren(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody List<SidebarFacetDTO> brandFacets) {
-    	return categoryService.getCategoryChildren(CategoryVars.PRIMARY_HIERARCHY_CODE, lcl, curr, categoryDesc, brandFacets);
+    public List<SidebarFacetDTO> getCategoryChildren(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody List<SidebarFacetDTO> facets) {
+    	return categoryService.getCategories(CategoryVars.PRIMARY_HIERARCHY_CODE, lcl, curr, categoryDesc, facets);
     }
 }
