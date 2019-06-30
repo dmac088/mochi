@@ -9,15 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-
 import io.nzbee.dao.BrandDAO;
 import io.nzbee.dao.CategoryDAO;
 import io.nzbee.domain.Brand;
 import io.nzbee.dto.SidebarFacetDTO;
-import io.nzbee.entity.BrandRepository;
-import io.nzbee.entity.Category;
 import io.nzbee.entity.CategoryAttribute;
-import io.nzbee.entity.CategoryAttributeRepository;
 import io.nzbee.entity.ProductRepository;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.ProductVars;
@@ -32,22 +28,15 @@ public class BrandService implements IBrandService {
 	
 	@Autowired
     private BrandDAO brandDAO;
-	
-    @Autowired
-    private BrandRepository brandRepository;
     
     @Autowired
     private ProductRepository productRepository;
-    
-    @Autowired
-    private CategoryAttributeRepository categoryAttributeRepository;
-  
     
     @Override
 	@Transactional
 	@Cacheable
 	public List<SidebarFacetDTO> getBrands(final String lcl, String currency) {
-    	List<io.nzbee.entity.Brand> lpb = brandRepository.findAll();
+    	List<io.nzbee.entity.Brand> lpb = brandDAO.getAll();
     	List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, lcl, currency))
 		.sorted((pb1, pb2) -> pb2.getProductCount().compareTo(pb1.getProductCount()))
 		.collect(Collectors.toList());
@@ -58,7 +47,7 @@ public class BrandService implements IBrandService {
 	@Transactional
 	@Cacheable
 	public Brand getBrand(String lcl, String curr, Long brandId) {
-    	io.nzbee.entity.Brand pb = brandRepository.findByBrandId(brandId);
+    	io.nzbee.entity.Brand pb = brandDAO.get(brandId).get();
      	return	createBrandDO(pb, lcl, curr);
 	}
  
