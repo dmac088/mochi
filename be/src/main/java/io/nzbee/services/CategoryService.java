@@ -100,7 +100,7 @@ public class CategoryService implements ICategoryService {
 		lcDO.stream().forEach(cDO -> {
 			final Long count = productRepository.count(CategoryVars.PRIMARY_HIERARCHY_CODE, 
 										CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
-										categoryDesc, 
+										cDO.getCategoryDesc(), 
 										locale,
 										currency,
 										ProductVars.MARKDOWN_SKU_DESCRIPTION,
