@@ -39,6 +39,11 @@ public class ProductController {
     public List<SidebarFacetDTO> getTags(@PathVariable String locale, @PathVariable String currency, @PathVariable String category, @PathVariable Double price, @RequestBody final List<SidebarFacetDTO> selectedFacets) {
     	return productService.getProductTags(locale, currency, category, price, selectedFacets);
     }
+    
+    @PostMapping("/Product/{locale}/{currency}/{category}/tags")
+    public List<SidebarFacetDTO> getTags(@PathVariable String locale, @PathVariable String currency, @PathVariable String category, @RequestBody final List<SidebarFacetDTO> selectedFacets) {
+    	return productService.getProductTags(locale, currency, category, selectedFacets);
+    }
   
     @PostMapping("/Product/{locale}/{currency}/category/{category}/maxPrice/{price}/page/{page}/size/{size}/sortBy/{sortBy}")
     public SearchDTO getProducts(@PathVariable String locale, @PathVariable String currency, @PathVariable String category, @PathVariable Double price, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy, @RequestBody final List<SidebarFacetDTO> selectedFacets) {

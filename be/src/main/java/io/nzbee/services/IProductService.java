@@ -17,4 +17,6 @@ public interface IProductService {
 	 
 	 List<SidebarFacetDTO> getProductTags(String locale, String currency, String categoryDesc, Double price, List<SidebarFacetDTO> selectedFacets);
 	 
+	 List<SidebarFacetDTO> getProductTags(String locale, String currency, String categoryDesc, List<SidebarFacetDTO> selectedFacets);
+	 
 }
