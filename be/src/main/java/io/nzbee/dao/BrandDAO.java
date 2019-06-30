@@ -41,14 +41,49 @@ public class BrandDAO  implements Dao<Brand> {
 	
 	@Override
 	public Optional<Brand> get(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<Brand> cq = cb.createQuery(Brand.class);
+		
+		Root<Brand> root = cq.from(Brand.class);
+		
+		Join<Brand, Product> brand = root.join(Brand_.products);
+		Join<Product, ProductStatus> status = brand.join(Product_.productStatus);
+		
+		List<Predicate> conditions = new ArrayList<Predicate>();
+		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
+		conditions.add(cb.equal(root.get(Brand_.brandId), id));
+
+		TypedQuery<Brand> query = em.createQuery(cq
+				.select(root)
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(false)
+		);
+
+		return Optional.ofNullable(query.getSingleResult());
 	}
 	
 	@Override
 	public List<Brand> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<Brand> cq = cb.createQuery(Brand.class);
+		
+		Root<Brand> root = cq.from(Brand.class);
+		
+		Join<Brand, Product> brand = root.join(Brand_.products);
+		Join<Product, ProductStatus> status = brand.join(Product_.productStatus);
+		
+		List<Predicate> conditions = new ArrayList<Predicate>();
+		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
+
+		TypedQuery<Brand> query = em.createQuery(cq
+				.select(root)
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(true)
+		);
+
+		return query.getResultList();
 	}
 	
 	@Override
