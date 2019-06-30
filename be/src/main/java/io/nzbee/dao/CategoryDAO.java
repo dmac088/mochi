@@ -149,10 +149,10 @@ public class CategoryDAO implements Dao<Category> {
 	public Category getByCategoryCode(String hieararchyCode, String categoryTypeCode, String categoryCode, String locale) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
-//		System.out.println(hieararchyCode);
-//		System.out.println(categoryTypeCode);
-//		System.out.println(categoryCode);
-//		System.out.println(locale);
+		System.out.println(hieararchyCode);
+		System.out.println(categoryTypeCode);
+		System.out.println(categoryCode);
+		System.out.println(locale);
 		
 		
 		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
