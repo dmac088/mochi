@@ -181,7 +181,7 @@ class Products extends Component {
        .catch((e) => {console.log(e)});
      })
      .then((newState) => {
-       return productApi.getProductTags(newState.locale, newState.currency, newState.category, newState.maxPrice, newState.selectedFacets)
+       return productApi.getProductTags(newState.locale, newState.currency, newState.category, newState.selectedFacets)
        .then((response) => {
          return response.text();
        })
