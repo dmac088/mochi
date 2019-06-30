@@ -54,7 +54,7 @@ public class BrandService implements IBrandService {
 	@Override
 	@Transactional
 	//@Cacheable
-	public List<SidebarFacetDTO> getBrandsForCategory(String hierarchyCode, String locale, String currency, String categoryDesc, List<SidebarFacetDTO> facets) {
+	public List<SidebarFacetDTO> getBrands(String hierarchyCode, String locale, String currency, String categoryDesc, List<SidebarFacetDTO> facets) {
 		
 		CategoryAttribute ca = categoryDAO.getByCategoryDesc(CategoryVars.PRIMARY_HIERARCHY_ROOT_CODE, 
 									  CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
