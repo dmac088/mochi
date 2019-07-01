@@ -166,9 +166,6 @@ public class CategoryDAO implements Dao<Category> {
 				.distinct(false)
 		);
 		
-		System.out.println(query.toString());
-		
-		
 		return query.getSingleResult();
 	}
 	
