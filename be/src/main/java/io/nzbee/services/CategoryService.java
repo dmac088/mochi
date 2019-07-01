@@ -102,11 +102,12 @@ public class CategoryService implements ICategoryService {
     	List<Long> tagIds = facets.stream().filter(f -> f.getFacetingName().equals(CategoryVars.TAG_FACET_NAME)).collect(Collectors.toList()) 
     			.stream().map(b -> { return b.getId(); }).collect(Collectors.toList());
     	
-		List<io.nzbee.entity.Category> lc = categoryDAO.getByParentAndBrands(
+		List<io.nzbee.entity.Category> lc = categoryDAO.get(
 				 CategoryVars.PRIMARY_HIERARCHY_CODE, 
 				 CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 				 categoryDesc, 
 				 brandIds,  
+				 tagIds,
 				 locale);
 		
 		List<Category> lcDO = lc.stream().map(c -> createCategory(hierarchyCode, c, locale, currency)).collect(Collectors.toList());

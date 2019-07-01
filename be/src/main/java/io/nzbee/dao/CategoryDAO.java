@@ -1,3 +1,4 @@
+
 package io.nzbee.dao;
 
 import java.util.ArrayList;
@@ -27,6 +28,8 @@ import io.nzbee.entity.Category_;
 import io.nzbee.entity.Hierarchy;
 import io.nzbee.entity.Hierarchy_;
 import io.nzbee.entity.Product;
+import io.nzbee.entity.ProductTag;
+import io.nzbee.entity.ProductTag_;
 import io.nzbee.entity.Product_;
 import io.nzbee.variables.CategoryVars;
 
@@ -231,7 +234,7 @@ public class CategoryDAO implements Dao<Category> {
 	}
 	
 	
-	public List<Category> getByParentAndBrands(String hieararchyCode, String categoryTypeCode, String parentCategoryDesc, List<Long> brandIds, String locale) {
+	public List<Category> get(String hieararchyCode, String categoryTypeCode, String parentCategoryDesc, List<Long> brandIds, List<Long> tagIds, String locale) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
@@ -251,6 +254,10 @@ public class CategoryDAO implements Dao<Category> {
 		conditions.add(cb.equal(categoryType.get(CategoryType_.code), categoryTypeCode));
 		if(!brandIds.isEmpty()) {
 			conditions.add(brand.get(Brand_.brandId).in(brandIds));
+		}
+		if(!tagIds.isEmpty()) {
+			Join<Product, ProductTag> tags = product.join(Product_.tags);
+			conditions.add(tags.get(ProductTag_.productTagId).in(tagIds));
 		}
 		if(!(parentCategoryDesc == null)) {
 			conditions.add(cb.equal(parentCategoryAttribute.get(CategoryAttribute_.categoryDesc), parentCategoryDesc));
