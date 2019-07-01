@@ -90,7 +90,7 @@ public class BrandService implements IBrandService {
 											categoryIds.size() == 0 ? Arrays.asList(new Long(-1)) : categoryIds,
 											(categoryIds.size() == 0 ? 0 : 1)
 											)
-									: productRepository.countforTags(CategoryVars.PRIMARY_HIERARCHY_CODE, 
+									: productRepository.countForTags(CategoryVars.PRIMARY_HIERARCHY_CODE, 
 											CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 											categoryDesc, 
 											locale,
