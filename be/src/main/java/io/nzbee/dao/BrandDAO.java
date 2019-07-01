@@ -110,7 +110,7 @@ public class BrandDAO  implements Dao<Brand> {
 		
 	}
 	
-	public List<Brand> getAll(List<Long> categoryIds, String categoryDesc, String locale, List<Long> tagIds) {
+	public List<Brand> getAll(List<Long> categoryIds, String locale, List<Long> tagIds) {
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 	
@@ -127,7 +127,6 @@ public class BrandDAO  implements Dao<Brand> {
 		//Join<Category, Hierarchy> categoryHierarchy = category.join(Category_.hierarchy);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
-		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.categoryDesc), categoryDesc));
 
 		if(!categoryIds.isEmpty()) {
 			conditions.add(category.get(Category_.categoryId).in(categoryIds));

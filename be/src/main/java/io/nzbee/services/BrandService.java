@@ -55,23 +55,15 @@ public class BrandService implements IBrandService {
 	@Transactional
 	//@Cacheable
 	public List<SidebarFacetDTO> getBrands(String hierarchyCode, String locale, String currency, String categoryDesc, List<SidebarFacetDTO> facets) {
-		
-		CategoryAttribute ca = categoryDAO.getByCategoryDesc(CategoryVars.PRIMARY_HIERARCHY_ROOT_CODE, 
-									  CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
-									  categoryDesc, 
-									  locale).getAttributes().stream().filter(c -> c.getLclCd().equals(locale)).findFirst().get();
-
-		if(ca == null) { return null; }
-		if(!ca.getCategory().isPresent()) { return null; }
 				
 		List<Long> categoryIds = facets.stream().filter(c -> c.getFacetingName().equals(CategoryVars.PRIMARY_CATEGORY_FACET_NAME)).collect(Collectors.toList())
 				.stream().map(c -> { return c.getId(); }).collect(Collectors.toList());
 		
 		List<Long> tagIds = facets.stream().filter(c -> c.getFacetingName().equals(CategoryVars.TAG_FACET_NAME)).collect(Collectors.toList())
 				.stream().map(t -> { return t.getId();}).collect(Collectors.toList());
-				
-		List<io.nzbee.entity.Brand> lpb = brandDAO.getAll(categoryIds, categoryDesc, locale, tagIds);
 		
+		//get a list of brands for the selected categories and tags
+		List<io.nzbee.entity.Brand> lpb = brandDAO.getAll(categoryIds, locale, tagIds);
 		List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, locale, currency)).collect(Collectors.toList());
 		
 		lb.stream().forEach(bDO -> {
@@ -107,7 +99,7 @@ public class BrandService implements IBrandService {
 											));
 		});
 		
-		List<SidebarFacetDTO> lsfdto = lb.stream().map(b -> createBrandDTO(b)).collect(Collectors.toList())
+		List<SidebarFacetDTO> lsfdto = lb.stream().filter(b -> b.getProductCount() > 0).map(b -> createBrandDTO(b)).collect(Collectors.toList())
 								.stream().sorted((o1, o2) -> o1.getDesc().compareTo(o2.getDesc()))
 								.collect(Collectors.toList());
 		
