@@ -125,7 +125,7 @@ public class CategoryService implements ICategoryService {
 											(brandIds.size() == 0 ? 0 : 1),
 											Arrays.asList(new Long(-1)),
 											0)
-										: 	productRepository.countforTags(
+										: 	productRepository.countForTags(
 											CategoryVars.PRIMARY_HIERARCHY_CODE, 
 											CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 											cDO.getCategoryDesc(), 

@@ -301,7 +301,7 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 					+ ") "
 					+ "AND now() BETWEEN prc.prc_st_dt AND prc.prc_en_dt ",
 			nativeQuery = true)	
-		Long countforTags(	@Param("hierarchyCode") String hierarchyCode,
+		Long countForTags(	@Param("hierarchyCode") String hierarchyCode,
 						   	@Param("categoryTypeCode") 		String categoryTypeCode,
 						   	@Param("categoryDesc") 			String categoryDesc, 
 						   	@Param("locale") 				String locale,
