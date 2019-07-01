@@ -202,6 +202,7 @@ public class ProductService implements IProductService {
 																								locale, 
 																								currency, 
 																								ProductVars.MARKDOWN_SKU_DESCRIPTION, 
+																								ProductVars.ACTIVE_SKU_CODE,
 																								((!selectedBrandIds.isEmpty()) 	? selectedBrandIds 	: Arrays.<Long>asList(new Long(-1))), 
 																								((!selectedBrandIds.isEmpty()) 	? 1 : 0), 
 																								((!facetCategoryIds.isEmpty()) 	? facetCategoryIds 	: Arrays.<Long>asList(new Long(-1))), 

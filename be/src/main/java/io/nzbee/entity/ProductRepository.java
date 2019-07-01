@@ -60,7 +60,10 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 				+ "	ON prc.ccy_id = ccy.ccy_id "
 				+ "INNER JOIN mochi.category_type ct "
 				+ " ON c.cat_typ_id = ct.cat_typ_id "
+				+ "INNER JOIN mochi.product_status pstat "
+				+ " ON p.prd_sts_id = pstat.prd_sts_id "
 				+ "WHERE pt.prc_typ_desc 	= :priceTypeDesc "
+				+ "AND pstat.prd_sts_cd 	= :productStatusCode "
 				+ "AND ct.cat_typ_cd 		= :categoryTypeCode "
 				+ "AND ccy.ccy_cd 			= :currencyCode "
 				+ "AND h.hir_cd 			= :hierarchyCode "
@@ -77,12 +80,13 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 				+ ") "
 				+ "AND now() BETWEEN prc.prc_st_dt AND prc.prc_en_dt ",
 		nativeQuery = true)	
-	Double maxMarkDownPrice(@Param("hierarchyCode") 	String hierarchyCode, 
-							@Param("categoryTypeCode") 	String categoryTypeCode,
-							@Param("categoryDesc") 		String categoryDesc, 
-							@Param("locale") 			String locale,
-							@Param("currencyCode") 		String currencyCode,
-							@Param("priceTypeDesc") 	String priceTypeDesc,
+	Double maxMarkDownPrice(@Param("hierarchyCode") 		String hierarchyCode, 
+							@Param("categoryTypeCode") 		String categoryTypeCode,
+							@Param("categoryDesc") 			String categoryDesc, 
+							@Param("locale") 				String locale,
+							@Param("currencyCode") 			String currencyCode,
+							@Param("priceTypeDesc") 		String priceTypeDesc,
+							@Param("productStatusCode")		String productStatusCode,
 						   	@Param("brandIds") 				List<Long> brandIds,
 						   	@Param("inHandlingBrands")		int inHandlingBrands,
 						   	@Param("categoryIds") 			List<Long> categoryIds,
@@ -131,7 +135,10 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 					+ " ON c.cat_typ_id = ct.cat_typ_id "
 					+ "INNER JOIN mochi.product_tag ptag "
 					+ " ON p.prd_id = ptag.prd_id "
+					+ "INNER JOIN mochi.product_status pstat "
+					+ " ON p.prd_sts_id = pstat.prd_sts_id "
 					+ "WHERE pt.prc_typ_desc 	= :priceTypeDesc "
+					+ "AND pstat.prd_sts_cd 	= :productStatusCode "
 					+ "AND ct.cat_typ_cd 		= :categoryTypeCode "
 					+ "AND ccy.ccy_cd 			= :currencyCode "
 					+ "AND h.hir_cd 			= :hierarchyCode "
@@ -159,6 +166,7 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 										@Param("locale") 			String locale,
 										@Param("currencyCode") 		String currencyCode,
 										@Param("priceTypeDesc") 	String priceTypeDesc,
+										@Param("productStatusCode")		String productStatusCode,
 									   	@Param("brandIds") 				List<Long> brandIds,
 									   	@Param("inHandlingBrands")		int inHandlingBrands,
 									   	@Param("categoryIds") 			List<Long> categoryIds,
@@ -207,7 +215,10 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 				+ "	ON prc.ccy_id = ccy.ccy_id "
 				+ "INNER JOIN mochi.category_type ct "
 				+ " ON c.cat_typ_id = ct.cat_typ_id "
+				+ "INNER JOIN mochi.product_status pstat "
+				+ " ON p.prd_sts_id = pstat.prd_sts_id "
 				+ "WHERE pt.prc_typ_desc 	= :priceTypeDesc "
+				+ "AND pstat.prd_sts_cd 	= :productStatusCode "
 				+ "AND ct.cat_typ_cd 		= :categoryTypeCode "
 				+ "AND ccy.ccy_cd 			= :currencyCode "
 				+ "AND h.hir_cd 			= :hierarchyCode "
@@ -230,6 +241,7 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 			   	@Param("locale") 				String locale,
 			   	@Param("currencyCode") 			String currencyCode,
 			   	@Param("priceTypeDesc") 		String priceTypeDesc,
+			   	@Param("productStatusCode")		String productStatusCode,
 			   	@Param("brandIds") 				List<Long> brandIds,
 			   	@Param("inHandlingBrands")		int inHandlingBrands,
 			   	@Param("categoryIds") 			List<Long> categoryIds,
@@ -279,7 +291,10 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 					+ " ON c.cat_typ_id = ct.cat_typ_id "
 					+ "INNER JOIN mochi.product_tag ptag "
 					+ " ON p.prd_id = ptag.prd_id "
+					+ "INNER JOIN mochi.product_status pstat "
+					+ " ON p.prd_sts_id = pstat.prd_sts_id "
 					+ "WHERE pt.prc_typ_desc 	= :priceTypeDesc "
+					+ "AND pstat.prd_sts_cd 	= :productStatusCode "
 					+ "AND ct.cat_typ_cd 		= :categoryTypeCode "
 					+ "AND ccy.ccy_cd 			= :currencyCode "
 					+ "AND h.hir_cd 			= :hierarchyCode "
@@ -307,6 +322,7 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 						   	@Param("locale") 				String locale,
 						   	@Param("currencyCode") 			String currencyCode,
 						   	@Param("priceTypeDesc") 		String priceTypeDesc,
+						   	@Param("productStatusCode")		String productStatusCode,
 						   	@Param("brandIds") 				List<Long> brandIds,
 						   	@Param("inHandlingBrands")		int inHandlingBrands,
 						   	@Param("categoryIds") 			List<Long> categoryIds,
