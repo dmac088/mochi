@@ -126,16 +126,12 @@ class App extends Component {
     .then(() => {
       //update the cart products in redux store
       const productIds = cartSelector.get().items.map(a => a.productId);
-      console.log(productIds);
-      console.log(locale);
-      console.log(currency);
       //call the rest Api to apply new item array based on new language
       productApi.findByIds(locale, currency, productIds)
       .then((response) => {
         return response.text()
       })
       .then((responseText) => {
-        console.log(JSON.parse(responseText))
         return JSON.parse(responseText);
       })
       .then((responseJSON) => {
