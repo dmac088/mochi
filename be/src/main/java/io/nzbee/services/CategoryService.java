@@ -113,17 +113,31 @@ public class CategoryService implements ICategoryService {
 		List<Category> lcDO = lc.stream().map(c -> createCategory(hierarchyCode, c, locale, currency)).collect(Collectors.toList());
 		
 		lcDO.stream().forEach(cDO -> {
-			final Long count = productRepository.count(
-										CategoryVars.PRIMARY_HIERARCHY_CODE, 
-										CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
-										cDO.getCategoryDesc(), 
-										locale,
-										currency,
-										ProductVars.MARKDOWN_SKU_DESCRIPTION,
-										brandIds.size() == 0 ? Arrays.asList(new Long(-1)) : brandIds ,
-										(brandIds.size() == 0 ? 0 : 1),
-										Arrays.asList(new Long(-1)),
-										0);
+			final Long count = tagIds.isEmpty() 
+										? 	productRepository.count(
+											CategoryVars.PRIMARY_HIERARCHY_CODE, 
+											CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
+											cDO.getCategoryDesc(), 
+											locale,
+											currency,
+											ProductVars.MARKDOWN_SKU_DESCRIPTION,
+											brandIds.size() == 0 ? Arrays.asList(new Long(-1)) : brandIds ,
+											(brandIds.size() == 0 ? 0 : 1),
+											Arrays.asList(new Long(-1)),
+											0)
+										: 	productRepository.countforTags(
+											CategoryVars.PRIMARY_HIERARCHY_CODE, 
+											CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
+											cDO.getCategoryDesc(), 
+											locale,
+											currency,
+											ProductVars.MARKDOWN_SKU_DESCRIPTION,
+											brandIds.size() == 0 ? Arrays.asList(new Long(-1)) : brandIds ,
+											(brandIds.size() == 0 ? 0 : 1),
+											Arrays.asList(new Long(-1)),
+											0,
+											tagIds,
+											(tagIds.size() == 0 ? 0 : 1)) ;
 			
 			cDO.setProductCount(count);
 		});	
