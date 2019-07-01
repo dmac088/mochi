@@ -119,6 +119,7 @@ public class ProductDAO implements Dao<Product> {
 			Join<Product, ProductTag> tag = root.join(Product_.tags);
 			conditions.add(tag.get(ProductTag_.productTagId).in(tagIds));
 		}
+		
 		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), locale));
 		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
 		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale));
@@ -145,7 +146,6 @@ public class ProductDAO implements Dao<Product> {
 		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
 		
 		Root<Product> root = cq.from(Product.class);
-		
 		Join<Product, ProductAttribute> productAttribute = root.join(Product_.attributes);
 		Join<Product, Category> category = root.join(Product_.categories);
 		Join<Product, Brand> brand = root.join(Product_.brand);
@@ -227,14 +227,12 @@ public class ProductDAO implements Dao<Product> {
 			conditions.add(root.get(Product_.productId).in(productIds));
 		}
 		
-
 		TypedQuery<Product> query = em.createQuery(cq
 				.select(root)
 				.where(conditions.toArray(new Predicate[] {}))
 				.distinct(true)
 		);
 
-		
 		return query.getResultList();
     }
 	
