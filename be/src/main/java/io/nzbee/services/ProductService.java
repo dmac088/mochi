@@ -206,7 +206,8 @@ public class ProductService implements IProductService {
 																								Arrays.<Long>asList(new Long(t.getTagId())), 
 																								1));
 											return f;
-										}).collect(Collectors.toList());
+										}).collect(Collectors.toList())
+										.stream().filter(t -> t.getProductCount() > 0).collect(Collectors.toList());
 			
 			return lf;	
 	}
@@ -244,7 +245,8 @@ public class ProductService implements IProductService {
 										f.setDesc(t.getTagDesc());
 										f.setProductCount(new Long(0));
 										return f;
-									}).collect(Collectors.toList());
+									}).collect(Collectors.toList())
+									.stream().filter(t -> t.getProductCount() > 0).collect(Collectors.toList());;
 		
 		return lf;	
 	}
