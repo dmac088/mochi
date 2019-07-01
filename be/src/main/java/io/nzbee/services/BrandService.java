@@ -78,7 +78,8 @@ public class BrandService implements IBrandService {
 			List<Long> lid = new ArrayList<Long>();
 			lid.add(bDO.getBrandId());
 			bDO.setProductCount(
-					productRepository.count(CategoryVars.PRIMARY_HIERARCHY_CODE, 
+					(tagIds.isEmpty()) 
+									? productRepository.count(CategoryVars.PRIMARY_HIERARCHY_CODE, 
 											CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 											categoryDesc, 
 											locale,
@@ -88,6 +89,19 @@ public class BrandService implements IBrandService {
 											(lid.size() == 0 ? 0 : 1),
 											categoryIds.size() == 0 ? Arrays.asList(new Long(-1)) : categoryIds,
 											(categoryIds.size() == 0 ? 0 : 1)
+											)
+									: productRepository.countforTags(CategoryVars.PRIMARY_HIERARCHY_CODE, 
+											CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
+											categoryDesc, 
+											locale,
+											currency,
+											ProductVars.MARKDOWN_SKU_DESCRIPTION,
+											lid.size() == 0 ? Arrays.asList(new Long(-1)) : lid,
+											(lid.size() == 0 ? 0 : 1),
+											categoryIds.size() == 0 ? Arrays.asList(new Long(-1)) : categoryIds,
+											(categoryIds.size() == 0 ? 0 : 1),
+											tagIds.size() == 0 ? Arrays.asList(new Long(-1)) : tagIds,
+											(tagIds.size() == 0 ? 0 : 1)
 											));
 		});
 		
