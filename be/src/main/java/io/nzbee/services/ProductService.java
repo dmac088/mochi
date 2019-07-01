@@ -170,35 +170,44 @@ public class ProductService implements IProductService {
 	
 	@Override
 	public List<SidebarFacetDTO> getProductTags(String locale, String currency, String categoryDesc, List<SidebarFacetDTO> selectedFacets) {
-
-			//all categories (if non selected in facets
-			Category parent = categoryDAO.getByCategoryDesc(CategoryVars.PRIMARY_HIERARCHY_CODE, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, categoryDesc, locale);
-			List<Category> allCategories = recurseCategories(new ArrayList<Category>(), parent);
-			List<Long> allCategoryIds = allCategories.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
-							
-			//Facets
+			
+			//categories
 			List<SidebarFacetDTO> selectedCategories = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals(CategoryVars.PRIMARY_CATEGORY_FACET_NAME);}).collect(Collectors.toList());
 			List<Category> lpc = selectedCategories.stream().map(f-> {return categoryDAO.getByCategoryDesc(CategoryVars.PRIMARY_HIERARCHY_CODE, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, f.getDesc(), locale);}).collect(Collectors.toList());
-								
 			List<Category> lpcf = new ArrayList<Category>();
 			lpc.stream().forEach(pc -> { lpcf.addAll(recurseCategories(new ArrayList<Category>(), pc)); });
-
 			List<Long> facetCategoryIds = lpcf.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
 
+			//brands
 			List<SidebarFacetDTO> selectedBrands = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals(CategoryVars.BRAND_FACET_NAME);}).collect(Collectors.toList());
 			List<Long> selectedBrandIds = selectedBrands.stream().map(b -> {return b.getId();}).collect(Collectors.toList());
-					     	
-			List<Long> categoryIds = (selectedCategories.size() > 0) ? facetCategoryIds : allCategoryIds;
+					
+			//tags
+			List<SidebarFacetDTO> selectedTags = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals(CategoryVars.TAG_FACET_NAME);}).collect(Collectors.toList());
+			List<Long> selectedTagIds = selectedTags.stream().map(t -> {return t.getId();}).collect(Collectors.toList());
 			
-			List<ProductTagAttribute> pt = productTagDAO.getAll(categoryIds, locale, null, null, ProductVars.MARKDOWN_SKU_DESCRIPTION, currency, new Date(), new Date(), selectedBrandIds);
+			List<ProductTagAttribute> pt = productTagDAO.getAll(facetCategoryIds, locale, null, null, ProductVars.MARKDOWN_SKU_DESCRIPTION, currency, new Date(), new Date(), selectedBrandIds);
 			
+		
 			List<SidebarFacetDTO> lf = pt.stream().map(t -> {
 											SidebarFacetDTO f = new SidebarFacetDTO();
 											f.setFacetingName(CategoryVars.TAG_FACET_NAME);
 											f.setId(t.getTagId());
 											f.setToken(t.getTag().get().getCode());
 											f.setDesc(t.getTagDesc());
-											f.setProductCount(new Long(0));
+											f.setProductCount(productRepository.countForTags(
+																								CategoryVars.PRIMARY_HIERARCHY_CODE, 
+																								CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
+																								categoryDesc, 
+																								locale, 
+																								currency, 
+																								ProductVars.MARKDOWN_SKU_DESCRIPTION, 
+																								((!selectedBrandIds.isEmpty()) 	? selectedBrandIds 	: Arrays.<Long>asList(new Long(-1))), 
+																								((!selectedBrandIds.isEmpty()) 	? 1 : 0), 
+																								((!facetCategoryIds.isEmpty()) 	? facetCategoryIds 	: Arrays.<Long>asList(new Long(-1))), 
+																								((!facetCategoryIds.isEmpty()) 	? 1 : 0), 
+																								((!selectedTagIds.isEmpty()) 	? selectedTagIds 	: Arrays.<Long>asList(new Long(-1))), 
+																								((!selectedTagIds.isEmpty()) 	? 1 : 0)));
 											return f;
 										}).collect(Collectors.toList());
 			
