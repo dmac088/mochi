@@ -124,12 +124,10 @@ public class BrandDAO  implements Dao<Brand> {
 		Join<Product, ProductStatus> status = brand.join(Product_.productStatus);
 		Join<Brand, BrandAttribute> brandAttribute = root.join(Brand_.brandAttributes);
 		Join<Category, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
-		Join<Category, Category> parent = category.join(Category_.parent);
-		Join<Category, CategoryAttribute> parentAttribute = parent.join(Category_.attributes);
 		//Join<Category, Hierarchy> categoryHierarchy = category.join(Category_.hierarchy);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
-		conditions.add(cb.equal(parentAttribute.get(CategoryAttribute_.categoryDesc), categoryDesc));
+		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.categoryDesc), categoryDesc));
 
 		if(!categoryIds.isEmpty()) {
 			conditions.add(category.get(Category_.categoryId).in(categoryIds));
