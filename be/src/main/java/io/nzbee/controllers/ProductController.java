@@ -30,6 +30,11 @@ public class ProductController {
     	return productService.getProduct(locale, currency, id);
     }
     
+    @PostMapping("/Product/{locale}/{currency}")
+    public List<Product> getProducts(@PathVariable String locale, @PathVariable String currency, @RequestBody final List<Long> productIds) {
+    	return productService.getProducts(locale, currency, productIds);
+    }
+    
     @PostMapping("/Product/{locale}/{currency}/{category}/maxprice")
     public Double getMaxPrice(@PathVariable String locale, @PathVariable String currency, @PathVariable String category, @RequestBody final List<SidebarFacetDTO> selectedFacets) {
     	return productService.getMaxPrice(category, locale, currency, selectedFacets);
