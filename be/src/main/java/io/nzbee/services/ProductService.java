@@ -128,6 +128,15 @@ public class ProductService implements IProductService {
 		return rc;
 	}
 	
+	@Cacheable
+	public List<Product> getProducts(String locale, String currency, List<Long> productIds) {
+		
+	    List<io.nzbee.entity.Product> lp = 
+     			productDAO.getAll(locale, currency, productIds);
+     	
+		return lp.stream().map(p -> { return this.convertToProductDO(p, locale, currency);}).collect(Collectors.toList());
+	}
+	
 	@Override
 	public Double getMaxPrice(String categoryDesc, String locale, String currency, List<SidebarFacetDTO> selectedFacets) {
 		

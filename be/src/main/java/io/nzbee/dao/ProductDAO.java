@@ -199,6 +199,45 @@ public class ProductDAO implements Dao<Product> {
 		return new PageImpl<Product>(query.getResultList(), pageable, resultCount);
     }
 	
+	public List<Product> getAll(String locale, String currency, List<Long> productIds) {
+		
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+	
+		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
+		
+		Root<Product> root = cq.from(Product.class);
+		
+		Join<Product, ProductAttribute> productAttribute = root.join(Product_.attributes);
+		Join<Product, Category> category = root.join(Product_.categories);
+		Join<Product, Brand> brand = root.join(Product_.brand);
+		Join<Product, ProductStatus> status = root.join(Product_.productStatus);
+		Join<Product, ProductPrice> price = root.join(Product_.prices);
+		Join<ProductPrice, Currency> curr = price.join(ProductPrice_.currency);
+		Join<Brand, BrandAttribute> brandAttribute = brand.join(Brand_.brandAttributes);
+		Join<Category, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
+		//Join<Category, Hierarchy> categoryHierarchy = category.join(Category_.hierarchy);
+		
+		List<Predicate> conditions = new ArrayList<Predicate>();
+		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), locale));
+		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale));
+		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
+		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
+		conditions.add(cb.equal(curr.get(Currency_.code), currency));
+		if(!productIds.isEmpty()) {
+			conditions.add(root.get(Product_.productId).in(productIds));
+		}
+		
+
+		TypedQuery<Product> query = em.createQuery(cq
+				.select(root)
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(true)
+		);
+
+		
+		return query.getResultList();
+    }
+	
 	
 	private Order getOrder(String orderName, Sort.Direction orderDirection, CriteriaBuilder cb, Join<Product, ProductAttribute> attributeJoin, Join<Product, ProductPrice> priceJoin) {
 
