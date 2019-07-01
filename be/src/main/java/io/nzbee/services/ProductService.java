@@ -182,10 +182,6 @@ public class ProductService implements IProductService {
 			List<SidebarFacetDTO> selectedBrands = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals(CategoryVars.BRAND_FACET_NAME);}).collect(Collectors.toList());
 			List<Long> selectedBrandIds = selectedBrands.stream().map(b -> {return b.getId();}).collect(Collectors.toList());
 					
-			//tags
-			List<SidebarFacetDTO> selectedTags = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals(CategoryVars.TAG_FACET_NAME);}).collect(Collectors.toList());
-			List<Long> selectedTagIds = selectedTags.stream().map(t -> {return t.getId();}).collect(Collectors.toList());
-			
 			List<ProductTagAttribute> pt = productTagDAO.getAll(facetCategoryIds, locale, null, null, ProductVars.MARKDOWN_SKU_DESCRIPTION, currency, new Date(), new Date(), selectedBrandIds);
 			
 		
@@ -207,8 +203,8 @@ public class ProductService implements IProductService {
 																								((!selectedBrandIds.isEmpty()) 	? 1 : 0), 
 																								((!facetCategoryIds.isEmpty()) 	? facetCategoryIds 	: Arrays.<Long>asList(new Long(-1))), 
 																								((!facetCategoryIds.isEmpty()) 	? 1 : 0), 
-																								((!selectedTagIds.isEmpty()) 	? selectedTagIds 	: Arrays.<Long>asList(new Long(-1))), 
-																								((!selectedTagIds.isEmpty()) 	? 1 : 0)));
+																								Arrays.<Long>asList(new Long(t.getTagId())), 
+																								1));
 											return f;
 										}).collect(Collectors.toList());
 			
