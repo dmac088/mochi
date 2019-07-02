@@ -94,9 +94,11 @@ public class BrandService implements IBrandService {
 											));
 		});
 		
-		List<SidebarFacetDTO> lsfdto = lb.stream().filter(b -> b.getProductCount() > 0).map(b -> createBrandDTO(b)).collect(Collectors.toList())
-								.stream().sorted((o1, o2) -> o1.getDesc().compareTo(o2.getDesc()))
-								.collect(Collectors.toList());
+		List<SidebarFacetDTO> lsfdto = lb.stream()
+				.filter(b -> b.getProductCount() > 0)
+				.map(b -> createBrandDTO(b)).collect(Collectors.toList()).stream()
+				.sorted((o1, o2) -> o1.getDesc().compareTo(o2.getDesc()))
+				.collect(Collectors.toList());
 		
      	return lsfdto;
 	}
