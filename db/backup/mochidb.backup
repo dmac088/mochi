@@ -1413,9 +1413,9 @@ SELECT pg_catalog.setval('mochi.brand_category_bnd_cat_id_seq', 10, true);
 --
 
 COPY mochi.category (cat_id, cat_cd, cat_prnt_id, cat_lvl, cat_typ_id, hir_id) FROM stdin;
-43	BSP01	39	1	2	42
-39	PRM02	\N	0	2	42
-38	FET01	39	1	2	42
+43	BSP01	39	1	1	42
+39	PRM02	\N	0	1	42
+38	FET01	39	1	1	42
 40	BND01	\N	0	1	43
 42	OTH02	40	1	1	43
 41	FET02	40	1	1	43
@@ -1455,7 +1455,7 @@ COPY mochi.category (cat_id, cat_cd, cat_prnt_id, cat_lvl, cat_typ_id, hir_id) F
 29	DUM03	2	1	1	41
 2	PRM01	\N	0	1	41
 7	BAP01	4	2	1	41
-44	UNK01	39	1	2	42
+44	UNK01	39	1	1	42
 \.
 
 
