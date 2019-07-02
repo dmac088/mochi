@@ -170,7 +170,7 @@ public class CategoryDAO implements Dao<Category> {
 	}
 	
 	
-	public Category getByCategoryCode(String hieararchyCode, String categoryTypeCode, String categoryCode, String locale) {
+	public Category getByCategoryCode(String categoryTypeCode, String categoryCode, String locale) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 
 		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
