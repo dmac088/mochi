@@ -464,10 +464,8 @@ public class ProductService implements IProductService {
     
     private Set<Facet> getParentCategoryFacets(Set<Facet> cfs, Facet sf, QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery q, String locale, String currency) {
     	if(sf == null) { return cfs; }
-    	System.out.println(sf.getValue());
     	
     	String categoryCode = (new LinkedList<String>(Arrays.asList(sf.getValue().split("/")))).getLast();
-    	System.out.println(categoryCode);
     	
     	Optional<Category> c = Optional.ofNullable(categoryDAO.getByCategoryCode(
     															CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
