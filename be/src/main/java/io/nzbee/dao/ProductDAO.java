@@ -30,8 +30,6 @@ import io.nzbee.entity.CategoryAttribute_;
 import io.nzbee.entity.Category_;
 import io.nzbee.entity.Currency;
 import io.nzbee.entity.Currency_;
-import io.nzbee.entity.Hierarchy;
-import io.nzbee.entity.Hierarchy_;
 import io.nzbee.entity.PageableUtil;
 import io.nzbee.entity.Product;
 import io.nzbee.entity.ProductAttribute;
@@ -45,7 +43,6 @@ import io.nzbee.entity.ProductStatus_;
 import io.nzbee.entity.ProductTag;
 import io.nzbee.entity.ProductTag_;
 import io.nzbee.entity.Product_;
-import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.ProductVars;
 
 @Component
