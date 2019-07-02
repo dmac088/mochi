@@ -66,7 +66,7 @@ public class BrandService implements IBrandService {
 			lid.add(bDO.getBrandId());
 			bDO.setProductCount(
 					(tagIds.isEmpty()) 
-									? productRepository.count(CategoryVars.PRIMARY_HIERARCHY_CODE, 
+									? productRepository.count(
 											CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 											categoryDesc, 
 											locale,
@@ -78,7 +78,7 @@ public class BrandService implements IBrandService {
 											categoryIds.size() == 0 ? Arrays.asList(new Long(-1)) : categoryIds,
 											(categoryIds.size() == 0 ? 0 : 1)
 											)
-									: productRepository.countForTags(CategoryVars.PRIMARY_HIERARCHY_CODE, 
+									: productRepository.countForTags(
 											CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 											categoryDesc, 
 											locale,

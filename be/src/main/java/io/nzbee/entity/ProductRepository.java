@@ -31,7 +31,6 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 				+ " ON c.cat_typ_id = ct.cat_typ_id "
 				+ "WHERE ca.cat_desc = :categoryDesc "
 				+ "AND ca.lcl_cd = :locale "
-				+ "AND h.hir_cd = :hierarchyCode "
 				+ "AND ct.cat_typ_cd = :categoryTypeCode "
 				+ "UNION ALL "
 				+ "SELECT c.cat_id, c.cat_cd, c.hir_id, c.cat_typ_id "
@@ -39,7 +38,7 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 				+ "INNER JOIN mochi.hierarchy h ON c.hir_id = h.hir_id "
 				+ "INNER JOIN MyCTE ON c.cat_prnt_id = MyCTE.cat_id "
 				+ "WHERE c.cat_prnt_id IS NOT NULL "
-				+ "AND h.hir_cd = :hierarchyCode) "
+				+ ") "
 				+ "SELECT coalesce(MAX(prc.prc_val), 0) "
 				+ "FROM MyCTE c "
 				+ "INNER JOIN mochi.hierarchy h "
@@ -66,7 +65,6 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 				+ "AND pstat.prd_sts_cd 	= :productStatusCode "
 				+ "AND ct.cat_typ_cd 		= :categoryTypeCode "
 				+ "AND ccy.ccy_cd 			= :currencyCode "
-				+ "AND h.hir_cd 			= :hierarchyCode "
 				+ "AND ca.lcl_cd 			= :locale "
 				+ "AND ("
 				+ "	:inHandlingBrands = 0 "
@@ -80,7 +78,7 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 				+ ") "
 				+ "AND now() BETWEEN prc.prc_st_dt AND prc.prc_en_dt ",
 		nativeQuery = true)	
-	Double maxMarkDownPrice(@Param("hierarchyCode") 		String hierarchyCode, 
+	Double maxMarkDownPrice(
 							@Param("categoryTypeCode") 		String categoryTypeCode,
 							@Param("categoryDesc") 			String categoryDesc, 
 							@Param("locale") 				String locale,
@@ -104,7 +102,6 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 					+ " ON c.cat_typ_id = ct.cat_typ_id "
 					+ "WHERE ca.cat_desc = :categoryDesc "
 					+ "AND ca.lcl_cd = :locale "
-					+ "AND h.hir_cd = :hierarchyCode "
 					+ "AND ct.cat_typ_cd = :categoryTypeCode "
 					+ "UNION ALL "
 					+ "SELECT c.cat_id, c.cat_cd, c.hir_id, c.cat_typ_id "
@@ -112,7 +109,7 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 					+ "INNER JOIN mochi.hierarchy h ON c.hir_id = h.hir_id "
 					+ "INNER JOIN MyCTE ON c.cat_prnt_id = MyCTE.cat_id "
 					+ "WHERE c.cat_prnt_id IS NOT NULL "
-					+ "AND h.hir_cd = :hierarchyCode) "
+					+ ") "
 					+ "SELECT coalesce(MAX(prc.prc_val), 0) "
 					+ "FROM MyCTE c "
 					+ "INNER JOIN mochi.hierarchy h "
@@ -141,7 +138,6 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 					+ "AND pstat.prd_sts_cd 	= :productStatusCode "
 					+ "AND ct.cat_typ_cd 		= :categoryTypeCode "
 					+ "AND ccy.ccy_cd 			= :currencyCode "
-					+ "AND h.hir_cd 			= :hierarchyCode "
 					+ "AND ca.lcl_cd 			= :locale "
 					+ "AND ("
 					+ "	:inHandlingBrands = 0 "
@@ -160,7 +156,7 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 					+ ") "
 					+ "AND now() BETWEEN prc.prc_st_dt AND prc.prc_en_dt ",
 			nativeQuery = true)	
-		Double maxMarkDownPriceForTags(	@Param("hierarchyCode") 	String hierarchyCode, 
+		Double maxMarkDownPriceForTags(	
 										@Param("categoryTypeCode") 	String categoryTypeCode,
 										@Param("categoryDesc") 		String categoryDesc, 
 										@Param("locale") 			String locale,
@@ -186,7 +182,6 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 				+ " ON c.cat_typ_id = ct.cat_typ_id "
 				+ "WHERE ca.cat_desc = :categoryDesc "
 				+ "AND ca.lcl_cd = :locale "
-				+ "AND h.hir_cd = :hierarchyCode "
 				+ "AND ct.cat_typ_cd = :categoryTypeCode "
 				+ "UNION ALL "
 				+ "SELECT c.cat_id, c.cat_cd, c.hir_id, c.cat_typ_id "
@@ -194,7 +189,7 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 				+ "INNER JOIN mochi.hierarchy h ON c.hir_id = h.hir_id "
 				+ "INNER JOIN MyCTE ON c.cat_prnt_id = MyCTE.cat_id "
 				+ "WHERE c.cat_prnt_id IS NOT NULL "
-				+ "AND h.hir_cd = :hierarchyCode) "
+				+ ") "
 				+ "SELECT COUNT(DISTINCT p.prd_id) "
 				+ "FROM MyCTE c "
 				+ "INNER JOIN mochi.hierarchy h "
@@ -221,7 +216,6 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 				+ "AND pstat.prd_sts_cd 	= :productStatusCode "
 				+ "AND ct.cat_typ_cd 		= :categoryTypeCode "
 				+ "AND ccy.ccy_cd 			= :currencyCode "
-				+ "AND h.hir_cd 			= :hierarchyCode "
 				+ "AND ca.lcl_cd 			= :locale "
 				+ "AND ("
 				+ "	:inHandlingBrands = 0 "
@@ -235,7 +229,7 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 				+ ") "
 				+ "AND now() BETWEEN prc.prc_st_dt AND prc.prc_en_dt ",
 		nativeQuery = true)	
-	Long count(	@Param("hierarchyCode") 		String hierarchyCode,
+	Long count(	
 			   	@Param("categoryTypeCode") 		String categoryTypeCode,
 			   	@Param("categoryDesc") 			String categoryDesc, 
 			   	@Param("locale") 				String locale,
@@ -260,7 +254,6 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 					+ " ON c.cat_typ_id = ct.cat_typ_id "
 					+ "WHERE ca.cat_desc = :categoryDesc "
 					+ "AND ca.lcl_cd = :locale "
-					+ "AND h.hir_cd = :hierarchyCode "
 					+ "AND ct.cat_typ_cd = :categoryTypeCode "
 					+ "UNION ALL "
 					+ "SELECT c.cat_id, c.cat_cd, c.hir_id, c.cat_typ_id "
@@ -268,7 +261,7 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 					+ "INNER JOIN mochi.hierarchy h ON c.hir_id = h.hir_id "
 					+ "INNER JOIN MyCTE ON c.cat_prnt_id = MyCTE.cat_id "
 					+ "WHERE c.cat_prnt_id IS NOT NULL "
-					+ "AND h.hir_cd = :hierarchyCode) "
+					+ ") "
 					+ "SELECT COUNT(DISTINCT p.prd_id) "
 					+ "FROM MyCTE c "
 					+ "INNER JOIN mochi.hierarchy h "
@@ -297,7 +290,6 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 					+ "AND pstat.prd_sts_cd 	= :productStatusCode "
 					+ "AND ct.cat_typ_cd 		= :categoryTypeCode "
 					+ "AND ccy.ccy_cd 			= :currencyCode "
-					+ "AND h.hir_cd 			= :hierarchyCode "
 					+ "AND ca.lcl_cd 			= :locale "
 					+ "AND ("
 					+ "	:inHandlingBrands = 0 "
@@ -316,7 +308,7 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 					+ ") "
 					+ "AND now() BETWEEN prc.prc_st_dt AND prc.prc_en_dt ",
 			nativeQuery = true)	
-		Long countForTags(	@Param("hierarchyCode") String hierarchyCode,
+		Long countForTags(	
 						   	@Param("categoryTypeCode") 		String categoryTypeCode,
 						   	@Param("categoryDesc") 			String categoryDesc, 
 						   	@Param("locale") 				String locale,

@@ -96,13 +96,13 @@ public class ProductService implements IProductService {
 		
 		//all categories (if non selected in facets
 		//Category parent = categoryRepository.findByAttributesLclCdAndAttributesCategoryDesc(locale, categoryDesc);
-		Category parent = categoryDAO.getByCategoryDesc(CategoryVars.PRIMARY_HIERARCHY_CODE, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, categoryDesc, locale);
+		Category parent = categoryDAO.getByCategoryDesc(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, categoryDesc, locale);
 		List<Category> allCategories = recurseCategories(new ArrayList<Category>(), parent);
 		List<Long> allCategoryIds = allCategories.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
 		
 		//Category Facets
 		List<SidebarFacetDTO> selectedCategories = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals(CategoryVars.PRIMARY_CATEGORY_FACET_NAME);}).collect(Collectors.toList());
-		List<Category> lpc = selectedCategories.stream().map(f-> {return categoryDAO.getByCategoryDesc(CategoryVars.PRIMARY_HIERARCHY_CODE, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, f.getDesc(), locale);}).collect(Collectors.toList());
+		List<Category> lpc = selectedCategories.stream().map(f-> {return categoryDAO.getByCategoryDesc(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, f.getDesc(), locale);}).collect(Collectors.toList());
 						
 		List<Category> lpcf = new ArrayList<Category>();
 		lpc.stream().forEach(pc -> { lpcf.addAll(recurseCategories(new ArrayList<Category>(), pc)); });
@@ -141,13 +141,13 @@ public class ProductService implements IProductService {
 	public Double getMaxPrice(String categoryDesc, String locale, String currency, List<SidebarFacetDTO> facets) {
 		
 		//all categories (if non selected in facets
-		Category parent = categoryDAO.getByCategoryDesc(CategoryVars.PRIMARY_HIERARCHY_CODE, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, categoryDesc, locale);
+		Category parent = categoryDAO.getByCategoryDesc(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, categoryDesc, locale);
 		List<Category> allCategories = recurseCategories(new ArrayList<Category>(), parent);
 		List<Long> allCategoryIds = allCategories.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
 				
 		//Category Facets
 		List<SidebarFacetDTO> selectedCategories = facets.stream().filter(f -> {return f.getFacetingName().equals(CategoryVars.PRIMARY_CATEGORY_FACET_NAME);}).collect(Collectors.toList());
-		List<Category> lpc = selectedCategories.stream().map(f-> {return categoryDAO.getByCategoryDesc(CategoryVars.PRIMARY_HIERARCHY_CODE, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, f.getDesc(), locale);}).collect(Collectors.toList());
+		List<Category> lpc = selectedCategories.stream().map(f-> {return categoryDAO.getByCategoryDesc(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, f.getDesc(), locale);}).collect(Collectors.toList());
 				
 		List<Category> lpcf = new ArrayList<Category>();
 		lpc.stream().forEach(pc -> { lpcf.addAll(recurseCategories(new ArrayList<Category>(), pc)); });
@@ -173,7 +173,7 @@ public class ProductService implements IProductService {
 			
 			//categories
 			List<SidebarFacetDTO> selectedCategories = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals(CategoryVars.PRIMARY_CATEGORY_FACET_NAME);}).collect(Collectors.toList());
-			List<Category> lpc = selectedCategories.stream().map(f-> {return categoryDAO.getByCategoryDesc(CategoryVars.PRIMARY_HIERARCHY_CODE, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, f.getDesc(), locale);}).collect(Collectors.toList());
+			List<Category> lpc = selectedCategories.stream().map(f-> {return categoryDAO.getByCategoryDesc(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, f.getDesc(), locale);}).collect(Collectors.toList());
 			List<Category> lpcf = new ArrayList<Category>();
 			lpc.stream().forEach(pc -> { lpcf.addAll(recurseCategories(new ArrayList<Category>(), pc)); });
 			List<Long> facetCategoryIds = lpcf.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
@@ -191,8 +191,7 @@ public class ProductService implements IProductService {
 											f.setId(t.getTagId());
 											f.setToken(t.getTag().get().getCode());
 											f.setDesc(t.getTagDesc());
-											f.setProductCount(productRepository.countForTags(
-																								CategoryVars.PRIMARY_HIERARCHY_CODE, 
+											f.setProductCount(productRepository.countForTags( 
 																								CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 																								categoryDesc, 
 																								locale, 
@@ -217,13 +216,13 @@ public class ProductService implements IProductService {
 	public List<SidebarFacetDTO> getProductTags(String locale, String currency, String categoryDesc, Double price, List<SidebarFacetDTO> selectedFacets) {
 		
 		//all categories (if non selected in facets
-		Category parent = categoryDAO.getByCategoryDesc(CategoryVars.PRIMARY_HIERARCHY_CODE, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, categoryDesc, locale);
+		Category parent = categoryDAO.getByCategoryDesc(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, categoryDesc, locale);
 		List<Category> allCategories = recurseCategories(new ArrayList<Category>(), parent);
 		List<Long> allCategoryIds = allCategories.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
 						
 		//Facets
 		List<SidebarFacetDTO> selectedCategories = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals(CategoryVars.PRIMARY_CATEGORY_FACET_NAME);}).collect(Collectors.toList());
-		List<Category> lpc = selectedCategories.stream().map(f-> {return categoryDAO.getByCategoryDesc(CategoryVars.PRIMARY_HIERARCHY_CODE, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, f.getDesc(), locale);}).collect(Collectors.toList());
+		List<Category> lpc = selectedCategories.stream().map(f-> {return categoryDAO.getByCategoryDesc(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, f.getDesc(), locale);}).collect(Collectors.toList());
 							
 		List<Category> lpcf = new ArrayList<Category>();
 		lpc.stream().forEach(pc -> { lpcf.addAll(recurseCategories(new ArrayList<Category>(), pc)); });

@@ -138,7 +138,7 @@ public class CategoryDAO implements Dao<Category> {
 		return query.getResultList();
 	}
 	
-	public Category getByCategoryDesc(String hieararchyCode, String categoryTypeCode, String categoryDesc, String locale) {
+	public Category getByCategoryDesc(String categoryTypeCode, String categoryDesc, String locale) {
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		

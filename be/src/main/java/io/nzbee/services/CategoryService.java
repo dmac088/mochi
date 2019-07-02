@@ -34,7 +34,7 @@ public class CategoryService implements ICategoryService {
 	public List<Category> getCategories(final String locale, String currency) {
     	List<io.nzbee.entity.Category> lpc = categoryDAO.getAll();
     	return lpc.stream()
-    			.map(pc -> createCategory(CategoryVars.PRIMARY_HIERARCHY_CODE, pc, locale, currency))
+    			.map(pc -> createCategory(pc, locale, currency))
     			.filter(pc -> pc.getProductCount() > 0)
     			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
@@ -47,7 +47,7 @@ public class CategoryService implements ICategoryService {
  	public List<Category> getCategoryParent(final String locale, String currency, final Long parentCategoryId) {
     	List<io.nzbee.entity.Category> lpc = categoryDAO.getByParent(CategoryVars.PRIMARY_HIERARCHY_CODE, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, parentCategoryId, locale);
     	return lpc.stream()
-    			.map(pc -> createCategory(CategoryVars.PRIMARY_HIERARCHY_CODE, pc, locale, currency))
+    			.map(pc -> createCategory(pc, locale, currency))
     			.filter(pc -> pc.getProductCount() > 0)
     			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
@@ -59,7 +59,7 @@ public class CategoryService implements ICategoryService {
   	public List<Category> getCategoriesForLevel(final String locale, String currency, final Long level) {
      	List<io.nzbee.entity.Category> lpc = categoryDAO.getByLevel(CategoryVars.PRIMARY_HIERARCHY_CODE, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, level, locale);
      	return lpc.stream()
-     			.map(pc -> createCategory(CategoryVars.PRIMARY_HIERARCHY_CODE, pc, locale, currency))
+     			.map(pc -> createCategory(pc, locale, currency))
      			.filter(pc -> pc.getProductCount() > 0)
     			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
@@ -71,7 +71,7 @@ public class CategoryService implements ICategoryService {
   	//@Cacheable
   	public Category getCategory(final String locale, String currency, final Long categoryId) {
     	io.nzbee.entity.Category pc = categoryDAO.get(categoryId).get();
-     	return	createCategory(CategoryVars.PRIMARY_HIERARCHY_CODE,pc, locale, currency);
+     	return	createCategory(pc, locale, currency);
   	}
     
     @Override
@@ -79,13 +79,11 @@ public class CategoryService implements ICategoryService {
 	//@Cacheable
 	public Category getCategory(String locale, String currency, String categoryDesc) {
     	io.nzbee.entity.Category pc = categoryDAO.getByCategoryDesc(
-						    										CategoryVars.PRIMARY_HIERARCHY_CODE, 
 						    										CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 						    										categoryDesc, 
 						    										locale
 						    									   );
      	return	createCategory( 
-     							CategoryVars.PRIMARY_HIERARCHY_CODE, 
      							pc, 
      							locale, 
      							currency
@@ -111,13 +109,12 @@ public class CategoryService implements ICategoryService {
 				 tagIds,
 				 locale);
 		
-		List<Category> lcDO = lc.stream().map(c -> createCategory(hierarchyCode, c, locale, currency)).collect(Collectors.toList());
+		List<Category> lcDO = lc.stream().map(c -> createCategory(c, locale, currency)).collect(Collectors.toList());
 		
 		lcDO.stream().forEach(cDO -> {
 			cDO.setProductCount(
 								(tagIds.isEmpty()) 
 										? 	productRepository.count(
-											CategoryVars.PRIMARY_HIERARCHY_CODE, 
 											CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 											cDO.getCategoryDesc(), 
 											locale,
@@ -129,7 +126,6 @@ public class CategoryService implements ICategoryService {
 											Arrays.asList(new Long(-1)),
 											0)
 										: 	productRepository.countForTags(
-											CategoryVars.PRIMARY_HIERARCHY_CODE, 
 											CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 											cDO.getCategoryDesc(), 
 											locale,
@@ -173,7 +169,7 @@ public class CategoryService implements ICategoryService {
     }
     
  	@Cacheable
-    public Category createCategory(final String hierarchyCode, final io.nzbee.entity.Category pc, final String locale, final String currency) {
+    public Category createCategory(final io.nzbee.entity.Category pc, final String locale, final String currency) {
     	
  		//create a new product DTO
         final Category cDO = new Category();
@@ -183,7 +179,6 @@ public class CategoryService implements ICategoryService {
         
         //get product count and set it
         cDO.setProductCount(	productRepository.count(
-        						CategoryVars.PRIMARY_HIERARCHY_CODE, 
 								CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 								pc.getAttributes().stream().filter(ca -> ca.getLclCd().equals(locale)).findFirst().get().getCategoryDesc(), 
 								locale,
@@ -198,7 +193,6 @@ public class CategoryService implements ICategoryService {
         
         cDO.setMaxMarkDownPrice(
         		productRepository.maxMarkDownPrice(
-        						CategoryVars.PRIMARY_HIERARCHY_CODE, 
 								CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 								pc.getAttributes().stream().filter(ca -> ca.getLclCd().equals(locale)).findFirst().get().getCategoryDesc(), 
 								locale,
@@ -213,7 +207,7 @@ public class CategoryService implements ICategoryService {
         //create the child objects and add to children collection
         List<Category> cDOl =
         pc.getChildren().stream().map(pc1 -> {
-        	Category pcchild = createCategory(hierarchyCode, pc1, locale, currency);
+        	Category pcchild = createCategory(pc1, locale, currency);
         	return pcchild;
         }).filter(c -> c.getProductCount() > 0).collect(Collectors.toList());
         cDO.setChildren(cDOl);
