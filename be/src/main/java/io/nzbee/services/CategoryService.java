@@ -210,9 +210,6 @@ public class CategoryService implements ICategoryService {
 								Arrays.asList(new Long(-1)),
 								0));
         		
-        //set the brand attributes of all products within the category, to the localized version
-        //Set<Brand> catBrands = pc.getProducts().stream().map(p -> this.createBrand(p.getBrand(), pc.getCategoryCode(), lcl)).collect(Collectors.toSet());
-       		
         //create the child objects and add to children collection
         List<Category> cDOl =
         pc.getChildren().stream().map(pc1 -> {
@@ -220,11 +217,7 @@ public class CategoryService implements ICategoryService {
         	return pcchild;
         }).filter(c -> c.getProductCount() > 0).collect(Collectors.toList());
         cDO.setChildren(cDOl);
-        
-        //get the counts for the brands within the category
-        //catBrands.forEach(b -> b.setProductCount(productRepository.countByCategoriesCategoryCodeAndBrandBrandCode(cDO.getCategoryCode(), b.getBrandCode())));
-        //catBrands.forEach(b -> b.setMaxMarkDownPrice(productRepository.maxMarkDownPriceByCategoriesCategoryCodeAndBrandBrandCodeAndPriceCurrencyCode(cDO.getCategoryCode(), b.getBrandCode(), currency)));
-       
+
         //set the parentId
         Optional<io.nzbee.entity.Category> parent = Optional.ofNullable(pc.getParent());
         if(parent.isPresent()) {
