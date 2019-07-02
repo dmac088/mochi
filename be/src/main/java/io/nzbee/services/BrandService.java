@@ -10,10 +10,8 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import io.nzbee.dao.BrandDAO;
-import io.nzbee.dao.CategoryDAO;
 import io.nzbee.domain.Brand;
 import io.nzbee.dto.SidebarFacetDTO;
-import io.nzbee.entity.CategoryAttribute;
 import io.nzbee.entity.ProductRepository;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.ProductVars;
@@ -23,9 +21,6 @@ import io.nzbee.variables.ProductVars;
 @CacheConfig(cacheNames="brands")
 public class BrandService implements IBrandService {
     
-	@Autowired
-    private CategoryDAO categoryDAO;
-	
 	@Autowired
     private BrandDAO brandDAO;
     
