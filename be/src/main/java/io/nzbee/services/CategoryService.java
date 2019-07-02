@@ -218,7 +218,7 @@ public class CategoryService implements ICategoryService {
         pc.getChildren().stream().map(pc1 -> {
         	Category pcchild = createCategory(hierarchyCode, pc1, locale, currency);
         	return pcchild;
-        }).collect(Collectors.toList());
+        }).filter(c -> c.getProductCount() > 0).collect(Collectors.toList());
         cDO.setChildren(cDOl);
         
         //get the counts for the brands within the category
