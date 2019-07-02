@@ -268,7 +268,6 @@ public class ProductDAO implements Dao<Product> {
 		Join<ProductPrice, Currency> curr = price.join(ProductPrice_.currency);
 		Join<Brand, BrandAttribute> brandAttribute = brand.join(Brand_.brandAttributes);
 		Join<Category, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
-		Join<Category, Hierarchy> categoryHierarchy = category.join(Category_.hierarchy);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		if(!categoryIds.isEmpty()) {
@@ -287,7 +286,6 @@ public class ProductDAO implements Dao<Product> {
 		conditions.add(cb.equal(type.get(ProductPriceType_.desc), priceType));
 		conditions.add(cb.equal(curr.get(Currency_.code), currency));
 		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
-		conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), CategoryVars.PRIMARY_HIERARCHY_CODE));
 		
 		TypedQuery<Double> query = em.createQuery(cq
 				.select(cb.max(price.<Double>get(ProductPrice_.priceValue)))
