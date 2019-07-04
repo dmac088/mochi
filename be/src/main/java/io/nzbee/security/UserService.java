@@ -28,8 +28,8 @@ public class UserService implements UserDetailsService {
     }
     
     
-	@Transactional
-	public void addUser(User user) {
-		userRepository.save(user);
-	}
+//	@Transactional
+//	public void addUser(User user) {
+//		userRepository.save(user);
+//	}
 }
