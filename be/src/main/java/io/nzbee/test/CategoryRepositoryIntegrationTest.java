@@ -81,16 +81,7 @@ public class CategoryRepositoryIntegrationTest {
     	Category found = categoryRepository.findByCategoryCode("TST01");
      
         // then
-        assertThat(found.getCategoryCode())
-          .isEqualTo(category.getCategoryCode());
-        assertThat(found.getCategoryLevel())
-        .isEqualTo(category.getCategoryLevel());
-        assertThat(found.getCategoryType().getCode())
-        .isEqualTo(category.getCategoryType().getCode());
-        assertThat(found.getHierarchy().getCode())
-        .isEqualTo(category.getHierarchy().getCode());
-        assertThat(found.getAttributes().stream().filter(a -> a.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH)).findFirst().get().getCategoryDesc())
-        .isEqualTo(category.getAttributes().stream().filter(a -> a.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH)).findFirst().get().getCategoryDesc());
+    	asserts(category, found);
     }
     
     @Test
@@ -101,18 +92,21 @@ public class CategoryRepositoryIntegrationTest {
     	Category found = categoryRepository.findByCategoryId(category.getCategoryId());
      
         // then
-        assertThat(found.getCategoryCode())
-          .isEqualTo(category.getCategoryCode());
-        assertThat(found.getCategoryLevel())
-        .isEqualTo(category.getCategoryLevel());
-        assertThat(found.getCategoryType().getCode())
-        .isEqualTo(category.getCategoryType().getCode());
-        assertThat(found.getHierarchy().getCode())
-        .isEqualTo(category.getHierarchy().getCode());
-        assertThat(found.getAttributes().stream().filter(a -> a.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH)).findFirst().get().getCategoryDesc())
-        .isEqualTo(category.getAttributes().stream().filter(a -> a.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH)).findFirst().get().getCategoryDesc());
-        
+    	asserts(category, found);
     
+    }
+    
+    private void asserts(Category category, Category found) {
+    	assertThat(found.getCategoryCode())
+        .isEqualTo(category.getCategoryCode());
+	    assertThat(found.getCategoryLevel())
+	    .isEqualTo(category.getCategoryLevel());
+	    assertThat(found.getCategoryType().getCode())
+	    .isEqualTo(category.getCategoryType().getCode());
+	    assertThat(found.getHierarchy().getCode())
+	    .isEqualTo(category.getHierarchy().getCode());
+	    assertThat(found.getAttributes().stream().filter(a -> a.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH)).findFirst().get().getCategoryDesc())
+	    .isEqualTo(category.getAttributes().stream().filter(a -> a.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH)).findFirst().get().getCategoryDesc());
     }
  
 }
