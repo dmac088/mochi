@@ -25,10 +25,10 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.json.JSONObject;
-
 import io.nzbee.entity.PartyPerson;
 import io.nzbee.entity.RoleCustomer;
 import io.nzbee.security.Encoders;
+import io.nzbee.security.IUserRoleService;
 import io.nzbee.security.User;
 import io.nzbee.security.UserRoleService;
 
@@ -42,7 +42,7 @@ https://www.baeldung.com/spring-data-rest-relationships
  
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {Encoders.class, UnitTestConfig.class})
+@ContextConfiguration(classes = {Encoders.class, UnitTestConfig.class, UserRoleService.class})
 public class RestClientUtil {
 	
 	@Autowired
@@ -50,7 +50,7 @@ public class RestClientUtil {
 	private PasswordEncoder passwordEncoder;
 	
 	@Autowired
-	UserRoleService userRoleService;
+	private UserRoleService userRoleService;
 	
     @Autowired
     @Qualifier("unitTestTemplate")

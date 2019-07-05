@@ -62,7 +62,8 @@ public class DataSourceBeanMochi {
     			"io.nzbee.dao",
     		    "io.nzbee.security",
 				"io.nzbee.services",
-				"io.nzbee.entity"}
+				"io.nzbee.entity",
+				"io.nzbee.test"}
         );
        JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
        em.setJpaVendorAdapter(vendorAdapter);

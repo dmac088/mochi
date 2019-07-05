@@ -5,8 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-
 import javax.persistence.EntityManager;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,7 +42,6 @@ public class CategoryRepositoryIntegrationTest {
     @Autowired
     private HierarchyRepository hierarchyRepository;
 
-    
     public Category persistNewCategory() {
     	Category 		category 		= new Category();
     	CategoryType 	categoryType 	= categoryTypeRepository.findByCategoryTypeId(new Long(1));
@@ -81,7 +78,7 @@ public class CategoryRepositoryIntegrationTest {
     	Category found = categoryRepository.findByCategoryCode("TST01");
      
         // then
-    	asserts(category, found);
+    	assertFound(category, found);
     }
     
     @Test
@@ -92,11 +89,10 @@ public class CategoryRepositoryIntegrationTest {
     	Category found = categoryRepository.findByCategoryId(category.getCategoryId());
      
         // then
-    	asserts(category, found);
-    
+    	assertFound(category, found);
     }
     
-    private void asserts(Category category, Category found) {
+    private void assertFound(Category category, Category found) {
     	assertThat(found.getCategoryCode())
         .isEqualTo(category.getCategoryCode());
 	    assertThat(found.getCategoryLevel())

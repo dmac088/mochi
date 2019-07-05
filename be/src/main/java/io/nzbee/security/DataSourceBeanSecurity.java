@@ -57,7 +57,8 @@ public class DataSourceBeanSecurity {
     		   								"io.nzbee.security",
     		   								"io.nzbee.domain",
     		   								"io.nzbee.entity",
-    		   								"io.nzbee.services"
+    		   								"io.nzbee.services",
+    		   								"io.nzbee.test"
     		   							 });
        JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
        em.setJpaVendorAdapter(vendorAdapter);
