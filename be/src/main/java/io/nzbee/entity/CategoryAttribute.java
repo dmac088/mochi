@@ -48,6 +48,10 @@ public class CategoryAttribute {
 		return categoryId;
 	}
 	
+	public void setCategoryId(Long categoryId) {
+		this.categoryId = categoryId;
+	}
+
 	public Optional<Category> getCategory() {
 		return Optional.ofNullable(category);
 	}
