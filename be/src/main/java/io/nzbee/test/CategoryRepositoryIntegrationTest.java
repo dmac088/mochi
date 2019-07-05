@@ -44,9 +44,7 @@ public class CategoryRepositoryIntegrationTest {
     private HierarchyRepository hierarchyRepository;
 
     
-    // write test cases here
-    @Test
-    public void whenFindByDesc_thenReturnCategory() {
+    public Category persistNewCategory() {
     	Category 		category 		= new Category();
     	CategoryType 	categoryType 	= categoryTypeRepository.findByCategoryTypeId(new Long(1));
     	Hierarchy 		hierarchy 		= hierarchyRepository.findByCode(CategoryVars.PRIMARY_HIERARCHY_CODE);
@@ -61,7 +59,6 @@ public class CategoryRepositoryIntegrationTest {
     	
     	List<CategoryAttribute> categoryAttributes = new ArrayList<CategoryAttribute>();
     	CategoryAttribute categoryAttribute = new CategoryAttribute();
-    	
     	categoryAttribute.setCategory(Optional.ofNullable(category));
     	categoryAttribute.setCategoryId(category.getCategoryId());
     	categoryAttribute.setCategoryDesc("testCategory");
@@ -70,10 +67,29 @@ public class CategoryRepositoryIntegrationTest {
     	category.setAttributes(categoryAttributes);
     	entityManager.persist(categoryAttribute);
     	entityManager.flush();
+    	
+    	return category;
+    }
+    
+    // write test cases here
+    @Test
+    public void whenFindByCode_thenReturnCategory() {
+    	Category category = this.persistNewCategory();
         
         // when
     	Category found = categoryRepository.findByCategoryCode("TST01");
-       // Employee found = employeeRepository.findByName(alex.getName());
+     
+        // then
+        assertThat(found.getCategoryCode())
+          .isEqualTo(category.getCategoryCode());
+    }
+    
+    @Test
+    public void whenFindById_thenReturnCategory() {
+    	Category category = this.persistNewCategory();
+        
+        // when
+    	Category found = categoryRepository.findByCategoryId(category.getCategoryId());
      
         // then
         assertThat(found.getCategoryCode())
