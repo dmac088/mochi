@@ -42,7 +42,7 @@ public class BrandService implements IBrandService {
 	@Transactional
 	@Cacheable
 	public Brand getBrand(String lcl, String curr, Long brandId) {
-    	io.nzbee.entity.Brand pb = brandDAO.get(brandId).get();
+    	io.nzbee.entity.Brand pb = brandDAO.findById(brandId).get();
      	return	createBrandDO(pb, lcl, curr);
 	}
  

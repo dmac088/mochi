@@ -70,7 +70,7 @@ public class CategoryService implements ICategoryService {
   	@Transactional
   	//@Cacheable
   	public Category getCategory(final String locale, String currency, final Long categoryId) {
-    	io.nzbee.entity.Category pc = categoryDAO.get(categoryId).get();
+    	io.nzbee.entity.Category pc = categoryDAO.findById(categoryId).get();
      	return	createCategory(pc, locale, currency);
   	}
     
