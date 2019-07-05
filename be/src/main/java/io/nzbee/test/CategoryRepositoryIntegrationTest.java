@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import javax.persistence.EntityManager;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,28 +47,28 @@ public class CategoryRepositoryIntegrationTest {
     // write test cases here
     @Test
     public void whenFindByDesc_thenReturnCategory() {
-    	CategoryAttribute categoryAttribute = new CategoryAttribute();
-    	categoryAttribute.setCategoryDesc("testCategory");
-    	categoryAttribute.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
-    	entityManager.persist(categoryAttribute);
-    	
-    	Category category = new Category();
-    	List<CategoryAttribute> categoryAttributes = new ArrayList<CategoryAttribute>();
-    	categoryAttributes.add(categoryAttribute);
-    	category.setAttributes(categoryAttributes);
-    	
-    	CategoryType categoryType = categoryTypeRepository.findByCategoryTypeId(new Long(1));
-    	Hierarchy hierarchy = hierarchyRepository.findByCode(CategoryVars.PRIMARY_HIERARCHY_CODE);
-    	Category parentCategory = categoryRepository.findByCategoryCode(CategoryVars.PRIMARY_HIERARCHY_ROOT_CODE);
+    	Category 		category 		= new Category();
+    	CategoryType 	categoryType 	= categoryTypeRepository.findByCategoryTypeId(new Long(1));
+    	Hierarchy 		hierarchy 		= hierarchyRepository.findByCode(CategoryVars.PRIMARY_HIERARCHY_CODE);
+    	Category 		parentCategory 	= categoryRepository.findByCategoryCode(CategoryVars.PRIMARY_HIERARCHY_ROOT_CODE);
     	
     	category.setCategoryCode("TST01");
     	category.setCategoryLevel(new Long(1));
     	category.setCategoryType(categoryType);
     	category.setHierarchy(hierarchy);
     	category.setParent(parentCategory);
-   
-    	//given
     	entityManager.persist(category);
+    	
+    	List<CategoryAttribute> categoryAttributes = new ArrayList<CategoryAttribute>();
+    	CategoryAttribute categoryAttribute = new CategoryAttribute();
+    	
+    	categoryAttribute.setCategory(Optional.ofNullable(category));
+    	categoryAttribute.setCategoryId(category.getCategoryId());
+    	categoryAttribute.setCategoryDesc("testCategory");
+    	categoryAttribute.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
+    	categoryAttributes.add(categoryAttribute);
+    	category.setAttributes(categoryAttributes);
+    	entityManager.persist(categoryAttribute);
     	entityManager.flush();
         
         // when
