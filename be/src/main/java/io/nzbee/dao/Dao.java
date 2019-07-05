@@ -7,7 +7,7 @@ import org.springframework.data.domain.Page;
 
 public interface Dao<T> {
     
-    Optional<T> get(long id);
+    Optional<T> findById(long id);
      
     List<T> getAll();
     

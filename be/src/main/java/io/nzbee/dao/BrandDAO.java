@@ -40,7 +40,7 @@ public class BrandDAO  implements Dao<Brand> {
 	private EntityManager em;
 	
 	@Override
-	public Optional<Brand> get(long id) {
+	public Optional<Brand> findById(long id) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Brand> cq = cb.createQuery(Brand.class);

@@ -39,7 +39,7 @@ public class CategoryDAO implements Dao<Category> {
 	private EntityManager em;
 
 	@Override
-	public Optional<Category> get(long id) {
+	public Optional<Category> findById(long id) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Category> cq = cb.createQuery(Category.class);

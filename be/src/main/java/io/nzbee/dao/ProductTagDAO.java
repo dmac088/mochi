@@ -50,7 +50,7 @@ public class ProductTagDAO  implements Dao<Product> {
 	private EntityManager em;
 	
 	@Override
-	public Optional<Product> get(long id) {
+	public Optional<Product> findById(long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

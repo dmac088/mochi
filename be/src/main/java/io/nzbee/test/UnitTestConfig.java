@@ -4,7 +4,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 import io.nzbee.security.IUserRoleService;
-import io.nzbee.security.UserRoleRepository;
 import io.nzbee.security.UserRoleService;
 
 public class UnitTestConfig {
