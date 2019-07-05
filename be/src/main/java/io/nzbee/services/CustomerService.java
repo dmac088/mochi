@@ -6,7 +6,6 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import io.nzbee.domain.Customer;
 import io.nzbee.entity.Party;
 import io.nzbee.entity.PartyPerson;
@@ -15,9 +14,9 @@ import io.nzbee.entity.PartyRepository;
 import io.nzbee.entity.Role;
 import io.nzbee.entity.RoleCustomer;
 import io.nzbee.exceptions.CustomerAlreadyExistException;
+import io.nzbee.security.IUserRoleService;
 import io.nzbee.security.User;
 import io.nzbee.security.UserRole;
-import io.nzbee.security.UserRoleService;
 
 @Service
 @Transactional
@@ -30,7 +29,7 @@ public class CustomerService implements ICustomerService {
     private PartyPersonRepository personRepository;
     
     @Autowired
-    private UserRoleService userRoleService;
+    private IUserRoleService userRoleService;
 	
 	private final String USER_ROLE_NAME		= "Customer";
 	private final String PARTY_ROLE_NAME	= "Customer";
