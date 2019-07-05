@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import org.junit.Test;
@@ -82,6 +83,8 @@ public class CategoryRepositoryIntegrationTest {
         // then
         assertThat(found.getCategoryCode())
           .isEqualTo(category.getCategoryCode());
+        assertThat(found.getAttributes().stream().filter(a -> a.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH)).findFirst().get().getCategoryDesc())
+        .isEqualTo(category.getAttributes().stream().filter(a -> a.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH)).findFirst().get().getCategoryDesc());
     }
     
     @Test
@@ -94,6 +97,8 @@ public class CategoryRepositoryIntegrationTest {
         // then
         assertThat(found.getCategoryCode())
           .isEqualTo(category.getCategoryCode());
+        assertThat(found.getAttributes().stream().filter(a -> a.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH)).findFirst().get().getCategoryDesc())
+        .isEqualTo(category.getAttributes().stream().filter(a -> a.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH)).findFirst().get().getCategoryDesc());
     }
  
 }
