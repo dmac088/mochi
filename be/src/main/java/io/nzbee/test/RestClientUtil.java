@@ -44,7 +44,7 @@ https://www.baeldung.com/spring-data-rest-relationships
  
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {Encoders.class, UnitTestConfig.class, UserRoleService.class})
+@ContextConfiguration(classes = {UnitTestConfig.class})
 public class RestClientUtil {
 	
 	@Autowired
