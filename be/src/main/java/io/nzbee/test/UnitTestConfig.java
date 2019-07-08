@@ -13,11 +13,5 @@ public class UnitTestConfig {
 		RestTemplate template = new RestTemplate();
 		return template;
     }
-	
-	@Bean 
-	public IUserRoleService userRoleService()  {
-		UserRoleService service = new UserRoleService();
-		return service;
-	}
 
 }
