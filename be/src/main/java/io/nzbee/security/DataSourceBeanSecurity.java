@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableJpaRepositories(
         entityManagerFactoryRef = "securityEntityManagerFactory", 
         transactionManagerRef = "securityTransactionManager")
+
 public class DataSourceBeanSecurity {
 	
 	@Autowired
