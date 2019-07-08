@@ -1,11 +1,14 @@
 package io.nzbee.test;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.client.RestTemplate;
 
-import io.nzbee.security.IUserRoleService;
-import io.nzbee.security.UserRoleService;
-
+@ComponentScan({"io.nzbee.domain",
+	"io.nzbee.security",
+	"io.nzbee.services",
+	"io.nzbee.dao",
+	"io.nzbee.entity"})
 public class UnitTestConfig {
 
 	@Bean 
