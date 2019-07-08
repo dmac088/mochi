@@ -30,6 +30,7 @@ import io.nzbee.entity.RoleCustomer;
 import io.nzbee.security.Encoders;
 import io.nzbee.security.IUserRoleService;
 import io.nzbee.security.User;
+import io.nzbee.security.UserRoleRepository;
 import io.nzbee.security.UserRoleService;
 
 /*
@@ -50,7 +51,7 @@ public class RestClientUtil {
 	private PasswordEncoder passwordEncoder;
 	
 	@Autowired
-	private UserRoleService userRoleService;
+	private IUserRoleService userRoleService;
 	
     @Autowired
     @Qualifier("unitTestTemplate")
