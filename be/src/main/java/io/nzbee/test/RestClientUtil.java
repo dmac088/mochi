@@ -25,6 +25,8 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.json.JSONObject;
+
+import io.nzbee.App;
 import io.nzbee.entity.PartyPerson;
 import io.nzbee.entity.RoleCustomer;
 import io.nzbee.security.Encoders;
@@ -43,7 +45,7 @@ https://www.baeldung.com/spring-data-rest-relationships
  
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {UnitTestConfig.class})
+@ContextConfiguration(classes = {UnitTestConfig.class, App.class})
 public class RestClientUtil {
 	
 	@Autowired
