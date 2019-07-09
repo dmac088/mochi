@@ -10,6 +10,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -25,16 +28,10 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.json.JSONObject;
-
-import io.nzbee.App;
 import io.nzbee.entity.PartyPerson;
 import io.nzbee.entity.RoleCustomer;
-import io.nzbee.security.Encoders;
 import io.nzbee.security.IUserRoleService;
 import io.nzbee.security.User;
-import io.nzbee.security.UserRoleRepository;
-import io.nzbee.security.UserRoleService;
-
 /*
 
 Use the following class to configure unit tests as per the following link:
@@ -45,7 +42,9 @@ https://www.baeldung.com/spring-data-rest-relationships
  
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {UnitTestConfig.class, App.class})
+@ContextConfiguration(classes = {UnitTestConfig.class})
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = Replace.NONE)
 public class RestClientUtil {
 	
 	@Autowired
