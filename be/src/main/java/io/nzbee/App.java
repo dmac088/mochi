@@ -8,8 +8,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-
 @SpringBootApplication
 @EnableCaching
 @ComponentScan({"io.nzbee.domain",
