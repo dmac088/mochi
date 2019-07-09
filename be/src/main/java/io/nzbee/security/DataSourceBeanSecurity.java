@@ -1,9 +1,14 @@
 package io.nzbee.security;
 
 import java.util.Properties;
-import javax.sql.DataSource;
+
+import javax.persistence.EntityManagerFactory;
+
+import org.hibernate.jpa.boot.spi.EntityManagerFactoryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -14,6 +19,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import com.zaxxer.hikari.HikariDataSource;
 
 
 
@@ -25,18 +31,31 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 public class DataSourceBeanSecurity {
 	
-	@Autowired
-	Environment env;
+//	@Autowired
+//	Environment env;
+	
+//	@Bean(name = "securityDataSource")
+//    public DataSource dataSource() {
+//		return DataSourceBuilder
+//                .create()
+//                .url(env.getProperty("spring.datasource.security.url")) 
+//                .username(env.getProperty("spring.datasource.security.username"))
+//                .password(env.getProperty("spring.datasource.security.password"))
+//                .driverClassName(env.getProperty("spring.jpa.properties.hibernate.driver_class"))
+//                .build();
+//    }
+	
+	@Bean(name = "securityDataSourceProperties")
+    @ConfigurationProperties("spring.datasource.security")
+    public DataSourceProperties dataSourceProperties() {
+        return new DataSourceProperties();
+    }
 	
 	@Bean(name = "securityDataSource")
-    public DataSource dataSource() {
-		return DataSourceBuilder
-                .create()
-                .url(env.getProperty("spring.datasource.security.url")) 
-                .username(env.getProperty("spring.datasource.security.username"))
-                .password(env.getProperty("spring.datasource.security.password"))
-                .driverClassName(env.getProperty("spring.jpa.properties.hibernate.driver_class"))
-                
+    @ConfigurationProperties("spring.datasource.security")
+    public HikariDataSource dataSource(@Qualifier("securityDataSourceProperties") DataSourceProperties properties) {
+        return properties.initializeDataSourceBuilder().type(HikariDataSource.class)
+        		.driverClassName("org.postgresql.Driver")
                 .build();
     }
 	
@@ -50,10 +69,10 @@ public class DataSourceBeanSecurity {
 	} 
      
 	@Bean(name = "securityEntityManagerFactory") 
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-       LocalContainerEntityManagerFactoryBean em 
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(@Qualifier("securityDataSource") HikariDataSource dataSource) {
+		LocalContainerEntityManagerFactoryBean em 
          = new LocalContainerEntityManagerFactoryBean();
-       em.setDataSource(this.dataSource());
+       em.setDataSource(dataSource);
        em.setPackagesToScan(new String[] {
     		   								"io.nzbee.security",
     		   								"io.nzbee.domain",
@@ -67,13 +86,12 @@ public class DataSourceBeanSecurity {
        return em;
     }
     
-	
 	@Bean(name = "securityTransactionManager")
-    public PlatformTransactionManager TransactionManager() {
+    public PlatformTransactionManager TransactionManager(@Qualifier("securityEntityManagerFactory") LocalContainerEntityManagerFactoryBean entityManagerFactory) {
         JpaTransactionManager transactionManager
                 = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(
-                this.entityManagerFactory().getObject());
+        		entityManagerFactory.getObject());
         return transactionManager;
     }
 } 

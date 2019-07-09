@@ -3,10 +3,10 @@ package io.nzbee.entity;
 
 
 import java.util.Properties;
-
-import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -19,6 +19,8 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import com.zaxxer.hikari.HikariDataSource;
+
 
 
 @Configuration
@@ -29,18 +31,19 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
         )
 public class DataSourceBeanMochi {
 	
-	@Autowired
-	Environment env;
+	@Primary
+	@Bean(name = "mochiDataSourceProperties")
+    @ConfigurationProperties("spring.datasource.mochi")
+    public DataSourceProperties dataSourceProperties() {
+        return new DataSourceProperties();
+    }
 	
 	@Primary
 	@Bean(name = "mochiDataSource")
-    public DataSource dataSource() {
-		return DataSourceBuilder
-                .create()
-                .url(env.getProperty("spring.datasource.mochi.url")) 
-                .username(env.getProperty("spring.datasource.mochi.username"))
-                .password(env.getProperty("spring.datasource.mochi.password"))
-                .driverClassName(env.getProperty("spring.jpa.properties.hibernate.driver_class"))
+    @ConfigurationProperties("spring.datasource.mochi")
+    public HikariDataSource dataSource(@Qualifier("mochiDataSourceProperties") DataSourceProperties properties) {
+        return properties.initializeDataSourceBuilder().type(HikariDataSource.class)
+        		.driverClassName("org.postgresql.Driver")
                 .build();
     }
 	
@@ -53,10 +56,10 @@ public class DataSourceBeanMochi {
      
 	@Primary
 	@Bean(name = "mochiEntityManagerFactory") 
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(@Qualifier("mochiDataSource") HikariDataSource dataSource) {
        LocalContainerEntityManagerFactoryBean em 
          = new LocalContainerEntityManagerFactoryBean();
-       em.setDataSource(this.dataSource());
+       em.setDataSource(dataSource);
        em.setPackagesToScan(new String[] 
     		   {"io.nzbee.domain",
     			"io.nzbee.dao",
@@ -71,14 +74,13 @@ public class DataSourceBeanMochi {
        return em;
     }
     
-	
 	@Primary
 	@Bean(name = "mochiTransactionManager")
-    public PlatformTransactionManager TransactionManager() {
+    public PlatformTransactionManager TransactionManager(@Qualifier("mochiEntityManagerFactory") LocalContainerEntityManagerFactoryBean entityManagerFactory) {
         JpaTransactionManager transactionManager
                 = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(
-                this.entityManagerFactory().getObject());
+        		entityManagerFactory.getObject());
         return transactionManager;
     }
 } 

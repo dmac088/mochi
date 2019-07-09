@@ -22,7 +22,5 @@ public class SearchIndexController {
     public String createSearchIndex() {
     	searchIndexService.createSearchIndex();
     	return "Search Index Created!";
-    }
-    
-    
+    } 
 }
