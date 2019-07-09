@@ -17,6 +17,7 @@ import io.nzbee.exceptions.CustomerAlreadyExistException;
 import io.nzbee.security.IUserRoleService;
 import io.nzbee.security.User;
 import io.nzbee.security.UserRole;
+import io.nzbee.security.UserRoleService;
 
 @Service
 @Transactional
@@ -29,7 +30,7 @@ public class CustomerService implements ICustomerService {
     private PartyPersonRepository personRepository;
     
     @Autowired
-    private IUserRoleService userRoleService;
+    private UserRoleService userRoleService;
 	
 	private final String USER_ROLE_NAME		= "Customer";
 	private final String PARTY_ROLE_NAME	= "Customer";

@@ -30,8 +30,8 @@ import org.springframework.web.client.RestTemplate;
 import org.json.JSONObject;
 import io.nzbee.entity.PartyPerson;
 import io.nzbee.entity.RoleCustomer;
-import io.nzbee.security.IUserRoleService;
 import io.nzbee.security.User;
+import io.nzbee.security.UserRole;
 /*
 
 Use the following class to configure unit tests as per the following link:
@@ -39,6 +39,7 @@ Use the following class to configure unit tests as per the following link:
 https://www.baeldung.com/spring-data-rest-relationships
  
 */
+import io.nzbee.security.UserRoleService;
  
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -52,7 +53,7 @@ public class RestClientUtil {
 	private PasswordEncoder passwordEncoder;
 	
 	@Autowired
-	private IUserRoleService userRoleService;
+	private UserRoleService userRoleService;
 	
     @Autowired
     @Qualifier("unitTestTemplate")
@@ -76,7 +77,7 @@ public class RestClientUtil {
     
     private static String CUSTOMER_USERNAME 				= "dmac219";
     private static String CUSTOMER_PASSWORD 				= "password";
-    private static String USER_ROLE							= "CUSTOMER";
+    private static String USER_ROLE							= "Customer";
 
     private HttpHeaders getHeaders() {
     	HttpHeaders headers = new HttpHeaders();
@@ -147,11 +148,13 @@ public class RestClientUtil {
 		 objUser.setPassword(passwordEncoder.encode(CUSTOMER_PASSWORD));
 		 objUser.setUsername(CUSTOMER_USERNAME);
 		 objUser.setEnabled(true);
-		 objUser.addUserRole(userRoleService.loadUserRoleByRoleName(USER_ROLE));
+		 UserRole ur = userRoleService.loadUserRoleByRoleName(USER_ROLE);
+		 List<UserRole> lur= new ArrayList<UserRole>();
+		 lur.add(ur);
+		 objUser.setUserRoles(lur);
 		 
 		 //add the user to the person
 		 objPerson.addUser(objUser);
-		 
 		
 		 //add role to person
 		 objPerson.addRole(objCustomer);

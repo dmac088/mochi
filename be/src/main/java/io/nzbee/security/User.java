@@ -14,6 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -77,9 +79,7 @@ public class User implements UserDetails, Serializable {
     		   inverseJoinColumns 	= @JoinColumn(name = "role_id"))
     @OrderBy
     @JsonIgnore
-    private Collection<UserRole> roles;
-    
-
+    private List<UserRole> roles;
     
 	@Override
     public boolean isAccountNonExpired() {
@@ -150,15 +150,15 @@ public class User implements UserDetails, Serializable {
 	}
 	
 	public void addUserRole(UserRole ur) {
-		this.roles.add(ur);
+		this.getUserRoles().add(ur);
 	}
 	
 	@JsonIgnore
-	public Collection<UserRole> getUserRoles() {
+	public List<UserRole> getUserRoles() {
 		return roles;
 	}
 
-	public void setUserRoles(Collection<UserRole> roles) {
+	public void setUserRoles(List<UserRole> roles) {
 		this.roles = roles;
 	}
 }
