@@ -27,7 +27,7 @@ import io.nzbee.variables.GeneralVars;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-public class CategoryRepositoryIntegrationTest {
+public class IT_CategoryRepository {
  
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")

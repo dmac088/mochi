@@ -66,9 +66,6 @@ public class UT_REST_Customer_Signup {
 	@Autowired
 	private ICustomerService customerService;
 	
-	@Autowired
-	private PartyPersonRepository personRepository;
-	
     @Autowired
     @Qualifier("unitTestTemplate")
     private RestTemplate template;
@@ -89,7 +86,7 @@ public class UT_REST_Customer_Signup {
     private static Date   CUSTOMER_START_DATE 				= new Date();
     private static String CUSTOMER_ROLE_TYPE 				= "Customer";
     
-    private static String CUSTOMER_USERNAME 				= "dmac258";
+    private static String CUSTOMER_USERNAME 				= "dmac259";
     private static String CUSTOMER_PASSWORD 				= "password";
     private static String USER_ROLE							= "CUSTOMER";
 
