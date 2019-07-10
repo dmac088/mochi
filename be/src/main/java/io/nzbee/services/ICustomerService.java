@@ -15,5 +15,7 @@ public interface ICustomerService {
 	 
 	 Customer getCustomer(String userName);
 	 
+	 void deleteCustomer(final Customer customer);
+	 
 	 Customer convertToCustomerDO(final io.nzbee.entity.PartyPerson person);
 }

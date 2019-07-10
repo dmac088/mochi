@@ -131,5 +131,13 @@ public class CustomerService implements ICustomerService {
     	return cDo;
     }
 
+
+	@Override
+	public void deleteCustomer(Customer customer) {
+		// TODO Auto-generated method stub
+		Party p = partyRepository.findByPartyUserUsername(customer.getUserName()).get();
+		partyRepository.delete(p);
+	}
+
     
 }
