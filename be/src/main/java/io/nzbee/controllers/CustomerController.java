@@ -43,12 +43,28 @@ public class CustomerController {
 
     //Registration
     @PostMapping("/Customer/Signup")
-    public GenericResponse registerNewPersonCustomer(@RequestBody final Customer customer) {
+    public GenericResponse registerNewCustomer(@RequestBody final Customer customer) {
         LOGGER.debug("Registering user account with information: {}", customer);
         
         try {
 			customerService.registerNewCustomer(customer);
 		} catch (CustomerAlreadyExistException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+      
+         //eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), getAppUrl(request)));
+        return new GenericResponse("success");
+    }
+    
+    @PostMapping("/Customer/Delete")
+    public GenericResponse deleteCustomer(@RequestBody final Customer customer) {
+        LOGGER.debug("Registering user account with information: {}", customer);
+        
+        try {
+        	System.out.println("deleteCustomer");
+			customerService.deleteCustomer(customer);
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

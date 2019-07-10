@@ -81,13 +81,14 @@ public class UT_REST_Customer_Signup {
     private static String OAUTH_TOKEN_GRANT_TYPE 			= "password";
     
     //private static String CUSTOMER_ENDPOINT 				= "https://localhost:8090/api/Customer";
-    private static String PERSON_ENDPOINT 					= "https://localhost:8090/api/Customer/Signup";
+    private static String CUSTOMER_SIGNUP_ENDPOINT 			= "https://localhost:8090/api/Customer/Signup";
+    private static String CUSTOMER_DELETE_ENDPOINT			= "https://localhost:8090/api/Customer/Delete";
     private static String CUSTOMER_GIVEN_NAME_EN 			= "Daniel";
     private static String CUSTOMER_FAMILY_NAME_EN 			= "Mackie";
     //private static String CUSTOMER_NAME_CN 				= "丹尼爾麥基";
     private static Date   CUSTOMER_START_DATE 				= new Date();
     
-    private static String CUSTOMER_USERNAME 				= "dmac265";
+    private static String CUSTOMER_USERNAME 				= "dmac268";
     private static String CUSTOMER_PASSWORD 				= "password";
     private static String USER_ROLE							= "Customer";
 
@@ -135,14 +136,56 @@ public class UT_REST_Customer_Signup {
     
     @Test
     public void deleteCustomer() {
+    	RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
     	HttpHeaders headers = this.retrieveHeaders();
     	
+    	//create a person object
+	    PartyPerson p1 = new PartyPerson();
+	    p1.setGivenName(CUSTOMER_GIVEN_NAME_EN);
+	    p1.setFamilyName(CUSTOMER_FAMILY_NAME_EN);
+	        
+	    //create the role object
+		p1.setPartyRoles(new ArrayList<Role>());
+		RoleCustomer c1 = new RoleCustomer();
+		c1.setRoleStart(CUSTOMER_START_DATE);
+			
+		//create a new user object
+		User u1 = new User();
+		u1.setUsername(CUSTOMER_USERNAME);
+		u1.setEnabled(true);
+		u1.setUserRoles(new ArrayList<UserRole>());
+		u1.addUserRole(userRoleService.loadUserRoleByRoleName(USER_ROLE));
+		u1.setPassword(CUSTOMER_PASSWORD);
+			
+		//add user to person 
+		p1.addUser(u1);
+		
+		//addPartytoUser
+		u1.setUserParty(p1);
+		
+		//add the role to person
+		p1.addRole(c1);
+		
+		//add the person to role
+		c1.setRoleParty(p1);
+		 
+		//add role to person
+		p1.addRole(c1);
+		c1.setRoleParty(p1);
+			
+		//persist the parent
+		Customer customer = customerService.convertToCustomerDO(p1);
+    	
+		HttpEntity<Customer> customerEntity = new HttpEntity<Customer>(customer, headers);
+		ResponseEntity<Customer> uri = restTemplate.exchange(UT_REST_Customer_Signup.CUSTOMER_DELETE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
+		assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value());
     }
     
     @Test
     public void updateCustomer() {
+    	RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
     	HttpHeaders headers = this.retrieveHeaders();
-    	
+    	//customerService.
     }
     
 	@Test
@@ -192,7 +235,7 @@ public class UT_REST_Customer_Signup {
 		 Customer customer = customerService.convertToCustomerDO(p1);
 		 
 		 HttpEntity<Customer> customerEntity = new HttpEntity<Customer>(customer, headers);
-		 ResponseEntity<Customer> uri = restTemplate.exchange(UT_REST_Customer_Signup.PERSON_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
+		 ResponseEntity<Customer> uri = restTemplate.exchange(UT_REST_Customer_Signup.CUSTOMER_SIGNUP_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
 		 assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value());
 	}
 }
