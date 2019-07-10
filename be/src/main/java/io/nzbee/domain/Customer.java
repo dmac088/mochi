@@ -77,7 +77,6 @@ public class Customer {
     public void setUserName(final String username) {
         this.userName = username;
     }
-
     
     public String getPassword() {
         return password;
