@@ -126,7 +126,7 @@ public class User implements UserDetails, Serializable {
 	public void setPassword(String password) {
 		// TODO Auto-generated method stub
 		BCryptPasswordEncoder pe = new BCryptPasswordEncoder(Encoders.userRounds);
-		this.password  = pe.encode(password);
+		this.setPassword(pe.encode(password));
 	}
 	
 	public void setEnabled(boolean enabled) {

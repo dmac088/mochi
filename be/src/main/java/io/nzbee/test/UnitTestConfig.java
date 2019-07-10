@@ -6,7 +6,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
-@ComponentScan({"io.nzbee.domain",
+@ComponentScan({
+	"io.nzbee.domain",
 	"io.nzbee.security",
 	"io.nzbee.services",
 	"io.nzbee.dao",

@@ -28,8 +28,13 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.json.JSONObject;
+
+import io.nzbee.domain.Customer;
 import io.nzbee.entity.PartyPerson;
+import io.nzbee.entity.PartyPersonRepository;
+import io.nzbee.entity.Role;
 import io.nzbee.entity.RoleCustomer;
+import io.nzbee.security.Encoders;
 import io.nzbee.security.User;
 import io.nzbee.security.UserRole;
 /*
@@ -55,6 +60,9 @@ public class RestClientUtil {
 	@Autowired
 	private UserRoleService userRoleService;
 	
+	@Autowired
+	private PartyPersonRepository personRepository;
+	
     @Autowired
     @Qualifier("unitTestTemplate")
     private RestTemplate template;
@@ -68,7 +76,7 @@ public class RestClientUtil {
     private static String OAUTH_TOKEN_GRANT_TYPE 			= "password";
     
     //private static String CUSTOMER_ENDPOINT 				= "https://localhost:8090/api/Customer";
-    private static String PERSON_ENDPOINT 					= "https://localhost:8090/api/Person";
+    private static String PERSON_ENDPOINT 					= "https://localhost:8090/api/Customer/Signup";
     private static String CUSTOMER_GIVEN_NAME_EN 			= "Daniel";
     private static String CUSTOMER_FAMILY_NAME_EN 			= "Mackie";
     //private static String CUSTOMER_NAME_CN 					= "丹尼爾麥基";
@@ -104,8 +112,6 @@ public class RestClientUtil {
     	return jObj.getString("access_token");
     }
     
-    
-    
     @Test
     public void verifyBeansConfigured() {
         assertNotNull(passwordEncoder);
@@ -129,40 +135,47 @@ public class RestClientUtil {
 	     headers.add("authorization", "Bearer " + getToken());
 	     headers.add("cache-control", "no-cache");
 		 
+	     Customer customer = new Customer();
 	     
-	     //Create the customer
-
-		 RoleCustomer objCustomer = new RoleCustomer();
-		 objCustomer.setRoleStart(RestClientUtil.CUSTOMER_START_DATE);
-		 objCustomer.getRoleType().setRoleTypeDesc(CUSTOMER_ROLE_TYPE);
-		 
-		 //Create the person
-		
-		 PartyPerson objPerson = new PartyPerson();
-		 objPerson.setGivenName(RestClientUtil.CUSTOMER_GIVEN_NAME_EN);
-		 objPerson.setFamilyName(RestClientUtil.CUSTOMER_FAMILY_NAME_EN);
-		
-		 
-		 //Create the user
-		 User objUser = new User();
-		 objUser.setPassword(passwordEncoder.encode(CUSTOMER_PASSWORD));
-		 objUser.setUsername(CUSTOMER_USERNAME);
-		 objUser.setEnabled(true);
-		 UserRole ur = userRoleService.loadUserRoleByRoleName(USER_ROLE);
-		 List<UserRole> lur= new ArrayList<UserRole>();
-		 lur.add(ur);
-		 objUser.setUserRoles(lur);
-		 
-		 //add the user to the person
-		 objPerson.addUser(objUser);
-		
+	     PartyPerson p1 = new PartyPerson();
+	     p1.setGivenName(CUSTOMER_GIVEN_NAME_EN);
+	     p1.setFamilyName(CUSTOMER_FAMILY_NAME_EN);
+	        
+	     //create the role object
+		 p1.setPartyRoles(new ArrayList<Role>());
+		 RoleCustomer c1 = new RoleCustomer();
+		 c1.setRoleStart(new Date());
+			
+		 //create a new user object
+		 User u1 = new User();
+		 u1.setUsername(CUSTOMER_USERNAME);
+		 u1.setEnabled(true);
+		 u1.setUserRoles(new ArrayList<UserRole>());
+		 u1.addUserRole(userRoleService.loadUserRoleByRoleName(USER_ROLE));
+		 u1.setPassword(CUSTOMER_PASSWORD);
+			
+		 //add user to person 
+		 p1.addUser(u1);
+			
+		 //addPartytoUser
+		 u1.setUserParty(p1);
+			
+		 //add the role to person
+		 p1.addRole(c1);
+			
+		 //add the person to role
+		 c1.setRoleParty(p1);
+			 
 		 //add role to person
-		 objPerson.addRole(objCustomer);
-		 objCustomer.setRoleParty(objPerson);
+		 p1.addRole(c1);
+		 c1.setRoleParty(p1);
+			
+		 //persist the parent
+		 //personRepository.save(p1);
 		 
-		 HttpEntity<PartyPerson> personEntity = new HttpEntity<PartyPerson>(objPerson, headers);
-		 ResponseEntity<PartyPerson> uri = restTemplate.exchange(RestClientUtil.PERSON_ENDPOINT, HttpMethod.POST, personEntity, PartyPerson.class);
-		 Assert.assertTrue(CUSTOMER_USERNAME.equals(uri.getBody().getPartyUser().getUsername()));
+		 HttpEntity<Customer> customerEntity = new HttpEntity<Customer>(customer, headers);
+		 ResponseEntity<Customer> uri = restTemplate.exchange(RestClientUtil.PERSON_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
+		 Assert.assertTrue(CUSTOMER_USERNAME.equals(uri.getBody().getUserName()));
 		 Assert.assertTrue(CUSTOMER_GIVEN_NAME_EN.equals(uri.getBody().getGivenName()));
 	}
 }
