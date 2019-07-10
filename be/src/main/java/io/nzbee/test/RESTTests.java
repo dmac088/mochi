@@ -54,7 +54,7 @@ import io.nzbee.services.ICustomerService;
 @ContextConfiguration(classes = {UnitTestConfig.class})
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-public class RestClientUtil {
+public class RESTTests {
 	
 	@Autowired
 	@Qualifier("userPasswordEncoder")
@@ -181,7 +181,7 @@ public class RestClientUtil {
 		 Customer customer = customerService.convertToCustomerDO(p1);
 		 
 		 HttpEntity<Customer> customerEntity = new HttpEntity<Customer>(customer, headers);
-		 ResponseEntity<Customer> uri = restTemplate.exchange(RestClientUtil.PERSON_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
+		 ResponseEntity<Customer> uri = restTemplate.exchange(RESTTests.PERSON_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
 		// Assert.assertTrue(CUSTOMER_USERNAME.equals(uri.getBody().getUserName()));
 		 //Assert.assertTrue(CUSTOMER_GIVEN_NAME_EN.equals(uri.getBody().getGivenName()));
 	}
