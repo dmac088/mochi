@@ -11,8 +11,9 @@ public interface ICustomerService {
 	 //The domain model is managed within the method
 	 void registerNewCustomer(final Customer customer);
 	 
-	 
 	 List<Customer> getCustomers();
 	 
 	 Customer getCustomer(String userName);
+	 
+	 Customer convertToCustomerDO(final io.nzbee.entity.PartyPerson person);
 }
