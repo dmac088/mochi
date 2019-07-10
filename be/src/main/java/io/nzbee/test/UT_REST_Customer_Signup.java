@@ -1,5 +1,6 @@
 package io.nzbee.test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.BufferingClientHttpRequestFactory;
@@ -84,11 +86,10 @@ public class UT_REST_Customer_Signup {
     private static String CUSTOMER_FAMILY_NAME_EN 			= "Mackie";
     //private static String CUSTOMER_NAME_CN 					= "丹尼爾麥基";
     private static Date   CUSTOMER_START_DATE 				= new Date();
-    private static String CUSTOMER_ROLE_TYPE 				= "Customer";
     
-    private static String CUSTOMER_USERNAME 				= "dmac259";
+    private static String CUSTOMER_USERNAME 				= "dmac263";
     private static String CUSTOMER_PASSWORD 				= "password";
-    private static String USER_ROLE							= "CUSTOMER";
+    private static String USER_ROLE							= "Customer";
 
     private HttpHeaders getHeaders() {
     	HttpHeaders headers = new HttpHeaders();
@@ -179,7 +180,6 @@ public class UT_REST_Customer_Signup {
 		 
 		 HttpEntity<Customer> customerEntity = new HttpEntity<Customer>(customer, headers);
 		 ResponseEntity<Customer> uri = restTemplate.exchange(UT_REST_Customer_Signup.PERSON_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
-		 Assert.assertTrue(CUSTOMER_USERNAME.equals(uri.getBody().getUserName()));
-		 Assert.assertTrue(CUSTOMER_GIVEN_NAME_EN.equals(uri.getBody().getGivenName()));
+		 assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value());
 	}
 }
