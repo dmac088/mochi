@@ -7,6 +7,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
+
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.Customer;
@@ -121,7 +123,7 @@ public class CustomerService implements ICustomerService {
 		
 		//persist the parent
 		personRepository.save(p1);
-    }
+    }  
 
     @Override
     public boolean customerExist(final String username) {

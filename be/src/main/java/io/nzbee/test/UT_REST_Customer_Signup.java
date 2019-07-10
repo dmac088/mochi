@@ -84,10 +84,10 @@ public class UT_REST_Customer_Signup {
     private static String PERSON_ENDPOINT 					= "https://localhost:8090/api/Customer/Signup";
     private static String CUSTOMER_GIVEN_NAME_EN 			= "Daniel";
     private static String CUSTOMER_FAMILY_NAME_EN 			= "Mackie";
-    //private static String CUSTOMER_NAME_CN 					= "丹尼爾麥基";
+    //private static String CUSTOMER_NAME_CN 				= "丹尼爾麥基";
     private static Date   CUSTOMER_START_DATE 				= new Date();
     
-    private static String CUSTOMER_USERNAME 				= "dmac263";
+    private static String CUSTOMER_USERNAME 				= "dmac265";
     private static String CUSTOMER_PASSWORD 				= "password";
     private static String USER_ROLE							= "Customer";
 
@@ -121,24 +121,40 @@ public class UT_REST_Customer_Signup {
         assertNotNull(passwordEncoder);
         assertNotNull(template);
     }
+   
+    
+    public HttpHeaders retrieveHeaders() {
+    	RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.add("Content-Type", MediaType.APPLICATION_JSON_VALUE);
+	    headers.add("authorization", "Bearer " + getToken());
+	    headers.add("cache-control", "no-cache");
+    	Assert.assertTrue(getToken().length() == 36);
+    	return headers;
+    }
+    
     
     @Test
-    public void retrieveToken() {
-    	Assert.assertTrue(getToken().length()=="baa0bbbd-742b-4225-ad5e-dfc74f38571b".length());
+    public void deleteCustomer() {
+    	HttpHeaders headers = this.retrieveHeaders();
+    	
+    }
+    
+    @Test
+    public void updateCustomer() {
+    	HttpHeaders headers = this.retrieveHeaders();
+    	
+    	
     }
     
 	@Test
-	//@Rollback(false)
 	public void addPersonCustomer() {
 		
 	     RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
 	     List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();
 		 interceptors.add(new LoggingRequestInterceptor());
 		 restTemplate.setInterceptors(interceptors);
-	     HttpHeaders headers = new HttpHeaders();
-	     headers.add("Content-Type", MediaType.APPLICATION_JSON_VALUE);
-	     headers.add("authorization", "Bearer " + getToken());
-	     headers.add("cache-control", "no-cache");
+	     HttpHeaders headers = this.retrieveHeaders();
 		 
 	     //create a person object
 	     PartyPerson p1 = new PartyPerson();
