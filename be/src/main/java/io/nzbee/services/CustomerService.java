@@ -1,32 +1,22 @@
 package io.nzbee.services;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-
 import javax.transaction.Transactional;
-
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.Customer;
-import io.nzbee.domain.Product;
-import io.nzbee.entity.Category;
 import io.nzbee.entity.Party;
 import io.nzbee.entity.PartyPerson;
 import io.nzbee.entity.PartyPersonRepository;
 import io.nzbee.entity.PartyRepository;
-import io.nzbee.entity.ProductAttribute;
 import io.nzbee.entity.Role;
 import io.nzbee.entity.RoleCustomer;
 import io.nzbee.exceptions.CustomerAlreadyExistException;
-import io.nzbee.security.IUserRoleService;
 import io.nzbee.security.User;
 import io.nzbee.security.UserRole;
 import io.nzbee.security.UserRoleService;
-import io.nzbee.variables.CategoryVars;
 
 @Service
 @Transactional
