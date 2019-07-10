@@ -51,10 +51,10 @@ import io.nzbee.services.ICustomerService;
  
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {UnitTestConfig.class})
+@ContextConfiguration(classes = {UT_REST_Config.class})
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-public class RESTTests {
+public class UT_REST_Customer_Signup {
 	
 	@Autowired
 	@Qualifier("userPasswordEncoder")
@@ -89,7 +89,7 @@ public class RESTTests {
     private static Date   CUSTOMER_START_DATE 				= new Date();
     private static String CUSTOMER_ROLE_TYPE 				= "Customer";
     
-    private static String CUSTOMER_USERNAME 				= "dmac257";
+    private static String CUSTOMER_USERNAME 				= "dmac258";
     private static String CUSTOMER_PASSWORD 				= "password";
     private static String USER_ROLE							= "CUSTOMER";
 
@@ -181,8 +181,8 @@ public class RESTTests {
 		 Customer customer = customerService.convertToCustomerDO(p1);
 		 
 		 HttpEntity<Customer> customerEntity = new HttpEntity<Customer>(customer, headers);
-		 ResponseEntity<Customer> uri = restTemplate.exchange(RESTTests.PERSON_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
-		// Assert.assertTrue(CUSTOMER_USERNAME.equals(uri.getBody().getUserName()));
-		 //Assert.assertTrue(CUSTOMER_GIVEN_NAME_EN.equals(uri.getBody().getGivenName()));
+		 ResponseEntity<Customer> uri = restTemplate.exchange(UT_REST_Customer_Signup.PERSON_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
+		 Assert.assertTrue(CUSTOMER_USERNAME.equals(uri.getBody().getUserName()));
+		 Assert.assertTrue(CUSTOMER_GIVEN_NAME_EN.equals(uri.getBody().getGivenName()));
 	}
 }

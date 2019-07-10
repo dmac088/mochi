@@ -12,7 +12,7 @@ import org.springframework.web.client.RestTemplate;
 	"io.nzbee.services",
 	"io.nzbee.dao",
 	"io.nzbee.entity"})
-public class UnitTestConfig {
+public class UT_REST_Config {
 
 	@Bean 
     public RestTemplate unitTestTemplate() {
