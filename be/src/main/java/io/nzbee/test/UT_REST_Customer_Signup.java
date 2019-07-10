@@ -140,8 +140,7 @@ public class UT_REST_Customer_Signup {
 	     headers.add("authorization", "Bearer " + getToken());
 	     headers.add("cache-control", "no-cache");
 		 
-	     
-	     
+	     //create a person object
 	     PartyPerson p1 = new PartyPerson();
 	     p1.setGivenName(CUSTOMER_GIVEN_NAME_EN);
 	     p1.setFamilyName(CUSTOMER_FAMILY_NAME_EN);
