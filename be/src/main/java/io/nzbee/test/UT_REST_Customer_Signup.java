@@ -129,7 +129,6 @@ public class UT_REST_Customer_Signup {
 	    headers.add("Content-Type", MediaType.APPLICATION_JSON_VALUE);
 	    headers.add("authorization", "Bearer " + getToken());
 	    headers.add("cache-control", "no-cache");
-    	Assert.assertTrue(getToken().length() == 36);
     	return headers;
     }
     
@@ -143,7 +142,6 @@ public class UT_REST_Customer_Signup {
     @Test
     public void updateCustomer() {
     	HttpHeaders headers = this.retrieveHeaders();
-    	
     	
     }
     
