@@ -38,8 +38,10 @@ public class Customer {
     
 	@NotNull
     private String customerId;
-    
-    //@NotNull
+	
+	private String partyType;
+
+	//@NotNull
     //@Size(min = 1)
     private String matchingPassword;
     
@@ -100,6 +102,14 @@ public class Customer {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+	
+	public String getPartyType() {
+		return partyType;
+	}
+
+	public void setPartyType(String partyType) {
+		this.partyType = partyType;
 	}
     
 	@Override

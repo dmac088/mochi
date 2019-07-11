@@ -119,18 +119,6 @@ public class CustomerService implements ICustomerService {
     public boolean customerExist(final String username) {
         return partyRepository.findByPartyUserUsername(username).isPresent();
     }
-    
-    @Override
-    public Customer convertToCustomerDO(final io.nzbee.entity.PartyPerson person) {
-    	final Customer cDo = new Customer();
-    	cDo.setGivenName(person.getGivenName());
-    	cDo.setFamilyName(person.getFamilyName());
-    	cDo.setPassword(person.getPartyUser().getPassword());
-    	cDo.setUserName(person.getPartyUser().getUsername());
-    	cDo.setMatchingPassword(person.getPartyUser().getPassword());
-    	return cDo;
-    }
-
 
 	@Override
 	public void deleteCustomer(Customer customer) {
@@ -139,6 +127,22 @@ public class CustomerService implements ICustomerService {
 		//partyRepository.delete(p);
 		System.out.println("PartyId = " + p.getPartyId());
 		partyRepository.deleteById(p.getPartyId());
+	}
+
+
+	@Override
+	public Customer convertToCustomerDO(Party party) {
+		final Customer cDo = new Customer();
+		if (PartyPerson.class.getSimpleName().equals(party.getClass().getSimpleName())) {
+			PartyPerson person = (PartyPerson) party;
+	    	cDo.setGivenName(person.getGivenName());
+	    	cDo.setFamilyName(person.getFamilyName());
+	    	cDo.setPassword(person.getPartyUser().getPassword());
+	    	cDo.setUserName(person.getPartyUser().getUsername());
+	    	cDo.setMatchingPassword(person.getPartyUser().getPassword());
+	    	cDo.setPartyType(party.getClass().getSimpleName());
+		}
+		return cDo;
 	}
 
     
