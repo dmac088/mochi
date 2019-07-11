@@ -18,4 +18,6 @@ public interface ICustomerService {
 	 void deleteCustomer(final Customer customer);
 	 
 	 Customer convertToCustomerDO(final io.nzbee.entity.Party party);
+	 
+	 void updateCustomer(Customer customer);
 }

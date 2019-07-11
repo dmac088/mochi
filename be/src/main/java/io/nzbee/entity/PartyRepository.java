@@ -10,9 +10,6 @@ public interface PartyRepository extends CrudRepository<Party, Long> {
 	
 	List<Party> findByPartyRolesRoleTypeRoleTypeDesc(String roleTypeDesc);
 	
-	Optional<Party> findByPartyId(Long id);
-	
 	Optional<Party> findByPartyUserUsername(String userName);
 
-	Long countByPartyUserUsername(String userName);
 }

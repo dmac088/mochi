@@ -69,6 +69,7 @@ public class UT_REST_CRUD_Customer {
     @Qualifier("unitTestTemplate")
     private RestTemplate template;
  
+    //oAuth configuration
     private static String TOKEN_ENDPOINT 					= "https://localhost:8090/oauth/token";
     private static String OAUTH_AUTHORIZATION 				= "Basic c3ByaW5nLXNlY3VyaXR5LW9hdXRoMi1yZWFkLXdyaXRlLWNsaWVudDpzcHJpbmctc2VjdXJpdHktb2F1dGgyLXJlYWQtd3JpdGUtY2xpZW50LXBhc3N3b3JkMTIzNA==";
     private static String OAUTH_CACHE_CONTROL 				= "no-cache";
@@ -77,9 +78,13 @@ public class UT_REST_CRUD_Customer {
     private static String OAUTH_TOKEN_CLIENTID 				= "spring-security-oauth2-read-write-client";
     private static String OAUTH_TOKEN_GRANT_TYPE 			= "password";
     
-    //private static String CUSTOMER_ENDPOINT 				= "https://localhost:8090/api/Customer";
-    private static String CUSTOMER_SIGNUP_ENDPOINT 			= "https://localhost:8090/api/Customer/Signup";
+    //Customer end points
+    private static String CUSTOMER_CREATE_ENDPOINT 			= "https://localhost:8090/api/Customer/Signup";
+    private static String CUSTOMER_READ_ENDPOINT 			= "https://localhost:8090/api/Customer";
+    private static String CUSTOMER_UPDATE_ENDPOINT 			= "https://localhost:8090/api/Customer/Update";
     private static String CUSTOMER_DELETE_ENDPOINT			= "https://localhost:8090/api/Customer/Delete";
+    
+    //Customer properties
     private static String CUSTOMER_GIVEN_NAME_EN 			= "Daniel";
     private static String CUSTOMER_FAMILY_NAME_EN 			= "Mackie";
     //private static String CUSTOMER_NAME_CN 				= "丹尼爾麥基";
@@ -174,11 +179,11 @@ public class UT_REST_CRUD_Customer {
 		 p1.addRole(c1);
 		 c1.setRoleParty(p1);
 			
-		 //persist the parent
+		 //convert to a Customer domain object 
 		 Customer customer = customerService.convertToCustomerDO(p1);
 		 
 		 HttpEntity<Customer> customerEntity = new HttpEntity<Customer>(customer, headers);
-		 ResponseEntity<Customer> uri = restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_SIGNUP_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
+		 ResponseEntity<Customer> uri = restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_CREATE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
 		 assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value());
 		 assertEquals(partyRepository.findByPartyUserUsername(CUSTOMER_USERNAME).get().getPartyUser().getUsername(), CUSTOMER_USERNAME);
 	}
@@ -193,24 +198,25 @@ public class UT_REST_CRUD_Customer {
     	RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
     	HttpHeaders headers = this.getRestHeaders();
     	
-    	//create a person object
+    	//find the existing customer
 	    Party p1 = partyRepository.findByPartyUserUsername(CUSTOMER_USERNAME).get();
 	   
 	    PartyPerson pp1 = partyPersonRepository.findById(p1.getPartyId()).get();
 	    
-		//persist the parent
+		//convert to a Customer domain object 
 		Customer customer = customerService.convertToCustomerDO(pp1);
     	
 		HttpEntity<Customer> customerEntity = new HttpEntity<Customer>(customer, headers);
 		ResponseEntity<Customer> uri = restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_DELETE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
-		assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value());
-		assertEquals(partyRepository.countByPartyUserUsername(CUSTOMER_USERNAME), new Long(0));
+		assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value()); 
+		assertEquals(partyRepository.findByPartyUserUsername(CUSTOMER_USERNAME).isPresent(), false);
     }
     
     @Test
     public void updateCustomer() {
     	RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
     	HttpHeaders headers = this.getRestHeaders();
+    	
     	//customerService.
     }
     
