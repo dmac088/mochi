@@ -1,13 +1,16 @@
 package io.nzbee.test;
 
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -134,7 +137,6 @@ public class UT_REST_CRUD_Customer {
     }
     
     @Test
-    @Order(1)   
     @Rollback(false)
     public void verifyBeansConfigured() {
         assertNotNull(passwordEncoder);
@@ -181,10 +183,9 @@ public class UT_REST_CRUD_Customer {
     }
     
     @Test
-	@Order(2)
     @Rollback(false)
 	public void createCustomer() {
-    	System.out.println("createCustomer");
+    	
 	     RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
 	     List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();
 		 interceptors.add(new LoggingRequestInterceptor());
@@ -197,42 +198,45 @@ public class UT_REST_CRUD_Customer {
 		 HttpEntity<Customer> customerEntity = new HttpEntity<Customer>(customer, headers);
 		 ResponseEntity<Customer> uri = restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_CREATE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
 		 assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value());
-		 assertEquals(partyRepository.findByPartyUserUsername(CUSTOMER_USERNAME).get().getPartyUser().getUsername(), CUSTOMER_USERNAME);
+		 
+		 uri = restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_READ_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.GET, customerEntity, Customer.class);
+		 assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value());
+		 assertEquals(uri.getBody().getGivenName(), CUSTOMER_GIVEN_NAME_EN);
+		 assertEquals(uri.getBody().getFamilyName(), CUSTOMER_FAMILY_NAME_EN);
+		 
     }
    
 
     @Test
-    @Order(3)
     @Rollback(false)
     public void updateCustomer() {
-    	System.out.println("updateCustomer");
+    	createCustomer();
+    	
     	RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
     	HttpHeaders headers = this.getRestHeaders();
     	
     	//find the existing customer
-	    Party p1 = partyRepository.findByPartyUserUsername(CUSTOMER_USERNAME).get();
-	    System.out.println(p1.getPartyType().getPartyTypeDesc());
-	   
-	    PartyPerson pp1 = partyPersonRepository.findById(p1.getPartyId()).get();
-	    
-		//convert to a Customer domain object 
-		Customer customer = customerService.convertToCustomerDO(pp1);
-    	
-		customer.setGivenName(CUSTOMER_UPDATE_GIVEN_NAME_EN);
+    	HttpEntity<Customer> customerEntity = new HttpEntity<Customer>(headers);
+    	Customer customer = restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_READ_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.GET, customerEntity, Customer.class).getBody();
 		
-		HttpEntity<Customer> customerEntity = new HttpEntity<Customer>(customer, headers);
+    	customer.setGivenName(CUSTOMER_UPDATE_GIVEN_NAME_EN);
+		
+    	customerEntity = new HttpEntity<Customer>(customer, headers);
+    	
 		ResponseEntity<Customer> postUri = restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_UPDATE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
 		assertEquals(postUri.getStatusCodeValue(), HttpStatus.OK.value()); 
 		
 		ResponseEntity<Customer> getUri = restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_READ_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.GET, customerEntity, Customer.class);
 		assertEquals(CUSTOMER_UPDATE_GIVEN_NAME_EN, getUri.getBody().getGivenName());
+		
+		//delete
+		restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_DELETE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
     }
     
     @Test
-    @Order(4)
     @Rollback(false)
     public void deleteCustomer() {
-    	System.out.println("deleteCustomer");
+    	
     	RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
     	HttpHeaders headers = this.getRestHeaders();
     	
@@ -247,7 +251,14 @@ public class UT_REST_CRUD_Customer {
 		HttpEntity<Customer> customerEntity = new HttpEntity<Customer>(customer, headers);
 		ResponseEntity<Customer> uri = restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_DELETE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
 		assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value()); 
-		assertEquals(partyRepository.findByPartyUserUsername(CUSTOMER_USERNAME).isPresent(), false);
+		
+		HttpEntity<Customer> entity = new HttpEntity<Customer>(headers);
+		Optional<ResponseEntity<Customer>> o = Optional.ofNullable(restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_READ_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.GET, entity, Customer.class));
+		assertEquals(o.isPresent(), false);
+		
+		
+		//assertEquals(partyRepository.findByPartyUserUsername(CUSTOMER_USERNAME).isPresent(), false);
+		
     }
     
 	
