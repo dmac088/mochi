@@ -239,4 +239,23 @@ public class UT_REST_CRUD_Customer {
 		uri = restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_DELETE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
 		assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value()); 
     }
+    
+    //@Test
+    @Rollback(false)
+    public void deleteCustomer() {
+    	RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
+	    List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();
+		interceptors.add(new LoggingRequestInterceptor());
+		restTemplate.setInterceptors(interceptors);
+	    HttpHeaders headers = this.getRestHeaders();
+	
+		 //convert to a Customer domain object 
+		Customer customer = this.customerDefinition();
+		 
+		HttpEntity<Customer> customerEntity = new HttpEntity<Customer>(customer, headers);
+		
+		//delete
+		ResponseEntity<Customer> uri = restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_DELETE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
+		assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value()); 
+    }
 }
