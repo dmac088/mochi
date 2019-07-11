@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.Customer;
 import io.nzbee.entity.Party;
@@ -30,6 +32,11 @@ public class CustomerService implements ICustomerService {
     
     @Autowired
     private UserRoleService userRoleService;
+    
+    @Autowired
+	@Qualifier("userPasswordEncoder")
+	private PasswordEncoder passwordEncoder;
+	
 	
 	private final String USER_ROLE_NAME		= "Customer";
 	private final String PARTY_ROLE_NAME	= "Customer";
@@ -67,6 +74,9 @@ public class CustomerService implements ICustomerService {
 		c1.setFamilyName(((PartyPerson)pr1.get()).getFamilyName());
 		c1.setUserName(((PartyPerson)pr1.get()).getPartyUser().getUsername());
 		c1.setCustomerID(((RoleCustomer)((PartyPerson)pr1.get()).getPartyRole(PARTY_ROLE_NAME)).getCustomerNumber());
+		c1.setPassword(pr1.get().getPartyUser().getPassword());
+		c1.setMatchingPassword(pr1.get().getPartyUser().getPassword());
+		c1.setPartyType(PartyPerson.class.getSimpleName());
 		return c1;
 	}
 	

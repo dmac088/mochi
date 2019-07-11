@@ -78,6 +78,7 @@ public class UT_REST_CRUD_Customer {
     private static String CUSTOMER_GIVEN_NAME_EN 			= "Daniel";
     private static String CUSTOMER_UPDATE_GIVEN_NAME_EN 	= "Robert";
     private static String CUSTOMER_FAMILY_NAME_EN 			= "Mackie";
+    private static String CUSTOMER_TYPE_NAME_EN 			= "PartyPerson";
     //private static String CUSTOMER_NAME_CN 				= "丹尼爾麥基";
     private static Date   CUSTOMER_START_DATE 				= new Date();
     
@@ -161,7 +162,9 @@ public class UT_REST_CRUD_Customer {
 		 p1.addRole(c1);
 		 c1.setRoleParty(p1);
 		 
-		 return customerService.convertToCustomerDO(p1);
+		 Customer c = customerService.convertToCustomerDO(p1);
+		 
+		 return c; 
     }
     
     @Test
@@ -182,9 +185,17 @@ public class UT_REST_CRUD_Customer {
 		 assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value());
 		 
 		 uri = restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_READ_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.GET, customerEntity, Customer.class);
+		 Customer c = customerService.getCustomer(uri.getBody().getUserName());
+		 
+		 System.out.println(uri.getBody());
+		 
 		 assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value());
-		 assertEquals(uri.getBody().getGivenName(), CUSTOMER_GIVEN_NAME_EN);
-		 assertEquals(uri.getBody().getFamilyName(), CUSTOMER_FAMILY_NAME_EN);
+		 assertEquals(CUSTOMER_GIVEN_NAME_EN, c.getGivenName());
+		 assertEquals(CUSTOMER_FAMILY_NAME_EN, c.getFamilyName());
+		 assertEquals(CUSTOMER_TYPE_NAME_EN, c.getPartyType());
+		 //assertEquals(passwordEncoder.encode(CUSTOMER_PASSWORD), c.getPassword());
+		 //assertEquals(passwordEncoder.encode(CUSTOMER_PASSWORD), c.getMatchingPassword());
+		 //assertEquals(uri.getBody(), customer);
 		 
 		 //delete
 		 uri = restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_DELETE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
@@ -222,7 +233,7 @@ public class UT_REST_CRUD_Customer {
 		assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value()); 
     }
     
-    //@Test
+    @Test
     @Rollback(false)
     public void deleteCustomer() {
     	RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
