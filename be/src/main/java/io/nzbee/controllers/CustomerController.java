@@ -83,7 +83,7 @@ public class CustomerController {
         
         try {
         	System.out.println("Update Customer");
-			customerService.deleteCustomer(customer);
+			customerService.updateCustomer(customer);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
