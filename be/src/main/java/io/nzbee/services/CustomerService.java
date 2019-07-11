@@ -136,7 +136,9 @@ public class CustomerService implements ICustomerService {
 	public void deleteCustomer(Customer customer) {
 		// TODO Auto-generated method stub
 		Party p = partyRepository.findByPartyUserUsername(customer.getUserName()).get();
-		partyRepository.delete(p);
+		//partyRepository.delete(p);
+		System.out.println("PartyId = " + p.getPartyId());
+		partyRepository.deleteById(p.getPartyId());
 	}
 
     
