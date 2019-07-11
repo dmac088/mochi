@@ -14,5 +14,5 @@ public interface PartyRepository extends CrudRepository<Party, Long> {
 	
 	Optional<Party> findByPartyUserUsername(String userName);
 
-	
+	Long countByPartyUserUsername(String userName);
 }

@@ -36,6 +36,7 @@ import io.nzbee.entity.Party;
 import io.nzbee.entity.PartyPerson;
 import io.nzbee.entity.PartyPersonRepository;
 import io.nzbee.entity.PartyRepository;
+import io.nzbee.entity.PartyTypeRepository;
 import io.nzbee.entity.Role;
 import io.nzbee.entity.RoleCustomer;
 import io.nzbee.security.User;
@@ -144,6 +145,7 @@ public class UT_REST_Customer_Signup {
 	     PartyPerson p1 = new PartyPerson();
 	     p1.setGivenName(CUSTOMER_GIVEN_NAME_EN);
 	     p1.setFamilyName(CUSTOMER_FAMILY_NAME_EN);
+	    
 	        
 	     //create the role object
 		 p1.setPartyRoles(new ArrayList<Role>());
@@ -180,6 +182,7 @@ public class UT_REST_Customer_Signup {
 		 HttpEntity<Customer> customerEntity = new HttpEntity<Customer>(customer, headers);
 		 ResponseEntity<Customer> uri = restTemplate.exchange(UT_REST_Customer_Signup.CUSTOMER_SIGNUP_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
 		 assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value());
+		 assertEquals(partyRepository.findByPartyUserUsername(CUSTOMER_USERNAME).get().getPartyUser().getUsername(), CUSTOMER_USERNAME);
 	}
    
     
@@ -203,6 +206,7 @@ public class UT_REST_Customer_Signup {
 		HttpEntity<Customer> customerEntity = new HttpEntity<Customer>(customer, headers);
 		ResponseEntity<Customer> uri = restTemplate.exchange(UT_REST_Customer_Signup.CUSTOMER_DELETE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
 		assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value());
+		assertEquals(partyRepository.countByPartyUserUsername(CUSTOMER_USERNAME), new Long(0));
     }
     
     @Test
