@@ -1,16 +1,10 @@
 package io.nzbee.test;
 
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
-
-import javax.transaction.Transactional;
-
-import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +12,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -32,14 +25,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.event.TransactionPhase;
-import org.springframework.transaction.event.TransactionalEventListener;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.json.JSONObject;
 import io.nzbee.domain.Customer;
-import io.nzbee.entity.Party;
 import io.nzbee.entity.PartyPerson;
 import io.nzbee.entity.PartyPersonRepository;
 import io.nzbee.entity.PartyRepository;
@@ -66,12 +56,6 @@ public class UT_REST_CRUD_Customer {
 	
 	@Autowired
 	private ICustomerService customerService;
-	
-	@Autowired
-	private PartyRepository partyRepository;
-	
-	@Autowired
-	private PartyPersonRepository partyPersonRepository;
 	
     @Autowired
     @Qualifier("unitTestTemplate")
