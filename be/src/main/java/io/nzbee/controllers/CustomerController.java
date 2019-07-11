@@ -38,15 +38,19 @@ public class CustomerController {
     
     @GetMapping("/Customer/UserName/{userName}")
     public Customer getCustomer(@PathVariable String userName) {
+    	LOGGER.debug("Finding an existing customer with user name: {}", userName);
+    	System.out.println("Get Customer");
 		return customerService.getCustomer(userName);
     }
+    
 
     //Registration
     @PostMapping("/Customer/Signup")
     public GenericResponse registerNewCustomer(@RequestBody final Customer customer) {
-        LOGGER.debug("Registering user account with information: {}", customer);
+        LOGGER.debug("Creating a new customer with information: {}", customer);
         
         try {
+        	System.out.println("Create Customer");
 			customerService.registerNewCustomer(customer);
 		} catch (CustomerAlreadyExistException e) {
 			// TODO Auto-generated catch block
@@ -59,10 +63,10 @@ public class CustomerController {
     
     @PostMapping("/Customer/Delete")
     public GenericResponse deleteCustomer(@RequestBody final Customer customer) {
-        LOGGER.debug("Registering user account with information: {}", customer);
+        LOGGER.debug("Deleting user account with information: {}", customer);
         
         try {
-        	System.out.println("deleteCustomer");
+        	System.out.println("Delete Customer");
 			customerService.deleteCustomer(customer);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -73,9 +77,19 @@ public class CustomerController {
         return new GenericResponse("success");
     }
     
-    //Registration
-    @GetMapping("/user/registration")
-    public GenericResponse test() {
+    @PostMapping("/Customer/Update")
+    public GenericResponse updateCustomer(@RequestBody final Customer customer) {
+        LOGGER.debug("Updating user account with information: {}", customer);
+        
+        try {
+        	System.out.println("Update Customer");
+			customerService.deleteCustomer(customer);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+      
+         //eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), getAppUrl(request)));
         return new GenericResponse("success");
     }
 }

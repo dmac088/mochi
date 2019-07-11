@@ -128,7 +128,18 @@ public class CustomerService implements ICustomerService {
 		System.out.println("PartyId = " + p.getPartyId());
 		partyRepository.deleteById(p.getPartyId());
 	}
-
+	
+	@Override
+	public void updateCustomer(Customer customer) {
+		// TODO Auto-generated method stub
+		Party p = partyRepository.findByPartyUserUsername(customer.getUserName()).get();
+		//partyRepository.delete(p);
+		
+		
+		
+		System.out.println("PartyId = " + p.getPartyId());
+		partyRepository.deleteById(p.getPartyId());
+	}
 
 	@Override
 	public Customer convertToCustomerDO(Party party) {
