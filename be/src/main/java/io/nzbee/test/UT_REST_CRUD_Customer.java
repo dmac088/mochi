@@ -225,8 +225,10 @@ public class UT_REST_CRUD_Customer {
 		ResponseEntity<Customer> postUri = restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_UPDATE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
 		assertEquals(postUri.getStatusCodeValue(), HttpStatus.OK.value()); 
 		
-		ResponseEntity<Customer> getUri = restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_READ_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.GET, customerEntity, Customer.class);
-		assertEquals(CUSTOMER_UPDATE_GIVEN_NAME_EN, getUri.getBody().getGivenName());
+		Customer c = restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_READ_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.GET, customerEntity, Customer.class).getBody();
+		assertEquals(CUSTOMER_UPDATE_GIVEN_NAME_EN, c.getGivenName());
+		assertEquals(CUSTOMER_TYPE_NAME_EN, c.getPartyType());
+		assertEquals(CUSTOMER_FAMILY_NAME_EN, c.getFamilyName());
 		
 		//delete
 		uri = restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_DELETE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
