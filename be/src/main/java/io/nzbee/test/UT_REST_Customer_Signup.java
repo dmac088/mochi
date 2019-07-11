@@ -38,18 +38,9 @@ import io.nzbee.entity.PartyPersonRepository;
 import io.nzbee.entity.PartyRepository;
 import io.nzbee.entity.Role;
 import io.nzbee.entity.RoleCustomer;
-import io.nzbee.security.Encoders;
 import io.nzbee.security.User;
 import io.nzbee.security.UserRole;
-/*
-
-Use the following class to configure unit tests as per the following link:
-
-https://www.baeldung.com/spring-data-rest-relationships
- 
-*/
 import io.nzbee.security.UserRoleService;
-import io.nzbee.services.CustomerService;
 import io.nzbee.services.ICustomerService;
  
 
