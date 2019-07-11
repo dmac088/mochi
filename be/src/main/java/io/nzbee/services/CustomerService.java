@@ -139,6 +139,7 @@ public class CustomerService implements ICustomerService {
 		
 		PartyPerson pp = null;
 		if(customer.getPartyType().equals(PartyPerson.class.getSimpleName())) {
+			System.out.println("pop");
 			pp = (PartyPerson) p;
 			pp.setGivenName(customer.getGivenName());
 			pp.setFamilyName(customer.getFamilyName());
