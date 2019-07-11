@@ -39,7 +39,7 @@ public class CustomerController {
     @GetMapping("/Customer/UserName/{userName}")
     public Customer getCustomer(@PathVariable String userName) {
     	LOGGER.debug("Finding an existing customer with user name: {}", userName);
-    	System.out.println("Get Customer");
+    	//System.out.println("Get Customer");
 		return customerService.getCustomer(userName);
     }
     
@@ -50,7 +50,7 @@ public class CustomerController {
         LOGGER.debug("Creating a new customer with information: {}", customer);
         
         try {
-        	System.out.println("Create Customer");
+        	//System.out.println("Create Customer");
 			customerService.registerNewCustomer(customer);
 		} catch (CustomerAlreadyExistException e) {
 			// TODO Auto-generated catch block
@@ -66,7 +66,7 @@ public class CustomerController {
         LOGGER.debug("Deleting user account with information: {}", customer);
         
         try {
-        	System.out.println("Delete Customer");
+        	//System.out.println("Delete Customer");
 			customerService.deleteCustomer(customer);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -82,7 +82,7 @@ public class CustomerController {
         LOGGER.debug("Updating user account with information: {}", customer);
         
         try {
-        	System.out.println("Update Customer");
+        	//System.out.println("Update Customer");
 			customerService.updateCustomer(customer);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

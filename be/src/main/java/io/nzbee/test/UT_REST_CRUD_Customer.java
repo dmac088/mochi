@@ -85,7 +85,7 @@ public class UT_REST_CRUD_Customer {
     
     //Customer end points
     private static String CUSTOMER_CREATE_ENDPOINT 			= "https://localhost:8090/api/Customer/Signup";
-    private static String CUSTOMER_READ_ENDPOINT 			= "https://localhost:8090/api/Customer";
+    private static String CUSTOMER_READ_ENDPOINT 			= "https://localhost:8090/api/Customer/UserName/";
     private static String CUSTOMER_UPDATE_ENDPOINT 			= "https://localhost:8090/api/Customer/Update";
     private static String CUSTOMER_DELETE_ENDPOINT			= "https://localhost:8090/api/Customer/Delete";
     
@@ -135,6 +135,7 @@ public class UT_REST_CRUD_Customer {
     
     @Test
     @Order(1)   
+    @Rollback(false)
     public void verifyBeansConfigured() {
         assertNotNull(passwordEncoder);
         assertNotNull(template);
@@ -181,7 +182,9 @@ public class UT_REST_CRUD_Customer {
     
     @Test
 	@Order(2)
+    @Rollback(false)
 	public void createCustomer() {
+    	System.out.println("createCustomer");
 	     RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
 	     List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();
 		 interceptors.add(new LoggingRequestInterceptor());
@@ -200,7 +203,9 @@ public class UT_REST_CRUD_Customer {
 
     @Test
     @Order(3)
+    @Rollback(false)
     public void updateCustomer() {
+    	System.out.println("updateCustomer");
     	RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
     	HttpHeaders headers = this.getRestHeaders();
     	
@@ -216,14 +221,18 @@ public class UT_REST_CRUD_Customer {
 		customer.setGivenName(CUSTOMER_UPDATE_GIVEN_NAME_EN);
 		
 		HttpEntity<Customer> customerEntity = new HttpEntity<Customer>(customer, headers);
-		ResponseEntity<Customer> uri = restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_UPDATE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
-		assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value()); 
-		assertEquals(CUSTOMER_UPDATE_GIVEN_NAME_EN, ((PartyPerson)partyRepository.findByPartyUserUsername(CUSTOMER_USERNAME).get()).getGivenName());
+		ResponseEntity<Customer> postUri = restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_UPDATE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
+		assertEquals(postUri.getStatusCodeValue(), HttpStatus.OK.value()); 
+		
+		ResponseEntity<Customer> getUri = restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_READ_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.GET, customerEntity, Customer.class);
+		assertEquals(CUSTOMER_UPDATE_GIVEN_NAME_EN, getUri.getBody().getGivenName());
     }
     
     @Test
     @Order(4)
+    @Rollback(false)
     public void deleteCustomer() {
+    	System.out.println("deleteCustomer");
     	RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
     	HttpHeaders headers = this.getRestHeaders();
     	
