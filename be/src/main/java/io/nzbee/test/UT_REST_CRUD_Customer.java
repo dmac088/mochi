@@ -49,7 +49,7 @@ import io.nzbee.services.ICustomerService;
 @ContextConfiguration(classes = {UT_REST_Config.class})
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-public class UT_REST_Customer_Signup {
+public class UT_REST_CRUD_Customer {
 	
 	@Autowired
 	@Qualifier("userPasswordEncoder")
@@ -180,7 +180,7 @@ public class UT_REST_Customer_Signup {
 		 Customer customer = customerService.convertToCustomerDO(p1);
 		 
 		 HttpEntity<Customer> customerEntity = new HttpEntity<Customer>(customer, headers);
-		 ResponseEntity<Customer> uri = restTemplate.exchange(UT_REST_Customer_Signup.CUSTOMER_SIGNUP_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
+		 ResponseEntity<Customer> uri = restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_SIGNUP_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
 		 assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value());
 		 assertEquals(partyRepository.findByPartyUserUsername(CUSTOMER_USERNAME).get().getPartyUser().getUsername(), CUSTOMER_USERNAME);
 	}
@@ -204,7 +204,7 @@ public class UT_REST_Customer_Signup {
 		Customer customer = customerService.convertToCustomerDO(pp1);
     	
 		HttpEntity<Customer> customerEntity = new HttpEntity<Customer>(customer, headers);
-		ResponseEntity<Customer> uri = restTemplate.exchange(UT_REST_Customer_Signup.CUSTOMER_DELETE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
+		ResponseEntity<Customer> uri = restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_DELETE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
 		assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value());
 		assertEquals(partyRepository.countByPartyUserUsername(CUSTOMER_USERNAME), new Long(0));
     }
