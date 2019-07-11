@@ -87,7 +87,7 @@ public class UT_REST_CRUD_Customer {
     //private static String CUSTOMER_NAME_CN 				= "丹尼爾麥基";
     private static Date   CUSTOMER_START_DATE 				= new Date();
     
-    private static String CUSTOMER_USERNAME 				= "dmac270";
+    private static String CUSTOMER_USERNAME 				= "dmac088";
     private static String CUSTOMER_PASSWORD 				= "password";
     private static String USER_ROLE							= "Customer";
 
