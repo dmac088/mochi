@@ -121,6 +121,7 @@ public class CustomerService implements ICustomerService {
     }
 
 	@Override
+	@Transactional
 	public void deleteCustomer(Customer customer) {
 		// TODO Auto-generated method stub
 		Party p = partyRepository.findByPartyUserUsername(customer.getUserName()).get();
@@ -130,15 +131,20 @@ public class CustomerService implements ICustomerService {
 	}
 	
 	@Override
+	@Transactional
 	public void updateCustomer(Customer customer) {
 		// TODO Auto-generated method stub
 		Party p = partyRepository.findByPartyUserUsername(customer.getUserName()).get();
 		//partyRepository.delete(p);
 		
+		PartyPerson pp = null;
+		if(customer.getPartyType().equals(PartyPerson.class.getSimpleName())) {
+			pp = (PartyPerson) p;
+			pp.setGivenName(customer.getGivenName());
+			pp.setFamilyName(customer.getFamilyName());
+			personRepository.save(pp);
+		}
 		
-		
-		System.out.println("PartyId = " + p.getPartyId());
-		partyRepository.deleteById(p.getPartyId());
 	}
 
 	@Override
