@@ -128,79 +128,79 @@ public class UT_REST_CRUD_Customer {
     
     private Customer customerDefinition() {
     	//create a person object
-	     PartyPerson p1 = new PartyPerson();
-	     p1.setGivenName(CUSTOMER_GIVEN_NAME_EN);
-	     p1.setFamilyName(CUSTOMER_FAMILY_NAME_EN);
+	    PartyPerson p1 = new PartyPerson();
+	    p1.setGivenName(CUSTOMER_GIVEN_NAME_EN);
+	    p1.setFamilyName(CUSTOMER_FAMILY_NAME_EN);
 	    
-	        
-	     //create the role object
-		 p1.setPartyRoles(new ArrayList<Role>());
-		 RoleCustomer c1 = new RoleCustomer();
-		 c1.setRoleStart(CUSTOMER_START_DATE);
+	    
+	    //create the role object
+	    p1.setPartyRoles(new ArrayList<Role>());
+	    RoleCustomer c1 = new RoleCustomer();
+	    c1.setRoleStart(CUSTOMER_START_DATE);
 			
-		 //create a new user object
-		 User u1 = new User();
-		 u1.setUsername(CUSTOMER_USERNAME);
-		 u1.setEnabled(true);
-		 u1.setUserRoles(new ArrayList<UserRole>());
-		 u1.addUserRole(userRoleService.loadUserRoleByRoleName(USER_ROLE));
-		 u1.setPassword(CUSTOMER_PASSWORD);
+	    //create a new user object
+	    User u1 = new User();
+	    u1.setUsername(CUSTOMER_USERNAME);
+	    u1.setEnabled(true);
+	    u1.setUserRoles(new ArrayList<UserRole>());
+	    u1.addUserRole(userRoleService.loadUserRoleByRoleName(USER_ROLE));
+	    u1.setPassword(CUSTOMER_PASSWORD);
 			
-		 //add user to person 
-		 p1.addUser(u1);
+	    //add user to person 
+	    p1.addUser(u1);
 			
-		 //addPartytoUser
-		 u1.setUserParty(p1);
+	    //addPartytoUser
+	    u1.setUserParty(p1);
 			
-		 //add the role to person
-		 p1.addRole(c1);
+	    //add the role to person
+	    p1.addRole(c1);
 			
-		 //add the person to role
-		 c1.setRoleParty(p1);
-			 
-		 //add role to person
-		 p1.addRole(c1);
-		 c1.setRoleParty(p1);
-		 
-		 Customer c = customerService.convertToCustomerDO(p1);
-		 
-		 return c; 
+	    //add the person to role
+	    c1.setRoleParty(p1);
+		    
+	    //add role to person
+	    p1.addRole(c1);
+	    c1.setRoleParty(p1);
+	    
+	    Customer c = customerService.convertToCustomerDO(p1);
+	    
+	    return c; 
     }
     
     @Test
     @Rollback(false)
 	public void createCustomer() {
     	
-	     RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
-	     List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();
-		 interceptors.add(new LoggingRequestInterceptor());
-		 restTemplate.setInterceptors(interceptors);
-	     HttpHeaders headers = this.getRestHeaders();
+	    RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
+	    List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();
+	    interceptors.add(new LoggingRequestInterceptor());
+	    restTemplate.setInterceptors(interceptors);
+	    HttpHeaders headers = this.getRestHeaders();
 	
-		 //convert to a Customer domain object 
-		 Customer customer = this.customerDefinition();
-		 
-		 HttpEntity<Customer> customerEntity = new HttpEntity<Customer>(customer, headers);
-		 ResponseEntity<Customer> uri = restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_CREATE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
-		 assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value());
-		 
-		 uri = restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_READ_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.GET, customerEntity, Customer.class);
-		 Customer c = customerService.getCustomer(uri.getBody().getUserName());
-		 
-		 System.out.println(uri.getBody());
-		 
-		 assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value());
-		 assertEquals(CUSTOMER_GIVEN_NAME_EN, c.getGivenName());
-		 assertEquals(CUSTOMER_FAMILY_NAME_EN, c.getFamilyName());
-		 assertEquals(CUSTOMER_TYPE_NAME_EN, c.getPartyType());
-		 //assertEquals(passwordEncoder.encode(CUSTOMER_PASSWORD), c.getPassword());
-		 //assertEquals(passwordEncoder.encode(CUSTOMER_PASSWORD), c.getMatchingPassword());
-		 //assertEquals(uri.getBody(), customer);
-		 
-		 //delete
-		 uri = restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_DELETE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
-		 assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value()); 
-		 
+	    //convert to a Customer domain object 
+	    Customer customer = this.customerDefinition();
+	    
+	    HttpEntity<Customer> customerEntity = new HttpEntity<Customer>(customer, headers);
+	    ResponseEntity<Customer> uri = restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_CREATE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
+	    assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value());
+	    
+	    uri = restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_READ_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.GET, customerEntity, Customer.class);
+	    Customer c = customerService.getCustomer(uri.getBody().getUserName());
+	    
+	    System.out.println(uri.getBody());
+	    
+	    assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value());
+	    assertEquals(CUSTOMER_GIVEN_NAME_EN, c.getGivenName());
+	    assertEquals(CUSTOMER_FAMILY_NAME_EN, c.getFamilyName());
+	    assertEquals(CUSTOMER_TYPE_NAME_EN, c.getPartyType());
+	    //assertEquals(passwordEncoder.encode(CUSTOMER_PASSWORD), c.getPassword());
+	    //assertEquals(passwordEncoder.encode(CUSTOMER_PASSWORD), c.getMatchingPassword());
+	    //assertEquals(uri.getBody(), customer);
+	    
+	    //delete
+	    uri = restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_DELETE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
+	    assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value()); 
+	    
     }
    
 
@@ -213,9 +213,9 @@ public class UT_REST_CRUD_Customer {
 		restTemplate.setInterceptors(interceptors);
 	    HttpHeaders headers = this.getRestHeaders();
 	
-		 //convert to a Customer domain object 
+	    //convert to a Customer domain object 
 		Customer customer = this.customerDefinition();
-		 
+	    
 		HttpEntity<Customer> customerEntity = new HttpEntity<Customer>(customer, headers);
 		ResponseEntity<Customer> uri = restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_CREATE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
 		assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value());
@@ -244,9 +244,9 @@ public class UT_REST_CRUD_Customer {
 		restTemplate.setInterceptors(interceptors);
 	    HttpHeaders headers = this.getRestHeaders();
 	
-		 //convert to a Customer domain object 
+	    //convert to a Customer domain object 
 		Customer customer = this.customerDefinition();
-		 
+	    
 		HttpEntity<Customer> customerEntity = new HttpEntity<Customer>(customer, headers);
 		
 		//delete
