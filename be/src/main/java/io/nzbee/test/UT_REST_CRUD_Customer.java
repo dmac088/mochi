@@ -30,13 +30,11 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.json.JSONObject;
-
 import io.nzbee.domain.Customer;
 import io.nzbee.entity.Party;
 import io.nzbee.entity.PartyPerson;
 import io.nzbee.entity.PartyPersonRepository;
 import io.nzbee.entity.PartyRepository;
-import io.nzbee.entity.PartyTypeRepository;
 import io.nzbee.entity.Role;
 import io.nzbee.entity.RoleCustomer;
 import io.nzbee.security.User;
