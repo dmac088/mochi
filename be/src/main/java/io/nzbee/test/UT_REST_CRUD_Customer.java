@@ -81,6 +81,7 @@ public class UT_REST_CRUD_Customer {
     private static String CUSTOMER_TYPE_NAME_EN 			= "PartyPerson";
     //private static String CUSTOMER_NAME_CN 				= "丹尼爾麥基";
     private static Date   CUSTOMER_START_DATE 				= new Date();
+    private static String CUSTOMER_NUMER 					= "0123498765";
     
     private static String CUSTOMER_USERNAME 				= "dmac1112";
     private static String CUSTOMER_PASSWORD 				= "password";
@@ -137,6 +138,7 @@ public class UT_REST_CRUD_Customer {
 	    p1.setPartyRoles(new ArrayList<Role>());
 	    RoleCustomer c1 = new RoleCustomer();
 	    c1.setRoleStart(CUSTOMER_START_DATE);
+	    c1.setCustomerNumber(CUSTOMER_NUMER);
 			
 	    //create a new user object
 	    User u1 = new User();
@@ -229,6 +231,7 @@ public class UT_REST_CRUD_Customer {
 		assertEquals(CUSTOMER_UPDATE_GIVEN_NAME_EN, c.getGivenName());
 		assertEquals(CUSTOMER_TYPE_NAME_EN, c.getPartyType());
 		assertEquals(CUSTOMER_FAMILY_NAME_EN, c.getFamilyName());
+		assertEquals(CUSTOMER_NUMER, c.getCustomerID());
 		
 		//delete
 		uri = restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_DELETE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
