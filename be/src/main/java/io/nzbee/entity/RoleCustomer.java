@@ -31,4 +31,7 @@ public class RoleCustomer extends Role {
 		return CustomerNumber;
 	}
 
+	public void setCustomerNumber(String customerNumber) {
+		CustomerNumber = customerNumber;
+	}
 }
