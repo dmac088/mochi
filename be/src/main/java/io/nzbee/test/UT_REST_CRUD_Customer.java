@@ -195,6 +195,9 @@ public class UT_REST_CRUD_Customer {
 	    assertEquals(CUSTOMER_GIVEN_NAME_EN, c.getGivenName());
 	    assertEquals(CUSTOMER_FAMILY_NAME_EN, c.getFamilyName());
 	    assertEquals(CUSTOMER_TYPE_NAME_EN, c.getPartyType());
+	    
+	   //this is a sequence number in the database
+	    //assertEquals(CUSTOMER_NUMER, c.getCustomerID());
 	    //assertEquals(passwordEncoder.encode(CUSTOMER_PASSWORD), c.getPassword());
 	    //assertEquals(passwordEncoder.encode(CUSTOMER_PASSWORD), c.getMatchingPassword());
 	    //assertEquals(uri.getBody(), customer);
@@ -231,7 +234,9 @@ public class UT_REST_CRUD_Customer {
 		assertEquals(CUSTOMER_UPDATE_GIVEN_NAME_EN, c.getGivenName());
 		assertEquals(CUSTOMER_TYPE_NAME_EN, c.getPartyType());
 		assertEquals(CUSTOMER_FAMILY_NAME_EN, c.getFamilyName());
-		assertEquals(CUSTOMER_NUMER, c.getCustomerID());
+		
+		//this is a sequence number in the database
+		//assertEquals(CUSTOMER_NUMER, c.getCustomerID());
 		
 		//delete
 		uri = restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_DELETE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
