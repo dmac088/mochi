@@ -96,6 +96,7 @@ public class CustomerService implements ICustomerService {
 		p1.setPartyRoles(new ArrayList<Role>());
 		RoleCustomer c1 = new RoleCustomer();
 		c1.setRoleStart(new Date());
+		//c1.setCustomerNumber(customer.getCustomerID());
 		
 		//create a new user object
 		User u1 = new User();
