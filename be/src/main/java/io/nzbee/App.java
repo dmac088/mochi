@@ -10,14 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.event.ContextRefreshedEvent;
 @SpringBootApplication
 @EnableCaching
-@ComponentScan({"io.nzbee.domain",
-				"io.nzbee.security",
-				"io.nzbee.test",
-				"io.nzbee.services",
-				"io.nzbee.dto",
-				"io.nzbee.dao",
-				"io.nzbee.entity",
-				"io.nzbee.controllers"})
+@ComponentScan({"io.nzbee.*"})
 public class App {
 	
 	 private static final Logger LOG = LoggerFactory.getLogger(App.class);
