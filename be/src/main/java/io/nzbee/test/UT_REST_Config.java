@@ -7,11 +7,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Configuration
 @ComponentScan({
-	"io.nzbee.domain",
-	"io.nzbee.security",
-	"io.nzbee.services",
-	"io.nzbee.dao",
-	"io.nzbee.entity"})
+	"io.nzbee.*"})
 public class UT_REST_Config {
 
 	@Bean 
