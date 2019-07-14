@@ -3,7 +3,7 @@ package io.nzbee.domain;
 import java.util.List;
 import java.util.Objects;
 
-import io.nzbee.entity.Layout;
+import io.nzbee.entity.layout.Layout;
 
 public class Category {
 	

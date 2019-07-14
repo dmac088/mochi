@@ -30,9 +30,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 
-import io.nzbee.entity.Layout;
 import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.hierarchy.Hierarchy;
+import io.nzbee.entity.layout.Layout;
 import io.nzbee.entity.product.Product;
 import io.nzbee.variables.GeneralVars;
 

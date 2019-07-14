@@ -1,4 +1,4 @@
-package io.nzbee.entity;
+package io.nzbee.entity.organization;
 
 import java.io.Serializable;
 
