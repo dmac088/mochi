@@ -1,8 +1,8 @@
 package io.nzbee.entity.category;
 
-import io.nzbee.entity.Layout;
 import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.hierarchy.Hierarchy;
+import io.nzbee.entity.layout.Layout;
 import io.nzbee.entity.product.Product;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.ListAttribute;
