@@ -30,7 +30,6 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.json.JSONObject;
 import io.nzbee.domain.Customer;
-import io.nzbee.entity.customer.RoleCustomer;
 import io.nzbee.entity.person.Person;
 import io.nzbee.entity.role.Role;
 import io.nzbee.security.User;
@@ -136,7 +135,7 @@ public class UT_REST_CRUD_Customer {
 	    
 	    //create the role object
 	    p1.setPartyRoles(new ArrayList<Role>());
-	    RoleCustomer c1 = new RoleCustomer();
+	    io.nzbee.entity.customer.Customer c1 = new io.nzbee.entity.customer.Customer();
 	    c1.setRoleStart(CUSTOMER_START_DATE);
 	    c1.setCustomerNumber(CUSTOMER_NUMER);
 			

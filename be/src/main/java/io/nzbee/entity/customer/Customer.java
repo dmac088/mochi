@@ -16,12 +16,12 @@ import io.nzbee.entity.role.RoleType;
 @Entity
 @Table(name = "customer", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "rle_id")
-public class RoleCustomer extends Role {
+public class Customer extends Role {
  
 	@Transient
 	private Long roleTypeId = (long) 1;
 	
-	public RoleCustomer() {
+	public Customer() {
 		super();
 		this.setRoleType(new RoleType(roleTypeId));
 	}

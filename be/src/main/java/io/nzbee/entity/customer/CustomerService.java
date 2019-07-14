@@ -12,15 +12,15 @@ import org.springframework.transaction.annotation.Transactional;
 import io.nzbee.entity.role.Role;
 
 @Service
-public class RoleCustomerService {
+public class CustomerService {
 
 	@Autowired
-	private RoleCustomerCustomRepository customerRepository; 
+	private CustomerCustomRepository customerRepository; 
 
 	
 	@PreAuthorize("hasAuthority('CUSTOMER_READER')")
 	@Transactional(readOnly = true)
-	public List<RoleCustomer> getAllCustomers() {
+	public List<Customer> getAllCustomers() {
 		return customerRepository.findAll();
 	}
 
@@ -32,13 +32,13 @@ public class RoleCustomerService {
 	
 	@PreAuthorize("hasAuthority('CUSTOMER_CREATE')")
 	@Transactional
-	public void addCustomer(RoleCustomer customer) {
+	public void addCustomer(Customer customer) {
 		customerRepository.save(customer);
 	}
 	
 	@PreAuthorize("hasAuthority('CUSTOMER_UPDATE')")
 	@Transactional
-	public void updateCustomer(Long id, RoleCustomer customer) {
+	public void updateCustomer(Long id, Customer customer) {
 		customerRepository.save(customer);
 	}
 	
