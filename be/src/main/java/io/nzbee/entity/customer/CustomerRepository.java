@@ -10,10 +10,10 @@ import io.nzbee.entity.role.Role;
 import io.nzbee.entity.role.RoleBaseRepository;
 
 @Repository("customerRepository")
-public interface RoleCustomerRepository extends RoleBaseRepository<RoleCustomer> {
+public interface CustomerRepository extends RoleBaseRepository<Customer> {
 
 	
-	List<RoleCustomer> findAll();
+	List<Customer> findAll();
 	
 	
 	Optional<Role> findByRoleId(Long CustomerId);
@@ -23,7 +23,7 @@ public interface RoleCustomerRepository extends RoleBaseRepository<RoleCustomer>
 	
 	//Customer findOneByCustomerId(String Id);
 	//need to use specification since findByCustomerId causes an exception
-	RoleCustomer findOne(Specification<RoleCustomer> spec);
+	Customer findOne(Specification<Customer> spec);
 	
 
 }

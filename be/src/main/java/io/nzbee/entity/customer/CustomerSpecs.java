@@ -7,16 +7,16 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.data.jpa.domain.Specification;
 
-public class RoleCustomerSpecs {
+public class CustomerSpecs {
 
-	public static Specification<RoleCustomer> byCustomerNumber(String customerId) {
-		return new Specification<RoleCustomer>() {
+	public static Specification<Customer> byCustomerNumber(String customerId) {
+		return new Specification<Customer>() {
 			/**
 			 * 
 			 */
 			private static final long serialVersionUID = 1L;
 
-			public Predicate toPredicate(Root<RoleCustomer> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
+			public Predicate toPredicate(Root<Customer> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
 
 				return builder.equal(root.get("CustomerNumber"), customerId);
 

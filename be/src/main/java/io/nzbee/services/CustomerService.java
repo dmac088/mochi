@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.Customer;
-import io.nzbee.entity.customer.RoleCustomer;
 import io.nzbee.entity.party.Party;
 import io.nzbee.entity.party.PartyRepository;
 import io.nzbee.entity.person.Person;
@@ -54,7 +53,7 @@ public class CustomerService implements ICustomerService {
 		List<Party> pl = partyRepository.findAll();
 		for(Party p : pl) {
 			Customer c = new Customer();
-			c.setCustomerID(((RoleCustomer)p.getPartyRole(PARTY_ROLE_NAME)).getCustomerNumber());
+			c.setCustomerID(((io.nzbee.entity.customer.Customer)p.getPartyRole(PARTY_ROLE_NAME)).getCustomerNumber());
 			c.setGivenName(((Person)p).getGivenName());
 			c.setFamilyName(((Person)p).getFamilyName());
 			c.setUserName(p.getPartyUser().getUsername());
@@ -73,7 +72,7 @@ public class CustomerService implements ICustomerService {
 		c1.setGivenName(((Person)pr1.get()).getGivenName());
 		c1.setFamilyName(((Person)pr1.get()).getFamilyName());
 		c1.setUserName(((Person)pr1.get()).getPartyUser().getUsername());
-		c1.setCustomerID(((RoleCustomer)((Person)pr1.get()).getPartyRole(PARTY_ROLE_NAME)).getCustomerNumber());
+		c1.setCustomerID(((io.nzbee.entity.customer.Customer)((Person)pr1.get()).getPartyRole(PARTY_ROLE_NAME)).getCustomerNumber());
 		c1.setPassword(pr1.get().getPartyUser().getPassword());
 		c1.setMatchingPassword(pr1.get().getPartyUser().getPassword());
 		c1.setPartyType(Person.class.getSimpleName());
@@ -94,7 +93,7 @@ public class CustomerService implements ICustomerService {
         
 		//create the role object
 		p1.setPartyRoles(new ArrayList<Role>());
-		RoleCustomer c1 = new RoleCustomer();
+		io.nzbee.entity.customer.Customer c1 = new io.nzbee.entity.customer.Customer();
 		c1.setRoleStart(new Date());
 		//c1.setCustomerNumber(customer.getCustomerID());
 		
