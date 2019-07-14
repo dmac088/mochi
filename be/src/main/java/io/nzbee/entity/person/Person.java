@@ -15,7 +15,7 @@ import io.nzbee.entity.party.PartyType;
 @Entity
 @Table(name = "person", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "psn_id")
-public class PartyPerson extends Party implements Serializable {
+public class Person extends Party implements Serializable {
 
 	/**
 	 * 
@@ -31,7 +31,7 @@ public class PartyPerson extends Party implements Serializable {
 	@Column(name="psn_fml_nm")
 	private String FamilyName;
 	
-	public PartyPerson() {
+	public Person() {
 		super();
 		this.setPartyType(new PartyType(partyTypeId));
 	}

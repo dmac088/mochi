@@ -12,8 +12,8 @@ import io.nzbee.domain.Customer;
 import io.nzbee.entity.customer.RoleCustomer;
 import io.nzbee.entity.party.Party;
 import io.nzbee.entity.party.PartyRepository;
-import io.nzbee.entity.person.PartyPerson;
-import io.nzbee.entity.person.PartyPersonRepository;
+import io.nzbee.entity.person.Person;
+import io.nzbee.entity.person.PersonRepository;
 import io.nzbee.entity.role.Role;
 import io.nzbee.exceptions.CustomerAlreadyExistException;
 import io.nzbee.security.User;
@@ -28,7 +28,7 @@ public class CustomerService implements ICustomerService {
     private PartyRepository partyRepository;
     
     @Autowired
-    private PartyPersonRepository personRepository;
+    private PersonRepository personRepository;
     
     @Autowired
     private UserRoleService userRoleService;
@@ -55,8 +55,8 @@ public class CustomerService implements ICustomerService {
 		for(Party p : pl) {
 			Customer c = new Customer();
 			c.setCustomerID(((RoleCustomer)p.getPartyRole(PARTY_ROLE_NAME)).getCustomerNumber());
-			c.setGivenName(((PartyPerson)p).getGivenName());
-			c.setFamilyName(((PartyPerson)p).getFamilyName());
+			c.setGivenName(((Person)p).getGivenName());
+			c.setFamilyName(((Person)p).getFamilyName());
 			c.setUserName(p.getPartyUser().getUsername());
 			c.setPassword(p.getPartyUser().getPassword());
 			cl.add(c);
@@ -70,13 +70,13 @@ public class CustomerService implements ICustomerService {
 	public Customer getCustomer(String userName) {
 		Optional<Party> pr1 = partyRepository.findByPartyUserUsername(userName);
 		Customer c1 = new Customer();
-		c1.setGivenName(((PartyPerson)pr1.get()).getGivenName());
-		c1.setFamilyName(((PartyPerson)pr1.get()).getFamilyName());
-		c1.setUserName(((PartyPerson)pr1.get()).getPartyUser().getUsername());
-		c1.setCustomerID(((RoleCustomer)((PartyPerson)pr1.get()).getPartyRole(PARTY_ROLE_NAME)).getCustomerNumber());
+		c1.setGivenName(((Person)pr1.get()).getGivenName());
+		c1.setFamilyName(((Person)pr1.get()).getFamilyName());
+		c1.setUserName(((Person)pr1.get()).getPartyUser().getUsername());
+		c1.setCustomerID(((RoleCustomer)((Person)pr1.get()).getPartyRole(PARTY_ROLE_NAME)).getCustomerNumber());
 		c1.setPassword(pr1.get().getPartyUser().getPassword());
 		c1.setMatchingPassword(pr1.get().getPartyUser().getPassword());
-		c1.setPartyType(PartyPerson.class.getSimpleName());
+		c1.setPartyType(Person.class.getSimpleName());
 		return c1;
 	}
 	
@@ -88,7 +88,7 @@ public class CustomerService implements ICustomerService {
             throw new CustomerAlreadyExistException("There is an account with that username: " + customer.getUserName());
         }
         
-        PartyPerson p1 = new PartyPerson();
+        Person p1 = new Person();
         p1.setGivenName(customer.getGivenName());
         p1.setFamilyName(customer.getFamilyName());
         
@@ -148,10 +148,10 @@ public class CustomerService implements ICustomerService {
 		Party p = partyRepository.findByPartyUserUsername(customer.getUserName()).get();
 		//partyRepository.delete(p);
 		
-		PartyPerson pp = null;
-		if(customer.getPartyType().equals(PartyPerson.class.getSimpleName())) {
+		Person pp = null;
+		if(customer.getPartyType().equals(Person.class.getSimpleName())) {
 			System.out.println("pop");
-			pp = (PartyPerson) p;
+			pp = (Person) p;
 			pp.setGivenName(customer.getGivenName());
 			pp.setFamilyName(customer.getFamilyName());
 			personRepository.save(pp);
@@ -162,8 +162,8 @@ public class CustomerService implements ICustomerService {
 	@Override
 	public Customer convertToCustomerDO(Party party) {
 		final Customer cDo = new Customer();
-		if (PartyPerson.class.getSimpleName().equals(party.getClass().getSimpleName())) {
-			PartyPerson person = (PartyPerson) party;
+		if (Person.class.getSimpleName().equals(party.getClass().getSimpleName())) {
+			Person person = (Person) party;
 	    	cDo.setGivenName(person.getGivenName());
 	    	cDo.setFamilyName(person.getFamilyName());
 	    	cDo.setPassword(person.getPartyUser().getPassword());

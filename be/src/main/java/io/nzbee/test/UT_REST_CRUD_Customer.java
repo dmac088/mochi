@@ -31,7 +31,7 @@ import org.springframework.web.client.RestTemplate;
 import org.json.JSONObject;
 import io.nzbee.domain.Customer;
 import io.nzbee.entity.customer.RoleCustomer;
-import io.nzbee.entity.person.PartyPerson;
+import io.nzbee.entity.person.Person;
 import io.nzbee.entity.role.Role;
 import io.nzbee.security.User;
 import io.nzbee.security.UserRole;
@@ -129,7 +129,7 @@ public class UT_REST_CRUD_Customer {
     
     private Customer customerDefinition() {
     	//create a person object
-	    PartyPerson p1 = new PartyPerson();
+	    Person p1 = new Person();
 	    p1.setGivenName(CUSTOMER_GIVEN_NAME_EN);
 	    p1.setFamilyName(CUSTOMER_FAMILY_NAME_EN);
 	    
