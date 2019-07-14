@@ -2,6 +2,10 @@ package io.nzbee.entity;
 
 import org.hibernate.search.analyzer.Discriminator;
 
+import io.nzbee.entity.brand.BrandAttribute;
+import io.nzbee.entity.category.CategoryAttribute;
+import io.nzbee.entity.product.ProductAttribute;
+
 public class LanguageDiscriminator implements Discriminator {
 
     public String getAnalyzerDefinitionName(Object value, Object entity, String field) {

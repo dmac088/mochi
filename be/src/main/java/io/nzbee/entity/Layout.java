@@ -12,6 +12,8 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.nzbee.entity.category.Category;
+
 @Entity
 @Table(name = "layout", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "lay_id")
