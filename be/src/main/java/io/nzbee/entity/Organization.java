@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import io.nzbee.entity.party.Party;
+
 @Entity
 @Table(name = "organisation", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "org_id")

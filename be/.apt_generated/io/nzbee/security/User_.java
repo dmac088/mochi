@@ -1,6 +1,6 @@
 package io.nzbee.security;
 
-import io.nzbee.entity.Party;
+import io.nzbee.entity.party.Party;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;

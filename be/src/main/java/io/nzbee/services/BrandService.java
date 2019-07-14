@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import io.nzbee.dao.BrandDAO;
 import io.nzbee.domain.Brand;
 import io.nzbee.dto.SidebarFacetDTO;
-import io.nzbee.entity.ProductRepository;
+import io.nzbee.entity.product.ProductRepository;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.ProductVars;
 
@@ -31,7 +31,7 @@ public class BrandService implements IBrandService {
 	@Transactional
 	@Cacheable
 	public List<SidebarFacetDTO> getBrands(final String lcl, String currency) {
-    	List<io.nzbee.entity.Brand> lpb = brandDAO.getAll();
+    	List<io.nzbee.entity.brand.Brand> lpb = brandDAO.getAll();
     	List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, lcl, currency))
 		.sorted((pb1, pb2) -> pb2.getProductCount().compareTo(pb1.getProductCount()))
 		.collect(Collectors.toList());
@@ -42,7 +42,7 @@ public class BrandService implements IBrandService {
 	@Transactional
 	@Cacheable
 	public Brand getBrand(String lcl, String curr, Long brandId) {
-    	io.nzbee.entity.Brand pb = brandDAO.findById(brandId).get();
+    	io.nzbee.entity.brand.Brand pb = brandDAO.findById(brandId).get();
      	return	createBrandDO(pb, lcl, curr);
 	}
  
@@ -58,7 +58,7 @@ public class BrandService implements IBrandService {
 				.stream().map(t -> { return t.getId();}).collect(Collectors.toList());
 		
 		//get a list of brands for the selected categories and tags
-		List<io.nzbee.entity.Brand> lpb = brandDAO.getAll(categoryIds, locale, tagIds);
+		List<io.nzbee.entity.brand.Brand> lpb = brandDAO.getAll(categoryIds, locale, tagIds);
 		List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, locale, currency)).collect(Collectors.toList());
 		
 		lb.stream().forEach(bDO -> {
@@ -105,7 +105,7 @@ public class BrandService implements IBrandService {
     
 	
  	@Cacheable
-    private Brand createBrandDO(final io.nzbee.entity.Brand b, final String lcl, final String currency) {
+    private Brand createBrandDO(final io.nzbee.entity.brand.Brand b, final String lcl, final String currency) {
     	final Brand bDO = new Brand();
     	bDO.setBrandId(b.getBrandId());
     	bDO.setBrandCode(b.getBrandCode());

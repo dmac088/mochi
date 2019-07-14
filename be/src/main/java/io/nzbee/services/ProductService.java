@@ -40,15 +40,15 @@ import io.nzbee.dao.ProductTagDAO;
 import io.nzbee.domain.Product;
 import io.nzbee.dto.SearchDTO;
 import io.nzbee.dto.SidebarFacetDTO;
-import io.nzbee.entity.Brand;
-import io.nzbee.entity.BrandRepository;
-import io.nzbee.entity.Category;
 import io.nzbee.entity.PageableUtil;
-import io.nzbee.entity.ProductAttribute;
-import io.nzbee.entity.ProductAttributeRepository;
-import io.nzbee.entity.ProductPriceRepository;
-import io.nzbee.entity.ProductRepository;
-import io.nzbee.entity.ProductTagAttribute;
+import io.nzbee.entity.brand.Brand;
+import io.nzbee.entity.brand.BrandRepository;
+import io.nzbee.entity.category.Category;
+import io.nzbee.entity.product.ProductAttribute;
+import io.nzbee.entity.product.ProductAttributeRepository;
+import io.nzbee.entity.product.ProductPriceRepository;
+import io.nzbee.entity.product.ProductRepository;
+import io.nzbee.entity.tag.ProductTagAttribute;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.ProductVars;
 
@@ -86,7 +86,7 @@ public class ProductService implements IProductService {
 	@Transactional
 	@Cacheable
 	public Product getProduct(String lcl, String currency, Long id) {
-    	io.nzbee.entity.Product pa = productRepository.findById(id).get();
+    	io.nzbee.entity.product.Product pa = productRepository.findById(id).get();
 		Product p = this.convertToProductDO(pa, lcl, currency);
 		return p;
 	}	
@@ -118,7 +118,7 @@ public class ProductService implements IProductService {
 		List<SidebarFacetDTO> selectedTags = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals(CategoryVars.TAG_FACET_NAME);}).collect(Collectors.toList());
 		List<Long> selectedTagIds = selectedTags.stream().map(t -> {return t.getId();}).collect(Collectors.toList());
 			
-     	Page<io.nzbee.entity.Product> ppa = 
+     	Page<io.nzbee.entity.product.Product> ppa = 
      			productDAO.getAll(categoryIds, locale, new Double(0), price, ProductVars.MARKDOWN_SKU_DESCRIPTION, currency, new Date(), new Date(), PageRequest.of(page, size, this.sortByParam(sortBy)), selectedBrandIds, selectedTagIds);
      	
   		Page<Product> pp = ppa.map(pa -> this.convertToProductDO(pa, locale, currency));
@@ -131,7 +131,7 @@ public class ProductService implements IProductService {
 	@Cacheable
 	public List<Product> getProducts(String locale, String currency, List<Long> productIds) {
 		
-	    List<io.nzbee.entity.Product> lp = 
+	    List<io.nzbee.entity.product.Product> lp = 
      			productDAO.getAll(locale, currency, productIds);
      	
 		return lp.stream().map(p -> { return this.convertToProductDO(p, locale, currency);}).collect(Collectors.toList());
@@ -540,7 +540,7 @@ public class ProductService implements IProductService {
 		return allFacets;
 	}
 	
-    public Product convertToProductDO(final io.nzbee.entity.Product product, String lcl, String currency) {
+    public Product convertToProductDO(final io.nzbee.entity.product.Product product, String lcl, String currency) {
     	ProductAttribute pa = productAttributeRepository.findByLclCdAndProductId(lcl, product.getProductId());
         final Product pDo = new Product();
         pDo.setProductId(product.getProductId());

@@ -1,5 +1,6 @@
 package io.nzbee.entity;
 
+import io.nzbee.entity.category.Category;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
