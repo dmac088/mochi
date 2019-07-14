@@ -77,7 +77,7 @@ public class UT_REST_CRUD_Customer {
     private static String CUSTOMER_GIVEN_NAME_EN 			= "Daniel";
     private static String CUSTOMER_UPDATE_GIVEN_NAME_EN 	= "Robert";
     private static String CUSTOMER_FAMILY_NAME_EN 			= "Mackie";
-    private static String CUSTOMER_TYPE_NAME_EN 			= "PartyPerson";
+    private static String CUSTOMER_TYPE_NAME_EN 			= "Person";
     //private static String CUSTOMER_NAME_CN 				= "丹尼爾麥基";
     private static Date   CUSTOMER_START_DATE 				= new Date();
     private static String CUSTOMER_NUMER 					= "0123498765";
