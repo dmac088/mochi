@@ -8,7 +8,7 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 @ComponentScan({
 	"io.nzbee.*"})
-public class UT_REST_Config {
+public class UT_Config {
 
 	@Bean 
     public RestTemplate unitTestTemplate() {
