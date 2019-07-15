@@ -1,10 +1,8 @@
-package io.nzbee.domain;
+package io.nzbee.dto;
 
 import java.util.Date;
-import java.util.Objects;
 
-
-public class Product {
+public class InboundProductMaster {
 
 	private Long productId;
 
@@ -107,32 +105,4 @@ public class Product {
 		this.primaryCategoryPath = primaryCategoryPath;
 	}
 	
-	@Override
-	public boolean equals(Object o) {
-		 if (this == o) return true;
-	     if (o == null || getClass() != o.getClass()) return false;
-	     Product pcDto = (Product) o;
-	     return this.productId == pcDto.productId;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(productId);
-	}
-
-	@Override
-    public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("Product [productId=").append(productId)
-        		.append(", productUPC=").append(productUPC)
-        		.append(", productCreateDt=").append(productCreateDt)
-        		.append(", productDesc=").append(productDesc)
-        		.append(", brandDesc=").append(brandDesc)
-        		.append(", productRetail=").append(productRetail)
-        		.append(", productMarkdown=").append(productMarkdown)
-                .append(", ProductImage=").append(productImage)
-                .append(", lclCd=").append(lclCd);
-        return builder.toString();
-    }
-
 }
