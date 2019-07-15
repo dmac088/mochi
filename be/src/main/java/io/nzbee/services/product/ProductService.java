@@ -1,4 +1,4 @@
-package io.nzbee.services;
+package io.nzbee.services.product;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

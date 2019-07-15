@@ -35,7 +35,7 @@ import io.nzbee.entity.role.Role;
 import io.nzbee.security.User;
 import io.nzbee.security.UserRole;
 import io.nzbee.security.UserRoleService;
-import io.nzbee.services.ICustomerService;
+import io.nzbee.services.customer.ICustomerService;
  
 
 @RunWith(SpringJUnit4ClassRunner.class)

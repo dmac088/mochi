@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.nzbee.domain.Product;
 import io.nzbee.dto.SearchDTO;
 import io.nzbee.dto.SidebarFacetDTO;
-import io.nzbee.services.IProductService;
+import io.nzbee.services.product.IProductService;
 
 @RestController
 @RequestMapping("/api")

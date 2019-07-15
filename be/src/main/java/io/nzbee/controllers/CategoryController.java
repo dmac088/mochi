@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.nzbee.domain.Category;
 import io.nzbee.dto.SidebarFacetDTO;
-import io.nzbee.services.ICategoryService;
+import io.nzbee.services.category.ICategoryService;
 import io.nzbee.variables.CategoryVars;
 
 @RestController

@@ -14,7 +14,6 @@ public class PersonService {
 	@Autowired
 	private PersonRepository personRepository; 
 	
-	
 	@PreAuthorize("hasAuthority('PERSON_READER')")
 	@Transactional(readOnly = true)
 	public List<Person> getAllPersons() {
@@ -44,11 +43,9 @@ public class PersonService {
 		personRepository.save(person);
 	}
 	
-	
 	@PreAuthorize("hasAuthority('PERSON_DELETE')")
 	@Transactional
 	public void deletePerson(Long id) {
 		personRepository.deleteById(id);
 	}
-	
 }
