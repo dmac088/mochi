@@ -1,6 +1,7 @@
 package io.nzbee.hierarchy;
 
 import io.nzbee.entity.category.Category;
+import io.nzbee.entity.hierarchy.Hierarchy;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;

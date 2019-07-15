@@ -1,4 +1,4 @@
-package io.nzbee.services;
+package io.nzbee.services.category;
 
 
 import java.util.List;

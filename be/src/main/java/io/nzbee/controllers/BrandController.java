@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.nzbee.domain.Brand;
 import io.nzbee.dto.SidebarFacetDTO;
-import io.nzbee.services.IBrandService;
+import io.nzbee.services.brand.IBrandService;
 import io.nzbee.variables.CategoryVars;
 
 @RestController

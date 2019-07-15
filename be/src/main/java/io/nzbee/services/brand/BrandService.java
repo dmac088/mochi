@@ -1,4 +1,4 @@
-package io.nzbee.services;
+package io.nzbee.services.brand;
 
 import java.util.ArrayList;
 import java.util.Arrays;
