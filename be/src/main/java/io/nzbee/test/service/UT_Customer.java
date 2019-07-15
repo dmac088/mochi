@@ -37,11 +37,11 @@ import io.nzbee.security.UserRole;
 import io.nzbee.security.UserRoleService;
 import io.nzbee.services.customer.ICustomerService;
 import io.nzbee.test.LoggingRequestInterceptor;
-import io.nzbee.test.UT_REST_Config;
+import io.nzbee.test.UT_Config;
  
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {UT_REST_Config.class})
+@ContextConfiguration(classes = {UT_Config.class})
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 public class UT_Customer {
