@@ -1,4 +1,4 @@
-package io.nzbee.test;
+package io.nzbee.test.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -36,13 +36,15 @@ import io.nzbee.security.User;
 import io.nzbee.security.UserRole;
 import io.nzbee.security.UserRoleService;
 import io.nzbee.services.customer.ICustomerService;
+import io.nzbee.test.LoggingRequestInterceptor;
+import io.nzbee.test.UT_REST_Config;
  
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {UT_REST_Config.class})
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-public class UT_REST_CRUD_Customer {
+public class UT_Customer {
 	
 	@Autowired
 	@Qualifier("userPasswordEncoder")
@@ -182,10 +184,10 @@ public class UT_REST_CRUD_Customer {
 	    Customer customer = this.customerDefinition();
 	    
 	    HttpEntity<Customer> customerEntity = new HttpEntity<Customer>(customer, headers);
-	    ResponseEntity<Customer> uri = restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_CREATE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
+	    ResponseEntity<Customer> uri = restTemplate.exchange(UT_Customer.CUSTOMER_CREATE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
 	    assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value());
 	    
-	    uri = restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_READ_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.GET, customerEntity, Customer.class);
+	    uri = restTemplate.exchange(UT_Customer.CUSTOMER_READ_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.GET, customerEntity, Customer.class);
 	    Customer c = customerService.getCustomer(uri.getBody().getUserName());
 	    
 	    System.out.println(uri.getBody());
@@ -202,7 +204,7 @@ public class UT_REST_CRUD_Customer {
 	    //assertEquals(uri.getBody(), customer);
 	    
 	    //delete
-	    uri = restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_DELETE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
+	    uri = restTemplate.exchange(UT_Customer.CUSTOMER_DELETE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
 	    assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value()); 
 	    
     }
@@ -221,15 +223,15 @@ public class UT_REST_CRUD_Customer {
 		Customer customer = this.customerDefinition();
 	    
 		HttpEntity<Customer> customerEntity = new HttpEntity<Customer>(customer, headers);
-		ResponseEntity<Customer> uri = restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_CREATE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
+		ResponseEntity<Customer> uri = restTemplate.exchange(UT_Customer.CUSTOMER_CREATE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
 		assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value());
     	
     	customer.setGivenName(CUSTOMER_UPDATE_GIVEN_NAME_EN);
 		
-		ResponseEntity<Customer> postUri = restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_UPDATE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
+		ResponseEntity<Customer> postUri = restTemplate.exchange(UT_Customer.CUSTOMER_UPDATE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
 		assertEquals(postUri.getStatusCodeValue(), HttpStatus.OK.value()); 
 		
-		Customer c = restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_READ_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.GET, customerEntity, Customer.class).getBody();
+		Customer c = restTemplate.exchange(UT_Customer.CUSTOMER_READ_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.GET, customerEntity, Customer.class).getBody();
 		assertEquals(CUSTOMER_UPDATE_GIVEN_NAME_EN, c.getGivenName());
 		assertEquals(CUSTOMER_TYPE_NAME_EN, c.getPartyType());
 		assertEquals(CUSTOMER_FAMILY_NAME_EN, c.getFamilyName());
@@ -238,7 +240,7 @@ public class UT_REST_CRUD_Customer {
 		//assertEquals(CUSTOMER_NUMER, c.getCustomerID());
 		
 		//delete
-		uri = restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_DELETE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
+		uri = restTemplate.exchange(UT_Customer.CUSTOMER_DELETE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
 		assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value()); 
     }
     
@@ -257,7 +259,7 @@ public class UT_REST_CRUD_Customer {
 		HttpEntity<Customer> customerEntity = new HttpEntity<Customer>(customer, headers);
 		
 		//delete
-		ResponseEntity<Customer> uri = restTemplate.exchange(UT_REST_CRUD_Customer.CUSTOMER_DELETE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
+		ResponseEntity<Customer> uri = restTemplate.exchange(UT_Customer.CUSTOMER_DELETE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
 		assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value()); 
     }
 }
