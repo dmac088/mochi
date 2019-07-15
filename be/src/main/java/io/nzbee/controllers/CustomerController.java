@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.nzbee.domain.Customer;
+import io.nzbee.exceptions.CustomerAlreadyExistException;
 import io.nzbee.services.GenericResponse;
-import io.nzbee.services.customer.CustomerAlreadyExistException;
 import io.nzbee.services.customer.ICustomerService;
 
 
