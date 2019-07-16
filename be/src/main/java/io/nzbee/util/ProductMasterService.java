@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -46,6 +47,8 @@ public class ProductMasterService {
 	@Autowired 
 	private CategoryAttributeService categoryAttributeService;
 	
+	@Autowired
+	private Environment env;
 	
 	private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -98,7 +101,7 @@ public class ProductMasterService {
 	        ObjectWriter myObjectWriter = mapper.writer(schema);
 	        writer.write(myObjectWriter.writeValueAsString(lpms));
          
-	        File tempFile = new ClassPathResource("data/product_master.csv").getFile();
+	        File tempFile = new ClassPathResource("data/" + env.getProperty("util.product-master-output-file")).getFile();
 	        FileOutputStream tempFileOutputStream = new FileOutputStream(tempFile);
 	        BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(tempFileOutputStream, 1024);
 	        OutputStreamWriter writerOutputStream = new OutputStreamWriter(bufferedOutputStream, "UTF-8");
