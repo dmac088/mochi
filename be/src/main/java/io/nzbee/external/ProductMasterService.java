@@ -50,7 +50,6 @@ public class ProductMasterService {
 	public void writeProductMaster() {
 	    try {
 	    
-	    
 	    	List<Product> products = productService.getProducts();
 	    	
 	    	List<ProductMasterSchema> lpms = products.stream().map(p -> {
