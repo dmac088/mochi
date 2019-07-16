@@ -1,107 +1,117 @@
 package io.nzbee.external;
 
-import java.util.Date;
 
 public class ProductMasterSchema {
 
-	private String productUPC;
+	private String PRODUCT_UPC_CODE;
 	
-	private Date productCreateDt;
+	private String PRODUCT_CREATED_DATE;
 
-	private String productDescEN;
+	private String PRODUCT_DESCRIPTION_EN;
 	
-	private String productDescHK;
+	private String PRODUCT_DESCRIPTION_HK;
 	
-	private String brandDesc;
+	private String BRAND_DESCRIPTION_EN;
 	
-	private double productRetailUSD;
+	private String BRAND_DESCRIPTION_HK;
 	
-	private double productMarkdownUSD;
+	private double PRODUCT_RETAIL_PRICE_USD;
 	
-	private double productRetailHKD;
+	private double PRODUCT_MARKDOWN_PRICE_USD;
 	
-	private double productMarkdownHKD;
+	private double PRODUCT_RETAIL_PRICE_HKD;
 	
-	private String primaryCategoryPath; 
-
-	public String getProductUPC() {
-		return productUPC;
-	}
-
-	public void setProductUPC(String productUPC) {
-		this.productUPC = productUPC;
-	}
-
-	public Date getProductCreateDt() {
-		return productCreateDt;
-	}
-
-	public void setProductCreateDt(Date productCreateDt) {
-		this.productCreateDt = productCreateDt;
-	}
+	private double PRODUCT_MARKDOWN_PRICE_HKD;
 	
-	public String getBrandDesc() {
-		return brandDesc;
+	private String PRIMARY_CATEGORY_PATH; 
+
+	public String get_PRODUCT_UPC_CODE() {
+		return PRODUCT_UPC_CODE;
 	}
 
-	public void setBrandDesc(String brandDesc) {
-		this.brandDesc = brandDesc;
-	}
-	
-	public String getPrimaryCategoryPath() {
-		return primaryCategoryPath;
+	public void set_PRODUCT_UPC_CODE(String PRODUCTUPC) {
+		this.PRODUCT_UPC_CODE = PRODUCTUPC;
 	}
 
-	public void setPrimaryCategoryPath(String primaryCategoryPath) {
-		this.primaryCategoryPath = primaryCategoryPath;
+	public String get_PRODUCT_CREATED_DATE() {
+		return PRODUCT_CREATED_DATE;
 	}
 
-	public String getProductDescEN() {
-		return productDescEN;
+	public void set_PRODUCT_CREATED_DATE(String PRODUCTCreateDt) {
+		this.PRODUCT_CREATED_DATE = PRODUCTCreateDt;
 	}
 
-	public void setProductDescEN(String productDescEN) {
-		this.productDescEN = productDescEN;
+	public String get_PRODUCT_DESCRIPTION_EN() {
+		return PRODUCT_DESCRIPTION_EN;
 	}
 
-	public String getProductDescHK() {
-		return productDescHK;
+	public void set_PRODUCT_DESCRIPTION_EN(String PRODUCT_DESCRIPTION_EN) {
+		this.PRODUCT_DESCRIPTION_EN = PRODUCT_DESCRIPTION_EN;
 	}
 
-	public void setProductDescHK(String productDescHK) {
-		this.productDescHK = productDescHK;
+	public String get_PRODUCT_DESCRIPTION_HK() {
+		return PRODUCT_DESCRIPTION_HK;
 	}
 
-	public double getProductRetailUSD() {
-		return productRetailUSD;
+	public void set_PRODUCT_DESCRIPTION_HK(String PRODUCT_DESCRIPTION_HK) {
+		this.PRODUCT_DESCRIPTION_HK = PRODUCT_DESCRIPTION_HK;
 	}
 
-	public void setProductRetailUSD(double productRetailUSD) {
-		this.productRetailUSD = productRetailUSD;
+	public String get_BRAND_DESCRIPTION_EN() {
+		return BRAND_DESCRIPTION_EN;
 	}
 
-	public double getProductMarkdownUSD() {
-		return productMarkdownUSD;
+	public void set_BRAND_DESCRIPTION_EN(String BRAND_DESCRIPTION_EN) {
+		this.BRAND_DESCRIPTION_EN = BRAND_DESCRIPTION_EN;
 	}
 
-	public void setProductMarkdownUSD(double productMarkdownUSD) {
-		this.productMarkdownUSD = productMarkdownUSD;
+	public String get_BRAND_DESCRIPTION_HK() {
+		return BRAND_DESCRIPTION_HK;
 	}
 
-	public double getProductRetailHKD() {
-		return productRetailHKD;
+	public void set_BRAND_DESCRIPTION_HK(String BRAND_DESCRIPTION_HK) {
+		this.BRAND_DESCRIPTION_HK = BRAND_DESCRIPTION_HK;
 	}
 
-	public void setProductRetailHKD(double productRetailHKD) {
-		this.productRetailHKD = productRetailHKD;
+	public double get_PRODUCT_RETAIL_PRICE_USD() {
+		return PRODUCT_RETAIL_PRICE_USD;
 	}
 
-	public double getProductMarkdownHKD() {
-		return productMarkdownHKD;
+	public void set_PRODUCT_RETAIL_PRICE_USD(double PRODUCT_RETAIL_PRICE_USD) {
+		this.PRODUCT_RETAIL_PRICE_USD = PRODUCT_RETAIL_PRICE_USD;
 	}
 
-	public void setProductMarkdownHKD(double productMarkdownHKD) {
-		this.productMarkdownHKD = productMarkdownHKD;
+	public double get_PRODUCT_MARKDOWN_PRICE_USD() {
+		return PRODUCT_MARKDOWN_PRICE_USD;
 	}
+
+	public void set_PRODUCT_MARKDOWN_PRICE_USD(double PRODUCT_MARKDOWN_PRICE_USD) {
+		this.PRODUCT_MARKDOWN_PRICE_USD = PRODUCT_MARKDOWN_PRICE_USD;
+	}
+
+	public double get_PRODUCT_RETAIL_PRICE_HKD() {
+		return PRODUCT_RETAIL_PRICE_HKD;
+	}
+
+	public void set_PRODUCT_RETAIL_PRICE_HKD(double PRODUCT_RETAIL_PRICE_HKD) {
+		this.PRODUCT_RETAIL_PRICE_HKD = PRODUCT_RETAIL_PRICE_HKD;
+	}
+
+	public double get_PRODUCT_MARKDOWN_PRICE_HKD() {
+		return PRODUCT_MARKDOWN_PRICE_HKD;
+	}
+
+	public void set_PRODUCT_MARKDOWN_PRICE_HKD(double PRODUCT_MARKDOWN_PRICE_HKD) {
+		this.PRODUCT_MARKDOWN_PRICE_HKD = PRODUCT_MARKDOWN_PRICE_HKD;
+	}
+
+	public String get_PRIMARY_CATEGORY_PATH() {
+		return PRIMARY_CATEGORY_PATH;
+	}
+
+	public void set_PRIMARY_CATEGORY_PATH(String PRIMARY_CATEGORY_PATH) {
+		this.PRIMARY_CATEGORY_PATH = PRIMARY_CATEGORY_PATH;
+	}
+
 	
 }

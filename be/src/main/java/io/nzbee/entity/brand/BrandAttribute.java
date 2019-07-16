@@ -22,7 +22,7 @@ public class BrandAttribute {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="bnd_lcl_id")
 	private Long Id;
-	
+
 	@Column(name="bnd_id")
 	private Long brandId;
 
@@ -38,10 +38,14 @@ public class BrandAttribute {
 	@JsonBackReference
 	private Brand brand;
 	
-	public Long getbrandId() {
+	public Long getId() {
 		return brandId;
 	}
-	
+
+	public void setId(Long brandId) {
+		this.brandId = brandId;
+	}
+
 	public Brand getBrand() {
 		return brand;
 	}

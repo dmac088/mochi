@@ -4,6 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
@@ -14,6 +15,9 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
+
+import io.nzbee.entity.brand.BrandAttributeService;
+import io.nzbee.entity.category.CategoryAttributeService;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.ProductAttributeService;
 import io.nzbee.entity.product.ProductPriceService;
@@ -26,12 +30,22 @@ public class ProductMasterService {
 	
 	@Autowired
 	@Qualifier("productEntityService")
-	private ProductService productService; 
+	private ProductService productService;
+	
+	@Autowired
+	private BrandAttributeService brandService; 
 	
 	@Autowired
 	private ProductPriceService productPriceService;
 	
-	@Autowired ProductAttributeService productAttributeService;
+	@Autowired 
+	private ProductAttributeService productAttributeService;
+	
+	@Autowired 
+	private CategoryAttributeService categoryAttributeService;
+	
+	
+	private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
 //	public <ProductMasterSchema> List<ProductMasterSchema> loadObjectList(Class<ProductMasterSchema> type/*, String fileName*/) {
 //	    try {
@@ -54,14 +68,17 @@ public class ProductMasterService {
 	    	
 	    	List<ProductMasterSchema> lpms = products.stream().map(p -> {
 	    		ProductMasterSchema pms = new ProductMasterSchema();
-	    		pms.setProductUPC(p.getProductUPC());
-	    		pms.setProductCreateDt(p.getProductCreateDt());
-	    		pms.setProductDescEN(productAttributeService.getProductAttributeEN(p.getProductId()).getProductDesc());
-	    		pms.setProductDescHK(productAttributeService.getProductAttributeHK(p.getProductId()).getProductDesc());
-	    		pms.setProductRetailUSD(productPriceService.getCurrentRetailPriceUSD(p.getProductId()).getPriceValue());
-	    		pms.setProductRetailHKD(productPriceService.getCurrentRetailPriceHKD(p.getProductId()).getPriceValue());
-	    		pms.setProductMarkdownUSD(productPriceService.getCurrentMarkdownPriceUSD(p.getProductId()).getPriceValue());
-	    		pms.setProductMarkdownHKD(productPriceService.getCurrentMarkdownPriceHKD(p.getProductId()).getPriceValue());
+	    		pms.set_PRODUCT_UPC_CODE(p.getProductUPC());
+	    		pms.set_PRODUCT_CREATED_DATE(format.format(p.getProductCreateDt()));
+	    		pms.set_PRODUCT_DESCRIPTION_EN(productAttributeService.getProductAttributeEN(p.getProductId()).getProductDesc());
+	    		pms.set_PRODUCT_DESCRIPTION_HK(productAttributeService.getProductAttributeHK(p.getProductId()).getProductDesc());
+	    		pms.set_PRODUCT_RETAIL_PRICE_USD(productPriceService.getCurrentRetailPriceUSD(p.getProductId()).getPriceValue());
+	    		pms.set_PRODUCT_RETAIL_PRICE_HKD(productPriceService.getCurrentRetailPriceHKD(p.getProductId()).getPriceValue());
+	    		pms.set_PRODUCT_MARKDOWN_PRICE_USD(productPriceService.getCurrentMarkdownPriceUSD(p.getProductId()).getPriceValue());
+	    		pms.set_PRODUCT_MARKDOWN_PRICE_HKD(productPriceService.getCurrentMarkdownPriceHKD(p.getProductId()).getPriceValue());
+	    		pms.set_BRAND_DESCRIPTION_EN(brandService.getBrandAttributesEN(p.getBrand().getBrandId()).getBrandDesc());
+	    		pms.set_BRAND_DESCRIPTION_HK(brandService.getBrandAttributesHK(p.getBrand().getBrandId()).getBrandDesc());
+	    		pms.set_PRIMARY_CATEGORY_PATH("\\TBC");
 	    		return pms;
 	    	}).collect(Collectors.toList());
 	    	
