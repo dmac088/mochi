@@ -637,7 +637,8 @@ ALTER TABLE mochi.price OWNER TO mochidb_owner;
 
 CREATE TABLE mochi.price_type (
     prc_typ_id bigint NOT NULL,
-    prc_typ_desc character varying
+    prc_typ_desc character varying,
+    prc_typ_cd character varying
 );
 
 
@@ -2229,9 +2230,9 @@ SELECT pg_catalog.setval('mochi.price_prc_id_seq', 120, true);
 -- Data for Name: price_type; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY mochi.price_type (prc_typ_id, prc_typ_desc) FROM stdin;
-1	retail
-2	markdown
+COPY mochi.price_type (prc_typ_id, prc_typ_desc, prc_typ_cd) FROM stdin;
+1	retail	RET01
+2	markdown	MKD01
 \.
 
 
