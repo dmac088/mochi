@@ -123,6 +123,15 @@ class App extends Component {
         });
       });
     })
+    .then((promiseArray) => {
+      if(!promiseArray) { return }
+      Promise.all(promiseArray)
+      .then((value) => {
+        this.setState({
+          "previewCategories": value,
+        });
+      });
+    })
     .then(() => {
       //update the cart products in redux store
       const productIds = cartSelector.get().items.map(a => a.productId);
@@ -139,15 +148,6 @@ class App extends Component {
       })
       .then(() => {
         cartService.updateCartTotals();
-      });
-    })
-    .then((promiseArray) => {
-      if(!promiseArray) { return }
-      Promise.all(promiseArray)
-      .then((value) => {
-        this.setState({
-          "previewCategories": value,
-        });
       });
     })
     .catch((e) => {
