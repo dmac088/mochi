@@ -28,6 +28,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
         		.antMatchers(HttpMethod.POST,"/api/Customer/Signup").permitAll()
         		.antMatchers(HttpMethod.GET,"/api/Product/**").permitAll()
         		.antMatchers(HttpMethod.POST,"/api/Product/**").permitAll()
+        		.antMatchers(HttpMethod.GET,"/api/Product/Load").permitAll()
         		.antMatchers(HttpMethod.GET,"/api/ProductAttribute/**").permitAll()
         		.antMatchers(HttpMethod.GET,"/api/Brand/**").permitAll()
         		.antMatchers(HttpMethod.POST,"/api/Brand/**").permitAll()

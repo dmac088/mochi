@@ -6,4 +6,8 @@ public class GeneralVars {
 	
 	public static final String LANGUAGE_HK = "zh-HK";
 	
+	public static final String CURRENCY_USD = "HKD";
+	
+	public static final String CURRENCY_HKD = "USD";
+	
 }

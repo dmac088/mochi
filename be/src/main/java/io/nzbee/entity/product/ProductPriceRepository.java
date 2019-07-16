@@ -12,4 +12,7 @@ public interface ProductPriceRepository extends CrudRepository<ProductPrice, Lon
 	ProductPrice findByid(Long id);
 	
 	ProductPrice findByProductProductIdAndTypeDescAndStartDateLessThanEqualAndEndDateGreaterThanEqualAndCurrencyCode(Long productId, String priceTypeDesc, Date priceStart, Date priceEnd, String currencyCode);
+
+	ProductPrice findByProductProductIdAndTypeCodeAndStartDateLessThanEqualAndEndDateGreaterThanEqualAndCurrencyCode(
+			Long productId, String priceTypeCode, Date priceDateA, Date priceDateB, String currencyCode);
 }
