@@ -10,6 +10,8 @@ public interface BrandAttributeRepository extends CrudRepository<BrandAttribute,
 
 	List<BrandAttribute> findByLclCd(String lcl);
 	
+	BrandAttribute findByBrandIdAndLclCd(Long Id, String lcl);
+	
 	BrandAttribute findByLclCdAndBrandProductsProductId(String lcl, Long productId);
 
 }
