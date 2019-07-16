@@ -1,37 +1,28 @@
-package io.nzbee.dto;
+package io.nzbee.external;
 
 import java.util.Date;
 
-public class InboundProductMaster {
-
-	private Long productId;
+public class ProductMasterSchema {
 
 	private String productUPC;
 	
 	private Date productCreateDt;
 
-	private String productDesc;
+	private String productDescEN;
+	
+	private String productDescHK;
 	
 	private String brandDesc;
 	
-	private double productRetail;
+	private double productRetailUSD;
 	
-	private double productMarkdown;
+	private double productMarkdownUSD;
 	
-	private String productImage;
+	private double productRetailHKD;
 	
-	private String lclCd;
+	private double productMarkdownHKD;
 	
 	private String primaryCategoryPath; 
-
-
-	public Long getProductId() {
-		return productId;
-	}
-
-	public void setProductId(Long productId) {
-		this.productId = productId;
-	}
 
 	public String getProductUPC() {
 		return productUPC;
@@ -48,46 +39,6 @@ public class InboundProductMaster {
 	public void setProductCreateDt(Date productCreateDt) {
 		this.productCreateDt = productCreateDt;
 	}
-
-	public String getProductDesc() {
-		return productDesc;
-	}
-
-	public void setProductDesc(String productDesc) {
-		this.productDesc = productDesc;
-	}
-
-	public double getProductRetail() {
-		return productRetail;
-	}
-
-	public void setProductRetail(double productRetail) {
-		this.productRetail = productRetail;
-	}
-
-	public double getProductMarkdown() {
-		return productMarkdown;
-	}
-
-	public void setProductMarkdown(double productMarkdown) {
-		this.productMarkdown = productMarkdown;
-	}
-
-	public String getProductImage() {
-		return productImage;
-	}
-
-	public void setProductImage(String productImage) {
-		this.productImage = productImage;
-	}
-
-	public String getLclCd() {
-		return lclCd;
-	}
-
-	public void setLclCd(String lclCd) {
-		this.lclCd = lclCd;
-	}
 	
 	public String getBrandDesc() {
 		return brandDesc;
@@ -103,6 +54,54 @@ public class InboundProductMaster {
 
 	public void setPrimaryCategoryPath(String primaryCategoryPath) {
 		this.primaryCategoryPath = primaryCategoryPath;
+	}
+
+	public String getProductDescEN() {
+		return productDescEN;
+	}
+
+	public void setProductDescEN(String productDescEN) {
+		this.productDescEN = productDescEN;
+	}
+
+	public String getProductDescHK() {
+		return productDescHK;
+	}
+
+	public void setProductDescHK(String productDescHK) {
+		this.productDescHK = productDescHK;
+	}
+
+	public double getProductRetailUSD() {
+		return productRetailUSD;
+	}
+
+	public void setProductRetailUSD(double productRetailUSD) {
+		this.productRetailUSD = productRetailUSD;
+	}
+
+	public double getProductMarkdownUSD() {
+		return productMarkdownUSD;
+	}
+
+	public void setProductMarkdownUSD(double productMarkdownUSD) {
+		this.productMarkdownUSD = productMarkdownUSD;
+	}
+
+	public double getProductRetailHKD() {
+		return productRetailHKD;
+	}
+
+	public void setProductRetailHKD(double productRetailHKD) {
+		this.productRetailHKD = productRetailHKD;
+	}
+
+	public double getProductMarkdownHKD() {
+		return productMarkdownHKD;
+	}
+
+	public void setProductMarkdownHKD(double productMarkdownHKD) {
+		this.productMarkdownHKD = productMarkdownHKD;
 	}
 	
 }

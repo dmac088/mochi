@@ -4,6 +4,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import io.nzbee.variables.GeneralVars;
+
 @Service
 public class ProductAttributeService {
 
@@ -18,8 +20,16 @@ public class ProductAttributeService {
 		return productAttributeRepository.findByLclCd(lcl);
 	}
 	
-	public ProductAttribute getProductAttribute(String lcl, Long id) {
+	public ProductAttribute getProductAttribute(Long id, String lcl) {
 		return productAttributeRepository.findByLclCdAndProductId(lcl, id);
+	}
+	
+	public ProductAttribute getProductAttributeEN(Long id) {
+		return productAttributeRepository.findByLclCdAndProductId(GeneralVars.LANGUAGE_ENGLISH, id);
+	}
+	
+	public ProductAttribute getProductAttributeHK(Long id) {
+		return productAttributeRepository.findByLclCdAndProductId(GeneralVars.LANGUAGE_HK, id);
 	}
 	
 	public void addProductAttribute(ProductAttribute ProductAttribute) {

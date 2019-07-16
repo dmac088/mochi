@@ -1,0 +1,6 @@
+desc,facetType,facetingClassName,facetingName,fieldName,id,level,parent,parentId,productCount,token
+Berries,,,PrimaryCategoryFR,categoryDesc,12,0,false,,2,BER01
+Citrus,,,PrimaryCategoryFR,categoryDesc,14,0,false,,3,CIT01
+Melons,,,PrimaryCategoryFR,categoryDesc,13,0,false,,2,MEL01
+Pomes,,,PrimaryCategoryFR,categoryDesc,10,0,false,,3,POM01
+Tropical,,,PrimaryCategoryFR,categoryDesc,15,0,false,,2,TRO01

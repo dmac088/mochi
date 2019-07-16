@@ -8,7 +8,8 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(ProductPriceType.class)
 public abstract class ProductPriceType_ {
 
-	public static volatile SingularAttribute<ProductPriceType, Long> priceTypeId;
+	public static volatile SingularAttribute<ProductPriceType, String> code;
+	public static volatile SingularAttribute<ProductPriceType, Long> Id;
 	public static volatile SingularAttribute<ProductPriceType, String> desc;
 
 }
