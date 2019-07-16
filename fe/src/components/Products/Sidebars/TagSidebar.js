@@ -5,7 +5,7 @@ import _ from 'lodash';
       return facets.filter(o => !(o.token.toLowerCase() === 'empty')).map(facet => {
         return(
           <React.Fragment>
-            <li>
+            <li key={facet.id}>
               <a onClick={(e) => {
                                  e.preventDefault();
                                  props.applyFacet(e, null);
