@@ -1,4 +1,4 @@
-package io.nzbee.external;
+package io.nzbee.util;
 
 
 public class ProductMasterSchema {

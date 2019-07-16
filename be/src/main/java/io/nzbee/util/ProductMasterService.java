@@ -1,10 +1,12 @@
-package io.nzbee.external;
+package io.nzbee.util;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
@@ -61,12 +63,13 @@ public class ProductMasterService {
 //	    }
 //	}
 	
-	public void writeProductMaster() {
+	public List<ProductMasterSchema> writeProductMaster(PrintWriter writer) {
+		List<ProductMasterSchema> lpms = new ArrayList<ProductMasterSchema>();
 	    try {
 	    
 	    	List<Product> products = productService.getProducts();
 	    	
-	    	List<ProductMasterSchema> lpms = products.stream().map(p -> {
+	    	 	lpms.addAll(products.stream().map(p -> {
 	    		ProductMasterSchema pms = new ProductMasterSchema();
 	    		pms.set_PRODUCT_UPC_CODE(p.getProductUPC());
 	    		pms.set_PRODUCT_CREATED_DATE(format.format(p.getProductCreateDt()));
@@ -85,7 +88,7 @@ public class ProductMasterService {
 	    		//pms.set_BRAND_IMAGE_HK(productAttributeService.getProductAttributeHK(p.getProductId()).getProductImage());
 	    		
 	    		return pms;
-	    	}).collect(Collectors.toList());
+	    	}).collect(Collectors.toList()));
 	    	
 	    	CsvMapper mapper = new CsvMapper(); 
 	        CsvSchema schema = mapper.schemaFor(ProductMasterSchema.class);
@@ -93,16 +96,20 @@ public class ProductMasterService {
 	        schema = schema.withColumnSeparator(',');
 	        
 	        ObjectWriter myObjectWriter = mapper.writer(schema);
-	        File tempFile = new ClassPathResource("data/product_master.dat").getFile();
+	        writer.write(myObjectWriter.writeValueAsString(lpms));
+         
+	        File tempFile = new ClassPathResource("data/product_master.csv").getFile();
 	        FileOutputStream tempFileOutputStream = new FileOutputStream(tempFile);
 	        BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(tempFileOutputStream, 1024);
 	        OutputStreamWriter writerOutputStream = new OutputStreamWriter(bufferedOutputStream, "UTF-8");
-	        myObjectWriter.writeValue(writerOutputStream, lpms);
+	        
 	  
 	    } catch (Exception e) {
 	        //logger.error("Error occurred while loading object list from file " + fileName, e);
 	        System.out.println(e);
 	    }
+	    
+	    return lpms;
 	}
 	
 }
