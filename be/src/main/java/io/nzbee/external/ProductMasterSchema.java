@@ -23,6 +23,10 @@ public class ProductMasterSchema {
 	
 	private double PRODUCT_MARKDOWN_PRICE_HKD;
 	
+	private String PRODUCT_IMAGE_EN;
+	
+	private String PRODUCT_IMAGE_HK;
+	
 	private String PRIMARY_CATEGORY_PATH; 
 
 	public String get_PRODUCT_UPC_CODE() {
@@ -111,6 +115,22 @@ public class ProductMasterSchema {
 
 	public void set_PRIMARY_CATEGORY_PATH(String PRIMARY_CATEGORY_PATH) {
 		this.PRIMARY_CATEGORY_PATH = PRIMARY_CATEGORY_PATH;
+	}
+
+	public String get_PRODUCT_IMAGE_EN() {
+		return PRODUCT_IMAGE_EN;
+	}
+
+	public void set_PRODUCT_IMAGE_EN(String PRODUCT_IMAGE_EN) {
+		this.PRODUCT_IMAGE_EN = PRODUCT_IMAGE_EN;
+	}
+
+	public String get_PRODUCT_IMAGE_HK() {
+		return PRODUCT_IMAGE_HK;
+	}
+
+	public void set_PRODUCT_IMAGE_HK(String PRODUCT_IMAGE_HK) {
+		this.PRODUCT_IMAGE_HK = PRODUCT_IMAGE_HK;
 	}
 
 	

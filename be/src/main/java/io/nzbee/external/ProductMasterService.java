@@ -79,6 +79,11 @@ public class ProductMasterService {
 	    		pms.set_BRAND_DESCRIPTION_EN(brandService.getBrandAttributesEN(p.getBrand().getBrandId()).getBrandDesc());
 	    		pms.set_BRAND_DESCRIPTION_HK(brandService.getBrandAttributesHK(p.getBrand().getBrandId()).getBrandDesc());
 	    		pms.set_PRIMARY_CATEGORY_PATH("\\TBC");
+	    		pms.set_PRODUCT_IMAGE_EN(productAttributeService.getProductAttributeEN(p.getProductId()).getProductImage());
+	    		pms.set_PRODUCT_IMAGE_HK(productAttributeService.getProductAttributeHK(p.getProductId()).getProductImage());
+	    		//pms.set_BRAND_IMAGE_EN(productAttributeService.getProductAttributeEN(p.getProductId()).getProductImage());
+	    		//pms.set_BRAND_IMAGE_HK(productAttributeService.getProductAttributeHK(p.getProductId()).getProductImage());
+	    		
 	    		return pms;
 	    	}).collect(Collectors.toList());
 	    	
