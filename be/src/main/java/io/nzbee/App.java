@@ -5,11 +5,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.event.ContextRefreshedEvent;
+
+import io.nzbee.util.FileStorageProperties;
 @SpringBootApplication
 @EnableCaching
+@EnableConfigurationProperties({
+    FileStorageProperties.class
+})
 @ComponentScan({"io.nzbee.*"})
 public class App {
 	

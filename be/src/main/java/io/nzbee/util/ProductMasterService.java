@@ -10,22 +10,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
+import org.springframework.core.io.Resource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.core.env.Environment;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
-
 import io.nzbee.entity.brand.BrandAttributeService;
-import io.nzbee.entity.category.CategoryAttributeService;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.ProductAttributeService;
 import io.nzbee.entity.product.ProductPriceService;
 import io.nzbee.entity.product.ProductService;
-import org.springframework.beans.factory.annotation.Qualifier;
+
 
 @Service
 @Transactional
@@ -43,14 +42,10 @@ public class ProductMasterService {
 	
 	@Autowired 
 	private ProductAttributeService productAttributeService;
-	
-	@Autowired 
-	private CategoryAttributeService categoryAttributeService;
-	
-	@Autowired
-	private Environment env;
-	
+
 	private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+	
+	private static final Logger logger = LoggerFactory.getLogger(ProductMasterService.class);
 
 //	public <ProductMasterSchema> List<ProductMasterSchema> loadObjectList(Class<ProductMasterSchema> type/*, String fileName*/) {
 //	    try {
@@ -66,7 +61,7 @@ public class ProductMasterService {
 //	    }
 //	}
 	
-	public List<ProductMasterSchema> writeProductMaster(PrintWriter writer) {
+	public void writeProductMaster(Resource resource) {
 		List<ProductMasterSchema> lpms = new ArrayList<ProductMasterSchema>();
 	    try {
 	    
@@ -99,20 +94,16 @@ public class ProductMasterService {
 	        schema = schema.withColumnSeparator(',');
 	        
 	        ObjectWriter myObjectWriter = mapper.writer(schema);
-	        writer.write(myObjectWriter.writeValueAsString(lpms));
-         
-	        File tempFile = new ClassPathResource("data/" + env.getProperty("util.product-master-output-file")).getFile();
-	        FileOutputStream tempFileOutputStream = new FileOutputStream(tempFile);
-	        BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(tempFileOutputStream, 1024);
-	        OutputStreamWriter writerOutputStream = new OutputStreamWriter(bufferedOutputStream, "UTF-8");
+	        String ow = myObjectWriter.writeValueAsString(lpms);
+	        PrintWriter out = new PrintWriter(resource.getFile().getAbsolutePath());
+	        out.write(ow);
+	        out.flush();
+	        out.close();
 	        
-	  
 	    } catch (Exception e) {
-	        //logger.error("Error occurred while loading object list from file " + fileName, e);
-	        System.out.println(e);
+	        logger.error("Error occurred while loading object list from file " + resource.getFilename(), e);
+	       
 	    }
-	    
-	    return lpms;
 	}
 	
 }
