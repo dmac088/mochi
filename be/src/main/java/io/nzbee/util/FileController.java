@@ -82,10 +82,7 @@ public class FileController {
         if(contentType == null) {
             contentType = "application/octet-stream";
         }
-//        
-//        response.setContentType(contentType);
-//        response.setHeader("Content-Disposition", "attachment; file=" + fileStorageProperties.getDownloadDir() + fileName);
-//        
+        
         //write the product master data to file
         productMasterService.writeProductMaster(resource);
         
