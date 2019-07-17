@@ -54,7 +54,6 @@ public class FileController {
                 .collect(Collectors.toList());
     }
 
-    //@GetMapping("/Product/Download/{fileName:.+}")
     @GetMapping("/Product/Download/{fileName:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request, HttpServletResponse response) {
     	//generate the file for downloading
