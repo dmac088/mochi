@@ -14,9 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -25,7 +22,10 @@ public class FileController {
     private static final Logger logger = LoggerFactory.getLogger(FileController.class);
     
     @Autowired
-    private FileStorageService fileStorageService;
+    private FileStorageServiceDownload fileStorageServiceDownload;
+    
+    @Autowired
+    private FileStorageServiceUpload fileStorageServiceUpload;
     
     @Autowired
     private ProductMasterService productMasterService;
@@ -33,12 +33,17 @@ public class FileController {
 	@Autowired
 	private FileStorageProperties fileStorageProperties;
     
-    @PostMapping("/uploadFile")
+    @PostMapping("/Product/Upload/")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
-        String fileName = fileStorageService.storeFile(file);
-
+        String fileName = fileStorageServiceUpload.storeFile(file);
+        try {
+        System.out.println(fileStorageServiceUpload.loadFileAsResource(fileName).getFile().getAbsolutePath());
+        } catch (IOException e) {
+        	logger.error(e.toString());
+        }
+        
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/downloadFile/")
+                .path(fileStorageProperties.getUploadDir())	
                 .path(fileName)
                 .toUriString();
 
@@ -46,13 +51,13 @@ public class FileController {
                 file.getContentType(), file.getSize());
     }
 
-    @PostMapping("/uploadMultipleFiles")
-    public List<UploadFileResponse> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
-        return Arrays.asList(files)
-                .stream()
-                .map(file -> uploadFile(file))
-                .collect(Collectors.toList());
-    }
+//    @PostMapping("/uploadMultipleFiles")
+//    public List<UploadFileResponse> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
+//        return Arrays.asList(files)
+//                .stream()
+//                .map(file -> uploadFile(file))
+//                .collect(Collectors.toList());
+//    }
 
     @GetMapping("/Product/Download/{fileName:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request, HttpServletResponse response) {
@@ -67,7 +72,7 @@ public class FileController {
     	}
     	
         // Load file as Resource
-        Resource resource = fileStorageService.loadFileAsResource(file.getName());
+        Resource resource = fileStorageServiceDownload.loadFileAsResource(file.getName());
 
         // Try to determine file's content type
         String contentType = null;
