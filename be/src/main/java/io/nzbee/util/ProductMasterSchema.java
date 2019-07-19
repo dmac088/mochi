@@ -133,5 +133,12 @@ public class ProductMasterSchema {
 		this.PRODUCT_IMAGE_HK = PRODUCT_IMAGE_HK;
 	}
 
-	
+	@Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+        //builder.append("UserDto [firstName=").append(givenName).append(", lastName=").append(familyName).append(", password=").append(password).append(", matchingPassword=").append(matchingPassword).append(", username=").append(userName)
+        //        .append(", role=").append("]");
+        //return builder.toString();
+        return null;
+    }
 }
