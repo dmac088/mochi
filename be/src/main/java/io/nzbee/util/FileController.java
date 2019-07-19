@@ -10,6 +10,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import com.fasterxml.jackson.databind.MappingIterator;
+import com.fasterxml.jackson.dataformat.csv.CsvMapper;
+import com.fasterxml.jackson.dataformat.csv.CsvSchema;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
@@ -34,13 +39,22 @@ public class FileController {
 	private FileStorageProperties fileStorageProperties;
     
     @PostMapping("/Product/Upload/")
-    public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
-        String fileName = fileStorageServiceUpload.storeFile(file);
+    public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile uploadFile) {
+        String fileName = fileStorageServiceUpload.storeFile(uploadFile);
+
         try {
-        System.out.println(fileStorageServiceUpload.loadFileAsResource(fileName).getFile().getAbsolutePath());
+        	
+        	File file = fileStorageServiceUpload.loadFileAsResource(fileName).getFile();
+        	CsvSchema bootstrapSchema = CsvSchema.emptySchema().withHeader();
+            CsvMapper mapper = new CsvMapper();
+            MappingIterator<ProductMasterSchema> readValues =
+            	mapper.reader(ProductMasterSchema.class).with(bootstrapSchema).readValues(file);
+            
         } catch (IOException e) {
         	logger.error(e.toString());
         }
+        
+        
         
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(fileStorageProperties.getUploadDir())	
@@ -48,7 +62,7 @@ public class FileController {
                 .toUriString();
 
         return new UploadFileResponse(fileName, fileDownloadUri,
-                file.getContentType(), file.getSize());
+        		uploadFile.getContentType(), uploadFile.getSize());
     }
 
 //    @PostMapping("/uploadMultipleFiles")
