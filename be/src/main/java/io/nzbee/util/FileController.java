@@ -50,6 +50,10 @@ public class FileController {
             MappingIterator<ProductMasterSchema> readValues =
             	mapper.reader(ProductMasterSchema.class).with(bootstrapSchema).readValues(file);
             
+            readValues.readAll().stream().forEach(p -> {
+            	System.out.println(p.toString());
+            });
+            
         } catch (IOException e) {
         	logger.error(e.toString());
         }
