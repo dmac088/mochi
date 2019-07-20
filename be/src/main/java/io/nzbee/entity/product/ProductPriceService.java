@@ -2,6 +2,8 @@ package io.nzbee.entity.product;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +19,7 @@ public class ProductPriceService {
 		return productPriceRepository.findAll();
 	}
 
-	public ProductPrice getProductPrice(Long productId, 
+	public Optional<ProductPrice> getProductPrice(Long productId, 
 										String priceTypeCode,
 										Date priceDateA,
 										Date priceDateB,
@@ -32,7 +34,7 @@ public class ProductPriceService {
 		);
 	}
 	
-	public ProductPrice getCurrentRetailPriceUSD(Long productId) {
+	public Optional<ProductPrice> getCurrentRetailPriceUSD(Long productId) {
 		return productPriceRepository.findByProductProductIdAndTypeCodeAndStartDateLessThanEqualAndEndDateGreaterThanEqualAndCurrencyCode(
 				productId, 
 				ProductVars.PRICE_RETAIL_CODE,
@@ -42,7 +44,7 @@ public class ProductPriceService {
 		);
 	}
 
-	public ProductPrice getCurrentMarkdownPriceUSD(Long productId) {
+	public Optional<ProductPrice> getCurrentMarkdownPriceUSD(Long productId) {
 		return productPriceRepository.findByProductProductIdAndTypeCodeAndStartDateLessThanEqualAndEndDateGreaterThanEqualAndCurrencyCode(
 				productId, 
 				ProductVars.PRICE_MARKDOWN_CODE,
@@ -52,7 +54,7 @@ public class ProductPriceService {
 		);
 	}
 	
-	public ProductPrice getCurrentRetailPriceHKD(Long productId) {
+	public Optional<ProductPrice> getCurrentRetailPriceHKD(Long productId) {
 		return productPriceRepository.findByProductProductIdAndTypeCodeAndStartDateLessThanEqualAndEndDateGreaterThanEqualAndCurrencyCode(
 				productId, 
 				ProductVars.PRICE_RETAIL_CODE,
@@ -62,7 +64,7 @@ public class ProductPriceService {
 		);
 	}
 	
-	public ProductPrice getCurrentMarkdownPriceHKD(Long productId) {
+	public Optional<ProductPrice> getCurrentMarkdownPriceHKD(Long productId) {
 		return productPriceRepository.findByProductProductIdAndTypeCodeAndStartDateLessThanEqualAndEndDateGreaterThanEqualAndCurrencyCode(
 				productId, 
 				ProductVars.PRICE_MARKDOWN_CODE,
