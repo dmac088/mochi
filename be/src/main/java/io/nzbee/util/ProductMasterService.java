@@ -29,6 +29,7 @@ import io.nzbee.entity.product.ProductAttribute;
 import io.nzbee.entity.product.ProductAttributeService;
 import io.nzbee.entity.product.ProductPrice;
 import io.nzbee.entity.product.ProductPriceService;
+import io.nzbee.entity.product.ProductPriceType;
 import io.nzbee.entity.product.ProductService;
 import io.nzbee.variables.GeneralVars;
 
@@ -149,8 +150,10 @@ public class ProductMasterService {
 		product.setBrand(brand);
 		
 		//Price
-		Optional<ProductPrice> oPrice = productPriceService.getCurrentRetailPriceUSD(product.getProductId());
-		ProductPrice price = oPrice.isPresent() ? oPrice.get() : new ProductPrice();
+		//ProductPriceType oPriceType = priceTypeService.
+		
+//		Optional<ProductPriceType> oPriceType = productPriceTypeService;
+//		ProductPriceType priceType = oPriceType.isPresent() ? oPriceType.get() : new ProductPriceType();
 		
 		
 		
