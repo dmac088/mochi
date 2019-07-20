@@ -1,5 +1,7 @@
 package io.nzbee.util;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -12,6 +14,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
@@ -38,6 +42,9 @@ public class ProductMasterService {
 	
 	@Autowired 
 	private ProductAttributeService productAttributeService;
+	
+    @Autowired
+    private FileStorageServiceUpload fileStorageServiceUpload;
 
 	private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 	
@@ -57,7 +64,23 @@ public class ProductMasterService {
 //	    }
 //	}
 	
-	public void writeProductMaster(Resource resource) {
+	public void writeProdcutMaster(String fileName) {
+		try {
+			File file = fileStorageServiceUpload.loadFileAsResource(fileName).getFile();
+	    	CsvSchema bootstrapSchema = CsvSchema.emptySchema().withHeader();
+	        CsvMapper mapper = new CsvMapper();
+	        MappingIterator<ProductMasterSchema> readValues =
+	        	mapper.readerFor(ProductMasterSchema.class).with(bootstrapSchema).readValues(file);
+	        
+	        readValues.readAll().stream().forEach(p -> {
+	        	System.out.println(p.toString());
+	        });
+		} catch (IOException e) {
+			logger.error(e.toString());
+		}
+	}
+	
+	public void extractProductMaster(Resource resource) {
 		List<ProductMasterSchema> lpms = new ArrayList<ProductMasterSchema>();
 	    try {
 	    

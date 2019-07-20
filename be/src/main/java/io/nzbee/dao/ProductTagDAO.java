@@ -42,44 +42,44 @@ import io.nzbee.entity.tag.ProductTag_;
 import io.nzbee.variables.ProductVars;
 
 @Component 
-public class ProductTagDAO  implements Dao<Product> {
+public class ProductTagDAO  implements Dao<ProductTag> {
 	
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
 	private EntityManager em;
 	
 	@Override
-	public Optional<Product> findById(long id) {
+	public Optional<ProductTag> findById(long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Product> getAll() {
+	public List<ProductTag> getAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Page<Product> findAll() {
+	public Page<ProductTag> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void save(Product t) {
+	public void save(ProductTag t) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void update(Product t, String[] params) {
+	public void update(ProductTag t, String[] params) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void delete(Product t) {
+	public void delete(ProductTag t) {
 		// TODO Auto-generated method stub
 		
 	}
