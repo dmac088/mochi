@@ -107,8 +107,8 @@ public class BrandService implements IBrandService {
  	@Cacheable
     private Brand createBrandDO(final io.nzbee.entity.brand.Brand b, final String lcl, final String currency) {
     	final Brand bDO = new Brand();
-    	bDO.setBrandId(b.getBrandId());
-    	bDO.setBrandCode(b.getBrandCode());
+    	bDO.setBrandId(b.getId());
+    	bDO.setBrandCode(b.getCode());
     	bDO.setBrandDesc(
 	    	b.getAttributes().stream()
 			.filter(ba -> ba.getLclCd().equals(lcl)

@@ -155,11 +155,11 @@ public class Product {
 		this.productId = productId;
 	}
 
-	public String getProductUPC() {
+	public String getUPC() {
 		return productUPC;
 	}
 
-	public void setProductUPC(String productUPC) {
+	public void setUPC(String productUPC) {
 		this.productUPC = productUPC;
 	}
 
