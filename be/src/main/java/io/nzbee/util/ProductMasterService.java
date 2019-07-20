@@ -3,11 +3,9 @@ package io.nzbee.util;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import org.springframework.core.io.Resource;
@@ -21,15 +19,10 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.entity.brand.BrandService;
-import io.nzbee.entity.brand.Brand;
-import io.nzbee.entity.brand.BrandAttribute;
 import io.nzbee.entity.brand.BrandAttributeService;
 import io.nzbee.entity.product.Product;
-import io.nzbee.entity.product.ProductAttribute;
 import io.nzbee.entity.product.ProductAttributeService;
-import io.nzbee.entity.product.ProductPrice;
 import io.nzbee.entity.product.ProductPriceService;
-import io.nzbee.entity.product.ProductPriceType;
 import io.nzbee.entity.product.ProductService;
 import io.nzbee.variables.GeneralVars;
 
@@ -40,7 +33,12 @@ public class ProductMasterService {
 	
 	@Autowired
 	@Qualifier("productEntityService")
-	private ProductService productService;
+	private ProductService productEntityService;
+	
+	@Autowired
+	@Qualifier("productDomainService")
+	private io.nzbee.services.product.ProductService productDomainService;
+	
 	
 	@Autowired
 	@Qualifier("brandEntityService")
@@ -93,79 +91,29 @@ public class ProductMasterService {
 		}
 	}
 	
-	public io.nzbee.domain.Product persistProductMaster(ProductMasterSchema p) {
+	public void persistProductMaster(ProductMasterSchema p) {
 		
+		io.nzbee.domain.Product pDo = 
+		io.nzbee.services.product.ProductService.convertToProductDO(
+				p.get_PRODUCT_CREATED_DATE(), 
+				p.get_PRODUCT_UPC_CODE(), 
+				p.get_BRAND_DESCRIPTION_EN(), 
+				p.get_PRODUCT_RETAIL_PRICE_USD(), 
+				p.get_PRODUCT_MARKDOWN_PRICE_USD(), 
+				p.get_PRODUCT_IMAGE_EN(), 
+				GeneralVars.LANGUAGE_ENGLISH, 
+				GeneralVars.CURRENCY_USD, 
+				"/TBC");
 		
-		Optional<Product> oProduct = productService.getProduct(p.get_PRODUCT_UPC_CODE());
-		Product product = oProduct.isPresent() ? oProduct.get() : new Product();
-		product.setUPC(p.get_PRODUCT_UPC_CODE());
-		
-		//parsing dates is unsafe
-		try {
-			product.setProductCreateDt(new SimpleDateFormat(GeneralVars.DEFAULT_DATE_FORMAT).parse(p.get_PRODUCT_CREATED_DATE()));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		List<ProductAttribute> lpa = new ArrayList<ProductAttribute>();
-		//Product Attribute English
-		Optional<ProductAttribute> oProductAttributeEN = productAttributeService.getProductAttribute(product.getProductId(), GeneralVars.LANGUAGE_ENGLISH);
-		ProductAttribute productAttributeEN = oProductAttributeEN.isPresent() ? oProductAttributeEN.get() : new ProductAttribute();
-		productAttributeEN.setProductDesc(p.get_PRODUCT_DESCRIPTION_EN());
-		productAttributeEN.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
-		productAttributeEN.setProductImage(p.get_PRODUCT_IMAGE_EN());
-		productAttributeEN.setProduct(product);
-		lpa.add(productAttributeEN);
-		
-		//Product Attribute Hong Kong
-		Optional<ProductAttribute> oProductAttributeHK = productAttributeService.getProductAttribute(product.getProductId(), GeneralVars.LANGUAGE_HK);
-		ProductAttribute productAttributeHK = oProductAttributeHK.isPresent() ? oProductAttributeHK.get() : new ProductAttribute();
-		productAttributeHK.setProductDesc(p.get_PRODUCT_DESCRIPTION_HK());
-		productAttributeHK.setLclCd(GeneralVars.LANGUAGE_HK);
-		productAttributeHK.setProductImage(p.get_PRODUCT_IMAGE_HK());
-		productAttributeHK.setProduct(product);
-		lpa.add(productAttributeHK);
-		
-		product.setAttributes(lpa);
-		
-		
-		//Brand
-		Optional<Brand> oBrand = brandService.getBrand(p.get_BRAND_CODE());
-		Brand brand = oBrand.isPresent() ? oBrand.get() : new Brand();
-		brand.setCode(p.get_BRAND_CODE());
-		
-		List<BrandAttribute> lba = new ArrayList<BrandAttribute>();
-		BrandAttribute brandAttributeEN = new BrandAttribute();
-		brandAttributeEN.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
-		brandAttributeEN.setBrandDesc(p.get_BRAND_DESCRIPTION_EN());
-		lba.add(brandAttributeEN);
-		
-		BrandAttribute brandAttributeHK = new BrandAttribute();
-		brandAttributeHK.setLclCd(GeneralVars.LANGUAGE_HK);
-		brandAttributeHK.setBrandDesc(p.get_BRAND_DESCRIPTION_HK());
-		lba.add(brandAttributeEN);
-		
-		brand.setAttributes(lba);
-		product.setBrand(brand);
-		
-		//Price
-		//ProductPriceType oPriceType = priceTypeService.
-		
-//		Optional<ProductPriceType> oPriceType = productPriceTypeService;
-//		ProductPriceType priceType = oPriceType.isPresent() ? oPriceType.get() : new ProductPriceType();
-		
-		
-		
-		
-		return null;
+		productDomainService.persist(pDo);
+
 	}
 	
 	public void extractProductMaster(Resource resource) {
 		List<ProductMasterSchema> lpms = new ArrayList<ProductMasterSchema>();
 	    try {
 	    
-	    	List<Product> products = productService.getProducts();
+	    	List<Product> products = productEntityService.getProducts();
 	    	
 	    	 	lpms.addAll(products.stream().map(p -> {
 	    		ProductMasterSchema pms = new ProductMasterSchema();

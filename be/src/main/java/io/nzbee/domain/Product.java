@@ -24,6 +24,8 @@ public class Product {
 	
 	private String lclCd;
 	
+	private String currency;
+	
 	private String primaryCategoryPath; 
 
 
@@ -112,7 +114,7 @@ public class Product {
 		 if (this == o) return true;
 	     if (o == null || getClass() != o.getClass()) return false;
 	     Product pcDto = (Product) o;
-	     return this.productId == pcDto.productId;
+	     return this.productUPC == pcDto.productUPC;
 	}
 
 	@Override
@@ -134,5 +136,13 @@ public class Product {
                 .append(", lclCd=").append(lclCd);
         return builder.toString();
     }
+
+	public String getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(String currency) {
+		this.currency = currency;
+	}
 
 }

@@ -1,6 +1,8 @@
 package io.nzbee.services.product;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -42,6 +44,7 @@ import io.nzbee.dto.SearchDTO;
 import io.nzbee.dto.SidebarFacetDTO;
 import io.nzbee.entity.PageableUtil;
 import io.nzbee.entity.brand.Brand;
+import io.nzbee.entity.brand.BrandAttribute;
 import io.nzbee.entity.brand.BrandRepository;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.product.ProductAttribute;
@@ -50,6 +53,7 @@ import io.nzbee.entity.product.ProductPriceRepository;
 import io.nzbee.entity.product.ProductRepository;
 import io.nzbee.entity.tag.ProductTagAttribute;
 import io.nzbee.variables.CategoryVars;
+import io.nzbee.variables.GeneralVars;
 import io.nzbee.variables.ProductVars;
 
 @Service(value = "productDomainService")
@@ -57,6 +61,9 @@ import io.nzbee.variables.ProductVars;
 @CacheConfig(cacheNames="products")
 public class ProductService implements IProductService {
     
+	@Autowired 
+	private io.nzbee.entity.product.ProductService productService;
+	
     @Autowired
     private ProductRepository productRepository;
     
@@ -541,8 +548,8 @@ public class ProductService implements IProductService {
 	}
 	
     public Product convertToProductDO(final io.nzbee.entity.product.Product product, String lcl, String currency) {
+    	final Product pDo = new Product();
     	Optional<ProductAttribute> pa = productAttributeRepository.findByLclCdAndProductId(lcl, product.getProductId());
-        final Product pDo = new Product();
         pDo.setProductId(product.getProductId());
         pDo.setProductCreateDt(product.getProductCreateDt());
         pDo.setProductUPC(product.getUPC());
@@ -561,6 +568,93 @@ public class ProductService implements IProductService {
         pDo.setPrimaryCategoryPath(sb.toString());        
         return pDo;
     }
+    
+    public static Product convertToProductDO(
+    			String productCreatedDate,
+    			String productUPC,
+    			String productDesc,
+    			Double productRetailPrice,
+    			Double productMarkdownPrice,
+    			String productImage,
+    			String productLocale,
+    			String productCurrency,
+    			String productCategory
+    		) {
+    	final Product pDo = new Product();
+    	pDo.setProductUPC(productUPC);
+    	try {
+			pDo.setProductCreateDt(new SimpleDateFormat(GeneralVars.DEFAULT_DATE_FORMAT).parse(productCreatedDate));
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+    	pDo.setProductDesc(productDesc);
+    	pDo.setProductRetail(productRetailPrice);
+    	pDo.setProductMarkdown(productMarkdownPrice);
+    	pDo.setProductImage(productImage);
+    	pDo.setLclCd(productLocale);
+    	pDo.setCurrency(productCurrency);
+    	pDo.setPrimaryCategoryPath(productCategory);
+    	return pDo;
+    }
+    
+    
+    public void persist(Product p) {
+    	
+		Optional<io.nzbee.entity.product.Product> oProduct = productService.getProduct(p.getProductUPC());
+		io.nzbee.entity.product.Product product = oProduct.isPresent() ? oProduct.get() : new io.nzbee.entity.product.Product();
+		product.setUPC(p.getProductUPC());
+		product.setProductCreateDt(p.getProductCreateDt());
+		
+		
+//		List<ProductAttribute> lpa = new ArrayList<ProductAttribute>();
+//		//Product Attribute English
+//		Optional<ProductAttribute> oProductAttributeEN = productAttributeService.getProductAttribute(product.getProductId(), GeneralVars.LANGUAGE_ENGLISH);
+//		ProductAttribute productAttributeEN = oProductAttributeEN.isPresent() ? oProductAttributeEN.get() : new ProductAttribute();
+//		productAttributeEN.setProductDesc(p.get_PRODUCT_DESCRIPTION_EN());
+//		productAttributeEN.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
+//		productAttributeEN.setProductImage(p.get_PRODUCT_IMAGE_EN());
+//		productAttributeEN.setProduct(product);
+//		lpa.add(productAttributeEN);
+//		
+//		//Product Attribute Hong Kong
+//		Optional<ProductAttribute> oProductAttributeHK = productAttributeService.getProductAttribute(product.getProductId(), GeneralVars.LANGUAGE_HK);
+//		ProductAttribute productAttributeHK = oProductAttributeHK.isPresent() ? oProductAttributeHK.get() : new ProductAttribute();
+//		productAttributeHK.setProductDesc(p.get_PRODUCT_DESCRIPTION_HK());
+//		productAttributeHK.setLclCd(GeneralVars.LANGUAGE_HK);
+//		productAttributeHK.setProductImage(p.get_PRODUCT_IMAGE_HK());
+//		productAttributeHK.setProduct(product);
+//		lpa.add(productAttributeHK);
+//		
+//		product.setAttributes(lpa);
+//		
+//		
+//		//Brand
+//		Optional<Brand> oBrand = brandService.getBrand(p.get_BRAND_CODE());
+//		Brand brand = oBrand.isPresent() ? oBrand.get() : new Brand();
+//		brand.setCode(p.get_BRAND_CODE());
+//		
+//		List<BrandAttribute> lba = new ArrayList<BrandAttribute>();
+//		BrandAttribute brandAttributeEN = new BrandAttribute();
+//		brandAttributeEN.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
+//		brandAttributeEN.setBrandDesc(p.get_BRAND_DESCRIPTION_EN());
+//		lba.add(brandAttributeEN);
+//		
+//		BrandAttribute brandAttributeHK = new BrandAttribute();
+//		brandAttributeHK.setLclCd(GeneralVars.LANGUAGE_HK);
+//		brandAttributeHK.setBrandDesc(p.get_BRAND_DESCRIPTION_HK());
+//		lba.add(brandAttributeEN);
+//		
+//		brand.setAttributes(lba);
+//		product.setBrand(brand);
+		
+		//Price
+		//ProductPriceType oPriceType = priceTypeService.
+		
+		//	Optional<ProductPriceType> oPriceType = productPriceTypeService;
+		//	ProductPriceType priceType = oPriceType.isPresent() ? oPriceType.get() : new ProductPriceType();
+
+	}	
     
     private String getSortFieldName(String field, String currency) {
 		switch(field) {
