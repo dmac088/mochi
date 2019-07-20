@@ -44,7 +44,6 @@ import io.nzbee.dto.SearchDTO;
 import io.nzbee.dto.SidebarFacetDTO;
 import io.nzbee.entity.PageableUtil;
 import io.nzbee.entity.brand.Brand;
-import io.nzbee.entity.brand.BrandAttribute;
 import io.nzbee.entity.brand.BrandRepository;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.product.ProductAttribute;
@@ -63,6 +62,9 @@ public class ProductService implements IProductService {
     
 	@Autowired 
 	private io.nzbee.entity.product.ProductService productService;
+
+	@Autowired 
+	private io.nzbee.entity.product.ProductAttributeService productAttributeService;
 	
     @Autowired
     private ProductRepository productRepository;
@@ -585,7 +587,6 @@ public class ProductService implements IProductService {
     	try {
 			pDo.setProductCreateDt(new SimpleDateFormat(GeneralVars.DEFAULT_DATE_FORMAT).parse(productCreatedDate));
 		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
     	pDo.setProductDesc(productDesc);
@@ -607,15 +608,15 @@ public class ProductService implements IProductService {
 		product.setProductCreateDt(p.getProductCreateDt());
 		
 		
-//		List<ProductAttribute> lpa = new ArrayList<ProductAttribute>();
-//		//Product Attribute English
-//		Optional<ProductAttribute> oProductAttributeEN = productAttributeService.getProductAttribute(product.getProductId(), GeneralVars.LANGUAGE_ENGLISH);
-//		ProductAttribute productAttributeEN = oProductAttributeEN.isPresent() ? oProductAttributeEN.get() : new ProductAttribute();
-//		productAttributeEN.setProductDesc(p.get_PRODUCT_DESCRIPTION_EN());
-//		productAttributeEN.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
-//		productAttributeEN.setProductImage(p.get_PRODUCT_IMAGE_EN());
-//		productAttributeEN.setProduct(product);
-//		lpa.add(productAttributeEN);
+		List<ProductAttribute> lpa = new ArrayList<ProductAttribute>();
+		//Product Attribute English
+		Optional<ProductAttribute> oProductAttributeEN = productAttributeService.getProductAttribute(product.getProductId(), GeneralVars.LANGUAGE_ENGLISH);
+		ProductAttribute productAttributeEN = oProductAttributeEN.isPresent() ? oProductAttributeEN.get() : new ProductAttribute();
+		productAttributeEN.setProductDesc(p.getProductDesc());
+		productAttributeEN.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
+		productAttributeEN.setProductImage(p.getProductImage());
+		productAttributeEN.setProduct(product);
+		lpa.add(productAttributeEN);
 //		
 //		//Product Attribute Hong Kong
 //		Optional<ProductAttribute> oProductAttributeHK = productAttributeService.getProductAttribute(product.getProductId(), GeneralVars.LANGUAGE_HK);
