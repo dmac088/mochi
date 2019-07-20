@@ -132,13 +132,25 @@ public class ProductMasterSchema {
 	public void set_PRODUCT_IMAGE_HK(String PRODUCT_IMAGE_HK) {
 		this.PRODUCT_IMAGE_HK = PRODUCT_IMAGE_HK;
 	}
-
+	
 	@Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        //builder.append("UserDto [firstName=").append(givenName).append(", lastName=").append(familyName).append(", password=").append(password).append(", matchingPassword=").append(matchingPassword).append(", username=").append(userName)
-        //        .append(", role=").append("]");
-        //return builder.toString();
-        return null;
+        builder.append("ProductMasterSchema [PRODUCT_UPC_CODE=").append(PRODUCT_UPC_CODE)
+        	   .append(", PRODUCT_CREATED_DATE=").append(PRODUCT_CREATED_DATE)
+        	   .append(", PRODUCT_DESCRIPTION_EN=").append(PRODUCT_DESCRIPTION_EN)
+        	   .append(", PRODUCT_DESCRIPTION_HK=").append(PRODUCT_DESCRIPTION_HK)
+        	   .append(", BRAND_DESCRIPTION_EN=").append(BRAND_DESCRIPTION_EN)
+        	   .append(", BRAND_DESCRIPTION_HK=").append(BRAND_DESCRIPTION_HK)
+        	   .append(", PRODUCT_RETAIL_PRICE_USD=").append(PRODUCT_RETAIL_PRICE_USD)
+        	   .append(", PRODUCT_MARKDOWN_PRICE_USD=").append(PRODUCT_MARKDOWN_PRICE_USD)
+        	   .append(", PRODUCT_RETAIL_PRICE_HKD=").append(PRODUCT_RETAIL_PRICE_HKD)
+        	   .append(", PRODUCT_MARKDOWN_PRICE_HKD=").append(PRODUCT_MARKDOWN_PRICE_HKD)
+        	   .append(", PRODUCT_IMAGE_EN=").append(PRODUCT_IMAGE_EN)
+        	   .append(", PRODUCT_IMAGE_HK=").append(PRODUCT_IMAGE_HK)
+        	   .append(", PRIMARY_CATEGORY_PATH=").append(PRIMARY_CATEGORY_PATH)
+               .append("]");
+        return builder.toString();
+        
     }
 }
