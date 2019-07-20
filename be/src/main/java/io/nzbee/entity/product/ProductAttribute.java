@@ -92,7 +92,7 @@ public class ProductAttribute {
 	@Facet
 	@Field(analyze = Analyze.NO)
 	public String getBrandCode() {
-		return this.product.getBrand().getBrandCode();
+		return this.product.getBrand().getCode();
 	}
 	
 	@Transient

@@ -10,4 +10,6 @@ public class GeneralVars {
 	
 	public static final String CURRENCY_HKD = "USD";
 	
+	public static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
+	
 }

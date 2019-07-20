@@ -52,7 +52,7 @@ import io.nzbee.entity.tag.ProductTagAttribute;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.ProductVars;
 
-@Service
+@Service(value = "productDomainService")
 @Transactional
 @CacheConfig(cacheNames="products")
 public class ProductService implements IProductService {
@@ -456,10 +456,10 @@ public class ProductService implements IProductService {
     }
     
     public SidebarFacetDTO convertToBrandSidebarDTO(String brandCode, String lcl, String currency) {
-    	Brand b = brandRepository.findByBrandCode(brandCode);
+    	Optional<Brand> b = brandRepository.findByCode(brandCode);
     	SidebarFacetDTO bf = new SidebarFacetDTO();
-    	bf.setId(b.getBrandId());
-    	bf.setDesc(b.getAttributes().stream().filter(ba -> ba.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getBrandDesc());
+    	bf.setId(b.get().getId());
+    	bf.setDesc(b.get().getAttributes().stream().filter(ba -> ba.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getBrandDesc());
     	return bf;
     }
     
@@ -545,7 +545,7 @@ public class ProductService implements IProductService {
         final Product pDo = new Product();
         pDo.setProductId(product.getProductId());
         pDo.setProductCreateDt(product.getProductCreateDt());
-        pDo.setProductUPC(product.getProductUPC());
+        pDo.setProductUPC(product.getUPC());
         pDo.setProductDesc(pa.getProductDesc());
         pDo.setProductRetail(productPriceRepository.findByProductProductIdAndTypeDescAndStartDateLessThanEqualAndEndDateGreaterThanEqualAndCurrencyCode(product.getProductId(), "retail", new Date(), new Date(), currency).getPriceValue());
         pDo.setProductMarkdown(productPriceRepository.findByProductProductIdAndTypeDescAndStartDateLessThanEqualAndEndDateGreaterThanEqualAndCurrencyCode(product.getProductId(), "markdown", new Date(), new Date(), currency).getPriceValue());

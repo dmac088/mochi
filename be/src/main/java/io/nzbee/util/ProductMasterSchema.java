@@ -11,6 +11,8 @@ public class ProductMasterSchema {
 	
 	private String PRODUCT_DESCRIPTION_HK;
 	
+	private String BRAND_CODE;
+	
 	private String BRAND_DESCRIPTION_EN;
 	
 	private String BRAND_DESCRIPTION_HK;
@@ -133,6 +135,14 @@ public class ProductMasterSchema {
 		this.PRODUCT_IMAGE_HK = PRODUCT_IMAGE_HK;
 	}
 	
+	public String get_BRAND_CODE() {
+		return BRAND_CODE;
+	}
+
+	public void set_BRAND_CODE(String BRAND_CODE) {
+		this.BRAND_CODE = BRAND_CODE;
+	}
+	
 	@Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
@@ -140,6 +150,7 @@ public class ProductMasterSchema {
         	   .append(", PRODUCT_CREATED_DATE=").append(PRODUCT_CREATED_DATE)
         	   .append(", PRODUCT_DESCRIPTION_EN=").append(PRODUCT_DESCRIPTION_EN)
         	   .append(", PRODUCT_DESCRIPTION_HK=").append(PRODUCT_DESCRIPTION_HK)
+        	   .append(", BRAND_CODE=").append(BRAND_CODE)
         	   .append(", BRAND_DESCRIPTION_EN=").append(BRAND_DESCRIPTION_EN)
         	   .append(", BRAND_DESCRIPTION_HK=").append(BRAND_DESCRIPTION_HK)
         	   .append(", PRODUCT_RETAIL_PRICE_USD=").append(PRODUCT_RETAIL_PRICE_USD)
@@ -153,4 +164,6 @@ public class ProductMasterSchema {
         return builder.toString();
         
     }
+
+	
 }

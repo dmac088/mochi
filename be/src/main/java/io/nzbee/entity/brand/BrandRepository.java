@@ -1,6 +1,7 @@
 package io.nzbee.entity.brand;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
 
@@ -8,10 +9,10 @@ public interface BrandRepository extends CrudRepository<Brand, Long> {
 
 	List<Brand> findAll();
 
-	Brand findByBrandId(Long brandId);
+	Optional<Brand> findById(Long Id); 
 	
-	Brand findByBrandCode(String brandCode);
-	
+	Optional<Brand> findByCode(String brandCode);
+	 
 	List<Brand> findDistinctByProductsCategoriesCategoryIdIn(List<Long> categoryIds);
 	
 	List<Brand> findByProductsCategoriesAttributesLclCdAndProductsCategoriesAttributesCategoryDesc(String lcl, String categoryDesc);

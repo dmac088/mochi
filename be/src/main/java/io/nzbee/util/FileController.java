@@ -37,7 +37,7 @@ public class FileController {
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile uploadFile) {
         String fileName = fileStorageServiceUpload.storeFile(uploadFile);
 
-        productMasterService.writeProdcutMaster(fileName);
+        productMasterService.writeProductMaster(fileName);
       
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(fileStorageProperties.getUploadDir())	

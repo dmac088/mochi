@@ -159,8 +159,8 @@ public class CategoryService implements ICategoryService {
 	@Cacheable
     private Brand createBrand(final io.nzbee.entity.brand.Brand b, String categoryCode, final String lcl) {
     	final Brand bDto = new Brand();
-    	bDto.setBrandId(b.getBrandId());
-    	bDto.setBrandCode(b.getBrandCode());
+    	bDto.setBrandId(b.getId());
+    	bDto.setBrandCode(b.getCode());
     	bDto.setBrandDesc(
 	    	b.getAttributes().stream()
 			.filter(ba -> ba.getLclCd().equals(lcl)

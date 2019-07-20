@@ -65,15 +65,15 @@ public class Brand {
 		 		}).collect(Collectors.toList()).get(0).getBrandDesc();
 	}
 	
-	public Long getBrandId() {
+	public Long getId() {
 		return this.brandId;
 	}
 
-	public String getBrandCode() {
+	public String getCode() {
 		return brandCode;
 	}
 
-	public void setBrandCode(String brandCode) {
+	public void setCode(String brandCode) {
 		this.brandCode = brandCode;
 	}
 	
