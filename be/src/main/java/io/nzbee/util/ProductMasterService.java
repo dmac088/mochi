@@ -149,7 +149,8 @@ public class ProductMasterService {
 		product.setBrand(brand);
 		
 		//Price
-		ProductPrice price = productPriceService.getCurrentRetailPriceUSD(product.getProductId());
+		Optional<ProductPrice> oPrice = productPriceService.getCurrentRetailPriceUSD(product.getProductId());
+		ProductPrice price = oPrice.isPresent() ? oPrice.get() : new ProductPrice();
 		
 		
 		
@@ -169,10 +170,10 @@ public class ProductMasterService {
 	    		pms.set_PRODUCT_CREATED_DATE(format.format(p.getProductCreateDt()));
 	    		pms.set_PRODUCT_DESCRIPTION_EN(productAttributeService.getProductAttributeEN(p.getProductId()).get().getProductDesc());
 	    		pms.set_PRODUCT_DESCRIPTION_HK(productAttributeService.getProductAttributeHK(p.getProductId()).get().getProductDesc());
-	    		pms.set_PRODUCT_RETAIL_PRICE_USD(productPriceService.getCurrentRetailPriceUSD(p.getProductId()).getPriceValue());
-	    		pms.set_PRODUCT_RETAIL_PRICE_HKD(productPriceService.getCurrentRetailPriceHKD(p.getProductId()).getPriceValue());
-	    		pms.set_PRODUCT_MARKDOWN_PRICE_USD(productPriceService.getCurrentMarkdownPriceUSD(p.getProductId()).getPriceValue());
-	    		pms.set_PRODUCT_MARKDOWN_PRICE_HKD(productPriceService.getCurrentMarkdownPriceHKD(p.getProductId()).getPriceValue());
+	    		pms.set_PRODUCT_RETAIL_PRICE_USD(productPriceService.getCurrentRetailPriceUSD(p.getProductId()).get().getPriceValue());
+	    		pms.set_PRODUCT_RETAIL_PRICE_HKD(productPriceService.getCurrentRetailPriceHKD(p.getProductId()).get().getPriceValue());
+	    		pms.set_PRODUCT_MARKDOWN_PRICE_USD(productPriceService.getCurrentMarkdownPriceUSD(p.getProductId()).get().getPriceValue());
+	    		pms.set_PRODUCT_MARKDOWN_PRICE_HKD(productPriceService.getCurrentMarkdownPriceHKD(p.getProductId()).get().getPriceValue());
 	    		pms.set_BRAND_CODE(brandService.getBrand(p.getBrand().getId()).get().getCode());
 	    		pms.set_BRAND_DESCRIPTION_EN(brandAttributeService.getBrandAttributesEN(p.getBrand().getId()).getBrandDesc());
 	    		pms.set_BRAND_DESCRIPTION_HK(brandAttributeService.getBrandAttributesHK(p.getBrand().getId()).getBrandDesc());

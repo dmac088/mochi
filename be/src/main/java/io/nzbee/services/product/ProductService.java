@@ -456,7 +456,7 @@ public class ProductService implements IProductService {
     }
     
     public SidebarFacetDTO convertToBrandSidebarDTO(String brandCode, String lcl, String currency) {
-    	Optional<Brand> b = brandRepository.findByCode(brandCode);
+    	Optional<Brand> b = brandRepository.findByBrandCode(brandCode);
     	SidebarFacetDTO bf = new SidebarFacetDTO();
     	bf.setId(b.get().getId());
     	bf.setDesc(b.get().getAttributes().stream().filter(ba -> ba.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getBrandDesc());
@@ -541,15 +541,15 @@ public class ProductService implements IProductService {
 	}
 	
     public Product convertToProductDO(final io.nzbee.entity.product.Product product, String lcl, String currency) {
-    	ProductAttribute pa = productAttributeRepository.findByLclCdAndProductId(lcl, product.getProductId());
+    	Optional<ProductAttribute> pa = productAttributeRepository.findByLclCdAndProductId(lcl, product.getProductId());
         final Product pDo = new Product();
         pDo.setProductId(product.getProductId());
         pDo.setProductCreateDt(product.getProductCreateDt());
         pDo.setProductUPC(product.getUPC());
-        pDo.setProductDesc(pa.getProductDesc());
-        pDo.setProductRetail(productPriceRepository.findByProductProductIdAndTypeDescAndStartDateLessThanEqualAndEndDateGreaterThanEqualAndCurrencyCode(product.getProductId(), "retail", new Date(), new Date(), currency).getPriceValue());
-        pDo.setProductMarkdown(productPriceRepository.findByProductProductIdAndTypeDescAndStartDateLessThanEqualAndEndDateGreaterThanEqualAndCurrencyCode(product.getProductId(), "markdown", new Date(), new Date(), currency).getPriceValue());
-        pDo.setProductImage(pa.getProductImage());
+        pDo.setProductDesc(pa.get().getProductDesc());
+        pDo.setProductRetail(productPriceRepository.findByProductProductIdAndTypeDescAndStartDateLessThanEqualAndEndDateGreaterThanEqualAndCurrencyCode(product.getProductId(), "retail", new Date(), new Date(), currency).get().getPriceValue());
+        pDo.setProductMarkdown(productPriceRepository.findByProductProductIdAndTypeDescAndStartDateLessThanEqualAndEndDateGreaterThanEqualAndCurrencyCode(product.getProductId(), "markdown", new Date(), new Date(), currency).get().getPriceValue());
+        pDo.setProductImage(pa.get().getProductImage());
         pDo.setLclCd(lcl);
         pDo.setBrandDesc(product.getBrand().getAttributes().stream()
         .filter( ba -> ba.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getBrandDesc());
