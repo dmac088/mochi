@@ -21,10 +21,13 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.entity.brand.BrandService;
+import io.nzbee.entity.brand.Brand;
+import io.nzbee.entity.brand.BrandAttribute;
 import io.nzbee.entity.brand.BrandAttributeService;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.ProductAttribute;
 import io.nzbee.entity.product.ProductAttributeService;
+import io.nzbee.entity.product.ProductPrice;
 import io.nzbee.entity.product.ProductPriceService;
 import io.nzbee.entity.product.ProductService;
 import io.nzbee.variables.GeneralVars;
@@ -91,15 +94,12 @@ public class ProductMasterService {
 	
 	public io.nzbee.domain.Product persistProductMaster(ProductMasterSchema p) {
 		
-		Product product = null;
-		Optional<Product> oProduct = productService.getProduct(p.get_PRODUCT_UPC_CODE());
-		if (!oProduct.isPresent()) {
-			product = oProduct.get();
-		} else {
-			product = new Product();
-		}
 		
+		Optional<Product> oProduct = productService.getProduct(p.get_PRODUCT_UPC_CODE());
+		Product product = oProduct.isPresent() ? oProduct.get() : new Product();
 		product.setUPC(p.get_PRODUCT_UPC_CODE());
+		
+		//parsing dates is unsafe
 		try {
 			product.setProductCreateDt(new SimpleDateFormat(GeneralVars.DEFAULT_DATE_FORMAT).parse(p.get_PRODUCT_CREATED_DATE()));
 		} catch (ParseException e) {
@@ -108,15 +108,18 @@ public class ProductMasterService {
 		}
 		
 		List<ProductAttribute> lpa = new ArrayList<ProductAttribute>();
-		//product attribute english
-		ProductAttribute productAttributeEN = new ProductAttribute(); 
+		//Product Attribute English
+		Optional<ProductAttribute> oProductAttributeEN = productAttributeService.getProductAttribute(product.getProductId(), GeneralVars.LANGUAGE_ENGLISH);
+		ProductAttribute productAttributeEN = oProductAttributeEN.isPresent() ? oProductAttributeEN.get() : new ProductAttribute();
 		productAttributeEN.setProductDesc(p.get_PRODUCT_DESCRIPTION_EN());
 		productAttributeEN.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
 		productAttributeEN.setProductImage(p.get_PRODUCT_IMAGE_EN());
 		productAttributeEN.setProduct(product);
 		lpa.add(productAttributeEN);
 		
-		ProductAttribute productAttributeHK = new ProductAttribute(); 
+		//Product Attribute Hong Kong
+		Optional<ProductAttribute> oProductAttributeHK = productAttributeService.getProductAttribute(product.getProductId(), GeneralVars.LANGUAGE_HK);
+		ProductAttribute productAttributeHK = oProductAttributeHK.isPresent() ? oProductAttributeHK.get() : new ProductAttribute();
 		productAttributeHK.setProductDesc(p.get_PRODUCT_DESCRIPTION_HK());
 		productAttributeHK.setLclCd(GeneralVars.LANGUAGE_HK);
 		productAttributeHK.setProductImage(p.get_PRODUCT_IMAGE_HK());
@@ -125,7 +128,31 @@ public class ProductMasterService {
 		
 		product.setAttributes(lpa);
 		
-		//Brand brand = brandService.getBrand(p.get_brand)
+		
+		//Brand
+		Optional<Brand> oBrand = brandService.getBrand(p.get_BRAND_CODE());
+		Brand brand = oBrand.isPresent() ? oBrand.get() : new Brand();
+		brand.setCode(p.get_BRAND_CODE());
+		
+		List<BrandAttribute> lba = new ArrayList<BrandAttribute>();
+		BrandAttribute brandAttributeEN = new BrandAttribute();
+		brandAttributeEN.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
+		brandAttributeEN.setBrandDesc(p.get_BRAND_DESCRIPTION_EN());
+		lba.add(brandAttributeEN);
+		
+		BrandAttribute brandAttributeHK = new BrandAttribute();
+		brandAttributeHK.setLclCd(GeneralVars.LANGUAGE_HK);
+		brandAttributeHK.setBrandDesc(p.get_BRAND_DESCRIPTION_HK());
+		lba.add(brandAttributeEN);
+		
+		brand.setAttributes(lba);
+		product.setBrand(brand);
+		
+		//Price
+		ProductPrice price = productPriceService.getCurrentRetailPriceUSD(product.getProductId());
+		
+		
+		
 		
 		return null;
 	}
@@ -140,8 +167,8 @@ public class ProductMasterService {
 	    		ProductMasterSchema pms = new ProductMasterSchema();
 	    		pms.set_PRODUCT_UPC_CODE(p.getUPC());
 	    		pms.set_PRODUCT_CREATED_DATE(format.format(p.getProductCreateDt()));
-	    		pms.set_PRODUCT_DESCRIPTION_EN(productAttributeService.getProductAttributeEN(p.getProductId()).getProductDesc());
-	    		pms.set_PRODUCT_DESCRIPTION_HK(productAttributeService.getProductAttributeHK(p.getProductId()).getProductDesc());
+	    		pms.set_PRODUCT_DESCRIPTION_EN(productAttributeService.getProductAttributeEN(p.getProductId()).get().getProductDesc());
+	    		pms.set_PRODUCT_DESCRIPTION_HK(productAttributeService.getProductAttributeHK(p.getProductId()).get().getProductDesc());
 	    		pms.set_PRODUCT_RETAIL_PRICE_USD(productPriceService.getCurrentRetailPriceUSD(p.getProductId()).getPriceValue());
 	    		pms.set_PRODUCT_RETAIL_PRICE_HKD(productPriceService.getCurrentRetailPriceHKD(p.getProductId()).getPriceValue());
 	    		pms.set_PRODUCT_MARKDOWN_PRICE_USD(productPriceService.getCurrentMarkdownPriceUSD(p.getProductId()).getPriceValue());
@@ -150,8 +177,8 @@ public class ProductMasterService {
 	    		pms.set_BRAND_DESCRIPTION_EN(brandAttributeService.getBrandAttributesEN(p.getBrand().getId()).getBrandDesc());
 	    		pms.set_BRAND_DESCRIPTION_HK(brandAttributeService.getBrandAttributesHK(p.getBrand().getId()).getBrandDesc());
 	    		pms.set_PRIMARY_CATEGORY_PATH("\\TBC");
-	    		pms.set_PRODUCT_IMAGE_EN(productAttributeService.getProductAttributeEN(p.getProductId()).getProductImage());
-	    		pms.set_PRODUCT_IMAGE_HK(productAttributeService.getProductAttributeHK(p.getProductId()).getProductImage());
+	    		pms.set_PRODUCT_IMAGE_EN(productAttributeService.getProductAttributeEN(p.getProductId()).get().getProductImage());
+	    		pms.set_PRODUCT_IMAGE_HK(productAttributeService.getProductAttributeHK(p.getProductId()).get().getProductImage());
 	    		//pms.set_BRAND_IMAGE_EN(productAttributeService.getProductAttributeEN(p.getProductId()).getProductImage());
 	    		//pms.set_BRAND_IMAGE_HK(productAttributeService.getProductAttributeHK(p.getProductId()).getProductImage());
 	    		

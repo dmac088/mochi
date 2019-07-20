@@ -58,6 +58,10 @@ public class BrandAttribute {
 		return brandDesc;
 	}
 	
+	public void setBrandDesc(String brandDesc) {
+		this.brandDesc = brandDesc;
+	}
+	
 	public String getLclCd() {
 		return lclCd;
 	}

@@ -18,8 +18,8 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 	List<Product> findByCategoriesCategoryIdIn(List<Long> id);
 	
 	List<Product> findByProductIdIn(Long[] id);
-	
-	Optional<Product> findByUPC(String upc);
+
+	Optional<Product> findByProductUPC(String upc);
 	
 	@Query(
 		value = "WITH RECURSIVE MyCTE AS ( "
