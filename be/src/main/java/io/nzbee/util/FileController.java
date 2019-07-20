@@ -10,11 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import com.fasterxml.jackson.databind.MappingIterator;
-import com.fasterxml.jackson.dataformat.csv.CsvMapper;
-import com.fasterxml.jackson.dataformat.csv.CsvSchema;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
@@ -42,24 +37,8 @@ public class FileController {
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile uploadFile) {
         String fileName = fileStorageServiceUpload.storeFile(uploadFile);
 
-        try {
-        	
-        	File file = fileStorageServiceUpload.loadFileAsResource(fileName).getFile();
-        	CsvSchema bootstrapSchema = CsvSchema.emptySchema().withHeader();
-            CsvMapper mapper = new CsvMapper();
-            MappingIterator<ProductMasterSchema> readValues =
-            	mapper.reader(ProductMasterSchema.class).with(bootstrapSchema).readValues(file);
-            
-            readValues.readAll().stream().forEach(p -> {
-            	System.out.println(p.toString());
-            });
-            
-        } catch (IOException e) {
-        	logger.error(e.toString());
-        }
-        
-        
-        
+        productMasterService.writeProdcutMaster(fileName);
+      
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(fileStorageProperties.getUploadDir())	
                 .path(fileName)
@@ -106,7 +85,7 @@ public class FileController {
         }
         
         //write the product master data to file
-        productMasterService.writeProductMaster(resource);
+        productMasterService.extractProductMaster(resource);
         
         return ResponseEntity.ok()
                .contentType(MediaType.parseMediaType(contentType))
