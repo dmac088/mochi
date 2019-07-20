@@ -11,7 +11,7 @@ public interface BrandRepository extends CrudRepository<Brand, Long> {
 
 	Optional<Brand> findById(Long Id); 
 	
-	Optional<Brand> findByCode(String brandCode);
+	Optional<Brand> findByBrandCode(String brandCode);
 	 
 	List<Brand> findDistinctByProductsCategoriesCategoryIdIn(List<Long> categoryIds);
 	

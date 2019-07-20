@@ -1,6 +1,8 @@
 package io.nzbee.entity.product;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,15 +22,15 @@ public class ProductAttributeService {
 		return productAttributeRepository.findByLclCd(lcl);
 	}
 	
-	public ProductAttribute getProductAttribute(Long id, String lcl) {
+	public Optional<ProductAttribute> getProductAttribute(Long id, String lcl) {
 		return productAttributeRepository.findByLclCdAndProductId(lcl, id);
 	}
 	
-	public ProductAttribute getProductAttributeEN(Long id) {
+	public Optional<ProductAttribute> getProductAttributeEN(Long id) {
 		return productAttributeRepository.findByLclCdAndProductId(GeneralVars.LANGUAGE_ENGLISH, id);
 	}
 	
-	public ProductAttribute getProductAttributeHK(Long id) {
+	public Optional<ProductAttribute> getProductAttributeHK(Long id) {
 		return productAttributeRepository.findByLclCdAndProductId(GeneralVars.LANGUAGE_HK, id);
 	}
 	

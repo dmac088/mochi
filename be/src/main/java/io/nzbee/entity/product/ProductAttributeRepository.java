@@ -1,6 +1,8 @@
 package io.nzbee.entity.product;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.repository.CrudRepository;
 
 public interface ProductAttributeRepository extends CrudRepository<ProductAttribute, Long> {
@@ -9,6 +11,6 @@ public interface ProductAttributeRepository extends CrudRepository<ProductAttrib
 
 	List<ProductAttribute> findByLclCd(String lcl);
 
-	ProductAttribute findByLclCdAndProductId(String lcl, Long id);
+	Optional<ProductAttribute> findByLclCdAndProductId(String lcl, Long id);
 
 }

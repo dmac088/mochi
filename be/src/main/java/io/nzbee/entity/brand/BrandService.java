@@ -20,7 +20,7 @@ public class BrandService {
 	}
 	
 	public Optional<Brand> getBrand(String brandCode) {
-		return brandRepository.findByCode(brandCode);
+		return brandRepository.findByBrandCode(brandCode);
 	}
 	
 }

@@ -21,7 +21,7 @@ public class ProductService {
 	}
 	
 	public Optional<Product> getProduct(String upc) {
-		return productRepository.findByUPC(upc);
+		return productRepository.findByProductUPC(upc);
 	}
 
 }
