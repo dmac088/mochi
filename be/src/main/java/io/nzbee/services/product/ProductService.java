@@ -59,6 +59,9 @@ import io.nzbee.variables.ProductVars;
 @Transactional
 @CacheConfig(cacheNames="products")
 public class ProductService implements IProductService {
+	//In service classes, we should only call methods of entity service classes
+	//the repositories themselves should not be referenced outside the entity service class
+	//this way we ensure proper separation of concerns
     
 	@Autowired 
 	private io.nzbee.entity.product.ProductService productService;
