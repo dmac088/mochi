@@ -11,18 +11,29 @@ import io.nzbee.dto.SidebarFacetDTO;
 
 public interface IProductService {
 
-	 SearchDTO findProduct(String locale, String currency, String categoryCode, String term, int page, int size, String sortBy, List<SidebarFacetDTO> selectedFacets);
+	//Only domain objects should be returned from the below methods
+	//User Interface objects should be returned from one or more DTO (data transfer object) services
+	//This service layer should simply construct and persist "domain" objects from and to the entity layer
 	
-	 SearchDTO getProducts(String locale, String currency, String categoryDesc, Double price, int page, int size, String sortBy, List<SidebarFacetDTO> selectedFacets);
+	//returns a user interface object, rule broken, need to change to return a domain object 
+	SearchDTO findProduct(String locale, String currency, String categoryCode, String term, int page, int size, String sortBy, List<SidebarFacetDTO> selectedFacets);
+	
+	//returns a user interface object, rule broken, need to change to return a domain object 
+	SearchDTO getProducts(String locale, String currency, String categoryDesc, Double price, int page, int size, String sortBy, List<SidebarFacetDTO> selectedFacets);
 	 
-	 List<Product> getProducts(@PathVariable String locale, @PathVariable String currency, @RequestBody final List<Long> productIds);
+	//returns a list of domain object, this is good
+	List<Product> getProducts(@PathVariable String locale, @PathVariable String currency, @RequestBody final List<Long> productIds);
 	 
-	 Double getMaxPrice(String categoryDesc, String locale, String currency, List<SidebarFacetDTO> selectedFacets);
+	//returns a domain object, this is good
+	Product getProduct(String locale, String currency, Long id);
 	 
-	 Product getProduct(String locale, String currency, Long id);
+	//returns a user interface object, rule broken, need to change to return a domain object 
+	List<SidebarFacetDTO> getProductTags(String locale, String currency, String categoryDesc, Double price, List<SidebarFacetDTO> selectedFacets);
 	 
-	 List<SidebarFacetDTO> getProductTags(String locale, String currency, String categoryDesc, Double price, List<SidebarFacetDTO> selectedFacets);
-	 
-	 List<SidebarFacetDTO> getProductTags(String locale, String currency, String categoryDesc, List<SidebarFacetDTO> selectedFacets);
+	//returns a user interface object, rule broken, need to change to return a domain object
+	List<SidebarFacetDTO> getProductTags(String locale, String currency, String categoryDesc, List<SidebarFacetDTO> selectedFacets);
+
+	//returns an attribute value which is allowed
+	Double getMaxPrice(String categoryDesc, String locale, String currency, List<SidebarFacetDTO> selectedFacets);
 	 
 }
