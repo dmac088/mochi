@@ -14,6 +14,8 @@ public interface IProductService {
 	//Only domain objects should be returned from the below methods
 	//User Interface objects should be returned from one or more DTO (data transfer object) services
 	//This service layer should simply construct and persist "domain" objects from and to the entity layer
+	//This service layer is an interface since if we want to store our data in a non-hibernate way, we can swap in another service 
+	//as long as it conforms to the same interface contract
 	
 	//returns a user interface object, rule broken, need to change to return a domain object 
 	SearchDTO findProduct(String locale, String currency, String categoryCode, String term, int page, int size, String sortBy, List<SidebarFacetDTO> selectedFacets);
