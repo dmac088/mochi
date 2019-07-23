@@ -1,4 +1,4 @@
-package io.nzbee.dto;
+package io.nzbee.dto.search;
 
 public interface ISearchDTOService {
 

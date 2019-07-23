@@ -40,7 +40,7 @@ import io.nzbee.dao.CategoryDAO;
 import io.nzbee.dao.ProductDAO;
 import io.nzbee.dao.ProductTagDAO;
 import io.nzbee.domain.Product;
-import io.nzbee.dto.SearchDTO;
+import io.nzbee.dto.search.SearchDTO;
 import io.nzbee.dto.sidebar.SidebarDTO;
 import io.nzbee.entity.PageableUtil;
 import io.nzbee.entity.brand.Brand;
