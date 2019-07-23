@@ -14,7 +14,7 @@ import io.nzbee.domain.Brand;
 import io.nzbee.domain.Category;
 import io.nzbee.dto.sidebar.SidebarDTO;
 import io.nzbee.entity.category.CategoryDAO;
-import io.nzbee.entity.product.ProductRepository;
+import io.nzbee.entity.product.IProductRepository;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.ProductVars;
 
@@ -24,7 +24,7 @@ import io.nzbee.variables.ProductVars;
 public class CategoryService implements ICategoryService {
     
     @Autowired
-    private ProductRepository productRepository;
+    private IProductRepository productRepository;
     
     @Autowired
     private CategoryDAO categoryDAO;

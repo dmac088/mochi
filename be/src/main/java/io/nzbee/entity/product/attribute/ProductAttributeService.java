@@ -1,4 +1,4 @@
-package io.nzbee.entity.product;
+package io.nzbee.entity.product.attribute;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package io.nzbee.entity.product;
+package io.nzbee.entity.product.attribute;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 

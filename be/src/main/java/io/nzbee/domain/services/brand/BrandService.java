@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import io.nzbee.domain.Brand;
 import io.nzbee.dto.sidebar.SidebarDTO;
 import io.nzbee.entity.brand.BrandDAO;
-import io.nzbee.entity.product.ProductRepository;
+import io.nzbee.entity.product.IProductRepository;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.ProductVars;
 
@@ -26,7 +26,7 @@ public class BrandService implements IBrandService {
     private BrandDAO brandDAO;
     
     @Autowired
-    private ProductRepository productRepository;
+    private IProductRepository productRepository;
     
     @Override
 	@Transactional

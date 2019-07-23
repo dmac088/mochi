@@ -21,9 +21,9 @@ import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.entity.brand.BrandService;
 import io.nzbee.entity.brand.BrandAttributeService;
 import io.nzbee.entity.product.Product;
-import io.nzbee.entity.product.ProductAttributeService;
-import io.nzbee.entity.product.ProductPriceService;
-import io.nzbee.entity.product.ProductService;
+import io.nzbee.entity.product.ProductServiceImpl;
+import io.nzbee.entity.product.attribute.ProductAttributeService;
+import io.nzbee.entity.product.price.ProductPriceService;
 import io.nzbee.variables.GeneralVars;
 
 
@@ -33,7 +33,7 @@ public class ProductMasterService {
 	
 	@Autowired
 	@Qualifier("productEntityService")
-	private ProductService productEntityService;
+	private ProductServiceImpl productEntityService;
 	
 	@Autowired
 	@Qualifier("productDomainService")

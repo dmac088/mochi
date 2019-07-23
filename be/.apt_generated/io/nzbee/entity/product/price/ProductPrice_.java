@@ -1,5 +1,7 @@
-package io.nzbee.entity.product;
+package io.nzbee.entity.product.price;
 
+import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.currency.Currency;
 import java.util.Date;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;

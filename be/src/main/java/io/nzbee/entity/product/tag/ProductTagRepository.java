@@ -1,4 +1,4 @@
-package io.nzbee.entity.tag;
+package io.nzbee.entity.product.tag;
 
 import java.util.List;
 import org.springframework.data.repository.CrudRepository;

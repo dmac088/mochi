@@ -1,4 +1,4 @@
-package io.nzbee.entity.product;
+package io.nzbee.entity.product.attribute;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -38,8 +38,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.nzbee.entity.LanguageDiscriminator;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.CategoryAttribute;
-import io.nzbee.entity.tag.ProductTag;
-import io.nzbee.entity.tag.ProductTagAttribute;
+import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.tag.ProductTag;
+import io.nzbee.entity.product.tag.ProductTagAttribute;
 import io.nzbee.variables.CategoryVars;
 
 @Entity

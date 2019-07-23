@@ -31,12 +31,17 @@ import io.nzbee.entity.category.Category_;
 import io.nzbee.entity.Dao;
 import io.nzbee.entity.PageableUtil;
 import io.nzbee.entity.product.Currency_;
-import io.nzbee.entity.product.ProductAttribute_;
-import io.nzbee.entity.product.ProductPriceType_;
-import io.nzbee.entity.product.ProductPrice_;
 import io.nzbee.entity.product.ProductStatus_;
 import io.nzbee.entity.product.Product_;
-import io.nzbee.entity.tag.ProductTag;
+import io.nzbee.entity.product.attribute.ProductAttribute;
+import io.nzbee.entity.product.attribute.ProductAttribute_;
+import io.nzbee.entity.product.currency.Currency;
+import io.nzbee.entity.product.price.ProductPrice;
+import io.nzbee.entity.product.price.ProductPriceType;
+import io.nzbee.entity.product.price.ProductPriceType_;
+import io.nzbee.entity.product.price.ProductPrice_;
+import io.nzbee.entity.product.status.ProductStatus;
+import io.nzbee.entity.product.tag.ProductTag;
 import io.nzbee.entity.tag.ProductTag_;
 import io.nzbee.variables.ProductVars;
 
@@ -55,8 +60,22 @@ public class ProductDAO implements Dao<Product> {
 
 	@Override
 	public List<Product> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
+		
+		Root<Product> root = cq.from(Product.class);
+
+		//Join<Category, Hierarchy> categoryHierarchy = category.join(Category_.hierarchy);
+		
+		List<Predicate> conditions = new ArrayList<Predicate>();		
+		TypedQuery<Product> query = em.createQuery(cq
+				.select(root)
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(false)
+		);
+		
+		return query.getResultList();
 	}
 
 	@Override
@@ -78,12 +97,45 @@ public class ProductDAO implements Dao<Product> {
 	}
 
 	@Override
-	public Page<Product> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Product> findAll() {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
+		
+		Root<Product> root = cq.from(Product.class);
+
+		//Join<Category, Hierarchy> categoryHierarchy = category.join(Category_.hierarchy);
+		
+		List<Predicate> conditions = new ArrayList<Predicate>();		
+		TypedQuery<Product> query = em.createQuery(cq
+				.select(root)
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(false)
+		);
+		
+		return query.getResultList();
 	}
 	
-	public Long getResultCount(List<Long> categoryIds, String locale, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, Pageable pageable, List<Long> brandIds, List<Long> tagIds) {
+	public Optional<Product> findByUPC(String upc) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
+		
+		Root<Product> root = cq.from(Product.class);
+
+		List<Predicate> conditions = new ArrayList<Predicate>();	
+		conditions.add(cb.equal(root.get(Product_.productUPC), upc));
+		
+		TypedQuery<Product> query = em.createQuery(cq
+				.select(root)
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(false)
+		);
+		
+		return Optional.ofNullable(query.getSingleResult());
+	}
+	
+	private Long getResultCount(List<Long> categoryIds, String locale, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, Pageable pageable, List<Long> brandIds, List<Long> tagIds) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
@@ -131,21 +183,21 @@ public class ProductDAO implements Dao<Product> {
 		return query.getSingleResult();
 	}
 	
-	public Page<Product> getAll(List<Long> categoryIds, String locale, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, Pageable pageable, List<Long> brandIds, List<Long> tagIds) {
+	public Page<Product> findAll(List<Long> categoryIds, String locale, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, Pageable pageable, List<Long> brandIds, List<Long> tagIds) {
 	
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 	
 		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
 		
-		Root<Product> root = cq.from(Product.class);
-		Join<Product, ProductAttribute> productAttribute = root.join(Product_.attributes);
-		Join<Product, Category> category = root.join(Product_.categories);
-		Join<Product, Brand> brand = root.join(Product_.brand);
-		Join<Product, ProductStatus> status = root.join(Product_.productStatus);
-		Join<Product, ProductPrice> price = root.join(Product_.prices);
-		Join<ProductPrice, ProductPriceType> type = price.join(ProductPrice_.type);
-		Join<ProductPrice, Currency> curr = price.join(ProductPrice_.currency);
-		Join<Brand, BrandAttribute> brandAttribute = brand.join(Brand_.brandAttributes);
+		Root<Product> root 									= cq.from(Product.class);
+		Join<Product, ProductAttribute> productAttribute 	= root.join(Product_.attributes);
+		Join<Product, Category> category 					= root.join(Product_.categories);
+		Join<Product, Brand> brand 							= root.join(Product_.brand);
+		Join<Product, ProductStatus> status 				= root.join(Product_.productStatus);
+		Join<Product, ProductPrice> price 					= root.join(Product_.prices);
+		Join<ProductPrice, ProductPriceType> type 			= price.join(ProductPrice_.type);
+		Join<ProductPrice, Currency> curr 					= price.join(ProductPrice_.currency);
+		Join<Brand, BrandAttribute> brandAttribute 			= brand.join(Brand_.brandAttributes);
 		Join<Category, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
 		//Join<Category, Hierarchy> categoryHierarchy = category.join(Category_.hierarchy);
 		
@@ -227,7 +279,6 @@ public class ProductDAO implements Dao<Product> {
 
 		return query.getResultList();
     }
-	
 	
 	private Order getOrder(String orderName, Sort.Direction orderDirection, CriteriaBuilder cb, Join<Product, ProductAttribute> attributeJoin, Join<Product, ProductPrice> priceJoin) {
 
