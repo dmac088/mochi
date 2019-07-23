@@ -1,6 +1,7 @@
 package io.nzbee.entity.product.tag;
 
 import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.tag.attribute.ProductTagAttribute;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
