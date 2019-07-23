@@ -1,4 +1,4 @@
-package io.nzbee.entity.product;
+package io.nzbee.entity.product.price;
 
 import java.util.Date;
 
@@ -11,6 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+
+import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.currency.Currency;
 
 @Entity
 @Table(name = "price", schema = "mochi")

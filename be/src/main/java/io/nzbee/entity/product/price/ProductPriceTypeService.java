@@ -1,4 +1,4 @@
-package io.nzbee.entity.product;
+package io.nzbee.entity.product.price;
 
 import java.util.List;
 import java.util.Optional;

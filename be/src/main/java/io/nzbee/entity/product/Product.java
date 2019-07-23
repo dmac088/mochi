@@ -30,7 +30,10 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.category.Category;
-import io.nzbee.entity.tag.ProductTag;
+import io.nzbee.entity.product.attribute.ProductAttribute;
+import io.nzbee.entity.product.price.ProductPrice;
+import io.nzbee.entity.product.status.ProductStatus;
+import io.nzbee.entity.product.tag.ProductTag;
 import io.nzbee.variables.GeneralVars;
 import io.nzbee.variables.ProductVars;
 

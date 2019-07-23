@@ -1,4 +1,4 @@
-package io.nzbee.entity.product;
+package io.nzbee.entity.product.tag;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,9 +13,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
-
 import io.nzbee.entity.Dao;
 import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.brand.BrandAttribute;
@@ -26,13 +24,17 @@ import io.nzbee.entity.category.CategoryAttribute;
 import io.nzbee.entity.category.CategoryAttribute_;
 import io.nzbee.entity.category.Category_;
 import io.nzbee.entity.product.Currency_;
-import io.nzbee.entity.product.ProductAttribute_;
-import io.nzbee.entity.product.ProductPriceType_;
-import io.nzbee.entity.product.ProductPrice_;
+import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.ProductStatus_;
 import io.nzbee.entity.product.Product_;
-import io.nzbee.entity.tag.ProductTag;
-import io.nzbee.entity.tag.ProductTagAttribute;
+import io.nzbee.entity.product.attribute.ProductAttribute;
+import io.nzbee.entity.product.attribute.ProductAttribute_;
+import io.nzbee.entity.product.currency.Currency;
+import io.nzbee.entity.product.price.ProductPrice;
+import io.nzbee.entity.product.price.ProductPriceType;
+import io.nzbee.entity.product.price.ProductPriceType_;
+import io.nzbee.entity.product.price.ProductPrice_;
+import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.entity.tag.ProductTagAttribute_;
 import io.nzbee.entity.tag.ProductTag_;
 import io.nzbee.variables.ProductVars;
@@ -57,7 +59,7 @@ public class ProductTagDAO  implements Dao<ProductTag> {
 	}
 
 	@Override
-	public Page<ProductTag> findAll() {
+	public List<ProductTag> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}

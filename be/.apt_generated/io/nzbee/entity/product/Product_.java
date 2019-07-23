@@ -2,7 +2,10 @@ package io.nzbee.entity.product;
 
 import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.category.Category;
-import io.nzbee.entity.tag.ProductTag;
+import io.nzbee.entity.product.attribute.ProductAttribute;
+import io.nzbee.entity.product.price.ProductPrice;
+import io.nzbee.entity.product.status.ProductStatus;
+import io.nzbee.entity.product.tag.ProductTag;
 import java.util.Date;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.ListAttribute;

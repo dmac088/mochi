@@ -45,13 +45,13 @@ import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.brand.BrandRepository;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.CategoryDAO;
-import io.nzbee.entity.product.ProductAttribute;
-import io.nzbee.entity.product.ProductAttributeRepository;
 import io.nzbee.entity.product.ProductDAO;
-import io.nzbee.entity.product.ProductPriceRepository;
-import io.nzbee.entity.product.ProductRepository;
-import io.nzbee.entity.product.ProductTagDAO;
-import io.nzbee.entity.tag.ProductTagAttribute;
+import io.nzbee.entity.product.IProductRepository;
+import io.nzbee.entity.product.attribute.ProductAttribute;
+import io.nzbee.entity.product.attribute.ProductAttributeRepository;
+import io.nzbee.entity.product.price.ProductPriceRepository;
+import io.nzbee.entity.product.tag.ProductTagAttribute;
+import io.nzbee.entity.product.tag.ProductTagDAO;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.GeneralVars;
 import io.nzbee.variables.ProductVars;
@@ -65,13 +65,13 @@ public class ProductService implements IProductService {
 	//this way we ensure proper separation of concerns
     
 	@Autowired 
-	private io.nzbee.entity.product.ProductService productService;
+	private io.nzbee.entity.product.ProductServiceImpl productService;
 
 	@Autowired 
-	private io.nzbee.entity.product.ProductAttributeService productAttributeService;
+	private io.nzbee.entity.product.attribute.ProductAttributeService productAttributeService;
 	
     @Autowired
-    private ProductRepository productRepository;
+    private IProductRepository productRepository;
     
     @Autowired 
     private ProductPriceRepository productPriceRepository;

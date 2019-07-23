@@ -26,7 +26,7 @@ import io.nzbee.entity.hierarchy.Hierarchy;
 import io.nzbee.entity.hierarchy.Hierarchy_;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.Product_;
-import io.nzbee.entity.tag.ProductTag;
+import io.nzbee.entity.product.tag.ProductTag;
 import io.nzbee.entity.tag.ProductTag_;
 import io.nzbee.variables.CategoryVars;
 
@@ -98,7 +98,7 @@ public class CategoryDAO implements Dao<Category> {
 	}
 
 	@Override
-	public Page<Category> findAll() {
+	public List<Category> findAll() {
 		return null;
 	}
 	

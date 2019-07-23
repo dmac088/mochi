@@ -1,4 +1,4 @@
-package io.nzbee.entity.product;
+package io.nzbee.entity.product.price;
 
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;

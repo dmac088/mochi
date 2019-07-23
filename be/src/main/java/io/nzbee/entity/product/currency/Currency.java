@@ -1,4 +1,4 @@
-package io.nzbee.entity.product;
+package io.nzbee.entity.product.currency;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

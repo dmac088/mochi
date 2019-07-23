@@ -23,12 +23,12 @@ import io.nzbee.entity.category.CategoryAttribute;
 import io.nzbee.entity.category.CategoryAttribute_;
 import io.nzbee.entity.category.Category_;
 import io.nzbee.entity.product.Product;
-import io.nzbee.entity.product.ProductAttribute;
-import io.nzbee.entity.product.ProductAttribute_;
-import io.nzbee.entity.product.ProductStatus;
 import io.nzbee.entity.product.ProductStatus_;
 import io.nzbee.entity.product.Product_;
-import io.nzbee.entity.tag.ProductTag;
+import io.nzbee.entity.product.attribute.ProductAttribute;
+import io.nzbee.entity.product.attribute.ProductAttribute_;
+import io.nzbee.entity.product.status.ProductStatus;
+import io.nzbee.entity.product.tag.ProductTag;
 import io.nzbee.entity.tag.ProductTag_;
 import io.nzbee.variables.ProductVars;
 
@@ -87,7 +87,7 @@ public class BrandDAO  implements Dao<Brand> {
 	}
 	
 	@Override
-	public Page<Brand> findAll() {
+	public List<Brand> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}

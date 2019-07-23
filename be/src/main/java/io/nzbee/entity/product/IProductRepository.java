@@ -2,24 +2,21 @@ package io.nzbee.entity.product;
 
 
 import java.util.List;
-import java.util.Optional;
-
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-public interface ProductRepository extends CrudRepository<Product, Long> {
+public interface IProductRepository extends CrudRepository<Product, Long> {
 
-	List<Product> findAll();
-	
-	List<Product> findAll(Specification<Product> spec);
-	
-	List<Product> findByCategoriesCategoryIdIn(List<Long> id);
-	
-	List<Product> findByProductIdIn(Long[] id);
-
-	Optional<Product> findByProductUPC(String upc);
+//	List<Product> findAll();
+//	
+//	List<Product> findAll(Specification<Product> spec);
+//	
+//	List<Product> findByCategoriesCategoryIdIn(List<Long> id);
+//	
+//	List<Product> findByProductIdIn(Long[] id);
+//
+//	Optional<Product> findByProductUPC(String upc);
 	
 	@Query(
 		value = "WITH RECURSIVE MyCTE AS ( "

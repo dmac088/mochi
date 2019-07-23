@@ -1,5 +1,6 @@
-package io.nzbee.entity.product;
+package io.nzbee.entity.product.attribute;
 
+import io.nzbee.entity.product.Product;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
