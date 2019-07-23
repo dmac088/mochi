@@ -14,7 +14,6 @@ import javax.persistence.criteria.Root;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import io.nzbee.entity.IDao;
 import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.brand.Brand_;
 import io.nzbee.entity.category.CategoryAttribute_;
@@ -31,7 +30,7 @@ import io.nzbee.entity.product.tag.ProductTag_;
 import io.nzbee.variables.CategoryVars;
 
 @Component
-public class CategoryDao implements IDao<Category> {
+public class CategoryDao implements ICategoryDao {
 
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
@@ -57,6 +56,28 @@ public class CategoryDao implements IDao<Category> {
 		return Optional.ofNullable(query.getSingleResult());
 	}
 
+	@Override
+	public List<Category> findAll() {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
+		
+		Root<Category> root = cq.from(Category.class);
+		
+		Join<Category, CategoryType> categoryType = root.join(Category_.categoryType);
+		
+		List<Predicate> conditions = new ArrayList<Predicate>();
+		conditions.add(cb.equal(categoryType.get(CategoryType_.code), CategoryVars.CATEGORY_TYPE_CODE_PRODUCT));
+		
+		TypedQuery<Category> query = em.createQuery(cq
+				.select(root)
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(true)
+		);
+		
+		return query.getResultList();
+	}
+	
 	@Override
 	public List<Category> getAll() {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -94,16 +115,10 @@ public class CategoryDao implements IDao<Category> {
 	@Override
 	public void delete(Category t) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
-	public List<Category> findAll() {
-		return null;
-	}
-	
-	
-	public List<Category> getByBrands(String hieararchyCode, String categoryTypeCode, List<Long> brandIds, Long level, String locale) {
+	public List<Category> findByBrandIds(String hieararchyCode, String categoryTypeCode, List<Long> brandIds, Long level, String locale) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
@@ -137,7 +152,7 @@ public class CategoryDao implements IDao<Category> {
 		return query.getResultList();
 	}
 	
-	public Category getByCategoryDesc(String categoryTypeCode, String categoryDesc, String locale) {
+	public Optional<Category> findByCategoryDesc(String categoryTypeCode, String categoryDesc, String locale) {
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
@@ -165,11 +180,10 @@ public class CategoryDao implements IDao<Category> {
 				.distinct(false)
 		);
 		
-		return query.getSingleResult();
+		return Optional.ofNullable(query.getSingleResult());
 	}
-	
-	
-	public Category getByCategoryCode(String categoryTypeCode, String categoryCode, String locale) {
+		
+	public Optional<Category> findByCategoryCode(String categoryTypeCode, String categoryCode, String locale) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 
 		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
@@ -193,10 +207,10 @@ public class CategoryDao implements IDao<Category> {
 				.distinct(false)
 		);
 		
-		return query.getSingleResult();
+		return Optional.ofNullable(query.getSingleResult());
 	}
 	
-	public List<Category> getByParent(String hieararchyCode, String categoryTypeCode, Long parentCategoryId, String locale) {
+	public List<Category> findByParent(String hieararchyCode, String categoryTypeCode, Long parentCategoryId, String locale) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
@@ -227,8 +241,7 @@ public class CategoryDao implements IDao<Category> {
 		return query.getResultList();
 	}
 	
-	
-	public List<Category> get(String hieararchyCode, String categoryTypeCode, String parentCategoryDesc, List<Long> brandIds, List<Long> tagIds, String locale) {
+	public List<Category> find(String hieararchyCode, String categoryTypeCode, String parentCategoryDesc, List<Long> brandIds, List<Long> tagIds, String locale) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
@@ -267,8 +280,7 @@ public class CategoryDao implements IDao<Category> {
 		return query.getResultList();
 	}
 	
-
-	public List<Category> getByLevel(String hieararchyCode, String categoryTypeCode, Long level, String locale) {
+	public List<Category> findByLevel(String hieararchyCode, String categoryTypeCode, Long level, String locale) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
