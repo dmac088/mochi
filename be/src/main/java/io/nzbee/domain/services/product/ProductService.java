@@ -95,6 +95,7 @@ public class ProductService implements IProductService {
     
 	@Cacheable
 	public SearchDTO getProducts(String locale, String currency, String categoryDesc, Double price, int page, int size, String sortBy, List<SidebarDTO> selectedFacets) {
+		System.out.println(categoryDesc);
 		
 		//all categories (if non selected in facets
 		//Category parent = categoryRepository.findByAttributesLclCdAndAttributesCategoryDesc(locale, categoryDesc);
@@ -549,8 +550,8 @@ public class ProductService implements IProductService {
         pDo.setProductCreateDt(product.getProductCreateDt());
         pDo.setProductUPC(product.getUPC());
         pDo.setProductDesc(pa.get().getProductDesc());
-        pDo.setProductRetail(productPriceService.get(product.getProductId(), "retail", new Date(), new Date(), currency).get().getPriceValue());
-        pDo.setProductMarkdown(productPriceService.get(product.getProductId(), "markdown", new Date(), new Date(), currency).get().getPriceValue());
+        pDo.setProductRetail(productPriceService.get(product.getProductId(), ProductVars.PRICE_RETAIL_CODE, new Date(), new Date(), currency).get().getPriceValue());
+        pDo.setProductMarkdown(productPriceService.get(product.getProductId(), ProductVars.PRICE_MARKDOWN_CODE, new Date(), new Date(), currency).get().getPriceValue());
         pDo.setProductImage(pa.get().getProductImage());
         pDo.setLclCd(lcl);
         pDo.setBrandDesc(product.getBrand().getAttributes().stream()
