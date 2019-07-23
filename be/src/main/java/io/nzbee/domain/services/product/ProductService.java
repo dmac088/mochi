@@ -47,7 +47,7 @@ import io.nzbee.entity.category.Category;
 import io.nzbee.entity.product.attribute.IProductAttributeService;
 import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.price.IProductPriceService;
-import io.nzbee.entity.product.tag.ProductTagDAO;
+import io.nzbee.entity.product.tag.IProductTagService;
 import io.nzbee.entity.product.tag.attribute.ProductTagAttribute;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.GeneralVars;
@@ -75,7 +75,7 @@ public class ProductService implements IProductService {
     private IBrandService brandService;
     
     @Autowired
-    private ProductTagDAO productTagDAO;
+    private IProductTagService productTagService;
 
     @Autowired
     @Qualifier("categoryEntityService")
@@ -186,7 +186,7 @@ public class ProductService implements IProductService {
 			List<SidebarDTO> selectedBrands = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals(CategoryVars.BRAND_FACET_NAME);}).collect(Collectors.toList());
 			List<Long> selectedBrandIds = selectedBrands.stream().map(b -> {return b.getId();}).collect(Collectors.toList());
 					
-			List<ProductTagAttribute> pt = productTagDAO.getAll(facetCategoryIds, locale, null, null, ProductVars.MARKDOWN_SKU_DESCRIPTION, currency, new Date(), new Date(), selectedBrandIds);
+			List<ProductTagAttribute> pt = productTagService.findAll(facetCategoryIds, locale, null, null, ProductVars.MARKDOWN_SKU_DESCRIPTION, currency, new Date(), new Date(), selectedBrandIds);
 			
 		
 			List<SidebarDTO> lf = pt.stream().map(t -> {
@@ -238,7 +238,7 @@ public class ProductService implements IProductService {
 				     	
 		List<Long> categoryIds = (selectedCategories.size() > 0) ? facetCategoryIds : allCategoryIds;
 		
-		List<ProductTagAttribute> pt = productTagDAO.getAll(categoryIds, locale, new Double(0), price, ProductVars.MARKDOWN_SKU_DESCRIPTION, currency, new Date(), new Date(), selectedBrandIds);
+		List<ProductTagAttribute> pt = productTagService.findAll(categoryIds, locale, new Double(0), price, ProductVars.MARKDOWN_SKU_DESCRIPTION, currency, new Date(), new Date(), selectedBrandIds);
 		
 		List<SidebarDTO> lf = pt.stream().map(t -> {
 										SidebarDTO f = new SidebarDTO();
