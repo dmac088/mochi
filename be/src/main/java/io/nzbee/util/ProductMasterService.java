@@ -19,7 +19,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.entity.brand.BrandService;
-import io.nzbee.entity.brand.BrandAttributeService;
+import io.nzbee.entity.brand.attribute.BrandAttributeService;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.ProductServiceImpl;
 import io.nzbee.entity.product.attribute.ProductAttributeService;

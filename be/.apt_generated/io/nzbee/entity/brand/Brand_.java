@@ -1,5 +1,6 @@
 package io.nzbee.entity.brand;
 
+import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.product.Product;
 import javax.annotation.Generated;

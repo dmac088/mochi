@@ -9,41 +9,65 @@ import org.springframework.stereotype.Service;
 import io.nzbee.variables.GeneralVars;
 
 @Service
-public class ProductAttributeService {
+public class ProductAttributeService implements IProductAttributeService {
 
 	@Autowired
 	private ProductAttributeRepository productAttributeRepository; 
 	
-	public List<ProductAttribute> getProductAttribute() {
-		return productAttributeRepository.findAll();
-	}
-
-	public List<ProductAttribute> getProductAttribute(String lcl) {
-		return productAttributeRepository.findByLclCd(lcl);
+	@Override
+	public Optional<ProductAttribute> findById(long id) {
+		// TODO Auto-generated method stub
+		return productAttributeRepository.findById(id);
 	}
 	
-	public Optional<ProductAttribute> getProductAttribute(Long id, String lcl) {
+	@Override
+	public Optional<ProductAttribute> findByIdAndLocale(Long id, String lcl) {
 		return productAttributeRepository.findByLclCdAndProductId(lcl, id);
 	}
 	
+	@Override
+	public List<ProductAttribute> getAll() {
+		// TODO Auto-generated method stub
+		return productAttributeRepository.findAll();
+	}
+
+	@Override
+	public List<ProductAttribute> findAll() {
+		// TODO Auto-generated method stub
+		return productAttributeRepository.findAll();
+	}
+	
+	@Override
+	public List<ProductAttribute> findAll(String lcl) {
+		return productAttributeRepository.findByLclCd(lcl);
+	}
+
+	@Override
+	public void save(ProductAttribute t) {
+		// TODO Auto-generated method stub
+		productAttributeRepository.save(t);
+	}
+
+	@Override
+	public void update(ProductAttribute t, String[] params) {
+		// TODO Auto-generated method stub
+		productAttributeRepository.save(t);
+	}
+
+	@Override
+	public void delete(ProductAttribute t) {
+		// TODO Auto-generated method stub
+		productAttributeRepository.delete(t);		
+	}
+
+	@Override
 	public Optional<ProductAttribute> getProductAttributeEN(Long id) {
 		return productAttributeRepository.findByLclCdAndProductId(GeneralVars.LANGUAGE_ENGLISH, id);
 	}
 	
+	@Override
 	public Optional<ProductAttribute> getProductAttributeHK(Long id) {
 		return productAttributeRepository.findByLclCdAndProductId(GeneralVars.LANGUAGE_HK, id);
-	}
-	
-	public void addProductAttribute(ProductAttribute ProductAttribute) {
-		productAttributeRepository.save(ProductAttribute);
-	}
-	
-	public void updateProductAttribute(Long id, ProductAttribute ProductAttribute) {
-		productAttributeRepository.save(ProductAttribute);
-	}
-	
-	public void deleteProductAttribute(Long id) {
-		productAttributeRepository.deleteById(id);
 	}
 	
 }

@@ -1,4 +1,4 @@
-package io.nzbee.entity.brand;
+package io.nzbee.entity.brand.attribute;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +13,8 @@ import javax.persistence.Table;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import io.nzbee.entity.brand.Brand;
 
 @Entity
 @Table(name = "brand_attr_lcl", schema = "mochi")

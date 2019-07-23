@@ -13,9 +13,9 @@ import javax.persistence.criteria.Root;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import io.nzbee.entity.IDao;
 import io.nzbee.entity.brand.BrandAttribute_;
 import io.nzbee.entity.brand.Brand_;
+import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.CategoryAttribute;
 import io.nzbee.entity.category.CategoryAttribute_;
@@ -31,7 +31,7 @@ import io.nzbee.entity.product.tag.ProductTag_;
 import io.nzbee.variables.ProductVars;
 
 @Component
-public class BrandDAO  implements IDao<Brand> { 
+public class BrandDAO  implements IBrandDao { 
 
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
@@ -108,6 +108,7 @@ public class BrandDAO  implements IDao<Brand> {
 		
 	}
 	
+	@Override
 	public List<Brand> getAll(List<Long> categoryIds, String locale, List<Long> tagIds) {
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();

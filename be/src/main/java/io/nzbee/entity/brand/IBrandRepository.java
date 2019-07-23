@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
 
-public interface BrandRepository extends CrudRepository<Brand, Long> {
+public interface IBrandRepository extends CrudRepository<Brand, Long> {
 
 	List<Brand> findAll();
 
