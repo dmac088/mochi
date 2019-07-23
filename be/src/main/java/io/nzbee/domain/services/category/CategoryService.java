@@ -9,10 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import io.nzbee.dao.CategoryDAO;
+
 import io.nzbee.domain.Brand;
 import io.nzbee.domain.Category;
 import io.nzbee.dto.sidebar.SidebarDTO;
+import io.nzbee.entity.category.CategoryDAO;
 import io.nzbee.entity.product.ProductRepository;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.ProductVars;
