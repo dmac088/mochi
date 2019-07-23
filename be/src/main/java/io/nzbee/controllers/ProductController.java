@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.nzbee.domain.Product;
 import io.nzbee.domain.services.product.IProductService;
-import io.nzbee.dto.SearchDTO;
+import io.nzbee.dto.search.SearchDTO;
 import io.nzbee.dto.sidebar.SidebarDTO;
 
 @RestController

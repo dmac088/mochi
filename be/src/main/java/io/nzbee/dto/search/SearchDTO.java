@@ -1,4 +1,4 @@
-package io.nzbee.dto;
+package io.nzbee.dto.search;
 
 import java.util.List;
 import org.springframework.data.domain.Page;
