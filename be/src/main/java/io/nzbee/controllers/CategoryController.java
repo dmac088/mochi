@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.nzbee.domain.Category;
-import io.nzbee.dto.SidebarFacetDTO;
+import io.nzbee.dto.sidebar.SidebarDTO;
 import io.nzbee.services.category.ICategoryService;
 import io.nzbee.variables.CategoryVars;
 
@@ -52,7 +52,7 @@ public class CategoryController {
     }
     
     @PostMapping("/Category/{lcl}/{curr}/desc/{categoryDesc}/children")
-    public List<SidebarFacetDTO> getCategoryChildren(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody List<SidebarFacetDTO> facets) {
+    public List<SidebarDTO> getCategoryChildren(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody List<SidebarDTO> facets) {
     	return categoryService.getCategories(CategoryVars.PRIMARY_HIERARCHY_CODE, lcl, curr, categoryDesc, facets);
     }
 }

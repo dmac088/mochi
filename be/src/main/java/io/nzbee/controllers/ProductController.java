@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.nzbee.domain.Product;
 import io.nzbee.dto.SearchDTO;
-import io.nzbee.dto.SidebarFacetDTO;
+import io.nzbee.dto.sidebar.SidebarDTO;
 import io.nzbee.services.product.IProductService;
 
 @RestController
@@ -36,27 +36,27 @@ public class ProductController {
     }
     
     @PostMapping("/Product/{locale}/{currency}/{category}/maxprice")
-    public Double getMaxPrice(@PathVariable String locale, @PathVariable String currency, @PathVariable String category, @RequestBody final List<SidebarFacetDTO> selectedFacets) {
+    public Double getMaxPrice(@PathVariable String locale, @PathVariable String currency, @PathVariable String category, @RequestBody final List<SidebarDTO> selectedFacets) {
     	return productService.getMaxPrice(category, locale, currency, selectedFacets);
     }
     
     @PostMapping("/Product/{locale}/{currency}/{category}/{price}/tags")
-    public List<SidebarFacetDTO> getTags(@PathVariable String locale, @PathVariable String currency, @PathVariable String category, @PathVariable Double price, @RequestBody final List<SidebarFacetDTO> selectedFacets) {
+    public List<SidebarDTO> getTags(@PathVariable String locale, @PathVariable String currency, @PathVariable String category, @PathVariable Double price, @RequestBody final List<SidebarDTO> selectedFacets) {
     	return productService.getProductTags(locale, currency, category, price, selectedFacets);
     }
     
     @PostMapping("/Product/{locale}/{currency}/{category}/tags")
-    public List<SidebarFacetDTO> getTags(@PathVariable String locale, @PathVariable String currency, @PathVariable String category, @RequestBody final List<SidebarFacetDTO> selectedFacets) {
+    public List<SidebarDTO> getTags(@PathVariable String locale, @PathVariable String currency, @PathVariable String category, @RequestBody final List<SidebarDTO> selectedFacets) {
     	return productService.getProductTags(locale, currency, category, selectedFacets);
     }
   
     @PostMapping("/Product/{locale}/{currency}/category/{category}/maxPrice/{price}/page/{page}/size/{size}/sortBy/{sortBy}")
-    public SearchDTO getProducts(@PathVariable String locale, @PathVariable String currency, @PathVariable String category, @PathVariable Double price, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy, @RequestBody final List<SidebarFacetDTO> selectedFacets) {
+    public SearchDTO getProducts(@PathVariable String locale, @PathVariable String currency, @PathVariable String category, @PathVariable Double price, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy, @RequestBody final List<SidebarDTO> selectedFacets) {
     	return productService.getProducts(locale, currency, category, price, page, size, sortBy, selectedFacets);
     }
  
     @PostMapping("/Search/{locale}/{currency}/Category/{category}/SearchTerm/{term}/Page/{page}/Size/{size}/SortBy/{sortBy}")
-    public SearchDTO search(@PathVariable String locale, @PathVariable String currency, @PathVariable String category,@PathVariable String term, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy, @RequestBody final List<SidebarFacetDTO> selectedFacets) {
+    public SearchDTO search(@PathVariable String locale, @PathVariable String currency, @PathVariable String category,@PathVariable String term, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy, @RequestBody final List<SidebarDTO> selectedFacets) {
     	return productService.findProduct(locale, currency, category, term, page, size, sortBy, selectedFacets);
     }
     

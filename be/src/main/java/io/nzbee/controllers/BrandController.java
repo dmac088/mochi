@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.nzbee.domain.Brand;
-import io.nzbee.dto.SidebarFacetDTO;
+import io.nzbee.dto.sidebar.SidebarDTO;
 import io.nzbee.services.brand.IBrandService;
 import io.nzbee.variables.CategoryVars;
 
@@ -27,7 +27,7 @@ public class BrandController {
     }
     
     @GetMapping("/Brand/{lcl}/{curr}")
-    public List<SidebarFacetDTO> getBrands(@PathVariable String lcl, @PathVariable String curr) {
+    public List<SidebarDTO> getBrands(@PathVariable String lcl, @PathVariable String curr) {
     	return brandService.getBrands(lcl, curr);
     }
 
@@ -37,7 +37,7 @@ public class BrandController {
     }
     
     @PostMapping("/Brand/{lcl}/{curr}/category/{categoryDesc}")
-    public List<SidebarFacetDTO> getBrands(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody List<SidebarFacetDTO> facets) {
+    public List<SidebarDTO> getBrands(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody List<SidebarDTO> facets) {
     	return brandService.getBrands(CategoryVars.PRIMARY_HIERARCHY_CODE, lcl, curr, categoryDesc, facets);
     }
 }

@@ -4,12 +4,13 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 
 import io.nzbee.domain.Product;
+import io.nzbee.dto.sidebar.SidebarDTO;
 
 public class SearchDTO {
 	
 	Page<Product> products;
 	
-	List<SidebarFacetDTO> Facets;
+	List<SidebarDTO> Facets;
 
 	public Page<Product> getProducts() {
 		return products;
@@ -19,11 +20,11 @@ public class SearchDTO {
 		this.products = products;
 	}
 
-	public List<SidebarFacetDTO> getFacets() {
+	public List<SidebarDTO> getFacets() {
 		return Facets;
 	}
 
-	public void setFacets(List<SidebarFacetDTO> facets) {
+	public void setFacets(List<SidebarDTO> facets) {
 		this.Facets = facets;
 	}
 	
