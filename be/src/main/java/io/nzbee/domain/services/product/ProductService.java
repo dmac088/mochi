@@ -88,6 +88,7 @@ public class ProductService implements IProductService {
 	@Transactional
 	@Cacheable
 	public Product getProduct(String lcl, String currency, Long id) {
+    	System.out.println(id);
     	io.nzbee.entity.product.Product pa = productService.getProduct(id).get();
 		Product p = this.convertToProductDO(pa, lcl, currency);
 		return p;

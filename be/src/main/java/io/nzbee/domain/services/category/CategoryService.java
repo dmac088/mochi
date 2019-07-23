@@ -23,6 +23,7 @@ import io.nzbee.variables.ProductVars;
 public class CategoryService implements ICategoryService {
     
     @Autowired
+    @Qualifier("productEntityService")
     private IProductService productService;
     
     @Autowired
