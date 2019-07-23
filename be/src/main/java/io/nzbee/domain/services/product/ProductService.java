@@ -41,11 +41,11 @@ import io.nzbee.dto.search.SearchDTO;
 import io.nzbee.dto.sidebar.SidebarDTO;
 import io.nzbee.entity.PageableUtil;
 import io.nzbee.entity.brand.Brand;
-import io.nzbee.entity.brand.BrandRepository;
+import io.nzbee.entity.brand.IBrandService;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.CategoryDAO;
+import io.nzbee.entity.product.attribute.IProductAttributeService;
 import io.nzbee.entity.product.attribute.ProductAttribute;
-import io.nzbee.entity.product.attribute.ProductAttributeRepository;
 import io.nzbee.entity.product.price.ProductPriceRepository;
 import io.nzbee.entity.product.tag.ProductTagAttribute;
 import io.nzbee.entity.product.tag.ProductTagDAO;
@@ -64,17 +64,14 @@ public class ProductService implements IProductService {
 	@Autowired 
 	private io.nzbee.entity.product.IProductService productService;
 
-	@Autowired 
-	private io.nzbee.entity.product.attribute.ProductAttributeService productAttributeService;
-	
     @Autowired 
     private ProductPriceRepository productPriceRepository;
     
     @Autowired
-    private ProductAttributeRepository productAttributeRepository;
+    private IProductAttributeService productAttributeService;
     
     @Autowired
-    private BrandRepository brandRepository;
+    private IBrandService brandService;
     
     @Autowired
     private ProductTagDAO productTagDAO;
@@ -459,7 +456,7 @@ public class ProductService implements IProductService {
     }
     
     public SidebarDTO convertToBrandSidebarDTO(String brandCode, String lcl, String currency) {
-    	Optional<Brand> b = brandRepository.findByBrandCode(brandCode);
+    	Optional<Brand> b = brandService.getBrand(brandCode);
     	SidebarDTO bf = new SidebarDTO();
     	bf.setId(b.get().getId());
     	bf.setDesc(b.get().getAttributes().stream().filter(ba -> ba.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getBrandDesc());
@@ -545,7 +542,7 @@ public class ProductService implements IProductService {
 	
     public Product convertToProductDO(final io.nzbee.entity.product.Product product, String lcl, String currency) {
     	final Product pDo = new Product();
-    	Optional<ProductAttribute> pa = productAttributeRepository.findByLclCdAndProductId(lcl, product.getProductId());
+    	Optional<ProductAttribute> pa = productAttributeService.findByIdAndLocale(product.getProductId(), lcl);
         pDo.setProductId(product.getProductId());
         pDo.setProductCreateDt(product.getProductCreateDt());
         pDo.setProductUPC(product.getUPC());
@@ -604,7 +601,7 @@ public class ProductService implements IProductService {
 		
 		List<ProductAttribute> lpa = new ArrayList<ProductAttribute>();
 		//Product Attribute English
-		Optional<ProductAttribute> oProductAttributeEN = productAttributeService.getProductAttribute(product.getProductId(), GeneralVars.LANGUAGE_ENGLISH);
+		Optional<ProductAttribute> oProductAttributeEN = productAttributeService.getProductAttributeEN(product.getProductId());
 		ProductAttribute productAttributeEN = oProductAttributeEN.isPresent() ? oProductAttributeEN.get() : new ProductAttribute();
 		productAttributeEN.setProductDesc(p.getProductDesc());
 		productAttributeEN.setLclCd(GeneralVars.LANGUAGE_ENGLISH);

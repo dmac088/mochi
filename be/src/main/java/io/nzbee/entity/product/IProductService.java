@@ -56,7 +56,6 @@ public interface IProductService {
 		   	List<Long> categoryIds,
 		   	int inHandlingCategories);
 	
-	
 	Long getCountForTags(
 			String categoryTypeCode,
 		    String categoryDesc, 

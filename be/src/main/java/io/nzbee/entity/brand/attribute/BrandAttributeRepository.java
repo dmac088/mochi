@@ -1,4 +1,4 @@
-package io.nzbee.entity.brand;
+package io.nzbee.entity.brand.attribute;
 
 import java.util.List;
 

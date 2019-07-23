@@ -22,6 +22,7 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.product.Product;
 

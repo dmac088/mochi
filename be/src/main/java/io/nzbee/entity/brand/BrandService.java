@@ -6,19 +6,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service(value="brandEntityService")
-public class BrandService {
+public class BrandService implements IBrandService {
 
 	@Autowired
-	private BrandRepository brandRepository; 
+	private IBrandRepository brandRepository; 
 	
-	public List<Brand> getBrandAttributes() {
+	@Override
+	public List<Brand> getBrands() {
 		return brandRepository.findAll();
 	}
 	
+	@Override
 	public Optional<Brand> getBrand(Long Id) {
 		return brandRepository.findById(Id);
 	}
 	
+	@Override
 	public Optional<Brand> getBrand(String brandCode) {
 		return brandRepository.findByBrandCode(brandCode);
 	}
