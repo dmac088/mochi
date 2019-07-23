@@ -1,4 +1,4 @@
-package io.nzbee.test.service;
+package io.nzbee.test.domain.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
