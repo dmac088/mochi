@@ -6,15 +6,14 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-
 import io.nzbee.domain.Brand;
 import io.nzbee.domain.Category;
 import io.nzbee.dto.sidebar.SidebarDTO;
-import io.nzbee.entity.category.CategoryDao;
-import io.nzbee.entity.product.IProductRepository;
+import io.nzbee.entity.product.IProductService;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.ProductVars;
 
@@ -24,16 +23,17 @@ import io.nzbee.variables.ProductVars;
 public class CategoryService implements ICategoryService {
     
     @Autowired
-    private IProductRepository productRepository;
+    private IProductService productService;
     
     @Autowired
-    private CategoryDao categoryDAO;
+    @Qualifier("categoryEntityService")
+    private io.nzbee.entity.category.ICategoryService categoryService;
     
     @Override
 	@Transactional
 	//@Cacheable
 	public List<Category> getCategories(final String locale, String currency) {
-    	List<io.nzbee.entity.category.Category> lpc = categoryDAO.getAll();
+    	List<io.nzbee.entity.category.Category> lpc = categoryService.getAll();
     	return lpc.stream()
     			.map(pc -> createCategory(pc, locale, currency))
     			.filter(pc -> pc.getProductCount() > 0)
@@ -46,7 +46,7 @@ public class CategoryService implements ICategoryService {
  	@Transactional
  	//@Cacheable
  	public List<Category> getCategoryParent(final String locale, String currency, final Long parentCategoryId) {
-    	List<io.nzbee.entity.category.Category> lpc = categoryDAO.getByParent(CategoryVars.PRIMARY_HIERARCHY_CODE, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, parentCategoryId, locale);
+    	List<io.nzbee.entity.category.Category> lpc = categoryService.findByParent(CategoryVars.PRIMARY_HIERARCHY_CODE, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, parentCategoryId, locale);
     	return lpc.stream()
     			.map(pc -> createCategory(pc, locale, currency))
     			.filter(pc -> pc.getProductCount() > 0)
@@ -58,7 +58,7 @@ public class CategoryService implements ICategoryService {
   	@Transactional
   	//@Cacheable
   	public List<Category> getCategoriesForLevel(final String locale, String currency, final Long level) {
-     	List<io.nzbee.entity.category.Category> lpc = categoryDAO.getByLevel(CategoryVars.PRIMARY_HIERARCHY_CODE, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, level, locale);
+     	List<io.nzbee.entity.category.Category> lpc = categoryService.findByLevel(CategoryVars.PRIMARY_HIERARCHY_CODE, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, level, locale);
      	return lpc.stream()
      			.map(pc -> createCategory(pc, locale, currency))
      			.filter(pc -> pc.getProductCount() > 0)
@@ -71,7 +71,7 @@ public class CategoryService implements ICategoryService {
   	@Transactional
   	//@Cacheable
   	public Category getCategory(final String locale, String currency, final Long categoryId) {
-    	io.nzbee.entity.category.Category pc = categoryDAO.findById(categoryId).get();
+    	io.nzbee.entity.category.Category pc = categoryService.findById(categoryId).get();
      	return	createCategory(pc, locale, currency);
   	}
     
@@ -79,13 +79,13 @@ public class CategoryService implements ICategoryService {
 	@Transactional
 	//@Cacheable
 	public Category getCategory(String locale, String currency, String categoryDesc) {
-    	io.nzbee.entity.category.Category pc = categoryDAO.getByCategoryDesc(
+    	Optional<io.nzbee.entity.category.Category> pc = categoryService.findByCategoryDesc(
 						    										CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 						    										categoryDesc, 
 						    										locale
 						    									   );
      	return	createCategory( 
-     							pc, 
+     							pc.get(), 
      							locale, 
      							currency
      						  );
@@ -102,7 +102,7 @@ public class CategoryService implements ICategoryService {
     	List<Long> tagIds = facets.stream().filter(f -> f.getFacetingName().equals(CategoryVars.TAG_FACET_NAME)).collect(Collectors.toList()) 
     			.stream().map(b -> { return b.getId(); }).collect(Collectors.toList());
     	
-		List<io.nzbee.entity.category.Category> lc = categoryDAO.get(
+		List<io.nzbee.entity.category.Category> lc = categoryService.find(
 				 CategoryVars.PRIMARY_HIERARCHY_CODE, 
 				 CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 				 categoryDesc, 
@@ -115,7 +115,7 @@ public class CategoryService implements ICategoryService {
 		lcDO.stream().forEach(cDO -> {
 			cDO.setProductCount(
 								(tagIds.isEmpty()) 
-										? 	productRepository.count(
+										? 	productService.getCount(
 											CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 											cDO.getCategoryDesc(), 
 											locale,
@@ -126,7 +126,7 @@ public class CategoryService implements ICategoryService {
 											(brandIds.size() == 0 ? 0 : 1),
 											Arrays.asList(new Long(-1)),
 											0)
-										: 	productRepository.countForTags(
+										: 	productService.getCountForTags(
 											CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 											cDO.getCategoryDesc(), 
 											locale,
@@ -179,7 +179,7 @@ public class CategoryService implements ICategoryService {
         cDO.setCategoryLevel(pc.getCategoryLevel());
         
         //get product count and set it
-        cDO.setProductCount(	productRepository.count(
+        cDO.setProductCount(	productService.getCount(
 								CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 								pc.getAttributes().stream().filter(ca -> ca.getLclCd().equals(locale)).findFirst().get().getCategoryDesc(), 
 								locale,
@@ -193,7 +193,7 @@ public class CategoryService implements ICategoryService {
         
         
         cDO.setMaxMarkDownPrice(
-        		productRepository.maxMarkDownPrice(
+        						productService.getMaxMarkDownPrice(
 								CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 								pc.getAttributes().stream().filter(ca -> ca.getLclCd().equals(locale)).findFirst().get().getCategoryDesc(), 
 								locale,

@@ -3,19 +3,17 @@ package io.nzbee.entity.category;
 import java.util.List;
 import java.util.Optional;
 
-public interface ICategoryService {
+import io.nzbee.entity.IDao;
 
-	Optional<Category> findById(long id);
-	
-	List<Category> findAll();
-	
-	List<Category> getAll();
-	
-	List<Category> findByParent(String hieararchyCode, String categoryTypeCode, Long parentCategoryId, String locale);
+public interface ICategoryDao extends IDao<Category> {
+
+	List<Category> findByBrandIds(String hieararchyCode, String categoryTypeCode, List<Long> brandIds, Long level, String locale);
 	
 	Optional<Category> findByCategoryDesc(String categoryTypeCode, String categoryDesc, String locale);
 	
 	Optional<Category> findByCategoryCode(String categoryTypeCode, String categoryCode, String locale);
+	
+	List<Category> findByParent(String hieararchyCode, String categoryTypeCode, Long parentCategoryId, String locale);
 	
 	List<Category> find(String hieararchyCode, String categoryTypeCode, String parentCategoryDesc, List<Long> brandIds, List<Long> tagIds, String locale);
 	
