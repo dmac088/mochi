@@ -29,19 +29,19 @@ import io.nzbee.entity.category.CategoryAttribute;
 import io.nzbee.entity.category.CategoryAttribute_;
 import io.nzbee.entity.category.Category_;
 import io.nzbee.entity.PageableUtil;
-import io.nzbee.entity.product.Currency_;
-import io.nzbee.entity.product.ProductStatus_;
 import io.nzbee.entity.product.Product_;
 import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.attribute.ProductAttribute_;
 import io.nzbee.entity.product.currency.Currency;
+import io.nzbee.entity.product.currency.Currency_;
 import io.nzbee.entity.product.price.ProductPrice;
 import io.nzbee.entity.product.price.ProductPriceType;
 import io.nzbee.entity.product.price.ProductPriceType_;
 import io.nzbee.entity.product.price.ProductPrice_;
 import io.nzbee.entity.product.status.ProductStatus;
+import io.nzbee.entity.product.status.ProductStatus_;
 import io.nzbee.entity.product.tag.ProductTag;
-import io.nzbee.entity.tag.ProductTag_;
+import io.nzbee.entity.product.tag.ProductTag_;
 import io.nzbee.variables.ProductVars;
 
 @Component

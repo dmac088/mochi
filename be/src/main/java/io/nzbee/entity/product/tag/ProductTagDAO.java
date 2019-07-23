@@ -23,20 +23,18 @@ import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.CategoryAttribute;
 import io.nzbee.entity.category.CategoryAttribute_;
 import io.nzbee.entity.category.Category_;
-import io.nzbee.entity.product.Currency_;
 import io.nzbee.entity.product.Product;
-import io.nzbee.entity.product.ProductStatus_;
 import io.nzbee.entity.product.Product_;
 import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.attribute.ProductAttribute_;
 import io.nzbee.entity.product.currency.Currency;
+import io.nzbee.entity.product.currency.Currency_;
 import io.nzbee.entity.product.price.ProductPrice;
 import io.nzbee.entity.product.price.ProductPriceType;
 import io.nzbee.entity.product.price.ProductPriceType_;
 import io.nzbee.entity.product.price.ProductPrice_;
 import io.nzbee.entity.product.status.ProductStatus;
-import io.nzbee.entity.tag.ProductTagAttribute_;
-import io.nzbee.entity.tag.ProductTag_;
+import io.nzbee.entity.product.status.ProductStatus_;
 import io.nzbee.variables.ProductVars;
 
 @Component 
@@ -107,7 +105,7 @@ public class ProductTagDAO  implements IDao<ProductTag> {
 		if(!brandIds.isEmpty()) {
 			conditions.add(brand.get(Brand_.brandId).in(brandIds));
 		}
-		if(!(priceStart == null && priceEnd ==null)) {
+		if(!(priceStart == null && priceEnd == null)) {
 			Join<Product, ProductPrice> price = product.join(Product_.prices);
 			Join<ProductPrice, ProductPriceType> type = price.join(ProductPrice_.type);
 			Join<ProductPrice, Currency> curr = price.join(ProductPrice_.currency);

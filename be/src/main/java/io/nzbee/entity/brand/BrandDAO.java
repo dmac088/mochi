@@ -23,13 +23,13 @@ import io.nzbee.entity.category.CategoryAttribute;
 import io.nzbee.entity.category.CategoryAttribute_;
 import io.nzbee.entity.category.Category_;
 import io.nzbee.entity.product.Product;
-import io.nzbee.entity.product.ProductStatus_;
 import io.nzbee.entity.product.Product_;
 import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.attribute.ProductAttribute_;
 import io.nzbee.entity.product.status.ProductStatus;
+import io.nzbee.entity.product.status.ProductStatus_;
 import io.nzbee.entity.product.tag.ProductTag;
-import io.nzbee.entity.tag.ProductTag_;
+import io.nzbee.entity.product.tag.ProductTag_;
 import io.nzbee.variables.ProductVars;
 
 @Component
