@@ -4,7 +4,7 @@ package io.nzbee.services.category;
 import java.util.List;
 
 import io.nzbee.domain.Category;
-import io.nzbee.dto.SidebarFacetDTO;
+import io.nzbee.dto.sidebar.SidebarDTO;
 
 public interface ICategoryService {
 	 
@@ -18,6 +18,6 @@ public interface ICategoryService {
 	 
 	Category getCategory(String lcl, String currency, String categoryDesc);
 
-	List<SidebarFacetDTO> getCategories(String hierarchyCode, String locale, String currency, String categoryDesc, List<SidebarFacetDTO> facets);
+	List<SidebarDTO> getCategories(String hierarchyCode, String locale, String currency, String categoryDesc, List<SidebarDTO> facets);
 
 }

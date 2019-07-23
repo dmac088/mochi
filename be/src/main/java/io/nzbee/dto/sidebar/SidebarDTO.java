@@ -1,8 +1,8 @@
-package io.nzbee.dto;
+package io.nzbee.dto.sidebar;
 
 import java.util.Objects;
 
-public class SidebarFacetDTO {
+public class SidebarDTO {
 
 	private Long Id;
 
@@ -118,7 +118,7 @@ public class SidebarFacetDTO {
 	public boolean equals(Object o) {
 		 if (this == o) return true;
 	     if (o == null || getClass() != o.getClass()) return false;
-	     SidebarFacetDTO pcf = (SidebarFacetDTO) o;
+	     SidebarDTO pcf = (SidebarDTO) o;
 	     return this.Id == pcf.Id;
 	}
 
