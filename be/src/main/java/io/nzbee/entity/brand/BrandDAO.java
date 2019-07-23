@@ -12,9 +12,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
-
 import io.nzbee.entity.IDao;
 import io.nzbee.entity.brand.BrandAttribute_;
 import io.nzbee.entity.brand.Brand_;

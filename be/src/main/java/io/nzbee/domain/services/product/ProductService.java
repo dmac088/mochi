@@ -36,7 +36,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.google.common.collect.Lists;
 import org.springframework.data.domain.Sort;
-
 import io.nzbee.domain.Product;
 import io.nzbee.dto.search.SearchDTO;
 import io.nzbee.dto.sidebar.SidebarDTO;
@@ -45,8 +44,6 @@ import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.brand.BrandRepository;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.CategoryDAO;
-import io.nzbee.entity.product.ProductDao;
-import io.nzbee.entity.product.IProductRepository;
 import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.attribute.ProductAttributeRepository;
 import io.nzbee.entity.product.price.ProductPriceRepository;
