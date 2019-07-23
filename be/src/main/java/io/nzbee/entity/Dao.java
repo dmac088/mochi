@@ -1,4 +1,4 @@
-package io.nzbee.dao;
+package io.nzbee.entity;
 
 import java.util.List;
 import java.util.Optional;

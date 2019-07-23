@@ -1,4 +1,4 @@
-package io.nzbee.dao;
+package io.nzbee.entity.brand;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
-import io.nzbee.entity.brand.Brand;
-import io.nzbee.entity.brand.BrandAttribute;
+
+import io.nzbee.entity.Dao;
 import io.nzbee.entity.brand.BrandAttribute_;
 import io.nzbee.entity.brand.Brand_;
 import io.nzbee.entity.category.Category;

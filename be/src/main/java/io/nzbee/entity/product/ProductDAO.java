@@ -1,4 +1,4 @@
-package io.nzbee.dao;
+package io.nzbee.entity.product;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,17 +28,12 @@ import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.CategoryAttribute;
 import io.nzbee.entity.category.CategoryAttribute_;
 import io.nzbee.entity.category.Category_;
+import io.nzbee.entity.Dao;
 import io.nzbee.entity.PageableUtil;
-import io.nzbee.entity.product.Currency;
 import io.nzbee.entity.product.Currency_;
-import io.nzbee.entity.product.Product;
-import io.nzbee.entity.product.ProductAttribute;
 import io.nzbee.entity.product.ProductAttribute_;
-import io.nzbee.entity.product.ProductPrice;
-import io.nzbee.entity.product.ProductPriceType;
 import io.nzbee.entity.product.ProductPriceType_;
 import io.nzbee.entity.product.ProductPrice_;
-import io.nzbee.entity.product.ProductStatus;
 import io.nzbee.entity.product.ProductStatus_;
 import io.nzbee.entity.product.Product_;
 import io.nzbee.entity.tag.ProductTag;
