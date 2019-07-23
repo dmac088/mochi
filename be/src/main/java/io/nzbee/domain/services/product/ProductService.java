@@ -88,7 +88,6 @@ public class ProductService implements IProductService {
 	@Transactional
 	@Cacheable
 	public Product getProduct(String lcl, String currency, Long id) {
-    	System.out.println(id);
     	io.nzbee.entity.product.Product pa = productService.getProduct(id).get();
 		Product p = this.convertToProductDO(pa, lcl, currency);
 		return p;
@@ -96,8 +95,7 @@ public class ProductService implements IProductService {
     
 	@Cacheable
 	public SearchDTO getProducts(String locale, String currency, String categoryDesc, Double price, int page, int size, String sortBy, List<SidebarDTO> selectedFacets) {
-		System.out.println(categoryDesc);
-		
+
 		//all categories (if non selected in facets
 		//Category parent = categoryRepository.findByAttributesLclCdAndAttributesCategoryDesc(locale, categoryDesc);
 		Optional<Category> parent = categoryService.findByCategoryDesc(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, categoryDesc, locale);
