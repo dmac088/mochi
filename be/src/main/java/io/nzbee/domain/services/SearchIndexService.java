@@ -1,4 +1,4 @@
-package io.nzbee.services;
+package io.nzbee.domain.services;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

@@ -1,4 +1,4 @@
-package io.nzbee.services.brand;
+package io.nzbee.domain.services.brand;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,4 +1,4 @@
-package io.nzbee.services;
+package io.nzbee.domain.services;
 
 import java.util.List;
 import java.util.stream.Collectors;

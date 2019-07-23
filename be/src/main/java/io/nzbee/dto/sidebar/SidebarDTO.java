@@ -2,6 +2,10 @@ package io.nzbee.dto.sidebar;
 
 import java.util.Objects;
 
+//this is a generic object used to populate UI elements such as navigation side-bars
+//on the web-site, it can accept brand, category, or any other object as long as it's mapped
+//in the service layer
+
 public class SidebarDTO {
 
 	private Long Id;

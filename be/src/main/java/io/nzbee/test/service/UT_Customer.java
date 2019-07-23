@@ -30,12 +30,12 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.json.JSONObject;
 import io.nzbee.domain.Customer;
+import io.nzbee.domain.services.customer.ICustomerService;
 import io.nzbee.entity.person.Person;
 import io.nzbee.entity.role.Role;
 import io.nzbee.security.User;
 import io.nzbee.security.UserRole;
 import io.nzbee.security.UserRoleService;
-import io.nzbee.services.customer.ICustomerService;
 import io.nzbee.test.LoggingRequestInterceptor;
 import io.nzbee.test.UT_Config;
  

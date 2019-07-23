@@ -1,4 +1,4 @@
-package io.nzbee.services.category;
+package io.nzbee.domain.services.category;
 
 import java.util.Arrays;
 import java.util.List;
