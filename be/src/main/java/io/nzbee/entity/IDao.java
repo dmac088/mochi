@@ -3,7 +3,7 @@ package io.nzbee.entity;
 import java.util.List;
 import java.util.Optional;
 
-public interface Dao<T> {
+public interface IDao<T> {
     
     Optional<T> findById(long id);
      

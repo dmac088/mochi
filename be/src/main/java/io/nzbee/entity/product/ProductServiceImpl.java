@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class ProductServiceImpl implements IProductService {
 	
 	@Autowired
-	private ProductDAO productDAO;
+	private ProductDao productDAO;
 	
 	@Autowired
 	private IProductRepository productRepository;
@@ -21,6 +21,12 @@ public class ProductServiceImpl implements IProductService {
 	@Override
 	public List<Product> getProducts() {
 		return productDAO.getAll();
+	}
+	
+	@Override
+	public List<Product> getProducts(String locale, String currency, List<Long> productIds) {
+		// TODO Auto-generated method stub
+		return productDAO.getAll(locale, currency, productIds);
 	}
 	
 	@Override
@@ -50,7 +56,7 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public Double maxMarkDownPrice(String categoryTypeCode, String categoryDesc, String locale, String currencyCode,
+	public Double getMaxMarkDownPrice(String categoryTypeCode, String categoryDesc, String locale, String currencyCode,
 			String priceTypeDesc, String productStatusCode, List<Long> brandIds, int inHandlingBrands,
 			List<Long> categoryIds, int inHandlingCategories) {
 		// TODO Auto-generated method stub
@@ -58,7 +64,7 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public Double maxMarkDownPriceForTags(String categoryTypeCode, String categoryDesc, String locale,
+	public Double getMaxMarkDownPriceForTags(String categoryTypeCode, String categoryDesc, String locale,
 			String currencyCode, String priceTypeDesc, String productStatusCode, List<Long> brandIds,
 			int inHandlingBrands, List<Long> categoryIds, int inHandlingCategories, List<Long> tagIds,
 			int inHandlingTags) {
@@ -67,7 +73,7 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public Long count(String categoryTypeCode, String categoryDesc, String locale, String currencyCode,
+	public Long getCount(String categoryTypeCode, String categoryDesc, String locale, String currencyCode,
 			String priceTypeDesc, String productStatusCode, List<Long> brandIds, int inHandlingBrands,
 			List<Long> categoryIds, int inHandlingCategories) {
 		// TODO Auto-generated method stub
@@ -75,13 +81,18 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public Long countForTags(String categoryTypeCode, String categoryDesc, String locale, String currencyCode,
+	public Long getCountForTags(String categoryTypeCode, String categoryDesc, String locale, String currencyCode,
 			String priceTypeDesc, String productStatusCode, List<Long> brandIds, int inHandlingBrands,
 			List<Long> categoryIds, int inHandlingCategories, List<Long> tagIds, int inHandlingTags) {
 		// TODO Auto-generated method stub
 		return productRepository.countForTags(categoryTypeCode, categoryDesc, locale, currencyCode, priceTypeDesc, productStatusCode, brandIds, inHandlingBrands, categoryIds, inHandlingCategories, tagIds, inHandlingTags);
 	}
-	
-	
+
+	@Override
+	public Double getMaxPrice(String categoryDesc, String locale, String priceType, String currency,
+			List<Long> categoryIds, List<Long> brandIds, List<Long> tagIds) {
+		// TODO Auto-generated method stub
+		return productDAO.getMaxPrice(categoryDesc, locale, priceType, currency, categoryIds, brandIds, tagIds);
+	}
 
 }

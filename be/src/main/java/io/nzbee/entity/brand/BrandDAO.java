@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
-import io.nzbee.entity.Dao;
+import io.nzbee.entity.IDao;
 import io.nzbee.entity.brand.BrandAttribute_;
 import io.nzbee.entity.brand.Brand_;
 import io.nzbee.entity.category.Category;
@@ -33,7 +33,7 @@ import io.nzbee.entity.tag.ProductTag_;
 import io.nzbee.variables.ProductVars;
 
 @Component
-public class BrandDAO  implements Dao<Brand> { 
+public class BrandDAO  implements IDao<Brand> { 
 
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
