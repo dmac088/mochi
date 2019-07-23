@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service(value="brandEntityService")
-public class BrandService implements IBrandService {
+public class BrandServiceImpl implements IBrandService {
 
 	@Autowired
 	private IBrandRepository brandRepository; 
