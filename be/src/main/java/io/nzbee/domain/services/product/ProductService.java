@@ -46,6 +46,7 @@ import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.CategoryDAO;
 import io.nzbee.entity.product.attribute.IProductAttributeService;
 import io.nzbee.entity.product.attribute.ProductAttribute;
+import io.nzbee.entity.product.price.IProductPriceService;
 import io.nzbee.entity.product.price.ProductPriceRepository;
 import io.nzbee.entity.product.tag.ProductTagAttribute;
 import io.nzbee.entity.product.tag.ProductTagDAO;
@@ -65,7 +66,7 @@ public class ProductService implements IProductService {
 	private io.nzbee.entity.product.IProductService productService;
 
     @Autowired 
-    private ProductPriceRepository productPriceRepository;
+    private IProductPriceService productPriceService;
     
     @Autowired
     private IProductAttributeService productAttributeService;
@@ -547,8 +548,8 @@ public class ProductService implements IProductService {
         pDo.setProductCreateDt(product.getProductCreateDt());
         pDo.setProductUPC(product.getUPC());
         pDo.setProductDesc(pa.get().getProductDesc());
-        pDo.setProductRetail(productPriceRepository.findByProductProductIdAndTypeDescAndStartDateLessThanEqualAndEndDateGreaterThanEqualAndCurrencyCode(product.getProductId(), "retail", new Date(), new Date(), currency).get().getPriceValue());
-        pDo.setProductMarkdown(productPriceRepository.findByProductProductIdAndTypeDescAndStartDateLessThanEqualAndEndDateGreaterThanEqualAndCurrencyCode(product.getProductId(), "markdown", new Date(), new Date(), currency).get().getPriceValue());
+        pDo.setProductRetail(productPriceService.get(product.getProductId(), "retail", new Date(), new Date(), currency).get().getPriceValue());
+        pDo.setProductMarkdown(productPriceService.get(product.getProductId(), "markdown", new Date(), new Date(), currency).get().getPriceValue());
         pDo.setProductImage(pa.get().getProductImage());
         pDo.setLclCd(lcl);
         pDo.setBrandDesc(product.getBrand().getAttributes().stream()

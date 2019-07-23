@@ -18,12 +18,12 @@ import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
-import io.nzbee.entity.brand.BrandService;
+import io.nzbee.entity.brand.BrandServiceImpl;
 import io.nzbee.entity.brand.attribute.BrandAttributeService;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.ProductServiceImpl;
-import io.nzbee.entity.product.attribute.ProductAttributeService;
-import io.nzbee.entity.product.price.ProductPriceService;
+import io.nzbee.entity.product.attribute.ProductAttributeServiceImpl;
+import io.nzbee.entity.product.price.ProductPriceServiceImpl;
 import io.nzbee.variables.GeneralVars;
 
 
@@ -42,16 +42,16 @@ public class ProductMasterService {
 	
 	@Autowired
 	@Qualifier("brandEntityService")
-	private BrandService brandService; 
+	private BrandServiceImpl brandService; 
 	
 	@Autowired
 	private BrandAttributeService brandAttributeService; 
 	
 	@Autowired
-	private ProductPriceService productPriceService;
+	private ProductPriceServiceImpl productPriceService;
 	
 	@Autowired 
-	private ProductAttributeService productAttributeService;
+	private ProductAttributeServiceImpl productAttributeService;
 	
     @Autowired
     private FileStorageServiceUpload fileStorageServiceUpload;

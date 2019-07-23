@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import io.nzbee.variables.GeneralVars;
 
 @Service
-public class ProductAttributeService implements IProductAttributeService {
+public class ProductAttributeServiceImpl implements IProductAttributeService {
 
 	@Autowired
 	private ProductAttributeRepository productAttributeRepository; 
