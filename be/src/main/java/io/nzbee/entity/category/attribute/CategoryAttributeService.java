@@ -1,4 +1,4 @@
-package io.nzbee.entity.category;
+package io.nzbee.entity.category.attribute;
 
 
 import java.util.List;

@@ -20,6 +20,8 @@ import io.nzbee.entity.brand.Brand_;
 import io.nzbee.entity.category.CategoryAttribute_;
 import io.nzbee.entity.category.CategoryType_;
 import io.nzbee.entity.category.Category_;
+import io.nzbee.entity.category.attribute.CategoryAttribute;
+import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.entity.hierarchy.Hierarchy;
 import io.nzbee.entity.hierarchy.Hierarchy_;
 import io.nzbee.entity.product.Product;
@@ -29,7 +31,7 @@ import io.nzbee.entity.product.tag.ProductTag_;
 import io.nzbee.variables.CategoryVars;
 
 @Component
-public class CategoryDAO implements IDao<Category> {
+public class CategoryDao implements IDao<Category> {
 
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")

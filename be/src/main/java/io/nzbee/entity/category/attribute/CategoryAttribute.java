@@ -1,4 +1,4 @@
-package io.nzbee.entity.category;
+package io.nzbee.entity.category.attribute;
 
 import java.util.Optional;
 
@@ -18,6 +18,7 @@ import org.hibernate.search.annotations.Field;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import io.nzbee.entity.LanguageDiscriminator;
+import io.nzbee.entity.category.Category;
 
 @Entity
 @Table(name = "category_attr_lcl", schema = "mochi")

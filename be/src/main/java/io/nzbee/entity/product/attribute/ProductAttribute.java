@@ -37,7 +37,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import io.nzbee.entity.LanguageDiscriminator;
 import io.nzbee.entity.category.Category;
-import io.nzbee.entity.category.CategoryAttribute;
+import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.tag.ProductTag;
 import io.nzbee.entity.product.tag.ProductTagAttribute;
