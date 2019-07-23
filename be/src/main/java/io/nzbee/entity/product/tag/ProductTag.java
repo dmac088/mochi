@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.tag.attribute.ProductTagAttribute;
 
 @Entity
 @Table(name = "tag", schema = "mochi")

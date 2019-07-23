@@ -40,7 +40,7 @@ import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.tag.ProductTag;
-import io.nzbee.entity.product.tag.ProductTagAttribute;
+import io.nzbee.entity.product.tag.attribute.ProductTagAttribute;
 import io.nzbee.variables.CategoryVars;
 
 @Entity
