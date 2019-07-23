@@ -31,6 +31,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 
 import io.nzbee.entity.brand.Brand;
+import io.nzbee.entity.category.attribute.CategoryAttribute;
+import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.entity.hierarchy.Hierarchy;
 import io.nzbee.entity.layout.Layout;
 import io.nzbee.entity.product.Product;

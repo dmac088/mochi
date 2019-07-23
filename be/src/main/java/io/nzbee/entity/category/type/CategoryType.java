@@ -1,4 +1,4 @@
-package io.nzbee.entity.category;
+package io.nzbee.entity.category.type;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

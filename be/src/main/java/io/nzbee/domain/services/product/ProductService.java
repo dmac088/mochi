@@ -27,6 +27,7 @@ import org.hibernate.search.query.facet.FacetCombine;
 import org.hibernate.search.query.facet.FacetSortOrder;
 import org.hibernate.search.query.facet.FacetingRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
@@ -43,11 +44,10 @@ import io.nzbee.entity.PageableUtil;
 import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.brand.IBrandService;
 import io.nzbee.entity.category.Category;
-import io.nzbee.entity.category.CategoryDAO;
+import io.nzbee.entity.category.CategoryDao;
 import io.nzbee.entity.product.attribute.IProductAttributeService;
 import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.price.IProductPriceService;
-import io.nzbee.entity.product.price.ProductPriceRepository;
 import io.nzbee.entity.product.tag.ProductTagAttribute;
 import io.nzbee.entity.product.tag.ProductTagDAO;
 import io.nzbee.variables.CategoryVars;
@@ -63,6 +63,7 @@ public class ProductService implements IProductService {
 	//this way we ensure proper separation of concerns
     
 	@Autowired 
+	@Qualifier("productEntityService")
 	private io.nzbee.entity.product.IProductService productService;
 
     @Autowired 
@@ -78,7 +79,7 @@ public class ProductService implements IProductService {
     private ProductTagDAO productTagDAO;
 
     @Autowired
-    private CategoryDAO categoryDAO;
+    private CategoryDao categoryDAO;
     
 	@PersistenceContext(unitName = "mochiEntityManagerFactory")
 	private EntityManager em;

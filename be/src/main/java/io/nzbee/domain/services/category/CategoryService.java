@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import io.nzbee.domain.Brand;
 import io.nzbee.domain.Category;
 import io.nzbee.dto.sidebar.SidebarDTO;
-import io.nzbee.entity.category.CategoryDAO;
+import io.nzbee.entity.category.CategoryDao;
 import io.nzbee.entity.product.IProductRepository;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.ProductVars;
@@ -27,7 +27,7 @@ public class CategoryService implements ICategoryService {
     private IProductRepository productRepository;
     
     @Autowired
-    private CategoryDAO categoryDAO;
+    private CategoryDao categoryDAO;
     
     @Override
 	@Transactional

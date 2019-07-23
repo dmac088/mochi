@@ -1,4 +1,4 @@
-package io.nzbee.entity.category;
+package io.nzbee.entity.category.type;
 
 import java.util.List;
 import org.springframework.data.repository.CrudRepository;

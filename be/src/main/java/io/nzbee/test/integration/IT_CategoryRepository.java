@@ -15,10 +15,10 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.category.Category;
-import io.nzbee.entity.category.CategoryAttribute;
 import io.nzbee.entity.category.CategoryRepository;
-import io.nzbee.entity.category.CategoryType;
-import io.nzbee.entity.category.CategoryTypeRepository;
+import io.nzbee.entity.category.attribute.CategoryAttribute;
+import io.nzbee.entity.category.type.CategoryType;
+import io.nzbee.entity.category.type.CategoryTypeRepository;
 import io.nzbee.entity.hierarchy.Hierarchy;
 import io.nzbee.entity.hierarchy.HierarchyRepository;
 import io.nzbee.variables.CategoryVars;
