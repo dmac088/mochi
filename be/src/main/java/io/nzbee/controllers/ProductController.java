@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.nzbee.domain.Product;
+import io.nzbee.domain.services.product.IProductService;
 import io.nzbee.dto.SearchDTO;
 import io.nzbee.dto.sidebar.SidebarDTO;
-import io.nzbee.services.product.IProductService;
 
 @RestController
 @RequestMapping("/api")

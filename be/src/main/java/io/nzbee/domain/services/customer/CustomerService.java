@@ -1,4 +1,4 @@
-package io.nzbee.services.customer;
+package io.nzbee.domain.services.customer;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

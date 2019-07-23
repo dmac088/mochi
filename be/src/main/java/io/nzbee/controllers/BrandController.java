@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.nzbee.domain.Brand;
+import io.nzbee.domain.services.brand.IBrandService;
 import io.nzbee.dto.sidebar.SidebarDTO;
-import io.nzbee.services.brand.IBrandService;
 import io.nzbee.variables.CategoryVars;
 
 @RestController

@@ -1,4 +1,4 @@
-package io.nzbee.services.product;
+package io.nzbee.domain.services.product;
 
 import java.util.List;
 
