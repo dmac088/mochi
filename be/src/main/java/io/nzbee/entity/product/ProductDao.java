@@ -73,8 +73,22 @@ public class ProductDao implements IProductDao {
 	
 	@Override
 	public Optional<Product> findById(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
+		
+		Root<Product> root = cq.from(Product.class);
+
+		List<Predicate> conditions = new ArrayList<Predicate>();	
+		conditions.add(cb.equal(root.get(Product_.productId), id));
+		
+		TypedQuery<Product> query = em.createQuery(cq
+				.select(root)
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(false)
+		);
+		
+		return Optional.ofNullable(query.getSingleResult());
 	}
 
 	@Override
