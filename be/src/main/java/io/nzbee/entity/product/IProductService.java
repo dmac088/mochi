@@ -12,11 +12,15 @@ public interface IProductService {
 	
 	public Page<Product> getProducts(List<Long> categoryIds, String locale, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, Pageable pageable, List<Long> brandIds, List<Long> tagIds);
 
+	List<Product> getProducts(String locale, String currency, List<Long> productIds);
+	
 	public Optional<Product> getProduct(Long Id);
 	
 	public Optional<Product> getProduct(String upc);
 	
-	Double maxMarkDownPrice(String categoryTypeCode,
+	Double getMaxPrice(String categoryDesc, String locale, String priceType, String currency, List<Long> categoryIds, List<Long> brandIds, List<Long> tagIds);
+	
+	Double getMaxMarkDownPrice(String categoryTypeCode,
 		   	String categoryDesc, 
 		   	String locale,
 		   	String currencyCode,
@@ -27,7 +31,7 @@ public interface IProductService {
 		   	List<Long> categoryIds,
 		   	int inHandlingCategories);
 	
-	Double maxMarkDownPriceForTags(String categoryTypeCode,
+	Double getMaxMarkDownPriceForTags(String categoryTypeCode,
 			String categoryDesc, 
 			String locale,
 			String currencyCode,
@@ -40,7 +44,7 @@ public interface IProductService {
 			List<Long> tagIds,
 			int inHandlingTags);
 	
-	Long count(
+	Long getCount(
 		   	String categoryTypeCode,
 		   	String categoryDesc, 
 		   	String locale,
@@ -53,7 +57,7 @@ public interface IProductService {
 		   	int inHandlingCategories);
 	
 	
-	Long countForTags(
+	Long getCountForTags(
 			String categoryTypeCode,
 		    String categoryDesc, 
 			String locale,

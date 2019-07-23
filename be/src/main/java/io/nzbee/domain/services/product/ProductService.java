@@ -45,7 +45,7 @@ import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.brand.BrandRepository;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.CategoryDAO;
-import io.nzbee.entity.product.ProductDAO;
+import io.nzbee.entity.product.ProductDao;
 import io.nzbee.entity.product.IProductRepository;
 import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.attribute.ProductAttributeRepository;
@@ -65,14 +65,11 @@ public class ProductService implements IProductService {
 	//this way we ensure proper separation of concerns
     
 	@Autowired 
-	private io.nzbee.entity.product.ProductServiceImpl productService;
+	private io.nzbee.entity.product.IProductService productService;
 
 	@Autowired 
 	private io.nzbee.entity.product.attribute.ProductAttributeService productAttributeService;
 	
-    @Autowired
-    private IProductRepository productRepository;
-    
     @Autowired 
     private ProductPriceRepository productPriceRepository;
     
@@ -84,22 +81,18 @@ public class ProductService implements IProductService {
     
     @Autowired
     private ProductTagDAO productTagDAO;
-    
-    @Autowired
-    private ProductDAO productDAO;
-    
+
     @Autowired
     private CategoryDAO categoryDAO;
     
 	@PersistenceContext(unitName = "mochiEntityManagerFactory")
 	private EntityManager em;
     
-    
     @Override
 	@Transactional
 	@Cacheable
 	public Product getProduct(String lcl, String currency, Long id) {
-    	io.nzbee.entity.product.Product pa = productRepository.findById(id).get();
+    	io.nzbee.entity.product.Product pa = productService.getProduct(id).get();
 		Product p = this.convertToProductDO(pa, lcl, currency);
 		return p;
 	}	
@@ -132,7 +125,7 @@ public class ProductService implements IProductService {
 		List<Long> selectedTagIds = selectedTags.stream().map(t -> {return t.getId();}).collect(Collectors.toList());
 			
      	Page<io.nzbee.entity.product.Product> ppa = 
-     			productDAO.getAll(categoryIds, locale, new Double(0), price, ProductVars.MARKDOWN_SKU_DESCRIPTION, currency, new Date(), new Date(), PageRequest.of(page, size, this.sortByParam(sortBy)), selectedBrandIds, selectedTagIds);
+     			productService.getProducts(categoryIds, locale, new Double(0), price, ProductVars.MARKDOWN_SKU_DESCRIPTION, currency, new Date(), new Date(), PageRequest.of(page, size, this.sortByParam(sortBy)), selectedBrandIds, selectedTagIds);
      	
   		Page<Product> pp = ppa.map(pa -> this.convertToProductDO(pa, locale, currency));
   		SearchDTO rc = new SearchDTO();
@@ -145,7 +138,7 @@ public class ProductService implements IProductService {
 	public List<Product> getProducts(String locale, String currency, List<Long> productIds) {
 		
 	    List<io.nzbee.entity.product.Product> lp = 
-     			productDAO.getAll(locale, currency, productIds);
+	    		productService.getProducts(locale, currency, productIds);
      	
 		return lp.stream().map(p -> { return this.convertToProductDO(p, locale, currency);}).collect(Collectors.toList());
 	}
@@ -176,8 +169,8 @@ public class ProductService implements IProductService {
 		List<SidebarDTO> selectedTags = facets.stream().filter(f -> {return f.getFacetingName().equals(CategoryVars.TAG_FACET_NAME);}).collect(Collectors.toList());
 		List<Long> selectedTagIds = selectedTags.stream().map(t -> {return t.getId();}).collect(Collectors.toList());
 	
-		Double maxPrice = productDAO.getMaxPrice(categoryDesc, locale, ProductVars.MARKDOWN_SKU_DESCRIPTION, currency, categoryIds, selectedBrandIds, selectedTagIds);
-	
+		Double maxPrice = productService.getMaxPrice(categoryDesc, locale, ProductVars.MARKDOWN_SKU_DESCRIPTION, currency, categoryIds, selectedBrandIds, selectedTagIds);
+						  
 		return maxPrice;
 	}
 	
@@ -204,7 +197,7 @@ public class ProductService implements IProductService {
 											f.setId(t.getTagId());
 											f.setToken(t.getTag().get().getCode());
 											f.setDesc(t.getTagDesc());
-											f.setProductCount(productRepository.countForTags( 
+											f.setProductCount(productService.getCountForTags( 
 																								CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 																								categoryDesc, 
 																								locale, 
