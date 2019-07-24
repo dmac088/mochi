@@ -1,4 +1,4 @@
-package io.nzbee.entity.customer;
+package io.nzbee.entity.role.customer;
 
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;

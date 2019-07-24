@@ -1,4 +1,4 @@
-package io.nzbee.entity.person;
+package io.nzbee.entity.party.person;
 
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;

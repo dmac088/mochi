@@ -1,4 +1,4 @@
-package io.nzbee.entity.customer;
+package io.nzbee.entity.role.customer;
 
 import java.util.List;
 import java.util.Optional;

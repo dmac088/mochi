@@ -1,4 +1,4 @@
-package io.nzbee.entity.hierarchy;
+package io.nzbee.entity.product.hierarchy;
 
 import io.nzbee.entity.category.Category;
 import javax.annotation.Generated;
