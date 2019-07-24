@@ -34,8 +34,8 @@ import io.nzbee.domain.services.customer.ICustomerService;
 import io.nzbee.entity.party.person.Person;
 import io.nzbee.entity.role.Role;
 import io.nzbee.security.user.User;
+import io.nzbee.security.user.role.IUserRoleService;
 import io.nzbee.security.user.role.UserRole;
-import io.nzbee.security.user.role.UserRoleService;
 import io.nzbee.test.LoggingRequestInterceptor;
 import io.nzbee.test.UT_Config;
  
@@ -51,7 +51,7 @@ public class UT_Customer {
 	private PasswordEncoder passwordEncoder;
 	
 	@Autowired
-	private UserRoleService userRoleService;
+	private IUserRoleService userRoleService;
 	
 	@Autowired
 	private ICustomerService customerService;
