@@ -25,7 +25,7 @@ import io.nzbee.entity.product.tag.ProductTag_;
 import io.nzbee.variables.ProductVars;
 
 @Component
-public class BrandDAO  implements IBrandDao { 
+public class BrandDaoImpl  implements IBrandDao { 
 
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
