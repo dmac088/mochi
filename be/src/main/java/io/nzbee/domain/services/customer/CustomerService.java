@@ -10,10 +10,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.Customer;
 import io.nzbee.entity.party.Party;
-import io.nzbee.entity.party.PartyRepository;
 import io.nzbee.entity.party.PartyServiceImpl;
 import io.nzbee.entity.party.person.Person;
-import io.nzbee.entity.party.person.PersonRepository;
 import io.nzbee.entity.party.person.PersonService;
 import io.nzbee.entity.role.Role;
 import io.nzbee.exceptions.CustomerAlreadyExistException;
@@ -69,7 +67,7 @@ public class CustomerService implements ICustomerService {
 	@Override
 	@Transactional
 	public Customer getCustomer(String userName) {
-		Optional<Party> pr1 = partyRepository.findByPartyUserUsername(userName);
+		Optional<Party> pr1 = partyService.findOne(userName);
 		Customer c1 = new Customer();
 		c1.setGivenName(((Person)pr1.get()).getGivenName());
 		c1.setFamilyName(((Person)pr1.get()).getFamilyName());
@@ -124,29 +122,29 @@ public class CustomerService implements ICustomerService {
 		c1.setRoleParty(p1);
 		
 		//persist the parent
-		personRepository.save(p1);
+		personService.save(p1);
     }  
 
     @Override
     public boolean customerExist(final String username) {
-        return partyRepository.findByPartyUserUsername(username).isPresent();
+        return partyService.findOne(username).isPresent();
     }
 
 	@Override
 	@Transactional
 	public void deleteCustomer(Customer customer) {
 		// TODO Auto-generated method stub
-		Party p = partyRepository.findByPartyUserUsername(customer.getUserName()).get();
+		Party p = partyService.findOne(customer.getUserName()).get();
 		//partyRepository.delete(p);
 		System.out.println("PartyId = " + p.getPartyId());
-		partyRepository.deleteById(p.getPartyId());
+		partyService.delete(p);
 	}
 	
 	@Override
 	@Transactional
 	public void updateCustomer(Customer customer) {
 		// TODO Auto-generated method stub
-		Party p = partyRepository.findByPartyUserUsername(customer.getUserName()).get();
+		Party p = partyService.findOne(customer.getUserName()).get();
 		//partyRepository.delete(p);
 		
 		Person pp = null;
@@ -155,7 +153,7 @@ public class CustomerService implements ICustomerService {
 			pp = (Person) p;
 			pp.setGivenName(customer.getGivenName());
 			pp.setFamilyName(customer.getFamilyName());
-			personRepository.save(pp);
+			personService.save(pp);
 		}
 		
 	}

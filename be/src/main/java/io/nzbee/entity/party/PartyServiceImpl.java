@@ -10,21 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class PartyServiceImpl {
+public class PartyServiceImpl implements IPartyService {
 
 	@Autowired
 	private PartyRepository PartyRepository; 
-	
-	@PreAuthorize("hasAuthority('PARTY_READER')")
-	@Transactional(readOnly = true)
-	public List<Party> findAll() {
-		List<Party> Partys = new ArrayList<>();
-		Iterator<Party> i = PartyRepository.findAll().iterator();
-		while(i.hasNext()) {
-			Partys.add(i.next());
-		}
-		return Partys;
-	}
 	
 	@PreAuthorize("hasAuthority('PARTY_READER')")
 	@Transactional(readOnly = true)
@@ -37,36 +26,55 @@ public class PartyServiceImpl {
 		return Partys;
 	}
 	
+	@Override
+	@PreAuthorize("hasAuthority('PARTY_READER')")
+	@Transactional(readOnly = true)
+	public List<Party> findAll() {
+		List<Party> Partys = new ArrayList<>();
+		Iterator<Party> i = PartyRepository.findAll().iterator();
+		while(i.hasNext()) {
+			Partys.add(i.next());
+		}
+		return Partys;
+	}
+
+	@Override
 	@PreAuthorize("hasAuthority('PARTY_READ')")
 	@Transactional(readOnly = true)
-	public Optional<Party> find(Long id) {
-		Optional<Party> p = PartyRepository.findById(id);
-		return p;
+	public Optional<Party> findOne(Long id) {
+		// TODO Auto-generated method stub
+		return PartyRepository.findById(id);
 	}
-	
+
+	@Override
 	@PreAuthorize("hasAuthority('PARTY_READ')")
 	@Transactional(readOnly = true)
-	public Optional<Party> find(String userName) {
-		Optional<Party> p = PartyRepository.findByPartyUserUsername(userName);
-		return p;
+	public Optional<Party> findOne(String code) {
+		// TODO Auto-generated method stub
+		return PartyRepository.findByPartyUserUsername(code);
 	}
-	
+
+	@Override
 	@PreAuthorize("hasAuthority('PARTY_CREATE')")
 	@Transactional
 	public void save(Party Party) {
 		PartyRepository.save(Party);
 	}
 	
+	@Override
 	@PreAuthorize("hasAuthority('PARTY_UPDATE')")
 	@Transactional
-	public void update(String id, Party Party) {
-		PartyRepository.save(Party);
+	public void update(Party t) {
+		// TODO Auto-generated method stub
+		PartyRepository.save(t);
 	}
-	
+
+	@Override
 	@PreAuthorize("hasAuthority('PARTY_DELETE')")
 	@Transactional
-	public void delete(Long id) {
-		PartyRepository.deleteById(id);
+	public void delete(Party t) {
+		// TODO Auto-generated method stub
+		PartyRepository.delete(t);
 	}
 	
 }
