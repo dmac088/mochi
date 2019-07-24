@@ -11,7 +11,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.Brand;
 import io.nzbee.entity.product.IProductRepository;
-import io.nzbee.ui.web.component.sidebar.SidebarDto;
+import io.nzbee.ui.component.web.sidebar.SidebarDto;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.ProductVars;
 

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import io.nzbee.domain.Brand;
 import io.nzbee.domain.Category;
 import io.nzbee.entity.product.IProductService;
-import io.nzbee.ui.web.component.sidebar.SidebarDto;
+import io.nzbee.ui.component.web.sidebar.SidebarDto;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.ProductVars;
 

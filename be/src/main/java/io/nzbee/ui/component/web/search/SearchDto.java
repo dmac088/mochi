@@ -1,10 +1,10 @@
-package io.nzbee.ui.web.component.search;
+package io.nzbee.ui.component.web.search;
 
 import java.util.List;
 import org.springframework.data.domain.Page;
 
 import io.nzbee.domain.Product;
-import io.nzbee.ui.web.component.sidebar.SidebarDto;
+import io.nzbee.ui.component.web.sidebar.SidebarDto;
 
 public class SearchDto {
 	
