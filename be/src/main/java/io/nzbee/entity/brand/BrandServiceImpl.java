@@ -30,9 +30,9 @@ public class BrandServiceImpl implements IBrandService {
 	}
 
 	@Override
-	public List<Brand> findAll(List<Long> categoryIds, String locale, List<Long> tagIds) {
+	public List<Brand> findAll(List<Long> categoryIds, List<Long> tagIds) {
 		// TODO Auto-generated method stub
-		return brandDao.findAll(categoryIds, locale, tagIds);
+		return brandDao.findAll(categoryIds, tagIds);
 	}
 	
 }
