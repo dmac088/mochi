@@ -14,10 +14,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import io.nzbee.entity.brand.Brand_;
+import io.nzbee.entity.category.Category;
+import io.nzbee.entity.category.Category_;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.Product_;
 import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.entity.product.status.ProductStatus_;
+import io.nzbee.entity.product.tag.ProductTag;
+import io.nzbee.entity.product.tag.ProductTag_;
 import io.nzbee.variables.ProductVars;
 
 @Component
@@ -145,7 +149,7 @@ public class BrandDAO  implements IBrandDao {
 	
 
 	@Override
-	public List<Brand> findAll(List<Long> categoryIds, String locale, List<Long> tagIds) {
+	public List<Brand> findAll(List<Long> categoryIds, List<Long> tagIds) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Brand> cq = cb.createQuery(Brand.class);
@@ -154,10 +158,14 @@ public class BrandDAO  implements IBrandDao {
 		
 		Join<Brand, Product> brand = root.join(Brand_.products);
 		Join<Product, ProductStatus> status = brand.join(Product_.productStatus);
+		Join<Product, Category> category = brand.join(Product_.categories);
+		Join<Product, ProductTag> productTag = brand.join(Product_.tags);
+		
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
-		//conditions.add(cb.equal(root.get(Brand_.brandCode), brandCode));
+		conditions.add(category.get(Category_.categoryId).in(categoryIds));
+		conditions.add(productTag.get(ProductTag_.productTagId).in(tagIds));
 
 		TypedQuery<Brand> query = em.createQuery(cq
 				.select(root)
@@ -167,6 +175,7 @@ public class BrandDAO  implements IBrandDao {
 
 		return query.getResultList();
 	}
+
 
 
 }

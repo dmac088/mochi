@@ -7,9 +7,9 @@ public interface IBrandService {
 
 	List<Brand> findAll();
 	
-	List<Brand> findAll(List<Long> categoryIds, String locale, List<Long> tagIds);
-	
 	Optional<Brand> findById(Long Id);
 	
 	Optional<Brand> findByCode(String brandCode);
+
+	List<Brand> findAll(List<Long> categoryIds, List<Long> tagIds);
 }

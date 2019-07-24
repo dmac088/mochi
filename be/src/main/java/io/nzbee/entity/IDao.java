@@ -16,5 +16,6 @@ public interface IDao<T> {
     void update(T t, String[] params);
      
     void delete(T t);
+
     
 }

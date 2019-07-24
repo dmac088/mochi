@@ -7,7 +7,7 @@ import io.nzbee.entity.IDao;
 
 public interface IBrandDao extends IDao<Brand> {
 
-	List<Brand> findAll(List<Long> categoryIds, String locale, List<Long> tagIds);
+	List<Brand> findAll(List<Long> categoryIds, List<Long> tagIds);
 	
 	Optional<Brand> findByCode(String brandCode);
 	

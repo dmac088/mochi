@@ -125,7 +125,7 @@ public class ProductMasterService {
 	    		pms.set_PRODUCT_RETAIL_PRICE_HKD(productPriceService.getCurrentRetailPriceHKD(p.getProductId()).get().getPriceValue());
 	    		pms.set_PRODUCT_MARKDOWN_PRICE_USD(productPriceService.getCurrentMarkdownPriceUSD(p.getProductId()).get().getPriceValue());
 	    		pms.set_PRODUCT_MARKDOWN_PRICE_HKD(productPriceService.getCurrentMarkdownPriceHKD(p.getProductId()).get().getPriceValue());
-	    		pms.set_BRAND_CODE(brandService.getBrand(p.getBrand().getId()).get().getCode());
+	    		pms.set_BRAND_CODE(brandService.findById(p.getBrand().getId()).get().getCode());
 	    		pms.set_BRAND_DESCRIPTION_EN(brandAttributeService.getBrandAttributesEN(p.getBrand().getId()).getBrandDesc());
 	    		pms.set_BRAND_DESCRIPTION_HK(brandAttributeService.getBrandAttributesHK(p.getBrand().getId()).getBrandDesc());
 	    		pms.set_PRIMARY_CATEGORY_PATH("\\TBC");

@@ -57,7 +57,7 @@ public class BrandService implements IBrandService {
 				.stream().map(t -> { return t.getId();}).collect(Collectors.toList());
 		
 		//get a list of brands for the selected categories and tags
-		List<io.nzbee.entity.brand.Brand> lpb = brandService.findAll(categoryIds, locale, tagIds);
+		List<io.nzbee.entity.brand.Brand> lpb = brandService.findAll(categoryIds, tagIds);
 		List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, locale, currency)).collect(Collectors.toList());
 		
 		lb.stream().forEach(bDO -> {
