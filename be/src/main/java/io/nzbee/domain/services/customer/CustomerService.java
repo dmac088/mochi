@@ -9,28 +9,28 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.Customer;
+import io.nzbee.entity.party.IPartyService;
 import io.nzbee.entity.party.Party;
-import io.nzbee.entity.party.PartyServiceImpl;
+import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.Person;
-import io.nzbee.entity.party.person.PersonService;
 import io.nzbee.entity.role.Role;
 import io.nzbee.exceptions.CustomerAlreadyExistException;
 import io.nzbee.security.user.User;
+import io.nzbee.security.user.role.IUserRoleService;
 import io.nzbee.security.user.role.UserRole;
-import io.nzbee.security.user.role.UserRoleService;
 
 @Service
 @Transactional
 public class CustomerService implements ICustomerService {
 
     @Autowired
-    private PartyServiceImpl partyService;
+    private IPartyService partyService;
     
     @Autowired
-    private PersonService personService;
+    private IPersonService personService;
     
     @Autowired
-    private UserRoleService userRoleService;
+    private IUserRoleService userRoleService;
     
     @Autowired
 	@Qualifier("userPasswordEncoder")
