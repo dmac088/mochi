@@ -4,7 +4,7 @@ package io.nzbee.domain.services.brand;
 import java.util.List;
 
 import io.nzbee.domain.Brand;
-import io.nzbee.ui.web.component.sidebar.SidebarDto;
+import io.nzbee.ui.component.web.sidebar.SidebarDto;
 
 public interface IBrandService {
 	 

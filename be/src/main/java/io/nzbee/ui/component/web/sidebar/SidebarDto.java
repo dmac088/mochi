@@ -1,4 +1,4 @@
-package io.nzbee.ui.web.component.sidebar;
+package io.nzbee.ui.component.web.sidebar;
 
 import java.util.Objects;
 

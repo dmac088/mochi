@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.nzbee.domain.Product;
 import io.nzbee.domain.services.product.IProductService;
-import io.nzbee.ui.web.component.search.SearchDto;
-import io.nzbee.ui.web.component.sidebar.SidebarDto;
+import io.nzbee.ui.component.web.search.SearchDto;
+import io.nzbee.ui.component.web.sidebar.SidebarDto;
 
 @RestController
 @RequestMapping("/api")

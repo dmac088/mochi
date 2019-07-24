@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import io.nzbee.domain.Product;
-import io.nzbee.ui.web.component.search.SearchDto;
-import io.nzbee.ui.web.component.sidebar.SidebarDto;
+import io.nzbee.ui.component.web.search.SearchDto;
+import io.nzbee.ui.component.web.sidebar.SidebarDto;
 
 public interface IProductService {
 

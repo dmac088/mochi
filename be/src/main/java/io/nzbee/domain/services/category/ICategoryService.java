@@ -4,7 +4,7 @@ package io.nzbee.domain.services.category;
 import java.util.List;
 
 import io.nzbee.domain.Category;
-import io.nzbee.ui.web.component.sidebar.SidebarDto;
+import io.nzbee.ui.component.web.sidebar.SidebarDto;
 
 public interface ICategoryService {
 	 
