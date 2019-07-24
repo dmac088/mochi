@@ -9,21 +9,30 @@ import org.springframework.stereotype.Service;
 public class BrandServiceImpl implements IBrandService {
 
 	@Autowired
-	private IBrandRepository brandRepository; 
-	
+	private IBrandDao brandDao; 
+
 	@Override
-	public List<Brand> getBrands() {
-		return brandRepository.findAll();
+	public List<Brand> findAll() {
+		// TODO Auto-generated method stub
+		return brandDao.findAll();
 	}
-	
+
 	@Override
-	public Optional<Brand> getBrand(Long Id) {
-		return brandRepository.findById(Id);
+	public Optional<Brand> findById(Long Id) {
+		// TODO Auto-generated method stub
+		return brandDao.findById(Id);
 	}
-	
+
 	@Override
-	public Optional<Brand> getBrand(String brandCode) {
-		return brandRepository.findByBrandCode(brandCode);
+	public Optional<Brand> findByCode(String brandCode) {
+		// TODO Auto-generated method stub
+		return brandDao.findByCode(brandCode);
+	}
+
+	@Override
+	public List<Brand> findAll(List<Long> categoryIds, String locale, List<Long> tagIds) {
+		// TODO Auto-generated method stub
+		return brandDao.findAll(categoryIds, locale, tagIds);
 	}
 	
 }
