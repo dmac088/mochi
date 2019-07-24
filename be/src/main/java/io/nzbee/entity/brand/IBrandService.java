@@ -5,10 +5,11 @@ import java.util.Optional;
 
 public interface IBrandService {
 
-	List<Brand> getBrands();
+	List<Brand> findAll();
 	
-	Optional<Brand> getBrand(Long Id);
+	List<Brand> findAll(List<Long> categoryIds, String locale, List<Long> tagIds);
 	
-	Optional<Brand> getBrand(String brandCode);
+	Optional<Brand> findById(Long Id);
 	
+	Optional<Brand> findByCode(String brandCode);
 }

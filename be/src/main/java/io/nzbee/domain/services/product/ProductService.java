@@ -458,7 +458,7 @@ public class ProductService implements IProductService {
     }
     
     public SidebarDTO convertToBrandSidebarDTO(String brandCode, String lcl, String currency) {
-    	Optional<Brand> b = brandService.getBrand(brandCode);
+    	Optional<Brand> b = brandService.findByCode(brandCode);
     	SidebarDTO bf = new SidebarDTO();
     	bf.setId(b.get().getId());
     	bf.setDesc(b.get().getAttributes().stream().filter(ba -> ba.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getBrandDesc());

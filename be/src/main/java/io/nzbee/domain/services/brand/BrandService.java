@@ -9,10 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-
 import io.nzbee.domain.Brand;
 import io.nzbee.dto.sidebar.SidebarDTO;
-import io.nzbee.entity.brand.BrandDAO;
 import io.nzbee.entity.product.IProductRepository;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.ProductVars;
@@ -23,7 +21,7 @@ import io.nzbee.variables.ProductVars;
 public class BrandService implements IBrandService {
     
 	@Autowired
-    private BrandDAO brandDAO;
+    private io.nzbee.entity.brand.IBrandService brandService;
     
     @Autowired
     private IProductRepository productRepository;
@@ -32,7 +30,7 @@ public class BrandService implements IBrandService {
 	@Transactional
 	@Cacheable
 	public List<SidebarDTO> getBrands(final String lcl, String currency) {
-    	List<io.nzbee.entity.brand.Brand> lpb = brandDAO.getAll();
+    	List<io.nzbee.entity.brand.Brand> lpb = brandService.findAll();
     	List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, lcl, currency))
 		.sorted((pb1, pb2) -> pb2.getProductCount().compareTo(pb1.getProductCount()))
 		.collect(Collectors.toList());
@@ -43,7 +41,7 @@ public class BrandService implements IBrandService {
 	@Transactional
 	@Cacheable
 	public Brand getBrand(String lcl, String curr, Long brandId) {
-    	io.nzbee.entity.brand.Brand pb = brandDAO.findById(brandId).get();
+    	io.nzbee.entity.brand.Brand pb = brandService.findById(brandId).get();
      	return	createBrandDO(pb, lcl, curr);
 	}
  
@@ -59,7 +57,7 @@ public class BrandService implements IBrandService {
 				.stream().map(t -> { return t.getId();}).collect(Collectors.toList());
 		
 		//get a list of brands for the selected categories and tags
-		List<io.nzbee.entity.brand.Brand> lpb = brandDAO.getAll(categoryIds, locale, tagIds);
+		List<io.nzbee.entity.brand.Brand> lpb = brandService.findAll(categoryIds, locale, tagIds);
 		List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, locale, currency)).collect(Collectors.toList());
 		
 		lb.stream().forEach(bDO -> {

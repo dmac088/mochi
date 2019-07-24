@@ -14,20 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import io.nzbee.entity.brand.Brand_;
-import io.nzbee.entity.brand.attribute.BrandAttribute;
-import io.nzbee.entity.brand.attribute.BrandAttribute_;
-import io.nzbee.entity.category.Category;
-import io.nzbee.entity.category.Category_;
-import io.nzbee.entity.category.attribute.CategoryAttribute;
-import io.nzbee.entity.category.attribute.CategoryAttribute_;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.Product_;
-import io.nzbee.entity.product.attribute.ProductAttribute;
-import io.nzbee.entity.product.attribute.ProductAttribute_;
 import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.entity.product.status.ProductStatus_;
-import io.nzbee.entity.product.tag.ProductTag;
-import io.nzbee.entity.product.tag.ProductTag_;
 import io.nzbee.variables.ProductVars;
 
 @Component
@@ -86,8 +76,26 @@ public class BrandDAO  implements IBrandDao {
 	
 	@Override
 	public List<Brand> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<Brand> cq = cb.createQuery(Brand.class);
+		
+		Root<Brand> root = cq.from(Brand.class);
+		
+		Join<Brand, Product> brand = root.join(Brand_.products);
+		Join<Product, ProductStatus> status = brand.join(Product_.productStatus);
+		
+		List<Predicate> conditions = new ArrayList<Predicate>();
+		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
+		//conditions.add(cb.equal(root.get(Brand_.brandCode), brandCode));
+
+		TypedQuery<Brand> query = em.createQuery(cq
+				.select(root)
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(false)
+		);
+
+		return query.getResultList();
 	}
 	
 	@Override
@@ -107,48 +115,58 @@ public class BrandDAO  implements IBrandDao {
 		// TODO Auto-generated method stub
 		
 	}
+
 	
 	@Override
-	public List<Brand> getAll(List<Long> categoryIds, String locale, List<Long> tagIds) {
-		
+	public Optional<Brand> findByCode(String brandCode) {
+
 		CriteriaBuilder cb = em.getCriteriaBuilder();
-	
+		
 		CriteriaQuery<Brand> cq = cb.createQuery(Brand.class);
 		
 		Root<Brand> root = cq.from(Brand.class);
 		
 		Join<Brand, Product> brand = root.join(Brand_.products);
-		Join<Product, ProductAttribute> productAttribute = brand.join(Product_.attributes);
-		Join<Product, Category> category = brand.join(Product_.categories);
 		Join<Product, ProductStatus> status = brand.join(Product_.productStatus);
-		Join<Brand, BrandAttribute> brandAttribute = root.join(Brand_.brandAttributes);
-		Join<Category, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
-		//Join<Category, Hierarchy> categoryHierarchy = category.join(Category_.hierarchy);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
-
-		if(!categoryIds.isEmpty()) {
-			conditions.add(category.get(Category_.categoryId).in(categoryIds));
-		}
-		
-		if(!tagIds.isEmpty()) {
-			Join<Product, ProductTag> tag = brand.join(Product_.tags);
-			conditions.add(tag.get(ProductTag_.productTagId).in(tagIds));
-		}
-		
-		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), locale));
-		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale));
-		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
 		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
+		conditions.add(cb.equal(root.get(Brand_.brandCode), brandCode));
 
 		TypedQuery<Brand> query = em.createQuery(cq
 				.select(root)
 				.where(conditions.toArray(new Predicate[] {}))
-				.distinct(true)
+				.distinct(false)
 		);
 
+		return Optional.ofNullable(query.getSingleResult());
+	}
+	
+	
+
+	@Override
+	public List<Brand> findAll(List<Long> categoryIds, String locale, List<Long> tagIds) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
+		CriteriaQuery<Brand> cq = cb.createQuery(Brand.class);
+		
+		Root<Brand> root = cq.from(Brand.class);
+		
+		Join<Brand, Product> brand = root.join(Brand_.products);
+		Join<Product, ProductStatus> status = brand.join(Product_.productStatus);
+		
+		List<Predicate> conditions = new ArrayList<Predicate>();
+		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
+		//conditions.add(cb.equal(root.get(Brand_.brandCode), brandCode));
+
+		TypedQuery<Brand> query = em.createQuery(cq
+				.select(root)
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(false)
+		);
+
 		return query.getResultList();
-    }
+	}
+
 
 }
