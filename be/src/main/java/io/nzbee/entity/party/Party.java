@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import io.nzbee.entity.role.Role;
-import io.nzbee.security.User;
+import io.nzbee.security.user.User;
 
 @Entity
 @Table(name = "party", schema = "mochi")

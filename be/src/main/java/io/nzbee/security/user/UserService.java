@@ -1,4 +1,4 @@
-package io.nzbee.security;
+package io.nzbee.security.user;
 
 
 

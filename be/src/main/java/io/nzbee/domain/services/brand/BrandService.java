@@ -10,7 +10,7 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.Brand;
-import io.nzbee.entity.product.IProductRepository;
+import io.nzbee.entity.product.IProductService;
 import io.nzbee.ui.component.web.sidebar.SidebarDto;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.ProductVars;
@@ -24,7 +24,7 @@ public class BrandService implements IBrandService {
     private io.nzbee.entity.brand.IBrandService brandService;
     
     @Autowired
-    private IProductRepository productRepository;
+    private IProductService productService;
     
     @Override
 	@Transactional
@@ -65,7 +65,7 @@ public class BrandService implements IBrandService {
 			lid.add(bDO.getBrandId());
 			bDO.setProductCount(
 					(tagIds.isEmpty()) 
-									? productRepository.count(
+									? productService.getCount(
 											CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 											categoryDesc, 
 											locale,
@@ -77,7 +77,7 @@ public class BrandService implements IBrandService {
 											categoryIds.size() == 0 ? Arrays.asList(new Long(-1)) : categoryIds,
 											(categoryIds.size() == 0 ? 0 : 1)
 											)
-									: productRepository.countForTags(
+									: productService.getCountForTags(
 											CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 											categoryDesc, 
 											locale,

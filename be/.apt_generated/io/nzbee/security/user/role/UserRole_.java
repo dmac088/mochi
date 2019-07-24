@@ -1,5 +1,6 @@
-package io.nzbee.security;
+package io.nzbee.security.user.role;
 
+import io.nzbee.security.authority.Authority;
 import io.nzbee.security.user.User;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.CollectionAttribute;
