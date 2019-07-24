@@ -1,4 +1,4 @@
-package io.nzbee.security;
+package io.nzbee.security.authority;
 
 import org.springframework.security.core.GrantedAuthority;
 import javax.persistence.Column;

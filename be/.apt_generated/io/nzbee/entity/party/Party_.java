@@ -1,7 +1,7 @@
 package io.nzbee.entity.party;
 
 import io.nzbee.entity.role.Role;
-import io.nzbee.security.User;
+import io.nzbee.security.user.User;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;

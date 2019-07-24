@@ -33,9 +33,9 @@ import io.nzbee.domain.Customer;
 import io.nzbee.domain.services.customer.ICustomerService;
 import io.nzbee.entity.party.person.Person;
 import io.nzbee.entity.role.Role;
-import io.nzbee.security.User;
-import io.nzbee.security.UserRole;
-import io.nzbee.security.UserRoleService;
+import io.nzbee.security.user.User;
+import io.nzbee.security.user.role.UserRole;
+import io.nzbee.security.user.role.UserRoleService;
 import io.nzbee.test.LoggingRequestInterceptor;
 import io.nzbee.test.UT_Config;
  

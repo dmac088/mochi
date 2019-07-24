@@ -1,4 +1,4 @@
-package io.nzbee.security;
+package io.nzbee.security.user.role;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

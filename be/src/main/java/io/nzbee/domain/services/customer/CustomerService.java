@@ -11,23 +11,25 @@ import org.springframework.stereotype.Service;
 import io.nzbee.domain.Customer;
 import io.nzbee.entity.party.Party;
 import io.nzbee.entity.party.PartyRepository;
+import io.nzbee.entity.party.PartyServiceImpl;
 import io.nzbee.entity.party.person.Person;
 import io.nzbee.entity.party.person.PersonRepository;
+import io.nzbee.entity.party.person.PersonService;
 import io.nzbee.entity.role.Role;
 import io.nzbee.exceptions.CustomerAlreadyExistException;
-import io.nzbee.security.User;
-import io.nzbee.security.UserRole;
-import io.nzbee.security.UserRoleService;
+import io.nzbee.security.user.User;
+import io.nzbee.security.user.role.UserRole;
+import io.nzbee.security.user.role.UserRoleService;
 
 @Service
 @Transactional
 public class CustomerService implements ICustomerService {
 
     @Autowired
-    private PartyRepository partyRepository;
+    private PartyServiceImpl partyService;
     
     @Autowired
-    private PersonRepository personRepository;
+    private PersonService personService;
     
     @Autowired
     private UserRoleService userRoleService;
@@ -50,7 +52,7 @@ public class CustomerService implements ICustomerService {
 	@Transactional
 	public List<Customer> getCustomers() {
 		List<Customer> cl = new ArrayList<Customer>();
-		List<Party> pl = partyRepository.findAll();
+		List<Party> pl = partyService.findAll();
 		for(Party p : pl) {
 			Customer c = new Customer();
 			c.setCustomerID(((io.nzbee.entity.role.customer.Customer)p.getPartyRole(PARTY_ROLE_NAME)).getCustomerNumber());

@@ -1,4 +1,4 @@
-package io.nzbee.security;
+package io.nzbee.security.user;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import io.nzbee.entity.party.Party;
+import io.nzbee.security.Encoders;
+import io.nzbee.security.user.role.UserRole;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

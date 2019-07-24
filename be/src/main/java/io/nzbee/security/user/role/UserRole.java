@@ -1,4 +1,4 @@
-package io.nzbee.security;
+package io.nzbee.security.user.role;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -14,6 +14,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import io.nzbee.security.authority.Authority;
+import io.nzbee.security.user.User;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
