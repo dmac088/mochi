@@ -158,24 +158,26 @@ public class BrandDAO  implements IBrandDao {
 		
 		Join<Brand, Product> brand = root.join(Brand_.products);
 		Join<Product, ProductStatus> status = brand.join(Product_.productStatus);
-		Join<Product, Category> category = brand.join(Product_.categories);
-		Join<Product, ProductTag> productTag = brand.join(Product_.tags);
-		
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
+		if(categoryIds.size() > 0) {
+			Join<Product, Category> category = brand.join(Product_.categories);
+			conditions.add(category.get(Category_.categoryId).in(categoryIds));
+		}
+		System.out.println(tagIds.size() );
+		if(tagIds.size() > 0) {
+			Join<Product, ProductTag> productTag = brand.join(Product_.tags);
+			conditions.add(productTag.get(ProductTag_.productTagId).in(tagIds));
+		}
 		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
-		conditions.add(category.get(Category_.categoryId).in(categoryIds));
-		conditions.add(productTag.get(ProductTag_.productTagId).in(tagIds));
-
+		
 		TypedQuery<Brand> query = em.createQuery(cq
 				.select(root)
 				.where(conditions.toArray(new Predicate[] {}))
-				.distinct(false)
+				.distinct(true)
 		);
 
 		return query.getResultList();
 	}
-
-
 
 }
