@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 public class CategoryServiceImpl implements ICategoryService {
 
 	@Autowired
-	private CategoryDao categoryDAO;
+	private CategoryDaoImpl categoryDAO;
 	
 	@Override
 	public Optional<Category> findById(long id) {

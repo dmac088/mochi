@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class ProductServiceImpl implements IProductService {
 	
 	@Autowired
-	private ProductDao productDAO;
+	private ProductDaoImpl productDAO;
 	
 	@Autowired
 	private IProductRepository productRepository;
