@@ -1,16 +1,16 @@
-package io.nzbee.dto.search;
+package io.nzbee.ui.web.component.search;
 
 import java.util.List;
 import org.springframework.data.domain.Page;
 
 import io.nzbee.domain.Product;
-import io.nzbee.dto.sidebar.SidebarDTO;
+import io.nzbee.ui.web.component.sidebar.SidebarDto;
 
-public class SearchDTO {
+public class SearchDto {
 	
 	Page<Product> products;
 	
-	List<SidebarDTO> Facets;
+	List<SidebarDto> Facets;
 
 	public Page<Product> getProducts() {
 		return products;
@@ -20,11 +20,11 @@ public class SearchDTO {
 		this.products = products;
 	}
 
-	public List<SidebarDTO> getFacets() {
+	public List<SidebarDto> getFacets() {
 		return Facets;
 	}
 
-	public void setFacets(List<SidebarDTO> facets) {
+	public void setFacets(List<SidebarDto> facets) {
 		this.Facets = facets;
 	}
 	
