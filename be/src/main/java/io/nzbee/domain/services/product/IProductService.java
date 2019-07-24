@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import io.nzbee.domain.Product;
-import io.nzbee.dto.search.SearchDTO;
-import io.nzbee.dto.sidebar.SidebarDTO;
+import io.nzbee.ui.web.component.search.SearchDto;
+import io.nzbee.ui.web.component.sidebar.SidebarDto;
 
 public interface IProductService {
 
@@ -18,10 +18,10 @@ public interface IProductService {
 	//as long as it conforms to the same interface contract
 	
 	//returns a user interface object, rule broken, need to change to return a domain object 
-	SearchDTO findProduct(String locale, String currency, String categoryCode, String term, int page, int size, String sortBy, List<SidebarDTO> selectedFacets);
+	SearchDto findProduct(String locale, String currency, String categoryCode, String term, int page, int size, String sortBy, List<SidebarDto> selectedFacets);
 	
 	//returns a user interface object, rule broken, need to change to return a domain object 
-	SearchDTO getProducts(String locale, String currency, String categoryDesc, Double price, int page, int size, String sortBy, List<SidebarDTO> selectedFacets);
+	SearchDto getProducts(String locale, String currency, String categoryDesc, Double price, int page, int size, String sortBy, List<SidebarDto> selectedFacets);
 	 
 	//returns a list of domain object, this is good
 	List<Product> getProducts(@PathVariable String locale, @PathVariable String currency, @RequestBody final List<Long> productIds);
@@ -30,12 +30,12 @@ public interface IProductService {
 	Product getProduct(String locale, String currency, Long id);
 	 
 	//returns a user interface object, rule broken, need to change to return a domain object 
-	List<SidebarDTO> getProductTags(String locale, String currency, String categoryDesc, Double price, List<SidebarDTO> selectedFacets);
+	List<SidebarDto> getProductTags(String locale, String currency, String categoryDesc, Double price, List<SidebarDto> selectedFacets);
 	 
 	//returns a user interface object, rule broken, need to change to return a domain object
-	List<SidebarDTO> getProductTags(String locale, String currency, String categoryDesc, List<SidebarDTO> selectedFacets);
+	List<SidebarDto> getProductTags(String locale, String currency, String categoryDesc, List<SidebarDto> selectedFacets);
 
 	//returns an attribute value which is allowed
-	Double getMaxPrice(String categoryDesc, String locale, String currency, List<SidebarDTO> selectedFacets);
+	Double getMaxPrice(String categoryDesc, String locale, String currency, List<SidebarDto> selectedFacets);
 	 
 }

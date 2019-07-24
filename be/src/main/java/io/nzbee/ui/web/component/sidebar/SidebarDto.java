@@ -1,4 +1,4 @@
-package io.nzbee.dto.sidebar;
+package io.nzbee.ui.web.component.sidebar;
 
 import java.util.Objects;
 
@@ -6,7 +6,7 @@ import java.util.Objects;
 //on the web-site, it can accept brand, category, or any other object as long as it's mapped
 //in the service layer
 
-public class SidebarDTO {
+public class SidebarDto {
 
 	private Long Id;
 
@@ -122,7 +122,7 @@ public class SidebarDTO {
 	public boolean equals(Object o) {
 		 if (this == o) return true;
 	     if (o == null || getClass() != o.getClass()) return false;
-	     SidebarDTO pcf = (SidebarDTO) o;
+	     SidebarDto pcf = (SidebarDto) o;
 	     return this.Id == pcf.Id;
 	}
 
