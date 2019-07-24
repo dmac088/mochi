@@ -31,7 +31,7 @@ import org.springframework.web.client.RestTemplate;
 import org.json.JSONObject;
 import io.nzbee.domain.Customer;
 import io.nzbee.domain.services.customer.ICustomerService;
-import io.nzbee.entity.person.Person;
+import io.nzbee.entity.party.person.Person;
 import io.nzbee.entity.role.Role;
 import io.nzbee.security.User;
 import io.nzbee.security.UserRole;
@@ -137,7 +137,7 @@ public class UT_Customer {
 	    
 	    //create the role object
 	    p1.setPartyRoles(new ArrayList<Role>());
-	    io.nzbee.entity.customer.Customer c1 = new io.nzbee.entity.customer.Customer();
+	    io.nzbee.entity.role.customer.Customer c1 = new io.nzbee.entity.role.customer.Customer();
 	    c1.setRoleStart(CUSTOMER_START_DATE);
 	    c1.setCustomerNumber(CUSTOMER_NUMER);
 			

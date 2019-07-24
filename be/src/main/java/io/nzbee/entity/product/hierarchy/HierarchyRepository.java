@@ -1,4 +1,4 @@
-package io.nzbee.entity.hierarchy;
+package io.nzbee.entity.product.hierarchy;
 
 import java.util.List;
 import org.springframework.data.repository.CrudRepository;
