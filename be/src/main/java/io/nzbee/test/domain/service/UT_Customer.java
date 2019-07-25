@@ -60,6 +60,7 @@ public class UT_Customer {
     @Qualifier("unitTestTemplate")
     private RestTemplate template;
  
+ 
     //oAuth configuration
     private static String TOKEN_ENDPOINT 					= "https://localhost:8090/oauth/token";
     private static String OAUTH_AUTHORIZATION 				= "Basic c3ByaW5nLXNlY3VyaXR5LW9hdXRoMi1yZWFkLXdyaXRlLWNsaWVudDpzcHJpbmctc2VjdXJpdHktb2F1dGgyLXJlYWQtd3JpdGUtY2xpZW50LXBhc3N3b3JkMTIzNA==";
@@ -171,7 +172,7 @@ public class UT_Customer {
     }
     
     @Test
-    @Rollback(false)
+    //@Rollback(false)
 	public void createCustomer() {
     	
 	    RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
@@ -188,9 +189,8 @@ public class UT_Customer {
 	    assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value());
 	    
 	    uri = restTemplate.exchange(UT_Customer.CUSTOMER_READ_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.GET, customerEntity, Customer.class);
-	    Customer c = customerService.getCustomer(uri.getBody().getUserName());
-	    
 	    System.out.println(uri.getBody());
+	    Customer c = customerService.findOne(uri.getBody().getUserName());
 	    
 	    assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value());
 	    assertEquals(CUSTOMER_GIVEN_NAME_EN, c.getGivenName());

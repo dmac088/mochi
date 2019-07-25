@@ -87,14 +87,15 @@ public class ProductService implements IProductService {
     @Override
 	@Transactional
 	@Cacheable
-	public Product getProduct(String lcl, String currency, Long id) {
+	public Product findOne(String lcl, String currency, Long id) {
     	io.nzbee.entity.product.Product pa = productService.getProduct(id).get();
 		Product p = this.convertToProductDO(pa, lcl, currency);
 		return p;
 	}	
     
+    @Override
 	@Cacheable
-	public SearchDto getProducts(String locale, String currency, String categoryDesc, Double price, int page, int size, String sortBy, List<SidebarDto> selectedFacets) {
+	public SearchDto findAll(String locale, String currency, String categoryDesc, Double price, int page, int size, String sortBy, List<SidebarDto> selectedFacets) {
 
 		//all categories (if non selected in facets
 		//Category parent = categoryRepository.findByAttributesLclCdAndAttributesCategoryDesc(locale, categoryDesc);
@@ -130,8 +131,9 @@ public class ProductService implements IProductService {
 		return rc;
 	}
 	
+    @Override
 	@Cacheable
-	public List<Product> getProducts(String locale, String currency, List<Long> productIds) {
+	public List<Product> findAll(String locale, String currency, List<Long> productIds) {
 		
 	    List<io.nzbee.entity.product.Product> lp = 
 	    		productService.getProducts(locale, currency, productIds);
@@ -271,7 +273,7 @@ public class ProductService implements IProductService {
 	@SuppressWarnings("unchecked")
 	@Override
 	//@Cacheable
-	public SearchDto findProduct(String lcl, String currency, String categoryDesc, String searchTerm, int page, int size, String sortBy, List<SidebarDto> selectedFacets) {		
+	public SearchDto findAll(String lcl, String currency, String categoryDesc, String searchTerm, int page, int size, String sortBy, List<SidebarDto> selectedFacets) {		
 		
 		FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
 				
@@ -699,6 +701,48 @@ public class ProductService implements IProductService {
 			recurseCategories(list, c); 
 		});
 		return list; 
+	}
+
+	@Override
+	public Product load() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void save(Product t) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void update(Product t) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete(Product t) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Product findOne(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Product findOne(String code) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Product> findAll() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

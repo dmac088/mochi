@@ -41,6 +41,8 @@ public class IT_CategoryRepository {
 
     @Autowired
     private HierarchyRepository hierarchyRepository;
+    
+
 
     public Category persistNewCategory() {
     	Category 		category 		= new Category();

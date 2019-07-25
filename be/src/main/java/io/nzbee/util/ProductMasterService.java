@@ -37,8 +37,7 @@ public class ProductMasterService {
 	
 	@Autowired
 	@Qualifier("productDomainService")
-	private io.nzbee.domain.services.product.ProductService productDomainService;
-	
+	private io.nzbee.domain.services.product.IProductService productDomainService;
 	
 	@Autowired
 	@Qualifier("brandEntityService")
@@ -105,7 +104,7 @@ public class ProductMasterService {
 				GeneralVars.CURRENCY_USD, 
 				"/TBC");
 		
-		productDomainService.persist(pDo);
+		productDomainService.save(pDo);
 
 	}
 	

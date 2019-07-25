@@ -27,12 +27,12 @@ public class ProductController {
     
     @GetMapping("/Product/{locale}/{currency}/id/{id}")
     public Product getProduct(@PathVariable String locale, @PathVariable String currency, @PathVariable Long id) {
-    	return productService.getProduct(locale, currency, id);
+    	return productService.findOne(locale, currency, id);
     }
     
     @PostMapping("/Product/{locale}/{currency}")
     public List<Product> getProducts(@PathVariable String locale, @PathVariable String currency, @RequestBody final List<Long> productIds) {
-    	return productService.getProducts(locale, currency, productIds);
+    	return productService.findAll(locale, currency, productIds);
     }
     
     @PostMapping("/Product/{locale}/{currency}/{category}/maxprice")
@@ -52,12 +52,12 @@ public class ProductController {
   
     @PostMapping("/Product/{locale}/{currency}/category/{category}/maxPrice/{price}/page/{page}/size/{size}/sortBy/{sortBy}")
     public SearchDto getProducts(@PathVariable String locale, @PathVariable String currency, @PathVariable String category, @PathVariable Double price, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy, @RequestBody final List<SidebarDto> selectedFacets) {
-    	return productService.getProducts(locale, currency, category, price, page, size, sortBy, selectedFacets);
+    	return productService.findAll(locale, currency, category, price, page, size, sortBy, selectedFacets);
     }
  
     @PostMapping("/Search/{locale}/{currency}/Category/{category}/SearchTerm/{term}/Page/{page}/Size/{size}/SortBy/{sortBy}")
     public SearchDto search(@PathVariable String locale, @PathVariable String currency, @PathVariable String category,@PathVariable String term, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy, @RequestBody final List<SidebarDto> selectedFacets) {
-    	return productService.findProduct(locale, currency, category, term, page, size, sortBy, selectedFacets);
+    	return productService.findAll(locale, currency, category, term, page, size, sortBy, selectedFacets);
     }
     
 }
