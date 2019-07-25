@@ -6,7 +6,7 @@ import java.util.Objects;
 //on the web-site, it can accept brand, category, or any other object as long as it's mapped
 //in the service layer
 
-public class SidebarDto {
+public class Sidebar {
 
 	private Long Id;
 
@@ -122,7 +122,7 @@ public class SidebarDto {
 	public boolean equals(Object o) {
 		 if (this == o) return true;
 	     if (o == null || getClass() != o.getClass()) return false;
-	     SidebarDto pcf = (SidebarDto) o;
+	     Sidebar pcf = (Sidebar) o;
 	     return this.Id == pcf.Id;
 	}
 

@@ -11,7 +11,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.Brand;
 import io.nzbee.entity.product.IProductService;
-import io.nzbee.ui.component.web.sidebar.SidebarDto;
+import io.nzbee.ui.component.web.sidebar.Sidebar;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.ProductVars;
 
@@ -29,7 +29,7 @@ public class BrandService implements IBrandService {
     @Override
 	@Transactional
 	@Cacheable
-	public List<SidebarDto> getBrands(final String lcl, String currency) {
+	public List<Sidebar> getBrands(final String lcl, String currency) {
     	List<io.nzbee.entity.brand.Brand> lpb = brandService.findAll();
     	List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, lcl, currency))
 		.sorted((pb1, pb2) -> pb2.getProductCount().compareTo(pb1.getProductCount()))
@@ -48,7 +48,7 @@ public class BrandService implements IBrandService {
 	@Override
 	@Transactional
 	//@Cacheable
-	public List<SidebarDto> getBrands(String hierarchyCode, String locale, String currency, String categoryDesc, List<SidebarDto> facets) {
+	public List<Sidebar> getBrands(String hierarchyCode, String locale, String currency, String categoryDesc, List<Sidebar> facets) {
 				
 		List<Long> categoryIds = facets.stream().filter(c -> c.getFacetingName().equals(CategoryVars.PRIMARY_CATEGORY_FACET_NAME)).collect(Collectors.toList())
 				.stream().map(c -> { return c.getId(); }).collect(Collectors.toList());
@@ -93,7 +93,7 @@ public class BrandService implements IBrandService {
 											));
 		});
 		
-		List<SidebarDto> lsfdto = lb.stream()
+		List<Sidebar> lsfdto = lb.stream()
 				.filter(b -> b.getProductCount() > 0)
 				.map(b -> createBrandDTO(b)).collect(Collectors.toList()).stream()
 				.sorted((o1, o2) -> o1.getDesc().compareTo(o2.getDesc()))
@@ -116,8 +116,8 @@ public class BrandService implements IBrandService {
     }
 
  	@Cacheable
-    private SidebarDto createBrandDTO(final Brand b) {
-    	final SidebarDto bDto = new SidebarDto();
+    private Sidebar createBrandDTO(final Brand b) {
+    	final Sidebar bDto = new Sidebar();
     	bDto.setFacetingName(CategoryVars.BRAND_FACET_NAME);
     	bDto.setFieldName("brandDesc");
     	bDto.setToken(b.getBrandCode());

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.nzbee.domain.Category;
 import io.nzbee.domain.services.category.ICategoryService;
-import io.nzbee.ui.component.web.sidebar.SidebarDto;
+import io.nzbee.ui.component.web.sidebar.Sidebar;
 import io.nzbee.variables.CategoryVars;
 
 @RestController
@@ -52,7 +52,7 @@ public class CategoryController {
     }
     
     @PostMapping("/Category/{lcl}/{curr}/desc/{categoryDesc}/children")
-    public List<SidebarDto> getCategoryChildren(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody List<SidebarDto> facets) {
+    public List<Sidebar> getCategoryChildren(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody List<Sidebar> facets) {
     	return categoryService.getCategories(CategoryVars.PRIMARY_HIERARCHY_CODE, lcl, curr, categoryDesc, facets);
     }
 }
