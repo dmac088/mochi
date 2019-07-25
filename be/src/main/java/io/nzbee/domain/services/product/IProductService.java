@@ -2,13 +2,13 @@ package io.nzbee.domain.services.product;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import io.nzbee.domain.Product;
 import io.nzbee.domain.services.IService;
-import io.nzbee.ui.component.web.search.SearchDto;
-import io.nzbee.ui.component.web.sidebar.SidebarDto;
+import io.nzbee.ui.component.web.sidebar.Sidebar;
 
 public interface IProductService extends IService<Product> {
 
@@ -19,24 +19,18 @@ public interface IProductService extends IService<Product> {
 	//as long as it conforms to the same interface contract
 	
 	//returns a user interface object, rule broken, need to change to return a domain object 
-	SearchDto findAll(String locale, String currency, String categoryCode, String term, int page, int size, String sortBy, List<SidebarDto> selectedFacets);
+	Page<Product> findAll(String locale, String currency, String categoryCode, String term, int page, int size, String sortBy, List<Sidebar> selectedFacets);
 	
 	//returns a user interface object, rule broken, need to change to return a domain object 
-	SearchDto findAll(String locale, String currency, String categoryDesc, Double price, int page, int size, String sortBy, List<SidebarDto> selectedFacets);
+	Page<Product> findAll(String locale, String currency, String categoryDesc, Double price, int page, int size, String sortBy, List<Sidebar> selectedFacets);
 	 
 	//returns a list of domain object, this is good
 	List<Product> findAll(@PathVariable String locale, @PathVariable String currency, @RequestBody final List<Long> productIds);
 	 
 	//returns a domain object, this is good
 	Product findOne(String locale, String currency, Long id);
-	 
-	//returns a user interface object, rule broken, need to change to return a domain object 
-	List<SidebarDto> getProductTags(String locale, String currency, String categoryDesc, Double price, List<SidebarDto> selectedFacets);
-	 
-	//returns a user interface object, rule broken, need to change to return a domain object
-	List<SidebarDto> getProductTags(String locale, String currency, String categoryDesc, List<SidebarDto> selectedFacets);
-
+	
 	//returns an attribute value which is allowed
-	Double getMaxPrice(String categoryDesc, String locale, String currency, List<SidebarDto> selectedFacets);
+	Double getMaxPrice(String categoryDesc, String locale, String currency, List<Sidebar> selectedFacets);
 	
 }

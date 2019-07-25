@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import io.nzbee.domain.Brand;
 import io.nzbee.domain.Category;
 import io.nzbee.entity.product.IProductService;
-import io.nzbee.ui.component.web.sidebar.SidebarDto;
+import io.nzbee.ui.component.web.sidebar.Sidebar;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.ProductVars;
 
@@ -95,7 +95,7 @@ public class CategoryService implements ICategoryService {
     @Override
 	@Transactional
 	//@Cacheable
-	public List<SidebarDto> getCategories(String hierarchyCode, String locale, String currency, String categoryDesc, List<SidebarDto> facets) {
+	public List<Sidebar> getCategories(String hierarchyCode, String locale, String currency, String categoryDesc, List<Sidebar> facets) {
     	
     	List<Long> brandIds = facets.stream().filter(f -> f.getFacetingName().equals(CategoryVars.BRAND_FACET_NAME)).collect(Collectors.toList()) 
     			.stream().map(b -> { return b.getId(); }).collect(Collectors.toList());
@@ -146,7 +146,7 @@ public class CategoryService implements ICategoryService {
 		});	
 		
 		
-		List<SidebarDto> lsfdto = 
+		List<Sidebar> lsfdto = 
 			lcDO.stream()
 			.filter(c -> c.getProductCount() > 0)
 			.map(c -> createCategoryDTO(c)).collect(Collectors.toList()).stream()
@@ -230,8 +230,8 @@ public class CategoryService implements ICategoryService {
     }
  	
  	 //Create a data transfer object
-    private SidebarDto createCategoryDTO(final Category c) {
-    	final SidebarDto cDto = new SidebarDto();
+    private Sidebar createCategoryDTO(final Category c) {
+    	final Sidebar cDto = new Sidebar();
     	cDto.setFacetingName(CategoryVars.PRIMARY_CATEGORY_FACET_NAME);
     	cDto.setFieldName("categoryDesc");
     	cDto.setToken(c.getCategoryCode());
