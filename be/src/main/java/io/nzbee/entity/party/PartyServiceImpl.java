@@ -1,7 +1,4 @@
 package io.nzbee.entity.party;
-
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,29 +10,19 @@ import org.springframework.transaction.annotation.Transactional;
 public class PartyServiceImpl implements IPartyService {
 
 	@Autowired
-	private PartyRepository PartyRepository; 
+	private PartyRepository partyRepository; 
 	
 	@PreAuthorize("hasAuthority('PARTY_READER')")
 	@Transactional(readOnly = true)
 	public List<Party> findByRoleTypeDesc(String roleTypeDesc) {
-		List<Party> Partys = new ArrayList<>();
-		Iterator<Party> i = PartyRepository.findByPartyRolesRoleTypeRoleTypeDesc(roleTypeDesc).iterator();
-		while(i.hasNext()) {
-			Partys.add(i.next());
-		}
-		return Partys;
+		return partyRepository.findByPartyRolesRoleTypeRoleTypeDesc(roleTypeDesc);
 	}
 	
 	@Override
 	@PreAuthorize("hasAuthority('PARTY_READER')")
 	@Transactional(readOnly = true)
 	public List<Party> findAll() {
-		List<Party> Partys = new ArrayList<>();
-		Iterator<Party> i = PartyRepository.findAll().iterator();
-		while(i.hasNext()) {
-			Partys.add(i.next());
-		}
-		return Partys;
+		return partyRepository.findAll();
 	}
 
 	@Override
@@ -43,22 +30,24 @@ public class PartyServiceImpl implements IPartyService {
 	@Transactional(readOnly = true)
 	public Optional<Party> findOne(Long id) {
 		// TODO Auto-generated method stub
-		return PartyRepository.findById(id);
+		return partyRepository.findById(id);
 	}
 
 	@Override
-	@PreAuthorize("hasAuthority('PARTY_READ')")
+	//We need to ensure the user is logged in before invoking this method
+	//@PreAuthorize("hasAuthority('PARTY_READ')")
 	@Transactional(readOnly = true)
 	public Optional<Party> findOne(String code) {
 		// TODO Auto-generated method stub
-		return PartyRepository.findByPartyUserUsername(code);
+		return partyRepository.findByPartyUserUsername(code);
 	}
 
 	@Override
 	@PreAuthorize("hasAuthority('PARTY_CREATE')")
 	@Transactional
 	public void save(Party Party) {
-		PartyRepository.save(Party);
+		// TODO Auto-generated method stub
+		partyRepository.save(Party);
 	}
 	
 	@Override
@@ -66,7 +55,7 @@ public class PartyServiceImpl implements IPartyService {
 	@Transactional
 	public void update(Party t) {
 		// TODO Auto-generated method stub
-		PartyRepository.save(t);
+		partyRepository.save(t);
 	}
 
 	@Override
@@ -74,7 +63,7 @@ public class PartyServiceImpl implements IPartyService {
 	@Transactional
 	public void delete(Party t) {
 		// TODO Auto-generated method stub
-		PartyRepository.delete(t);
+		partyRepository.delete(t);
 	}
 	
 }

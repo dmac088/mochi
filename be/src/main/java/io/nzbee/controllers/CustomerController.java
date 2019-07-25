@@ -40,7 +40,7 @@ public class CustomerController {
     public Customer getCustomer(@PathVariable String userName) {
     	LOGGER.debug("Finding an existing customer with user name: {}", userName);
     	//System.out.println("Get Customer");
-		return customerService.getCustomer(userName);
+		return customerService.findOne(userName);
     }
     
 

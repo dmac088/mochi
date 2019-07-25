@@ -2,8 +2,9 @@ package io.nzbee.domain.services.customer;
 import java.util.List;
 
 import io.nzbee.domain.Customer;
+import io.nzbee.domain.services.IService;
 
-public interface ICustomerService {
+public interface ICustomerService extends IService<Customer> {
 
 	 boolean customerExist(final String username);
 
@@ -12,8 +13,6 @@ public interface ICustomerService {
 	 void registerNewCustomer(final Customer customer);
 	 
 	 List<Customer> getCustomers();
-	 
-	 Customer getCustomer(String userName);
 	 
 	 void deleteCustomer(final Customer customer);
 	 

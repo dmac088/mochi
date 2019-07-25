@@ -66,16 +66,9 @@ public class CustomerService implements ICustomerService {
 	
 	@Override
 	@Transactional
-	public Customer getCustomer(String userName) {
+	public Customer findOne(String userName) {
 		Optional<Party> pr1 = partyService.findOne(userName);
-		Customer c1 = new Customer();
-		c1.setGivenName(((Person)pr1.get()).getGivenName());
-		c1.setFamilyName(((Person)pr1.get()).getFamilyName());
-		c1.setUserName(((Person)pr1.get()).getPartyUser().getUsername());
-		c1.setCustomerID(((io.nzbee.entity.role.customer.Customer)((Person)pr1.get()).getPartyRole(PARTY_ROLE_NAME)).getCustomerNumber());
-		c1.setPassword(pr1.get().getPartyUser().getPassword());
-		c1.setMatchingPassword(pr1.get().getPartyUser().getPassword());
-		c1.setPartyType(Person.class.getSimpleName());
+		Customer c1 = convertToCustomerDO(pr1.get());
 		return c1;
 	}
 	
@@ -171,6 +164,48 @@ public class CustomerService implements ICustomerService {
 	    	cDo.setPartyType(party.getClass().getSimpleName());
 		}
 		return cDo;
+	}
+
+
+	@Override
+	public Customer findOne(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public List<Customer> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Customer load() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public void save(Customer t) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void update(Customer t) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void delete(Customer t) {
+		// TODO Auto-generated method stub
+		
 	}
 
     
