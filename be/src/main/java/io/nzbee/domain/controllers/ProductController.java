@@ -35,7 +35,7 @@ public class ProductController {
     
     @PostMapping("/Product/{locale}/{currency}/{category}/maxprice")
     public Double getMaxPrice(@PathVariable String locale, @PathVariable String currency, @PathVariable String category, @RequestBody final List<Sidebar> selectedFacets) {
-    	return productService.getMaxPrice(category, locale, currency, selectedFacets);
+    	return null;// productService.getMaxPrice(category, locale, currency, selectedFacets);
     }
     
 //    @PostMapping("/Product/{locale}/{currency}/category/{category}/maxPrice/{price}/page/{page}/size/{size}/sortBy/{sortBy}")
