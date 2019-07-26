@@ -80,7 +80,7 @@ public class ProductTagDAO  implements IProductTagDao {
 	}
 	
 	@Override
-	public List<ProductTag> findAll(List<Long> categoryIds, String locale, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, List<Long> brandIds) {
+	public List<ProductTag> findAll(String locale, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, List<Long> categoryIds, List<Long> brandIds) {
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 	
