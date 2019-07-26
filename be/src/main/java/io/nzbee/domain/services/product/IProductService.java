@@ -3,12 +3,8 @@ package io.nzbee.domain.services.product;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-
 import io.nzbee.domain.Product;
 import io.nzbee.domain.services.IService;
-import io.nzbee.ui.component.web.sidebar.Sidebar;
 
 public interface IProductService extends IService<Product> {
 
@@ -19,18 +15,36 @@ public interface IProductService extends IService<Product> {
 	//as long as it conforms to the same interface contract
 	
 	//returns a user interface object, rule broken, need to change to return a domain object 
-	Page<Product> findAll(String locale, String currency, String categoryCode, String term, int page, int size, String sortBy, List<Sidebar> selectedFacets);
+	Page<Product> findAll(String lcl, 
+			 String currency, 
+			 String categoryDesc, 
+			 String searchTerm, 
+			 int page, 
+			 int size, 
+			 String sortBy, 
+			 List<String> categoryTokens,
+			 List<String> brandTokens,
+			 List<String> tagTokens);
 	
 	//returns a user interface object, rule broken, need to change to return a domain object 
-	Page<Product> findAll(String locale, String currency, String categoryDesc, Double price, int page, int size, String sortBy, List<Sidebar> selectedFacets);
-	 
-	//returns a list of domain object, this is good
-	List<Product> findAll(@PathVariable String locale, @PathVariable String currency, @RequestBody final List<Long> productIds);
-	 
+	Page<Product> findAll(String locale, 
+			 String currency, 
+			 String categoryDesc, 
+			 Double price, 
+			 int page, 
+			 int size, 
+			 String sortBy, 
+			 List<Long> categoryIds,
+			 List<Long> brandIds,
+			 List<Long> tagIds);
+	
 	//returns a domain object, this is good
 	Product findOne(String locale, String currency, Long id);
 	
+	List<Product> findAll(String locale, String currency, List<Long> productIds);
+	
 	//returns an attribute value which is allowed
-	Double getMaxPrice(String categoryDesc, String locale, String currency, List<Sidebar> selectedFacets);
+	Double getMaxPrice(String categoryDesc, String locale, String currency, List<Long> categoryIds, List<Long> brandIds,
+			List<Long> tagIds);
 	
 }

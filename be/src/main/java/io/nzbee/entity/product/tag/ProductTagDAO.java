@@ -34,8 +34,6 @@ import io.nzbee.entity.product.price.ProductPriceType_;
 import io.nzbee.entity.product.price.ProductPrice_;
 import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.entity.product.status.ProductStatus_;
-import io.nzbee.entity.product.tag.attribute.ProductTagAttribute;
-import io.nzbee.entity.product.tag.attribute.ProductTagAttribute_;
 import io.nzbee.variables.ProductVars;
 
 @Component 

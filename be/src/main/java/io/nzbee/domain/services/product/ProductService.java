@@ -38,7 +38,6 @@ import org.springframework.stereotype.Service;
 import com.google.common.collect.Lists;
 import org.springframework.data.domain.Sort;
 import io.nzbee.domain.Product;
-import io.nzbee.domain.services.category.CategoryService;
 import io.nzbee.entity.PageableUtil;
 import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.brand.IBrandService;
@@ -90,36 +89,44 @@ public class ProductService implements IProductService {
     
     @Override
 	@Cacheable
-	public Page<Product> findAll(String locale, String currency, String categoryDesc, Double price, int page, int size, String sortBy, List<Sidebar> selectedFacets) {
+	public Page<Product> findAll(String locale, 
+								 String currency, 
+								 String categoryDesc, 
+								 Double price, 
+								 int page, 
+								 int size, 
+								 String sortBy, 
+								 List<Long> categoryIds,
+								 List<Long> brandIds,
+								 List<Long> tagIds) {
 
 		//all categories (if non selected in facets
 		//Category parent = categoryRepository.findByAttributesLclCdAndAttributesCategoryDesc(locale, categoryDesc);
-		Optional<Category> parent = categoryService.findByCategoryDesc(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, categoryDesc, locale);
-		List<Category> allCategories = CategoryService.recurseCategories(new ArrayList<Category>(), parent.get());
-		List<Long> allCategoryIds = allCategories.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
-		
-		//Category Facets
-		List<Sidebar> selectedCategories = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals(CategoryVars.PRIMARY_CATEGORY_FACET_NAME);}).collect(Collectors.toList());
-		List<Category> lpc = selectedCategories.stream().map(f-> {return categoryService.findByCategoryDesc(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, f.getDesc(), locale).get();}).collect(Collectors.toList());
-						
-		List<Category> lpcf = new ArrayList<Category>();
-		lpc.stream().forEach(pc -> { lpcf.addAll(CategoryService.recurseCategories(new ArrayList<Category>(), pc)); });
-
-		List<Long> facetCategoryIds = lpcf.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
-		List<Long> categoryIds = (selectedCategories.size() > 0) ? facetCategoryIds : allCategoryIds;
-
-		//Brand Facets
-		List<Sidebar> selectedBrands = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals(CategoryVars.BRAND_FACET_NAME);}).collect(Collectors.toList());
-		List<Long> selectedBrandIds = selectedBrands.stream().map(b -> {return b.getId();}).collect(Collectors.toList());
-				
-		//Tag Facets
-		List<Sidebar> selectedTags = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals(CategoryVars.TAG_FACET_NAME);}).collect(Collectors.toList());
-		List<Long> selectedTagIds = selectedTags.stream().map(t -> {return t.getId();}).collect(Collectors.toList());
-			
+//		Optional<Category> parent = categoryService.findByCategoryDesc(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, categoryDesc, locale);
+//		List<Category> allCategories = CategoryService.recurseCategories(new ArrayList<Category>(), parent.get());
+//		List<Long> allCategoryIds = allCategories.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
+//		
+//		//Category Facets
+//		List<Sidebar> selectedCategories = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals(CategoryVars.PRIMARY_CATEGORY_FACET_NAME);}).collect(Collectors.toList());
+//		List<Category> lpc = selectedCategories.stream().map(f-> {return categoryService.findByCategoryDesc(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, f.getDesc(), locale).get();}).collect(Collectors.toList());
+//						
+//		List<Category> lpcf = new ArrayList<Category>();
+//		lpc.stream().forEach(pc -> { lpcf.addAll(CategoryService.recurseCategories(new ArrayList<Category>(), pc)); });
+//
+//		List<Long> facetCategoryIds = lpcf.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
+//		List<Long> categoryIds = (selectedCategories.size() > 0) ? facetCategoryIds : allCategoryIds;
+//
+//		//Brand Facets
+//		List<Sidebar> selectedBrands = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals(CategoryVars.BRAND_FACET_NAME);}).collect(Collectors.toList());
+//		List<Long> selectedBrandIds = selectedBrands.stream().map(b -> {return b.getId();}).collect(Collectors.toList());
+//				
+//		//Tag Facets
+//		List<Sidebar> selectedTags = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals(CategoryVars.TAG_FACET_NAME);}).collect(Collectors.toList());
+//		List<Long> selectedTagIds = selectedTags.stream().map(t -> {return t.getId();}).collect(Collectors.toList());
+//			
      	Page<io.nzbee.entity.product.Product> ppa = 
-     			productService.getProducts(categoryIds, locale, new Double(0), price, ProductVars.MARKDOWN_SKU_DESCRIPTION, currency, new Date(), new Date(), PageRequest.of(page, size, this.sortByParam(sortBy)), selectedBrandIds, selectedTagIds);
+     			productService.getProducts(categoryIds, locale, new Double(0), price, ProductVars.MARKDOWN_SKU_DESCRIPTION, currency, new Date(), new Date(), PageRequest.of(page, size, this.sortByParam(sortBy)), brandIds, tagIds);
 
-     	
      	return ppa.map(pa -> this.convertToProductDO(pa, locale, currency));
 //  		Page<Product> pp = ppa.map(pa -> this.convertToProductDO(pa, locale, currency));
 //  		SearchDto rc = new SearchDto();
@@ -139,32 +146,32 @@ public class ProductService implements IProductService {
 	}
 	
 	@Override
-	public Double getMaxPrice(String categoryDesc, String locale, String currency, List<Sidebar> facets) {
+	public Double getMaxPrice(String categoryDesc, String locale, String currency, List<Long> categoryIds, List<Long> brandIds, List<Long> tagIds) {
 		
 		//all categories (if non selected in facets
-		Optional<Category> parent = categoryService.findByCategoryDesc(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, categoryDesc, locale);
-		List<Category> allCategories = CategoryService.recurseCategories(new ArrayList<Category>(), parent.get());
-		List<Long> allCategoryIds = allCategories.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
-				
-		//Category Facets
-		List<Sidebar> selectedCategories = facets.stream().filter(f -> {return f.getFacetingName().equals(CategoryVars.PRIMARY_CATEGORY_FACET_NAME);}).collect(Collectors.toList());
-		List<Category> lpc = selectedCategories.stream().map(f-> {return categoryService.findByCategoryDesc(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, f.getDesc(), locale).get();}).collect(Collectors.toList());
-				
-		List<Category> lpcf = new ArrayList<Category>();
-		lpc.stream().forEach(pc -> { lpcf.addAll(CategoryService.recurseCategories(new ArrayList<Category>(), pc)); });
-
-		List<Long> facetCategoryIds = lpcf.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
-		List<Long> categoryIds = (selectedCategories.size() > 0) ? facetCategoryIds : allCategoryIds;
-
-		//Brand Facets
-		List<Sidebar> selectedBrands = facets.stream().filter(f -> {return f.getFacetingName().equals(CategoryVars.BRAND_FACET_NAME);}).collect(Collectors.toList());
-		List<Long> selectedBrandIds = selectedBrands.stream().map(b -> {return b.getId();}).collect(Collectors.toList());
-		
-		//Tag Facets
-		List<Sidebar> selectedTags = facets.stream().filter(f -> {return f.getFacetingName().equals(CategoryVars.TAG_FACET_NAME);}).collect(Collectors.toList());
-		List<Long> selectedTagIds = selectedTags.stream().map(t -> {return t.getId();}).collect(Collectors.toList());
+//		Optional<Category> parent = categoryService.findByCategoryDesc(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, categoryDesc, locale);
+//		List<Category> allCategories = CategoryService.recurseCategories(new ArrayList<Category>(), parent.get());
+//		List<Long> allCategoryIds = allCategories.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
+//				
+//		//Category Facets
+//		List<Sidebar> selectedCategories = facets.stream().filter(f -> {return f.getFacetingName().equals(CategoryVars.PRIMARY_CATEGORY_FACET_NAME);}).collect(Collectors.toList());
+//		List<Category> lpc = selectedCategories.stream().map(f-> {return categoryService.findByCategoryDesc(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, f.getDesc(), locale).get();}).collect(Collectors.toList());
+//				
+//		List<Category> lpcf = new ArrayList<Category>();
+//		lpc.stream().forEach(pc -> { lpcf.addAll(CategoryService.recurseCategories(new ArrayList<Category>(), pc)); });
+//
+//		List<Long> facetCategoryIds = lpcf.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
+//		List<Long> categoryIds = (selectedCategories.size() > 0) ? facetCategoryIds : allCategoryIds;
+//
+//		//Brand Facets
+//		List<Sidebar> selectedBrands = facets.stream().filter(f -> {return f.getFacetingName().equals(CategoryVars.BRAND_FACET_NAME);}).collect(Collectors.toList());
+//		List<Long> selectedBrandIds = selectedBrands.stream().map(b -> {return b.getId();}).collect(Collectors.toList());
+//		
+//		//Tag Facets
+//		List<Sidebar> selectedTags = facets.stream().filter(f -> {return f.getFacetingName().equals(CategoryVars.TAG_FACET_NAME);}).collect(Collectors.toList());
+//		List<Long> selectedTagIds = selectedTags.stream().map(t -> {return t.getId();}).collect(Collectors.toList());
 	
-		Double maxPrice = productService.getMaxPrice(categoryDesc, locale, ProductVars.MARKDOWN_SKU_DESCRIPTION, currency, categoryIds, selectedBrandIds, selectedTagIds);
+		Double maxPrice = productService.getMaxPrice(categoryDesc, locale, ProductVars.MARKDOWN_SKU_DESCRIPTION, currency, categoryIds, brandIds, tagIds);
 						  
 		return maxPrice;
 	}
@@ -188,7 +195,16 @@ public class ProductService implements IProductService {
 	@SuppressWarnings("unchecked")
 	@Override
 	//@Cacheable
-	public Page<Product> findAll(String lcl, String currency, String categoryDesc, String searchTerm, int page, int size, String sortBy, List<Sidebar> selectedFacets) {		
+	public Page<Product> findAll(String lcl, 
+								 String currency, 
+								 String categoryDesc, 
+								 String searchTerm, 
+								 int page, 
+								 int size, 
+								 String sortBy, 
+								 List<String> categoryTokens,
+								 List<String> brandTokens,
+								 List<String> tagTokens) {		
 		
 		FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
 				
@@ -248,9 +264,14 @@ public class ProductService implements IProductService {
 								return getParentCategoryFacets(new HashSet<Facet>(), f, productQueryBuilder, jpaQuery, lcl, currency);
 		}).collect(Collectors.toSet()).stream().flatMap(Set::stream).collect(Collectors.toSet()));
 		
+		List<String> allTokens = new ArrayList<String>();
+		allTokens.addAll(categoryTokens);
+		allTokens.addAll(brandTokens);
+		allTokens.addAll(tagTokens);
+		
 		//filter to get the facets that are selected
-		lf = selectedFacets.stream().flatMap(x -> {
-			return allFacets.stream().filter(y -> x.getToken().equals(y.getValue()));
+		lf = allTokens.stream().flatMap(x -> {
+			return allFacets.stream().filter(y -> x.equals(y.getValue()));
 		}).collect(Collectors.toList());
 		
 		cs = new HashSet<Sidebar>();
@@ -262,8 +283,8 @@ public class ProductService implements IProductService {
 			}
 		});
 		
-		lf = selectedFacets.stream().flatMap(x -> {
-			return allFacets.stream().filter(y -> x.getToken().equals(y.getValue()));
+		lf = allTokens.stream().flatMap(x -> {
+			return allFacets.stream().filter(y -> x.equals(y.getValue()));
 		}).collect(Collectors.toList());
 		
 		lf.stream().forEach(f -> {

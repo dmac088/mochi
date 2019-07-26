@@ -2,9 +2,7 @@ package io.nzbee.entity.product.tag;
 
 import java.util.Date;
 import java.util.List;
-
 import io.nzbee.entity.IDao;
-import io.nzbee.entity.product.tag.attribute.ProductTagAttribute;
 
 public interface IProductTagDao  extends IDao<ProductTag> {
 	
