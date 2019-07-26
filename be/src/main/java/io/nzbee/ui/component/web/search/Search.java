@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import io.nzbee.domain.Product;
 import io.nzbee.ui.component.web.sidebar.Sidebar;
 
-public class SearchDto {
+public class Search {
 	
 	Page<Product> products;
 	
