@@ -1,4 +1,4 @@
-package io.nzbee.controllers;
+package io.nzbee.domain.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import io.nzbee.domain.Product;
 import io.nzbee.domain.services.product.IProductService;
-import io.nzbee.ui.component.web.search.SearchDto;
 import io.nzbee.ui.component.web.sidebar.Sidebar;
 
 @RestController

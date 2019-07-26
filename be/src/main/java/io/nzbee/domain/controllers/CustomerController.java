@@ -1,4 +1,4 @@
-package io.nzbee.controllers;
+package io.nzbee.domain.controllers;
 
 import java.util.List;
 

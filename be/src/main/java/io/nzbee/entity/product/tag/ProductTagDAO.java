@@ -82,15 +82,15 @@ public class ProductTagDAO  implements IProductTagDao {
 	}
 	
 	@Override
-	public List<ProductTagAttribute> findAll(List<Long> categoryIds, String locale, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, List<Long> brandIds) {
+	public List<ProductTag> findAll(List<Long> categoryIds, String locale, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, List<Long> brandIds) {
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 	
-		CriteriaQuery<ProductTagAttribute> cq = cb.createQuery(ProductTagAttribute.class);
+		CriteriaQuery<ProductTag> cq = cb.createQuery(ProductTag.class);
 		
-		Root<ProductTagAttribute> root = cq.from(ProductTagAttribute.class);
-		Join<ProductTagAttribute, ProductTag> tag = root.join(ProductTagAttribute_.tag);
-		Join<ProductTag, Product> product = tag.join(ProductTag_.products);
+		Root<ProductTag> root = cq.from(ProductTag.class);
+		//Join<ProductTagAttribute, ProductTag> tag = root.join(ProductTagAttribute_.tag);
+		Join<ProductTag, Product> product = root.join(ProductTag_.products);
 		Join<Product, ProductAttribute> productAttribute = product.join(Product_.attributes);
 		Join<Product, Category> category = product.join(Product_.categories);
 		Join<Product, Brand> brand = product.join(Product_.brand);
@@ -118,13 +118,13 @@ public class ProductTagDAO  implements IProductTagDao {
 			conditions.add(cb.equal(type.get(ProductPriceType_.desc), priceType));
 			conditions.add(cb.equal(curr.get(Currency_.code), currency));
 		}
-		conditions.add(cb.equal(root.get(ProductTagAttribute_.lclCd), locale));
+		
 		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), locale));
 		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale));
 		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
 		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
 
-		TypedQuery<ProductTagAttribute> query = em.createQuery(cq
+		TypedQuery<ProductTag> query = em.createQuery(cq
 				.select(root)
 				.where(conditions.toArray(new Predicate[] {}))
 				.distinct(true)

@@ -1,4 +1,4 @@
-package io.nzbee.controllers;
+package io.nzbee.domain.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import io.nzbee.domain.services.tag.ITagService;

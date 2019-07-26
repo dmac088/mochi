@@ -38,6 +38,7 @@ import org.springframework.stereotype.Service;
 import com.google.common.collect.Lists;
 import org.springframework.data.domain.Sort;
 import io.nzbee.domain.Product;
+import io.nzbee.domain.services.category.CategoryService;
 import io.nzbee.entity.PageableUtil;
 import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.brand.IBrandService;
@@ -94,7 +95,7 @@ public class ProductService implements IProductService {
 		//all categories (if non selected in facets
 		//Category parent = categoryRepository.findByAttributesLclCdAndAttributesCategoryDesc(locale, categoryDesc);
 		Optional<Category> parent = categoryService.findByCategoryDesc(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, categoryDesc, locale);
-		List<Category> allCategories = recurseCategories(new ArrayList<Category>(), parent.get());
+		List<Category> allCategories = CategoryService.recurseCategories(new ArrayList<Category>(), parent.get());
 		List<Long> allCategoryIds = allCategories.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
 		
 		//Category Facets
@@ -102,7 +103,7 @@ public class ProductService implements IProductService {
 		List<Category> lpc = selectedCategories.stream().map(f-> {return categoryService.findByCategoryDesc(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, f.getDesc(), locale).get();}).collect(Collectors.toList());
 						
 		List<Category> lpcf = new ArrayList<Category>();
-		lpc.stream().forEach(pc -> { lpcf.addAll(recurseCategories(new ArrayList<Category>(), pc)); });
+		lpc.stream().forEach(pc -> { lpcf.addAll(CategoryService.recurseCategories(new ArrayList<Category>(), pc)); });
 
 		List<Long> facetCategoryIds = lpcf.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
 		List<Long> categoryIds = (selectedCategories.size() > 0) ? facetCategoryIds : allCategoryIds;
@@ -142,7 +143,7 @@ public class ProductService implements IProductService {
 		
 		//all categories (if non selected in facets
 		Optional<Category> parent = categoryService.findByCategoryDesc(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, categoryDesc, locale);
-		List<Category> allCategories = recurseCategories(new ArrayList<Category>(), parent.get());
+		List<Category> allCategories = CategoryService.recurseCategories(new ArrayList<Category>(), parent.get());
 		List<Long> allCategoryIds = allCategories.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
 				
 		//Category Facets
@@ -150,7 +151,7 @@ public class ProductService implements IProductService {
 		List<Category> lpc = selectedCategories.stream().map(f-> {return categoryService.findByCategoryDesc(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, f.getDesc(), locale).get();}).collect(Collectors.toList());
 				
 		List<Category> lpcf = new ArrayList<Category>();
-		lpc.stream().forEach(pc -> { lpcf.addAll(recurseCategories(new ArrayList<Category>(), pc)); });
+		lpc.stream().forEach(pc -> { lpcf.addAll(CategoryService.recurseCategories(new ArrayList<Category>(), pc)); });
 
 		List<Long> facetCategoryIds = lpcf.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
 		List<Long> categoryIds = (selectedCategories.size() > 0) ? facetCategoryIds : allCategoryIds;
@@ -608,16 +609,7 @@ public class ProductService implements IProductService {
     	}
     }
 	
-	public static List<Category> recurseCategories(List<Category> list, Category category) {
-		if(category == null) { return list; }
-		list.add(category);
-		if(category.getChildren().isEmpty()) { return list; }
-		category.getChildren().stream().forEach(c -> {
-			list.add(c);
-			recurseCategories(list, c); 
-		});
-		return list; 
-	}
+	
 
 	@Override
 	public Product load() {

@@ -1,5 +1,6 @@
 package io.nzbee.domain.services.category;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -242,4 +243,15 @@ public class CategoryService implements ICategoryService {
     	cDto.setParent(c.getChildCategoryCount() > 0);
 		return cDto;
     }
+    
+    public static List<io.nzbee.entity.category.Category> recurseCategories(ArrayList<io.nzbee.entity.category.Category> arrayList, io.nzbee.entity.category.Category pc) {
+		if(pc == null) { return arrayList; }
+		arrayList.add(pc);
+		if(pc.getChildren().isEmpty()) { return arrayList; }
+		pc.getChildren().stream().forEach(c -> {
+			arrayList.add(c);
+			recurseCategories(arrayList, c); 
+		});
+		return arrayList; 
+	}
 }
