@@ -4,11 +4,15 @@ public class Tag {
 
 	private Long tagId;
 	
+	private String tagCode;
+
 	private String tagDesc;
 	
 	private String tagType;
 	
 	private String locale;
+	
+	private Long productCount;
 
 	public Long getTagId() {
 		return tagId;
@@ -16,6 +20,14 @@ public class Tag {
 
 	public void setTagId(Long tagId) {
 		this.tagId = tagId;
+	}
+	
+	public String getTagCode() {
+		return tagCode;
+	}
+
+	public void setTagCode(String tagCode) {
+		this.tagCode = tagCode;
 	}
 
 	public String getTagDesc() {
@@ -41,6 +53,14 @@ public class Tag {
 	public void setLocale(String locale) {
 		this.locale = locale;
 	}
+
+	public Long getProductCount() {
+		return productCount;
+	}
+
+	public void setProductCount(Long productCount) {
+		this.productCount = productCount;
+	}
 	
 	@Override
     public String toString() {
@@ -50,6 +70,5 @@ public class Tag {
                 .append(", locale=").append(locale);
         return builder.toString();
 	}
-	
-	
+
 }
