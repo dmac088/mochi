@@ -13,4 +13,5 @@ public interface ITagService extends IService<Tag> {
 	
 	//returns a list of domain objects
 	List<Tag> findAll(String locale, String currency, String categoryDesc, Double price, List<Sidebar> selectedFacets);
+	
 }

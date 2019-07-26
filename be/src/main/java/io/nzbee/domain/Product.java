@@ -109,6 +109,14 @@ public class Product {
 		this.primaryCategoryPath = primaryCategoryPath;
 	}
 	
+	public String getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(String currency) {
+		this.currency = currency;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		 if (this == o) return true;
@@ -136,13 +144,5 @@ public class Product {
                 .append(", lclCd=").append(lclCd);
         return builder.toString();
     }
-
-	public String getCurrency() {
-		return currency;
-	}
-
-	public void setCurrency(String currency) {
-		this.currency = currency;
-	}
 
 }
