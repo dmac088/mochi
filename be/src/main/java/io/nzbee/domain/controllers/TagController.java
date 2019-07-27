@@ -8,6 +8,7 @@ public class TagController {
     @Autowired
     private ITagService tagService;
 
+    
 //		I don't think we need this controller here
     
 //    @PostMapping("/Product/{locale}/{currency}/{category}/{price}/tags")
