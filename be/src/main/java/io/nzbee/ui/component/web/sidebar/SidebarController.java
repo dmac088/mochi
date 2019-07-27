@@ -19,7 +19,12 @@ public class SidebarController {
   
 	@PostMapping("/Product/{locale}/{currency}/{category}/tags")
 	public List<Sidebar> getTags(@PathVariable String locale, @PathVariable String currency, @PathVariable String category, @RequestBody final List<Sidebar> selectedFacets) {
-	  return sidebarService.findAll(locale, currency, category, selectedFacets);
+	  return sidebarService.findAllTags(locale, currency, category, selectedFacets);
 	} 
+
+    @PostMapping("/Category/{lcl}/{curr}/desc/{categoryDesc}/children")
+    public List<Sidebar> getCategoryChildren(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody List<Sidebar> facets) {
+    	return sidebarService.findAllCategories(lcl, curr, categoryDesc, facets);
+    }
 	
 }
