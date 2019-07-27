@@ -30,5 +30,10 @@ public class SidebarController {
     public List<Sidebar> getCategoryChildren(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody List<Sidebar> facets) {
     	return sidebarService.findAllCategories(lcl, curr, categoryDesc, facets);
     }
+    
+    @PostMapping("/Brand/{lcl}/{curr}/category/{categoryDesc}")
+    public List<Sidebar> getBrands(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody List<Sidebar> facets) {
+    	return sidebarService.findAllBrands(lcl, curr, categoryDesc, facets);
+    }
 	
 }

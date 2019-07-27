@@ -13,8 +13,9 @@ import io.nzbee.domain.Tag;
 import io.nzbee.domain.services.brand.IBrandService;
 import io.nzbee.domain.services.category.ICategoryService;
 import io.nzbee.domain.services.tag.ITagService;
-import io.nzbee.entity.brand.BrandAttribute_;
+import io.nzbee.entity.brand.attribute.BrandAttribute_;
 import io.nzbee.entity.category.attribute.CategoryAttribute_;
+import io.nzbee.entity.product.tag.attribute.ProductTagAttribute_;
 import io.nzbee.ui.component.web.generic.UIService;
 import io.nzbee.variables.CategoryVars;
 
@@ -48,8 +49,10 @@ public class SidebarServiceImpl extends UIService implements ISidebarService {
 	private Sidebar convertTagToSidebar(Tag t) {
 		Sidebar s = new Sidebar();
 		s.setId(t.getTagId());
+		s.setToken(t.getTagCode());
 		s.setDesc(t.getTagDesc());
 		s.setFacetingName(CategoryVars.TAG_FACET_NAME);
+		s.setFieldName(ProductTagAttribute_.tagDesc.getName());
 		s.setFacetingClassName(t.getClass().getSimpleName());
 		s.setProductCount(t.getProductCount());
 		return s;
@@ -102,7 +105,7 @@ public class SidebarServiceImpl extends UIService implements ISidebarService {
     	final Sidebar s = new Sidebar();
     	s.setFacetingClassName(b.getClass().getSimpleName());
     	s.setFacetingName(CategoryVars.BRAND_FACET_NAME);
-    	s.setFieldName(io.nzbee.entity.brand.attribute.BrandAttribute_.brandDesc.getName());
+    	s.setFieldName(BrandAttribute_.brandDesc.getName());
     	s.setToken(b.getBrandCode());
     	s.setLevel(new Long(0));
     	s.setDesc(b.getBrandDesc());

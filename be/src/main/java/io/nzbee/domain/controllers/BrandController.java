@@ -35,9 +35,5 @@ public class BrandController {
     public Brand getBrand(@PathVariable String lcl, @PathVariable String curr, @PathVariable Long brandId) {
     	return brandService.getBrand(lcl, curr, brandId);
     }
-    
-    @PostMapping("/Brand/{lcl}/{curr}/category/{categoryDesc}")
-    public List<Sidebar> getBrands(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody List<Sidebar> facets) {
-    	return brandService.getBrands(CategoryVars.PRIMARY_HIERARCHY_CODE, lcl, curr, categoryDesc, facets);
-    }
+
 }
