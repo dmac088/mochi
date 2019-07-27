@@ -3,7 +3,13 @@ package io.nzbee.domain.services.tag;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.stereotype.Service;
+
 import io.nzbee.domain.Tag;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.product.IProductService;
@@ -16,6 +22,10 @@ import io.nzbee.variables.ProductVars;
 //it received primitive types and responds with domain objects,
 //that are constructed from relevant entity objects
 //its simplicity helps us with unit testing
+
+@Service
+@Transactional
+@CacheConfig(cacheNames="tags")
 public class TagService implements ITagService {
 
 	@Autowired
