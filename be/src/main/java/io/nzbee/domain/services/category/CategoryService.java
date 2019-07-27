@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import io.nzbee.domain.Brand;
 import io.nzbee.domain.Category;
 import io.nzbee.entity.product.IProductService;
-import io.nzbee.ui.component.web.sidebar.Sidebar;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.ProductVars;
 
@@ -34,7 +33,7 @@ public class CategoryService implements ICategoryService {
     @Override
 	@Transactional
 	//@Cacheable
-	public List<Category> getCategories(final String locale, String currency) {
+	public List<Category> findAll(final String locale, String currency) {
     	List<io.nzbee.entity.category.Category> lpc = categoryService.getAll();
     	return lpc.stream()
     			.map(pc -> createCategory(pc, locale, currency))
@@ -59,7 +58,7 @@ public class CategoryService implements ICategoryService {
     @Override
   	@Transactional
   	//@Cacheable
-  	public List<Category> getCategoriesForLevel(final String locale, String currency, final Long level) {
+  	public List<Category> findAllForLevel(final String locale, String currency, final Long level) {
      	List<io.nzbee.entity.category.Category> lpc = categoryService.findByLevel(CategoryVars.PRIMARY_HIERARCHY_CODE, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, level, locale);
      	return lpc.stream()
      			.map(pc -> createCategory(pc, locale, currency))
@@ -96,13 +95,7 @@ public class CategoryService implements ICategoryService {
     @Override
 	@Transactional
 	//@Cacheable
-	public List<Sidebar> getCategories(String hierarchyCode, String locale, String currency, String categoryDesc, List<Sidebar> facets) {
-    	
-    	List<Long> brandIds = facets.stream().filter(f -> f.getFacetingName().equals(CategoryVars.BRAND_FACET_NAME)).collect(Collectors.toList()) 
-    			.stream().map(b -> { return b.getId(); }).collect(Collectors.toList());
-    	
-    	List<Long> tagIds = facets.stream().filter(f -> f.getFacetingName().equals(CategoryVars.TAG_FACET_NAME)).collect(Collectors.toList()) 
-    			.stream().map(b -> { return b.getId(); }).collect(Collectors.toList());
+	public List<Category> findAll(String locale, String currency, String categoryDesc, List<Long> brandIds, List<Long> tagIds) {
     	
 		List<io.nzbee.entity.category.Category> lc = categoryService.find(
 				 CategoryVars.PRIMARY_HIERARCHY_CODE, 
@@ -143,18 +136,8 @@ public class CategoryService implements ICategoryService {
 											(tagIds.size() == 0 ? 0 : 1)
 											)
 								);
-			System.out.println(cDO.getProductCount());
-		});	
-		
-		
-		List<Sidebar> lsfdto = 
-			lcDO.stream()
-			.filter(c -> c.getProductCount() > 0)
-			.map(c -> createCategoryDTO(c)).collect(Collectors.toList()).stream()
-			.sorted((o1, o2) -> o1.getDesc().compareTo(o2.getDesc()))
-			.collect(Collectors.toList());
-		
-     	return lsfdto;
+		});		
+     	return lcDO;
 	}
     
 
@@ -229,21 +212,7 @@ public class CategoryService implements ICategoryService {
         cDO.setLayouts(pc.getLayouts());
         return cDO;
     }
- 	
- 	 //Create a data transfer object
-    private Sidebar createCategoryDTO(final Category c) {
-    	final Sidebar cDto = new Sidebar();
-    	cDto.setFacetingClassName(c.getClass().getSimpleName());
-    	cDto.setFacetingName(CategoryVars.PRIMARY_CATEGORY_FACET_NAME);
-    	cDto.setFieldName("categoryDesc");
-    	cDto.setToken(c.getCategoryCode());
-    	cDto.setLevel(new Long(0));
-    	cDto.setDesc(c.getCategoryDesc());
-    	cDto.setId(c.getCategoryId());
-    	cDto.setProductCount(c.getProductCount());
-    	cDto.setParent(c.getChildCategoryCount() > 0);
-		return cDto;
-    }
+
     
     public static List<io.nzbee.entity.category.Category> recurseCategories(ArrayList<io.nzbee.entity.category.Category> arrayList, io.nzbee.entity.category.Category pc) {
 		if(pc == null) { return arrayList; }

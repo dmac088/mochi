@@ -2,13 +2,13 @@ package io.nzbee.ui.component.web.sidebar;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import io.nzbee.domain.Brand;
 import io.nzbee.domain.Category;
 import io.nzbee.domain.Tag;
+import io.nzbee.domain.services.category.ICategoryService;
 import io.nzbee.domain.services.tag.ITagService;
+import io.nzbee.entity.category.attribute.CategoryAttribute_;
 import io.nzbee.ui.component.web.generic.UIService;
 import io.nzbee.variables.CategoryVars;
 
@@ -17,8 +17,11 @@ public class SidebarServiceImpl extends UIService implements ISidebarService {
 	@Autowired
 	private ITagService tagService;
 	
+	@Autowired
+	private ICategoryService categoryService;
+	
 	@Override
-	public List<Sidebar> findAll(String locale, String currency, String category, List<Sidebar> selectedFacets) {
+	public List<Sidebar> findAllTags(String locale, String currency, String category, List<Sidebar> selectedFacets) {
 		// TODO Auto-generated method stub
 		List<Long> categoryIds = super.getFacetIds(selectedFacets, Category.class);
 		List<Long> brandIds = super.getFacetIds(selectedFacets, Brand.class);
@@ -40,4 +43,33 @@ public class SidebarServiceImpl extends UIService implements ISidebarService {
 		return s;
 	}
 	
+	@Override
+	public List<Sidebar> findAllCategories(String locale, String currency, String category, List<Sidebar> selectedFacets) {
+		// TODO Auto-generated method stub
+		List<Long> tagIds = super.getFacetIds(selectedFacets, Tag.class);
+		List<Long> brandIds = super.getFacetIds(selectedFacets, Brand.class);
+		
+		List<Category> categories = categoryService.findAll(locale, currency, category, brandIds, tagIds);
+		
+		List<Sidebar> catBars = categories.stream().map(c -> convertCatToSidebar(c)).collect(Collectors.toList());
+		
+		return catBars;
+	}
+	
+	 //Create a data transfer object
+    private Sidebar convertCatToSidebar(final Category c) {
+    	final Sidebar s = new Sidebar();
+    	s.setFacetingClassName(c.getClass().getSimpleName());
+    	s.setFacetingName(CategoryVars.PRIMARY_CATEGORY_FACET_NAME);
+    	s.setFieldName(CategoryAttribute_.categoryDesc.getName());
+    	s.setToken(c.getCategoryCode());
+    	s.setLevel(new Long(0));
+    	s.setDesc(c.getCategoryDesc());
+    	s.setId(c.getCategoryId());
+    	s.setProductCount(c.getProductCount());
+    	s.setParent(c.getChildCategoryCount() > 0);
+		return s;
+    }
+
+
 }
