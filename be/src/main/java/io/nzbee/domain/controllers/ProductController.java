@@ -37,15 +37,5 @@ public class ProductController {
     public Double getMaxPrice(@PathVariable String locale, @PathVariable String currency, @PathVariable String category, @RequestBody final List<Sidebar> selectedFacets) {
     	return null;// productService.getMaxPrice(category, locale, currency, selectedFacets);
     }
-    
-//    @PostMapping("/Product/{locale}/{currency}/category/{category}/maxPrice/{price}/page/{page}/size/{size}/sortBy/{sortBy}")
-//    public SearchDto getProducts(@PathVariable String locale, @PathVariable String currency, @PathVariable String category, @PathVariable Double price, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy, @RequestBody final List<Sidebar> selectedFacets) {
-//    	return productService.findAll(locale, currency, category, price, page, size, sortBy, selectedFacets);
-//    }
-// 
-//    @PostMapping("/Search/{locale}/{currency}/Category/{category}/SearchTerm/{term}/Page/{page}/Size/{size}/SortBy/{sortBy}")
-//    public SearchDto search(@PathVariable String locale, @PathVariable String currency, @PathVariable String category,@PathVariable String term, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy, @RequestBody final List<Sidebar> selectedFacets) {
-//    	return productService.findAll(locale, currency, category, term, page, size, sortBy, selectedFacets);
-//    }
-    
+
 }

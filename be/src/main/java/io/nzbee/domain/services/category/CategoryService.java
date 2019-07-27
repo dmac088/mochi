@@ -233,6 +233,7 @@ public class CategoryService implements ICategoryService {
  	 //Create a data transfer object
     private Sidebar createCategoryDTO(final Category c) {
     	final Sidebar cDto = new Sidebar();
+    	cDto.setFacetingClassName(c.getClass().getSimpleName());
     	cDto.setFacetingName(CategoryVars.PRIMARY_CATEGORY_FACET_NAME);
     	cDto.setFieldName("categoryDesc");
     	cDto.setToken(c.getCategoryCode());
