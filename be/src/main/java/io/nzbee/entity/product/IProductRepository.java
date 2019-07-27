@@ -319,7 +319,7 @@ public interface IProductRepository extends CrudRepository<Product, Long> {
 						   	@Param("categoryIds") 			List<Long> categoryIds,
 						   	@Param("inHandlingCategories")	int inHandlingCategories,
 						   	@Param("tagIds") 				List<Long> tagIds,
-						   	@Param("inHandlingTags")	int inHandlingTags
+						   	@Param("inHandlingTags")		int inHandlingTags
 		);
 	
 }

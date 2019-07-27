@@ -26,4 +26,6 @@ public interface ISearchService {
 			 int size, 
 			 String sortBy, 
 			 List<Sidebar> selectedFacets);
+	
+	Double getMaxPrice(String categoryDesc, String locale, String currency, List<Sidebar> selectedFacets);
 }

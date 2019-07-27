@@ -42,9 +42,8 @@ public interface IProductService extends IService<Product> {
 	Product findOne(String locale, String currency, Long id);
 	
 	List<Product> findAll(String locale, String currency, List<Long> productIds);
-	
-	//returns an attribute value which is allowed
-	Double getMaxPrice(String categoryDesc, String locale, String currency, List<Long> categoryIds, List<Long> brandIds,
-			List<Long> tagIds);
+
+	Double getMaxPrice(String categoryDesc, String locale, String markdownSkuDescription, String currency,
+			List<Long> categoryIds, List<Long> brandIds, List<Long> tagIds);
 	
 }
