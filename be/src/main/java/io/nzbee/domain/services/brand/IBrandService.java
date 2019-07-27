@@ -12,7 +12,7 @@ public interface IBrandService {
 	
 	List<Sidebar> getBrands(String lcl, String curr);
 
-	List<Sidebar> getBrands(String hierarchyCode, String lcl, String curr, String categoryDesc,
-			List<Sidebar> facets);
+	List<Brand> getBrands(String lcl, String curr, String categoryDesc,
+			List<Long> categoryIds, List<Long> tagIds);
 
 }

@@ -48,14 +48,8 @@ public class BrandService implements IBrandService {
 	@Override
 	@Transactional
 	//@Cacheable
-	public List<Sidebar> getBrands(String hierarchyCode, String locale, String currency, String categoryDesc, List<Sidebar> facets) {
-				
-		List<Long> categoryIds = facets.stream().filter(c -> c.getFacetingName().equals(CategoryVars.PRIMARY_CATEGORY_FACET_NAME)).collect(Collectors.toList())
-				.stream().map(c -> { return c.getId(); }).collect(Collectors.toList());
-		
-		List<Long> tagIds = facets.stream().filter(c -> c.getFacetingName().equals(CategoryVars.TAG_FACET_NAME)).collect(Collectors.toList())
-				.stream().map(t -> { return t.getId();}).collect(Collectors.toList());
-		
+	public List<Brand> getBrands(String locale, String currency, String categoryDesc, List<Long> categoryIds, List<Long> tagIds) {
+						
 		//get a list of brands for the selected categories and tags
 		List<io.nzbee.entity.brand.Brand> lpb = brandService.findAll(categoryIds, tagIds);
 		List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, locale, currency)).collect(Collectors.toList());
@@ -93,13 +87,7 @@ public class BrandService implements IBrandService {
 											));
 		});
 		
-		List<Sidebar> lsfdto = lb.stream()
-				.filter(b -> b.getProductCount() > 0)
-				.map(b -> createBrandDTO(b)).collect(Collectors.toList()).stream()
-				.sorted((o1, o2) -> o1.getDesc().compareTo(o2.getDesc()))
-				.collect(Collectors.toList());
-		
-     	return lsfdto;
+     	return lb;
 	}
     
 	

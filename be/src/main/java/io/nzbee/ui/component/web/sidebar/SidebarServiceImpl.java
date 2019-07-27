@@ -6,14 +6,14 @@ import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
-
 import io.nzbee.domain.Brand;
 import io.nzbee.domain.Category;
 import io.nzbee.domain.Tag;
+import io.nzbee.domain.services.brand.IBrandService;
 import io.nzbee.domain.services.category.ICategoryService;
 import io.nzbee.domain.services.tag.ITagService;
+import io.nzbee.entity.brand.BrandAttribute_;
 import io.nzbee.entity.category.attribute.CategoryAttribute_;
 import io.nzbee.ui.component.web.generic.UIService;
 import io.nzbee.variables.CategoryVars;
@@ -28,6 +28,9 @@ public class SidebarServiceImpl extends UIService implements ISidebarService {
 	
 	@Autowired
 	private ICategoryService categoryService;
+
+	@Autowired
+	private IBrandService brandService;
 	
 	@Override
 	public List<Sidebar> findAllTags(String locale, String currency, String category, List<Sidebar> selectedFacets) {
@@ -77,6 +80,34 @@ public class SidebarServiceImpl extends UIService implements ISidebarService {
     	s.setId(c.getCategoryId());
     	s.setProductCount(c.getProductCount());
     	s.setParent(c.getChildCategoryCount() > 0);
+		return s;
+    }
+
+	@Override
+	public List<Sidebar> findAllBrands(String locale, String currency, String category, List<Sidebar> selectedFacets) {
+		// TODO Auto-generated method stub
+		List<Long> tagIds = super.getFacetIds(selectedFacets, Tag.class);
+		List<Long> categoryIds = super.getFacetIds(selectedFacets, Category.class);
+		
+		List<Brand> brands = brandService.getBrands(locale, currency, category, categoryIds, tagIds);
+		
+		List<Sidebar> brandBars = brands.stream().map(b -> convertBrandToSidebar(b)).collect(Collectors.toList());
+		
+		return brandBars;
+	}
+	
+	
+	 //Create a data transfer object
+    private Sidebar convertBrandToSidebar(final Brand b) {
+    	final Sidebar s = new Sidebar();
+    	s.setFacetingClassName(b.getClass().getSimpleName());
+    	s.setFacetingName(CategoryVars.BRAND_FACET_NAME);
+    	s.setFieldName(io.nzbee.entity.brand.attribute.BrandAttribute_.brandDesc.getName());
+    	s.setToken(b.getBrandCode());
+    	s.setLevel(new Long(0));
+    	s.setDesc(b.getBrandDesc());
+    	s.setId(b.getBrandId());
+    	s.setProductCount(b.getProductCount());
 		return s;
     }
 
