@@ -145,38 +145,6 @@ public class ProductService implements IProductService {
 		return lp.stream().map(p -> { return this.convertToProductDO(p, locale, currency);}).collect(Collectors.toList());
 	}
 	
-	@Override
-	public Double getMaxPrice(String categoryDesc, String locale, String currency, List<Long> categoryIds, List<Long> brandIds, List<Long> tagIds) {
-		
-		//all categories (if non selected in facets
-//		Optional<Category> parent = categoryService.findByCategoryDesc(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, categoryDesc, locale);
-//		List<Category> allCategories = CategoryService.recurseCategories(new ArrayList<Category>(), parent.get());
-//		List<Long> allCategoryIds = allCategories.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
-//				
-//		//Category Facets
-//		List<Sidebar> selectedCategories = facets.stream().filter(f -> {return f.getFacetingName().equals(CategoryVars.PRIMARY_CATEGORY_FACET_NAME);}).collect(Collectors.toList());
-//		List<Category> lpc = selectedCategories.stream().map(f-> {return categoryService.findByCategoryDesc(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, f.getDesc(), locale).get();}).collect(Collectors.toList());
-//				
-//		List<Category> lpcf = new ArrayList<Category>();
-//		lpc.stream().forEach(pc -> { lpcf.addAll(CategoryService.recurseCategories(new ArrayList<Category>(), pc)); });
-//
-//		List<Long> facetCategoryIds = lpcf.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
-//		List<Long> categoryIds = (selectedCategories.size() > 0) ? facetCategoryIds : allCategoryIds;
-//
-//		//Brand Facets
-//		List<Sidebar> selectedBrands = facets.stream().filter(f -> {return f.getFacetingName().equals(CategoryVars.BRAND_FACET_NAME);}).collect(Collectors.toList());
-//		List<Long> selectedBrandIds = selectedBrands.stream().map(b -> {return b.getId();}).collect(Collectors.toList());
-//		
-//		//Tag Facets
-//		List<Sidebar> selectedTags = facets.stream().filter(f -> {return f.getFacetingName().equals(CategoryVars.TAG_FACET_NAME);}).collect(Collectors.toList());
-//		List<Long> selectedTagIds = selectedTags.stream().map(t -> {return t.getId();}).collect(Collectors.toList());
-	
-		Double maxPrice = productService.getMaxPrice(categoryDesc, locale, ProductVars.MARKDOWN_SKU_DESCRIPTION, currency, categoryIds, brandIds, tagIds);
-						  
-		return maxPrice;
-	}
-	
-
 	private List<Facet> getDiscreteFacets(QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery jpaQuery, String facetingName, String fieldReference) {		
 		//create a category faceting request for the base level 
 		FacetingRequest facetRequest = qb.facet()
@@ -672,6 +640,28 @@ public class ProductService implements IProductService {
 	public List<Product> findAll() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public Double getMaxPrice(String categoryDesc, String locale, String markdownSkuDescription, String currency,
+			List<Long> categoryIds, List<Long> brandIds, List<Long> tagIds) {
+		// TODO Auto-generated method stub
+		brandIds.add(new Long(-1));
+		categoryIds.add(new Long(-1));
+		tagIds.add(new Long(-1));
+		return productService.getMaxMarkDownPriceForTags(
+				CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
+				categoryDesc, 
+				locale, 
+				currency, 
+				ProductVars.MARKDOWN_SKU_DESCRIPTION, 
+				ProductVars.ACTIVE_SKU_CODE, 
+				brandIds, 
+				brandIds.stream().filter(b -> b.longValue() > -1).collect(Collectors.toList()).size(), 
+				categoryIds, 
+				categoryIds.stream().filter(c -> c.longValue() > -1).collect(Collectors.toList()).size(), 
+				tagIds, 
+				tagIds.stream().filter(t -> t.longValue() > -1).collect(Collectors.toList()).size());
 	}
 
 

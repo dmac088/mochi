@@ -1,26 +1,24 @@
 package io.nzbee.ui.component.web.search;
 
 import java.util.List;
-import java.util.stream.Collectors;
-
 import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-
 import io.nzbee.domain.Brand;
 import io.nzbee.domain.Category;
 import io.nzbee.domain.Product;
 import io.nzbee.domain.Tag;
 import io.nzbee.domain.services.product.IProductService;
 import io.nzbee.ui.component.web.sidebar.Sidebar;
+import io.nzbee.variables.ProductVars;
+import io.nzbee.ui.component.web.generic.UIService;
 
 @Service(value = "SearchService")
 @Transactional
 @CacheConfig(cacheNames="products")
-public class SearchServiceImpl implements ISearchService{
+public class SearchServiceImpl extends UIService implements ISearchService {
 
 	@Autowired
 	private IProductService productService;
@@ -75,13 +73,18 @@ public class SearchServiceImpl implements ISearchService{
 		return search;
 	}
 	
-	private <T> List<String> getFacetTokens(List<Sidebar> facets, Class<T> type) {
-		System.out.println("getFacetTokens");
-		return facets.stream().filter(t -> t.getFacetingClassName().equals(type.getSimpleName())).map(c -> c.getToken()).collect(Collectors.toList());
+	@Override
+	public Double getMaxPrice(String categoryDesc, String locale, String currency, List<Sidebar> selectedFacets) {
+		
+		//convert selected facets into token lists
+		List<Long> categoryIds = this.getFacetIds(selectedFacets, Category.class); 
+		List<Long> brandIds = this.getFacetIds(selectedFacets, Brand.class);
+		List<Long> tagIds = this.getFacetIds(selectedFacets, Tag.class);
+	
+		Double maxPrice = productService.getMaxPrice(categoryDesc, locale, ProductVars.MARKDOWN_SKU_DESCRIPTION, currency, categoryIds, brandIds, tagIds);
+						  
+		return maxPrice;
 	}
 	
-	private <T> List<Long> getFacetIds(List<Sidebar> facets, Class<T> type) {
-		System.out.println("getFacetIds");
-		return facets.stream().filter(t -> t.getFacetingClassName().equals(type.getSimpleName())).map(c -> c.getId()).collect(Collectors.toList());
-	}
+	
 }
