@@ -11,8 +11,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.Brand;
 import io.nzbee.entity.product.IProductService;
-import io.nzbee.ui.component.web.sidebar.Sidebar;
-import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.ProductVars;
 
 @Service
@@ -29,30 +27,42 @@ public class BrandService implements IBrandService {
     @Override
 	@Transactional
 	@Cacheable
-	public List<Sidebar> getBrands(final String lcl, String currency) {
+	public List<Brand> findAll(String lcl) {
     	List<io.nzbee.entity.brand.Brand> lpb = brandService.findAll();
-    	List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, lcl, currency))
+    	List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, lcl))
 		.sorted((pb1, pb2) -> pb2.getProductCount().compareTo(pb1.getProductCount()))
 		.collect(Collectors.toList());
-    	return lb.stream().map(b -> createBrandDTO(b)).collect(Collectors.toList());
+    	return lb;
 	}	
 
 	@Override
 	@Transactional
 	@Cacheable
-	public Brand getBrand(String lcl, String curr, Long brandId) {
+	public Brand findOne(String lcl, Long brandId) {
     	io.nzbee.entity.brand.Brand pb = brandService.findById(brandId).get();
-     	return	createBrandDO(pb, lcl, curr);
+     	return	createBrandDO(pb, lcl);
+	}
+	
+	@Override
+	public Brand findOneByCode(String lcl, String brandCode) {
+		// TODO Auto-generated method stub
+		return createBrandDO(brandService.findByCode(brandCode).get(), lcl);
+	}
+
+	@Override
+	public Brand findOneByDesc(String lcl, String brandDesc) {
+		// TODO Auto-generated method stub
+		return createBrandDO(brandService.findByDesc(brandDesc, lcl).get(), lcl);
 	}
  
 	@Override
 	@Transactional
 	//@Cacheable
-	public List<Brand> getBrands(String locale, String currency, String categoryDesc, List<Long> categoryIds, List<Long> tagIds) {
+	public List<Brand> findAll(String locale, String currency, String categoryDesc, List<Long> categoryIds, List<Long> tagIds) {
 						
 		//get a list of brands for the selected categories and tags
 		List<io.nzbee.entity.brand.Brand> lpb = brandService.findAll(categoryIds, tagIds);
-		List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, locale, currency)).collect(Collectors.toList());
+		List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, locale)).collect(Collectors.toList());
 		
 		lb.stream().forEach(bDO -> {
 			List<Long> lid = new ArrayList<Long>();
@@ -86,7 +96,7 @@ public class BrandService implements IBrandService {
     
 	
  	@Cacheable
-    private Brand createBrandDO(final io.nzbee.entity.brand.Brand b, final String lcl, final String currency) {
+    private Brand createBrandDO(final io.nzbee.entity.brand.Brand b, final String lcl) {
     	final Brand bDO = new Brand();
     	bDO.setBrandId(b.getId());
     	bDO.setBrandCode(b.getCode());
@@ -95,19 +105,6 @@ public class BrandService implements IBrandService {
 			.filter(ba -> ba.getLclCd().equals(lcl)
 			).collect(Collectors.toList()).get(0).getBrandDesc());
     	return bDO;
-    }
-
- 	@Cacheable
-    private Sidebar createBrandDTO(final Brand b) {
-    	final Sidebar bDto = new Sidebar();
-    	bDto.setFacetingName(CategoryVars.BRAND_FACET_NAME);
-    	bDto.setFieldName("brandDesc");
-    	bDto.setToken(b.getBrandCode());
-    	bDto.setLevel(new Long(0));
-    	bDto.setDesc(b.getBrandDesc());
-    	bDto.setId(b.getBrandId());
-    	bDto.setProductCount(b.getProductCount());
-		return bDto;
     }
 
 }

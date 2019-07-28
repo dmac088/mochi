@@ -4,15 +4,18 @@ package io.nzbee.domain.services.brand;
 import java.util.List;
 
 import io.nzbee.domain.Brand;
-import io.nzbee.ui.component.web.sidebar.Sidebar;
 
 public interface IBrandService {
 	 
-	Brand getBrand(String lcl, String curr, Long brandId);
+	Brand findOne(String lcl, Long brandId);
 	
-	List<Sidebar> getBrands(String lcl, String curr);
+	Brand findOneByCode(String lcl, String brandCode);
+	
+	Brand findOneByDesc(String lcl, String brandDesc);
+	
+	List<Brand> findAll(String lcl);
 
-	List<Brand> getBrands(String lcl, String curr, String categoryDesc,
+	List<Brand> findAll(String lcl, String curr, String categoryDesc,
 			List<Long> categoryIds, List<Long> tagIds);
 
 }

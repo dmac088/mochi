@@ -10,6 +10,8 @@ public interface IBrandService {
 	Optional<Brand> findById(Long Id);
 	
 	Optional<Brand> findByCode(String brandCode);
+	
+	Optional<Brand> findByDesc(String brandDesc, String locale);
 
 	List<Brand> findAll(List<Long> categoryIds, List<Long> tagIds);
 }

@@ -3,9 +3,7 @@ package io.nzbee.ui.component.web.sidebar;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.Brand;
@@ -38,6 +36,7 @@ public class SidebarServiceImpl extends UIService implements ISidebarService {
 
 	@Autowired
 	private IProductService productService;
+
 	
 	@Override
 	public List<Sidebar> findAllTags(String locale, String currency, String category, List<Sidebar> selectedFacets) {
@@ -89,7 +88,7 @@ public class SidebarServiceImpl extends UIService implements ISidebarService {
 		List<Long> tagIds = super.getFacetIds(selectedFacets, Tag.class);
 		List<Long> brandIds = super.getFacetIds(selectedFacets, Brand.class);
 		
-		List<Category> categories = categoryService.findAll(locale, currency, category, brandIds, tagIds);
+		List<Category> categories = categoryService.findAll(locale, category, brandIds, tagIds);
 		
 		List<Sidebar> catBars = categories.stream().map(c -> convertCatToSidebar(c)).collect(Collectors.toList());
 		
@@ -117,13 +116,12 @@ public class SidebarServiceImpl extends UIService implements ISidebarService {
 		List<Long> tagIds = super.getFacetIds(selectedFacets, Tag.class);
 		List<Long> categoryIds = super.getFacetIds(selectedFacets, Category.class);
 		
-		List<Brand> brands = brandService.getBrands(locale, currency, category, categoryIds, tagIds);
+		List<Brand> brands = brandService.findAll(locale, currency, category, categoryIds, tagIds);
 		
 		List<Sidebar> brandBars = brands.stream().map(b -> convertBrandToSidebar(b)).collect(Collectors.toList())
 										.stream().filter(b -> b.getProductCount() > 0).collect(Collectors.toList());
 		return brandBars;
 	}
-	
 	
 	 //Create a data transfer object
     private Sidebar convertBrandToSidebar(final Brand b) {
@@ -138,6 +136,5 @@ public class SidebarServiceImpl extends UIService implements ISidebarService {
     	s.setProductCount(b.getProductCount());
 		return s;
     }
-
 
 }

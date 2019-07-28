@@ -10,7 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import io.nzbee.entity.category.Category;
-import io.nzbee.entity.category.CategoryServiceImpl;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.variables.CategoryVars;
 
@@ -201,8 +200,8 @@ public class ProductServiceImpl implements IProductService {
 				locale).get();
 
 		List<Category> lc = new ArrayList<Category>();
-		return CategoryServiceImpl.recurseCategories(lc, pc)
-							.stream().map(c -> c.getCategoryId()).collect(Collectors.toList());
+		return categoryService.recurseCategories(lc, pc)
+				.stream().map(c -> c.getCategoryId()).collect(Collectors.toList());
 	}
 
 

@@ -12,7 +12,13 @@ public abstract class UIService {
 	}
 	
 	protected <T> List<Long> getFacetIds(List<Sidebar> facets, Class<T> type) {
-		return facets.stream().filter(t -> t.getFacetingClassName().equals(type.getSimpleName())).map(c -> c.getId()).collect(Collectors.toList());
+		System.out.println(type.getSimpleName());
+		System.out.println(facets.size());
+		return facets.stream().filter(t -> {
+			System.out.println(t.getFacetingClassName());
+			return t.getFacetingClassName().equals(type.getSimpleName());
+		}).map(c -> c.getId()).collect(Collectors.toList());
+		
 	}
 	
 }

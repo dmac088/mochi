@@ -14,17 +14,7 @@ public interface IProductService extends IService<Product> {
 	//This service layer is an interface since if we want to store our data in a non-hibernate way, we can swap in another service 
 	//as long as it conforms to the same interface contract
 	
-	//returns a user interface object, rule broken, need to change to return a domain object 
-	Page<Product> findAll(String lcl, 
-			 String currency, 
-			 String categoryDesc, 
-			 String searchTerm, 
-			 int page, 
-			 int size, 
-			 String sortBy, 
-			 List<String> categoryTokens,
-			 List<String> brandTokens,
-			 List<String> tagTokens);
+	
 	
 	//returns a user interface object, rule broken, need to change to return a domain object 
 	Page<Product> findAll(String locale, 
@@ -50,5 +40,7 @@ public interface IProductService extends IService<Product> {
 			String productStatusCode, List<Long> categoryIds, List<Long> brandIds,
 			List<Long> tagIds
 			);
+
+	Product convertToProductDO(io.nzbee.entity.product.Product product, String lcl, String currency);
 	
 }

@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import io.nzbee.entity.brand.Brand_;
+import io.nzbee.entity.brand.attribute.BrandAttribute;
+import io.nzbee.entity.brand.attribute.BrandAttribute_;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.Category_;
 import io.nzbee.entity.product.Product;
@@ -45,6 +47,33 @@ public class BrandDaoImpl  implements IBrandDao {
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
 		conditions.add(cb.equal(root.get(Brand_.brandId), id));
+
+		TypedQuery<Brand> query = em.createQuery(cq
+				.select(root)
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(false)
+		);
+
+		return Optional.ofNullable(query.getSingleResult());
+	}
+	
+	@Override
+	public Optional<Brand> findByDesc(String brandDesc, String locale) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<Brand> cq = cb.createQuery(Brand.class);
+		
+		Root<Brand> root = cq.from(Brand.class);
+		
+		Join<Brand, Product> brand = root.join(Brand_.products);
+		Join<Product, ProductStatus> status = brand.join(Product_.productStatus);
+		Join<Brand, BrandAttribute> attribute = root.join(Brand_.brandAttributes);
+		
+		List<Predicate> conditions = new ArrayList<Predicate>();
+		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
+		conditions.add(cb.equal(attribute.get(BrandAttribute_.brandDesc), brandDesc));
+		conditions.add(cb.equal(attribute.get(BrandAttribute_.lclCd), locale));
+		//conditions.add(cb.equal(root.get(Brand_.brandId), id));
 
 		TypedQuery<Brand> query = em.createQuery(cq
 				.select(root)
