@@ -31,7 +31,7 @@ public class ProductServiceImpl implements IProductService {
 	
 	@Override
 	public Page<Product> findAll(List<Long> categoryIds, String locale, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, Pageable pageable, List<Long> brandIds, List<Long> tagIds) {
-		return productDAO.findAll(	categoryIds,
+		return productDAO.findAllActiveSKUByPrimaryHierarchy(	categoryIds,
 									locale,
 									priceStart,
 									priceEnd,
@@ -73,19 +73,19 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public Long getCount(String categoryTypeCode, String categoryDesc, String locale, String currencyCode,
-			String priceTypeDesc, String productStatusCode, List<Long> brandIds, int inHandlingBrands,
+	public Long getCount(String categoryDesc, String locale,
+			String productStatusCode, List<Long> brandIds, int inHandlingBrands,
 			List<Long> categoryIds, int inHandlingCategories) {
 		// TODO Auto-generated method stub
-		return productRepository.count(categoryTypeCode, categoryDesc, locale, currencyCode, priceTypeDesc, productStatusCode, brandIds, inHandlingBrands, categoryIds, inHandlingCategories);
+		return productRepository.count(categoryDesc, locale, productStatusCode, brandIds, inHandlingBrands, categoryIds, inHandlingCategories);
 	}
 
 	@Override
-	public Long getCountForTags(String categoryTypeCode, String categoryDesc, String locale, String currencyCode,
-			String priceTypeDesc, String productStatusCode, List<Long> brandIds, int inHandlingBrands,
+	public Long getCountForTags(String categoryDesc, String locale,
+			String productStatusCode, List<Long> brandIds, int inHandlingBrands,
 			List<Long> categoryIds, int inHandlingCategories, List<Long> tagIds, int inHandlingTags) {
 		// TODO Auto-generated method stub
-		return productRepository.countForTags(categoryTypeCode, categoryDesc, locale, currencyCode, priceTypeDesc, productStatusCode, brandIds, inHandlingBrands, categoryIds, inHandlingCategories, tagIds, inHandlingTags);
+		return productRepository.countForTags(categoryDesc, locale, productStatusCode, brandIds, inHandlingBrands, categoryIds, inHandlingCategories, tagIds, inHandlingTags);
 	}
 
 	@Override

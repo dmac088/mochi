@@ -111,22 +111,16 @@ public class CategoryService implements ICategoryService {
 			cDO.setProductCount(
 								(tagIds.isEmpty()) 
 										? 	productService.getCount(
-											CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 											cDO.getCategoryDesc(), 
 											locale,
-											currency,
-											ProductVars.MARKDOWN_SKU_DESCRIPTION,
 											ProductVars.ACTIVE_SKU_CODE,
 											brandIds.size() == 0 ? Arrays.asList(new Long(-1)) : brandIds ,
 											(brandIds.size() == 0 ? 0 : 1),
 											Arrays.asList(new Long(-1)),
 											0)
 										: 	productService.getCountForTags(
-											CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 											cDO.getCategoryDesc(), 
 											locale,
-											currency,
-											ProductVars.MARKDOWN_SKU_DESCRIPTION,
 											ProductVars.ACTIVE_SKU_CODE,
 											brandIds.size() == 0 ? Arrays.asList(new Long(-1)) : brandIds ,
 											(brandIds.size() == 0 ? 0 : 1),
@@ -165,11 +159,8 @@ public class CategoryService implements ICategoryService {
         
         //get product count and set it
         cDO.setProductCount(	productService.getCount(
-								CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 								pc.getAttributes().stream().filter(ca -> ca.getLclCd().equals(locale)).findFirst().get().getCategoryDesc(), 
 								locale,
-								currency,
-								ProductVars.MARKDOWN_SKU_DESCRIPTION,
 								ProductVars.ACTIVE_SKU_CODE,
 								Arrays.asList(new Long(-1)),
 								0,
