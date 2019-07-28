@@ -53,7 +53,7 @@ import io.nzbee.variables.ProductVars;
 @Service(value = "productDomainService")
 @Transactional
 @CacheConfig(cacheNames="products")
-public class ProductService implements IProductService {
+public class ProductServiceImpl implements IProductService {
 	//In service classes, we should only call methods of entity service classes
 	//the repositories themselves should not be referenced outside the entity service class
 	//this way we ensure proper separation of concerns

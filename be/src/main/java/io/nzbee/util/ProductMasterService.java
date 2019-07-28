@@ -93,7 +93,7 @@ public class ProductMasterService {
 	public void persistProductMaster(ProductMasterSchema p) {
 		
 		io.nzbee.domain.Product pDo = 
-		io.nzbee.domain.services.product.ProductService.convertToProductDO(
+		io.nzbee.domain.services.product.ProductServiceImpl.convertToProductDO(
 				p.get_PRODUCT_CREATED_DATE(), 
 				p.get_PRODUCT_UPC_CODE(), 
 				p.get_BRAND_DESCRIPTION_EN(), 
