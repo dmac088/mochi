@@ -2,21 +2,17 @@ package io.nzbee.entity.product;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-public interface IProductService {
+import io.nzbee.entity.IService;
 
-	public List<Product> getProducts();
-	
-	public Page<Product> getProducts(List<Long> categoryIds, String locale, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, Pageable pageable, List<Long> brandIds, List<Long> tagIds);
+public interface IProductService extends IService<Product> {
 
-	List<Product> getProducts(String locale, String currency, List<Long> productIds);
 	
-	public Optional<Product> getProduct(Long Id);
-	
-	public Optional<Product> getProduct(String upc);
+	public Page<Product> findAll(List<Long> categoryIds, String locale, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, Pageable pageable, List<Long> brandIds, List<Long> tagIds);
+
+	List<Product> findAll(String locale, String currency, List<Long> productIds);
 	
 	Double getMaxPrice(String categoryDesc, String locale, String priceType, String currency, List<Long> categoryIds, List<Long> brandIds, List<Long> tagIds);
 	

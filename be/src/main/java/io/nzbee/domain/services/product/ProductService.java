@@ -82,7 +82,7 @@ public class ProductService implements IProductService {
 	@Transactional
 	@Cacheable
 	public Product findOne(String lcl, String currency, Long id) {
-    	io.nzbee.entity.product.Product pa = productService.getProduct(id).get();
+    	io.nzbee.entity.product.Product pa = productService.findOne(id).get();
 		Product p = this.convertToProductDO(pa, lcl, currency);
 		return p;
 	}	
@@ -99,40 +99,11 @@ public class ProductService implements IProductService {
 								 List<Long> categoryIds,
 								 List<Long> brandIds,
 								 List<Long> tagIds) {
-
-		//all categories (if non selected in facets
-		//Category parent = categoryRepository.findByAttributesLclCdAndAttributesCategoryDesc(locale, categoryDesc);
-//		Optional<Category> parent = categoryService.findByCategoryDesc(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, categoryDesc, locale);
-//		List<Category> allCategories = CategoryService.recurseCategories(new ArrayList<Category>(), parent.get());
-//		List<Long> allCategoryIds = allCategories.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
-//		
-//		//Category Facets
-//		List<Sidebar> selectedCategories = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals(CategoryVars.PRIMARY_CATEGORY_FACET_NAME);}).collect(Collectors.toList());
-//		List<Category> lpc = selectedCategories.stream().map(f-> {return categoryService.findByCategoryDesc(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, f.getDesc(), locale).get();}).collect(Collectors.toList());
-//						
-//		List<Category> lpcf = new ArrayList<Category>();
-//		lpc.stream().forEach(pc -> { lpcf.addAll(CategoryService.recurseCategories(new ArrayList<Category>(), pc)); });
-//
-//		List<Long> facetCategoryIds = lpcf.stream().map(sc -> { return sc.getCategoryId(); }).collect(Collectors.toList());
-//		List<Long> categoryIds = (selectedCategories.size() > 0) ? facetCategoryIds : allCategoryIds;
-//
-//		//Brand Facets
-//		List<Sidebar> selectedBrands = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals(CategoryVars.BRAND_FACET_NAME);}).collect(Collectors.toList());
-//		List<Long> selectedBrandIds = selectedBrands.stream().map(b -> {return b.getId();}).collect(Collectors.toList());
-//				
-//		//Tag Facets
-//		List<Sidebar> selectedTags = selectedFacets.stream().filter(f -> {return f.getFacetingName().equals(CategoryVars.TAG_FACET_NAME);}).collect(Collectors.toList());
-//		List<Long> selectedTagIds = selectedTags.stream().map(t -> {return t.getId();}).collect(Collectors.toList());
-//			
+	
      	Page<io.nzbee.entity.product.Product> ppa = 
-     			productService.getProducts(categoryIds, locale, new Double(0), price, ProductVars.MARKDOWN_SKU_DESCRIPTION, currency, new Date(), new Date(), PageRequest.of(page, size, this.sortByParam(sortBy)), brandIds, tagIds);
+     			productService.findAll(categoryIds, locale, new Double(0), price, ProductVars.MARKDOWN_SKU_DESCRIPTION, currency, new Date(), new Date(), PageRequest.of(page, size, this.sortByParam(sortBy)), brandIds, tagIds);
 
      	return ppa.map(pa -> this.convertToProductDO(pa, locale, currency));
-//  		Page<Product> pp = ppa.map(pa -> this.convertToProductDO(pa, locale, currency));
-//  		SearchDto rc = new SearchDto();
-//		rc.setProducts(pp);
-//		
-//		return rc;
 	}
 	
     @Override
@@ -140,7 +111,7 @@ public class ProductService implements IProductService {
 	public List<Product> findAll(String locale, String currency, List<Long> productIds) {
 		
 	    List<io.nzbee.entity.product.Product> lp = 
-	    		productService.getProducts(locale, currency, productIds);
+	    		productService.findAll(locale, currency, productIds);
      	
 		return lp.stream().map(p -> { return this.convertToProductDO(p, locale, currency);}).collect(Collectors.toList());
 	}
@@ -330,19 +301,7 @@ public class ProductService implements IProductService {
 		List<Product> lp = results.stream().map(pa -> this.convertToProductDO(pa.getProduct(), lcl, currency)).collect(Collectors.toList());
 		
 		return new PageImpl<Product>(lp, pageable, jpaQuery.getResultSize());
-		
-		//create a paging object to hold the results of jpaQuery 
-//		Page<Product> pp = new PageImpl<Product>(lp, pageable, jpaQuery.getResultSize());
-//		
-//		List<Sidebar> css = cs.stream().sorted(Comparator.comparing(Sidebar::getToken)).collect(Collectors.toList());
-//		
-//		src.setFacets(css);
-//		src.getFacets().addAll(bs);
-//		src.getFacets().addAll(ps);
-//		src.getFacets().addAll(ts);
-//		src.setProducts(pp);
-//		
-//		return src;
+	
 	}
 	
     public Sidebar convertToCategorySidebarDTO(String categoryCode, String locale, String currency) {
@@ -503,7 +462,7 @@ public class ProductService implements IProductService {
     
     public void persist(Product p) {
     	
-		Optional<io.nzbee.entity.product.Product> oProduct = productService.getProduct(p.getProductUPC());
+		Optional<io.nzbee.entity.product.Product> oProduct = productService.findOne(p.getProductUPC());
 		io.nzbee.entity.product.Product product = oProduct.isPresent() ? oProduct.get() : new io.nzbee.entity.product.Product();
 		product.setUPC(p.getProductUPC());
 		product.setProductCreateDt(p.getProductCreateDt());
