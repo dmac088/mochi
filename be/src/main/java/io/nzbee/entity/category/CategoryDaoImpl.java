@@ -77,28 +77,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 		
 		return query.getResultList();
 	}
-	
-	@Override
-	public List<Category> getAll() {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		
-		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
-		
-		Root<Category> root = cq.from(Category.class);
-		
-		Join<Category, CategoryType> categoryType = root.join(Category_.categoryType);
-		
-		List<Predicate> conditions = new ArrayList<Predicate>();
-		conditions.add(cb.equal(categoryType.get(CategoryType_.code), CategoryVars.CATEGORY_TYPE_CODE_PRODUCT));
-		
-		TypedQuery<Category> query = em.createQuery(cq
-				.select(root)
-				.where(conditions.toArray(new Predicate[] {}))
-				.distinct(true)
-		);
-		
-		return query.getResultList();
-	}
+
 
 	@Override
 	public void save(Category t) {
@@ -307,6 +286,12 @@ public class CategoryDaoImpl implements ICategoryDao {
 		);
 		
 		return query.getResultList();
+	}
+
+	@Override
+	public List<Category> getAll() {
+		// TODO Auto-generated method stub
+		return this.findAll();
 	}
 	
 	

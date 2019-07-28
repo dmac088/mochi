@@ -1,5 +1,6 @@
 package io.nzbee.entity.category;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +62,16 @@ public class CategoryServiceImpl implements ICategoryService {
 		return null;
 	}
 	
-	
+	public static List<Category> recurseCategories(List<Category> arrayList, Category pc) {
+		if(pc == null) { return arrayList; }
+		arrayList.add(pc);
+		if(pc.getChildren().isEmpty()) { return arrayList; }
+		pc.getChildren().stream().forEach(c -> {
+			arrayList.add(c);
+			recurseCategories(arrayList, c); 
+		});
+		return arrayList; 
+	}
 	
 
 }

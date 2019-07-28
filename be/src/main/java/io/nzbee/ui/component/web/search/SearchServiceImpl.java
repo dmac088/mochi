@@ -24,7 +24,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 	private IProductService productService;
 	
 	@Override
-	public Search findAll(String lcl, 
+	public Search findAll(String locale, 
 			 String currency, 
 			 String categoryDesc, 
 			 String searchTerm, 
@@ -39,7 +39,16 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		List<String> tagTokens = this.getFacetTokens(selectedFacets, Tag.class);
 		
 		//call the domain layer service to get a Page of Products
-		Page<Product> pp = productService.findAll(lcl, currency, categoryDesc, searchTerm, page, size, sortBy, categoryTokens, brandTokens, tagTokens);
+		Page<Product> pp = productService.findAll(locale, 
+												  currency, 
+												  categoryDesc, 
+												  searchTerm, 
+												  page, 
+												  size, 
+												  sortBy, 
+												  categoryTokens, 
+												  brandTokens, 
+												  tagTokens);
 		
 		//add the page of objects to a new Search object and return it 
 		Search search = new Search();
