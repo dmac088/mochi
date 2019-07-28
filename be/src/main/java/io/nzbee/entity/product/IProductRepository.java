@@ -60,7 +60,7 @@ public interface IProductRepository extends CrudRepository<Product, Long> {
 				+ " ON c.cat_typ_id = ct.cat_typ_id "
 				+ "INNER JOIN mochi.product_status pstat "
 				+ " ON p.prd_sts_id = pstat.prd_sts_id "
-				+ "WHERE pt.prc_typ_desc 	= :priceTypeDesc "
+				+ "WHERE pt.prc_typ_cd 	= 'MKD01' "
 				+ "AND pstat.prd_sts_cd 	= :productStatusCode "
 				+ "AND ct.cat_typ_cd 		= :categoryTypeCode "
 				+ "AND ccy.ccy_cd 			= :currencyCode "
@@ -82,7 +82,6 @@ public interface IProductRepository extends CrudRepository<Product, Long> {
 							@Param("categoryDesc") 			String categoryDesc, 
 							@Param("locale") 				String locale,
 							@Param("currencyCode") 			String currencyCode,
-							@Param("priceTypeDesc") 		String priceTypeDesc,
 							@Param("productStatusCode")		String productStatusCode,
 						   	@Param("brandIds") 				List<Long> brandIds,
 						   	@Param("inHandlingBrands")		int inHandlingBrands,
@@ -133,7 +132,7 @@ public interface IProductRepository extends CrudRepository<Product, Long> {
 					+ " ON p.prd_id = ptag.prd_id "
 					+ "INNER JOIN mochi.product_status pstat "
 					+ " ON p.prd_sts_id = pstat.prd_sts_id "
-					+ "WHERE pt.prc_typ_desc 	= :priceTypeDesc "
+					+ "WHERE pt.prc_typ_cd 	=  'MKD01' "
 					+ "AND pstat.prd_sts_cd 	= :productStatusCode "
 					+ "AND ct.cat_typ_cd 		= :categoryTypeCode "
 					+ "AND ccy.ccy_cd 			= :currencyCode "
@@ -156,18 +155,17 @@ public interface IProductRepository extends CrudRepository<Product, Long> {
 					+ "AND now() BETWEEN prc.prc_st_dt AND prc.prc_en_dt ",
 			nativeQuery = true)	
 		Double maxMarkDownPriceForTags(	
-										@Param("categoryTypeCode") 	String categoryTypeCode,
-										@Param("categoryDesc") 		String categoryDesc, 
-										@Param("locale") 			String locale,
-										@Param("currencyCode") 		String currencyCode,
-										@Param("priceTypeDesc") 	String priceTypeDesc,
+										@Param("categoryTypeCode") 		String categoryTypeCode,
+										@Param("categoryDesc") 			String categoryDesc, 
+										@Param("locale") 				String locale,
+										@Param("currencyCode") 			String currencyCode,
 										@Param("productStatusCode")		String productStatusCode,
 									   	@Param("brandIds") 				List<Long> brandIds,
 									   	@Param("inHandlingBrands")		int inHandlingBrands,
 									   	@Param("categoryIds") 			List<Long> categoryIds,
 									   	@Param("inHandlingCategories")	int inHandlingCategories,
-									   	@Param("tagIds") 			List<Long> tagIds,
-									   	@Param("inHandlingTags")	int inHandlingTags);
+									   	@Param("tagIds") 				List<Long> tagIds,
+									   	@Param("inHandlingTags")		int inHandlingTags);
 	
 	@Query(
 		value = "WITH RECURSIVE MyCTE AS ( "

@@ -620,19 +620,19 @@ public class ProductService implements IProductService {
 		categoryIds.add(new Long(-1));
 		tagIds.add(new Long(-1));
 		
-		return productService.getMaxMarkDownPriceForTags(
+		return productService.getMaxMarkDownPrice(
 				CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 				categoryDesc, 
 				locale, 
-				currency, 
-				ProductVars.MARKDOWN_SKU_DESCRIPTION, 
+				currency,  
 				ProductVars.ACTIVE_SKU_CODE, 
 				brandIds, 
 				brandIds.stream().filter(b -> b.longValue() > -1).collect(Collectors.toList()).size(), 
 				categoryIds, 
-				categoryIds.stream().filter(c -> c.longValue() > -1).collect(Collectors.toList()).size(), 
-				tagIds, 
-				tagIds.stream().filter(t -> t.longValue() > -1).collect(Collectors.toList()).size());
+				categoryIds.stream().filter(c -> c.longValue() > -1).collect(Collectors.toList()).size()//, 
+				//tagIds, 
+				//tagIds.stream().filter(t -> t.longValue() > -1).collect(Collectors.toList()).size()
+				);
 	}
 
 	@Override
