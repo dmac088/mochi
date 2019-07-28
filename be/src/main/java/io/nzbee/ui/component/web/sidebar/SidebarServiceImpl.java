@@ -103,7 +103,7 @@ public class SidebarServiceImpl extends UIService implements ISidebarService {
     	s.setFacetingName(CategoryVars.PRIMARY_CATEGORY_FACET_NAME);
     	s.setFieldName(CategoryAttribute_.categoryDesc.getName());
     	s.setToken(c.getCategoryCode());
-    	s.setLevel(new Long(0));
+    	s.setLevel(c.getCategoryLevel());
     	s.setDesc(c.getCategoryDesc());
     	s.setId(c.getCategoryId());
     	s.setProductCount(c.getProductCount());
