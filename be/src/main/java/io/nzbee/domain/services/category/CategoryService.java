@@ -1,6 +1,5 @@
 package io.nzbee.domain.services.category;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -174,7 +173,6 @@ public class CategoryService implements ICategoryService {
 								pc.getAttributes().stream().filter(ca -> ca.getLclCd().equals(locale)).findFirst().get().getCategoryDesc(), 
 								locale,
 								currency,
-								ProductVars.MARKDOWN_SKU_DESCRIPTION,
 								ProductVars.ACTIVE_SKU_CODE,
 								Arrays.asList(new Long(-1)),
 								0,
