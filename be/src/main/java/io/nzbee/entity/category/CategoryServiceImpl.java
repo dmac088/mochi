@@ -61,7 +61,8 @@ public class CategoryServiceImpl implements ICategoryService {
 		return null;
 	}
 	
-	public static List<Category> recurseCategories(List<Category> arrayList, Category pc) {
+	@Override
+	public List<Category> recurseCategories(List<Category> arrayList, Category pc) {
 		if(pc == null) { return arrayList; }
 		arrayList.add(pc);
 		if(pc.getChildren().isEmpty()) { return arrayList; }

@@ -2,6 +2,9 @@ package io.nzbee.ui.component.web.search;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
+import io.nzbee.domain.Product;
 import io.nzbee.ui.component.web.sidebar.Sidebar;
 
 public interface ISearchService {
@@ -28,4 +31,7 @@ public interface ISearchService {
 			 List<Sidebar> selectedFacets);
 	
 	Double getMaxPrice(String categoryDesc, String locale, String currency, List<Sidebar> selectedFacets);
+
+	Page<Product> findAll(String lcl, String currency, String categoryDesc, String searchTerm, int page, int size,
+			String sortBy, List<String> categoryTokens, List<String> brandTokens, List<String> tagTokens);
 }

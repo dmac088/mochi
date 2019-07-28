@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import io.nzbee.domain.Category;
 import io.nzbee.domain.services.category.ICategoryService;
+import io.nzbee.variables.CategoryVars;
 
 @RestController
 @RequestMapping("/api")
@@ -23,27 +24,27 @@ public class CategoryController {
     
     @GetMapping("/Category/{lcl}/{curr}")
     public List<Category> getCategories(@PathVariable String lcl, @PathVariable String curr) {
-    	return categoryService.findAll(lcl, curr);
+    	return categoryService.findAll(lcl);
     }
     
     @GetMapping("/Category/{lcl}/{curr}/ParentCategory/{parentCat}")
     public List<Category> getCategories(@PathVariable String lcl, @PathVariable String curr, @PathVariable Long parentCategory) {
-    	return categoryService.getCategoryParent(lcl, curr, parentCategory);
+    	return categoryService.findByParent(lcl, parentCategory);
     }
     
     @GetMapping("/Category/{lcl}/{curr}/level/{level}")
     public List<Category> getCategoriesForLevel(@PathVariable String lcl, @PathVariable String curr, @PathVariable Long level) {
-    	return categoryService.findAllForLevel(lcl, curr, level);
+    	return categoryService.findAllForLevel(lcl, level);
     }
 
     @GetMapping("/Category/{lcl}/{curr}/id/{categoryId}")
     public Category getCategory(@PathVariable String lcl, @PathVariable String curr, @PathVariable Long categoryId) {
-    	return categoryService.getCategory(lcl, curr, categoryId);
+    	return categoryService.findOne(lcl, categoryId);
     }
     
     @GetMapping("/Category/{lcl}/{curr}/desc/{categoryDesc}")
     public Category getCategory(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc) {
-    	return categoryService.getCategory(lcl, curr, categoryDesc);
+    	return categoryService.findOneByDesc(lcl, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, categoryDesc);
     }
    
 }

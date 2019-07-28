@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import io.nzbee.domain.Brand;
 import io.nzbee.domain.services.brand.IBrandService;
-import io.nzbee.ui.component.web.sidebar.Sidebar;
 
 @RestController
 @RequestMapping("/api")
@@ -23,13 +22,13 @@ public class BrandController {
     }
     
     @GetMapping("/Brand/{lcl}/{curr}")
-    public List<Sidebar> getBrands(@PathVariable String lcl, @PathVariable String curr) {
-    	return brandService.getBrands(lcl, curr);
+    public List<Brand> getBrands(@PathVariable String lcl, @PathVariable String curr) {
+    	return brandService.findAll(lcl);
     }
 
     @GetMapping("/Brand/{lcl}/{curr}/id/{brandId}")
     public Brand getBrand(@PathVariable String lcl, @PathVariable String curr, @PathVariable Long brandId) {
-    	return brandService.getBrand(lcl, curr, brandId);
+    	return brandService.findOne(lcl, brandId);
     }
 
 }
