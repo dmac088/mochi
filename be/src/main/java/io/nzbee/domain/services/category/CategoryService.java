@@ -203,16 +203,4 @@ public class CategoryService implements ICategoryService {
         cDO.setLayouts(pc.getLayouts());
         return cDO;
     }
-
-    
-    public static List<io.nzbee.entity.category.Category> recurseCategories(ArrayList<io.nzbee.entity.category.Category> arrayList, io.nzbee.entity.category.Category pc) {
-		if(pc == null) { return arrayList; }
-		arrayList.add(pc);
-		if(pc.getChildren().isEmpty()) { return arrayList; }
-		pc.getChildren().stream().forEach(c -> {
-			arrayList.add(c);
-			recurseCategories(arrayList, c); 
-		});
-		return arrayList; 
-	}
 }

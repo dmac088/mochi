@@ -10,8 +10,10 @@ import io.nzbee.entity.IService;
 public interface IProductService extends IService<Product> {
 
 	
-	public Page<Product> findAll(List<Long> categoryIds, String locale, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, Pageable pageable, List<Long> brandIds, List<Long> tagIds);
-
+	Page<Product> findAll(String categoryDesc, List<Long> categoryIds, String locale, Double priceStart,
+			Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd,
+			Pageable pageable, List<Long> brandIds, List<Long> tagIds);
+	
 	List<Product> findAll(String locale, String currency, List<Long> productIds);
 	
 	Double getMaxPrice(String categoryDesc, String locale, String priceType, String currency, List<Long> categoryIds, List<Long> brandIds, List<Long> tagIds);
@@ -46,4 +48,6 @@ public interface IProductService extends IService<Product> {
 	Long getCountForTags(String categoryDesc, String locale, String productStatusCode, List<Long> brandIds,
 			int inHandlingBrands, List<Long> categoryIds, int inHandlingCategories, List<Long> tagIds,
 			int inHandlingTags);
+
+
 }
