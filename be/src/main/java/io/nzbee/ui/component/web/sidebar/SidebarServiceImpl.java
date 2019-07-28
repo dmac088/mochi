@@ -45,11 +45,15 @@ public class SidebarServiceImpl extends UIService implements ISidebarService {
 		List<Long> categoryIds = super.getFacetIds(selectedFacets, Category.class);
 		List<Long> brandIds = super.getFacetIds(selectedFacets, Brand.class);
 		
+	
+		
 		List<Tag> tags = tagService.findAll(locale, currency, category, categoryIds, brandIds);
 		
 		List<Sidebar> tagBars = tags.stream().map(t -> {
-				
+				List<Long> tagIds = new ArrayList<Long>();
+				tagIds.add(t.getTagId());
 				Sidebar s = convertTagToSidebar(t);
+				
 				s.setProductCount(productService.getCount(
 						CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 						category, 
@@ -58,7 +62,7 @@ public class SidebarServiceImpl extends UIService implements ISidebarService {
 						ProductVars.ACTIVE_SKU_CODE, 
 						categoryIds, 
 						brandIds, 
-						new ArrayList<Long>()
+						tagIds
 						)
 				);
 				return s;
