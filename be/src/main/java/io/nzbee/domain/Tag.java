@@ -11,8 +11,6 @@ public class Tag {
 	private String tagType;
 	
 	private String locale;
-	
-	private Long productCount;
 
 	public Long getTagId() {
 		return tagId;
@@ -52,14 +50,6 @@ public class Tag {
 
 	public void setLocale(String locale) {
 		this.locale = locale;
-	}
-
-	public Long getProductCount() {
-		return productCount;
-	}
-
-	public void setProductCount(Long productCount) {
-		this.productCount = productCount;
 	}
 	
 	@Override

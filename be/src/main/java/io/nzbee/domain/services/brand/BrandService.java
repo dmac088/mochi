@@ -60,11 +60,8 @@ public class BrandService implements IBrandService {
 			bDO.setProductCount(
 					(tagIds.isEmpty()) 
 									? productService.getCount(
-											CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 											categoryDesc, 
 											locale,
-											currency,
-											ProductVars.MARKDOWN_SKU_DESCRIPTION,
 											ProductVars.ACTIVE_SKU_CODE,
 											lid.size() == 0 ? Arrays.asList(new Long(-1)) : lid,
 											(lid.size() == 0 ? 0 : 1),
@@ -72,11 +69,8 @@ public class BrandService implements IBrandService {
 											(categoryIds.size() == 0 ? 0 : 1)
 											)
 									: productService.getCountForTags(
-											CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 											categoryDesc, 
 											locale,
-											currency,
-											ProductVars.MARKDOWN_SKU_DESCRIPTION,
 											ProductVars.ACTIVE_SKU_CODE,
 											lid.size() == 0 ? Arrays.asList(new Long(-1)) : lid,
 											(lid.size() == 0 ? 0 : 1),

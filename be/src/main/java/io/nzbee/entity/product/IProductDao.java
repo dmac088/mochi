@@ -14,7 +14,9 @@ public interface IProductDao extends IDao<Product> {
 	Optional<Product> findByUPC(String upc);
 	
 	//parameters should be primitive types
-	Page<Product> findAll(List<Long> categoryIds, String locale, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, Pageable pageable, List<Long> brandIds, List<Long> tagIds);	
+	Page<Product> findAllActiveSKU(List<Long> categoryIds, String locale, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, Pageable pageable, List<Long> brandIds, List<Long> tagIds);	
+	
+	Page<Product> findAllActiveSKUByPrimaryHierarchy(List<Long> categoryIds, String locale, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, Pageable pageable, List<Long> brandIds, List<Long> tagIds);
 	
 	List<Product> getAll(String locale, String currency, List<Long> productIds);
 	

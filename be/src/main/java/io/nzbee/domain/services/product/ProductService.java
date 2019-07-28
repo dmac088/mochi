@@ -603,11 +603,12 @@ public class ProductService implements IProductService {
 
 	@Override
 	public Double getMaxPrice(String categoryDesc, String locale, String markdownSkuDescription, String currency,
-			List<Long> categoryIds, List<Long> brandIds, List<Long> tagIds) {
-		// TODO Auto-generated method stub
+		List<Long> categoryIds, List<Long> brandIds, List<Long> tagIds) {
+		
 		brandIds.add(new Long(-1));
 		categoryIds.add(new Long(-1));
 		tagIds.add(new Long(-1));
+		
 		return productService.getMaxMarkDownPriceForTags(
 				CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 				categoryDesc, 
@@ -622,6 +623,39 @@ public class ProductService implements IProductService {
 				tagIds, 
 				tagIds.stream().filter(t -> t.longValue() > -1).collect(Collectors.toList()).size());
 	}
+
+	@Override
+	public Long getCount(String categoryTypeCode, String categoryDesc, String locale, String currency,
+			String productStatusCode, List<Long> categoryIds, List<Long> brandIds, List<Long> tagIds) {
+			
+		brandIds.add(new Long(-1));
+		categoryIds.add(new Long(-1));
+		tagIds.add(new Long(-1));
+		
+		return tagIds.stream().filter(b -> b.longValue() > -1).collect(Collectors.toList()).size() == 0
+			   ?
+				productService.getCount(
+				categoryDesc, 
+				locale, 
+				productStatusCode, 
+				brandIds, 
+				brandIds.stream().filter(b -> b.longValue() > -1).collect(Collectors.toList()).size(), 
+				categoryIds, 
+				categoryIds.stream().filter(c -> c.longValue() > -1).collect(Collectors.toList()).size())
+				:
+				productService.getCountForTags(
+				categoryDesc, 
+				locale, 
+				productStatusCode, 
+				brandIds, 
+				brandIds.stream().filter(b -> b.longValue() > -1).collect(Collectors.toList()).size(), 
+				categoryIds, 
+				categoryIds.stream().filter(c -> c.longValue() > -1).collect(Collectors.toList()).size(),
+				tagIds, 
+				tagIds.stream().filter(c -> c.longValue() > -1).collect(Collectors.toList()).size());	
+	}
+	
+	
 
 
 }

@@ -112,7 +112,7 @@ public class ProductMasterService {
 		List<ProductMasterSchema> lpms = new ArrayList<ProductMasterSchema>();
 	    try {
 	    
-	    	List<Product> products = productEntityService.getProducts();
+	    	List<Product> products = productEntityService.findAll();
 	    	
 	    	 	lpms.addAll(products.stream().map(p -> {
 	    		ProductMasterSchema pms = new ProductMasterSchema();

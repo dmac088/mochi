@@ -46,4 +46,9 @@ public interface IProductService extends IService<Product> {
 	Double getMaxPrice(String categoryDesc, String locale, String markdownSkuDescription, String currency,
 			List<Long> categoryIds, List<Long> brandIds, List<Long> tagIds);
 	
+	Long getCount(String categoryTypeCode, String categoryDesc, String locale, String currency,
+			String productStatusCode, List<Long> categoryIds, List<Long> brandIds,
+			List<Long> tagIds
+			);
+	
 }

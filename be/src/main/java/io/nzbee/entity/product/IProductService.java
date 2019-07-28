@@ -39,30 +39,11 @@ public interface IProductService extends IService<Product> {
 			int inHandlingCategories,
 			List<Long> tagIds,
 			int inHandlingTags);
-	
-	Long getCount(
-		   	String categoryTypeCode,
-		   	String categoryDesc, 
-		   	String locale,
-		   	String currencyCode,
-		   	String priceTypeDesc,
-		   	String productStatusCode,
-		   	List<Long> brandIds,
-		   	int inHandlingBrands,
-		   	List<Long> categoryIds,
-		   	int inHandlingCategories);
-	
-	Long getCountForTags(
-			String categoryTypeCode,
-		    String categoryDesc, 
-			String locale,
-			String currencyCode,
-			String priceTypeDesc,
-			String productStatusCode,
-			List<Long> brandIds,
-			int inHandlingBrands,
-			List<Long> categoryIds,
-			int inHandlingCategories,
-			List<Long> tagIds,
+
+	Long getCount(String categoryDesc, String locale, String productStatusCode, List<Long> brandIds,
+			int inHandlingBrands, List<Long> categoryIds, int inHandlingCategories);
+
+	Long getCountForTags(String categoryDesc, String locale, String productStatusCode, List<Long> brandIds,
+			int inHandlingBrands, List<Long> categoryIds, int inHandlingCategories, List<Long> tagIds,
 			int inHandlingTags);
 }

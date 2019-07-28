@@ -1,5 +1,6 @@
 package io.nzbee.ui.component.web.sidebar;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,12 +13,14 @@ import io.nzbee.domain.Category;
 import io.nzbee.domain.Tag;
 import io.nzbee.domain.services.brand.IBrandService;
 import io.nzbee.domain.services.category.ICategoryService;
+import io.nzbee.domain.services.product.IProductService;
 import io.nzbee.domain.services.tag.ITagService;
 import io.nzbee.entity.brand.attribute.BrandAttribute_;
 import io.nzbee.entity.category.attribute.CategoryAttribute_;
 import io.nzbee.entity.product.tag.attribute.ProductTagAttribute_;
 import io.nzbee.ui.component.web.generic.UIService;
 import io.nzbee.variables.CategoryVars;
+import io.nzbee.variables.ProductVars;
 
 @Service(value = "SidebarService")
 @Transactional
@@ -32,6 +35,9 @@ public class SidebarServiceImpl extends UIService implements ISidebarService {
 
 	@Autowired
 	private IBrandService brandService;
+
+	@Autowired
+	private IProductService productService;
 	
 	@Override
 	public List<Sidebar> findAllTags(String locale, String currency, String category, List<Sidebar> selectedFacets) {
@@ -41,7 +47,22 @@ public class SidebarServiceImpl extends UIService implements ISidebarService {
 		
 		List<Tag> tags = tagService.findAll(locale, currency, category, categoryIds, brandIds);
 		
-		List<Sidebar> tagBars = tags.stream().map(t -> convertTagToSidebar(t)).collect(Collectors.toList());
+		List<Sidebar> tagBars = tags.stream().map(t -> {
+				
+				Sidebar s = convertTagToSidebar(t);
+				s.setProductCount(productService.getCount(
+						CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
+						category, 
+						locale, 
+						currency, 
+						ProductVars.ACTIVE_SKU_CODE, 
+						categoryIds, 
+						brandIds, 
+						new ArrayList<Long>()
+						)
+				);
+				return s;
+			}).collect(Collectors.toList());
 		
 		return tagBars;
 	}
@@ -54,7 +75,6 @@ public class SidebarServiceImpl extends UIService implements ISidebarService {
 		s.setFacetingName(CategoryVars.TAG_FACET_NAME);
 		s.setFieldName(ProductTagAttribute_.tagDesc.getName());
 		s.setFacetingClassName(t.getClass().getSimpleName());
-		s.setProductCount(t.getProductCount());
 		return s;
 	}
 	
