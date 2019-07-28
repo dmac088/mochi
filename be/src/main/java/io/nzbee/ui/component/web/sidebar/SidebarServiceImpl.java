@@ -62,7 +62,8 @@ public class SidebarServiceImpl extends UIService implements ISidebarService {
 						)
 				);
 				return s;
-			}).collect(Collectors.toList());
+			}).collect(Collectors.toList())
+				.stream().filter(t -> t.getProductCount() > 0).collect(Collectors.toList());
 		
 		return tagBars;
 	}
@@ -114,8 +115,8 @@ public class SidebarServiceImpl extends UIService implements ISidebarService {
 		
 		List<Brand> brands = brandService.getBrands(locale, currency, category, categoryIds, tagIds);
 		
-		List<Sidebar> brandBars = brands.stream().map(b -> convertBrandToSidebar(b)).collect(Collectors.toList());
-		
+		List<Sidebar> brandBars = brands.stream().map(b -> convertBrandToSidebar(b)).collect(Collectors.toList())
+										.stream().filter(b -> b.getProductCount() > 0).collect(Collectors.toList());
 		return brandBars;
 	}
 	
