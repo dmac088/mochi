@@ -19,18 +19,18 @@ public class ProductServiceImpl implements IProductService {
 	private IProductRepository productRepository;
 	
 	@Override
-	public List<Product> getProducts() {
+	public List<Product> findAll() {
 		return productDAO.getAll();
 	}
 	
 	@Override
-	public List<Product> getProducts(String locale, String currency, List<Long> productIds) {
+	public List<Product> findAll(String locale, String currency, List<Long> productIds) {
 		// TODO Auto-generated method stub
 		return productDAO.getAll(locale, currency, productIds);
 	}
 	
 	@Override
-	public Page<Product> getProducts(List<Long> categoryIds, String locale, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, Pageable pageable, List<Long> brandIds, List<Long> tagIds) {
+	public Page<Product> findAll(List<Long> categoryIds, String locale, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, Pageable pageable, List<Long> brandIds, List<Long> tagIds) {
 		return productDAO.findAll(	categoryIds,
 									locale,
 									priceStart,
@@ -46,12 +46,12 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public Optional<Product> getProduct(Long Id) {
+	public Optional<Product> findOne(Long Id) {
 		return productDAO.findById(Id);
 	}
 	
 	@Override
-	public Optional<Product> getProduct(String upc) {
+	public Optional<Product> findOne(String upc) {
 		return productDAO.findByUPC(upc);
 	}
 
@@ -93,6 +93,24 @@ public class ProductServiceImpl implements IProductService {
 			List<Long> categoryIds, List<Long> brandIds, List<Long> tagIds) {
 		// TODO Auto-generated method stub
 		return productDAO.getMaxPrice(categoryDesc, locale, priceType, currency, categoryIds, brandIds, tagIds);
+	}
+
+	@Override
+	public void save(Product t) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void update(Product t) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete(Product t) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
