@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.Brand;
 import io.nzbee.domain.Category;
@@ -35,6 +36,7 @@ public class SidebarServiceImpl extends UIService implements ISidebarService {
 	private IBrandService brandService;
 
 	@Autowired
+	@Qualifier("productDomainService")
 	private IProductService productService;
 
 	

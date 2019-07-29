@@ -22,6 +22,7 @@ import org.hibernate.search.query.facet.FacetCombine;
 import org.hibernate.search.query.facet.FacetSortOrder;
 import org.hibernate.search.query.facet.FacetingRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -49,6 +50,7 @@ import io.nzbee.ui.component.web.generic.UIService;
 public class SearchServiceImpl extends UIService implements ISearchService {
 
 	@Autowired
+	@Qualifier("productDomainService")
 	private IProductService productService;
 	
 	@Autowired
