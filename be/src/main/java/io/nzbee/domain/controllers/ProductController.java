@@ -17,10 +17,6 @@ public class ProductController {
 
     @Autowired
     private IProductService productService;
-
-    public ProductController() {
-        super();
-    }
     
     @GetMapping("/Product/{locale}/{currency}/id/{id}")
     public Product getProduct(@PathVariable String locale, @PathVariable String currency, @PathVariable Long id) {
