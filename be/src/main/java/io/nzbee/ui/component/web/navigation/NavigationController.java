@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.nzbee.ui.component.web.facet.NavFacet;
 import io.nzbee.ui.component.web.search.Search;
-import io.nzbee.ui.component.web.sidebar.Sidebar;
 
 @RestController
 @RequestMapping("/api")
@@ -20,7 +20,7 @@ public class NavigationController {
 	private INavigationService navigationService;
 	
 	@PostMapping("/Product/{locale}/{currency}/category/{category}/page/{page}/size/{size}/sortBy/{sortBy}")
-	public Search getProducts(@PathVariable String locale, @PathVariable String currency, @PathVariable String category, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy, @RequestBody final List<Sidebar> selectedFacets) {
+	public Search getProducts(@PathVariable String locale, @PathVariable String currency, @PathVariable String category, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy, @RequestBody final List<NavFacet> selectedFacets) {
 	   	return navigationService.findAll(locale, currency, category, page, size, sortBy, selectedFacets);
 	}
 

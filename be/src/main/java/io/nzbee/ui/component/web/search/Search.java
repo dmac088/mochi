@@ -4,13 +4,13 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 
 import io.nzbee.domain.Product;
-import io.nzbee.ui.component.web.sidebar.Sidebar;
+import io.nzbee.ui.component.web.facet.NavFacet;
 
 public class Search {
 	
 	Page<Product> products;
 	
-	List<Sidebar> Facets;
+	List<NavFacet> Facets;
 
 	public Page<Product> getProducts() {
 		return products;
@@ -20,11 +20,11 @@ public class Search {
 		this.products = products;
 	}
 
-	public List<Sidebar> getFacets() {
+	public List<NavFacet> getFacets() {
 		return Facets;
 	}
 
-	public void setFacets(List<Sidebar> facets) {
+	public void setFacets(List<NavFacet> facets) {
 		this.Facets = facets;
 	}
 	

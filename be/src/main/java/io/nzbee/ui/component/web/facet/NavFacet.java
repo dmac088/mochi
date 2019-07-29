@@ -1,12 +1,13 @@
-package io.nzbee.ui.component.web.sidebar;
+package io.nzbee.ui.component.web.facet;
 
+import java.util.List;
 import java.util.Objects;
 
 //this is a generic object used to populate UI elements such as navigation side-bars
 //on the web-site, it can accept brand, category, or any other object as long as it's mapped
 //in the service layer
 
-public class Sidebar {
+public class NavFacet {
 
 	private Long Id;
 
@@ -29,6 +30,8 @@ public class Sidebar {
 	private boolean parent;
 
 	private Long parentId;
+	
+	private List<NavFacetAttribute> sidebarAttributes;
 
 	public Long getId() {
 		return Id;
@@ -117,12 +120,20 @@ public class Sidebar {
 	public void setParent(boolean parent) {
 		this.parent = parent;
 	}
+	
+	public List<NavFacetAttribute> getSidebarAttributes() {
+		return sidebarAttributes;
+	}
+
+	public void setSidebarAttributes(List<NavFacetAttribute> sidebarAttributes) {
+		this.sidebarAttributes = sidebarAttributes;
+	}
 
 	@Override
 	public boolean equals(Object o) {
 		 if (this == o) return true;
 	     if (o == null || getClass() != o.getClass()) return false;
-	     Sidebar pcf = (Sidebar) o;
+	     NavFacet pcf = (NavFacet) o;
 	     return this.Id == pcf.Id;
 	}
 
@@ -134,8 +145,7 @@ public class Sidebar {
 	@Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("CategoryDto [Id=")
-        .append(Id)
+        builder.append("Facet [Id=").append(Id)
         .append(", facetDesc=").append(facetDesc)
         .append(", facetToken=").append(facetToken)
         .append(", facetingName=").append(facetingName)

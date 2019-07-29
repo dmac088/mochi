@@ -1,4 +1,4 @@
-package io.nzbee.ui.component.web.sidebar;
+package io.nzbee.ui.component.web.facet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ import io.nzbee.variables.ProductVars;
 @Service(value = "SidebarService")
 @Transactional
 //@CacheConfig(cacheNames="products")
-public class SidebarServiceImpl extends UIService implements ISidebarService {
+public class NavFacetServiceImpl extends UIService implements INavFacetService {
 
 	@Autowired
 	private ITagService tagService;
@@ -41,7 +41,7 @@ public class SidebarServiceImpl extends UIService implements ISidebarService {
 
 	
 	@Override
-	public List<Sidebar> findAllTags(String locale, String currency, String category, List<Sidebar> selectedFacets) {
+	public List<NavFacet> findAllTags(String locale, String currency, String category, List<NavFacet> selectedFacets) {
 		// TODO Auto-generated method stub
 		List<Long> categoryIds = super.getFacetIds(selectedFacets, Category.class);
 		List<Long> brandIds = super.getFacetIds(selectedFacets, Brand.class);
@@ -50,10 +50,10 @@ public class SidebarServiceImpl extends UIService implements ISidebarService {
 		
 		List<Tag> tags = tagService.findAll(locale, currency, category, categoryIds, brandIds);
 		
-		List<Sidebar> tagBars = tags.stream().map(t -> {
+		List<NavFacet> tagBars = tags.stream().map(t -> {
 				List<Long> tagIds = new ArrayList<Long>();
 				tagIds.add(t.getTagId());
-				Sidebar s = convertTagToSidebar(t);
+				NavFacet s = convertTagToSidebar(t);
 				
 				s.setProductCount(productService.getCount(
 						CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
@@ -73,8 +73,8 @@ public class SidebarServiceImpl extends UIService implements ISidebarService {
 		return tagBars;
 	}
 
-	private Sidebar convertTagToSidebar(Tag t) {
-		Sidebar s = new Sidebar();
+	private NavFacet convertTagToSidebar(Tag t) {
+		NavFacet s = new NavFacet();
 		s.setId(t.getTagId());
 		s.setToken(t.getTagCode());
 		s.setDesc(t.getTagDesc());
@@ -85,21 +85,21 @@ public class SidebarServiceImpl extends UIService implements ISidebarService {
 	}
 	
 	@Override
-	public List<Sidebar> findAllCategories(String locale, String currency, String category, List<Sidebar> selectedFacets) {
+	public List<NavFacet> findAllCategories(String locale, String currency, String category, List<NavFacet> selectedFacets) {
 		// TODO Auto-generated method stub
 		List<Long> tagIds = super.getFacetIds(selectedFacets, Tag.class);
 		List<Long> brandIds = super.getFacetIds(selectedFacets, Brand.class);
 		
 		List<Category> categories = categoryService.findAll(locale, category, brandIds, tagIds);
 		
-		List<Sidebar> catBars = categories.stream().map(c -> convertCatToSidebar(c)).collect(Collectors.toList());
+		List<NavFacet> catBars = categories.stream().map(c -> convertCatToSidebar(c)).collect(Collectors.toList());
 		
 		return catBars;
 	}
 	
 	 //Create a data transfer object
-    private Sidebar convertCatToSidebar(final Category c) {
-    	final Sidebar s = new Sidebar();
+    private NavFacet convertCatToSidebar(final Category c) {
+    	final NavFacet s = new NavFacet();
     	s.setFacetingClassName(c.getClass().getSimpleName());
     	s.setFacetingName(CategoryVars.PRIMARY_CATEGORY_FACET_NAME);
     	s.setFieldName(CategoryAttribute_.categoryDesc.getName());
@@ -113,21 +113,21 @@ public class SidebarServiceImpl extends UIService implements ISidebarService {
     }
 
 	@Override
-	public List<Sidebar> findAllBrands(String locale, String currency, String category, List<Sidebar> selectedFacets) {
+	public List<NavFacet> findAllBrands(String locale, String currency, String category, List<NavFacet> selectedFacets) {
 		// TODO Auto-generated method stub
 		List<Long> tagIds = super.getFacetIds(selectedFacets, Tag.class);
 		List<Long> categoryIds = super.getFacetIds(selectedFacets, Category.class);
 		
 		List<Brand> brands = brandService.findAll(locale, currency, category, categoryIds, tagIds);
 		
-		List<Sidebar> brandBars = brands.stream().map(b -> convertBrandToSidebar(b)).collect(Collectors.toList())
+		List<NavFacet> brandBars = brands.stream().map(b -> convertBrandToSidebar(b)).collect(Collectors.toList())
 										.stream().filter(b -> b.getProductCount() > 0).collect(Collectors.toList());
 		return brandBars;
 	}
 	
 	 //Create a data transfer object
-    private Sidebar convertBrandToSidebar(final Brand b) {
-    	final Sidebar s = new Sidebar();
+    private NavFacet convertBrandToSidebar(final Brand b) {
+    	final NavFacet s = new NavFacet();
     	s.setFacetingClassName(b.getClass().getSimpleName());
     	s.setFacetingName(CategoryVars.BRAND_FACET_NAME);
     	s.setFieldName(BrandAttribute_.brandDesc.getName());

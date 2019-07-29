@@ -39,9 +39,9 @@ import io.nzbee.domain.services.product.IProductService;
 import io.nzbee.entity.PageableUtil;
 import io.nzbee.domain.services.brand.IBrandService;
 import io.nzbee.entity.product.attribute.ProductAttribute;
-import io.nzbee.ui.component.web.sidebar.Sidebar;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.ProductVars;
+import io.nzbee.ui.component.web.facet.NavFacet;
 import io.nzbee.ui.component.web.generic.UIService;
 
 @Service(value = "SearchService")
@@ -70,7 +70,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			 int page, 
 			 int size, 
 			 String sortBy, 
-			 List<Sidebar> selectedFacets) {
+			 List<NavFacet> selectedFacets) {
 		
 		//convert selected facets into token lists
 		List<String> categoryTokens = this.getFacetTokens(selectedFacets, Category.class); 
@@ -97,7 +97,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 	}
 	
 	@Override
-	public Sidebar getMaxPrice(String categoryDesc, String locale, String currency, List<Sidebar> selectedFacets) {
+	public NavFacet getMaxPrice(String categoryDesc, String locale, String currency, List<NavFacet> selectedFacets) {
 		
 		//convert selected facets into token lists
 		List<Long> categoryIds = this.getFacetIds(selectedFacets, Category.class); 
@@ -106,7 +106,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 	
 		Double maxPrice = productService.getMaxPrice(categoryDesc, locale, ProductVars.MARKDOWN_SKU_DESCRIPTION, currency, categoryIds, brandIds, tagIds);
 						  
-		Sidebar s = new Sidebar();
+		NavFacet s = new NavFacet();
 		s.setToken(maxPrice.toString());
 		s.setFacetingName(CategoryVars.PRICE_FACET_NAME);		
 		
@@ -183,7 +183,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		org.hibernate.search.jpa.FullTextQuery jpaQuery = fullTextEntityManager.createFullTextQuery(searchQuery, ProductAttribute.class);
 		
 		final Set<Facet> allFacets = new HashSet<Facet>();
-		final Set<Sidebar> cs, bs;
+		final Set<NavFacet> cs, bs;
 		List<Facet> lf;
 		
 		//initialize the facets
@@ -210,7 +210,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			return allFacets.stream().filter(y -> x.equals(y.getValue()));
 		}).collect(Collectors.toList());
 		
-		cs = new HashSet<Sidebar>();
+		cs = new HashSet<NavFacet>();
 		lf.stream().forEach(f -> {
 			jpaQuery.getFacetManager().getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
 			processFacets(allFacets, productQueryBuilder, jpaQuery, currency, f.getFacetingName());
@@ -229,7 +229,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		
 		allFacets.stream().filter(f-> f.getFacetingName().equals(CategoryVars.PRIMARY_CATEGORY_FACET_NAME)).collect(Collectors.toList()).stream().forEach(cf ->  		{
 													String categoryCode = (new LinkedList<String>(Arrays.asList(cf.getValue().split("/")))).getLast();
-													Sidebar cfDto = convertCategoryToSidebar(categoryCode, lcl, currency);
+													NavFacet cfDto = convertCategoryToNavFacet(categoryCode, lcl, currency);
 													cfDto.setProductCount(new Long(cf.getCount()));
 													cfDto.setToken(cf.getValue());
 													cfDto.setFacetType("discrete");
@@ -238,9 +238,9 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 													cs.add(cfDto);
 												});
 		
-		bs = new HashSet<Sidebar>();
+		bs = new HashSet<NavFacet>();
 		allFacets.stream().filter(f-> f.getFacetingName().equals(CategoryVars.BRAND_FACET_NAME)).collect(Collectors.toList()).forEach(bf ->     {
-													Sidebar bfDto = convertToBrandSidebarDTO(
+													NavFacet bfDto = convertBrandToNavFacet(
 													bf.getValue(), lcl, currency);
 													bfDto.setProductCount(new Long(bf.getCount()));
 													bfDto.setToken(bf.getValue());
@@ -251,10 +251,10 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 												});
 		
 		//for each of the baseline facets, convert them to Facet DTOs for the client and add them to "s" 
-		final List<Sidebar> ps = new ArrayList<Sidebar>();
+		final List<NavFacet> ps = new ArrayList<NavFacet>();
 		allFacets.stream().filter(f-> f.getFacetingName().equals(CategoryVars.PRICE_FACET_NAME)).collect(Collectors.toList()).forEach(pf ->     {
 													//pf.getValue();
-													Sidebar pfDto = new Sidebar();
+													NavFacet pfDto = new NavFacet();
 													pfDto.setProductCount(new Long(pf.getCount()));
 													pfDto.setToken(pf.getValue());
 													pfDto.setFacetType("range");
@@ -265,10 +265,10 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 											   });
 		
 		
-		final List<Sidebar> ts = new ArrayList<Sidebar>();
+		final List<NavFacet> ts = new ArrayList<NavFacet>();
 		allFacets.stream().filter(f-> f.getFacetingName().equals(CategoryVars.TAG_FACET_NAME)).collect(Collectors.toList()).forEach(tf ->     {
 													//pf.getValue();
-													Sidebar tfDto = new Sidebar();
+													NavFacet tfDto = new NavFacet();
 													tfDto.setProductCount(new Long(tf.getCount()));
 													tfDto.setToken(tf.getValue());
 													tfDto.setFacetType("discrete");
@@ -379,8 +379,8 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			return allFacets;
 		}
 	
-    public Sidebar convertCategoryToSidebar(String categoryCode, String locale, String currency) {
-    	Sidebar cf = new Sidebar();
+    public NavFacet convertCategoryToNavFacet(String categoryCode, String locale, String currency) {
+    	NavFacet cf = new NavFacet();
     	Category c = categoryService.findOneByCode(locale, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, categoryCode);
     	if(c == null) { return cf; }
     	cf.setId(c.getCategoryId());
@@ -423,9 +423,9 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			}
 		}
 	    
-	    public Sidebar convertToBrandSidebarDTO(String brandCode, String lcl, String currency) {
+	    public NavFacet convertBrandToNavFacet(String brandCode, String lcl, String currency) {
 	    	Brand b = brandService.findOneByCode(lcl, brandCode);
-	    	Sidebar bf = new Sidebar();
+	    	NavFacet bf = new NavFacet();
 	    	bf.setId(b.getBrandId());
 	    	bf.setDesc(b.getBrandDesc());
 	    	return bf;
