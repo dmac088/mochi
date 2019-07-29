@@ -3,6 +3,9 @@ package io.nzbee.ui.component.web.facet;
 import java.util.List;
 import java.util.Objects;
 
+import org.apache.commons.lang3.StringUtils;
+
+
 //this is a generic object used to populate UI elements such as navigation side-bars
 //on the web-site, it can accept brand, category, or any other object as long as it's mapped
 //in the service layer
@@ -22,16 +25,8 @@ public class NavFacet {
 	private String facetToken;
 	
 	private String facetType;
-
-	private Long level;
 	
-	private Long productCount;
-
-	private boolean parent;
-
-	private Long parentId;
-	
-	private List<NavFacetAttribute> sidebarAttributes;
+	private List<NavFacetAttribute> navAttributes;
 
 	public Long getId() {
 		return Id;
@@ -39,14 +34,6 @@ public class NavFacet {
 
 	public void setId(Long id) {
 		this.Id = id;
-	}
-	
-	public Long getParentId() {
-		return parentId;
-	}
-
-	public void setParentId(Long parentId) {
-		this.parentId = parentId;
 	}
 	
 	public String getFacetingName() {
@@ -73,14 +60,6 @@ public class NavFacet {
 		this.facetFieldName = facetFieldName;
 	}
 
-	public Long getLevel() {
-		return level;
-	}
-
-	public void setLevel(Long facetLevel) {
-		this.level = facetLevel;
-	}
-
 	public String getDesc() {
 		return facetDesc;
 	}
@@ -104,29 +83,13 @@ public class NavFacet {
 	public void setFacetType(String facetType) {
 		this.facetType = facetType;
 	}
-
-	public Long getProductCount() {
-		return productCount;
-	}
-
-	public void setProductCount(Long productCount) {
-		this.productCount = productCount;
-	}
-
-	public boolean isParent() {
-		return parent;
-	}
-
-	public void setParent(boolean parent) {
-		this.parent = parent;
-	}
 	
-	public List<NavFacetAttribute> getSidebarAttributes() {
-		return sidebarAttributes;
+	public List<NavFacetAttribute> getNavAttributes() {
+		return navAttributes;
 	}
 
-	public void setSidebarAttributes(List<NavFacetAttribute> sidebarAttributes) {
-		this.sidebarAttributes = sidebarAttributes;
+	public void setNavAttributes(List<NavFacetAttribute> navAttributes) {
+		this.navAttributes = navAttributes;
 	}
 
 	@Override
@@ -150,8 +113,7 @@ public class NavFacet {
         .append(", facetToken=").append(facetToken)
         .append(", facetingName=").append(facetingName)
         .append(", facetFieldName=").append(facetFieldName)
-        .append(", count=").append(productCount)
-        .append(", parentId=").append(parentId)
+        .append(", attributes=").append(StringUtils.join(navAttributes, ","))
         .append("]");
         return builder.toString();
     }
