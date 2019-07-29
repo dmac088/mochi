@@ -15,9 +15,9 @@ import io.nzbee.domain.Category;
 import io.nzbee.domain.Product;
 import io.nzbee.domain.Tag;
 import io.nzbee.domain.services.product.IProductService;
+import io.nzbee.ui.component.web.facet.NavFacet;
 import io.nzbee.ui.component.web.generic.UIService;
 import io.nzbee.ui.component.web.search.Search;
-import io.nzbee.ui.component.web.sidebar.Sidebar;
 import io.nzbee.variables.CategoryVars;
 
 @Service(value = "NavigationService")
@@ -39,14 +39,14 @@ public class NavigationServiceImpl extends UIService implements INavigationServi
 			 int page, 
 			 int size, 
 			 String sortBy, 
-			 List<Sidebar> selectedFacets) {
+			 List<NavFacet> selectedFacets) {
 		
 		//convert selected facets into token lists
 		List<Long> categoryIds = this.getFacetIds(selectedFacets, Category.class); 
 		List<Long> brandIds = this.getFacetIds(selectedFacets, Brand.class);
 		List<Long> tagIds = this.getFacetIds(selectedFacets, Tag.class);
 				
-		List<Sidebar> ls = selectedFacets.stream().filter(f -> f.getFacetingName().equals(CategoryVars.PRICE_FACET_NAME)).collect(Collectors.toList());
+		List<NavFacet> ls = selectedFacets.stream().filter(f -> f.getFacetingName().equals(CategoryVars.PRICE_FACET_NAME)).collect(Collectors.toList());
 	
 		Page<Product> pp = ls.isEmpty()
 						   ? productService.findAll(locale, currency, categoryDesc, page, size, sortBy, categoryIds, brandIds, tagIds)

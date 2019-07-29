@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.nzbee.ui.component.web.sidebar.Sidebar;
+import io.nzbee.ui.component.web.facet.NavFacet;
 
 @RestController
 @RequestMapping("/api")
@@ -26,16 +26,16 @@ public class SearchController {
     						@PathVariable int page, 
     						@PathVariable int size, 
     						@PathVariable String sortBy, 
-    						@RequestBody List<Sidebar> selectedFacets) {
+    						@RequestBody List<NavFacet> selectedFacets) {
 
     	return searchService.findAll(locale, currency, category, term, page, size, sortBy, selectedFacets);
     }
     
     @PostMapping("/Product/{locale}/{currency}/{category}/maxprice")
-    public Sidebar getMaxPrice(	@PathVariable String locale, 
+    public NavFacet getMaxPrice(	@PathVariable String locale, 
     							@PathVariable String currency, 
     							@PathVariable String category, 
-    							@RequestBody  List<Sidebar> selectedFacets) {
+    							@RequestBody  List<NavFacet> selectedFacets) {
     	return searchService.getMaxPrice(category, locale, currency, selectedFacets);
     }
 	
