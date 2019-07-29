@@ -1,10 +1,7 @@
 package io.nzbee.ui.component.web.search;
 
 import java.util.List;
-
-import org.hibernate.search.query.facet.Facet;
 import org.springframework.data.domain.Page;
-
 import io.nzbee.domain.Product;
 import io.nzbee.ui.component.web.facet.NavFacet;
 
