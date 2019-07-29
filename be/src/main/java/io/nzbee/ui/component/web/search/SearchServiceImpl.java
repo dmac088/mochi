@@ -97,7 +97,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 	}
 	
 	@Override
-	public Double getMaxPrice(String categoryDesc, String locale, String currency, List<Sidebar> selectedFacets) {
+	public Sidebar getMaxPrice(String categoryDesc, String locale, String currency, List<Sidebar> selectedFacets) {
 		
 		//convert selected facets into token lists
 		List<Long> categoryIds = this.getFacetIds(selectedFacets, Category.class); 
@@ -106,7 +106,11 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 	
 		Double maxPrice = productService.getMaxPrice(categoryDesc, locale, ProductVars.MARKDOWN_SKU_DESCRIPTION, currency, categoryIds, brandIds, tagIds);
 						  
-		return maxPrice;
+		Sidebar s = new Sidebar();
+		s.setToken(maxPrice.toString());
+		s.setFacetingName(CategoryVars.PRICE_FACET_NAME);		
+		
+		return s;
 	}
 	
 	private List<Facet> getDiscreteFacets(QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery jpaQuery, String facetingName, String fieldReference) {		
