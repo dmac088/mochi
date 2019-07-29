@@ -88,6 +88,33 @@ public class ProductServiceImpl implements IProductService {
 
      	return ppa.map(pa -> this.convertToProductDO(pa, locale, currency));
 	}
+    
+    @Override
+	@Cacheable
+	public Page<Product> findAll(String locale, 
+								 String currency, 
+								 String categoryDesc, 
+								 int page, 
+								 int size, 
+								 String sortBy, 
+								 List<Long> categoryIds,
+								 List<Long> brandIds,
+								 List<Long> tagIds) {
+	
+     	Page<io.nzbee.entity.product.Product> ppa = 
+     			productService.findAll( categoryDesc,
+     									categoryIds, 
+     									locale, 
+     									ProductVars.MARKDOWN_SKU_DESCRIPTION, 
+     									currency, 
+     									new Date(), 
+     									new Date(), 
+     									PageRequest.of(page, size, this.sortByParam(sortBy)), 
+     									brandIds, 
+     									tagIds);
+
+     	return ppa.map(pa -> this.convertToProductDO(pa, locale, currency));
+	}
 	
     @Override
 	@Cacheable

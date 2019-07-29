@@ -62,7 +62,7 @@ export const findByCategory = (locale, currency, category, brand, maxPrice, page
 																					locale +
 																					'/' + currency +
 																					'/category/' + category +
-																					'/maxPrice/' + maxPrice +
+																					//'/maxPrice/' + maxPrice +
 																					'/page/' + page +
 																					'/size/' + size +
 																					'/sortBy/' + sortBy,

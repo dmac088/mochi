@@ -213,6 +213,7 @@ public class ProductDaoImpl implements IProductDao {
 		return new PageImpl<Product>(query.getResultList(), pageable, resultCount);
     }
 	
+	
 	@Override
 	public Page<Product> findAllActiveSKUByPrimaryHierarchy(List<Long> categoryIds, String locale, Double priceStart,
 			Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd,
@@ -250,8 +251,10 @@ public class ProductDaoImpl implements IProductDao {
 		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
 		conditions.add(cb.equal(type.get(ProductPriceType_.desc), priceType));
 		conditions.add(cb.equal(curr.get(Currency_.code), currency));
-		conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.priceValue), priceStart));
-		conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.priceValue), priceEnd));
+		if(priceStart != -1 && priceEnd != -1) {
+			conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.priceValue), priceStart));
+			conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.priceValue), priceEnd));
+		}
 		conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.startDate), priceDateStart));
 		conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.endDate), priceDateEnd));
 		conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), CategoryVars.PRIMARY_HIERARCHY_CODE));		
