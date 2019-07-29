@@ -20,7 +20,7 @@ public interface ISearchService {
 			 String sortBy, 
 			 List<Sidebar> selectedFacets);
 	
-	Double getMaxPrice(String categoryDesc, String locale, String currency, List<Sidebar> selectedFacets);
+	Sidebar getMaxPrice(String categoryDesc, String locale, String currency, List<Sidebar> selectedFacets);
 
 	Page<Product> findAll(String lcl, String currency, String categoryDesc, String searchTerm, int page, int size,
 			String sortBy, List<String> categoryTokens, List<String> brandTokens, List<String> tagTokens);

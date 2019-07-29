@@ -32,7 +32,7 @@ public class SearchController {
     }
     
     @PostMapping("/Product/{locale}/{currency}/{category}/maxprice")
-    public Double getMaxPrice(	@PathVariable String locale, 
+    public Sidebar getMaxPrice(	@PathVariable String locale, 
     							@PathVariable String currency, 
     							@PathVariable String category, 
     							@RequestBody  List<Sidebar> selectedFacets) {

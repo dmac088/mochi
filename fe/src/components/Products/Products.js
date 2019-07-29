@@ -55,16 +55,13 @@ class Products extends Component {
     };
   }
 
-
   componentDidMount() {
     this.refresh(1, this.state.selectedFacets);
   }
 
-
   componentDidUpdate(prevProps) {
     this.refresh(0, this.state.selectedFacets);
   }
-
 
   refresh = (isMounting, selectedFacets) => {
     const { pathname, search }              = this.props.location;
@@ -173,8 +170,9 @@ class Products extends Component {
        })
        .then((responseText) => {
           if(type === 'category') {
-            newState["maxPrice"] = JSON.parse(responseText);
-            if(!noChangePrice) {newState["selectedPrice"] = JSON.parse(responseText);}
+            console.log(responseText);
+            newState["maxPrice"] = JSON.parse(responseText).token;
+            if(!noChangePrice) {newState["selectedPrice"] = JSON.parse(responseText).token;}
           }
           return newState;
        })
