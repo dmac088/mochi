@@ -42,5 +42,8 @@ public interface IProductService extends IService<Product> {
 			);
 
 	Product convertToProductDO(io.nzbee.entity.product.Product product, String lcl, String currency);
+
+	Page<Product> findAll(String locale, String currency, String categoryDesc, int page, int size, String sortBy,
+			List<Long> categoryIds, List<Long> brandIds, List<Long> tagIds);
 	
 }

@@ -15,7 +15,7 @@ export const findAll = (locale, currency, category, searchTerm, maxPrice, page, 
 																																	endPoints.get + locale
 																																+ '/' + currency
 																																+ endPoints.category + category
-																															//	+ endPoints.maxPrice + maxPrice
+																																//	+ endPoints.maxPrice + maxPrice
 																																+ endPoints.search + searchTerm
 																																+ endPoints.page + page
 																																+ endPoints.size + size

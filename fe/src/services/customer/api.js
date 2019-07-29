@@ -6,12 +6,12 @@ const endPoints = {
 };
 
 export const findByUserName = (userName) => fetchApi(
-																																endPoints.get + userName,
-																																{},
-																																{},
-																																'GET',
-																																{}
-																															);
+																															endPoints.get + userName,
+																															{},
+																															{},
+																															'GET',
+																															{}
+																										);
 
 export const createNewCustomer = (customer) => fetchApi(
 																															endPoints.signup,

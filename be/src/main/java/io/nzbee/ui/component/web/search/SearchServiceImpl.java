@@ -96,34 +96,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		return search;
 	}
 	
-
-	
-	//returns a user interface object, rule broken, need to change to return a domain object 
-	@Override
-	public Search findAll(String locale, 
-			 String currency, 
-			 String categoryDesc, 
-			 Double price, 
-			 int page, 
-			 int size, 
-			 String sortBy, 
-			 List<Sidebar> selectedFacets) {
-		System.out.println("Daniel");
-		
-		//convert selected facets into token lists
-		List<Long> categoryIds = this.getFacetIds(selectedFacets, Category.class); 
-		List<Long> brandIds = this.getFacetIds(selectedFacets, Brand.class);
-		List<Long> tagIds = this.getFacetIds(selectedFacets, Tag.class);
-		
-		Page<Product> pp = productService.findAll(locale, currency, categoryDesc, price, page, size, sortBy, categoryIds, brandIds, tagIds);
-		
-		//add the page of objects to a new Search object and return it 
-		Search search = new Search();
-		search.setProducts(pp);
-		search.setFacets(selectedFacets);
-		return search;
-	}
-	
 	@Override
 	public Double getMaxPrice(String categoryDesc, String locale, String currency, List<Sidebar> selectedFacets) {
 		

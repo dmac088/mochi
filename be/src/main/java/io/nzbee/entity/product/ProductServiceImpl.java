@@ -65,6 +65,35 @@ public class ProductServiceImpl implements IProductService {
 					tagIds
 				 );
 	}
+	
+	
+	@Override
+	public Page<Product> findAll(	String categoryDesc,
+									List<Long> categoryIds, 
+									String locale, 
+									String priceType, 
+									String currency, 
+									Date priceDateStart, 
+									Date priceDateEnd, 
+									Pageable pageable, 
+									List<Long> brandIds, 
+									List<Long> tagIds) {
+		
+			return productDAO.findAllActiveSKUByPrimaryHierarchy(	
+					categoryIds.size() <= 0 ? this.getAllChildIds(categoryDesc, locale)
+											: categoryIds,
+					locale,
+					new Double(-1),
+					new Double(-1),
+					priceType,
+					currency,
+					priceDateStart,
+					priceDateEnd,
+					pageable,
+					brandIds,
+					tagIds
+				 );
+	}
 
 	@Override
 	public Optional<Product> findOne(Long Id) {
