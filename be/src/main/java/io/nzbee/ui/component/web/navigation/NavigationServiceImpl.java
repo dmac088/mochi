@@ -46,7 +46,7 @@ public class NavigationServiceImpl extends UIService implements INavigationServi
 		List<Long> brandIds = this.getFacetIds(selectedFacets, Brand.class);
 		List<Long> tagIds = this.getFacetIds(selectedFacets, Tag.class);
 				
-		List<NavFacet> ls = selectedFacets.stream().filter(f -> f.getFacetingName().equals(CategoryVars.PRICE_FACET_NAME)).collect(Collectors.toList());
+		List<NavFacet> ls = selectedFacets.stream().filter(f -> f.getFacetName().equals(CategoryVars.PRICE_FACET_NAME)).collect(Collectors.toList());
 	
 		Page<Product> pp = ls.isEmpty()
 						   ? productService.findAll(locale, currency, categoryDesc, page, size, sortBy, categoryIds, brandIds, tagIds)

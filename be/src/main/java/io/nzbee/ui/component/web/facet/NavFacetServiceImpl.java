@@ -14,9 +14,6 @@ import io.nzbee.domain.services.brand.IBrandService;
 import io.nzbee.domain.services.category.ICategoryService;
 import io.nzbee.domain.services.product.IProductService;
 import io.nzbee.domain.services.tag.ITagService;
-import io.nzbee.entity.brand.attribute.BrandAttribute_;
-import io.nzbee.entity.category.attribute.CategoryAttribute_;
-import io.nzbee.entity.product.tag.attribute.ProductTagAttribute_;
 import io.nzbee.ui.component.web.generic.UIService;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.ProductVars;
@@ -77,8 +74,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		NavFacet<Tag> s = new NavFacet<Tag>();
 		s.setId(t.getTagId());
 		s.setToken(t.getTagCode());
-		s.setFacetingName(CategoryVars.TAG_FACET_NAME);
-		s.setFieldName(ProductTagAttribute_.tagDesc.getName());
+		s.setFacetName(CategoryVars.TAG_FACET_NAME);
 		s.setPayload(t);
 		return s;
 	}
@@ -99,8 +95,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 	 //Create a data transfer object
     private NavFacet<Category> convertCatToSidebar(final Category c) {
     	final NavFacet<Category> s = new NavFacet<Category>();
-    	s.setFacetingName(CategoryVars.PRIMARY_CATEGORY_FACET_NAME);
-    	s.setFieldName(CategoryAttribute_.categoryDesc.getName());
+    	s.setFacetName(CategoryVars.PRIMARY_CATEGORY_FACET_NAME);
     	s.setToken(c.getCategoryCode());
     	s.setId(c.getCategoryId());
     	s.setPayload(c);
@@ -124,8 +119,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 	 //Create a data transfer object
     private NavFacet<Brand> convertBrandToSidebar(final Brand b) {
     	final NavFacet<Brand> s = new NavFacet<Brand>();
-    	s.setFacetingName(CategoryVars.BRAND_FACET_NAME);
-    	s.setFieldName(BrandAttribute_.brandDesc.getName());
+    	s.setFacetName(CategoryVars.BRAND_FACET_NAME);
     	s.setToken(b.getBrandCode());
     	s.setId(b.getBrandId());
     	s.setPayload(b);
