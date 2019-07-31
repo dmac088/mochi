@@ -16,12 +16,6 @@ public class Category {
 	private Long categoryLevel;
 	
 	private String categoryType;
-	
-	private boolean isFacet;
-
-	private String categoryFacetToken;
-	
-	private Long categoryFacetCount;
 
 	private String lclCd;
 	
@@ -30,10 +24,6 @@ public class Category {
 	private Long parentId;	
 
 	private Long childCategoryCount;
-	
-	private Long productCount;
-	
-	private Double maxMarkDownPrice;
 
 	private List<Category> children;
 	
@@ -93,22 +83,6 @@ public class Category {
 		this.childCategoryCount = childCategoryCount;
 	}
 	
-	public Long getProductCount() {
-		return productCount;
-	}
-
-	public void setProductCount(Long productCount) {
-		this.productCount = productCount;
-	}
-	
-	public Double getMaxMarkDownPrice() {
-		return maxMarkDownPrice;
-	}
-
-	public void setMaxMarkDownPrice(Double maxMarkDownPrice) {
-		this.maxMarkDownPrice = maxMarkDownPrice;
-	}
-	
 	public String getCategoryType() {
 		return categoryType;
 	}
@@ -123,30 +97,6 @@ public class Category {
 
 	public void setLayouts(List<Layout> layouts) {
 		this.layouts = layouts;
-	}
-	
-	public String getFacetToken() {
-		return categoryFacetToken;
-	}
-
-	public void setFacetToken(String categoryToken) {
-		this.categoryFacetToken = categoryToken;
-	}
-	
-	public boolean isFacet() {
-		return isFacet;
-	}
-
-	public void setFacet(boolean isFacet) {
-		this.isFacet = isFacet;
-	}
-
-	public Long getFacetCount() {
-		return categoryFacetCount;
-	}
-
-	public void setFacetCount(Long categoryFacetCount) {
-		this.categoryFacetCount = categoryFacetCount;
 	}
 	
 	public List<Category> getChildren() {
@@ -179,13 +129,8 @@ public class Category {
         .append(", categoryDesc=").append(categoryDesc)
         .append(", categoryLevel=").append(categoryLevel)
         .append(", categoryType=").append(categoryType)
-        .append(", isFacet=").append(isFacet)
-        .append(", categoryFacetToken=").append(categoryFacetToken)
-        .append(", categoryFacetCount=").append(categoryFacetCount)
         .append(", parentId=").append(parentId)
         .append(", childCategoryCount=").append(childCategoryCount)
-        .append(", productCount=").append(productCount)
-        .append(", maxMarkDownPrice=").append(maxMarkDownPrice)
         .append(", lclCd=").append(lclCd)
         .append("]");    	
         return builder.toString();

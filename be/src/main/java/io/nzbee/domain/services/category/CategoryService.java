@@ -36,8 +36,6 @@ public class CategoryService implements ICategoryService {
     	List<io.nzbee.entity.category.Category> lpc = categoryService.getAll();
     	return lpc.stream()
     			.map(pc -> createCategory(pc, locale))
-    			.filter(pc -> pc.getProductCount() > 0)
-    			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
     			
 	}	
@@ -66,8 +64,6 @@ public class CategoryService implements ICategoryService {
     	List<io.nzbee.entity.category.Category> lpc = categoryService.findByParent(CategoryVars.PRIMARY_HIERARCHY_CODE, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, parentCategoryId, locale);
     	return lpc.stream()
     			.map(pc -> createCategory(pc, locale))
-    			.filter(pc -> pc.getProductCount() > 0)
-    			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
  	}
     
@@ -78,8 +74,6 @@ public class CategoryService implements ICategoryService {
      	List<io.nzbee.entity.category.Category> lpc = categoryService.findByLevel(CategoryVars.PRIMARY_HIERARCHY_CODE, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, level, locale);
      	return lpc.stream()
      			.map(pc -> createCategory(pc, locale))
-     			.filter(pc -> pc.getProductCount() > 0)
-    			.sorted((pc1, pc2) -> pc2.getProductCount().compareTo(pc1.getProductCount()))
     			.collect(Collectors.toList());
   	}	
     
@@ -123,30 +117,30 @@ public class CategoryService implements ICategoryService {
 		
 		List<Category> lcDO = lc.stream().map(c -> createCategory(c, locale)).collect(Collectors.toList());
 		
-		lcDO.stream().forEach(cDO -> {
-			cDO.setProductCount(
-								(tagIds.isEmpty()) 
-										? 	productService.getCount(
-											cDO.getCategoryDesc(), 
-											locale,
-											ProductVars.ACTIVE_SKU_CODE,
-											brandIds.size() == 0 ? Arrays.asList(new Long(-1)) : brandIds ,
-											(brandIds.size() == 0 ? 0 : 1),
-											Arrays.asList(new Long(-1)),
-											0)
-										: 	productService.getCountForTags(
-											cDO.getCategoryDesc(), 
-											locale,
-											ProductVars.ACTIVE_SKU_CODE,
-											brandIds.size() == 0 ? Arrays.asList(new Long(-1)) : brandIds ,
-											(brandIds.size() == 0 ? 0 : 1),
-											Arrays.asList(new Long(-1)),
-											0,
-											tagIds,
-											(tagIds.size() == 0 ? 0 : 1)
-											)
-								);
-		});		
+//		lcDO.stream().forEach(cDO -> {
+//			cDO.setProductCount(
+//								(tagIds.isEmpty()) 
+//										? 	productService.getCount(
+//											cDO.getCategoryDesc(), 
+//											locale,
+//											ProductVars.ACTIVE_SKU_CODE,
+//											brandIds.size() == 0 ? Arrays.asList(new Long(-1)) : brandIds ,
+//											(brandIds.size() == 0 ? 0 : 1),
+//											Arrays.asList(new Long(-1)),
+//											0)
+//										: 	productService.getCountForTags(
+//											cDO.getCategoryDesc(), 
+//											locale,
+//											ProductVars.ACTIVE_SKU_CODE,
+//											brandIds.size() == 0 ? Arrays.asList(new Long(-1)) : brandIds ,
+//											(brandIds.size() == 0 ? 0 : 1),
+//											Arrays.asList(new Long(-1)),
+//											0,
+//											tagIds,
+//											(tagIds.size() == 0 ? 0 : 1)
+//											)
+//								);
+//		});		
      	return lcDO;
 	}
     
@@ -174,14 +168,14 @@ public class CategoryService implements ICategoryService {
         cDO.setCategoryLevel(pc.getCategoryLevel());
         
         //get product count and set it
-        cDO.setProductCount(	productService.getCount(
-								pc.getAttributes().stream().filter(ca -> ca.getLclCd().equals(locale)).findFirst().get().getCategoryDesc(), 
-								locale,
-								ProductVars.ACTIVE_SKU_CODE,
-								Arrays.asList(new Long(-1)),
-								0,
-								Arrays.asList(new Long(-1)),
-								0));
+//        cDO.setProductCount(	productService.getCount(
+//								pc.getAttributes().stream().filter(ca -> ca.getLclCd().equals(locale)).findFirst().get().getCategoryDesc(), 
+//								locale,
+//								ProductVars.ACTIVE_SKU_CODE,
+//								Arrays.asList(new Long(-1)),
+//								0,
+//								Arrays.asList(new Long(-1)),
+//								0));
         
         
 //        cDO.setMaxMarkDownPrice(
@@ -201,7 +195,7 @@ public class CategoryService implements ICategoryService {
         pc.getChildren().stream().map(pc1 -> {
         	Category pcchild = createCategory(pc1, locale);
         	return pcchild;
-        }).filter(c -> c.getProductCount() > 0).collect(Collectors.toList());
+        }).collect(Collectors.toList());//.filter(c -> c.getProductCount() > 0).collect(Collectors.toList());
         cDO.setChildren(cDOl);
 
         //set the parentId
