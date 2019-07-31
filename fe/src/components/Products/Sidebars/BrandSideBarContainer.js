@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import { createRouteProps } from '../../../services/helpers/routeHelper';
 
   const renderFacets = (facets, selectedFacets, routeProps, props) => {
+    console.log(facets);
     if(facets.length === 0) { return null }
     console.log(facets);
     return facets.map(facet => {
@@ -15,7 +16,7 @@ import { createRouteProps } from '../../../services/helpers/routeHelper';
                               }}
               id={facet.token}
               href="#">
-            {facet.desc} ({facet.productCount})
+            {facet.facetDisplayValue} ({facet.productCount})
           </a>
         </li>
       );

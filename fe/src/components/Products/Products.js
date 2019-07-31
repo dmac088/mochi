@@ -153,6 +153,7 @@ class Products extends Component {
      .then((newState) => {
        return brandApi.findByCategory(newState.locale, newState.currency, newState.category, newState.selectedFacets)
        .then((response) => {
+         console.log(response);
          return response.text();
        })
        .then((responseText) => {
@@ -317,14 +318,14 @@ class Products extends Component {
 
   filterFacetsByName = (facets, name) => {
     if(!facets) { return }
-    return facets.filter(o => o.facetingName === name);
+    return facets.filter(o => o.facetName === name);
   }
 
   filterFacetsUnselected = (facets, selectedFacets, facetingNames = []) => {
     if(!facets) { return }
     if(!selectedFacets) { return }
     return facets.filter(facet => (selectedFacets.findIndex(o => o.token === facet.token
-                                                         && facetingNames.includes(o.facetingName)
+                                                         && facetingNames.includes(o.facetName)
                                                        ) === -1));
   }
 

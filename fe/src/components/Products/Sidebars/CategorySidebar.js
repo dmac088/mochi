@@ -8,7 +8,7 @@ import _ from 'lodash';
     return (
       <a
         className="isParent"
-        id={facet.desc}
+        id={facet.id}
         onClick={(e) => {
                         e.preventDefault();
                         changeCategory(e, routeProps);
@@ -34,9 +34,9 @@ import _ from 'lodash';
                                }}
                id={facet.token} href="#"
                style={{"marginLeft": margin}}>
-              {facet.desc} ({facet.productCount})
+              {facet.facetDisplayValue} ({facet.productCount})
             </a>
-            {(facet.parent) ? renderChevron(facet, routeProps, props) : null}
+            {(facet.payload.parent) ? renderChevron(facet, routeProps, props) : null}
           </li>
         </React.Fragment>
       );
