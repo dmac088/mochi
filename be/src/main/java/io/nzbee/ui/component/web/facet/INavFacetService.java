@@ -3,7 +3,7 @@ package io.nzbee.ui.component.web.facet;
 import java.util.List;
 
 
-public interface INavFacetService {
+public interface INavFacetService<T> {
 
 	//returns a user interface object, rule broken, need to change to return a domain object 
 //	Page<Product> findAll(String lcl, 
@@ -21,5 +21,5 @@ public interface INavFacetService {
 	
 	List<NavFacet> findAllCategories(String locale, String currency, String category, List<NavFacet> selectedFacets);
 	
-	List<NavFacet> findAllBrands(String locale, String currency, String category, List<NavFacet> selectedFacets);
+	List<NavFacet<T>> findAllBrands(String locale, String currency, String category, List<NavFacet> selectedFacets);
 }

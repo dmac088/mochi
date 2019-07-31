@@ -183,7 +183,8 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		org.hibernate.search.jpa.FullTextQuery jpaQuery = fullTextEntityManager.createFullTextQuery(searchQuery, ProductAttribute.class);
 		
 		final Set<Facet> allFacets = new HashSet<Facet>();
-		final Set<NavFacet> cs, bs;
+		final Set<NavFacet<Category>> cs; 
+		final Set<NavFacet<Brand>> bs;
 		List<Facet> lf;
 		
 		//initialize the facets
@@ -210,7 +211,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			return allFacets.stream().filter(y -> x.equals(y.getValue()));
 		}).collect(Collectors.toList());
 		
-		cs = new HashSet<NavFacet>();
+		cs = new HashSet<NavFacet<Category>>();
 		lf.stream().forEach(f -> {
 			jpaQuery.getFacetManager().getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
 			processFacets(allFacets, productQueryBuilder, jpaQuery, currency, f.getFacetingName());
@@ -229,25 +230,25 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		
 		allFacets.stream().filter(f-> f.getFacetingName().equals(CategoryVars.PRIMARY_CATEGORY_FACET_NAME)).collect(Collectors.toList()).stream().forEach(cf ->  		{
 													String categoryCode = (new LinkedList<String>(Arrays.asList(cf.getValue().split("/")))).getLast();
-													NavFacet cfDto = convertCategoryToNavFacet(categoryCode, lcl, currency);
-													cfDto.setProductCount(new Long(cf.getCount()));
-													cfDto.setToken(cf.getValue());
-													cfDto.setFacetType("discrete");
-													cfDto.setFacetingName(cf.getFacetingName());
-													cfDto.setFieldName(cf.getFieldName());
-													cs.add(cfDto);
+													NavFacet<Category> categoryFacet = convertCategoryToNavFacet(categoryCode, lcl, currency);
+													categoryFacet.setProductCount(new Long(cf.getCount()));
+													categoryFacet.setToken(cf.getValue());
+													categoryFacet.setFacetType("discrete");
+													categoryFacet.setFacetingName(cf.getFacetingName());
+													categoryFacet.setFieldName(cf.getFieldName());
+													cs.add(categoryFacet);
 												});
 		
-		bs = new HashSet<NavFacet>();
+		bs = new HashSet<NavFacet<Brand>>();
 		allFacets.stream().filter(f-> f.getFacetingName().equals(CategoryVars.BRAND_FACET_NAME)).collect(Collectors.toList()).forEach(bf ->     {
-													NavFacet bfDto = convertBrandToNavFacet(
+													NavFacet<Brand> brandFacet = convertBrandToNavFacet(
 													bf.getValue(), lcl, currency);
-													bfDto.setProductCount(new Long(bf.getCount()));
-													bfDto.setToken(bf.getValue());
-													bfDto.setFacetType("discrete");
-													bfDto.setFacetingName(bf.getFacetingName());
-													bfDto.setFieldName(bf.getFieldName());
-													bs.add(bfDto);
+													brandFacet.setProductCount(new Long(bf.getCount()));
+													brandFacet.setToken(bf.getValue());
+													brandFacet.setFacetType("discrete");
+													brandFacet.setFacetingName(bf.getFacetingName());
+													brandFacet.setFieldName(bf.getFieldName());
+													bs.add(brandFacet);
 												});
 		
 		//for each of the baseline facets, convert them to Facet DTOs for the client and add them to "s" 
@@ -258,24 +259,22 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 													pfDto.setProductCount(new Long(pf.getCount()));
 													pfDto.setToken(pf.getValue());
 													pfDto.setFacetType("range");
-													pfDto.setDesc(pf.getValue());
 													pfDto.setFacetingName(pf.getFacetingName());
 													pfDto.setFieldName(pf.getFieldName());
 													ps.add(pfDto);
 											   });
 		
 		
-		final List<NavFacet> ts = new ArrayList<NavFacet>();
+		final List<NavFacet<Tag>> ts = new ArrayList<NavFacet<Tag>>();
 		allFacets.stream().filter(f-> f.getFacetingName().equals(CategoryVars.TAG_FACET_NAME)).collect(Collectors.toList()).forEach(tf ->     {
 													//pf.getValue();
-													NavFacet tfDto = new NavFacet();
-													tfDto.setProductCount(new Long(tf.getCount()));
-													tfDto.setToken(tf.getValue());
-													tfDto.setFacetType("discrete");
-													tfDto.setDesc(tf.getValue());
-													tfDto.setFacetingName(tf.getFacetingName());
-													tfDto.setFieldName(tf.getFieldName());
-													ts.add(tfDto);
+													NavFacet<Tag> tagFacet = new NavFacet<Tag>();
+													tagFacet.setProductCount(new Long(tagFacet.getProductCount()));
+													tagFacet.setToken(tagFacet.getToken());
+													tagFacet.setFacetType("discrete");
+													tagFacet.setFacetingName(tf.getFacetingName());
+													tagFacet.setFieldName(tf.getFieldName());
+													ts.add(tagFacet);
 											   });
 		
 		
@@ -379,17 +378,12 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			return allFacets;
 		}
 	
-    public NavFacet convertCategoryToNavFacet(String categoryCode, String locale, String currency) {
-    	NavFacet cf = new NavFacet();
+    public NavFacet<Category> convertCategoryToNavFacet(String categoryCode, String locale, String currency) {
+    	NavFacet<Category> cf = new NavFacet<Category>();
     	Category c = categoryService.findOneByCode(locale, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, categoryCode);
     	if(c == null) { return cf; }
     	cf.setId(c.getCategoryId());
-    	cf.setDesc(c.getCategoryDesc());
-    	cf.setLevel(c.getCategoryLevel());
-    	Optional<Category> parent = Optional.ofNullable(categoryService.findParent(locale, c.getCategoryId()));
-    	if(parent.isPresent()) {
-    		cf.setParentId(parent.get().getCategoryId());
-    	}
+    	cf.setPayload(c);
     	return cf;		
     }
 	
@@ -423,15 +417,12 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			}
 		}
 	    
-	    public NavFacet convertBrandToNavFacet(String brandCode, String lcl, String currency) {
+	    public NavFacet<Brand> convertBrandToNavFacet(String brandCode, String lcl, String currency) {
 	    	Brand b = brandService.findOneByCode(lcl, brandCode);
-	    	NavFacet bf = new NavFacet();
+	    	NavFacet<Brand> bf = new NavFacet<Brand>();
 	    	bf.setId(b.getBrandId());
-	    	bf.setDesc(b.getBrandDesc());
+	    	bf.setPayload(b);
 	    	return bf;
 	    } 
-	    
-	   
-	
-	
+		
 }
