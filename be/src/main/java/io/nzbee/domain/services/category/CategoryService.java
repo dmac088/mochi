@@ -1,6 +1,5 @@
 package io.nzbee.domain.services.category;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -14,7 +13,6 @@ import io.nzbee.domain.Brand;
 import io.nzbee.domain.Category;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.variables.CategoryVars;
-import io.nzbee.variables.ProductVars;
 
 @Service
 @Transactional
