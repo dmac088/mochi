@@ -10,9 +10,7 @@ public class NavFacet<T> {
 
 	private Long Id;
 
-	private String facetingName;
-	
-	private String facetFieldName;
+	private String facetName;
 	
 	private String facetToken;
 	
@@ -32,22 +30,14 @@ public class NavFacet<T> {
 		this.Id = id;
 	}
 	
-	public String getFacetingName() {
-		return facetingName;
+	public String getFacetName() {
+		return facetName;
 	}
 
-	public void setFacetingName(String facetingName) {
-		this.facetingName = facetingName;
+	public void setFacetName(String facetName) {
+		this.facetName = facetName;
 	}
 
-	public String getFieldName() {
-		return facetFieldName;
-	}
-
-	public void setFieldName(String facetFieldName) {
-		this.facetFieldName = facetFieldName;
-	}
-	
 	public String getToken() {
 		return facetToken;
 	}
@@ -103,8 +93,7 @@ public class NavFacet<T> {
         final StringBuilder builder = new StringBuilder();
         builder.append("Facet [Id=").append(Id)
         .append(", facetToken=").append(facetToken)
-        .append(", facetingName=").append(facetingName)
-        .append(", facetFieldName=").append(facetFieldName)
+        .append(", facetName=").append(facetName)
         .append(", facetClassName=").append(facetClassName)
         .append("]");
         return builder.toString();

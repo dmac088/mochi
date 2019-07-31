@@ -108,7 +108,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 						  
 		NavFacet<Object> s = new NavFacet<Object>();
 		s.setToken(maxPrice.toString());
-		s.setFacetingName(CategoryVars.PRICE_FACET_NAME);		
+		s.setFacetName(CategoryVars.PRICE_FACET_NAME);		
 		
 		return s;
 	}
@@ -234,8 +234,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 													categoryFacet.setProductCount(new Long(cf.getCount()));
 													categoryFacet.setToken(cf.getValue());
 													categoryFacet.setFacetType("discrete");
-													categoryFacet.setFacetingName(cf.getFacetingName());
-													categoryFacet.setFieldName(cf.getFieldName());
+													categoryFacet.setFacetName(cf.getFacetingName());
 													cs.add(categoryFacet);
 												});
 		
@@ -246,8 +245,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 													brandFacet.setProductCount(new Long(bf.getCount()));
 													brandFacet.setToken(bf.getValue());
 													brandFacet.setFacetType("discrete");
-													brandFacet.setFacetingName(bf.getFacetingName());
-													brandFacet.setFieldName(bf.getFieldName());
+													brandFacet.setFacetName(bf.getFacetingName());
 													bs.add(brandFacet);
 												});
 		
@@ -259,8 +257,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 													pfDto.setProductCount(new Long(pf.getCount()));
 													pfDto.setToken(pf.getValue());
 													pfDto.setFacetType("range");
-													pfDto.setFacetingName(pf.getFacetingName());
-													pfDto.setFieldName(pf.getFieldName());
+													pfDto.setFacetName(pf.getFacetingName());
 													ps.add(pfDto);
 											   });
 		
@@ -272,8 +269,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 													tagFacet.setProductCount(new Long(tagFacet.getProductCount()));
 													tagFacet.setToken(tagFacet.getToken());
 													tagFacet.setFacetType("discrete");
-													tagFacet.setFacetingName(tf.getFacetingName());
-													tagFacet.setFieldName(tf.getFieldName());
+													tagFacet.setFacetName(tf.getFacetingName());
 													ts.add(tagFacet);
 											   });
 		
