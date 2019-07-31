@@ -171,9 +171,8 @@ class Products extends Component {
        })
        .then((responseText) => {
           if(type === 'category') {
-            console.log(responseText);
-            newState["maxPrice"] = JSON.parse(responseText).token;
-            if(!noChangePrice) {newState["selectedPrice"] = JSON.parse(responseText).token;}
+            newState["maxPrice"] = JSON.parse(responseText);
+            if(!noChangePrice) {newState["selectedPrice"] = JSON.parse(responseText);}
           }
           return newState;
        })
