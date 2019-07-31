@@ -1,16 +1,12 @@
 package io.nzbee.ui.component.web.facet;
 
-import java.util.List;
 import java.util.Objects;
-
-import org.apache.commons.lang3.StringUtils;
-
 
 //this is a generic object used to populate UI elements such as navigation side-bars
 //on the web-site, it can accept brand, category, or any other object as long as it's mapped
 //in the service layer
 
-public class NavFacet {
+public class NavFacet<T> {
 
 	private Long Id;
 
@@ -18,15 +14,15 @@ public class NavFacet {
 	
 	private String facetFieldName;
 	
-	private String facetClassName;
-
-	private String facetDesc;
-	
 	private String facetToken;
 	
 	private String facetType;
 	
-	private List<NavFacetAttribute> navAttributes;
+	private String facetClassName;
+	
+	private Long productCount;
+
+	private T payload;
 
 	public Long getId() {
 		return Id;
@@ -43,14 +39,6 @@ public class NavFacet {
 	public void setFacetingName(String facetingName) {
 		this.facetingName = facetingName;
 	}
-	
-	public String getFacetingClassName() {
-		return facetClassName;
-	}
-
-	public void setFacetingClassName(String facetingClassName) {
-		this.facetClassName = facetingClassName;
-	}
 
 	public String getFieldName() {
 		return facetFieldName;
@@ -58,14 +46,6 @@ public class NavFacet {
 
 	public void setFieldName(String facetFieldName) {
 		this.facetFieldName = facetFieldName;
-	}
-
-	public String getDesc() {
-		return facetDesc;
-	}
-
-	public void setDesc(String desc) {
-		this.facetDesc = desc;
 	}
 	
 	public String getToken() {
@@ -84,12 +64,25 @@ public class NavFacet {
 		this.facetType = facetType;
 	}
 	
-	public List<NavFacetAttribute> getNavAttributes() {
-		return navAttributes;
+
+	public T getPayload() {
+		return payload;
 	}
 
-	public void setNavAttributes(List<NavFacetAttribute> navAttributes) {
-		this.navAttributes = navAttributes;
+	public void setPayload(T payload) {
+		this.payload = payload;
+	}
+
+	public String getFacetClassName() {
+		return this.getPayload().getClass().getSimpleName();
+	}
+	
+	public Long getProductCount() {
+		return productCount;
+	}
+
+	public void setProductCount(Long productCount) {
+		this.productCount = productCount;
 	}
 
 	@Override
@@ -109,12 +102,12 @@ public class NavFacet {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append("Facet [Id=").append(Id)
-        .append(", facetDesc=").append(facetDesc)
         .append(", facetToken=").append(facetToken)
         .append(", facetingName=").append(facetingName)
         .append(", facetFieldName=").append(facetFieldName)
-        .append(", attributes=").append(StringUtils.join(navAttributes, ","))
+        .append(", facetClassName=").append(facetClassName)
         .append("]");
         return builder.toString();
     }
+
 }

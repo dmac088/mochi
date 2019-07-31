@@ -74,13 +74,11 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 	}
 
 	private NavFacet convertTagToSidebar(Tag t) {
-		NavFacet s = new NavFacet();
+		NavFacet<Tag> s = new NavFacet<Tag>();
 		s.setId(t.getTagId());
 		s.setToken(t.getTagCode());
-		s.setDesc(t.getTagDesc());
 		s.setFacetingName(CategoryVars.TAG_FACET_NAME);
 		s.setFieldName(ProductTagAttribute_.tagDesc.getName());
-		s.setFacetingClassName(t.getClass().getSimpleName());
 		return s;
 	}
 	
@@ -98,17 +96,13 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 	}
 	
 	 //Create a data transfer object
-    private NavFacet convertCatToSidebar(final Category c) {
-    	final NavFacet s = new NavFacet();
-    	s.setFacetingClassName(c.getClass().getSimpleName());
+    private NavFacet<Category> convertCatToSidebar(final Category c) {
+    	final NavFacet<Category> s = new NavFacet<Category>();
     	s.setFacetingName(CategoryVars.PRIMARY_CATEGORY_FACET_NAME);
     	s.setFieldName(CategoryAttribute_.categoryDesc.getName());
     	s.setToken(c.getCategoryCode());
-    	s.setLevel(c.getCategoryLevel());
-    	s.setDesc(c.getCategoryDesc());
     	s.setId(c.getCategoryId());
     	s.setProductCount(c.getProductCount());
-    	s.setParent(c.getChildCategoryCount() > 0);
 		return s;
     }
 
@@ -126,14 +120,11 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 	}
 	
 	 //Create a data transfer object
-    private NavFacet convertBrandToSidebar(final Brand b) {
-    	final NavFacet s = new NavFacet();
-    	s.setFacetingClassName(b.getClass().getSimpleName());
+    private NavFacet<Brand> convertBrandToSidebar(final Brand b) {
+    	final NavFacet<Brand> s = new NavFacet<Brand>();
     	s.setFacetingName(CategoryVars.BRAND_FACET_NAME);
     	s.setFieldName(BrandAttribute_.brandDesc.getName());
     	s.setToken(b.getBrandCode());
-    	s.setLevel(new Long(0));
-    	s.setDesc(b.getBrandDesc());
     	s.setId(b.getBrandId());
     	s.setProductCount(b.getProductCount());
 		return s;
