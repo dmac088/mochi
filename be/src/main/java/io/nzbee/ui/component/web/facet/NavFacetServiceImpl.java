@@ -50,7 +50,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		List<NavFacet<Tag>> tagBars = tags.stream().map(t -> {
 				List<Long> tagIds = new ArrayList<Long>();
 				tagIds.add(t.getTagId());
-				NavFacet<Tag> s = convertTagToSidebar(t);
+				NavFacet<Tag> s = convertTagToNavFacet(t);
 				
 				s.setProductCount(productService.getCount(
 						CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
@@ -70,9 +70,10 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		return tagBars;
 	}
 
-	private NavFacet<Tag> convertTagToSidebar(Tag t) {
+	private NavFacet<Tag> convertTagToNavFacet(Tag t) {
 		NavFacet<Tag> s = new NavFacet<Tag>();
 		s.setId(t.getTagId());
+		s.setFacetDisplayValue(t.getTagDesc());
 		s.setToken(t.getTagCode());
 		s.setFacetName(CategoryVars.TAG_FACET_NAME);
 		s.setPayload(t);
@@ -87,17 +88,18 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		
 		List<Category> categories = categoryService.findAll(locale, category, brandIds, tagIds);
 		
-		List<NavFacet<Category>> catBars = categories.stream().map(c -> convertCatToSidebar(c)).collect(Collectors.toList());
+		List<NavFacet<Category>> catBars = categories.stream().map(c -> convertCatToNavFacet(c)).collect(Collectors.toList());
 		
 		return catBars;
 	}
 	 
 	 //Create a data transfer object
-    private NavFacet<Category> convertCatToSidebar(final Category c) {
+    private NavFacet<Category> convertCatToNavFacet(final Category c) {
     	final NavFacet<Category> s = new NavFacet<Category>();
+    	s.setId(c.getCategoryId());
+    	s.setFacetDisplayValue(c.getCategoryDesc());
     	s.setFacetName(CategoryVars.PRIMARY_CATEGORY_FACET_NAME);
     	s.setToken(c.getCategoryCode());
-    	s.setId(c.getCategoryId());
     	s.setPayload(c);
 		return s;
     } 
@@ -110,17 +112,17 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		
 		List<Brand> brands = brandService.findAll(locale, currency, category, categoryIds, tagIds);
 		
-		List<NavFacet<Brand>> brandBars = brands.stream().map(b -> convertBrandToSidebar(b)).collect(Collectors.toList())
-										.stream().filter(b -> b.getProductCount() > 0).collect(Collectors.toList());
+		List<NavFacet<Brand>> brandBars = brands.stream().map(b -> convertBrandToNavFacet(b)).collect(Collectors.toList());
 		return brandBars;
 	}
 	
 	 //Create a data transfer object
-    private NavFacet<Brand> convertBrandToSidebar(final Brand b) {
+    private NavFacet<Brand> convertBrandToNavFacet(final Brand b) {
     	final NavFacet<Brand> s = new NavFacet<Brand>();
+    	s.setId(b.getBrandId());
+    	s.setFacetDisplayValue(b.getBrandDesc());
     	s.setFacetName(CategoryVars.BRAND_FACET_NAME);
     	s.setToken(b.getBrandCode());
-    	s.setId(b.getBrandId());
     	s.setPayload(b);
 		return s;
     }

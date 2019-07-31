@@ -5,6 +5,7 @@ import 'rc-slider/assets/index.css';
 
 export const PriceSidebar = (props) => {
     const { maxPrice, selectedPrice, selectedFacets, updateSelectedPrice, facets, applyFacet, type } = props;
+    console.log(maxPrice);
     return (
       <div className="sidebar mb-35">
         <h3 className="sidebar-title">Filter By Price</h3>
@@ -24,7 +25,7 @@ const priceRanges = (maxPrice, selectedFacets, applyFacet, facets, props) => {
                               }}
               id={facet.token}
               href="#">
-            {facet.desc} ({facet.productCount})
+            {facet.facetDisplayValue} ({facet.productCount})
           </a>
         </li>
       );

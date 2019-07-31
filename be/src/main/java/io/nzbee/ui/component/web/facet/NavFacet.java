@@ -16,6 +16,8 @@ public class NavFacet<T> {
 	
 	private String facetType;
 	
+	private String facetDisplayValue;
+
 	private String facetClassName;
 	
 	private Long productCount;
@@ -53,7 +55,14 @@ public class NavFacet<T> {
 	public void setFacetType(String facetType) {
 		this.facetType = facetType;
 	}
-	
+
+	public String getFacetDisplayValue() {
+		return facetDisplayValue;
+	}
+
+	public void setFacetDisplayValue(String facetDisplayValue) {
+		this.facetDisplayValue = facetDisplayValue;
+	}
 
 	public T getPayload() {
 		return payload;

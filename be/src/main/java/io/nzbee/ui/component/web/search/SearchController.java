@@ -32,11 +32,11 @@ public class SearchController {
     }
     
     @PostMapping("/Product/{locale}/{currency}/{category}/maxprice")
-    public NavFacet getMaxPrice(	@PathVariable String locale, 
+    public Double getMaxPrice(	@PathVariable String locale, 
     							@PathVariable String currency, 
     							@PathVariable String category, 
     							@RequestBody  List<NavFacet> selectedFacets) {
-    	return searchService.getMaxPrice(category, locale, currency, selectedFacets);
+    	return Double.parseDouble(searchService.getMaxPrice(category, locale, currency, selectedFacets).getToken());
     }
 	
 }
