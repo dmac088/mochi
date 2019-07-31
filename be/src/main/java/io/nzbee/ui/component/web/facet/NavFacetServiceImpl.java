@@ -91,7 +91,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		
 		return catBars;
 	}
-	
+	 
 	 //Create a data transfer object
     private NavFacet<Category> convertCatToSidebar(final Category c) {
     	final NavFacet<Category> s = new NavFacet<Category>();
