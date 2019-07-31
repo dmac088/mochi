@@ -97,7 +97,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 	}
 	
 	@Override
-	public NavFacet getMaxPrice(String categoryDesc, String locale, String currency, List<NavFacet> selectedFacets) {
+	public NavFacet<Object> getMaxPrice(String categoryDesc, String locale, String currency, List<NavFacet> selectedFacets) {
 		
 		//convert selected facets into token lists
 		List<Long> categoryIds = this.getFacetIds(selectedFacets, Category.class); 
@@ -106,7 +106,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 	
 		Double maxPrice = productService.getMaxPrice(categoryDesc, locale, ProductVars.MARKDOWN_SKU_DESCRIPTION, currency, categoryIds, brandIds, tagIds);
 						  
-		NavFacet s = new NavFacet();
+		NavFacet<Object> s = new NavFacet<Object>();
 		s.setToken(maxPrice.toString());
 		s.setFacetingName(CategoryVars.PRICE_FACET_NAME);		
 		
@@ -252,10 +252,10 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 												});
 		
 		//for each of the baseline facets, convert them to Facet DTOs for the client and add them to "s" 
-		final List<NavFacet> ps = new ArrayList<NavFacet>();
+		final List<NavFacet<Object>> ps = new ArrayList<NavFacet<Object>>();
 		allFacets.stream().filter(f-> f.getFacetingName().equals(CategoryVars.PRICE_FACET_NAME)).collect(Collectors.toList()).forEach(pf ->     {
 													//pf.getValue();
-													NavFacet pfDto = new NavFacet();
+													NavFacet<Object> pfDto = new NavFacet<Object>();
 													pfDto.setProductCount(new Long(pf.getCount()));
 													pfDto.setToken(pf.getValue());
 													pfDto.setFacetType("range");

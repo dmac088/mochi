@@ -41,7 +41,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 
 	
 	@Override
-	public List<NavFacet> findAllTags(String locale, String currency, String category, List<NavFacet> selectedFacets) {
+	public List<NavFacet<Tag>> findAllTags(String locale, String currency, String category, List<NavFacet> selectedFacets) {
 		// TODO Auto-generated method stub
 		List<Long> categoryIds = super.getFacetIds(selectedFacets, Category.class);
 		List<Long> brandIds = super.getFacetIds(selectedFacets, Brand.class);
@@ -50,10 +50,10 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		
 		List<Tag> tags = tagService.findAll(locale, currency, category, categoryIds, brandIds);
 		
-		List<NavFacet> tagBars = tags.stream().map(t -> {
+		List<NavFacet<Tag>> tagBars = tags.stream().map(t -> {
 				List<Long> tagIds = new ArrayList<Long>();
 				tagIds.add(t.getTagId());
-				NavFacet s = convertTagToSidebar(t);
+				NavFacet<Tag> s = convertTagToSidebar(t);
 				
 				s.setProductCount(productService.getCount(
 						CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
@@ -73,7 +73,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		return tagBars;
 	}
 
-	private NavFacet convertTagToSidebar(Tag t) {
+	private NavFacet<Tag> convertTagToSidebar(Tag t) {
 		NavFacet<Tag> s = new NavFacet<Tag>();
 		s.setId(t.getTagId());
 		s.setToken(t.getTagCode());
@@ -83,14 +83,14 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 	}
 	
 	@Override
-	public List<NavFacet> findAllCategories(String locale, String currency, String category, List<NavFacet> selectedFacets) {
+	public List<NavFacet<Category>> findAllCategories(String locale, String currency, String category, List<NavFacet> selectedFacets) {
 		// TODO Auto-generated method stub
 		List<Long> tagIds = super.getFacetIds(selectedFacets, Tag.class);
 		List<Long> brandIds = super.getFacetIds(selectedFacets, Brand.class);
 		
 		List<Category> categories = categoryService.findAll(locale, category, brandIds, tagIds);
 		
-		List<NavFacet> catBars = categories.stream().map(c -> convertCatToSidebar(c)).collect(Collectors.toList());
+		List<NavFacet<Category>> catBars = categories.stream().map(c -> convertCatToSidebar(c)).collect(Collectors.toList());
 		
 		return catBars;
 	}
@@ -104,17 +104,17 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
     	s.setId(c.getCategoryId());
     	s.setProductCount(c.getProductCount());
 		return s;
-    }
+    } 
 
 	@Override
-	public List<NavFacet> findAllBrands(String locale, String currency, String category, List<NavFacet> selectedFacets) {
+	public List<NavFacet<Brand>> findAllBrands(String locale, String currency, String category, List<NavFacet> selectedFacets) {
 		// TODO Auto-generated method stub
 		List<Long> tagIds = super.getFacetIds(selectedFacets, Tag.class);
 		List<Long> categoryIds = super.getFacetIds(selectedFacets, Category.class);
 		
 		List<Brand> brands = brandService.findAll(locale, currency, category, categoryIds, tagIds);
 		
-		List<NavFacet> brandBars = brands.stream().map(b -> convertBrandToSidebar(b)).collect(Collectors.toList())
+		List<NavFacet<Brand>> brandBars = brands.stream().map(b -> convertBrandToSidebar(b)).collect(Collectors.toList())
 										.stream().filter(b -> b.getProductCount() > 0).collect(Collectors.toList());
 		return brandBars;
 	}
@@ -129,5 +129,6 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
     	s.setProductCount(b.getProductCount());
 		return s;
     }
+
 
 }
