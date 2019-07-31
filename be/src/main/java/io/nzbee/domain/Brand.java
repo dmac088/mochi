@@ -9,10 +9,6 @@ public class Brand {
 	private String brandCode;
 
 	private String brandDesc;
-	
-	private Long productCount;
-	
-	private Long maxMarkDownPrice;
 
 	public Long getBrandId() {
 		return brandId;
@@ -36,22 +32,6 @@ public class Brand {
 
 	public void setBrandDesc(String brandDesc) {
 		this.brandDesc = brandDesc;
-	}
-	
-	public Long getProductCount() {
-		return productCount;
-	}
-
-	public void setProductCount(Long productCount) {
-		this.productCount = productCount;
-	}
-	
-	public Long getMaxMarkDownPrice() {
-		return maxMarkDownPrice;
-	}
-
-	public void setMaxMarkDownPrice(Long maxMarkDownPrice) {
-		this.maxMarkDownPrice = maxMarkDownPrice;
 	}
 	
 	@Override

@@ -30,7 +30,7 @@ public class BrandService implements IBrandService {
 	public List<Brand> findAll(String lcl) {
     	List<io.nzbee.entity.brand.Brand> lpb = brandService.findAll();
     	List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, lcl))
-		.sorted((pb1, pb2) -> pb2.getProductCount().compareTo(pb1.getProductCount()))
+		//.sorted((pb1, pb2) -> pb2.getProductCount().compareTo(pb1.getProductCount()))
 		.collect(Collectors.toList());
     	return lb;
 	}	
@@ -67,28 +67,28 @@ public class BrandService implements IBrandService {
 		lb.stream().forEach(bDO -> {
 			List<Long> lid = new ArrayList<Long>();
 			lid.add(bDO.getBrandId());
-			bDO.setProductCount(
-					(tagIds.isEmpty()) 
-									? productService.getCount(
-											categoryDesc, 
-											locale,
-											ProductVars.ACTIVE_SKU_CODE,
-											lid.size() == 0 ? Arrays.asList(new Long(-1)) : lid,
-											(lid.size() == 0 ? 0 : 1),
-											categoryIds.size() == 0 ? Arrays.asList(new Long(-1)) : categoryIds,
-											(categoryIds.size() == 0 ? 0 : 1)
-											)
-									: productService.getCountForTags(
-											categoryDesc, 
-											locale,
-											ProductVars.ACTIVE_SKU_CODE,
-											lid.size() == 0 ? Arrays.asList(new Long(-1)) : lid,
-											(lid.size() == 0 ? 0 : 1),
-											categoryIds.size() == 0 ? Arrays.asList(new Long(-1)) : categoryIds,
-											(categoryIds.size() == 0 ? 0 : 1),
-											tagIds.size() == 0 ? Arrays.asList(new Long(-1)) : tagIds,
-											(tagIds.size() == 0 ? 0 : 1)
-											));
+//			bDO.setProductCount(
+//					(tagIds.isEmpty()) 
+//									? productService.getCount(
+//											categoryDesc, 
+//											locale,
+//											ProductVars.ACTIVE_SKU_CODE,
+//											lid.size() == 0 ? Arrays.asList(new Long(-1)) : lid,
+//											(lid.size() == 0 ? 0 : 1),
+//											categoryIds.size() == 0 ? Arrays.asList(new Long(-1)) : categoryIds,
+//											(categoryIds.size() == 0 ? 0 : 1)
+//											)
+//									: productService.getCountForTags(
+//											categoryDesc, 
+//											locale,
+//											ProductVars.ACTIVE_SKU_CODE,
+//											lid.size() == 0 ? Arrays.asList(new Long(-1)) : lid,
+//											(lid.size() == 0 ? 0 : 1),
+//											categoryIds.size() == 0 ? Arrays.asList(new Long(-1)) : categoryIds,
+//											(categoryIds.size() == 0 ? 0 : 1),
+//											tagIds.size() == 0 ? Arrays.asList(new Long(-1)) : tagIds,
+//											(tagIds.size() == 0 ? 0 : 1)
+//											));
 		});
 		
      	return lb;
