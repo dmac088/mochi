@@ -122,7 +122,6 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
     	s.setToken(b.getBrandCode());
     	s.setId(b.getBrandId());
     	s.setPayload(b);
-    	s.setProductCount(b.getProductCount());
 		return s;
     }
 
