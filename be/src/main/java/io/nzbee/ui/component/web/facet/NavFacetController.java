@@ -18,7 +18,7 @@ import io.nzbee.domain.Tag;
 public class NavFacetController {
     
 	@Autowired
-	private INavFacetService sidebarService;
+	private INavFacetService navFacetService;
 
 //  @PostMapping("/Product/{locale}/{currency}/{category}/{price}/tags")
 //  public List<Tag> getTags(@PathVariable String locale, @PathVariable String currency, @PathVariable String category, @PathVariable Double price, @RequestBody final List<Sidebar> selectedFacets) {
@@ -27,17 +27,17 @@ public class NavFacetController {
   
 	@PostMapping("/Product/{locale}/{currency}/{category}/tags")
 	public List<NavFacet<Tag>> getTags(@PathVariable String locale, @PathVariable String currency, @PathVariable String category, @RequestBody final List<NavFacet> selectedFacets) {
-	  return sidebarService.findAllTags(locale, currency, category, selectedFacets);
+	  return navFacetService.findAllTags(locale, currency, category, selectedFacets);
 	} 
 
     @PostMapping("/Category/{lcl}/{curr}/desc/{categoryDesc}/children")
     public List<NavFacet<Category>> getCategoryChildren(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody List<NavFacet> facets) {
-    	return sidebarService.findAllCategories(lcl, curr, categoryDesc, facets);
+    	return navFacetService.findAllCategories(lcl, curr, categoryDesc, facets);
     }
     
     @PostMapping("/Brand/{lcl}/{curr}/category/{categoryDesc}")
     public List<NavFacet<Brand>> getBrands(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody List<NavFacet> facets) {
-    	return sidebarService.findAllBrands(lcl, curr, categoryDesc, facets);
+    	return navFacetService.findAllBrands(lcl, curr, categoryDesc, facets);
     }
 	
 }
