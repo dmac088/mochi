@@ -89,7 +89,7 @@ public class NavFacet<T> {
 	public boolean equals(Object o) {
 		 if (this == o) return true;
 	     if (o == null || getClass() != o.getClass()) return false;
-	     NavFacet pcf = (NavFacet) o;
+	     NavFacet<T> pcf = (NavFacet<T>) o;
 	     return this.Id == pcf.Id;
 	}
 
