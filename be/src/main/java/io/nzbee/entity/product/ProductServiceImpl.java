@@ -2,8 +2,10 @@ package io.nzbee.entity.product;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -51,7 +53,7 @@ public class ProductServiceImpl implements IProductService {
 									List<Long> tagIds) {
 		
 			return productDAO.findAllActiveSKUByPrimaryHierarchy(	
-					categoryIds.size() <= 0 ? this.getAllChildIds(categoryDesc, locale)
+					categoryIds.isEmpty() 	? this.getAllChildIds(categoryDesc, locale).stream().collect(Collectors.toList())
 											: categoryIds,
 					locale,
 					priceStart,
@@ -80,7 +82,7 @@ public class ProductServiceImpl implements IProductService {
 									List<Long> tagIds) {
 		
 			return productDAO.findAllActiveSKUByPrimaryHierarchy(	
-					categoryIds.size() <= 0 ? this.getAllChildIds(categoryDesc, locale)
+					categoryIds.isEmpty() 	? this.getAllChildIds(categoryDesc, locale).stream().collect(Collectors.toList())
 											: categoryIds,
 					locale,
 					new Double(-1),
@@ -117,6 +119,8 @@ public class ProductServiceImpl implements IProductService {
 									List<Long> categoryIds, 
 									int inHandlingCategories) {
 		
+			List<Long> children = this.getAllChildIds(categoryDesc, locale).stream().collect(Collectors.toList());;
+		
 			return productRepository.maxMarkDownPrice(
 					categoryTypeCode, 
 					categoryDesc, 
@@ -125,7 +129,7 @@ public class ProductServiceImpl implements IProductService {
 					productStatusCode, 
 					brandIds, 
 					inHandlingBrands, 
-					categoryIds.size() <= 0 ? this.getAllChildIds(categoryDesc, locale)
+					categoryIds.isEmpty()	? children
 											: categoryIds, 
 					inHandlingCategories);
 	
@@ -145,6 +149,8 @@ public class ProductServiceImpl implements IProductService {
 				List<Long> tagIds,
 				int inHandlingTags) {
 		
+			List<Long> children = this.getAllChildIds(categoryDesc, locale).stream().collect(Collectors.toList());;
+		
 			// TODO Auto-generated method stub
 			return productRepository.maxMarkDownPriceForTags(
 					categoryTypeCode, 
@@ -154,7 +160,7 @@ public class ProductServiceImpl implements IProductService {
 					productStatusCode, 
 					brandIds, 
 					inHandlingBrands, 
-					categoryIds.size() <= 0 ? this.getAllChildIds(categoryDesc, locale)
+					categoryIds.isEmpty() 	? children
 											: categoryIds, 
 					inHandlingCategories, 
 					tagIds, 
@@ -172,7 +178,7 @@ public class ProductServiceImpl implements IProductService {
 				int inHandlingCategories) {
 		
 		// TODO Auto-generated method stub
-		
+		List<Long> children = this.getAllChildIds(categoryDesc, locale).stream().collect(Collectors.toList());;
 		
 		return productRepository.count(
 				categoryDesc, 
@@ -180,8 +186,8 @@ public class ProductServiceImpl implements IProductService {
 				productStatusCode, 
 				brandIds, 
 				inHandlingBrands, 
-				categoryIds.size() <= 0 ? this.getAllChildIds(categoryDesc, locale)
-										: categoryIds, 
+				categoryIds.isEmpty() 	 ? children
+										 : categoryIds, 
 				inHandlingCategories
 		);
 	}
@@ -190,13 +196,15 @@ public class ProductServiceImpl implements IProductService {
 	public Long getCountForTags(String categoryDesc, String locale,
 			String productStatusCode, List<Long> brandIds, int inHandlingBrands,
 			List<Long> categoryIds, int inHandlingCategories, List<Long> tagIds, int inHandlingTags) {
+		
+			List<Long> children = this.getAllChildIds(categoryDesc, locale).stream().collect(Collectors.toList());
 			// TODO Auto-generated method stub
 			return productRepository.countForTags(	categoryDesc,
 													locale, 
 													productStatusCode, 
 													brandIds, 
 													inHandlingBrands, 
-													categoryIds.size() <= 0 ? this.getAllChildIds(categoryDesc, locale)
+													categoryIds.isEmpty() 	? children
 																			: categoryIds, 
 													inHandlingCategories, 
 													tagIds, 
@@ -222,15 +230,15 @@ public class ProductServiceImpl implements IProductService {
 		
 	}
 	
-	private List<Long> getAllChildIds(String categoryDesc, String locale ) {
+	private Set<Long> getAllChildIds(String categoryDesc, String locale ) {
 		Category pc = categoryService.findByCategoryDesc(
 				CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 				categoryDesc, 
 				locale).get();
 
-		List<Category> lc = new ArrayList<Category>();
+		Set<Category> lc = new HashSet<Category>();
 		return categoryService.recurseCategories(lc, pc)
-				.stream().map(c -> c.getCategoryId()).collect(Collectors.toList());
+				.stream().map(c -> c.getCategoryId()).collect(Collectors.toSet());
 	}
 
 

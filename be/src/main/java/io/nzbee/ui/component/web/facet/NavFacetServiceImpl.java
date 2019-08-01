@@ -132,7 +132,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		
 		List<NavFacet<Brand>> brandBars = brands.stream().map(b -> {
 			List<Long> brandIds = new ArrayList<Long>();
-			categoryIds.add(b.getBrandId());
+			brandIds.add(b.getBrandId());
 			NavFacet<Brand> s = convertBrandToNavFacet(b);
 			
 			s.setProductCount(
