@@ -42,9 +42,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		// TODO Auto-generated method stub
 		List<Long> categoryIds = super.getFacetIds(selectedFacets, Category.class);
 		List<Long> brandIds = super.getFacetIds(selectedFacets, Brand.class);
-		
 	
-		
 		List<Tag> tags = tagService.findAll(locale, currency, category, categoryIds, brandIds);
 		
 		List<NavFacet<Tag>> tagBars = tags.stream().map(t -> {
@@ -52,7 +50,8 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 				tagIds.add(t.getTagId());
 				NavFacet<Tag> s = convertTagToNavFacet(t);
 				
-				s.setProductCount(productService.getCount(
+				s.setProductCount(
+					productService.getCount(
 						CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 						category, 
 						locale, 
@@ -61,7 +60,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 						categoryIds, 
 						brandIds, 
 						tagIds
-						)
+					)
 				);
 				return s;
 			}).collect(Collectors.toList())
@@ -88,7 +87,26 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		
 		List<Category> categories = categoryService.findAll(locale, category, brandIds, tagIds);
 		
-		List<NavFacet<Category>> catBars = categories.stream().map(c -> convertCatToNavFacet(c)).collect(Collectors.toList());
+		List<NavFacet<Category>> catBars = categories.stream().map(c -> {
+			List<Long> categoryIds = new ArrayList<Long>();
+			categoryIds.add(c.getCategoryId());
+			NavFacet<Category> s = convertCatToNavFacet(c);
+			
+			s.setProductCount(
+				productService.getCount(
+					CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
+					category, 
+					locale, 
+					currency, 
+					ProductVars.ACTIVE_SKU_CODE, 
+					categoryIds, 
+					brandIds, 
+					tagIds
+				)
+			);
+			return s;
+		}).collect(Collectors.toList())
+			.stream().filter(c -> c.getProductCount() > 0).collect(Collectors.toList());
 		
 		return catBars;
 	}
@@ -112,7 +130,27 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		
 		List<Brand> brands = brandService.findAll(locale, currency, category, categoryIds, tagIds);
 		
-		List<NavFacet<Brand>> brandBars = brands.stream().map(b -> convertBrandToNavFacet(b)).collect(Collectors.toList());
+		List<NavFacet<Brand>> brandBars = brands.stream().map(b -> {
+			List<Long> brandIds = new ArrayList<Long>();
+			categoryIds.add(b.getBrandId());
+			NavFacet<Brand> s = convertBrandToNavFacet(b);
+			
+			s.setProductCount(
+				productService.getCount(
+					CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
+					category, 
+					locale, 
+					currency, 
+					ProductVars.ACTIVE_SKU_CODE, 
+					categoryIds, 
+					brandIds, 
+					tagIds
+				)
+			);
+			return s;
+		}).collect(Collectors.toList())
+			.stream().filter(c -> c.getProductCount() > 0).collect(Collectors.toList());
+		
 		return brandBars;
 	}
 	
