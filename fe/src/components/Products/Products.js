@@ -153,7 +153,6 @@ class Products extends Component {
      .then((newState) => {
        return brandApi.findByCategory(newState.locale, newState.currency, newState.category, newState.selectedFacets)
        .then((response) => {
-         console.log(response);
          return response.text();
        })
        .then((responseText) => {

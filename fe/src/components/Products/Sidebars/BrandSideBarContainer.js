@@ -3,9 +3,7 @@ import { withRouter } from "react-router-dom";
 import { createRouteProps } from '../../../services/helpers/routeHelper';
 
   const renderFacets = (facets, selectedFacets, routeProps, props) => {
-    console.log(facets);
     if(facets.length === 0) { return null }
-    console.log(facets);
     return facets.map(facet => {
       return(
         <li key={facet.id}>
