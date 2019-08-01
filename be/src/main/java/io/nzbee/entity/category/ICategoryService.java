@@ -2,6 +2,7 @@ package io.nzbee.entity.category;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface ICategoryService {
 
@@ -21,6 +22,6 @@ public interface ICategoryService {
 	
 	List<Category> findByLevel(String hieararchyCode, String categoryTypeCode, Long level, String locale);
 
-	List<Category> recurseCategories(List<Category> arrayList, Category pc);
+	Set<Category> recurseCategories(Set<Category> arrayList, Category pc);
 	
 }
