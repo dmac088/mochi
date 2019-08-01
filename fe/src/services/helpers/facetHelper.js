@@ -1,6 +1,6 @@
 
 
-export const PRIMARY_CATEGORY_FACET_NAME = "PrimaryCategoryFR";
+export const PRIMARY_CATEGORY_FACET_NAME = "CategoryFR";
 
 export const SECONDARY_CATEGORY_FACET_NAME = "SecondaryCategoryFR";
 
