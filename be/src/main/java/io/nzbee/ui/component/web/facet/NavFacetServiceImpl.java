@@ -64,7 +64,10 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 				);
 				return s;
 			}).collect(Collectors.toList())
-				.stream().filter(t -> t.getProductCount() > 0).collect(Collectors.toList());
+				.stream().filter(t -> t.getProductCount() > 0)
+				.collect(Collectors.toList());
+		
+		tagBars.sort((o1, o2) -> o2.getProductCount().compareTo(o1.getProductCount()));
 		
 		return tagBars;
 	}
@@ -106,7 +109,10 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 			);
 			return s;
 		}).collect(Collectors.toList())
-			.stream().filter(c -> c.getProductCount() > 0).collect(Collectors.toList());
+			.stream().filter(c -> c.getProductCount() > 0)
+			.collect(Collectors.toList());
+		
+		catBars.sort((o1, o2) -> o2.getProductCount().compareTo(o1.getProductCount()));
 		
 		return catBars;
 	}
@@ -149,7 +155,10 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 			);
 			return s;
 		}).collect(Collectors.toList())
-			.stream().filter(c -> c.getProductCount() > 0).collect(Collectors.toList());
+			.stream().filter(c -> c.getProductCount() > 0)
+			.collect(Collectors.toList());
+		
+		brandBars.sort((o1, o2) -> o2.getProductCount().compareTo(o1.getProductCount()));
 		
 		return brandBars;
 	}
