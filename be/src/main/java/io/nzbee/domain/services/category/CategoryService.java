@@ -80,7 +80,6 @@ public class CategoryService implements ICategoryService {
   	@Transactional
   	//@Cacheable
   	public Category findOne(final String locale, final Long categoryId) {
-    	System.out.println(categoryId);
     	io.nzbee.entity.category.Category pc = categoryService.findById(categoryId).get();
      	return	createCategory(pc, locale);
   	}

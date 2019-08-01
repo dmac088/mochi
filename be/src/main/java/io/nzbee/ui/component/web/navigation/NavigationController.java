@@ -19,9 +19,16 @@ public class NavigationController {
 	@Autowired
 	private INavigationService navigationService;
 	
-	@PostMapping("/Product/{locale}/{currency}/category/{category}/page/{page}/size/{size}/sortBy/{sortBy}")
-	public Search getProducts(@PathVariable String locale, @PathVariable String currency, @PathVariable String category, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy, @RequestBody final List<NavFacet> selectedFacets) {
-	   	return navigationService.findAll(locale, currency, category, page, size, sortBy, selectedFacets);
+	@PostMapping("/Product/{locale}/{currency}/category/{category}/maxPrice/{price}/page/{page}/size/{size}/sortBy/{sortBy}")
+	public Search getProducts(	@PathVariable String locale, 
+								@PathVariable String currency, 
+								@PathVariable String category,
+								@PathVariable Double price, 
+								@PathVariable int page, 
+								@PathVariable int size, 
+								@PathVariable String sortBy,
+								@RequestBody final List<NavFacet> selectedFacets) {
+	   	return navigationService.findAll(locale, currency, category, price, page, size, sortBy, selectedFacets);
 	}
 
 	

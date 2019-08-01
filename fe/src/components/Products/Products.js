@@ -74,6 +74,8 @@ class Products extends Component {
 
       //get the max price for our new props
       const maxPrice = Number(this.getMaxPrice((this.filterCategories(categoryList, term)[0]), brand));
+      console.log(maxPrice);
+      console.log(categoryList);
 
       //isNan is not supported in IE
       //if(Number.isNaN(maxPrice)) { return }
@@ -109,7 +111,7 @@ class Products extends Component {
       &&  page        === this.state.params.page
       &&  size        === this.state.params.size
       &&  sort        === this.state.params.sort
-    //  &&  price       === this.state.syncPrice
+      &&  price       === this.state.syncPrice
       &&  isMounting  === 0
     ) {return;}
     callback(locale, currency, category, term, price+1, page, size, sort, selectedFacets)
