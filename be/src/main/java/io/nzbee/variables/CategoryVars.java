@@ -2,7 +2,7 @@ package io.nzbee.variables;
 
 public class CategoryVars {
 
-	public static final String PRIMARY_CATEGORY_FACET_NAME = "PrimaryCategoryFR";
+	public static final String PRIMARY_CATEGORY_FACET_NAME = "CategoryFR";
 	
 	public static final String BRAND_FACET_NAME = "BrandFR";
 	
