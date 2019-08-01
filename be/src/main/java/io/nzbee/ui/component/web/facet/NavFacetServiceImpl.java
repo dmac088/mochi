@@ -74,6 +74,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 
 	private NavFacet<Tag> convertTagToNavFacet(Tag t) {
 		NavFacet<Tag> s = new NavFacet<Tag>();
+		s.setFacetClassName(t.getClass().getSimpleName());
 		s.setId(t.getTagId());
 		s.setFacetDisplayValue(t.getTagDesc());
 		s.setToken(t.getTagCode());
@@ -120,6 +121,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 	 //Create a data transfer object
     private NavFacet<Category> convertCatToNavFacet(final Category c) {
     	final NavFacet<Category> s = new NavFacet<Category>();
+    	s.setFacetClassName(c.getClass().getSimpleName());
     	s.setId(c.getCategoryId());
     	s.setFacetDisplayValue(c.getCategoryDesc());
     	s.setFacetName(CategoryVars.PRIMARY_CATEGORY_FACET_NAME);
@@ -166,6 +168,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 	 //Create a data transfer object
     private NavFacet<Brand> convertBrandToNavFacet(final Brand b) {
     	final NavFacet<Brand> s = new NavFacet<Brand>();
+    	s.setFacetClassName(b.getClass().getSimpleName());
     	s.setId(b.getBrandId());
     	s.setFacetDisplayValue(b.getBrandDesc());
     	s.setFacetName(CategoryVars.BRAND_FACET_NAME);

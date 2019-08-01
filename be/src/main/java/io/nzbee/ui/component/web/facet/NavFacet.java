@@ -73,9 +73,13 @@ public class NavFacet<T> {
 	}
 
 	public String getFacetClassName() {
-		return this.getPayload().getClass().getSimpleName();
+		return this.facetClassName;
 	}
 	
+	public void setFacetClassName(String facetClassName) {
+		this.facetClassName = facetClassName;
+	}
+
 	public Long getProductCount() {
 		return productCount;
 	}
