@@ -241,7 +241,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 													NavFacet<Category> categoryFacet = convertCategoryToNavFacet(categoryCode, lcl, currency);
 													categoryFacet.setProductCount(new Long(cf.getCount()));
 													categoryFacet.setToken(cf.getValue());
-													categoryFacet.setFacetType("discrete");
+													categoryFacet.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
 													categoryFacet.setFacetName(cf.getFacetingName());
 													cs.add(categoryFacet);
 												});
@@ -253,7 +253,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 													brandFacet.setFacetDisplayValue(bf.getValue());
 													brandFacet.setProductCount(new Long(bf.getCount()));
 													brandFacet.setToken(bf.getValue());
-													brandFacet.setFacetType("discrete");
+													brandFacet.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
 													brandFacet.setFacetName(bf.getFacetingName());
 													bs.add(brandFacet);
 												});
@@ -266,7 +266,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 													priceFacet.setFacetDisplayValue(pf.getValue());
 													priceFacet.setProductCount(new Long(pf.getCount()));
 													priceFacet.setToken(pf.getValue());
-													priceFacet.setFacetType("range");
+													priceFacet.setFacetType(ProductVars.FACET_TYPE_RANGE);
 													priceFacet.setFacetName(pf.getFacetingName());
 													ps.add(priceFacet);
 											   });
@@ -279,7 +279,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 													tagFacet.setFacetDisplayValue(tf.getValue());
 													tagFacet.setProductCount(new Long(tf.getCount()));
 													tagFacet.setToken(tf.getValue());
-													tagFacet.setFacetType("discrete");
+													tagFacet.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
 													tagFacet.setFacetName(tf.getFacetingName());
 													ts.add(tagFacet);
 											   });
@@ -390,7 +390,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
     	Category c = categoryService.findOneByCode(locale, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, categoryCode);
     	if(c == null) { return cf; }
     	cf.setId(c.getCategoryId());
-    	cf.setPayload(c);
+//    	cf.setPayload(c);
     	return cf;		
     }
 	
@@ -428,7 +428,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 	    	Brand b = brandService.findOneByCode(lcl, brandCode);
 	    	NavFacet<Brand> bf = new NavFacet<Brand>();
 	    	bf.setId(b.getBrandId());
-	    	bf.setPayload(b);
+	 //   	bf.setPayload(b);
 	    	return bf;
 	    } 
 		

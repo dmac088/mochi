@@ -6,17 +6,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
+import io.nzbee.variables.CategoryVars;
+import io.nzbee.variables.ProductVars;
+
 public interface IProductRepository extends CrudRepository<Product, Long> {
 
-//	List<Product> findAll();
-//	
-//	List<Product> findAll(Specification<Product> spec);
-//	
-//	List<Product> findByCategoriesCategoryIdIn(List<Long> id);
-//	
-//	List<Product> findByProductIdIn(Long[] id);
-//
-//	Optional<Product> findByProductUPC(String upc);
 	
 	@Query(
 		value = "WITH RECURSIVE MyCTE AS ( "
@@ -87,6 +81,53 @@ public interface IProductRepository extends CrudRepository<Product, Long> {
 						   	@Param("inHandlingBrands")		int inHandlingBrands,
 						   	@Param("categoryIds") 			List<Long> categoryIds,
 						   	@Param("inHandlingCategories")	int inHandlingCategories);
+	
+	
+	@Query(
+			value = "WITH RECURSIVE MyCTE AS ( "
+					+ "SELECT c.cat_id, c.cat_cd, c.hir_id, c.cat_typ_id "
+					+ "FROM mochi.category c "
+					+ "INNER JOIN mochi.hierarchy h "
+					+ "	ON c.hir_id = h.hir_id "
+					+ "INNER JOIN mochi.category_type ct "
+					+ " ON c.cat_typ_id = ct.cat_typ_id "
+					+ "WHERE c.cat_id = :categoryId "
+					+ "AND ct.cat_typ_cd = '" + CategoryVars.CATEGORY_TYPE_CODE_PRODUCT + "'"
+					+ "UNION ALL "
+					+ "SELECT c.cat_id, c.cat_cd, c.hir_id, c.cat_typ_id "
+					+ "FROM mochi.category c "
+					+ "INNER JOIN mochi.hierarchy h ON c.hir_id = h.hir_id "
+					+ "INNER JOIN MyCTE ON c.cat_prnt_id = MyCTE.cat_id "
+					+ "WHERE c.cat_prnt_id IS NOT NULL "
+					+ ") "
+					+ "SELECT coalesce(MAX(prc.prc_val), 0) "
+					+ "FROM MyCTE c "
+					+ "INNER JOIN mochi.hierarchy h "
+					+ "	ON c.hir_id = h.hir_id "
+					+ "INNER JOIN mochi.product_category pc "
+					+ "	ON c.cat_id = pc.cat_id  "
+					+ "INNER JOIN mochi.product p "
+					+ "	ON pc.prd_id = p.prd_id "
+					+ "INNER JOIN mochi.price prc "
+					+ "	ON p.prd_id = prc.prd_id "
+					+ "INNER JOIN mochi.price_type pt "
+					+ "	ON prc.prc_typ_id = pt.prc_typ_id "
+					+ "INNER JOIN mochi.currency ccy "
+					+ "	ON prc.ccy_id = ccy.ccy_id "
+					+ "INNER JOIN mochi.category_type ct "
+					+ " ON c.cat_typ_id = ct.cat_typ_id "
+					+ "INNER JOIN mochi.product_status pstat "
+					+ " ON p.prd_sts_id = pstat.prd_sts_id "
+					+ "WHERE pt.prc_typ_cd 		= '" + ProductVars.PRICE_MARKDOWN_CODE + "'"
+					+ "AND pstat.prd_sts_cd 	= '" + ProductVars.ACTIVE_SKU_CODE + "'"
+					+ "AND ct.cat_typ_cd 		=  '" + CategoryVars.CATEGORY_TYPE_CODE_PRODUCT + "'"
+					+ "AND ccy.ccy_cd 			= :currencyCode "
+					+ "AND now() BETWEEN prc.prc_st_dt AND prc.prc_en_dt ",
+			nativeQuery = true)	
+		Double maxMarkDownPriceForCategory(
+				@Param("categoryId") 		Long categoryId,
+				@Param("currencyCode") 		String currencyCode
+		);
 	
 	@Query(
 			value = "WITH RECURSIVE MyCTE AS ( "
@@ -220,6 +261,43 @@ public interface IProductRepository extends CrudRepository<Product, Long> {
 			   	@Param("categoryIds") 			List<Long> categoryIds,
 			   	@Param("inHandlingCategories")	int inHandlingCategories);
 	
+	
+	@Query(
+			value = "WITH RECURSIVE MyCTE AS ( "
+					+ "SELECT c.cat_id, c.cat_cd, c.hir_id, c.cat_typ_id "
+					+ "FROM mochi.category c "
+					+ "INNER JOIN mochi.hierarchy h "
+					+ "	ON c.hir_id = h.hir_id "
+					+ "INNER JOIN mochi.category_type ct "
+					+ " ON c.cat_typ_id = ct.cat_typ_id "
+					+ "WHERE c.cat_id = :categoryId "
+					+ "AND ct.cat_typ_cd = '" + CategoryVars.CATEGORY_TYPE_CODE_PRODUCT + "'"
+					+ "UNION ALL "
+					+ "SELECT c.cat_id, c.cat_cd, c.hir_id, c.cat_typ_id "
+					+ "FROM mochi.category c "
+					+ "INNER JOIN mochi.hierarchy h ON c.hir_id = h.hir_id "
+					+ "INNER JOIN MyCTE ON c.cat_prnt_id = MyCTE.cat_id "
+					+ "WHERE c.cat_prnt_id IS NOT NULL "
+					+ ") "
+					+ "SELECT count(distinct p.prd_id) "
+					+ "FROM MyCTE c "
+					+ "INNER JOIN mochi.hierarchy h "
+					+ "	ON c.hir_id = h.hir_id "
+					+ "INNER JOIN mochi.product_category pc "
+					+ "	ON c.cat_id = pc.cat_id  "
+					+ "INNER JOIN mochi.product p "
+					+ "	ON pc.prd_id = p.prd_id "
+					+ "INNER JOIN mochi.category_type ct "
+					+ " ON c.cat_typ_id = ct.cat_typ_id "
+					+ "INNER JOIN mochi.product_status pstat "
+					+ " ON p.prd_sts_id = pstat.prd_sts_id "
+					+ "WHERE pstat.prd_sts_cd 	= '" + ProductVars.ACTIVE_SKU_CODE + "'"
+					+ "AND ct.cat_typ_cd 		=  '" + CategoryVars.CATEGORY_TYPE_CODE_PRODUCT + "'",
+					nativeQuery = true)
+	
+		Long countForCategory(
+				@Param("categoryId") 		Long categoryId
+		);
 	
 	@Query(
 			value = "WITH RECURSIVE MyCTE AS ( "

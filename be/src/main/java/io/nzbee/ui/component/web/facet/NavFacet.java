@@ -21,6 +21,8 @@ public class NavFacet<T> {
 	private String facetClassName;
 	
 	private Long productCount;
+	
+	private Double maxMarkdownPrice;
 
 	private T payload;
 
@@ -64,13 +66,13 @@ public class NavFacet<T> {
 		this.facetDisplayValue = facetDisplayValue;
 	}
 
-	public T getPayload() {
-		return payload;
-	}
-
-	public void setPayload(T payload) {
-		this.payload = payload;
-	}
+//	public T getPayload() {
+//		return payload;
+//	}
+//
+//	public void setPayload(T payload) {
+//		this.payload = payload;
+//	}
 
 	public String getFacetClassName() {
 		return this.facetClassName;
@@ -86,6 +88,14 @@ public class NavFacet<T> {
 
 	public void setProductCount(Long productCount) {
 		this.productCount = productCount;
+	}
+	
+	public Double getMaxMarkdownPrice() {
+		return maxMarkdownPrice;
+	}
+
+	public void setMaxMarkdownPrice(Double maxMarkdownPrice) {
+		this.maxMarkdownPrice = maxMarkdownPrice;
 	}
 
 	@Override

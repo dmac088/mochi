@@ -45,5 +45,9 @@ public interface IProductService extends IService<Product> {
 
 	Page<Product> findAll(String locale, String currency, String categoryDesc, int page, int size, String sortBy,
 			List<Long> categoryIds, List<Long> brandIds, List<Long> tagIds);
+
+	Double getMaxPriceForCategory(Long categoryId, String currencyCode);
+
+	Long getCountForCategory(Long categoryId);
 	
 }

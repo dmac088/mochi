@@ -14,4 +14,7 @@ public class ProductVars {
 	
 	public static final String ACTIVE_SKU_CODE = "ACT01";
 	
+	public static final String FACET_TYPE_DISCRETE = "discrete";
+	
+	public static final String FACET_TYPE_RANGE = "range";
 }

@@ -309,11 +309,21 @@ public class ProductServiceImpl implements IProductService {
 				brandIds, 
 				brandIds.stream().filter(b -> b.longValue() > -1).collect(Collectors.toList()).size(), 
 				categoryIds, 
-				categoryIds.stream().filter(c -> c.longValue() > -1).collect(Collectors.toList()).size()//, 
-				//tagIds, 
-				//tagIds.stream().filter(t -> t.longValue() > -1).collect(Collectors.toList()).size()
+				categoryIds.stream().filter(c -> c.longValue() > -1).collect(Collectors.toList()).size()
 				);
 	}
+	
+	
+	@Override
+	public Double getMaxPriceForCategory(Long categoryId, String currencyCode) {
+		return productService.getMaxMarkDownPriceForCategory(categoryId, currencyCode);
+	}
+	
+	@Override
+	public Long getCountForCategory(Long categoryId) {
+		return productService.getCountForCategory(categoryId);
+	}
+	
 
 	@Override
 	public Long getCount(String categoryTypeCode, String categoryDesc, String locale, String currency,
