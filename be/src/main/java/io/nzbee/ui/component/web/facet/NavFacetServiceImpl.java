@@ -39,8 +39,9 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 	private IProductService productService;
 
 	@Override
-	public List<NavFacet<Category>> findAllCategories(String lcl, String currencyCode) {
-		return categoryService.findAll(lcl).stream().map(c -> {
+	public NavFacetContainer findAllCategories(String lcl, String currencyCode) {
+		NavFacetContainer nfc = new NavFacetContainer();
+		nfc.setCategories(categoryService.findAll(lcl).stream().map(c -> {
 			NavFacet<Category> cnf = this.convertCatToNavFacet(c);
 			cnf.setMaxMarkdownPrice(productService.getMaxPriceForCategory(c.getCategoryId(), currencyCode));	
 			cnf.setProductCount(productService.getCountForCategory(c.getCategoryId()));
@@ -48,7 +49,9 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		}).collect(Collectors.toList())
 		.stream().filter(nf -> {
 			return nf.getProductCount() > 0;
-		}).collect(Collectors.toList());
+		}).collect(Collectors.toList()));
+		
+		return nfc;
 	}
 	
 	@Override
@@ -93,13 +96,12 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		s.setId(t.getTagId());
 		s.setFacetDisplayValue(t.getTagDesc());
 		s.setToken(t.getTagCode());
-		s.setFacetName(CategoryVars.TAG_FACET_NAME);
 		s.setPayload(t);
 		return s;
 	}
 	
 	@Override
-	public List<NavFacet<Category>> findAllCategories(String locale, String currency, String category, List<NavFacet> selectedFacets) {
+	public NavFacetContainer findAllCategories(String locale, String currency, String category, List<NavFacet> selectedFacets) {
 		// TODO Auto-generated method stub
 		List<Long> tagIds = super.getFacetIds(selectedFacets, Tag.class);
 		List<Long> brandIds = super.getFacetIds(selectedFacets, Brand.class);
@@ -130,7 +132,10 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		
 		catBars.sort((o1, o2) -> o2.getProductCount().compareTo(o1.getProductCount()));
 		
-		return catBars;
+		NavFacetContainer nfc = new NavFacetContainer();
+		nfc.setCategories(catBars);
+		
+		return nfc;
 	}
 	 
 	 //Create a data transfer object
@@ -140,14 +145,13 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
     	s.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
     	s.setId(c.getCategoryId());
     	s.setFacetDisplayValue(c.getCategoryDesc());
-    	s.setFacetName(CategoryVars.PRIMARY_CATEGORY_FACET_NAME);
     	s.setToken(c.getCategoryCode());
     	s.setPayload(c);
 		return s;
     } 
 
 	@Override
-	public List<NavFacet<Brand>> findAllBrands(String locale, String currency, String category, List<NavFacet> selectedFacets) {
+	public NavFacetContainer findAllBrands(String locale, String currency, String category, List<NavFacet> selectedFacets) {
 		// TODO Auto-generated method stub
 		List<Long> tagIds = super.getFacetIds(selectedFacets, Tag.class);
 		List<Long> categoryIds = super.getFacetIds(selectedFacets, Category.class);
@@ -178,7 +182,10 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		
 		brandBars.sort((o1, o2) -> o2.getProductCount().compareTo(o1.getProductCount()));
 		
-		return brandBars;
+		NavFacetContainer nfc = new NavFacetContainer();
+		nfc.setBrands(brandBars);
+		
+		return nfc;
 	}
 	
 	 //Create a data transfer object
@@ -188,7 +195,6 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
     	s.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
     	s.setId(b.getBrandId());
     	s.setFacetDisplayValue(b.getBrandDesc());
-    	s.setFacetName(CategoryVars.BRAND_FACET_NAME);
     	s.setToken(b.getBrandCode());
     	s.setPayload(b);
 		return s;

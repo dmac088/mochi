@@ -113,8 +113,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 													 tagIds);
 						  
 		NavFacet<Object> s = new NavFacet<Object>();
-		s.setToken(maxPrice.toString());
-		s.setFacetName(CategoryVars.PRICE_FACET_NAME);		
+		s.setToken(maxPrice.toString());	
 		
 		System.out.println(maxPrice);
 		
@@ -242,7 +241,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 													categoryFacet.setProductCount(new Long(cf.getCount()));
 													categoryFacet.setToken(cf.getValue());
 													categoryFacet.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
-													categoryFacet.setFacetName(cf.getFacetingName());
 													cs.add(categoryFacet);
 												});
 		
@@ -254,7 +252,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 													brandFacet.setProductCount(new Long(bf.getCount()));
 													brandFacet.setToken(bf.getValue());
 													brandFacet.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
-													brandFacet.setFacetName(bf.getFacetingName());
 													bs.add(brandFacet);
 												});
 		
@@ -267,7 +264,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 													priceFacet.setProductCount(new Long(pf.getCount()));
 													priceFacet.setToken(pf.getValue());
 													priceFacet.setFacetType(ProductVars.FACET_TYPE_RANGE);
-													priceFacet.setFacetName(pf.getFacetingName());
 													ps.add(priceFacet);
 											   });
 		
@@ -280,7 +276,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 													tagFacet.setProductCount(new Long(tf.getCount()));
 													tagFacet.setToken(tf.getValue());
 													tagFacet.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
-													tagFacet.setFacetName(tf.getFacetingName());
 													ts.add(tagFacet);
 											   });
 		

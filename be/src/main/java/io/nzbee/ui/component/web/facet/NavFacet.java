@@ -9,8 +9,6 @@ import java.util.Objects;
 public class NavFacet<T> {
 
 	private Long Id;
-
-	private String facetName;
 	
 	private String facetToken;
 	
@@ -32,14 +30,6 @@ public class NavFacet<T> {
 
 	public void setId(Long id) {
 		this.Id = id;
-	}
-	
-	public String getFacetName() {
-		return facetName;
-	}
-
-	public void setFacetName(String facetName) {
-		this.facetName = facetName;
 	}
 
 	public String getToken() {
@@ -116,7 +106,6 @@ public class NavFacet<T> {
         final StringBuilder builder = new StringBuilder();
         builder.append("Facet [Id=").append(Id)
         .append(", facetToken=").append(facetToken)
-        .append(", facetName=").append(facetName)
         .append(", facetClassName=").append(facetClassName)
         .append("]");
         return builder.toString();
