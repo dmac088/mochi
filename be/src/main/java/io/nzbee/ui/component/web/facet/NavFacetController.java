@@ -29,17 +29,17 @@ public class NavFacetController {
 	} 
 	
     @GetMapping("/Category/{lcl}/{curr}")
-    public NavFacetContainer getCategories(@PathVariable String lcl, @PathVariable String curr) {
+    public NavFacetResult getCategories(@PathVariable String lcl, @PathVariable String curr) {
     	return navFacetService.findAllCategories(lcl, curr);
     }
 
     @PostMapping("/Category/{lcl}/{curr}/desc/{categoryDesc}/children")
-    public NavFacetContainer getCategoryChildren(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody List<NavFacet> facets) {
+    public NavFacetResult getCategoryChildren(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody List<NavFacet> facets) {
     	return navFacetService.findAllCategories(lcl, curr, categoryDesc, facets);
     }
     
     @PostMapping("/Brand/{lcl}/{curr}/category/{categoryDesc}")
-    public NavFacetContainer getBrands(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody List<NavFacet> facets) {
+    public NavFacetResult getBrands(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody List<NavFacet> facets) {
     	return navFacetService.findAllBrands(lcl, curr, categoryDesc, facets);
     }
 	
