@@ -193,7 +193,7 @@ public class CategoryService implements ICategoryService {
         	Category pcchild = createCategory(pc1, locale);
         	return pcchild;
         }).collect(Collectors.toList());//.filter(c -> c.getProductCount() > 0).collect(Collectors.toList());
-        cDO.setChildren(cDOl);
+        //cDO.setChildren(cDOl);
 
         //set the parentId
         Optional<io.nzbee.entity.category.Category> parent = Optional.ofNullable(pc.getParent());

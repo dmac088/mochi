@@ -66,13 +66,13 @@ public class NavFacet<T> {
 		this.facetDisplayValue = facetDisplayValue;
 	}
 
-//	public T getPayload() {
-//		return payload;
-//	}
-//
-//	public void setPayload(T payload) {
-//		this.payload = payload;
-//	}
+	public T getPayload() {
+		return payload;
+	}
+
+	public void setPayload(T payload) {
+		this.payload = payload;
+	}
 
 	public String getFacetClassName() {
 		return this.facetClassName;
