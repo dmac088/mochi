@@ -24,8 +24,8 @@ public class Category {
 	private Long parentId;	
 
 	private Long childCategoryCount;
-
-	private List<Category> children;
+//
+//	private List<Category> children;
 	
 	public Long getCategoryId() {
 		return categoryId;
@@ -99,13 +99,13 @@ public class Category {
 		this.layouts = layouts;
 	}
 	
-	public List<Category> getChildren() {
-		return children;
-	}
-
-	public void setChildren(List<Category> children) {
-		this.children = children;
-	}
+//	public List<Category> getChildren() {
+//		return children;
+//	}
+//
+//	public void setChildren(List<Category> children) {
+//		this.children = children;
+//	}
 
 	@Override
 	public boolean equals(Object o) {

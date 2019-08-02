@@ -94,7 +94,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		s.setFacetDisplayValue(t.getTagDesc());
 		s.setToken(t.getTagCode());
 		s.setFacetName(CategoryVars.TAG_FACET_NAME);
-		//s.setPayload(t);
+		s.setPayload(t);
 		return s;
 	}
 	
@@ -142,7 +142,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
     	s.setFacetDisplayValue(c.getCategoryDesc());
     	s.setFacetName(CategoryVars.PRIMARY_CATEGORY_FACET_NAME);
     	s.setToken(c.getCategoryCode());
-    //	s.setPayload(c);
+    	s.setPayload(c);
 		return s;
     } 
 
@@ -190,7 +190,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
     	s.setFacetDisplayValue(b.getBrandDesc());
     	s.setFacetName(CategoryVars.BRAND_FACET_NAME);
     	s.setToken(b.getBrandCode());
-    //	s.setPayload(b);
+    	s.setPayload(b);
 		return s;
     }
 
