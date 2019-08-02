@@ -21,12 +21,7 @@ public class CategoryController {
     public CategoryController() {
         super();
     }
-    
-    @GetMapping("/Category/{lcl}/{curr}")
-    public List<Category> getCategories(@PathVariable String lcl, @PathVariable String curr) {
-    	return categoryService.findAll(lcl);
-    }
-    
+
     @GetMapping("/Category/{lcl}/{curr}/ParentCategory/{parentCat}")
     public List<Category> getCategories(@PathVariable String lcl, @PathVariable String curr, @PathVariable Long parentCategory) {
     	return categoryService.findByParent(lcl, parentCategory);

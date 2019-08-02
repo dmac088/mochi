@@ -1,5 +1,7 @@
 package io.nzbee.ui.component.web.facet;
 
+import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,6 +38,18 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 	@Qualifier("productDomainService")
 	private IProductService productService;
 
+	@Override
+	public List<NavFacet<Category>> findAllCategories(String lcl, String currencyCode) {
+		return categoryService.findAll(lcl).stream().map(c -> {
+			NavFacet<Category> cnf = this.convertCatToNavFacet(c);
+			cnf.setMaxMarkdownPrice(productService.getMaxPriceForCategory(c.getCategoryId(), currencyCode));	
+			cnf.setProductCount(productService.getCountForCategory(c.getCategoryId()));
+			return cnf;
+		}).collect(Collectors.toList())
+		.stream().filter(nf -> {
+			return nf.getProductCount() > 0;
+		}).collect(Collectors.toList());
+	}
 	
 	@Override
 	public List<NavFacet<Tag>> findAllTags(String locale, String currency, String category, List<NavFacet> selectedFacets) {
@@ -75,11 +89,12 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 	private NavFacet<Tag> convertTagToNavFacet(Tag t) {
 		NavFacet<Tag> s = new NavFacet<Tag>();
 		s.setFacetClassName(t.getClass().getSimpleName());
+		s.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
 		s.setId(t.getTagId());
 		s.setFacetDisplayValue(t.getTagDesc());
 		s.setToken(t.getTagCode());
 		s.setFacetName(CategoryVars.TAG_FACET_NAME);
-		s.setPayload(t);
+		//s.setPayload(t);
 		return s;
 	}
 	
@@ -122,11 +137,12 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
     private NavFacet<Category> convertCatToNavFacet(final Category c) {
     	final NavFacet<Category> s = new NavFacet<Category>();
     	s.setFacetClassName(c.getClass().getSimpleName());
+    	s.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
     	s.setId(c.getCategoryId());
     	s.setFacetDisplayValue(c.getCategoryDesc());
     	s.setFacetName(CategoryVars.PRIMARY_CATEGORY_FACET_NAME);
     	s.setToken(c.getCategoryCode());
-    	s.setPayload(c);
+    //	s.setPayload(c);
 		return s;
     } 
 
@@ -169,11 +185,12 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
     private NavFacet<Brand> convertBrandToNavFacet(final Brand b) {
     	final NavFacet<Brand> s = new NavFacet<Brand>();
     	s.setFacetClassName(b.getClass().getSimpleName());
+    	s.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
     	s.setId(b.getBrandId());
     	s.setFacetDisplayValue(b.getBrandDesc());
     	s.setFacetName(CategoryVars.BRAND_FACET_NAME);
     	s.setToken(b.getBrandCode());
-    	s.setPayload(b);
+    //	s.setPayload(b);
 		return s;
     }
 

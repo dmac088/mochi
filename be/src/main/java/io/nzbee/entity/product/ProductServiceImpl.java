@@ -165,6 +165,17 @@ public class ProductServiceImpl implements IProductService {
 					tagIds, 
 					inHandlingTags);
 	}
+	
+	
+	@Override
+	public Double getMaxMarkDownPriceForCategory(Long categoryId, String currencyCode) {
+		return productRepository.maxMarkDownPriceForCategory(categoryId, currencyCode);
+	}
+	
+	@Override
+	public Long getCountForCategory(Long categoryId) {
+		return productRepository.countForCategory(categoryId);
+	}
 
 	@Override
 	public Long getCount(

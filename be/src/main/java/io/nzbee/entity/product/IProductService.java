@@ -35,6 +35,7 @@ public interface IProductService extends IService<Product> {
 			String productStatusCode, List<Long> brandIds, int inHandlingBrands, List<Long> categoryIds,
 			int inHandlingCategories, List<Long> tagIds, int inHandlingTags);
 
+	Double getMaxMarkDownPriceForCategory(Long categoryId, String currencyCode);
 
-
+	Long getCountForCategory(Long categoryId);
 }

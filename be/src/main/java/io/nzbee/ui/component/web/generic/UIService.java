@@ -15,7 +15,6 @@ public abstract class UIService {
 		return facets.stream().filter(t -> {
 			return t.getFacetClassName() != null && t.getFacetClassName().equals(type.getSimpleName());
 		}).map(c -> c.getId()).collect(Collectors.toList());
-		
 	}
 	
 }

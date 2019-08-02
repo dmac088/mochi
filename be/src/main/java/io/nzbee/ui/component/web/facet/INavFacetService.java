@@ -27,5 +27,7 @@ public interface INavFacetService {
 	
 	List<NavFacet<Brand>> findAllBrands(String locale, String currency, String category, List<NavFacet> selectedFacets);
 
+	List<NavFacet<Category>> findAllCategories(String lcl, String curr);
+
 
 }
