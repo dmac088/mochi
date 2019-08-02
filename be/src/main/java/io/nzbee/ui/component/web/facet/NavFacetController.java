@@ -9,9 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import io.nzbee.domain.Brand;
-import io.nzbee.domain.Category;
 import io.nzbee.domain.Tag;
 
 @RestController
@@ -32,17 +29,17 @@ public class NavFacetController {
 	} 
 	
     @GetMapping("/Category/{lcl}/{curr}")
-    public List<NavFacet<Category>> getCategories(@PathVariable String lcl, @PathVariable String curr) {
+    public NavFacetContainer getCategories(@PathVariable String lcl, @PathVariable String curr) {
     	return navFacetService.findAllCategories(lcl, curr);
     }
 
     @PostMapping("/Category/{lcl}/{curr}/desc/{categoryDesc}/children")
-    public List<NavFacet<Category>> getCategoryChildren(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody List<NavFacet> facets) {
+    public NavFacetContainer getCategoryChildren(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody List<NavFacet> facets) {
     	return navFacetService.findAllCategories(lcl, curr, categoryDesc, facets);
     }
     
     @PostMapping("/Brand/{lcl}/{curr}/category/{categoryDesc}")
-    public List<NavFacet<Brand>> getBrands(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody List<NavFacet> facets) {
+    public NavFacetContainer getBrands(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody List<NavFacet> facets) {
     	return navFacetService.findAllBrands(lcl, curr, categoryDesc, facets);
     }
 	

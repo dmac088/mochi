@@ -23,11 +23,11 @@ public interface INavFacetService {
 	
 	List<NavFacet<Tag>> findAllTags(String locale, String currency, String category, List<NavFacet> selectedFacets);
 	
-	List<NavFacet<Category>> findAllCategories(String locale, String currency, String category, List<NavFacet> selectedFacets);
+	NavFacetResult findAllCategories(String locale, String currency, String category, List<NavFacet> selectedFacets);
 	
-	List<NavFacet<Brand>> findAllBrands(String locale, String currency, String category, List<NavFacet> selectedFacets);
+	NavFacetResult findAllBrands(String locale, String currency, String category, List<NavFacet> selectedFacets);
 
-	List<NavFacet<Category>> findAllCategories(String lcl, String curr);
+	NavFacetResult findAllCategories(String lcl, String curr);
 
 
 }
