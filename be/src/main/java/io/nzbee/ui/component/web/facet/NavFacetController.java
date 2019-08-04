@@ -3,6 +3,7 @@ package io.nzbee.ui.component.web.facet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,10 +27,10 @@ public class NavFacetController {
 //	  return navFacetService.findAllTags(locale, currency, categoryDesc, selectedFacets);
 //	} 
 //	
-//    @GetMapping("/Category/{lcl}/{curr}")
-//    public NavFacetResult getCategories(@PathVariable String lcl, @PathVariable String curr) {
-//    	return navFacetService.findAllCategories(lcl, curr);
-//    }
+    @GetMapping("/Category/{lcl}/{curr}")
+    public NavFacetResult getCategories(@PathVariable String lcl, @PathVariable String curr) {
+    	return navFacetService.findAll(lcl, curr);
+    }
 //
 //    @PostMapping("/Category/{lcl}/{curr}/desc/{categoryDesc}/children")
 //    public NavFacetResult getCategoryChildren(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody List<NavFacet> selectedFacets) {
