@@ -159,7 +159,6 @@ class Products extends Component {
        })
        .then((responseText) => {
          if(type === 'category') {
-           console.log(responseText);
             newState["facets"] = [...newState["facets"], ...JSON.parse(responseText).result.brands];
          }
          return newState;
@@ -186,6 +185,7 @@ class Products extends Component {
          return response.text();
        })
        .then((responseText) => {
+         console.log(responseText);
          if(type === 'category') {
            newState["facets"] = [...newState["facets"],...JSON.parse(responseText).result.tags];
          }
@@ -336,7 +336,6 @@ class Products extends Component {
       const { products, facets, selectedFacets, totalPages, totalElements, numberOfElements, isGrid, term, category, maxPrice, selectedPrice, type } = this.state;
       const { page, size } = this.state.params;
       if(!products) { return null }
-      console.log(facets);
       const cat = this.filterCategories(categoryList, category)[0];
 				return(
           <React.Fragment>
