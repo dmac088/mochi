@@ -1,5 +1,6 @@
 package io.nzbee.ui.component.web.facet;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,8 @@ public class NavFacetController {
 	
     @GetMapping("/Category/{lcl}/{curr}")
     public NavFacetResult getCategories(@PathVariable String lcl, @PathVariable String curr) {
-    	return navFacetService.findAll(lcl, curr);
+    	return navFacetService.findAll(lcl, curr, "All", new ArrayList<NavFacet>());
+    	//return navFacetService.findAll(lcl, curr);
     }
 
     @PostMapping("/Category/{lcl}/{curr}/desc/{categoryDesc}/children")
