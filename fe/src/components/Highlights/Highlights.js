@@ -33,24 +33,24 @@ class Highlights extends Component {
     if(selectedCategory) { return; }
     //reset the current category to first in array
     this.setState({
-      "selectedCategory": landingCategories[0].categoryCode,
+      "selectedCategory": landingCategories[0].payload.categoryCode,
     });
   }
 
 
   renderTabHeaders = (categoryList, selectedCategory) => {
-    return categoryList.map(category => {
-      const isActive = (category.categoryCode === selectedCategory);
+    return categoryList.map(c => {
+      const isActive = (c.payload.categoryCode === selectedCategory);
       return (
-        <a  key={category.categoryId}
+        <a  key={c.payload.categoryId}
             onClick={this.showTab}
             className={"nav-item nav-link " + ((isActive) ? " active" : "")}
-            id={category.categoryCode}
+            id={c.payload.categoryCode}
             data-toggle="tab"
-            href="#{category.categoryCode}"
+            href="#{c.payload.categoryCode}"
             role="tab"
             aria-selected="true">
-          {category.categoryDesc}
+          {c.payload.categoryDesc}
         </a>
       )
     });
@@ -58,16 +58,16 @@ class Highlights extends Component {
 
   renderTabs = (categoryList, selectedCategory) => {
     const { match, history, setCurrentProductId } = this.props;
-    return categoryList.map(category => {
-      const isActive = (category.categoryCode === selectedCategory);
+    return categoryList.map(c => {
+      const isActive = (c.payload.categoryCode === selectedCategory);
       return (
-        <div key={category.categoryId}
+        <div key={c.payload.categoryId}
              className={"tab-pane fade "  + ((isActive) ? " show active" : "")}
-             id={category.categoryCode}
+             id={c.payload.categoryCode}
              role="tabpanel"
              aria-labelledby="featured-tab">
           <Category
-            category={category}
+            category={c.payload}
             setCurrentProductId={setCurrentProductId}
           />
         </div>
@@ -76,6 +76,7 @@ class Highlights extends Component {
   }
 
   render() {
+    console.log(this.props);
     const { landingCategories } = this.props;
     const { selectedCategory } = this.state;
     if(landingCategories.length === 0) { return null; }
