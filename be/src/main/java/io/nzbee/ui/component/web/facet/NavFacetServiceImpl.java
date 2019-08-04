@@ -64,19 +64,19 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		List<Long> tIds = super.getFacetIds(selectedFacets, Tag.class);
 		List<Long> bIds = super.getFacetIds(selectedFacets, Brand.class);
 		List<Long> cIds = super.getFacetIds(selectedFacets, Category.class);
-		
-		Long proudctCount = productService.getCount(
-				CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
-				category, 
-				locale, 
-				currency, 
-				ProductVars.ACTIVE_SKU_CODE,
-				
-				//these are a bit risky
-				new ArrayList<Long>(cIds), 
-				new ArrayList<Long>(bIds), 
-				new ArrayList<Long>(tIds)
-		);
+//		
+//		Long proudctCount = productService.getCount(
+//				CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
+//				category, 
+//				locale, 
+//				currency, 
+//				ProductVars.ACTIVE_SKU_CODE,
+//				
+//				//these are a bit risky
+//				new ArrayList<Long>(cIds), 
+//				new ArrayList<Long>(bIds), 
+//				new ArrayList<Long>(tIds)
+//		);
 		
 		NavFacetContainer nfc = new NavFacetContainer();
 		NavFacetResult nfr = new NavFacetResult();
@@ -91,30 +91,30 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 			List<Long> categoryIds = new ArrayList<Long>();
 			categoryIds.add(c.getCategoryId());
 			NavFacet<Category> s = convertCatToNavFacet(c);
-			s.setProductCount(proudctCount);
+			//s.setProductCount(proudctCount);
 			return s;
-		}).collect(Collectors.toList())
-			.stream().filter(c -> c.getProductCount() > 0)
+		}).collect(Collectors.toList()).stream()
+			.filter(c -> c.getProductCount() > 0)
 			.collect(Collectors.toList());
 	
 		List<NavFacet<Brand>> brandBars = brands.stream().map(b -> {
 			List<Long> brandIds = new ArrayList<Long>();
 			brandIds.add(b.getBrandId());
 			NavFacet<Brand> s = convertBrandToNavFacet(b);
-			s.setProductCount(proudctCount);
+			//s.setProductCount(proudctCount);
 			return s;
-		}).collect(Collectors.toList())
-			.stream().filter(c -> c.getProductCount() > 0)
+		}).collect(Collectors.toList()).stream()
+			//.filter(c -> c.getProductCount() > 0)
 			.collect(Collectors.toList());
 		
 		List<NavFacet<Tag>> tagBars = tags.stream().map(t -> {
 			List<Long> tagIds = new ArrayList<Long>();
 			tagIds.add(t.getTagId());
 			NavFacet<Tag> s = convertTagToNavFacet(t);
-			s.setProductCount(proudctCount);
+			//s.setProductCount(proudctCount);
 			return s;
-		}).collect(Collectors.toList())
-			.stream().filter(t -> t.getProductCount() > 0)
+		}).collect(Collectors.toList()).stream()
+			//.filter(t -> t.getProductCount() > 0)
 			.collect(Collectors.toList());
 		
 		nfc.setBrands(brandBars);
