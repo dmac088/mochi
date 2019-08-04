@@ -104,9 +104,8 @@ class CategoryMenu extends Component {
     })
   }
 
-  renderCategoryListItems = (locale, isMobile, categoryList, isRootList, itemCounter, routeProps) => {
-
-    return categoryList.map(category => {
+  renderCategoryList = (locale, isMobile, displayCategoryList, categoryList, isRootList, itemCounter, routeProps) => {
+    return displayCategoryList.map(category => {
         if(isRootList) {itemCounter+=1};
         const { showMore }  = this.state
         const categoryId    = category.payload.categoryId;
@@ -122,8 +121,9 @@ class CategoryMenu extends Component {
                     itemCounter={itemCounter}
                     routeProps={routeProps}
                     showMore={showMore}
+                    displayCategoryList={displayCategoryList}
                     categoryList={categoryList}
-                    renderCategoryListItems={this.renderCategoryListItems}>
+                    renderCategoryList={this.renderCategoryList}>
               </ReactTransitionGroup>
         )
     });
@@ -133,12 +133,12 @@ class CategoryMenu extends Component {
     const { categoryList, isMobile, routeProps }  = this.props;
     const { locale }                              = routeProps.match.params;
     const { showMore }                            = this.state;
-
-//console.log(categoryList);
+    const displayCategoryList                     = categoryList.filter(o => o.payload.categoryLevel === 1);
+console.log(categoryList);
 
     return(
       <ul ref={this.setContainer}>
-        {this.renderCategoryListItems(locale, isMobile, categoryList, true, 0, routeProps)}
+        {this.renderCategoryList(locale, isMobile, displayCategoryList, categoryList, true, 0, routeProps)}
         {
           ((categoryList.length > 8 && !showMore)
           ? <li>
@@ -184,13 +184,19 @@ class CategoryMenuItem extends Component {
   }
 
   getChildren = (parent, categoryList) => {
+    //if(!parent) { return children; }
+    //console.log(categoryList);
     const children = categoryList.filter(o => o.payload.parentId === parent.payload.categoryId);
+    //console.log(children);
     return children;
+
+    //return children.map(c => this.getChildren(c, categoryList, children));
   }
 
   render() {
-    const { locale, itemCounter, isRootList, isMobile, showMore, renderCategoryListItems, category, routeProps, categoryList } = this.props;
+    const { locale, itemCounter, isRootList, isMobile, showMore, displayCategoryList, category, routeProps, categoryList, renderCategoryList } = this.props;
     const { hasChildren, expand } = this.state;
+    const children = [];
     return (
         <li
           className={
@@ -233,11 +239,13 @@ class CategoryMenuItem extends Component {
               ? <CategoryMenuItemSubList
                   locale={locale}
                   isMobile={isMobile}
-                  renderCategoryListItems={renderCategoryListItems}
+                  displayCategoryList={displayCategoryList}
+                  categoryList={categoryList}
                   children={this.getChildren(category, categoryList)}
                   categoryLevel={category.payload.categoryLevel}
                   itemCounter={itemCounter}
                   routeProps={routeProps}
+                  renderCategoryList={renderCategoryList}
                 />
               : null)}
           </ReactTransitionGroup>
@@ -264,11 +272,11 @@ class CategoryMenuItemSubList extends Component {
   }
 
   render() {
-    const { locale, itemCounter, children, isMobile, routeProps } = this.props;
+    const { locale, itemCounter, children, isMobile, routeProps, categoryList, renderCategoryList } = this.props;
     return (
       <ul ref={this.setContainer}
           className="category-mega-menu">
-            {this.props.renderCategoryListItems(locale, isMobile, children, false, itemCounter, routeProps)}
+            {renderCategoryList(locale, isMobile, children, categoryList, false, itemCounter, routeProps)}
       </ul>
     )
   }
