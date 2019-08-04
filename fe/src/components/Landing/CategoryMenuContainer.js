@@ -184,10 +184,7 @@ class CategoryMenuItem extends Component {
   }
 
   getChildren = (parent, categoryList) => {
-    console.log(parent);
-
     const children = categoryList.filter(o => o.payload.parentId === parent.payload.categoryId);
-    //console.log(children);
     return children;
   }
 
