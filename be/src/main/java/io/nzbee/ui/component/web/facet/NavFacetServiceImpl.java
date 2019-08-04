@@ -94,7 +94,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 			//s.setProductCount(proudctCount);
 			return s;
 		}).collect(Collectors.toList()).stream()
-			.filter(c -> c.getProductCount() > 0)
+			//.filter(c -> c.getProductCount() > 0)
 			.collect(Collectors.toList());
 	
 		List<NavFacet<Brand>> brandBars = brands.stream().map(b -> {
