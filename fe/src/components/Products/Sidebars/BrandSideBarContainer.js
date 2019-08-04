@@ -3,6 +3,8 @@ import { withRouter } from "react-router-dom";
 import { createRouteProps } from '../../../services/helpers/routeHelper';
 
   const renderFacets = (facets, selectedFacets, routeProps, props) => {
+    
+
     if(facets.length === 0) { return null }
     return facets.map(facet => {
       return(

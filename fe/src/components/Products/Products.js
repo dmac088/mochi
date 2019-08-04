@@ -335,6 +335,7 @@ class Products extends Component {
       const { products, facets, selectedFacets, totalPages, totalElements, numberOfElements, isGrid, term, category, maxPrice, selectedPrice, type } = this.state;
       const { page, size } = this.state.params;
       if(!products) { return null }
+      console.log(facets);
       const cat = this.filterCategories(categoryList, category)[0];
 				return(
           <React.Fragment>
