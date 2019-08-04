@@ -105,6 +105,7 @@ class CategoryMenu extends Component {
   }
 
   renderCategoryList = (locale, isMobile, displayCategoryList, categoryList, isRootList, itemCounter, routeProps) => {
+    if(!displayCategoryList) { return; }
     return displayCategoryList.map(category => {
         if(isRootList) {itemCounter+=1};
         const { showMore }  = this.state
@@ -134,7 +135,6 @@ class CategoryMenu extends Component {
     const { locale }                              = routeProps.match.params;
     const { showMore }                            = this.state;
     const displayCategoryList                     = categoryList.filter(o => o.payload.categoryLevel === 1);
-console.log(categoryList);
 
     return(
       <ul ref={this.setContainer}>
@@ -183,14 +183,15 @@ class CategoryMenuItem extends Component {
           : 25 + (((level-1) * 10)-offset)) + "px";
   }
 
-  getChildren = (parent, categoryList) => {
-    //if(!parent) { return children; }
-    //console.log(categoryList);
-    const children = categoryList.filter(o => o.payload.parentId === parent.payload.categoryId);
-    //console.log(children);
-    return children;
+  getChildren = (parent, categoryList, children) => {
+    const c = categoryList.filter(o => o.payload.parentId === parent.payload.categoryId);
+    if(!c) {return children;}
+    c.map((child) => {
+                      children.push(child);
+                      this.getChildren(child, categoryList, children);
+                      });
 
-    //return children.map(c => this.getChildren(c, categoryList, children));
+    return c;
   }
 
   render() {
@@ -241,7 +242,7 @@ class CategoryMenuItem extends Component {
                   isMobile={isMobile}
                   displayCategoryList={displayCategoryList}
                   categoryList={categoryList}
-                  children={this.getChildren(category, categoryList)}
+                  children={this.getChildren(category, categoryList, children)}
                   categoryLevel={category.payload.categoryLevel}
                   itemCounter={itemCounter}
                   routeProps={routeProps}
