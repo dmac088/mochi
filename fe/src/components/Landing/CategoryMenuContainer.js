@@ -41,8 +41,8 @@ class CategoryMenuContainer extends Component {
     const { menuVisible, isMobile } = this.state;
     const routeProps = createRouteProps(this.props.history, this.props.match, this.props.location);
     const { locale } = routeProps.match.params;
-
-    const categoryList = filterCategories(this.props.categoryList, 'LNDMM01');
+    const { categoryList } = this.props;
+    //const categoryList = filterCategories(this.props.categoryList, 'LNDMM01');
     return (
       <div className="hero-side-category">
         <div className="category-toggle-wrap">
@@ -122,6 +122,7 @@ class CategoryMenu extends Component {
                     itemCounter={itemCounter}
                     routeProps={routeProps}
                     showMore={showMore}
+                    categoryList={categoryList}
                     renderCategoryListItems={this.renderCategoryListItems}>
               </ReactTransitionGroup>
         )
@@ -132,6 +133,9 @@ class CategoryMenu extends Component {
     const { categoryList, isMobile, routeProps }  = this.props;
     const { locale }                              = routeProps.match.params;
     const { showMore }                            = this.state;
+
+//console.log(categoryList);
+
     return(
       <ul ref={this.setContainer}>
         {this.renderCategoryListItems(locale, isMobile, categoryList, true, 0, routeProps)}
@@ -158,7 +162,7 @@ class CategoryMenuItem extends Component {
 
   constructor(props) {
     super(props);
-    const { childCategoryCount } = this.props.category;
+    const { childCategoryCount } = this.props.category.payload;
     const { isMobile } = this.props;
     this.state = {
       hasChildren: childCategoryCount > 0,
@@ -167,7 +171,6 @@ class CategoryMenuItem extends Component {
   }
 
   expandCat = (e) => {
-
       e.preventDefault()
       this.setState(prevState => ({
         expand: !prevState.expand,
@@ -180,8 +183,16 @@ class CategoryMenuItem extends Component {
           : 25 + (((level-1) * 10)-offset)) + "px";
   }
 
+  getChildren = (parent, categoryList) => {
+    console.log(parent);
+
+    const children = categoryList.filter(o => o.payload.parentId === parent.payload.categoryId);
+    //console.log(children);
+    return children;
+  }
+
   render() {
-    const { locale, itemCounter, isRootList, isMobile, showMore, renderCategoryListItems, category, routeProps } = this.props;
+    const { locale, itemCounter, isRootList, isMobile, showMore, renderCategoryListItems, category, routeProps, categoryList } = this.props;
     const { hasChildren, expand } = this.state;
     return (
         <li
@@ -226,7 +237,7 @@ class CategoryMenuItem extends Component {
                   locale={locale}
                   isMobile={isMobile}
                   renderCategoryListItems={renderCategoryListItems}
-                  children={category.payload.children}
+                  children={this.getChildren(category, categoryList)}
                   categoryLevel={category.payload.categoryLevel}
                   itemCounter={itemCounter}
                   routeProps={routeProps}
