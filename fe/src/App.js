@@ -86,20 +86,20 @@ class App extends Component {
   //we cache data in App to avoid refreshing on route changes (componentDidMount)
   refreshData(locale, currency) {
     this.refreshCategoryList(locale, currency)
-    .then((categoryList) => {
+    .then((responseJSON) => {
       this.setState({
-        "categoryList": categoryList,
+        "categoryList": responseJSON.result.categories,
       });
     })
     .then(() => {
       const { categoryList } = this.state;
       //return an array of promises to the next in chain
-      return filterCategories(categoryList, 'LNDHC01').map(category => {
+      return filterCategories(categoryList, 'LNDHC01').map(c => {
         //we must return the nested promise
-        return this.getCategoryProducts(locale, currency, category.categoryDesc)
+        return this.getCategoryProducts(locale, currency, c.payload.categoryDesc)
         .then((response) => {
-          category["products"] = response;
-          return category;
+          c["products"] = response;
+          return c;
         });
       });
     })
@@ -114,12 +114,12 @@ class App extends Component {
     .then(() => {
       const { categoryList } = this.state;
       //return an array of promises to the next in chain
-      return filterCategories(categoryList, 'LNDPC01').map(category => {
+      return filterCategories(categoryList, 'LNDPC01').map(c => {
         //we must return the nested promise
-        return this.getCategoryProducts(locale, currency, category.categoryDesc)
+        return this.getCategoryProducts(locale, currency, c.payload.categoryDesc)
         .then((response) => {
-          category["products"] = response;
-          return category;
+          c["products"] = response;
+          return c;
         });
       });
     })

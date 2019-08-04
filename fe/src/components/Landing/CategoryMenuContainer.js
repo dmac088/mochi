@@ -105,10 +105,11 @@ class CategoryMenu extends Component {
   }
 
   renderCategoryListItems = (locale, isMobile, categoryList, isRootList, itemCounter, routeProps) => {
+
     return categoryList.map(category => {
         if(isRootList) {itemCounter+=1};
         const { showMore }  = this.state
-        const categoryId    = category.categoryId;
+        const categoryId    = category.payload.categoryId;
 
         return(
               <ReactTransitionGroup
@@ -196,20 +197,20 @@ class CategoryMenuItem extends Component {
           style={
             (isRootList && itemCounter > 8 && !showMore)
             ? {"display": "none"}
-            : {"--my-left-indent": this.getIndent(category.categoryLevel,10)}
+            : {"--my-left-indent": this.getIndent(category.payload.categoryLevel,10)}
           }
           >
-          <a  id={category.categoryDesc}
+          <a  id={category.payload.categoryDesc}
               onClick={(e) => {
                           if ((e.target.tagName.toLowerCase() === "i")) {return}
                           changeCategory(e, routeProps )
                         }}
               className={"megamenu-head"}
               style={(isMobile)
-                     ? {"--my-cat-indent": this.getIndent(category.categoryLevel)}
+                     ? {"--my-cat-indent": this.getIndent(category.payload.categoryLevel)}
                       : {"":""}}
               href="shop-left-sidebar.html">
-            {category.categoryDesc} 
+            {category.payload.categoryDesc}
             {(hasChildren && isMobile)
               ? <span>
                   <i onClick={this.expandCat}
@@ -225,8 +226,8 @@ class CategoryMenuItem extends Component {
                   locale={locale}
                   isMobile={isMobile}
                   renderCategoryListItems={renderCategoryListItems}
-                  children={category.children}
-                  categoryLevel={category.categoryLevel}
+                  children={category.payload.children}
+                  categoryLevel={category.payload.categoryLevel}
                   itemCounter={itemCounter}
                   routeProps={routeProps}
                 />

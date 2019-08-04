@@ -54,6 +54,7 @@ const $ = window.$;
   };
 
   const renderProducts = (props, slider) => {
+    
     const { category, setCurrentProductId } = props;
     if(!category) { return }
     if(!category.products) { return }
