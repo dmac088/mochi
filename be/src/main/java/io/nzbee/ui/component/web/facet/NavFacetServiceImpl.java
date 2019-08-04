@@ -1,7 +1,5 @@
 package io.nzbee.ui.component.web.facet;
 
-import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
