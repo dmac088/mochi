@@ -20,13 +20,13 @@ public class NavFacetController {
 
 	@PostMapping("/Product/{locale}/{currency}/{categoryDesc}/tags")
 	public NavFacetResult getTags(@PathVariable String locale, @PathVariable String currency, @PathVariable String categoryDesc, @RequestBody final List<NavFacet> selectedFacets) {
-	  return navFacetService.findAll(locale, currency, categoryDesc, selectedFacets);
+		return navFacetService.findAll(locale, currency, categoryDesc, selectedFacets);
 	} 
 	
     @GetMapping("/Category/{lcl}/{curr}")
     public NavFacetResult getCategories(@PathVariable String lcl, @PathVariable String curr) {
-    	return navFacetService.findAll(lcl, curr, "All", new ArrayList<NavFacet>());
-    	//return navFacetService.findAll(lcl, curr);
+    	//return navFacetService.findAll(lcl, curr, "All", new ArrayList<NavFacet>());
+    	return navFacetService.findAll(lcl, curr);
     }
 
     @PostMapping("/Category/{lcl}/{curr}/desc/{categoryDesc}/children")

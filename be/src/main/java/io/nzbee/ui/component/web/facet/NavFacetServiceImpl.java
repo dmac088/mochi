@@ -48,11 +48,10 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 									NavFacet<Category> cnf = this.convertCatToNavFacet(c);
 									cnf.setMaxMarkdownPrice(productService.getMaxPriceForCategory(c.getCategoryId(), currency));	
 									cnf.setProductCount(productService.getCountForCategory(c.getCategoryId()));
-								return cnf;
-							}).collect(Collectors.toList())
-							.stream().filter(nf -> {
-								return nf.getProductCount() > 0;
-							}).collect(Collectors.toList()));
+									return cnf;
+							}).collect(Collectors.toList()).stream()
+							  //.filter(nf -> nf.getProductCount() > 0)
+							  .collect(Collectors.toList()));
 		nfr.setResult(nfc);
 		return nfr;
 		
