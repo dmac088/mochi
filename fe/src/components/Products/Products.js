@@ -80,9 +80,6 @@ class Products extends Component {
       //isNan is not supported in IE
       //if(Number.isNaN(maxPrice)) { return }
 
-      // console.log(term);
-      // console.log(categoryList);
-
       //get the currenct selected price
       const { selectedPrice } = this.state;
 
@@ -148,7 +145,6 @@ class Products extends Component {
        })
        .then((responseText) => {
          if(type === 'category') {
-           console.log(JSON.parse(responseText));
             newState["facets"] = [...JSON.parse(responseText).result.categories];
          }
          return newState;

@@ -19,7 +19,7 @@ public interface INavFacetService {
 //				 List<String> brandTokens,
 //				 List<String> tagTokens);
 	
-	List<NavFacet<Tag>> findAllTags(String locale, String currency, String category, List<NavFacet> selectedFacets);
+	NavFacetResult findAllTags(String locale, String currency, String category, List<NavFacet> selectedFacets);
 	
 	NavFacetResult findAllCategories(String locale, String currency, String category, List<NavFacet> selectedFacets);
 	
