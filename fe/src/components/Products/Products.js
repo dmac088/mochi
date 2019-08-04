@@ -70,15 +70,18 @@ class Products extends Component {
     const { locale, currency, term, brand } = this.props.match.params;
     const type                              = this.props.match.params[0];
 
+
+
     if(type==="category") {
+
 
       //get the max price for our new props
       const maxPrice = Number(this.getMaxPrice((this.filterCategories(categoryList, term)[0]), brand));
-      console.log(maxPrice);
-      console.log(categoryList);
-
       //isNan is not supported in IE
       //if(Number.isNaN(maxPrice)) { return }
+
+      // console.log(term);
+      // console.log(categoryList);
 
       //get the currenct selected price
       const { selectedPrice } = this.state;
@@ -145,7 +148,8 @@ class Products extends Component {
        })
        .then((responseText) => {
          if(type === 'category') {
-            newState["facets"] = [...JSON.parse(responseText)];
+           console.log(JSON.parse(responseText));
+            newState["facets"] = [...JSON.parse(responseText).result.categories];
          }
          return newState;
        })
@@ -155,12 +159,11 @@ class Products extends Component {
      .then((newState) => {
        return brandApi.findByCategory(newState.locale, newState.currency, newState.category, newState.selectedFacets)
        .then((response) => {
-         console.log(newState.selectedFacets);
          return response.text();
        })
        .then((responseText) => {
          if(type === 'category') {
-            newState["facets"] = [...newState["facets"], ...JSON.parse(responseText)];
+            newState["facets"] = [...newState["facets"], ...JSON.parse(responseText).result.brands];
          }
          return newState;
        })
@@ -187,7 +190,7 @@ class Products extends Component {
        })
        .then((responseText) => {
          if(type === 'category') {
-           newState["facets"] = [...newState["facets"],...JSON.parse(responseText)];
+           newState["facets"] = [...newState["facets"],...JSON.parse(responseText).result.tags];
          }
          return newState;
        });
@@ -227,18 +230,18 @@ class Products extends Component {
 
   filterCategories = (categoryList, categoryDesc) => {
     return categoryList.filter(function(value, index, arr){
-      return value.categoryDesc === categoryDesc;
+      return value.payload.categoryDesc === categoryDesc;
     });
   }
 
   getMaxPrice = (category, currentBrand) => {
     if(!category) { return }
-    let maxPrice = category.maxMarkDownPrice;
+    let maxPrice = category.maxMarkdownPrice;
     if(!category.categoryBrands) {return maxPrice}
     if(!currentBrand) {return maxPrice}
     category.categoryBrands.map(brand => {
       if (currentBrand === brand.brandDesc) {
-          maxPrice = brand.maxMarkDownPrice;
+          maxPrice = brand.maxMarkdownPrice;
       }
     });
     return maxPrice;
