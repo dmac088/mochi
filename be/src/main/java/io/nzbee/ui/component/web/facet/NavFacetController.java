@@ -18,13 +18,13 @@ public class NavFacetController {
     
 	@Autowired
 	private INavFacetService navFacetService;
-
-	@PostMapping("/Product/{locale}/{currency}/{category}/{price}/tags")
-    public List<NavFacet<Tag>> getTags(@PathVariable String locale, @PathVariable String currency, @PathVariable String categoryDesc, @PathVariable Double price, @RequestBody final List<NavFacet> selectedFacets) {
-	  return navFacetService.findAll(locale, currency, categoryDesc, selectedFacets).getResult().getTags();
-	}
+//
+//	@PostMapping("/Product/{locale}/{currency}/{category}/{price}/tags")
+//    public List<NavFacet<Tag>> getTags(@PathVariable String locale, @PathVariable String currency, @PathVariable String categoryDesc, @PathVariable Double price, @RequestBody final List<NavFacet> selectedFacets) {
+//	  return navFacetService.findAll(locale, currency, categoryDesc, selectedFacets).getResult().getTags();
+//	}
   
-	@PostMapping("/Product/{locale}/{currency}/{category}/tags")
+	@PostMapping("/Product/{locale}/{currency}/{categoryDesc}/tags")
 	public NavFacetResult getTags(@PathVariable String locale, @PathVariable String currency, @PathVariable String categoryDesc, @RequestBody final List<NavFacet> selectedFacets) {
 	  return navFacetService.findAll(locale, currency, categoryDesc, selectedFacets);
 	} 
