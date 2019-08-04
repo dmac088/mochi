@@ -19,13 +19,15 @@ public interface INavFacetService {
 //				 List<String> brandTokens,
 //				 List<String> tagTokens);
 	
-	NavFacetResult findAllTags(String locale, String currency, String category, List<NavFacet> selectedFacets);
-	
-	NavFacetResult findAllCategories(String locale, String currency, String category, List<NavFacet> selectedFacets);
-	
-	NavFacetResult findAllBrands(String locale, String currency, String category, List<NavFacet> selectedFacets);
+//	NavFacetResult findAllTags(String locale, String currency, String category, List<NavFacet> selectedFacets);
+//	
+//	NavFacetResult findAllCategories(String locale, String currency, String category, List<NavFacet> selectedFacets);
+//	
+//	NavFacetResult findAllBrands(String locale, String currency, String category, List<NavFacet> selectedFacets);
+//
+//	NavFacetResult findAllCategories(String lcl, String curr);
 
-	NavFacetResult findAllCategories(String lcl, String curr);
+	NavFacetResult findAll(String locale, String currency, String category, List<NavFacet> selectedFacets);
 
-
+	NavFacetResult findAll(String locale, String currency);
 }

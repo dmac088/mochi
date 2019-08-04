@@ -36,67 +36,108 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 	@Qualifier("productDomainService")
 	private IProductService productService;
 
+	
+	
+	
 	@Override
-	public NavFacetResult findAllCategories(String lcl, String currencyCode) {
+	public NavFacetResult findAll(String locale, String currency) {
 		NavFacetContainer nfc = new NavFacetContainer();
 		NavFacetResult nfr = new NavFacetResult();
 		
-		nfc.setCategories(categoryService.findAll(lcl).stream().map(c -> {
-			NavFacet<Category> cnf = this.convertCatToNavFacet(c);
-			cnf.setMaxMarkdownPrice(productService.getMaxPriceForCategory(c.getCategoryId(), currencyCode));	
-			cnf.setProductCount(productService.getCountForCategory(c.getCategoryId()));
-			return cnf;
-		}).collect(Collectors.toList()));
-//		.stream().filter(nf -> {
-//			return nf.getProductCount() > 0;
-//		}).collect(Collectors.toList()))
-//		;
+		nfc.setCategories(	categoryService.findAll(locale).stream().map(c -> {
+									NavFacet<Category> cnf = this.convertCatToNavFacet(c);
+									cnf.setMaxMarkdownPrice(productService.getMaxPriceForCategory(c.getCategoryId(), currency));	
+									cnf.setProductCount(productService.getCountForCategory(c.getCategoryId()));
+								return cnf;
+							}).collect(Collectors.toList())
+							.stream().filter(nf -> {
+								return nf.getProductCount() > 0;
+							}).collect(Collectors.toList()));
+		nfr.setResult(nfc);
+		return nfr;
+		
+	}
+	
+	
+	@Override
+	public NavFacetResult findAll(String locale, String currency, String category, List<NavFacet> selectedFacets) {
+		List<Long> tIds = super.getFacetIds(selectedFacets, Tag.class);
+		List<Long> bIds = super.getFacetIds(selectedFacets, Brand.class);
+		List<Long> cIds = super.getFacetIds(selectedFacets, Category.class);
+		
+		Long proudctCount = productService.getCount(
+				CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
+				category, 
+				locale, 
+				currency, 
+				ProductVars.ACTIVE_SKU_CODE,
+				
+				//these are a bit risky
+				new ArrayList<Long>(cIds), 
+				new ArrayList<Long>(bIds), 
+				new ArrayList<Long>(tIds)
+		);
+		
+		NavFacetContainer nfc = new NavFacetContainer();
+		NavFacetResult nfr = new NavFacetResult();
+		
+		List<Category> categories = categoryService.findAll(locale, category, bIds, tIds);
+		List<Brand> brands = brandService.findAll(locale, currency, category, cIds, tIds);
+		List<Tag> tags = tagService.findAll(locale, currency, category, cIds, bIds);
+		
+		System.out.println(categories.size());
+		 
+		List<NavFacet<Category>> catBars = categories.stream().map(c -> {
+			List<Long> categoryIds = new ArrayList<Long>();
+			categoryIds.add(c.getCategoryId());
+			NavFacet<Category> s = convertCatToNavFacet(c);
+			s.setProductCount(proudctCount);
+			return s;
+		}).collect(Collectors.toList())
+			.stream().filter(c -> c.getProductCount() > 0)
+			.collect(Collectors.toList());
+	
+		List<NavFacet<Brand>> brandBars = brands.stream().map(b -> {
+			List<Long> brandIds = new ArrayList<Long>();
+			brandIds.add(b.getBrandId());
+			NavFacet<Brand> s = convertBrandToNavFacet(b);
+			s.setProductCount(proudctCount);
+			return s;
+		}).collect(Collectors.toList())
+			.stream().filter(c -> c.getProductCount() > 0)
+			.collect(Collectors.toList());
+		
+		List<NavFacet<Tag>> tagBars = tags.stream().map(t -> {
+			List<Long> tagIds = new ArrayList<Long>();
+			tagIds.add(t.getTagId());
+			NavFacet<Tag> s = convertTagToNavFacet(t);
+			s.setProductCount(proudctCount);
+			return s;
+		}).collect(Collectors.toList())
+			.stream().filter(t -> t.getProductCount() > 0)
+			.collect(Collectors.toList());
+		
+		nfc.setBrands(brandBars);
+		nfc.setCategories(catBars);
+		nfc.setTags(tagBars);
 		
 		nfr.setResult(nfc);
 		
 		return nfr;
-	}
-	
-	@Override
-	public NavFacetResult findAllTags(String locale, String currency, String category, List<NavFacet> selectedFacets) {
-		// TODO Auto-generated method stub
-		List<Long> categoryIds = super.getFacetIds(selectedFacets, Category.class);
-		List<Long> brandIds = super.getFacetIds(selectedFacets, Brand.class);
-	
-		List<Tag> tags = tagService.findAll(locale, currency, category, categoryIds, brandIds);
 		
-		List<NavFacet<Tag>> tagBars = tags.stream().map(t -> {
-				List<Long> tagIds = new ArrayList<Long>();
-				tagIds.add(t.getTagId());
-				NavFacet<Tag> s = convertTagToNavFacet(t);
-				
-				s.setProductCount(
-					productService.getCount(
-						CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
-						category, 
-						locale, 
-						currency, 
-						ProductVars.ACTIVE_SKU_CODE, 
-						categoryIds, 
-						brandIds, 
-						tagIds
-					)
-				);
-				return s;
-			}).collect(Collectors.toList())
-				.stream().filter(t -> t.getProductCount() > 0)
-				.collect(Collectors.toList());
-		
-		tagBars.sort((o1, o2) -> o2.getProductCount().compareTo(o1.getProductCount()));
-		
-		NavFacetContainer nfc = new NavFacetContainer();
-		nfc.setTags(tagBars);
-		NavFacetResult nfr = new NavFacetResult();
-		nfr.setResult(nfc);		
-		
-		return nfr;
 	}
 
+    private NavFacet<Category> convertCatToNavFacet(final Category c) {
+    	final NavFacet<Category> s = new NavFacet<Category>();
+    	s.setFacetClassName(c.getClass().getSimpleName());
+    	s.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
+    	s.setId(c.getCategoryId());
+    	s.setFacetDisplayValue(c.getCategoryDesc());
+    	s.setToken(c.getCategoryCode());
+    	s.setPayload(c);
+		return s;
+    } 
+	
 	private NavFacet<Tag> convertTagToNavFacet(Tag t) {
 		NavFacet<Tag> s = new NavFacet<Tag>();
 		s.setFacetClassName(t.getClass().getSimpleName());
@@ -108,99 +149,6 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		return s;
 	}
 	
-	@Override
-	public NavFacetResult findAllCategories(String locale, String currency, String category, List<NavFacet> selectedFacets) {
-		// TODO Auto-generated method stub
-		List<Long> tagIds = super.getFacetIds(selectedFacets, Tag.class);
-		List<Long> brandIds = super.getFacetIds(selectedFacets, Brand.class);
-		
-		List<Category> categories = categoryService.findAll(locale, category, brandIds, tagIds);
-		
-		List<NavFacet<Category>> catBars = categories.stream().map(c -> {
-			List<Long> categoryIds = new ArrayList<Long>();
-			categoryIds.add(c.getCategoryId());
-			NavFacet<Category> s = convertCatToNavFacet(c);
-			
-			s.setProductCount(
-				productService.getCount(
-					CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
-					category, 
-					locale, 
-					currency, 
-					ProductVars.ACTIVE_SKU_CODE, 
-					categoryIds, 
-					brandIds, 
-					tagIds
-				)
-			);
-			return s;
-		}).collect(Collectors.toList())
-			.stream().filter(c -> c.getProductCount() > 0)
-			.collect(Collectors.toList());
-		
-		catBars.sort((o1, o2) -> o2.getProductCount().compareTo(o1.getProductCount()));
-		
-		NavFacetContainer nfc = new NavFacetContainer();
-		nfc.setCategories(catBars);
-		NavFacetResult nfr = new NavFacetResult();
-		nfr.setResult(nfc);		
-		
-		return nfr;
-	}
-	 
-	 //Create a data transfer object
-    private NavFacet<Category> convertCatToNavFacet(final Category c) {
-    	final NavFacet<Category> s = new NavFacet<Category>();
-    	s.setFacetClassName(c.getClass().getSimpleName());
-    	s.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
-    	s.setId(c.getCategoryId());
-    	s.setFacetDisplayValue(c.getCategoryDesc());
-    	s.setToken(c.getCategoryCode());
-    	s.setPayload(c);
-		return s;
-    } 
-
-	@Override
-	public NavFacetResult findAllBrands(String locale, String currency, String category, List<NavFacet> selectedFacets) {
-		// TODO Auto-generated method stub
-		List<Long> tagIds = super.getFacetIds(selectedFacets, Tag.class);
-		List<Long> categoryIds = super.getFacetIds(selectedFacets, Category.class);
-		
-		List<Brand> brands = brandService.findAll(locale, currency, category, categoryIds, tagIds);
-		
-		List<NavFacet<Brand>> brandBars = brands.stream().map(b -> {
-			List<Long> brandIds = new ArrayList<Long>();
-			brandIds.add(b.getBrandId());
-			NavFacet<Brand> s = convertBrandToNavFacet(b);
-			
-			s.setProductCount(
-				productService.getCount(
-					CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
-					category, 
-					locale, 
-					currency, 
-					ProductVars.ACTIVE_SKU_CODE, 
-					categoryIds, 
-					brandIds, 
-					tagIds
-				)
-			);
-			return s;
-		}).collect(Collectors.toList())
-			.stream().filter(c -> c.getProductCount() > 0)
-			.collect(Collectors.toList());
-		
-		brandBars.sort((o1, o2) -> o2.getProductCount().compareTo(o1.getProductCount()));
-		
-		NavFacetContainer nfc = new NavFacetContainer();
-		nfc.setBrands(brandBars);
-		NavFacetResult nfr = new NavFacetResult();
-		nfr.setResult(nfc);
-		
-		return nfr;
-	}
-	
-	 //Create a data transfer object
     private NavFacet<Brand> convertBrandToNavFacet(final Brand b) {
     	final NavFacet<Brand> s = new NavFacet<Brand>();
     	s.setFacetClassName(b.getClass().getSimpleName());
