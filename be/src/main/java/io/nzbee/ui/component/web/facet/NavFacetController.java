@@ -24,7 +24,7 @@ public class NavFacetController {
 //  }
   
 	@PostMapping("/Product/{locale}/{currency}/{category}/tags")
-	public List<NavFacet<Tag>> getTags(@PathVariable String locale, @PathVariable String currency, @PathVariable String category, @RequestBody final List<NavFacet> selectedFacets) {
+	public NavFacetResult getTags(@PathVariable String locale, @PathVariable String currency, @PathVariable String category, @RequestBody final List<NavFacet> selectedFacets) {
 	  return navFacetService.findAllTags(locale, currency, category, selectedFacets);
 	} 
 	

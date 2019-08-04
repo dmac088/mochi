@@ -58,7 +58,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 	}
 	
 	@Override
-	public List<NavFacet<Tag>> findAllTags(String locale, String currency, String category, List<NavFacet> selectedFacets) {
+	public NavFacetResult findAllTags(String locale, String currency, String category, List<NavFacet> selectedFacets) {
 		// TODO Auto-generated method stub
 		List<Long> categoryIds = super.getFacetIds(selectedFacets, Category.class);
 		List<Long> brandIds = super.getFacetIds(selectedFacets, Brand.class);
@@ -89,7 +89,12 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		
 		tagBars.sort((o1, o2) -> o2.getProductCount().compareTo(o1.getProductCount()));
 		
-		return tagBars;
+		NavFacetContainer nfc = new NavFacetContainer();
+		nfc.setTags(tagBars);
+		NavFacetResult nfr = new NavFacetResult();
+		nfr.setResult(nfc);		
+		
+		return nfr;
 	}
 
 	private NavFacet<Tag> convertTagToNavFacet(Tag t) {
@@ -138,7 +143,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		NavFacetContainer nfc = new NavFacetContainer();
 		nfc.setCategories(catBars);
 		NavFacetResult nfr = new NavFacetResult();
-		nfr.setResult(nfc);
+		nfr.setResult(nfc);		
 		
 		return nfr;
 	}
@@ -190,6 +195,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		NavFacetContainer nfc = new NavFacetContainer();
 		nfc.setBrands(brandBars);
 		NavFacetResult nfr = new NavFacetResult();
+		nfr.setResult(nfc);
 		
 		return nfr;
 	}
