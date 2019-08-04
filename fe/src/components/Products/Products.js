@@ -159,6 +159,7 @@ class Products extends Component {
        })
        .then((responseText) => {
          if(type === 'category') {
+           console.log(responseText);
             newState["facets"] = [...newState["facets"], ...JSON.parse(responseText).result.brands];
          }
          return newState;
