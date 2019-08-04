@@ -76,7 +76,6 @@ class Highlights extends Component {
   }
 
   render() {
-    console.log(this.props);
     const { landingCategories } = this.props;
     const { selectedCategory } = this.state;
     if(landingCategories.length === 0) { return null; }
