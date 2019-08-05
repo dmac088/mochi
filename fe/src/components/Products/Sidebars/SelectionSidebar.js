@@ -42,6 +42,7 @@ import _ from 'lodash';
 
   export const SelectionSidebar = withRouter(({location, match, history, ...props}) => {
     const { selectedFacets } = props;
+    console.log(selectedFacets);
     const routeProps = createRouteProps(history, match, location);
     if(!selectedFacets.length > 0 ) { return null }
     return (
