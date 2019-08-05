@@ -3,7 +3,6 @@ import _ from 'lodash';
 
     const renderFacets = (facets, selectedFacets, props) => {
       return facets.map(facet => {
-        console.log(facet.token);
         return(
           <React.Fragment>
             <li key={facet.token}>
