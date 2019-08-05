@@ -74,10 +74,9 @@ class Products extends Component {
 
 
     if(type==="category") {
-
-
       //get the max price for our new props
       const maxPrice = Number(this.getMaxPrice((this.filterCategories(categoryList, term)[0]), brand));
+      if(!maxPrice) { return null; }
       //isNan is not supported in IE
       //if(Number.isNaN(maxPrice)) { return }
 
@@ -255,8 +254,8 @@ class Products extends Component {
         this.setState({
           "selectedFacets": newSelectedFacets,
         });
-        return;
-    }
+     return;
+  }
 
     const newSelectedFacets = _.cloneDeep(this.state.selectedFacets, true);
     const addFacet = this.state.facets.find(o => o.token === e.currentTarget.id);
@@ -293,12 +292,10 @@ class Products extends Component {
   }
 
   filterFacetsByName = (facets = [], name) => {
-    //console.log(facets);
     return facets.filter(o => o.facetDisplayValue === name);
   }
 
   filterFacetsUnselected = (facets = [], selectedFacets = []) => {
-    //console.log(facets);
     return facets.filter(facet => (selectedFacets.findIndex(o => o.token === facet.token) === -1));
   }
 
@@ -307,9 +304,6 @@ class Products extends Component {
       const { toggleQuickView, setCurrentProductId, showQVModal, currentProductId, categoryList, changeCategory, changeBrand} = this.props;
       const { products, facets, selectedFacets, totalPages, totalElements, numberOfElements, isGrid, term, category, maxPrice, selectedPrice, type } = this.state;
       const { page, size } = this.state.params;
-      console.log(facets);
-      console.log(facets.tags);
-      console.log(this.filterFacetsUnselected(facets.tags, selectedFacets));
       if(!products) { return null }
       const cat = this.filterCategories(categoryList, category)[0];
 				return(
