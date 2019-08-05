@@ -3,10 +3,10 @@ import _ from 'lodash';
 
     const renderFacets = (facets, selectedFacets, props) => {
       return facets.map(facet => {
-        console.log(facet);
+        console.log(facet.token);
         return(
           <React.Fragment>
-            <li key={facet.id}>
+            <li key={facet.token}>
               <a onClick={(e) => {
                                  e.preventDefault();
                                  props.applyFacet(e, null);
