@@ -18,6 +18,8 @@ public class NavFacet<T> {
 
 	private String facetClassName;
 	
+	private Long facetLevel;
+
 	private Long productCount;
 	
 	private Double maxMarkdownPrice;
@@ -70,6 +72,14 @@ public class NavFacet<T> {
 	
 	public void setFacetClassName(String facetClassName) {
 		this.facetClassName = facetClassName;
+	}
+	
+	public Long getFacetLevel() {
+		return facetLevel;
+	}
+
+	public void setFacetLevel(Long facetLevel) {
+		this.facetLevel = facetLevel;
 	}
 
 	public Long getProductCount() {
