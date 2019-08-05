@@ -154,7 +154,7 @@ class Products extends Component {
          return newState;
        })
        .catch((e) => {
-         console.log(e)
+         console.log(e);
        });
        return newState;
      })
