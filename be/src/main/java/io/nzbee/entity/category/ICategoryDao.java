@@ -15,8 +15,9 @@ public interface ICategoryDao extends IDao<Category> {
 	
 	List<Category> findByParent(String hieararchyCode, String categoryTypeCode, Long parentCategoryId, String locale);
 	
-	List<Category> find(String hieararchyCode, String categoryTypeCode, String parentCategoryDesc, List<Long> brandIds, List<Long> tagIds, String locale);
-	
 	List<Category> findByLevel(String hieararchyCode, String categoryTypeCode, Long level, String locale);
+
+	List<Category> findByCriteria(String hieararchyCode, String categoryTypeCode, String parentCategoryDesc,
+			List<Long> brandIds, List<Long> tagIds, String locale);
 	
 }
