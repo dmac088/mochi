@@ -5,7 +5,7 @@ const endPoints = {
 };
 
 
-export const findAllChildrenByCriteria = (locale, currency, categoryDesc, selectedFacets) => 	fetchApi(
+export const findAllChildrenByCriteria = (locale, currency, categoryDesc, selectedFacets) => 						fetchApi(
                                                           																								endPoints.get +
                                                           																								locale + '/' +
                                                           																								currency + '/category/' +

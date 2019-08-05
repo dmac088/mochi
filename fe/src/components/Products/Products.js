@@ -75,8 +75,6 @@ class Products extends Component {
     const { locale, currency, term, brand } = this.props.match.params;
     const type                              = this.props.match.params[0];
 
-
-
     if(type==="category") {
       //get the max price for our new props
       const maxPrice = Number(this.getMaxPrice((this.filterCategories(categoryList, term)[0]), brand));
@@ -263,13 +261,13 @@ class Products extends Component {
 
     if(removeFacet) {
         const newSelectedFacets = this.state.selectedFacets;
-        newSelectedFacets.categories = newSelectedFacets.filter(
+        newSelectedFacets.categories          = newSelectedFacets.filter(
                                               o => !(removeCategoryFacets.find(d => d.token === o.token)));
 
-        newSelectedFacets.brands = newSelectedFacets.filter(
+        newSelectedFacets.brands              = newSelectedFacets.filter(
                                               o => !(removeBrandFacets.find(d => d.token === o.token)));
 
-        newSelectedFacets.tags = newSelectedFacets.filter(
+        newSelectedFacets.tags                = newSelectedFacets.filter(
                                               o => !(removeTagFacets.find(d => d.token === o.token)));
 
         this.setState({
@@ -283,9 +281,9 @@ class Products extends Component {
     const selectedBrands                = brands.find(o => o.token === e.currentTarget.id);
     const selectedTags                  = tags.find(o => o.token === e.currentTarget.id);
 
-    newSelectedFacets.categories = selectedCategories;
-    newSelectedFacets.brands = selectedBrands;
-    newSelectedFacets.tags = selectedTags;
+    newSelectedFacets.categories = (selectedCategories) ? [selectedCategories] : [];
+    newSelectedFacets.brands = (selectedBrands) ? [selectedBrands] : [];
+    newSelectedFacets.tags = (selectedTags) ? [selectedTags] : [];
 
     this.setState({
       "selectedFacets": newSelectedFacets,
