@@ -253,14 +253,14 @@ class Products extends Component {
   }
 
   applyFacet = (e, props) => {
-    const { categories, brands, tags }  = this.state.facets;
-    const removeCategoryFacets = this.state.selectedFacets.categories.find(o => o.token === e.currentTarget.id);
-    const removeBrandFacets = this.state.selectedFacets.brands.find(o => o.token === e.currentTarget.id);
-    const removeTagFacets = this.state.selectedFacets.tags.find(o => o.token === e.currentTarget.id);
-    const removeFacet = removeCategoryFacets || removeBrandFacets || removeTagFacets
+    const { categories, brands, tags }        = this.state.facets;
+    const removeCategoryFacets                = this.state.selectedFacets.categories.find(o => o.token === e.currentTarget.id);
+    const removeBrandFacets                   = this.state.selectedFacets.brands.find(o => o.token === e.currentTarget.id);
+    const removeTagFacets                     = this.state.selectedFacets.tags.find(o => o.token === e.currentTarget.id);
+    const removeFacet                         = removeCategoryFacets || removeBrandFacets || removeTagFacets;
 
     if(removeFacet) {
-        const newSelectedFacets = this.state.selectedFacets;
+        const newSelectedFacets               = this.state.selectedFacets;
         newSelectedFacets.categories          = newSelectedFacets.filter(
                                               o => !(removeCategoryFacets.find(d => d.token === o.token)));
 
@@ -276,14 +276,14 @@ class Products extends Component {
      return;
     }
 
-    const newSelectedFacets             = _.cloneDeep(this.state.selectedFacets, true);
-    const selectedCategories            = categories.find(o => o.token === e.currentTarget.id);
-    const selectedBrands                = brands.find(o => o.token === e.currentTarget.id);
-    const selectedTags                  = tags.find(o => o.token === e.currentTarget.id);
+    const newSelectedFacets                   = _.cloneDeep(this.state.selectedFacets, true);
+    const selectedCategories                  = categories.find(o => o.token === e.currentTarget.id);
+    const selectedBrands                      = brands.find(o => o.token === e.currentTarget.id);
+    const selectedTags                        = tags.find(o => o.token === e.currentTarget.id);
 
-    newSelectedFacets.categories = (selectedCategories) ? [selectedCategories] : [];
-    newSelectedFacets.brands = (selectedBrands) ? [selectedBrands] : [];
-    newSelectedFacets.tags = (selectedTags) ? [selectedTags] : [];
+    newSelectedFacets.categories              = (selectedCategories) ? [selectedCategories] : [];
+    newSelectedFacets.brands                  = (selectedBrands) ? [selectedBrands] : [];
+    newSelectedFacets.tags                    = (selectedTags) ? [selectedTags] : [];
 
     this.setState({
       "selectedFacets": newSelectedFacets,
