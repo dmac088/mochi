@@ -311,11 +311,10 @@ class Products extends Component {
   }
 
   isActive = (facet, selectedFacets, facets) => {
-    // if(!facet) { return }
-    // const parents = this.getParents(facet, facets, [])
-    // const parentIsSelected =  (parents) ? (parents.filter(parent => { return !(selectedFacets.findIndex(o => o.token === parent.token) === -1) }).length > 0) : false;
-    // return !(selectedFacets.findIndex(o => o.token === facet.token) === -1)
-    return true;
+    if(!facet) { return; }
+    const parents = this.getParents(facet, facets, []);
+    const parentIsSelected =  (parents) ? (parents.filter(parent => { return !(selectedFacets.findIndex(o => o.token === parent.token) === -1) }).length > 0) : false;
+    return !(selectedFacets.findIndex(o => o.token === facet.token) === -1);
   }
 
   filterFacetsByName = (facets, name) => {
