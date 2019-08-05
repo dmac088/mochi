@@ -3,8 +3,6 @@ import { withRouter } from "react-router-dom";
 import { createRouteProps } from '../../../services/helpers/routeHelper';
 
   const renderFacets = (facets, selectedFacets, routeProps, props) => {
-    
-
     if(facets.length === 0) { return null }
     return facets.map(facet => {
       return(
@@ -25,6 +23,8 @@ import { createRouteProps } from '../../../services/helpers/routeHelper';
 
   export const BrandSidebarContainer = withRouter(({location, match, history, ...props}) => {
     const { facets, selectedFacets } = props;
+    if(!facets) { return null; }
+    if(!(facets.length > 0)) { return null; }
     const routeProps = createRouteProps(history, match, location);
     return (
         <div className="sidebar mb-35">

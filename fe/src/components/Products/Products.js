@@ -14,6 +14,7 @@ import { Pagination } from './Pagination';
 import * as categoryApi from '../../data/categories/api';
 import * as productApi from '../../data/products/api';
 import * as brandApi from '../../data/brands/api';
+import * as facetApi from '../../data/facets/api';
 import { updateParams } from '../../services/helpers/functionHelper';
 import {
   PRIMARY_CATEGORY_FACET_NAME,
@@ -139,31 +140,18 @@ class Products extends Component {
      })
      .then((newState) => {
        //add the category children to the facets array
-       return categoryApi.findAllChildren(newState.locale, newState.currency, newState.category, newState.selectedFacets)
+       return facetApi.findAllChildreByCriteria(newState.locale, newState.currency, newState.category, newState.selectedFacets)
        .then((response) => {
          return response.text();
        })
        .then((responseText) => {
          if(type === 'category') {
-            newState["facets"] = [...JSON.parse(responseText).result.categories];
+            newState["facets"] = JSON.parse(responseText).result;
          }
          return newState;
        })
        .catch((e) => {console.log(e)});
        return newState;
-     })
-     .then((newState) => {
-       return brandApi.findByCategory(newState.locale, newState.currency, newState.category, newState.selectedFacets)
-       .then((response) => {
-         return response.text();
-       })
-       .then((responseText) => {
-         if(type === 'category') {
-            newState["facets"] = [...newState["facets"], ...JSON.parse(responseText).result.brands];
-         }
-         return newState;
-       })
-       .catch((e) => {console.log(e)});
      })
      .then((newState) => {
        return  productApi.getMaxPrice(newState.locale, newState.currency, newState.category, newState.selectedFacets)
@@ -178,18 +166,6 @@ class Products extends Component {
           return newState;
        })
        .catch((e) => {console.log(e)});
-     })
-     .then((newState) => {
-       return productApi.getProductTags(newState.locale, newState.currency, newState.category, newState.selectedFacets)
-       .then((response) => {
-         return response.text();
-       })
-       .then((responseText) => {
-         if(type === 'category') {
-           newState["facets"] = [...newState["facets"],...JSON.parse(responseText).result.tags];
-         }
-         return newState;
-       });
      })
      .then((newState) => {
        this.setState({
@@ -316,17 +292,14 @@ class Products extends Component {
     return !(selectedFacets.findIndex(o => o.token === facet.token) === -1)
   }
 
-  filterFacetsByName = (facets, name) => {
-    if(!facets) { return }
-    return facets.filter(o => o.facetName === name);
+  filterFacetsByName = (facets = [], name) => {
+    //console.log(facets);
+    return facets.filter(o => o.facetDisplayValue === name);
   }
 
-  filterFacetsUnselected = (facets, selectedFacets, facetingNames = []) => {
-    if(!facets) { return }
-    if(!selectedFacets) { return }
-    return facets.filter(facet => (selectedFacets.findIndex(o => o.token === facet.token
-                                                         && facetingNames.includes(o.facetName)
-                                                       ) === -1));
+  filterFacetsUnselected = (facets = [], selectedFacets = []) => {
+    //console.log(facets);
+    return facets.filter(facet => (selectedFacets.findIndex(o => o.token === facet.token) === -1));
   }
 
   render() {
@@ -334,6 +307,9 @@ class Products extends Component {
       const { toggleQuickView, setCurrentProductId, showQVModal, currentProductId, categoryList, changeCategory, changeBrand} = this.props;
       const { products, facets, selectedFacets, totalPages, totalElements, numberOfElements, isGrid, term, category, maxPrice, selectedPrice, type } = this.state;
       const { page, size } = this.state.params;
+      console.log(facets);
+      console.log(facets.tags);
+      console.log(this.filterFacetsUnselected(facets.tags, selectedFacets));
       if(!products) { return null }
       const cat = this.filterCategories(categoryList, category)[0];
 				return(
@@ -349,33 +325,29 @@ class Products extends Component {
                       />
                       <CategorySidebar
                         selectedFacets={selectedFacets}
-                        facets={this.filterFacetsUnselected([...this.filterFacetsByName(facets, PRIMARY_CATEGORY_FACET_NAME),
-                                                             ...this.filterFacetsByName(facets, SECONDARY_CATEGORY_FACET_NAME)],
-                                                            selectedFacets,
-                                                            [PRIMARY_CATEGORY_FACET_NAME, SECONDARY_CATEGORY_FACET_NAME])
-                                }
+                        facets={this.filterFacetsUnselected(facets.categories, selectedFacets)}
                         isActive={this.isActive}
                         applyFacet={this.applyFacet}
                       />
                       <BrandSidebar
                         selectedFacets={selectedFacets}
                         isActive={this.isActive}
-                        facets={this.filterFacetsUnselected(this.filterFacetsByName(facets, BRAND_FACET_NAME), selectedFacets, BRAND_FACET_NAME)}
+                        facets={this.filterFacetsUnselected(facets.brands, selectedFacets)}
                         applyFacet={this.applyFacet}
                       />
                       <PriceSidebar
                         type={type}
-                        facets={this.filterFacetsUnselected(this.filterFacetsByName(facets, PRICE_FACET_NAME), selectedFacets, PRICE_FACET_NAME)}
+                        facets={this.filterFacetsUnselected(facets.prices, selectedFacets)}
                         updateSelectedPrice={this.updateSelectedPrice}
                         applyFacet={this.applyFacet}
                         isActive={this.isActive}
                         selectedFacets={selectedFacets}
                         maxPrice={maxPrice}
                         selectedPrice={selectedPrice}/>
-                      <TagSidebar
-                        selectedFacets={selectedFacets}
-                        facets={this.filterFacetsUnselected(this.filterFacetsByName(facets, TAG_FACET_NAME),selectedFacets,TAG_FACET_NAME)}
-                        applyFacet={this.applyFacet}
+                        <TagSidebar
+                          selectedFacets={selectedFacets}
+                          facets={this.filterFacetsUnselected(facets.tags, selectedFacets)}
+                          applyFacet={this.applyFacet}
                         />
                     </div>
                   </div>
