@@ -43,15 +43,20 @@ import _ from 'lodash';
   export const SelectionSidebar = withRouter(({location, match, history, ...props}) => {
     const { selectedFacets } = props;
     const routeProps = createRouteProps(history, match, location);
-    if(!selectedFacets.length > 0 ) { return null }
+
+    if(    !selectedFacets.categories
+        && !selectedFacets.brands
+        && !selectedFacets.prices
+        && !selectedFacets.tags) { return null; }
+
     return (
       <div className="sidebar mb-35">
         <h3 className="sidebar-title">SELECTIONS</h3>
         <ul className="selected-categories">
-          {renderSection("Categories", selectedFacets.filter(o => o.facetName === PRIMARY_CATEGORY_FACET_NAME || o.facetName === SECONDARY_CATEGORY_FACET_NAME), routeProps, props)}
-          {renderSection("Brands", selectedFacets.filter(o => o.facetName === BRAND_FACET_NAME), routeProps, props)}
-          {renderSection("Price Ranges", selectedFacets.filter(o => o.facetName === PRICE_FACET_NAME), routeProps, props)}
-          {renderSection("Tags", selectedFacets.filter(o => o.facetName === TAG_FACET_NAME), routeProps, props)}
+          {renderSection("Categories", selectedFacets.categories, routeProps, props)}
+          {renderSection("Brands", selectedFacets.brands, routeProps, props)}
+          {renderSection("Price Ranges", selectedFacets.prices, routeProps, props)}
+          {renderSection("Tags", selectedFacets.tags, routeProps, props)}
         </ul>
       </div>
     );
