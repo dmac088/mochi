@@ -145,7 +145,7 @@ class Products extends Component {
      })
      .then((newState) => {
        //add the category children to the facets array
-       return facetApi.findAllChildreByCriteria(newState.locale, newState.currency, newState.category, newState.selectedFacets)
+       return facetApi.findAllChildrenByCriteria(newState.locale, newState.currency, newState.category, newState.selectedFacets)
        .then((response) => {
          return response.text();
        })
@@ -173,7 +173,7 @@ class Products extends Component {
           return newState;
        })
        .catch((e) => {
-         console.log(e)
+         console.log(e);
        });
      })
      .then((newState) => {

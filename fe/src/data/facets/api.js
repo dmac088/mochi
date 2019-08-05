@@ -5,12 +5,12 @@ const endPoints = {
 };
 
 
-export const findAllChildreByCriteria = (locale, currency, categoryDesc, selectedBrands = []) => 	fetchApi(
+export const findAllChildrenByCriteria = (locale, currency, categoryDesc, selectedFacets) => 	fetchApi(
                                                           																								endPoints.get +
                                                           																								locale + '/' +
                                                           																								currency + '/category/' +
                                                           																								categoryDesc,
-                                                          																								selectedBrands,
+                                                          																								selectedFacets,
                                                           																								{},
                                                           																								'POST',
                                                           																								{"Content-Type": "application/json"}
