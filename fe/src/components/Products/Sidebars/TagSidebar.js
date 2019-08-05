@@ -2,7 +2,8 @@ import React from 'react';
 import _ from 'lodash';
 
     const renderFacets = (facets, selectedFacets, props) => {
-      return facets.filter(o => !(o.token.toLowerCase() === 'empty')).map(facet => {
+      return facets.map(facet => {
+        console.log(facet);
         return(
           <React.Fragment>
             <li key={facet.id}>
