@@ -98,7 +98,7 @@ class App extends Component {
         //we must return the nested promise
         return this.getCategoryProducts(locale, currency, c.payload.categoryDesc)
         .then((response) => {
-          c["products"] = response;
+          c.payload["products"] = response;
           return c;
         });
       });

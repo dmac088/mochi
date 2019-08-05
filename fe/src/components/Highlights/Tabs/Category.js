@@ -76,6 +76,7 @@ const settings = {
 
   export const Category = withRouter(({history, match, location, ...props}) => {
     let slider;
+    console.log(props);
     const { products } = props.category;
     const routeProps = createRouteProps(history, match, location);
     if(!products) {return null;}
