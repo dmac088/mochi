@@ -220,7 +220,8 @@ public class CategoryDaoImpl implements ICategoryDao {
 		return query.getResultList();
 	}
 	
-	public List<Category> find(String hieararchyCode, String categoryTypeCode, String parentCategoryDesc, List<Long> brandIds, List<Long> tagIds, String locale) {
+	@Override
+	public List<Category> findByCriteria(String hieararchyCode, String categoryTypeCode, String parentCategoryDesc, List<Long> brandIds, List<Long> tagIds, String locale) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Category> cq = cb.createQuery(Category.class);

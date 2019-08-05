@@ -113,31 +113,7 @@ public class CategoryService implements ICategoryService {
 				 locale);
 		
 		List<Category> lcDO = lc.stream().map(c -> createCategory(c, locale)).collect(Collectors.toList());
-		
-//		lcDO.stream().forEach(cDO -> {
-//			cDO.setProductCount(
-//								(tagIds.isEmpty()) 
-//										? 	productService.getCount(
-//											cDO.getCategoryDesc(), 
-//											locale,
-//											ProductVars.ACTIVE_SKU_CODE,
-//											brandIds.size() == 0 ? Arrays.asList(new Long(-1)) : brandIds ,
-//											(brandIds.size() == 0 ? 0 : 1),
-//											Arrays.asList(new Long(-1)),
-//											0)
-//										: 	productService.getCountForTags(
-//											cDO.getCategoryDesc(), 
-//											locale,
-//											ProductVars.ACTIVE_SKU_CODE,
-//											brandIds.size() == 0 ? Arrays.asList(new Long(-1)) : brandIds ,
-//											(brandIds.size() == 0 ? 0 : 1),
-//											Arrays.asList(new Long(-1)),
-//											0,
-//											tagIds,
-//											(tagIds.size() == 0 ? 0 : 1)
-//											)
-//								);
-//		});		
+			
      	return lcDO;
 	}
     
