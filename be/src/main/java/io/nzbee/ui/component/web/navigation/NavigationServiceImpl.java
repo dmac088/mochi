@@ -1,6 +1,8 @@
 package io.nzbee.ui.component.web.navigation;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -12,6 +14,7 @@ import io.nzbee.domain.Product;
 import io.nzbee.domain.Tag;
 import io.nzbee.domain.services.product.IProductService;
 import io.nzbee.ui.component.web.facet.NavFacet;
+import io.nzbee.ui.component.web.facet.NavFacetContainer;
 import io.nzbee.ui.component.web.generic.UIService;
 import io.nzbee.ui.component.web.search.Search;
 
@@ -35,19 +38,19 @@ public class NavigationServiceImpl extends UIService implements INavigationServi
 			 int page, 
 			 int size, 
 			 String sortBy, 
-			 List<NavFacet> selectedFacets) {
+			 NavFacetContainer selectedFacets) {
 		
 		//convert selected facets into token lists
-		List<Long> categoryIds = this.getFacetIds(selectedFacets, Category.class); 
-		List<Long> brandIds = this.getFacetIds(selectedFacets, Brand.class);
-		List<Long> tagIds = this.getFacetIds(selectedFacets, Tag.class);
+		List<Long> categoryIds = selectedFacets.getCategories().stream().map(t -> t.getId()).collect(Collectors.toList());
+		List<Long> brandIds = selectedFacets.getBrands().stream().map(t -> t.getId()).collect(Collectors.toList());
+		List<Long> tagIds = selectedFacets.getTags().stream().map(t -> t.getId()).collect(Collectors.toList());
 				
 		Page<Product> pp = productService.findAll(locale, currency, categoryDesc, price, page, size, sortBy, categoryIds, brandIds, tagIds);
 		
 		//add the page of objects to a new Search object and return it 
 		Search search = new Search();
 		search.setProducts(pp);
-		search.setFacets(selectedFacets);
+		//search.setFacets(selectedFacets);
 		return search;
 	}
     

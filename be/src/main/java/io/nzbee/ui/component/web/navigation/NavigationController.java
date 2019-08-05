@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.nzbee.ui.component.web.facet.NavFacet;
+import io.nzbee.ui.component.web.facet.NavFacetContainer;
 import io.nzbee.ui.component.web.search.Search;
 
 @RestController
@@ -27,7 +28,7 @@ public class NavigationController {
 								@PathVariable int page, 
 								@PathVariable int size, 
 								@PathVariable String sortBy,
-								@RequestBody final List<NavFacet> selectedFacets) {
+								@RequestBody final NavFacetContainer selectedFacets) {
 	   	return navigationService.findAll(locale, currency, category, price, page, size, sortBy, selectedFacets);
 	}
 
