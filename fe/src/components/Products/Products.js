@@ -359,7 +359,7 @@ class Products extends Component {
                       />
                       <PriceSidebar
                         type={type}
-                        facets={this.filterFacetsUnselected(facets.prices, selectedFacets)}
+                        facets={this.filterFacetsUnselected(facets.prices, selectedFacets.prices)}
                         updateSelectedPrice={this.updateSelectedPrice}
                         applyFacet={this.applyFacet}
                         isActive={this.isActive}
