@@ -139,37 +139,6 @@ public class CategoryService implements ICategoryService {
         cDO.setCategoryId(pc.getCategoryId());
         cDO.setCategoryCode(pc.getCategoryCode());
         cDO.setCategoryLevel(pc.getCategoryLevel());
-        
-        //get product count and set it
-//        cDO.setProductCount(	productService.getCount(
-//								pc.getAttributes().stream().filter(ca -> ca.getLclCd().equals(locale)).findFirst().get().getCategoryDesc(), 
-//								locale,
-//								ProductVars.ACTIVE_SKU_CODE,
-//								Arrays.asList(new Long(-1)),
-//								0,
-//								Arrays.asList(new Long(-1)),
-//								0));
-        
-        
-//        cDO.setMaxMarkDownPrice(
-//        						productService.getMaxMarkDownPrice(
-//								CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
-//								pc.getAttributes().stream().filter(ca -> ca.getLclCd().equals(locale)).findFirst().get().getCategoryDesc(), 
-//								locale,
-//								currency,
-//								ProductVars.ACTIVE_SKU_CODE,
-//								Arrays.asList(new Long(-1)),
-//								0,
-//								Arrays.asList(new Long(-1)),
-//								0));
-        		
-        //create the child objects and add to children collection
-        List<Category> cDOl =
-        pc.getChildren().stream().map(pc1 -> {
-        	Category pcchild = createCategory(pc1, locale);
-        	return pcchild;
-        }).collect(Collectors.toList());//.filter(c -> c.getProductCount() > 0).collect(Collectors.toList());
-        //cDO.setChildren(cDOl);
 
         //set the parentId
         Optional<io.nzbee.entity.category.Category> parent = Optional.ofNullable(pc.getParent());
