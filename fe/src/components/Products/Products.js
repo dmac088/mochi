@@ -259,7 +259,7 @@ class Products extends Component {
     const removeCategoryFacets = this.state.selectedFacets.categories.find(o => o.token === e.currentTarget.id);
     const removeBrandFacets = this.state.selectedFacets.brands.find(o => o.token === e.currentTarget.id);
     const removeTagFacets = this.state.selectedFacets.tags.find(o => o.token === e.currentTarget.id);
-    const removeFacet = removeCategoryFacets || removeBrandFacet || removeTagFacet
+    const removeFacet = removeCategoryFacets || removeBrandFacets || removeTagFacets
 
     if(removeFacet) {
         const newSelectedFacets = this.state.selectedFacets;
