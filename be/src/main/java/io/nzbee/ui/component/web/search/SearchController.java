@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.nzbee.ui.component.web.facet.NavFacet;
+import io.nzbee.ui.component.web.facet.NavFacetContainer;
 
 @RestController
 @RequestMapping("/api")
@@ -35,7 +36,7 @@ public class SearchController {
     public Double getMaxPrice(	@PathVariable String locale, 
     							@PathVariable String currency, 
     							@PathVariable String category, 
-    							@RequestBody  List<NavFacet> selectedFacets) {
+    							@RequestBody  NavFacetContainer selectedFacets) {
     	return Double.parseDouble(searchService.getMaxPrice(category, locale, currency, selectedFacets).getToken());
     }
 	

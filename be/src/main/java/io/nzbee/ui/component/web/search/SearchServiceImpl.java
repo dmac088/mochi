@@ -42,6 +42,7 @@ import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.ProductVars;
 import io.nzbee.ui.component.web.facet.NavFacet;
+import io.nzbee.ui.component.web.facet.NavFacetContainer;
 import io.nzbee.ui.component.web.generic.UIService;
 
 @Service(value = "SearchService")
@@ -97,12 +98,12 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 	}
 	
 	@Override
-	public NavFacet<Object> getMaxPrice(String categoryDesc, String locale, String currency, List<NavFacet> selectedFacets) {
+	public NavFacet<Object> getMaxPrice(String categoryDesc, String locale, String currency, NavFacetContainer selectedFacets) {
 		
 		//convert selected facets into token lists
-		List<Long> categoryIds = this.getFacetIds(selectedFacets, Category.class); 
-		List<Long> brandIds = this.getFacetIds(selectedFacets, Brand.class);
-		List<Long> tagIds = this.getFacetIds(selectedFacets, Tag.class);
+		List<Long> categoryIds = selectedFacets.getCategories().stream().map(c -> c.getId()).collect(Collectors.toList());
+		List<Long> brandIds = selectedFacets.getBrands().stream().map(c -> c.getId()).collect(Collectors.toList());
+		List<Long> tagIds = selectedFacets.getTags().stream().map(c -> c.getId()).collect(Collectors.toList());
 	
 		Double maxPrice = productService.getMaxPrice(categoryDesc, 
 													 locale, 
