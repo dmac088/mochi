@@ -39,10 +39,12 @@ class Products extends Component {
       "term":     "",
       "products": [],
       "facets": [],
-      "syncFacets": [],
-      "selectedFacets": { "categories:": [],
-                          "brands:": [],
-                          "tags:": []},
+      "syncFacets":     { "categories": [],
+                          "brands": [],
+                          "tags": []},
+      "selectedFacets": { "categories": [],
+                          "brands": [],
+                          "tags": []},
       "totalPages": 0,
       "totalElements": 0,
       "numberOfElements": 0,
@@ -97,7 +99,7 @@ class Products extends Component {
   }
 
 
-  update = (type, locale, currency, pathname, category, term, params, price, maxPrice, isMounting = 0, selectedFacets = [], callback) => {
+  update = (type, locale, currency, pathname, category, term, params, price, maxPrice, isMounting = 0, selectedFacets, callback) => {
     if(!params) {return;}
     const { page, size, sort } = params;
     const noChangePrice = ( currency === this.state.currency
@@ -125,7 +127,7 @@ class Products extends Component {
         "products":               responseJSON.products.content,
         "facets":                 facets,
         "syncFacets":             selectedFacets,
-        "selectedFacets":         (term !== this.state.term) ? [] : selectedFacets,
+        "selectedFacets":         selectedFacets,//(term !== this.state.term) ? [] : selectedFacets,
         "totalPages":             responseJSON.products.totalPages,
         "totalElements":          responseJSON.products.totalElements,
         "numberOfElements":       responseJSON.products.numberOfElements,
@@ -163,7 +165,9 @@ class Products extends Component {
           }
           return newState;
        })
-       .catch((e) => {console.log(e)});
+       .catch((e) => {
+         console.log(e)
+       });
      })
      .then((newState) => {
        this.setState({
@@ -183,7 +187,7 @@ class Products extends Component {
     .then((responseText) => {
       console.log(facets);
       console.log(responseText);
-        return JSON.parse(responseText);
+      return JSON.parse(responseText);
     });
 
   toggleGrid = (e) => {
@@ -262,6 +266,7 @@ class Products extends Component {
 
         newSelectedFacets.tags = newSelectedFacets.filter(
                                               o => !(removeTagFacets.find(d => d.token === o.token)));
+
         this.setState({
           "selectedFacets": newSelectedFacets,
         });
@@ -280,7 +285,6 @@ class Products extends Component {
     this.setState({
       "selectedFacets": newSelectedFacets,
     });
-    console.log(this.state);
   }
 
   getParents(facet, facets, parents) {
@@ -302,10 +306,11 @@ class Products extends Component {
   }
 
   isActive = (facet, selectedFacets, facets) => {
-    if(!facet) { return }
-    const parents = this.getParents(facet, facets, [])
-    const parentIsSelected =  (parents) ? (parents.filter(parent => { return !(selectedFacets.findIndex(o => o.token === parent.token) === -1) }).length > 0) : false;
-    return !(selectedFacets.findIndex(o => o.token === facet.token) === -1)
+    // if(!facet) { return }
+    // const parents = this.getParents(facet, facets, [])
+    // const parentIsSelected =  (parents) ? (parents.filter(parent => { return !(selectedFacets.findIndex(o => o.token === parent.token) === -1) }).length > 0) : false;
+    // return !(selectedFacets.findIndex(o => o.token === facet.token) === -1)
+    return true;
   }
 
   filterFacetsByName = (facets = [], name) => {
@@ -335,13 +340,13 @@ class Products extends Component {
                         applyFacet={this.applyFacet}
                       />
                       <CategorySidebar
-                        selectedFacets={selectedFacets}
+                        selectedFacets={selectedFacets.categories}
                         facets={this.filterFacetsUnselected(facets.categories, selectedFacets)}
                         isActive={this.isActive}
                         applyFacet={this.applyFacet}
                       />
                       <BrandSidebar
-                        selectedFacets={selectedFacets}
+                        selectedFacets={selectedFacets.brands}
                         isActive={this.isActive}
                         facets={this.filterFacetsUnselected(facets.brands, selectedFacets)}
                         applyFacet={this.applyFacet}
@@ -356,7 +361,7 @@ class Products extends Component {
                         maxPrice={maxPrice}
                         selectedPrice={selectedPrice}/>
                         <TagSidebar
-                          selectedFacets={selectedFacets}
+                          selectedFacets={selectedFacets.tags}
                           facets={this.filterFacetsUnselected(facets.tags, selectedFacets)}
                           applyFacet={this.applyFacet}
                         />
