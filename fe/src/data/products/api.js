@@ -57,7 +57,9 @@ export const findByIds = (locale, currency, productIds = []) => fetchApi(
 																					{"Content-Type": "application/json"}
 																					);
 
-export const findByCategory = (locale, currency, category, brand, maxPrice, page = 0, size = 10, sortBy = 'nameAsc', selectedFacets = []) => fetchApi(
+export const findByCategory = (locale, currency, category, brand, maxPrice, page = 0, size = 10, sortBy = 'nameAsc', selectedFacets = {  	"categories": [],
+																																																																					"brands": [],
+																																																																					"tags": []} ) => fetchApi(
 																					endPoints.get +
 																					locale +
 																					'/' + currency +
