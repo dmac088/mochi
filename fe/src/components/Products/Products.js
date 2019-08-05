@@ -152,7 +152,9 @@ class Products extends Component {
          }
          return newState;
        })
-       .catch((e) => {console.log(e)});
+       .catch((e) => {
+         console.log(e)
+       });
        return newState;
      })
      .then((newState) => {
@@ -187,8 +189,6 @@ class Products extends Component {
         return response.text();
     })
     .then((responseText) => {
-      console.log(facets);
-      console.log(responseText);
       return JSON.parse(responseText);
     });
 
@@ -362,11 +362,11 @@ class Products extends Component {
                         selectedFacets={selectedFacets}
                         maxPrice={maxPrice}
                         selectedPrice={selectedPrice}/>
-                        <TagSidebar
-                          selectedFacets={selectedFacets.tags}
-                          facets={this.filterFacetsUnselected(facets.tags, selectedFacets)}
-                          applyFacet={this.applyFacet}
-                        />
+                      <TagSidebar
+                        selectedFacets={selectedFacets.tags}
+                        facets={this.filterFacetsUnselected(facets.tags, selectedFacets)}
+                        applyFacet={this.applyFacet}
+                      />
                     </div>
                   </div>
                   <div className="col-lg-9 order-1 order-lg-2 mb-sm-35 mb-xs-35">

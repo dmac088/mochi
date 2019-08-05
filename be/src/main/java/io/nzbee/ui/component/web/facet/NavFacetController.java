@@ -18,7 +18,7 @@ public class NavFacetController {
 	private INavFacetService navFacetService;
 
 	@PostMapping("/Product/{locale}/{currency}/{categoryDesc}/tags")
-	public NavFacetResult getTags(@PathVariable String locale, @PathVariable String currency, @PathVariable String categoryDesc, @RequestBody final List<NavFacet> selectedFacets) {
+	public NavFacetResult getTags(@PathVariable String locale, @PathVariable String currency, @PathVariable String categoryDesc, @RequestBody final NavFacetContainer selectedFacets) {
 		return navFacetService.findAll(locale, currency, categoryDesc, selectedFacets);
 	} 
 	
@@ -28,17 +28,17 @@ public class NavFacetController {
     }
 
     @PostMapping("/Category/{lcl}/{curr}/desc/{categoryDesc}/children")
-    public NavFacetResult getCategoryChildren(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody List<NavFacet> selectedFacets) {
+    public NavFacetResult getCategoryChildren(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody NavFacetContainer selectedFacets) {
     	return navFacetService.findAll(lcl, curr, categoryDesc, selectedFacets);
     }
     
     @PostMapping("/Brand/{lcl}/{curr}/category/{categoryDesc}")
-    public NavFacetResult getBrands(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody List<NavFacet> selectedFacets) {
+    public NavFacetResult getBrands(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody NavFacetContainer selectedFacets) {
     	return navFacetService.findAll(lcl, curr, categoryDesc, selectedFacets);
     }
 	
     @PostMapping("/NavFacet/{lcl}/{curr}/category/{categoryDesc}")
-    public NavFacetResult getAll(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody List<NavFacet> selectedFacets) {
+    public NavFacetResult getAll(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody NavFacetContainer selectedFacets) {
     	return navFacetService.findAll(lcl, curr, categoryDesc, selectedFacets);
     }
     

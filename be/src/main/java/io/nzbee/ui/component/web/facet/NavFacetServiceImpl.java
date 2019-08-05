@@ -59,10 +59,10 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 	
 	
 	@Override
-	public NavFacetResult findAll(String locale, String currency, String category, List<NavFacet> selectedFacets) {
-		List<Long> tIds = super.getFacetIds(selectedFacets, Tag.class);
-		List<Long> bIds = super.getFacetIds(selectedFacets, Brand.class);
-		List<Long> cIds = super.getFacetIds(selectedFacets, Category.class);
+	public NavFacetResult findAll(String locale, String currency, String category, NavFacetContainer selectedFacets) {
+		List<Long> tIds = selectedFacets.getTags().stream().map(t -> t.getId()).collect(Collectors.toList());
+		List<Long> bIds = selectedFacets.getBrands().stream().map(t -> t.getId()).collect(Collectors.toList());
+		List<Long> cIds = selectedFacets.getCategories().stream().map(t -> t.getId()).collect(Collectors.toList());
 		
 		Long proudctCount = productService.getCount(
 				CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
