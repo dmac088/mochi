@@ -1,2 +1,2 @@
 // math.js
-export const sum = (x, y) => 3;
+export const sum = (x, y) => x + y;
