@@ -36,7 +36,7 @@ import _ from 'lodash';
                style={{"marginLeft": margin}}>
               {facet.facetDisplayValue} ({facet.productCount})
             </a>
-            {(facet.payload.parent) ? renderChevron(facet, routeProps, props) : null}
+            {(facet.payload.childCategoryCount > 0) ? renderChevron(facet, routeProps, props) : null}
           </li>
         </React.Fragment>
       );
