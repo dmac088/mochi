@@ -10,9 +10,9 @@ import _ from 'lodash';
         className="isParent"
         id={facet.id}
         onClick={(e) => {
-                        e.preventDefault();
-                        changeCategory(e, routeProps);
-                      }}>
+                          e.preventDefault();
+                          changeCategory(e, routeProps);
+                        }}>
       </a>
     );
   }
