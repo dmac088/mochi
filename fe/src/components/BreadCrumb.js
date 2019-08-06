@@ -5,23 +5,23 @@ import { changeCategory, homeRouteString, createRouteProps } from '../services/h
 
   const findCategoryByName = (categoryList, term) => {
     return categoryList.filter(function(value, index, arr){
-      return value.categoryDesc === term;
+      return value.facetDisplayValue === term;
     })[0];
   }
 
   const findCategoryById = (categoryList, categoryId) => {
     return categoryList.filter(function(value, index, arr){
-      return value.categoryId === categoryId;
+      return value.id === categoryId;
     })[0];
   }
 
   const createLineage = (categoryList, categoryId, result) => {
     const category = findCategoryById(categoryList, categoryId);
     if(!category) { return }
-    if(category.categoryLevel === 0) {return;}
+    if(category.facetLevel === 0) {return;}
     result.push(findCategoryById(categoryList, categoryId));
-    if(!category.parentId) {return;}
-    createLineage(categoryList, category.parentId, result);
+    if(!category.payload.parentId) {return;}
+    createLineage(categoryList, category.payload.parentId, result);
   }
 
   const renderCategoryLineage = (categoryList, term, routeProps) => {
@@ -29,13 +29,13 @@ import { changeCategory, homeRouteString, createRouteProps } from '../services/h
     const category = findCategoryByName(categoryList, term);
     if(!category) { return }
     createLineage( categoryList,
-                        category.categoryId,
+                        category.id,
                         result);
     return result.reverse().map(category => {
       return (
-        <li key={category.categoryId} className="active">
-          <a id={category.categoryDesc} onClick={(e) => changeCategory(e, routeProps)} href="#">
-            {category.categoryDesc}
+        <li key={category.id} className="active">
+          <a id={category.facetDisplayValue} onClick={(e) => changeCategory(e, routeProps)} href="#">
+            {category.facetDisplayValue}
           </a>
         </li>
       )
@@ -74,6 +74,7 @@ import { changeCategory, homeRouteString, createRouteProps } from '../services/h
   }
 
   export const BreadCrumb = withRouter(({history, match, location, ...props}) => {
+
     const routeProps = createRouteProps(history, match, location);
     const { term, productId } = routeProps.match.params;
     const type = routeProps.match.params[0];
@@ -81,7 +82,6 @@ import { changeCategory, homeRouteString, createRouteProps } from '../services/h
     const isCategory = (type && type.toLowerCase() === "category");
     const isSearch = (type && type.toLowerCase() === "search")
     const renderProductFlag = (productId);
-
 
     return (
       <div className="breadcrumb-area mb-50">
