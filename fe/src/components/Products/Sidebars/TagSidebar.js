@@ -8,7 +8,7 @@ import _ from 'lodash';
             <li key={facet.token}>
               <a onClick={(e) => {
                                  e.preventDefault();
-                                 props.applyFacet(e, null);
+                                 props.updateFacets(e, null);
                           }}
                  id={facet.token}
                  href="#">

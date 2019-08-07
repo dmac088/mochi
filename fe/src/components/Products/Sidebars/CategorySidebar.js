@@ -39,7 +39,7 @@ const renderFacets = (facets, selectedFacets, routeProps, props) => {
             }
             onClick={e => {
               e.preventDefault();
-              props.applyFacet(e, routeProps);
+              props.updateFacets(e, routeProps);
             }}
             id={facet.token}
             href="#"

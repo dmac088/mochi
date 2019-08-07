@@ -10,7 +10,7 @@ import { createRouteProps } from '../../../services/helpers/routeHelper';
           <a  className={(props.isActive(facet, selectedFacets, facets)) ? "active" : ""}
               onClick={(e) => {
                                 e.preventDefault();
-                                props.applyFacet(e, routeProps);
+                                props.updateFacets(e, routeProps);
                               }}
               id={facet.token}
               href="#">

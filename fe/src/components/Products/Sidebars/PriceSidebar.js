@@ -4,17 +4,17 @@ import qs from 'query-string';
 import 'rc-slider/assets/index.css';
 
 export const PriceSidebar = (props) => {
-    const { maxPrice, selectedPrice, selectedFacets, updateSelectedPrice, facets, applyFacet, type } = props;
+    const { maxPrice, selectedPrice, selectedFacets, updateSelectedPrice, facets, updateFacets, type } = props;
     return (
       <div className="sidebar mb-35">
         <h3 className="sidebar-title">Filter By Price</h3>
         {(type === "category")  ? priceSlider(maxPrice, selectedPrice, updateSelectedPrice)
-                                : priceRanges(maxPrice, selectedFacets, applyFacet, facets, props)}
+                                : priceRanges(maxPrice, selectedFacets, updateFacets, facets, props)}
       </div>
     );
   }
 
-const priceRanges = (maxPrice, selectedFacets, applyFacet, facets, props) => {
+const priceRanges = (maxPrice, selectedFacets, updateFacets, facets, props) => {
     if(!facets) { return null; }
     return facets.map(facet => {
       return(
@@ -22,7 +22,7 @@ const priceRanges = (maxPrice, selectedFacets, applyFacet, facets, props) => {
           <a  className={(props.isActive(facet, selectedFacets, facets)) ? "active" : ""}
               onClick={(e) => {
                                 e.preventDefault();
-                                props.applyFacet(e, props);
+                                props.updateFacets(e, props);
                               }}
               id={facet.token}
               href="#">
