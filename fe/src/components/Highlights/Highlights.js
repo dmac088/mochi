@@ -33,24 +33,24 @@ class Highlights extends Component {
     if(selectedCategory) { return; }
     //reset the current category to first in array
     this.setState({
-      "selectedCategory": landingCategories[0].payload.categoryCode,
+      "selectedCategory": landingCategories[0].facetId,
     });
   }
 
 
   renderTabHeaders = (categoryList, selectedCategory) => {
     return categoryList.map(c => {
-      const isActive = (c.payload.categoryCode === selectedCategory);
+      const isActive = (c.facetId === selectedCategory);
       return (
-        <a  key={c.payload.categoryId}
+        <a  key={c.facetId}
             onClick={this.showTab}
             className={"nav-item nav-link " + ((isActive) ? " active" : "")}
-            id={c.payload.categoryCode}
+            id={c.facetId}
             data-toggle="tab"
             href="#{c.payload.categoryCode}"
             role="tab"
             aria-selected="true">
-          {c.payload.categoryDesc}
+          {c.facetDisplayValue}
         </a>
       )
     });
@@ -59,15 +59,15 @@ class Highlights extends Component {
   renderTabs = (categoryList, selectedCategory) => {
     const { match, history, setCurrentProductId } = this.props;
     return categoryList.map(c => {
-      const isActive = (c.payload.categoryCode === selectedCategory);
+      const isActive = (c.facetId === selectedCategory);
       return (
-        <div key={c.payload.categoryId}
+        <div key={c.facetId}
              className={"tab-pane fade "  + ((isActive) ? " show active" : "")}
-             id={c.payload.categoryCode}
+             id={c.facetId}
              role="tabpanel"
              aria-labelledby="featured-tab">
           <Category
-            category={c.payload}
+            category={c}
             setCurrentProductId={setCurrentProductId}
           />
         </div>
