@@ -74,7 +74,7 @@ class Products extends Component {
     const params                            = {...this.state.params};
     const { locale, currency, term, brand } = this.props.match.params;
     const type                              = this.props.match.params[0];
-    
+
     const price = this.state.selectedPrice;
     const facet = this.findFacet(categoryList, term);
     if(!facet) { return null; }
@@ -143,11 +143,11 @@ class Products extends Component {
        //add the category children to the facets array
        return facetApi.findAllChildrenByCriteria(newState.locale, newState.currency, newState.category, newState.selectedFacets)
        .then((response) => {
-         return response.text();
+         return response.json();
        })
-       .then((responseText) => {
+       .then((response) => {
          if(type === 'category') {
-            newState["facets"] = JSON.parse(responseText).result;
+            newState["facets"] = response.result;
          }
          return newState;
        })
@@ -159,12 +159,12 @@ class Products extends Component {
      .then((newState) => {
        return  productApi.getMaxPrice(newState.locale, newState.currency, newState.category, newState.selectedFacets)
        .then((response) => {
-         return response.text();
+         return response.json();
        })
-       .then((responseText) => {
+       .then((response) => {
           if(type === 'category') {
-            newState["maxPrice"] = JSON.parse(responseText);
-            if(!noChangePrice) {newState["selectedPrice"] = JSON.parse(responseText);}
+            newState["maxPrice"] = response;
+            if(!noChangePrice) {newState["selectedPrice"] = response;}
           }
           return newState;
        })
