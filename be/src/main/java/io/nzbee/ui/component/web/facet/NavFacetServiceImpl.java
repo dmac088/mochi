@@ -46,7 +46,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		
 		nfc.setCategories(	categoryService.findAll(locale).stream().map(c -> {
 									NavFacet<Category> cnf = this.convertCatToNavFacet(c);
-									cnf.setMaxMarkdownPrice(productService.getMaxPriceForCategory(c.getCategoryId(), currency));	
+									cnf.setFacetMaxMarkdownPrice(productService.getMaxPriceForCategory(c.getCategoryId(), currency));	
 									cnf.setFacetProductCount(productService.getCountForCategory(c.getCategoryId()));
 									return cnf;
 							}).collect(Collectors.toList()).stream()
@@ -162,6 +162,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
     	s.setFacetClassName(c.getClass().getSimpleName());
     	s.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
     	s.setFacetId(c.getCategoryId());
+    	s.setFacetParentId(c.getParentId());
     	s.setFacetChildCount(c.getChildCategoryCount());
     	s.setFacetDisplayValue(c.getCategoryDesc());
     	s.setToken(c.getCategoryCode());
@@ -175,6 +176,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		s.setFacetClassName(t.getClass().getSimpleName());
 		s.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
 		s.setFacetId(t.getTagId());
+		s.setFacetParentId(new Long(-1));
 		s.setFacetChildCount(new Long(0));
 		s.setFacetDisplayValue(t.getTagDesc());
 		s.setToken(t.getTagCode());
@@ -188,6 +190,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
     	s.setFacetClassName(b.getClass().getSimpleName());
     	s.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
     	s.setFacetId(b.getBrandId());
+    	s.setFacetParentId(new Long(-1));
     	s.setFacetChildCount(new Long(0));
     	s.setFacetDisplayValue(b.getBrandDesc());
     	s.setToken(b.getBrandCode());
