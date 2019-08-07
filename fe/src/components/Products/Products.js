@@ -117,7 +117,8 @@ class Products extends Component {
          "category":               category,
          "term":                   term,
          "products":               response.products.content,
-         //"facets":                 (facets) ? facets : [],
+         //searching can return facets so we need to check this later
+         //"facets":                 facets,
          "syncFacets":             selectedFacets,
          "selectedFacets":         (term !== this.state.term) ? {  "categories": [],
                                                                    "brands": [],
