@@ -234,21 +234,17 @@ class Products extends Component {
     });
   }
 
-  applyFacet = (e, props) => {
+  updateFacets = (e) => {
     const { categories, brands, tags }        = this.state.selectedFacets;
     const newSelectedFacets                   = _.cloneDeep(this.state.selectedFacets, true);
 
-    //these need to be arrays not objects
-    const removeCategoryFacet                 = categories.find(o => o.token  === e.currentTarget.id);
-    const removeBrandFacet                    = brands.find(o => o.token      === e.currentTarget.id);
-    const removeTagFacet                      = tags.find(o => o.token        === e.currentTarget.id);
-    const removeFacet                         = removeCategoryFacet || removeBrandFacet || removeTagFacet;
+    const allFacets                           = [...categories, ...brands, ...tags];
+    const removeFacet                         = allFacets.find(o => o.token  === e.currentTarget.id);
 
     if(removeFacet) {
-
-        newSelectedFacets.categories          = categories.filter(o => !(removeCategoryFacet.token  === o.token));
-        newSelectedFacets.brands              = brands.filter(o => !(removeBrandFacet.token         === o.token));
-        newSelectedFacets.tags                = tags.filter(o => !(removeTagFacet.token             === o.token));
+        newSelectedFacets.categories          = categories.filter(o => !(removeFacet.token  === o.token));
+        newSelectedFacets.brands              = brands.filter(o => !(removeFacet.token      === o.token));
+        newSelectedFacets.tags                = tags.filter(o => !(removeFacet.token        === o.token));
 
         this.setState({
           "selectedFacets": newSelectedFacets,
@@ -256,10 +252,13 @@ class Products extends Component {
 
         return;
     }
+    this.addFacet(e, newSelectedFacets);
+  }
 
-    const selectedCategory                    = this.state.facets.categories.find(o => o.token  === e.currentTarget.id);
-    const selectedBrand                       = this.state.facets.brands.find(o => o.token      === e.currentTarget.id);
-    const selectedTag                         = this.state.facets.tags.find(o => o.token        === e.currentTarget.id);
+  addFacet = (e, newSelectedFacets) => {
+    const { categories, brands, tags }        = this.state.facets;
+    const allFacets                           = [...categories, ...brands, ...tags];
+    const selectedFacet                       = allFacets.find(o => o.token  === e.currentTarget.id);
 
     newSelectedFacets.categories              = (selectedCategory)  ? [...newSelectedFacets.categories, selectedCategory] : [];
     newSelectedFacets.brands                  = (selectedBrand)     ? [...newSelectedFacets.brands, selectedBrand] : [];
@@ -319,25 +318,25 @@ class Products extends Component {
                     <div className="sidebar-area">
                       <SelectionSidebar
                         selectedFacets={selectedFacets}
-                        applyFacet={this.applyFacet}
+                        updateFacets={this.updateFacets}
                       />
                       <CategorySidebar
                         selectedFacets={selectedFacets.categories}
                         facets={this.filterFacetsUnselected(facets.categories, selectedFacets.categories)}
                         isActive={this.isActive}
-                        applyFacet={this.applyFacet}
+                        updateFacets={this.updateFacets}
                       />
                       <BrandSidebar
                         selectedFacets={selectedFacets.brands}
                         isActive={this.isActive}
                         facets={this.filterFacetsUnselected(facets.brands, selectedFacets.brands)}
-                        applyFacet={this.applyFacet}
+                        updateFacets={this.updateFacets}
                       />
                       <PriceSidebar
                         type={type}
                         facets={this.filterFacetsUnselected(facets.prices, selectedFacets.prices)}
                         updateSelectedPrice={this.updateSelectedPrice}
-                        applyFacet={this.applyFacet}
+                        updateFacets={this.updateFacets}
                         isActive={this.isActive}
                         selectedFacets={selectedFacets}
                         maxPrice={maxPrice}
@@ -345,7 +344,7 @@ class Products extends Component {
                       <TagSidebar
                         selectedFacets={selectedFacets.tags}
                         facets={this.filterFacetsUnselected(facets.tags, selectedFacets.tags)}
-                        applyFacet={this.applyFacet}
+                        updateFacets={this.updateFacets}
                       />
                     </div>
                   </div>
