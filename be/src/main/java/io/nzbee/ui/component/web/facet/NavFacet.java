@@ -22,7 +22,7 @@ public class NavFacet<T> {
 	
 	private Long facetChildCount;
 
-	private Long productCount;
+	private Long facetProductCount;
 	
 	private Double maxMarkdownPrice;
 
@@ -83,14 +83,6 @@ public class NavFacet<T> {
 	public void setFacetLevel(Long facetLevel) {
 		this.facetLevel = facetLevel;
 	}
-
-	public Long getProductCount() {
-		return productCount;
-	}
-
-	public void setProductCount(Long productCount) {
-		this.productCount = productCount;
-	}
 	
 	public Double getMaxMarkdownPrice() {
 		return maxMarkdownPrice;
@@ -131,6 +123,14 @@ public class NavFacet<T> {
         .append("]");
         return builder.toString();
     }
+
+	public Long getFacetProductCount() {
+		return facetProductCount;
+	}
+
+	public void setFacetProductCount(Long facetProductCount) {
+		this.facetProductCount = facetProductCount;
+	}
 
 
 }

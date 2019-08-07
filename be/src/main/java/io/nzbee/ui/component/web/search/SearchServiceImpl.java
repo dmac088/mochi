@@ -239,7 +239,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		allFacets.stream().filter(f-> f.getFacetingName().equals(CategoryVars.PRIMARY_CATEGORY_FACET_NAME)).collect(Collectors.toList()).stream().forEach(cf ->  		{
 													String categoryCode = (new LinkedList<String>(Arrays.asList(cf.getValue().split("/")))).getLast();
 													NavFacet<Category> categoryFacet = convertCategoryToNavFacet(categoryCode, lcl, currency);
-													categoryFacet.setProductCount(new Long(cf.getCount()));
+													categoryFacet.setFacetProductCount(new Long(cf.getCount()));
 													categoryFacet.setToken(cf.getValue());
 													categoryFacet.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
 													cs.add(categoryFacet);
@@ -250,7 +250,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 													NavFacet<Brand> brandFacet = convertBrandToNavFacet(
 													bf.getValue(), lcl, currency);
 													brandFacet.setFacetDisplayValue(bf.getValue());
-													brandFacet.setProductCount(new Long(bf.getCount()));
+													brandFacet.setFacetProductCount(new Long(bf.getCount()));
 													brandFacet.setToken(bf.getValue());
 													brandFacet.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
 													bs.add(brandFacet);
@@ -262,7 +262,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 													//pf.getValue();
 													NavFacet<Object> priceFacet = new NavFacet<Object>();
 													priceFacet.setFacetDisplayValue(pf.getValue());
-													priceFacet.setProductCount(new Long(pf.getCount()));
+													priceFacet.setFacetProductCount(new Long(pf.getCount()));
 													priceFacet.setToken(pf.getValue());
 													priceFacet.setFacetType(ProductVars.FACET_TYPE_RANGE);
 													ps.add(priceFacet);
@@ -274,7 +274,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 													//pf.getValue();
 													NavFacet<Tag> tagFacet = new NavFacet<Tag>();
 													tagFacet.setFacetDisplayValue(tf.getValue());
-													tagFacet.setProductCount(new Long(tf.getCount()));
+													tagFacet.setFacetProductCount(new Long(tf.getCount()));
 													tagFacet.setToken(tf.getValue());
 													tagFacet.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
 													ts.add(tagFacet);

@@ -11,7 +11,7 @@ const renderChevron = (facet, routeProps, props) => {
   return (
     <a
       className="isParent"
-      id={facet.id}
+      id={facet.facetId}
       onClick={e => {
         e.preventDefault();
         changeCategory(e, routeProps);
@@ -32,7 +32,7 @@ const renderFacets = (facets, selectedFacets, routeProps, props) => {
     const margin = (facet.facetLevel - minLevel) * 15;
     return (
       <React.Fragment>
-        <li key={facet.id}>
+        <li key={facet.facetId}>
           <a
             className={
               props.isActive(facet, selectedFacets, facets) ? "active" : ""
@@ -47,7 +47,7 @@ const renderFacets = (facets, selectedFacets, routeProps, props) => {
           >
             {facet.facetDisplayValue} ({facet.productCount})
           </a>
-          {facet.payload.childCategoryCount > 0
+          {facet.facetChildCount > 0
             ? renderChevron(facet, routeProps, props)
             : null}
         </li>
