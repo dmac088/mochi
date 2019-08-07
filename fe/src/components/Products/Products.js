@@ -215,12 +215,12 @@ class Products extends Component {
 
   getMaxPrice = (category, currentBrand) => {
     if(!category) { return }
-    let maxPrice = category.maxMarkdownPrice;
+    let maxPrice = category.facetMaxMarkdownPrice;
     if(!category.categoryBrands) {return maxPrice}
     if(!currentBrand) {return maxPrice}
     category.categoryBrands.map(brand => {
       if (currentBrand === brand.brandDesc) {
-          maxPrice = brand.maxMarkdownPrice;
+          maxPrice = brand.facetMaxMarkdownPrice;
       }
     });
     return maxPrice;
