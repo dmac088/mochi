@@ -6,7 +6,7 @@ import { createRouteProps } from '../../../services/helpers/routeHelper';
     if(facets.length === 0) { return null }
     return facets.map(facet => {
       return(
-        <li key={facet.id}>
+        <li key={facet.facetId}>
           <a  className={(props.isActive(facet, selectedFacets, facets)) ? "active" : ""}
               onClick={(e) => {
                                 e.preventDefault();
@@ -14,7 +14,7 @@ import { createRouteProps } from '../../../services/helpers/routeHelper';
                               }}
               id={facet.token}
               href="#">
-            {facet.facetDisplayValue} ({facet.productCount})
+            {facet.facetDisplayValue} ({facet.facetProductCount})
           </a>
         </li>
       );
