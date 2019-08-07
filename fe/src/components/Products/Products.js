@@ -75,24 +75,20 @@ class Products extends Component {
     const { locale, currency, term, brand } = this.props.match.params;
     const type                              = this.props.match.params[0];
 
-    const price = this.state.selectedPrice;
-    const facet = this.findFacet(categoryList, term);
+    const price                             = this.state.selectedPrice;
+    const facet                             = this.findFacet(categoryList, term);
     if(!facet) { return null; }
-    const maxPrice = Number(facet.facetMaxMarkdownPrice);
+    const maxPrice                          = Number(facet.facetMaxMarkdownPrice);
 
-    if(type==="category") {
-      //get the currenct selected price
-      const { selectedPrice } = this.state;
-      //the incoming props are different to the local state
-      const isDifferent = (!(term   === this.state.category));
+    //get the currenct selected price
+    const { selectedPrice } = this.state;
+    const isDifferent = (!(term   === this.state.category));
+    const newPrice = (isDifferent) ? maxPrice : selectedPrice;
 
-      const newPrice = (isDifferent) ? maxPrice : selectedPrice;
-      this.update(type, locale, currency, pathname, term, brand, Object.assign(params, qs.parse(search)), newPrice, 0, isMounting, selectedFacets, this.findAll);
-    }
+    (type==="category")
+        ? this.update(type, locale, currency, pathname, term, brand, Object.assign(params, qs.parse(search)), newPrice, 0, isMounting, selectedFacets, this.findAll)
+        : this.update(type, locale, currency, pathname, "ALL", term, Object.assign(params, qs.parse(search)), price, maxPrice, isMounting, selectedFacets, pageService.findAll);
 
-    if (type === "search") {
-      this.update(type, locale, currency, pathname, "ALL", term, Object.assign(params, qs.parse(search)), price, maxPrice, isMounting, selectedFacets, pageService.findAll);
-    }
   }
 
 
@@ -112,73 +108,70 @@ class Products extends Component {
       &&  isMounting  === 0
     ) {return;}
     callback(locale, currency, category, term, price+1, page, size, sort, selectedFacets)
-    .then((responseJSON) => {
-
-      const facets = { responseJSON };
-      const newState = {
-        "locale":                 locale,
-        "currency":               currency,
-        "type":                   type,
-        "category":               category,
-        "term":                   term,
-        "products":               responseJSON.products.content,
-        "facets":                 facets,
-        "syncFacets":             selectedFacets,
-        "selectedFacets":         (term !== this.state.term) ? {  "categories": [],
-                                                                  "brands": [],
-                                                                  "tags": [],
-                                                                  "prices": []} : selectedFacets,
-        "totalPages":             responseJSON.products.totalPages,
-        "totalElements":          responseJSON.products.totalElements,
-        "numberOfElements":       responseJSON.products.numberOfElements,
-        "params":                 params,
-        "maxPrice":               maxPrice,
-        "selectedPrice":          price,
-        "syncPrice":              price,
-      };
-      return newState;
-     })
-     .then((newState) => {
-       //add the category children to the facets array
-       return facetApi.findAllChildrenByCriteria(newState.locale, newState.currency, newState.category, newState.selectedFacets)
-       .then((response) => {
-         return response.json();
-       })
-       .then((response) => {
-         if(type === 'category') {
-            newState["facets"] = response.result;
-         }
-         return newState;
-       })
-       .catch((e) => {
-         console.log(e);
-       });
-       return newState;
-     })
-     .then((newState) => {
-       return  productApi.getMaxPrice(newState.locale, newState.currency, newState.category, newState.selectedFacets)
-       .then((response) => {
-         return response.json();
-       })
-       .then((response) => {
-          if(type === 'category') {
-            newState["maxPrice"] = response;
-            if(!noChangePrice) {newState["selectedPrice"] = response;}
-          }
-          return newState;
-       })
-       .catch((e) => {
-         console.log(e);
-       });
-     })
-     .then((newState) => {
+    .then((response) => {
+      const { facets } = response;
        this.setState({
-         ...newState
+         "locale":                 locale,
+         "currency":               currency,
+         "type":                   type,
+         "category":               category,
+         "term":                   term,
+         "products":               response.products.content,
+         //"facets":                 (facets) ? facets : [],
+         "syncFacets":             selectedFacets,
+         "selectedFacets":         (term !== this.state.term) ? {  "categories": [],
+                                                                   "brands": [],
+                                                                   "tags": [],
+                                                                   "prices": []} : selectedFacets,
+         "totalPages":             response.products.totalPages,
+         "totalElements":          response.products.totalElements,
+         "numberOfElements":       response.products.numberOfElements,
+         "params":                 params,
+         "selectedPrice":          price,
+         "syncPrice":              price,
        });
      })
      .catch((e)=>{
        console.log(e);
      });
+
+     //get the children of the current category
+     facetApi.findAllChildrenByCriteria(locale, currency, category, selectedFacets)
+     .then((response) => {
+       return response.json();
+     })
+     .then((response) => {
+       if(type === 'category') {
+         this.setState({
+           "facets": response.result,
+         });
+       }
+     })
+     .catch((e) => {
+       console.log(e);
+     });
+
+     //get the max price of the current category
+     productApi.getMaxPrice(locale, currency, category, selectedFacets)
+     .then((response) => {
+       return response.json();
+     })
+     .then((response) => {
+        if(type === 'category') {
+          this.setState({
+            "maxPrice": response,
+          });
+          if(!noChangePrice) {
+            this.setState({
+              "selectedPrice": response,
+            });
+          }
+        }
+     })
+     .catch((e) => {
+       console.log(e);
+     });
+
   }
 
   findAll = (locale, currency, category, brand, maxPrice, page, size, sort, facets) =>
@@ -225,12 +218,6 @@ class Products extends Component {
     this.setState({
       "selectedPrice": value,
     })
-  }
-
-  updateMaxPrice = (category, brand) => {
-    this.setState({
-      "maxPrice": value,
-    });
   }
 
   updateFacets = (e) => {
@@ -290,11 +277,6 @@ class Products extends Component {
     if(!facet) { return; }
     const parents = this.getParents(facet, facets, []);
     return (selectedFacets.find(o => o.token === facet.token));
-  }
-
-  filterFacetsByName = (facets, name) => {
-    if (!facets) { return; }
-    return facets.filter(o => o.facetDisplayValue === name);
   }
 
   filterFacetsUnselected = (facets, selectedFacets) => {
