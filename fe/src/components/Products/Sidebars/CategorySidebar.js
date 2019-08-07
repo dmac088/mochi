@@ -45,7 +45,7 @@ const renderFacets = (facets, selectedFacets, routeProps, props) => {
             href="#"
             style={{ marginLeft: margin }}
           >
-            {facet.facetDisplayValue} ({facet.productCount})
+            {facet.facetDisplayValue} ({facet.facetProductCount})
           </a>
           {facet.facetChildCount > 0
             ? renderChevron(facet, routeProps, props)
