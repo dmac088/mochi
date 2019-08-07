@@ -47,7 +47,7 @@ class Highlights extends Component {
             className={"nav-item nav-link " + ((isActive) ? " active" : "")}
             id={c.facetId}
             data-toggle="tab"
-            href="#{c.payload.categoryCode}"
+            href="#{c.facetId}"
             role="tab"
             aria-selected="true">
           {c.facetDisplayValue}

@@ -209,7 +209,7 @@ class Products extends Component {
 
   filterCategories = (categoryList, categoryDesc) => {
     return categoryList.filter(function(value, index, arr){
-      return value.payload.categoryDesc === categoryDesc;
+      return value.facetDisplayValue === categoryDesc;
     });
   }
 
