@@ -74,26 +74,17 @@ class Products extends Component {
     const params                            = {...this.state.params};
     const { locale, currency, term, brand } = this.props.match.params;
     const type                              = this.props.match.params[0];
-
-
+    
+    const price = this.state.selectedPrice;
+    const facet = this.findFacet(categoryList, term);
+    if(!facet) { return null; }
+    const maxPrice = Number(facet.facetMaxMarkdownPrice);
 
     if(type==="category") {
-      //get the max price for our new props
-      console.log(this.getMaxPrice((this.findFacet(categoryList, term)), brand));
-
-
-      //find the relevant facet
-      const facet = this.findFacet(categoryList, term);
-      if(!facet) { return null; }
-
-      //get the maxPrice
-      const maxPrice = Number(facet.facetMaxMarkdownPrice);
-
       //get the currenct selected price
       const { selectedPrice } = this.state;
-
       //the incoming props are different to the local state
-      const isDifferent = (!(term === this.state.category
+      const isDifferent = (!(term   === this.state.category
                            && brand === this.state.term));
 
       const price = (isDifferent) ? maxPrice : selectedPrice;
@@ -101,8 +92,6 @@ class Products extends Component {
     }
 
     if (type === "search") {
-      const price = this.state.selectedPrice;
-      const maxPrice = Number(this.getMaxPrice((this.filterCategories(categoryList, term)[0]), brand));
       this.update(type, locale, currency, pathname, "ALL", term, Object.assign(params, qs.parse(search)), price, maxPrice, isMounting, selectedFacets, pageService.findAll);
     }
   }
@@ -196,10 +185,7 @@ class Products extends Component {
   getProducts = (locale, currency, category, brand, maxPrice, page, size, sort, facets) =>
     productApi.findByCategory(locale, currency, category, brand, maxPrice, page, size, sort, facets)
     .then((response) => {
-        return response.text();
-    })
-    .then((responseText) => {
-      return JSON.parse(responseText);
+        return response.json();
     });
 
   toggleGrid = (e) => {
@@ -220,19 +206,6 @@ class Products extends Component {
     return facetList.find(function(value, index, arr){
       return value.facetDisplayValue === facetDesc;
     });
-  }
-
-  getMaxPrice = (category, currentBrand) => {
-    if(!category) { return }
-    let maxPrice = category.facetMaxMarkdownPrice;
-    if(!category.categoryBrands) {return maxPrice}
-    if(!currentBrand) {return maxPrice}
-    category.categoryBrands.map(brand => {
-      if (currentBrand === brand.brandDesc) {
-          maxPrice = brand.facetMaxMarkdownPrice;
-      }
-    });
-    return maxPrice;
   }
 
   renderProducts = (category, products, setCurrentProductId, isGrid) => {
@@ -301,9 +274,9 @@ class Products extends Component {
   getParents(facet, facets, parents) {
     if(!facet) { return null }
     if(facet.facetParentId === null) { return parents }
-    const pa = facets.filter(o => o.id === facet.facetParentId);
-    parents.push(pa[0])
-    return this.getParents(pa[0], facets, parents);
+    const pa = facets.find(o => o.id === facet.facetParentId);
+    parents.push(pa)
+    return this.getParents(pa, facets, parents);
   }
 
   getChildren(parent, facets, children) {
@@ -319,8 +292,7 @@ class Products extends Component {
   isActive = (facet, selectedFacets, facets) => {
     if(!facet) { return; }
     const parents = this.getParents(facet, facets, []);
-    const parentIsSelected =  (parents) ? (parents.filter(parent => { return !(selectedFacets.findIndex(o => o.token === parent.token) === -1) }).length > 0) : false;
-    return !(selectedFacets.findIndex(o => o.token === facet.token) === -1);
+    return (selectedFacets.find(o => o.token === facet.token));
   }
 
   filterFacetsByName = (facets, name) => {
@@ -330,11 +302,10 @@ class Products extends Component {
 
   filterFacetsUnselected = (facets, selectedFacets) => {
     if (!facets) { return; }
-    return facets.filter(facet => (selectedFacets.findIndex(o => o.token === facet.token) === -1));
+    return facets.filter(facet => !(selectedFacets.find(o => o.token === facet.token)));
   }
 
   render() {
-
       const { toggleQuickView, setCurrentProductId, showQVModal, currentProductId, categoryList, changeCategory, changeBrand} = this.props;
       const { products, facets, selectedFacets, totalPages, totalElements, numberOfElements, isGrid, term, category, maxPrice, selectedPrice, type } = this.state;
       const { page, size } = this.state.params;
