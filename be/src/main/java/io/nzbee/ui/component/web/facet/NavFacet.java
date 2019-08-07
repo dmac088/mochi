@@ -20,11 +20,13 @@ public class NavFacet<T> {
 	
 	private Long facetLevel;
 	
+	private Long facetParentId;
+	
 	private Long facetChildCount;
 
 	private Long facetProductCount;
 	
-	private Double maxMarkdownPrice;
+	private Double facetMaxMarkdownPrice;
 
 	private T payload;
 
@@ -83,15 +85,6 @@ public class NavFacet<T> {
 	public void setFacetLevel(Long facetLevel) {
 		this.facetLevel = facetLevel;
 	}
-	
-	public Double getMaxMarkdownPrice() {
-		return maxMarkdownPrice;
-	}
-
-	public void setMaxMarkdownPrice(Double maxMarkdownPrice) {
-		this.maxMarkdownPrice = maxMarkdownPrice;
-	}
-	
 
 	public Long getFacetChildCount() {
 		return facetChildCount;
@@ -99,6 +92,30 @@ public class NavFacet<T> {
 
 	public void setFacetChildCount(Long facetChildCount) {
 		this.facetChildCount = facetChildCount;
+	}
+	
+	public Long getFacetProductCount() {
+		return facetProductCount;
+	}
+
+	public void setFacetProductCount(Long facetProductCount) {
+		this.facetProductCount = facetProductCount;
+	}
+
+	public Double getFacetMaxMarkdownPrice() {
+		return facetMaxMarkdownPrice;
+	}
+
+	public void setFacetMaxMarkdownPrice(Double facetMaxMarkdownPrice) {
+		this.facetMaxMarkdownPrice = facetMaxMarkdownPrice;
+	}
+	
+	public Long getFacetParentId() {
+		return facetParentId;
+	}
+
+	public void setFacetParentId(Long facetParentId) {
+		this.facetParentId = facetParentId;
 	}
 
 	@Override
@@ -123,14 +140,5 @@ public class NavFacet<T> {
         .append("]");
         return builder.toString();
     }
-
-	public Long getFacetProductCount() {
-		return facetProductCount;
-	}
-
-	public void setFacetProductCount(Long facetProductCount) {
-		this.facetProductCount = facetProductCount;
-	}
-
 
 }
