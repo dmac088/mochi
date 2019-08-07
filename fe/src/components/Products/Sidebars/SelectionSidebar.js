@@ -18,7 +18,7 @@ import _ from 'lodash';
           <a className="active"
              onClick={(e) => {
                                 e.preventDefault();
-                                props.applyFacet(e, routeProps);
+                                props.updateFacets(e, routeProps);
                              }}
              id={facet.token}
              href="#">
