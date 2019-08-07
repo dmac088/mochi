@@ -109,7 +109,7 @@ class CategoryMenu extends Component {
     return displayCategoryList.map(category => {
         if(isRootList) {itemCounter+=1};
         const { showMore }  = this.state
-        const categoryId    = category.payload.categoryId;
+        const categoryId    = category.facetId;
 
         return(
               <ReactTransitionGroup
@@ -134,7 +134,7 @@ class CategoryMenu extends Component {
     const { categoryList, isMobile, routeProps }  = this.props;
     const { locale }                              = routeProps.match.params;
     const { showMore }                            = this.state;
-    const displayCategoryList                     = categoryList.filter(o => o.payload.categoryLevel === 1);
+    const displayCategoryList                     = categoryList.filter(o => o.facetLevel === 1);
 
     return(
       <ul ref={this.setContainer}>
@@ -162,10 +162,10 @@ class CategoryMenuItem extends Component {
 
   constructor(props) {
     super(props);
-    const { childCategoryCount } = this.props.category.payload;
+    const { facetChildCount } = this.props.category;
     const { isMobile } = this.props;
     this.state = {
-      hasChildren: childCategoryCount > 0,
+      hasChildren: facetChildCount > 0,
       expand: ((isMobile) ? false : true),
     }
   }
@@ -184,7 +184,7 @@ class CategoryMenuItem extends Component {
   }
 
   getChildren = (parent, categoryList, children) => {
-    const c = categoryList.filter(o => o.payload.parentId === parent.payload.categoryId);
+    const c = categoryList.filter(o => o.facetParentId === parent.facetId);
     if(!c) {return children;}
     c.map((child) => {
                       children.push(child);
@@ -212,20 +212,20 @@ class CategoryMenuItem extends Component {
           style={
             (isRootList && itemCounter > 8 && !showMore)
             ? {"display": "none"}
-            : {"--my-left-indent": this.getIndent(category.payload.categoryLevel,10)}
+            : {"--my-left-indent": this.getIndent(category.facetLevel, 10)}
           }
           >
-          <a  id={category.payload.categoryDesc}
+          <a  id={category.facetDisplayValue}
               onClick={(e) => {
                           if ((e.target.tagName.toLowerCase() === "i")) {return}
                           changeCategory(e, routeProps )
                         }}
               className={"megamenu-head"}
               style={(isMobile)
-                     ? {"--my-cat-indent": this.getIndent(category.payload.categoryLevel)}
+                     ? {"--my-cat-indent": this.getIndent(category.facetLevel)}
                       : {"":""}}
               href="shop-left-sidebar.html">
-            {category.payload.categoryDesc}
+            {category.facetDisplayValue}
             {(hasChildren && isMobile)
               ? <span>
                   <i onClick={this.expandCat}
@@ -243,7 +243,7 @@ class CategoryMenuItem extends Component {
                   displayCategoryList={displayCategoryList}
                   categoryList={categoryList}
                   children={this.getChildren(category, categoryList, children)}
-                  categoryLevel={category.payload.categoryLevel}
+                  categoryLevel={category.facetLevel}
                   itemCounter={itemCounter}
                   routeProps={routeProps}
                   renderCategoryList={renderCategoryList}
