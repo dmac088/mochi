@@ -101,9 +101,9 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 	public NavFacet<Object> getMaxPrice(String categoryDesc, String locale, String currency, NavFacetContainer selectedFacets) {
 		
 		//convert selected facets into token lists
-		List<Long> categoryIds = selectedFacets.getCategories().stream().map(c -> c.getId()).collect(Collectors.toList());
-		List<Long> brandIds = selectedFacets.getBrands().stream().map(c -> c.getId()).collect(Collectors.toList());
-		List<Long> tagIds = selectedFacets.getTags().stream().map(c -> c.getId()).collect(Collectors.toList());
+		List<Long> categoryIds = selectedFacets.getCategories().stream().map(c -> c.getFacetId()).collect(Collectors.toList());
+		List<Long> brandIds = selectedFacets.getBrands().stream().map(c -> c.getFacetId()).collect(Collectors.toList());
+		List<Long> tagIds = selectedFacets.getTags().stream().map(c -> c.getFacetId()).collect(Collectors.toList());
 	
 		Double maxPrice = productService.getMaxPrice(categoryDesc, 
 													 locale, 
@@ -385,7 +385,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
     	NavFacet<Category> cf = new NavFacet<Category>();
     	Category c = categoryService.findOneByCode(locale, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, categoryCode);
     	if(c == null) { return cf; }
-    	cf.setId(c.getCategoryId());
+    	cf.setFacetId(c.getCategoryId());
 //    	cf.setPayload(c);
     	return cf;		
     }
@@ -423,8 +423,8 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 	    public NavFacet<Brand> convertBrandToNavFacet(String brandCode, String lcl, String currency) {
 	    	Brand b = brandService.findOneByCode(lcl, brandCode);
 	    	NavFacet<Brand> bf = new NavFacet<Brand>();
-	    	bf.setId(b.getBrandId());
-	 //   	bf.setPayload(b);
+	    	bf.setFacetId(b.getBrandId());
+	    	bf.setPayload(b);
 	    	return bf;
 	    } 
 		
