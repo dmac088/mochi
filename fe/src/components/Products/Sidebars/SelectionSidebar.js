@@ -14,7 +14,7 @@ import _ from 'lodash';
   const renderFacets = (selectedFacets, routeProps, props) => {
     return selectedFacets.map(facet => {
       return (
-        <li key={facet.id}>
+        <li key={facet.facetId}>
           <a className="active"
              onClick={(e) => {
                                 e.preventDefault();
@@ -22,7 +22,7 @@ import _ from 'lodash';
                              }}
              id={facet.token}
              href="#">
-            {facet.facetDisplayValue} ({facet.productCount})
+            {facet.facetDisplayValue} ({facet.facetProductCount})
           </a>
         </li>
       );

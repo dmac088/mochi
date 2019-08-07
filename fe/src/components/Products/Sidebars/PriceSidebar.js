@@ -26,7 +26,7 @@ const priceRanges = (maxPrice, selectedFacets, applyFacet, facets, props) => {
                               }}
               id={facet.token}
               href="#">
-            {facet.facetDisplayValue} ({facet.productCount})
+            {facet.facetDisplayValue} ({facet.facetProductCount})
           </a>
         </li>
       );

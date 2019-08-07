@@ -12,7 +12,7 @@ import _ from 'lodash';
                           }}
                  id={facet.token}
                  href="#">
-                 {facet.facetDisplayValue} ({facet.productCount})
+                 {facet.facetDisplayValue} ({facet.facetProductCount})
                </a>
             </li>
           </React.Fragment>
