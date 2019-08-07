@@ -84,11 +84,10 @@ class Products extends Component {
       //get the currenct selected price
       const { selectedPrice } = this.state;
       //the incoming props are different to the local state
-      const isDifferent = (!(term   === this.state.category
-                           && brand === this.state.term));
+      const isDifferent = (!(term   === this.state.category));
 
-      const price = (isDifferent) ? maxPrice : selectedPrice;
-      this.update(type, locale, currency, pathname, term, brand, Object.assign(params, qs.parse(search)), price, 0, isMounting, selectedFacets, this.getProducts);
+      const newPrice = (isDifferent) ? maxPrice : selectedPrice;
+      this.update(type, locale, currency, pathname, term, brand, Object.assign(params, qs.parse(search)), newPrice, 0, isMounting, selectedFacets, this.findAll);
     }
 
     if (type === "search") {
@@ -182,7 +181,7 @@ class Products extends Component {
      });
   }
 
-  getProducts = (locale, currency, category, brand, maxPrice, page, size, sort, facets) =>
+  findAll = (locale, currency, category, brand, maxPrice, page, size, sort, facets) =>
     productApi.findByCategory(locale, currency, category, brand, maxPrice, page, size, sort, facets)
     .then((response) => {
         return response.json();
@@ -235,16 +234,15 @@ class Products extends Component {
   }
 
   updateFacets = (e) => {
-    const { categories, brands, tags }        = this.state.selectedFacets;
     const newSelectedFacets                   = _.cloneDeep(this.state.selectedFacets, true);
-
+    const { categories, brands, tags }        = newSelectedFacets;
     const allFacets                           = [...categories, ...brands, ...tags];
     const removeFacet                         = allFacets.find(o => o.token  === e.currentTarget.id);
 
     if(removeFacet) {
-        newSelectedFacets.categories          = categories.filter(o => !(removeFacet.token  === o.token));
-        newSelectedFacets.brands              = brands.filter(o => !(removeFacet.token      === o.token));
-        newSelectedFacets.tags                = tags.filter(o => !(removeFacet.token        === o.token));
+        newSelectedFacets.categories          = categories.filter(o => (removeFacet.token  !== o.token));
+        newSelectedFacets.brands              = brands.filter(o => (removeFacet.token      !== o.token));
+        newSelectedFacets.tags                = tags.filter(o => (removeFacet.token        !== o.token));
 
         this.setState({
           "selectedFacets": newSelectedFacets,
@@ -259,10 +257,11 @@ class Products extends Component {
     const { categories, brands, tags }        = this.state.facets;
     const allFacets                           = [...categories, ...brands, ...tags];
     const selectedFacet                       = allFacets.find(o => o.token  === e.currentTarget.id);
+    const { facetClassName }                  = selectedFacet;
 
-    newSelectedFacets.categories              = (selectedCategory)  ? [...newSelectedFacets.categories, selectedCategory] : [];
-    newSelectedFacets.brands                  = (selectedBrand)     ? [...newSelectedFacets.brands, selectedBrand] : [];
-    newSelectedFacets.tags                    = (selectedTag)       ? [...newSelectedFacets.tags, selectedTag] : [];
+    newSelectedFacets.categories              = (facetClassName === 'Category')   ? [...newSelectedFacets.categories, selectedFacet]  : [...newSelectedFacets.categories];
+    newSelectedFacets.brands                  = (facetClassName === 'Brand')      ? [...newSelectedFacets.brands, selectedFacet]      : [...newSelectedFacets.brands];
+    newSelectedFacets.tags                    = (facetClassName === 'Tag')        ? [...newSelectedFacets.tags, selectedFacet]        : [...newSelectedFacets.tags];
 
     this.setState({
       "selectedFacets": newSelectedFacets,
