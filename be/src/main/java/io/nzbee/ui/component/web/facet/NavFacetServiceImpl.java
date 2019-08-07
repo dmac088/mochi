@@ -60,9 +60,9 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 	
 	@Override
 	public NavFacetResult findAll(String locale, String currency, String category, NavFacetContainer selectedFacets) {
-		List<Long> tIds = selectedFacets.getTags().stream().map(t -> t.getId()).collect(Collectors.toList());
-		List<Long> bIds = selectedFacets.getBrands().stream().map(t -> t.getId()).collect(Collectors.toList());
-		List<Long> cIds = selectedFacets.getCategories().stream().map(t -> t.getId()).collect(Collectors.toList());
+		List<Long> tIds = selectedFacets.getTags().stream().map(t -> t.getFacetId()).collect(Collectors.toList());
+		List<Long> bIds = selectedFacets.getBrands().stream().map(t -> t.getFacetId()).collect(Collectors.toList());
+		List<Long> cIds = selectedFacets.getCategories().stream().map(t -> t.getFacetId()).collect(Collectors.toList());
 		
 		NavFacetContainer nfc = new NavFacetContainer();
 		NavFacetResult nfr = new NavFacetResult();
@@ -161,7 +161,8 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
     	final NavFacet<Category> s = new NavFacet<Category>();
     	s.setFacetClassName(c.getClass().getSimpleName());
     	s.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
-    	s.setId(c.getCategoryId());
+    	s.setFacetId(c.getCategoryId());
+    	s.setFacetChildCount(c.getChildCategoryCount());
     	s.setFacetDisplayValue(c.getCategoryDesc());
     	s.setToken(c.getCategoryCode());
     	s.setFacetLevel(c.getCategoryLevel());
@@ -173,7 +174,8 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		NavFacet<Tag> s = new NavFacet<Tag>();
 		s.setFacetClassName(t.getClass().getSimpleName());
 		s.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
-		s.setId(t.getTagId());
+		s.setFacetId(t.getTagId());
+		s.setFacetChildCount(new Long(0));
 		s.setFacetDisplayValue(t.getTagDesc());
 		s.setToken(t.getTagCode());
 		s.setFacetLevel(new Long(0));
@@ -185,7 +187,8 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
     	final NavFacet<Brand> s = new NavFacet<Brand>();
     	s.setFacetClassName(b.getClass().getSimpleName());
     	s.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
-    	s.setId(b.getBrandId());
+    	s.setFacetId(b.getBrandId());
+    	s.setFacetChildCount(new Long(0));
     	s.setFacetDisplayValue(b.getBrandDesc());
     	s.setToken(b.getBrandCode());
     	s.setFacetLevel(new Long(0));

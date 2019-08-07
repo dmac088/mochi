@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class NavFacet<T> {
 
-	private Long Id;
+	private Long facetId;
 	
 	private String facetToken;
 	
@@ -19,6 +19,8 @@ public class NavFacet<T> {
 	private String facetClassName;
 	
 	private Long facetLevel;
+	
+	private Long facetChildCount;
 
 	private Long productCount;
 	
@@ -26,12 +28,12 @@ public class NavFacet<T> {
 
 	private T payload;
 
-	public Long getId() {
-		return Id;
+	public Long getFacetId() {
+		return facetId;
 	}
 
-	public void setId(Long id) {
-		this.Id = id;
+	public void setFacetId(Long id) {
+		this.facetId = id;
 	}
 
 	public String getToken() {
@@ -97,28 +99,38 @@ public class NavFacet<T> {
 	public void setMaxMarkdownPrice(Double maxMarkdownPrice) {
 		this.maxMarkdownPrice = maxMarkdownPrice;
 	}
+	
+
+	public Long getFacetChildCount() {
+		return facetChildCount;
+	}
+
+	public void setFacetChildCount(Long facetChildCount) {
+		this.facetChildCount = facetChildCount;
+	}
 
 	@Override
 	public boolean equals(Object o) {
 		 if (this == o) return true;
 	     if (o == null || getClass() != o.getClass()) return false;
 	     NavFacet<T> pcf = (NavFacet<T>) o;
-	     return this.Id == pcf.Id;
+	     return this.facetId == pcf.facetId;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(Id);
+		return Objects.hash(facetId);
 	}
 
 	@Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("Facet [Id=").append(Id)
+        builder.append("Facet [Id=").append(facetId)
         .append(", facetToken=").append(facetToken)
         .append(", facetClassName=").append(facetClassName)
         .append("]");
         return builder.toString();
     }
+
 
 }

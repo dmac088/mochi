@@ -32,7 +32,7 @@ import { getValue } from './config/lang/selector';
 import { filterCategories } from './services/helpers/filterHelper';
 
 
-class App extends Component {
+export class App extends Component {
 
   constructor(props) {
     super(props);
@@ -55,7 +55,7 @@ class App extends Component {
                                                       })
                                                       .catch((e) => {
                                                         console.log("autologin didn't work, no refresh token found on the client!");
-
+                                                        console.log(e);
                                                       })
                                                       .then(() => {
                                                         this.initialize();
@@ -305,6 +305,10 @@ class App extends Component {
 
   renderProduct = () => {
     return (<Product />);
+  }
+
+  getHello = () => {
+    return "Hello World!";
   }
 
 
