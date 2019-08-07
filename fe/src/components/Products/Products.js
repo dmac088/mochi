@@ -75,10 +75,19 @@ class Products extends Component {
     const { locale, currency, term, brand } = this.props.match.params;
     const type                              = this.props.match.params[0];
 
+
+
     if(type==="category") {
       //get the max price for our new props
-      const maxPrice = Number(this.getMaxPrice((this.filterCategories(categoryList, term)[0]), brand));
-      if(!maxPrice) { return null; }
+      console.log(this.getMaxPrice((this.findFacet(categoryList, term)), brand));
+
+
+      //find the relevant facet
+      const facet = this.findFacet(categoryList, term);
+      if(!facet) { return null; }
+
+      //get the maxPrice
+      const maxPrice = Number(facet.facetMaxMarkdownPrice);
 
       //get the currenct selected price
       const { selectedPrice } = this.state;
@@ -207,9 +216,9 @@ class Products extends Component {
     })
   }
 
-  filterCategories = (categoryList, categoryDesc) => {
-    return categoryList.filter(function(value, index, arr){
-      return value.facetDisplayValue === categoryDesc;
+  findFacet = (facetList, facetDesc) => {
+    return facetList.find(function(value, index, arr){
+      return value.facetDisplayValue === facetDesc;
     });
   }
 
@@ -330,7 +339,7 @@ class Products extends Component {
       const { products, facets, selectedFacets, totalPages, totalElements, numberOfElements, isGrid, term, category, maxPrice, selectedPrice, type } = this.state;
       const { page, size } = this.state.params;
       if(!products) { return null }
-      const cat = this.filterCategories(categoryList, category)[0];
+      const cat = this.findFacet(categoryList, category);
 				return(
           <React.Fragment>
             <div className="shop-page-container mb-50">
