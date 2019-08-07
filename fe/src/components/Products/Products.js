@@ -291,8 +291,8 @@ class Products extends Component {
 
   getParents(facet, facets, parents) {
     if(!facet) { return null }
-    if(facet.parentId === null) { return parents }
-    const pa = facets.filter(o => o.id === facet.parentId);
+    if(facet.facetParentId === null) { return parents }
+    const pa = facets.filter(o => o.id === facet.facetParentId);
     parents.push(pa[0])
     return this.getParents(pa[0], facets, parents);
   }

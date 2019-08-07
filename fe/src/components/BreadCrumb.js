@@ -11,7 +11,7 @@ import { changeCategory, homeRouteString, createRouteProps } from '../services/h
 
   const findCategoryById = (categoryList, categoryId) => {
     return categoryList.filter(function(value, index, arr){
-      return value.id === categoryId;
+      return value.facetId === categoryId;
     })[0];
   }
 
@@ -20,8 +20,8 @@ import { changeCategory, homeRouteString, createRouteProps } from '../services/h
     if(!category) { return }
     if(category.facetLevel === 0) {return;}
     result.push(findCategoryById(categoryList, categoryId));
-    if(!category.payload.parentId) {return;}
-    createLineage(categoryList, category.payload.parentId, result);
+    if(!category.facetParentId) {return;}
+    createLineage(categoryList, category.facetParentId, result);
   }
 
   const renderCategoryLineage = (categoryList, term, routeProps) => {
@@ -29,11 +29,11 @@ import { changeCategory, homeRouteString, createRouteProps } from '../services/h
     const category = findCategoryByName(categoryList, term);
     if(!category) { return }
     createLineage( categoryList,
-                        category.id,
+                        category.facetId,
                         result);
     return result.reverse().map(category => {
       return (
-        <li key={category.id} className="active">
+        <li key={category.facetId} className="active">
           <a id={category.facetDisplayValue} onClick={(e) => changeCategory(e, routeProps)} href="#">
             {category.facetDisplayValue}
           </a>
