@@ -101,35 +101,10 @@ class Products extends Component {
     ) {return;}
 
     const p1 = callback(locale, currency, category, term, price+1, page, size, sort, selectedFacets)
-    // .then((response) => {
-    //   const { facets, products } = response;
-    //    this.setState({
-    //      "locale":                 locale,
-    //      "currency":               currency,
-    //      "type":                   type,
-    //      "category":               category,
-    //      "term":                   term,
-    //      "products":               products.content,
-    //      //searching can return facets so we need to check this later
-    //      //"facets":                 facets,
-    //      "syncFacets":             selectedFacets,
-    //      "selectedFacets":         (term !== this.state.term) ? {  "categories": [],
-    //                                                                "brands": [],
-    //                                                                "tags": [],
-    //                                                                "prices": []} : selectedFacets,
-    //      "totalPages":             products.totalPages,
-    //      "totalElements":          products.totalElements,
-    //      "numberOfElements":       products.numberOfElements,
-    //      "params":                 params,
-    //      "selectedPrice":          price,
-    //      "syncPrice":              price,
-    //    });
-    //  })
      .catch((e)=>{
        console.log(e);
      });
 
-     //get the children of the current category
      const p2 = facetApi.findAllChildrenByCriteria(locale, currency, category, selectedFacets)
      .then((response) => {
        return response.json();
@@ -137,32 +112,11 @@ class Products extends Component {
      .catch((e) => {
        console.log(e);
      });
-     // .then((response) => {
-     //   if(type === 'category') {
-     //     this.setState({
-     //       "facets": response.result,
-     //     });
-     //   }
-     // })
 
-
-     //get the max price of the current category
      const p3 = productApi.getMaxPrice(locale, currency, category, selectedFacets)
      .then((response) => {
        return response.json();
      })
-     // .then((response) => {
-     //    if(type === 'category') {
-     //      this.setState({
-     //        "maxPrice": response,
-     //      });
-     //      if(!noChangePrice) {
-     //        this.setState({
-     //          "selectedPrice": response,
-     //        });
-     //      }
-     //    }
-     // })
      .catch((e) => {
        console.log(e);
      });
@@ -170,7 +124,28 @@ class Products extends Component {
      const pa = [p1, p2, p3];
      Promise.all(pa)
      .then((response) => {
-       console.log(response);
+          this.setState( {
+            "locale":                 locale,
+            "currency":               currency,
+            "type":                   type,
+            "category":               category,
+            "term":                   term,
+            "products":               response[0].products.content,
+            //searching can return facets so we need to check this later
+            "facets":                 (type === 'category') ? response[1].result : prevState.facets,
+            "syncFacets":             selectedFacets,
+            "selectedFacets":         (term !== this.state.term) ? {  "categories": [],
+                                                                      "brands": [],
+                                                                      "tags": [],
+                                                                      "prices": []} : selectedFacets,
+            "totalPages":             response[0].products.totalPages,
+            "totalElements":          response[0].products.totalElements,
+            "numberOfElements":       response[0].products.numberOfElements,
+            "params":                 params,
+            "syncPrice":              price,
+            "maxPrice":               (type === 'category') ? response[2] : price,
+            "selectedPrice":          (type === 'category' && !noChangePrice) ? response[2] : price,
+          });
      });
 
   }
