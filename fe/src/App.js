@@ -158,10 +158,7 @@ export class App extends Component {
   getCategoryProducts = (locale, currency, category) =>
     productApi.findByCategory(locale, currency, category, "", 500, 0, 50)
     .then((response) => {
-        return response.text();
-    })
-    .then((responseText) => {
-        return JSON.parse(responseText);
+        return response.json();
     })
     .then((responseJSON) => {
         return responseJSON.products.content;
@@ -170,13 +167,7 @@ export class App extends Component {
   refreshCategoryList = (locale, currency) =>
     categoryApi.findAll(locale, currency)
     .then((response) => {
-        return response.text();
-    })
-    .then((responseText) => {
-        return JSON.parse(responseText);
-    })
-    .then((responseJSON) => {
-        return responseJSON;
+        return response.json();
     });
 
 
