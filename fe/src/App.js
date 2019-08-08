@@ -96,7 +96,7 @@ export class App extends Component {
       //return an array of promises to the next in chain
       return filterCategories(categoryList, 'LNDHC01').map(c => {
         //we must return the nested promise
-        return this.getCategoryProducts(locale, currency, c.payload.categoryDesc)
+        return this.getCategoryProducts(locale, currency, c.facetDisplayValue)
         .then((response) => {
           c.payload["products"] = response;
           return c;
@@ -116,7 +116,7 @@ export class App extends Component {
       //return an array of promises to the next in chain
       return filterCategories(categoryList, 'LNDPC01').map(c => {
         //we must return the nested promise
-        return this.getCategoryProducts(locale, currency, c.payload.categoryDesc)
+        return this.getCategoryProducts(locale, currency, c.facetDisplayValue)
         .then((response) => {
           c["products"] = response;
           return c;
