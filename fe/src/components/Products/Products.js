@@ -15,14 +15,6 @@ import * as categoryApi from '../../data/categories/api';
 import * as productApi from '../../data/products/api';
 import * as brandApi from '../../data/brands/api';
 import * as facetApi from '../../data/facets/api';
-import { updateParams } from '../../services/helpers/functionHelper';
-import {
-  PRIMARY_CATEGORY_FACET_NAME,
-  SECONDARY_CATEGORY_FACET_NAME,
-  BRAND_FACET_NAME,
-  PRICE_FACET_NAME,
-  TAG_FACET_NAME
-} from '../../services/helpers/facetHelper';
 import * as pageService from '../../services/page';
 import qs from 'query-string';
 import _ from 'lodash';
