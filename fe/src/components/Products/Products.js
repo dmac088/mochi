@@ -53,21 +53,21 @@ class Products extends Component {
   }
 
   componentDidMount() {
-    this.refresh(1, this.state.selectedFacets);
+    this.refresh(1);
   }
 
-  componentDidUpdate(prevProps) {
-    this.refresh(0, this.state.selectedFacets);
+  componentDidUpdate(prevProps, prevState) {
+    this.refresh(0);
   }
 
-  refresh = (isMounting, selectedFacets) => {
+  refresh = (isMounting) => {
+    const { selectedFacets }                = this.state;
     const { pathname, search }              = this.props.location;
     const { categoryList }                  = this.props;
     const params                            = {...this.state.params};
     const { locale, currency, term, brand } = this.props.match.params;
     const type                              = this.props.match.params[0];
 
-    const price                             = this.state.selectedPrice;
     const facet                             = this.findFacet(categoryList, term);
     if(!facet) { return null; }
     const maxPrice                          = Number(facet.facetMaxMarkdownPrice);
@@ -79,7 +79,7 @@ class Products extends Component {
 
     (type==="category")
         ? this.update(type, locale, currency, pathname, term, brand, Object.assign(params, qs.parse(search)), newPrice, 0, isMounting, selectedFacets, this.findAll)
-        : this.update(type, locale, currency, pathname, "ALL", term, Object.assign(params, qs.parse(search)), price, maxPrice, isMounting, selectedFacets, pageService.findAll);
+        : this.update(type, locale, currency, pathname, "ALL", term, Object.assign(params, qs.parse(search)), newPrice, maxPrice, isMounting, selectedFacets, pageService.findAll);
 
   }
 
