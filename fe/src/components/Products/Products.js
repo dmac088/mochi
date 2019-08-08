@@ -101,14 +101,14 @@ class Products extends Component {
     ) {return;}
     callback(locale, currency, category, term, price+1, page, size, sort, selectedFacets)
     .then((response) => {
-      const { facets } = response;
+      const { facets, products } = response;
        this.setState({
          "locale":                 locale,
          "currency":               currency,
          "type":                   type,
          "category":               category,
          "term":                   term,
-         "products":               response.products.content,
+         "products":               products.content,
          //searching can return facets so we need to check this later
          //"facets":                 facets,
          "syncFacets":             selectedFacets,
@@ -116,9 +116,9 @@ class Products extends Component {
                                                                    "brands": [],
                                                                    "tags": [],
                                                                    "prices": []} : selectedFacets,
-         "totalPages":             response.products.totalPages,
-         "totalElements":          response.products.totalElements,
-         "numberOfElements":       response.products.numberOfElements,
+         "totalPages":             products.totalPages,
+         "totalElements":          products.totalElements,
+         "numberOfElements":       products.numberOfElements,
          "params":                 params,
          "selectedPrice":          price,
          "syncPrice":              price,
