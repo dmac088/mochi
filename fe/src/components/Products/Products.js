@@ -100,70 +100,77 @@ class Products extends Component {
       &&  isMounting  === 0
     ) {return;}
 
-    callback(locale, currency, category, term, price+1, page, size, sort, selectedFacets)
-    .then((response) => {
-      const { facets, products } = response;
-       this.setState({
-         "locale":                 locale,
-         "currency":               currency,
-         "type":                   type,
-         "category":               category,
-         "term":                   term,
-         "products":               products.content,
-         //searching can return facets so we need to check this later
-         //"facets":                 facets,
-         "syncFacets":             selectedFacets,
-         "selectedFacets":         (term !== this.state.term) ? {  "categories": [],
-                                                                   "brands": [],
-                                                                   "tags": [],
-                                                                   "prices": []} : selectedFacets,
-         "totalPages":             products.totalPages,
-         "totalElements":          products.totalElements,
-         "numberOfElements":       products.numberOfElements,
-         "params":                 params,
-         "selectedPrice":          price,
-         "syncPrice":              price,
-       });
-     })
+    const p1 = callback(locale, currency, category, term, price+1, page, size, sort, selectedFacets)
+    // .then((response) => {
+    //   const { facets, products } = response;
+    //    this.setState({
+    //      "locale":                 locale,
+    //      "currency":               currency,
+    //      "type":                   type,
+    //      "category":               category,
+    //      "term":                   term,
+    //      "products":               products.content,
+    //      //searching can return facets so we need to check this later
+    //      //"facets":                 facets,
+    //      "syncFacets":             selectedFacets,
+    //      "selectedFacets":         (term !== this.state.term) ? {  "categories": [],
+    //                                                                "brands": [],
+    //                                                                "tags": [],
+    //                                                                "prices": []} : selectedFacets,
+    //      "totalPages":             products.totalPages,
+    //      "totalElements":          products.totalElements,
+    //      "numberOfElements":       products.numberOfElements,
+    //      "params":                 params,
+    //      "selectedPrice":          price,
+    //      "syncPrice":              price,
+    //    });
+    //  })
      .catch((e)=>{
        console.log(e);
      });
 
      //get the children of the current category
-     facetApi.findAllChildrenByCriteria(locale, currency, category, selectedFacets)
+     const p2 = facetApi.findAllChildrenByCriteria(locale, currency, category, selectedFacets)
      .then((response) => {
        return response.json();
-     })
-     .then((response) => {
-       if(type === 'category') {
-         this.setState({
-           "facets": response.result,
-         });
-       }
      })
      .catch((e) => {
        console.log(e);
      });
+     // .then((response) => {
+     //   if(type === 'category') {
+     //     this.setState({
+     //       "facets": response.result,
+     //     });
+     //   }
+     // })
+
 
      //get the max price of the current category
-     productApi.getMaxPrice(locale, currency, category, selectedFacets)
+     const p3 = productApi.getMaxPrice(locale, currency, category, selectedFacets)
      .then((response) => {
        return response.json();
      })
-     .then((response) => {
-        if(type === 'category') {
-          this.setState({
-            "maxPrice": response,
-          });
-          if(!noChangePrice) {
-            this.setState({
-              "selectedPrice": response,
-            });
-          }
-        }
-     })
+     // .then((response) => {
+     //    if(type === 'category') {
+     //      this.setState({
+     //        "maxPrice": response,
+     //      });
+     //      if(!noChangePrice) {
+     //        this.setState({
+     //          "selectedPrice": response,
+     //        });
+     //      }
+     //    }
+     // })
      .catch((e) => {
        console.log(e);
+     });
+
+     const pa = [p1, p2, p3];
+     Promise.all(pa)
+     .then((response) => {
+       console.log(response);
      });
 
   }
