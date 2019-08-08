@@ -11,7 +11,7 @@ const renderChevron = (facet, routeProps, props) => {
   return (
     <a
       className="isParent"
-      id={facet.facetId}
+      id={facet.facetDisplayValue}
       onClick={e => {
         e.preventDefault();
         changeCategory(e, routeProps);
