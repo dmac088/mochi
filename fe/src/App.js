@@ -138,10 +138,7 @@ export class App extends Component {
       //call the rest Api to apply new item array based on new language
       productApi.findByIds(locale, currency, productIds)
       .then((response) => {
-        return response.text()
-      })
-      .then((responseText) => {
-        return JSON.parse(responseText);
+        return response.json()
       })
       .then((responseJSON) => {
         cartService.updateCartItems(responseJSON);
