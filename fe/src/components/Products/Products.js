@@ -99,6 +99,7 @@ class Products extends Component {
       &&  price       === this.state.syncPrice
       &&  isMounting  === 0
     ) {return;}
+
     callback(locale, currency, category, term, price+1, page, size, sort, selectedFacets)
     .then((response) => {
       const { facets, products } = response;
