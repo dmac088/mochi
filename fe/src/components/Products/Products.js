@@ -100,6 +100,9 @@ class Products extends Component {
       &&  isMounting  === 0
     ) {return;}
 
+    console.log(_.isEqual(selectedFacets, this.state.syncFacets));
+    console.log(price       === this.state.syncPrice);
+
     const p1 = callback(locale, currency, category, term, price+1, page, size, sort, selectedFacets)
      .catch((e)=>{
        console.log(e);
@@ -142,7 +145,7 @@ class Products extends Component {
             "totalElements":          response[0].products.totalElements,
             "numberOfElements":       response[0].products.numberOfElements,
             "params":                 params,
-            "syncPrice":              (type === 'category') ? response[2] : price,
+            "syncPrice":              (!noChangePrice) ? response[2] : price,
             "maxPrice":               (type === 'category') ? response[2] : price,
             "selectedPrice":          (type === 'category' && !noChangePrice) ? response[2] : price,
           });
