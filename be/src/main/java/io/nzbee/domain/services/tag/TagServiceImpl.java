@@ -110,6 +110,7 @@ public class TagServiceImpl implements ITagService {
 	@Override
 	public Tag findOneByCode(String code, String lcl) {
 		// TODO Auto-generated method stub
+		System.out.println(code);
 		ProductTag pt = productTagService.findOne(code).get();
 		String tagDesc = pt.getAttributes().stream().filter(t -> t.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getTagDesc();
 		return this.convertToTagDO(pt.getTagId(), pt.getCode(), tagDesc, lcl);
