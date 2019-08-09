@@ -19,7 +19,6 @@ public interface ISearchService {
 			 String sortBy, 
 			 List<NavFacet> selectedFacets);
 	
-
 	NavFacet<Object> getMaxPrice(String categoryDesc, String locale, String currency, NavFacetContainer selectedFacets);
 
 	Search findAll(String lcl, String currency, String categoryDesc, String searchTerm, int page, int size,

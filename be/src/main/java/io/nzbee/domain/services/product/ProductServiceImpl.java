@@ -149,7 +149,7 @@ public class ProductServiceImpl implements IProductService {
         return pDo;
     }
     
-    public static Product convertToProductDO(
+    public Product convertToProductDO(
     			String productCreatedDate,
     			String productUPC,
     			String productDesc,

@@ -8,7 +8,7 @@ public class Tag {
 
 	private String tagDesc;
 	
-	private String tagType;
+	//private String tagType;
 	
 	private String locale;
 
@@ -36,13 +36,13 @@ public class Tag {
 		this.tagDesc = tagDesc;
 	}
 	
-	public String getTagType() {
-		return tagType;
-	}
-
-	public void setTagType(String tagType) {
-		this.tagType = tagType;
-	}
+//	public String getTagType() {
+//		return tagType;
+//	}
+//
+//	public void setTagType(String tagType) {
+//		this.tagType = tagType;
+//	}
 
 	public String getLocale() {
 		return locale;
