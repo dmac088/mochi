@@ -73,12 +73,12 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 
 	@Override
 	public Search findAll(String locale, String currency, String categoryDesc, String searchTerm, int page, int size,
-			String sortBy, List<NavFacet> selectedFacets) {
+			String sortBy, NavFacetContainer selectedFacets) {
 
 		// convert selected facets into token lists
-		List<String> categoryTokens = this.getFacetTokens(selectedFacets, Category.class);
-		List<String> brandTokens = this.getFacetTokens(selectedFacets, Brand.class);
-		List<String> tagTokens = this.getFacetTokens(selectedFacets, Tag.class);
+		List<String> categoryTokens = this.getFacetTokens(selectedFacets.getCategories());
+		List<String> brandTokens 	= this.getFacetTokens(selectedFacets.getBrands());
+		List<String> tagTokens 		= this.getFacetTokens(selectedFacets.getTags());
 
 		// call the domain layer service to get a Page of Products
 		return this.findAll(locale, 
@@ -410,5 +410,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			return "product.productDesc";
 		}
 	}
+
+
 
 }

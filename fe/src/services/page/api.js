@@ -11,6 +11,8 @@ const endPoints = {
 };
 
 export const findAll = (locale, currency, category, searchTerm, maxPrice, page, size, sort, selectedFacets) => {
+																																console.log(selectedFacets);
+
 																																return fetchApi(
 																																	endPoints.get + locale
 																																+ '/' + currency

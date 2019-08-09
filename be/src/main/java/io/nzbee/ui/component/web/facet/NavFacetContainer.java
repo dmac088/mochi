@@ -1,5 +1,6 @@
 package io.nzbee.ui.component.web.facet;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.nzbee.domain.Brand;
@@ -9,11 +10,11 @@ import io.nzbee.domain.Tag;
 public class NavFacetContainer {
 
 	
-	private List<NavFacet<Category>> categories;
+	private List<NavFacet<Category>> categories = new ArrayList<NavFacet<Category>>();
 	
-	private List<NavFacet<Brand>> brands;
-	
-	private List<NavFacet<Tag>> tags;
+	private List<NavFacet<Brand>> brands = new ArrayList<NavFacet<Brand>>();
+
+	private List<NavFacet<Tag>> tags = new ArrayList<NavFacet<Tag>>();
 
 	public List<NavFacet<Category>> getCategories() {
 		return categories;
