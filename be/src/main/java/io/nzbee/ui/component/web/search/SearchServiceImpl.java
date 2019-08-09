@@ -78,22 +78,25 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		List<String> brandTokens 	= this.getFacetTokens(selectedFacets, Brand.class);
 		List<String> tagTokens 		= this.getFacetTokens(selectedFacets, Tag.class);
 		
+		List<NavFacet> returnFacets = new ArrayList<NavFacet>();
+		
 		//call the domain layer service to get a Page of Products
 		Page<Product> pp  = this.findAll(	locale, 
-										currency, 
-										categoryDesc, 
-										searchTerm, 
-										page, 
-										size, 
-										sortBy, 
-										categoryTokens, 
-										brandTokens, 
-										tagTokens);
+											currency, 
+											categoryDesc, 
+											searchTerm, 
+											page, 
+											size, 
+											sortBy, 
+											categoryTokens, 
+											brandTokens, 
+											tagTokens,
+											returnFacets);
 		
 		//add the page of objects to a new Search object and return it 
 		Search search = new Search();
 		search.setProducts(pp);
-		search.setFacets(selectedFacets);
+		search.setFacets(returnFacets);
 		return search;
 	}
 	
@@ -148,7 +151,8 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 								 String sortBy, 
 								 List<String> categoryTokens,
 								 List<String> brandTokens,
-								 List<String> tagTokens) {		
+								 List<String> tagTokens,
+								 List<NavFacet> returnFacets) {		
 		
 		FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
 				
@@ -280,6 +284,9 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 													ts.add(tagFacet);
 											   });
 		
+		returnFacets.addAll(cs);
+		returnFacets.addAll(bs);
+		returnFacets.addAll(ts);
 		
 		//create a results container to send back to the client 
 		//SearchDto src = new SearchDto();
