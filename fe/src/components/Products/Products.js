@@ -142,7 +142,7 @@ class Products extends Component {
             "totalElements":          response[0].products.totalElements,
             "numberOfElements":       response[0].products.numberOfElements,
             "params":                 params,
-            "syncPrice":              price,
+            "syncPrice":              (type === 'category') ? response[2] : price,
             "maxPrice":               (type === 'category') ? response[2] : price,
             "selectedPrice":          (type === 'category' && !noChangePrice) ? response[2] : price,
           });
