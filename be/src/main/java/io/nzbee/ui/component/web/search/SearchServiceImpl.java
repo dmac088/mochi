@@ -281,8 +281,11 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 
 		Search search = new Search();
 		search.setProducts(new PageImpl<Product>(lp, pageable, jpaQuery.getResultSize()));
-		search.setFacets(returnFacets);
-
+		NavFacetContainer nfc = new NavFacetContainer();
+		nfc.setBrands(returnFacets.stream().filter(f -> f.getFacetClassName().equals(Brand.class.getSimpleName())).collect(Collectors.toList()));
+		nfc.setCategories(returnFacets.stream().filter(f -> f.getFacetClassName().equals(Category.class.getSimpleName())).collect(Collectors.toList()));
+		nfc.setTags(returnFacets.stream().filter(f -> f.getFacetClassName().equals(Tag.class.getSimpleName())).collect(Collectors.toList()));
+		search.setNavFacets(nfc);
 		return search;
 	}
 

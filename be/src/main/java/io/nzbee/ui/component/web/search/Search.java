@@ -1,16 +1,14 @@
 package io.nzbee.ui.component.web.search;
 
-import java.util.List;
 import org.springframework.data.domain.Page;
-
 import io.nzbee.domain.Product;
-import io.nzbee.ui.component.web.facet.NavFacet;
+import io.nzbee.ui.component.web.facet.NavFacetContainer;
 
 public class Search {
 	
 	Page<Product> products;
 	
-	List<NavFacet> Facets;
+	NavFacetContainer navFacets;
 
 	public Page<Product> getProducts() {
 		return products;
@@ -19,13 +17,12 @@ public class Search {
 	public void setProducts(Page<Product> products) {
 		this.products = products;
 	}
-
-	public List<NavFacet> getFacets() {
-		return Facets;
-	}
-
-	public void setFacets(List<NavFacet> facets) {
-		this.Facets = facets;
-	}
 	
+	public NavFacetContainer getFacets() {
+		return navFacets;
+	}
+
+	public void setFacets(NavFacetContainer navFacets) {
+		this.navFacets = navFacets;
+	}
 }

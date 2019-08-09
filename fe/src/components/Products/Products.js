@@ -141,7 +141,7 @@ class Products extends Component {
             "term":                   term,
             "products":               response[0].products.content,
             //searching can return facets so we need to check this later
-            "facets":                 response[1].result,
+            "facets":                 (type === 'category') ? response[1].result : response[0].facets,
             "syncFacets":             selectedFacets,
             "selectedFacets":         (term !== this.state.term) ? {  "categories": [],
                                                                       "brands": [],
@@ -274,6 +274,7 @@ class Products extends Component {
       const { products, facets, selectedFacets, totalPages, totalElements, numberOfElements, isGrid, term, category, maxPrice, selectedPrice, type } = this.state;
       const { page, size } = this.state.params;
       if(!products) { return null }
+      console.log(facets);
       const cat = this.findFacet(categoryList, category);
 				return(
           <React.Fragment>
