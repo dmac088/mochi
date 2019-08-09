@@ -15,6 +15,8 @@ public class NavFacetContainer {
 	private List<NavFacet<Brand>> brands = new ArrayList<NavFacet<Brand>>();
 
 	private List<NavFacet<Tag>> tags = new ArrayList<NavFacet<Tag>>();
+	
+	private List<NavFacet<Object>> prices = new ArrayList<NavFacet<Object>>();
 
 	public List<NavFacet<Category>> getCategories() {
 		return categories;
@@ -38,5 +40,13 @@ public class NavFacetContainer {
 
 	public void setTags(List<NavFacet<Tag>> tags) {
 		this.tags = tags;
+	}
+
+	public List<NavFacet<Object>> getPrices() {
+		return prices;
+	}
+
+	public void setPrices(List<NavFacet<Object>> prices) {
+		this.prices = prices;
 	}	
 }

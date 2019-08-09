@@ -214,6 +214,7 @@ class Products extends Component {
         newSelectedFacets.categories          = categories.filter(o => (removeFacet.token  !== o.token));
         newSelectedFacets.brands              = brands.filter(o => (removeFacet.token      !== o.token));
         newSelectedFacets.tags                = tags.filter(o => (removeFacet.token        !== o.token));
+        newSelectedFacets.prices              = prices.filter(o => (removeFacet.token       !== o.token));
 
         this.setState({
           "selectedFacets": newSelectedFacets,
@@ -225,14 +226,15 @@ class Products extends Component {
   }
 
   addFacet = (e, newSelectedFacets) => {
-    const { categories, brands, tags }        = this.state.facets;
-    const allFacets                           = [...categories, ...brands, ...tags];
+    const { categories, brands, tags, prices }        = this.state.facets;
+    const allFacets                           = [...categories, ...brands, ...tags, ...prices];
     const selectedFacet                       = allFacets.find(o => o.token  === e.currentTarget.id);
     const { facetClassName }                  = selectedFacet;
 
-    newSelectedFacets.categories              = (facetClassName === 'Category')   ? [...newSelectedFacets.categories, selectedFacet]  : [...newSelectedFacets.categories];
-    newSelectedFacets.brands                  = (facetClassName === 'Brand')      ? [...newSelectedFacets.brands, selectedFacet]      : [...newSelectedFacets.brands];
-    newSelectedFacets.tags                    = (facetClassName === 'Tag')        ? [...newSelectedFacets.tags, selectedFacet]        : [...newSelectedFacets.tags];
+    newSelectedFacets.categories              = (facetClassName === 'Category')                       ? [...newSelectedFacets.categories, selectedFacet]  : [...newSelectedFacets.categories];
+    newSelectedFacets.brands                  = (facetClassName === 'Brand')                          ? [...newSelectedFacets.brands, selectedFacet]      : [...newSelectedFacets.brands];
+    newSelectedFacets.tags                    = (facetClassName === 'Tag')                            ? [...newSelectedFacets.tags, selectedFacet]        : [...newSelectedFacets.tags];
+    newSelectedFacets.prices                  = (facetClassName === 'Product.productMarkdown')        ? [...newSelectedFacets.prices, selectedFacet]      : [...newSelectedFacets.prices];
 
     this.setState({
       "selectedFacets": newSelectedFacets,

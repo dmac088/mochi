@@ -5,11 +5,12 @@ import 'rc-slider/assets/index.css';
 
 export const PriceSidebar = (props) => {
     const { maxPrice, selectedPrice, selectedFacets, updateSelectedPrice, facets, updateFacets, type } = props;
+    console.log(selectedFacets);
     return (
       <div className="sidebar mb-35">
         <h3 className="sidebar-title">Filter By Price</h3>
         {(type === "category")  ? priceSlider(maxPrice, selectedPrice, updateSelectedPrice)
-                                : priceRanges(maxPrice, selectedFacets, updateFacets, facets, props)}
+                                : priceRanges(maxPrice, selectedFacets.prices, updateFacets, facets, props)}
       </div>
     );
   }

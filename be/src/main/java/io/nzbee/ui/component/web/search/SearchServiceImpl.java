@@ -79,6 +79,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		List<String> categoryTokens = this.getFacetTokens(selectedFacets.getCategories());
 		List<String> brandTokens 	= this.getFacetTokens(selectedFacets.getBrands());
 		List<String> tagTokens 		= this.getFacetTokens(selectedFacets.getTags());
+		List<String> priceTokens 	= this.getFacetTokens(selectedFacets.getPrices());
 
 		// call the domain layer service to get a Page of Products
 		return this.findAll(locale, 
@@ -90,7 +91,8 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 							sortBy, 
 							categoryTokens,
 							brandTokens,
-							tagTokens);
+							tagTokens,
+							priceTokens);
 
 	}
 
@@ -130,7 +132,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 	@Override
 	// @Cacheable
 	public Search findAll(String lcl, String currency, String categoryDesc, String searchTerm, int page, int size,
-			String sortBy, List<String> categoryTokens, List<String> brandTokens, List<String> tagTokens) {
+			String sortBy, List<String> categoryTokens, List<String> brandTokens, List<String> tagTokens, List<String> priceTokens) {
 
 		FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
 
@@ -186,6 +188,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		allTokens.addAll(categoryTokens);
 		allTokens.addAll(brandTokens);
 		allTokens.addAll(tagTokens);
+		allTokens.addAll(priceTokens);
 
 		// filter to get the facets that are selected
 		lf = allTokens.stream().flatMap(x -> {
@@ -238,7 +241,9 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		allFacets.stream().filter(f -> f.getFacetingName().equals(CategoryVars.PRICE_FACET_NAME))
 				.collect(Collectors.toList()).forEach(pf -> {
 					NavFacet<Object> priceFacet = new NavFacet<Object>();
+					//priceFacet.setFacetId();
 					priceFacet.setFacetDisplayValue(pf.getValue());
+					priceFacet.setFacetClassName("Product.productMarkdown");
 					priceFacet.setFacetProductCount(new Long(pf.getCount()));
 					priceFacet.setToken(pf.getValue());
 					priceFacet.setFacetType(ProductVars.FACET_TYPE_RANGE);
@@ -261,6 +266,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		returnFacets.addAll(cs);
 		returnFacets.addAll(bs);
 		returnFacets.addAll(ts);
+		returnFacets.addAll(ps);
 
 		// set pageable definition for jpaQuery
 		Pageable pageable = PageRequest.of(page, size);
@@ -282,9 +288,14 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		Search search = new Search();
 		search.setProducts(new PageImpl<Product>(lp, pageable, jpaQuery.getResultSize()));
 		NavFacetContainer nfc = new NavFacetContainer();
+		returnFacets.stream().forEach(f -> {
+						System.out.println(f.getFacetClassName());
+		});
+		
 		nfc.setBrands(returnFacets.stream().filter(f -> f.getFacetClassName().equals(Brand.class.getSimpleName())).collect(Collectors.toList()));
 		nfc.setCategories(returnFacets.stream().filter(f -> f.getFacetClassName().equals(Category.class.getSimpleName())).collect(Collectors.toList()));
 		nfc.setTags(returnFacets.stream().filter(f -> f.getFacetClassName().equals(Tag.class.getSimpleName())).collect(Collectors.toList()));
+		nfc.setPrices(returnFacets.stream().filter(f -> f.getFacetClassName().equals("Product.productMarkdown")).collect(Collectors.toList()));
 		search.setFacets(nfc);
 		return search;
 	}
