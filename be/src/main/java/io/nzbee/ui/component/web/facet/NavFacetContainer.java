@@ -38,8 +38,5 @@ public class NavFacetContainer {
 
 	public void setTags(List<NavFacet<Tag>> tags) {
 		this.tags = tags;
-	}
-	
-	
-	
+	}	
 }
