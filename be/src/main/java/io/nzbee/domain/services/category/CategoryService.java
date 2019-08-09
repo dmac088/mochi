@@ -117,20 +117,7 @@ public class CategoryService implements ICategoryService {
      	return lcDO;
 	}
     
-
-	@Transactional
-	@Cacheable
-    private Brand createBrand(final io.nzbee.entity.brand.Brand b, String categoryCode, final String lcl) {
-    	final Brand bDto = new Brand();
-    	bDto.setBrandId(b.getId());
-    	bDto.setBrandCode(b.getCode());
-    	bDto.setBrandDesc(
-	    	b.getAttributes().stream()
-			.filter(ba -> ba.getLclCd().equals(lcl)
-			).collect(Collectors.toList()).get(0).getBrandDesc());
-    	return bDto;
-    }
-    
+	@Override
  	@Cacheable
     public Category createCategory(final io.nzbee.entity.category.Category pc, final String locale) {
     	

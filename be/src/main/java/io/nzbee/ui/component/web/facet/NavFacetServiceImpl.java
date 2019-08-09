@@ -36,9 +36,6 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 	@Qualifier("productDomainService")
 	private IProductService productService;
 
-	
-	
-	
 	@Override
 	public NavFacetResult findAll(String locale, String currency) {
 		NavFacetContainer nfc = new NavFacetContainer();
@@ -157,7 +154,8 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		);
 	}
 
-    private NavFacet<Category> convertCatToNavFacet(final Category c) {
+	@Override
+    public NavFacet<Category> convertCatToNavFacet(final Category c) {
     	final NavFacet<Category> s = new NavFacet<Category>();
     	s.setFacetClassName(c.getClass().getSimpleName());
     	s.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
@@ -171,7 +169,8 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		return s;
     } 
 	
-	private NavFacet<Tag> convertTagToNavFacet(Tag t) {
+    @Override
+	public NavFacet<Tag> convertTagToNavFacet(Tag t) {
 		NavFacet<Tag> s = new NavFacet<Tag>();
 		s.setFacetClassName(t.getClass().getSimpleName());
 		s.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
@@ -185,7 +184,8 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		return s;
 	}
 	
-    private NavFacet<Brand> convertBrandToNavFacet(final Brand b) {
+    @Override
+    public NavFacet<Brand> convertBrandToNavFacet(final Brand b) {
     	final NavFacet<Brand> s = new NavFacet<Brand>();
     	s.setFacetClassName(b.getClass().getSimpleName());
     	s.setFacetType(ProductVars.FACET_TYPE_DISCRETE);

@@ -23,4 +23,6 @@ public interface ICategoryService {
 
 	List<Category> findAll(String locale, String category, List<Long> brandIds, List<Long> tagIds);
 
+	Category createCategory(io.nzbee.entity.category.Category pc, String locale);
+
 }

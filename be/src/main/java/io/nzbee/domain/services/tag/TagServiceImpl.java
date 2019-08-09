@@ -1,5 +1,9 @@
 package io.nzbee.domain.services.tag;
 
+import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,11 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 
+import io.nzbee.domain.Product;
 import io.nzbee.domain.Tag;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.tag.IProductTagService;
 import io.nzbee.entity.product.tag.ProductTag;
+import io.nzbee.variables.GeneralVars;
 import io.nzbee.variables.ProductVars;
 
 
@@ -26,7 +32,7 @@ import io.nzbee.variables.ProductVars;
 @Service
 @Transactional
 @CacheConfig(cacheNames="tags")
-public class TagService implements ITagService {
+public class TagServiceImpl implements ITagService {
 
 	@Autowired
 	ICategoryService categoryService;
@@ -60,22 +66,9 @@ public class TagService implements ITagService {
 		t.setTagCode(pt.getCode());
 		t.setLocale(locale);
 		t.setTagDesc(pt.getAttributes().stream().filter(ta -> ta.getLclCd().equals(locale)).collect(Collectors.toList()).get(0).getTagDesc());
-		t.setTagType("Product");
 		return t;
 	}
 	
-	@Override
-	public Tag findOne(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Tag findOne(String code) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	@Override
 	public List<Tag> findAll() {
 		// TODO Auto-generated method stub
@@ -104,6 +97,38 @@ public class TagService implements ITagService {
 	public void delete(Tag t) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Tag findOne(Long id, String lcl) {
+		// TODO Auto-generated method stub
+		ProductTag pt = productTagService.findOne(id).get();
+		String tagDesc = pt.getAttributes().stream().filter(t -> t.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getTagDesc();
+		return this.convertToTagDO(pt.getTagId(), pt.getCode(), tagDesc, lcl);
+	}
+
+	@Override
+	public Tag findOne(String code) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public Tag convertToTagDO(
+   			Long tagId,
+   			String tagCode,
+   			String tagDesc,
+   			String locale) {
+		
+	   	final Tag tDo = new Tag();
+	   	tDo.setTagId(tagId);
+	   	tDo.setLocale(locale);
+	   	return tDo;
+   }
+
+	@Override
+	public Tag findOne(Long id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

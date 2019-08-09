@@ -37,7 +37,7 @@ import io.nzbee.entity.product.status.ProductStatus_;
 import io.nzbee.variables.ProductVars;
 
 @Component 
-public class ProductTagDAO  implements IProductTagDao {
+public class ProductTagDaoImpl  implements IProductTagDao {
 	
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
@@ -46,8 +46,45 @@ public class ProductTagDAO  implements IProductTagDao {
 	@Override
 	public Optional<ProductTag> findById(long id) {
 		// TODO Auto-generated method stub
-		return null;
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<ProductTag> cq = cb.createQuery(ProductTag.class);
+		
+		Root<ProductTag> root = cq.from(ProductTag.class);
+
+		List<Predicate> conditions = new ArrayList<Predicate>();	
+		conditions.add(cb.equal(root.get(ProductTag_.productTagId), id));
+		
+		TypedQuery<ProductTag> query = em.createQuery(cq
+				.select(root)
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(false)
+		);
+		
+		return Optional.ofNullable(query.getSingleResult());
 	}
+	
+	@Override
+	public Optional<ProductTag> findByCode(String code) {
+		// TODO Auto-generated method stub
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<ProductTag> cq = cb.createQuery(ProductTag.class);
+		
+		Root<ProductTag> root = cq.from(ProductTag.class);
+
+		List<Predicate> conditions = new ArrayList<Predicate>();	
+		conditions.add(cb.equal(root.get(ProductTag_.productTagCode), code));
+		
+		TypedQuery<ProductTag> query = em.createQuery(cq
+				.select(root)
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(false)
+		);
+		
+		return Optional.ofNullable(query.getSingleResult());
+	}
+
 
 	@Override
 	public List<ProductTag> getAll() {
