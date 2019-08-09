@@ -310,10 +310,11 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 	    	String categoryCode = (new LinkedList<String>(Arrays.asList(sf.getValue().split("/")))).getLast();
 	    	
 	    	Optional<Category> c = Optional.ofNullable(categoryService.findOneByCode(
-	    															locale, 
+	    											 				locale, 
 	    															CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 	    															categoryCode));
 	    	if(!c.isPresent()) { return cfs; }
+	    	if(c.get().getParentId() == null) { return cfs; } 
 	    	Optional<Category> parent = Optional.ofNullable(categoryService.findOne(locale, c.get().getParentId()));
 	    	if(!parent.isPresent()) { return cfs; }
 	    	
