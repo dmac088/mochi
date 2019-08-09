@@ -237,7 +237,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		final List<NavFacet<Object>> ps = new ArrayList<NavFacet<Object>>();
 		allFacets.stream().filter(f -> f.getFacetingName().equals(CategoryVars.PRICE_FACET_NAME))
 				.collect(Collectors.toList()).forEach(pf -> {
-					// pf.getValue();
 					NavFacet<Object> priceFacet = new NavFacet<Object>();
 					priceFacet.setFacetDisplayValue(pf.getValue());
 					priceFacet.setFacetProductCount(new Long(pf.getCount()));
@@ -249,12 +248,9 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		final List<NavFacet<Tag>> ts = new ArrayList<NavFacet<Tag>>();
 		allFacets.stream().filter(f -> f.getFacetingName().equals(CategoryVars.TAG_FACET_NAME))
 				.collect(Collectors.toList()).forEach(tf -> {
-					// pf.getValue();
-					tagService.find
-					
-					System.out.println(tf.getValue());
-					NavFacet<Tag> tagFacet = new NavFacet<Tag>();
-					tagFacet.setFacetDisplayValue(tf.getValue());
+					if(tf.getValue().equals("Empty"))  return; 
+					Tag tag = tagService.findOneByCode(tf.getValue(), lcl);
+					NavFacet<Tag> tagFacet = facetService.convertTagToNavFacet(tag);
 					tagFacet.setFacetProductCount(new Long(tf.getCount()));
 					tagFacet.setToken(tf.getValue());
 					tagFacet.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
