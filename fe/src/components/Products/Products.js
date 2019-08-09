@@ -68,14 +68,26 @@ class Products extends Component {
     const { locale, currency, term, brand } = this.props.match.params;
     const type                              = this.props.match.params[0];
 
-    const facet                             = this.findFacet(categoryList, term);
+    console.log(type);
+    console.log(term);
+    console.log(categoryList);
+
+    //find the faet from the list of categories that matches the term (categoryDesc), e.g. get the maxPrice of "Fruit"
+    let maxPrice                            = 0;
+
+    const facet                             = (type === "category")
+                                              ? this.findFacet(categoryList, term)
+                                              : this.findFacet(categoryList, "ALL");
+
     if(!facet) { return null; }
-    const maxPrice                          = Number(facet.facetMaxMarkdownPrice);
+    maxPrice                                = Number(facet.facetMaxMarkdownPrice);
 
     //get the currenct selected price
     const { selectedPrice } = this.state;
     const isDifferent = (!(term   === this.state.category));
     const newPrice = (isDifferent) ? maxPrice : selectedPrice;
+
+
 
     (type==="category")
         ? this.update(type, locale, currency, pathname, term, brand, Object.assign(params, qs.parse(search)), newPrice, 0, isMounting, selectedFacets, this.findAll)
@@ -87,7 +99,7 @@ class Products extends Component {
   update = (type, locale, currency, pathname, category, term, params, price, maxPrice, isMounting = 0, selectedFacets, callback) => {
     if(!params) {return;}
     const { page, size, sort } = params;
-    const noChangePrice = ( currency === this.state.currency
+    const noChangePrice =       ( currency === this.state.currency
                             &&  (_.isEqual(selectedFacets, this.state.syncFacets)));
     if(   locale      === this.state.locale
       &&  noChangePrice
