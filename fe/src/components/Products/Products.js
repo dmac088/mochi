@@ -132,6 +132,7 @@ class Products extends Component {
     const pa = [p1, p2, p3];
     Promise.all(pa)
     .then((response) => {
+      console.log(response);
           this.setState( {
             "locale":                 locale,
             "currency":               currency,
@@ -140,7 +141,7 @@ class Products extends Component {
             "term":                   term,
             "products":               response[0].products.content,
             //searching can return facets so we need to check this later
-            "facets":                 (type === 'category') ? response[1].result : prevState.facets,
+            "facets":                 response[1].result,
             "syncFacets":             selectedFacets,
             "selectedFacets":         (term !== this.state.term) ? {  "categories": [],
                                                                       "brands": [],
