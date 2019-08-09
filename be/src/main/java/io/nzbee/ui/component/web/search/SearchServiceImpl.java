@@ -372,14 +372,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		return allFacets;
 	}
 
-	public NavFacet<Brand> convertBrandToNavFacet(String brandCode, String lcl, String currency) {
-		Brand b = brandService.findOneByCode(lcl, brandCode);
-		NavFacet<Brand> bf = new NavFacet<Brand>();
-		bf.setFacetId(b.getBrandId());
-		bf.setPayload(b);
-		return bf;
-	}
-
 	private org.apache.lucene.search.Sort getSortField(String field, String currency) {
 		switch (field) {
 		case "nameAsc":
