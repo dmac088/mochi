@@ -109,29 +109,29 @@ class Products extends Component {
     ) {return;}
 
     const p1 = callback(locale, currency, category, term, price+1, page, size, sort, selectedFacets)
-     .catch((e)=>{
-       console.log(e);
-     });
+    .catch((e)=>{
+     console.log(e);
+    });
 
-     const p2 = facetApi.findAllChildrenByCriteria(locale, currency, category, selectedFacets)
-     .then((response) => {
-       return response.json();
-     })
-     .catch((e) => {
-       console.log(e);
-     });
+    const p2 = facetApi.findAllChildrenByCriteria(locale, currency, category, selectedFacets)
+    .then((response) => {
+     return response.json();
+    })
+    .catch((e) => {
+     console.log(e);
+    });
 
-     const p3 = productApi.getMaxPrice(locale, currency, category, selectedFacets)
-     .then((response) => {
-       return response.json();
-     })
-     .catch((e) => {
-       console.log(e);
-     });
+    const p3 = productApi.getMaxPrice(locale, currency, category, selectedFacets)
+    .then((response) => {
+     return response.json();
+    })
+    .catch((e) => {
+     console.log(e);
+    });
 
-     const pa = [p1, p2, p3];
-     Promise.all(pa)
-     .then((response) => {
+    const pa = [p1, p2, p3];
+    Promise.all(pa)
+    .then((response) => {
           this.setState( {
             "locale":                 locale,
             "currency":               currency,
