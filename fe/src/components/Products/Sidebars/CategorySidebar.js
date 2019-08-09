@@ -56,6 +56,15 @@ const renderFacets = (facets, selectedFacets, routeProps, props) => {
   });
 };
 
+const sortFacets = (facets) => {
+  const newFacets = [...facets];
+  return newFacets.sort((a, b) => {
+    if(a.token < b.token) { return -1; }
+    if(a.token > b.token) { return 1; }
+    return 0;
+  });
+}
+
 export const CategorySidebar = withRouter(
   ({ location, match, history, ...props }) => {
     const { facets, selectedFacets } = props;
@@ -70,7 +79,7 @@ export const CategorySidebar = withRouter(
       <div className="sidebar mb-35">
         <h3 className="sidebar-title">PRODUCT CATEGORIES</h3>
         <ul className="product-categories">
-          {renderFacets(facets, selectedFacets, routeProps, props)}
+          {renderFacets(sortFacets(facets), sortFacets(selectedFacets), routeProps, props)}
         </ul>
       </div>
     );
