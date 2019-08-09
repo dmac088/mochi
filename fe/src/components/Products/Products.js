@@ -68,10 +68,6 @@ class Products extends Component {
     const { locale, currency, term, brand } = this.props.match.params;
     const type                              = this.props.match.params[0];
 
-    console.log(type);
-    console.log(term);
-    console.log(categoryList);
-
     //find the faet from the list of categories that matches the term (categoryDesc), e.g. get the maxPrice of "Fruit"
     let maxPrice                            = 0;
 
