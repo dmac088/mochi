@@ -206,15 +206,15 @@ class Products extends Component {
 
   updateFacets = (e) => {
     const newSelectedFacets                   = _.cloneDeep(this.state.selectedFacets, true);
-    const { categories, brands, tags }        = newSelectedFacets;
-    const allFacets                           = [...categories, ...brands, ...tags];
+    const { categories, brands, tags, prices }        = newSelectedFacets;
+    const allFacets                           = [...categories, ...brands, ...tags, ...prices];
     const removeFacet                         = allFacets.find(o => o.token  === e.currentTarget.id);
 
     if(removeFacet) {
         newSelectedFacets.categories          = categories.filter(o => (removeFacet.token  !== o.token));
         newSelectedFacets.brands              = brands.filter(o => (removeFacet.token      !== o.token));
         newSelectedFacets.tags                = tags.filter(o => (removeFacet.token        !== o.token));
-        newSelectedFacets.prices              = prices.filter(o => (removeFacet.token       !== o.token));
+        newSelectedFacets.prices              = prices.filter(o => (removeFacet.token      !== o.token));
 
         this.setState({
           "selectedFacets": newSelectedFacets,
