@@ -17,7 +17,7 @@ import io.nzbee.variables.CategoryVars;
 @Service
 @Transactional
 @CacheConfig(cacheNames="categories")
-public class CategoryService implements ICategoryService {
+public class CategoryServiceImpl implements ICategoryService {
     
     @Autowired
     @Qualifier("productEntityService")

@@ -81,8 +81,16 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		List<String> tagTokens = this.getFacetTokens(selectedFacets, Tag.class);
 
 		// call the domain layer service to get a Page of Products
-		return this.findAll(locale, currency, categoryDesc, searchTerm, page, size, sortBy, categoryTokens, brandTokens,
-				tagTokens);
+		return this.findAll(locale, 
+							currency, 
+							categoryDesc, 
+							searchTerm, 
+							page, 
+							size, 
+							sortBy, 
+							categoryTokens,
+							brandTokens,
+							tagTokens);
 
 	}
 
@@ -242,7 +250,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		allFacets.stream().filter(f -> f.getFacetingName().equals(CategoryVars.TAG_FACET_NAME))
 				.collect(Collectors.toList()).forEach(tf -> {
 					// pf.getValue();
-					//tagService.findOne(id)
+					tagService.find
 					
 					System.out.println(tf.getValue());
 					NavFacet<Tag> tagFacet = new NavFacet<Tag>();

@@ -100,7 +100,7 @@ public class TagServiceImpl implements ITagService {
 	}
 
 	@Override
-	public Tag findOne(Long id, String lcl) {
+	public Tag findOneById(Long id, String lcl) {
 		// TODO Auto-generated method stub
 		ProductTag pt = productTagService.findOne(id).get();
 		String tagDesc = pt.getAttributes().stream().filter(t -> t.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getTagDesc();
@@ -108,9 +108,11 @@ public class TagServiceImpl implements ITagService {
 	}
 
 	@Override
-	public Tag findOne(String code) {
+	public Tag findOneByCode(String code, String lcl) {
 		// TODO Auto-generated method stub
-		return null;
+		ProductTag pt = productTagService.findOne(code).get();
+		String tagDesc = pt.getAttributes().stream().filter(t -> t.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getTagDesc();
+		return this.convertToTagDO(pt.getTagId(), pt.getCode(), tagDesc, lcl);
 	}
 	
 	public Tag convertToTagDO(
@@ -127,6 +129,12 @@ public class TagServiceImpl implements ITagService {
 
 	@Override
 	public Tag findOne(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Tag findOne(String code) {
 		// TODO Auto-generated method stub
 		return null;
 	}
