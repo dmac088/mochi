@@ -133,8 +133,11 @@ public class ProductAttribute {
 	public String getTagA() {
 		Optional<List<ProductTag>> lpt = Optional.ofNullable(this.getProduct().getTags());
 		if(!lpt.isPresent());
-		Iterator<ProductTag> i = lpt.get().iterator();
-		if(i.hasNext()) { return i.next().getCode(); }
+		List<Optional<ProductTagAttribute>> lpa = lpt.get().stream().map(t -> {
+			return t.getAttributes().stream().filter(ta -> ta.getLclCd().equals(this.getLclCd())).findFirst();
+		}).collect(Collectors.toList());
+		Iterator<ProductTagAttribute> i = lpa.stream().filter(ta -> ta.isPresent()).map(t -> { return t.get();}).sorted(Comparator.comparing(ProductTagAttribute::getTagDesc)).iterator();
+		if(i.hasNext()) { return i.next().getTagDesc(); }
 		return "Empty";
 	}
 	
@@ -143,15 +146,34 @@ public class ProductAttribute {
 	public String getTagB() {
 		Optional<List<ProductTag>> lpt = Optional.ofNullable(this.getProduct().getTags());
 		if(!lpt.isPresent());
-		Iterator<ProductTag> i = lpt.get().iterator();
+		List<Optional<ProductTagAttribute>> lpa = lpt.get().stream().map(t -> {
+			return t.getAttributes().stream().filter(ta -> ta.getLclCd().equals(this.getLclCd())).findFirst();
+		}).collect(Collectors.toList());
+		Iterator<ProductTagAttribute> i = lpa.stream().filter(ta -> ta.isPresent()).map(t -> { return t.get();}).sorted(Comparator.comparing(ProductTagAttribute::getTagDesc)).iterator();
 		if(i.hasNext()) { i.next(); }
-		if(i.hasNext()) { return i.next().getCode(); }
+		if(i.hasNext()) { return i.next().getTagDesc(); }
 		return "Empty";
 	}
 	
 	@Transient
 	@Field(analyze = Analyze.YES)
 	public String getTagC() {
+		Optional<List<ProductTag>> lpt = Optional.ofNullable(this.getProduct().getTags());
+		if(!lpt.isPresent());
+		List<Optional<ProductTagAttribute>> lpa = lpt.get().stream().map(t -> {
+			return t.getAttributes().stream().filter(ta -> ta.getLclCd().equals(this.getLclCd())).findFirst();
+		}).collect(Collectors.toList());
+		Iterator<ProductTagAttribute> i = lpa.stream().filter(ta -> ta.isPresent()).map(t -> { return t.get();}).sorted(Comparator.comparing(ProductTagAttribute::getTagDesc)).iterator();
+		if(i.hasNext()) { i.next(); }
+		if(i.hasNext()) { i.next(); }
+		if(i.hasNext()) { return i.next().getTagDesc(); }
+		return "Empty";
+	}
+	
+	@Transient
+	@Facet
+	@Field(analyze = Analyze.NO)
+	public String getTagAFacet() { 
 		Optional<List<ProductTag>> lpt = Optional.ofNullable(this.getProduct().getTags());
 		if(!lpt.isPresent());
 		Iterator<ProductTag> i = lpt.get().iterator();
@@ -164,22 +186,26 @@ public class ProductAttribute {
 	@Transient
 	@Facet
 	@Field(analyze = Analyze.NO)
-	public String getTagAFacet() { 
-		return this.getTagA();
-	}
-	
-	@Transient
-	@Facet
-	@Field(analyze = Analyze.NO)
 	public String getTagBFacet() { 
-		return this.getTagB();
+		Optional<List<ProductTag>> lpt = Optional.ofNullable(this.getProduct().getTags());
+		if(!lpt.isPresent());
+		Iterator<ProductTag> i = lpt.get().iterator();
+		if(i.hasNext()) { i.next(); }
+		if(i.hasNext()) { return i.next().getCode(); }
+		return "Empty";
 	}
 	
 	@Transient
 	@Facet
 	@Field(analyze = Analyze.NO)
 	public String getTagCFacet() { 
-		return this.getTagC();
+		Optional<List<ProductTag>> lpt = Optional.ofNullable(this.getProduct().getTags());
+		if(!lpt.isPresent());
+		Iterator<ProductTag> i = lpt.get().iterator();
+		if(i.hasNext()) { i.next(); }
+		if(i.hasNext()) { i.next(); }
+		if(i.hasNext()) { return i.next().getCode(); }
+		return "Empty";
 	}
 	
 	public Long getProductId() {
