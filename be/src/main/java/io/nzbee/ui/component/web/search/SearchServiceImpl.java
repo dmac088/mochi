@@ -78,10 +78,10 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		List<String> brandTokens 	= this.getFacetTokens(selectedFacets, Brand.class);
 		List<String> tagTokens 		= this.getFacetTokens(selectedFacets, Tag.class);
 		
-		List<NavFacet> returnFacets = new ArrayList<NavFacet>();
+
 		
 		//call the domain layer service to get a Page of Products
-		Page<Product> pp  = this.findAll(	locale, 
+		return this.findAll(	locale, 
 											currency, 
 											categoryDesc, 
 											searchTerm, 
@@ -90,14 +90,9 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 											sortBy, 
 											categoryTokens, 
 											brandTokens, 
-											tagTokens,
-											returnFacets);
+											tagTokens);
 		
-		//add the page of objects to a new Search object and return it 
-		Search search = new Search();
-		search.setProducts(pp);
-		search.setFacets(returnFacets);
-		return search;
+	
 	}
 	
 	@Override
@@ -142,7 +137,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 	@SuppressWarnings("unchecked")
 	@Override
 	//@Cacheable
-	public Page<Product> findAll(String lcl, 
+	public Search findAll(String lcl, 
 								 String currency, 
 								 String categoryDesc, 
 								 String searchTerm, 
@@ -151,8 +146,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 								 String sortBy, 
 								 List<String> categoryTokens,
 								 List<String> brandTokens,
-								 List<String> tagTokens,
-								 List<NavFacet> returnFacets) {		
+								 List<String> tagTokens) {		
 		
 		FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
 				
@@ -242,7 +236,8 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		
 		allFacets.stream().filter(f-> f.getFacetingName().equals(CategoryVars.PRIMARY_CATEGORY_FACET_NAME)).collect(Collectors.toList()).stream().forEach(cf ->  		{
 													String categoryCode = (new LinkedList<String>(Arrays.asList(cf.getValue().split("/")))).getLast();
-													NavFacet<Category> categoryFacet = convertCategoryToNavFacet(categoryCode, lcl, currency);
+													NavFacet<Category> categoryFacet = 
+													convertCategoryToNavFacet(categoryCode, lcl, currency);
 													categoryFacet.setFacetProductCount(new Long(cf.getCount()));
 													categoryFacet.setToken(cf.getValue());
 													categoryFacet.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
@@ -251,8 +246,8 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		
 		bs = new HashSet<NavFacet<Brand>>();
 		allFacets.stream().filter(f-> f.getFacetingName().equals(CategoryVars.BRAND_FACET_NAME)).collect(Collectors.toList()).forEach(bf ->     {
-													NavFacet<Brand> brandFacet = convertBrandToNavFacet(
-													bf.getValue(), lcl, currency);
+													NavFacet<Brand> brandFacet = 
+													convertBrandToNavFacet(bf.getValue(), lcl, currency);
 													brandFacet.setFacetDisplayValue(bf.getValue());
 													brandFacet.setFacetProductCount(new Long(bf.getCount()));
 													brandFacet.setToken(bf.getValue());
@@ -284,12 +279,10 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 													ts.add(tagFacet);
 											   });
 		
+		List<NavFacet> returnFacets = new ArrayList<NavFacet>();
 		returnFacets.addAll(cs);
 		returnFacets.addAll(bs);
 		returnFacets.addAll(ts);
-		
-		//create a results container to send back to the client 
-		//SearchDto src = new SearchDto();
 		
 		//set pageable definition for jpaQuery
 		Pageable pageable = PageRequest.of(page, size);
@@ -307,8 +300,11 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		//convert the results of jpaQuery to product Data Transfer Objects 
 		List<Product> lp = results.stream().map(pa -> productService.convertToProductDO(pa.getProduct(), lcl, currency)).collect(Collectors.toList());
 		
-		return new PageImpl<Product>(lp, pageable, jpaQuery.getResultSize());
-	
+		Search search = new Search();
+		search.setProducts(new PageImpl<Product>(lp, pageable, jpaQuery.getResultSize()));
+		search.setFacets(returnFacets);
+		
+		return search;
 	}
 	
 	 private Set<Facet> getParentCategoryFacets(Set<Facet> cfs, Facet sf, QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery q, String locale, String currency) {
