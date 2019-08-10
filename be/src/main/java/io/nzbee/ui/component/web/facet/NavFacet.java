@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class NavFacet<T> {
 
-	private Long facetId;
+	private String facetId;
 	
 	private String facetToken;
 	
@@ -30,11 +30,11 @@ public class NavFacet<T> {
 
 	private T payload;
 
-	public Long getFacetId() {
+	public String getFacetId() {
 		return facetId;
 	}
 
-	public void setFacetId(Long id) {
+	public void setFacetId(String id) {
 		this.facetId = id;
 	}
 

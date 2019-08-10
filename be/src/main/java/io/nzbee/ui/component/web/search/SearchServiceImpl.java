@@ -100,10 +100,9 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			NavFacetContainer selectedFacets) {
 
 		// convert selected facets into token lists
-		List<Long> categoryIds = selectedFacets.getCategories().stream().map(c -> c.getFacetId())
-				.collect(Collectors.toList());
-		List<Long> brandIds = selectedFacets.getBrands().stream().map(c -> c.getFacetId()).collect(Collectors.toList());
-		List<Long> tagIds = selectedFacets.getTags().stream().map(c -> c.getFacetId()).collect(Collectors.toList());
+		List<Long> categoryIds = selectedFacets.getCategories().stream().map(c -> Long.parseLong(c.getFacetId())).collect(Collectors.toList());
+		List<Long> brandIds = selectedFacets.getBrands().stream().map(c -> Long.parseLong(c.getFacetId())).collect(Collectors.toList());
+		List<Long> tagIds = selectedFacets.getTags().stream().map(c -> Long.parseLong(c.getFacetId())).collect(Collectors.toList());
 
 		Double maxPrice = productService.getMaxPrice(categoryDesc, locale, ProductVars.MARKDOWN_SKU_DESCRIPTION,
 				currency, categoryIds, brandIds, tagIds);
@@ -249,7 +248,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		allFacets.stream().filter(f -> f.getFacetingName().equals(CategoryVars.PRICE_FACET_NAME))
 				.collect(Collectors.toList()).forEach(pf -> {
 					NavFacet<Object> priceFacet = new NavFacet<Object>();
-					//priceFacet.setFacetId();
+					priceFacet.setFacetId("Product.productMarkdown[" + pf.getValue()  + "]");
 					priceFacet.setFacetDisplayValue(pf.getValue());
 					priceFacet.setFacetClassName("Product.productMarkdown");
 					priceFacet.setFacetProductCount(new Long(pf.getCount()));
