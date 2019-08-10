@@ -136,7 +136,12 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		String transLcl = lcl.substring(0, 2).toUpperCase() + lcl.substring(3, 5).toUpperCase();
 
 		QueryBuilder productQueryBuilder = fullTextEntityManager.getSearchFactory().buildQueryBuilder()
-				.forEntity(ProductAttribute.class).overridesForField("productDesc", lcl).get();
+				.forEntity(ProductAttribute.class)
+				.overridesForField("productDesc", lcl)
+				.overridesForField("tagA", lcl)
+				.overridesForField("tagB", lcl)
+				.overridesForField("tagC", lcl)
+				.get();
 
 		// this is a Lucene query using the Lucene api
 		org.apache.lucene.search.Query searchQuery = productQueryBuilder.bool().must(productQueryBuilder.keyword()
@@ -151,7 +156,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 						"secondaryCategory." + "secondaryCategoryDesc" + transLcl, 
 						"product.brand.brandDesc" + transLcl,
 						"productDesc", 
-						"tagA", 
+						"tagA",
 						"tagB", 
 						"tagC"
 						)
