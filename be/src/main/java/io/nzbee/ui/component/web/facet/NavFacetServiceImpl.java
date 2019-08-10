@@ -57,9 +57,9 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 	
 	@Override
 	public NavFacetResult findAll(String locale, String currency, String category, NavFacetContainer selectedFacets) {
-		List<Long> tIds = selectedFacets.getTags().stream().map(t -> t.getFacetId()).collect(Collectors.toList());
-		List<Long> bIds = selectedFacets.getBrands().stream().map(t -> t.getFacetId()).collect(Collectors.toList());
-		List<Long> cIds = selectedFacets.getCategories().stream().map(t -> t.getFacetId()).collect(Collectors.toList());
+		List<Long> tIds = selectedFacets.getTags().stream().map(t -> Long.parseLong(t.getFacetId())).collect(Collectors.toList());
+		List<Long> bIds = selectedFacets.getBrands().stream().map(t -> Long.parseLong(t.getFacetId())).collect(Collectors.toList());
+		List<Long> cIds = selectedFacets.getCategories().stream().map(t -> Long.parseLong(t.getFacetId())).collect(Collectors.toList());
 		
 		NavFacetContainer nfc = new NavFacetContainer();
 		NavFacetResult nfr = new NavFacetResult();
@@ -159,7 +159,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
     	final NavFacet<Category> s = new NavFacet<Category>();
     	s.setFacetClassName(c.getClass().getSimpleName());
     	s.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
-    	s.setFacetId(c.getCategoryId());
+    	s.setFacetId(c.getCategoryId().toString());
     	s.setFacetParentId(c.getParentId());
     	s.setFacetChildCount(c.getChildCategoryCount());
     	s.setFacetDisplayValue(c.getCategoryDesc());
@@ -174,7 +174,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		NavFacet<Tag> s = new NavFacet<Tag>();
 		s.setFacetClassName(t.getClass().getSimpleName());
 		s.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
-		s.setFacetId(t.getTagId());
+		s.setFacetId(t.getTagId().toString());
 		s.setFacetParentId(new Long(-1));
 		s.setFacetChildCount(new Long(0));
 		s.setFacetDisplayValue(t.getTagDesc());
@@ -189,7 +189,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
     	final NavFacet<Brand> s = new NavFacet<Brand>();
     	s.setFacetClassName(b.getClass().getSimpleName());
     	s.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
-    	s.setFacetId(b.getBrandId());
+    	s.setFacetId(b.getBrandId().toString());
     	s.setFacetParentId(new Long(-1));
     	s.setFacetChildCount(new Long(0));
     	s.setFacetDisplayValue(b.getBrandDesc());
