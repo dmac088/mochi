@@ -94,36 +94,23 @@ public class TagServiceImpl implements ITagService {
 	public Tag findOneById(Long id, String lcl) {
 		// TODO Auto-generated method stub
 		ProductTag pt = productTagService.findOne(id).get();
-		String tagDesc = pt.getAttributes().stream().filter(t -> t.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getTagDesc();
-		return this.convertToTagDO(pt.getTagId(), pt.getCode(), tagDesc, lcl);
+		return this.convertToTagDO(pt, lcl);
 	}
 
 	@Override
 	public Tag findOneByCode(String code, String lcl) {
 		ProductTag pt = productTagService.findOne(code).get();
-		String tagDesc = pt.getAttributes().stream().filter(t -> t.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getTagDesc();
-		return this.convertToTagDO(pt.getTagId(), pt.getCode(), tagDesc, lcl);
+		return this.convertToTagDO(pt, lcl);
 	}
 	
 	@Override
 	public Tag findOneByDesc(String desc, String lcl) {
 		// TODO Auto-generated method stub
 		ProductTag pt = productTagService.findOne(desc, lcl).get();
-		String tagDesc = pt.getAttributes().stream().filter(t -> t.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getTagDesc();
-		return this.convertToTagDO(pt.getTagId(), pt.getCode(), tagDesc, lcl);
+		return this.convertToTagDO(pt, lcl);
 	}
 	
-	public Tag convertToTagDO(
-   			Long tagId,
-   			String tagCode,
-   			String tagDesc,
-   			String locale) {
-		
-	   	final Tag tDo = new Tag();
-	   	tDo.setTagId(tagId);
-	   	tDo.setLocale(locale);
-	   	return tDo;
-   }
+
 
 	@Override
 	public Tag findOne(Long id) {
