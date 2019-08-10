@@ -122,8 +122,7 @@ public class NavFacet<T> {
 	public boolean equals(Object o) {
 		 if (this == o) return true;
 	     if (o == null || getClass() != o.getClass()) return false;
-	     NavFacet<T> pcf = (NavFacet<T>) o;
-	     return this.facetId == pcf.facetId;
+	     return this.facetToken == ((NavFacet<T>) o).facetToken;
 	}
 
 	@Override

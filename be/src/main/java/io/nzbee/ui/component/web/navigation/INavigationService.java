@@ -1,8 +1,5 @@
 package io.nzbee.ui.component.web.navigation;
 
-import java.util.List;
-
-import io.nzbee.ui.component.web.facet.NavFacet;
 import io.nzbee.ui.component.web.facet.NavFacetContainer;
 import io.nzbee.ui.component.web.search.Search;
 
