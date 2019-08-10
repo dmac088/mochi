@@ -1,8 +1,6 @@
 package io.nzbee.ui.component.web.search;
 
 import java.util.List;
-import org.springframework.data.domain.Page;
-import io.nzbee.domain.Product;
 import io.nzbee.ui.component.web.facet.NavFacet;
 import io.nzbee.ui.component.web.facet.NavFacetContainer;
 
