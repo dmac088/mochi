@@ -80,10 +80,8 @@ class Products extends Component {
 
     //get the currenct selected price
     const { selectedPrice } = this.state;
-    const isDifferent = (!(term   === this.state.category));
+    const isDifferent = (term !== this.state.category);
     const newPrice = (isDifferent) ? maxPrice : selectedPrice;
-
-
 
     (type==="category")
         ? this.update(type, locale, currency, pathname, term, brand, Object.assign(params, qs.parse(search)), newPrice, 0, isMounting, selectedFacets, this.findAll)
@@ -108,9 +106,22 @@ class Products extends Component {
       &&  isMounting  === 0
     ) {return;}
 
-    const p1 = callback(locale, currency, category, term, price+1, page, size, sort, selectedFacets)
-    .catch((e)=>{
-     console.log(e);
+    //need to get the new max price for selected facets before getting the products
+    const p1 = productApi.getMaxPrice(locale, currency, category, selectedFacets)
+    .then((response) => {
+     return response.json();
+    })
+    .then((price) => {
+      return callback(locale, currency, category, term, price, page, size, sort, selectedFacets)
+      .catch((e)=>{
+       console.log(e);
+      });
+    })
+    // .then((resposne) => {
+    //   console.log(response);
+    // })
+    .catch((e) => {
+      console.log(e);
     });
 
     const p2 = facetApi.findAllChildrenByCriteria(locale, currency, category, selectedFacets)
@@ -121,17 +132,10 @@ class Products extends Component {
      console.log(e);
     });
 
-    const p3 = productApi.getMaxPrice(locale, currency, category, selectedFacets)
-    .then((response) => {
-     return response.json();
-    })
-    .catch((e) => {
-     console.log(e);
-    });
-
-    const pa = [p1, p2, p3];
+    const pa = [p1, p2];
     Promise.all(pa)
     .then((response) => {
+          console.log(response);
           this.setState( {
             "locale":                 locale,
             "currency":               currency,
