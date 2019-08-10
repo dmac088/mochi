@@ -151,7 +151,7 @@ public class ProductAttribute {
 		}).collect(Collectors.toList());
 		Iterator<ProductTagAttribute> i = lpa.stream().filter(ta -> ta.isPresent()).map(t -> { return t.get();}).sorted(Comparator.comparing(ProductTagAttribute::getTagDesc)).iterator();
 		if(i.hasNext()) { i.next(); }
-		if(i.hasNext()) { return i.next().getTagDesc(); }
+		if(i.hasNext()) {  return i.next().getTagDesc(); }
 		return "Empty";
 	}
 	
