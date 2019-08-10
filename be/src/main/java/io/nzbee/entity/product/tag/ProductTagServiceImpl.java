@@ -37,6 +37,12 @@ public class ProductTagServiceImpl implements IProductTagService {
 		// TODO Auto-generated method stub
 		return productTagDAO.findByCode(code);
 	}
+	
+	@Override
+	public Optional<ProductTag> findOne(String desc, String locale) {
+		// TODO Auto-generated method stub
+		return productTagDAO.findByDesc(desc, locale);
+	}
 
 	@Override
 	public void save(ProductTag t) {

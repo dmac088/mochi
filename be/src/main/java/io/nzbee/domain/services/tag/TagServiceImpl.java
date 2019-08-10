@@ -1,26 +1,17 @@
 package io.nzbee.domain.services.tag;
 
-import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
-
-import io.nzbee.domain.Product;
 import io.nzbee.domain.Tag;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.tag.IProductTagService;
 import io.nzbee.entity.product.tag.ProductTag;
-import io.nzbee.variables.GeneralVars;
 import io.nzbee.variables.ProductVars;
 
 
@@ -65,7 +56,7 @@ public class TagServiceImpl implements ITagService {
 		t.setTagId(pt.getTagId());
 		t.setTagCode(pt.getCode());
 		t.setLocale(locale);
-		t.setTagDesc(pt.getAttributes().stream().filter(ta -> ta.getLclCd().equals(locale)).collect(Collectors.toList()).get(0).getTagDesc());
+		t.setTagDesc(pt.getAttributes().stream().filter(ta -> ta.getLclCd().equals(locale)).collect(Collectors.toList()).stream().findFirst().get().getTagDesc());
 		return t;
 	}
 	
@@ -109,9 +100,15 @@ public class TagServiceImpl implements ITagService {
 
 	@Override
 	public Tag findOneByCode(String code, String lcl) {
-		// TODO Auto-generated method stub
-		System.out.println(code);
 		ProductTag pt = productTagService.findOne(code).get();
+		String tagDesc = pt.getAttributes().stream().filter(t -> t.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getTagDesc();
+		return this.convertToTagDO(pt.getTagId(), pt.getCode(), tagDesc, lcl);
+	}
+	
+	@Override
+	public Tag findOneByDesc(String desc, String lcl) {
+		// TODO Auto-generated method stub
+		ProductTag pt = productTagService.findOne(desc, lcl).get();
 		String tagDesc = pt.getAttributes().stream().filter(t -> t.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getTagDesc();
 		return this.convertToTagDO(pt.getTagId(), pt.getCode(), tagDesc, lcl);
 	}

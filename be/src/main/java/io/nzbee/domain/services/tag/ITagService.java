@@ -17,5 +17,7 @@ public interface ITagService extends IService<Tag> {
 
 	Tag findOneByCode(String code, String lcl);
 
+	Tag findOneByDesc(String desc, String lcl);
+
 
 }

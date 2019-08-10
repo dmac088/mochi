@@ -128,8 +128,6 @@ public class CustomerService implements ICustomerService {
 	public void deleteCustomer(Customer customer) {
 		// TODO Auto-generated method stub
 		Party p = partyService.findOne(customer.getUserName()).get();
-		//partyRepository.delete(p);
-		System.out.println("PartyId = " + p.getPartyId());
 		partyService.delete(p);
 	}
 	
@@ -142,7 +140,6 @@ public class CustomerService implements ICustomerService {
 		
 		Person pp = null;
 		if(customer.getPartyType().equals(Person.class.getSimpleName())) {
-			System.out.println("pop");
 			pp = (Person) p;
 			pp.setGivenName(customer.getGivenName());
 			pp.setFamilyName(customer.getFamilyName());

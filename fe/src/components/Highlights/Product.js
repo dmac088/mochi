@@ -39,6 +39,7 @@ class Product extends Component {
   }
 
   renderProduct = (category, product, currentImage, setCurrentProductId) => {
+		
 		const routeProps = createRouteProps(this.props.history, this.props.match, this.props.location);
     return (
       <React.Fragment>
