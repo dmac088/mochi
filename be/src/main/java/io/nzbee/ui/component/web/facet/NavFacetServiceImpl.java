@@ -178,7 +178,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		s.setFacetParentId(new Long(-1));
 		s.setFacetChildCount(new Long(0));
 		s.setFacetDisplayValue(t.getTagDesc());
-		s.setToken(t.getTagCode());
+		s.setToken(t.getTagDesc());
 		s.setFacetLevel(new Long(0));
 		s.setPayload(t);
 		return s;

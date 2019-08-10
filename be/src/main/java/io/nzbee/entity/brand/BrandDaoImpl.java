@@ -193,7 +193,6 @@ public class BrandDaoImpl  implements IBrandDao {
 			Join<Product, Category> category = brand.join(Product_.categories);
 			conditions.add(category.get(Category_.categoryId).in(categoryIds));
 		}
-		System.out.println(tagIds.size() );
 		if(tagIds.size() > 0) {
 			Join<Product, ProductTag> productTag = brand.join(Product_.tags);
 			conditions.add(productTag.get(ProductTag_.productTagId).in(tagIds));

@@ -24,7 +24,6 @@ import org.hibernate.search.query.facet.FacetingRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -112,8 +111,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		NavFacet<Object> s = new NavFacet<Object>();
 		s.setToken(maxPrice.toString());
 
-		System.out.println(maxPrice);
-
 		return s;
 	}
 
@@ -143,15 +140,21 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 
 		// this is a Lucene query using the Lucene api
 		org.apache.lucene.search.Query searchQuery = productQueryBuilder.bool().must(productQueryBuilder.keyword()
-				.onFields("primaryCategory.parent.parent.parent." + "primaryCategoryDesc" + transLcl,
+				.onFields(
+						"primaryCategory.parent.parent.parent." + "primaryCategoryDesc" + transLcl,
 						"primaryCategory.parent.parent." + "primaryCategoryDesc" + transLcl,
 						"primaryCategory.parent." + "primaryCategoryDesc" + transLcl,
 						"primaryCategory.primaryCategoryDesc" + transLcl,
 						"secondaryCategory.parent.parent.parent." + "secondaryCategoryDesc" + transLcl,
 						"secondaryCategory.parent.parent." + "secondaryCategoryDesc" + transLcl,
 						"secondaryCategory.parent." + "secondaryCategoryDesc" + transLcl,
-						"secondaryCategory." + "secondaryCategoryDesc" + transLcl, "product.brand.brandDesc" + transLcl,
-						"productDesc", "tagA", "tagB", "tagC")
+						"secondaryCategory." + "secondaryCategoryDesc" + transLcl, 
+						"product.brand.brandDesc" + transLcl,
+						"productDesc", 
+						"tagA", 
+						"tagB", 
+						"tagC"
+						)
 				.matching(searchTerm).createQuery())
 				.must(productQueryBuilder.keyword().onFields("lclCd").matching(lcl).createQuery()).createQuery();
 
@@ -254,7 +257,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		allFacets.stream().filter(f -> f.getFacetingName().equals(CategoryVars.TAG_FACET_NAME))
 				.collect(Collectors.toList()).forEach(tf -> {
 					if(tf.getValue().equals("Empty"))  return; 
-					Tag tag = tagService.findOneByCode(tf.getValue(), lcl);
+					Tag tag = tagService.findOneByDesc(tf.getValue(), lcl);
 					NavFacet<Tag> tagFacet = facetService.convertTagToNavFacet(tag);
 					tagFacet.setFacetProductCount(new Long(tf.getCount()));
 					tagFacet.setToken(tf.getValue());
@@ -288,10 +291,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		Search search = new Search();
 		search.setProducts(new PageImpl<Product>(lp, pageable, jpaQuery.getResultSize()));
 		NavFacetContainer nfc = new NavFacetContainer();
-		returnFacets.stream().forEach(f -> {
-						System.out.println(f.getFacetClassName());
-		});
-		
 		nfc.setBrands(returnFacets.stream().filter(f -> f.getFacetClassName().equals(Brand.class.getSimpleName())).collect(Collectors.toList()));
 		nfc.setCategories(returnFacets.stream().filter(f -> f.getFacetClassName().equals(Category.class.getSimpleName())).collect(Collectors.toList()));
 		nfc.setTags(returnFacets.stream().filter(f -> f.getFacetClassName().equals(Tag.class.getSimpleName())).collect(Collectors.toList()));

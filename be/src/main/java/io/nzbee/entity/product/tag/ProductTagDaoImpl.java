@@ -34,6 +34,8 @@ import io.nzbee.entity.product.price.ProductPriceType_;
 import io.nzbee.entity.product.price.ProductPrice_;
 import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.entity.product.status.ProductStatus_;
+import io.nzbee.entity.product.tag.attribute.ProductTagAttribute;
+import io.nzbee.entity.product.tag.attribute.ProductTagAttribute_;
 import io.nzbee.variables.ProductVars;
 
 @Component 
@@ -75,6 +77,30 @@ public class ProductTagDaoImpl  implements IProductTagDao {
 
 		List<Predicate> conditions = new ArrayList<Predicate>();	
 		conditions.add(cb.equal(root.get(ProductTag_.productTagCode), code));
+		
+		TypedQuery<ProductTag> query = em.createQuery(cq
+				.select(root)
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(false)
+		);
+		
+		return Optional.ofNullable(query.getSingleResult());
+	}
+
+	
+	@Override
+	public Optional<ProductTag> findByDesc(String desc, String locale) {
+		// TODO Auto-generated method stub
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<ProductTag> cq = cb.createQuery(ProductTag.class);
+		Root<ProductTag> root = cq.from(ProductTag.class);
+		Join<ProductTag, ProductTagAttribute> attribute = root.join(ProductTag_.attributes);
+		
+
+		List<Predicate> conditions = new ArrayList<Predicate>();	
+		conditions.add(cb.equal(attribute.get(ProductTagAttribute_.lclCd), locale));
+		conditions.add(cb.equal(attribute.get(ProductTagAttribute_.tagDesc), desc));
 		
 		TypedQuery<ProductTag> query = em.createQuery(cq
 				.select(root)

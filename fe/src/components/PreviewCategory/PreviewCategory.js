@@ -9,7 +9,7 @@ export const PreviewCategory = (props) => {
             <div className="row">
               <div className="col-lg-12">
                 <div className="section-title">
-                  <h3>{category.categoryDesc}</h3>
+                  <h3>{category.facetDisplayValue}</h3>
                 </div>
               </div>
             </div>

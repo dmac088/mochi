@@ -168,44 +168,28 @@ public class ProductAttribute {
 		if(i.hasNext()) { i.next(); }
 		if(i.hasNext()) { return i.next().getTagDesc(); }
 		return "Empty";
+
 	}
 	
 	@Transient
 	@Facet
 	@Field(analyze = Analyze.NO)
 	public String getTagAFacet() { 
-		Optional<List<ProductTag>> lpt = Optional.ofNullable(this.getProduct().getTags());
-		if(!lpt.isPresent());
-		Iterator<ProductTag> i = lpt.get().iterator();
-		if(i.hasNext()) { i.next(); }
-		if(i.hasNext()) { i.next(); }
-		if(i.hasNext()) { return i.next().getCode(); }
-		return "Empty";
+		return this.getTagA();
 	}
 	
 	@Transient
 	@Facet
 	@Field(analyze = Analyze.NO)
 	public String getTagBFacet() { 
-		Optional<List<ProductTag>> lpt = Optional.ofNullable(this.getProduct().getTags());
-		if(!lpt.isPresent());
-		Iterator<ProductTag> i = lpt.get().iterator();
-		if(i.hasNext()) { i.next(); }
-		if(i.hasNext()) { return i.next().getCode(); }
-		return "Empty";
+		return this.getTagB();
 	}
 	
 	@Transient
 	@Facet
 	@Field(analyze = Analyze.NO)
 	public String getTagCFacet() { 
-		Optional<List<ProductTag>> lpt = Optional.ofNullable(this.getProduct().getTags());
-		if(!lpt.isPresent());
-		Iterator<ProductTag> i = lpt.get().iterator();
-		if(i.hasNext()) { i.next(); }
-		if(i.hasNext()) { i.next(); }
-		if(i.hasNext()) { return i.next().getCode(); }
-		return "Empty";
+		return this.getTagC();
 	}
 	
 	public Long getProductId() {

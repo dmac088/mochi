@@ -77,6 +77,7 @@ const settings = {
   export const Category = withRouter(({history, match, location, ...props}) => {
     let slider;
     const { products } = props.category;
+    console.log(products);
     const routeProps = createRouteProps(history, match, location);
     if(!products) {return null;}
     const columns = chunkArray(products, 3);
