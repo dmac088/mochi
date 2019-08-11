@@ -1,11 +1,15 @@
 package io.nzbee.entity.product;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import org.assertj.core.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -118,13 +122,16 @@ public class ProductServiceImpl implements IProductService {
 		
 			List<String> children = this.getAllChildCodes(categoryDesc, locale).stream().collect(Collectors.toList());
 		
+			//default element
+			List<String> de = Collections.singletonList("0");
+			
 			return productRepository.maxMarkDownPrice(
 					categoryTypeCode, 
 					categoryDesc, 
 					locale, 
 					currencyCode, 
 					productStatusCode, 
-					brandCodes, 
+					brandCodes.isEmpty() ? de : brandCodes, 
 					brandCodes.isEmpty() ? 0 : -1,
 					categoryCodes.isEmpty()	? children
 											: categoryCodes,
@@ -147,6 +154,9 @@ public class ProductServiceImpl implements IProductService {
 		
 			List<String> children = this.getAllChildCodes(categoryDesc, locale).stream().collect(Collectors.toList());;
 			
+			//default element
+			List<String> de = Collections.singletonList("0");
+			
 			// TODO Auto-generated method stub
 			return productRepository.maxMarkDownPriceForTags(
 					categoryTypeCode, 
@@ -154,13 +164,13 @@ public class ProductServiceImpl implements IProductService {
 					locale, 
 					currencyCode, 
 					productStatusCode, 
-					brandCodes, 
+					brandCodes.isEmpty() ? de : brandCodes, 
 					brandCodes.isEmpty() ? 0 : -1, 
-					categoryCodes, 
+					categoryCodes.isEmpty() ? de : categoryCodes, 
 					categoryCodes.isEmpty() && children.isEmpty()
 					? 0
 					: -1, 
-					tagCodes, 
+					tagCodes.isEmpty() ? de : tagCodes, 
 					tagCodes.isEmpty() ? 0 : -1);
 	}
 	
@@ -187,13 +197,18 @@ public class ProductServiceImpl implements IProductService {
 		// TODO Auto-generated method stub
 		List<String> children = this.getAllChildCodes(categoryDesc, locale).stream().collect(Collectors.toList());;
 		
+		//default element
+		List<String> de = Collections.singletonList("0");
+		
 		return productRepository.count(
 				categoryDesc, 
 				locale, 
 				productStatusCode, 
-				brandCodes, 
+				brandCodes.isEmpty() ? de : brandCodes, 
 				brandCodes.isEmpty() ? 0 : -1,
-				categoryCodes.isEmpty() 	? children
+				categoryCodes.isEmpty() 	? children.isEmpty()
+											  ? de
+											  : children
 										 	: categoryCodes,
 				categoryCodes.isEmpty() && children.isEmpty()
 											? 0
@@ -209,17 +224,23 @@ public class ProductServiceImpl implements IProductService {
 			List<String> children = this.getAllChildCodes(categoryDesc, locale).stream().collect(Collectors.toList());
 			// TODO Auto-generated method stub
 			
+			//default element
+			List<String> de = Collections.singletonList("0");
+			
 			return productRepository.countForTags(	categoryDesc,
 													locale, 
 													productStatusCode, 
-													brandCodes,
+													brandCodes.isEmpty() ? de : brandCodes,
 													brandCodes.isEmpty() ? 0 : -1,
-													categoryCodes.isEmpty() 	? children
+													categoryCodes.isEmpty() 	? 
+																				  children.isEmpty()
+																				  ? de
+																				  : children
 																				: categoryCodes,
 													categoryCodes.isEmpty() && children.isEmpty()
 													? 0
 													: -1,							
-													tagCodes,
+													tagCodes.isEmpty() ? de : tagCodes,
 													tagCodes.isEmpty() ? 0 : -1);
 	}
 
