@@ -149,7 +149,6 @@ public class ProductServiceImpl implements IProductService {
         
         StringBuilder sb = new StringBuilder();
         product.getCategories().stream().filter(c -> {return c.getHierarchy().getCode().equals(CategoryVars.PRIMARY_HIERARCHY_CODE);}).collect(Collectors.toList())
-        .stream().sorted(Comparator.comparingLong(Category::getCategoryLevel)).collect(Collectors.toList())
         .stream().forEach(c -> sb.append(c.getAttributes().stream().filter(ca -> { return ca.getLclCd().equals(lcl);}).collect(Collectors.toList()).get(0).getCategoryDesc()));
         pDo.setPrimaryCategoryPath(sb.toString());        
         return pDo;
