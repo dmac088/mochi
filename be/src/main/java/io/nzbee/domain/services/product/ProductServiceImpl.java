@@ -103,21 +103,21 @@ public class ProductServiceImpl implements IProductService {
 								 int page, 
 								 int size, 
 								 String sortBy, 
-								 List<Long> categoryIds,
-								 List<Long> brandIds,
-								 List<Long> tagIds) {
+								 List<Category> categories,
+								 List<Brand> brands,
+								 List<Tag> tags) {
 	
      	Page<io.nzbee.entity.product.Product> ppa = 
      			productService.findAll( categoryDesc,
-     									categoryIds, 
+     									categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
      									locale, 
      									ProductVars.MARKDOWN_SKU_DESCRIPTION, 
      									currency, 
      									new Date(), 
      									new Date(), 
      									PageRequest.of(page, size, this.sortByParam(sortBy)), 
-     									brandIds, 
-     									tagIds);
+     									brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()), 
+     									tags.stream().map(t -> t.getTagCode()).collect(Collectors.toList()));
 
      	return ppa.map(pa -> this.convertToProductDO(pa, locale, currency));
 	}
@@ -308,9 +308,7 @@ public class ProductServiceImpl implements IProductService {
 				currency,  
 				ProductVars.ACTIVE_SKU_CODE, 
 				brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()), 
-				brandIds.stream().filter(b -> b.longValue() > -1).collect(Collectors.toList()).size(), 
-				categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
-				categoryIds.stream().filter(c -> c.longValue() > -1).collect(Collectors.toList()).size()
+				categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList())
 				);
 	}
 	
@@ -331,50 +329,20 @@ public class ProductServiceImpl implements IProductService {
 			String productStatusCode, List<Category> categories, List<Brand> brands, List<Tag> tags) {
 		
 		return tags.isEmpty()
-			   ?
+			    ?
 				productService.getCount(
 				categoryDesc, 
 				locale, 
 				productStatusCode, 
-				brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()), 
-				brandIds.stream().filter(b -> b.longValue() > -1).collect(Collectors.toList()).size(), 
-				categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
-				categoryIds.stream().filter(c -> c.longValue() > -1).collect(Collectors.toList()).size())
+				brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()),  
+				categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()))
 				:
 				productService.getCountForTags(
 				categoryDesc, 
 				locale, 
 				productStatusCode, 
-				brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()), 
-				brandIds.stream().filter(b -> b.longValue() > -1).collect(Collectors.toList()).size(), 
+				brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()),  
 				categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
-				categoryIds.stream().filter(c -> c.longValue() > -1).collect(Collectors.toList()).size(),
-				tags.stream().map(t -> t.getTagCode()).collect(Collectors.toList()), 
-				tagIds.stream().filter(c -> c.longValue() > -1).collect(Collectorss.toList()).size());	
+				tags.stream().map(t -> t.getTagCode()).collect(Collectors.toList()));	
 	}
-
-	
-	
-//	 public Product convertToProductDO(final io.nzbee.entity.product.Product product, String lcl, String currency) {
-//	    	final Product pDo = new Product();
-//	    	Optional<ProductAttribute> pa = productAttributeService.findByIdAndLocale(product.getProductId(), lcl);
-//	        pDo.setProductId(product.getProductId());
-//	        pDo.setProductCreateDt(product.getProductCreateDt());
-//	        pDo.setProductUPC(product.getUPC());
-//	        pDo.setProductDesc(pa.get().getProductDesc());
-//	        pDo.setProductRetail(productPriceService.get(product.getProductId(), ProductVars.PRICE_RETAIL_CODE, new Date(), new Date(), currency).get().getPriceValue());
-//	        pDo.setProductMarkdown(productPriceService.get(product.getProductId(), ProductVars.PRICE_MARKDOWN_CODE, new Date(), new Date(), currency).get().getPriceValue());
-//	        pDo.setProductImage(pa.get().getProductImage());
-//	        pDo.setLclCd(lcl);
-//	        pDo.setBrandDesc(product.getBrand().getAttributes().stream()
-//	        .filter( ba -> ba.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getBrandDesc());
-//	        
-//	        StringBuilder sb = new StringBuilder();
-//	        product.getCategories().stream().filter(c -> {return c.getHierarchy().getCode().equals(CategoryVars.PRIMARY_HIERARCHY_CODE);}).collect(Collectors.toList())
-//	        .stream().sorted(Comparator.comparingLong(Category::getCategoryLevel)).collect(Collectors.toList())
-//	        .stream().forEach(c -> sb.append(c.getAttributes().stream().filter(ca -> { return ca.getLclCd().equals(lcl);}).collect(Collectors.toList()).get(0).getCategoryDesc()));
-//	        pDo.setPrimaryCategoryPath(sb.toString());        
-//	        return pDo;
-//	    }
-
 }
