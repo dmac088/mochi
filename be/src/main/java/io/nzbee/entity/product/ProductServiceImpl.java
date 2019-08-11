@@ -242,18 +242,6 @@ public class ProductServiceImpl implements IProductService {
 		
 	}
 	
-	private Set<Long> getAllChildIds(String categoryDesc, String locale ) {
-		Category pc = categoryService.findByCategoryDesc(
-				CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
-				categoryDesc, 
-				locale).get();
-
-		Set<Category> lc = new HashSet<Category>();
-		return categoryService.recurseCategories(lc, pc)
-				.stream().map(c -> c.getCategoryId()).collect(Collectors.toSet());
-	}
-	
-	
 	private Set<String> getAllChildCodes(String categoryDesc, String locale ) {
 		Category pc = categoryService.findByCategoryDesc(
 				CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
