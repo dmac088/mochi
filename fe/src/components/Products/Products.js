@@ -112,7 +112,7 @@ class Products extends Component {
                    return response.json();
                 })
                 .then((price) => {
-                  const newStateA = {"price": null};
+                  const newStateA = {};
                   newStateA.price = price;
                   return newStateA;
                 })
