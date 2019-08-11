@@ -299,11 +299,7 @@ public class ProductServiceImpl implements IProductService {
 
 	@Override
 	public Double getMaxPrice(String categoryDesc, String locale, String markdownSkuDescription, String currency,
-		List<Category> categoryIds, List<Brand> brandIds, List<Tag> tagIds) {
-		
-		brandIds.add(new Long(-1));
-		categoryIds.add(new Long(-1));
-		tagIds.add(new Long(-1));
+		List<Category> categories, List<Brand> brands, List<Tag> tags) {
 		
 		return productService.getMaxMarkDownPrice(
 				CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
@@ -311,9 +307,9 @@ public class ProductServiceImpl implements IProductService {
 				locale, 
 				currency,  
 				ProductVars.ACTIVE_SKU_CODE, 
-				brandIds, 
+				brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()), 
 				brandIds.stream().filter(b -> b.longValue() > -1).collect(Collectors.toList()).size(), 
-				categoryIds, 
+				categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
 				categoryIds.stream().filter(c -> c.longValue() > -1).collect(Collectors.toList()).size()
 				);
 	}
@@ -333,32 +329,28 @@ public class ProductServiceImpl implements IProductService {
 	@Override
 	public Long getCount(String categoryTypeCode, String categoryDesc, String locale, String currency,
 			String productStatusCode, List<Category> categories, List<Brand> brands, List<Tag> tags) {
-			
-		brandIds.add(new Long(-1));
-		categoryIds.add(new Long(-1));
-		tagIds.add(new Long(-1));
 		
-		return tagIds.stream().filter(b -> b.longValue() > -1).collect(Collectors.toList()).size() == 0
+		return tags.isEmpty()
 			   ?
 				productService.getCount(
 				categoryDesc, 
 				locale, 
 				productStatusCode, 
-				brandIds, 
+				brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()), 
 				brandIds.stream().filter(b -> b.longValue() > -1).collect(Collectors.toList()).size(), 
-				categoryIds, 
+				categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
 				categoryIds.stream().filter(c -> c.longValue() > -1).collect(Collectors.toList()).size())
 				:
 				productService.getCountForTags(
 				categoryDesc, 
 				locale, 
 				productStatusCode, 
-				brandIds, 
+				brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()), 
 				brandIds.stream().filter(b -> b.longValue() > -1).collect(Collectors.toList()).size(), 
-				categoryIds, 
+				categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
 				categoryIds.stream().filter(c -> c.longValue() > -1).collect(Collectors.toList()).size(),
-				tagIds, 
-				tagIds.stream().filter(c -> c.longValue() > -1).collect(Collectors.toList()).size());	
+				tags.stream().map(t -> t.getTagCode()).collect(Collectors.toList()), 
+				tagIds.stream().filter(c -> c.longValue() > -1).collect(Collectorss.toList()).size());	
 	}
 
 	

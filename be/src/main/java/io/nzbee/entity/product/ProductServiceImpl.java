@@ -70,19 +70,19 @@ public class ProductServiceImpl implements IProductService {
 	
 	@Override
 	public Page<Product> findAll(	String categoryDesc,
-									List<Long> categoryIds, 
+									List<String> categoryCodes, 
 									String locale, 
 									String priceType, 
 									String currency, 
 									Date priceDateStart, 
 									Date priceDateEnd, 
 									Pageable pageable, 
-									List<Long> brandIds, 
-									List<Long> tagIds) {
+									List<String> brandCodes, 
+									List<String> tagCodes) {
 		
-			return productDAO.findAllActiveSKUByPrimaryHierarchyById(	
-					categoryIds.isEmpty() 	? this.getAllChildIds(categoryDesc, locale).stream().collect(Collectors.toList())
-											: categoryIds,
+			return productDAO.findAllActiveSKUByPrimaryHierarchyByCode(	
+					categoryCodes.isEmpty() 	? this.getAllChildCodes(categoryDesc, locale).stream().collect(Collectors.toList())
+												: categoryCodes,
 					locale,
 					new Double(-1),
 					new Double(-1),
@@ -91,8 +91,8 @@ public class ProductServiceImpl implements IProductService {
 					priceDateStart,
 					priceDateEnd,
 					pageable,
-					brandIds,
-					tagIds
+					brandCodes,
+					tagCodes
 				 );
 	}
 
@@ -113,10 +113,8 @@ public class ProductServiceImpl implements IProductService {
 									String locale, 
 									String currencyCode, 
 									String productStatusCode, 
-									List<Long> brandIds, 
-									int inHandlingBrands,
-									List<Long> categoryIds, 
-									int inHandlingCategories) {
+									List<String> brandCodes,
+									List<String> categoryCodes) {
 		
 			List<Long> children = this.getAllChildIds(categoryDesc, locale).stream().collect(Collectors.toList());;
 		
@@ -126,11 +124,9 @@ public class ProductServiceImpl implements IProductService {
 					locale, 
 					currencyCode, 
 					productStatusCode, 
-					brandIds, 
-					inHandlingBrands, 
-					categoryIds.isEmpty()	? children
-											: categoryIds, 
-					inHandlingCategories);
+					brandCodes, 
+					categoryCodes.isEmpty()	? children
+											: categoryCodes);
 	
 	}
 
@@ -141,14 +137,11 @@ public class ProductServiceImpl implements IProductService {
 				String locale,
 				String currencyCode, 
 				String productStatusCode, 
-				List<Long> brandIds,
-				int inHandlingBrands, 
-				List<Long> categoryIds, 
-				int inHandlingCategories, 
-				List<Long> tagIds,
-				int inHandlingTags) {
+				List<String> brandCodes, 
+				List<String> categoryCodes, 
+				List<String> tagCodes) {
 		
-			List<Long> children = this.getAllChildIds(categoryDesc, locale).stream().collect(Collectors.toList());;
+			List<String> children = this.getAllChildCodes(categoryDesc, locale).stream().collect(Collectors.toList());;
 		
 			// TODO Auto-generated method stub
 			return productRepository.maxMarkDownPriceForTags(
@@ -157,19 +150,16 @@ public class ProductServiceImpl implements IProductService {
 					locale, 
 					currencyCode, 
 					productStatusCode, 
-					brandIds, 
-					inHandlingBrands, 
-					categoryIds.isEmpty() 	? children
-											: categoryIds, 
-					inHandlingCategories, 
-					tagIds, 
-					inHandlingTags);
+					brandCodes,  
+					categoryCodes.isEmpty() 	? children
+												: categoryCodes,  
+					tagCodes);
 	}
 	
 	
 	@Override
-	public Double getMaxMarkDownPriceForCategory(Long categoryId, String currencyCode) {
-		return productRepository.maxMarkDownPriceForCategory(categoryId, currencyCode);
+	public Double getMaxMarkDownPriceForCategory(String categoryCode, String currencyCode) {
+		return productRepository.maxMarkDownPriceForCategory(categoryCode, currencyCode);
 	}
 	
 	@Override
@@ -182,43 +172,37 @@ public class ProductServiceImpl implements IProductService {
 				String categoryDesc, 
 				String locale,
 				String productStatusCode, 
-				List<Long> brandIds, 
-				int inHandlingBrands,
-				List<Long> categoryIds, 
-				int inHandlingCategories) {
+				List<String> brandCodes, 
+				List<String> categoryCodes
+				) {
 		
 		// TODO Auto-generated method stub
-		List<Long> children = this.getAllChildIds(categoryDesc, locale).stream().collect(Collectors.toList());;
+		List<String> children = this.getAllChildCodes(categoryDesc, locale).stream().collect(Collectors.toList());;
 		
 		return productRepository.count(
 				categoryDesc, 
 				locale, 
 				productStatusCode, 
-				brandIds, 
-				inHandlingBrands, 
-				categoryIds.isEmpty() 	 ? children
-										 : categoryIds, 
-				inHandlingCategories
+				brandCodes, 
+				categoryCodes.isEmpty() 	 ? children
+										 	 : categoryCodes
 		);
 	}
 
 	@Override
 	public Long getCountForTags(String categoryDesc, String locale,
-			String productStatusCode, List<Long> brandIds, int inHandlingBrands,
-			List<Long> categoryIds, int inHandlingCategories, List<Long> tagIds, int inHandlingTags) {
+			String productStatusCode, List<String> brandCodes,
+			List<String> categoryCodes, List<String> tagCodes) {
 		
 			List<Long> children = this.getAllChildIds(categoryDesc, locale).stream().collect(Collectors.toList());
 			// TODO Auto-generated method stub
 			return productRepository.countForTags(	categoryDesc,
 													locale, 
 													productStatusCode, 
-													brandIds, 
-													inHandlingBrands, 
-													categoryIds.isEmpty() 	? children
-																			: categoryIds, 
-													inHandlingCategories, 
-													tagIds, 
-													inHandlingTags);
+													brandCodes, 
+													categoryCodes.isEmpty() 	? children
+																				: categoryCodes, 
+													tagCodes);
 	}
 
 	
