@@ -122,7 +122,6 @@ class Products extends Component {
                                       .then((response) => {
                                         const newStateB = {...response};
                                         newStateB.price = newPrice;
-                                        newStateB.products = response.products;
                                         return newStateB;
                                       })
                                       .catch((e)=>{
