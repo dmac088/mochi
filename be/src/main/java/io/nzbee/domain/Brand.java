@@ -4,19 +4,9 @@ import java.util.Objects;
 
 public class Brand {
 
-	private Long brandId;
-	
 	private String brandCode;
 
 	private String brandDesc;
-
-	public Long getBrandId() {
-		return brandId;
-	}
-
-	public void setBrandId(Long brandId) {
-		this.brandId = brandId;
-	}
 	
 	public String getBrandCode() {
 		return brandCode;
@@ -39,12 +29,12 @@ public class Brand {
 		 if (this == o) return true;
 	     if (o == null || getClass() != o.getClass()) return false;
 	     Brand pcDto = (Brand) o;
-	     return this.brandId == pcDto.brandId;
+	     return this.brandCode == pcDto.brandCode;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(brandId);
+		return Objects.hash(brandCode);
 	}
 	
 }

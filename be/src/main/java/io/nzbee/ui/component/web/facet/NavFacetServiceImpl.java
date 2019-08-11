@@ -80,9 +80,8 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 	
 		List<NavFacet<Brand>> brandBars = brands.stream().map(b -> {
 			List<Long> brandIds = new ArrayList<Long>();
-			brandIds.add(b.getBrandId());
 			NavFacet<Brand> s = convertBrandToNavFacet(b);
-			s.setFacetProductCount(this.getCountForBrand(locale, currency, category, cIds, b.getBrandId(), tIds));
+			s.setFacetProductCount(this.getCountForBrand(locale, currency, category, cIds, b, tIds));
 			return s;
 		}).collect(Collectors.toList()).stream()
 			.filter(c -> c.getFacetProductCount() > 0)
@@ -108,9 +107,8 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		
 	}
 	
-	private Long getCountForBrand(String locale, String currency, String category, List<Long> cIds, Long brandId, List<Long> tIds) {
+	private Long getCountForBrand(String locale, String currency, String category, List<Long> cIds, Brand brand, List<Long> tIds) {
 		List<Long> lbId = new ArrayList<Long>();
-		lbId.add(brandId);
 		return productService.getCount(
 		CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 		category, 
@@ -189,7 +187,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
     	final NavFacet<Brand> s = new NavFacet<Brand>();
     	s.setFacetClassName(b.getClass().getSimpleName());
     	s.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
-    	s.setFacetId(b.getBrandId().toString());
+    	s.setFacetId(b.getBrandCode());
     	s.setFacetParentId(new Long(-1));
     	s.setFacetChildCount(new Long(0));
     	s.setFacetDisplayValue(b.getBrandDesc());

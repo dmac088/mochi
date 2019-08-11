@@ -8,11 +8,6 @@ import org.springframework.data.domain.Pageable;
 import io.nzbee.entity.IService;
 
 public interface IProductService extends IService<Product> {
-
-	
-	Page<Product> findAll(String categoryDesc, List<Long> categoryIds, String locale, Double priceStart,
-			Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd,
-			Pageable pageable, List<Long> brandIds, List<Long> tagIds);
 	
 	Page<Product> findAll(String categoryDesc, List<Long> categoryIds, String locale, String priceType, String currency,
 			Date priceDateStart, Date priceDateEnd, Pageable pageable, List<Long> brandIds, List<Long> tagIds);
@@ -38,4 +33,8 @@ public interface IProductService extends IService<Product> {
 	Double getMaxMarkDownPriceForCategory(Long categoryId, String currencyCode);
 
 	Long getCountForCategory(Long categoryId);
+
+	Page<Product> findAll(String categoryDesc, List<String> categoryCodes, String locale, Double priceStart,
+			Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd,
+			Pageable pageable, List<String> brandCodes, List<String> tagCodes);
 }
