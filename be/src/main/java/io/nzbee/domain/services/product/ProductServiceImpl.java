@@ -299,7 +299,7 @@ public class ProductServiceImpl implements IProductService {
 
 	@Override
 	public Double getMaxPrice(String categoryDesc, String locale, String markdownSkuDescription, String currency,
-		List<Long> categoryIds, List<Long> brandIds, List<Long> tagIds) {
+		List<Category> categoryIds, List<Brand> brandIds, List<Tag> tagIds) {
 		
 		brandIds.add(new Long(-1));
 		categoryIds.add(new Long(-1));
@@ -320,19 +320,19 @@ public class ProductServiceImpl implements IProductService {
 	
 	
 	@Override
-	public Double getMaxPriceForCategory(Long categoryId, String currencyCode) {
-		return productService.getMaxMarkDownPriceForCategory(categoryId, currencyCode);
+	public Double getMaxPriceForCategory(Category category, String currencyCode) {
+		return productService.getMaxMarkDownPriceForCategory(category.getCategoryCode(), currencyCode);
 	}
 	
 	@Override
-	public Long getCountForCategory(Long categoryId) {
-		return productService.getCountForCategory(categoryId);
+	public Long getCountForCategory(Category category) {
+		return productService.getCountForCategory(category.getCategoryCode());
 	}
 	
 
 	@Override
 	public Long getCount(String categoryTypeCode, String categoryDesc, String locale, String currency,
-			String productStatusCode, List<Long> categoryIds, List<Long> brandIds, List<Long> tagIds) {
+			String productStatusCode, List<Category> categories, List<Brand> brands, List<Tag> tags) {
 			
 		brandIds.add(new Long(-1));
 		categoryIds.add(new Long(-1));
@@ -360,6 +360,7 @@ public class ProductServiceImpl implements IProductService {
 				tagIds, 
 				tagIds.stream().filter(c -> c.longValue() > -1).collect(Collectors.toList()).size());	
 	}
+
 	
 	
 //	 public Product convertToProductDO(final io.nzbee.entity.product.Product product, String lcl, String currency) {

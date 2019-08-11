@@ -122,7 +122,6 @@ public class CategoryServiceImpl implements ICategoryService {
     	
  		//create a new product DTO
         final Category cDO = new Category();
-        cDO.setCategoryId(pc.getCategoryId());
         cDO.setCategoryCode(pc.getCategoryCode());
         cDO.setCategoryLevel(pc.getCategoryLevel());
 
