@@ -39,7 +39,7 @@ public class ProductServiceImpl implements IProductService {
 	
 	@Override
 	public Page<Product> findAll(	String categoryDesc,
-									List<Long> categoryIds, 
+									List<String> categoryCodes, 
 									String locale, 
 									Double priceStart, 
 									Double priceEnd, 
@@ -48,12 +48,12 @@ public class ProductServiceImpl implements IProductService {
 									Date priceDateStart, 
 									Date priceDateEnd, 
 									Pageable pageable, 
-									List<Long> brandIds, 
-									List<Long> tagIds) {
+									List<String> brandCodes, 
+									List<String> tagCodes) {
 		
-			return productDAO.findAllActiveSKUByPrimaryHierarchy(	
-					categoryIds.isEmpty() 	? this.getAllChildIds(categoryDesc, locale).stream().collect(Collectors.toList())
-											: categoryIds,
+			return productDAO.findAllActiveSKUByPrimaryHierarchyByCode(	
+					categoryCodes.isEmpty() ? this.getAllChildCodes(categoryDesc, locale).stream().collect(Collectors.toList())
+											: categoryCodes,
 					locale,
 					priceStart,
 					priceEnd,
@@ -62,8 +62,8 @@ public class ProductServiceImpl implements IProductService {
 					priceDateStart,
 					priceDateEnd,
 					pageable,
-					brandIds,
-					tagIds
+					brandCodes,
+					tagCodes
 				 );
 	}
 	
@@ -80,7 +80,7 @@ public class ProductServiceImpl implements IProductService {
 									List<Long> brandIds, 
 									List<Long> tagIds) {
 		
-			return productDAO.findAllActiveSKUByPrimaryHierarchy(	
+			return productDAO.findAllActiveSKUByPrimaryHierarchyById(	
 					categoryIds.isEmpty() 	? this.getAllChildIds(categoryDesc, locale).stream().collect(Collectors.toList())
 											: categoryIds,
 					locale,
@@ -249,6 +249,18 @@ public class ProductServiceImpl implements IProductService {
 		Set<Category> lc = new HashSet<Category>();
 		return categoryService.recurseCategories(lc, pc)
 				.stream().map(c -> c.getCategoryId()).collect(Collectors.toSet());
+	}
+	
+	
+	private Set<String> getAllChildCodes(String categoryDesc, String locale ) {
+		Category pc = categoryService.findByCategoryDesc(
+				CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
+				categoryDesc, 
+				locale).get();
+
+		Set<Category> lc = new HashSet<Category>();
+		return categoryService.recurseCategories(lc, pc)
+				.stream().map(c -> c.getCategoryCode()).collect(Collectors.toSet());
 	}
 
 

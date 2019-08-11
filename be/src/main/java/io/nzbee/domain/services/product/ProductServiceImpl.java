@@ -18,7 +18,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Sort;
 import io.nzbee.domain.Product;
-import io.nzbee.entity.category.Category;
+import io.nzbee.domain.Category;
+import io.nzbee.domain.Brand;
+import io.nzbee.domain.Tag;
 import io.nzbee.entity.product.attribute.IProductAttributeService;
 import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.price.IProductPriceService;
@@ -68,13 +70,17 @@ public class ProductServiceImpl implements IProductService {
 								 int page, 
 								 int size, 
 								 String sortBy, 
-								 List<Long> categoryIds,
-								 List<Long> brandIds,
-								 List<Long> tagIds) {
+								 List<Category> categories,
+								 List<Brand> brands,
+								 List<Tag> tags) {
 	
+    	//we need to convert to lists of IDs or codes here
+    	
+    	
+    	
      	Page<io.nzbee.entity.product.Product> ppa = 
      			productService.findAll( categoryDesc,
-     									categoryIds, 
+     									categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
      									locale, 
      									new Double(0), 
      									price, 
@@ -83,8 +89,8 @@ public class ProductServiceImpl implements IProductService {
      									new Date(), 
      									new Date(), 
      									PageRequest.of(page, size, this.sortByParam(sortBy)), 
-     									brandIds, 
-     									tagIds);
+     									brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()), 
+     									tags.stream().map(t -> t.getTagCode()).collect(Collectors.toList()));
 
      	return ppa.map(pa -> this.convertToProductDO(pa, locale, currency));
 	}

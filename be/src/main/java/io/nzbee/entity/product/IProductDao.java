@@ -16,10 +16,20 @@ public interface IProductDao extends IDao<Product> {
 	//parameters should be primitive types
 	Page<Product> findAllActiveSKU(List<Long> categoryIds, String locale, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, Pageable pageable, List<Long> brandIds, List<Long> tagIds);	
 	
-	Page<Product> findAllActiveSKUByPrimaryHierarchy(List<Long> categoryIds, String locale, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, Pageable pageable, List<Long> brandIds, List<Long> tagIds);
-	
 	List<Product> getAll(String locale, String currency, List<Long> productIds);
-	
-	Double getMaxPrice(String categoryDesc, String locale, String priceType, String currency, List<Long> categoryIds, List<Long> brandIds, List<Long> tagIds);
+
+	Page<Product> findAllActiveSKUByPrimaryHierarchyById(List<Long> categoryIds, String locale, Double priceStart,
+			Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd,
+			Pageable pageable, List<Long> brandIds, List<Long> tagIds);
+
+	Page<Product> findAllActiveSKUByPrimaryHierarchyByCode(List<String> categoryCodes, String locale, Double priceStart,
+			Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd,
+			Pageable pageable, List<String> brandCodes, List<String> tagCodes);
+
+	Double getMaxPriceByCode(String categoryDesc, String locale, String priceType, String currency,
+			List<String> categoryCodes, List<String> brandCodes, List<String> tagCodes);
+
+	Double getMaxPriceById(String categoryDesc, String locale, String priceType, String currency,
+			List<Long> categoryIds, List<Long> brandIds, List<Long> tagIds);
 	
 }

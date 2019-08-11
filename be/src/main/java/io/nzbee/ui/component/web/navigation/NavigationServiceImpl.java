@@ -41,7 +41,18 @@ public class NavigationServiceImpl extends UIService implements INavigationServi
 		List<Long> brandIds = selectedFacets.getBrands().stream().map(t -> Long.parseLong(t.getFacetId())).collect(Collectors.toList());
 		List<Long> tagIds = selectedFacets.getTags().stream().map(t ->  Long.parseLong(t.getFacetId())).collect(Collectors.toList());
 				
-		Page<Product> pp = productService.findAll(locale, currency, categoryDesc, price, page, size, sortBy, categoryIds, brandIds, tagIds);
+		
+		
+		Page<Product> pp = productService.findAll(locale, 
+												  currency, 
+												  categoryDesc, 
+												  price, 
+												  page, 
+												  size, 
+												  sortBy, 
+												  selectedFacets.getCategories().stream().map(c -> c.getPayload()).collect(Collectors.toList()), 
+												  selectedFacets.getBrands().stream().map(b -> b.getPayload()).collect(Collectors.toList()),
+												  selectedFacets.getTags().stream().map(t -> t.getPayload()).collect(Collectors.toList()));
 		
 		//add the page of objects to a new Search object and return it 
 		Search search = new Search();

@@ -3,7 +3,11 @@ package io.nzbee.domain.services.product;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+
+import io.nzbee.domain.Brand;
+import io.nzbee.domain.Category;
 import io.nzbee.domain.Product;
+import io.nzbee.domain.Tag;
 import io.nzbee.domain.services.IService;
 
 public interface IProductService extends IService<Product> {
@@ -17,16 +21,16 @@ public interface IProductService extends IService<Product> {
 	
 	
 	//returns a user interface object, rule broken, need to change to return a domain object 
-	Page<Product> findAll(String locale, 
-			 String currency, 
-			 String categoryDesc, 
-			 Double price, 
-			 int page, 
-			 int size, 
-			 String sortBy, 
-			 List<Long> categoryIds,
-			 List<Long> brandIds,
-			 List<Long> tagIds);
+//	Page<Product> findAll(String locale, 
+//			 String currency, 
+//			 String categoryDesc, 
+//			 Double price, 
+//			 int page, 
+//			 int size, 
+//			 String sortBy, 
+//			 List<Long> categoryIds,
+//			 List<Long> brandIds,
+//			 List<Long> tagIds);
 	
 	//returns a domain object, this is good
 	Product findOne(String locale, String currency, Long id);
@@ -49,5 +53,10 @@ public interface IProductService extends IService<Product> {
 	Double getMaxPriceForCategory(Long categoryId, String currencyCode);
 
 	Long getCountForCategory(Long categoryId);
+
+	Page<Product> findAll(String locale, String currency, String categoryDesc, Double price, int page, int size,
+			String sortBy, List<Category> categories, List<Brand> brands, List<Tag> tags);
+
+
 	
 }
