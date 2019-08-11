@@ -4,10 +4,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.Tag;
+import io.nzbee.domain.Category;
+import io.nzbee.domain.Brand;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.tag.IProductTagService;
@@ -35,16 +38,32 @@ public class TagServiceImpl implements ITagService {
 	IProductService productService;
 	
 	@Override
-	public List<Tag> findAll(String locale, String currency, String categoryDesc, List<Long> categoryIds, List<Long> brandIds) {
-		return productTagService.findAll(locale, null, null, ProductVars.MARKDOWN_SKU_DESCRIPTION, currency, new Date(), new Date(), categoryIds, brandIds)
+	public List<Tag> findAll(String locale, String currency, String categoryDesc, List<Category> categories, List<Brand> brands) {
+		return productTagService.findAll(locale, 
+										null, 
+										null, 
+										ProductVars.MARKDOWN_SKU_DESCRIPTION, 
+										currency, 
+										new Date(), 
+										new Date(), 
+										categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
+										brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()))
 				.stream().map(pt -> {
 					return convertToTagDO(pt, locale);
 				}).collect(Collectors.toList());	
 	}
 	
 	@Override
-	public List<Tag> findAll(String locale, String currency, String categoryDesc, Double price, List<Long> categoryIds, List<Long> brandIds) {
-		return productTagService.findAll(locale, new Double(0), price, ProductVars.MARKDOWN_SKU_DESCRIPTION, currency, new Date(), new Date(), categoryIds, brandIds)
+	public List<Tag> findAll(String locale, String currency, String categoryDesc, Double price, List<Category> categories, List<Brand> brands) {
+		return productTagService.findAll(locale, 
+				new Double(0), 
+				price, 
+				ProductVars.MARKDOWN_SKU_DESCRIPTION, 
+				currency, 
+				new Date(), 
+				new Date(), 
+				categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
+				brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()))
 				.stream().map(pt -> {
 					return convertToTagDO(pt, locale);
 				}).collect(Collectors.toList());

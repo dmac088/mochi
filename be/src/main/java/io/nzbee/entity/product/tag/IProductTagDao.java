@@ -8,9 +8,10 @@ import io.nzbee.entity.IDao;
 
 public interface IProductTagDao  extends IDao<ProductTag> {
 	
-	List<ProductTag> findAll(String locale, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, List<Long> categoryIds, List<Long> brandIds);
-
 	Optional<ProductTag> findByCode(String code);
 
 	Optional<ProductTag> findByDesc(String desc, String locale);
+
+	List<ProductTag> findAll(String locale, Double priceStart, Double priceEnd, String priceType, String currency,
+			Date priceDateStart, Date priceDateEnd, List<String> categoryCodes, List<String> brandCodes);
 }

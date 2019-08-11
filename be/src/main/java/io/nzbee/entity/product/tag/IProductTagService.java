@@ -9,8 +9,9 @@ import io.nzbee.entity.IService;
 
 public interface IProductTagService  extends IService<ProductTag> {
 
-	List<ProductTag> findAll(String locale, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, List<Long> categoryIds, List<Long> brandIds);
-
 	Optional<ProductTag> findOne(String desc, String locale);
+
+	List<ProductTag> findAll(String locale, Double priceStart, Double priceEnd, String priceType, String currency,
+			Date priceDateStart, Date priceDateEnd, List<String> categoryCodes, List<String> brandCodes);
 	
 }

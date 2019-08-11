@@ -178,7 +178,7 @@ public class BrandDaoImpl  implements IBrandDao {
 	
 
 	@Override
-	public List<Brand> findAll(List<Long> categoryIds, List<Long> tagIds) {
+	public List<Brand> findAll(List<String> categoryCodes, List<String> tagCodes) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Brand> cq = cb.createQuery(Brand.class);
@@ -189,13 +189,13 @@ public class BrandDaoImpl  implements IBrandDao {
 		Join<Product, ProductStatus> status = brand.join(Product_.productStatus);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
-		if(categoryIds.size() > 0) {
+		if(categoryCodes.size() > 0) {
 			Join<Product, Category> category = brand.join(Product_.categories);
-			conditions.add(category.get(Category_.categoryId).in(categoryIds));
+			conditions.add(category.get(Category_.categoryCode).in(categoryCodes));
 		}
-		if(tagIds.size() > 0) {
+		if(tagCodes.size() > 0) {
 			Join<Product, ProductTag> productTag = brand.join(Product_.tags);
-			conditions.add(productTag.get(ProductTag_.productTagId).in(tagIds));
+			conditions.add(productTag.get(ProductTag_.productTagCode).in(tagCodes));
 		}
 		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
 		

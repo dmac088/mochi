@@ -3,11 +3,14 @@ package io.nzbee.domain.services.brand;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.Brand;
+import io.nzbee.domain.Category;
+import io.nzbee.domain.Tag;
 
 @Service
 @Transactional
@@ -51,9 +54,12 @@ public class BrandService implements IBrandService {
 	@Override
 	@Transactional
 	//@Cacheable
-	public List<Brand> findAll(String locale, String currency, String categoryDesc, List<Long> categoryIds, List<Long> tagIds) {
+	public List<Brand> findAll(String locale, String currency, String categoryDesc, List<Category> categories, List<Tag> tags) {
 		//get a list of brands for the selected categories and tags
-		List<io.nzbee.entity.brand.Brand> lpb = brandService.findAll(categoryIds, tagIds);
+		List<io.nzbee.entity.brand.Brand> lpb = brandService.findAll(
+																	categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
+																	tags.stream().map(t -> t.getTagCode()).collect(Collectors.toList())
+																	);
 		List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, locale)).collect(Collectors.toList());		
      	return lb;
 	}

@@ -15,9 +15,17 @@ public class ProductTagServiceImpl implements IProductTagService {
 	
 	@Override
 	public List<ProductTag> findAll(String locale, Double priceStart, Double priceEnd,
-			String priceType, String currency, Date priceDateStart, Date priceDateEnd, List<Long> categoryIds, List<Long> brandIds) {
+			String priceType, String currency, Date priceDateStart, Date priceDateEnd, List<String> categoryCodes, List<String> brandCodes) {
 		// TODO Auto-generated method stub
-		return productTagDAO.findAll(locale, priceStart, priceEnd, priceType, currency, priceDateStart, priceDateEnd, categoryIds, brandIds);
+		return productTagDAO.findAll(locale, 
+				priceStart, 
+				priceEnd, 
+				priceType, 
+				currency, 
+				priceDateStart, 
+				priceDateEnd, 
+				categoryCodes, 
+				brandCodes);
 	}
 
 	@Override
