@@ -116,7 +116,7 @@ public class ProductServiceImpl implements IProductService {
 									List<String> brandCodes,
 									List<String> categoryCodes) {
 		
-			List<Long> children = this.getAllChildIds(categoryDesc, locale).stream().collect(Collectors.toList());;
+			List<String> children = this.getAllChildCodes(categoryDesc, locale).stream().collect(Collectors.toList());
 		
 			return productRepository.maxMarkDownPrice(
 					categoryTypeCode, 
@@ -125,8 +125,12 @@ public class ProductServiceImpl implements IProductService {
 					currencyCode, 
 					productStatusCode, 
 					brandCodes, 
+					brandCodes.isEmpty() ? 0 : -1,
 					categoryCodes.isEmpty()	? children
-											: categoryCodes);
+											: categoryCodes,
+					categoryCodes.isEmpty() && children.isEmpty()
+											? 0
+											: -1);
 	
 	}
 
@@ -142,7 +146,7 @@ public class ProductServiceImpl implements IProductService {
 				List<String> tagCodes) {
 		
 			List<String> children = this.getAllChildCodes(categoryDesc, locale).stream().collect(Collectors.toList());;
-		
+			
 			// TODO Auto-generated method stub
 			return productRepository.maxMarkDownPriceForTags(
 					categoryTypeCode, 
@@ -150,10 +154,14 @@ public class ProductServiceImpl implements IProductService {
 					locale, 
 					currencyCode, 
 					productStatusCode, 
-					brandCodes,  
-					categoryCodes.isEmpty() 	? children
-												: categoryCodes,  
-					tagCodes);
+					brandCodes, 
+					brandCodes.isEmpty() ? 0 : -1, 
+					categoryCodes, 
+					categoryCodes.isEmpty() && children.isEmpty()
+					? 0
+					: -1, 
+					tagCodes, 
+					tagCodes.isEmpty() ? 0 : -1);
 	}
 	
 	
@@ -184,8 +192,12 @@ public class ProductServiceImpl implements IProductService {
 				locale, 
 				productStatusCode, 
 				brandCodes, 
-				categoryCodes.isEmpty() 	 ? children
-										 	 : categoryCodes
+				brandCodes.isEmpty() ? 0 : -1,
+				categoryCodes.isEmpty() 	? children
+										 	: categoryCodes,
+				categoryCodes.isEmpty() && children.isEmpty()
+											? 0
+											: -1
 		);
 	}
 
@@ -194,15 +206,21 @@ public class ProductServiceImpl implements IProductService {
 			String productStatusCode, List<String> brandCodes,
 			List<String> categoryCodes, List<String> tagCodes) {
 		
-			List<Long> children = this.getAllChildIds(categoryDesc, locale).stream().collect(Collectors.toList());
+			List<String> children = this.getAllChildCodes(categoryDesc, locale).stream().collect(Collectors.toList());
 			// TODO Auto-generated method stub
+			
 			return productRepository.countForTags(	categoryDesc,
 													locale, 
 													productStatusCode, 
-													brandCodes, 
+													brandCodes,
+													brandCodes.isEmpty() ? 0 : -1,
 													categoryCodes.isEmpty() 	? children
-																				: categoryCodes, 
-													tagCodes);
+																				: categoryCodes,
+													categoryCodes.isEmpty() && children.isEmpty()
+													? 0
+													: -1,							
+													tagCodes,
+													tagCodes.isEmpty() ? 0 : -1);
 	}
 
 	
