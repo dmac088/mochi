@@ -11,7 +11,7 @@ public abstract class UIService {
 		return facets.stream().map(c -> c.getToken()).collect(Collectors.toList());
 	}
 	
-	protected List<Long> getFacetIds(List<NavFacet> facets, Class type) {
+	protected List<String> getFacetIds(List<NavFacet> facets, Class type) {
 		return facets.stream().filter(t -> {
 			return t.getFacetClassName() != null && t.getFacetClassName().equals(type.getSimpleName());
 		}).map(c -> c.getFacetId()).collect(Collectors.toList());
