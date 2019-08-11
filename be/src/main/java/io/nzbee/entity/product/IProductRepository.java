@@ -62,12 +62,12 @@ public interface IProductRepository extends CrudRepository<Product, Long> {
 				+ "AND ("
 				+ "	:inHandlingBrands = 0 "
 				+ " OR "
-				+ " b.bnd_id in (:brandIds) "
+				+ " b.bnd_cd in (:brandCodes) "
 				+ ") "
 				+ "AND ("
 				+ "	:inHandlingCategories = 0 "
 				+ " OR "
-				+ " c.cat_id in (:categoryIds) "
+				+ " c.cat_cd in (:categoryCodes) "
 				+ ") "
 				+ "AND now() BETWEEN prc.prc_st_dt AND prc.prc_en_dt ",
 		nativeQuery = true)	
@@ -181,17 +181,17 @@ public interface IProductRepository extends CrudRepository<Product, Long> {
 					+ "AND ("
 					+ "	:inHandlingBrands = 0 "
 					+ " OR "
-					+ " b.bnd_id in (:brandIds) "
+					+ " b.bnd_cd in (:brandCodes) "
 					+ ") "
 					+ "AND ("
 					+ "	:inHandlingCategories = 0 "
 					+ " OR "
-					+ " c.cat_id in (:categoryIds) "
+					+ " c.cat_cd in (:categoryCodes) "
 					+ ") "
 					+ "AND ("
 					+ "	:inHandlingTags = 0 "
 					+ " OR "
-					+ " ptag.tag_id in (:tagIds) "
+					+ " ptag.tag_cd in (:tagCodes) "
 					+ ") "
 					+ "AND now() BETWEEN prc.prc_st_dt AND prc.prc_en_dt ",
 			nativeQuery = true)	
@@ -244,12 +244,12 @@ public interface IProductRepository extends CrudRepository<Product, Long> {
 				+ "AND ("
 				+ "	:inHandlingBrands = 0 "
 				+ " OR "
-				+ " b.bnd_id in (:brandIds) "
+				+ " b.bnd_cd in (:brandCodes) "
 				+ ") "
 				+ "AND ("
 				+ "	:inHandlingCategories = 0 "
 				+ " OR "
-				+ " c.cat_id in (:categoryIds) "
+				+ " c.cat_cd in (:categoryCodes) "
 				+ ") ",
 		nativeQuery = true)	
 	Long count(	
@@ -337,17 +337,17 @@ public interface IProductRepository extends CrudRepository<Product, Long> {
 					+ "AND ("
 					+ "	:inHandlingBrands = 0 "
 					+ " OR "
-					+ " b.bnd_id in (:brandIds) "
+					+ " b.bnd_cd in (:brandCodes) "
 					+ ") "
 					+ "AND ("
 					+ "	:inHandlingCategories = 0 "
 					+ " OR "
-					+ " c.cat_id in (:categoryIds) "
+					+ " c.cat_cd in (:categoryCodes) "
 					+ ") "
 					+ "AND ("
 					+ "	:inHandlingTags = 0 "
 					+ " OR "
-					+ " ptag.tag_id in (:tagIds) "
+					+ " ptag.tag_cd in (:tagCodes) "
 					+ ") ",
 			nativeQuery = true)	
 		Long countForTags(	
