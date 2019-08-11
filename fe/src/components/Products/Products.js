@@ -109,17 +109,26 @@ class Products extends Component {
     //need to get the new max price for selected facets before getting the products
     const p1 = productApi.getMaxPrice(locale, currency, category, selectedFacets)
     .then((response) => {
-     return response.json();
+       return response.json();
     })
     .then((price) => {
-      return callback(locale, currency, category, term, price, page, size, sort, selectedFacets)
-      .catch((e)=>{
-       console.log(e);
-      });
+      const newStateA = {"price": null};
+      newStateA.price = price;
+      return newStateA;
     })
-    // .then((resposne) => {
-    //   console.log(response);
-    // })
+    .then((response) => {
+      const newPrice = response.price;
+      return callback(locale, currency, category, term, newPrice, page, size, sort, selectedFacets)
+                          .then((response) => {
+                            const newStateB = {...response};
+                            newStateB.price = newPrice;
+                            newStateB.products = response.products;
+                            return newStateB;
+                          })
+                          .catch((e)=>{
+                             console.log(e);
+                          });
+    })
     .catch((e) => {
       console.log(e);
     });
@@ -135,7 +144,7 @@ class Products extends Component {
     const pa = [p1, p2];
     Promise.all(pa)
     .then((response) => {
-          console.log(response);
+         console.log(response);
           this.setState( {
             "locale":                 locale,
             "currency":               currency,
@@ -154,9 +163,9 @@ class Products extends Component {
             "totalElements":          response[0].products.totalElements,
             "numberOfElements":       response[0].products.numberOfElements,
             "params":                 params,
-            "syncPrice":              (!noChangePrice) ? response[2] : price,
-            "maxPrice":               (type === 'category') ? response[2] : price,
-            "selectedPrice":          (type === 'category' && !noChangePrice) ? response[2] : price,
+            "syncPrice":              (!noChangePrice) ? response[0].price : price,
+            "maxPrice":               (type === 'category') ? response[0].price : price,
+            "selectedPrice":          (type === 'category' && !noChangePrice) ? response[0].price : price,
           });
      });
 
