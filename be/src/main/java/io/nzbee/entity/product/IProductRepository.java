@@ -77,9 +77,9 @@ public interface IProductRepository extends CrudRepository<Product, Long> {
 							@Param("locale") 				String locale,
 							@Param("currencyCode") 			String currencyCode,
 							@Param("productStatusCode")		String productStatusCode,
-						   	@Param("brandIds") 				List<Long> brandIds,
+						   	@Param("brandCodes")			List<String> brandCodes,
 						   	@Param("inHandlingBrands")		int inHandlingBrands,
-						   	@Param("categoryIds") 			List<Long> categoryIds,
+						   	@Param("categoryCodes") 		List<String> categoryCodes,
 						   	@Param("inHandlingCategories")	int inHandlingCategories);
 	
 	
@@ -125,7 +125,7 @@ public interface IProductRepository extends CrudRepository<Product, Long> {
 					+ "AND now() BETWEEN prc.prc_st_dt AND prc.prc_en_dt ",
 			nativeQuery = true)	
 		Double maxMarkDownPriceForCategory(
-				@Param("categoryId") 		Long categoryId,
+				@Param("categoryCode") 		String categoryCode,
 				@Param("currencyCode") 		String currencyCode
 		);
 	
@@ -201,11 +201,11 @@ public interface IProductRepository extends CrudRepository<Product, Long> {
 										@Param("locale") 				String locale,
 										@Param("currencyCode") 			String currencyCode,
 										@Param("productStatusCode")		String productStatusCode,
-									   	@Param("brandIds") 				List<Long> brandIds,
+									   	@Param("brandCodes")			List<String> brandCodes,
 									   	@Param("inHandlingBrands")		int inHandlingBrands,
-									   	@Param("categoryIds") 			List<Long> categoryIds,
+									   	@Param("categoryCodes") 		List<String> categoryCodes,
 									   	@Param("inHandlingCategories")	int inHandlingCategories,
-									   	@Param("tagIds") 				List<Long> tagIds,
+									   	@Param("tagCodes")  			List<String> tagCodes,
 									   	@Param("inHandlingTags")		int inHandlingTags);
 	
 	@Query(
@@ -256,9 +256,9 @@ public interface IProductRepository extends CrudRepository<Product, Long> {
 			   	@Param("categoryDesc") 			String categoryDesc, 
 			   	@Param("locale") 				String locale,
 			   	@Param("productStatusCode")		String productStatusCode,
-			   	@Param("brandIds") 				List<Long> brandIds,
+			   	@Param("brandCodes")			List<String> brandCodes,
 			   	@Param("inHandlingBrands")		int inHandlingBrands,
-			   	@Param("categoryIds") 			List<Long> categoryIds,
+			   	@Param("categoryCodes") 		List<String> categoryCodes,
 			   	@Param("inHandlingCategories")	int inHandlingCategories);
 	
 	
@@ -296,7 +296,7 @@ public interface IProductRepository extends CrudRepository<Product, Long> {
 					nativeQuery = true)
 	
 		Long countForCategory(
-				@Param("categoryId") 		Long categoryId
+				@Param("categoryCode") 		String categoryCode
 		);
 	
 	@Query(
@@ -354,11 +354,11 @@ public interface IProductRepository extends CrudRepository<Product, Long> {
 						   	@Param("categoryDesc") 			String categoryDesc, 
 						   	@Param("locale") 				String locale,
 						   	@Param("productStatusCode")		String productStatusCode,
-						   	@Param("brandIds") 				List<Long> brandIds,
+						   	@Param("brandCodes")			List<String> brandCodes,
 						   	@Param("inHandlingBrands")		int inHandlingBrands,
-						   	@Param("categoryIds") 			List<Long> categoryIds,
+						   	@Param("categoryCodes") 		List<String> categoryCodes,
 						   	@Param("inHandlingCategories")	int inHandlingCategories,
-						   	@Param("tagIds") 				List<Long> tagIds,
+						   	@Param("tagCodes")  			List<String> tagCodes,
 						   	@Param("inHandlingTags")		int inHandlingTags
 		);
 	
