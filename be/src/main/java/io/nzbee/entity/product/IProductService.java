@@ -26,7 +26,7 @@ public interface IProductService extends IService<Product> {
 	
 	Double getMaxMarkDownPriceForCategory(String categoryCode, String currencyCode);
 
-	Long getCountForCategory(Long categoryId);
+	Long getCountForCategory(String categoryCode);
 
 	Page<Product> findAll(String categoryDesc, List<String> categoryCodes, String locale, Double priceStart,
 			Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd,
@@ -35,7 +35,6 @@ public interface IProductService extends IService<Product> {
 	Page<Product> findAll(String categoryDesc, List<String> categoryCodes, String locale, String priceType,
 			String currency, Date priceDateStart, Date priceDateEnd, Pageable pageable, List<String> brandCodes,
 			List<String> tagCodes);
-
 
 	
 }
