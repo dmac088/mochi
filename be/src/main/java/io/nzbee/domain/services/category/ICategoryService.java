@@ -3,11 +3,11 @@ package io.nzbee.domain.services.category;
 
 import java.util.List;
 
+import io.nzbee.domain.Brand;
 import io.nzbee.domain.Category;
+import io.nzbee.domain.Tag;
 
 public interface ICategoryService {
-	 
-	List<Category> findAll(String lcl);
 	 
 	List<Category> findAllForLevel(String lcl, Long level);
 	 
@@ -20,9 +20,13 @@ public interface ICategoryService {
 	Category findOneByDesc(String locale,  String categoryType, String categoryDesc);
 	
 	Category findOneByCode(String locale, String categoryType, String categoryCode);
-
-	List<Category> findAll(String locale, String category, List<Long> brandIds, List<Long> tagIds);
+	
 
 	Category createCategory(io.nzbee.entity.category.Category pc, String locale);
+
+	List<Category> findAll(String locale, String categoryDesc, List<Brand> brands,
+			List<Tag> tags);
+
+	List<Category> findAll(String locale);
 
 }

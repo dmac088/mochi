@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import io.nzbee.domain.Brand;
 import io.nzbee.domain.Category;
+import io.nzbee.domain.Tag;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.variables.CategoryVars;
 
@@ -101,14 +103,14 @@ public class CategoryServiceImpl implements ICategoryService {
     @Override
 	@Transactional
 	//@Cacheable
-	public List<Category> findAll(String locale, String categoryDesc, List<Long> brandIds, List<Long> tagIds) {
+	public List<Category> findAll(String locale, String categoryDesc, List<Brand> brands, List<Tag> tags) {
     	
 		List<io.nzbee.entity.category.Category> lc = categoryService.find(
 				 CategoryVars.PRIMARY_HIERARCHY_CODE, 
 				 CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 				 categoryDesc, 
-				 brandIds,  
-				 tagIds,
+				 brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()),  
+				 tags.stream().map(t -> t.getTagCode()).collect(Collectors.toList()),
 				 locale);
 		
 		List<Category> lcDO = lc.stream().map(c -> createCategory(c, locale)).collect(Collectors.toList());
