@@ -57,29 +57,28 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 	
 	@Override
 	public NavFacetResult findAll(String locale, String currency, String categoryDesc, NavFacetContainer selectedFacets) {
-		List<Long> tIds = selectedFacets.getTags().stream().map(t -> Long.parseLong(t.getFacetId())).collect(Collectors.toList());
-		List<Long> bIds = selectedFacets.getBrands().stream().map(t -> Long.parseLong(t.getFacetId())).collect(Collectors.toList());
-		List<Long> cIds = selectedFacets.getCategories().stream().map(t -> Long.parseLong(t.getFacetId())).collect(Collectors.toList());
+		List<Tag> lt = selectedFacets.getTags().stream().map(t -> t.getPayload()).collect(Collectors.toList());
+		List<Brand> lb = selectedFacets.getBrands().stream().map(t -> t.getPayload()).collect(Collectors.toList());
+		List<Category> lc = selectedFacets.getCategories().stream().map(t -> t.getPayload()).collect(Collectors.toList());
 		
 		NavFacetContainer nfc = new NavFacetContainer();
 		NavFacetResult nfr = new NavFacetResult();
 		
-		List<Category> categories = categoryService.findAll(locale, categoryDesc, bIds, tIds);
-		List<Brand> brands = brandService.findAll(locale, currency, categoryDesc, cIds, tIds);
-		List<Tag> tags = tagService.findAll(locale, currency, categoryDesc, cIds, bIds);
+		List<Category> categories = categoryService.findAll(locale, categoryDesc, lb, lt);
+		List<Brand> brands = brandService.findAll(locale, currency, categoryDesc, lc, lt);
+		List<Tag> tags = tagService.findAll(locale, currency, categoryDesc, lc, lb);
 	
 		List<NavFacet<Category>> catBars = categories.stream().map(c -> {
 			NavFacet<Category> s = convertCatToNavFacet(c);
-			s.setFacetProductCount(this.getCountForCategory(locale, currency, categoryDesc, c, bIds, tIds));
+			s.setFacetProductCount(this.getCountForCategory(locale, currency, categoryDesc, c, lb, lt));
 			return s;
 		}).collect(Collectors.toList()).stream()
 			.filter(c -> c.getFacetProductCount() > 0)
 			.collect(Collectors.toList());
 	
 		List<NavFacet<Brand>> brandBars = brands.stream().map(b -> {
-			List<Long> brandIds = new ArrayList<Long>();
 			NavFacet<Brand> s = convertBrandToNavFacet(b);
-			s.setFacetProductCount(this.getCountForBrand(locale, currency, categoryDesc, cIds, b, tIds));
+			s.setFacetProductCount(this.getCountForBrand(locale, currency, categoryDesc, lc, b, lt));
 			return s;
 		}).collect(Collectors.toList()).stream()
 			.filter(c -> c.getFacetProductCount() > 0)
@@ -87,9 +86,8 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		
 		List<NavFacet<Tag>> tagBars = tags.stream().map(t -> {
 			List<Long> tagIds = new ArrayList<Long>();
-			tagIds.add(t.getTagId());
 			NavFacet<Tag> s = convertTagToNavFacet(t);
-			s.setFacetProductCount(this.getCountForTag(locale, currency, categoryDesc, cIds, bIds, t.getTagId()));
+			s.setFacetProductCount(this.getCountForTag(locale, currency, categoryDesc, lc, lb, t));
 			return s;
 		}).collect(Collectors.toList()).stream()
 			.filter(t -> t.getFacetProductCount() > 0)
@@ -105,37 +103,37 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		
 	}
 	
-	private Long getCountForBrand(String locale, String currency, String category, List<Long> cIds, Brand brand, List<Long> tIds) {
-		List<Long> lbId = new ArrayList<Long>();
+	private Long getCountForBrand(String locale, String currency, String category, List<Category> categories, Brand brand, List<Tag> tags) {
+
 		return productService.getCount(
 		CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 		category, 
 		locale, 
 		currency, 
 		ProductVars.ACTIVE_SKU_CODE,
-		new ArrayList<Long>(cIds), 
-		lbId, 
-		new ArrayList<Long>(tIds)
+		categories, 
+		brand, 
+		tags
 		);
 	}
 	
 	
-	private Long getCountForTag(String locale, String currency, String category, List<Long> cIds, List<Long> bIds, Long tagId) {
-		List<Long> ltId = new ArrayList<Long>();
-		ltId.add(tagId);
+	private Long getCountForTag(String locale, String currency, String category, List<Category> categories, List<Brand> brands, Tag tag) {
+
 		return productService.getCount(
 		CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 		category, 
 		locale, 
 		currency, 
 		ProductVars.ACTIVE_SKU_CODE,
-		new ArrayList<Long>(cIds), 
-		new ArrayList<Long>(bIds), 
-		ltId
+		categories, 
+		brands, 
+		tag
 		);
 	}
 	
-	private Long getCountForCategory(String locale, String currency, String categoryDesc, Category category, List<Long> bIds, List<Long> tIds) {
+	private Long getCountForCategory(String locale, String currency, String categoryDesc, Category category, List<Brand> brands, List<Tag> tags) {
+		
 		return productService.getCount(
 		CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 		categoryDesc, 
@@ -143,10 +141,10 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		currency, 
 		ProductVars.ACTIVE_SKU_CODE,
 		category, 
-		new ArrayList<Long>(bIds), 
-		tIds
+		brands, 
+		tags
 		);
-	}
+	}s
 
 	@Override
     public NavFacet<Category> convertCatToNavFacet(final Category c) {
