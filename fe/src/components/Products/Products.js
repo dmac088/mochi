@@ -107,44 +107,43 @@ class Products extends Component {
     ) {return;}
 
     //need to get the new max price for selected facets before getting the products
-    const p1 = productApi.getMaxPrice(locale, currency, category, selectedFacets)
-    .then((response) => {
-       return response.json();
-    })
-    .then((price) => {
-      const newStateA = {"price": null};
-      newStateA.price = price;
-      return newStateA;
-    })
-    .then((response) => {
-      const newPrice = response.price;
-      return callback(locale, currency, category, term, newPrice, page, size, sort, selectedFacets)
-                          .then((response) => {
-                            const newStateB = {...response};
-                            newStateB.price = newPrice;
-                            newStateB.products = response.products;
-                            return newStateB;
-                          })
-                          .catch((e)=>{
-                             console.log(e);
-                          });
-    })
-    .catch((e) => {
-      console.log(e);
-    });
+    const p1 =  productApi.getMaxPrice(locale, currency, category, selectedFacets)
+                .then((response) => {
+                   return response.json();
+                })
+                .then((price) => {
+                  const newStateA = {"price": null};
+                  newStateA.price = price;
+                  return newStateA;
+                })
+                .then((response) => {
+                  const newPrice = response.price;
+                  return callback(locale, currency, category, term, newPrice, page, size, sort, selectedFacets)
+                                      .then((response) => {
+                                        const newStateB = {...response};
+                                        newStateB.price = newPrice;
+                                        newStateB.products = response.products;
+                                        return newStateB;
+                                      })
+                                      .catch((e)=>{
+                                         console.log(e);
+                                      });
+                })
+                .catch((e) => {
+                  console.log(e);
+                });
 
-    const p2 = facetApi.findAllChildrenByCriteria(locale, currency, category, selectedFacets)
-    .then((response) => {
-     return response.json();
-    })
-    .catch((e) => {
-     console.log(e);
-    });
+    const p2 =  facetApi.findAllChildrenByCriteria(locale, currency, category, selectedFacets)
+                .then((response) => {
+                 return response.json();
+                })
+                .catch((e) => {
+                 console.log(e);
+                });
 
     const pa = [p1, p2];
     Promise.all(pa)
     .then((response) => {
-         console.log(response);
           this.setState( {
             "locale":                 locale,
             "currency":               currency,
