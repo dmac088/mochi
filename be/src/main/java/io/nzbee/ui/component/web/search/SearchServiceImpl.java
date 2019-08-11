@@ -99,13 +99,14 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 	public NavFacet<Object> getMaxPrice(String categoryDesc, String locale, String currency,
 			NavFacetContainer selectedFacets) {
 
-		// convert selected facets into token lists
-		List<Long> categoryIds = selectedFacets.getCategories().stream().map(c -> Long.parseLong(c.getFacetId())).collect(Collectors.toList());
-		List<Long> brandIds = selectedFacets.getBrands().stream().map(c -> Long.parseLong(c.getFacetId())).collect(Collectors.toList());
-		List<Long> tagIds = selectedFacets.getTags().stream().map(c -> Long.parseLong(c.getFacetId())).collect(Collectors.toList());
-
-		Double maxPrice = productService.getMaxPrice(categoryDesc, locale, ProductVars.MARKDOWN_SKU_DESCRIPTION,
-				currency, categoryIds, brandIds, tagIds);
+		Double maxPrice = productService.getMaxPrice(
+				categoryDesc, 
+				locale, 
+				ProductVars.MARKDOWN_SKU_DESCRIPTION,
+				currency, 
+				selectedFacets.getCategories().stream().map(c -> c.getPayload()).collect(Collectors.toList()), 
+				selectedFacets.getBrands().stream().map(b -> b.getPayload()).collect(Collectors.toList()), 
+				selectedFacets.getTags().stream().map(t -> t.getPayload()).collect(Collectors.toList()));
 
 		NavFacet<Object> s = new NavFacet<Object>();
 		s.setToken(maxPrice.toString());
