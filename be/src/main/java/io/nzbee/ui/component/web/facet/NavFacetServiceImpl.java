@@ -104,22 +104,9 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 	}
 	
 	private Long getCountForBrand(String locale, String currency, String category, List<Category> categories, Brand brand, List<Tag> tags) {
-
-		return productService.getCount(
-		CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
-		category, 
-		locale, 
-		currency, 
-		ProductVars.ACTIVE_SKU_CODE,
-		categories, 
-		brand, 
-		tags
-		);
-	}
-	
-	
-	private Long getCountForTag(String locale, String currency, String category, List<Category> categories, List<Brand> brands, Tag tag) {
-
+		List<Brand> brands = new ArrayList<Brand>();
+		brands.add(brand);
+		
 		return productService.getCount(
 		CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 		category, 
@@ -128,11 +115,30 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		ProductVars.ACTIVE_SKU_CODE,
 		categories, 
 		brands, 
-		tag
+		tags
+		);
+	}
+	
+	
+	private Long getCountForTag(String locale, String currency, String category, List<Category> categories, List<Brand> brands, Tag tag) {
+		List<Tag> tags = new ArrayList<Tag>();
+		tags.add(tag);
+		
+		return productService.getCount(
+		CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
+		category, 
+		locale, 
+		currency, 
+		ProductVars.ACTIVE_SKU_CODE,
+		categories, 
+		brands, 
+		tags
 		);
 	}
 	
 	private Long getCountForCategory(String locale, String currency, String categoryDesc, Category category, List<Brand> brands, List<Tag> tags) {
+		List<Category> categories = new ArrayList<Category>();
+		categories.add(category);
 		
 		return productService.getCount(
 		CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
@@ -140,11 +146,11 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		locale, 
 		currency, 
 		ProductVars.ACTIVE_SKU_CODE,
-		category, 
+		categories, 
 		brands, 
 		tags
 		);
-	}s
+	}
 
 	@Override
     public NavFacet<Category> convertCatToNavFacet(final Category c) {

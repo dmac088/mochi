@@ -52,8 +52,8 @@ public class CategoryServiceImpl implements ICategoryService {
 
 	@Override
 	public List<Category> find(String hieararchyCode, String categoryTypeCode, String parentCategoryDesc,
-			List<Long> brandIds, List<Long> tagIds, String locale) {
-		return categoryDAO.findChildrenByCriteria(hieararchyCode, categoryTypeCode, parentCategoryDesc, brandIds, tagIds, locale);
+			List<String> brandCodes, List<String> tagCodes, String locale) {
+		return categoryDAO.findChildrenByCriteria(hieararchyCode, categoryTypeCode, parentCategoryDesc, brandCodes, tagCodes, locale);
 	}
 
 	@Override

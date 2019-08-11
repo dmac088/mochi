@@ -221,7 +221,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 	}
 	
 	@Override
-	public List<Category> findChildrenByCriteria(String hieararchyCode, String categoryTypeCode, String parentCategoryDesc, List<Long> brandIds, List<Long> tagIds, String locale) {
+	public List<Category> findChildrenByCriteria(String hieararchyCode, String categoryTypeCode, String parentCategoryDesc, List<String> brandCodes, List<String> tagCodes, String locale) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
@@ -239,12 +239,12 @@ public class CategoryDaoImpl implements ICategoryDao {
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), hieararchyCode));
 		conditions.add(cb.equal(categoryType.get(CategoryType_.code), categoryTypeCode));
-		if(!brandIds.isEmpty()) {
-			conditions.add(brand.get(Brand_.brandId).in(brandIds));
+		if(!brandCodes.isEmpty()) {
+			conditions.add(brand.get(Brand_.brandCode).in(brandCodes));
 		}
-		if(!tagIds.isEmpty()) {
+		if(!tagCodes.isEmpty()) {
 			Join<Product, ProductTag> tags = product.join(Product_.tags);
-			conditions.add(tags.get(ProductTag_.productTagId).in(tagIds));
+			conditions.add(tags.get(ProductTag_.productTagCode).in(tagCodes));
 		}
 		if(!(parentCategoryDesc == null)) {
 			conditions.add(cb.equal(parentCategoryAttribute.get(CategoryAttribute_.categoryDesc), parentCategoryDesc));

@@ -18,10 +18,11 @@ public interface ICategoryService {
 	
 	Optional<Category> findByCategoryCode(String categoryTypeCode, String categoryCode, String locale);
 	
-	List<Category> find(String hieararchyCode, String categoryTypeCode, String parentCategoryDesc, List<Long> brandIds, List<Long> tagIds, String locale);
-	
 	List<Category> findByLevel(String hieararchyCode, String categoryTypeCode, Long level, String locale);
 
 	Set<Category> recurseCategories(Set<Category> arrayList, Category pc);
+
+	List<Category> find(String hieararchyCode, String categoryTypeCode, String parentCategoryDesc,
+			List<String> brandCodes, List<String> tagCodes, String locale);
 	
 }
