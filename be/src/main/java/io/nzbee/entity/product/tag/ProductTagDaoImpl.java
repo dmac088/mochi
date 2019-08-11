@@ -143,7 +143,7 @@ public class ProductTagDaoImpl  implements IProductTagDao {
 	}
 	
 	@Override
-	public List<ProductTag> findAll(String locale, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, List<Long> categoryIds, List<Long> brandIds) {
+	public List<ProductTag> findAll(String locale, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, List<String> categoryCodes, List<String> brandCodes) {
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 	
@@ -162,11 +162,11 @@ public class ProductTagDaoImpl  implements IProductTagDao {
 		Join<Category, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
-		if(!categoryIds.isEmpty()) {
-			conditions.add(category.get(Category_.categoryId).in(categoryIds));
+		if(!categoryCodes.isEmpty()) {
+			conditions.add(category.get(Category_.categoryCode).in(categoryCodes));
 		}
-		if(!brandIds.isEmpty()) {
-			conditions.add(brand.get(Brand_.brandId).in(brandIds));
+		if(!brandCodes.isEmpty()) {
+			conditions.add(brand.get(Brand_.brandCode).in(brandCodes));
 		}
 		if(!(priceStart == null && priceEnd == null)) {
 			Join<Product, ProductPrice> price = product.join(Product_.prices);

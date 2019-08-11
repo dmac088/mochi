@@ -13,5 +13,5 @@ public interface IBrandService {
 	
 	Optional<Brand> findByDesc(String brandDesc, String locale);
 
-	List<Brand> findAll(List<Long> categoryIds, List<Long> tagIds);
+	List<Brand> findAll(List<String> categoryCodes, List<String> tagCodes);
 }

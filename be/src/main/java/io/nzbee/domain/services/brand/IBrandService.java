@@ -4,6 +4,8 @@ package io.nzbee.domain.services.brand;
 import java.util.List;
 
 import io.nzbee.domain.Brand;
+import io.nzbee.domain.Category;
+import io.nzbee.domain.Tag;
 
 public interface IBrandService {
 	 
@@ -15,7 +17,6 @@ public interface IBrandService {
 	
 	List<Brand> findAll(String lcl);
 
-	List<Brand> findAll(String lcl, String curr, String categoryDesc,
-			List<Long> categoryIds, List<Long> tagIds);
+	List<Brand> findAll(String locale, String currency, String categoryDesc, List<Category> categories, List<Tag> tags);
 
 }
