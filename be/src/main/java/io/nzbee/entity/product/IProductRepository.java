@@ -330,6 +330,8 @@ public interface IProductRepository extends CrudRepository<Product, Long> {
 					+ "	ON p.bnd_id = b.bnd_id "
 					+ "INNER JOIN mochi.product_tag ptag "
 					+ " ON p.prd_id = ptag.prd_id "
+					+ "INNER JOIN mochi.tag tag "
+					+ "	ON ptag.tag_id = tag.tag_id "
 					+ "INNER JOIN mochi.product_status pstat "
 					+ " ON p.prd_sts_id = pstat.prd_sts_id "
 					+ "WHERE pstat.prd_sts_cd 	= :productStatusCode "
@@ -347,7 +349,7 @@ public interface IProductRepository extends CrudRepository<Product, Long> {
 					+ "AND ("
 					+ "	:inHandlingTags = 0 "
 					+ " OR "
-					+ " ptag.tag_cd in (:tagCodes) "
+					+ " tag.tag_cd in (:tagCodes) "
 					+ ") ",
 			nativeQuery = true)	
 		Long countForTags(	
