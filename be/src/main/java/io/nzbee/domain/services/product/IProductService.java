@@ -38,25 +38,21 @@ public interface IProductService extends IService<Product> {
 	List<Product> findAll(String locale, String currency, List<Long> productIds);
 
 	Double getMaxPrice(String categoryDesc, String locale, String markdownSkuDescription, String currency,
-			List<Long> categoryIds, List<Long> brandIds, List<Long> tagIds);
-	
-	Long getCount(String categoryTypeCode, String categoryDesc, String locale, String currency,
-			String productStatusCode, List<Long> categoryIds, List<Long> brandIds,
-			List<Long> tagIds
-			);
+			List<Category> categories, List<Brand> brands, List<Tag> tags);
 
 	Product convertToProductDO(io.nzbee.entity.product.Product product, String lcl, String currency);
 
 	Page<Product> findAll(String locale, String currency, String categoryDesc, int page, int size, String sortBy,
 			List<Long> categoryIds, List<Long> brandIds, List<Long> tagIds);
 
-	Double getMaxPriceForCategory(Long categoryId, String currencyCode);
-
-	Long getCountForCategory(Long categoryId);
-
 	Page<Product> findAll(String locale, String currency, String categoryDesc, Double price, int page, int size,
 			String sortBy, List<Category> categories, List<Brand> brands, List<Tag> tags);
 
+	Long getCount(String categoryTypeCode, String categoryDesc, String locale, String currency,
+			String productStatusCode, List<Category> categories, List<Brand> brands, List<Tag> tags);
 
+	Long getCountForCategory(Category category);
+
+	Double getMaxPriceForCategory(Category category, String currencyCode);
 	
 }

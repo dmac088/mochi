@@ -6,10 +6,7 @@ import java.util.Objects;
 import io.nzbee.entity.layout.Layout;
 
 public class Category {
-	
-	private Long categoryId;
-	
-	private String categoryCode;
+ String categoryCode;
 	
 	private String categoryDesc;
 	
@@ -24,17 +21,7 @@ public class Category {
 	private Long parentId;	
 
 	private Long childCategoryCount;
-//
-//	private List<Category> children;
 	
-	public Long getCategoryId() {
-		return categoryId;
-	}
-
-	public void setCategoryId(Long categoryId) {
-		this.categoryId = categoryId;
-	}
-
 	public String getCategoryCode() {
 		return categoryCode;
 	}
@@ -98,34 +85,25 @@ public class Category {
 	public void setLayouts(List<Layout> layouts) {
 		this.layouts = layouts;
 	}
-	
-//	public List<Category> getChildren() {
-//		return children;
-//	}
-//
-//	public void setChildren(List<Category> children) {
-//		this.children = children;
-//	}
 
 	@Override
 	public boolean equals(Object o) {
 		 if (this == o) return true;
 	     if (o == null || getClass() != o.getClass()) return false;
 	     Category pcDto = (Category) o;
-	     return this.categoryId == pcDto.categoryId;
+	     return this.categoryCode == pcDto.categoryCode;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(categoryId);
+		return Objects.hash(categoryCode);
 	}
 
 	@Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append("domain.Category [")
-        .append("categoryId=").append(categoryId)
-        .append(", categoryCode=").append(categoryCode)
+        .append("categoryCode=").append(categoryCode)
         .append(", categoryDesc=").append(categoryDesc)
         .append(", categoryLevel=").append(categoryLevel)
         .append(", categoryType=").append(categoryType)
