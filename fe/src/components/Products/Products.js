@@ -164,7 +164,7 @@ class Products extends Component {
             "numberOfElements":       response[0].products.numberOfElements,
             "params":                 params,
             "syncPrice":              (!noChangePrice)                        ? response[0].maxPrice : response[0].price,
-            "maxPrice":               (type === 'category')                   ? response[0].maxPrice : response[0].price,
+            "maxPrice":               response[0].maxPrice,
             "selectedPrice":          (type === 'category' && !noChangePrice) ? response[0].maxPrice : response[0].price,
           });
      });
