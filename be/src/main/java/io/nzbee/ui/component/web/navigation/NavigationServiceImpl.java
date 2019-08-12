@@ -35,13 +35,7 @@ public class NavigationServiceImpl extends UIService implements INavigationServi
 			 int size, 
 			 String sortBy, 
 			 NavFacetContainer selectedFacets) {
-		
-		//convert selected facets into token lists
-		List<Long> categoryIds = selectedFacets.getCategories().stream().map(t -> Long.parseLong(t.getFacetId())).collect(Collectors.toList());
-		List<Long> brandIds = selectedFacets.getBrands().stream().map(t -> Long.parseLong(t.getFacetId())).collect(Collectors.toList());
-		List<Long> tagIds = selectedFacets.getTags().stream().map(t ->  Long.parseLong(t.getFacetId())).collect(Collectors.toList());
-				
-		
+
 		
 		Page<Product> pp = productService.findAll(locale, 
 												  currency, 
