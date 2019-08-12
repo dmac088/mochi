@@ -324,7 +324,7 @@ public class ProductDaoImpl implements IProductDao {
 		}
 		conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.startDate), priceDateStart));
 		conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.endDate), priceDateEnd));
-		conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), CategoryVars.PRIMARY_HIERARCHY_CODE));		
+		//conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), CategoryVars.PRIMARY_HIERARCHY_CODE));		
 		Long resultCount = this.getResultCountByCode(categoryCodes, locale, priceStart, priceEnd, priceType, currency, priceDateStart, priceDateEnd, pageable, brandCodes, tagCodes);
 	
 		Order order = pageable.getSort().stream().map(o -> {
