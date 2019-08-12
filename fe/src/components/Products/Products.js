@@ -92,9 +92,9 @@ class Products extends Component {
 
   update = (type, locale, currency, pathname, category, term, params, price, maxPrice, isMounting = 0, selectedFacets, callback) => {
     if(!params) {return;}
-    const { page, size, sort } = params;
-    const noChangePrice =       ( currency === this.state.currency
-                            &&  (_.isEqual(selectedFacets, this.state.syncFacets)));
+    const { page, size, sort }  = params;
+    const noChangePrice         = ( currency === this.state.currency
+                              &&  (_.isEqual(selectedFacets, this.state.syncFacets)));
     if(   locale      === this.state.locale
       &&  noChangePrice
       &&  category    === this.state.category
