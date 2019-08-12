@@ -299,7 +299,7 @@ public class ProductDaoImpl implements IProductDao {
 		Join<ProductPrice, Currency> curr 					= price.join(ProductPrice_.currency);
 		Join<Brand, BrandAttribute> brandAttribute 			= brand.join(Brand_.brandAttributes);
 		Join<Category, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
-		Join<Category, Hierarchy> categoryHierarchy 		= category.join(Category_.hierarchy);
+		//Join<Category, Hierarchy> categoryHierarchy 		= category.join(Category_.hierarchy);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		if(!categoryCodes.isEmpty()) {
