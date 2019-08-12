@@ -281,7 +281,7 @@ public class ProductDaoImpl implements IProductDao {
 	}
 	
 	@Override
-	public Page<Product> findAllActiveSKUByPrimaryHierarchyByCode(List<String> categoryCodes, String locale, Double priceStart,
+	public Page<Product> findAllActiveSKUByCode(List<String> categoryCodes, String locale, Double priceStart,
 			Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd,
 			Pageable pageable, List<String> brandCodes, List<String> tagCodes) {
 		// TODO Auto-generated method stub

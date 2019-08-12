@@ -55,7 +55,7 @@ public class ProductServiceImpl implements IProductService {
 									List<String> brandCodes, 
 									List<String> tagCodes) {
 		
-			return productDAO.findAllActiveSKUByPrimaryHierarchyByCode(	
+			return productDAO.findAllActiveSKUByCode(	
 					categoryCodes.isEmpty() ? this.getAllChildCodes(categoryDesc, locale).stream().collect(Collectors.toList())
 											: categoryCodes,
 					locale,
@@ -84,7 +84,7 @@ public class ProductServiceImpl implements IProductService {
 									List<String> brandCodes, 
 									List<String> tagCodes) {
 		
-			return productDAO.findAllActiveSKUByPrimaryHierarchyByCode(	
+			return productDAO.findAllActiveSKUByCode(	
 					categoryCodes.isEmpty() 	? this.getAllChildCodes(categoryDesc, locale).stream().collect(Collectors.toList())
 												: categoryCodes,
 					locale,

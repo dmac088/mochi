@@ -22,14 +22,14 @@ public interface IProductDao extends IDao<Product> {
 			Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd,
 			Pageable pageable, List<Long> brandIds, List<Long> tagIds);
 
-	Page<Product> findAllActiveSKUByPrimaryHierarchyByCode(List<String> categoryCodes, String locale, Double priceStart,
-			Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd,
-			Pageable pageable, List<String> brandCodes, List<String> tagCodes);
-
 	Double getMaxPriceByCode(String categoryDesc, String locale, String priceType, String currency,
 			List<String> categoryCodes, List<String> brandCodes, List<String> tagCodes);
 
 	Double getMaxPriceById(String categoryDesc, String locale, String priceType, String currency,
 			List<Long> categoryIds, List<Long> brandIds, List<Long> tagIds);
+
+	Page<Product> findAllActiveSKUByCode(List<String> categoryCodes, String locale, Double priceStart, Double priceEnd,
+			String priceType, String currency, Date priceDateStart, Date priceDateEnd, Pageable pageable,
+			List<String> brandCodes, List<String> tagCodes);
 	
 }
