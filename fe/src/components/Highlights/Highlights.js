@@ -29,6 +29,7 @@ class Highlights extends Component {
   reset = () => {
     const { landingCategories } = this.props;
     const { selectedCategory } = this.state;
+
     if(landingCategories.length === 0) {return;}
     if(selectedCategory) { return; }
     //reset the current category to first in array
@@ -59,6 +60,7 @@ class Highlights extends Component {
   renderTabs = (categoryList, selectedCategory) => {
     const { match, history, setCurrentProductId } = this.props;
     return categoryList.map(c => {
+      
       const isActive = (c.facetId === selectedCategory);
       return (
         <div key={c.facetId}

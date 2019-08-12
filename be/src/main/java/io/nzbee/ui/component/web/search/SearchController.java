@@ -24,7 +24,6 @@ public class SearchController {
     						@PathVariable int size, 
     						@PathVariable String sortBy, 
     						@RequestBody  NavFacetContainer selectedFacets) {
-
     	return searchService.findAll(locale, currency, category, term, page, size, sortBy, selectedFacets);
     }
     
