@@ -94,10 +94,10 @@ class Products extends Component {
     if(!params) {return;}
     const { page, size, sort }  = params;
     const noChangePrice         = ( currency === this.state.currency
-                              &&  (_.isEqual(selectedFacets, this.state.syncFacets)));
+                              &&  (_.isEqual(selectedFacets, this.state.syncFacets))
+                              &&  category === this.state.category);
     if(   locale      === this.state.locale
       &&  noChangePrice
-      &&  category    === this.state.category
       &&  term        === this.state.term
       &&  page        === this.state.params.page
       &&  size        === this.state.params.size
@@ -117,11 +117,13 @@ class Products extends Component {
                   return newStateA;
                 })
                 .then((response) => {
-                  const newPrice = response.price;
+                  const newPrice = (noChangePrice) ? price : response.price;
+                  const maxPrice = response.price;
                   return callback(locale, currency, category, term, newPrice, page, size, sort, selectedFacets)
                                       .then((response) => {
                                         const newStateB = {...response};
                                         newStateB.price = newPrice;
+                                        newStateB.maxPrice = maxPrice;
                                         return newStateB;
                                       })
                                       .catch((e)=>{
@@ -161,9 +163,9 @@ class Products extends Component {
             "totalElements":          response[0].products.totalElements,
             "numberOfElements":       response[0].products.numberOfElements,
             "params":                 params,
-            "syncPrice":              (!noChangePrice) ? response[0].price : price,
-            "maxPrice":               (type === 'category') ? response[0].price : price,
-            "selectedPrice":          (type === 'category' && !noChangePrice) ? response[0].price : price,
+            "syncPrice":              (!noChangePrice)                        ? response[0].maxPrice : response[0].price,
+            "maxPrice":               (type === 'category')                   ? response[0].maxPrice : response[0].price,
+            "selectedPrice":          (type === 'category' && !noChangePrice) ? response[0].maxPrice : response[0].price,
           });
      });
 
