@@ -34,7 +34,10 @@ const priceRanges = (maxPrice, selectedFacets, updateFacets, facets, props) => {
 }
 
 const priceSlider = (maxPrice, selectedPrice, updateSelectedPrice ) => {
-  const increment = Math.round((maxPrice / 4) * 100) / 100;
+  const increment = Math.round((maxPrice / 5) * 100) / 100;
+  console.log(maxPrice);
+  console.log(selectedPrice);
+  console.log(increment);
   return (
     <React.Fragment>
       <p>Value less than: {(selectedPrice) ? selectedPrice : maxPrice}</p>
