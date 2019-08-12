@@ -42,6 +42,10 @@ export class App extends Component {
                      "currentProductId": null,
                      "landingCategories": [],
                      "previewCategories": [],
+                     "selectedFacets": { "categories": [],
+                                         "brands": [],
+                                         "tags": [],
+                                         "prices": []},
                  };
   }
 
@@ -153,13 +157,27 @@ export class App extends Component {
   }
 
   getCategoryProducts = (locale, currency, category) =>
-    productApi.findByCategory(locale, currency, category, "", 500, 0, 50)
-    .then((response) => {
-        return response.json();
-    })
-    .then((responseJSON) => {
-        return responseJSON.products.content;
-    });
+      productApi.getMaxPrice(locale, currency, category, this.state.selectedFacets)
+              .then((response) => {
+                 return response.json();
+              })
+              .then((price) => {
+                return productApi.findByCategory(locale, currency, category, "", price, 0, 50)
+                                    .then((response) => {
+                                      return response.json();
+                                    })
+                                    .then((responseJSON) => {
+                                        return responseJSON.products.content;
+                                    })
+                                    .catch((e)=>{
+                                       console.log(e);
+                                    });
+              })
+              .catch((e) => {
+                console.log(e);
+              });
+
+
 
   refreshCategoryList = (locale, currency) =>
     categoryApi.findAll(locale, currency)
