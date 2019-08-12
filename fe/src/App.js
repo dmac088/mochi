@@ -100,7 +100,6 @@ export class App extends Component {
       //return an array of promises to the next in chain
       return filterCategories(categoryList, 'LNDHC01').map(c => {
         //we must return the nested promise
-        console.log(c);
         return this.getCategoryProducts(locale, currency, c.facetDisplayValue)
         .then((response) => {
           c["products"] = response;
