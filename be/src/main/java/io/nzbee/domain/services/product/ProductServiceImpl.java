@@ -20,6 +20,9 @@ import io.nzbee.domain.Product;
 import io.nzbee.domain.Category;
 import io.nzbee.domain.Brand;
 import io.nzbee.domain.Tag;
+import io.nzbee.entity.brand.IBrandService;
+import io.nzbee.entity.brand.attribute.BrandAttribute;
+import io.nzbee.entity.brand.attribute.IBrandAttributeService;
 import io.nzbee.entity.product.attribute.IProductAttributeService;
 import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.price.IProductPriceService;
@@ -39,6 +42,12 @@ public class ProductServiceImpl implements IProductService {
 	@Qualifier("productEntityService")
 	private io.nzbee.entity.product.IProductService productService;
 
+    @Autowired 
+    private IBrandService brandService;
+    
+    @Autowired
+    private IBrandAttributeService brandAttributeService;
+	
     @Autowired 
     private IProductPriceService productPriceService;
     
@@ -143,6 +152,8 @@ public class ProductServiceImpl implements IProductService {
         pDo.setProductMarkdown(productPriceService.get(product.getProductId(), ProductVars.PRICE_MARKDOWN_CODE, new Date(), new Date(), currency).get().getPriceValue());
         pDo.setProductImage(pa.get().getProductImage());
         pDo.setLclCd(lcl);
+        
+        //we need to do something about brand being a reference object
         pDo.setBrandDesc(product.getBrand().getAttributes().stream()
         .filter( ba -> ba.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getBrandDesc());
         
@@ -187,55 +198,43 @@ public class ProductServiceImpl implements IProductService {
     	
     	System.out.println("Saving....." + p.getProductUPC());
     	
-    	//use entity beans to save, and evit from domain cache, and entity level cach if caching exists there.
+    	//use entity beans to save, and evict from domain cache, and entity level cache if caching exists there.
     	
-//    	//we need keys to drive an update
-//		Optional<io.nzbee.entity.product.Product> oProduct = productService.findOne(p.getProductUPC());
-//		io.nzbee.entity.product.Product product = oProduct.isPresent() ? oProduct.get() : new io.nzbee.entity.product.Product();
-//		product.setUPC(p.getProductUPC());
-//		product.setProductCreateDt(p.getProductCreateDt());
-//		
-//		
-//		List<ProductAttribute> lpa = new ArrayList<ProductAttribute>();
-//		//Product Attribute English
-//		Optional<ProductAttribute> oProductAttributeEN = productAttributeService.getProductAttributeEN(product.getProductId());
-//		ProductAttribute productAttributeEN = oProductAttributeEN.isPresent() ? oProductAttributeEN.get() : new ProductAttribute();
-//		productAttributeEN.setProductDesc(p.getProductDesc());
-//		productAttributeEN.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
-//		productAttributeEN.setProductImage(p.getProductImage());
-//		productAttributeEN.setProduct(product);
-//		lpa.add(productAttributeEN);
-//		
-//		//Product Attribute Hong Kong
-//		Optional<ProductAttribute> oProductAttributeHK = productAttributeService.getProductAttribute(product.getProductId(), GeneralVars.LANGUAGE_HK);
-//		ProductAttribute productAttributeHK = oProductAttributeHK.isPresent() ? oProductAttributeHK.get() : new ProductAttribute();
-//		productAttributeHK.setProductDesc(p.get_PRODUCT_DESCRIPTION_HK());
-//		productAttributeHK.setLclCd(GeneralVars.LANGUAGE_HK);
-//		productAttributeHK.setProductImage(p.get_PRODUCT_IMAGE_HK());
-//		productAttributeHK.setProduct(product);
-//		lpa.add(productAttributeHK);
-//		
-//		product.setAttributes(lpa);
-//		
-//		
-//		//Brand
-//		Optional<Brand> oBrand = brandService.getBrand(p.get_BRAND_CODE());
-//		Brand brand = oBrand.isPresent() ? oBrand.get() : new Brand();
-//		brand.setCode(p.get_BRAND_CODE());
-//		
-//		List<BrandAttribute> lba = new ArrayList<BrandAttribute>();
-//		BrandAttribute brandAttributeEN = new BrandAttribute();
-//		brandAttributeEN.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
-//		brandAttributeEN.setBrandDesc(p.get_BRAND_DESCRIPTION_EN());
-//		lba.add(brandAttributeEN);
-//		
-//		BrandAttribute brandAttributeHK = new BrandAttribute();
-//		brandAttributeHK.setLclCd(GeneralVars.LANGUAGE_HK);
-//		brandAttributeHK.setBrandDesc(p.get_BRAND_DESCRIPTION_HK());
-//		lba.add(brandAttributeEN);
-//		
-//		brand.setAttributes(lba);
-//		product.setBrand(brand);
+    	//we need keys to drive an update
+		Optional<io.nzbee.entity.product.Product> oProduct = productService.findOne(p.getProductUPC());
+		io.nzbee.entity.product.Product product = oProduct.isPresent() ? oProduct.get() : new io.nzbee.entity.product.Product();
+		product.setUPC(p.getProductUPC());
+		product.setProductCreateDt(p.getProductCreateDt());
+		
+		List<ProductAttribute> lpa = new ArrayList<ProductAttribute>();
+		//Product Attribute English
+		Optional<ProductAttribute> oProductAttributeEN = productAttributeService.getProductAttributeEN(product.getProductId());
+		ProductAttribute productAttributeEN = oProductAttributeEN.isPresent() ? oProductAttributeEN.get() : new ProductAttribute();
+		productAttributeEN.setProductDesc(p.getProductDesc());
+		productAttributeEN.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
+		productAttributeEN.setProductImage(p.getProductImage());
+		productAttributeEN.setProduct(product);
+		lpa.add(productAttributeEN);
+
+		product.setAttributes(lpa);
+		
+		//Brand
+		Optional<io.nzbee.entity.brand.Brand> oBrand = brandService.findOne(product);
+		io.nzbee.entity.brand.Brand brand = oBrand.isPresent() ? oBrand.get() : new io.nzbee.entity.brand.Brand();
+		brand.setCode(p.getBrand().get().getBrandCode());
+		
+		
+		//Brand Attributes
+		List<BrandAttribute> lba = new ArrayList<BrandAttribute>();
+		Optional<BrandAttribute> oBrandAttributeEN = brandAttributeService.getBrandAttributesEN(brand.getId());
+		BrandAttribute brandAttributeEN  = oBrandAttributeEN.isPresent() ? oBrandAttributeEN.get() : new io.nzbee.entity.brand.attribute.BrandAttribute();
+		brandAttributeEN.setBrandDesc(brand.getBrandDescENGB());
+		brandAttributeEN.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
+		lba.add(brandAttributeEN);
+		
+		brand.setAttributes(lba);
+		
+		product.setBrand(brand);
 		
 		//Price
 		//ProductPriceType oPriceType = priceTypeService.

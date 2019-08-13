@@ -2,6 +2,7 @@ package io.nzbee.domain;
 
 import java.util.Date;
 import java.util.Objects;
+import java.util.Optional;
 
 
 public class Product {
@@ -12,7 +13,7 @@ public class Product {
 
 	private String productDesc;
 	
-	private String brandDesc;
+	private Optional<Brand> brand;
 	
 	private double productRetail;
 	
@@ -82,14 +83,6 @@ public class Product {
 		this.lclCd = lclCd;
 	}
 	
-	public String getBrandDesc() {
-		return brandDesc;
-	}
-
-	public void setBrandDesc(String brandDesc) {
-		this.brandDesc = brandDesc;
-	}
-	
 	public String getPrimaryCategoryPath() {
 		return primaryCategoryPath;
 	}
@@ -105,6 +98,15 @@ public class Product {
 	public void setCurrency(String currency) {
 		this.currency = currency;
 	}
+	
+	public Optional<Brand> getBrand() {
+		return brand;
+	}
+
+	public void setBrand(Optional<Brand> brand) {
+		this.brand = brand;
+	}
+
 
 	@Override
 	public boolean equals(Object o) {
@@ -125,7 +127,6 @@ public class Product {
         builder.append("Product [productUPC=").append(productUPC)
         		.append(", productCreateDt=").append(productCreateDt)
         		.append(", productDesc=").append(productDesc)
-        		.append(", brandDesc=").append(brandDesc)
         		.append(", productRetail=").append(productRetail)
         		.append(", productMarkdown=").append(productMarkdown)
                 .append(", ProductImage=").append(productImage)
