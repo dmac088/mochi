@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import org.springframework.core.io.Resource;
@@ -38,6 +39,10 @@ public class ProductMasterService {
 	@Autowired
 	@Qualifier("productDomainService")
 	private io.nzbee.domain.services.product.IProductService productDomainService;
+	
+	@Autowired
+	@Qualifier("brandDomainService")
+	private io.nzbee.domain.services.brand.IBrandService brandDomainService;
 	
 	@Autowired
 	@Qualifier("brandEntityService")
@@ -104,6 +109,13 @@ public class ProductMasterService {
 				GeneralVars.CURRENCY_USD, 
 				"/TBC");
 		
+		io.nzbee.domain.Brand bDo =
+				brandDomainService.convertToBrandDO(
+						p.get_BRAND_CODE(), 
+						p.get_BRAND_DESCRIPTION_EN());
+		
+		pDo.setBrand(Optional.ofNullable(bDo));
+		
 		productDomainService.save(pDo);
 
 	}
@@ -125,8 +137,8 @@ public class ProductMasterService {
 		    	pms.set_PRODUCT_MARKDOWN_PRICE_USD(productPriceService.getCurrentMarkdownPriceUSD(p.getProductId()).get().getPriceValue());
 		    	pms.set_PRODUCT_MARKDOWN_PRICE_HKD(productPriceService.getCurrentMarkdownPriceHKD(p.getProductId()).get().getPriceValue());
 		    	pms.set_BRAND_CODE(brandService.findById(p.getBrand().getId()).get().getCode());
-		    	pms.set_BRAND_DESCRIPTION_EN(brandAttributeService.getBrandAttributesEN(p.getBrand().getId()).getBrandDesc());
-		    	pms.set_BRAND_DESCRIPTION_HK(brandAttributeService.getBrandAttributesHK(p.getBrand().getId()).getBrandDesc());
+		    	pms.set_BRAND_DESCRIPTION_EN(brandAttributeService.getBrandAttributesEN(p.getBrand().getId()).get().getBrandDesc());
+		    	pms.set_BRAND_DESCRIPTION_HK(brandAttributeService.getBrandAttributesHK(p.getBrand().getId()).get().getBrandDesc());
 		    	pms.set_PRIMARY_CATEGORY_PATH("\\TBC");
 		    	pms.set_PRODUCT_IMAGE_EN(productAttributeService.getProductAttributeEN(p.getProductId()).get().getProductImage());
 		    	pms.set_PRODUCT_IMAGE_HK(productAttributeService.getProductAttributeHK(p.getProductId()).get().getProductImage());

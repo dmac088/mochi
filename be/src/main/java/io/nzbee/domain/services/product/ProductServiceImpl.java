@@ -153,9 +153,12 @@ public class ProductServiceImpl implements IProductService {
         pDo.setProductImage(pa.get().getProductImage());
         pDo.setLclCd(lcl);
         
+        final Brand bDo = new Brand();
+        bDo.setBrandCode(product.getBrand().getCode());
+        bDo.setBrandDesc(product.getBrand().getBrandDescENGB());
+        
         //we need to do something about brand being a reference object
-        pDo.setBrandDesc(product.getBrand().getAttributes().stream()
-        .filter( ba -> ba.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getBrandDesc());
+        pDo.setBrand(Optional.ofNullable(bDo));
         
         StringBuilder sb = new StringBuilder();
         product.getCategories().stream().filter(c -> {return c.getHierarchy().getCode().equals(CategoryVars.PRIMARY_HIERARCHY_CODE);}).collect(Collectors.toList())
@@ -221,8 +224,8 @@ public class ProductServiceImpl implements IProductService {
 		//Brand
 		Optional<io.nzbee.entity.brand.Brand> oBrand = brandService.findOne(product);
 		io.nzbee.entity.brand.Brand brand = oBrand.isPresent() ? oBrand.get() : new io.nzbee.entity.brand.Brand();
+		Optional<Brand> bDo = p.getBrand(); 
 		brand.setCode(p.getBrand().get().getBrandCode());
-		
 		
 		//Brand Attributes
 		List<BrandAttribute> lba = new ArrayList<BrandAttribute>();

@@ -1,6 +1,9 @@
 package io.nzbee.domain.services.brand;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 
@@ -12,6 +15,7 @@ import io.nzbee.domain.Brand;
 import io.nzbee.domain.Category;
 import io.nzbee.domain.Product;
 import io.nzbee.domain.Tag;
+import io.nzbee.variables.GeneralVars;
 
 @Service
 @Transactional
@@ -27,7 +31,7 @@ public class BrandService implements IBrandService {
 	@Cacheable
 	public List<Brand> findAll(String lcl) {
     	List<io.nzbee.entity.brand.Brand> lpb = brandService.findAll();
-    	List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, lcl))
+    	List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, lcl).get())
 		.collect(Collectors.toList());
     	return lb;
 	}	
@@ -35,19 +39,27 @@ public class BrandService implements IBrandService {
 	@Override
 	@Transactional
 	@Cacheable
-	public Brand findOne(String lcl, Long brandId) {
+	public Optional<Brand> findOne(String lcl, Long brandId) {
     	io.nzbee.entity.brand.Brand pb = brandService.findById(brandId).get();
      	return	createBrandDO(pb, lcl);
 	}
 	
 	@Override
-	public Brand findOneByCode(String lcl, String brandCode) {
+	@Transactional
+	@Cacheable
+	public Optional<Brand> findOne(Product product) {
+    	io.nzbee.entity.brand.Brand pb = brandService.findByCode(product.getBrand().get().getBrandCode()).get();
+     	return	createBrandDO(pb, product.getLclCd());
+	}
+	
+	@Override
+	public Optional<Brand> findOneByCode(String lcl, String brandCode) {
 		// TODO Auto-generated method stub
 		return createBrandDO(brandService.findByCode(brandCode).get(), lcl);
 	}
 
 	@Override
-	public Brand findOneByDesc(String lcl, String brandDesc) {
+	public Optional<Brand> findOneByDesc(String lcl, String brandDesc) {
 		// TODO Auto-generated method stub
 		return createBrandDO(brandService.findByDesc(brandDesc, lcl).get(), lcl);
 	}
@@ -61,21 +73,36 @@ public class BrandService implements IBrandService {
 																	categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
 																	tags.stream().map(t -> t.getTagCode()).collect(Collectors.toList())
 																	);
-		List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, locale)).collect(Collectors.toList());		
+		List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, locale).get()).collect(Collectors.toList());		
      	return lb;
 	}
     
 	
  	@Cacheable
-    private Brand createBrandDO(final io.nzbee.entity.brand.Brand b, final String lcl) {
+    private Optional<Brand> createBrandDO(final io.nzbee.entity.brand.Brand b, final String lcl) {
     	final Brand bDO = new Brand();
     	bDO.setBrandCode(b.getCode());
     	bDO.setBrandDesc(
 	    	b.getAttributes().stream()
 			.filter(ba -> ba.getLclCd().equals(lcl)
 			).collect(Collectors.toList()).get(0).getBrandDesc());
-    	return bDO;
+    	return Optional.ofNullable(bDO);
     }
 
+	@Override
+	public Brand converToBrandDO(io.nzbee.entity.brand.Brand brand, String locale) {
+		
+		return null;
+	}
 
+	 @Override
+	 public Brand convertToBrandDO(
+	    			String brandCode,
+	    			String brandDesc
+	    		) {
+	    	final Brand pBo = new Brand();
+	    	pBo.setBrandCode(brandCode);
+	    	pBo.setBrandDesc(brandDesc);
+	    	return pBo;
+	}
 }

@@ -235,7 +235,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		bs = new HashSet<NavFacet<Brand>>();
 		allFacets.stream().filter(f -> f.getFacetingName().equals(CategoryVars.BRAND_FACET_NAME))
 				.collect(Collectors.toList()).forEach(bf -> {
-					Brand brand = brandService.findOneByCode(lcl, bf.getValue());
+					Brand brand = brandService.findOneByCode(lcl, bf.getValue()).get();
 					NavFacet<Brand> brandFacet = facetService.convertBrandToNavFacet(brand);
 					brandFacet.setFacetProductCount(new Long(bf.getCount()));
 					brandFacet.setToken(bf.getValue());
