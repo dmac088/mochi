@@ -91,20 +91,20 @@ public class ProductMasterService {
 	}
 	
 	public void persistProductMaster(ProductMasterSchema p) {
-		System.out.println(p);
-//		io.nzbee.domain.Product pDo = 
-//		io.nzbee.domain.services.product.ProductServiceImpl.convertToProductDO(
-//				p.get_PRODUCT_CREATED_DATE(), 
-//				p.get_PRODUCT_UPC_CODE(), 
-//				p.get_BRAND_DESCRIPTION_EN(), 
-//				p.get_PRODUCT_RETAIL_PRICE_USD(), 
-//				p.get_PRODUCT_MARKDOWN_PRICE_USD(), 
-//				p.get_PRODUCT_IMAGE_EN(), 
-//				GeneralVars.LANGUAGE_ENGLISH, 
-//				GeneralVars.CURRENCY_USD, 
-//				"/TBC");
 		
-//		productDomainService.save(pDo);
+		io.nzbee.domain.Product pDo = 
+				productDomainService.convertToProductDO(
+				p.get_PRODUCT_CREATED_DATE(), 
+				p.get_PRODUCT_UPC_CODE(), 
+				p.get_BRAND_DESCRIPTION_EN(), 
+				p.get_PRODUCT_RETAIL_PRICE_USD(), 
+				p.get_PRODUCT_MARKDOWN_PRICE_USD(), 
+				p.get_PRODUCT_IMAGE_EN(), 
+				GeneralVars.LANGUAGE_ENGLISH, 
+				GeneralVars.CURRENCY_USD, 
+				"/TBC");
+		
+		productDomainService.save(pDo);
 
 	}
 	
