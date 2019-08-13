@@ -53,17 +53,23 @@ public class Brand {
 	
 	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = "en-GB"))
 	public String getBrandDescENGB() {
-		return this.getAttributes().stream().filter(ba -> {
-		 			return ba.getLclCd().equals("en-GB");
-		 		}).collect(Collectors.toList()).get(0).getBrandDesc();
+		List<BrandAttribute> lba = this.getAttributes().stream().filter(ca -> {
+ 			return ca.getLclCd().equals("en-GB");
+ 		}).collect(Collectors.toList());
+
+		if (lba.isEmpty()) { return null; }
+		return lba.get(0).getBrandDesc();
 	}
 	
 	
 	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = "zh-HK"))
 	public String getBrandDescZHHK() {
-		return this.getAttributes().stream().filter(ca -> {
+		List<BrandAttribute> lba = this.getAttributes().stream().filter(ca -> {
 		 			return ca.getLclCd().equals("zh-HK");
-		 		}).collect(Collectors.toList()).get(0).getBrandDesc();
+		 		}).collect(Collectors.toList());
+		
+		if (lba.isEmpty()) { return null; }
+		return lba.get(0).getBrandDesc();
 	}
 	
 	public Long getId() {
