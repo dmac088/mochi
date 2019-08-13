@@ -28,7 +28,7 @@ public class BrandController {
 
     @GetMapping("/Brand/{lcl}/{curr}/id/{brandId}")
     public Brand getBrand(@PathVariable String lcl, @PathVariable String curr, @PathVariable Long brandId) {
-    	return brandService.findOne(lcl, brandId);
+    	return brandService.findOne(lcl, brandId).get();
     }
 
 }

@@ -2,6 +2,7 @@ package io.nzbee.domain.services.brand;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import io.nzbee.domain.Brand;
 import io.nzbee.domain.Category;
@@ -10,14 +11,20 @@ import io.nzbee.domain.Tag;
 
 public interface IBrandService {
 	
-	Brand findOne(String lcl, Long brandId);
+	Optional<Brand> findOne(String lcl, Long brandId);
 	
-	Brand findOneByCode(String lcl, String brandCode);
+	Optional<Brand> findOneByCode(String lcl, String brandCode);
 	
-	Brand findOneByDesc(String lcl, String brandDesc);
+	Optional<Brand> findOneByDesc(String lcl, String brandDesc);
 	
 	List<Brand> findAll(String lcl);
 
 	List<Brand> findAll(String locale, String currency, String categoryDesc, List<Category> categories, List<Tag> tags);
+
+	Optional<Brand> findOne(Product product);
+	
+	Brand converToBrandDO (io.nzbee.entity.brand.Brand brand, String locale);
+
+	Brand convertToBrandDO(String brandCode, String brandDesc);
 
 }
