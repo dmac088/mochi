@@ -153,6 +153,7 @@ public class ProductServiceImpl implements IProductService {
         return pDo;
     }
     
+    @Override
     public Product convertToProductDO(
     			String productCreatedDate,
     			String productUPC,
@@ -181,24 +182,27 @@ public class ProductServiceImpl implements IProductService {
     	return pDo;
     }
     
-    
-    public void persist(Product p) {
+    @Override
+    public void save(Product p) {
     	
-		Optional<io.nzbee.entity.product.Product> oProduct = productService.findOne(p.getProductUPC());
-		io.nzbee.entity.product.Product product = oProduct.isPresent() ? oProduct.get() : new io.nzbee.entity.product.Product();
-		product.setUPC(p.getProductUPC());
-		product.setProductCreateDt(p.getProductCreateDt());
-		
-		
-		List<ProductAttribute> lpa = new ArrayList<ProductAttribute>();
-		//Product Attribute English
-		Optional<ProductAttribute> oProductAttributeEN = productAttributeService.getProductAttributeEN(product.getProductId());
-		ProductAttribute productAttributeEN = oProductAttributeEN.isPresent() ? oProductAttributeEN.get() : new ProductAttribute();
-		productAttributeEN.setProductDesc(p.getProductDesc());
-		productAttributeEN.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
-		productAttributeEN.setProductImage(p.getProductImage());
-		productAttributeEN.setProduct(product);
-		lpa.add(productAttributeEN);
+    	System.out.println("Saving....." + p.getProductUPC());
+    	
+//    	//we need keys to drive an update
+//		Optional<io.nzbee.entity.product.Product> oProduct = productService.findOne(p.getProductUPC());
+//		io.nzbee.entity.product.Product product = oProduct.isPresent() ? oProduct.get() : new io.nzbee.entity.product.Product();
+//		product.setUPC(p.getProductUPC());
+//		product.setProductCreateDt(p.getProductCreateDt());
+//		
+//		
+//		List<ProductAttribute> lpa = new ArrayList<ProductAttribute>();
+//		//Product Attribute English
+//		Optional<ProductAttribute> oProductAttributeEN = productAttributeService.getProductAttributeEN(product.getProductId());
+//		ProductAttribute productAttributeEN = oProductAttributeEN.isPresent() ? oProductAttributeEN.get() : new ProductAttribute();
+//		productAttributeEN.setProductDesc(p.getProductDesc());
+//		productAttributeEN.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
+//		productAttributeEN.setProductImage(p.getProductImage());
+//		productAttributeEN.setProduct(product);
+//		lpa.add(productAttributeEN);
 //		
 //		//Product Attribute Hong Kong
 //		Optional<ProductAttribute> oProductAttributeHK = productAttributeService.getProductAttribute(product.getProductId(), GeneralVars.LANGUAGE_HK);
@@ -260,11 +264,6 @@ public class ProductServiceImpl implements IProductService {
 		return null;
 	}
 
-	@Override
-	public void save(Product t) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void update(Product t) {
@@ -344,4 +343,6 @@ public class ProductServiceImpl implements IProductService {
 				categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
 				tags.stream().map(t -> t.getTagCode()).collect(Collectors.toList()));	
 	}
+
+
 }
