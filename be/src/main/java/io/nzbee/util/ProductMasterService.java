@@ -99,7 +99,7 @@ public class ProductMasterService {
 				productDomainService.convertToProductDO(
 					p.get_PRODUCT_CREATED_DATE(), 
 					p.get_PRODUCT_UPC_CODE(), 
-					p.get_BRAND_DESCRIPTION_EN(), 
+					p.get_PRODUCT_DESCRIPTION_EN(), 
 					p.get_PRODUCT_RETAIL_PRICE_USD(), 
 					p.get_PRODUCT_MARKDOWN_PRICE_USD(), 
 					p.get_PRODUCT_IMAGE_EN(), 
