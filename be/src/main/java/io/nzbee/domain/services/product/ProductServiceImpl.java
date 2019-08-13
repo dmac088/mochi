@@ -187,6 +187,8 @@ public class ProductServiceImpl implements IProductService {
     	
     	System.out.println("Saving....." + p.getProductUPC());
     	
+    	//use entity beans to save, and evit from domain cache, and entity level cach if caching exists there.
+    	
 //    	//we need keys to drive an update
 //		Optional<io.nzbee.entity.product.Product> oProduct = productService.findOne(p.getProductUPC());
 //		io.nzbee.entity.product.Product product = oProduct.isPresent() ? oProduct.get() : new io.nzbee.entity.product.Product();
