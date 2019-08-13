@@ -154,8 +154,11 @@ public class ProductServiceImpl implements IProductService {
         pDo.setLclCd(lcl);
         
         //we need to do something about brand being a reference object
-        pDo.setBrandDesc(product.getBrand().getAttributes().stream()
-        .filter( ba -> ba.getLclCd().equals(lcl)).collect(Collectors.toList()).get(0).getBrandDesc());
+        final Brand bDo = new Brand();
+        bDo.setBrandCode(product.getBrand().getCode());
+        bDo.setBrandDesc(product.getBrand().getBrandDescENGB());
+        
+        pDo.setBrand(Optional.ofNullable(bDo));
         
         StringBuilder sb = new StringBuilder();
         product.getCategories().stream().filter(c -> {return c.getHierarchy().getCode().equals(CategoryVars.PRIMARY_HIERARCHY_CODE);}).collect(Collectors.toList())
