@@ -6,8 +6,6 @@ import java.util.Objects;
 
 public class Product {
 
-	private Long productId;
-
 	private String productUPC;
 	
 	private Date productCreateDt;
@@ -27,15 +25,6 @@ public class Product {
 	private String currency;
 	
 	private String primaryCategoryPath; 
-
-
-	public Long getProductId() {
-		return productId;
-	}
-
-	public void setProductId(Long productId) {
-		this.productId = productId;
-	}
 
 	public String getProductUPC() {
 		return productUPC;
@@ -127,14 +116,13 @@ public class Product {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(productId);
+		return Objects.hash(productUPC);
 	}
 
 	@Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("Product [productId=").append(productId)
-        		.append(", productUPC=").append(productUPC)
+        builder.append("Product [productUPC=").append(productUPC)
         		.append(", productCreateDt=").append(productCreateDt)
         		.append(", productDesc=").append(productDesc)
         		.append(", brandDesc=").append(brandDesc)

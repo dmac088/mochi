@@ -30,11 +30,12 @@ public class FileController {
     @Autowired
     private ProductMasterService productMasterService;
     
-	@Autowired
+	@Autowired 
 	private FileStorageProperties fileStorageProperties;
     
     @PostMapping("/Product/Upload/")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile uploadFile) {
+
         String fileName = fileStorageServiceUpload.storeFile(uploadFile);
 
         productMasterService.writeProductMaster(fileName);
