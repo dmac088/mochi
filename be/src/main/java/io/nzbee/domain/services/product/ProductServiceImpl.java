@@ -135,7 +135,7 @@ public class ProductServiceImpl implements IProductService {
     public Product convertToProductDO(final io.nzbee.entity.product.Product product, String lcl, String currency) {
     	final Product pDo = new Product();
     	Optional<ProductAttribute> pa = productAttributeService.findByIdAndLocale(product.getProductId(), lcl);
-        pDo.setProductId(product.getProductId());
+        pDo.setProductUPC(product.getUPC());
         pDo.setProductCreateDt(product.getProductCreateDt());
         pDo.setProductUPC(product.getUPC());
         pDo.setProductDesc(pa.get().getProductDesc());

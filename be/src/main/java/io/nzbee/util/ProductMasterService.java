@@ -91,7 +91,7 @@ public class ProductMasterService {
 	}
 	
 	public void persistProductMaster(ProductMasterSchema p) {
-		
+		System.out.println(p);
 //		io.nzbee.domain.Product pDo = 
 //		io.nzbee.domain.services.product.ProductServiceImpl.convertToProductDO(
 //				p.get_PRODUCT_CREATED_DATE(), 
@@ -114,26 +114,26 @@ public class ProductMasterService {
 	    
 	    	List<Product> products = productEntityService.findAll();
 	    	
-	    	 	lpms.addAll(products.stream().map(p -> {
-	    		ProductMasterSchema pms = new ProductMasterSchema();
-	    		pms.set_PRODUCT_UPC_CODE(p.getUPC());
-	    		pms.set_PRODUCT_CREATED_DATE(format.format(p.getProductCreateDt()));
-	    		pms.set_PRODUCT_DESCRIPTION_EN(productAttributeService.getProductAttributeEN(p.getProductId()).get().getProductDesc());
-	    		pms.set_PRODUCT_DESCRIPTION_HK(productAttributeService.getProductAttributeHK(p.getProductId()).get().getProductDesc());
-	    		pms.set_PRODUCT_RETAIL_PRICE_USD(productPriceService.getCurrentRetailPriceUSD(p.getProductId()).get().getPriceValue());
-	    		pms.set_PRODUCT_RETAIL_PRICE_HKD(productPriceService.getCurrentRetailPriceHKD(p.getProductId()).get().getPriceValue());
-	    		pms.set_PRODUCT_MARKDOWN_PRICE_USD(productPriceService.getCurrentMarkdownPriceUSD(p.getProductId()).get().getPriceValue());
-	    		pms.set_PRODUCT_MARKDOWN_PRICE_HKD(productPriceService.getCurrentMarkdownPriceHKD(p.getProductId()).get().getPriceValue());
-	    		pms.set_BRAND_CODE(brandService.findById(p.getBrand().getId()).get().getCode());
-	    		pms.set_BRAND_DESCRIPTION_EN(brandAttributeService.getBrandAttributesEN(p.getBrand().getId()).getBrandDesc());
-	    		pms.set_BRAND_DESCRIPTION_HK(brandAttributeService.getBrandAttributesHK(p.getBrand().getId()).getBrandDesc());
-	    		pms.set_PRIMARY_CATEGORY_PATH("\\TBC");
-	    		pms.set_PRODUCT_IMAGE_EN(productAttributeService.getProductAttributeEN(p.getProductId()).get().getProductImage());
-	    		pms.set_PRODUCT_IMAGE_HK(productAttributeService.getProductAttributeHK(p.getProductId()).get().getProductImage());
-	    		//pms.set_BRAND_IMAGE_EN(productAttributeService.getProductAttributeEN(p.getProductId()).getProductImage());
-	    		//pms.set_BRAND_IMAGE_HK(productAttributeService.getProductAttributeHK(p.getProductId()).getProductImage());
+	    	lpms.addAll(products.stream().map(p -> {
+		    	ProductMasterSchema pms = new ProductMasterSchema();
+		    	pms.set_PRODUCT_UPC_CODE(p.getUPC());
+		    	pms.set_PRODUCT_CREATED_DATE(format.format(p.getProductCreateDt()));
+		    	pms.set_PRODUCT_DESCRIPTION_EN(productAttributeService.getProductAttributeEN(p.getProductId()).get().getProductDesc());
+		    	pms.set_PRODUCT_DESCRIPTION_HK(productAttributeService.getProductAttributeHK(p.getProductId()).get().getProductDesc());
+		    	pms.set_PRODUCT_RETAIL_PRICE_USD(productPriceService.getCurrentRetailPriceUSD(p.getProductId()).get().getPriceValue());
+		    	pms.set_PRODUCT_RETAIL_PRICE_HKD(productPriceService.getCurrentRetailPriceHKD(p.getProductId()).get().getPriceValue());
+		    	pms.set_PRODUCT_MARKDOWN_PRICE_USD(productPriceService.getCurrentMarkdownPriceUSD(p.getProductId()).get().getPriceValue());
+		    	pms.set_PRODUCT_MARKDOWN_PRICE_HKD(productPriceService.getCurrentMarkdownPriceHKD(p.getProductId()).get().getPriceValue());
+		    	pms.set_BRAND_CODE(brandService.findById(p.getBrand().getId()).get().getCode());
+		    	pms.set_BRAND_DESCRIPTION_EN(brandAttributeService.getBrandAttributesEN(p.getBrand().getId()).getBrandDesc());
+		    	pms.set_BRAND_DESCRIPTION_HK(brandAttributeService.getBrandAttributesHK(p.getBrand().getId()).getBrandDesc());
+		    	pms.set_PRIMARY_CATEGORY_PATH("\\TBC");
+		    	pms.set_PRODUCT_IMAGE_EN(productAttributeService.getProductAttributeEN(p.getProductId()).get().getProductImage());
+		    	pms.set_PRODUCT_IMAGE_HK(productAttributeService.getProductAttributeHK(p.getProductId()).get().getProductImage());
+		    	//pms.set_BRAND_IMAGE_EN(productAttributeService.getProductAttributeEN(p.getProductId()).getProductImage());
+		    	//pms.set_BRAND_IMAGE_HK(productAttributeService.getProductAttributeHK(p.getProductId()).getProductImage());
 	    		
-	    		return pms;
+	    	return pms;
 	    	}).collect(Collectors.toList()));
 	    	
 	    	CsvMapper mapper = new CsvMapper(); 
