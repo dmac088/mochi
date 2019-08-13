@@ -1,6 +1,7 @@
 package io.nzbee.entity.brand.attribute;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
 
@@ -10,8 +11,8 @@ public interface BrandAttributeRepository extends CrudRepository<BrandAttribute,
 
 	List<BrandAttribute> findByLclCd(String lcl);
 	
-	BrandAttribute findByBrandIdAndLclCd(Long Id, String lcl);
+	Optional<BrandAttribute> findByBrandIdAndLclCd(Long Id, String lcl);
 	
-	BrandAttribute findByLclCdAndBrandProductsProductId(String lcl, Long productId);
+	Optional<BrandAttribute> findByLclCdAndBrandProductsProductId(String lcl, Long productId);
 
 }

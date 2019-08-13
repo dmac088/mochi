@@ -5,10 +5,11 @@ import java.util.List;
 
 import io.nzbee.domain.Brand;
 import io.nzbee.domain.Category;
+import io.nzbee.domain.Product;
 import io.nzbee.domain.Tag;
 
 public interface IBrandService {
-	 
+	
 	Brand findOne(String lcl, Long brandId);
 	
 	Brand findOneByCode(String lcl, String brandCode);

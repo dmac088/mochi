@@ -10,6 +10,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.Brand;
 import io.nzbee.domain.Category;
+import io.nzbee.domain.Product;
 import io.nzbee.domain.Tag;
 
 @Service
@@ -75,5 +76,6 @@ public class BrandService implements IBrandService {
 			).collect(Collectors.toList()).get(0).getBrandDesc());
     	return bDO;
     }
+
 
 }

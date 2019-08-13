@@ -5,6 +5,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import io.nzbee.entity.product.Product;
+
 @Service(value="brandEntityService")
 public class BrandServiceImpl implements IBrandService {
 
@@ -33,6 +35,12 @@ public class BrandServiceImpl implements IBrandService {
 	public List<Brand> findAll(List<String> categoryCodes, List<String> tagCodes) {
 		// TODO Auto-generated method stub
 		return brandDao.findAll(categoryCodes, tagCodes);
+	}
+	
+	@Override
+	public Optional<Brand> findOne(Product p) {
+		// TODO Auto-generated method stub
+		return Optional.ofNullable(p.getBrand());
 	}
 
 	@Override
