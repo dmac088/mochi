@@ -16,7 +16,7 @@ import io.nzbee.domain.Tag;
 @Service
 @Transactional
 @CacheConfig(cacheNames="brands")
-public class BrandService implements IBrandService {
+public class BrandServiceImpl implements IBrandService {
     
 	@Autowired
     private io.nzbee.entity.brand.IBrandService brandService;
@@ -65,6 +65,13 @@ public class BrandService implements IBrandService {
      	return lb;
 	}
     
+	@Override
+	public Brand convertToBrandDO(String brandCode, String brandDesc) {
+		Brand b = new Brand();
+		b.setBrandCode(brandCode);
+		b.setBrandDesc(brandDesc);
+		return b; 
+	}
 	
  	@Cacheable
     private Brand createBrandDO(final io.nzbee.entity.brand.Brand b, final String lcl) {

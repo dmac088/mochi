@@ -20,4 +20,6 @@ public interface IBrandService {
 
 	List<Brand> findAll(String locale, String currency, String categoryDesc, List<Category> categories, List<Tag> tags);
 
+	Brand convertToBrandDO(String brandCode, String brandDesc);
+
 }
