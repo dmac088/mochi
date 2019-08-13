@@ -25,6 +25,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.product.Product;
+import io.nzbee.variables.GeneralVars;
 
 
 @Entity
@@ -51,10 +52,10 @@ public class Brand {
 	@IndexedEmbedded
 	private List<BrandAttribute> brandAttributes;
 	
-	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = "en-GB"))
+	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_ENGLISH))
 	public String getBrandDescENGB() {
 		List<BrandAttribute> lba = this.getAttributes().stream().filter(ca -> {
- 			return ca.getLclCd().equals("en-GB");
+ 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH);
  		}).collect(Collectors.toList());
 
 		if (lba.isEmpty()) { return null; }
@@ -62,10 +63,10 @@ public class Brand {
 	}
 	
 	
-	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = "zh-HK"))
+	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_HK))
 	public String getBrandDescZHHK() {
 		List<BrandAttribute> lba = this.getAttributes().stream().filter(ca -> {
-		 			return ca.getLclCd().equals("zh-HK");
+		 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_HK);
 		 		}).collect(Collectors.toList());
 		
 		if (lba.isEmpty()) { return null; }
