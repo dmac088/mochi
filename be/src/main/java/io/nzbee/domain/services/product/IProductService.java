@@ -38,8 +38,8 @@ public interface IProductService extends IService<Product> {
 
 	Double getMaxPriceForCategory(Category category, String currencyCode);
 
-	Page<Product> findAll(String locale, String currency, String categoryDesc, int page, int size, String sortBy,
-			List<Category> categories, List<Brand> brands, List<Tag> tags);
+//	Page<Product> findAll(String locale, String currency, String categoryDesc, int page, int size, String sortBy,
+//			List<Category> categories, List<Brand> brands, List<Tag> tags);
 
 	Product convertToProductDO(String productCreatedDate, String productUPC, String productDesc,
 			Double productRetailPrice, Double productMarkdownPrice, String productImage, String productLocale,
