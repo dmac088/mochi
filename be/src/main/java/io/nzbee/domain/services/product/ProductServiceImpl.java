@@ -11,6 +11,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -70,7 +71,7 @@ public class ProductServiceImpl implements IProductService {
 	}	
     
     @Override
-	//@Cacheable
+	@Cacheable
 	public Page<Product> findAll(String locale, 
 								 String currency, 
 								 String categoryDesc, 
@@ -103,32 +104,32 @@ public class ProductServiceImpl implements IProductService {
      	return ppa.map(pa -> this.convertToProductDO(pa, locale, currency));
 	}
     
-    @Override
-	//@Cacheable
-	public Page<Product> findAll(String locale, 
-								 String currency, 
-								 String categoryDesc, 
-								 int page, 
-								 int size, 
-								 String sortBy, 
-								 List<Category> categories,
-								 List<Brand> brands,
-								 List<Tag> tags) {
-	
-     	Page<io.nzbee.entity.product.Product> ppa = 
-     			productService.findAll( categoryDesc,
-     									categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
-     									locale, 
-     									ProductVars.MARKDOWN_SKU_DESCRIPTION, 
-     									currency, 
-     									new Date(), 
-     									new Date(), 
-     									PageRequest.of(page, size, this.sortByParam(sortBy)), 
-     									brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()), 
-     									tags.stream().map(t -> t.getTagCode()).collect(Collectors.toList()));
-
-     	return ppa.map(pa -> this.convertToProductDO(pa, locale, currency));
-	}
+//    @Override
+//	//@Cacheable
+//	public Page<Product> findAll(String locale, 
+//								 String currency, 
+//								 String categoryDesc, 
+//								 int page, 
+//								 int size, 
+//								 String sortBy, 
+//								 List<Category> categories,
+//								 List<Brand> brands,
+//								 List<Tag> tags) {
+//	
+//     	Page<io.nzbee.entity.product.Product> ppa = 
+//     			productService.findAll( categoryDesc,
+//     									categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
+//     									locale, 
+//     									ProductVars.MARKDOWN_SKU_DESCRIPTION, 
+//     									currency, 
+//     									new Date(), 
+//     									new Date(), 
+//     									PageRequest.of(page, size, this.sortByParam(sortBy)), 
+//     									brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()), 
+//     									tags.stream().map(t -> t.getTagCode()).collect(Collectors.toList()));
+//
+//     	return ppa.map(pa -> this.convertToProductDO(pa, locale, currency));
+//	}
 	
     @Override
 	//@Cacheable
@@ -197,6 +198,7 @@ public class ProductServiceImpl implements IProductService {
     }
     
     @Override
+    @CacheEvict(allEntries=true)
     public void save(Product p) {
     	
     	System.out.println("Saving....." + p.getProductUPC());
