@@ -101,15 +101,4 @@ public class BrandServiceImpl implements IBrandService {
 		
 		return null;
 	}
-
-	 @Override
-	 public Brand convertToBrandDO(
-	    			String brandCode,
-	    			String brandDesc
-	    		) {
-	    	final Brand pBo = new Brand();
-	    	pBo.setBrandCode(brandCode);
-	    	pBo.setBrandDesc(brandDesc);
-	    	return pBo;
-	}
 }
