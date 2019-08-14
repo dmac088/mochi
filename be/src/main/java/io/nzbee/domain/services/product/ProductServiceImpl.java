@@ -71,7 +71,6 @@ public class ProductServiceImpl implements IProductService {
 	}	
     
     @Override
-	@Cacheable
 	public Page<Product> findAll(String locale, 
 								 String currency, 
 								 String categoryDesc, 
@@ -169,6 +168,7 @@ public class ProductServiceImpl implements IProductService {
     }
     
     @Override
+    @Cacheable(key = "{ #productUPC, #productLocale, #productCurrency }")
     public Product convertToProductDO(
     			String productCreatedDate,
     			String productUPC,
@@ -198,7 +198,7 @@ public class ProductServiceImpl implements IProductService {
     }
     
     @Override
-    @CacheEvict(allEntries=true)
+    @CacheEvict(key = "{ #p.getProductUPC(), #p.getLclCd() , #p.getCurrency() }")
     public void save(Product p) {
     	
     	System.out.println("Saving....." + p.getProductUPC());
