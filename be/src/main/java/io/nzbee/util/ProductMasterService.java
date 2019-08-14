@@ -106,7 +106,7 @@ public class ProductMasterService {
 					GeneralVars.LANGUAGE_ENGLISH, 
 					GeneralVars.CURRENCY_USD, 
 					"/TBC");
-		
+			
 		io.nzbee.domain.Brand bDo =
 				brandDomainService.convertToBrandDO(
 					p.get_BRAND_CODE(), 

@@ -138,6 +138,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		QueryBuilder productQueryBuilder = fullTextEntityManager.getSearchFactory().buildQueryBuilder()
 				.forEntity(ProductAttribute.class)
 				.overridesForField("productDesc", lcl)
+				.overridesForField("brandDesc", lcl)
 				.overridesForField("tagA", lcl)
 				.overridesForField("tagB", lcl)
 				.overridesForField("tagC", lcl)
@@ -154,7 +155,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 						"secondaryCategory.parent.parent." + "secondaryCategoryDesc" + transLcl,
 						"secondaryCategory.parent." + "secondaryCategoryDesc" + transLcl,
 						"secondaryCategory." + "secondaryCategoryDesc" + transLcl, 
-						"product.brand.brandDesc" + transLcl,
+						"brandDesc",
 						"productDesc", 
 						"tagA",
 						"tagB", 
