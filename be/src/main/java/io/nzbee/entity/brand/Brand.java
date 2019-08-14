@@ -52,26 +52,26 @@ public class Brand {
 	@IndexedEmbedded
 	private List<BrandAttribute> brandAttributes;
 	
-	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_ENGLISH))
-	public String getBrandDescENGB() {
-		List<BrandAttribute> lba = this.getAttributes().stream().filter(ca -> {
- 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH);
- 		}).collect(Collectors.toList());
-
-		if (lba.isEmpty()) { return null; }
-		return lba.get(0).getBrandDesc();
-	}
-	
-	
-	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_HK))
-	public String getBrandDescZHHK() {
-		List<BrandAttribute> lba = this.getAttributes().stream().filter(ca -> {
-		 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_HK);
-		 		}).collect(Collectors.toList());
-		
-		if (lba.isEmpty()) { return null; }
-		return lba.get(0).getBrandDesc();
-	}
+//	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_ENGLISH))
+//	public String getBrandDescENGB() {
+//		List<BrandAttribute> lba = this.getAttributes().stream().filter(ca -> {
+// 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH);
+// 		}).collect(Collectors.toList());
+//
+//		//if (lba.isEmpty()) { return null; }
+//		return lba.get(0).getBrandDesc();
+//	}
+//	
+//	
+//	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_HK))
+//	public String getBrandDescZHHK() {
+//		List<BrandAttribute> lba = this.getAttributes().stream().filter(ca -> {
+//		 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_HK);
+//		 		}).collect(Collectors.toList());
+//		
+//		//if (lba.isEmpty()) { return null; }
+//		return lba.get(0).getBrandDesc();
+//	}
 	
 	public Long getId() {
 		return this.brandId;

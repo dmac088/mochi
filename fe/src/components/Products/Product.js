@@ -16,6 +16,7 @@ import { productImagePath } from '../../services/helpers/imageHelper';
 
 
   const renderLV = (category, product, setCurrentProductId, isGrid, routeProps) => {
+    console.log(product);
     return (
       <div className="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
         <div className="gf-product shop-list-view-product">

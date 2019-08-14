@@ -36,6 +36,7 @@ import org.hibernate.search.annotations.TokenizerDef;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import io.nzbee.entity.LanguageDiscriminator;
+import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.product.Product;
@@ -168,7 +169,14 @@ public class ProductAttribute {
 		if(i.hasNext()) { i.next(); }
 		if(i.hasNext()) { return i.next().getTagDesc(); }
 		return "Empty";
-
+	}
+	
+	@Field(analyze = Analyze.YES)
+	public String getBrandDesc() {
+		List<BrandAttribute> lba = this.getProduct().getBrand().getAttributes();
+		Optional<BrandAttribute> brandAttribute = lba.stream().filter(ba -> ba.getLclCd().equals(this.getLclCd())).findFirst();
+		if(brandAttribute.isPresent()) { return brandAttribute.get().getBrandDesc(); }
+		return "Empty";
 	}
 	
 	@Transient

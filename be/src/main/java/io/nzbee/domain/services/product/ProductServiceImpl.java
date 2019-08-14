@@ -155,7 +155,7 @@ public class ProductServiceImpl implements IProductService {
         
         final Brand bDo = new Brand();
         bDo.setBrandCode(product.getBrand().getCode());
-        bDo.setBrandDesc(product.getBrand().getBrandDescENGB());
+        bDo.setBrandDesc(product.getBrand().getAttributes().stream().filter(ba -> ba.getLclCd().equals(lcl)).findFirst().get().getBrandDesc());
         
         //we need to do something about brand being a reference object
         pDo.setBrand(Optional.ofNullable(bDo));
@@ -231,7 +231,7 @@ public class ProductServiceImpl implements IProductService {
 		List<BrandAttribute> lba = new ArrayList<BrandAttribute>();
 		Optional<BrandAttribute> oBrandAttributeEN = brandAttributeService.getBrandAttributesEN(brand.getId());
 		BrandAttribute brandAttributeEN  = oBrandAttributeEN.isPresent() ? oBrandAttributeEN.get() : new io.nzbee.entity.brand.attribute.BrandAttribute();
-		brandAttributeEN.setBrandDesc(brand.getBrandDescENGB());
+		brandAttributeEN.setBrandDesc(brand.getAttributes().stream().filter(ba -> ba.getLclCd().equals(p.getLclCd())).findFirst().get().getBrandDesc());
 		brandAttributeEN.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
 		lba.add(brandAttributeEN);
 		
