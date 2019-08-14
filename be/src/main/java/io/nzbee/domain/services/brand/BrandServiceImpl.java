@@ -1,12 +1,9 @@
 package io.nzbee.domain.services.brand;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
@@ -15,7 +12,6 @@ import io.nzbee.domain.Brand;
 import io.nzbee.domain.Category;
 import io.nzbee.domain.Product;
 import io.nzbee.domain.Tag;
-import io.nzbee.variables.GeneralVars;
 
 @Service
 @Transactional
