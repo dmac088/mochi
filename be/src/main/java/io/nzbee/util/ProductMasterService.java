@@ -37,16 +37,14 @@ public class ProductMasterService {
 	private ProductServiceImpl productEntityService;
 	
 	@Autowired
-	@Qualifier("productDomainService")
 	private io.nzbee.domain.services.product.IProductService productDomainService;
-	
-	@Autowired
-	@Qualifier("brandDomainService")
-	private io.nzbee.domain.services.brand.IBrandService brandDomainService;
 	
 	@Autowired
 	@Qualifier("brandEntityService")
 	private BrandServiceImpl brandService; 
+	
+	@Autowired
+	private io.nzbee.domain.services.brand.IBrandService brandDomainService;
 	
 	@Autowired
 	private IBrandAttributeService brandAttributeService; 
@@ -99,21 +97,21 @@ public class ProductMasterService {
 		
 		io.nzbee.domain.Product pDo = 
 				productDomainService.convertToProductDO(
-				p.get_PRODUCT_CREATED_DATE(), 
-				p.get_PRODUCT_UPC_CODE(), 
-				p.get_BRAND_DESCRIPTION_EN(), 
-				p.get_PRODUCT_RETAIL_PRICE_USD(), 
-				p.get_PRODUCT_MARKDOWN_PRICE_USD(), 
-				p.get_PRODUCT_IMAGE_EN(), 
-				GeneralVars.LANGUAGE_ENGLISH, 
-				GeneralVars.CURRENCY_USD, 
-				"/TBC");
+					p.get_PRODUCT_CREATED_DATE(), 
+					p.get_PRODUCT_UPC_CODE(), 
+					p.get_PRODUCT_DESCRIPTION_EN(), 
+					p.get_PRODUCT_RETAIL_PRICE_USD(), 
+					p.get_PRODUCT_MARKDOWN_PRICE_USD(), 
+					p.get_PRODUCT_IMAGE_EN(), 
+					GeneralVars.LANGUAGE_ENGLISH, 
+					GeneralVars.CURRENCY_USD, 
+					"/TBC");
 		
 		io.nzbee.domain.Brand bDo =
 				brandDomainService.convertToBrandDO(
-						p.get_BRAND_CODE(), 
-						p.get_BRAND_DESCRIPTION_EN());
-		
+					p.get_BRAND_CODE(), 
+					p.get_BRAND_DESCRIPTION_EN());
+				
 		pDo.setBrand(Optional.ofNullable(bDo));
 		
 		productDomainService.save(pDo);

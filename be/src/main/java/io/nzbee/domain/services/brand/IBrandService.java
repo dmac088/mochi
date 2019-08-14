@@ -21,9 +21,9 @@ public interface IBrandService {
 
 	List<Brand> findAll(String locale, String currency, String categoryDesc, List<Category> categories, List<Tag> tags);
 
-	Optional<Brand> findOne(Product product);
-	
 	Brand converToBrandDO (io.nzbee.entity.brand.Brand brand, String locale);
+
+	Optional<Brand> findOne(Product product);
 
 	Brand convertToBrandDO(String brandCode, String brandDesc);
 
