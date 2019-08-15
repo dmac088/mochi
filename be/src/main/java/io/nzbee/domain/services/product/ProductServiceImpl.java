@@ -132,7 +132,7 @@ public class ProductServiceImpl implements IProductService {
 //	}
 	
     @Override
-	//@Cacheable
+	@Cacheable(value="selectedProducts")
 	public List<Product> findAll(String locale, String currency, List<Long> productIds) {
 		
 	    List<io.nzbee.entity.product.Product> lp = 
@@ -200,7 +200,8 @@ public class ProductServiceImpl implements IProductService {
     @Override
     //evicts all from the "products" List cache, 
     @Caching(evict = { 
-    	@CacheEvict(value="products", allEntries=true) })
+    	@CacheEvict(value="products", allEntries=true),
+    	@CacheEvict(value="selectedProducts", allEntries=true) })
     //overwrites the existing product if it exists in the cache 
     @CachePut(value="product", key = "{ #p.getProductUPC().concat(#p.getLclCd()).concat(#p.getCurrency()) }") 
     public void save(Product p) {
