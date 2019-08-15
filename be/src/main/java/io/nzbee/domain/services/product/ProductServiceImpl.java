@@ -168,7 +168,7 @@ public class ProductServiceImpl implements IProductService {
     }
     
     @Override
-    @Cacheable(value="product", key="{ #productUPC.concat(#productLocale.concat(#productCurrency) }")
+    @Cacheable(value="product", key="{ #productUPC.concat(#productLocale).concat(#productCurrency) }")
     public Product convertToProductDO(
     			String productCreatedDate,
     			String productUPC,
