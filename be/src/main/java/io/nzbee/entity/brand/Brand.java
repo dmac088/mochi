@@ -1,7 +1,6 @@
 package io.nzbee.entity.brand;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,19 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.Analyzer;
-import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.IndexedEmbedded;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.product.Product;
-import io.nzbee.variables.GeneralVars;
 
 
 @Entity
