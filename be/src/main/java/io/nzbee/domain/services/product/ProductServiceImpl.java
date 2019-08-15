@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,6 @@ import io.nzbee.variables.ProductVars;
 
 @Service(value = "productDomainService")
 @Transactional
-@CacheConfig(cacheNames="products")
 public class ProductServiceImpl implements IProductService {
 	//In service classes, we should only call methods of entity service classes
 	//the repositories themselves should not be referenced outside the entity service class
@@ -168,7 +168,7 @@ public class ProductServiceImpl implements IProductService {
     }
     
     @Override
-    @Cacheable(key = "{ #productUPC, #productLocale, #productCurrency }")
+    @Cacheable(value="product", key="{ #productUPC.concat(#productLocale.concat(#productCurrency) }")
     public Product convertToProductDO(
     			String productCreatedDate,
     			String productUPC,
@@ -198,7 +198,10 @@ public class ProductServiceImpl implements IProductService {
     }
     
     @Override
-    @CacheEvict(key = "{ #p.getProductUPC(), #p.getLclCd() , #p.getCurrency() }")
+
+    @Caching(evict = { 
+    	@CacheEvict(value="products", allEntries=true), 
+    	@CacheEvict(value="product", key = "{ #p.getProductUPC().concat(#p.getLclCd()).concat(#p.getCurrency()) }") })
     public void save(Product p) {
     	
     	System.out.println("Saving....." + p.getProductUPC());
