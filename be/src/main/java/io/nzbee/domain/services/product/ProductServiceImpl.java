@@ -204,7 +204,7 @@ public class ProductServiceImpl implements IProductService {
     	@CacheEvict(value="selectedProducts", allEntries=true) })
     //overwrites the existing product if it exists in the cache 
     @CachePut(value="product", key = "{ #p.getProductUPC().concat(#p.getLclCd()).concat(#p.getCurrency()) }") 
-    public void save(Product p) {
+    public Product save(Product p) {
     	
     	System.out.println("Saving....." + p.getProductUPC());
     	
@@ -221,7 +221,7 @@ public class ProductServiceImpl implements IProductService {
 		Optional<ProductAttribute> oProductAttributeEN = productAttributeService.getProductAttributeEN(product.getProductId());
 		ProductAttribute productAttributeEN = oProductAttributeEN.isPresent() ? oProductAttributeEN.get() : new ProductAttribute();
 		productAttributeEN.setProductDesc(p.getProductDesc());
-		productAttributeEN.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
+		productAttributeEN.setLclCd(p.getLclCd());
 		productAttributeEN.setProductImage(p.getProductImage());
 		productAttributeEN.setProduct(product);
 		lpa.add(productAttributeEN);
@@ -239,12 +239,13 @@ public class ProductServiceImpl implements IProductService {
 		Optional<BrandAttribute> oBrandAttributeEN = brandAttributeService.getBrandAttributesEN(brand.getId());
 		BrandAttribute brandAttributeEN  = oBrandAttributeEN.isPresent() ? oBrandAttributeEN.get() : new io.nzbee.entity.brand.attribute.BrandAttribute();
 		brandAttributeEN.setBrandDesc(brand.getAttributes().stream().filter(ba -> ba.getLclCd().equals(p.getLclCd())).findFirst().get().getBrandDesc());
-		brandAttributeEN.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
+		brandAttributeEN.setLclCd(p.getLclCd());
 		lba.add(brandAttributeEN);
 		
 		brand.setAttributes(lba);
 		
 		product.setBrand(brand);
+		return this.convertToProductDO(product, p.getLclCd(), p.getCurrency());
 		
 		//Price
 		//ProductPriceType oPriceType = priceTypeService.

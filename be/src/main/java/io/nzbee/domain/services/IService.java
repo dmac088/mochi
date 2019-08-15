@@ -2,6 +2,8 @@ package io.nzbee.domain.services;
 
 import java.util.List;
 
+import io.nzbee.domain.Product;
+
 //generic service class
 public interface IService<T> {
 	
@@ -13,7 +15,7 @@ public interface IService<T> {
 	
 	T load();
 	
-	void save(T t);
+	T save(T t);
 	
 	void update(T t);
 	
