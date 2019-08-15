@@ -24,6 +24,7 @@ import io.nzbee.domain.Brand;
 import io.nzbee.domain.Tag;
 import io.nzbee.entity.brand.IBrandService;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
+import io.nzbee.entity.brand.attribute.BrandAttributeServiceImpl;
 import io.nzbee.entity.brand.attribute.IBrandAttributeService;
 import io.nzbee.entity.product.attribute.IProductAttributeService;
 import io.nzbee.entity.product.attribute.ProductAttribute;
@@ -236,8 +237,8 @@ public class ProductServiceImpl implements IProductService {
 		
 		//Brand Attributes
 		List<BrandAttribute> lba = new ArrayList<BrandAttribute>();
-		Optional<BrandAttribute> oBrandAttributeEN = brandAttributeService.getBrandAttributesEN(brand.getId());
-		BrandAttribute brandAttributeEN  = oBrandAttributeEN.isPresent() ? oBrandAttributeEN.get() : new io.nzbee.entity.brand.attribute.BrandAttribute();
+		Optional<BrandAttribute> oBrandAttribute = brandAttributeService.getBrandAttributes(brand.getId(), p.getLclCd());
+		BrandAttribute brandAttributeEN  = oBrandAttribute.isPresent() ? oBrandAttribute.get() : new io.nzbee.entity.brand.attribute.BrandAttribute();
 		brandAttributeEN.setBrandDesc(brand.getAttributes().stream().filter(ba -> ba.getLclCd().equals(p.getLclCd())).findFirst().get().getBrandDesc());
 		brandAttributeEN.setLclCd(p.getLclCd());
 		lba.add(brandAttributeEN);

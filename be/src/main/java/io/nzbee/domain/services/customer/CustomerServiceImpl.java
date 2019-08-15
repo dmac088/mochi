@@ -21,7 +21,7 @@ import io.nzbee.security.user.role.UserRole;
 
 @Service
 @Transactional
-public class CustomerService implements ICustomerService {
+public class CustomerServiceImpl implements ICustomerService {
 
     @Autowired
     private IPartyService partyService;
@@ -186,9 +186,9 @@ public class CustomerService implements ICustomerService {
 
 
 	@Override
-	public void save(Customer t) {
+	public Customer save(Customer t) {
 		// TODO Auto-generated method stub
-		
+		return t;
 	}
 
 

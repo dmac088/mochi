@@ -18,9 +18,9 @@ public class ProductController {
     @Autowired
     private IProductService productService;
     
-    @GetMapping("/Product/{locale}/{currency}/id/{id}")
-    public Product getProduct(@PathVariable String locale, @PathVariable String currency, @PathVariable Long id) {
-    	return productService.findOne(locale, currency, id);
+    @GetMapping("/Product/{locale}/{currency}/code/{code}")
+    public Product getProduct(@PathVariable String locale, @PathVariable String currency, @PathVariable String code) {
+    	return productService.findOne(locale, currency, code);
     }
     
     @PostMapping("/Product/{locale}/{currency}")

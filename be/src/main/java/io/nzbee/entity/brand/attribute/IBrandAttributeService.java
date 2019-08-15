@@ -3,31 +3,14 @@ package io.nzbee.entity.brand.attribute;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+public interface IBrandAttributeService {
 
-import io.nzbee.variables.GeneralVars;
+	Optional<BrandAttribute> getBrandAttributes(Long Id, String locale);
 
-@Service
-public class IBrandAttributeService {
+	List<BrandAttribute> getBrandAttributes();
 
-	@Autowired
-	private BrandAttributeRepository brandAttributeRepository; 
-	
-	public List<BrandAttribute> getBrandAttributes() {
-		return brandAttributeRepository.findAll();
-	}
-	
-	public Optional<BrandAttribute> getBrandAttributesEN(Long Id) {
-		return brandAttributeRepository.findByBrandIdAndLclCd(Id, GeneralVars.LANGUAGE_ENGLISH);
-	}
-	
-	public Optional<BrandAttribute> getBrandAttributesHK(Long Id) {
-		return brandAttributeRepository.findByBrandIdAndLclCd(Id, GeneralVars.LANGUAGE_HK);
-	}
+	Optional<BrandAttribute> getBrandAttributesEN(Long Id);
 
-//	public List<Product> getProduct(Long productId) {
-//		return 
-//	}
+	Optional<BrandAttribute> getBrandAttributesHK(Long Id);
 
 }
