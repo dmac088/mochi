@@ -63,7 +63,7 @@ public class ProductServiceImpl implements IProductService {
     
     @Override
 	@Transactional
-	@Cacheable
+	@Cacheable(value="product")
 	public Product findOne(String lcl, String currency, String code) {
     	io.nzbee.entity.product.Product pa = productService.findOne(code).get();
 		Product p = this.convertToProductDO(pa, lcl, currency);
@@ -71,6 +71,7 @@ public class ProductServiceImpl implements IProductService {
 	}	
     
     @Override
+    @Cacheable(value="products")
 	public Page<Product> findAll(String locale, 
 								 String currency, 
 								 String categoryDesc, 
