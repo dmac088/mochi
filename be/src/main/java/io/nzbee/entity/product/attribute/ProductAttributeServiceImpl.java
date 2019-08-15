@@ -61,6 +61,11 @@ public class ProductAttributeServiceImpl implements IProductAttributeService {
 	}
 
 	@Override
+	public Optional<ProductAttribute> getProductAttribute(Long id, String locale) {
+		return productAttributeRepository.findByLclCdAndProductId(GeneralVars.LANGUAGE_ENGLISH, id);
+	}
+	
+	@Override
 	public Optional<ProductAttribute> getProductAttributeEN(Long id) {
 		return productAttributeRepository.findByLclCdAndProductId(GeneralVars.LANGUAGE_ENGLISH, id);
 	}

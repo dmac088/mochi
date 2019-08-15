@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.entity.brand.BrandServiceImpl;
-import io.nzbee.entity.brand.attribute.IBrandAttributeService;
+import io.nzbee.entity.brand.attribute.BrandAttributeServiceImpl;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.ProductServiceImpl;
 import io.nzbee.entity.product.attribute.ProductAttributeServiceImpl;
@@ -47,7 +47,7 @@ public class ProductMasterService {
 	private io.nzbee.domain.services.brand.IBrandService brandDomainService;
 	
 	@Autowired
-	private IBrandAttributeService brandAttributeService; 
+	private BrandAttributeServiceImpl brandAttributeService; 
 	
 	@Autowired
 	private ProductPriceServiceImpl productPriceService;

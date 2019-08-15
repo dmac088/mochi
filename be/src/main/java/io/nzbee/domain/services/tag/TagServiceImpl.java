@@ -92,7 +92,8 @@ public class TagServiceImpl implements ITagService {
 	}
 
 	@Override
-	public void save(Tag t) {
+	public Tag save(Tag t) {
+		return t;
 		// TODO Auto-generated method stub
 		
 	}
