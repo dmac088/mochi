@@ -19,7 +19,7 @@ public interface IProductService extends IService<Product> {
 	//as long as it conforms to the same interface contract
 	
 	//returns a domain object, this is good
-	Product findOne(String locale, String currency, Long id);
+	Product findOne(String lcl, String currency, String code);
 	
 	List<Product> findAll(String locale, String currency, List<Long> productIds);
 
@@ -44,6 +44,8 @@ public interface IProductService extends IService<Product> {
 	Product convertToProductDO(String productCreatedDate, String productUPC, String productDesc,
 			Double productRetailPrice, Double productMarkdownPrice, String productImage, String productLocale,
 			String productCurrency, String productCategory);
+
+	
 
 	
 }

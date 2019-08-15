@@ -10,8 +10,8 @@ import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
@@ -63,9 +63,9 @@ public class ProductServiceImpl implements IProductService {
     
     @Override
 	@Transactional
-	//@Cacheable
-	public Product findOne(String lcl, String currency, Long id) {
-    	io.nzbee.entity.product.Product pa = productService.findOne(id).get();
+	@Cacheable
+	public Product findOne(String lcl, String currency, String code) {
+    	io.nzbee.entity.product.Product pa = productService.findOne(code).get();
 		Product p = this.convertToProductDO(pa, lcl, currency);
 		return p;
 	}	
@@ -168,7 +168,6 @@ public class ProductServiceImpl implements IProductService {
     }
     
     @Override
-    @Cacheable(value="product", key="{ #productUPC.concat(#productLocale).concat(#productCurrency) }")
     public Product convertToProductDO(
     			String productCreatedDate,
     			String productUPC,
@@ -198,10 +197,11 @@ public class ProductServiceImpl implements IProductService {
     }
     
     @Override
-
+    //evicts all from the "products" List cache, 
     @Caching(evict = { 
-    	@CacheEvict(value="products", allEntries=true), 
-    	@CacheEvict(value="product", key = "{ #p.getProductUPC().concat(#p.getLclCd()).concat(#p.getCurrency()) }") })
+    	@CacheEvict(value="products", allEntries=true) })
+    //overwrites the existing product if it exists in the cache 
+    @CachePut(value="product", key = "{ #p.getProductUPC().concat(#p.getLclCd()).concat(#p.getCurrency()) }") 
     public void save(Product p) {
     	
     	System.out.println("Saving....." + p.getProductUPC());
