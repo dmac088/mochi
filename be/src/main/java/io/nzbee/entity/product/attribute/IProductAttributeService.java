@@ -14,4 +14,6 @@ public interface IProductAttributeService extends IDao<ProductAttribute> {
 	Optional<ProductAttribute> getProductAttributeEN(Long id);
 	
 	Optional<ProductAttribute> getProductAttributeHK(Long id);
+
+	Optional<ProductAttribute> getProductAttribute(Long id, String locale);
 }

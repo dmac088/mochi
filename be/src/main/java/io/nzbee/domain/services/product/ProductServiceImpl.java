@@ -218,13 +218,13 @@ public class ProductServiceImpl implements IProductService {
 		
 		List<ProductAttribute> lpa = new ArrayList<ProductAttribute>();
 		//Product Attribute English
-		Optional<ProductAttribute> oProductAttributeEN = productAttributeService.getProductAttributeEN(product.getProductId());
-		ProductAttribute productAttributeEN = oProductAttributeEN.isPresent() ? oProductAttributeEN.get() : new ProductAttribute();
-		productAttributeEN.setProductDesc(p.getProductDesc());
-		productAttributeEN.setLclCd(p.getLclCd());
-		productAttributeEN.setProductImage(p.getProductImage());
-		productAttributeEN.setProduct(product);
-		lpa.add(productAttributeEN);
+		Optional<ProductAttribute> oProductAttributeLcl = productAttributeService.getProductAttribute(product.getProductId(), p.getLclCd());
+		ProductAttribute productAttribute = oProductAttributeLcl.isPresent() ? oProductAttributeLcl.get() : new ProductAttribute();
+		productAttribute.setProductDesc(p.getProductDesc());
+		productAttribute.setLclCd(p.getLclCd());
+		productAttribute.setProductImage(p.getProductImage());
+		productAttribute.setProduct(product);
+		lpa.add(productAttribute);
 
 		product.setAttributes(lpa);
 		
