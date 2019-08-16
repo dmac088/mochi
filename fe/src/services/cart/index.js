@@ -25,8 +25,8 @@ import * as cartSelector from './selectors';
 		store.dispatch(actionCreators.updateItem(cart, index, item));
 	}
 
-	export const removeCartItem = (cart, productId) => {
-		store.dispatch(actionCreators.removeItem(cart, productId));
+	export const removeCartItem = (cart, productUPC) => {
+		store.dispatch(actionCreators.removeItem(cart, productUPC));
 	}
 
 	export const updateCartTotals = () => {
@@ -41,19 +41,18 @@ import * as cartSelector from './selectors';
 							  cart, items));
 	}
 
-	const checkProduct = (cart, productID) => {
+	const checkProduct = (cart, productUPC) => {
 		return cart.items.some(function(item) {
-			return item.productId === productID;
+			return item.productUPC === productUPC;
 		});
 	}
 
 	export const addToCart = (cart, selectedProduct, callback) => {
-		let productId = selectedProduct.productId;
-		let productQty = selectedProduct.quantity;
-		if (checkProduct(cart, productId)) {
-	    let index = cart.items.findIndex(x => x.productId === productId);
+		let { productUPC, quantity } = selectedProduct;
+		if (checkProduct(cart, productUPC)) {
+	    let index = cart.items.findIndex(x => x.productUPC === productUPC);
 			let updatedItem = _.cloneDeep(cart.items[index]);
-			updatedItem.quantity = updatedItem.quantity + Number(productQty);
+			updatedItem.quantity = updatedItem.quantity + Number(quantity);
 			updateCartItem(cart, index, updatedItem);
 	  } else {
 	    //add the product to the cart
@@ -63,9 +62,9 @@ import * as cartSelector from './selectors';
 		callback();
 	}
 
-	export const removeFromCart = (cart, productId) => {
-		if (checkProduct(cart, productId)) {
-			removeCartItem(cart, productId);
+	export const removeFromCart = (cart, productUPC) => {
+		if (checkProduct(cart, productUPC)) {
+			removeCartItem(cart, productUPC);
 		}
 		updateCartTotals();
 	}

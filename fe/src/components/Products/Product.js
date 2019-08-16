@@ -9,6 +9,7 @@ import { productImagePath } from '../../services/helpers/imageHelper';
     e.preventDefault();
     const quantity = 1;
     product.quantity = quantity;
+    console.log(product);
     cartService.addToCart(cartSelector.get(),
                           product,
                           ()=>{console.log("addToCart complete!")});
@@ -21,12 +22,12 @@ import { productImagePath } from '../../services/helpers/imageHelper';
       <div className="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
         <div className="gf-product shop-list-view-product">
           <div className="image">
-            <a onClick={(e) => routeSingleProduct(e, category.categoryDesc, routeProps)} id={product.productId} href="#">
+            <a onClick={(e) => routeSingleProduct(e, category.categoryDesc, routeProps)} id={product.productUPC} href="#">
               <span className="onsale">Sale!</span>
               <img src={productImagePath + product.productImage} className="img-fluid" alt />
             </a>
             <div className="product-hover-icons">
-              <a id={product.productId}
+              <a id={product.productUPC}
                  onClick={setCurrentProductId}
                  href="#"
                  data-tooltip="Quick view"
@@ -65,7 +66,7 @@ import { productImagePath } from '../../services/helpers/imageHelper';
       <div className="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
         <div className="gf-product shop-grid-view-product">
           <div className="image">
-            <a onClick={(e) => routeSingleProduct(e, (category) ? category.categoryDesc : null, routeProps)} id={product.productId} href="#">
+            <a onClick={(e) => routeSingleProduct(e, (category) ? category.categoryDesc : null, routeProps)} id={product.productUPC} href="#">
               <span className="onsale">Sale!</span>
               <img src={productImagePath + product.productImage} className="img-fluid" alt />
             </a>
@@ -73,7 +74,7 @@ import { productImagePath } from '../../services/helpers/imageHelper';
               <a onClick={(e) => addToCart(e, product)} href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
               <a href="#" data-tooltip="Add to wishlist"> <span className="icon_heart_alt" /> </a>
               <a href="#" data-tooltip="Compare"> <span className="arrow_left-right_alt" /> </a>
-              <a  id={product.productId}
+              <a  id={product.productUPC}
                   onClick={setCurrentProductId}
                   href="#"
                   data-tooltip="Quick view"
