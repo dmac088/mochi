@@ -86,25 +86,25 @@ class Accordion extends React.Component {
 
   removeItem = (e) => {
     e.preventDefault();
-    cartService.removeFromCart(cartSelector.get(), Number(e.currentTarget.id));
+    cartService.removeFromCart(cartSelector.get(), e.currentTarget.id);
   }
 
   renderCartItems = (cart) => {
       const routeProps = createRouteProps(this.props.history, this.props.match, this.props.location);
       return cart.items.map(product => {
           return(
-            <div key={product.productId} className="cart-float-single-item d-flex">
+            <div key={product.productUPC} className="cart-float-single-item d-flex">
               <span className="remove-item">
-                <a id={product.productId} onClick={this.removeItem}  href="#">
+                <a id={product.productUPC} onClick={this.removeItem}  href="#">
                   <i className="fa fa-times" />
                 </a>
               </span>
               <div className="cart-float-single-item-image">
-                <a id={product.productId} href="#" onClick={(e) => routeSingleProduct(e, null, routeProps)}><img src={productImagePath + product.productImage} className="img-fluid" alt="" /></a>
+                <a id={product.productUPC} href="#" onClick={(e) => routeSingleProduct(e, null, routeProps)}><img src={productImagePath + product.productImage} className="img-fluid" alt="" /></a>
               </div>
               <div className="cart-float-single-item-desc">
                 <p className="product-title">
-                  <a id={product.productId} href="#" onClick={(e) => routeSingleProduct(e, null, routeProps)}>{product.productDesc} </a></p>
+                  <a id={product.productUPC} href="#" onClick={(e) => routeSingleProduct(e, null, routeProps)}>{product.productDesc} </a></p>
                 <p className="price"><span className="count">{product.quantity}x</span> ${product.productMarkdown}</p>
               </div>
             </div>

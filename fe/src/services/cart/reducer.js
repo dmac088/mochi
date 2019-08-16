@@ -21,7 +21,7 @@ export const reducer = (state = initialState, action) => {
 
 		case actionTypes.REMOVE_ITEM:
 			cartClone.items = cartClone.items.filter(function(value, index, arr){
-															return value.productId !== action.productId;
+															return value.productUPC !== action.productUPC;
 												});
 			return cartClone;
 		case actionTypes.UPDATE_CART_TOTALS:
@@ -31,7 +31,7 @@ export const reducer = (state = initialState, action) => {
 
 		case actionTypes.UPDATE_CART_ITEMS:
 			const newItems = cartClone.items.map(o => {
-				return Object.assign(o, 0, action.items.filter(i => i.productId === o.productId)[0]);
+				return Object.assign(o, 0, action.items.filter(i => i.productUPC === o.productUPC)[0]);
 			});
 			cartClone.items = newItems;
 			return cartClone;

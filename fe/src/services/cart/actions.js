@@ -13,10 +13,10 @@ export const updateItem = (cart, index, item) => ({
 	item,
 });
 
-export const removeItem = (cart, productId) => ({
+export const removeItem = (cart, productUPC) => ({
 	type: actionTypes.REMOVE_ITEM,
 	cart,
-	productId,
+	productUPC,
 });
 
 export const updateCartTotals = (cart, totalItems, totalAmount) => ({
