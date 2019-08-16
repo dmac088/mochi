@@ -9,7 +9,7 @@ const $ = window.$;
     return products.map(product => {
       return (
           <Product
-            key={product.productId}
+            key={product.productUPC}
             product={product}
             category={category}
             setCurrentProductId={setCurrentProductId}

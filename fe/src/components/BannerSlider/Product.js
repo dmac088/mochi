@@ -16,20 +16,20 @@ const $ = window.$;
     const routeProps = createRouteProps(history, match, location);
     if(!product) {return null;}
     return (
-        <div key={product.productId} className="gf-product banner-slider-product">
+        <div key={product.productUPC} className="gf-product banner-slider-product">
           <div className="image">
-            <a id={product.productId} onClick={(e) => routeSingleProduct(e, category.categoryDesc, routeProps)} href="#">
+            <a id={product.productUPC} onClick={(e) => routeSingleProduct(e, category.categoryDesc, routeProps)} href="#">
               <span className="onsale">Sale!</span>
               <img src={productImagePath + product.productImage} className="img-fluid" alt="" />
             </a>
             <div className="product-hover-icons">
-              <a  id={product.productId}
+              <a  id={product.productUPC}
                   onClick={setCurrentProductId}
                   href="#"
                   data-tooltip="Quick view"
                   data-toggle="modal"
                   data-target="#quick-view-modal-container">
-                <span id={product.productId} className="icon_search" />
+                <span id={product.productUPC} className="icon_search" />
               </a>
             </div>
           </div>
