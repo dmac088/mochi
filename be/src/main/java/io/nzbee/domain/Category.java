@@ -6,7 +6,8 @@ import java.util.Objects;
 import io.nzbee.entity.layout.Layout;
 
 public class Category {
- String categoryCode;
+	
+	private String categoryCode;
 	
 	private String categoryDesc;
 	
@@ -18,7 +19,7 @@ public class Category {
 	
 	private List<Layout> layouts;
 	
-	private Long parentId;	
+	private String parentCode;	
 
 	private Long childCategoryCount;
 	
@@ -28,6 +29,14 @@ public class Category {
 
 	public void setCategoryCode(String categoryCode) {
 		this.categoryCode = categoryCode;
+	}
+
+	public String getParentCode() {
+		return parentCode;
+	}
+
+	public void setParentCode(String parentCode) {
+		this.parentCode = parentCode;
 	}
 
 	public String getCategoryDesc() {
@@ -54,14 +63,6 @@ public class Category {
 		this.lclCd = lclCd;
 	}
 
-	public Long getParentId() {
-		return parentId;
-	}
-
-	public void setParentId(Long parentId) {
-		this.parentId = parentId;
-	}
-	
 	public Long getChildCategoryCount() {
 		return childCategoryCount;
 	}
@@ -107,10 +108,11 @@ public class Category {
         .append(", categoryDesc=").append(categoryDesc)
         .append(", categoryLevel=").append(categoryLevel)
         .append(", categoryType=").append(categoryType)
-        .append(", parentId=").append(parentId)
+        .append(", parentCode=").append(parentCode)
         .append(", childCategoryCount=").append(childCategoryCount)
         .append(", lclCd=").append(lclCd)
         .append("]");    	
         return builder.toString();
     }
+
 }

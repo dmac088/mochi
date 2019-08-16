@@ -86,6 +86,17 @@ public class CategoryServiceImpl implements ICategoryService {
   	}
     
     @Override
+  	@Transactional
+  	//@Cacheable
+  	public Category findOne(final String locale, final String categoryCode) {
+    	io.nzbee.entity.category.Category pc = categoryService.findByCategoryCode(
+    			CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
+    			categoryCode, 
+    			locale).get();
+     	return	createCategory(pc, locale);
+  	}
+    
+    @Override
 	@Transactional
 	//@Cacheable
 	public Category findOneByDesc(String locale,  String categoryType, String categoryDesc) {
@@ -130,7 +141,7 @@ public class CategoryServiceImpl implements ICategoryService {
         //set the parentId
         Optional<io.nzbee.entity.category.Category> parent = Optional.ofNullable(pc.getParent());
         if(parent.isPresent()) {
-        	cDO.setParentId(parent.get().getCategoryId());
+        	cDO.setParentCode(parent.get().getCategoryCode());
         }
         
         cDO.setCategoryDesc(pc.getAttributes().stream()

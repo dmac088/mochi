@@ -158,7 +158,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
     	s.setFacetClassName(c.getClass().getSimpleName());
     	s.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
     	s.setFacetId(c.getCategoryCode().toString());
-    	s.setFacetParentId(c.getParentId());
+    	s.setFacetParentId(c.getParentCode());
     	s.setFacetChildCount(c.getChildCategoryCount());
     	s.setFacetDisplayValue(c.getCategoryDesc());
     	s.setToken(c.getCategoryCode());
@@ -173,7 +173,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		s.setFacetClassName(t.getClass().getSimpleName());
 		s.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
 		s.setFacetId(t.getTagId().toString());
-		s.setFacetParentId(new Long(-1));
+		s.setFacetParentId("-1");
 		s.setFacetChildCount(new Long(0));
 		s.setFacetDisplayValue(t.getTagDesc());
 		s.setToken(t.getTagDesc());
@@ -188,7 +188,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
     	s.setFacetClassName(b.getClass().getSimpleName());
     	s.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
     	s.setFacetId(b.getBrandCode());
-    	s.setFacetParentId(new Long(-1));
+    	s.setFacetParentId("-1");
     	s.setFacetChildCount(new Long(0));
     	s.setFacetDisplayValue(b.getBrandDesc());
     	s.setToken(b.getBrandCode());
