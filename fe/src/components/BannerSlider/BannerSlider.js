@@ -54,14 +54,14 @@ const $ = window.$;
   };
 
   const renderProducts = (props, slider) => {
-    
+
     const { category, setCurrentProductId } = props;
     if(!category) { return }
     if(!category.products) { return }
     return category.products.map(product => {
       return (
           <Product
-            key={product.productId}
+            key={product.productUPC}
             product={product}
             {...props}
           />

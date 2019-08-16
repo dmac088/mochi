@@ -258,7 +258,7 @@ class QuickViewProduct extends Component{
     return(
 			<div className={"modal fade quick-view-modal-container "
 									+ ((isShowing) ? " show" : "")}
-				id={"modal-" + product.productId}
+				id={"modal-" + product.productUPC}
 				tabIndex="-1"
 				role="dialog"
 				style={ (!isShowing)

@@ -39,31 +39,31 @@ class Product extends Component {
   }
 
   renderProduct = (category, product, currentImage, setCurrentProductId) => {
-		
+
 		const routeProps = createRouteProps(this.props.history, this.props.match, this.props.location);
     return (
       <React.Fragment>
         <div className="image">
-          <a id={product.productId} onClick={(e) => routeSingleProduct(e, category.categoryDesc, routeProps)} href="#">
+          <a id={product.productUPC} onClick={(e) => routeSingleProduct(e, category.categoryDesc, routeProps)} href="#">
             <span className="onsale">Sale!</span>
             <img src={productImagePath + currentImage} className="img-fluid" alt="" />
           </a>
           <div className="product-hover-icons">
             <a onClick={this.addToCart} className="active" href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
-            <a id={product.productId} onClick={setCurrentProductId} href="#" data-tooltip="Add to wishlist"> <span className="icon_heart_alt" /> </a>
-            <a id={product.productId} onClick={setCurrentProductId} href="#" data-tooltip="Compare"> <span className="arrow_left-right_alt" /> </a>
-            <a id={product.productId} onClick={setCurrentProductId} href="#" data-tooltip="Quick view" data-toggle="modal" data-target={"#modal-" + product.productId} >
+            <a id={product.productUPC} onClick={setCurrentProductId} href="#" data-tooltip="Add to wishlist"> <span className="icon_heart_alt" /> </a>
+            <a id={product.productUPC} onClick={setCurrentProductId} href="#" data-tooltip="Compare"> <span className="arrow_left-right_alt" /> </a>
+            <a id={product.productUPC} onClick={setCurrentProductId} href="#" data-tooltip="Quick view" data-toggle="modal" data-target={"#modal-" + product.productUPC} >
               <span className="icon_search" />
             </a>
           </div>
         </div>
         <div className="product-content">
           <div className="product-categories">
-            <a id={product.productId} href={(e) => routeSingleProduct(e, category.categoryDesc, routePropse, category.categoryDesc, routeProps)} href="#">{category.categoryDesc}</a>,<span> </span>
-            <a id={product.productId} href={(e) => routeSingleProduct(e, category.categoryDesc, routeProps)} href="#">{product.brandDesc}</a>
+            <a id={product.productUPC} href={(e) => routeSingleProduct(e, category.categoryDesc, routePropse, category.categoryDesc, routeProps)} href="#">{category.categoryDesc}</a>,<span> </span>
+            <a id={product.productUPC} href={(e) => routeSingleProduct(e, category.categoryDesc, routeProps)} href="#">{product.brandDesc}</a>
           </div>
           <h3 className="product-title">
-            <a id={product.productId} onClick={(e) => routeSingleProduct(e, category.categoryDesc, routeProps)} href="#">
+            <a id={product.productUPC} onClick={(e) => routeSingleProduct(e, category.categoryDesc, routeProps)} href="#">
               {product.productDesc}
             </a>
           </h3>

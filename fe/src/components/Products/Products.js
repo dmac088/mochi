@@ -201,7 +201,7 @@ class Products extends Component {
     if(!products) {return}
     return products.map(product => {
         return (
-                    <Product key={product.productId}
+                    <Product key={product.productUPC}
                         category={category}
                         product={product}
                         setCurrentProductId={setCurrentProductId}

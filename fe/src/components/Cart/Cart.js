@@ -14,14 +14,14 @@ import { productImagePath } from '../../services/helpers/imageHelper';
     const { match, history } = props;
     return cart.items.map(product => {
         return(
-          <tr key={product.productId}>
+          <tr key={product.productUPC}>
             <td className="pro-thumbnail">
-              <a id={product.productId} href="#" onClick={(e) => routeSingleProduct(e, null, routeProps)}>
+              <a id={product.productUPC} href="#" onClick={(e) => routeSingleProduct(e, null, routeProps)}>
                 <img src={productImagePath + product.productImage} className="img-fluid" alt="Product" />
               </a>
             </td>
             <td className="pro-title">
-              <a id={product.productId} href="#" onClick={(e) => routeSingleProduct(e, null, routeProps)}>
+              <a id={product.productUPC} href="#" onClick={(e) => routeSingleProduct(e, null, routeProps)}>
                 {product.productDesc}
               </a>
             </td>
@@ -37,7 +37,7 @@ import { productImagePath } from '../../services/helpers/imageHelper';
               <span>${product.quantity * product.productMarkdown}</span>
             </td>
             <td className="pro-remove">
-              <a id={product.productId} onClick={removeItem} href="#">
+              <a id={product.productUPC} onClick={removeItem} href="#">
                 <i className="fa fa-trash-o"></i>
               </a>
             </td>
