@@ -20,7 +20,7 @@ public class NavFacet<T> {
 	
 	private Long facetLevel;
 	
-	private Long facetParentId;
+	private String facetParentId;
 	
 	private Long facetChildCount;
 
@@ -110,11 +110,11 @@ public class NavFacet<T> {
 		this.facetMaxMarkdownPrice = facetMaxMarkdownPrice;
 	}
 	
-	public Long getFacetParentId() {
+	public String getFacetParentId() {
 		return facetParentId;
 	}
 
-	public void setFacetParentId(Long facetParentId) {
+	public void setFacetParentId(String facetParentId) {
 		this.facetParentId = facetParentId;
 	}
 

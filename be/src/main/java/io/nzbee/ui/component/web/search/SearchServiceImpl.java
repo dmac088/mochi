@@ -318,10 +318,10 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		if (!c.isPresent()) {
 			return cfs;
 		}
-		if (c.get().getParentId() == null) {
+		if (c.get().getParentCode() == null) {
 			return cfs;
 		}
-		Optional<Category> parent = Optional.ofNullable(categoryService.findOne(locale, c.get().getParentId()));
+		Optional<Category> parent = Optional.ofNullable(categoryService.findOne(locale, c.get().getParentCode()));
 		if (!parent.isPresent()) {
 			return cfs;
 		}

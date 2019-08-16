@@ -29,4 +29,6 @@ public interface ICategoryService {
 
 	List<Category> findAll(String locale);
 
+	Category findOne(String locale, String categoryCode);
+
 }
