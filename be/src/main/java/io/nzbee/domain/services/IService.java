@@ -2,8 +2,6 @@ package io.nzbee.domain.services;
 
 import java.util.List;
 
-import io.nzbee.domain.Product;
-
 //generic service class
 public interface IService<T> {
 	
