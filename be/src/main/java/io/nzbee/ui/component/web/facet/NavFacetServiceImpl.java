@@ -85,7 +85,6 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 			.collect(Collectors.toList());
 		
 		List<NavFacet<Tag>> tagBars = tags.stream().map(t -> {
-			List<Long> tagIds = new ArrayList<Long>();
 			NavFacet<Tag> s = convertTagToNavFacet(t);
 			s.setFacetProductCount(this.getCountForTag(locale, currency, categoryDesc, lc, lb, t));
 			return s;

@@ -24,7 +24,6 @@ import io.nzbee.domain.Brand;
 import io.nzbee.domain.Tag;
 import io.nzbee.entity.brand.IBrandService;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
-import io.nzbee.entity.brand.attribute.BrandAttributeServiceImpl;
 import io.nzbee.entity.brand.attribute.IBrandAttributeService;
 import io.nzbee.entity.product.attribute.IProductAttributeService;
 import io.nzbee.entity.product.attribute.ProductAttribute;
@@ -233,7 +232,7 @@ public class ProductServiceImpl implements IProductService {
 		Optional<io.nzbee.entity.brand.Brand> oBrand = brandService.findOne(product);
 		io.nzbee.entity.brand.Brand brand = oBrand.isPresent() ? oBrand.get() : new io.nzbee.entity.brand.Brand();
 		Optional<Brand> bDo = p.getBrand(); 
-		brand.setCode(p.getBrand().get().getBrandCode());
+		brand.setCode(bDo.get().getBrandCode());
 		
 		//Brand Attributes
 		List<BrandAttribute> lba = new ArrayList<BrandAttribute>();
