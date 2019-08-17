@@ -271,7 +271,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 					ts.add(tagFacet);
 				});
 
-		List<NavFacet> returnFacets = new ArrayList<NavFacet>();
+		List<NavFacet<?>> returnFacets = new ArrayList<NavFacet<?>>();
 		returnFacets.addAll(cs);
 		returnFacets.addAll(bs);
 		returnFacets.addAll(ts);
@@ -297,10 +297,11 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		Search search = new Search();
 		search.setProducts(new PageImpl<Product>(lp, pageable, jpaQuery.getResultSize()));
 		NavFacetContainer nfc = new NavFacetContainer();
-		nfc.setBrands(returnFacets.stream().filter(f -> f.getFacetClassName().equals(Brand.class.getSimpleName())).collect(Collectors.toList()));
-		nfc.setCategories(returnFacets.stream().filter(f -> f.getFacetClassName().equals(Category.class.getSimpleName())).collect(Collectors.toList()));
-		nfc.setTags(returnFacets.stream().filter(f -> f.getFacetClassName().equals(Tag.class.getSimpleName())).collect(Collectors.toList()));
-		nfc.setPrices(returnFacets.stream().filter(f -> f.getFacetClassName().equals("Product.productMarkdown")).collect(Collectors.toList()));
+		nfc.setFacets(returnFacets);
+		//nfc.setBrands(returnFacets.stream().filter(f -> f.getFacetClassName().equals(Brand.class.getSimpleName())).collect(Collectors.toList()));
+		//nfc.setCategories(returnFacets.stream().filter(f -> f.getFacetClassName().equals(Category.class.getSimpleName())).collect(Collectors.toList()));
+		//nfc.setTags(returnFacets.stream().filter(f -> f.getFacetClassName().equals(Tag.class.getSimpleName())).collect(Collectors.toList()));
+		//nfc.setPrices(returnFacets.stream().filter(f -> f.getFacetClassName().equals("Product.productMarkdown")).collect(Collectors.toList()));
 		search.setFacets(nfc);
 		return search;
 	}
