@@ -50,9 +50,28 @@ public class NavFacetContainer {
 														   ))
 				.map(f -> (NavFacet<Object>) f).collect(Collectors.toList());
 	}
+	
+	public void setCategories(List<NavFacet<Category>> categories) {
+		this.facets.addAll(categories);
+	}
+	
+	public void setBrands(List<NavFacet<Brand>> brands) {
+		this.facets.addAll(brands);
+	}
+	
+	public void setTags(List<NavFacet<Tag>> tags) {
+		this.facets.addAll(tags);
+	}
+	
+	public void setPrices(List<NavFacet<Object>> prices) {
+		this.facets.addAll(prices);
+	}
+
 
 	public void setFacets(List<NavFacet<?>> collect) {
 		// TODO Auto-generated method stub
 		this.facets = collect;
-	}	
+	}
+
+	
 }
