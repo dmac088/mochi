@@ -58,9 +58,7 @@ public class ProductServiceImpl implements IProductService {
     @Autowired
     @Qualifier("categoryEntityService")
     private io.nzbee.entity.category.ICategoryService categoryService;
-    
-
-    
+   
     @Override
 	@Transactional
 	@Cacheable(value="product")
