@@ -1,52 +1,58 @@
 package io.nzbee.ui.component.web.facet;
 
+
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.stream.Collectors;
 import io.nzbee.domain.Brand;
 import io.nzbee.domain.Category;
+import io.nzbee.domain.Product;
 import io.nzbee.domain.Tag;
 
 public class NavFacetContainer {
 
 	
-	private List<NavFacet<Category>> categories = new ArrayList<NavFacet<Category>>();
-	
-	private List<NavFacet<Brand>> brands = new ArrayList<NavFacet<Brand>>();
+	private List<NavFacet<?>> facets = new ArrayList<NavFacet<?>>();
 
-	private List<NavFacet<Tag>> tags = new ArrayList<NavFacet<Tag>>();
-	
-	private List<NavFacet<Object>> prices = new ArrayList<NavFacet<Object>>();
+	public List<NavFacet<?>> getFacets() {
+		return facets;
+	}
 
+	@SuppressWarnings("unchecked")
 	public List<NavFacet<Category>> getCategories() {
-		return categories;
+		return this.facets.stream()
+				.filter(f -> f.getFacetClassName().equals(Category.class.getSimpleName()))
+				.map(f -> (NavFacet<Category>) f)
+				.collect(Collectors.toList());
 	}
 
-	public void setCategories(List<NavFacet<Category>> categories) {
-		this.categories = categories;
-	}
-
+	@SuppressWarnings("unchecked")
 	public List<NavFacet<Brand>> getBrands() {
-		return brands;
+		return this.facets.stream()
+				.filter(f -> f.getFacetClassName().equals(Brand.class.getSimpleName()))
+				.map(f -> (NavFacet<Brand>) f)
+				.collect(Collectors.toList());
 	}
 
-	public void setBrands(List<NavFacet<Brand>> brands) {
-		this.brands = brands;
-	}
-
+	@SuppressWarnings("unchecked")
 	public List<NavFacet<Tag>> getTags() {
-		return tags;
+		return this.facets.stream()
+				.filter(f -> f.getFacetClassName().equals(Tag.class.getSimpleName()))
+				.map(f -> (NavFacet<Tag>) f)
+				.collect(Collectors.toList());
 	}
 
-	public void setTags(List<NavFacet<Tag>> tags) {
-		this.tags = tags;
-	}
-
+	@SuppressWarnings("unchecked")
 	public List<NavFacet<Object>> getPrices() {
-		return prices;
+		return this.facets.stream()
+				.filter(f -> f.getFacetClassName().equals(Product.class.getSimpleName() 
+														  + ".productMarkdown"
+														   ))
+				.map(f -> (NavFacet<Object>) f).collect(Collectors.toList());
 	}
 
-	public void setPrices(List<NavFacet<Object>> prices) {
-		this.prices = prices;
+	public void setFacets(List<NavFacet<?>> collect) {
+		// TODO Auto-generated method stub
+		this.facets = collect;
 	}	
 }

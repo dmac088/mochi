@@ -41,7 +41,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		NavFacetContainer nfc = new NavFacetContainer();
 		NavFacetResult nfr = new NavFacetResult();
 		
-		nfc.setCategories(	categoryService.findAll(locale).stream().map(c -> {
+		nfc.getFacets().addAll(	categoryService.findAll(locale).stream().map(c -> {
 									NavFacet<Category> cnf = this.convertCatToNavFacet(c);
 									cnf.setFacetMaxMarkdownPrice(productService.getMaxPriceForCategory(c, currency));	
 									cnf.setFacetProductCount(productService.getCountForCategory(c));
@@ -92,9 +92,9 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 			.filter(t -> t.getFacetProductCount() > 0)
 			.collect(Collectors.toList());
 		
-		nfc.setBrands(brandBars);
-		nfc.setCategories(catBars);
-		nfc.setTags(tagBars);
+		nfc.getFacets().addAll(brandBars);
+		nfc.getFacets().addAll(catBars);
+		nfc.getFacets().addAll(tagBars);
 		
 		nfr.setResult(nfc);
 		
