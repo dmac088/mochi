@@ -16,6 +16,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
+import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.category.product.ICategoryProductRepository;
 import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.entity.category.type.CategoryTypeRepository;
@@ -45,7 +46,7 @@ public class IT_CategoryRepository {
 
 
     public Category persistNewCategory() {
-    	Category 		category 		= new Category();
+    	Category 		category 		= new CategoryProduct();
     	CategoryType 	categoryType 	= categoryTypeRepository.findByCategoryTypeId(new Long(1));
     	Hierarchy 		hierarchy 		= hierarchyRepository.findByCode(CategoryVars.PRIMARY_HIERARCHY_CODE);
     	Category 		parentCategory 	= categoryRepository.findByCategoryCode(CategoryVars.PRIMARY_HIERARCHY_ROOT_CODE);

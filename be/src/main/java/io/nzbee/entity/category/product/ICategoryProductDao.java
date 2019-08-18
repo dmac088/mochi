@@ -2,9 +2,7 @@ package io.nzbee.entity.category.product;
 
 import java.util.List;
 import java.util.Optional;
-
 import io.nzbee.entity.IDao;
-import io.nzbee.entity.category.Category;
 
 public interface ICategoryProductDao extends IDao<CategoryProduct> {
 
