@@ -1421,16 +1421,10 @@ SELECT pg_catalog.setval('brand_bnd_id_seq', 41, true);
 --
 
 COPY brand_category (bnd_cat_id, bnd_id, cat_id) FROM stdin;
-1	33	41
-2	34	41
-3	35	41
-4	32	42
-5	36	42
-6	37	42
-7	38	42
-8	39	42
-9	40	42
-10	41	42
+11	32	45
+12	33	45
+13	34	45
+14	35	45
 \.
 
 
@@ -1438,7 +1432,7 @@ COPY brand_category (bnd_cat_id, bnd_id, cat_id) FROM stdin;
 -- Name: brand_category_bnd_cat_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('brand_category_bnd_cat_id_seq', 10, true);
+SELECT pg_catalog.setval('brand_category_bnd_cat_id_seq', 14, true);
 
 
 --
@@ -1451,7 +1445,6 @@ COPY category (cat_id, cat_cd, cat_prnt_id, cat_lvl, cat_typ_id, hir_id) FROM st
 38	FET01	39	1	1	42
 40	BND01	\N	0	1	43
 42	OTH02	40	1	1	43
-41	FET02	40	1	1	43
 8	SVG01	4	2	1	41
 16	NUT01	2	1	1	41
 28	DUM02	2	1	1	41
@@ -1489,6 +1482,7 @@ COPY category (cat_id, cat_cd, cat_prnt_id, cat_lvl, cat_typ_id, hir_id) FROM st
 2	PRM01	\N	0	1	41
 7	BAP01	4	2	1	41
 44	UNK01	39	1	1	42
+45	FBR01	\N	0	2	43
 \.
 
 
@@ -1568,8 +1562,6 @@ COPY category_attr_lcl (cat_lcl_id, cat_id, cat_desc, cat_img_pth, lcl_cd) FROM 
 85	39	雜	\N	zh-HK
 86	40	All Brands	\N	en-GB
 87	40	所有品牌	\N	zh-HK
-88	41	Featured Brands	\N	en-GB
-89	41	推薦品牌	\N	zh-HK
 90	42	Other Brands	\N	en-GB
 99	42	其他品牌	\N	zh-HK
 100	43	Best Sellers	\N	en-GB
@@ -1583,6 +1575,8 @@ COPY category_attr_lcl (cat_lcl_id, cat_id, cat_desc, cat_img_pth, lcl_cd) FROM 
 102	44	Unknown	\N	en-GB
 103	44	未知	\N	zh-HK
 13	2	ALL		zh-HK
+104	45	Featured Brands	\N	en-GB
+105	45	推薦品牌	\N	zh-HK
 \.
 
 
@@ -1598,6 +1592,7 @@ SELECT pg_catalog.setval('category_attr_lcl_cat_id_seq', 21, true);
 --
 
 COPY category_brand (cat_id) FROM stdin;
+45
 \.
 
 
@@ -1618,7 +1613,6 @@ COPY category_product (cat_id) FROM stdin;
 38
 40
 42
-41
 8
 16
 28
