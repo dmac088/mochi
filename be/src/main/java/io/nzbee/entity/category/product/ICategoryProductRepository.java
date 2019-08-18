@@ -1,9 +1,11 @@
-package io.nzbee.entity.category;
+package io.nzbee.entity.category.product;
 
 import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 
-public interface ICategoryRepository extends CrudRepository<Category, Long> {
+import io.nzbee.entity.category.Category;
+
+public interface ICategoryProductRepository extends CrudRepository<Category, Long> {
 
 	List<Category> findAll();
 	

@@ -21,13 +21,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import io.nzbee.entity.brand.Brand;
-import io.nzbee.entity.brand.Brand_;
+import io.nzbee.entity.brand.Brand_; 
 import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.brand.attribute.BrandAttribute_;
-import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.Category_;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.attribute.CategoryAttribute_;
+import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.PageableUtil;
 import io.nzbee.entity.product.Product_;
 import io.nzbee.entity.product.attribute.ProductAttribute;
@@ -161,14 +161,14 @@ public class ProductDaoImpl implements IProductDao {
 		
 		Root<Product> root 									= cq.from(Product.class);
 		Join<Product, ProductAttribute> productAttribute 	= root.join(Product_.attributes);
-		Join<Product, Category> category 					= root.join(Product_.categories);
+		Join<Product, CategoryProduct> category 			= root.join(Product_.categories);
 		Join<Product, Brand> brand 							= root.join(Product_.brand);
 		Join<Product, ProductStatus> status 				= root.join(Product_.productStatus);
 		Join<Product, ProductPrice> price 					= root.join(Product_.prices);
 		Join<ProductPrice, ProductPriceType> type 			= price.join(ProductPrice_.type);
 		Join<ProductPrice, Currency> curr 					= price.join(ProductPrice_.currency);
 		Join<Brand, BrandAttribute> brandAttribute 			= brand.join(Brand_.brandAttributes);
-		Join<Category, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
+		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
 		//Join<Category, Hierarchy> categoryHierarchy = category.join(Category_.hierarchy);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
@@ -226,15 +226,15 @@ public class ProductDaoImpl implements IProductDao {
 		
 		Root<Product> root 									= cq.from(Product.class);
 		Join<Product, ProductAttribute> productAttribute 	= root.join(Product_.attributes);
-		Join<Product, Category> category 					= root.join(Product_.categories);
+		Join<Product, CategoryProduct> category 					= root.join(Product_.categories);
 		Join<Product, Brand> brand 							= root.join(Product_.brand);
 		Join<Product, ProductStatus> status 				= root.join(Product_.productStatus);
 		Join<Product, ProductPrice> price 					= root.join(Product_.prices);
 		Join<ProductPrice, ProductPriceType> type 			= price.join(ProductPrice_.type);
 		Join<ProductPrice, Currency> curr 					= price.join(ProductPrice_.currency);
 		Join<Brand, BrandAttribute> brandAttribute 			= brand.join(Brand_.brandAttributes);
-		Join<Category, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
-		Join<Category, Hierarchy> categoryHierarchy 		= category.join(Category_.hierarchy);
+		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
+		Join<CategoryProduct, Hierarchy> categoryHierarchy 		= category.join(Category_.hierarchy);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		if(!categoryIds.isEmpty()) {
@@ -291,14 +291,14 @@ public class ProductDaoImpl implements IProductDao {
 		
 		Root<Product> root 									= cq.from(Product.class);
 		Join<Product, ProductAttribute> productAttribute 	= root.join(Product_.attributes);
-		Join<Product, Category> category 					= root.join(Product_.categories);
+		Join<Product, CategoryProduct> category 					= root.join(Product_.categories);
 		Join<Product, Brand> brand 							= root.join(Product_.brand);
 		Join<Product, ProductStatus> status 				= root.join(Product_.productStatus);
 		Join<Product, ProductPrice> price 					= root.join(Product_.prices);
 		Join<ProductPrice, ProductPriceType> type 			= price.join(ProductPrice_.type);
 		Join<ProductPrice, Currency> curr 					= price.join(ProductPrice_.currency);
 		Join<Brand, BrandAttribute> brandAttribute 			= brand.join(Brand_.brandAttributes);
-		Join<Category, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
+		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
 		//Join<Category, Hierarchy> categoryHierarchy 		= category.join(Category_.hierarchy);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
@@ -355,13 +355,13 @@ public class ProductDaoImpl implements IProductDao {
 		Root<Product> root = cq.from(Product.class);
 		
 		Join<Product, ProductAttribute> productAttribute = root.join(Product_.attributes);
-		Join<Product, Category> category = root.join(Product_.categories);
+		Join<Product, CategoryProduct> category = root.join(Product_.categories);
 		Join<Product, Brand> brand = root.join(Product_.brand);
 		Join<Product, ProductStatus> status = root.join(Product_.productStatus);
 		Join<Product, ProductPrice> price = root.join(Product_.prices);
 		Join<ProductPrice, Currency> curr = price.join(ProductPrice_.currency);
 		Join<Brand, BrandAttribute> brandAttribute = brand.join(Brand_.brandAttributes);
-		Join<Category, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
+		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
 		//Join<Category, Hierarchy> categoryHierarchy = category.join(Category_.hierarchy);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
@@ -391,7 +391,7 @@ public class ProductDaoImpl implements IProductDao {
 		CriteriaQuery<Double> cq = cb.createQuery(Double.class);
 		
 		Root<Product> root = cq.from(Product.class);
-		Join<Product, Category> category = root.join(Product_.categories);
+		Join<Product, CategoryProduct> category = root.join(Product_.categories);
 		Join<Product, ProductAttribute> productAttribute = root.join(Product_.attributes);
 		Join<Product, Brand> brand = root.join(Product_.brand);
 		Join<Product, ProductStatus> status = root.join(Product_.productStatus);
@@ -399,7 +399,7 @@ public class ProductDaoImpl implements IProductDao {
 		Join<ProductPrice, ProductPriceType> type = price.join(ProductPrice_.type);
 		Join<ProductPrice, Currency> curr = price.join(ProductPrice_.currency);
 		Join<Brand, BrandAttribute> brandAttribute = brand.join(Brand_.brandAttributes);
-		Join<Category, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
+		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		if(!categoryIds.isEmpty()) {
@@ -435,7 +435,7 @@ public class ProductDaoImpl implements IProductDao {
 		CriteriaQuery<Double> cq = cb.createQuery(Double.class);
 		
 		Root<Product> root = cq.from(Product.class);
-		Join<Product, Category> category = root.join(Product_.categories);
+		Join<Product, CategoryProduct> category = root.join(Product_.categories);
 		Join<Product, ProductAttribute> productAttribute = root.join(Product_.attributes);
 		Join<Product, Brand> brand = root.join(Product_.brand);
 		Join<Product, ProductStatus> status = root.join(Product_.productStatus);
@@ -443,7 +443,7 @@ public class ProductDaoImpl implements IProductDao {
 		Join<ProductPrice, ProductPriceType> type = price.join(ProductPrice_.type);
 		Join<ProductPrice, Currency> curr = price.join(ProductPrice_.currency);
 		Join<Brand, BrandAttribute> brandAttribute = brand.join(Brand_.brandAttributes);
-		Join<Category, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
+		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		if(!categoryCodes.isEmpty()) {
@@ -478,14 +478,14 @@ public class ProductDaoImpl implements IProductDao {
 		
 		Root<Product> root = cq.from(Product.class);
 		Join<Product, ProductAttribute> productAttribute = root.join(Product_.attributes);
-		Join<Product, Category> category = root.join(Product_.categories);
+		Join<Product, CategoryProduct> category = root.join(Product_.categories);
 		Join<Product, Brand> brand = root.join(Product_.brand);
 		Join<Product, ProductStatus> status = root.join(Product_.productStatus);
 		Join<Product, ProductPrice> price = root.join(Product_.prices);
 		Join<ProductPrice, ProductPriceType> type = price.join(ProductPrice_.type);
 		Join<ProductPrice, Currency> curr = price.join(ProductPrice_.currency);
 		Join<Brand, BrandAttribute> brandAttribute = brand.join(Brand_.brandAttributes);
-		Join<Category, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
+		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
 		//Join<Category, Hierarchy> categoryHierarchy = category.join(Category_.hierarchy);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
@@ -526,14 +526,14 @@ public class ProductDaoImpl implements IProductDao {
 		
 		Root<Product> root = cq.from(Product.class);
 		Join<Product, ProductAttribute> productAttribute = root.join(Product_.attributes);
-		Join<Product, Category> category = root.join(Product_.categories);
+		Join<Product, CategoryProduct> category = root.join(Product_.categories);
 		Join<Product, Brand> brand = root.join(Product_.brand);
 		Join<Product, ProductStatus> status = root.join(Product_.productStatus);
 		Join<Product, ProductPrice> price = root.join(Product_.prices);
 		Join<ProductPrice, ProductPriceType> type = price.join(ProductPrice_.type);
 		Join<ProductPrice, Currency> curr = price.join(ProductPrice_.currency);
 		Join<Brand, BrandAttribute> brandAttribute = brand.join(Brand_.brandAttributes);
-		Join<Category, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
+		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
 		//Join<Category, Hierarchy> categoryHierarchy = category.join(Category_.hierarchy);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();

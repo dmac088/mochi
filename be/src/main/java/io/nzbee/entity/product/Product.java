@@ -27,9 +27,8 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import io.nzbee.entity.brand.Brand;
-import io.nzbee.entity.category.Category;
+import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.price.ProductPrice;
 import io.nzbee.entity.product.status.ProductStatus;
@@ -40,7 +39,7 @@ import io.nzbee.variables.ProductVars;
 @Entity
 @Table(name = "product", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "prd_id")
-public class Product {
+public class Product { 
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -56,7 +55,7 @@ public class Product {
 	@ManyToMany(mappedBy = "products")
 	@IndexedEmbedded
 	@JsonIgnore
-	private List<Category> categories;
+	private List<CategoryProduct> categories;
 	
 	@ManyToMany(mappedBy = "products")
 	@IndexedEmbedded
@@ -134,7 +133,7 @@ public class Product {
 		return productId;
 	}
 
-	public Collection<Category> getCategories() {
+	public Collection<CategoryProduct> getCategories() {
 		return this.categories;
 	}
 	
@@ -150,7 +149,7 @@ public class Product {
 		this.attributes = productAttributes;
 	}
 
-	public void setCategories(List<Category> categories) {
+	public void setCategories(List<CategoryProduct> categories) {
 		this.categories = categories;
 	}
 

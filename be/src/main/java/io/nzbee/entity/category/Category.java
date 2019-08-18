@@ -1,7 +1,6 @@
 package io.nzbee.entity.category;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -12,6 +11,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.JoinTable;
@@ -19,7 +20,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Analyzer;
@@ -28,20 +28,22 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.google.common.collect.Lists;
-
-import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.entity.layout.Layout;
-import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.hierarchy.Hierarchy;
 import io.nzbee.variables.GeneralVars;
 
 @Entity
 @Table(name = "category", schema = "mochi")
-@PrimaryKeyJoinColumn(name = "cat_id")
-public class Category {
+@Inheritance(strategy = InheritanceType.JOINED)
+@JsonTypeInfo(
+	    use = JsonTypeInfo.Id.MINIMAL_CLASS,
+	    include = JsonTypeInfo.As.PROPERTY,
+	    property = "@class")
+public abstract class Category {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -62,21 +64,7 @@ public class Category {
 	@JsonBackReference
 	private Hierarchy hierarchy;
 
-	@ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "product_category", schema="mochi", 
-    		   joinColumns 			= @JoinColumn(name = "cat_id"), 
-    		   inverseJoinColumns 	= @JoinColumn(name = "prd_id"))
-    @OrderBy
-    @JsonIgnore
-    private List<Product> products;
-	
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "brand_category", schema="mochi", 
-    		   joinColumns 			= @JoinColumn(name = "cat_id"), 
-    		   inverseJoinColumns 	= @JoinColumn(name = "bnd_id"))
-    @OrderBy
-    @JsonIgnore
-    private List<Brand> brands;
+
     
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "layout_category", schema="mochi", 
@@ -204,10 +192,6 @@ public class Category {
 		this.categoryLevel = categoryLevel;
 	}
 	
-	public Collection<Product> getProducts() {
-		return products;
-	}
-	
     public Hierarchy getHierarchy() {
 		return hierarchy;
 	}
@@ -224,9 +208,6 @@ public class Category {
 		this.categoryCode = categoryCode;
 	}
 	
-	public Long getProductCount() {
-		return new Long(products.size());
-	}
 	
 	public CategoryType getCategoryType() {
 		return categoryType;

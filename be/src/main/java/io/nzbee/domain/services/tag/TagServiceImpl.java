@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import io.nzbee.domain.Tag;
 import io.nzbee.domain.Category;
 import io.nzbee.domain.Brand;
-import io.nzbee.entity.category.ICategoryService;
+import io.nzbee.entity.category.product.ICategoryProductService;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.tag.IProductTagService;
 import io.nzbee.entity.product.tag.ProductTag;
@@ -29,7 +29,7 @@ import io.nzbee.variables.ProductVars;
 public class TagServiceImpl implements ITagService {
 
 	@Autowired
-	ICategoryService categoryService;
+	ICategoryProductService categoryService;
 	
 	@Autowired
 	IProductTagService productTagService;

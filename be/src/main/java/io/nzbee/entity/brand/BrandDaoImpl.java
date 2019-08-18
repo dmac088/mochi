@@ -16,8 +16,8 @@ import org.springframework.stereotype.Component;
 import io.nzbee.entity.brand.Brand_;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.brand.attribute.BrandAttribute_;
-import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.Category_;
+import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.Product_;
 import io.nzbee.entity.product.status.ProductStatus;
@@ -190,7 +190,7 @@ public class BrandDaoImpl  implements IBrandDao {
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		if(categoryCodes.size() > 0) {
-			Join<Product, Category> category = brand.join(Product_.categories);
+			Join<Product, CategoryProduct> category = brand.join(Product_.categories);
 			conditions.add(category.get(Category_.categoryCode).in(categoryCodes));
 		}
 		if(tagCodes.size() > 0) {
