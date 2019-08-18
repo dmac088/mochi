@@ -4,8 +4,7 @@ import _ from 'lodash';
     const renderFacets = (facets, selectedFacets, props) => {
       return facets.map(facet => {
         return(
-          <React.Fragment>
-            <li key={facet.token}>
+            <li key={facet.facetId}>
               <a onClick={(e) => {
                                  e.preventDefault();
                                  props.updateFacets(e, null);
@@ -15,7 +14,6 @@ import _ from 'lodash';
                  {facet.facetDisplayValue} ({facet.facetProductCount})
                </a>
             </li>
-          </React.Fragment>
         );
       });
     }

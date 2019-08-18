@@ -9,7 +9,6 @@ import { productImagePath } from '../../services/helpers/imageHelper';
     e.preventDefault();
     const quantity = 1;
     product.quantity = quantity;
-    console.log(product);
     cartService.addToCart(cartSelector.get(),
                           product,
                           ()=>{console.log("addToCart complete!")});
@@ -17,7 +16,6 @@ import { productImagePath } from '../../services/helpers/imageHelper';
 
 
   const renderLV = (category, product, setCurrentProductId, isGrid, routeProps) => {
-    console.log(product);
     return (
       <div className="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
         <div className="gf-product shop-list-view-product">
@@ -61,7 +59,6 @@ import { productImagePath } from '../../services/helpers/imageHelper';
 
 
   const renderGV = (category, product, setCurrentProductId, isGrid, routeProps) => {
-    //console.log(product);
     return (
       <div className="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
         <div className="gf-product shop-grid-view-product">

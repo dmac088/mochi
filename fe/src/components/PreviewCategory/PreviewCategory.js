@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { BannerSlider } from '../BannerSlider/BannerSlider';
 
 export const PreviewCategory = (props) => {
-    const { category } = props;
+    const { category, key } = props;
     return (
-        <div className="slider slider-with-banner mb-35">
+        <div key={key} className="slider slider-with-banner mb-35">
           <div className="container">
             <div className="row">
               <div className="col-lg-12">

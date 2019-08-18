@@ -4,6 +4,9 @@ package io.nzbee.ui.component.web.facet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.nzbee.domain.Brand;
 import io.nzbee.domain.Category;
 import io.nzbee.domain.Product;
@@ -14,6 +17,7 @@ public class NavFacetContainer {
 	
 	private List<NavFacet<?>> facets = new ArrayList<NavFacet<?>>();
 
+	@JsonIgnore
 	public List<NavFacet<?>> getFacets() {
 		return facets;
 	}
