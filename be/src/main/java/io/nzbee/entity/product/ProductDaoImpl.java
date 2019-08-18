@@ -28,6 +28,7 @@ import io.nzbee.entity.category.Category_;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.attribute.CategoryAttribute_;
 import io.nzbee.entity.category.product.CategoryProduct;
+import io.nzbee.entity.category.product.CategoryProduct_;
 import io.nzbee.entity.PageableUtil;
 import io.nzbee.entity.product.Product_;
 import io.nzbee.entity.product.attribute.ProductAttribute;
@@ -168,12 +169,12 @@ public class ProductDaoImpl implements IProductDao {
 		Join<ProductPrice, ProductPriceType> type 			= price.join(ProductPrice_.type);
 		Join<ProductPrice, Currency> curr 					= price.join(ProductPrice_.currency);
 		Join<Brand, BrandAttribute> brandAttribute 			= brand.join(Brand_.brandAttributes);
-		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
+		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(CategoryProduct_.attributes);
 		//Join<Category, Hierarchy> categoryHierarchy = category.join(Category_.hierarchy);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		if(!categoryIds.isEmpty()) {
-			conditions.add(category.get(Category_.categoryId).in(categoryIds));
+			conditions.add(category.get(CategoryProduct_.categoryId).in(categoryIds));
 		}
 		if(!brandIds.isEmpty()) {
 			conditions.add(brand.get(Brand_.brandId).in(brandIds));
@@ -233,12 +234,12 @@ public class ProductDaoImpl implements IProductDao {
 		Join<ProductPrice, ProductPriceType> type 			= price.join(ProductPrice_.type);
 		Join<ProductPrice, Currency> curr 					= price.join(ProductPrice_.currency);
 		Join<Brand, BrandAttribute> brandAttribute 			= brand.join(Brand_.brandAttributes);
-		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
-		Join<CategoryProduct, Hierarchy> categoryHierarchy 		= category.join(Category_.hierarchy);
+		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(CategoryProduct_.attributes);
+		Join<CategoryProduct, Hierarchy> categoryHierarchy 		= category.join(CategoryProduct_.hierarchy);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		if(!categoryIds.isEmpty()) {
-			conditions.add(category.get(Category_.categoryId).in(categoryIds));
+			conditions.add(category.get(CategoryProduct_.categoryId).in(categoryIds));
 		}
 		if(!brandIds.isEmpty()) {
 			conditions.add(brand.get(Brand_.brandId).in(brandIds));
@@ -298,12 +299,12 @@ public class ProductDaoImpl implements IProductDao {
 		Join<ProductPrice, ProductPriceType> type 			= price.join(ProductPrice_.type);
 		Join<ProductPrice, Currency> curr 					= price.join(ProductPrice_.currency);
 		Join<Brand, BrandAttribute> brandAttribute 			= brand.join(Brand_.brandAttributes);
-		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
+		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(CategoryProduct_.attributes);
 		//Join<Category, Hierarchy> categoryHierarchy 		= category.join(Category_.hierarchy);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		if(!categoryCodes.isEmpty()) {
-			conditions.add(category.get(Category_.categoryCode).in(categoryCodes));
+			conditions.add(category.get(CategoryProduct_.categoryCode).in(categoryCodes));
 		}
 		if(!brandCodes.isEmpty()) {
 			conditions.add(brand.get(Brand_.brandCode).in(brandCodes));
@@ -361,7 +362,7 @@ public class ProductDaoImpl implements IProductDao {
 		Join<Product, ProductPrice> price = root.join(Product_.prices);
 		Join<ProductPrice, Currency> curr = price.join(ProductPrice_.currency);
 		Join<Brand, BrandAttribute> brandAttribute = brand.join(Brand_.brandAttributes);
-		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
+		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(CategoryProduct_.attributes);
 		//Join<Category, Hierarchy> categoryHierarchy = category.join(Category_.hierarchy);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
@@ -403,7 +404,7 @@ public class ProductDaoImpl implements IProductDao {
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		if(!categoryIds.isEmpty()) {
-			conditions.add(category.get(Category_.categoryId).in(categoryIds));
+			conditions.add(category.get(CategoryProduct_.categoryId).in(categoryIds));
 		}
 		if(!brandIds.isEmpty()) {
 			conditions.add(brand.get(Brand_.brandId).in(brandIds));
@@ -490,7 +491,7 @@ public class ProductDaoImpl implements IProductDao {
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		if(!categoryIds.isEmpty()) {
-			conditions.add(category.get(Category_.categoryId).in(categoryIds));
+			conditions.add(category.get(CategoryProduct_.categoryId).in(categoryIds));
 		}
 		if(!brandIds.isEmpty()) {
 			conditions.add(brand.get(Brand_.brandId).in(brandIds));
@@ -533,12 +534,12 @@ public class ProductDaoImpl implements IProductDao {
 		Join<ProductPrice, ProductPriceType> type = price.join(ProductPrice_.type);
 		Join<ProductPrice, Currency> curr = price.join(ProductPrice_.currency);
 		Join<Brand, BrandAttribute> brandAttribute = brand.join(Brand_.brandAttributes);
-		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
+		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(CategoryProduct_.attributes);
 		//Join<Category, Hierarchy> categoryHierarchy = category.join(Category_.hierarchy);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		if(!categoryCodes.isEmpty()) {
-			conditions.add(category.get(Category_.categoryCode).in(categoryCodes));
+			conditions.add(category.get(CategoryProduct_.categoryCode).in(categoryCodes));
 		}
 		if(!brandCodes.isEmpty()) {
 			conditions.add(brand.get(Brand_.brandCode).in(brandCodes));

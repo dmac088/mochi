@@ -22,6 +22,8 @@ import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.Category_;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.attribute.CategoryAttribute_;
+import io.nzbee.entity.category.product.CategoryProduct;
+import io.nzbee.entity.category.product.CategoryProduct_;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.Product_;
 import io.nzbee.entity.product.attribute.ProductAttribute;
@@ -153,13 +155,13 @@ public class ProductTagDaoImpl  implements IProductTagDao {
 		//Join<ProductTagAttribute, ProductTag> tag = root.join(ProductTagAttribute_.tag);
 		Join<ProductTag, Product> product = root.join(ProductTag_.products);
 		Join<Product, ProductAttribute> productAttribute = product.join(Product_.attributes);
-		Join<Product, Category> category = product.join(Product_.categories);
+		Join<Product, CategoryProduct> category = product.join(Product_.categories);
 		Join<Product, Brand> brand = product.join(Product_.brand);
 		Join<Product, ProductStatus> status = product.join(Product_.productStatus);
 		
 		
 		Join<Brand, BrandAttribute> brandAttribute = brand.join(Brand_.brandAttributes);
-		Join<Category, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
+		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(CategoryProduct_.attributes);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		if(!categoryCodes.isEmpty()) {
