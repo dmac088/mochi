@@ -15,8 +15,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.category.Category;
-import io.nzbee.entity.category.ICategoryRepository;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
+import io.nzbee.entity.category.product.ICategoryProductRepository;
 import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.entity.category.type.CategoryTypeRepository;
 import io.nzbee.entity.product.hierarchy.Hierarchy;
@@ -34,7 +34,7 @@ public class IT_CategoryRepository {
 	private EntityManager entityManager;
  
     @Autowired
-    private ICategoryRepository categoryRepository;
+    private ICategoryProductRepository categoryRepository;
 
     @Autowired
     private CategoryTypeRepository categoryTypeRepository;
