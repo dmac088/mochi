@@ -109,17 +109,17 @@ public class ProductAttribute {
 	@Transient
 	@IndexedEmbedded
 	public Category getSecondaryCategory() {
-		Optional<Collection<Optional<Category>>> lc = 
+		Optional<Collection<Optional<CategoryProduct>>> lc = 
 		Optional.ofNullable(this.getProduct().getCategories().stream().map(a -> {return Optional.ofNullable(a);}).collect(Collectors.toList()));
 		if(lc.isPresent()) {
-			Optional<Category> c = lc.get().stream().filter(b -> b.isPresent()).collect(Collectors.toList()).stream()
+			Optional<CategoryProduct> c = lc.get().stream().filter(b -> b.isPresent()).collect(Collectors.toList()).stream()
 					.map(d -> d.get()).collect(Collectors.toList())
 					.stream().filter(e -> e.getHierarchy().getCode().equals(CategoryVars.SECONDARY_HIERARCHY_CODE)).findFirst();
 			
 			if(c.isPresent()) { return c.get();}
 		}
 		
-		lc = Optional.ofNullable(new ArrayList<Optional<Category>>());
+		lc = Optional.ofNullable(new ArrayList<Optional<CategoryProduct>>());
 		CategoryProduct c = new CategoryProduct();
 		CategoryAttribute ca = new CategoryAttribute();
 		c.setCategoryCode("UNK01");
