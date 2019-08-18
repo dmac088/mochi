@@ -52,6 +52,7 @@ export class App extends Component {
   componentDidMount() {
     const unsubscribe = store.subscribe(() => {
                                               			if (store.getState().services.persist.isHydrated) {
+                                                      console.log("hydrated = " + store.getState().services.persist.isHydrated);
                                               				unsubscribe();
                                               				this.autoLogin()
                                                       .then(() => {
