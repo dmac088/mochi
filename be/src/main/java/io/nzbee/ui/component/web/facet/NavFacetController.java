@@ -35,7 +35,7 @@ public class NavFacetController {
     	return navFacetService.findAll(lcl, curr, categoryDesc, selectedFacets);
     }
 	
-    @PostMapping("/NavFacet/{lcl}/{curr}/category/{categoryDesc}")
+    @PostMapping("/Product/{lcl}/{curr}/category/{categoryDesc}")
     public NavFacetResult getAll(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody NavFacetContainer selectedFacets) {
     	return navFacetService.findAll(lcl, curr, categoryDesc, selectedFacets);
     }

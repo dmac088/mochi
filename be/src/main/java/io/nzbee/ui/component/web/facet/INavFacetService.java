@@ -15,4 +15,8 @@ public interface INavFacetService {
 	NavFacet<Tag> convertTagToNavFacet(Tag t);
 
 	NavFacet<Brand> convertBrandToNavFacet(Brand b);
+
+	String calcFacetId(String className, String id);
+
+	String calcToken(String className, String id);
 }

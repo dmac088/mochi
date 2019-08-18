@@ -31,7 +31,6 @@ const renderFacets = (facets, selectedFacets, routeProps, props) => {
   return facets.map(facet => {
     const margin = (facet.facetLevel - minLevel) * 15;
     return (
-      <React.Fragment>
         <li key={facet.facetId}>
           <a
             className={
@@ -51,7 +50,6 @@ const renderFacets = (facets, selectedFacets, routeProps, props) => {
             ? renderChevron(facet, routeProps, props)
             : null}
         </li>
-      </React.Fragment>
     );
   });
 };

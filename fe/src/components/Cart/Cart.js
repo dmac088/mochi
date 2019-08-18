@@ -7,7 +7,7 @@ import { productImagePath } from '../../services/helpers/imageHelper';
 
   const removeItem = (e) => {
     e.preventDefault();
-    cartService.removeFromCart(cartSelector.get(), Number(e.currentTarget.id));
+    cartService.removeFromCart(cartSelector.get(), e.currentTarget.id);
   }
 
   const renderCartProducts = (routeProps, props, cart) => {

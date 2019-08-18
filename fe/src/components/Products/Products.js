@@ -14,7 +14,7 @@ import { Pagination } from './Pagination';
 import * as categoryApi from '../../data/categories/api';
 import * as productApi from '../../data/products/api';
 import * as brandApi from '../../data/brands/api';
-import * as facetApi from '../../data/facets/api';
+//import * as facetApi from '../../data/facets/api';
 import * as pageService from '../../services/page';
 import qs from 'query-string';
 import _ from 'lodash';
@@ -134,7 +134,7 @@ class Products extends Component {
                   console.log(e);
                 });
 
-    const p2 =  facetApi.findAllChildrenByCriteria(locale, currency, category, selectedFacets)
+    const p2 =  productApi.findAllChildrenByCriteria(locale, currency, category, selectedFacets)
                 .then((response) => {
                  return response.json();
                 })
@@ -201,7 +201,8 @@ class Products extends Component {
     if(!products) {return}
     return products.map(product => {
         return (
-                    <Product key={product.productUPC}
+                    <Product
+                        key={product.productUPC}
                         category={category}
                         product={product}
                         setCurrentProductId={setCurrentProductId}
@@ -290,7 +291,6 @@ class Products extends Component {
       if(!products) { return null }
       const cat = this.findFacet(categoryList, category);
 				return(
-          <React.Fragment>
             <div className="shop-page-container mb-50">
               <div className="container">
                 <div className="row">
@@ -361,7 +361,6 @@ class Products extends Component {
                 </div>
               </div>
             </div>
-          </React.Fragment>
 					)
 				}
 }

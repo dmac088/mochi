@@ -250,9 +250,9 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		allFacets.stream().filter(f -> f.getFacetingName().equals(CategoryVars.PRICE_FACET_NAME))
 				.collect(Collectors.toList()).forEach(pf -> {
 					NavFacet<Object> priceFacet = new NavFacet<Object>();
-					priceFacet.setFacetId("Product.productMarkdown[" + pf.getValue()  + "]");
-					priceFacet.setFacetDisplayValue(pf.getValue());
 					priceFacet.setFacetClassName("Product.productMarkdown");
+					priceFacet.setFacetId(facetService.calcFacetId(priceFacet.getFacetClassName(), pf.getValue()));
+					priceFacet.setFacetDisplayValue(pf.getValue());
 					priceFacet.setFacetProductCount(new Long(pf.getCount()));
 					priceFacet.setToken(pf.getValue());
 					priceFacet.setFacetType(ProductVars.FACET_TYPE_RANGE);

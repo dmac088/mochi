@@ -156,11 +156,11 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
     	final NavFacet<Category> s = new NavFacet<Category>();
     	s.setFacetClassName(c.getClass().getSimpleName());
     	s.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
-    	s.setFacetId(c.getCategoryCode().toString());
+    	s.setFacetId(calcFacetId(s.getFacetClassName(), c.getCategoryCode().toString()));
     	s.setFacetParentId(c.getParentCode());
     	s.setFacetChildCount(c.getChildCategoryCount());
     	s.setFacetDisplayValue(c.getCategoryDesc());
-    	s.setToken(c.getCategoryCode());
+    	s.setToken(calcToken(s.getFacetClassName(), c.getCategoryCode()));
     	s.setFacetLevel(c.getCategoryLevel());
     	s.setPayload(c);
 		return s;
@@ -171,11 +171,10 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		NavFacet<Tag> s = new NavFacet<Tag>();
 		s.setFacetClassName(t.getClass().getSimpleName());
 		s.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
-		s.setFacetId(t.getTagId().toString());
-		s.setFacetParentId("-1");
+		s.setFacetId(calcFacetId(s.getFacetClassName(), t.getTagCode()));
 		s.setFacetChildCount(new Long(0));
 		s.setFacetDisplayValue(t.getTagDesc());
-		s.setToken(t.getTagDesc());
+		s.setToken(calcToken(s.getFacetClassName(), t.getTagCode()));
 		s.setFacetLevel(new Long(0));
 		s.setPayload(t);
 		return s;
@@ -186,18 +185,23 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
     	final NavFacet<Brand> s = new NavFacet<Brand>();
     	s.setFacetClassName(b.getClass().getSimpleName());
     	s.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
-    	s.setFacetId(b.getBrandCode());
-    	s.setFacetParentId("-1");
+    	s.setFacetId(calcFacetId(s.getFacetClassName(), b.getBrandCode()));
     	s.setFacetChildCount(new Long(0));
     	s.setFacetDisplayValue(b.getBrandDesc());
-    	s.setToken(b.getBrandCode());
+    	s.setToken(calcToken(s.getFacetClassName(), b.getBrandCode()));
     	s.setFacetLevel(new Long(0));
     	s.setPayload(b);
 		return s;
     }
-
-
-
-
+    
+    @Override
+    public String calcFacetId(String className, String id) {
+    	return className + ".id" + "[" + id + "]";
+    }
+    
+    @Override
+    public String calcToken(String className, String id) {
+    	return className + ".token" + "[" + id + "]";
+    }
 
 }
