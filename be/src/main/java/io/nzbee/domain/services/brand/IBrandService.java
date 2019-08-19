@@ -27,4 +27,6 @@ public interface IBrandService {
 
 	Brand convertToBrandDO(String brandCode, String brandDesc);
 
+	List<Brand> findAll(String category, String lcl);
+
 }

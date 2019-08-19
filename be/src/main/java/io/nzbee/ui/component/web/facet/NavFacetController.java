@@ -1,5 +1,7 @@
 package io.nzbee.ui.component.web.facet;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -7,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import io.nzbee.domain.Brand;
 
 @RestController
 @RequestMapping("/api")
@@ -30,9 +34,9 @@ public class NavFacetController {
     	return navFacetService.findAll(lcl, curr, categoryDesc, selectedFacets);
     }
     
-    @PostMapping("/Brand/{lcl}/{curr}/category/{categoryDesc}")
-    public NavFacetResult getBrands(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody NavFacetContainer selectedFacets) {
-    	return navFacetService.findAll(lcl, curr, categoryDesc, selectedFacets);
+    @GetMapping("/Brand/{lcl}/{curr}/category/{categoryDesc}")
+    public List<NavFacet<Brand>> getBrands(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc) {
+    	return navFacetService.findAllBrands(lcl, categoryDesc);
     }
 	
     @PostMapping("/Product/{lcl}/{curr}/category/{categoryDesc}")

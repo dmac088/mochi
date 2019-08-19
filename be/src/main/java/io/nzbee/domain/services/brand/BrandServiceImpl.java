@@ -31,6 +31,16 @@ public class BrandServiceImpl implements IBrandService {
 		.collect(Collectors.toList());
     	return lb;
 	}	
+    
+    @Override
+	@Transactional
+	@Cacheable
+	public List<Brand> findAll(String category, String lcl) {
+    	List<io.nzbee.entity.brand.Brand> lpb = brandService.findAll(category);
+    	List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, lcl).get())
+		.collect(Collectors.toList());
+    	return lb;
+	}	
 
 	@Override
 	@Transactional
