@@ -18,4 +18,6 @@ public interface IBrandService {
 	List<Brand> findAll(List<String> categoryCodes, List<String> tagCodes);
 
 	Optional<Brand> findOne(Product p);
+
+	List<Brand> findAll(String brandCategoryCode);
 }

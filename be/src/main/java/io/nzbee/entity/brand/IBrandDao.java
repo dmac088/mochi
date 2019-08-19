@@ -12,5 +12,7 @@ public interface IBrandDao extends IDao<Brand> {
 	Optional<Brand> findByDesc(String brandDesc, String locale);
 
 	List<Brand> findAll(List<String> categoryCodes, List<String> tagCodes);
+
+	List<Brand> findAll(String brandCategoryCode);
 	
 }
