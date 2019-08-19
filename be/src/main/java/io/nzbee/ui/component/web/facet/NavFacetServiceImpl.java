@@ -54,6 +54,17 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		
 	}
 	
+	@Override
+	public List<NavFacet<Brand>> findAllBrands(String locale, String category) {
+		List<Brand> brands = brandService.findAll(category, locale);
+		
+		List<NavFacet<Brand>> brandBars = brands.stream().map(b -> {
+			NavFacet<Brand> s = convertBrandToNavFacet(b);
+			return s;
+		}).collect(Collectors.toList());
+		
+		return brandBars;
+	}
 	
 	@Override
 	public NavFacetResult findAll(String locale, String currency, String categoryDesc, NavFacetContainer selectedFacets) {

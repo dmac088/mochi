@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 import io.nzbee.entity.brand.Brand_;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.brand.attribute.BrandAttribute_;
-import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.Category_;
 import io.nzbee.entity.category.brand.CategoryBrand;
 import io.nzbee.entity.category.brand.CategoryBrand_;
@@ -228,7 +227,7 @@ public class BrandDaoImpl  implements IBrandDao {
 		TypedQuery<Brand> query = em.createQuery(cq
 				.select(root)
 				.where(conditions.toArray(new Predicate[] {}))
-				.distinct(true)
+				.distinct(false)
 		);
 
 		return query.getResultList();
