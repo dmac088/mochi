@@ -26,6 +26,8 @@ public class Product {
 	private String currency;
 	
 	private String primaryCategoryPath; 
+	
+	private Category category;
 
 	public String getProductUPC() {
 		return productUPC;
@@ -107,6 +109,13 @@ public class Product {
 		this.brand = brand;
 	}
 
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
 
 	@Override
 	public boolean equals(Object o) {
@@ -133,5 +142,6 @@ public class Product {
                 .append(", lclCd=").append(lclCd);
         return builder.toString();
     }
+
 
 }

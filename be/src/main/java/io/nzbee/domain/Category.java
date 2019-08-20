@@ -5,7 +5,7 @@ import java.util.Objects;
 
 import io.nzbee.entity.layout.Layout;
 
-public class Category {
+public abstract class Category {
 	
 	private String categoryCode;
 	
@@ -22,6 +22,7 @@ public class Category {
 	private String parentCode;	
 
 	private Long childCategoryCount;
+	
 	
 	public String getCategoryCode() {
 		return categoryCode;
@@ -114,5 +115,6 @@ public class Category {
         .append("]");    	
         return builder.toString();
     }
+
 
 }

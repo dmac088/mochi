@@ -8,6 +8,8 @@ public class Brand {
 
 	private String brandDesc;
 	
+	private BrandCategory category;
+	
 	public String getBrandCode() {
 		return brandCode;
 	}
@@ -22,6 +24,14 @@ public class Brand {
 
 	public void setBrandDesc(String brandDesc) {
 		this.brandDesc = brandDesc;
+	}
+	
+	public BrandCategory getCategory() {
+		return category;
+	}
+
+	public void setCategory(BrandCategory category) {
+		this.category = category;
 	}
 	
 	@Override
