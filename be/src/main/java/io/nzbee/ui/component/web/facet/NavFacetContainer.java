@@ -80,6 +80,16 @@ public class NavFacetContainer {
 	public void setPrices(List<NavFacet<Object>> prices) {
 		this.facets.addAll(prices);
 	}
+	
+	public void setProductCategories(List<NavFacet<ProductCategory>> productCategories) {
+		this.facets.addAll(productCategories);
+	}
+	
+	public void setBrandCategories(List<NavFacet<BrandCategory>> brandCategories) {
+		this.facets.addAll(brandCategories);
+	}
+	
+	
 
 
 	public void setFacets(List<NavFacet<?>> collect) {
