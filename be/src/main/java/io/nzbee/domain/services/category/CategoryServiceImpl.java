@@ -11,6 +11,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.Brand;
 import io.nzbee.domain.Category;
+import io.nzbee.domain.ProductCategory;
 import io.nzbee.domain.Tag;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.IProductService;
@@ -135,7 +136,7 @@ public class CategoryServiceImpl implements ICategoryService {
     public Category createCategory(final io.nzbee.entity.category.Category pc, final String locale) {
     	
  		//create a new product DTO
-        final Category cDO = new Category();
+        final Category cDO = new ProductCategory();
         cDO.setCategoryCode(pc.getCategoryCode());
         cDO.setCategoryLevel(pc.getCategoryLevel());
 
