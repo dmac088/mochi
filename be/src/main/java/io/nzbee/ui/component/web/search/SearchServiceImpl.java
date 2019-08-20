@@ -75,7 +75,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			String sortBy, NavFacetContainer selectedFacets) {
 
 		// convert selected facets into token lists
-		List<String> categoryTokens = this.getFacetTokens(selectedFacets.getCategories());
+		List<String> categoryTokens = this.getFacetTokens(selectedFacets.getProductCategories());
 		List<String> brandTokens 	= this.getFacetTokens(selectedFacets.getBrands());
 		List<String> tagTokens 		= this.getFacetTokens(selectedFacets.getTags());
 		List<String> priceTokens 	= this.getFacetTokens(selectedFacets.getPrices());
@@ -104,7 +104,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 				locale, 
 				ProductVars.MARKDOWN_SKU_DESCRIPTION,
 				currency, 
-				selectedFacets.getCategories().stream().map(c -> c.getPayload()).collect(Collectors.toList()), 
+				selectedFacets.getProductCategories().stream().map(c -> c.getPayload()).collect(Collectors.toList()), 
 				selectedFacets.getBrands().stream().map(b -> b.getPayload()).collect(Collectors.toList()), 
 				selectedFacets.getTags().stream().map(t -> t.getPayload()).collect(Collectors.toList()));
 

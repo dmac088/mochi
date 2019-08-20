@@ -42,7 +42,7 @@ public class NavigationServiceImpl extends UIService implements INavigationServi
 												  page, 
 												  size, 
 												  sortBy, 
-												  selectedFacets.getCategories().stream().map(c -> c.getPayload()).collect(Collectors.toList()), 
+												  selectedFacets.getProductCategories().stream().map(c -> c.getPayload()).collect(Collectors.toList()), 
 												  selectedFacets.getBrands().stream().map(b -> b.getPayload()).collect(Collectors.toList()),
 												  selectedFacets.getTags().stream().map(t -> t.getPayload()).collect(Collectors.toList()));
 		

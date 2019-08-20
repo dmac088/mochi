@@ -42,10 +42,10 @@ import _ from 'lodash';
 
   export const SelectionSidebar = withRouter(({location, match, history, ...props}) => {
     if(!props.selectedFacets) { return null; }
-    const { categories, prices, brands, tags } = props.selectedFacets;
+    const { productCategories, prices, brands, tags } = props.selectedFacets;
     const routeProps = createRouteProps(history, match, location);
 
-    if(!(  categories.length  > 0
+    if(!(  productCategories.length  > 0
         || prices.length      > 0
         || brands.length      > 0
         || tags.length        > 0)) { return null; }
@@ -54,7 +54,7 @@ import _ from 'lodash';
       <div className="sidebar mb-35">
         <h3 className="sidebar-title">SELECTIONS</h3>
         <ul className="selected-categories">
-          {renderSection("Categories", categories, routeProps, props)}
+          {renderSection("Categories", productCategories, routeProps, props)}
           {renderSection("Brands", brands, routeProps, props)}
           {renderSection("Price Ranges", prices, routeProps, props)}
           {renderSection("Tags", tags, routeProps, props)}

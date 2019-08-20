@@ -31,11 +31,11 @@ class Products extends Component {
       "term":     "",
       "products": [],
       "facets": [],
-      "syncFacets":     { "categories": [],
+      "syncFacets":     { "productCategories": [],
                           "brands": [],
                           "tags": [],
                           "prices": []},
-      "selectedFacets": { "categories": [],
+      "selectedFacets": { "productCategories": [],
                           "brands": [],
                           "tags": [],
                           "prices": []},
@@ -145,6 +145,7 @@ class Products extends Component {
     const pa = [p1, p2];
     Promise.all(pa)
     .then((response) => {
+      
           this.setState( {
             "locale":                 locale,
             "currency":               currency,
@@ -155,7 +156,7 @@ class Products extends Component {
             //searching can return facets so we need to check this later
             "facets":                 (type === 'category') ? response[1].result : response[0].facets,
             "syncFacets":             selectedFacets,
-            "selectedFacets":         (term !== this.state.term) ? {"categories": [],
+            "selectedFacets":         (term !== this.state.term) ? {"productCategories": [],
                                                                     "brands": [],
                                                                     "tags": [],
                                                                     "prices": []} : selectedFacets,
@@ -245,7 +246,7 @@ class Products extends Component {
     const selectedFacet                       = allFacets.find(o => o.token  === e.currentTarget.id);
     const { facetClassName }                  = selectedFacet;
 
-    newSelectedFacets.categories              = (facetClassName === 'Category')                       ? [...newSelectedFacets.categories, selectedFacet]  : [...newSelectedFacets.categories];
+    newSelectedFacets.categories              = (facetClassName === 'ProductCategory')                ? [...newSelectedFacets.categories, selectedFacet]  : [...newSelectedFacets.categories];
     newSelectedFacets.brands                  = (facetClassName === 'Brand')                          ? [...newSelectedFacets.brands, selectedFacet]      : [...newSelectedFacets.brands];
     newSelectedFacets.tags                    = (facetClassName === 'Tag')                            ? [...newSelectedFacets.tags, selectedFacet]        : [...newSelectedFacets.tags];
     newSelectedFacets.prices                  = (facetClassName === 'Product.productMarkdown')        ? [...newSelectedFacets.prices, selectedFacet]      : [...newSelectedFacets.prices];
