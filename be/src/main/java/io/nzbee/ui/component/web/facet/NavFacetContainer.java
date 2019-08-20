@@ -25,18 +25,18 @@ public class NavFacetContainer {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<NavFacet<Category>> getProductCategories() {
+	public List<NavFacet<ProductCategory>> getProductCategories() {
 		return this.facets.stream()
 				.filter(f -> f.getFacetClassName().equals(ProductCategory.class.getSimpleName()))
-				.map(f -> (NavFacet<Category>) f)
+				.map(f -> (NavFacet<ProductCategory>) f)
 				.collect(Collectors.toList());
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<NavFacet<Category>> getBrandCategories() {
+	public List<NavFacet<BrandCategory>> getBrandCategories() {
 		return this.facets.stream()
 				.filter(f -> f.getFacetClassName().equals(BrandCategory.class.getSimpleName()))
-				.map(f -> (NavFacet<Category>) f)
+				.map(f -> (NavFacet<BrandCategory>) f)
 				.collect(Collectors.toList());
 	}
 
