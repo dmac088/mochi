@@ -246,10 +246,14 @@ class Products extends Component {
     const selectedFacet                                       = allFacets.find(o => o.token  === e.currentTarget.id);
     const { facetClassName }                                  = selectedFacet;
 
-    newSelectedFacets.productCategories       = (facetClassName === 'ProductCategory')                ? [...newSelectedFacets.productCategories, selectedFacet]  : [...newSelectedFacets.productCategories];
-    newSelectedFacets.brands                  = (facetClassName === 'Brand')                          ? [...newSelectedFacets.brands, selectedFacet]      : [...newSelectedFacets.brands];
-    newSelectedFacets.tags                    = (facetClassName === 'Tag')                            ? [...newSelectedFacets.tags, selectedFacet]        : [...newSelectedFacets.tags];
-    newSelectedFacets.prices                  = (facetClassName === 'Product.productMarkdown')        ? [...newSelectedFacets.prices, selectedFacet]      : [...newSelectedFacets.prices];
+    newSelectedFacets.productCategories       = (facetClassName === 'ProductCategory')                ? [...newSelectedFacets.productCategories, selectedFacet]
+                                                                                                      : [...newSelectedFacets.productCategories];
+    newSelectedFacets.brands                  = (facetClassName === 'Brand')                          ? [...newSelectedFacets.brands, selectedFacet]
+                                                                                                      : [...newSelectedFacets.brands];
+    newSelectedFacets.tags                    = (facetClassName === 'Tag')                            ? [...newSelectedFacets.tags, selectedFacet]
+                                                                                                      : [...newSelectedFacets.tags];
+    newSelectedFacets.prices                  = (facetClassName === 'Product.productMarkdown')        ? [...newSelectedFacets.prices, selectedFacet]
+                                                                                                      : [...newSelectedFacets.prices];
 
     this.setState({
       "selectedFacets": newSelectedFacets,
