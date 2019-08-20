@@ -145,7 +145,6 @@ class Products extends Component {
     const pa = [p1, p2];
     Promise.all(pa)
     .then((response) => {
-          console.log(response);
           this.setState( {
             "locale":                 locale,
             "currency":               currency,
