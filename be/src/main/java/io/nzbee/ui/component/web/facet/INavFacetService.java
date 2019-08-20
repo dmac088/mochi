@@ -1,7 +1,5 @@
 package io.nzbee.ui.component.web.facet;
 
-import java.util.List;
-
 import io.nzbee.domain.Brand;
 import io.nzbee.domain.Category;
 import io.nzbee.domain.Tag;
