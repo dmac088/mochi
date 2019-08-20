@@ -42,7 +42,7 @@ export class App extends Component {
                      "currentProductId": null,
                      "landingCategories": [],
                      "previewCategories": [],
-                     "selectedFacets": { "categories": [],
+                     "selectedFacets": { "productCategories": [],
                                          "brands": [],
                                          "tags": [],
                                          "prices": []},
@@ -93,7 +93,7 @@ export class App extends Component {
     this.refreshCategoryList(locale, currency)
     .then((responseJSON) => {
       this.setState({
-        "categoryList": responseJSON.result.categories,
+        "categoryList": responseJSON.result.productCategories,
       });
     })
     .then(() => {

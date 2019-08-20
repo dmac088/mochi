@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.nzbee.domain.Brand;
+import io.nzbee.domain.BrandCategory;
 import io.nzbee.domain.Category;
 import io.nzbee.domain.Product;
 import io.nzbee.domain.ProductCategory;
@@ -24,9 +25,17 @@ public class NavFacetContainer {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<NavFacet<Category>> getCategories() {
+	public List<NavFacet<Category>> getProductCategories() {
 		return this.facets.stream()
 				.filter(f -> f.getFacetClassName().equals(ProductCategory.class.getSimpleName()))
+				.map(f -> (NavFacet<Category>) f)
+				.collect(Collectors.toList());
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<NavFacet<Category>> getBrandCategories() {
+		return this.facets.stream()
+				.filter(f -> f.getFacetClassName().equals(BrandCategory.class.getSimpleName()))
 				.map(f -> (NavFacet<Category>) f)
 				.collect(Collectors.toList());
 	}
