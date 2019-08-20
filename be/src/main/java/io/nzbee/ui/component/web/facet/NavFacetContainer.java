@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.nzbee.domain.Brand;
 import io.nzbee.domain.Category;
 import io.nzbee.domain.Product;
+import io.nzbee.domain.ProductCategory;
 import io.nzbee.domain.Tag;
 
 public class NavFacetContainer {
@@ -25,7 +26,7 @@ public class NavFacetContainer {
 	@SuppressWarnings("unchecked")
 	public List<NavFacet<Category>> getCategories() {
 		return this.facets.stream()
-				.filter(f -> f.getFacetClassName().equals(Category.class.getSimpleName()))
+				.filter(f -> f.getFacetClassName().equals(ProductCategory.class.getSimpleName()))
 				.map(f -> (NavFacet<Category>) f)
 				.collect(Collectors.toList());
 	}

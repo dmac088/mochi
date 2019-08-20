@@ -49,6 +49,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 							}).collect(Collectors.toList()).stream()
 							  .filter(nf -> nf.getFacetProductCount() > 0)
 							  .collect(Collectors.toList()));
+		
 		nfr.setResult(nfc);
 		return nfr;
 		
