@@ -22,5 +22,5 @@ public interface INavFacetService {
 
 	String calcToken(String className, String id);
 
-	List<NavFacet<Brand>> findAllBrands(String locale, String category);
+	NavFacetResult findAllBrands(String locale, String category);
 }

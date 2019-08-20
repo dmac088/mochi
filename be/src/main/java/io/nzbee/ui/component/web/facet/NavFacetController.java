@@ -34,9 +34,9 @@ public class NavFacetController {
     	return navFacetService.findAll(lcl, curr, categoryDesc, selectedFacets);
     }
     
-    @GetMapping("/Brand/{lcl}/{curr}/category/{categoryDesc}")
-    public List<NavFacet<Brand>> getBrands(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc) {
-    	return navFacetService.findAllBrands(lcl, categoryDesc);
+    @GetMapping("/Brand/{lcl}/{curr}/category/{categoryCode}")
+    public NavFacetResult getBrands(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryCode) {
+    	return navFacetService.findAllBrands(lcl, categoryCode);
     }
 	
     @PostMapping("/Product/{lcl}/{curr}/category/{categoryDesc}")
