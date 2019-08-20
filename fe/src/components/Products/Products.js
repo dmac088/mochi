@@ -145,7 +145,7 @@ class Products extends Component {
     const pa = [p1, p2];
     Promise.all(pa)
     .then((response) => {
-      
+          console.log(response);
           this.setState( {
             "locale":                 locale,
             "currency":               currency,
@@ -220,13 +220,13 @@ class Products extends Component {
   }
 
   updateFacets = (e) => {
-    const newSelectedFacets                   = _.cloneDeep(this.state.selectedFacets, true);
-    const { categories, brands, tags, prices }        = newSelectedFacets;
-    const allFacets                           = [...categories, ...brands, ...tags, ...prices];
-    const removeFacet                         = allFacets.find(o => o.token  === e.currentTarget.id);
+    const newSelectedFacets                                   = _.cloneDeep(this.state.selectedFacets, true);
+    const { productCategories, brands, tags, prices }         = newSelectedFacets;
+    const allFacets                                           = [...productCategories, ...brands, ...tags, ...prices];
+    const removeFacet                                         = allFacets.find(o => o.token  === e.currentTarget.id);
 
     if(removeFacet) {
-        newSelectedFacets.categories          = categories.filter(o => (removeFacet.token  !== o.token));
+        newSelectedFacets.productCategories   = productCategories.filter(o => (removeFacet.token  !== o.token));
         newSelectedFacets.brands              = brands.filter(o => (removeFacet.token      !== o.token));
         newSelectedFacets.tags                = tags.filter(o => (removeFacet.token        !== o.token));
         newSelectedFacets.prices              = prices.filter(o => (removeFacet.token      !== o.token));
@@ -241,12 +241,12 @@ class Products extends Component {
   }
 
   addFacet = (e, newSelectedFacets) => {
-    const { categories, brands, tags, prices }        = this.state.facets;
-    const allFacets                           = [...categories, ...brands, ...tags, ...prices];
-    const selectedFacet                       = allFacets.find(o => o.token  === e.currentTarget.id);
-    const { facetClassName }                  = selectedFacet;
+    const { productCategories, brands, tags, prices }         = this.state.facets;
+    const allFacets                                           = [...productCategories, ...brands, ...tags, ...prices];
+    const selectedFacet                                       = allFacets.find(o => o.token  === e.currentTarget.id);
+    const { facetClassName }                                  = selectedFacet;
 
-    newSelectedFacets.categories              = (facetClassName === 'ProductCategory')                ? [...newSelectedFacets.categories, selectedFacet]  : [...newSelectedFacets.categories];
+    newSelectedFacets.productCategories       = (facetClassName === 'ProductCategory')                ? [...newSelectedFacets.productCategories, selectedFacet]  : [...newSelectedFacets.productCategories];
     newSelectedFacets.brands                  = (facetClassName === 'Brand')                          ? [...newSelectedFacets.brands, selectedFacet]      : [...newSelectedFacets.brands];
     newSelectedFacets.tags                    = (facetClassName === 'Tag')                            ? [...newSelectedFacets.tags, selectedFacet]        : [...newSelectedFacets.tags];
     newSelectedFacets.prices                  = (facetClassName === 'Product.productMarkdown')        ? [...newSelectedFacets.prices, selectedFacet]      : [...newSelectedFacets.prices];
@@ -302,8 +302,8 @@ class Products extends Component {
                         updateFacets={this.updateFacets}
                       />
                       <CategorySidebar
-                        selectedFacets={selectedFacets.categories}
-                        facets={this.filterFacetsUnselected(facets.categories, selectedFacets.categories)}
+                        selectedFacets={selectedFacets.productCategories}
+                        facets={this.filterFacetsUnselected(facets.productCategories, selectedFacets.productCategories)}
                         isActive={this.isActive}
                         updateFacets={this.updateFacets}
                       />
