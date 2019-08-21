@@ -13,7 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import io.nzbee.entity.category.Category;
-import io.nzbee.entity.category.product.ICategoryProductService;
+import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.variables.CategoryVars;
 
 @Service(value = "productEntityService")
@@ -26,8 +26,8 @@ public class ProductServiceImpl implements IProductService {
 	private IProductRepository productRepository;
 	
 	@Autowired
-	@Qualifier("categoryProductEntityService")
-	private ICategoryProductService categoryService;
+	@Qualifier("categoryEntityService")
+	private ICategoryService categoryService;
 	
 	@Override
 	public List<Product> findAll() {
