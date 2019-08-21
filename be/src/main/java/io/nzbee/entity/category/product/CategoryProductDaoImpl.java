@@ -77,6 +77,8 @@ public class CategoryProductDaoImpl implements ICategoryProductDao {
 				.distinct(true)
 		);
 		
+		//List<Category> cl = query.getResultList().stream().map(c -> (Category) c).collect(Collectors.toList());
+		
 		return query.getResultList();
 	}
 
