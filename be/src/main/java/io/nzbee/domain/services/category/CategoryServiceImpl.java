@@ -139,7 +139,7 @@ public class CategoryServiceImpl implements ICategoryService {
         final Category cDO = (pc instanceof CategoryProduct) ? new ProductCategory() : new BrandCategory();
         cDO.setCategoryCode(pc.getCategoryCode());
         cDO.setCategoryLevel(pc.getCategoryLevel());
-
+       
         //set the parentId
         Optional<io.nzbee.entity.category.Category> parent = Optional.ofNullable(pc.getParent());
         if(parent.isPresent()) {
