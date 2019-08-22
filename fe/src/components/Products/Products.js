@@ -31,11 +31,13 @@ class Products extends Component {
       "term":     "",
       "products": [],
       "facets": [],
-      "syncFacets":     { "productCategories": [],
+      "syncFacets":     { "brandCategories": [],
+                          "productCategories": [],
                           "brands": [],
                           "tags": [],
                           "prices": []},
-      "selectedFacets": { "productCategories": [],
+      "selectedFacets": { "brandCategories": [],
+                          "productCategories": [],
                           "brands": [],
                           "tags": [],
                           "prices": []},
@@ -155,7 +157,8 @@ class Products extends Component {
             //searching can return facets so we need to check this later
             "facets":                 (type === 'category') ? response[1].result : response[0].facets,
             "syncFacets":             selectedFacets,
-            "selectedFacets":         (term !== this.state.term) ? {"productCategories": [],
+            "selectedFacets":         (term !== this.state.term) ? {"brandCategories": [],
+                                                                    "productCategories": [],
                                                                     "brands": [],
                                                                     "tags": [],
                                                                     "prices": []} : selectedFacets,
@@ -293,6 +296,7 @@ class Products extends Component {
       const { products, facets, selectedFacets, totalPages, totalElements, numberOfElements, isGrid, term, category, maxPrice, selectedPrice, type } = this.state;
       const { page, size } = this.state.params;
       if(!products) { return null }
+      console.log(this.props);
       const cat = this.findFacet(categoryList, category);
 				return(
             <div className="shop-page-container mb-50">

@@ -73,7 +73,7 @@ public class CategoryServiceImpl implements ICategoryService {
 	public List<Category> find(String hieararchyCode, String categoryTypeCode, String parentCategoryDesc,
 			List<String> brandCodes, List<String> tagCodes, String locale) {
 		// TODO Auto-generated method stub
-		return null;
+		return categoryDAO.findChildrenByCriteria(hieararchyCode, categoryTypeCode, parentCategoryDesc, brandCodes, tagCodes, locale);
 	}
 	
 
