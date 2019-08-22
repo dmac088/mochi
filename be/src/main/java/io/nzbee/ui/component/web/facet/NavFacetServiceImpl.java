@@ -47,11 +47,8 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 									cnf.setFacetProductCount(productService.getCountForCategory(c));
 									return cnf;
 							}).collect(Collectors.toList()).stream()
-							  .filter(nf -> nf.getFacetProductCount() > 0)
+							  //.filter(nf -> nf.getFacetProductCount() > 0)
 							  .collect(Collectors.toList()));
-		
-		
-		
 		nfr.setResult(nfc);
 		return nfr;
 		
