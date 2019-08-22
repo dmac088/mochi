@@ -10,9 +10,11 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.Brand;
+import io.nzbee.domain.BrandCategory;
 import io.nzbee.domain.Category;
 import io.nzbee.domain.ProductCategory;
 import io.nzbee.domain.Tag;
+import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.variables.CategoryVars;
 
@@ -34,12 +36,9 @@ public class CategoryServiceImpl implements ICategoryService {
 	//@Cacheable
 	public List<Category> findAll(String locale) {
     	List<io.nzbee.entity.category.Category> lpc = categoryService.findAll();
-    	lpc.stream().forEach(c -> {
-    	});
     	return lpc.stream()
     			.map(pc -> createCategory(pc, locale))
     			.collect(Collectors.toList());
-    			
 	}	
 
 
@@ -135,9 +134,9 @@ public class CategoryServiceImpl implements ICategoryService {
 	@Override
  	@Cacheable
     public Category createCategory(final io.nzbee.entity.category.Category pc, final String locale) {
-    	
+	
  		//create a new product DTO
-        final Category cDO = new ProductCategory();
+        final Category cDO = (pc instanceof CategoryProduct) ? new ProductCategory() : new BrandCategory();
         cDO.setCategoryCode(pc.getCategoryCode());
         cDO.setCategoryLevel(pc.getCategoryLevel());
 
