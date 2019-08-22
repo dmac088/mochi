@@ -14,14 +14,21 @@ import javax.persistence.criteria.Root;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+
+import io.nzbee.entity.brand.Brand;
+import io.nzbee.entity.brand.Brand_;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.Category_;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.attribute.CategoryAttribute_;
 import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.entity.category.type.CategoryType_;
+import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.Product_;
 import io.nzbee.entity.product.hierarchy.Hierarchy;
 import io.nzbee.entity.product.hierarchy.Hierarchy_;
+import io.nzbee.entity.product.tag.ProductTag;
+import io.nzbee.entity.product.tag.ProductTag_;
 
 @Component
 public class CategoryDaoImpl implements ICategoryDao {
@@ -195,6 +202,46 @@ public class CategoryDaoImpl implements ICategoryDao {
 			conditions.add(cb.equal(root.get(Category_.categoryLevel), level));
 		}
 	
+		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
+		
+		TypedQuery<Category> query = em.createQuery(cq
+				.select(root)
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(true)
+		);
+		
+		return query.getResultList();
+	}
+	
+	@Override
+	public List<Category> findChildrenByCriteria(String hieararchyCode, String categoryTypeCode, String parentCategoryDesc, List<String> brandCodes, List<String> tagCodes, String locale) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
+		
+		Root<Category> root = cq.from(Category.class);
+		
+		Join<Category, CategoryType> categoryType = root.join(Category_.categoryType);
+		Join<Category, CategoryAttribute> categoryAttribute = root.join(Category_.attributes);
+		Join<Category, Hierarchy> categoryHierarchy = root.join(Category_.hierarchy);
+		Join<Category, Product> product = root.join(Category_.products);
+		Join<Product, Brand> brand = product.join(Product_.brand);
+		Join<Category, Category> parent = root.join(Category_.parent);
+		Join<Category, CategoryAttribute> parentCategoryAttribute = parent.join(Category_.attributes);
+		
+		List<Predicate> conditions = new ArrayList<Predicate>();
+		conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), hieararchyCode));
+		conditions.add(cb.equal(categoryType.get(CategoryType_.code), categoryTypeCode));
+		if(!brandCodes.isEmpty()) {
+			conditions.add(brand.get(Brand_.brandCode).in(brandCodes));
+		}
+		if(!tagCodes.isEmpty()) {
+			Join<Product, ProductTag> tags = product.join(Product_.tags);
+			conditions.add(tags.get(ProductTag_.productTagCode).in(tagCodes));
+		}
+		if(!(parentCategoryDesc == null)) {
+			conditions.add(cb.equal(parentCategoryAttribute.get(CategoryAttribute_.categoryDesc), parentCategoryDesc));
+		}
 		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
 		
 		TypedQuery<Category> query = em.createQuery(cq
