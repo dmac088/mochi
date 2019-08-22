@@ -224,7 +224,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 		Join<Category, CategoryType> categoryType = root.join(Category_.categoryType);
 		Join<Category, CategoryAttribute> categoryAttribute = root.join(Category_.attributes);
 		Join<Category, Hierarchy> categoryHierarchy = root.join(Category_.hierarchy);
-		Join<Category, Product> product = root.join(Category_.products);
+		Join<CategoryProduct, Product> product = root.join(Category_.products);
 		Join<Product, Brand> brand = product.join(Product_.brand);
 		Join<Category, Category> parent = root.join(Category_.parent);
 		Join<Category, CategoryAttribute> parentCategoryAttribute = parent.join(Category_.attributes);
