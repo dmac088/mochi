@@ -4,6 +4,8 @@ package io.nzbee.entity.category;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -21,6 +23,8 @@ import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.Category_;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.attribute.CategoryAttribute_;
+import io.nzbee.entity.category.product.CategoryProduct;
+import io.nzbee.entity.category.product.CategoryProduct_;
 import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.entity.category.type.CategoryType_;
 import io.nzbee.entity.product.Product;
@@ -217,16 +221,16 @@ public class CategoryDaoImpl implements ICategoryDao {
 	public List<Category> findChildrenByCriteria(String hieararchyCode, String categoryTypeCode, String parentCategoryDesc, List<String> brandCodes, List<String> tagCodes, String locale) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
-		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
+		CriteriaQuery<CategoryProduct> cq = cb.createQuery(CategoryProduct.class);
 		
-		Root<Category> root = cq.from(Category.class);
+		Root<CategoryProduct> root = cq.from(CategoryProduct.class);
 		
-		Join<Category, CategoryType> categoryType = root.join(Category_.categoryType);
-		Join<Category, CategoryAttribute> categoryAttribute = root.join(Category_.attributes);
-		Join<Category, Hierarchy> categoryHierarchy = root.join(Category_.hierarchy);
-		Join<CategoryProduct, Product> product = root.join(Category_.products);
+		Join<CategoryProduct, CategoryType> categoryType = root.join(Category_.categoryType);
+		Join<CategoryProduct, CategoryAttribute> categoryAttribute = root.join(Category_.attributes);
+		Join<CategoryProduct, Hierarchy> categoryHierarchy = root.join(Category_.hierarchy);
+		Join<CategoryProduct, Product> product = root.join(CategoryProduct_.products);
 		Join<Product, Brand> brand = product.join(Product_.brand);
-		Join<Category, Category> parent = root.join(Category_.parent);
+		Join<CategoryProduct, Category> parent = root.join(Category_.parent);
 		Join<Category, CategoryAttribute> parentCategoryAttribute = parent.join(Category_.attributes);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
@@ -244,13 +248,13 @@ public class CategoryDaoImpl implements ICategoryDao {
 		}
 		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
 		
-		TypedQuery<Category> query = em.createQuery(cq
+		TypedQuery<CategoryProduct> query = em.createQuery(cq
 				.select(root)
 				.where(conditions.toArray(new Predicate[] {}))
 				.distinct(true)
 		);
 		
-		return query.getResultList();
+		return query.getResultList().stream().map(c -> (Category) c).collect(Collectors.toList());
 	}
 
 	@Override
