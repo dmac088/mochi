@@ -130,12 +130,12 @@ export class App extends Component {
                         return filterCategories(categoryList, 'LNDPC01').map(c => {
                         //we must return the nested promise
                           return this.getCategoryBrands(locale, currency, c.facetDisplayValue)
-                              .then((response) => {
-                                  c["brands"] = response;
-                                      return c;
-                                  });
-                            });
-                          };
+                          .then((response) => {
+                            c["brands"] = response;
+                            return c;
+                          });
+                        });
+                      };
 
     //products in cart
     const p5 = (productIds) => productApi.findByIds(locale, currency, productIds)
@@ -148,16 +148,17 @@ export class App extends Component {
       return response.result;
     })
     .then((result) => {
-      return Promise.all([            Promise.all(p2(result.productCategories)),
-                                      Promise.all(p3(result.productCategories)),
-                                      Promise.all(p4(result.brandCategories)),
+      return Promise.all([            Promise.all(p2(result.productCategories)) /*langing categories*/,
+                                      Promise.all(p3(result.productCategories)) /*preview categories*/,
+                                      Promise.all(p4(result.brandCategories)) /*brand categories*/,
                                       p5(cartSelector.get().items.map(a => a.productUPC)),
-                                      p1]);
+                                      p1 /*all categories*/]);
     })
     .then((response) => {
       this.setState({
+        "productCategoryList": response[4].result.productCategories,
+        "brandCategoryList": response[4].result.brandCategories,
         "landingCategories": response[0],
-        "brandCategoryList": filterCategories(response[2].result.brandCategories, 'LNDHM01'),
         "previewCategories": response[1],
       });
       cartService.updateCartItems(response[3]);
@@ -201,7 +202,6 @@ export class App extends Component {
   refreshCategoryList = (locale, currency) =>
     categoryApi.findAll(locale, currency)
     .then((response) => {
-      console.log(response);
         return response.json();
     });
 

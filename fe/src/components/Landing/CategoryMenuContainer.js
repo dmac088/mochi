@@ -42,6 +42,7 @@ class CategoryMenuContainer extends Component {
     const routeProps = createRouteProps(this.props.history, this.props.match, this.props.location);
     const { locale } = routeProps.match.params;
     const { categoryList } = this.props;
+
     //const categoryList = filterCategories(this.props.categoryList, 'LNDMM01');
     return (
       <div className="hero-side-category">
