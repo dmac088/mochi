@@ -100,7 +100,7 @@ export class App extends Component {
                         return responseJSON;
                       });
 
-    //product array for landing categories
+    //promise array with one category per element containing products
     const p2 = (productCategoryList) => {
                         //return an array of promises to the next in chain
                          return filterCategories(productCategoryList, 'LNDHC01').map(c => {
@@ -111,9 +111,9 @@ export class App extends Component {
                               return c;
                             });
                           });
-                      };
+                        };
 
-    //product array for preview categories
+    //promise array with one category per element containing products
     const p3 = (productCategoryList) => {
                       //return an array of promises to the next in chain
                       return filterCategories(productCategoryList, 'LNDPC01').map(c => {
@@ -140,48 +140,45 @@ export class App extends Component {
     //             reject("broken!");
     //           });
 
+      //this is an array
+      const landing = (categories) => Promise.all(p2(categories))
+      .then((response) => {
+        this.setState({
+          "landingCategories": response,
+        });
+      });
+
+      //this is an array
+      const preview = (categories) => Promise.all(p3(categories))
+      .then((response) => {
+        this.setState({
+            "previewCategories": response,
+          });
+      });
 
       p1.then((response) => {
         return response.result.productCategories;
       })
-      .then((categories) =>
-              Promise.all(p2(categories))
-              .then((response) => {
-                this.setState({
-                  "landingCategories": response,
-                });
-      }))
-      .catch((e) => console.log(e));
-
-      p1.then((response) => {
-          return response.result.productCategories;
-      })
-      .then((categories) =>
-              Promise.all(p3(categories))
-              .then((response) => {
-                this.setState({
-                    "previewCategories": response,
-                  });
-              }))
-              .catch((e) => console.log(e));
-
-
-      //update the cart products in redux store
-      const productIds = cartSelector.get().items.map(a => a.productId);
-      //call the rest Api to apply new item array based on new language
-      productApi.findByIds(locale, currency, productIds)
-      .then((response) => {
-        return response.json()
-      })
-      .then((responseJSON) => {
-        cartService.updateCartItems(responseJSON);
+      .then((categories) => {
+        Promise.all([landing(categories), preview(categories)]);
       })
       .then(() => {
-        cartService.updateCartTotals();
-      }).catch((e) => {
-          console.log(e);
+        //update the cart products in redux store
+        const productIds = cartSelector.get().items.map(a => a.productId);
+        //call the rest Api to apply new item array based on new language
+        productApi.findByIds(locale, currency, productIds)
+        .then((response) => {
+          return response.json()
+        })
+        .then((responseJSON) => {
+          cartService.updateCartItems(responseJSON);
+        })
+        .then(() => {
+          cartService.updateCartTotals();
+        }).catch((e) => {
+            console.log(e);
+        });
       });
-
   }
 
   getCategoryProducts = (locale, currency, category) =>
