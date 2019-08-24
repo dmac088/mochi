@@ -25,7 +25,18 @@ export const findById = (locale, currency, brandId) => fetchApi(
 																											 );
 
 
-export const findByCategory = (locale, currency, parentCategory, selectedCategories = []) => fetchApi(
+export const findByBrandCategory = (locale, currency, category) => fetchApi(
+																																	endPoints.get +
+																											 						locale +
+																											 						'/' + currency +
+																											 						'/category/' + parentCategory,
+																											 						selectedCategories,
+																											 						{},
+																											 						'POST',
+																											 						{"Content-Type": "application/json"}
+																											 				);
+
+export const findByProductCategory = (locale, currency, parentCategory, selectedCategories = []) => fetchApi(
 																																endPoints.get +
 																																locale +
 																																'/' + currency +
