@@ -106,7 +106,6 @@ class QuickViewProduct extends Component{
 
 	    this.getProduct(locale, currency, productId)
 	    .then((responseJSON) => {
-				console.log(responseJSON.productImage);
 				setTimeout(() => {
 					this.setState({
 						"product": responseJSON,
