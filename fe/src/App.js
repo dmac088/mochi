@@ -93,8 +93,6 @@ export class App extends Component {
   //we cache data in App to avoid refreshing on route changes (componentDidMount)
   refreshData(locale, currency) {
 
-    //list of categories (brand and product), remember we can call this twice in promise.all and it wont actaull run twice
-    //promise.all will only execut ethe promise once no matter how many times we call it
     const p1 = this.refreshCategoryList(locale, currency)
                       .then((responseJSON) => {
                         return responseJSON;
@@ -136,23 +134,21 @@ export class App extends Component {
     p1.then((response) => {
       return response.result;
     })
-      .then((result) => {
-        console.log(cartSelector.get().items);
-        return Promise.all([            Promise.all(p2(result.productCategories)),
-                                        Promise.all(p3(result.productCategories)),
-                                        cart(cartSelector.get().items.map(a => a.productId)),
-                                        p1]);
-      })
-      .then((response) => {
-        console.log(response);
-        this.setState({
-          "landingCategories": response[0],
-          "brandCategoryList": filterCategories(response[3].result.productCategories, 'LNDHM01'),
-          "previewCategories": response[1],
-        });
-        cartService.updateCartItems(response[2]);
-        cartService.updateCartTotals();
+    .then((result) => {
+      return Promise.all([            Promise.all(p2(result.productCategories)),
+                                      Promise.all(p3(result.productCategories)),
+                                      cart(cartSelector.get().items.map(a => a.productUPC)),
+                                      p1]);
+    })
+    .then((response) => {
+      this.setState({
+        "landingCategories": response[0],
+        "brandCategoryList": filterCategories(response[3].result.productCategories, 'LNDHM01'),
+        "previewCategories": response[1],
       });
+      cartService.updateCartItems(response[2]);
+      cartService.updateCartTotals();
+    });
   }
 
   getCategoryProducts = (locale, currency, category) =>
