@@ -157,7 +157,7 @@ export class App extends Component {
     .then((response) => {
       this.setState({
         "landingCategories": response[0],
-        "brandCategoryList": filterCategories(response[2].result.productCategories, 'LNDHM01'),
+        "brandCategoryList": filterCategories(response[2].result.brandCategories, 'LNDHM01'),
         "previewCategories": response[1],
       });
       cartService.updateCartItems(response[3]);
