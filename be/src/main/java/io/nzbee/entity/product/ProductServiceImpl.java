@@ -35,9 +35,9 @@ public class ProductServiceImpl implements IProductService {
 	}
 	
 	@Override
-	public List<Product> findAll(String locale, String currency, List<Long> productIds) {
+	public List<Product> findAll(String locale, String currency, List<String> productCodes) {
 		// TODO Auto-generated method stub
-		return productDAO.getAll(locale, currency, productIds);
+		return productDAO.getAll(locale, currency, productCodes);
 	}
 	
 	@Override

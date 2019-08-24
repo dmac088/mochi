@@ -127,10 +127,10 @@ public class ProductServiceImpl implements IProductService {
 	
     @Override
 	@Cacheable(value="selectedProducts")
-	public List<Product> findAll(String locale, String currency, List<Long> productIds) {
+	public List<Product> findAll(String locale, String currency, List<String> productCodes) {
 		
 	    List<io.nzbee.entity.product.Product> lp = 
-	    		productService.findAll(locale, currency, productIds);
+	    		productService.findAll(locale, currency, productCodes);
      	
 		return lp.stream().map(p -> { return this.convertToProductDO(p, locale, currency);}).collect(Collectors.toList());
 	}

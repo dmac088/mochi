@@ -347,7 +347,7 @@ public class ProductDaoImpl implements IProductDao {
 	}
 	
 	@Override
-	public List<Product> getAll(String locale, String currency, List<Long> productIds) {
+	public List<Product> getAll(String locale, String currency, List<String> productCodes) {
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 	
@@ -371,8 +371,8 @@ public class ProductDaoImpl implements IProductDao {
 		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
 		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
 		conditions.add(cb.equal(curr.get(Currency_.code), currency));
-		if(!productIds.isEmpty()) {
-			conditions.add(root.get(Product_.productId).in(productIds));
+		if(!productCodes.isEmpty()) {
+			conditions.add(root.get(Product_.productUPC).in(productCodes));
 		}
 		
 		TypedQuery<Product> query = em.createQuery(cq
