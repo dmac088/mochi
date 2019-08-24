@@ -124,7 +124,7 @@ export class App extends Component {
                       });
                     };
 
-    //brand categories
+    //brand categories, get a list of brands for each brand category and add to payload
     const p4 = (categoryList) => {
                         //return an array of promises to the next in chain
                         return filterCategories(categoryList, 'LNDPC01').map(c => {
