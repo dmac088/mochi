@@ -128,6 +128,7 @@ export class App extends Component {
     const p4 = (categoryList) =>
                         //return an array of promises to the next in chain
                         filterCategories(categoryList, 'LNDHM01').map(c => {
+                          console.log(c);
                         //we must return the nested promise
                           // return this.getCategoryBrands(locale, currency, c.facetDisplayValue)
                           // .then((response) => {
