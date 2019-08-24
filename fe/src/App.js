@@ -135,7 +135,7 @@ export class App extends Component {
                             return c;
                           });
                         });
-                      
+
     //products in cart
     const p5 = (productIds) => productApi.findByIds(locale, currency, productIds)
                 .then((response) => {
@@ -151,7 +151,7 @@ export class App extends Component {
                                       Promise.all(p3(result.productCategories)) /*preview categories*/,
                                       Promise.all(p4(result.brandCategories)) /*brand categories*/,
                                       p5(cartSelector.get().items.map(a => a.productUPC)),
-                                      p1 /*all categories*/]);
+                                      p1 /*all categories*/])
     })
     .then((response) => {
       this.setState({
