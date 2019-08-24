@@ -71,9 +71,9 @@ class Products extends Component {
     const type                              = this.props.match.params[0];
 
     //find the faet from the list of categories that matches the term (categoryDesc), e.g. get the maxPrice of "Fruit"
-    let maxPrice                            = 0;
+    let maxPrice                              = 0;
 
-    const facet                             = (type === "category")
+    const facet                               = (type === "category")
                                               ? this.findFacet(categoryList, term)
                                               : this.findFacet(categoryList, "ALL");
 

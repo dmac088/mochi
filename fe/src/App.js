@@ -37,7 +37,8 @@ export class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-                     "categoryList": [],
+                     "productCategoryList": [],
+                     "brandCategoryList": [],
                      "showQVModal": false,
                      "currentProductId": null,
                      "landingCategories": [],
@@ -95,13 +96,13 @@ export class App extends Component {
     .then((responseJSON) => {
       console.log(responseJSON);
       this.setState({
-        "categoryList": responseJSON.result.productCategories,
+        "productCategoryList": responseJSON.result.productCategories,
       });
     })
     .then(() => {
-      const { categoryList } = this.state;
+      const { productCategoryList } = this.state;
       //return an array of promises to the next in chain
-      return filterCategories(categoryList, 'LNDHC01').map(c => {
+      return filterCategories(productCategoryList, 'LNDHC01').map(c => {
         //we must return the nested promise
         return this.getCategoryProducts(locale, currency, c.facetDisplayValue)
         .then((response) => {
@@ -119,9 +120,9 @@ export class App extends Component {
       });
     })
     .then(() => {
-      const { categoryList } = this.state;
+      const { productCategoryList } = this.state;
       //return an array of promises to the next in chain
-      return filterCategories(categoryList, 'LNDPC01').map(c => {
+      return filterCategories(productCategoryList, 'LNDPC01').map(c => {
         //we must return the nested promise
         return this.getCategoryProducts(locale, currency, c.facetDisplayValue)
         .then((response) => {
@@ -131,7 +132,7 @@ export class App extends Component {
       });
     })
     .then((promiseArray) => {
-      if(!promiseArray) { return }
+      if(!promiseArray) { return; }
       Promise.all(promiseArray)
       .then((value) => {
         this.setState({
@@ -189,8 +190,8 @@ export class App extends Component {
     });
 
 
-  filterPreviewCategories = (categoryList) => {
-    return categoryList.filter(function(value, index, arr){
+  filterPreviewCategories = (productCategoryList) => {
+    return productCategoryList.filter(function(value, index, arr){
       return value.categoryPreview === 1;
     });
   }
@@ -216,20 +217,20 @@ export class App extends Component {
 
 
   renderLayout = (contentCallback) => {
-    const { categoryList } = this.state;
+    const { productCategoryList } = this.state;
     return (
       <Layout
-        categoryList={categoryList}>
+        categoryList={productCategoryList}>
           {contentCallback()}
       </Layout>
     );
   }
 
   renderLayoutBC = (contentCallback) => {
-    const { categoryList } = this.state;
+    const { productCategoryList } = this.state;
     return (
       <LayoutBC
-        categoryList={categoryList}>
+        categoryList={productCategoryList}>
         {contentCallback()}
       </LayoutBC>
     );
@@ -250,14 +251,14 @@ export class App extends Component {
   }
 
   renderProducts = () => {
-    const { pagedItems, categoryList, showQVModal, currentProductId } = this.state;
+    const { pagedItems, productCategoryList, showQVModal, currentProductId } = this.state;
     return (
       <Products
         toggleQuickView={this.toggleQuickView}
         showQVModal={showQVModal}
         setCurrentProductId={this.setCurrentProductId}
         currentProductId={currentProductId}
-        categoryList={categoryList}
+        categoryList={productCategoryList}
       />
     );
   }
