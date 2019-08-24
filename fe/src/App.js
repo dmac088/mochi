@@ -127,13 +127,13 @@ export class App extends Component {
     //brand categories, get a list of brands for each brand category and add to payload
     const p4 = (categoryList) =>
                         //return an array of promises to the next in chain
-                        filterCategories(categoryList, 'LNDPC01').map(c => {
+                        filterCategories(categoryList, 'LNDHM01').map(c => {
                         //we must return the nested promise
-                          return this.getCategoryBrands(locale, currency, c.facetDisplayValue)
-                          .then((response) => {
-                            c["brands"] = response;
+                          // return this.getCategoryBrands(locale, currency, c.facetDisplayValue)
+                          // .then((response) => {
+                          //   c["brands"] = response;
                             return c;
-                          });
+                          //});
                         });
 
     //products in cart
