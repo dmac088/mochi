@@ -98,10 +98,10 @@ export class App extends Component {
                         return responseJSON;
                       });
 
-    //promise array with one category per element containing products
-    const p2 = (productCategoryList) => {
+    //highlighted categories
+    const p2 = (categoryList) => {
                         //return an array of promises to the next in chain
-                         return filterCategories(productCategoryList, 'LNDHC01').map(c => {
+                         return filterCategories(categoryList, 'LNDHC01').map(c => {
                           //we must return the nested promise
                             return this.getCategoryProducts(locale, currency, c.facetDisplayValue)
                             .then((response) => {
@@ -111,10 +111,10 @@ export class App extends Component {
                           });
                         };
 
-    //promise array with one category per element containing products
-    const p3 = (productCategoryList) => {
+    //preview categories
+    const p3 = (categoryList) => {
                       //return an array of promises to the next in chain
-                      return filterCategories(productCategoryList, 'LNDPC01').map(c => {
+                      return filterCategories(categoryList, 'LNDPC01').map(c => {
                         //we must return the nested promise
                         return this.getCategoryProducts(locale, currency, c.facetDisplayValue)
                         .then((response) => {
@@ -124,8 +124,21 @@ export class App extends Component {
                       });
                     };
 
+    //brand categories
+    const p4 = (categoryList) => {
+                        //return an array of promises to the next in chain
+                        return filterCategories(categoryList, 'LNDPC01').map(c => {
+                        //we must return the nested promise
+                          return this.getCategoryBrands(locale, currency, c.facetDisplayValue)
+                              .then((response) => {
+                                  c["brands"] = response;
+                                      return c;
+                                  });
+                            });
+                          };
+
     //products in cart
-    const cart = (productIds) => productApi.findByIds(locale, currency, productIds)
+    const p5 = (productIds) => productApi.findByIds(locale, currency, productIds)
                 .then((response) => {
                   return response.json();
                 });
@@ -137,16 +150,17 @@ export class App extends Component {
     .then((result) => {
       return Promise.all([            Promise.all(p2(result.productCategories)),
                                       Promise.all(p3(result.productCategories)),
-                                      cart(cartSelector.get().items.map(a => a.productUPC)),
+                                      Promise.all(p4(result.brandCategories)),
+                                      p4(cartSelector.get().items.map(a => a.productUPC)),
                                       p1]);
     })
     .then((response) => {
       this.setState({
         "landingCategories": response[0],
-        "brandCategoryList": filterCategories(response[3].result.productCategories, 'LNDHM01'),
+        "brandCategoryList": filterCategories(response[2].result.productCategories, 'LNDHM01'),
         "previewCategories": response[1],
       });
-      cartService.updateCartItems(response[2]);
+      cartService.updateCartItems(response[3]);
       cartService.updateCartTotals();
     });
   }
