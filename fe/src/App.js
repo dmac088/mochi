@@ -99,9 +99,9 @@ export class App extends Component {
                       });
 
     //highlighted categories
-    const p2 = (categoryList) => {
+    const p2 = (categoryList) =>
                         //return an array of promises to the next in chain
-                         return filterCategories(categoryList, 'LNDHC01').map(c => {
+                        filterCategories(categoryList, 'LNDHC01').map(c => {
                           //we must return the nested promise
                             return this.getCategoryProducts(locale, currency, c.facetDisplayValue)
                             .then((response) => {
@@ -109,12 +109,12 @@ export class App extends Component {
                               return c;
                             });
                           });
-                        };
+
 
     //preview categories
-    const p3 = (categoryList) => {
+    const p3 = (categoryList) =>
                       //return an array of promises to the next in chain
-                      return filterCategories(categoryList, 'LNDPC01').map(c => {
+                      filterCategories(categoryList, 'LNDPC01').map(c => {
                         //we must return the nested promise
                         return this.getCategoryProducts(locale, currency, c.facetDisplayValue)
                         .then((response) => {
@@ -122,12 +122,12 @@ export class App extends Component {
                           return c;
                         });
                       });
-                    };
+
 
     //brand categories, get a list of brands for each brand category and add to payload
-    const p4 = (categoryList) => {
+    const p4 = (categoryList) =>
                         //return an array of promises to the next in chain
-                        return filterCategories(categoryList, 'LNDPC01').map(c => {
+                        filterCategories(categoryList, 'LNDPC01').map(c => {
                         //we must return the nested promise
                           return this.getCategoryBrands(locale, currency, c.facetDisplayValue)
                           .then((response) => {
@@ -135,8 +135,7 @@ export class App extends Component {
                             return c;
                           });
                         });
-                      };
-
+                      
     //products in cart
     const p5 = (productIds) => productApi.findByIds(locale, currency, productIds)
                 .then((response) => {
