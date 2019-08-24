@@ -151,7 +151,7 @@ export class App extends Component {
       return Promise.all([            Promise.all(p2(result.productCategories)),
                                       Promise.all(p3(result.productCategories)),
                                       Promise.all(p4(result.brandCategories)),
-                                      p4(cartSelector.get().items.map(a => a.productUPC)),
+                                      p5(cartSelector.get().items.map(a => a.productUPC)),
                                       p1]);
     })
     .then((response) => {
