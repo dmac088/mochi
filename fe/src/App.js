@@ -137,6 +137,7 @@ export class App extends Component {
       return response.result;
     })
       .then((result) => {
+        console.log(cartSelector.get().items);
         return Promise.all([            Promise.all(p2(result.productCategories)),
                                         Promise.all(p3(result.productCategories)),
                                         cart(cartSelector.get().items.map(a => a.productId)),
