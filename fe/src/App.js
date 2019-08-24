@@ -126,58 +126,31 @@ export class App extends Component {
                       });
                     };
 
-    //brands for brand categories
-    // const p4 =  (productCategoryList) => new Promise((resolve, reject) => {
-    //                 //return an array of promises to the next in chain
-    //                 resolve(filterCategories(productCategoryList, 'LNDPC01').map(c => {
-    //                 //we must return the nested promise
-    //                   return this.getCategoryProducts(locale, currency, c.facetDisplayValue)
-    //                   .then((response) => {
-    //                   c["products"] = response;
-    //                   return c;
-    //                 });
-    //             }));
-    //             reject("broken!");
-    //           });
+    //products in cart
+    const cart = (productIds) => productApi.findByIds(locale, currency, productIds)
+                .then((response) => {
+                  return response.json();
+                });
 
-      //this is an array
-      const landing = (categories) => Promise.all(p2(categories))
-      .then((response) => {
-        this.setState({
-          "landingCategories": response,
-        });
-      });
 
-      //this is an array
-      const preview = (categories) => Promise.all(p3(categories))
-      .then((response) => {
-        this.setState({
-            "previewCategories": response,
-          });
-      });
-
-      p1.then((response) => {
-        return response.result.productCategories;
+    p1.then((response) => {
+      return response.result;
+    })
+      .then((result) => {
+        return Promise.all([            Promise.all(p2(result.productCategories)),
+                                        Promise.all(p3(result.productCategories)),
+                                        cart(cartSelector.get().items.map(a => a.productId)),
+                                        p1]);
       })
-      .then((categories) => {
-        Promise.all([landing(categories), preview(categories)]);
-      })
-      .then(() => {
-        //update the cart products in redux store
-        const productIds = cartSelector.get().items.map(a => a.productId);
-        //call the rest Api to apply new item array based on new language
-        productApi.findByIds(locale, currency, productIds)
-        .then((response) => {
-          return response.json()
-        })
-        .then((responseJSON) => {
-          cartService.updateCartItems(responseJSON);
-        })
-        .then(() => {
-          cartService.updateCartTotals();
-        }).catch((e) => {
-            console.log(e);
+      .then((response) => {
+        console.log(response);
+        this.setState({
+          "landingCategories": response[0],
+          "brandCategoryList": filterCategories(response[3].result.productCategories, 'LNDHM01'),
+          "previewCategories": response[1],
         });
+        cartService.updateCartItems(response[2]);
+        cartService.updateCartTotals();
       });
   }
 
@@ -220,7 +193,6 @@ export class App extends Component {
       console.log(response);
         return response.json();
     });
-
 
   filterPreviewCategories = (productCategoryList) => {
     return productCategoryList.filter(function(value, index, arr){
