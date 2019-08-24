@@ -20,8 +20,6 @@ public interface IProductService extends IService<Product> {
 	
 	//returns a domain object, this is good
 	Product findOne(String lcl, String currency, String code);
-	
-	List<Product> findAll(String locale, String currency, List<Long> productIds);
 
 	Double getMaxPrice(String categoryDesc, String locale, String markdownSkuDescription, String currency,
 			List<Category> categories, List<Brand> brands, List<Tag> tags);
@@ -44,6 +42,8 @@ public interface IProductService extends IService<Product> {
 	Product convertToProductDO(String productCreatedDate, String productUPC, String productDesc,
 			Double productRetailPrice, Double productMarkdownPrice, String productImage, String productLocale,
 			String productCurrency, String productCategory);
+
+	List<Product> findAll(String locale, String currency, List<String> productCodes);
 
 	
 

@@ -24,8 +24,8 @@ public class ProductController {
     }
     
     @PostMapping("/Product/{locale}/{currency}")
-    public List<Product> getProducts(@PathVariable String locale, @PathVariable String currency, @RequestBody final List<Long> productIds) {
-    	return productService.findAll(locale, currency, productIds);
+    public List<Product> getProducts(@PathVariable String locale, @PathVariable String currency, @RequestBody final List<String> productCodes) {
+    	return productService.findAll(locale, currency, productCodes);
     }
     
 }

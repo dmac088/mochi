@@ -140,6 +140,10 @@ export class App extends Component {
     //products in cart
     const p5 = (productIds) => productApi.findByIds(locale, currency, productIds)
                 .then((response) => {
+                  // console.log(locale);
+                  // console.log(currency);
+                  // console.log(productIds);
+                  // console.log(response.json());
                   return response.json();
                 });
 
@@ -155,11 +159,12 @@ export class App extends Component {
                                       p1 /*all categories*/])
     })
     .then((response) => {
+      //console.log(response);
       this.setState({
-        "productCategoryList": response[4].result.productCategories,
-        "brandCategoryList": response[4].result.brandCategories,
-        "landingCategories": response[0],
-        "previewCategories": response[1],
+        "productCategoryList":  response[4].result.productCategories,
+        "brandCategoryList":    response[4].result.brandCategories,
+        "landingCategories":    response[0],
+        "previewCategories":    response[1],
       });
       cartService.updateCartItems(response[3]);
       cartService.updateCartTotals();
