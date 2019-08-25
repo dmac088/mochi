@@ -16,6 +16,7 @@ import * as cartService from './services/cart';
 import * as cartSelector from './services/cart/selectors';
 import * as categoryApi from './data/categories/api';
 import * as productApi from './data/products/api';
+import * as brandApi from './data/brands/api';
 import { Layout } from './components/Layout/Layout';
 import { LayoutBC } from './components/Layout/LayoutBC';
 import { Landing } from './components/Landing/Landing';
@@ -124,26 +125,22 @@ export class App extends Component {
                       });
 
 
-    //brand categories, get a list of brands for each brand category and add to payload
+    //brand categories, get a list of brands for brand category and add to payload
     const p4 = (categoryList) =>
                         //return an array of promises to the next in chain
                         filterCategories(categoryList, 'LNDHM01').map(c => {
                           console.log(c);
                         //we must return the nested promise
-                          // return this.getCategoryBrands(locale, currency, c.facetDisplayValue)
-                          // .then((response) => {
-                          //   c["brands"] = response;
+                          return this.getCategoryBrands(locale, currency, c.payload.categoryCode)
+                          .then((response) => {
+                            c["brands"] = response;
                             return c;
-                          //});
+                          });
                         });
 
     //products in cart
     const p5 = (productIds) => productApi.findByIds(locale, currency, productIds)
                 .then((response) => {
-                  // console.log(locale);
-                  // console.log(currency);
-                  // console.log(productIds);
-                  // console.log(response.json());
                   return response.json();
                 });
 
@@ -198,7 +195,7 @@ export class App extends Component {
                   return response.json();
               })
               .then((responseJSON) => {
-                  return responseJSON.products.content;
+                  console.log(responseJSON);
               })
               .catch((e) => {
                   console.log(e);
