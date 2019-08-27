@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import Search from './Search';
-import { Menu } from './Menu';
+import { WebMenu } from './WebMenu';
 import MobileMenu from './MobileMenu';
 import HeaderCartSummary from './HeaderCartSummary';
 import { LanguageSelector } from './LanguageSelector';
@@ -108,7 +108,7 @@ class Header extends Component {
                 </div>
                 {(this.state.renderMobile) ?
                   <MobileMenu /> :
-                  <Menu
+                  <WebMenu
                     brandCategoryList={brandCategoryList}
                   />
                 }

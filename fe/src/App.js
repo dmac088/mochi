@@ -132,9 +132,7 @@ export class App extends Component {
                         //we must return the nested promise
                           return this.getCategoryBrands(locale, currency, c.payload.categoryCode)
                           .then((response) => {
-                            console.log(response);
                             c.payload["brands"] = response.result.brands;
-                            console.log(c)
                             return c;
                           });
                         });
