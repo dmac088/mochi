@@ -198,6 +198,7 @@ class CategoryMenuItem extends Component {
   render() {
     const { locale, itemCounter, isRootList, isMobile, showMore, displayCategoryList, category, routeProps, categoryList, renderCategoryList } = this.props;
     const { hasChildren, expand } = this.state;
+    console.log(this.props);
     const children = [];
     return (
         <li
@@ -275,6 +276,7 @@ class CategoryMenuItemSubList extends Component {
 
   render() {
     const { locale, itemCounter, children, isMobile, routeProps, categoryList, renderCategoryList } = this.props;
+    console.log(children);
     return (
       <ul ref={this.setContainer}
           className="category-mega-menu">

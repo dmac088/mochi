@@ -5,7 +5,6 @@ import { filterCategories } from '../../services/helpers/filterHelper';
 
 export const Menu = withRouter(({history, match, location, ...props}) => {
     const routeProps = createRouteProps(history, match, location);
-    console.log(props);
     const { brandCategoryList } = props;
     return (
       <div className="main-menu">
@@ -41,7 +40,6 @@ const ContactMenu = () => {
 
 const BrandMenu = (props) => {
   const { brandCategoryList } = props;
-  console.log(brandCategoryList);
   if(!brandCategoryList) { return null; }
   if(brandCategoryList.length === 0) { return null; }
   const category = filterCategories(brandCategoryList, 'LNDHM01')[0];
