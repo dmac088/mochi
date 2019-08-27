@@ -129,11 +129,12 @@ export class App extends Component {
     const p4 = (categoryList) =>
                         //return an array of promises to the next in chain
                         filterCategories(categoryList, 'LNDHM01').map(c => {
-                          console.log(c);
                         //we must return the nested promise
                           return this.getCategoryBrands(locale, currency, c.payload.categoryCode)
                           .then((response) => {
-                            c["brands"] = response;
+                            console.log(response);
+                            c.payload["brands"] = response.result.brands;
+                            console.log(c)
                             return c;
                           });
                         });
@@ -193,9 +194,6 @@ export class App extends Component {
       brandApi.findByBrandCategory(locale, currency, category)
               .then((response) => {
                   return response.json();
-              })
-              .then((responseJSON) => {
-                  console.log(responseJSON);
               })
               .catch((e) => {
                   console.log(e);
