@@ -175,7 +175,9 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
     	s.setFacetClassName(c.getClass().getSimpleName());
     	s.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
     	s.setFacetId(calcFacetId(s.getFacetClassName(), c.getCategoryCode().toString()));
-    	s.setFacetParentId(c.getParentCode());
+    	if(c.getParentCode() != null) {
+    		s.setFacetParentId(calcFacetId(s.getFacetClassName(), c.getParentCode().toString()));
+    	}
     	s.setFacetChildCount(c.getChildCategoryCount());
     	s.setFacetDisplayValue(c.getCategoryDesc());
     	s.setToken(calcToken(s.getFacetClassName(), c.getCategoryCode()));
