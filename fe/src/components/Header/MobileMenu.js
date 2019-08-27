@@ -37,7 +37,6 @@ class MobileMenu extends Component {
     })
   }
 
-
   render() {
     return (
       <div className="mobile-menu d-block d-lg-none mean-container">
@@ -127,9 +126,6 @@ class BrandMenu extends Component {
     )
   }
 }
-
-
-
 
 class BlogMenu extends Component {
 

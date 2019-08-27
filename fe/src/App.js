@@ -232,20 +232,22 @@ export class App extends Component {
 
 
   renderLayout = (contentCallback) => {
-    const { productCategoryList } = this.state;
+    const { productCategoryList, brandCategoryList } = this.state;
     return (
       <Layout
-        categoryList={productCategoryList}>
+        categoryList={productCategoryList}
+        brandCategoryList={brandCategoryList}>
           {contentCallback()}
       </Layout>
     );
   }
 
   renderLayoutBC = (contentCallback) => {
-    const { productCategoryList } = this.state;
+    const { productCategoryList, brandCategoryList } = this.state;
     return (
       <LayoutBC
-        categoryList={productCategoryList}>
+        categoryList={productCategoryList}
+        brandCategoryList={brandCategoryList}>
         {contentCallback()}
       </LayoutBC>
     );

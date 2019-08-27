@@ -46,7 +46,7 @@ class Header extends Component {
   }
 
   render() {
-    const { location, history, match, authenticated } = this.props;
+    const { location, history, match, authenticated, brandCategoryList} = this.props;
     const routeProps = createRouteProps(history, match, location);
     return(
       <header>
@@ -108,7 +108,9 @@ class Header extends Component {
                 </div>
                 {(this.state.renderMobile) ?
                   <MobileMenu /> :
-                  <Menu />
+                  <Menu
+                    brandCategoryList={brandCategoryList}
+                  />
                 }
               </div>
               <div className="col-12">
