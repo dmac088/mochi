@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { routeHome, routeContact, createRouteProps } from '../../services/helpers/routeHelper';
 import { filterCategories } from '../../services/helpers/filterHelper';
 
-export const Menu = withRouter(({history, match, location, ...props}) => {
+export const WebMenu = withRouter(({history, match, location, ...props}) => {
     const routeProps = createRouteProps(history, match, location);
     const { brandCategoryList } = props;
     return (
@@ -11,7 +11,7 @@ export const Menu = withRouter(({history, match, location, ...props}) => {
         <nav>
           <ul>
             <HomeMenu />
-            <BrandMenu
+            <BrandCategoryMenu
               brandCategoryList={brandCategoryList}
              />
             <BlogMenu />
@@ -38,19 +38,21 @@ const ContactMenu = () => {
     );
 }
 
-const BrandMenu = (props) => {
+const BrandCategoryMenu = (props) => {
   const { brandCategoryList } = props;
   if(!brandCategoryList) { return null; }
   if(brandCategoryList.length === 0) { return null; }
-  const category = filterCategories(brandCategoryList, 'LNDHM01')[0];
+
+  return brandCategoryList.map(bc => {
     return (
       <li className="menu-item-has-children">
-        <a href="#">{category.facetDisplayValue}</a>
+        <a href="#">{bc.facetDisplayValue}</a>
         <ul class="mega-menu three-column">
-          {renderBrands(category.payload.brands)}
+          {renderBrands(bc.payload.brands)}
         </ul>
       </li>
-    )
+    );
+  });
 }
 
 const renderBrands = (brandList) => {
