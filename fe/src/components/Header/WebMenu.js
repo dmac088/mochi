@@ -45,9 +45,9 @@ const BrandCategoryMenu = (props) => {
 
   return brandCategoryList.map(bc => {
     return (
-      <li className="menu-item-has-children">
+      <li key={bc.facetId} className="menu-item-has-children">
         <a href="#">{bc.facetDisplayValue}</a>
-        <ul class="mega-menu three-column">
+        <ul className="mega-menu three-column">
           {renderBrands(bc.payload.brands)}
         </ul>
       </li>
@@ -58,7 +58,7 @@ const BrandCategoryMenu = (props) => {
 const renderBrands = (brandList) => {
   return brandList.map(b => {
     return (
-      <li><a href="#">{b.facetDisplayValue}</a></li>
+      <li key={b.facetId}><a href="#">{b.facetDisplayValue}</a></li>
     );
   });
 }
