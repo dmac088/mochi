@@ -49,27 +49,27 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 SET search_path = mochi, pg_catalog;
 
 --
--- Name: ftcategories(text); Type: FUNCTION; Schema: mochi; Owner: postgres
+-- Name: ft_categories(text); Type: FUNCTION; Schema: mochi; Owner: postgres
 --
 
-CREATE FUNCTION ftcategories(text) RETURNS TABLE(cat_id bigint, cat_cd text, cat_prnt_id bigint)
+CREATE FUNCTION ft_categories(text) RETURNS TABLE(cat_id bigint, cat_cd text, cat_prnt_id bigint, cat_typ_id bigint)
     LANGUAGE sql
     AS $_$
 WITH RECURSIVE 
     -- starting node(s)
-    starting (cat_id, cat_cd, cat_prnt_id) AS
+    starting (cat_id, cat_cd, cat_prnt_id, cat_typ_id) AS
     (
-      SELECT t.cat_id, t.cat_cd, t.cat_prnt_id
+      SELECT t.cat_id, t.cat_cd, t.cat_prnt_id, t.cat_typ_id
       FROM mochi.category AS t
       WHERE t.cat_cd = $1        
     ),
-    descendants (cat_id, cat_cd, cat_prnt_id) AS
+    descendants (cat_id, cat_cd, cat_prnt_id, cat_typ_id) AS
     (
-      SELECT t.cat_id, t.cat_cd, t.cat_prnt_id
+      SELECT t.cat_id, t.cat_cd, t.cat_prnt_id, t.cat_typ_id
       FROM mochi.category AS t
       WHERE t.cat_cd = $1
       UNION ALL
-      SELECT t.cat_id, t.cat_cd, t.cat_prnt_id 
+      SELECT t.cat_id, t.cat_cd, t.cat_prnt_id, t.cat_typ_id
       FROM mochi.category AS t 
 		JOIN descendants AS d 
 		ON t.cat_prnt_id = d.cat_id
@@ -77,12 +77,13 @@ WITH RECURSIVE
 
 SELECT 	descendants.cat_id,
 		descendants.cat_cd,
-		descendants.cat_prnt_id
+		descendants.cat_prnt_id,
+		descendants.cat_typ_id
 FROM  starting 
 		cross join descendants $_$;
 
 
-ALTER FUNCTION mochi.ftcategories(text) OWNER TO postgres;
+ALTER FUNCTION mochi.ft_categories(text) OWNER TO postgres;
 
 SET search_path = public, pg_catalog;
 
@@ -1105,9 +1106,11 @@ CREATE VIEW vw_category AS
  SELECT p.cat_id AS parent_cat_id,
     p.cat_cd AS parent_cat_cd,
     cc.cat_id AS child_cat_id,
-    cc.cat_cd AS child_cat_cd
+    cc.cat_cd AS child_cat_cd,
+    cc.cat_typ_id AS child_cat_typ_id
    FROM (category p
-     JOIN LATERAL ftcategories((p.cat_cd)::text) cc(cat_id, cat_cd, cat_prnt_id) ON ((1 = 1)));
+     JOIN LATERAL ft_categories((p.cat_cd)::text) cc(cat_id, cat_cd, cat_prnt_id, cat_typ_id) ON ((1 = 1)))
+  WHERE (cc.cat_typ_id = 1);
 
 
 ALTER TABLE vw_category OWNER TO postgres;
