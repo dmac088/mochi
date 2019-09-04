@@ -149,7 +149,8 @@ public class CategoryServiceImpl implements ICategoryService {
         cDO.setCategoryDesc(pc.getAttributes().stream()
         		.filter( pa -> pa.getLclCd().equals(locale)).collect(Collectors.toList()).get(0).getCategoryDesc());
         cDO.setLclCd(locale);
-        cDO.setChildCategoryCount(new Long(pc.getChildren().size()));
+        cDO.setChildCategoryCount(pc.getChildCategoryCount());
+        
         cDO.setCategoryType(pc.getCategoryType().getCode());
         cDO.setLayouts(pc.getLayouts());
         return cDO;

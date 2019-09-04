@@ -6,6 +6,16 @@ public class BrandCategory extends Category {
 
 	private List<Brand> brands;
 
+	private Long brandCount;
+	
+	public Long getBrandCount() {
+		return brandCount;
+	}
+
+	public void setBrandCount(Long brandCount) {
+		this.brandCount = brandCount;
+	}
+
 	public List<Brand> getBrands() {
 		return brands;
 	}
@@ -13,5 +23,7 @@ public class BrandCategory extends Category {
 	public void setBrands(List<Brand> brands) {
 		this.brands = brands;
 	}
+	
+
 	
 }
