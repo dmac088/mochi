@@ -44,9 +44,4 @@ public class CategoryBrand extends Category {
     public Long getBrandCount() {
 		return brandCount;
 	}
-
-	public void setBrandCount(Long brandCount) {
-		this.brandCount = brandCount;
-	}
-	
 }

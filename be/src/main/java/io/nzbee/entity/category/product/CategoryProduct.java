@@ -1,7 +1,6 @@
 package io.nzbee.entity.category.product;
 
 import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,9 +11,7 @@ import javax.persistence.OrderBy;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
 import org.hibernate.annotations.Immutable;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.type.CategoryType;
@@ -56,8 +53,4 @@ public class CategoryProduct extends Category  {
 		return productCount;
 	}
 
-	public void setProductCount(Long productCount) {
-		this.productCount = productCount;
-	}
-	
 }
