@@ -2,14 +2,14 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.6.5
--- Dumped by pg_dump version 9.6.5
+-- Dumped from database version 9.5.14
+-- Dumped by pg_dump version 9.5.14
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 SET row_security = off;
@@ -46,13 +46,11 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
-SET search_path = mochi, pg_catalog;
-
 --
 -- Name: ft_categories(text); Type: FUNCTION; Schema: mochi; Owner: postgres
 --
 
-CREATE FUNCTION ft_categories(text) RETURNS TABLE(cat_id bigint, cat_cd text, cat_prnt_id bigint, cat_typ_id bigint)
+CREATE FUNCTION mochi.ft_categories(text) RETURNS TABLE(cat_id bigint, cat_cd text, cat_prnt_id bigint, cat_typ_id bigint)
     LANGUAGE sql
     AS $_$
 WITH RECURSIVE 
@@ -85,13 +83,11 @@ FROM  starting
 
 ALTER FUNCTION mochi.ft_categories(text) OWNER TO postgres;
 
-SET search_path = public, pg_catalog;
-
 --
 -- Name: random_between(integer, integer); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
-CREATE FUNCTION random_between(low integer, high integer) RETURNS integer
+CREATE FUNCTION public.random_between(low integer, high integer) RETURNS integer
     LANGUAGE plpgsql STRICT
     AS $$
 BEGIN
@@ -102,8 +98,6 @@ $$;
 
 ALTER FUNCTION public.random_between(low integer, high integer) OWNER TO postgres;
 
-SET search_path = mochi, pg_catalog;
-
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -112,27 +106,27 @@ SET default_with_oids = false;
 -- Name: address; Type: TABLE; Schema: mochi; Owner: postgres
 --
 
-CREATE TABLE address (
+CREATE TABLE mochi.address (
 );
 
 
-ALTER TABLE address OWNER TO postgres;
+ALTER TABLE mochi.address OWNER TO postgres;
 
 --
 -- Name: address_type; Type: TABLE; Schema: mochi; Owner: postgres
 --
 
-CREATE TABLE address_type (
+CREATE TABLE mochi.address_type (
 );
 
 
-ALTER TABLE address_type OWNER TO postgres;
+ALTER TABLE mochi.address_type OWNER TO postgres;
 
 --
 -- Name: brand_bnd_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE brand_bnd_id_seq
+CREATE SEQUENCE mochi.brand_bnd_id_seq
     START WITH 6
     INCREMENT BY 1
     NO MINVALUE
@@ -140,25 +134,25 @@ CREATE SEQUENCE brand_bnd_id_seq
     CACHE 1;
 
 
-ALTER TABLE brand_bnd_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.brand_bnd_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: brand; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE brand (
-    bnd_id bigint DEFAULT nextval('brand_bnd_id_seq'::regclass) NOT NULL,
+CREATE TABLE mochi.brand (
+    bnd_id bigint DEFAULT nextval('mochi.brand_bnd_id_seq'::regclass) NOT NULL,
     bnd_cd character(5)
 );
 
 
-ALTER TABLE brand OWNER TO mochidb_owner;
+ALTER TABLE mochi.brand OWNER TO mochidb_owner;
 
 --
 -- Name: brand_attr_lcl_bnd_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE brand_attr_lcl_bnd_id_seq
+CREATE SEQUENCE mochi.brand_attr_lcl_bnd_id_seq
     START WITH 19
     INCREMENT BY 1
     NO MINVALUE
@@ -166,14 +160,14 @@ CREATE SEQUENCE brand_attr_lcl_bnd_id_seq
     CACHE 1;
 
 
-ALTER TABLE brand_attr_lcl_bnd_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.brand_attr_lcl_bnd_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: brand_attr_lcl; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE brand_attr_lcl (
-    bnd_lcl_id bigint DEFAULT nextval('brand_attr_lcl_bnd_id_seq'::regclass) NOT NULL,
+CREATE TABLE mochi.brand_attr_lcl (
+    bnd_lcl_id bigint DEFAULT nextval('mochi.brand_attr_lcl_bnd_id_seq'::regclass) NOT NULL,
     bnd_id bigint NOT NULL,
     bnd_desc character varying(100),
     bnd_img_pth character varying(100),
@@ -181,13 +175,13 @@ CREATE TABLE brand_attr_lcl (
 );
 
 
-ALTER TABLE brand_attr_lcl OWNER TO mochidb_owner;
+ALTER TABLE mochi.brand_attr_lcl OWNER TO mochidb_owner;
 
 --
 -- Name: brand_category_bnd_cat_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE brand_category_bnd_cat_id_seq
+CREATE SEQUENCE mochi.brand_category_bnd_cat_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -195,26 +189,26 @@ CREATE SEQUENCE brand_category_bnd_cat_id_seq
     CACHE 1;
 
 
-ALTER TABLE brand_category_bnd_cat_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.brand_category_bnd_cat_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: brand_category; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE brand_category (
-    bnd_cat_id bigint DEFAULT nextval('brand_category_bnd_cat_id_seq'::regclass) NOT NULL,
+CREATE TABLE mochi.brand_category (
+    bnd_cat_id bigint DEFAULT nextval('mochi.brand_category_bnd_cat_id_seq'::regclass) NOT NULL,
     bnd_id bigint,
     cat_id bigint
 );
 
 
-ALTER TABLE brand_category OWNER TO mochidb_owner;
+ALTER TABLE mochi.brand_category OWNER TO mochidb_owner;
 
 --
 -- Name: category_cat_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE category_cat_id_seq
+CREATE SEQUENCE mochi.category_cat_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -222,14 +216,14 @@ CREATE SEQUENCE category_cat_id_seq
     CACHE 1;
 
 
-ALTER TABLE category_cat_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.category_cat_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: category; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE category (
-    cat_id bigint DEFAULT nextval('category_cat_id_seq'::regclass) NOT NULL,
+CREATE TABLE mochi.category (
+    cat_id bigint DEFAULT nextval('mochi.category_cat_id_seq'::regclass) NOT NULL,
     cat_cd character varying(5) NOT NULL,
     cat_prnt_id bigint,
     cat_lvl bigint,
@@ -238,13 +232,13 @@ CREATE TABLE category (
 );
 
 
-ALTER TABLE category OWNER TO mochidb_owner;
+ALTER TABLE mochi.category OWNER TO mochidb_owner;
 
 --
 -- Name: category_attr_lcl_cat_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE category_attr_lcl_cat_id_seq
+CREATE SEQUENCE mochi.category_attr_lcl_cat_id_seq
     START WITH 4
     INCREMENT BY 1
     NO MINVALUE
@@ -252,14 +246,14 @@ CREATE SEQUENCE category_attr_lcl_cat_id_seq
     CACHE 1;
 
 
-ALTER TABLE category_attr_lcl_cat_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.category_attr_lcl_cat_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: category_attr_lcl; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE category_attr_lcl (
-    cat_lcl_id bigint DEFAULT nextval('category_attr_lcl_cat_id_seq'::regclass) NOT NULL,
+CREATE TABLE mochi.category_attr_lcl (
+    cat_lcl_id bigint DEFAULT nextval('mochi.category_attr_lcl_cat_id_seq'::regclass) NOT NULL,
     cat_id bigint NOT NULL,
     cat_desc character varying(100),
     cat_img_pth character varying(100),
@@ -267,35 +261,35 @@ CREATE TABLE category_attr_lcl (
 );
 
 
-ALTER TABLE category_attr_lcl OWNER TO mochidb_owner;
+ALTER TABLE mochi.category_attr_lcl OWNER TO mochidb_owner;
 
 --
 -- Name: category_brand; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE category_brand (
-    cat_id bigint DEFAULT nextval('category_cat_id_seq'::regclass) NOT NULL
+CREATE TABLE mochi.category_brand (
+    cat_id bigint DEFAULT nextval('mochi.category_cat_id_seq'::regclass) NOT NULL
 );
 
 
-ALTER TABLE category_brand OWNER TO mochidb_owner;
+ALTER TABLE mochi.category_brand OWNER TO mochidb_owner;
 
 --
 -- Name: category_product; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE category_product (
-    cat_id bigint DEFAULT nextval('category_cat_id_seq'::regclass) NOT NULL
+CREATE TABLE mochi.category_product (
+    cat_id bigint DEFAULT nextval('mochi.category_cat_id_seq'::regclass) NOT NULL
 );
 
 
-ALTER TABLE category_product OWNER TO mochidb_owner;
+ALTER TABLE mochi.category_product OWNER TO mochidb_owner;
 
 --
 -- Name: category_type_cat_typ_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE category_type_cat_typ_id_seq
+CREATE SEQUENCE mochi.category_type_cat_typ_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -303,38 +297,38 @@ CREATE SEQUENCE category_type_cat_typ_id_seq
     CACHE 1;
 
 
-ALTER TABLE category_type_cat_typ_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.category_type_cat_typ_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: category_type; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE category_type (
-    cat_typ_id bigint DEFAULT nextval('category_type_cat_typ_id_seq'::regclass) NOT NULL,
+CREATE TABLE mochi.category_type (
+    cat_typ_id bigint DEFAULT nextval('mochi.category_type_cat_typ_id_seq'::regclass) NOT NULL,
     cat_typ_cd character varying(5) NOT NULL,
     cat_typ_desc character varying(20)
 );
 
 
-ALTER TABLE category_type OWNER TO mochidb_owner;
+ALTER TABLE mochi.category_type OWNER TO mochidb_owner;
 
 --
 -- Name: currency; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE currency (
+CREATE TABLE mochi.currency (
     ccy_id bigint NOT NULL,
     ccy_cd character(3)
 );
 
 
-ALTER TABLE currency OWNER TO mochidb_owner;
+ALTER TABLE mochi.currency OWNER TO mochidb_owner;
 
 --
 -- Name: customer_cst_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE customer_cst_id_seq
+CREATE SEQUENCE mochi.customer_cst_id_seq
     START WITH 1000000001
     INCREMENT BY 1
     NO MINVALUE
@@ -342,25 +336,25 @@ CREATE SEQUENCE customer_cst_id_seq
     CACHE 1;
 
 
-ALTER TABLE customer_cst_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.customer_cst_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: customer; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE customer (
+CREATE TABLE mochi.customer (
     rle_id bigint NOT NULL,
-    cst_id character(10) DEFAULT nextval('customer_cst_id_seq'::regclass)
+    cst_id character(10) DEFAULT nextval('mochi.customer_cst_id_seq'::regclass)
 );
 
 
-ALTER TABLE customer OWNER TO mochidb_owner;
+ALTER TABLE mochi.customer OWNER TO mochidb_owner;
 
 --
 -- Name: discount; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE discount (
+CREATE TABLE mochi.discount (
     dis_id bigint NOT NULL,
     dis_cd character(5),
     prm_id bigint,
@@ -369,25 +363,25 @@ CREATE TABLE discount (
 );
 
 
-ALTER TABLE discount OWNER TO mochidb_owner;
+ALTER TABLE mochi.discount OWNER TO mochidb_owner;
 
 --
 -- Name: discount_type; Type: TABLE; Schema: mochi; Owner: postgres
 --
 
-CREATE TABLE discount_type (
+CREATE TABLE mochi.discount_type (
     dis_typ_id bigint NOT NULL,
     dis_typ_desc character varying NOT NULL
 );
 
 
-ALTER TABLE discount_type OWNER TO postgres;
+ALTER TABLE mochi.discount_type OWNER TO postgres;
 
 --
 -- Name: hibernate_sequence; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE hibernate_sequence
+CREATE SEQUENCE mochi.hibernate_sequence
     START WITH 232134
     INCREMENT BY 1
     NO MINVALUE
@@ -395,13 +389,13 @@ CREATE SEQUENCE hibernate_sequence
     CACHE 1;
 
 
-ALTER TABLE hibernate_sequence OWNER TO mochidb_owner;
+ALTER TABLE mochi.hibernate_sequence OWNER TO mochidb_owner;
 
 --
 -- Name: hierarchy_hir_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE hierarchy_hir_id_seq
+CREATE SEQUENCE mochi.hierarchy_hir_id_seq
     START WITH 41
     INCREMENT BY 1
     NO MINVALUE
@@ -409,46 +403,46 @@ CREATE SEQUENCE hierarchy_hir_id_seq
     CACHE 1;
 
 
-ALTER TABLE hierarchy_hir_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.hierarchy_hir_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: hierarchy; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE hierarchy (
-    hir_id bigint DEFAULT nextval('hierarchy_hir_id_seq'::regclass) NOT NULL,
+CREATE TABLE mochi.hierarchy (
+    hir_id bigint DEFAULT nextval('mochi.hierarchy_hir_id_seq'::regclass) NOT NULL,
     hir_cd character varying(5) NOT NULL,
     hir_desc character varying(100) NOT NULL
 );
 
 
-ALTER TABLE hierarchy OWNER TO mochidb_owner;
+ALTER TABLE mochi.hierarchy OWNER TO mochidb_owner;
 
 --
 -- Name: inventory_on_hand; Type: TABLE; Schema: mochi; Owner: postgres
 --
 
-CREATE TABLE inventory_on_hand (
+CREATE TABLE mochi.inventory_on_hand (
 );
 
 
-ALTER TABLE inventory_on_hand OWNER TO postgres;
+ALTER TABLE mochi.inventory_on_hand OWNER TO postgres;
 
 --
 -- Name: inventory_transaction; Type: TABLE; Schema: mochi; Owner: postgres
 --
 
-CREATE TABLE inventory_transaction (
+CREATE TABLE mochi.inventory_transaction (
 );
 
 
-ALTER TABLE inventory_transaction OWNER TO postgres;
+ALTER TABLE mochi.inventory_transaction OWNER TO postgres;
 
 --
 -- Name: layout_lay_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE layout_lay_id_seq
+CREATE SEQUENCE mochi.layout_lay_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -456,26 +450,26 @@ CREATE SEQUENCE layout_lay_id_seq
     CACHE 1;
 
 
-ALTER TABLE layout_lay_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.layout_lay_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: layout; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE layout (
-    lay_id bigint DEFAULT nextval('layout_lay_id_seq'::regclass) NOT NULL,
+CREATE TABLE mochi.layout (
+    lay_id bigint DEFAULT nextval('mochi.layout_lay_id_seq'::regclass) NOT NULL,
     lay_cd character varying(10) NOT NULL,
     lay_desc character varying(100) NOT NULL
 );
 
 
-ALTER TABLE layout OWNER TO mochidb_owner;
+ALTER TABLE mochi.layout OWNER TO mochidb_owner;
 
 --
 -- Name: layout_category_lay_cat_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE layout_category_lay_cat_id_seq
+CREATE SEQUENCE mochi.layout_category_lay_cat_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -483,97 +477,97 @@ CREATE SEQUENCE layout_category_lay_cat_id_seq
     CACHE 1;
 
 
-ALTER TABLE layout_category_lay_cat_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.layout_category_lay_cat_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: layout_category; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE layout_category (
-    lay_cat_id bigint DEFAULT nextval('layout_category_lay_cat_id_seq'::regclass) NOT NULL,
+CREATE TABLE mochi.layout_category (
+    lay_cat_id bigint DEFAULT nextval('mochi.layout_category_lay_cat_id_seq'::regclass) NOT NULL,
     lay_id bigint,
     cat_id bigint
 );
 
 
-ALTER TABLE layout_category OWNER TO mochidb_owner;
+ALTER TABLE mochi.layout_category OWNER TO mochidb_owner;
 
 --
 -- Name: locale; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE locale (
+CREATE TABLE mochi.locale (
     lcl_cd character varying(20) NOT NULL
 );
 
 
-ALTER TABLE locale OWNER TO mochidb_owner;
+ALTER TABLE mochi.locale OWNER TO mochidb_owner;
 
 --
 -- Name: location; Type: TABLE; Schema: mochi; Owner: postgres
 --
 
-CREATE TABLE location (
+CREATE TABLE mochi.location (
 );
 
 
-ALTER TABLE location OWNER TO postgres;
+ALTER TABLE mochi.location OWNER TO postgres;
 
 --
 -- Name: order; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE "order" (
+CREATE TABLE mochi."order" (
     ord_id bigint NOT NULL,
     pty_id bigint NOT NULL
 );
 
 
-ALTER TABLE "order" OWNER TO mochidb_owner;
+ALTER TABLE mochi."order" OWNER TO mochidb_owner;
 
 --
 -- Name: order_line; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE order_line (
+CREATE TABLE mochi.order_line (
     ord_id bigint NOT NULL,
     prd_id bigint NOT NULL,
     ord_lne_no bigint NOT NULL
 );
 
 
-ALTER TABLE order_line OWNER TO mochidb_owner;
+ALTER TABLE mochi.order_line OWNER TO mochidb_owner;
 
 --
 -- Name: organisation; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE organisation (
+CREATE TABLE mochi.organisation (
     org_id bigint NOT NULL,
     org_nme character varying(100) NOT NULL,
     org_reg_no character varying(50) NOT NULL
 );
 
 
-ALTER TABLE organisation OWNER TO mochidb_owner;
+ALTER TABLE mochi.organisation OWNER TO mochidb_owner;
 
 --
 -- Name: party; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE party (
+CREATE TABLE mochi.party (
     pty_id bigint NOT NULL,
     pty_typ_id bigint NOT NULL
 );
 
 
-ALTER TABLE party OWNER TO mochidb_owner;
+ALTER TABLE mochi.party OWNER TO mochidb_owner;
 
 --
 -- Name: party_party_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE party_party_id_seq
+CREATE SEQUENCE mochi.party_party_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -581,13 +575,13 @@ CREATE SEQUENCE party_party_id_seq
     CACHE 1;
 
 
-ALTER TABLE party_party_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.party_party_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: party_pty_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE party_pty_id_seq
+CREATE SEQUENCE mochi.party_pty_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -595,32 +589,32 @@ CREATE SEQUENCE party_pty_id_seq
     CACHE 1;
 
 
-ALTER TABLE party_pty_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.party_pty_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: party_pty_id_seq; Type: SEQUENCE OWNED BY; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER SEQUENCE party_pty_id_seq OWNED BY party.pty_id;
+ALTER SEQUENCE mochi.party_pty_id_seq OWNED BY mochi.party.pty_id;
 
 
 --
 -- Name: party_type; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE party_type (
+CREATE TABLE mochi.party_type (
     pty_typ_id bigint NOT NULL,
     pty_typ_desc character varying NOT NULL
 );
 
 
-ALTER TABLE party_type OWNER TO mochidb_owner;
+ALTER TABLE mochi.party_type OWNER TO mochidb_owner;
 
 --
 -- Name: party_type_pty_typ_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE party_type_pty_typ_id_seq
+CREATE SEQUENCE mochi.party_type_pty_typ_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -628,20 +622,20 @@ CREATE SEQUENCE party_type_pty_typ_id_seq
     CACHE 1;
 
 
-ALTER TABLE party_type_pty_typ_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.party_type_pty_typ_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: party_type_pty_typ_id_seq; Type: SEQUENCE OWNED BY; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER SEQUENCE party_type_pty_typ_id_seq OWNED BY party_type.pty_typ_id;
+ALTER SEQUENCE mochi.party_type_pty_typ_id_seq OWNED BY mochi.party_type.pty_typ_id;
 
 
 --
 -- Name: person; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE person (
+CREATE TABLE mochi.person (
     psn_id bigint NOT NULL,
     psn_gvn_nm character varying,
     psn_fml_nm character varying,
@@ -649,13 +643,13 @@ CREATE TABLE person (
 );
 
 
-ALTER TABLE person OWNER TO mochidb_owner;
+ALTER TABLE mochi.person OWNER TO mochidb_owner;
 
 --
 -- Name: person_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE person_id_seq
+CREATE SEQUENCE mochi.person_id_seq
     START WITH 6
     INCREMENT BY 1
     NO MINVALUE
@@ -663,13 +657,13 @@ CREATE SEQUENCE person_id_seq
     CACHE 1;
 
 
-ALTER TABLE person_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.person_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: price_prc_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE price_prc_id_seq
+CREATE SEQUENCE mochi.price_prc_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -677,14 +671,14 @@ CREATE SEQUENCE price_prc_id_seq
     CACHE 1;
 
 
-ALTER TABLE price_prc_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.price_prc_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: price; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE price (
-    prc_id bigint DEFAULT nextval('price_prc_id_seq'::regclass) NOT NULL,
+CREATE TABLE mochi.price (
+    prc_id bigint DEFAULT nextval('mochi.price_prc_id_seq'::regclass) NOT NULL,
     prc_typ_id bigint NOT NULL,
     prd_id bigint NOT NULL,
     prc_val numeric NOT NULL,
@@ -694,26 +688,26 @@ CREATE TABLE price (
 );
 
 
-ALTER TABLE price OWNER TO mochidb_owner;
+ALTER TABLE mochi.price OWNER TO mochidb_owner;
 
 --
 -- Name: price_type; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE price_type (
+CREATE TABLE mochi.price_type (
     prc_typ_id bigint NOT NULL,
     prc_typ_desc character varying,
     prc_typ_cd character varying
 );
 
 
-ALTER TABLE price_type OWNER TO mochidb_owner;
+ALTER TABLE mochi.price_type OWNER TO mochidb_owner;
 
 --
 -- Name: product; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE product (
+CREATE TABLE mochi.product (
     prd_id bigint NOT NULL,
     upc_cd character varying(12) NOT NULL,
     prd_crtd_dt date NOT NULL,
@@ -723,13 +717,13 @@ CREATE TABLE product (
 );
 
 
-ALTER TABLE product OWNER TO mochidb_owner;
+ALTER TABLE mochi.product OWNER TO mochidb_owner;
 
 --
 -- Name: product_attr_lcl; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE product_attr_lcl (
+CREATE TABLE mochi.product_attr_lcl (
     prd_lcl_id bigint NOT NULL,
     prd_id bigint NOT NULL,
     prd_desc character varying(100),
@@ -738,13 +732,13 @@ CREATE TABLE product_attr_lcl (
 );
 
 
-ALTER TABLE product_attr_lcl OWNER TO mochidb_owner;
+ALTER TABLE mochi.product_attr_lcl OWNER TO mochidb_owner;
 
 --
 -- Name: product_category_prd_cat_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE product_category_prd_cat_id_seq
+CREATE SEQUENCE mochi.product_category_prd_cat_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -752,26 +746,26 @@ CREATE SEQUENCE product_category_prd_cat_id_seq
     CACHE 1;
 
 
-ALTER TABLE product_category_prd_cat_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.product_category_prd_cat_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: product_category; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE product_category (
-    prd_cat_id bigint DEFAULT nextval('product_category_prd_cat_id_seq'::regclass) NOT NULL,
+CREATE TABLE mochi.product_category (
+    prd_cat_id bigint DEFAULT nextval('mochi.product_category_prd_cat_id_seq'::regclass) NOT NULL,
     prd_id bigint,
     cat_id bigint
 );
 
 
-ALTER TABLE product_category OWNER TO mochidb_owner;
+ALTER TABLE mochi.product_category OWNER TO mochidb_owner;
 
 --
 -- Name: product_status_prd_sts_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE product_status_prd_sts_id_seq
+CREATE SEQUENCE mochi.product_status_prd_sts_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -779,36 +773,36 @@ CREATE SEQUENCE product_status_prd_sts_id_seq
     CACHE 1;
 
 
-ALTER TABLE product_status_prd_sts_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.product_status_prd_sts_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: product_status; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE product_status (
-    prd_sts_id bigint DEFAULT nextval('product_status_prd_sts_id_seq'::regclass) NOT NULL,
+CREATE TABLE mochi.product_status (
+    prd_sts_id bigint DEFAULT nextval('mochi.product_status_prd_sts_id_seq'::regclass) NOT NULL,
     prd_sts_cd character varying(5) NOT NULL,
     prd_sts_desc character varying(20)
 );
 
 
-ALTER TABLE product_status OWNER TO mochidb_owner;
+ALTER TABLE mochi.product_status OWNER TO mochidb_owner;
 
 --
 -- Name: product_supplier; Type: TABLE; Schema: mochi; Owner: postgres
 --
 
-CREATE TABLE product_supplier (
+CREATE TABLE mochi.product_supplier (
 );
 
 
-ALTER TABLE product_supplier OWNER TO postgres;
+ALTER TABLE mochi.product_supplier OWNER TO postgres;
 
 --
 -- Name: product_tag_prd_tag_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE product_tag_prd_tag_id_seq
+CREATE SEQUENCE mochi.product_tag_prd_tag_id_seq
     START WITH 25
     INCREMENT BY 1
     NO MINVALUE
@@ -816,26 +810,26 @@ CREATE SEQUENCE product_tag_prd_tag_id_seq
     CACHE 1;
 
 
-ALTER TABLE product_tag_prd_tag_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.product_tag_prd_tag_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: product_tag; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE product_tag (
-    prd_tag_id bigint DEFAULT nextval('product_tag_prd_tag_id_seq'::regclass) NOT NULL,
+CREATE TABLE mochi.product_tag (
+    prd_tag_id bigint DEFAULT nextval('mochi.product_tag_prd_tag_id_seq'::regclass) NOT NULL,
     prd_id bigint,
     tag_id bigint
 );
 
 
-ALTER TABLE product_tag OWNER TO mochidb_owner;
+ALTER TABLE mochi.product_tag OWNER TO mochidb_owner;
 
 --
 -- Name: product_tag_attr_lcl_tag_id_seq; Type: SEQUENCE; Schema: mochi; Owner: postgres
 --
 
-CREATE SEQUENCE product_tag_attr_lcl_tag_id_seq
+CREATE SEQUENCE mochi.product_tag_attr_lcl_tag_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -843,13 +837,13 @@ CREATE SEQUENCE product_tag_attr_lcl_tag_id_seq
     CACHE 1;
 
 
-ALTER TABLE product_tag_attr_lcl_tag_id_seq OWNER TO postgres;
+ALTER TABLE mochi.product_tag_attr_lcl_tag_id_seq OWNER TO postgres;
 
 --
 -- Name: product_type_prd_typ_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE product_type_prd_typ_id_seq
+CREATE SEQUENCE mochi.product_type_prd_typ_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -857,26 +851,26 @@ CREATE SEQUENCE product_type_prd_typ_id_seq
     CACHE 1;
 
 
-ALTER TABLE product_type_prd_typ_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.product_type_prd_typ_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: product_type; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE product_type (
-    prd_typ_id bigint DEFAULT nextval('product_type_prd_typ_id_seq'::regclass) NOT NULL,
+CREATE TABLE mochi.product_type (
+    prd_typ_id bigint DEFAULT nextval('mochi.product_type_prd_typ_id_seq'::regclass) NOT NULL,
     prd_typ_cd character varying(5) NOT NULL,
     prd_typ_desc character varying(20)
 );
 
 
-ALTER TABLE product_type OWNER TO mochidb_owner;
+ALTER TABLE mochi.product_type OWNER TO mochidb_owner;
 
 --
 -- Name: promotion; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE promotion (
+CREATE TABLE mochi.promotion (
     prm_id bigint NOT NULL,
     prm_cd character(5) NOT NULL,
     prm_sht_desc character varying,
@@ -887,23 +881,23 @@ CREATE TABLE promotion (
 );
 
 
-ALTER TABLE promotion OWNER TO mochidb_owner;
+ALTER TABLE mochi.promotion OWNER TO mochidb_owner;
 
 --
 -- Name: promotion_brand; Type: TABLE; Schema: mochi; Owner: postgres
 --
 
-CREATE TABLE promotion_brand (
+CREATE TABLE mochi.promotion_brand (
 );
 
 
-ALTER TABLE promotion_brand OWNER TO postgres;
+ALTER TABLE mochi.promotion_brand OWNER TO postgres;
 
 --
 -- Name: promotion_category_prm_cat_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE promotion_category_prm_cat_id_seq
+CREATE SEQUENCE mochi.promotion_category_prm_cat_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -911,58 +905,58 @@ CREATE SEQUENCE promotion_category_prm_cat_id_seq
     CACHE 1;
 
 
-ALTER TABLE promotion_category_prm_cat_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.promotion_category_prm_cat_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: promotion_category; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE promotion_category (
-    prm_cat_id bigint DEFAULT nextval('promotion_category_prm_cat_id_seq'::regclass) NOT NULL,
+CREATE TABLE mochi.promotion_category (
+    prm_cat_id bigint DEFAULT nextval('mochi.promotion_category_prm_cat_id_seq'::regclass) NOT NULL,
     prm_id bigint,
     cat_id bigint
 );
 
 
-ALTER TABLE promotion_category OWNER TO mochidb_owner;
+ALTER TABLE mochi.promotion_category OWNER TO mochidb_owner;
 
 --
 -- Name: promotion_order; Type: TABLE; Schema: mochi; Owner: postgres
 --
 
-CREATE TABLE promotion_order (
+CREATE TABLE mochi.promotion_order (
 );
 
 
-ALTER TABLE promotion_order OWNER TO postgres;
+ALTER TABLE mochi.promotion_order OWNER TO postgres;
 
 --
 -- Name: promotion_product; Type: TABLE; Schema: mochi; Owner: postgres
 --
 
-CREATE TABLE promotion_product (
+CREATE TABLE mochi.promotion_product (
 );
 
 
-ALTER TABLE promotion_product OWNER TO postgres;
+ALTER TABLE mochi.promotion_product OWNER TO postgres;
 
 --
 -- Name: promotion_type; Type: TABLE; Schema: mochi; Owner: postgres
 --
 
-CREATE TABLE promotion_type (
+CREATE TABLE mochi.promotion_type (
     prm_typ_id bigint NOT NULL,
     prm_typ_desc character varying
 );
 
 
-ALTER TABLE promotion_type OWNER TO postgres;
+ALTER TABLE mochi.promotion_type OWNER TO postgres;
 
 --
 -- Name: role_rle_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE role_rle_id_seq
+CREATE SEQUENCE mochi.role_rle_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -970,39 +964,39 @@ CREATE SEQUENCE role_rle_id_seq
     CACHE 1;
 
 
-ALTER TABLE role_rle_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.role_rle_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: role; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE role (
-    rle_id bigint DEFAULT nextval('role_rle_id_seq'::regclass) NOT NULL,
+CREATE TABLE mochi.role (
+    rle_id bigint DEFAULT nextval('mochi.role_rle_id_seq'::regclass) NOT NULL,
     rle_typ_id bigint NOT NULL,
     rle_start_dttm date DEFAULT now() NOT NULL,
     pty_id bigint NOT NULL
 );
 
 
-ALTER TABLE role OWNER TO mochidb_owner;
+ALTER TABLE mochi.role OWNER TO mochidb_owner;
 
 --
 -- Name: role_type; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE role_type (
+CREATE TABLE mochi.role_type (
     rle_typ_id bigint NOT NULL,
     rle_typ_desc character varying NOT NULL
 );
 
 
-ALTER TABLE role_type OWNER TO mochidb_owner;
+ALTER TABLE mochi.role_type OWNER TO mochidb_owner;
 
 --
 -- Name: role_type_rle_typ_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE role_type_rle_typ_id_seq
+CREATE SEQUENCE mochi.role_type_rle_typ_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1010,20 +1004,20 @@ CREATE SEQUENCE role_type_rle_typ_id_seq
     CACHE 1;
 
 
-ALTER TABLE role_type_rle_typ_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.role_type_rle_typ_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: role_type_rle_typ_id_seq; Type: SEQUENCE OWNED BY; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER SEQUENCE role_type_rle_typ_id_seq OWNED BY role_type.rle_typ_id;
+ALTER SEQUENCE mochi.role_type_rle_typ_id_seq OWNED BY mochi.role_type.rle_typ_id;
 
 
 --
 -- Name: role_type_role_typ_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE role_type_role_typ_id_seq
+CREATE SEQUENCE mochi.role_type_role_typ_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1031,23 +1025,23 @@ CREATE SEQUENCE role_type_role_typ_id_seq
     CACHE 1;
 
 
-ALTER TABLE role_type_role_typ_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.role_type_role_typ_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: supplier; Type: TABLE; Schema: mochi; Owner: postgres
 --
 
-CREATE TABLE supplier (
+CREATE TABLE mochi.supplier (
 );
 
 
-ALTER TABLE supplier OWNER TO postgres;
+ALTER TABLE mochi.supplier OWNER TO postgres;
 
 --
 -- Name: tag_tag_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE tag_tag_id_seq
+CREATE SEQUENCE mochi.tag_tag_id_seq
     START WITH 15
     INCREMENT BY 1
     NO MINVALUE
@@ -1055,25 +1049,25 @@ CREATE SEQUENCE tag_tag_id_seq
     CACHE 1;
 
 
-ALTER TABLE tag_tag_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.tag_tag_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: tag; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE tag (
-    tag_id bigint DEFAULT nextval('tag_tag_id_seq'::regclass) NOT NULL,
+CREATE TABLE mochi.tag (
+    tag_id bigint DEFAULT nextval('mochi.tag_tag_id_seq'::regclass) NOT NULL,
     tag_cd character(5) NOT NULL
 );
 
 
-ALTER TABLE tag OWNER TO mochidb_owner;
+ALTER TABLE mochi.tag OWNER TO mochidb_owner;
 
 --
 -- Name: tag_attr_lcl_tag_id_seq; Type: SEQUENCE; Schema: mochi; Owner: postgres
 --
 
-CREATE SEQUENCE tag_attr_lcl_tag_id_seq
+CREATE SEQUENCE mochi.tag_attr_lcl_tag_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1081,14 +1075,14 @@ CREATE SEQUENCE tag_attr_lcl_tag_id_seq
     CACHE 1;
 
 
-ALTER TABLE tag_attr_lcl_tag_id_seq OWNER TO postgres;
+ALTER TABLE mochi.tag_attr_lcl_tag_id_seq OWNER TO postgres;
 
 --
 -- Name: tag_attr_lcl; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE tag_attr_lcl (
-    tag_lcl_id bigint DEFAULT nextval('tag_attr_lcl_tag_id_seq'::regclass) NOT NULL,
+CREATE TABLE mochi.tag_attr_lcl (
+    tag_lcl_id bigint DEFAULT nextval('mochi.tag_attr_lcl_tag_id_seq'::regclass) NOT NULL,
     tag_id bigint NOT NULL,
     tag_desc character varying(100),
     tag_img_pth character varying(100),
@@ -1096,44 +1090,43 @@ CREATE TABLE tag_attr_lcl (
 );
 
 
-ALTER TABLE tag_attr_lcl OWNER TO mochidb_owner;
+ALTER TABLE mochi.tag_attr_lcl OWNER TO mochidb_owner;
 
 --
--- Name: vw_category; Type: VIEW; Schema: mochi; Owner: postgres
+-- Name: vw_category_product; Type: VIEW; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE VIEW vw_category AS
+CREATE VIEW mochi.vw_category_product AS
  SELECT p.cat_id AS parent_cat_id,
     p.cat_cd AS parent_cat_cd,
-    cc.cat_id AS child_cat_id,
-    cc.cat_cd AS child_cat_cd,
-    cc.cat_typ_id AS child_cat_typ_id
-   FROM (category p
-     JOIN LATERAL ft_categories((p.cat_cd)::text) cc(cat_id, cat_cd, cat_prnt_id, cat_typ_id) ON ((1 = 1)))
-  WHERE (cc.cat_typ_id = 1);
+    count(DISTINCT prd.upc_cd) AS product_count
+   FROM (((mochi.category p
+     JOIN LATERAL mochi.ft_categories((p.cat_cd)::text) cc(cat_id, cat_cd, cat_prnt_id, cat_typ_id) ON ((1 = 1)))
+     JOIN mochi.product_category pc ON ((cc.cat_id = pc.cat_id)))
+     JOIN mochi.product prd ON ((pc.prd_id = prd.prd_id)))
+  WHERE (cc.cat_typ_id = 1)
+  GROUP BY p.cat_id, p.cat_cd;
 
 
-ALTER TABLE vw_category OWNER TO postgres;
-
-SET search_path = security, pg_catalog;
+ALTER TABLE mochi.vw_category_product OWNER TO mochidb_owner;
 
 --
 -- Name: permission; Type: TABLE; Schema: security; Owner: security_owner
 --
 
-CREATE TABLE permission (
+CREATE TABLE security.permission (
     id bigint NOT NULL,
     name character varying(255)
 );
 
 
-ALTER TABLE permission OWNER TO security_owner;
+ALTER TABLE security.permission OWNER TO security_owner;
 
 --
 -- Name: authority_id_seq; Type: SEQUENCE; Schema: security; Owner: security_owner
 --
 
-CREATE SEQUENCE authority_id_seq
+CREATE SEQUENCE security.authority_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1141,20 +1134,20 @@ CREATE SEQUENCE authority_id_seq
     CACHE 1;
 
 
-ALTER TABLE authority_id_seq OWNER TO security_owner;
+ALTER TABLE security.authority_id_seq OWNER TO security_owner;
 
 --
 -- Name: authority_id_seq; Type: SEQUENCE OWNED BY; Schema: security; Owner: security_owner
 --
 
-ALTER SEQUENCE authority_id_seq OWNED BY permission.id;
+ALTER SEQUENCE security.authority_id_seq OWNED BY security.permission.id;
 
 
 --
 -- Name: clientdetails; Type: TABLE; Schema: security; Owner: security_owner
 --
 
-CREATE TABLE clientdetails (
+CREATE TABLE security.clientdetails (
     appid character varying(256) NOT NULL,
     resourceids character varying(256),
     appsecret character varying(256),
@@ -1169,13 +1162,13 @@ CREATE TABLE clientdetails (
 );
 
 
-ALTER TABLE clientdetails OWNER TO security_owner;
+ALTER TABLE security.clientdetails OWNER TO security_owner;
 
 --
 -- Name: oauth_access_token; Type: TABLE; Schema: security; Owner: security_owner
 --
 
-CREATE TABLE oauth_access_token (
+CREATE TABLE security.oauth_access_token (
     token_id character varying(256),
     token bytea,
     authentication_id character varying(256) NOT NULL,
@@ -1186,13 +1179,13 @@ CREATE TABLE oauth_access_token (
 );
 
 
-ALTER TABLE oauth_access_token OWNER TO security_owner;
+ALTER TABLE security.oauth_access_token OWNER TO security_owner;
 
 --
 -- Name: oauth_approvals; Type: TABLE; Schema: security; Owner: security_owner
 --
 
-CREATE TABLE oauth_approvals (
+CREATE TABLE security.oauth_approvals (
     userid character varying(256),
     clientid character varying(256),
     scope character varying(256),
@@ -1202,13 +1195,13 @@ CREATE TABLE oauth_approvals (
 );
 
 
-ALTER TABLE oauth_approvals OWNER TO security_owner;
+ALTER TABLE security.oauth_approvals OWNER TO security_owner;
 
 --
 -- Name: oauth_client_details; Type: TABLE; Schema: security; Owner: security_owner
 --
 
-CREATE TABLE oauth_client_details (
+CREATE TABLE security.oauth_client_details (
     client_id character varying(256) NOT NULL,
     resource_ids character varying(256),
     client_secret character varying(256),
@@ -1223,13 +1216,13 @@ CREATE TABLE oauth_client_details (
 );
 
 
-ALTER TABLE oauth_client_details OWNER TO security_owner;
+ALTER TABLE security.oauth_client_details OWNER TO security_owner;
 
 --
 -- Name: oauth_client_token; Type: TABLE; Schema: security; Owner: security_owner
 --
 
-CREATE TABLE oauth_client_token (
+CREATE TABLE security.oauth_client_token (
     token_id character varying(256),
     token bytea,
     authentication_id character varying(256) NOT NULL,
@@ -1238,38 +1231,38 @@ CREATE TABLE oauth_client_token (
 );
 
 
-ALTER TABLE oauth_client_token OWNER TO security_owner;
+ALTER TABLE security.oauth_client_token OWNER TO security_owner;
 
 --
 -- Name: oauth_code; Type: TABLE; Schema: security; Owner: security_owner
 --
 
-CREATE TABLE oauth_code (
+CREATE TABLE security.oauth_code (
     code character varying(256),
     authentication bytea
 );
 
 
-ALTER TABLE oauth_code OWNER TO security_owner;
+ALTER TABLE security.oauth_code OWNER TO security_owner;
 
 --
 -- Name: oauth_refresh_token; Type: TABLE; Schema: security; Owner: security_owner
 --
 
-CREATE TABLE oauth_refresh_token (
+CREATE TABLE security.oauth_refresh_token (
     token_id character varying(256),
     token bytea,
     authentication bytea
 );
 
 
-ALTER TABLE oauth_refresh_token OWNER TO security_owner;
+ALTER TABLE security.oauth_refresh_token OWNER TO security_owner;
 
 --
 -- Name: role_id_seq; Type: SEQUENCE; Schema: security; Owner: postgres
 --
 
-CREATE SEQUENCE role_id_seq
+CREATE SEQUENCE security.role_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1277,25 +1270,25 @@ CREATE SEQUENCE role_id_seq
     CACHE 1;
 
 
-ALTER TABLE role_id_seq OWNER TO postgres;
+ALTER TABLE security.role_id_seq OWNER TO postgres;
 
 --
 -- Name: role; Type: TABLE; Schema: security; Owner: security_owner
 --
 
-CREATE TABLE role (
-    id bigint DEFAULT nextval('role_id_seq'::regclass) NOT NULL,
+CREATE TABLE security.role (
+    id bigint DEFAULT nextval('security.role_id_seq'::regclass) NOT NULL,
     name character varying(40)
 );
 
 
-ALTER TABLE role OWNER TO security_owner;
+ALTER TABLE security.role OWNER TO security_owner;
 
 --
 -- Name: role_permission_id_seq; Type: SEQUENCE; Schema: security; Owner: postgres
 --
 
-CREATE SEQUENCE role_permission_id_seq
+CREATE SEQUENCE security.role_permission_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1303,26 +1296,26 @@ CREATE SEQUENCE role_permission_id_seq
     CACHE 1;
 
 
-ALTER TABLE role_permission_id_seq OWNER TO postgres;
+ALTER TABLE security.role_permission_id_seq OWNER TO postgres;
 
 --
 -- Name: role_permission; Type: TABLE; Schema: security; Owner: security_owner
 --
 
-CREATE TABLE role_permission (
-    id bigint DEFAULT nextval('role_permission_id_seq'::regclass) NOT NULL,
+CREATE TABLE security.role_permission (
+    id bigint DEFAULT nextval('security.role_permission_id_seq'::regclass) NOT NULL,
     role_id bigint NOT NULL,
     permission_id bigint NOT NULL
 );
 
 
-ALTER TABLE role_permission OWNER TO security_owner;
+ALTER TABLE security.role_permission OWNER TO security_owner;
 
 --
 -- Name: user_; Type: TABLE; Schema: security; Owner: security_owner
 --
 
-CREATE TABLE user_ (
+CREATE TABLE security.user_ (
     pty_id bigint NOT NULL,
     account_expired boolean,
     account_locked boolean,
@@ -1333,13 +1326,13 @@ CREATE TABLE user_ (
 );
 
 
-ALTER TABLE user_ OWNER TO security_owner;
+ALTER TABLE security.user_ OWNER TO security_owner;
 
 --
 -- Name: user_role_id_seq; Type: SEQUENCE; Schema: security; Owner: security_owner
 --
 
-CREATE SEQUENCE user_role_id_seq
+CREATE SEQUENCE security.user_role_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1347,60 +1340,54 @@ CREATE SEQUENCE user_role_id_seq
     CACHE 1;
 
 
-ALTER TABLE user_role_id_seq OWNER TO security_owner;
+ALTER TABLE security.user_role_id_seq OWNER TO security_owner;
 
 --
 -- Name: user_role; Type: TABLE; Schema: security; Owner: security_owner
 --
 
-CREATE TABLE user_role (
-    id bigint DEFAULT nextval('user_role_id_seq'::regclass) NOT NULL,
+CREATE TABLE security.user_role (
+    id bigint DEFAULT nextval('security.user_role_id_seq'::regclass) NOT NULL,
     pty_id bigint NOT NULL,
     role_id bigint NOT NULL
 );
 
 
-ALTER TABLE user_role OWNER TO security_owner;
-
-SET search_path = mochi, pg_catalog;
+ALTER TABLE security.user_role OWNER TO security_owner;
 
 --
--- Name: party pty_id; Type: DEFAULT; Schema: mochi; Owner: mochidb_owner
+-- Name: pty_id; Type: DEFAULT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY party ALTER COLUMN pty_id SET DEFAULT nextval('party_pty_id_seq'::regclass);
+ALTER TABLE ONLY mochi.party ALTER COLUMN pty_id SET DEFAULT nextval('mochi.party_pty_id_seq'::regclass);
 
 
 --
--- Name: party_type pty_typ_id; Type: DEFAULT; Schema: mochi; Owner: mochidb_owner
+-- Name: pty_typ_id; Type: DEFAULT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY party_type ALTER COLUMN pty_typ_id SET DEFAULT nextval('party_type_pty_typ_id_seq'::regclass);
+ALTER TABLE ONLY mochi.party_type ALTER COLUMN pty_typ_id SET DEFAULT nextval('mochi.party_type_pty_typ_id_seq'::regclass);
 
 
 --
--- Name: role_type rle_typ_id; Type: DEFAULT; Schema: mochi; Owner: mochidb_owner
+-- Name: rle_typ_id; Type: DEFAULT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY role_type ALTER COLUMN rle_typ_id SET DEFAULT nextval('role_type_rle_typ_id_seq'::regclass);
+ALTER TABLE ONLY mochi.role_type ALTER COLUMN rle_typ_id SET DEFAULT nextval('mochi.role_type_rle_typ_id_seq'::regclass);
 
-
-SET search_path = security, pg_catalog;
 
 --
--- Name: permission id; Type: DEFAULT; Schema: security; Owner: security_owner
+-- Name: id; Type: DEFAULT; Schema: security; Owner: security_owner
 --
 
-ALTER TABLE ONLY permission ALTER COLUMN id SET DEFAULT nextval('authority_id_seq'::regclass);
+ALTER TABLE ONLY security.permission ALTER COLUMN id SET DEFAULT nextval('security.authority_id_seq'::regclass);
 
-
-SET search_path = mochi, pg_catalog;
 
 --
 -- Data for Name: address; Type: TABLE DATA; Schema: mochi; Owner: postgres
 --
 
-COPY address  FROM stdin;
+COPY mochi.address  FROM stdin;
 \.
 
 
@@ -1408,7 +1395,7 @@ COPY address  FROM stdin;
 -- Data for Name: address_type; Type: TABLE DATA; Schema: mochi; Owner: postgres
 --
 
-COPY address_type  FROM stdin;
+COPY mochi.address_type  FROM stdin;
 \.
 
 
@@ -1416,7 +1403,7 @@ COPY address_type  FROM stdin;
 -- Data for Name: brand; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY brand (bnd_id, bnd_cd) FROM stdin;
+COPY mochi.brand (bnd_id, bnd_cd) FROM stdin;
 32	DLE01
 33	ENZ01
 34	DIV01
@@ -1434,7 +1421,7 @@ COPY brand (bnd_id, bnd_cd) FROM stdin;
 -- Data for Name: brand_attr_lcl; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY brand_attr_lcl (bnd_lcl_id, bnd_id, bnd_desc, bnd_img_pth, lcl_cd) FROM stdin;
+COPY mochi.brand_attr_lcl (bnd_lcl_id, bnd_id, bnd_desc, bnd_img_pth, lcl_cd) FROM stdin;
 59	32	Dole	\N	en-GB
 60	32	Dole	\N	zh-HK
 61	33	Enza	\N	en-GB
@@ -1462,21 +1449,21 @@ COPY brand_attr_lcl (bnd_lcl_id, bnd_id, bnd_desc, bnd_img_pth, lcl_cd) FROM std
 -- Name: brand_attr_lcl_bnd_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('brand_attr_lcl_bnd_id_seq', 78, true);
+SELECT pg_catalog.setval('mochi.brand_attr_lcl_bnd_id_seq', 78, true);
 
 
 --
 -- Name: brand_bnd_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('brand_bnd_id_seq', 41, true);
+SELECT pg_catalog.setval('mochi.brand_bnd_id_seq', 41, true);
 
 
 --
 -- Data for Name: brand_category; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY brand_category (bnd_cat_id, bnd_id, cat_id) FROM stdin;
+COPY mochi.brand_category (bnd_cat_id, bnd_id, cat_id) FROM stdin;
 11	32	45
 12	33	45
 13	34	45
@@ -1488,14 +1475,14 @@ COPY brand_category (bnd_cat_id, bnd_id, cat_id) FROM stdin;
 -- Name: brand_category_bnd_cat_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('brand_category_bnd_cat_id_seq', 14, true);
+SELECT pg_catalog.setval('mochi.brand_category_bnd_cat_id_seq', 14, true);
 
 
 --
 -- Data for Name: category; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY category (cat_id, cat_cd, cat_prnt_id, cat_lvl, cat_typ_id, hir_id) FROM stdin;
+COPY mochi.category (cat_id, cat_cd, cat_prnt_id, cat_lvl, cat_typ_id, hir_id) FROM stdin;
 43	BSP01	39	1	1	42
 39	PRM02	\N	0	1	42
 38	FET01	39	1	1	42
@@ -1546,7 +1533,7 @@ COPY category (cat_id, cat_cd, cat_prnt_id, cat_lvl, cat_typ_id, hir_id) FROM st
 -- Data for Name: category_attr_lcl; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY category_attr_lcl (cat_lcl_id, cat_id, cat_desc, cat_img_pth, lcl_cd) FROM stdin;
+COPY mochi.category_attr_lcl (cat_lcl_id, cat_id, cat_desc, cat_img_pth, lcl_cd) FROM stdin;
 14	3	水果		zh-HK
 17	5	深綠色蔬菜	\N	zh-HK
 19	6	紅色和橙色蔬菜	\N	zh-HK
@@ -1640,14 +1627,14 @@ COPY category_attr_lcl (cat_lcl_id, cat_id, cat_desc, cat_img_pth, lcl_cd) FROM 
 -- Name: category_attr_lcl_cat_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('category_attr_lcl_cat_id_seq', 21, true);
+SELECT pg_catalog.setval('mochi.category_attr_lcl_cat_id_seq', 21, true);
 
 
 --
 -- Data for Name: category_brand; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY category_brand (cat_id) FROM stdin;
+COPY mochi.category_brand (cat_id) FROM stdin;
 45
 \.
 
@@ -1656,14 +1643,14 @@ COPY category_brand (cat_id) FROM stdin;
 -- Name: category_cat_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('category_cat_id_seq', 7, true);
+SELECT pg_catalog.setval('mochi.category_cat_id_seq', 7, true);
 
 
 --
 -- Data for Name: category_product; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY category_product (cat_id) FROM stdin;
+COPY mochi.category_product (cat_id) FROM stdin;
 43
 39
 38
@@ -1713,7 +1700,7 @@ COPY category_product (cat_id) FROM stdin;
 -- Data for Name: category_type; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY category_type (cat_typ_id, cat_typ_cd, cat_typ_desc) FROM stdin;
+COPY mochi.category_type (cat_typ_id, cat_typ_cd, cat_typ_desc) FROM stdin;
 1	PRD01	product
 2	BND01	brand
 3	PRM01	promotion
@@ -1724,14 +1711,14 @@ COPY category_type (cat_typ_id, cat_typ_cd, cat_typ_desc) FROM stdin;
 -- Name: category_type_cat_typ_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('category_type_cat_typ_id_seq', 2, true);
+SELECT pg_catalog.setval('mochi.category_type_cat_typ_id_seq', 2, true);
 
 
 --
 -- Data for Name: currency; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY currency (ccy_id, ccy_cd) FROM stdin;
+COPY mochi.currency (ccy_id, ccy_cd) FROM stdin;
 1	HKD
 2	USD
 \.
@@ -1741,7 +1728,7 @@ COPY currency (ccy_id, ccy_cd) FROM stdin;
 -- Data for Name: customer; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY customer (rle_id, cst_id) FROM stdin;
+COPY mochi.customer (rle_id, cst_id) FROM stdin;
 1	1000000011
 232217	1000000026
 232221	1000000028
@@ -1772,14 +1759,14 @@ COPY customer (rle_id, cst_id) FROM stdin;
 -- Name: customer_cst_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('customer_cst_id_seq', 1000000200, true);
+SELECT pg_catalog.setval('mochi.customer_cst_id_seq', 1000000200, true);
 
 
 --
 -- Data for Name: discount; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY discount (dis_id, dis_cd, prm_id, dis_typ_id, dis_val) FROM stdin;
+COPY mochi.discount (dis_id, dis_cd, prm_id, dis_typ_id, dis_val) FROM stdin;
 \.
 
 
@@ -1787,7 +1774,7 @@ COPY discount (dis_id, dis_cd, prm_id, dis_typ_id, dis_val) FROM stdin;
 -- Data for Name: discount_type; Type: TABLE DATA; Schema: mochi; Owner: postgres
 --
 
-COPY discount_type (dis_typ_id, dis_typ_desc) FROM stdin;
+COPY mochi.discount_type (dis_typ_id, dis_typ_desc) FROM stdin;
 1	percentage
 2	value
 \.
@@ -1797,14 +1784,14 @@ COPY discount_type (dis_typ_id, dis_typ_desc) FROM stdin;
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 232565, true);
+SELECT pg_catalog.setval('mochi.hibernate_sequence', 232565, true);
 
 
 --
 -- Data for Name: hierarchy; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY hierarchy (hir_id, hir_cd, hir_desc) FROM stdin;
+COPY mochi.hierarchy (hir_id, hir_cd, hir_desc) FROM stdin;
 41	PRM01	Primary Product Category Hierarchy
 42	SEC02	Secondary Product Category Hierarchy
 43	BND01	Primary Product Brand Hierarchy
@@ -1815,14 +1802,14 @@ COPY hierarchy (hir_id, hir_cd, hir_desc) FROM stdin;
 -- Name: hierarchy_hir_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hierarchy_hir_id_seq', 43, true);
+SELECT pg_catalog.setval('mochi.hierarchy_hir_id_seq', 43, true);
 
 
 --
 -- Data for Name: inventory_on_hand; Type: TABLE DATA; Schema: mochi; Owner: postgres
 --
 
-COPY inventory_on_hand  FROM stdin;
+COPY mochi.inventory_on_hand  FROM stdin;
 \.
 
 
@@ -1830,7 +1817,7 @@ COPY inventory_on_hand  FROM stdin;
 -- Data for Name: inventory_transaction; Type: TABLE DATA; Schema: mochi; Owner: postgres
 --
 
-COPY inventory_transaction  FROM stdin;
+COPY mochi.inventory_transaction  FROM stdin;
 \.
 
 
@@ -1838,7 +1825,7 @@ COPY inventory_transaction  FROM stdin;
 -- Data for Name: layout; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY layout (lay_id, lay_cd, lay_desc) FROM stdin;
+COPY mochi.layout (lay_id, lay_cd, lay_desc) FROM stdin;
 1	LNDMM01	landing main menu 01
 2	LNDHC01	landing highlighted categories 01
 3	LNDPC01	landing preview categories 01
@@ -1851,7 +1838,7 @@ COPY layout (lay_id, lay_cd, lay_desc) FROM stdin;
 -- Data for Name: layout_category; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY layout_category (lay_cat_id, lay_id, cat_id) FROM stdin;
+COPY mochi.layout_category (lay_cat_id, lay_id, cat_id) FROM stdin;
 1	1	4
 2	1	16
 3	1	27
@@ -1875,21 +1862,21 @@ COPY layout_category (lay_cat_id, lay_id, cat_id) FROM stdin;
 -- Name: layout_category_lay_cat_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('layout_category_lay_cat_id_seq', 16, true);
+SELECT pg_catalog.setval('mochi.layout_category_lay_cat_id_seq', 16, true);
 
 
 --
 -- Name: layout_lay_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('layout_lay_id_seq', 4, true);
+SELECT pg_catalog.setval('mochi.layout_lay_id_seq', 4, true);
 
 
 --
 -- Data for Name: locale; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY locale (lcl_cd) FROM stdin;
+COPY mochi.locale (lcl_cd) FROM stdin;
 af-ZA
 am-ET
 ar-AE
@@ -2107,7 +2094,7 @@ zu-ZA
 -- Data for Name: location; Type: TABLE DATA; Schema: mochi; Owner: postgres
 --
 
-COPY location  FROM stdin;
+COPY mochi.location  FROM stdin;
 \.
 
 
@@ -2115,7 +2102,7 @@ COPY location  FROM stdin;
 -- Data for Name: order; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY "order" (ord_id, pty_id) FROM stdin;
+COPY mochi."order" (ord_id, pty_id) FROM stdin;
 \.
 
 
@@ -2123,7 +2110,7 @@ COPY "order" (ord_id, pty_id) FROM stdin;
 -- Data for Name: order_line; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY order_line (ord_id, prd_id, ord_lne_no) FROM stdin;
+COPY mochi.order_line (ord_id, prd_id, ord_lne_no) FROM stdin;
 \.
 
 
@@ -2131,7 +2118,7 @@ COPY order_line (ord_id, prd_id, ord_lne_no) FROM stdin;
 -- Data for Name: organisation; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY organisation (org_id, org_nme, org_reg_no) FROM stdin;
+COPY mochi.organisation (org_id, org_nme, org_reg_no) FROM stdin;
 \.
 
 
@@ -2139,7 +2126,7 @@ COPY organisation (org_id, org_nme, org_reg_no) FROM stdin;
 -- Data for Name: party; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY party (pty_id, pty_typ_id) FROM stdin;
+COPY mochi.party (pty_id, pty_typ_id) FROM stdin;
 1	1
 232216	1
 232220	1
@@ -2170,21 +2157,21 @@ COPY party (pty_id, pty_typ_id) FROM stdin;
 -- Name: party_party_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('party_party_id_seq', 1, false);
+SELECT pg_catalog.setval('mochi.party_party_id_seq', 1, false);
 
 
 --
 -- Name: party_pty_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('party_pty_id_seq', 1, false);
+SELECT pg_catalog.setval('mochi.party_pty_id_seq', 1, false);
 
 
 --
 -- Data for Name: party_type; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY party_type (pty_typ_id, pty_typ_desc) FROM stdin;
+COPY mochi.party_type (pty_typ_id, pty_typ_desc) FROM stdin;
 1	Person
 2	Organisation
 \.
@@ -2194,14 +2181,14 @@ COPY party_type (pty_typ_id, pty_typ_desc) FROM stdin;
 -- Name: party_type_pty_typ_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('party_type_pty_typ_id_seq', 1, false);
+SELECT pg_catalog.setval('mochi.party_type_pty_typ_id_seq', 1, false);
 
 
 --
 -- Data for Name: person; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY person (psn_id, psn_gvn_nm, psn_fml_nm, enb) FROM stdin;
+COPY mochi.person (psn_id, psn_gvn_nm, psn_fml_nm, enb) FROM stdin;
 1	Daniel	Mackie	t
 232216			\N
 232220			\N
@@ -2232,14 +2219,14 @@ COPY person (psn_id, psn_gvn_nm, psn_fml_nm, enb) FROM stdin;
 -- Name: person_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('person_id_seq', 6, false);
+SELECT pg_catalog.setval('mochi.person_id_seq', 6, false);
 
 
 --
 -- Data for Name: price; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY price (prc_id, prc_typ_id, prd_id, prc_val, prc_st_dt, prc_en_dt, ccy_id) FROM stdin;
+COPY mochi.price (prc_id, prc_typ_id, prd_id, prc_val, prc_st_dt, prc_en_dt, ccy_id) FROM stdin;
 1	1	1	75	2019-04-05 15:18:35.702178	9999-12-31 00:00:00	1
 2	1	2	75	2019-04-05 15:18:35.702178	9999-12-31 00:00:00	1
 3	1	3	120	2019-04-05 15:18:35.702178	9999-12-31 00:00:00	1
@@ -2367,14 +2354,14 @@ COPY price (prc_id, prc_typ_id, prd_id, prc_val, prc_st_dt, prc_en_dt, ccy_id) F
 -- Name: price_prc_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('price_prc_id_seq', 120, true);
+SELECT pg_catalog.setval('mochi.price_prc_id_seq', 120, true);
 
 
 --
 -- Data for Name: price_type; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY price_type (prc_typ_id, prc_typ_desc, prc_typ_cd) FROM stdin;
+COPY mochi.price_type (prc_typ_id, prc_typ_desc, prc_typ_cd) FROM stdin;
 1	retail	RET01
 2	markdown	MKD01
 \.
@@ -2384,7 +2371,7 @@ COPY price_type (prc_typ_id, prc_typ_desc, prc_typ_cd) FROM stdin;
 -- Data for Name: product; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY product (prd_id, upc_cd, prd_crtd_dt, bnd_id, prd_typ_id, prd_sts_id) FROM stdin;
+COPY mochi.product (prd_id, upc_cd, prd_crtd_dt, bnd_id, prd_typ_id, prd_sts_id) FROM stdin;
 5	12383658	2019-01-04	34	1	1
 7	14445678	2019-01-04	37	1	1
 9	12366678	2019-01-04	32	1	1
@@ -2422,7 +2409,7 @@ COPY product (prd_id, upc_cd, prd_crtd_dt, bnd_id, prd_typ_id, prd_sts_id) FROM 
 -- Data for Name: product_attr_lcl; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY product_attr_lcl (prd_lcl_id, prd_id, prd_desc, prd_img_pth, lcl_cd) FROM stdin;
+COPY mochi.product_attr_lcl (prd_lcl_id, prd_id, prd_desc, prd_img_pth, lcl_cd) FROM stdin;
 2	1	芒果	mango.jpg	zh-HK
 4	2	橙子	orange.jpg	zh-HK
 6	3	西兰花	broccoli.jpg	zh-HK
@@ -2490,7 +2477,7 @@ COPY product_attr_lcl (prd_lcl_id, prd_id, prd_desc, prd_img_pth, lcl_cd) FROM s
 -- Data for Name: product_category; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY product_category (prd_cat_id, prd_id, cat_id) FROM stdin;
+COPY mochi.product_category (prd_cat_id, prd_id, cat_id) FROM stdin;
 39	1	15
 40	2	14
 41	3	5
@@ -2550,14 +2537,14 @@ COPY product_category (prd_cat_id, prd_id, cat_id) FROM stdin;
 -- Name: product_category_prd_cat_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('product_category_prd_cat_id_seq', 102, true);
+SELECT pg_catalog.setval('mochi.product_category_prd_cat_id_seq', 102, true);
 
 
 --
 -- Data for Name: product_status; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY product_status (prd_sts_id, prd_sts_cd, prd_sts_desc) FROM stdin;
+COPY mochi.product_status (prd_sts_id, prd_sts_cd, prd_sts_desc) FROM stdin;
 1	ACT01	active
 2	INA01	inactive
 \.
@@ -2567,14 +2554,14 @@ COPY product_status (prd_sts_id, prd_sts_cd, prd_sts_desc) FROM stdin;
 -- Name: product_status_prd_sts_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('product_status_prd_sts_id_seq', 1, false);
+SELECT pg_catalog.setval('mochi.product_status_prd_sts_id_seq', 1, false);
 
 
 --
 -- Data for Name: product_supplier; Type: TABLE DATA; Schema: mochi; Owner: postgres
 --
 
-COPY product_supplier  FROM stdin;
+COPY mochi.product_supplier  FROM stdin;
 \.
 
 
@@ -2582,7 +2569,7 @@ COPY product_supplier  FROM stdin;
 -- Data for Name: product_tag; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY product_tag (prd_tag_id, prd_id, tag_id) FROM stdin;
+COPY mochi.product_tag (prd_tag_id, prd_id, tag_id) FROM stdin;
 25	10	17
 26	11	15
 27	22	17
@@ -2597,21 +2584,21 @@ COPY product_tag (prd_tag_id, prd_id, tag_id) FROM stdin;
 -- Name: product_tag_attr_lcl_tag_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: postgres
 --
 
-SELECT pg_catalog.setval('product_tag_attr_lcl_tag_id_seq', 1, false);
+SELECT pg_catalog.setval('mochi.product_tag_attr_lcl_tag_id_seq', 1, false);
 
 
 --
 -- Name: product_tag_prd_tag_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('product_tag_prd_tag_id_seq', 34, true);
+SELECT pg_catalog.setval('mochi.product_tag_prd_tag_id_seq', 34, true);
 
 
 --
 -- Data for Name: product_type; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY product_type (prd_typ_id, prd_typ_cd, prd_typ_desc) FROM stdin;
+COPY mochi.product_type (prd_typ_id, prd_typ_cd, prd_typ_desc) FROM stdin;
 1	NML01	retail product
 \.
 
@@ -2620,14 +2607,14 @@ COPY product_type (prd_typ_id, prd_typ_cd, prd_typ_desc) FROM stdin;
 -- Name: product_type_prd_typ_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('product_type_prd_typ_id_seq', 1, false);
+SELECT pg_catalog.setval('mochi.product_type_prd_typ_id_seq', 1, false);
 
 
 --
 -- Data for Name: promotion; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY promotion (prm_id, prm_cd, prm_sht_desc, prm_lng_desc, prm_st_dt, prm_en_dt, prm_typ_id) FROM stdin;
+COPY mochi.promotion (prm_id, prm_cd, prm_sht_desc, prm_lng_desc, prm_st_dt, prm_en_dt, prm_typ_id) FROM stdin;
 \.
 
 
@@ -2635,7 +2622,7 @@ COPY promotion (prm_id, prm_cd, prm_sht_desc, prm_lng_desc, prm_st_dt, prm_en_dt
 -- Data for Name: promotion_brand; Type: TABLE DATA; Schema: mochi; Owner: postgres
 --
 
-COPY promotion_brand  FROM stdin;
+COPY mochi.promotion_brand  FROM stdin;
 \.
 
 
@@ -2643,7 +2630,7 @@ COPY promotion_brand  FROM stdin;
 -- Data for Name: promotion_category; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY promotion_category (prm_cat_id, prm_id, cat_id) FROM stdin;
+COPY mochi.promotion_category (prm_cat_id, prm_id, cat_id) FROM stdin;
 \.
 
 
@@ -2651,14 +2638,14 @@ COPY promotion_category (prm_cat_id, prm_id, cat_id) FROM stdin;
 -- Name: promotion_category_prm_cat_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('promotion_category_prm_cat_id_seq', 1, false);
+SELECT pg_catalog.setval('mochi.promotion_category_prm_cat_id_seq', 1, false);
 
 
 --
 -- Data for Name: promotion_order; Type: TABLE DATA; Schema: mochi; Owner: postgres
 --
 
-COPY promotion_order  FROM stdin;
+COPY mochi.promotion_order  FROM stdin;
 \.
 
 
@@ -2666,7 +2653,7 @@ COPY promotion_order  FROM stdin;
 -- Data for Name: promotion_product; Type: TABLE DATA; Schema: mochi; Owner: postgres
 --
 
-COPY promotion_product  FROM stdin;
+COPY mochi.promotion_product  FROM stdin;
 \.
 
 
@@ -2674,7 +2661,7 @@ COPY promotion_product  FROM stdin;
 -- Data for Name: promotion_type; Type: TABLE DATA; Schema: mochi; Owner: postgres
 --
 
-COPY promotion_type (prm_typ_id, prm_typ_desc) FROM stdin;
+COPY mochi.promotion_type (prm_typ_id, prm_typ_desc) FROM stdin;
 1	product
 2	order
 3	category
@@ -2686,7 +2673,7 @@ COPY promotion_type (prm_typ_id, prm_typ_desc) FROM stdin;
 -- Data for Name: role; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY role (rle_id, rle_typ_id, rle_start_dttm, pty_id) FROM stdin;
+COPY mochi.role (rle_id, rle_typ_id, rle_start_dttm, pty_id) FROM stdin;
 1	1	2018-11-15	1
 232217	1	2018-11-15	232216
 232221	1	2018-11-15	232220
@@ -2717,14 +2704,14 @@ COPY role (rle_id, rle_typ_id, rle_start_dttm, pty_id) FROM stdin;
 -- Name: role_rle_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('role_rle_id_seq', 1, false);
+SELECT pg_catalog.setval('mochi.role_rle_id_seq', 1, false);
 
 
 --
 -- Data for Name: role_type; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY role_type (rle_typ_id, rle_typ_desc) FROM stdin;
+COPY mochi.role_type (rle_typ_id, rle_typ_desc) FROM stdin;
 1	Customer
 2	Supplier
 \.
@@ -2734,21 +2721,21 @@ COPY role_type (rle_typ_id, rle_typ_desc) FROM stdin;
 -- Name: role_type_rle_typ_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('role_type_rle_typ_id_seq', 1, false);
+SELECT pg_catalog.setval('mochi.role_type_rle_typ_id_seq', 1, false);
 
 
 --
 -- Name: role_type_role_typ_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('role_type_role_typ_id_seq', 1, false);
+SELECT pg_catalog.setval('mochi.role_type_role_typ_id_seq', 1, false);
 
 
 --
 -- Data for Name: supplier; Type: TABLE DATA; Schema: mochi; Owner: postgres
 --
 
-COPY supplier  FROM stdin;
+COPY mochi.supplier  FROM stdin;
 \.
 
 
@@ -2756,7 +2743,7 @@ COPY supplier  FROM stdin;
 -- Data for Name: tag; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY tag (tag_id, tag_cd) FROM stdin;
+COPY mochi.tag (tag_id, tag_cd) FROM stdin;
 15	ORG01
 17	GFR01
 \.
@@ -2766,7 +2753,7 @@ COPY tag (tag_id, tag_cd) FROM stdin;
 -- Data for Name: tag_attr_lcl; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY tag_attr_lcl (tag_lcl_id, tag_id, tag_desc, tag_img_pth, lcl_cd) FROM stdin;
+COPY mochi.tag_attr_lcl (tag_lcl_id, tag_id, tag_desc, tag_img_pth, lcl_cd) FROM stdin;
 1	15	Organic	\N	en-GB
 3	17	Gluten Free	\N	en-GB
 2	15	有機	\N	zh-HK
@@ -2778,30 +2765,28 @@ COPY tag_attr_lcl (tag_lcl_id, tag_id, tag_desc, tag_img_pth, lcl_cd) FROM stdin
 -- Name: tag_attr_lcl_tag_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: postgres
 --
 
-SELECT pg_catalog.setval('tag_attr_lcl_tag_id_seq', 4, true);
+SELECT pg_catalog.setval('mochi.tag_attr_lcl_tag_id_seq', 4, true);
 
 
 --
 -- Name: tag_tag_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('tag_tag_id_seq', 18, true);
+SELECT pg_catalog.setval('mochi.tag_tag_id_seq', 18, true);
 
-
-SET search_path = security, pg_catalog;
 
 --
 -- Name: authority_id_seq; Type: SEQUENCE SET; Schema: security; Owner: security_owner
 --
 
-SELECT pg_catalog.setval('authority_id_seq', 1, false);
+SELECT pg_catalog.setval('security.authority_id_seq', 1, false);
 
 
 --
 -- Data for Name: clientdetails; Type: TABLE DATA; Schema: security; Owner: security_owner
 --
 
-COPY clientdetails (appid, resourceids, appsecret, scope, granttypes, redirecturl, authorities, access_token_validity, refresh_token_validity, additionalinformation, autoapprovescopes) FROM stdin;
+COPY security.clientdetails (appid, resourceids, appsecret, scope, granttypes, redirecturl, authorities, access_token_validity, refresh_token_validity, additionalinformation, autoapprovescopes) FROM stdin;
 \.
 
 
@@ -2809,7 +2794,7 @@ COPY clientdetails (appid, resourceids, appsecret, scope, granttypes, redirectur
 -- Data for Name: oauth_access_token; Type: TABLE DATA; Schema: security; Owner: security_owner
 --
 
-COPY oauth_access_token (token_id, token, authentication_id, user_name, client_id, authentication, refresh_token) FROM stdin;
+COPY security.oauth_access_token (token_id, token, authentication_id, user_name, client_id, authentication, refresh_token) FROM stdin;
 e813b689e46101328d3f9b0b2427d9cb	\\xaced0005737200436f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744f4175746832416363657373546f6b656e0cb29e361b24face0200064c00156164646974696f6e616c496e666f726d6174696f6e74000f4c6a6176612f7574696c2f4d61703b4c000a65787069726174696f6e7400104c6a6176612f7574696c2f446174653b4c000c72656672657368546f6b656e74003f4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f636f6d6d6f6e2f4f417574683252656672657368546f6b656e3b4c000573636f706574000f4c6a6176612f7574696c2f5365743b4c0009746f6b656e547970657400124c6a6176612f6c616e672f537472696e673b4c000576616c756571007e000578707372001e6a6176612e7574696c2e436f6c6c656374696f6e7324456d7074794d6170593614855adce7d002000078707372000e6a6176612e7574696c2e44617465686a81014b5974190300007870770800000166a53212c0787372004c6f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744578706972696e674f417574683252656672657368546f6b656e2fdf47639dd0c9b70200014c000a65787069726174696f6e71007e0002787200446f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744f417574683252656672657368546f6b656e73e10e0a6354d45e0200014c000576616c756571007e0005787074002461373638363233322d306262332d346533622d613266322d3930353135333433343434367371007e00097708000001673f0c0f3e78737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65536574801d92d18f9b80550200007872002c6a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65436f6c6c656374696f6e19420080cb5ef71e0200014c0001637400164c6a6176612f7574696c2f436f6c6c656374696f6e3b7870737200176a6176612e7574696c2e4c696e6b656448617368536574d86cd75a95dd2a1e020000787200116a6176612e7574696c2e48617368536574ba44859596b8b7340300007870770c000000023f40000000000001740004726561647874000662656172657274002465383234323665622d636238612d343963642d613832322d663937393731346237636162	04eb1c0fab5d2d4a5221032a9cbc3d08	admin	spring-security-oauth2-read-client	\\xaced0005737200416f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e4f417574683241757468656e7469636174696f6ebd400b02166252130200024c000d73746f7265645265717565737474003c4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f70726f76696465722f4f4175746832526571756573743b4c00127573657241757468656e7469636174696f6e7400324c6f72672f737072696e676672616d65776f726b2f73656375726974792f636f72652f41757468656e7469636174696f6e3b787200476f72672e737072696e676672616d65776f726b2e73656375726974792e61757468656e7469636174696f6e2e416273747261637441757468656e7469636174696f6e546f6b656ed3aa287e6e47640e0200035a000d61757468656e746963617465644c000b617574686f7269746965737400164c6a6176612f7574696c2f436f6c6c656374696f6e3b4c000764657461696c737400124c6a6176612f6c616e672f4f626a6563743b787000737200266a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c654c697374fc0f2531b5ec8e100200014c00046c6973747400104c6a6176612f7574696c2f4c6973743b7872002c6a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65436f6c6c656374696f6e19420080cb5ef71e0200014c00016371007e00047870737200136a6176612e7574696c2e41727261794c6973747881d21d99c7619d03000149000473697a6578700000000977040000000973720032696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e417574686f726974794952ec0f5e493da00200024c000269647400104c6a6176612f6c616e672f4c6f6e673b4c00046e616d657400124c6a6176612f6c616e672f537472696e673b78707372000e6a6176612e6c616e672e4c6f6e673b8be490cc8f23df0200014a000576616c7565787200106a6176612e6c616e672e4e756d62657286ac951d0b94e08b0200007870000000000000000174000f435553544f4d45525f4352454154457371007e000d7371007e0011000000000000000274000d435553544f4d45525f524541447371007e000d7371007e0011000000000000000374000f435553544f4d45525f5550444154457371007e000d7371007e0011000000000000000474000f435553544f4d45525f44454c4554457371007e000d7371007e0011000000000000000574000e50524f445543545f4352454154457371007e000d7371007e0011000000000000000674000c50524f445543545f524541447371007e000d7371007e0011000000000000000774000e50524f445543545f5550444154457371007e000d7371007e0011000000000000000874000e50524f445543545f44454c4554457371007e000d7371007e00110000000000000009740013524f4c455f50524f445543545f5245414445527871007e000c707372003a6f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e4f41757468325265717565737400000000000000010200075a0008617070726f7665644c000b617574686f72697469657371007e00044c000a657874656e73696f6e7374000f4c6a6176612f7574696c2f4d61703b4c000b726564697265637455726971007e000f4c00077265667265736874003b4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f70726f76696465722f546f6b656e526571756573743b4c000b7265736f7572636549647374000f4c6a6176612f7574696c2f5365743b4c000d726573706f6e7365547970657371007e0030787200386f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e426173655265717565737436287a3ea37169bd0200034c0008636c69656e74496471007e000f4c001172657175657374506172616d657465727371007e002e4c000573636f706571007e00307870740022737072696e672d73656375726974792d6f61757468322d726561642d636c69656e74737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c654d6170f1a5a8fe74f507420200014c00016d71007e002e7870737200116a6176612e7574696c2e486173684d61700507dac1c31660d103000246000a6c6f6164466163746f724900097468726573686f6c6478703f400000000000067708000000080000000374000a6772616e745f7479706574000870617373776f7264740009636c69656e745f6964740022737072696e672d73656375726974792d6f61757468322d726561642d636c69656e74740008757365726e616d6574000561646d696e78737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65536574801d92d18f9b80550200007871007e0009737200176a6176612e7574696c2e4c696e6b656448617368536574d86cd75a95dd2a1e020000787200116a6176612e7574696c2e48617368536574ba44859596b8b7340300007870770c000000103f400000000000017400047265616478017371007e0041770c000000103f40000000000001737200426f72672e737072696e676672616d65776f726b2e73656375726974792e636f72652e617574686f726974792e53696d706c654772616e746564417574686f7269747900000000000001f40200014c0004726f6c6571007e000f787074000455534552787371007e00363f40000000000000770800000010000000007870707371007e0041770c000000103f400000000000017400187265736f757263652d7365727665722d726573742d617069787371007e0041770c000000103f40000000000000787372004f6f72672e737072696e676672616d65776f726b2e73656375726974792e61757468656e7469636174696f6e2e557365726e616d6550617373776f726441757468656e7469636174696f6e546f6b656e00000000000001f40200024c000b63726564656e7469616c7371007e00054c00097072696e636970616c71007e00057871007e0003017371007e00077371007e000b0000000977040000000971007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a7871007e004f737200176a6176612e7574696c2e4c696e6b6564486173684d617034c04e5c106cc0fb0200015a000b6163636573734f726465727871007e00363f400000000000067708000000080000000371007e003871007e003971007e003a71007e003b71007e003c71007e003d7800707372002d696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e55736572429c90cd9f67f3dd0200095a000e6163636f756e74457870697265645a000d6163636f756e744c6f636b65645a001263726564656e7469616c73457870697265645a0007656e61626c65644c0002496471007e000e4c000b617574686f72697469657371007e00044c000870617373776f726471007e000f4c000975736572506172747974002e4c696f2f6a617661627261696e732f737072696e67626f6f74737461727465722f646f6d61696e2f50617274793b4c0008757365726e616d6571007e000f78700000000171007e00137372002f6f72672e68696265726e6174652e636f6c6c656374696f6e2e696e7465726e616c2e50657273697374656e744261676563fd3f2082000c0200014c000362616771007e00087872003e6f72672e68696265726e6174652e636f6c6c656374696f6e2e696e7465726e616c2e416273747261637450657273697374656e74436f6c6c656374696f6ee9d3dc4da9113ba502000a5a001b616c6c6f774c6f61644f7574736964655472616e73616374696f6e49000a63616368656453697a655a000564697274795a000b696e697469616c697a65645a000d697354656d7053657373696f6e4c00036b65797400164c6a6176612f696f2f53657269616c697a61626c653b4c00056f776e657271007e00054c0004726f6c6571007e000f4c001273657373696f6e466163746f72795575696471007e000f4c000e73746f726564536e617073686f7471007e0057787000ffffffff00010071007e001371007e0054740039696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e557365722e617574686f726974696573707371007e000b0000000977040000000971007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a787371007e000b0000000977040000000971007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a7874003c243261243038247176727a515a376a4a376f7932702f6d734c344d302e6c38334364306a4e735836414a55697462675258477a6765346a30333568617372002d696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e646f6d61696e2e506572736f6e275dc007fb1e22180200034c000c46616d696c794e616d65456e71007e000f4c000b476976656e4e616d65456e71007e000f4c00064e616d65436e71007e000f78707400064d61636b696574000644616e69656c74000fe4b8b9e5b0bce788bee9baa5e59fba74000561646d696e	b99e8debf60f2fd025e583143320892e
 42099ededfddc33b3acca8b4dc9753d1	\\xaced0005737200436f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744f4175746832416363657373546f6b656e0cb29e361b24face0200064c00156164646974696f6e616c496e666f726d6174696f6e74000f4c6a6176612f7574696c2f4d61703b4c000a65787069726174696f6e7400104c6a6176612f7574696c2f446174653b4c000c72656672657368546f6b656e74003f4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f636f6d6d6f6e2f4f417574683252656672657368546f6b656e3b4c000573636f706574000f4c6a6176612f7574696c2f5365743b4c0009746f6b656e547970657400124c6a6176612f6c616e672f537472696e673b4c000576616c756571007e00057870737200176a6176612e7574696c2e4c696e6b6564486173684d617034c04e5c106cc0fb0200015a000b6163636573734f72646572787200116a6176612e7574696c2e486173684d61700507dac1c31660d103000246000a6c6f6164466163746f724900097468726573686f6c6478703f4000000000000c77080000001000000001740008757365726e616d6574000964616e64616e64616e78007372000e6a6176612e7574696c2e44617465686a81014b59741903000078707708000001674f6bc9d1787372004c6f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744578706972696e674f417574683252656672657368546f6b656e2fdf47639dd0c9b70200014c000a65787069726174696f6e71007e0002787200446f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744f417574683252656672657368546f6b656e73e10e0a6354d45e0200014c000576616c756571007e0005787074002431373130313436362d643861642d343434372d626433372d6636343538346430363637337371007e000c770800000167e945c65178737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65536574801d92d18f9b80550200007872002c6a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65436f6c6c656374696f6e19420080cb5ef71e0200014c0001637400164c6a6176612f7574696c2f436f6c6c656374696f6e3b7870737200176a6176612e7574696c2e4c696e6b656448617368536574d86cd75a95dd2a1e020000787200116a6176612e7574696c2e48617368536574ba44859596b8b7340300007870770c000000043f400000000000027400047265616474000577726974657874000662656172657274002432373030346363342d306265312d343930332d393739632d306265313362353266643366	a0576718d021bf611313cbed5b54107e	dandandan	spring-security-oauth2-read-write-client	\\xaced0005737200416f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e4f417574683241757468656e7469636174696f6ebd400b02166252130200024c000d73746f7265645265717565737474003c4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f70726f76696465722f4f4175746832526571756573743b4c00127573657241757468656e7469636174696f6e7400324c6f72672f737072696e676672616d65776f726b2f73656375726974792f636f72652f41757468656e7469636174696f6e3b787200476f72672e737072696e676672616d65776f726b2e73656375726974792e61757468656e7469636174696f6e2e416273747261637441757468656e7469636174696f6e546f6b656ed3aa287e6e47640e0200035a000d61757468656e746963617465644c000b617574686f7269746965737400164c6a6176612f7574696c2f436f6c6c656374696f6e3b4c000764657461696c737400124c6a6176612f6c616e672f4f626a6563743b787000737200266a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c654c697374fc0f2531b5ec8e100200014c00046c6973747400104c6a6176612f7574696c2f4c6973743b7872002c6a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65436f6c6c656374696f6e19420080cb5ef71e0200014c00016371007e00047870737200136a6176612e7574696c2e41727261794c6973747881d21d99c7619d03000149000473697a6578700000002377040000002373720032696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e417574686f726974794952ec0f5e493da00200024c000269647400104c6a6176612f6c616e672f4c6f6e673b4c00046e616d657400124c6a6176612f6c616e672f537472696e673b78707372000e6a6176612e6c616e672e4c6f6e673b8be490cc8f23df0200014a000576616c7565787200106a6176612e6c616e672e4e756d62657286ac951d0b94e08b0200007870000000000000000174000c50415254595f4352454154457371007e000d7371007e0011000000000000000274000a50415254595f524541447371007e000d7371007e0011000000000000000374000c50415254595f5550444154457371007e000d7371007e0011000000000000000474000c50415254595f44454c4554457371007e000d7371007e0011000000000000000574000d504552534f4e5f4352454154457371007e000d7371007e0011000000000000000674000b504552534f4e5f524541447371007e000d7371007e0011000000000000000774000d504552534f4e5f5550444154457371007e000d7371007e0011000000000000000874000d504552534f4e5f44454c4554457371007e000d7371007e001100000000000000097400134f5247414e49534154494f4e5f4352454154457371007e000d7371007e0011000000000000000a7400114f5247414e49534154494f4e5f524541447371007e000d7371007e0011000000000000000b7400134f5247414e49534154494f4e5f5550444154457371007e000d7371007e0011000000000000000c7400134f5247414e49534154494f4e5f44454c4554457371007e000d7371007e0011000000000000000d74000b524f4c455f4352454154457371007e000d7371007e0011000000000000000e740009524f4c455f524541447371007e000d7371007e0011000000000000000f74000b524f4c455f5550444154457371007e000d7371007e0011000000000000001074000b524f4c455f44454c4554457371007e000d7371007e0011000000000000001174000f435553544f4d45525f4352454154457371007e000d7371007e0011000000000000001274000d435553544f4d45525f524541447371007e000d7371007e0011000000000000001374000f435553544f4d45525f5550444154457371007e000d7371007e0011000000000000001474000f435553544f4d45525f44454c4554457371007e000d7371007e0011000000000000001574000f535550504c4945525f4352454154457371007e000d7371007e0011000000000000001674000d535550504c4945525f524541447371007e000d7371007e0011000000000000001774000f535550504c4945525f5550444154457371007e000d7371007e0011000000000000001874000f535550504c4945525f44454c4554457371007e000d7371007e0011000000000000001974000e50524f445543545f4352454154457371007e000d7371007e0011000000000000001a74000c50524f445543545f524541447371007e000d7371007e0011000000000000001b74000e50524f445543545f5550444154457371007e000d7371007e0011000000000000001c74000e50524f445543545f44454c4554457371007e000d7371007e0011000000000000001d74000e50524f445543545f5245414445527371007e000d7371007e0011000000000000001e74000c50415254595f5245414445527371007e000d7371007e0011000000000000001f74000b524f4c455f5245414445527371007e000d7371007e0011000000000000002074000d504552534f4e5f5245414445527371007e000d7371007e001100000000000000217400134f5247414e49534154494f4e5f5245414445527371007e000d7371007e0011000000000000002274000f435553544f4d45525f5245414445527371007e000d7371007e0011000000000000002374000f535550504c4945525f5245414445527871007e000c707372003a6f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e4f41757468325265717565737400000000000000010200075a0008617070726f7665644c000b617574686f72697469657371007e00044c000a657874656e73696f6e7374000f4c6a6176612f7574696c2f4d61703b4c000b726564697265637455726971007e000f4c00077265667265736874003b4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f70726f76696465722f546f6b656e526571756573743b4c000b7265736f7572636549647374000f4c6a6176612f7574696c2f5365743b4c000d726573706f6e7365547970657371007e007e787200386f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e426173655265717565737436287a3ea37169bd0200034c0008636c69656e74496471007e000f4c001172657175657374506172616d657465727371007e007c4c000573636f706571007e007e7870740028737072696e672d73656375726974792d6f61757468322d726561642d77726974652d636c69656e74737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c654d6170f1a5a8fe74f507420200014c00016d71007e007c7870737200116a6176612e7574696c2e486173684d61700507dac1c31660d103000246000a6c6f6164466163746f724900097468726573686f6c6478703f40000000000006770800000008000000037400027b7d74000074000a6772616e745f7479706574000870617373776f7264740008757365726e616d6574000964616e64616e64616e78737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65536574801d92d18f9b80550200007871007e0009737200176a6176612e7574696c2e4c696e6b656448617368536574d86cd75a95dd2a1e020000787200116a6176612e7574696c2e48617368536574ba44859596b8b7340300007870770c000000103f4000000000000274000472656164740005777269746578017371007e008f770c000000103f40000000000001737200426f72672e737072696e676672616d65776f726b2e73656375726974792e636f72652e617574686f726974792e53696d706c654772616e746564417574686f7269747900000000000001f40200014c0004726f6c6571007e000f787074000455534552787371007e00843f40000000000000770800000010000000007870707371007e008f770c000000103f400000000000017400187265736f757263652d7365727665722d726573742d617069787371007e008f770c000000103f40000000000000787372004f6f72672e737072696e676672616d65776f726b2e73656375726974792e61757468656e7469636174696f6e2e557365726e616d6550617373776f726441757468656e7469636174696f6e546f6b656e00000000000001f40200024c000b63726564656e7469616c7371007e00054c00097072696e636970616c71007e00057871007e0003017371007e00077371007e000b0000002377040000002371007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a71007e002d71007e003071007e003371007e003671007e003971007e003c71007e003f71007e004271007e004571007e004871007e004b71007e004e71007e005171007e005471007e005771007e005a71007e005d71007e006071007e006371007e006671007e006971007e006c71007e006f71007e007271007e007571007e00787871007e009e737200176a6176612e7574696c2e4c696e6b6564486173684d617034c04e5c106cc0fb0200015a000b6163636573734f726465727871007e00843f400000000000067708000000080000000371007e008671007e008771007e008871007e008971007e008a71007e008b7800707372002d696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e557365725a85109993e026380200095a000e6163636f756e74457870697265645a000d6163636f756e744c6f636b65645a001263726564656e7469616c73457870697265645a0007656e61626c65644c0002496471007e000e4c000870617373776f726471007e000f4c0005726f6c657371007e00044c000975736572506172747974002e4c696f2f6a617661627261696e732f737072696e67626f6f74737461727465722f646f6d61696e2f50617274793b4c0008757365726e616d6571007e000f7870000000017371007e00110000000000038b1c74003c243261243038244844737834636c6f683150584b6c4e7036433279474f62524f66523356797351415964414271356e614f58694776466b6e55382f477372002f6f72672e68696265726e6174652e636f6c6c656374696f6e2e696e7465726e616c2e50657273697374656e744261676563fd3f2082000c0200014c000362616771007e00087872003e6f72672e68696265726e6174652e636f6c6c656374696f6e2e696e7465726e616c2e416273747261637450657273697374656e74436f6c6c656374696f6ee9d3dc4da9113ba502000a5a001b616c6c6f774c6f61644f7574736964655472616e73616374696f6e49000a63616368656453697a655a000564697274795a000b696e697469616c697a65645a000d697354656d7053657373696f6e4c00036b65797400164c6a6176612f696f2f53657269616c697a61626c653b4c00056f776e657271007e00054c0004726f6c6571007e000f4c001273657373696f6e466163746f72795575696471007e000f4c000e73746f726564536e617073686f7471007e00a8787000ffffffff0001007371007e00110000000000038b1c71007e00a3740033696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e557365722e726f6c6573707371007e000b0000000177040000000173720031696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e55736572526f6c651c13eb38249950bf0200044c0002496471007e000e4c0005557365727371007e00044c000b617574686f72697469657371007e00044c00046e616d6571007e000f787071007e00137371007e00a600ffffffff00000071007e001371007e00ae740037696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e55736572526f6c652e55736572737070707371007e00a600ffffffff00010071007e001371007e00ae74003d696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e55736572526f6c652e617574686f726974696573707371007e000b0000002377040000002371007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a71007e002d71007e003071007e003371007e003671007e003971007e003c71007e003f71007e004271007e004571007e004871007e004b71007e004e71007e005171007e005471007e005771007e005a71007e005d71007e006071007e006371007e006671007e006971007e006c71007e006f71007e007271007e007571007e0078787371007e000b0000002377040000002371007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a71007e002d71007e003071007e003371007e003671007e003971007e003c71007e003f71007e004271007e004571007e004871007e004b71007e004e71007e005171007e005471007e005771007e005a71007e005d71007e006071007e006371007e006671007e006971007e006c71007e006f71007e007271007e007571007e00787874000541444d494e787371007e000b0000000177040000000171007e00ae787372002d696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e646f6d61696e2e506572736f6ed92c0eb5a8196b9b0200044c000c46616d696c794e616d65456e71007e000f4c000b476976656e4e616d65456e71007e000f4c00064e616d65436e71007e000f4c000b706172747954797065496471007e000e787074000074000074000071007e001374000964616e64616e64616e	52ef78f65a9ae054ac6176513959c706
 2f4be4fafad846b9cf2a0e13f87135df	\\xaced0005737200436f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744f4175746832416363657373546f6b656e0cb29e361b24face0200064c00156164646974696f6e616c496e666f726d6174696f6e74000f4c6a6176612f7574696c2f4d61703b4c000a65787069726174696f6e7400104c6a6176612f7574696c2f446174653b4c000c72656672657368546f6b656e74003f4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f636f6d6d6f6e2f4f417574683252656672657368546f6b656e3b4c000573636f706574000f4c6a6176612f7574696c2f5365743b4c0009746f6b656e547970657400124c6a6176612f6c616e672f537472696e673b4c000576616c756571007e00057870737200176a6176612e7574696c2e4c696e6b6564486173684d617034c04e5c106cc0fb0200015a000b6163636573734f72646572787200116a6176612e7574696c2e486173684d61700507dac1c31660d103000246000a6c6f6164466163746f724900097468726573686f6c6478703f4000000000000c7708000000100000000274000d61757468656e74696361746564737200116a6176612e6c616e672e426f6f6c65616ecd207280d59cfaee0200015a000576616c7565787001740008757365724e616d657400017a78007372000e6a6176612e7574696c2e44617465686a81014b597419030000787077080000016769ae8223787372004c6f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744578706972696e674f417574683252656672657368546f6b656e2fdf47639dd0c9b70200014c000a65787069726174696f6e71007e0002787200446f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744f417574683252656672657368546f6b656e73e10e0a6354d45e0200014c000576616c756571007e0005787074002432306130353735302d316538372d343361622d613365632d3439633132343331333934317371007e000f77080000016803887ea278737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65536574801d92d18f9b80550200007872002c6a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65436f6c6c656374696f6e19420080cb5ef71e0200014c0001637400164c6a6176612f7574696c2f436f6c6c656374696f6e3b7870737200176a6176612e7574696c2e4c696e6b656448617368536574d86cd75a95dd2a1e020000787200116a6176612e7574696c2e48617368536574ba44859596b8b7340300007870770c000000043f400000000000027400047265616474000577726974657874000662656172657274002433623062366465332d643930392d346263612d623063662d646235316635336136386265	7747a46de227dc40eab9c810e52340d3	z	spring-security-oauth2-read-write-client	\\xaced0005737200416f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e4f417574683241757468656e7469636174696f6ebd400b02166252130200024c000d73746f7265645265717565737474003c4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f70726f76696465722f4f4175746832526571756573743b4c00127573657241757468656e7469636174696f6e7400324c6f72672f737072696e676672616d65776f726b2f73656375726974792f636f72652f41757468656e7469636174696f6e3b787200476f72672e737072696e676672616d65776f726b2e73656375726974792e61757468656e7469636174696f6e2e416273747261637441757468656e7469636174696f6e546f6b656ed3aa287e6e47640e0200035a000d61757468656e746963617465644c000b617574686f7269746965737400164c6a6176612f7574696c2f436f6c6c656374696f6e3b4c000764657461696c737400124c6a6176612f6c616e672f4f626a6563743b787000737200266a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c654c697374fc0f2531b5ec8e100200014c00046c6973747400104c6a6176612f7574696c2f4c6973743b7872002c6a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65436f6c6c656374696f6e19420080cb5ef71e0200014c00016371007e00047870737200136a6176612e7574696c2e41727261794c6973747881d21d99c7619d03000149000473697a6578700000000e77040000000e73720032696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e417574686f726974794952ec0f5e493da00200024c000269647400104c6a6176612f6c616e672f4c6f6e673b4c00046e616d657400124c6a6176612f6c616e672f537472696e673b78707372000e6a6176612e6c616e672e4c6f6e673b8be490cc8f23df0200014a000576616c7565787200106a6176612e6c616e672e4e756d62657286ac951d0b94e08b0200007870000000000000000274000a50415254595f524541447371007e000d7371007e0011000000000000000674000b504552534f4e5f524541447371007e000d7371007e0011000000000000000a7400114f5247414e49534154494f4e5f524541447371007e000d7371007e0011000000000000000e740009524f4c455f524541447371007e000d7371007e0011000000000000001274000d435553544f4d45525f524541447371007e000d7371007e0011000000000000001674000d535550504c4945525f524541447371007e000d7371007e0011000000000000001a74000c50524f445543545f524541447371007e000d7371007e0011000000000000001d74000e50524f445543545f5245414445527371007e000d7371007e0011000000000000001e74000c50415254595f5245414445527371007e000d7371007e0011000000000000001f74000b524f4c455f5245414445527371007e000d7371007e0011000000000000002074000d504552534f4e5f5245414445527371007e000d7371007e001100000000000000217400134f5247414e49534154494f4e5f5245414445527371007e000d7371007e0011000000000000002274000f435553544f4d45525f5245414445527371007e000d7371007e0011000000000000002374000f535550504c4945525f5245414445527871007e000c707372003a6f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e4f41757468325265717565737400000000000000010200075a0008617070726f7665644c000b617574686f72697469657371007e00044c000a657874656e73696f6e7374000f4c6a6176612f7574696c2f4d61703b4c000b726564697265637455726971007e000f4c00077265667265736874003b4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f70726f76696465722f546f6b656e526571756573743b4c000b7265736f7572636549647374000f4c6a6176612f7574696c2f5365743b4c000d726573706f6e7365547970657371007e003f787200386f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e426173655265717565737436287a3ea37169bd0200034c0008636c69656e74496471007e000f4c001172657175657374506172616d657465727371007e003d4c000573636f706571007e003f7870740028737072696e672d73656375726974792d6f61757468322d726561642d77726974652d636c69656e74737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c654d6170f1a5a8fe74f507420200014c00016d71007e003d7870737200116a6176612e7574696c2e486173684d61700507dac1c31660d103000246000a6c6f6164466163746f724900097468726573686f6c6478703f40000000000006770800000008000000037400027b7d74000074000a6772616e745f7479706574000870617373776f7264740008757365726e616d657400017a78737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65536574801d92d18f9b80550200007871007e0009737200176a6176612e7574696c2e4c696e6b656448617368536574d86cd75a95dd2a1e020000787200116a6176612e7574696c2e48617368536574ba44859596b8b7340300007870770c000000103f4000000000000274000472656164740005777269746578017371007e0050770c000000103f40000000000001737200426f72672e737072696e676672616d65776f726b2e73656375726974792e636f72652e617574686f726974792e53696d706c654772616e746564417574686f7269747900000000000001f40200014c0004726f6c6571007e000f787074000455534552787371007e00453f40000000000000770800000010000000007870707371007e0050770c000000103f400000000000017400187265736f757263652d7365727665722d726573742d617069787371007e0050770c000000103f40000000000000787372004f6f72672e737072696e676672616d65776f726b2e73656375726974792e61757468656e7469636174696f6e2e557365726e616d6550617373776f726441757468656e7469636174696f6e546f6b656e00000000000001f40200024c000b63726564656e7469616c7371007e00054c00097072696e636970616c71007e00057871007e0003017371007e00077371007e000b0000000e77040000000e71007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a71007e002d71007e003071007e003371007e003671007e00397871007e005f737200176a6176612e7574696c2e4c696e6b6564486173684d617034c04e5c106cc0fb0200015a000b6163636573734f726465727871007e00453f400000000000067708000000080000000371007e004771007e004871007e004971007e004a71007e004b71007e004c7800707372002d696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e5573657212355cda1d3e1d670200095a000e6163636f756e74457870697265645a000d6163636f756e744c6f636b65645a001263726564656e7469616c73457870697265645a0007656e61626c65644c0002496471007e000e4c000870617373776f726471007e000f4c0005726f6c657371007e00044c000975736572506172747974002e4c696f2f6a617661627261696e732f737072696e67626f6f74737461727465722f646f6d61696e2f50617274793b4c0008757365726e616d6571007e000f7870000000017371007e00110000000000038b3074003c243261243038243577344978556a49773542477271525953752f70446535726f5276334575624c6252482f737133396649676c584c4c74666d4e43577372002f6f72672e68696265726e6174652e636f6c6c656374696f6e2e696e7465726e616c2e50657273697374656e744261676563fd3f2082000c0200014c000362616771007e00087872003e6f72672e68696265726e6174652e636f6c6c656374696f6e2e696e7465726e616c2e416273747261637450657273697374656e74436f6c6c656374696f6ee9d3dc4da9113ba502000a5a001b616c6c6f774c6f61644f7574736964655472616e73616374696f6e49000a63616368656453697a655a000564697274795a000b696e697469616c697a65645a000d697354656d7053657373696f6e4c00036b65797400164c6a6176612f696f2f53657269616c697a61626c653b4c00056f776e657271007e00054c0004726f6c6571007e000f4c001273657373696f6e466163746f72795575696471007e000f4c000e73746f726564536e617073686f7471007e0069787000ffffffff0001007371007e00110000000000038b3071007e0064740033696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e557365722e726f6c6573707371007e000b0000000177040000000173720031696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e55736572526f6c651c13eb38249950bf0200044c0002496471007e000e4c0005557365727371007e00044c000b617574686f72697469657371007e00044c00046e616d6571007e000f787071007e00137371007e006700ffffffff00000071007e001371007e006f740037696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e55736572526f6c652e55736572737070707371007e006700ffffffff00010071007e001371007e006f74003d696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e55736572526f6c652e617574686f726974696573707371007e000b0000000e77040000000e71007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a71007e002d71007e003071007e003371007e003671007e0039787371007e000b0000000e77040000000e71007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a71007e002d71007e003071007e003371007e003671007e003978740008437573746f6d6572787371007e000b0000000177040000000171007e006f7873720032696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e646f6d61696e2e5061727479506572736f6eaecd0ffd1ece638b0200034c000a46616d696c794e616d6571007e000f4c0009476976656e4e616d6571007e000f4c000b706172747954797065496471007e000e78707400017a7400017a7371007e001100000000000000017400017a	690a1ca86e10ea0004dac9f9835f6776
@@ -2832,7 +2817,7 @@ ed60e579cc86ec491ce7a85a1b06d18c	\\xaced0005737200436f72672e737072696e676672616d
 -- Data for Name: oauth_approvals; Type: TABLE DATA; Schema: security; Owner: security_owner
 --
 
-COPY oauth_approvals (userid, clientid, scope, status, expiresat, lastmodifiedat) FROM stdin;
+COPY security.oauth_approvals (userid, clientid, scope, status, expiresat, lastmodifiedat) FROM stdin;
 \.
 
 
@@ -2840,7 +2825,7 @@ COPY oauth_approvals (userid, clientid, scope, status, expiresat, lastmodifiedat
 -- Data for Name: oauth_client_details; Type: TABLE DATA; Schema: security; Owner: security_owner
 --
 
-COPY oauth_client_details (client_id, resource_ids, client_secret, scope, authorized_grant_types, web_server_redirect_uri, authorities, access_token_validity, refresh_token_validity, additional_information, autoapprove) FROM stdin;
+COPY security.oauth_client_details (client_id, resource_ids, client_secret, scope, authorized_grant_types, web_server_redirect_uri, authorities, access_token_validity, refresh_token_validity, additional_information, autoapprove) FROM stdin;
 spring-security-oauth2-read-client	resource-server-rest-api	$2a$04$WGq2P9egiOYoOFemBRfsiO9qTcyJtNRnPKNBl5tokP7IP.eZn93km	read	password,authorization_code,refresh_token,implicit	\N	USER	10800	2592000	\N	\N
 spring-security-oauth2-read-write-client	resource-server-rest-api	$2a$04$soeOR.QFmClXeFIrhJVLWOQxfHjsJLSpWrU1iGxcMGdu.a5hvfY4W	read,write	password,authorization_code,refresh_token,implicit	\N	USER	10800	2592000	\N	\N
 client		\N					30	\N	{}	
@@ -2852,7 +2837,7 @@ my-client-with-password	oauth2-resource	\N	read	password		ROLE_CLIENT	30	\N	{}
 -- Data for Name: oauth_client_token; Type: TABLE DATA; Schema: security; Owner: security_owner
 --
 
-COPY oauth_client_token (token_id, token, authentication_id, user_name, client_id) FROM stdin;
+COPY security.oauth_client_token (token_id, token, authentication_id, user_name, client_id) FROM stdin;
 \.
 
 
@@ -2860,7 +2845,7 @@ COPY oauth_client_token (token_id, token, authentication_id, user_name, client_i
 -- Data for Name: oauth_code; Type: TABLE DATA; Schema: security; Owner: security_owner
 --
 
-COPY oauth_code (code, authentication) FROM stdin;
+COPY security.oauth_code (code, authentication) FROM stdin;
 \.
 
 
@@ -2868,7 +2853,7 @@ COPY oauth_code (code, authentication) FROM stdin;
 -- Data for Name: oauth_refresh_token; Type: TABLE DATA; Schema: security; Owner: security_owner
 --
 
-COPY oauth_refresh_token (token_id, token, authentication) FROM stdin;
+COPY security.oauth_refresh_token (token_id, token, authentication) FROM stdin;
 98b0c15e8eaa4d20197a7b20025ad7d3	\\xaced00057372004c6f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744578706972696e674f417574683252656672657368546f6b656e2fdf47639dd0c9b70200014c000a65787069726174696f6e7400104c6a6176612f7574696c2f446174653b787200446f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744f417574683252656672657368546f6b656e73e10e0a6354d45e0200014c000576616c75657400124c6a6176612f6c616e672f537472696e673b787074002465663739373032362d643531322d343231392d386632362d3030333939326430333064617372000e6a6176612e7574696c2e44617465686a81014b59741903000078707708000001671f8b6f5578	\\xaced0005737200416f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e4f417574683241757468656e7469636174696f6ebd400b02166252130200024c000d73746f7265645265717565737474003c4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f70726f76696465722f4f4175746832526571756573743b4c00127573657241757468656e7469636174696f6e7400324c6f72672f737072696e676672616d65776f726b2f73656375726974792f636f72652f41757468656e7469636174696f6e3b787200476f72672e737072696e676672616d65776f726b2e73656375726974792e61757468656e7469636174696f6e2e416273747261637441757468656e7469636174696f6e546f6b656ed3aa287e6e47640e0200035a000d61757468656e746963617465644c000b617574686f7269746965737400164c6a6176612f7574696c2f436f6c6c656374696f6e3b4c000764657461696c737400124c6a6176612f6c616e672f4f626a6563743b787000737200266a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c654c697374fc0f2531b5ec8e100200014c00046c6973747400104c6a6176612f7574696c2f4c6973743b7872002c6a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65436f6c6c656374696f6e19420080cb5ef71e0200014c00016371007e00047870737200136a6176612e7574696c2e41727261794c6973747881d21d99c7619d03000149000473697a657870000000097704000000097372002e696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e757365722e417574686f726974799655eedc2f1cc8e70200024c000269647400104c6a6176612f6c616e672f4c6f6e673b4c00046e616d657400124c6a6176612f6c616e672f537472696e673b78707372000e6a6176612e6c616e672e4c6f6e673b8be490cc8f23df0200014a000576616c7565787200106a6176612e6c616e672e4e756d62657286ac951d0b94e08b0200007870000000000000000174000e434f4d50414e595f4352454154457371007e000d7371007e0011000000000000000274000c434f4d50414e595f524541447371007e000d7371007e0011000000000000000374000e434f4d50414e595f5550444154457371007e000d7371007e0011000000000000000474000e434f4d50414e595f44454c4554457371007e000d7371007e001100000000000000057400114445504152544d454e545f4352454154457371007e000d7371007e0011000000000000000674000f4445504152544d454e545f524541447371007e000d7371007e001100000000000000077400114445504152544d454e545f5550444154457371007e000d7371007e001100000000000000087400114445504152544d454e545f44454c4554457371007e000d7371007e00110000000000000009740013524f4c455f434f4d50414e595f5245414445527871007e000c707372003a6f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e4f41757468325265717565737400000000000000010200075a0008617070726f7665644c000b617574686f72697469657371007e00044c000a657874656e73696f6e7374000f4c6a6176612f7574696c2f4d61703b4c000b726564697265637455726971007e000f4c00077265667265736874003b4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f70726f76696465722f546f6b656e526571756573743b4c000b7265736f7572636549647374000f4c6a6176612f7574696c2f5365743b4c000d726573706f6e7365547970657371007e0030787200386f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e426173655265717565737436287a3ea37169bd0200034c0008636c69656e74496471007e000f4c001172657175657374506172616d657465727371007e002e4c000573636f706571007e00307870740028737072696e672d73656375726974792d6f61757468322d726561642d77726974652d636c69656e74737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c654d6170f1a5a8fe74f507420200014c00016d71007e002e7870737200116a6176612e7574696c2e486173684d61700507dac1c31660d103000246000a6c6f6164466163746f724900097468726573686f6c6478703f400000000000067708000000080000000374000a6772616e745f7479706574000870617373776f7264740009636c69656e745f6964740028737072696e672d73656375726974792d6f61757468322d726561642d77726974652d636c69656e74740008757365726e616d6574000561646d696e78737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65536574801d92d18f9b80550200007871007e0009737200176a6176612e7574696c2e4c696e6b656448617368536574d86cd75a95dd2a1e020000787200116a6176612e7574696c2e48617368536574ba44859596b8b7340300007870770c000000103f4000000000000274000472656164740005777269746578017371007e0041770c000000103f40000000000001737200426f72672e737072696e676672616d65776f726b2e73656375726974792e636f72652e617574686f726974792e53696d706c654772616e746564417574686f72697479000000000000019a0200014c0004726f6c6571007e000f787074000455534552787371007e00363f40000000000000770800000010000000007870707371007e0041770c000000103f400000000000017400187265736f757263652d7365727665722d726573742d617069787371007e0041770c000000103f40000000000000787372004f6f72672e737072696e676672616d65776f726b2e73656375726974792e61757468656e7469636174696f6e2e557365726e616d6550617373776f726441757468656e7469636174696f6e546f6b656e000000000000019a0200024c000b63726564656e7469616c7371007e00054c00097072696e636970616c71007e00057871007e0003017371007e00077371007e000b0000000977040000000971007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a7871007e0050737200176a6176612e7574696c2e4c696e6b6564486173684d617034c04e5c106cc0fb0200015a000b6163636573734f726465727871007e00363f400000000000067708000000080000000371007e003871007e003971007e003a71007e003b71007e003c71007e003d78007073720029696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e757365722e55736572b50960df68f89e140200085a000e6163636f756e74457870697265645a000d6163636f756e744c6f636b65645a001263726564656e7469616c73457870697265645a0007656e61626c65644c000b617574686f72697469657371007e00044c0002696471007e000e4c000870617373776f726471007e000f4c0008757365726e616d6571007e000f7870000000017372002f6f72672e68696265726e6174652e636f6c6c656374696f6e2e696e7465726e616c2e50657273697374656e74426167464a645c192e1ec40200014c000362616771007e00087872003e6f72672e68696265726e6174652e636f6c6c656374696f6e2e696e7465726e616c2e416273747261637450657273697374656e74436f6c6c656374696f6e627400d05f55733c02000a5a001b616c6c6f774c6f61644f7574736964655472616e73616374696f6e49000a63616368656453697a655a000564697274795a000b696e697469616c697a65645a000d697354656d7053657373696f6e4c00036b65797400164c6a6176612f696f2f53657269616c697a61626c653b4c00056f776e657271007e00054c0004726f6c6571007e000f4c001273657373696f6e466163746f72795575696471007e000f4c000e73746f726564536e617073686f7471007e0057787000ffffffff00010071007e001371007e0054740035696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e757365722e557365722e617574686f726974696573707371007e000b0000000977040000000971007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a787371007e000b0000000977040000000971007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a7871007e001374003c243261243038247176727a515a376a4a376f7932702f6d734c344d302e6c38334364306a4e735836414a55697462675258477a6765346a303335686174000561646d696e
 ffef8e233d582247424b29ec0414df35	\\xaced00057372004c6f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744578706972696e674f417574683252656672657368546f6b656e2fdf47639dd0c9b70200014c000a65787069726174696f6e7400104c6a6176612f7574696c2f446174653b787200446f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744f417574683252656672657368546f6b656e73e10e0a6354d45e0200014c000576616c75657400124c6a6176612f6c616e672f537472696e673b787074002462323739653635392d343763652d346538302d393433662d6336373965303638666265387372000e6a6176612e7574696c2e44617465686a81014b59741903000078707708000001671f8ddb1c78	\\xaced0005737200416f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e4f417574683241757468656e7469636174696f6ebd400b02166252130200024c000d73746f7265645265717565737474003c4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f70726f76696465722f4f4175746832526571756573743b4c00127573657241757468656e7469636174696f6e7400324c6f72672f737072696e676672616d65776f726b2f73656375726974792f636f72652f41757468656e7469636174696f6e3b787200476f72672e737072696e676672616d65776f726b2e73656375726974792e61757468656e7469636174696f6e2e416273747261637441757468656e7469636174696f6e546f6b656ed3aa287e6e47640e0200035a000d61757468656e746963617465644c000b617574686f7269746965737400164c6a6176612f7574696c2f436f6c6c656374696f6e3b4c000764657461696c737400124c6a6176612f6c616e672f4f626a6563743b787000737200266a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c654c697374fc0f2531b5ec8e100200014c00046c6973747400104c6a6176612f7574696c2f4c6973743b7872002c6a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65436f6c6c656374696f6e19420080cb5ef71e0200014c00016371007e00047870737200136a6176612e7574696c2e41727261794c6973747881d21d99c7619d03000149000473697a6578700000000977040000000973720032696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e417574686f726974794952ec0f5e493da00200024c000269647400104c6a6176612f6c616e672f4c6f6e673b4c00046e616d657400124c6a6176612f6c616e672f537472696e673b78707372000e6a6176612e6c616e672e4c6f6e673b8be490cc8f23df0200014a000576616c7565787200106a6176612e6c616e672e4e756d62657286ac951d0b94e08b0200007870000000000000000174000f435553544f4d45525f4352454154457371007e000d7371007e0011000000000000000274000d435553544f4d45525f524541447371007e000d7371007e0011000000000000000374000f435553544f4d45525f5550444154457371007e000d7371007e0011000000000000000474000f435553544f4d45525f44454c4554457371007e000d7371007e0011000000000000000574000e50524f445543545f4352454154457371007e000d7371007e0011000000000000000674000c50524f445543545f524541447371007e000d7371007e0011000000000000000774000e50524f445543545f5550444154457371007e000d7371007e0011000000000000000874000e50524f445543545f44454c4554457371007e000d7371007e00110000000000000009740013524f4c455f50524f445543545f5245414445527871007e000c707372003a6f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e4f41757468325265717565737400000000000000010200075a0008617070726f7665644c000b617574686f72697469657371007e00044c000a657874656e73696f6e7374000f4c6a6176612f7574696c2f4d61703b4c000b726564697265637455726971007e000f4c00077265667265736874003b4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f70726f76696465722f546f6b656e526571756573743b4c000b7265736f7572636549647374000f4c6a6176612f7574696c2f5365743b4c000d726573706f6e7365547970657371007e0030787200386f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e426173655265717565737436287a3ea37169bd0200034c0008636c69656e74496471007e000f4c001172657175657374506172616d657465727371007e002e4c000573636f706571007e00307870740028737072696e672d73656375726974792d6f61757468322d726561642d77726974652d636c69656e74737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c654d6170f1a5a8fe74f507420200014c00016d71007e002e7870737200116a6176612e7574696c2e486173684d61700507dac1c31660d103000246000a6c6f6164466163746f724900097468726573686f6c6478703f400000000000067708000000080000000374000a6772616e745f7479706574000870617373776f7264740009636c69656e745f6964740028737072696e672d73656375726974792d6f61757468322d726561642d77726974652d636c69656e74740008757365726e616d6574000561646d696e78737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65536574801d92d18f9b80550200007871007e0009737200176a6176612e7574696c2e4c696e6b656448617368536574d86cd75a95dd2a1e020000787200116a6176612e7574696c2e48617368536574ba44859596b8b7340300007870770c000000103f4000000000000274000472656164740005777269746578017371007e0041770c000000103f40000000000001737200426f72672e737072696e676672616d65776f726b2e73656375726974792e636f72652e617574686f726974792e53696d706c654772616e746564417574686f72697479000000000000019a0200014c0004726f6c6571007e000f787074000455534552787371007e00363f40000000000000770800000010000000007870707371007e0041770c000000103f400000000000017400187265736f757263652d7365727665722d726573742d617069787371007e0041770c000000103f40000000000000787372004f6f72672e737072696e676672616d65776f726b2e73656375726974792e61757468656e7469636174696f6e2e557365726e616d6550617373776f726441757468656e7469636174696f6e546f6b656e000000000000019a0200024c000b63726564656e7469616c7371007e00054c00097072696e636970616c71007e00057871007e0003017371007e00077371007e000b0000000977040000000971007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a7871007e0050737200176a6176612e7574696c2e4c696e6b6564486173684d617034c04e5c106cc0fb0200015a000b6163636573734f726465727871007e00363f400000000000067708000000080000000371007e003871007e003971007e003a71007e003b71007e003c71007e003d7800707372002d696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e55736572a579540c8b8e43430200085a000e6163636f756e74457870697265645a000d6163636f756e744c6f636b65645a001263726564656e7469616c73457870697265645a0007656e61626c65644c000b617574686f72697469657371007e00044c0002696471007e000e4c000870617373776f726471007e000f4c0008757365726e616d6571007e000f7870000000017372002f6f72672e68696265726e6174652e636f6c6c656374696f6e2e696e7465726e616c2e50657273697374656e74426167464a645c192e1ec40200014c000362616771007e00087872003e6f72672e68696265726e6174652e636f6c6c656374696f6e2e696e7465726e616c2e416273747261637450657273697374656e74436f6c6c656374696f6e627400d05f55733c02000a5a001b616c6c6f774c6f61644f7574736964655472616e73616374696f6e49000a63616368656453697a655a000564697274795a000b696e697469616c697a65645a000d697354656d7053657373696f6e4c00036b65797400164c6a6176612f696f2f53657269616c697a61626c653b4c00056f776e657271007e00054c0004726f6c6571007e000f4c001273657373696f6e466163746f72795575696471007e000f4c000e73746f726564536e617073686f7471007e0057787000ffffffff00010071007e001371007e0054740039696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e557365722e617574686f726974696573707371007e000b0000000977040000000971007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a787371007e000b0000000977040000000971007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a7871007e001374003c243261243038247176727a515a376a4a376f7932702f6d734c344d302e6c38334364306a4e735836414a55697462675258477a6765346a303335686174000561646d696e
 6b1aa181f5d152c5b1944349309332e4	\\xaced00057372004c6f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744578706972696e674f417574683252656672657368546f6b656e2fdf47639dd0c9b70200014c000a65787069726174696f6e7400104c6a6176612f7574696c2f446174653b787200446f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e636f6d6d6f6e2e44656661756c744f417574683252656672657368546f6b656e73e10e0a6354d45e0200014c000576616c75657400124c6a6176612f6c616e672f537472696e673b787074002432613033616535342d626161632d343330312d393430652d6630373463386633353961657372000e6a6176612e7574696c2e44617465686a81014b59741903000078707708000001672137e08b78	\\xaced0005737200416f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e4f417574683241757468656e7469636174696f6ebd400b02166252130200024c000d73746f7265645265717565737474003c4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f70726f76696465722f4f4175746832526571756573743b4c00127573657241757468656e7469636174696f6e7400324c6f72672f737072696e676672616d65776f726b2f73656375726974792f636f72652f41757468656e7469636174696f6e3b787200476f72672e737072696e676672616d65776f726b2e73656375726974792e61757468656e7469636174696f6e2e416273747261637441757468656e7469636174696f6e546f6b656ed3aa287e6e47640e0200035a000d61757468656e746963617465644c000b617574686f7269746965737400164c6a6176612f7574696c2f436f6c6c656374696f6e3b4c000764657461696c737400124c6a6176612f6c616e672f4f626a6563743b787000737200266a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c654c697374fc0f2531b5ec8e100200014c00046c6973747400104c6a6176612f7574696c2f4c6973743b7872002c6a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65436f6c6c656374696f6e19420080cb5ef71e0200014c00016371007e00047870737200136a6176612e7574696c2e41727261794c6973747881d21d99c7619d03000149000473697a6578700000000977040000000973720032696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e417574686f726974794952ec0f5e493da00200024c000269647400104c6a6176612f6c616e672f4c6f6e673b4c00046e616d657400124c6a6176612f6c616e672f537472696e673b78707372000e6a6176612e6c616e672e4c6f6e673b8be490cc8f23df0200014a000576616c7565787200106a6176612e6c616e672e4e756d62657286ac951d0b94e08b0200007870000000000000000174000f435553544f4d45525f4352454154457371007e000d7371007e0011000000000000000274000d435553544f4d45525f524541447371007e000d7371007e0011000000000000000374000f435553544f4d45525f5550444154457371007e000d7371007e0011000000000000000474000f435553544f4d45525f44454c4554457371007e000d7371007e0011000000000000000574000e50524f445543545f4352454154457371007e000d7371007e0011000000000000000674000c50524f445543545f524541447371007e000d7371007e0011000000000000000774000e50524f445543545f5550444154457371007e000d7371007e0011000000000000000874000e50524f445543545f44454c4554457371007e000d7371007e00110000000000000009740013524f4c455f50524f445543545f5245414445527871007e000c707372003a6f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e4f41757468325265717565737400000000000000010200075a0008617070726f7665644c000b617574686f72697469657371007e00044c000a657874656e73696f6e7374000f4c6a6176612f7574696c2f4d61703b4c000b726564697265637455726971007e000f4c00077265667265736874003b4c6f72672f737072696e676672616d65776f726b2f73656375726974792f6f61757468322f70726f76696465722f546f6b656e526571756573743b4c000b7265736f7572636549647374000f4c6a6176612f7574696c2f5365743b4c000d726573706f6e7365547970657371007e0030787200386f72672e737072696e676672616d65776f726b2e73656375726974792e6f61757468322e70726f76696465722e426173655265717565737436287a3ea37169bd0200034c0008636c69656e74496471007e000f4c001172657175657374506172616d657465727371007e002e4c000573636f706571007e00307870740022737072696e672d73656375726974792d6f61757468322d726561642d636c69656e74737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c654d6170f1a5a8fe74f507420200014c00016d71007e002e7870737200116a6176612e7574696c2e486173684d61700507dac1c31660d103000246000a6c6f6164466163746f724900097468726573686f6c6478703f400000000000067708000000080000000374000a6772616e745f7479706574000870617373776f7264740009636c69656e745f6964740022737072696e672d73656375726974792d6f61757468322d726561642d636c69656e74740008757365726e616d6574000561646d696e78737200256a6176612e7574696c2e436f6c6c656374696f6e7324556e6d6f6469666961626c65536574801d92d18f9b80550200007871007e0009737200176a6176612e7574696c2e4c696e6b656448617368536574d86cd75a95dd2a1e020000787200116a6176612e7574696c2e48617368536574ba44859596b8b7340300007870770c000000103f400000000000017400047265616478017371007e0041770c000000103f40000000000001737200426f72672e737072696e676672616d65776f726b2e73656375726974792e636f72652e617574686f726974792e53696d706c654772616e746564417574686f72697479000000000000019a0200014c0004726f6c6571007e000f787074000455534552787371007e00363f40000000000000770800000010000000007870707371007e0041770c000000103f400000000000017400187265736f757263652d7365727665722d726573742d617069787371007e0041770c000000103f40000000000000787372004f6f72672e737072696e676672616d65776f726b2e73656375726974792e61757468656e7469636174696f6e2e557365726e616d6550617373776f726441757468656e7469636174696f6e546f6b656e000000000000019a0200024c000b63726564656e7469616c7371007e00054c00097072696e636970616c71007e00057871007e0003017371007e00077371007e000b0000000977040000000971007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a7871007e004f737200176a6176612e7574696c2e4c696e6b6564486173684d617034c04e5c106cc0fb0200015a000b6163636573734f726465727871007e00363f400000000000067708000000080000000371007e003871007e003971007e003a71007e003b71007e003c71007e003d7800707372002d696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e55736572a579540c8b8e43430200085a000e6163636f756e74457870697265645a000d6163636f756e744c6f636b65645a001263726564656e7469616c73457870697265645a0007656e61626c65644c000b617574686f72697469657371007e00044c0002696471007e000e4c000870617373776f726471007e000f4c0008757365726e616d6571007e000f7870000000017372002f6f72672e68696265726e6174652e636f6c6c656374696f6e2e696e7465726e616c2e50657273697374656e74426167464a645c192e1ec40200014c000362616771007e00087872003e6f72672e68696265726e6174652e636f6c6c656374696f6e2e696e7465726e616c2e416273747261637450657273697374656e74436f6c6c656374696f6e627400d05f55733c02000a5a001b616c6c6f774c6f61644f7574736964655472616e73616374696f6e49000a63616368656453697a655a000564697274795a000b696e697469616c697a65645a000d697354656d7053657373696f6e4c00036b65797400164c6a6176612f696f2f53657269616c697a61626c653b4c00056f776e657271007e00054c0004726f6c6571007e000f4c001273657373696f6e466163746f72795575696471007e000f4c000e73746f726564536e617073686f7471007e0056787000ffffffff00010071007e001371007e0053740039696f2e6a617661627261696e732e737072696e67626f6f74737461727465722e73656375726974792e557365722e617574686f726974696573707371007e000b0000000977040000000971007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a787371007e000b0000000977040000000971007e001071007e001571007e001871007e001b71007e001e71007e002171007e002471007e002771007e002a7871007e001374003c243261243038247176727a515a376a4a376f7932702f6d734c344d302e6c38334364306a4e735836414a55697462675258477a6765346a303335686174000561646d696e
@@ -2946,7 +2931,7 @@ c3e0897592aebe9d57459202a0c55d4b	\\xaced00057372004c6f72672e737072696e676672616d
 -- Data for Name: permission; Type: TABLE DATA; Schema: security; Owner: security_owner
 --
 
-COPY permission (id, name) FROM stdin;
+COPY security.permission (id, name) FROM stdin;
 1	PARTY_CREATE
 2	PARTY_READ
 3	PARTY_UPDATE
@@ -2989,7 +2974,7 @@ COPY permission (id, name) FROM stdin;
 -- Data for Name: role; Type: TABLE DATA; Schema: security; Owner: security_owner
 --
 
-COPY role (id, name) FROM stdin;
+COPY security.role (id, name) FROM stdin;
 2	Customer
 1	Admin
 \.
@@ -2999,14 +2984,14 @@ COPY role (id, name) FROM stdin;
 -- Name: role_id_seq; Type: SEQUENCE SET; Schema: security; Owner: postgres
 --
 
-SELECT pg_catalog.setval('role_id_seq', 1, false);
+SELECT pg_catalog.setval('security.role_id_seq', 1, false);
 
 
 --
 -- Data for Name: role_permission; Type: TABLE DATA; Schema: security; Owner: security_owner
 --
 
-COPY role_permission (id, role_id, permission_id) FROM stdin;
+COPY security.role_permission (id, role_id, permission_id) FROM stdin;
 29	1	1
 30	1	2
 31	1	3
@@ -3063,14 +3048,14 @@ COPY role_permission (id, role_id, permission_id) FROM stdin;
 -- Name: role_permission_id_seq; Type: SEQUENCE SET; Schema: security; Owner: postgres
 --
 
-SELECT pg_catalog.setval('role_permission_id_seq', 77, true);
+SELECT pg_catalog.setval('security.role_permission_id_seq', 77, true);
 
 
 --
 -- Data for Name: user_; Type: TABLE DATA; Schema: security; Owner: security_owner
 --
 
-COPY user_ (pty_id, account_expired, account_locked, credentials_expired, enabled, password, user_name) FROM stdin;
+COPY security.user_ (pty_id, account_expired, account_locked, credentials_expired, enabled, password, user_name) FROM stdin;
 1	f	f	f	t	$2a$08$qvrzQZ7jJ7oy2p/msL4M0.l83Cd0jNsX6AJUitbgRXGzge4j035ha	admin
 232216	f	f	f	t	\N	asd321
 232220	f	f	f	t	$2a$08$HDsx4cloh1PXKlNp6C2yGObROfR3VysQAYdABq5naOXiGvFknU8/G	dandandan
@@ -3101,7 +3086,7 @@ COPY user_ (pty_id, account_expired, account_locked, credentials_expired, enable
 -- Data for Name: user_role; Type: TABLE DATA; Schema: security; Owner: security_owner
 --
 
-COPY user_role (id, pty_id, role_id) FROM stdin;
+COPY security.user_role (id, pty_id, role_id) FROM stdin;
 1	1	1
 2	232216	1
 3	232220	1
@@ -3132,1348 +3117,1519 @@ COPY user_role (id, pty_id, role_id) FROM stdin;
 -- Name: user_role_id_seq; Type: SEQUENCE SET; Schema: security; Owner: security_owner
 --
 
-SELECT pg_catalog.setval('user_role_id_seq', 171, true);
+SELECT pg_catalog.setval('security.user_role_id_seq', 171, true);
 
-
-SET search_path = mochi, pg_catalog;
 
 --
--- Name: brand_attr_lcl brand_attr_lcl_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: brand_attr_lcl_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY brand_attr_lcl
+ALTER TABLE ONLY mochi.brand_attr_lcl
     ADD CONSTRAINT brand_attr_lcl_pkey PRIMARY KEY (bnd_lcl_id);
 
 
 --
--- Name: brand_category brand_category_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: brand_category_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY brand_category
+ALTER TABLE ONLY mochi.brand_category
     ADD CONSTRAINT brand_category_pkey PRIMARY KEY (bnd_cat_id);
 
 
 --
--- Name: brand brand_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: brand_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY brand
+ALTER TABLE ONLY mochi.brand
     ADD CONSTRAINT brand_pkey PRIMARY KEY (bnd_id);
 
 
 --
--- Name: category_attr_lcl category_attr_lcl_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: category_attr_lcl_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY category_attr_lcl
+ALTER TABLE ONLY mochi.category_attr_lcl
     ADD CONSTRAINT category_attr_lcl_pkey PRIMARY KEY (cat_lcl_id);
 
 
 --
--- Name: category_brand category_brand_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: category_brand_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY category_brand
+ALTER TABLE ONLY mochi.category_brand
     ADD CONSTRAINT category_brand_pkey PRIMARY KEY (cat_id);
 
 
 --
--- Name: category category_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: category_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY category
+ALTER TABLE ONLY mochi.category
     ADD CONSTRAINT category_pkey PRIMARY KEY (cat_id);
 
 
 --
--- Name: category_product category_product_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: category_product_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY category_product
+ALTER TABLE ONLY mochi.category_product
     ADD CONSTRAINT category_product_pkey PRIMARY KEY (cat_id);
 
 
 --
--- Name: category_type category_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: category_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY category_type
+ALTER TABLE ONLY mochi.category_type
     ADD CONSTRAINT category_type_pkey PRIMARY KEY (cat_typ_id);
 
 
 --
--- Name: currency currency_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: currency_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY currency
+ALTER TABLE ONLY mochi.currency
     ADD CONSTRAINT currency_pkey PRIMARY KEY (ccy_id);
 
 
 --
--- Name: customer customer_cst_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: customer_cst_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY customer
+ALTER TABLE ONLY mochi.customer
     ADD CONSTRAINT customer_cst_id_key UNIQUE (cst_id);
 
 
 --
--- Name: customer customer_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: customer_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY customer
+ALTER TABLE ONLY mochi.customer
     ADD CONSTRAINT customer_pkey PRIMARY KEY (rle_id);
 
 
 --
--- Name: discount discount_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: discount_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY discount
+ALTER TABLE ONLY mochi.discount
     ADD CONSTRAINT discount_pkey PRIMARY KEY (dis_id);
 
 
 --
--- Name: discount_type discount_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: postgres
+-- Name: discount_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: postgres
 --
 
-ALTER TABLE ONLY discount_type
+ALTER TABLE ONLY mochi.discount_type
     ADD CONSTRAINT discount_type_pkey PRIMARY KEY (dis_typ_id);
 
 
 --
--- Name: hierarchy hierarchy_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: hierarchy_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY hierarchy
+ALTER TABLE ONLY mochi.hierarchy
     ADD CONSTRAINT hierarchy_pkey PRIMARY KEY (hir_id);
 
 
 --
--- Name: layout_category layout_category_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: layout_category_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY layout_category
+ALTER TABLE ONLY mochi.layout_category
     ADD CONSTRAINT layout_category_pkey PRIMARY KEY (lay_cat_id);
 
 
 --
--- Name: layout layout_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: layout_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY layout
+ALTER TABLE ONLY mochi.layout
     ADD CONSTRAINT layout_pkey PRIMARY KEY (lay_id);
 
 
 --
--- Name: order_line order_line_ord_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: order_line_ord_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY order_line
+ALTER TABLE ONLY mochi.order_line
     ADD CONSTRAINT order_line_ord_id_key UNIQUE (ord_id);
 
 
 --
--- Name: order_line order_line_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: order_line_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY order_line
+ALTER TABLE ONLY mochi.order_line
     ADD CONSTRAINT order_line_pkey PRIMARY KEY (ord_id, prd_id, ord_lne_no);
 
 
 --
--- Name: order orders_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: orders_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY "order"
+ALTER TABLE ONLY mochi."order"
     ADD CONSTRAINT orders_pkey PRIMARY KEY (ord_id);
 
 
 --
--- Name: order orders_pty_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: orders_pty_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY "order"
+ALTER TABLE ONLY mochi."order"
     ADD CONSTRAINT orders_pty_id_key UNIQUE (pty_id);
 
 
 --
--- Name: organisation organisation_org_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: organisation_org_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY organisation
+ALTER TABLE ONLY mochi.organisation
     ADD CONSTRAINT organisation_org_id_key UNIQUE (org_id);
 
 
 --
--- Name: party party_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: party_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY party
+ALTER TABLE ONLY mochi.party
     ADD CONSTRAINT party_pkey PRIMARY KEY (pty_id);
 
 
 --
--- Name: party_type party_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: party_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY party_type
+ALTER TABLE ONLY mochi.party_type
     ADD CONSTRAINT party_type_pkey PRIMARY KEY (pty_typ_id);
 
 
 --
--- Name: party_type party_type_pty_typ_desc_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: party_type_pty_typ_desc_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY party_type
+ALTER TABLE ONLY mochi.party_type
     ADD CONSTRAINT party_type_pty_typ_desc_key UNIQUE (pty_typ_desc);
 
 
 --
--- Name: person person_psn_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: person_psn_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY person
+ALTER TABLE ONLY mochi.person
     ADD CONSTRAINT person_psn_id_key UNIQUE (psn_id);
 
 
 --
--- Name: locale pk_locale; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: pk_locale; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY locale
+ALTER TABLE ONLY mochi.locale
     ADD CONSTRAINT pk_locale PRIMARY KEY (lcl_cd);
 
 
 --
--- Name: price price_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: price_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY price
+ALTER TABLE ONLY mochi.price
     ADD CONSTRAINT price_pkey PRIMARY KEY (prc_id);
 
 
 --
--- Name: price_type price_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: price_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY price_type
+ALTER TABLE ONLY mochi.price_type
     ADD CONSTRAINT price_type_pkey PRIMARY KEY (prc_typ_id);
 
 
 --
--- Name: product_attr_lcl product_attr_lcl_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: product_attr_lcl_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY product_attr_lcl
+ALTER TABLE ONLY mochi.product_attr_lcl
     ADD CONSTRAINT product_attr_lcl_pkey PRIMARY KEY (prd_lcl_id);
 
 
 --
--- Name: product_category product_category_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: product_category_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY product_category
+ALTER TABLE ONLY mochi.product_category
     ADD CONSTRAINT product_category_pkey PRIMARY KEY (prd_cat_id);
 
 
 --
--- Name: product product_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: product_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY product
+ALTER TABLE ONLY mochi.product
     ADD CONSTRAINT product_pkey PRIMARY KEY (prd_id);
 
 
 --
--- Name: product_status product_status_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: product_status_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY product_status
+ALTER TABLE ONLY mochi.product_status
     ADD CONSTRAINT product_status_pkey PRIMARY KEY (prd_sts_id);
 
 
 --
--- Name: product_tag product_tag_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: product_tag_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY product_tag
+ALTER TABLE ONLY mochi.product_tag
     ADD CONSTRAINT product_tag_pkey PRIMARY KEY (prd_tag_id);
 
 
 --
--- Name: product_type product_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: product_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY product_type
+ALTER TABLE ONLY mochi.product_type
     ADD CONSTRAINT product_type_pkey PRIMARY KEY (prd_typ_id);
 
 
 --
--- Name: promotion_category promotion_category_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: promotion_category_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY promotion_category
+ALTER TABLE ONLY mochi.promotion_category
     ADD CONSTRAINT promotion_category_pkey PRIMARY KEY (prm_cat_id);
 
 
 --
--- Name: promotion promotion_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: promotion_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY promotion
+ALTER TABLE ONLY mochi.promotion
     ADD CONSTRAINT promotion_pkey PRIMARY KEY (prm_id);
 
 
 --
--- Name: promotion_type promotion_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: postgres
+-- Name: promotion_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: postgres
 --
 
-ALTER TABLE ONLY promotion_type
+ALTER TABLE ONLY mochi.promotion_type
     ADD CONSTRAINT promotion_type_pkey PRIMARY KEY (prm_typ_id);
 
 
 --
--- Name: role role_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: role_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY role
+ALTER TABLE ONLY mochi.role
     ADD CONSTRAINT role_pkey PRIMARY KEY (rle_id);
 
 
 --
--- Name: role role_pty_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: role_pty_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY role
+ALTER TABLE ONLY mochi.role
     ADD CONSTRAINT role_pty_id_key UNIQUE (pty_id);
 
 
 --
--- Name: role_type role_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: role_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY role_type
+ALTER TABLE ONLY mochi.role_type
     ADD CONSTRAINT role_type_pkey PRIMARY KEY (rle_typ_id);
 
 
 --
--- Name: role_type role_type_rle_typ_desc_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: role_type_rle_typ_desc_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY role_type
+ALTER TABLE ONLY mochi.role_type
     ADD CONSTRAINT role_type_rle_typ_desc_key UNIQUE (rle_typ_desc);
 
 
 --
--- Name: tag_attr_lcl tag_attr_lcl_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: tag_attr_lcl_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY tag_attr_lcl
+ALTER TABLE ONLY mochi.tag_attr_lcl
     ADD CONSTRAINT tag_attr_lcl_pkey PRIMARY KEY (tag_lcl_id);
 
 
 --
--- Name: tag tag_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: tag_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY tag
+ALTER TABLE ONLY mochi.tag
     ADD CONSTRAINT tag_pkey PRIMARY KEY (tag_id);
 
 
 --
--- Name: brand_attr_lcl uc_bnd_desc_lcl_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_bnd_desc_lcl_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY brand_attr_lcl
+ALTER TABLE ONLY mochi.brand_attr_lcl
     ADD CONSTRAINT uc_bnd_desc_lcl_cd UNIQUE (bnd_desc, lcl_cd);
 
 
 --
--- Name: brand_attr_lcl uc_bnd_lcl; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_bnd_lcl; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY brand_attr_lcl
+ALTER TABLE ONLY mochi.brand_attr_lcl
     ADD CONSTRAINT uc_bnd_lcl UNIQUE (bnd_id, lcl_cd);
 
 
 --
--- Name: brand_category uc_brand_category; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_brand_category; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY brand_category
+ALTER TABLE ONLY mochi.brand_category
     ADD CONSTRAINT uc_brand_category UNIQUE (bnd_id, cat_id);
 
 
 --
--- Name: category uc_cat_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_cat_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY category
+ALTER TABLE ONLY mochi.category
     ADD CONSTRAINT uc_cat_cd UNIQUE (cat_cd);
 
 
 --
--- Name: category_attr_lcl uc_cat_desc; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_cat_desc; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY category_attr_lcl
+ALTER TABLE ONLY mochi.category_attr_lcl
     ADD CONSTRAINT uc_cat_desc UNIQUE (cat_desc, lcl_cd);
 
 
 --
--- Name: category_attr_lcl uc_cat_lcl; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_cat_lcl; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY category_attr_lcl
+ALTER TABLE ONLY mochi.category_attr_lcl
     ADD CONSTRAINT uc_cat_lcl UNIQUE (cat_id, lcl_cd);
 
 
 --
--- Name: category_type uc_cat_typ_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_cat_typ_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY category_type
+ALTER TABLE ONLY mochi.category_type
     ADD CONSTRAINT uc_cat_typ_cd UNIQUE (cat_typ_cd);
 
 
 --
--- Name: hierarchy uc_hir_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_hir_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY hierarchy
+ALTER TABLE ONLY mochi.hierarchy
     ADD CONSTRAINT uc_hir_cd UNIQUE (hir_cd);
 
 
 --
--- Name: layout uc_lay_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_lay_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY layout
+ALTER TABLE ONLY mochi.layout
     ADD CONSTRAINT uc_lay_cd UNIQUE (lay_cd);
 
 
 --
--- Name: layout uc_lay_desc; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_lay_desc; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY layout
+ALTER TABLE ONLY mochi.layout
     ADD CONSTRAINT uc_lay_desc UNIQUE (lay_desc);
 
 
 --
--- Name: layout_category uc_layout_category; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_layout_category; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY layout_category
+ALTER TABLE ONLY mochi.layout_category
     ADD CONSTRAINT uc_layout_category UNIQUE (lay_id, cat_id);
 
 
 --
--- Name: product_attr_lcl uc_prd_lcl_1; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_prd_lcl_1; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY product_attr_lcl
+ALTER TABLE ONLY mochi.product_attr_lcl
     ADD CONSTRAINT uc_prd_lcl_1 UNIQUE (prd_id, lcl_cd);
 
 
 --
--- Name: product_status uc_prd_sts_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_prd_sts_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY product_status
+ALTER TABLE ONLY mochi.product_status
     ADD CONSTRAINT uc_prd_sts_cd UNIQUE (prd_sts_cd);
 
 
 --
--- Name: product_type uc_prd_typ_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_prd_typ_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY product_type
+ALTER TABLE ONLY mochi.product_type
     ADD CONSTRAINT uc_prd_typ_cd UNIQUE (prd_typ_cd);
 
 
 --
--- Name: promotion uc_prm_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_prm_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY promotion
+ALTER TABLE ONLY mochi.promotion
     ADD CONSTRAINT uc_prm_cd UNIQUE (prm_cd);
 
 
 --
--- Name: product_category uc_product_category; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_product_category; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY product_category
+ALTER TABLE ONLY mochi.product_category
     ADD CONSTRAINT uc_product_category UNIQUE (prd_id, cat_id);
 
 
 --
--- Name: product_tag uc_product_tag; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_product_tag; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY product_tag
+ALTER TABLE ONLY mochi.product_tag
     ADD CONSTRAINT uc_product_tag UNIQUE (prd_id, tag_id);
 
 
 --
--- Name: promotion_category uc_promotion_category; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_promotion_category; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY promotion_category
+ALTER TABLE ONLY mochi.promotion_category
     ADD CONSTRAINT uc_promotion_category UNIQUE (prm_id, cat_id);
 
 
 --
--- Name: tag_attr_lcl uc_tag_desc; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_tag_desc; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY tag_attr_lcl
+ALTER TABLE ONLY mochi.tag_attr_lcl
     ADD CONSTRAINT uc_tag_desc UNIQUE (tag_desc, lcl_cd);
 
 
 --
--- Name: tag_attr_lcl uc_tag_lcl; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_tag_lcl; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY tag_attr_lcl
+ALTER TABLE ONLY mochi.tag_attr_lcl
     ADD CONSTRAINT uc_tag_lcl UNIQUE (tag_id, lcl_cd);
 
 
-SET search_path = security, pg_catalog;
-
 --
--- Name: permission authority_name; Type: CONSTRAINT; Schema: security; Owner: security_owner
+-- Name: authority_name; Type: CONSTRAINT; Schema: security; Owner: security_owner
 --
 
-ALTER TABLE ONLY permission
+ALTER TABLE ONLY security.permission
     ADD CONSTRAINT authority_name UNIQUE (name);
 
 
 --
--- Name: permission authority_pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
+-- Name: authority_pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
 --
 
-ALTER TABLE ONLY permission
+ALTER TABLE ONLY security.permission
     ADD CONSTRAINT authority_pkey PRIMARY KEY (id);
 
 
 --
--- Name: clientdetails clientdetails_pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
+-- Name: clientdetails_pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
 --
 
-ALTER TABLE ONLY clientdetails
+ALTER TABLE ONLY security.clientdetails
     ADD CONSTRAINT clientdetails_pkey PRIMARY KEY (appid);
 
 
 --
--- Name: oauth_access_token oauth_access_token_pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
+-- Name: oauth_access_token_pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
 --
 
-ALTER TABLE ONLY oauth_access_token
+ALTER TABLE ONLY security.oauth_access_token
     ADD CONSTRAINT oauth_access_token_pkey PRIMARY KEY (authentication_id);
 
 
 --
--- Name: oauth_client_details oauth_client_details_pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
+-- Name: oauth_client_details_pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
 --
 
-ALTER TABLE ONLY oauth_client_details
+ALTER TABLE ONLY security.oauth_client_details
     ADD CONSTRAINT oauth_client_details_pkey PRIMARY KEY (client_id);
 
 
 --
--- Name: oauth_client_token oauth_client_token_pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
+-- Name: oauth_client_token_pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
 --
 
-ALTER TABLE ONLY oauth_client_token
+ALTER TABLE ONLY security.oauth_client_token
     ADD CONSTRAINT oauth_client_token_pkey PRIMARY KEY (authentication_id);
 
 
 --
--- Name: role_permission role_permission_pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
+-- Name: role_permission_pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
 --
 
-ALTER TABLE ONLY role_permission
+ALTER TABLE ONLY security.role_permission
     ADD CONSTRAINT role_permission_pkey PRIMARY KEY (id);
 
 
 --
--- Name: role role_pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
+-- Name: role_pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
 --
 
-ALTER TABLE ONLY role
+ALTER TABLE ONLY security.role
     ADD CONSTRAINT role_pkey PRIMARY KEY (id);
 
 
 --
--- Name: user_ user___pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
+-- Name: user___pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
 --
 
-ALTER TABLE ONLY user_
+ALTER TABLE ONLY security.user_
     ADD CONSTRAINT user___pkey PRIMARY KEY (pty_id);
 
 
 --
--- Name: user_role user_role_pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
+-- Name: user_role_pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
 --
 
-ALTER TABLE ONLY user_role
+ALTER TABLE ONLY security.user_role
     ADD CONSTRAINT user_role_pkey PRIMARY KEY (id);
 
 
 --
--- Name: user_ user_user_name; Type: CONSTRAINT; Schema: security; Owner: security_owner
+-- Name: user_user_name; Type: CONSTRAINT; Schema: security; Owner: security_owner
 --
 
-ALTER TABLE ONLY user_
+ALTER TABLE ONLY security.user_
     ADD CONSTRAINT user_user_name UNIQUE (user_name);
 
-
-SET search_path = mochi, pg_catalog;
 
 --
 -- Name: role_role_typ_id_role_start_dttm_party_id_key; Type: INDEX; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE UNIQUE INDEX role_role_typ_id_role_start_dttm_party_id_key ON role USING btree (rle_typ_id, rle_start_dttm, pty_id);
+CREATE UNIQUE INDEX role_role_typ_id_role_start_dttm_party_id_key ON mochi.role USING btree (rle_typ_id, rle_start_dttm, pty_id);
 
 
 --
--- Name: brand_attr_lcl brand_attr_lcl_bnd_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: brand_attr_lcl_bnd_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY brand_attr_lcl
-    ADD CONSTRAINT brand_attr_lcl_bnd_id_fkey FOREIGN KEY (bnd_id) REFERENCES brand(bnd_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.brand_attr_lcl
+    ADD CONSTRAINT brand_attr_lcl_bnd_id_fkey FOREIGN KEY (bnd_id) REFERENCES mochi.brand(bnd_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: brand_attr_lcl brand_attr_lcl_lcl_cd_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: brand_attr_lcl_lcl_cd_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY brand_attr_lcl
-    ADD CONSTRAINT brand_attr_lcl_lcl_cd_fkey FOREIGN KEY (lcl_cd) REFERENCES locale(lcl_cd);
+ALTER TABLE ONLY mochi.brand_attr_lcl
+    ADD CONSTRAINT brand_attr_lcl_lcl_cd_fkey FOREIGN KEY (lcl_cd) REFERENCES mochi.locale(lcl_cd);
 
 
 --
--- Name: brand_category brand_category_bnd_id_brand_bnd_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: brand_category_bnd_id_brand_bnd_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY brand_category
-    ADD CONSTRAINT brand_category_bnd_id_brand_bnd_id_fkey FOREIGN KEY (bnd_id) REFERENCES brand(bnd_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.brand_category
+    ADD CONSTRAINT brand_category_bnd_id_brand_bnd_id_fkey FOREIGN KEY (bnd_id) REFERENCES mochi.brand(bnd_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: brand_category brand_category_cat_id_category_cat_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: brand_category_cat_id_category_cat_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY brand_category
-    ADD CONSTRAINT brand_category_cat_id_category_cat_id_fkey FOREIGN KEY (cat_id) REFERENCES category(cat_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.brand_category
+    ADD CONSTRAINT brand_category_cat_id_category_cat_id_fkey FOREIGN KEY (cat_id) REFERENCES mochi.category(cat_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: category_attr_lcl category_attr_lcl_cat_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: category_attr_lcl_cat_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY category_attr_lcl
-    ADD CONSTRAINT category_attr_lcl_cat_id_fkey FOREIGN KEY (cat_id) REFERENCES category(cat_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.category_attr_lcl
+    ADD CONSTRAINT category_attr_lcl_cat_id_fkey FOREIGN KEY (cat_id) REFERENCES mochi.category(cat_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: category_attr_lcl category_attr_lcl_lcl_cd_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: category_attr_lcl_lcl_cd_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY category_attr_lcl
-    ADD CONSTRAINT category_attr_lcl_lcl_cd_fkey FOREIGN KEY (lcl_cd) REFERENCES locale(lcl_cd);
+ALTER TABLE ONLY mochi.category_attr_lcl
+    ADD CONSTRAINT category_attr_lcl_lcl_cd_fkey FOREIGN KEY (lcl_cd) REFERENCES mochi.locale(lcl_cd);
 
 
 --
--- Name: category_brand category_brand_cat_id_category_cat_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: category_brand_cat_id_category_cat_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY category_brand
-    ADD CONSTRAINT category_brand_cat_id_category_cat_id_fkey FOREIGN KEY (cat_id) REFERENCES category(cat_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.category_brand
+    ADD CONSTRAINT category_brand_cat_id_category_cat_id_fkey FOREIGN KEY (cat_id) REFERENCES mochi.category(cat_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: category category_hir_id_hierarchy_hir_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: category_hir_id_hierarchy_hir_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY category
-    ADD CONSTRAINT category_hir_id_hierarchy_hir_id_fkey FOREIGN KEY (hir_id) REFERENCES hierarchy(hir_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.category
+    ADD CONSTRAINT category_hir_id_hierarchy_hir_id_fkey FOREIGN KEY (hir_id) REFERENCES mochi.hierarchy(hir_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: category_product category_product_cat_id_category_cat_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: category_product_cat_id_category_cat_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY category_product
-    ADD CONSTRAINT category_product_cat_id_category_cat_id_fkey FOREIGN KEY (cat_id) REFERENCES category(cat_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.category_product
+    ADD CONSTRAINT category_product_cat_id_category_cat_id_fkey FOREIGN KEY (cat_id) REFERENCES mochi.category(cat_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: customer customer_role_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: customer_role_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY customer
-    ADD CONSTRAINT customer_role_id_fkey FOREIGN KEY (rle_id) REFERENCES role(rle_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.customer
+    ADD CONSTRAINT customer_role_id_fkey FOREIGN KEY (rle_id) REFERENCES mochi.role(rle_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: layout_category layout_category_cat_id_category_cat_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: layout_category_cat_id_category_cat_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY layout_category
-    ADD CONSTRAINT layout_category_cat_id_category_cat_id_fkey FOREIGN KEY (cat_id) REFERENCES category(cat_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.layout_category
+    ADD CONSTRAINT layout_category_cat_id_category_cat_id_fkey FOREIGN KEY (cat_id) REFERENCES mochi.category(cat_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: layout_category layout_category_lay_id_layout_lay_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: layout_category_lay_id_layout_lay_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY layout_category
-    ADD CONSTRAINT layout_category_lay_id_layout_lay_id_fkey FOREIGN KEY (lay_id) REFERENCES layout(lay_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.layout_category
+    ADD CONSTRAINT layout_category_lay_id_layout_lay_id_fkey FOREIGN KEY (lay_id) REFERENCES mochi.layout(lay_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: order_line order_line_order_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: order_line_order_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY order_line
-    ADD CONSTRAINT order_line_order_id_fkey FOREIGN KEY (ord_id) REFERENCES "order"(ord_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.order_line
+    ADD CONSTRAINT order_line_order_id_fkey FOREIGN KEY (ord_id) REFERENCES mochi."order"(ord_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: order_line order_line_product_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: order_line_product_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY order_line
-    ADD CONSTRAINT order_line_product_id_fkey FOREIGN KEY (prd_id) REFERENCES product(prd_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.order_line
+    ADD CONSTRAINT order_line_product_id_fkey FOREIGN KEY (prd_id) REFERENCES mochi.product(prd_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: order orders_party_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: orders_party_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY "order"
-    ADD CONSTRAINT orders_party_id_fkey FOREIGN KEY (pty_id) REFERENCES party(pty_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi."order"
+    ADD CONSTRAINT orders_party_id_fkey FOREIGN KEY (pty_id) REFERENCES mochi.party(pty_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: organisation organisation_org_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: organisation_org_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY organisation
-    ADD CONSTRAINT organisation_org_id_fkey FOREIGN KEY (org_id) REFERENCES party(pty_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.organisation
+    ADD CONSTRAINT organisation_org_id_fkey FOREIGN KEY (org_id) REFERENCES mochi.party(pty_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: party party_pty_typ_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: party_pty_typ_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY party
-    ADD CONSTRAINT party_pty_typ_id_fkey FOREIGN KEY (pty_typ_id) REFERENCES party_type(pty_typ_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.party
+    ADD CONSTRAINT party_pty_typ_id_fkey FOREIGN KEY (pty_typ_id) REFERENCES mochi.party_type(pty_typ_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: person person_person_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: person_person_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY person
-    ADD CONSTRAINT person_person_id_fkey FOREIGN KEY (psn_id) REFERENCES party(pty_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.person
+    ADD CONSTRAINT person_person_id_fkey FOREIGN KEY (psn_id) REFERENCES mochi.party(pty_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: product_attr_lcl product_attr_lcl_lcl_cd_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: product_attr_lcl_lcl_cd_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY product_attr_lcl
-    ADD CONSTRAINT product_attr_lcl_lcl_cd_fkey FOREIGN KEY (lcl_cd) REFERENCES locale(lcl_cd);
+ALTER TABLE ONLY mochi.product_attr_lcl
+    ADD CONSTRAINT product_attr_lcl_lcl_cd_fkey FOREIGN KEY (lcl_cd) REFERENCES mochi.locale(lcl_cd);
 
 
 --
--- Name: product_category product_category_cat_id_category_cat_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: product_category_cat_id_category_cat_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY product_category
-    ADD CONSTRAINT product_category_cat_id_category_cat_id_fkey FOREIGN KEY (cat_id) REFERENCES category(cat_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.product_category
+    ADD CONSTRAINT product_category_cat_id_category_cat_id_fkey FOREIGN KEY (cat_id) REFERENCES mochi.category(cat_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: product_category product_category_prd_id_product_prd_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: product_category_prd_id_product_prd_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY product_category
-    ADD CONSTRAINT product_category_prd_id_product_prd_id_fkey FOREIGN KEY (prd_id) REFERENCES product(prd_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.product_category
+    ADD CONSTRAINT product_category_prd_id_product_prd_id_fkey FOREIGN KEY (prd_id) REFERENCES mochi.product(prd_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: product product_sts_id_product_status_sts_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: product_sts_id_product_status_sts_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY product
-    ADD CONSTRAINT product_sts_id_product_status_sts_id_fkey FOREIGN KEY (prd_sts_id) REFERENCES product_status(prd_sts_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.product
+    ADD CONSTRAINT product_sts_id_product_status_sts_id_fkey FOREIGN KEY (prd_sts_id) REFERENCES mochi.product_status(prd_sts_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: product_tag product_tag_prd_id_product_prd_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: product_tag_prd_id_product_prd_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY product_tag
-    ADD CONSTRAINT product_tag_prd_id_product_prd_id_fkey FOREIGN KEY (prd_id) REFERENCES product(prd_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.product_tag
+    ADD CONSTRAINT product_tag_prd_id_product_prd_id_fkey FOREIGN KEY (prd_id) REFERENCES mochi.product(prd_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: product_tag product_tag_tag_id_tag_tag_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: product_tag_tag_id_tag_tag_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY product_tag
-    ADD CONSTRAINT product_tag_tag_id_tag_tag_id_fkey FOREIGN KEY (tag_id) REFERENCES tag(tag_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.product_tag
+    ADD CONSTRAINT product_tag_tag_id_tag_tag_id_fkey FOREIGN KEY (tag_id) REFERENCES mochi.tag(tag_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: product product_typ_id_product_type_typ_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: product_typ_id_product_type_typ_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY product
-    ADD CONSTRAINT product_typ_id_product_type_typ_id_fkey FOREIGN KEY (prd_typ_id) REFERENCES product_type(prd_typ_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.product
+    ADD CONSTRAINT product_typ_id_product_type_typ_id_fkey FOREIGN KEY (prd_typ_id) REFERENCES mochi.product_type(prd_typ_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: promotion_category promotion_category_cat_id_category_cat_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: promotion_category_cat_id_category_cat_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY promotion_category
-    ADD CONSTRAINT promotion_category_cat_id_category_cat_id_fkey FOREIGN KEY (cat_id) REFERENCES category(cat_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.promotion_category
+    ADD CONSTRAINT promotion_category_cat_id_category_cat_id_fkey FOREIGN KEY (cat_id) REFERENCES mochi.category(cat_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: promotion_category promotion_category_prm_id_promotion_prm_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: promotion_category_prm_id_promotion_prm_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY promotion_category
-    ADD CONSTRAINT promotion_category_prm_id_promotion_prm_id_fkey FOREIGN KEY (prm_id) REFERENCES promotion(prm_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.promotion_category
+    ADD CONSTRAINT promotion_category_prm_id_promotion_prm_id_fkey FOREIGN KEY (prm_id) REFERENCES mochi.promotion(prm_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: role role_party_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: role_party_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY role
-    ADD CONSTRAINT role_party_id_fkey FOREIGN KEY (pty_id) REFERENCES party(pty_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.role
+    ADD CONSTRAINT role_party_id_fkey FOREIGN KEY (pty_id) REFERENCES mochi.party(pty_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: role role_role_typ_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: role_role_typ_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY role
-    ADD CONSTRAINT role_role_typ_id_fkey FOREIGN KEY (rle_typ_id) REFERENCES role_type(rle_typ_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.role
+    ADD CONSTRAINT role_role_typ_id_fkey FOREIGN KEY (rle_typ_id) REFERENCES mochi.role_type(rle_typ_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: tag_attr_lcl tag_attr_lcl_lcl_cd_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: tag_attr_lcl_lcl_cd_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY tag_attr_lcl
-    ADD CONSTRAINT tag_attr_lcl_lcl_cd_fkey FOREIGN KEY (lcl_cd) REFERENCES locale(lcl_cd);
+ALTER TABLE ONLY mochi.tag_attr_lcl
+    ADD CONSTRAINT tag_attr_lcl_lcl_cd_fkey FOREIGN KEY (lcl_cd) REFERENCES mochi.locale(lcl_cd);
 
 
 --
--- Name: tag_attr_lcl tag_attr_lcl_tag_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: tag_attr_lcl_tag_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY tag_attr_lcl
-    ADD CONSTRAINT tag_attr_lcl_tag_id_fkey FOREIGN KEY (tag_id) REFERENCES tag(tag_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.tag_attr_lcl
+    ADD CONSTRAINT tag_attr_lcl_tag_id_fkey FOREIGN KEY (tag_id) REFERENCES mochi.tag(tag_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
-SET search_path = security, pg_catalog;
-
 --
--- Name: role_permission role_permission_permission; Type: FK CONSTRAINT; Schema: security; Owner: security_owner
+-- Name: role_permission_permission; Type: FK CONSTRAINT; Schema: security; Owner: security_owner
 --
 
-ALTER TABLE ONLY role_permission
-    ADD CONSTRAINT role_permission_permission FOREIGN KEY (permission_id) REFERENCES permission(id);
+ALTER TABLE ONLY security.role_permission
+    ADD CONSTRAINT role_permission_permission FOREIGN KEY (permission_id) REFERENCES security.permission(id);
 
 
 --
--- Name: role_permission role_permission_role; Type: FK CONSTRAINT; Schema: security; Owner: security_owner
+-- Name: role_permission_role; Type: FK CONSTRAINT; Schema: security; Owner: security_owner
 --
 
-ALTER TABLE ONLY role_permission
-    ADD CONSTRAINT role_permission_role FOREIGN KEY (role_id) REFERENCES role(id);
+ALTER TABLE ONLY security.role_permission
+    ADD CONSTRAINT role_permission_role FOREIGN KEY (role_id) REFERENCES security.role(id);
 
 
 --
--- Name: user_role user_role_role; Type: FK CONSTRAINT; Schema: security; Owner: security_owner
+-- Name: user_role_role; Type: FK CONSTRAINT; Schema: security; Owner: security_owner
 --
 
-ALTER TABLE ONLY user_role
-    ADD CONSTRAINT user_role_role FOREIGN KEY (role_id) REFERENCES role(id);
+ALTER TABLE ONLY security.user_role
+    ADD CONSTRAINT user_role_role FOREIGN KEY (role_id) REFERENCES security.role(id);
 
 
 --
--- Name: user_role user_role_user_; Type: FK CONSTRAINT; Schema: security; Owner: security_owner
+-- Name: user_role_user_; Type: FK CONSTRAINT; Schema: security; Owner: security_owner
 --
 
-ALTER TABLE ONLY user_role
-    ADD CONSTRAINT user_role_user_ FOREIGN KEY (pty_id) REFERENCES user_(pty_id);
+ALTER TABLE ONLY security.user_role
+    ADD CONSTRAINT user_role_user_ FOREIGN KEY (pty_id) REFERENCES security.user_(pty_id);
 
 
 --
--- Name: user_ users__party; Type: FK CONSTRAINT; Schema: security; Owner: security_owner
+-- Name: users__party; Type: FK CONSTRAINT; Schema: security; Owner: security_owner
 --
 
-ALTER TABLE ONLY user_
+ALTER TABLE ONLY security.user_
     ADD CONSTRAINT users__party FOREIGN KEY (pty_id) REFERENCES mochi.party(pty_id);
 
 
 --
--- Name: mochi; Type: ACL; Schema: -; Owner: mochidb_owner
+-- Name: SCHEMA mochi; Type: ACL; Schema: -; Owner: mochidb_owner
 --
 
+REVOKE ALL ON SCHEMA mochi FROM PUBLIC;
+REVOKE ALL ON SCHEMA mochi FROM mochidb_owner;
+GRANT ALL ON SCHEMA mochi TO mochidb_owner;
 GRANT USAGE ON SCHEMA mochi TO mochi_app;
 GRANT ALL ON SCHEMA mochi TO security_owner;
 GRANT USAGE ON SCHEMA mochi TO security_app;
 
 
 --
--- Name: public; Type: ACL; Schema: -; Owner: danielmackie
+-- Name: SCHEMA public; Type: ACL; Schema: -; Owner: postgres
 --
 
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
 GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
 --
--- Name: security; Type: ACL; Schema: -; Owner: security_owner
+-- Name: SCHEMA security; Type: ACL; Schema: -; Owner: security_owner
 --
 
+REVOKE ALL ON SCHEMA security FROM PUBLIC;
+REVOKE ALL ON SCHEMA security FROM security_owner;
+GRANT ALL ON SCHEMA security TO security_owner;
 GRANT USAGE ON SCHEMA security TO mochi_app;
 GRANT USAGE ON SCHEMA security TO security_app;
 
 
-SET search_path = mochi, pg_catalog;
-
 --
--- Name: brand_bnd_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: SEQUENCE brand_bnd_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,USAGE ON SEQUENCE brand_bnd_id_seq TO mochi_app;
+REVOKE ALL ON SEQUENCE mochi.brand_bnd_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE mochi.brand_bnd_id_seq FROM mochidb_owner;
+GRANT ALL ON SEQUENCE mochi.brand_bnd_id_seq TO mochidb_owner;
+GRANT SELECT,USAGE ON SEQUENCE mochi.brand_bnd_id_seq TO mochi_app;
 
 
 --
--- Name: brand; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE brand; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE brand TO mochi_app;
+REVOKE ALL ON TABLE mochi.brand FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.brand FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.brand TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.brand TO mochi_app;
 
 
 --
--- Name: brand_attr_lcl; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE brand_attr_lcl; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE brand_attr_lcl TO mochi_app;
+REVOKE ALL ON TABLE mochi.brand_attr_lcl FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.brand_attr_lcl FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.brand_attr_lcl TO mochidb_owner;
+GRANT SELECT ON TABLE mochi.brand_attr_lcl TO mochi_app;
 
 
 --
--- Name: brand_category; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE brand_category; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE brand_category TO mochi_app;
+REVOKE ALL ON TABLE mochi.brand_category FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.brand_category FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.brand_category TO mochidb_owner;
+GRANT SELECT ON TABLE mochi.brand_category TO mochi_app;
 
 
 --
--- Name: category; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE category; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE category TO mochi_app;
+REVOKE ALL ON TABLE mochi.category FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.category FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.category TO mochidb_owner;
+GRANT SELECT ON TABLE mochi.category TO mochi_app;
 
 
 --
--- Name: category_attr_lcl; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE category_attr_lcl; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE category_attr_lcl TO mochi_app;
+REVOKE ALL ON TABLE mochi.category_attr_lcl FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.category_attr_lcl FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.category_attr_lcl TO mochidb_owner;
+GRANT SELECT ON TABLE mochi.category_attr_lcl TO mochi_app;
 
 
 --
--- Name: category_brand; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE category_brand; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE category_brand TO mochi_app;
+REVOKE ALL ON TABLE mochi.category_brand FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.category_brand FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.category_brand TO mochidb_owner;
+GRANT SELECT ON TABLE mochi.category_brand TO mochi_app;
 
 
 --
--- Name: category_product; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE category_product; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE category_product TO mochi_app;
+REVOKE ALL ON TABLE mochi.category_product FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.category_product FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.category_product TO mochidb_owner;
+GRANT SELECT ON TABLE mochi.category_product TO mochi_app;
 
 
 --
--- Name: category_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE category_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE category_type TO mochi_app;
+REVOKE ALL ON TABLE mochi.category_type FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.category_type FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.category_type TO mochidb_owner;
+GRANT SELECT ON TABLE mochi.category_type TO mochi_app;
 
 
 --
--- Name: currency; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE currency; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE currency TO mochi_app;
+REVOKE ALL ON TABLE mochi.currency FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.currency FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.currency TO mochidb_owner;
+GRANT SELECT ON TABLE mochi.currency TO mochi_app;
 
 
 --
--- Name: customer_cst_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: SEQUENCE customer_cst_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,USAGE ON SEQUENCE customer_cst_id_seq TO mochi_app;
+REVOKE ALL ON SEQUENCE mochi.customer_cst_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE mochi.customer_cst_id_seq FROM mochidb_owner;
+GRANT ALL ON SEQUENCE mochi.customer_cst_id_seq TO mochidb_owner;
+GRANT SELECT,USAGE ON SEQUENCE mochi.customer_cst_id_seq TO mochi_app;
 
 
 --
--- Name: customer; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE customer; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE customer TO mochi_app;
-GRANT SELECT ON TABLE customer TO security_app;
+REVOKE ALL ON TABLE mochi.customer FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.customer FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.customer TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.customer TO mochi_app;
+GRANT SELECT ON TABLE mochi.customer TO security_app;
 
 
 --
--- Name: hibernate_sequence; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: SEQUENCE hibernate_sequence; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,USAGE ON SEQUENCE hibernate_sequence TO mochi_app;
+REVOKE ALL ON SEQUENCE mochi.hibernate_sequence FROM PUBLIC;
+REVOKE ALL ON SEQUENCE mochi.hibernate_sequence FROM mochidb_owner;
+GRANT ALL ON SEQUENCE mochi.hibernate_sequence TO mochidb_owner;
+GRANT SELECT,USAGE ON SEQUENCE mochi.hibernate_sequence TO mochi_app;
 
 
 --
--- Name: hierarchy_hir_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: SEQUENCE hierarchy_hir_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,USAGE ON SEQUENCE hierarchy_hir_id_seq TO mochi_app;
+REVOKE ALL ON SEQUENCE mochi.hierarchy_hir_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE mochi.hierarchy_hir_id_seq FROM mochidb_owner;
+GRANT ALL ON SEQUENCE mochi.hierarchy_hir_id_seq TO mochidb_owner;
+GRANT SELECT,USAGE ON SEQUENCE mochi.hierarchy_hir_id_seq TO mochi_app;
 
 
 --
--- Name: hierarchy; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE hierarchy; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE hierarchy TO mochi_app;
+REVOKE ALL ON TABLE mochi.hierarchy FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.hierarchy FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.hierarchy TO mochidb_owner;
+GRANT SELECT ON TABLE mochi.hierarchy TO mochi_app;
 
 
 --
--- Name: layout; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE layout; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE layout TO mochi_app;
+REVOKE ALL ON TABLE mochi.layout FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.layout FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.layout TO mochidb_owner;
+GRANT SELECT ON TABLE mochi.layout TO mochi_app;
 
 
 --
--- Name: layout_category; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE layout_category; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE layout_category TO mochi_app;
+REVOKE ALL ON TABLE mochi.layout_category FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.layout_category FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.layout_category TO mochidb_owner;
+GRANT SELECT ON TABLE mochi.layout_category TO mochi_app;
 
 
 --
--- Name: order; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE "order"; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE "order" TO mochi_app;
+REVOKE ALL ON TABLE mochi."order" FROM PUBLIC;
+REVOKE ALL ON TABLE mochi."order" FROM mochidb_owner;
+GRANT ALL ON TABLE mochi."order" TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi."order" TO mochi_app;
 
 
 --
--- Name: order_line; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE order_line; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE order_line TO mochi_app;
+REVOKE ALL ON TABLE mochi.order_line FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.order_line FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.order_line TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.order_line TO mochi_app;
 
 
 --
--- Name: organisation; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE organisation; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE organisation TO mochi_app;
-GRANT SELECT ON TABLE organisation TO security_app;
+REVOKE ALL ON TABLE mochi.organisation FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.organisation FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.organisation TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.organisation TO mochi_app;
+GRANT SELECT ON TABLE mochi.organisation TO security_app;
 
 
 --
--- Name: party; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE party; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE party TO mochi_app;
-GRANT SELECT ON TABLE party TO security_app;
+REVOKE ALL ON TABLE mochi.party FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.party FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.party TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.party TO mochi_app;
+GRANT SELECT ON TABLE mochi.party TO security_app;
 
 
 --
--- Name: party_party_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: SEQUENCE party_party_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,USAGE ON SEQUENCE party_party_id_seq TO mochi_app;
+REVOKE ALL ON SEQUENCE mochi.party_party_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE mochi.party_party_id_seq FROM mochidb_owner;
+GRANT ALL ON SEQUENCE mochi.party_party_id_seq TO mochidb_owner;
+GRANT SELECT,USAGE ON SEQUENCE mochi.party_party_id_seq TO mochi_app;
 
 
 --
--- Name: party_pty_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: SEQUENCE party_pty_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,USAGE ON SEQUENCE party_pty_id_seq TO mochi_app;
+REVOKE ALL ON SEQUENCE mochi.party_pty_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE mochi.party_pty_id_seq FROM mochidb_owner;
+GRANT ALL ON SEQUENCE mochi.party_pty_id_seq TO mochidb_owner;
+GRANT SELECT,USAGE ON SEQUENCE mochi.party_pty_id_seq TO mochi_app;
 
 
 --
--- Name: party_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE party_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE party_type TO mochi_app;
-GRANT SELECT ON TABLE party_type TO security_app;
+REVOKE ALL ON TABLE mochi.party_type FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.party_type FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.party_type TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.party_type TO mochi_app;
+GRANT SELECT ON TABLE mochi.party_type TO security_app;
 
 
 --
--- Name: party_type_pty_typ_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: SEQUENCE party_type_pty_typ_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,USAGE ON SEQUENCE party_type_pty_typ_id_seq TO mochi_app;
+REVOKE ALL ON SEQUENCE mochi.party_type_pty_typ_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE mochi.party_type_pty_typ_id_seq FROM mochidb_owner;
+GRANT ALL ON SEQUENCE mochi.party_type_pty_typ_id_seq TO mochidb_owner;
+GRANT SELECT,USAGE ON SEQUENCE mochi.party_type_pty_typ_id_seq TO mochi_app;
 
 
 --
--- Name: person; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE person; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE person TO mochi_app;
-GRANT SELECT ON TABLE person TO security_app;
+REVOKE ALL ON TABLE mochi.person FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.person FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.person TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.person TO mochi_app;
+GRANT SELECT ON TABLE mochi.person TO security_app;
 
 
 --
--- Name: person_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: SEQUENCE person_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,USAGE ON SEQUENCE person_id_seq TO mochi_app;
+REVOKE ALL ON SEQUENCE mochi.person_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE mochi.person_id_seq FROM mochidb_owner;
+GRANT ALL ON SEQUENCE mochi.person_id_seq TO mochidb_owner;
+GRANT SELECT,USAGE ON SEQUENCE mochi.person_id_seq TO mochi_app;
 
 
 --
--- Name: price_prc_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: SEQUENCE price_prc_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,USAGE ON SEQUENCE price_prc_id_seq TO mochi_app;
+REVOKE ALL ON SEQUENCE mochi.price_prc_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE mochi.price_prc_id_seq FROM mochidb_owner;
+GRANT ALL ON SEQUENCE mochi.price_prc_id_seq TO mochidb_owner;
+GRANT SELECT,USAGE ON SEQUENCE mochi.price_prc_id_seq TO mochi_app;
 
 
 --
--- Name: price; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE price; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE price TO mochi_app;
+REVOKE ALL ON TABLE mochi.price FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.price FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.price TO mochidb_owner;
+GRANT SELECT ON TABLE mochi.price TO mochi_app;
 
 
 --
--- Name: price_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE price_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE price_type TO mochi_app;
+REVOKE ALL ON TABLE mochi.price_type FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.price_type FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.price_type TO mochidb_owner;
+GRANT SELECT ON TABLE mochi.price_type TO mochi_app;
 
 
 --
--- Name: product; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE product; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE product TO mochi_app;
+REVOKE ALL ON TABLE mochi.product FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.product FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.product TO mochidb_owner;
+GRANT SELECT ON TABLE mochi.product TO mochi_app;
 
 
 --
--- Name: product_attr_lcl; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE product_attr_lcl; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE product_attr_lcl TO mochi_app;
+REVOKE ALL ON TABLE mochi.product_attr_lcl FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.product_attr_lcl FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.product_attr_lcl TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.product_attr_lcl TO mochi_app;
 
 
 --
--- Name: product_category; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE product_category; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE product_category TO mochi_app;
+REVOKE ALL ON TABLE mochi.product_category FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.product_category FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.product_category TO mochidb_owner;
+GRANT SELECT ON TABLE mochi.product_category TO mochi_app;
 
 
 --
--- Name: product_status; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE product_status; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE product_status TO mochi_app;
+REVOKE ALL ON TABLE mochi.product_status FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.product_status FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.product_status TO mochidb_owner;
+GRANT SELECT ON TABLE mochi.product_status TO mochi_app;
 
 
 --
--- Name: product_tag; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE product_tag; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE product_tag TO mochi_app;
+REVOKE ALL ON TABLE mochi.product_tag FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.product_tag FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.product_tag TO mochidb_owner;
+GRANT SELECT ON TABLE mochi.product_tag TO mochi_app;
 
 
 --
--- Name: product_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE product_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE product_type TO mochi_app;
+REVOKE ALL ON TABLE mochi.product_type FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.product_type FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.product_type TO mochidb_owner;
+GRANT SELECT ON TABLE mochi.product_type TO mochi_app;
 
 
 --
--- Name: promotion_category; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE promotion_category; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE promotion_category TO mochi_app;
+REVOKE ALL ON TABLE mochi.promotion_category FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.promotion_category FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.promotion_category TO mochidb_owner;
+GRANT SELECT ON TABLE mochi.promotion_category TO mochi_app;
 
 
 --
--- Name: role_rle_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: SEQUENCE role_rle_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,USAGE ON SEQUENCE role_rle_id_seq TO mochi_app;
+REVOKE ALL ON SEQUENCE mochi.role_rle_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE mochi.role_rle_id_seq FROM mochidb_owner;
+GRANT ALL ON SEQUENCE mochi.role_rle_id_seq TO mochidb_owner;
+GRANT SELECT,USAGE ON SEQUENCE mochi.role_rle_id_seq TO mochi_app;
 
 
 --
--- Name: role; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE role; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role TO mochi_app;
-GRANT SELECT ON TABLE role TO security_app;
+REVOKE ALL ON TABLE mochi.role FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.role FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.role TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.role TO mochi_app;
+GRANT SELECT ON TABLE mochi.role TO security_app;
 
 
 --
--- Name: role_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE role_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role_type TO mochi_app;
-GRANT SELECT ON TABLE role_type TO security_app;
+REVOKE ALL ON TABLE mochi.role_type FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.role_type FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.role_type TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.role_type TO mochi_app;
+GRANT SELECT ON TABLE mochi.role_type TO security_app;
 
 
 --
--- Name: role_type_rle_typ_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: SEQUENCE role_type_rle_typ_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,USAGE ON SEQUENCE role_type_rle_typ_id_seq TO mochi_app;
+REVOKE ALL ON SEQUENCE mochi.role_type_rle_typ_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE mochi.role_type_rle_typ_id_seq FROM mochidb_owner;
+GRANT ALL ON SEQUENCE mochi.role_type_rle_typ_id_seq TO mochidb_owner;
+GRANT SELECT,USAGE ON SEQUENCE mochi.role_type_rle_typ_id_seq TO mochi_app;
 
 
 --
--- Name: role_type_role_typ_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: SEQUENCE role_type_role_typ_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,USAGE ON SEQUENCE role_type_role_typ_id_seq TO mochi_app;
+REVOKE ALL ON SEQUENCE mochi.role_type_role_typ_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE mochi.role_type_role_typ_id_seq FROM mochidb_owner;
+GRANT ALL ON SEQUENCE mochi.role_type_role_typ_id_seq TO mochidb_owner;
+GRANT SELECT,USAGE ON SEQUENCE mochi.role_type_role_typ_id_seq TO mochi_app;
 
 
 --
--- Name: tag; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE tag; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE tag TO mochi_app;
+REVOKE ALL ON TABLE mochi.tag FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.tag FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.tag TO mochidb_owner;
+GRANT SELECT ON TABLE mochi.tag TO mochi_app;
 
 
 --
--- Name: tag_attr_lcl; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE tag_attr_lcl; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
-
-GRANT SELECT ON TABLE tag_attr_lcl TO mochi_app;
 
+REVOKE ALL ON TABLE mochi.tag_attr_lcl FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.tag_attr_lcl FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.tag_attr_lcl TO mochidb_owner;
+GRANT SELECT ON TABLE mochi.tag_attr_lcl TO mochi_app;
 
-SET search_path = security, pg_catalog;
 
 --
--- Name: permission; Type: ACL; Schema: security; Owner: security_owner
+-- Name: TABLE permission; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE permission TO security_app;
-GRANT SELECT ON TABLE permission TO mochi_app;
+REVOKE ALL ON TABLE security.permission FROM PUBLIC;
+REVOKE ALL ON TABLE security.permission FROM security_owner;
+GRANT ALL ON TABLE security.permission TO security_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE security.permission TO security_app;
+GRANT SELECT ON TABLE security.permission TO mochi_app;
 
 
 --
--- Name: authority_id_seq; Type: ACL; Schema: security; Owner: security_owner
+-- Name: SEQUENCE authority_id_seq; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,USAGE ON SEQUENCE authority_id_seq TO mochi_app;
+REVOKE ALL ON SEQUENCE security.authority_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE security.authority_id_seq FROM security_owner;
+GRANT ALL ON SEQUENCE security.authority_id_seq TO security_owner;
+GRANT SELECT,USAGE ON SEQUENCE security.authority_id_seq TO mochi_app;
 
 
 --
--- Name: clientdetails; Type: ACL; Schema: security; Owner: security_owner
+-- Name: TABLE clientdetails; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE clientdetails TO security_app;
+REVOKE ALL ON TABLE security.clientdetails FROM PUBLIC;
+REVOKE ALL ON TABLE security.clientdetails FROM security_owner;
+GRANT ALL ON TABLE security.clientdetails TO security_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE security.clientdetails TO security_app;
 
 
 --
--- Name: oauth_access_token; Type: ACL; Schema: security; Owner: security_owner
+-- Name: TABLE oauth_access_token; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_access_token TO security_app;
+REVOKE ALL ON TABLE security.oauth_access_token FROM PUBLIC;
+REVOKE ALL ON TABLE security.oauth_access_token FROM security_owner;
+GRANT ALL ON TABLE security.oauth_access_token TO security_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE security.oauth_access_token TO security_app;
 
 
 --
--- Name: oauth_approvals; Type: ACL; Schema: security; Owner: security_owner
+-- Name: TABLE oauth_approvals; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_approvals TO security_app;
+REVOKE ALL ON TABLE security.oauth_approvals FROM PUBLIC;
+REVOKE ALL ON TABLE security.oauth_approvals FROM security_owner;
+GRANT ALL ON TABLE security.oauth_approvals TO security_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE security.oauth_approvals TO security_app;
 
 
 --
--- Name: oauth_client_details; Type: ACL; Schema: security; Owner: security_owner
+-- Name: TABLE oauth_client_details; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_client_details TO security_app;
+REVOKE ALL ON TABLE security.oauth_client_details FROM PUBLIC;
+REVOKE ALL ON TABLE security.oauth_client_details FROM security_owner;
+GRANT ALL ON TABLE security.oauth_client_details TO security_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE security.oauth_client_details TO security_app;
 
 
 --
--- Name: oauth_client_token; Type: ACL; Schema: security; Owner: security_owner
+-- Name: TABLE oauth_client_token; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_client_token TO security_app;
+REVOKE ALL ON TABLE security.oauth_client_token FROM PUBLIC;
+REVOKE ALL ON TABLE security.oauth_client_token FROM security_owner;
+GRANT ALL ON TABLE security.oauth_client_token TO security_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE security.oauth_client_token TO security_app;
 
 
 --
--- Name: oauth_code; Type: ACL; Schema: security; Owner: security_owner
+-- Name: TABLE oauth_code; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_code TO security_app;
+REVOKE ALL ON TABLE security.oauth_code FROM PUBLIC;
+REVOKE ALL ON TABLE security.oauth_code FROM security_owner;
+GRANT ALL ON TABLE security.oauth_code TO security_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE security.oauth_code TO security_app;
 
 
 --
--- Name: oauth_refresh_token; Type: ACL; Schema: security; Owner: security_owner
+-- Name: TABLE oauth_refresh_token; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_refresh_token TO security_app;
+REVOKE ALL ON TABLE security.oauth_refresh_token FROM PUBLIC;
+REVOKE ALL ON TABLE security.oauth_refresh_token FROM security_owner;
+GRANT ALL ON TABLE security.oauth_refresh_token TO security_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE security.oauth_refresh_token TO security_app;
 
 
 --
--- Name: role; Type: ACL; Schema: security; Owner: security_owner
+-- Name: TABLE role; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role TO security_app;
-GRANT SELECT ON TABLE role TO mochi_app;
+REVOKE ALL ON TABLE security.role FROM PUBLIC;
+REVOKE ALL ON TABLE security.role FROM security_owner;
+GRANT ALL ON TABLE security.role TO security_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE security.role TO security_app;
+GRANT SELECT ON TABLE security.role TO mochi_app;
 
 
 --
--- Name: role_permission; Type: ACL; Schema: security; Owner: security_owner
+-- Name: TABLE role_permission; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role_permission TO security_app;
-GRANT SELECT ON TABLE role_permission TO mochi_app;
+REVOKE ALL ON TABLE security.role_permission FROM PUBLIC;
+REVOKE ALL ON TABLE security.role_permission FROM security_owner;
+GRANT ALL ON TABLE security.role_permission TO security_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE security.role_permission TO security_app;
+GRANT SELECT ON TABLE security.role_permission TO mochi_app;
 
 
 --
--- Name: user_; Type: ACL; Schema: security; Owner: security_owner
+-- Name: TABLE user_; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_ TO mochi_app;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_ TO security_app;
+REVOKE ALL ON TABLE security.user_ FROM PUBLIC;
+REVOKE ALL ON TABLE security.user_ FROM security_owner;
+GRANT ALL ON TABLE security.user_ TO security_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE security.user_ TO mochi_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE security.user_ TO security_app;
 
 
 --
--- Name: user_role_id_seq; Type: ACL; Schema: security; Owner: security_owner
+-- Name: SEQUENCE user_role_id_seq; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT USAGE ON SEQUENCE user_role_id_seq TO mochi_app;
+REVOKE ALL ON SEQUENCE security.user_role_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE security.user_role_id_seq FROM security_owner;
+GRANT ALL ON SEQUENCE security.user_role_id_seq TO security_owner;
+GRANT USAGE ON SEQUENCE security.user_role_id_seq TO mochi_app;
 
 
 --
--- Name: user_role; Type: ACL; Schema: security; Owner: security_owner
+-- Name: TABLE user_role; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_role TO mochi_app;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_role TO security_app;
+REVOKE ALL ON TABLE security.user_role FROM PUBLIC;
+REVOKE ALL ON TABLE security.user_role FROM security_owner;
+GRANT ALL ON TABLE security.user_role TO security_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE security.user_role TO mochi_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE security.user_role TO security_app;
 
 
 --
