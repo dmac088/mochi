@@ -1103,7 +1103,8 @@ CREATE VIEW mochi.vw_category_brand AS
     p.hir_id,
     p.cat_typ_id,
     p.cat_prnt_id,
-    count(DISTINCT bnd.bnd_cd) AS brand_count
+    count(DISTINCT bnd.bnd_cd) AS brand_count,
+    count(DISTINCT cc.cat_cd) AS child_cat_count
    FROM (((mochi.category p
      JOIN LATERAL mochi.ft_categories((p.cat_cd)::text) cc(cat_id, cat_cd, cat_prnt_id, cat_typ_id) ON ((1 = 1)))
      JOIN mochi.brand_category pc ON ((cc.cat_id = pc.cat_id)))
@@ -1125,7 +1126,8 @@ CREATE VIEW mochi.vw_category_product AS
     p.hir_id,
     p.cat_typ_id,
     p.cat_prnt_id,
-    count(DISTINCT prd.upc_cd) AS product_count
+    count(DISTINCT prd.upc_cd) AS product_count,
+    count(DISTINCT cc.cat_cd) AS child_cat_count
    FROM (((mochi.category p
      JOIN LATERAL mochi.ft_categories((p.cat_cd)::text) cc(cat_id, cat_cd, cat_prnt_id, cat_typ_id) ON ((1 = 1)))
      JOIN mochi.product_category pc ON ((cc.cat_id = pc.cat_id)))
