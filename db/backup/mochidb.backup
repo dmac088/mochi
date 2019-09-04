@@ -1097,15 +1097,19 @@ ALTER TABLE mochi.tag_attr_lcl OWNER TO mochidb_owner;
 --
 
 CREATE VIEW mochi.vw_category_brand AS
- SELECT p.cat_id AS parent_cat_id,
-    p.cat_cd AS parent_cat_cd,
+ SELECT p.cat_id,
+    p.cat_cd,
+    p.cat_lvl,
+    p.hir_id,
+    p.cat_typ_id,
+    p.cat_prnt_id,
     count(DISTINCT bnd.bnd_cd) AS brand_count
    FROM (((mochi.category p
      JOIN LATERAL mochi.ft_categories((p.cat_cd)::text) cc(cat_id, cat_cd, cat_prnt_id, cat_typ_id) ON ((1 = 1)))
      JOIN mochi.brand_category pc ON ((cc.cat_id = pc.cat_id)))
      JOIN mochi.brand bnd ON ((pc.bnd_id = bnd.bnd_id)))
   WHERE (cc.cat_typ_id = 2)
-  GROUP BY p.cat_id, p.cat_cd;
+  GROUP BY p.cat_id, p.cat_cd, p.cat_lvl, p.hir_id, p.cat_typ_id, p.cat_prnt_id;
 
 
 ALTER TABLE mochi.vw_category_brand OWNER TO mochidb_owner;
