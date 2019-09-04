@@ -63,8 +63,6 @@ public abstract class Category {
 	@JoinColumn(name="hir_id", insertable=false, updatable=false)
 	@JsonBackReference
 	private Hierarchy hierarchy;
-
-
     
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "layout_category", schema="mochi", 
@@ -94,6 +92,8 @@ public abstract class Category {
 	})
 	private List<Category> children;	
 
+	@Column(name="child_cat_count")
+	private Long childCount;
 	
 	@Field(analyze = Analyze.NO)
 	@Facet
@@ -158,6 +158,10 @@ public abstract class Category {
 
 	public List<Category> getChildren() {
 		return children;
+	}
+	
+	public Long getChildCount() {
+		return childCount;
 	}
 	
 	public Category getParent() {

@@ -19,6 +19,7 @@ public abstract class Category_ {
 	public static volatile SingularAttribute<Category, Long> categoryLevel;
 	public static volatile SingularAttribute<Category, Hierarchy> hierarchy;
 	public static volatile ListAttribute<Category, CategoryAttribute> attributes;
+	public static volatile SingularAttribute<Category, Long> childCount;
 	public static volatile SingularAttribute<Category, String> categoryCode;
 	public static volatile ListAttribute<Category, Layout> layouts;
 	public static volatile SingularAttribute<Category, Long> categoryId;
