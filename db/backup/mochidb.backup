@@ -1099,7 +1099,7 @@ ALTER TABLE mochi.tag_attr_lcl OWNER TO mochidb_owner;
 CREATE VIEW mochi.vw_category_brand AS
  SELECT p.cat_id AS parent_cat_id,
     p.cat_cd AS parent_cat_cd,
-    count(DISTINCT bnd.bnd_cd) AS product_count
+    count(DISTINCT bnd.bnd_cd) AS brand_count
    FROM (((mochi.category p
      JOIN LATERAL mochi.ft_categories((p.cat_cd)::text) cc(cat_id, cat_cd, cat_prnt_id, cat_typ_id) ON ((1 = 1)))
      JOIN mochi.brand_category pc ON ((cc.cat_id = pc.cat_id)))
