@@ -21,6 +21,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Facet;
@@ -92,7 +94,7 @@ public abstract class Category {
 	})
 	private List<Category> children;	
 
-	@Column(name="child_cat_count")
+	@Transient
 	private Long childCount;
 	
 	@Field(analyze = Analyze.NO)

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.Brand;
 import io.nzbee.domain.Category;
+import io.nzbee.domain.ProductCategory;
 import io.nzbee.domain.Tag;
 import io.nzbee.domain.services.brand.IBrandService;
 import io.nzbee.domain.services.category.ICategoryService;
@@ -45,6 +46,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 									NavFacet<Category> cnf = this.convertCatToNavFacet(c);
 									cnf.setFacetMaxMarkdownPrice(productService.getMaxPriceForCategory(c, currency));	
 									cnf.setFacetProductCount(productService.getCountForCategory(c));
+									cnf.setFacetProductCount((c instanceof ProductCategory) ? ((ProductCategory) c).getProductCount() : 0);
 									return cnf;
 							}).collect(Collectors.toList()).stream()
 							  //.filter(nf -> nf.getFacetProductCount() > 0)
@@ -85,10 +87,13 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		List<Category> categories = categoryService.findAll(locale, categoryDesc, lb, lt);
 		List<Brand> brands = brandService.findAll(locale, currency, categoryDesc, lc, lt);
 		List<Tag> tags = tagService.findAll(locale, currency, categoryDesc, lc, lb);
+		boolean allNUll = tags.isEmpty() && brands.isEmpty() && categories.isEmpty();
 	
 		List<NavFacet<Category>> catBars = categories.stream().map(c -> {
 			NavFacet<Category> s = convertCatToNavFacet(c);
-			s.setFacetProductCount(this.getCountForCategory(locale, currency, categoryDesc, c, lb, lt));
+			s.setFacetProductCount( allNUll 
+										? (c instanceof ProductCategory) ? ((ProductCategory) c).getProductCount() : 0
+										: this.getCountForCategory(locale, currency, categoryDesc, c, lb, lt));
 			return s;
 		}).collect(Collectors.toList()).stream()
 			.filter(c -> c.getFacetProductCount() > 0)
