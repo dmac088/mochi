@@ -45,6 +45,9 @@ public interface IProductService extends IService<Product> {
 
 	List<Product> findAll(String locale, String currency, List<String> productCodes);
 
+	Page<Product> findAll(String locale, String currency, String categoryDesc, int page, int size, String sortBy,
+			List<Category> categories, List<Brand> brands, List<Tag> tags);
+
 	
 
 	

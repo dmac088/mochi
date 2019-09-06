@@ -87,8 +87,6 @@ public class ProductServiceImpl implements IProductService {
 					categoryCodes.isEmpty() 	? this.getAllChildCodes(categoryDesc, locale).stream().collect(Collectors.toList())
 												: categoryCodes,
 					locale,
-					new Double(-1),
-					new Double(-1),
 					priceType,
 					currency,
 					priceDateStart,

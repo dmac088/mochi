@@ -52,5 +52,32 @@ public class NavigationServiceImpl extends UIService implements INavigationServi
 		//search.setFacets(selectedFacets);
 		return search;
 	}
+	
+	@Override
+	public Search findAll(String locale, 
+			 String currency, 
+			 String categoryDesc,
+			 int page, 
+			 int size, 
+			 String sortBy, 
+			 NavFacetContainer selectedFacets) {
+
+		
+		Page<Product> pp = productService.findAll(locale, 
+												  currency, 
+												  categoryDesc, 
+												  page, 
+												  size, 
+												  sortBy, 
+												  selectedFacets.getProductCategories().stream().map(c -> c.getPayload()).collect(Collectors.toList()), 
+												  selectedFacets.getBrands().stream().map(b -> b.getPayload()).collect(Collectors.toList()),
+												  selectedFacets.getTags().stream().map(t -> t.getPayload()).collect(Collectors.toList()));
+		
+		//add the page of objects to a new Search object and return it 
+		Search search = new Search();
+		search.setProducts(pp);
+		//search.setFacets(selectedFacets);
+		return search;
+	}
     
 }
