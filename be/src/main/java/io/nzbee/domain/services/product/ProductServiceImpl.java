@@ -98,33 +98,38 @@ public class ProductServiceImpl implements IProductService {
      	return ppa.map(pa -> this.convertToProductDO(pa, locale, currency));
 	}
     
-//    @Override
-//	//@Cacheable
-//	public Page<Product> findAll(String locale, 
-//								 String currency, 
-//								 String categoryDesc, 
-//								 int page, 
-//								 int size, 
-//								 String sortBy, 
-//								 List<Category> categories,
-//								 List<Brand> brands,
-//								 List<Tag> tags) {
-//	
-//     	Page<io.nzbee.entity.product.Product> ppa = 
-//     			productService.findAll( categoryDesc,
-//     									categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
-//     									locale, 
-//     									ProductVars.MARKDOWN_SKU_DESCRIPTION, 
-//     									currency, 
-//     									new Date(), 
-//     									new Date(), 
-//     									PageRequest.of(page, size, this.sortByParam(sortBy)), 
-//     									brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()), 
-//     									tags.stream().map(t -> t.getTagCode()).collect(Collectors.toList()));
-//
-//     	return ppa.map(pa -> this.convertToProductDO(pa, locale, currency));
-//	}
+    @Override
+    @Cacheable(value="products")
+	public Page<Product> findAll(String locale, 
+								 String currency, 
+								 String categoryDesc, 
+								 int page, 
+								 int size, 
+								 String sortBy, 
+								 List<Category> categories,
+								 List<Brand> brands,
+								 List<Tag> tags) {
 	
+    	//we need to convert to lists of IDs or codes here
+    	
+    	
+    	
+     	Page<io.nzbee.entity.product.Product> ppa = 
+     			productService.findAll( categoryDesc,
+     									categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
+     									locale, 
+     									ProductVars.MARKDOWN_SKU_DESCRIPTION, 
+     									currency, 
+     									new Date(), 
+     									new Date(), 
+     									PageRequest.of(page, size, this.sortByParam(sortBy)), 
+     									brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()), 
+     									tags.stream().map(t -> t.getTagCode()).collect(Collectors.toList()));
+
+     	return ppa.map(pa -> this.convertToProductDO(pa, locale, currency));
+	}
+    
+    
     @Override
 	@Cacheable(value="selectedProducts")
 	public List<Product> findAll(String locale, String currency, List<String> productCodes) {

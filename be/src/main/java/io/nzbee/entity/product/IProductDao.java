@@ -31,5 +31,8 @@ public interface IProductDao extends IDao<Product> {
 			List<String> brandCodes, List<String> tagCodes);
 
 	List<Product> getAll(String locale, String currency, List<String> productCodes);
+
+	Page<Product> findAllActiveSKUByCode(List<String> categoryCodes, String locale, String priceType, String currency,
+			Date priceDateStart, Date priceDateEnd, Pageable pageable, List<String> brandCodes, List<String> tagCodes);
 	
 }

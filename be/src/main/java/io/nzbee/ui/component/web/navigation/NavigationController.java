@@ -28,5 +28,15 @@ public class NavigationController {
 	   	return navigationService.findAll(locale, currency, category, price, page, size, sortBy, selectedFacets);
 	}
 
+	@PostMapping("/Product/{locale}/{currency}/category/{category}/page/{page}/size/{size}/sortBy/{sortBy}")
+	public Search getProducts(	@PathVariable String locale, 
+								@PathVariable String currency, 
+								@PathVariable String category,
+								@PathVariable int page, 
+								@PathVariable int size, 
+								@PathVariable String sortBy,
+								@RequestBody final NavFacetContainer selectedFacets) {
+	   	return navigationService.findAll(locale, currency, category, page, size, sortBy, selectedFacets);
+	}
 	
 }
