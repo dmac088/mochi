@@ -173,11 +173,6 @@ public class ProductServiceImpl implements IProductService {
 	
 	
 	@Override
-	public Double getMaxMarkDownPriceForCategory(String categoryCode, String currencyCode) {
-		return productRepository.maxMarkDownPriceForCategory(categoryCode, currencyCode);
-	}
-	
-	@Override
 	public Long getCountForCategory(String categoryCode) {
 		return productRepository.countForCategory(categoryCode);
 	}

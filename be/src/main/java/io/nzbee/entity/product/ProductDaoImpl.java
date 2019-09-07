@@ -62,8 +62,6 @@ public class ProductDaoImpl implements IProductDao {
 		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
 		
 		Root<Product> root = cq.from(Product.class);
-
-		//Join<Category, Hierarchy> categoryHierarchy = category.join(Category_.hierarchy);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();		
 		TypedQuery<Product> query = em.createQuery(cq
