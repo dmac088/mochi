@@ -318,30 +318,38 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		if (c.get().getParentCode() == null) {
 			return cfs;
 		}
-		Optional<Category> parent = Optional.ofNullable(categoryService.findOne(locale, c.get().getParentCode()));
-		if (!parent.isPresent()) {
+		
+		Optional<Category> oParent = Optional.ofNullable(categoryService.findOne(locale, c.get().getParentCode()));
+		
+		if (!oParent.isPresent()) {
 			return cfs;
 		}
+		
+		Category parent = oParent.get();
 
 		// if we hit the root node, there are no parents
-		if (parent.get().getCategoryCode().equals(CategoryVars.PRIMARY_HIERARCHY_ROOT_CODE)) {
+		if (parent.getCategoryCode().equals(CategoryVars.PRIMARY_HIERARCHY_ROOT_CODE)) {
 			return cfs;
 		}
-		Long parentLevel = parent.get().getCategoryLevel();
+		
+		Long parentLevel = parent.getCategoryLevel();
 
 		String frName = sf.getFacetingName();
 		String frField = sf.getFieldName().split("\\.")[0]
 				+ StringUtils.repeat(".parent", c.get().getCategoryLevel().intValue() - parentLevel.intValue())
 				+ ".categoryToken";
 
-		Optional<Facet> parentFacet = this.getDiscreteFacets(qb, q, frName, frField).stream()
+		Optional<Facet> oParentFacet = this.getDiscreteFacets(qb, q, frName, frField).stream()
 				.filter(f -> f.getValue().equals(sf.getValue().replace("/" + categoryCode, ""))).findFirst();
-		if (parentFacet.isPresent()) {
-			cfs.add(parentFacet.get());
-		} else {
-			return cfs;
-		}
-		return this.getParentCategoryFacets(cfs, parentFacet.get(), qb, q, locale, currency);
+		
+		if (!oParentFacet.isPresent()) {
+			return cfs;	
+		} 
+		
+		Facet parentFacet = oParentFacet.get();
+		
+		cfs.add(parentFacet);
+		return this.getParentCategoryFacets(cfs, parentFacet, qb, q, locale, currency);
 	}
 
 	@SuppressWarnings("unchecked")
