@@ -136,7 +136,7 @@ public class CategoryServiceImpl implements ICategoryService {
     public Category createCategory(final io.nzbee.entity.category.Category pc, final String locale) {
 	
  		//create a new product DTO
-        final Category cDO = (pc instanceof CategoryProduct) ? new ProductCategory() : new BrandCategory();
+        final Category cDO = (pc.getCategoryType().getCode().equals(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT)) ? new ProductCategory() : new BrandCategory();
         cDO.setCategoryCode(pc.getCategoryCode());
         cDO.setCategoryLevel(pc.getCategoryLevel());
        
