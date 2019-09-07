@@ -192,7 +192,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 					return getParentCategoryFacets(new HashSet<Facet>(), f, productQueryBuilder, jpaQuery, lcl,
 							currency);
 				}).collect(Collectors.toSet()).stream().flatMap(Set::stream).collect(Collectors.toSet()));
-
+		
 		List<String> allTokens = new ArrayList<String>();
 		allTokens.addAll(categoryTokens);
 		allTokens.addAll(brandTokens);
@@ -204,6 +204,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			return allFacets.stream().filter(y -> x.equals(y.getValue()));
 		}).collect(Collectors.toList());
 
+		
 		cs = new HashSet<NavFacet<Category>>();
 		lf.stream().forEach(f -> {
 			jpaQuery.getFacetManager().getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
@@ -213,7 +214,8 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 						getParentCategoryFacets(new HashSet<Facet>(), f, productQueryBuilder, jpaQuery, lcl, currency));
 			}
 		});
-
+		
+	
 		lf = allTokens.stream().flatMap(x -> {
 			return allFacets.stream().filter(y -> x.equals(y.getValue()));
 		}).collect(Collectors.toList());
@@ -224,8 +226,12 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 
 		allFacets.stream().filter(f -> f.getFacetingName().equals(CategoryVars.PRIMARY_CATEGORY_FACET_NAME))
 				.collect(Collectors.toList()).stream().forEach(cf -> {
+					
 					String categoryCode = (new LinkedList<String>(Arrays.asList(cf.getValue().split("/")))).getLast();
 					Category category = categoryService.findOneByCode(lcl, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, categoryCode);
+//					System.out.println(category.getCategoryDesc());
+//					System.out.println(category.getCategoryType());
+//					System.out.println(category.getClass().getSimpleName());
 					NavFacet<Category> categoryFacet = facetService.convertCatToNavFacet(category);
 					categoryFacet.setFacetProductCount(new Long(cf.getCount()));
 					categoryFacet.setToken(cf.getValue());
@@ -233,6 +239,8 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 					cs.add(categoryFacet);
 				});
 
+	
+		
 		bs = new HashSet<NavFacet<Brand>>();
 		allFacets.stream().filter(f -> f.getFacetingName().equals(CategoryVars.BRAND_FACET_NAME))
 				.collect(Collectors.toList()).forEach(bf -> {
@@ -276,6 +284,10 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		returnFacets.addAll(bs);
 		returnFacets.addAll(ts);
 		returnFacets.addAll(ps);
+//		
+//		returnFacets.stream().forEach(f -> {
+//			System.out.println(f.getFacetDisplayValue() + " " + f.getFacetClassName());
+//		});
 
 		// set pageable definition for jpaQuery
 		Pageable pageable = PageRequest.of(page, size);
@@ -319,6 +331,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			return cfs;
 		}
 		
+		
 		Optional<Category> oParent = Optional.ofNullable(categoryService.findOne(locale, c.get().getParentCode()));
 		
 		if (!oParent.isPresent()) {
@@ -333,7 +346,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		}
 		
 		Long parentLevel = parent.getCategoryLevel();
-
+		
 		String frName = sf.getFacetingName();
 		String frField = sf.getFieldName().split("\\.")[0]
 				+ StringUtils.repeat(".parent", c.get().getCategoryLevel().intValue() - parentLevel.intValue())
@@ -349,6 +362,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		Facet parentFacet = oParentFacet.get();
 		
 		cfs.add(parentFacet);
+		
 		return this.getParentCategoryFacets(cfs, parentFacet, qb, q, locale, currency);
 	}
 
