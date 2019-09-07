@@ -321,11 +321,6 @@ public class ProductServiceImpl implements IProductService {
 				);
 	}
 	
-	@Override
-	public Long getCountForCategory(Category category) {
-		return productService.getCountForCategory(category.getCategoryCode());
-	}
-	
 
 	@Override
 	public Long getCount(String categoryTypeCode, String categoryDesc, String locale, String currency,

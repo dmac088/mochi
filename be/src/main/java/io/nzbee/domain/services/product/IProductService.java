@@ -32,8 +32,6 @@ public interface IProductService extends IService<Product> {
 	Long getCount(String categoryTypeCode, String categoryDesc, String locale, String currency,
 			String productStatusCode, List<Category> categories, List<Brand> brands, List<Tag> tags);
 
-	Long getCountForCategory(Category category);
-	
 	Product convertToProductDO(String productCreatedDate, String productUPC, String productDesc,
 			Double productRetailPrice, Double productMarkdownPrice, String productImage, String productLocale,
 			String productCurrency, String productCategory);
