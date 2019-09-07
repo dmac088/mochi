@@ -21,8 +21,6 @@ public interface IProductService extends IService<Product> {
 	Double getMaxMarkDownPriceForTags(String categoryTypeCode, String categoryDesc, String locale, String currencyCode,
 			String productStatusCode, List<String> brandCodes, List<String> categoryCodes, List<String> tagCodes);
 	
-	Double getMaxMarkDownPriceForCategory(String categoryCode, String currencyCode);
-
 	Long getCountForCategory(String categoryCode);
 
 	Page<Product> findAll(String categoryDesc, List<String> categoryCodes, String locale, Double priceStart,
