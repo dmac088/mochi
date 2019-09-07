@@ -353,12 +353,12 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 
 		List<ProductAttribute> results = jpaQuery.getResultList();
 
-		if (results.size() <= 0) {
+		if (results.isEmpty()) {
 			return new ArrayList<Facet>();
 		}
 
-		Double maxPrice = results.get(0).getProduct().getCurrentMarkdownPriceHKD();
-		Double minPrice = Lists.reverse(results).get(0).getProduct().getCurrentMarkdownPriceHKD();
+		Double maxPrice = results.stream().findFirst().get().getProduct().getCurrentMarkdownPriceHKD();
+		Double minPrice = Lists.reverse(results).stream().findFirst().get().getProduct().getCurrentMarkdownPriceHKD();
 		Double inc = (maxPrice > 0) ? (maxPrice - ((minPrice.equals(maxPrice)) ? 0 : minPrice)) / 4 : maxPrice;
 
 		inc = new BigDecimal(inc).setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
