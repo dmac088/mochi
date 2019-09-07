@@ -173,11 +173,6 @@ public class ProductServiceImpl implements IProductService {
 	
 	
 	@Override
-	public Long getCountForCategory(String categoryCode) {
-		return productRepository.countForCategory(categoryCode);
-	}
-
-	@Override
 	public Long getCount(
 				String categoryDesc, 
 				String locale,
