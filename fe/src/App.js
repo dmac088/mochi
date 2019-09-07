@@ -155,7 +155,6 @@ export class App extends Component {
                                       p1 /*all categories*/])
     })
     .then((response) => {
-      //console.log(response);
       this.setState({
         "productCategoryList":  response[4].result.productCategories,
         "brandCategoryList":    response[4].result.brandCategories,

@@ -295,7 +295,6 @@ class Products extends Component {
 
     const sfc = [...selectedFacets, ...children];
 
-    //console.log(children);
     return facets.filter(facet => !(sfc.find(o => o.token === facet.token)));
   }
 
