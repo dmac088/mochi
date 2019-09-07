@@ -14,7 +14,6 @@ import { Pagination } from './Pagination';
 import * as categoryApi from '../../data/categories/api';
 import * as productApi from '../../data/products/api';
 import * as brandApi from '../../data/brands/api';
-//import * as facetApi from '../../data/facets/api';
 import * as pageService from '../../services/page';
 import qs from 'query-string';
 import _ from 'lodash';
@@ -271,8 +270,8 @@ class Products extends Component {
   }
 
   getChildren(parent, facets, children) {
-    const ch = facets.filter(o => o.parentId === parent.id);
-    if (ch.length === 0) { return children }
+    const ch = facets.filter(o => o.facetParentId === parent.facetId);
+    if (!ch) { return children }
     ch.map(c => {
       children.push(c);
       return this.getChildren(c, facets, children);
@@ -288,7 +287,16 @@ class Products extends Component {
 
   filterFacetsUnselected = (facets, selectedFacets) => {
     if (!facets) { return; }
-    return facets.filter(facet => !(selectedFacets.find(o => o.token === facet.token)));
+    const children = [];
+
+    selectedFacets.forEach((sf, index) => {
+      this.getChildren(sf, facets, children);
+    });
+
+    const sfc = [...selectedFacets, ...children];
+
+    //console.log(children);
+    return facets.filter(facet => !(sfc.find(o => o.token === facet.token)));
   }
 
   render() {
