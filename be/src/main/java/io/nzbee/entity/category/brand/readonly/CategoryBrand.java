@@ -1,4 +1,4 @@
-package io.nzbee.entity.category.brand;
+package io.nzbee.entity.category.brand.readonly;
 
 import java.util.List;
 

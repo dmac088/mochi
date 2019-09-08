@@ -1,4 +1,4 @@
-package io.nzbee.entity.category.product;
+package io.nzbee.entity.category.product.readonly;
 
 import java.util.List;
 import javax.persistence.Column;
