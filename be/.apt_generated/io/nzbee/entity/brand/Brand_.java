@@ -1,7 +1,7 @@
 package io.nzbee.entity.brand;
 
 import io.nzbee.entity.brand.attribute.BrandAttribute;
-import io.nzbee.entity.category.brand.CategoryBrand;
+import io.nzbee.entity.category.brand.readonly.CategoryBrand;
 import io.nzbee.entity.product.Product;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.ListAttribute;
