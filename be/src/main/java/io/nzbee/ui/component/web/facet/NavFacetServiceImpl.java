@@ -47,7 +47,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 									NavFacet<Category> cnf = this.convertCatToNavFacet(c);
 									return cnf;
 							})
-							.filter(c -> c.getFacetProductCount() > 0)
+							//.filter(c -> c.getFacetProductCount() > 0)
 							.sorted(Comparator.comparing(NavFacet::getFacetProductCount
 									, (s1, s2) -> {
 							            return s2.compareTo(s1);
