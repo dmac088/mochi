@@ -46,8 +46,13 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		nfc.getFacets().addAll(	categoryService.findAll(locale).stream().map(c -> {
 									NavFacet<Category> cnf = this.convertCatToNavFacet(c);
 									return cnf;
-							}).collect(Collectors.toList()).stream()
-							  .collect(Collectors.toList()));
+							})
+							.filter(c -> c.getFacetProductCount() > 0)
+							.sorted(Comparator.comparing(NavFacet::getFacetProductCount
+									, (s1, s2) -> {
+							            return s2.compareTo(s1);
+							        }))
+							.collect(Collectors.toList()));
 		nfr.setResult(nfc);
 		return nfr;
 		
@@ -189,11 +194,16 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
     	s.setFacetClassName(c.getClass().getSimpleName());
     	s.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
     	s.setFacetId(calcFacetId(s.getFacetClassName(), c.getCategoryCode().toString()));
+    	
+    	System.out.println(c.getClass().getSimpleName());
+    
     	if(c.getParentCode() != null) {
     		s.setFacetParentId(calcFacetId(s.getFacetClassName(), c.getParentCode().toString()));
     	}
     	s.setFacetChildCount(c.getChildCategoryCount());
     	if (c instanceof ProductCategory) {
+    		System.out.println("Success!!!!");
+    		System.out.println(((ProductCategory) c).getProductCount());
     		s.setFacetProductCount(((ProductCategory) c).getProductCount());
     	} else {
     		s.setFacetProductCount(new Long(0));
