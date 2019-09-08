@@ -11,8 +11,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-
 import org.hibernate.annotations.Immutable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.nzbee.entity.brand.Brand;
@@ -23,9 +21,6 @@ import io.nzbee.entity.category.Category;
 @Table(name = "vw_category_brand", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "cat_id")
 public class CategoryBrand extends Category {
-	
-	@Transient
-	private Long categoryTypeId = (long) 2;
 
 	@ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "brand_category", schema="mochi", 
@@ -38,15 +33,16 @@ public class CategoryBrand extends Category {
 	@Column(name="brand_count")
 	private Long brandCount;
 
+	public CategoryBrand() {
+		super();
+	}
+	
 	public List<Brand> getBrands() {
 		return brands;
 	}
 
-    public Long getBrandCount() {
+    public Long getCount() {
 		return brandCount;
 	}
     
-	public Long getCategoryTypeId() {
-		return categoryTypeId;
-	}
 }

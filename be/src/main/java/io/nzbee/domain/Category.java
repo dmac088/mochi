@@ -23,6 +23,9 @@ public abstract class Category {
 
 	private Long childCategoryCount;
 	
+	public abstract Long getCount();
+	
+	public abstract void setCount(Long brandCount);
 	
 	public String getCategoryCode() {
 		return categoryCode;

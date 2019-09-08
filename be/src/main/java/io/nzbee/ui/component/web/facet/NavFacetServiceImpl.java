@@ -93,9 +93,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 	
 		List<NavFacet<Category>> catBars = categories.stream().map(c -> {
 			NavFacet<Category> s = convertCatToNavFacet(c);
-			s.setFacetProductCount( allNUll 
-										? (c instanceof ProductCategory) ? ((ProductCategory) c).getProductCount() : 0
-										: this.getCountForCategory(locale, currency, categoryDesc, c, lb, lt));
+			s.setFacetProductCount(c.getCount());
 			return s;
 		}).collect(Collectors.toList()).stream()
 			.filter(c -> c.getFacetProductCount() > 0)
@@ -171,22 +169,22 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		tags
 		);
 	}
-	
-	private Long getCountForCategory(String locale, String currency, String categoryDesc, Category category, List<Brand> brands, List<Tag> tags) {
-		List<Category> categories = new ArrayList<Category>();
-		categories.add(category);
-		
-		return productService.getCount(
-		CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
-		categoryDesc, 
-		locale, 
-		currency, 
-		ProductVars.ACTIVE_SKU_CODE,
-		categories, 
-		brands, 
-		tags
-		);
-	}
+//	
+//	private Long getCountForCategory(String locale, String currency, String categoryDesc, Category category, List<Brand> brands, List<Tag> tags) {
+//		List<Category> categories = new ArrayList<Category>();
+//		categories.add(category);
+//		
+//		return productService.getCount(
+//		CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
+//		categoryDesc, 
+//		locale, 
+//		currency, 
+//		ProductVars.ACTIVE_SKU_CODE,
+//		categories, 
+//		brands, 
+//		tags
+//		);
+//	}
 
 	@Override
     public NavFacet<Category> convertCatToNavFacet(final Category c) {
@@ -201,13 +199,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
     		s.setFacetParentId(calcFacetId(s.getFacetClassName(), c.getParentCode().toString()));
     	}
     	s.setFacetChildCount(c.getChildCategoryCount());
-    	if (c instanceof ProductCategory) {
-    		System.out.println("Success!!!!");
-    		System.out.println(((ProductCategory) c).getProductCount());
-    		s.setFacetProductCount(((ProductCategory) c).getProductCount());
-    	} else {
-    		s.setFacetProductCount(new Long(0));
-    	}
+    	s.setFacetProductCount(c.getCount());
     	
     	s.setFacetDisplayValue(c.getCategoryDesc());
     	s.setToken(calcToken(s.getFacetClassName(), c.getCategoryCode()));

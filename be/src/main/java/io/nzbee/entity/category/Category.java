@@ -154,6 +154,8 @@ public abstract class Category {
 		return pca.get().getCategoryDesc();
 	}
 	
+	public abstract Long getCount();
+	
 	public Long getChildCategoryCount() {
 		return new Long(this.children.size());
 	}
