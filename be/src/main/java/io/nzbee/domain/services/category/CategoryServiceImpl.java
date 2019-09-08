@@ -14,6 +14,7 @@ import io.nzbee.domain.BrandCategory;
 import io.nzbee.domain.Category;
 import io.nzbee.domain.ProductCategory;
 import io.nzbee.domain.Tag;
+import io.nzbee.entity.category.product.readonly.CategoryProduct;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.variables.CategoryVars;
 
@@ -135,7 +136,15 @@ public class CategoryServiceImpl implements ICategoryService {
     public Category createCategory(final io.nzbee.entity.category.Category pc, final String locale) {
 	
  		//create a new product DTO
-        final Category cDO = (pc.getCategoryType().getCode().equals(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT)) ? new ProductCategory() : new BrandCategory();
+        Category cDO = null;
+        
+        if(pc.getCategoryType().getCode().equals(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT)) {
+        	ProductCategory pDO = new ProductCategory();
+        	pDO.setProductCount(((CategoryProduct) pc).getProductCount());
+        	cDO = pDO;
+        } else {
+        	cDO = new BrandCategory();
+        }
         cDO.setCategoryCode(pc.getCategoryCode());
         cDO.setCategoryLevel(pc.getCategoryLevel());
        
