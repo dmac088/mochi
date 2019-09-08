@@ -16,7 +16,6 @@ import io.nzbee.domain.services.brand.IBrandService;
 import io.nzbee.domain.services.category.ICategoryService;
 import io.nzbee.domain.services.product.IProductService;
 import io.nzbee.domain.services.tag.ITagService;
-import io.nzbee.entity.product.tag.attribute.ProductTagAttribute;
 import io.nzbee.ui.component.web.generic.UIService;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.ProductVars;
