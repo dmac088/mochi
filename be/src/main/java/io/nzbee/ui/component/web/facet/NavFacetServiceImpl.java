@@ -94,7 +94,10 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 			return s;
 		}).collect(Collectors.toList()).stream()
 			.filter(c -> c.getFacetProductCount() > 0)
-			.sorted(Comparator.comparingLong(NavFacet::getFacetProductCount))
+			.sorted(Comparator.comparing(NavFacet::getFacetProductCount
+																			, (s1, s2) -> {
+																	            return s2.compareTo(s1);
+																	        }))
 			.collect(Collectors.toList());
 	
 		List<NavFacet<Brand>> brandBars = brands.stream().map(b -> {
@@ -103,7 +106,10 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 			return s;
 		}).collect(Collectors.toList()).stream()
 			.filter(c -> c.getFacetProductCount() > 0)
-			.sorted(Comparator.comparingLong(NavFacet::getFacetProductCount))
+			.sorted(Comparator.comparing(NavFacet::getFacetProductCount
+					, (s1, s2) -> {
+			            return s2.compareTo(s1);
+			        }))
 			.collect(Collectors.toList());
 		
 		List<NavFacet<Tag>> tagBars = tags.stream().map(t -> {
@@ -112,7 +118,10 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 			return s;
 		}).collect(Collectors.toList()).stream()
 			.filter(t -> t.getFacetProductCount() > 0)
-			.sorted(Comparator.comparingLong(NavFacet::getFacetProductCount))
+			.sorted(Comparator.comparing(NavFacet::getFacetProductCount
+					, (s1, s2) -> {
+			            return s2.compareTo(s1);
+			        }))
 			.collect(Collectors.toList());
 		
 		nfc.getFacets().addAll(brandBars);
