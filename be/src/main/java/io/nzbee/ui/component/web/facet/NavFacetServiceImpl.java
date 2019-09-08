@@ -1,6 +1,7 @@
 package io.nzbee.ui.component.web.facet;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
@@ -15,6 +16,7 @@ import io.nzbee.domain.services.brand.IBrandService;
 import io.nzbee.domain.services.category.ICategoryService;
 import io.nzbee.domain.services.product.IProductService;
 import io.nzbee.domain.services.tag.ITagService;
+import io.nzbee.entity.product.tag.attribute.ProductTagAttribute;
 import io.nzbee.ui.component.web.generic.UIService;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.ProductVars;
@@ -93,6 +95,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 			return s;
 		}).collect(Collectors.toList()).stream()
 			.filter(c -> c.getFacetProductCount() > 0)
+			.sorted(Comparator.comparingLong(NavFacet::getFacetProductCount))
 			.collect(Collectors.toList());
 	
 		List<NavFacet<Brand>> brandBars = brands.stream().map(b -> {
@@ -101,6 +104,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 			return s;
 		}).collect(Collectors.toList()).stream()
 			.filter(c -> c.getFacetProductCount() > 0)
+			.sorted(Comparator.comparingLong(NavFacet::getFacetProductCount))
 			.collect(Collectors.toList());
 		
 		List<NavFacet<Tag>> tagBars = tags.stream().map(t -> {
@@ -109,6 +113,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 			return s;
 		}).collect(Collectors.toList()).stream()
 			.filter(t -> t.getFacetProductCount() > 0)
+			.sorted(Comparator.comparingLong(NavFacet::getFacetProductCount))
 			.collect(Collectors.toList());
 		
 		nfc.getFacets().addAll(brandBars);
