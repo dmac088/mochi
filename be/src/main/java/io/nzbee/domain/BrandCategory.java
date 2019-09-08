@@ -23,7 +23,16 @@ public class BrandCategory extends Category {
 	public void setBrands(List<Brand> brands) {
 		this.brands = brands;
 	}
-	
 
+	@Override
+	public Long getCount() {
+		// TODO Auto-generated method stub
+		return brandCount;
+	}
+
+	@Override
+	public void setCount(Long brandCount) {
+		this.brandCount = brandCount;
+	}
 	
 }

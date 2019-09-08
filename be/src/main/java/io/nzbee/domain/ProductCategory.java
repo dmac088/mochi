@@ -16,11 +16,11 @@ public class ProductCategory extends Category {
 		this.products = products;
 	}
 	
-	public Long getProductCount() {
+	public Long getCount() {
 		return productCount;
 	}
 
-	public void setProductCount(Long productCount) {
+	public void setCount(Long productCount) {
 		this.productCount = productCount;
 	}
 }
