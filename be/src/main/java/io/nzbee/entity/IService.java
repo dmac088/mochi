@@ -5,6 +5,7 @@ import java.util.Optional;
 
 public interface IService<T> {
 
+	
 	public List<T> findAll();
 	
 	public Optional<T> findOne(Long id);
