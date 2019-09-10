@@ -1,10 +1,10 @@
-package io.nzbee.domain.services.category;
+package io.nzbee.domain.category;
 
 
 import java.util.List;
-import io.nzbee.domain.Brand;
-import io.nzbee.domain.Category;
-import io.nzbee.domain.Tag;
+
+import io.nzbee.domain.brand.Brand;
+import io.nzbee.domain.tag.Tag;
 
 public interface ICategoryService {
 	 

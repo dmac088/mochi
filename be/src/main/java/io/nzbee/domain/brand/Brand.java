@@ -1,6 +1,8 @@
-package io.nzbee.domain;
+package io.nzbee.domain.brand;
 
 import java.util.Objects;
+
+import io.nzbee.domain.category.BrandCategory;
 
 public class Brand {
 

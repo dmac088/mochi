@@ -1,4 +1,4 @@
-package io.nzbee.domain;
+package io.nzbee.domain.tag;
 
 public class Tag {
 

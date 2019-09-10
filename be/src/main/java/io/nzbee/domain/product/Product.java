@@ -1,8 +1,11 @@
-package io.nzbee.domain;
+package io.nzbee.domain.product;
 
 import java.util.Date;
 import java.util.Objects;
 import java.util.Optional;
+
+import io.nzbee.domain.brand.Brand;
+import io.nzbee.domain.category.Category;
 
 
 public class Product {

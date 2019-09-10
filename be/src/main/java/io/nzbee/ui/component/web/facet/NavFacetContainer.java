@@ -7,12 +7,12 @@ import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import io.nzbee.domain.Brand;
-import io.nzbee.domain.BrandCategory;
-import io.nzbee.domain.Category;
-import io.nzbee.domain.Product;
-import io.nzbee.domain.ProductCategory;
-import io.nzbee.domain.Tag;
+import io.nzbee.domain.brand.Brand;
+import io.nzbee.domain.category.BrandCategory;
+import io.nzbee.domain.category.Category;
+import io.nzbee.domain.category.ProductCategory;
+import io.nzbee.domain.product.Product;
+import io.nzbee.domain.tag.Tag;
 
 public class NavFacetContainer {
 

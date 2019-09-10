@@ -1,13 +1,12 @@
-package io.nzbee.domain.services.brand;
+package io.nzbee.domain.brand;
 
 
 import java.util.List;
 import java.util.Optional;
 
-import io.nzbee.domain.Brand;
-import io.nzbee.domain.Category;
-import io.nzbee.domain.Product;
-import io.nzbee.domain.Tag;
+import io.nzbee.domain.category.Category;
+import io.nzbee.domain.product.Product;
+import io.nzbee.domain.tag.Tag;
 
 public interface IBrandService {
 	

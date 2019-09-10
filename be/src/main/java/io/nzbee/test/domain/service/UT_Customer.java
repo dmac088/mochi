@@ -29,8 +29,9 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.json.JSONObject;
-import io.nzbee.domain.Customer;
-import io.nzbee.domain.services.customer.ICustomerService;
+
+import io.nzbee.domain.customer.Customer;
+import io.nzbee.domain.customer.ICustomerService;
 import io.nzbee.entity.party.person.Person;
 import io.nzbee.entity.role.Role;
 import io.nzbee.security.user.User;

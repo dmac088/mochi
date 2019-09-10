@@ -1,4 +1,4 @@
-package io.nzbee.domain.services.tag;
+package io.nzbee.domain.tag;
 
 import java.util.Date;
 import java.util.List;
@@ -8,9 +8,9 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
-import io.nzbee.domain.Tag;
-import io.nzbee.domain.Category;
-import io.nzbee.domain.Brand;
+
+import io.nzbee.domain.brand.Brand;
+import io.nzbee.domain.category.Category;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.tag.IProductTagService;
