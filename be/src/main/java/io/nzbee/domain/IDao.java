@@ -1,4 +1,4 @@
-package io.nzbee.domain.product;
+package io.nzbee.domain;
 
 import java.util.List;
 import java.util.Optional;
