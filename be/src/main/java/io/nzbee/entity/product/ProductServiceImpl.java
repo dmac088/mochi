@@ -20,7 +20,7 @@ import io.nzbee.variables.CategoryVars;
 public class ProductServiceImpl implements IProductService {
 	
 	@Autowired
-	private ProductDaoImpl productDAO;
+	private IProductDao productDAO;
 	
 	@Autowired
 	private IProductRepository productRepository;
