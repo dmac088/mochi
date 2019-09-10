@@ -38,5 +38,9 @@ public interface IProductDao extends IDao<Product> {
 	List<Product> findAll(String locale, String currency);
 
 	Optional<Product> findById(long id, String locale);
+
+	List<Product> getAll(String locale, String currency);
+
+	Optional<Product> findByUPC(String upc, String locale, String currency);
 	
 }
