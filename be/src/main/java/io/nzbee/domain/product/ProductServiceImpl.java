@@ -18,7 +18,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Sort;
-
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.category.Category;
 import io.nzbee.domain.tag.Tag;
@@ -43,6 +42,11 @@ public class ProductServiceImpl implements IProductService {
 	@Qualifier("productEntityService")
 	private io.nzbee.entity.product.IProductService productService;
 
+    @Autowired 
+    @Qualifier(value="productDomainDao")
+    private IProductDao productDao;
+
+    
     @Autowired 
     private IBrandService brandService;
     
@@ -133,7 +137,6 @@ public class ProductServiceImpl implements IProductService {
     @Override
 	@Cacheable(value="selectedProducts")
 	public List<Product> findAll(String locale, String currency, List<String> productCodes) {
-		
 	    List<io.nzbee.entity.product.Product> lp = 
 	    		productService.findAll(locale, currency, productCodes);
      	

@@ -48,7 +48,7 @@ import io.nzbee.entity.product.tag.ProductTag_;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.ProductVars;
 
-@Component
+@Component(value = "productDomainDao")
 public class ProductDaoImpl implements IProductDao {
 
 	@Autowired
