@@ -1,4 +1,4 @@
-package io.nzbee.domain;
+package io.nzbee.domain.category;
 
 import java.util.List;
 import java.util.Objects;

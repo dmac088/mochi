@@ -1,4 +1,4 @@
-package io.nzbee.domain.services.category;
+package io.nzbee.domain.category;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,11 +9,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import io.nzbee.domain.Brand;
-import io.nzbee.domain.BrandCategory;
-import io.nzbee.domain.Category;
-import io.nzbee.domain.ProductCategory;
-import io.nzbee.domain.Tag;
+
+import io.nzbee.domain.brand.Brand;
+import io.nzbee.domain.tag.Tag;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.variables.CategoryVars;
 

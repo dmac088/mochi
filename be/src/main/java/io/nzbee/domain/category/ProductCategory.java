@@ -1,6 +1,8 @@
-package io.nzbee.domain;
+package io.nzbee.domain.category;
 
 import java.util.List;
+
+import io.nzbee.domain.product.Product;
 
 public class ProductCategory extends Category {
 

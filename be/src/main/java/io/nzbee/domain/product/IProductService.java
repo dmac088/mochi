@@ -1,14 +1,13 @@
-package io.nzbee.domain.services.product;
+package io.nzbee.domain.product;
 
 import java.util.List;
 
 import org.springframework.data.domain.Page;
 
-import io.nzbee.domain.Brand;
-import io.nzbee.domain.Category;
-import io.nzbee.domain.Product;
-import io.nzbee.domain.Tag;
+import io.nzbee.domain.brand.Brand;
+import io.nzbee.domain.category.Category;
 import io.nzbee.domain.services.IService;
+import io.nzbee.domain.tag.Tag;
 
 public interface IProductService extends IService<Product> {
 

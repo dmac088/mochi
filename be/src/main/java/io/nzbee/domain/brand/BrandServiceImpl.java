@@ -1,4 +1,4 @@
-package io.nzbee.domain.services.brand;
+package io.nzbee.domain.brand;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import io.nzbee.domain.Brand;
-import io.nzbee.domain.Category;
-import io.nzbee.domain.Product;
-import io.nzbee.domain.Tag;
+
+import io.nzbee.domain.category.Category;
+import io.nzbee.domain.product.Product;
+import io.nzbee.domain.tag.Tag;
 
 @Service
 @Transactional

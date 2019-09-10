@@ -7,8 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import io.nzbee.domain.Category;
-import io.nzbee.domain.services.category.ICategoryService;
+
+import io.nzbee.domain.category.Category;
+import io.nzbee.domain.category.ICategoryService;
 import io.nzbee.variables.CategoryVars;
 
 @RestController

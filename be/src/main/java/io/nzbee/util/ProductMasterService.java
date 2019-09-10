@@ -37,14 +37,14 @@ public class ProductMasterService {
 	private ProductServiceImpl productEntityService;
 	
 	@Autowired
-	private io.nzbee.domain.services.product.IProductService productDomainService;
+	private io.nzbee.domain.product.IProductService productDomainService;
 	
 	@Autowired
 	@Qualifier("brandEntityService")
 	private BrandServiceImpl brandService; 
 	
 	@Autowired
-	private io.nzbee.domain.services.brand.IBrandService brandDomainService;
+	private io.nzbee.domain.brand.IBrandService brandDomainService;
 	
 	@Autowired
 	private BrandAttributeServiceImpl brandAttributeService; 
@@ -95,7 +95,7 @@ public class ProductMasterService {
 	
 	public void persistProductMaster(ProductMasterSchema p) {
 		
-		io.nzbee.domain.Product pDo = 
+		io.nzbee.domain.product.Product pDo = 
 				productDomainService.convertToProductDO(
 					p.get_PRODUCT_CREATED_DATE(), 
 					p.get_PRODUCT_UPC_CODE(), 
@@ -107,7 +107,7 @@ public class ProductMasterService {
 					GeneralVars.CURRENCY_USD, 
 					"/TBC");
 			
-		io.nzbee.domain.Brand bDo =
+		io.nzbee.domain.brand.Brand bDo =
 				brandDomainService.convertToBrandDO(
 					p.get_BRAND_CODE(), 
 					p.get_BRAND_DESCRIPTION_EN());

@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-import io.nzbee.domain.Product;
-import io.nzbee.domain.services.product.IProductService;
+
+import io.nzbee.domain.product.IProductService;
+import io.nzbee.domain.product.Product;
 import io.nzbee.ui.component.web.facet.NavFacetContainer;
 import io.nzbee.ui.component.web.generic.UIService;
 import io.nzbee.ui.component.web.search.Search;

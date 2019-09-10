@@ -1,4 +1,4 @@
-package io.nzbee.domain;
+package io.nzbee.domain.customer;
 
 import java.util.Objects;
 

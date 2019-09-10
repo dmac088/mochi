@@ -1,7 +1,6 @@
-package io.nzbee.domain.services.customer;
+package io.nzbee.domain.customer;
 import java.util.List;
 
-import io.nzbee.domain.Customer;
 import io.nzbee.domain.services.IService;
 
 public interface ICustomerService extends IService<Customer> {

@@ -1,4 +1,4 @@
-package io.nzbee.domain.services.product;
+package io.nzbee.domain.product;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,10 +18,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Sort;
-import io.nzbee.domain.Product;
-import io.nzbee.domain.Category;
-import io.nzbee.domain.Brand;
-import io.nzbee.domain.Tag;
+
+import io.nzbee.domain.brand.Brand;
+import io.nzbee.domain.category.Category;
+import io.nzbee.domain.tag.Tag;
 import io.nzbee.entity.brand.IBrandService;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.brand.attribute.IBrandAttributeService;

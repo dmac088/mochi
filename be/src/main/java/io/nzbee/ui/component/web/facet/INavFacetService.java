@@ -1,8 +1,8 @@
 package io.nzbee.ui.component.web.facet;
 
-import io.nzbee.domain.Brand;
-import io.nzbee.domain.Category;
-import io.nzbee.domain.Tag;
+import io.nzbee.domain.brand.Brand;
+import io.nzbee.domain.category.Category;
+import io.nzbee.domain.tag.Tag;
 
 public interface INavFacetService {
 
