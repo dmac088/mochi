@@ -7,12 +7,10 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import io.nzbee.entity.IDao;
+import io.nzbee.domain.product.IDao;
 
 public interface IProductDao extends IDao<Product> {
 
-	Optional<Product> findByUPC(String upc);
-	
 	//parameters should be primitive types
 	Page<Product> findAllActiveSKU(List<Long> categoryIds, String locale, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, Pageable pageable, List<Long> brandIds, List<Long> tagIds);	
 	
@@ -37,7 +35,7 @@ public interface IProductDao extends IDao<Product> {
 
 	List<Product> findAll(String locale, String currency);
 
-	Optional<Product> findById(long id, String locale);
+	Optional<Product> findById(long id, String locale, String currency);
 
 	List<Product> getAll(String locale, String currency);
 

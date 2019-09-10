@@ -57,12 +57,6 @@ public class ProductDaoImpl implements IProductDao {
 	private EntityManager em;
 
 	@Override
-	public List<io.nzbee.domain.product.Product> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	@Override
 	public List<io.nzbee.domain.product.Product> findAll(String locale, String currency) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
@@ -93,7 +87,7 @@ public class ProductDaoImpl implements IProductDao {
 
 	
 	@Override
-	public Optional<io.nzbee.domain.product.Product> findById(long id, String locale) {
+	public Optional<io.nzbee.domain.product.Product> findById(long id, String locale, String currency) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<io.nzbee.domain.product.Product> cq = cb.createQuery(io.nzbee.domain.product.Product.class);
@@ -163,15 +157,14 @@ public class ProductDaoImpl implements IProductDao {
 	public Optional<io.nzbee.domain.product.Product> findByUPC(String upc, String locale, String currency) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
-		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
+		CriteriaQuery<io.nzbee.domain.product.Product> cq = cb.createQuery(io.nzbee.domain.product.Product.class);
 		
 		Root<Product> root = cq.from(Product.class);
 
 		List<Predicate> conditions = new ArrayList<Predicate>();	
 		conditions.add(cb.equal(root.get(Product_.productUPC), upc));
 		
-		TypedQuery<Product> query = em.createQuery(cq
-				.select(root)
+		TypedQuery<io.nzbee.domain.product.Product> query = em.createQuery(cq
 				.where(conditions.toArray(new Predicate[] {}))
 				.distinct(false)
 		);
@@ -184,7 +177,7 @@ public class ProductDaoImpl implements IProductDao {
 	
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 	
-		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
+		CriteriaQuery<io.nzbee.domain.product.Product> cq = cb.createQuery(io.nzbee.domain.product.Product.class);
 		
 		Root<Product> root 									= cq.from(Product.class);
 		Join<Product, ProductAttribute> productAttribute 	= root.join(Product_.attributes);
@@ -226,8 +219,7 @@ public class ProductDaoImpl implements IProductDao {
 			return this.getOrder(o.getProperty().replaceAll(".*\\.", ""), o.getDirection(), cb, productAttribute, price);
 		}).collect(Collectors.toList()).get(0);
 		
-		TypedQuery<Product> query = em.createQuery(cq
-				.select(root)
+		TypedQuery<io.nzbee.domain.product.Product> query = em.createQuery(cq
 				.where(conditions.toArray(new Predicate[] {}))
 				.distinct(false)
 				.orderBy(order)
@@ -237,7 +229,7 @@ public class ProductDaoImpl implements IProductDao {
 		query.setFirstResult(pageableUtil.getStartPosition(pageable));
 		query.setMaxResults(pageable.getPageSize());
 		
-		return new PageImpl<Product>(query.getResultList(), pageable, resultCount);
+		return new PageImpl<io.nzbee.domain.product.Product>(query.getResultList(), pageable, resultCount);
     }
 	
 	
@@ -249,7 +241,7 @@ public class ProductDaoImpl implements IProductDao {
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
-		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
+		CriteriaQuery<io.nzbee.domain.product.Product> cq = cb.createQuery(io.nzbee.domain.product.Product.class);
 		
 		Root<Product> root 									= cq.from(Product.class);
 		Join<Product, ProductAttribute> productAttribute 	= root.join(Product_.attributes);
@@ -293,8 +285,7 @@ public class ProductDaoImpl implements IProductDao {
 			return this.getOrder(o.getProperty().replaceAll(".*\\.", ""), o.getDirection(), cb, productAttribute, price);
 		}).collect(Collectors.toList()).get(0);
 		
-		TypedQuery<Product> query = em.createQuery(cq
-				.select(root)
+		TypedQuery<io.nzbee.domain.product.Product> query = em.createQuery(cq
 				.where(conditions.toArray(new Predicate[] {}))
 				.distinct(false)
 				.orderBy(order)
@@ -304,7 +295,7 @@ public class ProductDaoImpl implements IProductDao {
 		query.setFirstResult(pageableUtil.getStartPosition(pageable));
 		query.setMaxResults(pageable.getPageSize());
 		
-		return new PageImpl<Product>(query.getResultList(), pageable, resultCount);
+		return new PageImpl<io.nzbee.domain.product.Product>(query.getResultList(), pageable, resultCount);
 	}
 	
 	@Override
@@ -314,7 +305,7 @@ public class ProductDaoImpl implements IProductDao {
 		// TODO Auto-generated method stub
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
-		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
+		CriteriaQuery<io.nzbee.domain.product.Product> cq = cb.createQuery(io.nzbee.domain.product.Product.class);
 		
 		Root<Product> root 									= cq.from(Product.class);
 		Join<Product, ProductAttribute> productAttribute 	= root.join(Product_.attributes);
@@ -358,8 +349,7 @@ public class ProductDaoImpl implements IProductDao {
 			return this.getOrder(o.getProperty().replaceAll(".*\\.", ""), o.getDirection(), cb, productAttribute, price);
 		}).collect(Collectors.toList()).get(0);
 		
-		TypedQuery<Product> query = em.createQuery(cq
-				.select(root)
+		TypedQuery<io.nzbee.domain.product.Product> query = em.createQuery(cq
 				.where(conditions.toArray(new Predicate[] {}))
 				.distinct(false)
 				.orderBy(order)
@@ -369,7 +359,7 @@ public class ProductDaoImpl implements IProductDao {
 		query.setFirstResult(pageableUtil.getStartPosition(pageable));
 		query.setMaxResults(pageable.getPageSize());
 		
-		return new PageImpl<Product>(query.getResultList(), pageable, resultCount);
+		return new PageImpl<io.nzbee.domain.product.Product>(query.getResultList(), pageable, resultCount);
 	}
 	
 	@Override
@@ -379,7 +369,7 @@ public class ProductDaoImpl implements IProductDao {
 		// TODO Auto-generated method stub
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
-		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
+		CriteriaQuery<io.nzbee.domain.product.Product> cq = cb.createQuery(io.nzbee.domain.product.Product.class);
 		
 		Root<Product> root 									= cq.from(Product.class);
 		Join<Product, ProductAttribute> productAttribute 	= root.join(Product_.attributes);
@@ -419,8 +409,7 @@ public class ProductDaoImpl implements IProductDao {
 			return this.getOrder(o.getProperty().replaceAll(".*\\.", ""), o.getDirection(), cb, productAttribute, price);
 		}).collect(Collectors.toList()).get(0);
 		
-		TypedQuery<Product> query = em.createQuery(cq
-				.select(root)
+		TypedQuery<io.nzbee.domain.product.Product> query = em.createQuery(cq
 				.where(conditions.toArray(new Predicate[] {}))
 				.distinct(false)
 				.orderBy(order)
@@ -430,7 +419,7 @@ public class ProductDaoImpl implements IProductDao {
 		query.setFirstResult(pageableUtil.getStartPosition(pageable));
 		query.setMaxResults(pageable.getPageSize());
 		
-		return new PageImpl<Product>(query.getResultList(), pageable, resultCount);
+		return new PageImpl<io.nzbee.domain.product.Product>(query.getResultList(), pageable, resultCount);
 	}
 	
 	@Override
@@ -438,7 +427,7 @@ public class ProductDaoImpl implements IProductDao {
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 	
-		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
+		CriteriaQuery<io.nzbee.domain.product.Product> cq = cb.createQuery(io.nzbee.domain.product.Product.class);
 		
 		Root<Product> root = cq.from(Product.class);
 		
@@ -462,8 +451,7 @@ public class ProductDaoImpl implements IProductDao {
 			conditions.add(root.get(Product_.productUPC).in(productCodes));
 		}
 		
-		TypedQuery<Product> query = em.createQuery(cq
-				.select(root)
+		TypedQuery<io.nzbee.domain.product.Product> query = em.createQuery(cq
 				.where(conditions.toArray(new Predicate[] {}))
 				.distinct(true)
 		);
@@ -714,12 +702,6 @@ public class ProductDaoImpl implements IProductDao {
 		}
 		
 		return cb.asc(cb.lower(attributeJoin.get(ProductAttribute_.productDesc.getName())));
-	}
-
-	@Override
-	public Optional<io.nzbee.domain.product.Product> findById(long id) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 
