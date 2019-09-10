@@ -114,18 +114,26 @@ public class ProductDaoImpl implements IProductDao {
 	}
 
 	@Override
-	public List<io.nzbee.domain.product.Product> getAll() {
+	public List<io.nzbee.domain.product.Product> getAll(String locale, String currency) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
-		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
+		CriteriaQuery<io.nzbee.domain.product.Product> cq = cb.createQuery(io.nzbee.domain.product.Product.class);
 		
+		//join product to product attribute
 		Root<Product> root = cq.from(Product.class);
-
-		//Join<Category, Hierarchy> categoryHierarchy = category.join(Category_.hierarchy);
+		Join<Product, ProductAttribute> productAttribute = root.join(Product_.attributes);
 		
-		List<Predicate> conditions = new ArrayList<Predicate>();		
-		TypedQuery<Product> query = em.createQuery(cq
-				.select(root)
+		List<Predicate> conditions = new ArrayList<Predicate>();
+		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale));
+		
+		// Define DTO projection
+		cq.select(cb.construct(
+				io.nzbee.domain.product.Product.class,
+		        root.get(Product_.productUPC),
+		        productAttribute.get(ProductAttribute_.productDesc)));
+		
+		
+		TypedQuery<io.nzbee.domain.product.Product> query = em.createQuery(cq
 				.where(conditions.toArray(new Predicate[] {}))
 				.distinct(false)
 		);
@@ -152,7 +160,7 @@ public class ProductDaoImpl implements IProductDao {
 	}
 
 	@Override
-	public Optional<io.nzbee.domain.product.Product> findByUPC(String upc) {
+	public Optional<io.nzbee.domain.product.Product> findByUPC(String upc, String locale, String currency) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
