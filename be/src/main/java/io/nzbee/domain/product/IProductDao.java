@@ -7,7 +7,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import io.nzbee.domain.product.IDao;
+import io.nzbee.domain.IDao;
 
 public interface IProductDao extends IDao<Product> {
 
