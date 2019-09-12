@@ -12,9 +12,9 @@ public class Product {
 
 	private String productDesc;
 	
-	private double productRetail;
+	private Double productRetail;
 	
-	private double productMarkdown;
+	private Double productMarkdown;
 	
 	private String productImage;
 	
@@ -22,11 +22,15 @@ public class Product {
 	
 	private String currency;
 	
+	public Product() {
+	
+	}
+	
 	public Product(String productUPC,
 				   Date productCreateDt,
 				   String productDesc,
-				   double productRetail,
-				   double productMarkdown,
+				   Double productRetail,
+				   Double productMarkdown,
 				   String productImage,
 				   String lclCd,
 				   String currency) {

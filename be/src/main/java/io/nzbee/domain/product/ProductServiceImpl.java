@@ -278,7 +278,6 @@ public class ProductServiceImpl implements IProductService {
     	pDo.setProductImage(productImage);
     	pDo.setLclCd(productLocale);
     	pDo.setCurrency(productCurrency);
-    	pDo.setPrimaryCategoryPath(productCategory);
     	return pDo;
     }
 
