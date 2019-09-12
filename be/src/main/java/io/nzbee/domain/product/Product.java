@@ -4,6 +4,11 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.Optional;
 
+import javax.persistence.Column;
+
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
+
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.category.Category;
 
@@ -14,6 +19,8 @@ public class Product {
 	
 	private Date productCreateDt;
 
+	@Field(analyze = Analyze.YES)
+	@Column(name="prd_desc")
 	private String productDesc;
 	
 	private Optional<Brand> brand;
