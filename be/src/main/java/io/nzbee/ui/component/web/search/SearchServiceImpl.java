@@ -135,7 +135,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		String transLcl = lcl.substring(0, 2).toUpperCase() + lcl.substring(3, 5).toUpperCase();
 
 		QueryBuilder productQueryBuilder = fullTextEntityManager.getSearchFactory().buildQueryBuilder()
-				.forEntity(Product.class)
+				.forEntity(io.nzbee.entity.product.Product.class)
 				.overridesForField("productDesc", lcl)
 				.overridesForField("brandDesc", lcl)
 				.overridesForField("tagA", lcl)
@@ -164,8 +164,19 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 				.must(productQueryBuilder.keyword().onFields("lclCd").matching(lcl).createQuery()).createQuery();
 
 		org.hibernate.search.jpa.FullTextQuery jpaQuery = fullTextEntityManager.createFullTextQuery(searchQuery,
-				Product.class);
+				io.nzbee.entity.product.Product.class);
 
+		jpaQuery.setProjection("productUPC",
+							   "productcreatedt",
+							   "attributes.productdesc",
+							   "attributes.productimage", /*this is not @IndexedEmbedded on the one side*/
+							   "brand.branddesc", /*this is not a collection or map so we are fine*/
+							   "productstatus.productstatusdesc"
+							  );
+		
+		
+		
+		
 		final Set<Facet> allFacets = new HashSet<Facet>();
 		final Set<NavFacet<Category>> cs;
 		final Set<NavFacet<Brand>> bs;
@@ -299,8 +310,18 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		jpaQuery.setSort(sort);
 
 		// get the results using jpaQuery object
-		List<Product> results = jpaQuery.getResultList();
+		
+		
+		List results = jpaQuery.getResultList();
 
+		
+		Object[] firstResult = (Object[]) results.get(0);
+		System.out.println(firstResult[0]);
+		System.out.println(firstResult[1]);
+		System.out.println(firstResult[2]);
+		System.out.println(firstResult[3]);
+		System.out.println(firstResult[4]);
+		
 		// convert the results of jpaQuery to product Data Transfer Objects
 		List<Product> lp = results;
 
@@ -370,7 +391,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		org.apache.lucene.search.Sort sort = getSortField("priceDesc", currency);
 		jpaQuery.setSort(sort);
 
-		List<Product> results = jpaQuery.getResultList();
+		List<io.nzbee.entity.product.Product> results = jpaQuery.getResultList();
 
 		if (results.isEmpty()) {
 			return new ArrayList<Facet>();
