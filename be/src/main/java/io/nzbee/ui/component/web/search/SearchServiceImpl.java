@@ -29,7 +29,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.google.common.collect.Lists;
-
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.brand.IBrandService;
 import io.nzbee.domain.category.Category;
@@ -39,7 +38,6 @@ import io.nzbee.domain.product.Product;
 import io.nzbee.domain.tag.ITagService;
 import io.nzbee.domain.tag.Tag;
 import io.nzbee.entity.PageableUtil;
-import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.ProductVars;
 import io.nzbee.ui.component.web.facet.INavFacetService;
@@ -137,7 +135,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		String transLcl = lcl.substring(0, 2).toUpperCase() + lcl.substring(3, 5).toUpperCase();
 
 		QueryBuilder productQueryBuilder = fullTextEntityManager.getSearchFactory().buildQueryBuilder()
-				.forEntity(ProductAttribute.class)
+				.forEntity(Product.class)
 				.overridesForField("productDesc", lcl)
 				.overridesForField("brandDesc", lcl)
 				.overridesForField("tagA", lcl)
@@ -166,7 +164,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 				.must(productQueryBuilder.keyword().onFields("lclCd").matching(lcl).createQuery()).createQuery();
 
 		org.hibernate.search.jpa.FullTextQuery jpaQuery = fullTextEntityManager.createFullTextQuery(searchQuery,
-				ProductAttribute.class);
+				Product.class);
 
 		final Set<Facet> allFacets = new HashSet<Facet>();
 		final Set<NavFacet<Category>> cs;
@@ -301,11 +299,10 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		jpaQuery.setSort(sort);
 
 		// get the results using jpaQuery object
-		List<ProductAttribute> results = jpaQuery.getResultList();
+		List<Product> results = jpaQuery.getResultList();
 
 		// convert the results of jpaQuery to product Data Transfer Objects
-		List<Product> lp = results.stream().map(pa -> productService.convertToProductDO(pa.getProduct(), lcl, currency))
-				.collect(Collectors.toList());
+		List<Product> lp = results;
 
 		Search search = new Search();
 		search.setProducts(new PageImpl<Product>(lp, pageable, jpaQuery.getResultSize()));
@@ -373,14 +370,14 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		org.apache.lucene.search.Sort sort = getSortField("priceDesc", currency);
 		jpaQuery.setSort(sort);
 
-		List<ProductAttribute> results = jpaQuery.getResultList();
+		List<Product> results = jpaQuery.getResultList();
 
 		if (results.isEmpty()) {
 			return new ArrayList<Facet>();
 		}
 
-		Double maxPrice = results.stream().findFirst().get().getProduct().getCurrentMarkdownPriceHKD();
-		Double minPrice = Lists.reverse(results).stream().findFirst().get().getProduct().getCurrentMarkdownPriceHKD();
+		Double maxPrice = results.stream().findFirst().get().getCurrentMarkdownPriceHKD();
+		Double minPrice = Lists.reverse(results).stream().findFirst().get().getCurrentMarkdownPriceHKD();
 		Double inc = (maxPrice > 0) ? (maxPrice - ((minPrice.equals(maxPrice)) ? 0 : minPrice)) / 4 : maxPrice;
 
 		inc = new BigDecimal(inc).setScale(2, BigDecimal.ROUND_DOWN).doubleValue();

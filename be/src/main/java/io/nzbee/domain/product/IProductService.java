@@ -1,6 +1,7 @@
 package io.nzbee.domain.product;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 
@@ -18,27 +19,25 @@ public interface IProductService extends IService<Product> {
 	//as long as it conforms to the same interface contract
 	
 	//returns a domain object, this is good
-	Product findOne(String lcl, String currency, String code);
+	Optional<Product> findOne(String lcl, String currency, String code);
 
 	Double getMaxPrice(String categoryDesc, String locale, String markdownSkuDescription, String currency,
 			List<Category> categories, List<Brand> brands, List<Tag> tags);
 
-	Product convertToProductDO(io.nzbee.entity.product.Product product, String lcl, String currency);
-	
 	Page<Product> findAll(String locale, String currency, String categoryDesc, Double price, int page, int size,
 			String sortBy, List<Category> categories, List<Brand> brands, List<Tag> tags);
 
 	Long getCount(String categoryTypeCode, String categoryDesc, String locale, String currency,
 			String productStatusCode, List<Category> categories, List<Brand> brands, List<Tag> tags);
 
-	Product convertToProductDO(String productCreatedDate, String productUPC, String productDesc,
-			Double productRetailPrice, Double productMarkdownPrice, String productImage, String productLocale,
-			String productCurrency, String productCategory);
-
 	List<Product> findAll(String locale, String currency, List<String> productCodes);
 
 	Page<Product> findAll(String locale, String currency, String categoryDesc, int page, int size, String sortBy,
 			List<Category> categories, List<Brand> brands, List<Tag> tags);
+
+	Product convertToProductDO(String productCreatedDate, String productUPC, String productDesc,
+			Double productRetailPrice, Double productMarkdownPrice, String productImage, String productLocale,
+			String productCurrency, String productCategory);
 
 	
 

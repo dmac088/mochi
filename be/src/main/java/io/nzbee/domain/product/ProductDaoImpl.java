@@ -36,8 +36,6 @@ import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.attribute.ProductAttribute_;
 import io.nzbee.entity.product.currency.Currency;
 import io.nzbee.entity.product.currency.Currency_;
-import io.nzbee.entity.product.hierarchy.Hierarchy;
-import io.nzbee.entity.product.hierarchy.Hierarchy_;
 import io.nzbee.entity.product.price.ProductPrice;
 import io.nzbee.entity.product.price.ProductPriceType;
 import io.nzbee.entity.product.price.ProductPriceType_;
@@ -46,10 +44,9 @@ import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.entity.product.status.ProductStatus_;
 import io.nzbee.entity.product.tag.ProductTag;
 import io.nzbee.entity.product.tag.ProductTag_;
-import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.ProductVars;
 
-@Component
+@Component(value="productDomainDao")
 public class ProductDaoImpl implements IProductDao {
 
 	@Autowired
@@ -172,134 +169,10 @@ public class ProductDaoImpl implements IProductDao {
 		return Optional.ofNullable(query.getSingleResult());
 	}
 		
-	@Override
-	public Page<io.nzbee.domain.product.Product> findAllActiveSKU(List<Long> categoryIds, String locale, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, Pageable pageable, List<Long> brandIds, List<Long> tagIds) {
-	
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-	
-		CriteriaQuery<io.nzbee.domain.product.Product> cq = cb.createQuery(io.nzbee.domain.product.Product.class);
-		
-		Root<Product> root 									= cq.from(Product.class);
-		Join<Product, ProductAttribute> productAttribute 	= root.join(Product_.attributes);
-		Join<Product, CategoryProduct> category 			= root.join(Product_.categories);
-		Join<Product, Brand> brand 							= root.join(Product_.brand);
-		Join<Product, ProductStatus> status 				= root.join(Product_.productStatus);
-		Join<Product, ProductPrice> price 					= root.join(Product_.prices);
-		Join<ProductPrice, ProductPriceType> type 			= price.join(ProductPrice_.type);
-		Join<ProductPrice, Currency> curr 					= price.join(ProductPrice_.currency);
-		Join<Brand, BrandAttribute> brandAttribute 			= brand.join(Brand_.brandAttributes);
-		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(CategoryProduct_.attributes);
-		//Join<Category, Hierarchy> categoryHierarchy = category.join(Category_.hierarchy);
-		
-		List<Predicate> conditions = new ArrayList<Predicate>();
-		if(!categoryIds.isEmpty()) {
-			conditions.add(category.get(CategoryProduct_.categoryId).in(categoryIds));
-		}
-		if(!brandIds.isEmpty()) {
-			conditions.add(brand.get(Brand_.brandId).in(brandIds));
-		}
-		if(!tagIds.isEmpty()) {
-			Join<Product, ProductTag> tag = root.join(Product_.tags);
-			conditions.add(tag.get(ProductTag_.productTagId).in(tagIds));
-		}
-		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), locale));
-		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale));
-		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
-		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
-		conditions.add(cb.equal(type.get(ProductPriceType_.desc), priceType));
-		conditions.add(cb.equal(curr.get(Currency_.code), currency));
-		conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.priceValue), priceStart));
-		conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.priceValue), priceEnd));
-		conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.startDate), priceDateStart));
-		conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.endDate), priceDateEnd));
-		
-		Long resultCount = this.getResultCountById(categoryIds, locale, priceStart, priceEnd, priceType, currency, priceDateStart, priceDateEnd, pageable, brandIds, tagIds);
-	
-		Order order = pageable.getSort().stream().map(o -> {
-			return this.getOrder(o.getProperty().replaceAll(".*\\.", ""), o.getDirection(), cb, productAttribute, price);
-		}).collect(Collectors.toList()).get(0);
-		
-		TypedQuery<io.nzbee.domain.product.Product> query = em.createQuery(cq
-				.where(conditions.toArray(new Predicate[] {}))
-				.distinct(false)
-				.orderBy(order)
-		);
-
-		PageableUtil pageableUtil = new PageableUtil();
-		query.setFirstResult(pageableUtil.getStartPosition(pageable));
-		query.setMaxResults(pageable.getPageSize());
-		
-		return new PageImpl<io.nzbee.domain.product.Product>(query.getResultList(), pageable, resultCount);
-    }
 	
 	
 	@Override
-	public Page<io.nzbee.domain.product.Product> findAllActiveSKUByPrimaryHierarchyById(List<Long> categoryIds, String locale, Double priceStart,
-			Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd,
-			Pageable pageable, List<Long> brandIds, List<Long> tagIds) {
-		
-		
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		
-		CriteriaQuery<io.nzbee.domain.product.Product> cq = cb.createQuery(io.nzbee.domain.product.Product.class);
-		
-		Root<Product> root 									= cq.from(Product.class);
-		Join<Product, ProductAttribute> productAttribute 	= root.join(Product_.attributes);
-		Join<Product, CategoryProduct> category 					= root.join(Product_.categories);
-		Join<Product, Brand> brand 							= root.join(Product_.brand);
-		Join<Product, ProductStatus> status 				= root.join(Product_.productStatus);
-		Join<Product, ProductPrice> price 					= root.join(Product_.prices);
-		Join<ProductPrice, ProductPriceType> type 			= price.join(ProductPrice_.type);
-		Join<ProductPrice, Currency> curr 					= price.join(ProductPrice_.currency);
-		Join<Brand, BrandAttribute> brandAttribute 			= brand.join(Brand_.brandAttributes);
-		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(CategoryProduct_.attributes);
-		Join<CategoryProduct, Hierarchy> categoryHierarchy 		= category.join(CategoryProduct_.hierarchy);
-		
-		List<Predicate> conditions = new ArrayList<Predicate>();
-		if(!categoryIds.isEmpty()) {
-			conditions.add(category.get(CategoryProduct_.categoryId).in(categoryIds));
-		}
-		if(!brandIds.isEmpty()) {
-			conditions.add(brand.get(Brand_.brandId).in(brandIds));
-		}
-		if(!tagIds.isEmpty()) {
-			Join<Product, ProductTag> tag = root.join(Product_.tags);
-			conditions.add(tag.get(ProductTag_.productTagId).in(tagIds));
-		}
-		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), locale));
-		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale));
-		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
-		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
-		conditions.add(cb.equal(type.get(ProductPriceType_.desc), priceType));
-		conditions.add(cb.equal(curr.get(Currency_.code), currency));
-		if(priceStart != -1 && priceEnd != -1) {
-			conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.priceValue), priceStart));
-			conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.priceValue), priceEnd));
-		}
-		conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.startDate), priceDateStart));
-		conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.endDate), priceDateEnd));
-		conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), CategoryVars.PRIMARY_HIERARCHY_CODE));		
-		Long resultCount = this.getResultCountById(categoryIds, locale, priceStart, priceEnd, priceType, currency, priceDateStart, priceDateEnd, pageable, brandIds, tagIds);
-	
-		Order order = pageable.getSort().stream().map(o -> {
-			return this.getOrder(o.getProperty().replaceAll(".*\\.", ""), o.getDirection(), cb, productAttribute, price);
-		}).collect(Collectors.toList()).get(0);
-		
-		TypedQuery<io.nzbee.domain.product.Product> query = em.createQuery(cq
-				.where(conditions.toArray(new Predicate[] {}))
-				.distinct(false)
-				.orderBy(order)
-		);
-
-		PageableUtil pageableUtil = new PageableUtil();
-		query.setFirstResult(pageableUtil.getStartPosition(pageable));
-		query.setMaxResults(pageable.getPageSize());
-		
-		return new PageImpl<io.nzbee.domain.product.Product>(query.getResultList(), pageable, resultCount);
-	}
-	
-	@Override
-	public Page<io.nzbee.domain.product.Product> findAllActiveSKUByCode(List<String> categoryCodes, String locale, Double priceStart,
+	public Page<io.nzbee.domain.product.Product> findAll(List<String> categoryCodes, String locale, Double priceStart,
 			Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd,
 			Pageable pageable, List<String> brandCodes, List<String> tagCodes) {
 		// TODO Auto-generated method stub
@@ -363,7 +236,7 @@ public class ProductDaoImpl implements IProductDao {
 	}
 	
 	@Override
-	public Page<io.nzbee.domain.product.Product> findAllActiveSKUByCode(List<String> categoryCodes, String locale, 
+	public Page<io.nzbee.domain.product.Product> findAll(List<String> categoryCodes, String locale, 
 			String priceType, String currency, Date priceDateStart, Date priceDateEnd,
 			Pageable pageable, List<String> brandCodes, List<String> tagCodes) {
 		// TODO Auto-generated method stub
@@ -546,54 +419,6 @@ public class ProductDaoImpl implements IProductDao {
 		 
 		return query.getSingleResult();
     }
-	
-	private Long getResultCountById(List<Long> categoryIds, String locale, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, Pageable pageable, List<Long> brandIds, List<Long> tagIds) {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		
-		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-		
-		Root<Product> root = cq.from(Product.class);
-		Join<Product, ProductAttribute> productAttribute = root.join(Product_.attributes);
-		Join<Product, CategoryProduct> category = root.join(Product_.categories);
-		Join<Product, Brand> brand = root.join(Product_.brand);
-		Join<Product, ProductStatus> status = root.join(Product_.productStatus);
-		Join<Product, ProductPrice> price = root.join(Product_.prices);
-		Join<ProductPrice, ProductPriceType> type = price.join(ProductPrice_.type);
-		Join<ProductPrice, Currency> curr = price.join(ProductPrice_.currency);
-		Join<Brand, BrandAttribute> brandAttribute = brand.join(Brand_.brandAttributes);
-		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
-		//Join<Category, Hierarchy> categoryHierarchy = category.join(Category_.hierarchy);
-		
-		List<Predicate> conditions = new ArrayList<Predicate>();
-		if(!categoryIds.isEmpty()) {
-			conditions.add(category.get(CategoryProduct_.categoryId).in(categoryIds));
-		}
-		if(!brandIds.isEmpty()) {
-			conditions.add(brand.get(Brand_.brandId).in(brandIds));
-		}
-		if(!tagIds.isEmpty()) {
-			Join<Product, ProductTag> tag = root.join(Product_.tags);
-			conditions.add(tag.get(ProductTag_.productTagId).in(tagIds));
-		}
-		
-		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), locale));
-		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
-		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale));
-		conditions.add(cb.equal(type.get(ProductPriceType_.desc), priceType));
-		conditions.add(cb.equal(curr.get(Currency_.code), currency));
-		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
-		conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.priceValue), priceStart));
-		conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.priceValue), priceEnd));
-		conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.startDate), priceDateStart));
-		conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.endDate), priceDateEnd));
-		
-		TypedQuery<Long> query = em.createQuery(cq
-				.select(cb.count(root.<Long>get(Product_.productId)))
-				.where(conditions.toArray(new Predicate[] {}))
-				.distinct(false));
-		 
-		return query.getSingleResult();
-	}
 	
 	private Long getResultCountByCode(List<String> categoryCodes, String locale, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, Pageable pageable, List<String> brandCodes, List<String> tagCodes) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
