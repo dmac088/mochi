@@ -2,15 +2,6 @@ package io.nzbee.domain.product;
 
 import java.util.Date;
 import java.util.Objects;
-import java.util.Optional;
-
-import javax.persistence.Column;
-
-import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.Field;
-
-import io.nzbee.domain.brand.Brand;
-import io.nzbee.domain.category.Category;
 
 
 public class Product {
@@ -19,11 +10,7 @@ public class Product {
 	
 	private Date productCreateDt;
 
-	@Field(analyze = Analyze.YES)
-	@Column(name="prd_desc")
 	private String productDesc;
-	
-	private Optional<Brand> brand;
 	
 	private double productRetail;
 	
@@ -35,10 +22,25 @@ public class Product {
 	
 	private String currency;
 	
-	private String primaryCategoryPath; 
+	public Product(String productUPC,
+				   Date productCreateDt,
+				   String productDesc,
+				   double productRetail,
+				   double productMarkdown,
+				   String productImage,
+				   String lclCd,
+				   String currency) {
+		
+		this.productUPC = productUPC;
+		this.productCreateDt = productCreateDt;
+		this.productDesc = productDesc;
+		this.productRetail = productRetail;
+		this.productMarkdown = productMarkdown;
+		this.productImage = productImage;
+		this.lclCd = lclCd;
+		this.currency = currency;
+	}
 	
-	private Category category;
-
 	public String getProductUPC() {
 		return productUPC;
 	}
@@ -95,36 +97,12 @@ public class Product {
 		this.lclCd = lclCd;
 	}
 	
-	public String getPrimaryCategoryPath() {
-		return primaryCategoryPath;
-	}
-
-	public void setPrimaryCategoryPath(String primaryCategoryPath) {
-		this.primaryCategoryPath = primaryCategoryPath;
-	}
-	
 	public String getCurrency() {
 		return currency;
 	}
 
 	public void setCurrency(String currency) {
 		this.currency = currency;
-	}
-	
-	public Optional<Brand> getBrand() {
-		return brand;
-	}
-
-	public void setBrand(Optional<Brand> brand) {
-		this.brand = brand;
-	}
-
-	public Category getCategory() {
-		return category;
-	}
-
-	public void setCategory(Category category) {
-		this.category = category;
 	}
 
 	@Override
