@@ -234,17 +234,16 @@ public class ProductDaoImpl implements IProductDao {
 		//We need to define a constructor in our Product DTO (domain object)
 		
 		
-		
 		cq.select(cb.construct(
 					io.nzbee.domain.product.Product.class,
-					root.<String> get(Product_.productUPC),
-					root.<Date> get(Product_.productCreateDt),
-					productAttribute.<String> get(ProductAttribute_.productDesc),
-					retailPrice.<Double> get(ProductPrice_.priceValue),
-					markdownPrice.<Double> get(ProductPrice_.priceValue),
-					productAttribute.<String> get(ProductAttribute_.ProductImage),
-					locale.toString(),
-					currency.toString()
+					root.get(Product_.productUPC),
+					root.get(Product_.productCreateDt),
+					productAttribute.get(ProductAttribute_.productDesc),
+					retailPrice.get(ProductPrice_.priceValue),
+					markdownPrice.get(ProductPrice_.priceValue),
+					productAttribute.get(ProductAttribute_.ProductImage),
+					productAttribute.get(ProductAttribute_.lclCd),
+					markdownPrice.get(ProductPrice_.currency)
 					)
 		);
 		
