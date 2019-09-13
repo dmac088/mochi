@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.nzbee.domain.brand.Brand;
-import io.nzbee.domain.brand.IBrandService;
+import io.nzbee.dto.brand.Brand;
+import io.nzbee.dto.brand.IBrandService;
 
 @RestController
 @RequestMapping("/api")
