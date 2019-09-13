@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import io.nzbee.domain.product.IProductService;
-import io.nzbee.domain.product.Product;
+
+import io.nzbee.dto.product.IProductService;
+import io.nzbee.dto.product.Product;
 
 @RestController
 @RequestMapping("/api")

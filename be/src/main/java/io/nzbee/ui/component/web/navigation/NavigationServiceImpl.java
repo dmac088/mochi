@@ -7,8 +7,8 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import io.nzbee.domain.product.IProductService;
-import io.nzbee.domain.product.Product;
+import io.nzbee.dto.product.IProductService;
+import io.nzbee.dto.product.Product;
 import io.nzbee.ui.component.web.facet.NavFacetContainer;
 import io.nzbee.ui.component.web.generic.UIService;
 import io.nzbee.ui.component.web.search.Search;
