@@ -1,9 +1,6 @@
 package io.nzbee.dto.category;
 
-import java.util.List;
 import java.util.Objects;
-
-import io.nzbee.entity.layout.Layout;
 
 public abstract class Category {
 	
@@ -18,8 +15,6 @@ public abstract class Category {
 	private String categoryType;
 
 	private String lclCd;
-	
-	private List<Layout> layouts;
 	
 	private String parentCode;	
 
@@ -91,14 +86,6 @@ public abstract class Category {
 	
 	public void setCategoryType(String categoryType) {
 		this.categoryType = categoryType;
-	}
-	
-	public List<Layout> getLayouts() {
-		return layouts;
-	}
-
-	public void setLayouts(List<Layout> layouts) {
-		this.layouts = layouts;
 	}
 
 	@Override

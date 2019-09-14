@@ -6,9 +6,9 @@ import io.nzbee.entity.IDao;
 
 public interface ICategoryDao extends IDao<Category> {
 
-	Optional<Category> findByCategoryDesc(String categoryTypeCode, String categoryDesc, String locale);
+	Optional<Category> findByCategoryDesc(String categoryDesc, String locale);
 	
-	Optional<Category> findByCategoryCode(String categoryTypeCode, String categoryCode, String locale);
+	Optional<Category> findByCategoryCode(String categoryCode, String locale);
 	
 	List<Category> findByParent(String hieararchyCode, String categoryTypeCode, Long parentCategoryId, String locale);
 	
@@ -16,6 +16,8 @@ public interface ICategoryDao extends IDao<Category> {
 
 	List<Category> findChildrenByCriteria(String hieararchyCode, String categoryTypeCode, String parentCategoryDesc,
 			List<String> brandCodes, List<String> tagCodes, String locale);
+
+	Optional<Category> findById(long id, String locale);
 
 	
 }
