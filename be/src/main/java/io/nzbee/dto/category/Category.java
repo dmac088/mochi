@@ -7,6 +7,8 @@ import io.nzbee.entity.layout.Layout;
 
 public abstract class Category {
 	
+	private Long id;
+
 	private String categoryCode;
 	
 	private String categoryDesc;
@@ -26,6 +28,14 @@ public abstract class Category {
 	public abstract Long getCount();
 	
 	public abstract void setCount(Long brandCount);
+	
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
 	
 	public String getCategoryCode() {
 		return categoryCode;
