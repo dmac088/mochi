@@ -32,7 +32,7 @@ import io.nzbee.entity.product.hierarchy.Hierarchy_;
 import io.nzbee.entity.product.tag.ProductTag;
 import io.nzbee.entity.product.tag.ProductTag_;
 
-@Component
+@Component(value="categoryDomainDao")
 public class CategoryDaoImpl implements ICategoryDao {
 
 	@Autowired
@@ -40,7 +40,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 	private EntityManager em;
 
 	@Override
-	public Optional<io.nzbee.dto.category.Category> findById(long id) {
+	public Optional<io.nzbee.dto.category.Category> findById(long id, String locale) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<io.nzbee.dto.category.Category> cq = cb.createQuery(io.nzbee.dto.category.Category.class);
@@ -77,7 +77,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 
 
 	
-	public Optional<io.nzbee.dto.category.Category> findByCategoryDesc(String categoryTypeCode, String categoryDesc, String locale) {
+	public Optional<io.nzbee.dto.category.Category> findByCategoryDesc(String categoryDesc, String locale) {
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
@@ -85,13 +85,13 @@ public class CategoryDaoImpl implements ICategoryDao {
 		
 		Root<Category> root = cq.from(Category.class);
 		
-		Join<Category, CategoryType> categoryType = root.join(Category_.categoryType);
+		//Join<Category, CategoryType> categoryType = root.join(Category_.categoryType);
 		Join<Category, CategoryAttribute> categoryAttribute = root.join(Category_.attributes);
 		//Join<Category, Hierarchy> categoryHierarchy = root.join(Category_.hierarchy);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		//conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), hieararchyCode));
-		conditions.add(cb.equal(categoryType.get(CategoryType_.code), categoryTypeCode));
+		//conditions.add(cb.equal(categoryType.get(CategoryType_.code), categoryTypeCode));
 	
 		if(!(categoryDesc == null)) {
 			conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.categoryDesc), categoryDesc));
@@ -108,19 +108,19 @@ public class CategoryDaoImpl implements ICategoryDao {
 		return Optional.ofNullable(query.getSingleResult());
 	}
 		
-	public Optional<io.nzbee.dto.category.Category> findByCategoryCode(String categoryTypeCode, String categoryCode, String locale) {
+	public Optional<io.nzbee.dto.category.Category> findByCategoryCode(String categoryCode, String locale) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 
 		CriteriaQuery<io.nzbee.dto.category.Category> cq = cb.createQuery(io.nzbee.dto.category.Category.class);
 		
 		Root<Category> root = cq.from(Category.class);
-		Join<Category, CategoryType> categoryType = root.join(Category_.categoryType);
+		//Join<Category, CategoryType> categoryType = root.join(Category_.categoryType);
 		
 		//Join<Category, Hierarchy> categoryHierarchy = root.join(Category_.hierarchy);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		//conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), hieararchyCode));
-		conditions.add(cb.equal(categoryType.get(CategoryType_.code), categoryTypeCode));
+		//conditions.add(cb.equal(categoryType.get(CategoryType_.code), categoryTypeCode));
 	
 		if(!(categoryCode == null)) {
 			conditions.add(cb.equal(root.get(Category_.categoryCode), categoryCode));
@@ -259,6 +259,12 @@ public class CategoryDaoImpl implements ICategoryDao {
 	public void delete(io.nzbee.dto.category.Category t) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Optional<io.nzbee.dto.category.Category> findById(long id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	
