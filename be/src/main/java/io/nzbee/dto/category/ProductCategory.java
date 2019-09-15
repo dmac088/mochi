@@ -7,15 +7,17 @@ import io.nzbee.dto.product.Product;
 public class ProductCategory extends Category {
 
 	public ProductCategory(Long id, String categoryCode, String categoryDesc, Long categoryLevel, String categoryType,
-			String lclCd, String parentCode) {
-		super(id, categoryCode, categoryDesc, categoryLevel, categoryType, lclCd, parentCode);
+			String lclCd, String parentCode, Long productCount) {
+		super(id, categoryCode, categoryDesc, categoryLevel, categoryType, lclCd, parentCode, productCount);
 		// TODO Auto-generated constructor stub
+	}
+
+	public ProductCategory() {
+		super();
 	}
 
 	private List<Product> products;
 	
-	private Long productCount;
-
 	public List<Product> getProducts() {
 		return products;
 	}
@@ -24,11 +26,4 @@ public class ProductCategory extends Category {
 		this.products = products;
 	}
 	
-	public Long getCount() {
-		return productCount;
-	}
-
-	public void setCount(Long productCount) {
-		this.productCount = productCount;
-	}
 }

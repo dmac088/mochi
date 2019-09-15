@@ -44,9 +44,5 @@ public class CategoryProduct extends Category  {
 	public CategoryType getCategoryType() {
 		return super.getCategoryType();
 	}
-	
-	public Long getCount() {
-		return productCount;
-	}
 
 }
