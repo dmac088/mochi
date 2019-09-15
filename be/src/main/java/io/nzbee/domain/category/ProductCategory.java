@@ -1,8 +1,7 @@
-package io.nzbee.dto.category;
+package io.nzbee.domain.category;
 
 import java.util.List;
 
-import io.nzbee.dto.product.Product;
 
 public class ProductCategory extends Category {
 
@@ -16,14 +15,14 @@ public class ProductCategory extends Category {
 		super();
 	}
 
-	private List<Product> products;
-	
-	public List<Product> getProducts() {
-		return products;
-	}
-
-	public void setProducts(List<Product> products) {
-		this.products = products;
-	}
-	
+//	private List<Product> products;
+//	
+//	public List<Product> getProducts() {
+//		return products;
+//	}
+//
+//	public void setProducts(List<Product> products) {
+//		this.products = products;
+//	}
+//	
 }
