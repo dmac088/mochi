@@ -11,7 +11,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import io.nzbee.dto.brand.Brand;
 import io.nzbee.dto.tag.Tag;
-import io.nzbee.entity.product.IProductService;
 import io.nzbee.variables.CategoryVars;
 
 @Service
@@ -91,7 +90,7 @@ public class CategoryServiceImpl implements ICategoryService {
 	@Transactional
 	//@Cacheable
 	public List<Category> findAll(String locale, String categoryDesc, List<Brand> brands, List<Tag> tags) {
-    	return categoryDao.find(
+    	return categoryDao.findChildrenByCriteria(
 				 categoryDesc, 
 				 brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()),  
 				 tags.stream().map(t -> t.getTagCode()).collect(Collectors.toList()),
