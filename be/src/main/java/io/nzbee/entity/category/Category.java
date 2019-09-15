@@ -40,7 +40,7 @@ import io.nzbee.variables.GeneralVars;
 
 @Entity
 @Table(name = "category", schema = "mochi")
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @JsonTypeInfo(
 	    use = JsonTypeInfo.Id.MINIMAL_CLASS,
 	    include = JsonTypeInfo.As.PROPERTY,

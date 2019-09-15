@@ -95,8 +95,6 @@ public class CategoryDaoImpl implements ICategoryDao {
 				categoryType.get(CategoryType_.code),
 				categoryAttribute.get(CategoryAttribute_.lclCd),
 				categoryParent.get(Category_.categoryCode),
-				//categoryProduct.get(CategoryProduct_.productCount)
-				//root.get(Category_.categoryId)
 				cb.selectCase()
 				.when(cb.equal(categoryType.get(CategoryType_.code), CategoryVars.CATEGORY_TYPE_CODE_PRODUCT), categoryProduct.get(CategoryProduct_.productCount))
 				.when(cb.equal(categoryType.get(CategoryType_.code), CategoryVars.CATEGORY_TYPE_CODE_BRAND), categoryBrand.get(CategoryBrand_.brandCount))
