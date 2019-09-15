@@ -41,8 +41,4 @@ public class CategoryBrand extends Category {
 		return brands;
 	}
 
-    public Long getCount() {
-		return brandCount;
-	}
-    
 }

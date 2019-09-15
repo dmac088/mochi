@@ -2,7 +2,7 @@ package io.nzbee.dto.category;
 
 import java.util.Objects;
 
-public abstract class Category {
+public class Category {
 	
 	private Long id;
 
@@ -19,10 +19,8 @@ public abstract class Category {
 	private String parentCode;	
 
 	private Long childCategoryCount;
-	
-	public abstract Long getCount();
-	
-	public abstract void setCount(Long count);
+
+	private Long objectCount;
 	
 	public long getId() {
 		return id;
@@ -32,20 +30,27 @@ public abstract class Category {
 		this.id = id;
 	}
 	
+	public Category() {
+		super();
+	}
+	
 	public Category(Long id, 
 					String categoryCode, 
 					String categoryDesc, 
 					Long categoryLevel, 
 					String categoryType,
 					String lclCd, 
-					String parentCode) {
-		this.id = id;
-		this.categoryCode = categoryCode;
-		this.categoryDesc = categoryDesc;
-		this.categoryLevel = categoryLevel;
-		this.categoryType = categoryType;
-		this.lclCd = lclCd;
-		this.parentCode = parentCode;
+					String parentCode,
+					Long objectCount) {
+		super();
+		this.id 			= id;
+		this.categoryCode 	= categoryCode;
+		this.categoryDesc 	= categoryDesc;
+		this.categoryLevel 	= categoryLevel;
+		this.categoryType 	= categoryType;
+		this.lclCd 			= lclCd;
+		this.parentCode 	= parentCode;
+		this.objectCount	= objectCount;
 	}
 
 	public String getCategoryCode() {
@@ -102,6 +107,14 @@ public abstract class Category {
 	
 	public void setCategoryType(String categoryType) {
 		this.categoryType = categoryType;
+	}
+	
+	public Long getCount() {
+		return objectCount;
+	}
+
+	public void setCount(Long objectCount) {
+		this.objectCount = objectCount;
 	}
 
 	@Override

@@ -10,8 +10,11 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.xml.crypto.dsig.spec.C14NMethodParameterSpec;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -21,6 +24,8 @@ import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.Category_;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.attribute.CategoryAttribute_;
+import io.nzbee.entity.category.brand.readonly.CategoryBrand;
+import io.nzbee.entity.category.brand.readonly.CategoryBrand_;
 import io.nzbee.entity.category.product.readonly.CategoryProduct_;
 import io.nzbee.entity.category.product.readonly.CategoryProduct;
 import io.nzbee.entity.category.type.CategoryType;
@@ -31,6 +36,7 @@ import io.nzbee.entity.product.hierarchy.Hierarchy;
 import io.nzbee.entity.product.hierarchy.Hierarchy_;
 import io.nzbee.entity.product.tag.ProductTag;
 import io.nzbee.entity.product.tag.ProductTag_;
+import io.nzbee.variables.CategoryVars;
 
 @Component(value="categoryDomainDao")
 public class CategoryDaoImpl implements ICategoryDao {
@@ -68,11 +74,14 @@ public class CategoryDaoImpl implements ICategoryDao {
 		
 		Root<Category> root = cq.from(Category.class);
 		
-		//Join<Category, CategoryType> categoryType = root.join(Category_.categoryType);
+		Root<CategoryProduct> categoryProduct = cb.treat(root, CategoryProduct.class);
+		Root<CategoryBrand> categoryBrand = cb.treat(root, CategoryBrand.class);
+		
+
 		Join<Category, CategoryAttribute> categoryAttribute = root.join(Category_.attributes);
 		Join<Category, CategoryType> categoryType = root.join(Category_.categoryType);
 		Join<Category, Category> categoryParent = root.join(Category_.parent);
-				
+		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		
 		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
@@ -85,9 +94,26 @@ public class CategoryDaoImpl implements ICategoryDao {
 				root.get(Category_.categoryLevel),
 				categoryType.get(CategoryType_.code),
 				categoryAttribute.get(CategoryAttribute_.lclCd),
-				categoryParent.get(Category_.categoryCode)
+				categoryParent.get(Category_.categoryCode),
+				//categoryProduct.get(CategoryProduct_.productCount)
+				//root.get(Category_.categoryId)
+				cb.selectCase()
+				.when(cb.equal(categoryType.get(CategoryType_.code), CategoryVars.CATEGORY_TYPE_CODE_PRODUCT), categoryProduct.get(CategoryProduct_.productCount))
+				.when(cb.equal(categoryType.get(CategoryType_.code), CategoryVars.CATEGORY_TYPE_CODE_BRAND), categoryBrand.get(CategoryBrand_.brandCount))
+				.otherwise(new Long(0))
 				)
 		);
+		
+		//https://hibernate.atlassian.net/browse/HHH-9594
+		//treat is not supported in the select 
+		//only in the where clause
+		/*
+		 .where(criteriaBuilder.or(
+                     criteriaBuilder.greaterThan(partTimeEmployee.get(PartTimeEmployee_.weeklySalary), 1000),
+                     criteriaBuilder.lessThan(contractEmployee.get(ContractEmployee_.hourlyRate), 75)
+          ));
+		 */
+		
 		
 		TypedQuery<io.nzbee.dto.category.Category> query = em.createQuery(cq
 				//.select(root)
@@ -95,7 +121,9 @@ public class CategoryDaoImpl implements ICategoryDao {
 				.distinct(false)
 		);
 		
+		
 		return query.getResultList();
+	
 	}
 
 
