@@ -10,11 +10,8 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
-import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.xml.crypto.dsig.spec.C14NMethodParameterSpec;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -102,19 +99,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 				)
 		);
 		
-		//https://hibernate.atlassian.net/browse/HHH-9594
-		//treat is not supported in the select 
-		//only in the where clause
-		/*
-		 .where(criteriaBuilder.or(
-                     criteriaBuilder.greaterThan(partTimeEmployee.get(PartTimeEmployee_.weeklySalary), 1000),
-                     criteriaBuilder.lessThan(contractEmployee.get(ContractEmployee_.hourlyRate), 75)
-          ));
-		 */
-		
-		
 		TypedQuery<io.nzbee.dto.category.Category> query = em.createQuery(cq
-				//.select(root)
 				.where(conditions.toArray(new Predicate[] {}))
 				.distinct(false)
 		);
