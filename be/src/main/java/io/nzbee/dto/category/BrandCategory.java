@@ -6,6 +6,12 @@ import io.nzbee.dto.brand.Brand;
 
 public class BrandCategory extends Category {
 
+	public BrandCategory(Long id, String categoryCode, String categoryDesc, Long categoryLevel, String categoryType,
+			String lclCd, String parentCode) {
+		super(id, categoryCode, categoryDesc, categoryLevel, categoryType, lclCd, parentCode);
+		// TODO Auto-generated constructor stub
+	}
+
 	private List<Brand> brands;
 
 	private Long brandCount;

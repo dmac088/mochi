@@ -29,7 +29,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.google.common.collect.Lists;
-
 import io.nzbee.dto.brand.Brand;
 import io.nzbee.dto.brand.IBrandService;
 import io.nzbee.dto.category.Category;
@@ -239,11 +238,11 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 				.collect(Collectors.toList()).stream().forEach(cf -> {
 					
 					String categoryCode = (new LinkedList<String>(Arrays.asList(cf.getValue().split("/")))).getLast();
-					Category category = categoryService.findOneByCode(lcl, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, categoryCode);
+					Optional<Category> category = categoryService.findOneByCode(lcl, categoryCode);
 //					System.out.println(category.getCategoryDesc());
 //					System.out.println(category.getCategoryType());
 //					System.out.println(category.getClass().getSimpleName());
-					NavFacet<Category> categoryFacet = facetService.convertCatToNavFacet(category);
+					NavFacet<Category> categoryFacet = facetService.convertCatToNavFacet(category.get());
 					categoryFacet.setFacetProductCount(new Long(cf.getCount()));
 					categoryFacet.setToken(cf.getValue());
 					categoryFacet.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
@@ -342,8 +341,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 
 		String categoryCode = (new LinkedList<String>(Arrays.asList(sf.getValue().split("/")))).getLast();
 
-		Optional<Category> c = Optional.ofNullable(
-				categoryService.findOneByCode(locale, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, categoryCode));
+		Optional<Category> c = categoryService.findOneByCode(locale, categoryCode);
 		if (!c.isPresent()) {
 			return cfs;
 		}
@@ -351,7 +349,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			return cfs;
 		}
 		
-		Optional<Category> oParent = Optional.ofNullable(categoryService.findOneByCode(locale, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, c.get().getParentCode()));
+		Optional<Category> oParent = categoryService.findOneByCode(locale, c.get().getParentCode());
 		
 		if (!oParent.isPresent()) {
 			return cfs;

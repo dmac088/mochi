@@ -19,7 +19,7 @@ public interface ICategoryService {
 	 
 	Optional<Category> findOneByDesc(String locale,  String categoryType, String categoryDesc);
 	
-	Category createCategory(io.nzbee.entity.category.Category pc, String locale);
+	//Category createCategory(io.nzbee.entity.category.Category pc, String locale);
 
 	List<Category> findAll(String locale, String categoryDesc, List<Brand> brands,
 			List<Tag> tags);
