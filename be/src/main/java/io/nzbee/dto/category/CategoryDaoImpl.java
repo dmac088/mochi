@@ -198,24 +198,28 @@ public class CategoryDaoImpl implements ICategoryDao {
 	}
 	
 	@Override
-	public List<io.nzbee.dto.category.Category> findChildrenByCriteria(String hieararchyCode, String categoryTypeCode, String parentCategoryDesc, List<String> brandCodes, List<String> tagCodes, String locale) {
+	public List<io.nzbee.dto.category.Category> findChildrenByCriteria(
+			String parentCategoryDesc, 
+			List<String> brandCodes, 
+			List<String> tagCodes, 
+			String locale) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<io.nzbee.dto.category.ProductCategory> cq = cb.createQuery(io.nzbee.dto.category.ProductCategory.class);
 		
 		Root<CategoryProduct> root = cq.from(CategoryProduct.class);
 		
-		Join<CategoryProduct, CategoryType> categoryType = root.join(Category_.categoryType);
+		//Join<CategoryProduct, CategoryType> categoryType = root.join(Category_.categoryType);
 		Join<CategoryProduct, CategoryAttribute> categoryAttribute = root.join(Category_.attributes);
-		Join<CategoryProduct, Hierarchy> categoryHierarchy = root.join(Category_.hierarchy);
+		//Join<CategoryProduct, Hierarchy> categoryHierarchy = root.join(Category_.hierarchy);
 		Join<CategoryProduct, Product> product = root.join(CategoryProduct_.products);
 		Join<Product, Brand> brand = product.join(Product_.brand);
 		Join<CategoryProduct, Category> parent = root.join(Category_.parent);
 		Join<Category, CategoryAttribute> parentCategoryAttribute = parent.join(Category_.attributes);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
-		conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), hieararchyCode));
-		conditions.add(cb.equal(categoryType.get(CategoryType_.code), categoryTypeCode));
+		//conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), hieararchyCode));
+		//conditions.add(cb.equal(categoryType.get(CategoryType_.code), categoryTypeCode));
 		if(!brandCodes.isEmpty()) {
 			conditions.add(brand.get(Brand_.brandCode).in(brandCodes));
 		}
