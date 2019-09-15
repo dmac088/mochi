@@ -2,7 +2,7 @@ package io.nzbee.dto.brand;
 
 import java.util.Objects;
 
-import io.nzbee.dto.category.BrandCategory;
+import io.nzbee.domain.category.BrandCategory;
 
 public class Brand {
 

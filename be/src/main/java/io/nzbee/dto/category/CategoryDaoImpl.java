@@ -251,7 +251,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 			String locale) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
-		CriteriaQuery<io.nzbee.dto.category.ProductCategory> cq = cb.createQuery(io.nzbee.dto.category.ProductCategory.class);
+		CriteriaQuery<io.nzbee.dto.category.Category> cq = cb.createQuery(io.nzbee.dto.category.Category.class);
 		
 		Root<CategoryProduct> root = cq.from(CategoryProduct.class);
 		
@@ -278,7 +278,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 		}
 		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
 		
-		TypedQuery<io.nzbee.dto.category.ProductCategory> query = em.createQuery(cq
+		TypedQuery<io.nzbee.dto.category.Category> query = em.createQuery(cq
 				//.select(root)
 				.where(conditions.toArray(new Predicate[] {}))
 				.distinct(true)
