@@ -22,7 +22,7 @@ public abstract class Category {
 	
 	public abstract Long getCount();
 	
-	public abstract void setCount(Long brandCount);
+	public abstract void setCount(Long count);
 	
 	public long getId() {
 		return id;
@@ -32,6 +32,22 @@ public abstract class Category {
 		this.id = id;
 	}
 	
+	public Category(Long id, 
+					String categoryCode, 
+					String categoryDesc, 
+					Long categoryLevel, 
+					String categoryType,
+					String lclCd, 
+					String parentCode) {
+		this.id = id;
+		this.categoryCode = categoryCode;
+		this.categoryDesc = categoryDesc;
+		this.categoryLevel = categoryLevel;
+		this.categoryType = categoryType;
+		this.lclCd = lclCd;
+		this.parentCode = parentCode;
+	}
+
 	public String getCategoryCode() {
 		return categoryCode;
 	}

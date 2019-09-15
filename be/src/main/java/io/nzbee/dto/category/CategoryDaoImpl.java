@@ -60,16 +60,39 @@ public class CategoryDaoImpl implements ICategoryDao {
 	}
 
 	@Override
-	public List<io.nzbee.dto.category.Category> findAll() {
+	public List<io.nzbee.dto.category.Category> findAll(String locale) {
+		System.out.println("bang!");
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<io.nzbee.dto.category.Category> cq = cb.createQuery(io.nzbee.dto.category.Category.class);
 		
 		Root<Category> root = cq.from(Category.class);
+		
+		//Join<Category, CategoryType> categoryType = root.join(Category_.categoryType);
+		Join<Category, CategoryAttribute> categoryAttribute = root.join(Category_.attributes);
+		Join<Category, CategoryType> categoryType = root.join(Category_.categoryType);
+		Join<Category, Category> categoryParent = root.join(Category_.parent);
 				
+		List<Predicate> conditions = new ArrayList<Predicate>();
+		
+		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
+		
+		cq.select(cb.construct(
+				io.nzbee.dto.category.Category.class,
+				root.get(Category_.categoryId),
+				root.get(Category_.categoryCode),
+				categoryAttribute.get(CategoryAttribute_.categoryDesc),
+				root.get(Category_.categoryLevel),
+				categoryType.get(CategoryType_.code),
+				categoryAttribute.get(CategoryAttribute_.lclCd),
+				categoryParent.get(Category_.categoryCode)
+				)
+		);
+		
 		TypedQuery<io.nzbee.dto.category.Category> query = em.createQuery(cq
 				//.select(root)
-				.distinct(true)
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(false)
 		);
 		
 		return query.getResultList();
@@ -87,6 +110,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 		
 		//Join<Category, CategoryType> categoryType = root.join(Category_.categoryType);
 		Join<Category, CategoryAttribute> categoryAttribute = root.join(Category_.attributes);
+		Join<Category, CategoryType> categoryType = root.join(Category_.categoryType);
 		//Join<Category, Hierarchy> categoryHierarchy = root.join(Category_.hierarchy);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
@@ -99,8 +123,19 @@ public class CategoryDaoImpl implements ICategoryDao {
 		
 		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
 		
+		cq.select(cb.construct(
+				io.nzbee.dto.category.Category.class,
+				root.get(Category_.categoryId),
+				root.get(Category_.categoryCode),
+				categoryAttribute.get(CategoryAttribute_.categoryDesc),
+				root.get(Category_.categoryLevel),
+				categoryType.get(CategoryType_.code),
+				categoryAttribute.get(CategoryAttribute_.lclCd),
+				root.get(Category_.parent).get(Category_.categoryCode)
+				)
+		);
+		
 		TypedQuery<io.nzbee.dto.category.Category> query = em.createQuery(cq
-				//.select(root)
 				.where(conditions.toArray(new Predicate[] {}))
 				.distinct(false)
 		);
@@ -267,6 +302,12 @@ public class CategoryDaoImpl implements ICategoryDao {
 
 	@Override
 	public Optional<io.nzbee.dto.category.Category> findById(long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<io.nzbee.dto.category.Category> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -10,6 +10,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -63,14 +64,39 @@ public class ProductDaoImpl implements IProductDao {
 		Root<Product> root = cq.from(Product.class);
 		Join<Product, ProductAttribute> productAttribute = root.join(Product_.attributes);
 		
+		Join<Product, ProductPrice> retailPrice 					= root.join(Product_.prices);
+		Join<ProductPrice, ProductPriceType> retailType 			= retailPrice.join(ProductPrice_.type);
+		retailType.on(cb.equal(retailType.get(ProductPriceType_.code), ProductVars.PRICE_MARKDOWN_CODE));
+		
+		Join<Product, ProductPrice> markdownPrice 					= root.join(Product_.prices);
+		Join<ProductPrice, ProductPriceType> markdownType 			= markdownPrice.join(ProductPrice_.type);
+		markdownType.on(cb.equal(markdownType.get(ProductPriceType_.code), ProductVars.PRICE_RETAIL_CODE));
+		
+		Join<ProductPrice, Currency> markdownCurr 					= markdownPrice.join(ProductPrice_.currency);
+		//markdownPrice.on(cb.between(new Date(), markdownPrice.get(ProductPrice_.startDate), markdownPrice.get(ProductPrice_.endDate)));
+		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale));
 		
 		// Define DTO projection
 		cq.select(cb.construct(
 				io.nzbee.dto.product.Product.class,
-		        root.get(Product_.productUPC),
-		        productAttribute.get(ProductAttribute_.productDesc)));
+				root.get(Product_.productUPC),
+				root.get(Product_.productCreateDt),
+				productAttribute.get(ProductAttribute_.productDesc),
+				retailPrice.get(ProductPrice_.priceValue),
+				markdownPrice.get(ProductPrice_.priceValue),
+				productAttribute.get(ProductAttribute_.ProductImage),
+				productAttribute.get(ProductAttribute_.lclCd),
+				markdownCurr.get(Currency_.code)
+				)
+		);
+		
+		// Define DTO projection
+		cq.select(cb.construct( io.nzbee.dto.product.Product.class,
+						        root.get(Product_.productUPC),
+						        productAttribute.get(ProductAttribute_.productDesc)
+				  			   ));
 		
 		
 		TypedQuery<io.nzbee.dto.product.Product> query = em.createQuery(cq
@@ -186,19 +212,24 @@ public class ProductDaoImpl implements IProductDao {
 		Join<Product, Brand> brand 									= root.join(Product_.brand);
 		Join<Product, ProductStatus> status 						= root.join(Product_.productStatus);
 		
-		Join<Product, ProductPrice> retailPrice 					= root.join(Product_.prices);
+		Join<Product, ProductPrice> retailPrice 					= root.join(Product_.prices, JoinType.LEFT);
 		Join<ProductPrice, ProductPriceType> retailType 			= retailPrice.join(ProductPrice_.type);
-		retailType.on(cb.equal(retailType.get(ProductPriceType_.code), ""));
+		retailType.on(cb.equal(retailType.get(ProductPriceType_.code), ProductVars.PRICE_RETAIL_CODE));
+		
 		Join<ProductPrice, Currency> retailCurr 					= retailPrice.join(ProductPrice_.currency);
 		retailPrice.on(cb.between(retailPrice.get(ProductPrice_.priceValue), priceStart, priceEnd));
 		retailPrice.on(cb.between(retailPrice.get(ProductPrice_.startDate), priceDateStart, priceDateEnd));
+		retailCurr.on(cb.equal(retailCurr.get(Currency_.code), currency));
 		
-		Join<Product, ProductPrice> markdownPrice 					= root.join(Product_.prices);
+		Join<Product, ProductPrice> markdownPrice 					= root.join(Product_.prices, JoinType.LEFT);
 		Join<ProductPrice, ProductPriceType> markdownType 			= markdownPrice.join(ProductPrice_.type);
-		markdownType.on(cb.equal(markdownType.get(ProductPriceType_.code), ""));
+		markdownType.on(cb.equal(markdownType.get(ProductPriceType_.code), ProductVars.PRICE_MARKDOWN_CODE));
+		
 		Join<ProductPrice, Currency> markdownCurr 					= markdownPrice.join(ProductPrice_.currency);
 		markdownPrice.on(cb.between(markdownPrice.get(ProductPrice_.priceValue), priceStart, priceEnd));
 		markdownPrice.on(cb.between(markdownPrice.get(ProductPrice_.startDate), priceDateStart, priceDateEnd));
+		markdownCurr.on(cb.equal(markdownCurr.get(Currency_.code), currency));
+		
 		///markdownPrice.on(cb.between(markdownPrice.get(ProductPrice_.endDate), priceDateStart, priceDateEnd));
 		
 		Join<Brand, BrandAttribute> brandAttribute 					= brand.join(Brand_.brandAttributes);
@@ -221,7 +252,15 @@ public class ProductDaoImpl implements IProductDao {
 		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
 		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
 		conditions.add(cb.equal(retailType.get(ProductPriceType_.desc), priceType));
-		conditions.add(cb.equal(retailCurr.get(Currency_.code), currency));
+
+		if(priceType.equals(ProductVars.RETAIL_SKU_DESCRIPTION)) {
+			conditions.add(cb.equal(retailType.get(ProductPriceType_.desc), priceType));
+			conditions.add(cb.between(retailPrice.get(ProductPrice_.priceValue), priceStart, priceEnd));
+		}
+		if(priceType.equals(ProductVars.MARKDOWN_SKU_DESCRIPTION)) {
+			conditions.add(cb.equal(markdownType.get(ProductPriceType_.desc), priceType));
+			conditions.add(cb.between(markdownPrice.get(ProductPrice_.priceValue), priceStart, priceEnd));
+		}
 		
 		Order order = pageable.getSort().stream().map(o -> {
 			return this.getOrder(o.getProperty().replaceAll(".*\\.", ""), o.getDirection(), cb, productAttribute, retailPrice);

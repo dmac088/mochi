@@ -8,12 +8,10 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-
 import io.nzbee.dto.brand.Brand;
 import io.nzbee.dto.brand.IBrandService;
 import io.nzbee.dto.category.Category;
 import io.nzbee.dto.category.ICategoryService;
-import io.nzbee.dto.category.ProductCategory;
 import io.nzbee.dto.product.IProductService;
 import io.nzbee.dto.tag.ITagService;
 import io.nzbee.dto.tag.Tag;
