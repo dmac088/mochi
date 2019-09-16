@@ -3,6 +3,7 @@ package io.nzbee.domain.brand;
 import java.util.List;
 import java.util.Optional;
 import io.nzbee.domain.category.Category;
+import io.nzbee.domain.tag.Tag;
 
 public interface IBrandService {
 	

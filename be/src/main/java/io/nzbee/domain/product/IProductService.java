@@ -37,4 +37,5 @@ public interface IProductService extends IService<Product> {
 			Double productRetailPrice, Double productMarkdownPrice, String productImage, String productLocale,
 			String productCurrency, String productCategory);
 
+
 }

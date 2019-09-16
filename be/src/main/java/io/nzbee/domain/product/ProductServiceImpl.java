@@ -2,21 +2,18 @@ package io.nzbee.domain.product;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.data.domain.Sort;
-import io.nzbee.variables.CategoryVars;
+import io.nzbee.dto.brand.Brand;
+import io.nzbee.dto.category.Category;
+import io.nzbee.dto.tag.Tag;
 import io.nzbee.variables.GeneralVars;
-import io.nzbee.variables.ProductVars;
 
 @Service(value = "productDomainService")
 @Transactional
@@ -52,17 +49,17 @@ public class ProductServiceImpl implements IProductService {
     	
     	//we need to convert to lists of IDs or codes here
     	return productDtoService.findAll(
-    			categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
     			locale, 
-    			new Double(0), 
-    			price, 
-    			ProductVars.MARKDOWN_SKU_DESCRIPTION, 
-    			currency, 
-    			new Date(), 
-    			new Date(), 
-    			PageRequest.of(page, size, this.sortByParam(sortBy)), 
-    			brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()), 
-    			tags.stream().map(t -> t.getTagCode()).collect(Collectors.toList())); 
+    			currency,
+    			categoryDesc,
+    			price,  
+    			page,
+    			size,
+    			sortBy,
+    			categories,
+    			brands,
+    			tags
+    			); 
 	}
     
     @Override
@@ -78,27 +75,17 @@ public class ProductServiceImpl implements IProductService {
 								 List<Tag> tags) {
 	
      	return productDtoService.findAll( 
-     							categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
-     							locale, 
-     							ProductVars.MARKDOWN_SKU_DESCRIPTION, 
-     							currency, 
-     							new Date(), 
-     							new Date(), 
-     							PageRequest.of(page, size, this.sortByParam(sortBy)), 
-     							brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()), 
-     							tags.stream().map(t -> t.getTagCode()).collect(Collectors.toList()));
+				     			 locale, 
+								 currency, 
+								 categoryDesc, 
+								 page, 
+								 size, 
+								 sortBy, 
+								 categories,
+								 brands,
+								 tags);
 
 	}
-   
-	private Sort sortByParam(String param) {
-    	switch (param) {
-    	case "priceAsc": return new Sort(Sort.Direction.ASC, "prices.PriceValue");
-    	case "priceDesc": return new Sort(Sort.Direction.DESC, "prices.PriceValue");
-    	case "nameAsc": return Sort.by(new Sort.Order(Sort.Direction.ASC, "attributes.ProductDesc").ignoreCase()) ;
-    	case "nameDesc": return Sort.by(new Sort.Order(Sort.Direction.DESC, "attributes.ProductDesc").ignoreCase());
-    	default: return Sort.by(new Sort.Order(Sort.Direction.ASC, "attributes.ProductDesc"));
-    	}
-    }
 	
 	@Override
 	public Product load() {
@@ -138,18 +125,22 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public Double getMaxPrice(String categoryDesc, String locale, String markdownSkuDescription, String currency,
-		List<Category> categories, List<Brand> brands, List<Tag> tags) {
+	public Double getMaxPrice(	String categoryDesc, 
+								String locale, 
+								String markdownSkuDescription, 
+								String currency,
+								List<Category> categories, 
+								List<Brand> brands, 
+								List<Tag> tags) {
 		
-		return productDtoService.getMaxMarkDownPrice(
-				CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
+		return productDtoService.getMaxPrice(
 				categoryDesc, 
 				locale, 
-				currency,  
-				ProductVars.ACTIVE_SKU_CODE, 
-				brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()), 
-				categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList())
-				);
+				markdownSkuDescription, 
+				currency,
+				categories, 
+				brands, 
+				tags);
 	}
 	
 
@@ -182,25 +173,27 @@ public class ProductServiceImpl implements IProductService {
     }
 
 	@Override
-	public Long getCount(String categoryTypeCode, String categoryDesc, String locale, String currency,
-			String productStatusCode, List<Category> categories, List<Brand> brands, List<Tag> tags) {
+	public Long getCount(	String categoryTypeCode, 
+							String categoryDesc, 
+							String locale, 
+							String currency,
+							String productStatusCode, 
+							List<Category> categories, 
+							List<Brand> brands, 
+							List<Tag> tags) {
 		
-		return tags.isEmpty()
-			    ?
+		return 
 			    productDtoService.getCount(
-				categoryDesc, 
-				locale, 
-				productStatusCode, 
-				brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()),  
-				categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()))
-				:
-				productDtoService.getCountForTags(
-				categoryDesc, 
-				locale, 
-				productStatusCode, 
-				brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()),  
-				categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
-				tags.stream().map(t -> t.getTagCode()).collect(Collectors.toList()));	
+									    categoryTypeCode,
+										categoryDesc, 
+										locale, 
+										currency,
+										productStatusCode,
+										categories,
+										brands,  
+										tags
+									    );
+				
 	}
 
 	@Override
