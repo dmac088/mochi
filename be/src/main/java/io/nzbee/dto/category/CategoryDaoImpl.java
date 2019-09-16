@@ -29,8 +29,6 @@ import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.entity.category.type.CategoryType_;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.Product_;
-import io.nzbee.entity.product.hierarchy.Hierarchy;
-import io.nzbee.entity.product.hierarchy.Hierarchy_;
 import io.nzbee.entity.product.tag.ProductTag;
 import io.nzbee.entity.product.tag.ProductTag_;
 import io.nzbee.variables.CategoryVars;
@@ -181,7 +179,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 		return Optional.ofNullable(query.getSingleResult());
 	}
 	
-	public List<io.nzbee.dto.category.Category> findByParent(String hieararchyCode, String categoryTypeCode, Long parentCategoryId, String locale) {
+	public List<io.nzbee.dto.category.Category> findByParent(String categoryTypeCode, String parentCategoryCode, String locale) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<io.nzbee.dto.category.Category> cq = cb.createQuery(io.nzbee.dto.category.Category.class);
@@ -190,15 +188,14 @@ public class CategoryDaoImpl implements ICategoryDao {
 		
 		Join<Category, CategoryType> categoryType = root.join(Category_.categoryType);
 		Join<Category, CategoryAttribute> categoryAttribute = root.join(Category_.attributes);
-		Join<Category, Hierarchy> categoryHierarchy = root.join(Category_.hierarchy);
 		Join<Category, Category> parent = root.join(Category_.parent);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
-		conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), hieararchyCode));
+
 		conditions.add(cb.equal(categoryType.get(CategoryType_.code), categoryTypeCode));
 	
-		if(!(parentCategoryId == null)) {
-			conditions.add(cb.equal(parent.get(Category_.categoryId), parentCategoryId));
+		if(!(parentCategoryCode == null)) {
+			conditions.add(cb.equal(parent.get(Category_.categoryCode), parentCategoryCode));
 		}
 		
 		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
@@ -214,7 +211,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 	
 	
 	
-	public List<io.nzbee.dto.category.Category> findByLevel(String hieararchyCode, String categoryTypeCode, Long level, String locale) {
+	public List<io.nzbee.dto.category.Category> findByLevel(String categoryTypeCode, Long level, String locale) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<io.nzbee.dto.category.Category> cq = cb.createQuery(io.nzbee.dto.category.Category.class);
@@ -223,11 +220,9 @@ public class CategoryDaoImpl implements ICategoryDao {
 		
 		Join<Category, CategoryType> categoryType = root.join(Category_.categoryType);
 		Join<Category, CategoryAttribute> categoryAttribute = root.join(Category_.attributes);
-		Join<Category, Hierarchy> categoryHierarchy = root.join(Category_.hierarchy);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		conditions.add(cb.equal(categoryType.get(CategoryType_.code), categoryTypeCode));
-		conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), hieararchyCode));
 		if(!(level == null)) {
 			conditions.add(cb.equal(root.get(Category_.categoryLevel), level));
 		}
@@ -322,7 +317,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	
 	
 }
