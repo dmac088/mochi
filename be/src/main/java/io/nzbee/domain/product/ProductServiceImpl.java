@@ -4,6 +4,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,13 +26,13 @@ public class ProductServiceImpl implements IProductService {
     
     @Autowired 
     @Qualifier(value="productDtoService")
-    private IProductService productDtoService;
+    private io.nzbee.dto.product.IProductService productDtoService;
     
     @Override
 	@Transactional
 	@Cacheable(value="product")
 	public Optional<Product> findOne(String locale, String currency, String code) {
-    	return productDtoService.findOne(code, locale, currency);
+    	return Optional.ofNullable(convertProductDtoToProductDO(productDtoService.findOne(code, locale, currency).get()));
 	}	
     
     @Override
@@ -59,7 +61,9 @@ public class ProductServiceImpl implements IProductService {
     			categories,
     			brands,
     			tags
-    			); 
+    			)
+    			.stream().map(c -> convertProductDtoToProductDO(c))
+    			.collect(Collectors.toList()); 
 	}
     
     @Override
@@ -144,34 +148,6 @@ public class ProductServiceImpl implements IProductService {
 	}
 	
 
-    @Override
-    public Product convertToProductDO(
-    			String productCreatedDate,
-    			String productUPC,
-    			String productDesc,
-    			Double productRetailPrice,
-    			Double productMarkdownPrice,
-    			String productImage,
-    			String productLocale,
-    			String productCurrency,
-    			String productCategory
-    		) {
-    	final Product pDo = new Product();
-    	pDo.setProductUPC(productUPC);
-    	try {
-			pDo.setProductCreateDt(new SimpleDateFormat(GeneralVars.DEFAULT_DATE_FORMAT).parse(productCreatedDate));
-		} catch (ParseException e1) {
-			e1.printStackTrace();
-		}
-    	pDo.setProductDesc(productDesc);
-    	pDo.setProductRetail(productRetailPrice);
-    	pDo.setProductMarkdown(productMarkdownPrice);
-    	pDo.setProductImage(productImage);
-    	pDo.setLclCd(productLocale);
-    	pDo.setCurrency(productCurrency);
-    	return pDo;
-    }
-
 	@Override
 	public Long getCount(	String categoryTypeCode, 
 							String categoryDesc, 
@@ -204,6 +180,12 @@ public class ProductServiceImpl implements IProductService {
 
 	@Override
 	public Product save(Product t) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Product convertProductDtoToProductDO(io.nzbee.dto.product.Product productDto) {
 		// TODO Auto-generated method stub
 		return null;
 	}
