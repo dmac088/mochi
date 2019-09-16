@@ -12,8 +12,8 @@ import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.brand.IBrandService;
 import io.nzbee.domain.category.Category;
 import io.nzbee.domain.category.ICategoryService;
-import io.nzbee.dto.product.IProductService;
-import io.nzbee.dto.tag.ITagService;
+import io.nzbee.domain.product.IProductService;
+import io.nzbee.domain.tag.ITagService;
 import io.nzbee.dto.tag.Tag;
 import io.nzbee.ui.component.web.generic.UIService;
 import io.nzbee.variables.CategoryVars;
@@ -244,5 +244,23 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
     public String calcToken(String className, String id) {
     	return className + ".token" + "[" + id + "]";
     }
+
+	@Override
+	public NavFacet<io.nzbee.dto.category.Category> convertCatToNavFacet(io.nzbee.dto.category.Category c) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public NavFacet<Tag> convertTagToNavFacet(Tag t) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public NavFacet<io.nzbee.dto.brand.Brand> convertBrandToNavFacet(io.nzbee.dto.brand.Brand b) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
