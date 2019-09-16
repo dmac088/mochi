@@ -156,7 +156,7 @@ CREATE FUNCTION mochi.ft_product_categories(text, text) RETURNS TABLE(cat_id big
      LEFT JOIN mochi.currency curr ON prc.ccy_id = curr.ccy_id 
      LEFT JOIN mochi.price_type pt ON prc.prc_typ_id = pt.prc_typ_id 
   WHERE cc.cat_typ_id = 1
-  AND cc.cat_cd = $1
+  AND p.cat_cd = $1
   AND ccy_cd = $2
   GROUP BY p.cat_id, p.cat_cd, p.cat_lvl, p.hir_id, p.cat_typ_id, p.cat_prnt_id;
 $_$;
