@@ -8,8 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
-import io.nzbee.dto.brand.Brand;
-import io.nzbee.dto.tag.Tag;
+
+import io.nzbee.domain.brand.Brand;
+import io.nzbee.domain.tag.Tag;
 import io.nzbee.variables.CategoryVars;
 
 @Service

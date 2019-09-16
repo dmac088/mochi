@@ -4,8 +4,9 @@ package io.nzbee.domain.category;
 import java.util.List;
 import java.util.Optional;
 
-import io.nzbee.dto.brand.Brand;
-import io.nzbee.dto.tag.Tag;
+import io.nzbee.domain.brand.Brand;
+import io.nzbee.domain.tag.Tag;
+
 
 public interface ICategoryService {
 	 
