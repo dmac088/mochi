@@ -185,7 +185,15 @@ public class ProductServiceImpl implements IProductService {
 	@Override
 	public Product convertProductDtoToProductDO(io.nzbee.dto.product.Product productDto) {
 		// TODO Auto-generated method stub
-		return null;
+		Product domainProduct = new Product();
+		domainProduct.setCurrency(productDto.getCurrency());
+		domainProduct.setLclCd(productDto.getLclCd());
+		domainProduct.setProductCreateDt(productDto.getProductCreateDt());
+		domainProduct.setProductDesc(productDto.getProductDesc());
+		domainProduct.setProductImage(productDto.getProductImage());
+		domainProduct.setProductMarkdown(productDto.getProductMarkdown());
+		domainProduct.setProductRetail(productDto.getProductRetail());
+		return domainProduct;
 	}
 
 
