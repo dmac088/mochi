@@ -2,7 +2,7 @@ package io.nzbee.domain.category;
 
 import java.util.Objects;
 
-public class Category {
+public abstract class Category {
 	
 	private Long id;
 

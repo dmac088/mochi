@@ -10,9 +10,9 @@ public interface ICategoryDao extends IDao<Category> {
 	
 	Optional<Category> findByCategoryCode(String categoryCode, String locale);
 	
-	List<Category> findByParent(String hieararchyCode, String categoryTypeCode, Long parentCategoryId, String locale);
+	List<Category> findByParent(String categoryTypeCodeProduct, String parentCategoryCode, String locale);
 	
-	List<Category> findByLevel(String hieararchyCode, String categoryTypeCode, Long level, String locale);
+	List<Category> findByLevel(String categoryTypeCode, Long level, String locale);
 
 	Optional<Category> findById(long id, String locale);
 
@@ -20,6 +20,8 @@ public interface ICategoryDao extends IDao<Category> {
 			String locale);
 
 	List<Category> findAll(String locale);
+
+	
 
 	
 }

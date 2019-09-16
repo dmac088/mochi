@@ -1,8 +1,5 @@
 package io.nzbee.domain.category;
 
-import java.util.List;
-
-
 public class ProductCategory extends Category {
 
 	public ProductCategory(Long id, String categoryCode, String categoryDesc, Long categoryLevel, String categoryType,

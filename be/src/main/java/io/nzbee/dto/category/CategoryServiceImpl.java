@@ -12,12 +12,11 @@ import io.nzbee.dto.brand.Brand;
 import io.nzbee.dto.tag.Tag;
 import io.nzbee.variables.CategoryVars;
 
-@Service
+@Service(value = "categoryDtoService")
 @Transactional
 @CacheConfig(cacheNames="categories")
 public class CategoryServiceImpl implements ICategoryService {
     
-   
     @Autowired
     @Qualifier("categoryDomainDao")
     private io.nzbee.dto.category.ICategoryDao categoryDao;
@@ -39,49 +38,37 @@ public class CategoryServiceImpl implements ICategoryService {
 	
 
 	@Override
-	public Optional<Category> findParent(String locale, Long categoryId) {
+	public Optional<Category> findParent(String locale, String parentCategoryCode) {
 		// TODO Auto-generated method stub
-		return categoryDao.findByCategoryCode(categoryDao.findById(categoryId).get().getParentCode(), locale);
+		return categoryDao.findByCategoryCode(parentCategoryCode, locale);
 	}
     
     @Override
  	@Transactional
  	//@Cacheable
- 	public List<Category> findByParent(final String locale, Long parentCategoryId) {
-    	return categoryDao.findByParent(CategoryVars.PRIMARY_HIERARCHY_CODE, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, parentCategoryId, locale);
-    	
+ 	public List<Category> findByParent(String locale, String parentCategoryCode) {
+    	return categoryDao.findByParent(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, parentCategoryCode, locale);
  	}
     
     @Override
   	@Transactional
   	//@Cacheable
   	public List<Category> findAllForLevel(final String locale, final Long level) {
-     	return categoryDao.findByLevel(CategoryVars.PRIMARY_HIERARCHY_CODE, CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, level, locale);
+     	return categoryDao.findByLevel(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, level, locale);
   	}	
     
-  
     @Override
   	@Transactional
   	//@Cacheable
-  	public Optional<Category> findOne(final String locale, final Long categoryId) {
-    	return categoryDao.findById(categoryId);
-  	}
-    
-    @Override
-  	@Transactional
-  	//@Cacheable
-  	public Optional<Category> findOne(final String locale, final String categoryCode) {
-    	return categoryDao.findByCategoryCode(
-    			categoryCode, 
-    			locale);
+  	public Optional<Category> findOne(String locale, String categoryCode) {
+    	return categoryDao.findByCategoryCode(categoryCode, locale);
   	}
     
     @Override
 	@Transactional
 	//@Cacheable
-	public Optional<Category> findOneByDesc(String locale,  String categoryType, String categoryDesc) {
-    	return categoryDao.findByCategoryDesc(categoryDesc, 
-						    				  locale);
+	public Optional<Category> findOneByDesc(String locale, String categoryDesc) {
+    	return categoryDao.findByCategoryDesc(categoryDesc, locale);
    
 	}
     
@@ -94,6 +81,13 @@ public class CategoryServiceImpl implements ICategoryService {
 				 brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()),  
 				 tags.stream().map(t -> t.getTagCode()).collect(Collectors.toList()),
 				 locale);
+	}
+
+
+	@Override
+	public Optional<Category> findOne(String locale, Long categoryId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
     
 //	@Override
