@@ -3,10 +3,11 @@ package io.nzbee.domain.product;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
+
+import io.nzbee.domain.brand.Brand;
+import io.nzbee.domain.category.Category;
 import io.nzbee.domain.services.IService;
-import io.nzbee.dto.brand.Brand;
-import io.nzbee.dto.category.Category;
-import io.nzbee.dto.tag.Tag;
+import io.nzbee.domain.tag.Tag;
 
 public interface IProductService extends IService<Product> {
 
@@ -34,6 +35,8 @@ public interface IProductService extends IService<Product> {
 			List<Category> categories, List<Brand> brands, List<Tag> tags);
 
 	Product convertProductDtoToProductDO(io.nzbee.dto.product.Product productDto);
+
+	io.nzbee.dto.product.Product convertProductDOToProductDto(Product productDO);
 
 
 }
