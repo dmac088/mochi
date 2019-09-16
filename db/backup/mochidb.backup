@@ -47,6 +47,47 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
 --
+-- Name: ft_brand_categories(text, text); Type: FUNCTION; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE FUNCTION mochi.ft_brand_categories(text, text) RETURNS TABLE(cat_id bigint, cat_cd text, cat_lvl bigint, hir_id bigint, cat_prnt_id bigint, cat_typ_id bigint, product_count bigint, child_cat_count bigint, max_price numeric)
+    LANGUAGE sql
+    AS $_$
+ SELECT p.cat_id,
+    p.cat_cd,
+    p.cat_lvl,
+    p.hir_id,
+    p.cat_typ_id,
+    p.cat_prnt_id,
+    count(DISTINCT prd.upc_cd) AS product_count,
+    count(DISTINCT cc.cat_cd) AS child_cat_count,
+    coalesce(
+    max(CASE
+	WHEN pt.prc_typ_cd = 'MKD01'
+	THEN prc.prc_val
+	END),
+    max(CASE
+	WHEN pt.prc_typ_cd = 'RET01'
+	THEN prc.prc_val
+	END)) as max_price
+   FROM mochi.category p
+     JOIN LATERAL mochi.ft_categories(p.cat_cd::text) cc(cat_id, cat_cd, cat_prnt_id, cat_typ_id) ON 1 = 1
+     LEFT JOIN mochi.brand_category pc ON cc.cat_id = pc.cat_id
+     LEFT JOIN mochi.brand bnd ON pc.bnd_id = bnd.bnd_id
+     LEFT JOIN mochi.product prd ON pc.bnd_id = prd.bnd_id
+     LEFT JOIN mochi.price prc ON prd.prd_id = prc.prd_id AND now() between prc.prc_st_dt and prc.prc_en_dt
+     LEFT JOIN mochi.currency curr ON prc.ccy_id = curr.ccy_id 
+     LEFT JOIN mochi.price_type pt ON prc.prc_typ_id = pt.prc_typ_id 
+  WHERE cc.cat_typ_id = 2
+  AND p.cat_cd = $1
+  AND ccy_cd = $2
+  GROUP BY p.cat_id, p.cat_cd, p.cat_lvl, p.hir_id, p.cat_typ_id, p.cat_prnt_id;
+$_$;
+
+
+ALTER FUNCTION mochi.ft_brand_categories(text, text) OWNER TO mochidb_owner;
+
+--
 -- Name: ft_categories(text); Type: FUNCTION; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -84,10 +125,10 @@ FROM  starting
 ALTER FUNCTION mochi.ft_categories(text) OWNER TO mochidb_owner;
 
 --
--- Name: ft_get_categories(text, text); Type: FUNCTION; Schema: mochi; Owner: mochidb_owner
+-- Name: ft_product_categories(text, text); Type: FUNCTION; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE FUNCTION mochi.ft_get_categories(text, text) RETURNS TABLE(cat_id bigint, cat_cd text, cat_lvl bigint, hir_id bigint, cat_prnt_id bigint, cat_typ_id bigint, product_count bigint, child_cat_count bigint, max_price numeric)
+CREATE FUNCTION mochi.ft_product_categories(text, text) RETURNS TABLE(cat_id bigint, cat_cd text, cat_lvl bigint, hir_id bigint, cat_prnt_id bigint, cat_typ_id bigint, product_count bigint, child_cat_count bigint, max_price numeric)
     LANGUAGE sql
     AS $_$
  SELECT p.cat_id,
@@ -115,13 +156,13 @@ CREATE FUNCTION mochi.ft_get_categories(text, text) RETURNS TABLE(cat_id bigint,
      LEFT JOIN mochi.currency curr ON prc.ccy_id = curr.ccy_id 
      LEFT JOIN mochi.price_type pt ON prc.prc_typ_id = pt.prc_typ_id 
   WHERE cc.cat_typ_id = 1
-  AND p.cat_cd = $1
+  AND cc.cat_cd = $1
   AND ccy_cd = $2
   GROUP BY p.cat_id, p.cat_cd, p.cat_lvl, p.hir_id, p.cat_typ_id, p.cat_prnt_id;
 $_$;
 
 
-ALTER FUNCTION mochi.ft_get_categories(text, text) OWNER TO mochidb_owner;
+ALTER FUNCTION mochi.ft_product_categories(text, text) OWNER TO mochidb_owner;
 
 --
 -- Name: random_between(integer, integer); Type: FUNCTION; Schema: public; Owner: postgres
