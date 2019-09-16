@@ -1,21 +1,16 @@
 package io.nzbee.domain.product;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-import io.nzbee.dto.brand.Brand;
-import io.nzbee.dto.category.Category;
-import io.nzbee.dto.tag.Tag;
-import io.nzbee.variables.GeneralVars;
+import io.nzbee.domain.category.Category;
+import io.nzbee.domain.brand.Brand;
+import io.nzbee.domain.tag.Tag;
 
 @Service(value = "productDomainService")
 @Transactional
@@ -197,5 +192,18 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 
+	@Override
+	public io.nzbee.dto.product.Product convertProductDOToProductDto(io.nzbee.domain.product.Product productDO) {
+		// TODO Auto-generated method stub
+		io.nzbee.dto.product.Product dtoProduct = new io.nzbee.dto.product.Product();
+		dtoProduct.setCurrency(productDO.getCurrency());
+		dtoProduct.setLclCd(productDO.getLclCd());
+		dtoProduct.setProductCreateDt(productDO.getProductCreateDt());
+		dtoProduct.setProductDesc(productDO.getProductDesc());
+		dtoProduct.setProductImage(productDO.getProductImage());
+		dtoProduct.setProductMarkdown(productDO.getProductMarkdown());
+		dtoProduct.setProductRetail(productDO.getProductRetail());
+		return dtoProduct;
+	}
 
 }
