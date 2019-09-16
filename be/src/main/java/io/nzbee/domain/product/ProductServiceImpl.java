@@ -61,9 +61,7 @@ public class ProductServiceImpl implements IProductService {
     			categories,
     			brands,
     			tags
-    			)
-    			.stream().map(c -> convertProductDtoToProductDO(c))
-    			.collect(Collectors.toList()); 
+    			).map(c -> convertProductDtoToProductDO(c)); 
 	}
     
     @Override
@@ -87,7 +85,7 @@ public class ProductServiceImpl implements IProductService {
 								 sortBy, 
 								 categories,
 								 brands,
-								 tags);
+								 tags).map(c -> this.convertProductDtoToProductDO(c));
 
 	}
 	
