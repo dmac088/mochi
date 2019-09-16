@@ -4625,6 +4625,26 @@ GRANT SELECT ON TABLE mochi.tag_attr_lcl TO mochi_app;
 
 
 --
+-- Name: TABLE vw_category_brand; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+REVOKE ALL ON TABLE mochi.vw_category_brand FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.vw_category_brand FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.vw_category_brand TO mochidb_owner;
+GRANT SELECT ON TABLE mochi.vw_category_brand TO mochi_app;
+
+
+--
+-- Name: TABLE vw_category_product; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+REVOKE ALL ON TABLE mochi.vw_category_product FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.vw_category_product FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.vw_category_product TO mochidb_owner;
+GRANT SELECT ON TABLE mochi.vw_category_product TO mochi_app;
+
+
+--
 -- Name: TABLE permission; Type: ACL; Schema: security; Owner: security_owner
 --
 
