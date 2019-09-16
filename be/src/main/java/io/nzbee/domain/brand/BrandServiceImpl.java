@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import io.nzbee.domain.category.Category;
+import io.nzbee.domain.tag.Tag;
 
-@Service
+@Service(value = "brandDomainService")
 @Transactional
 @CacheConfig(cacheNames="brands")
 public class BrandServiceImpl implements IBrandService {
@@ -46,13 +48,13 @@ public class BrandServiceImpl implements IBrandService {
      	return	createBrandDO(pb, lcl);
 	}
 	
-	@Override
-	@Transactional
-	@Cacheable
-	public Optional<Brand> findOne(Product product) {
-    	io.nzbee.entity.brand.Brand pb = brandService.findByCode(product.getBrand().get().getBrandCode()).get();
-     	return	createBrandDO(pb, product.getLclCd());
-	}
+//	@Override
+//	@Transactional
+//	@Cacheable
+//	public Optional<Brand> findOne(Product product) {
+//    	io.nzbee.entity.brand.Brand pb = brandService.findByCode(product.getBrand().get().getBrandCode()).get();
+//     	return	createBrandDO(pb, product.getLclCd());
+//	}
 	
 	@Override
 	public Optional<Brand> findOneByCode(String lcl, String brandCode) {
@@ -103,4 +105,5 @@ public class BrandServiceImpl implements IBrandService {
 		
 		return null;
 	}
+
 }

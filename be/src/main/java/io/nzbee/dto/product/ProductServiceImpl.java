@@ -239,8 +239,13 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public Double getMaxPrice(String categoryDesc, String locale, String markdownSkuDescription, String currency,
-		List<Category> categories, List<Brand> brands, List<Tag> tags) {
+	public Double getMaxPrice(	String categoryDesc, 
+								String locale, 
+								String markdownSkuDescription, 
+								String currency,
+								List<Category> categories, 
+								List<Brand> brands, 
+								List<Tag> tags) {
 		
 		return productService.getMaxMarkDownPrice(
 				CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
@@ -283,8 +288,14 @@ public class ProductServiceImpl implements IProductService {
     }
 
 	@Override
-	public Long getCount(String categoryTypeCode, String categoryDesc, String locale, String currency,
-			String productStatusCode, List<Category> categories, List<Brand> brands, List<Tag> tags) {
+	public Long getCount(	String categoryTypeCode, 
+							String categoryDesc, 
+							String locale, 
+							String currency,
+							String productStatusCode, 
+							List<Category> categories, 
+							List<Brand> brands, 
+							List<Tag> tags) {
 		
 		return tags.isEmpty()
 			    ?
