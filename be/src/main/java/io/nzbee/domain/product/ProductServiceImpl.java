@@ -193,7 +193,7 @@ public class ProductServiceImpl implements IProductService {
 
 
 	@Override
-	public io.nzbee.dto.product.Product convertProductDOToProductDto(io.nzbee.domain.product.Product productDO) {
+	public io.nzbee.dto.product.Product convertProductDOToProductDto(Product productDO) {
 		// TODO Auto-generated method stub
 		io.nzbee.dto.product.Product dtoProduct = new io.nzbee.dto.product.Product();
 		dtoProduct.setCurrency(productDO.getCurrency());
