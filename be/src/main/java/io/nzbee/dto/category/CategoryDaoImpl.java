@@ -85,7 +85,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 				"t.cat_cd, " + 
 				"t.cat_lvl, " +
 				"t.cat_prnt_id, " + 
-				"t.cat_typ_id, " +
+				"t.cat_typ_id " +
 			    "FROM mochi.category AS t " +
 			    "WHERE t.cat_cd = \'FRT01\' " +
 			    "UNION ALL " +
@@ -113,6 +113,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 						"descendants.cat_typ_id des_cat_type_id " +
 					"FROM  starting " +
 					"CROSS JOIN descendants " +
+					"WHERE descendants.cat_cd <> 'FRT01' " +
 				    ") " +
 				    "select " +
 					    "cc.des_cat_id as cat_id, " +
@@ -158,7 +159,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 					"	 cc.des_cat_prnt_id, " +
 					"	 cc.des_cat_type_id "
 		
-		)
+		).
 		
 		
 		/*
