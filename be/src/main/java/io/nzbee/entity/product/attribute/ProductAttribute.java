@@ -39,7 +39,7 @@ import io.nzbee.entity.LanguageDiscriminator;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
-import io.nzbee.entity.category.product.readonly.CategoryProduct;
+import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.tag.ProductTag;
 import io.nzbee.entity.product.tag.attribute.ProductTagAttribute;

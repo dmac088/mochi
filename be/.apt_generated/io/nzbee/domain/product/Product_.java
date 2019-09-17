@@ -1,7 +1,7 @@
 package io.nzbee.domain.product;
 
 import io.nzbee.entity.brand.Brand;
-import io.nzbee.entity.category.product.readonly.CategoryProduct;
+import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.price.ProductPrice;
 import io.nzbee.entity.product.status.ProductStatus;
