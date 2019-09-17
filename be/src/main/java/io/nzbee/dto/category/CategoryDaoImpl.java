@@ -21,10 +21,10 @@ import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.Category_;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.attribute.CategoryAttribute_;
-import io.nzbee.entity.category.brand.readonly.CategoryBrand;
+import io.nzbee.entity.category.brand.CategoryBrand;
 import io.nzbee.entity.category.brand.readonly.CategoryBrand_;
+import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.category.product.readonly.CategoryProduct_;
-import io.nzbee.entity.category.product.readonly.CategoryProduct;
 import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.entity.category.type.CategoryType_;
 import io.nzbee.entity.product.Product;
@@ -33,7 +33,7 @@ import io.nzbee.entity.product.tag.ProductTag;
 import io.nzbee.entity.product.tag.ProductTag_;
 import io.nzbee.variables.CategoryVars;
 
-@Component(value="categoryDomainDao")
+@Component(value="categoryDtoDao")
 public class CategoryDaoImpl implements ICategoryDao {
 
 	@Autowired
@@ -62,7 +62,106 @@ public class CategoryDaoImpl implements ICategoryDao {
 
 	@Override
 	public List<io.nzbee.dto.category.Category> findAll(String locale) {
-		System.out.println("bang!");
+
+		//we use common table expressions to 
+		//hierarchically traverse the category hierarchy 
+		//and create aggregate summaries
+		
+		em.createQuery(
+				"WITH RECURSIVE " +
+			    "starting (cat_id, cat_cd, cat_lvl, cat_prnt_id, cat_typ_id) AS " +
+			    "( " +
+			    "SELECT t.cat_id, " + 
+				"t.cat_cd, " +
+				"t.cat_lvl, "  +
+				"t.cat_prnt_id, " +
+				"t.cat_typ_id " +
+			    "FROM mochi.category AS t " +
+			    "WHERE t.cat_cd = \'FRT01\' " +       
+			    "), " +
+			    "descendants (cat_id, cat_cd, cat_lvl, cat_prnt_id, cat_typ_id) AS " +
+			    "(" +
+			    "SELECT t.cat_id, " +
+				"t.cat_cd, " + 
+				"t.cat_lvl, " +
+				"t.cat_prnt_id, " + 
+				"t.cat_typ_id, " +
+			    "FROM mochi.category AS t " +
+			    "WHERE t.cat_cd = \'FRT01\' " +
+			    "UNION ALL " +
+			    "SELECT 	" +
+			     "	t.cat_id, " + 
+				 "	t.cat_cd, " + 
+				 "	t.cat_lvl, " +
+				 "	t.cat_prnt_id, " + 
+				 "	t.cat_typ_id " +
+			     "FROM mochi.category AS t " + 
+			      "JOIN descendants AS d " + 
+			      "ON t.cat_prnt_id = d.cat_id " + 
+			    ")," +
+				"categories AS " + 
+				"    ( " +
+				      "SELECT 	starting.cat_id, " +
+						"starting.cat_cd, " +
+						"starting.cat_lvl, " +
+						"starting.cat_typ_id, " +
+						"starting.cat_prnt_id, " +
+						"descendants.cat_id des_cat_id, " +
+						"descendants.cat_cd des_cat_cd, " +
+						"descendants.cat_lvl des_cat_lvl," +
+						"descendants.cat_prnt_id des_cat_prnt_id, " +
+						"descendants.cat_typ_id des_cat_type_id " +
+					"FROM  starting " +
+					"CROSS JOIN descendants " +
+				    ") " +
+				    "select " +
+					    "cc.des_cat_id as cat_id, " +
+					    "cc.des_cat_cd as cat_cd, " +
+					    "cc.des_cat_lvl as cat_lvl, " +
+					    "cc.des_cat_prnt_id as prnt_id, " +
+					    "cc.des_cat_type_id, " +
+					    "count(DISTINCT prd.upc_cd) AS product_count, " +
+					    "COALESCE(max(markdown_price.prc_val), max(retail_price.prc_val), 0) AS max_price " +
+				    "from categories cc " +
+					"LEFT JOIN mochi.product_category pc ON cc.des_cat_id = pc.cat_id " +
+					"LEFT JOIN mochi.product prd ON pc.prd_id = prd.prd_id " +
+					"LEFT JOIN 	(SELECT prd_id,  " +
+					"			prc_typ_cd, " +
+					"			prc_val  " +
+					"		 FROM mochi.price prc  " +
+					"		 INNER JOIN mochi.currency curr  " +
+					"		 ON prc.ccy_id = curr.ccy_id  " +
+					"		 LEFT JOIN mochi.price_type pt  " +
+					"		 ON prc.prc_typ_id = pt.prc_typ_id " +
+					"		 WHERE now() >= prc.prc_st_dt AND now() <= prc.prc_en_dt " +
+					"		 AND curr.ccy_cd = 'HKD' " +
+					"		 AND prc_typ_cd::text = 'RET01') retail_price " +
+					"		 ON pc.prd_id = retail_price.prd_id " +
+							 
+					"LEFT JOIN 	(SELECT prd_id,  " +
+					"			prc_typ_cd, " +
+					"			prc_val  " +
+					"		 FROM mochi.price prc  " +
+					"		 INNER JOIN mochi.currency curr  " +
+					"		 ON prc.ccy_id = curr.ccy_id  " +
+					"		 LEFT JOIN mochi.price_type pt  " +
+					"		 ON prc.prc_typ_id = pt.prc_typ_id " +
+					"		 WHERE now() >= prc.prc_st_dt AND now() <= prc.prc_en_dt " +
+					"		 AND curr.ccy_cd = 'HKD' " +
+					"		 AND prc_typ_cd::text = 'MKD01')  markdown_price " +		 
+					"		 ON pc.prd_id = markdown_price.prd_id " +
+								
+					"WHERE cc.cat_typ_id = 1 " +
+					"GROUP BY cc.des_cat_id, " +
+					"	 cc.des_cat_cd, " +
+					"	 cc.des_cat_lvl, " +
+					"	 cc.des_cat_prnt_id, " +
+					"	 cc.des_cat_type_id "
+		
+		)
+		
+		
+		/*
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<io.nzbee.dto.category.Category> cq = cb.createQuery(io.nzbee.dto.category.Category.class);
@@ -104,7 +203,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 		
 		
 		return query.getResultList();
-	
+		*/
 	}
 
 

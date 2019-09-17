@@ -1,4 +1,4 @@
-package io.nzbee.entity.category.product.readonly;
+package io.nzbee.entity.category.product;
 
 import io.nzbee.entity.product.Product;
 import javax.annotation.Generated;
