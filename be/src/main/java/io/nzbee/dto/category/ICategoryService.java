@@ -13,12 +13,7 @@ public interface ICategoryService {
 	 
 	Optional<Category> findOne(String locale, Long categoryId);
 
-	//Category createCategory(io.nzbee.entity.category.Category pc, String locale);
-
-	List<Category> findAll(String locale, String categoryDesc, List<Brand> brands,
-			List<Tag> tags);
-
-	List<Category> findAll(String locale);
+	List<Category> findAll(String locale, String categoryDesc, List<Brand> brands, List<Tag> tags);
 
 	Optional<Category> findOne(String locale, String categoryCode);
 
@@ -30,6 +25,6 @@ public interface ICategoryService {
 
 	Optional<Category> findOneByDesc(String locale, String categoryDesc);
 
-
+	List<Category> findAll(String locale, String currency);
 
 }

@@ -13,8 +13,7 @@ public interface ICategoryService {
 	List<Category> findAllForLevel(String lcl, Long level);
 	 
 	List<Category> findByParent(String locale, String parentCategoryCode);
-	List<Category> findAll(String locale);
-	
+
 	List<Category> findAll(String locale, String categoryDesc, List<Brand> brands, List<Tag> tags);
 
 	Optional<Category> findOne(String locale, String categoryCode);
@@ -26,5 +25,7 @@ public interface ICategoryService {
 	Optional<Category> findOneByDesc(String locale, String categoryDesc);
 
 	Category convertCategoryDtoToCategoryDO(io.nzbee.dto.category.Category categoryDto);
+
+	List<Category> findAll(String locale, String currency);
 
 }
