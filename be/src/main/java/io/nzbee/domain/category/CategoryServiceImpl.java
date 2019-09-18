@@ -95,7 +95,7 @@ public class CategoryServiceImpl implements ICategoryService {
 
 
 	@Override
-	public Category convertCategoryDtoToCategoryDO(io.nzbee.dto.category.Category categoryDto) {
+	public Category convertCategoryDtoToCategoryDO(io.nzbee.dto.category.CategoryWithNameAndStats categoryDto) {
 		// TODO Auto-generated method stub
 		
 		Category categoryDO = categoryDto.getCategoryType().equals(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT) 

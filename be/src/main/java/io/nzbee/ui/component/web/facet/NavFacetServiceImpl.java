@@ -246,7 +246,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
     }
 
 	@Override
-	public NavFacet<io.nzbee.dto.category.Category> convertCatToNavFacet(Category c) {
+	public NavFacet<io.nzbee.dto.category.CategoryWithNameAndStats> convertCatToNavFacet(Category c) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -7,7 +7,7 @@ import org.springframework.data.domain.Page;
 
 import io.nzbee.domain.services.IService;
 import io.nzbee.dto.brand.Brand;
-import io.nzbee.dto.category.Category;
+import io.nzbee.dto.category.CategoryWithNameAndStats;
 import io.nzbee.dto.tag.Tag;
 
 public interface IProductService extends IService<Product> {
@@ -22,18 +22,18 @@ public interface IProductService extends IService<Product> {
 	Optional<Product> findOne(String lcl, String currency, String code);
 
 	Double getMaxPrice(String categoryDesc, String locale, String markdownSkuDescription, String currency,
-			List<Category> categories, List<Brand> brands, List<Tag> tags);
+			List<CategoryWithNameAndStats> categories, List<Brand> brands, List<Tag> tags);
 
 	Page<Product> findAll(String locale, String currency, String categoryDesc, Double price, int page, int size,
-			String sortBy, List<Category> categories, List<Brand> brands, List<Tag> tags);
+			String sortBy, List<CategoryWithNameAndStats> categories, List<Brand> brands, List<Tag> tags);
 
 	Long getCount(String categoryTypeCode, String categoryDesc, String locale, String currency,
-			String productStatusCode, List<Category> categories, List<Brand> brands, List<Tag> tags);
+			String productStatusCode, List<CategoryWithNameAndStats> categories, List<Brand> brands, List<Tag> tags);
 
 	List<Product> findAll(String locale, String currency, List<String> productCodes);
 
 	Page<Product> findAll(String locale, String currency, String categoryDesc, int page, int size, String sortBy,
-			List<Category> categories, List<Brand> brands, List<Tag> tags);
+			List<CategoryWithNameAndStats> categories, List<Brand> brands, List<Tag> tags);
 
 	Product convertToProductDO(String productCreatedDate, String productUPC, String productDesc,
 			Double productRetailPrice, Double productMarkdownPrice, String productImage, String productLocale,

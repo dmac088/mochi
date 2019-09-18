@@ -24,7 +24,7 @@ public interface ICategoryService {
 
 	Optional<Category> findOneByDesc(String locale, String categoryDesc);
 
-	Category convertCategoryDtoToCategoryDO(io.nzbee.dto.category.Category categoryDto);
+	Category convertCategoryDtoToCategoryDO(io.nzbee.dto.category.CategoryWithNameAndStats categoryDto);
 
 	List<Category> findAll(String locale, String currency);
 

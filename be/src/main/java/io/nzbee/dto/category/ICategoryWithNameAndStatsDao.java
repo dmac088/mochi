@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import io.nzbee.entity.IDao;
 
-public interface ICategoryDao extends IDao<CategoryWithNameAndStats> {
+public interface ICategoryWithNameAndStatsDao extends IDao<CategoryWithNameAndStats> {
 
 	Optional<CategoryWithNameAndStats> findByCategoryDesc(String categoryDesc, String locale);
 	

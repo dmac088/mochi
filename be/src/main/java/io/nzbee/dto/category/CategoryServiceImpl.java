@@ -24,13 +24,13 @@ public class CategoryServiceImpl implements ICategoryService {
     @Override
 	@Transactional
 	//@Cacheable
-	public List<Category> findAll(String locale, String currency) {
+	public List<CategoryWithNameAndStats> findAll(String locale, String currency) {
     	return  categoryDao.findAll(locale, currency);
 	}	
 
 
 	@Override
-	public Optional<Category> findOneByCode(String locale, String categoryCode) {
+	public Optional<CategoryWithNameAndStats> findOneByCode(String locale, String categoryCode) {
 		// TODO Auto-generated method stub
 		return categoryDao.findByCategoryCode(categoryCode, 
 											  locale);
@@ -38,7 +38,7 @@ public class CategoryServiceImpl implements ICategoryService {
 	
 
 	@Override
-	public Optional<Category> findParent(String locale, String parentCategoryCode) {
+	public Optional<CategoryWithNameAndStats> findParent(String locale, String parentCategoryCode) {
 		// TODO Auto-generated method stub
 		return categoryDao.findByCategoryCode(parentCategoryCode, locale);
 	}
@@ -46,28 +46,28 @@ public class CategoryServiceImpl implements ICategoryService {
     @Override
  	@Transactional
  	//@Cacheable
- 	public List<Category> findByParent(String locale, String parentCategoryCode) {
+ 	public List<CategoryWithNameAndStats> findByParent(String locale, String parentCategoryCode) {
     	return categoryDao.findByParent(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, parentCategoryCode, locale);
  	}
     
     @Override
   	@Transactional
   	//@Cacheable
-  	public List<Category> findAllForLevel(final String locale, final Long level) {
+  	public List<CategoryWithNameAndStats> findAllForLevel(final String locale, final Long level) {
      	return categoryDao.findByLevel(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, level, locale);
   	}	
     
     @Override
   	@Transactional
   	//@Cacheable
-  	public Optional<Category> findOne(String locale, String categoryCode) {
+  	public Optional<CategoryWithNameAndStats> findOne(String locale, String categoryCode) {
     	return categoryDao.findByCategoryCode(categoryCode, locale);
   	}
     
     @Override
 	@Transactional
 	//@Cacheable
-	public Optional<Category> findOneByDesc(String locale, String categoryDesc) {
+	public Optional<CategoryWithNameAndStats> findOneByDesc(String locale, String categoryDesc) {
     	return categoryDao.findByCategoryDesc(categoryDesc, locale);
    
 	}
@@ -75,7 +75,7 @@ public class CategoryServiceImpl implements ICategoryService {
     @Override
 	@Transactional
 	//@Cacheable
-	public List<Category> findAll(String locale, String categoryDesc, List<Brand> brands, List<Tag> tags) {
+	public List<CategoryWithNameAndStats> findAll(String locale, String categoryDesc, List<Brand> brands, List<Tag> tags) {
     	return categoryDao.findChildrenByCriteria(
 				 categoryDesc, 
 				 brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()),  
@@ -85,7 +85,7 @@ public class CategoryServiceImpl implements ICategoryService {
 
 
 	@Override
-	public Optional<Category> findOne(String locale, Long categoryId) {
+	public Optional<CategoryWithNameAndStats> findOne(String locale, Long categoryId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
