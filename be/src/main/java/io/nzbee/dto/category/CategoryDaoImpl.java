@@ -21,8 +21,6 @@ import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.Category_;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.attribute.CategoryAttribute_;
-import io.nzbee.entity.category.brand.CategoryBrand;
-import io.nzbee.entity.category.brand.readonly.CategoryBrand_;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.category.product.readonly.CategoryProduct_;
 import io.nzbee.entity.category.type.CategoryType;
@@ -32,6 +30,7 @@ import io.nzbee.entity.product.Product_;
 import io.nzbee.entity.product.tag.ProductTag;
 import io.nzbee.entity.product.tag.ProductTag_;
 import io.nzbee.variables.CategoryVars;
+import io.nzbee.variables.ProductVars;
 
 @Component(value="categoryDtoDao")
 public class CategoryDaoImpl implements ICategoryDao {
@@ -61,60 +60,59 @@ public class CategoryDaoImpl implements ICategoryDao {
 	}
 
 	@Override
-	public List<io.nzbee.dto.category.Category> findAll(String locale) {
+	public List<io.nzbee.dto.category.Category> findAll(String locale, String currency) {
 
 		//we use common table expressions to 
 		//hierarchically traverse the category hierarchy 
 		//and create aggregate summaries
 		
-		em.createQuery(
+		em.createNativeQuery(
 
-			    "WITH RECURSIVE  " +
-			    "descendants AS " +
-			    "( " +
-			    "  SELECT 	t.cat_id,  " +
-				"	t.cat_cd, " +
-				"	t.cat_lvl, " +
-				"	t.cat_prnt_id,  " +
-				"	t.cat_typ_id, " +
-				"	cast('/' || cast(t.cat_id as text) || '/' as text) node " +
-			    "  FROM mochi.category AS t " +
-			    "  WHERE t.cat_cd = 'PRM01' " +
-			    "  UNION ALL " +
-			    "  SELECT 	t.cat_id,  " +
-				"	t.cat_cd,  " +
-				"	t.cat_lvl, " +
-				"	t.cat_prnt_id,  " +
-				"	t.cat_typ_id, " +
-				"	cast(d.node || CAST(t.cat_id as text) || '/' as text) node " +
-			    "  FROM mochi.category AS t  " +
-			    "  JOIN descendants AS d  " +
-			    "  ON t.cat_prnt_id = d.cat_id " +
-			    "), " +
-			    "categories AS  " +
-			    "( " +
-			    "SELECT 	 " +
-				"	descendants.cat_id des_cat_id, " +
-				"	descendants.cat_cd des_cat_cd, " +
-				"	descendants.cat_lvl des_cat_lvl, " +
-				"	descendants.cat_prnt_id des_cat_prnt_id, " +
-				"	descendants.cat_typ_id des_cat_type_id, " +
-				"	descendants.node " +
-				"FROM  descendants " +
-			    "), summaries_pta " +
-			    "AS " +
-			    "( " +
-			    "SELECT  " +
-				"    cc.des_cat_id as cat_id, " +
-				"    cc.des_cat_cd as cat_cd, " +
-				"    cc.des_cat_lvl as cat_lvl, " +
-				"    cc.des_cat_prnt_id as prnt_id, " +
-				"    cc.des_cat_type_id as cat_type_id, " +
+				"WITH RECURSIVE  " +
+				"descendants AS " +
+				"( " +
+				"  SELECT 	t.cat_id,  " +
+				"			t.cat_cd, " +
+				"			t.cat_lvl, " +
+				"			t.cat_prnt_id,  " +
+				"			t.cat_typ_id, " +
+				"			cast('/' || cast(t.cat_id as text) || '/' as text) node " +
+				"  FROM mochi.category AS t " +
+				"  WHERE cat_prnt_id iS NULL " +
+				"  UNION ALL " +
+				"  SELECT 	t.cat_id,  " +
+				"			t.cat_cd,  " +
+				"			t.cat_lvl, " +
+				"			t.cat_prnt_id,  " +
+				"			t.cat_typ_id, " +
+				"			cast(d.node || CAST(t.cat_id as text) || '/' as text) node " +
+				"  FROM mochi.category AS t  " +
+				"  JOIN descendants AS d  " +
+				"  ON t.cat_prnt_id = d.cat_id " +
+				"), " +
+				"categories AS  " +
+				"( " +
+				"  SELECT 	descendants.cat_id des_cat_id, " +
+				"			descendants.cat_cd des_cat_cd, " +
+				"			descendants.cat_lvl des_cat_lvl, " +
+				"			descendants.cat_prnt_id des_cat_prnt_id, " +
+				"			descendants.cat_typ_id des_cat_type_id, " +
+				"			descendants.node " +
+				"FROM descendants " +
+				"), summaries_pta " +
+				"AS " +
+				"( " +
+				"select " +
+				"    cc.des_cat_id 				AS cat_id, " +
+				"    cc.des_cat_cd 				AS cat_cd, " +
+				"    cc.des_cat_lvl 				AS cat_lvl, " +
+				"    cc.des_cat_prnt_id 			AS prnt_id, " +
+				"    cc.des_cat_type_id 			AS cat_type_id, " +
 				"    cc.node, " +
-				"    count(DISTINCT prd.upc_cd) AS product_count, " +
-				"    max(markdown_price.prc_val) AS max_markdown_price,  " +
-				"    max(retail_price.prc_val) AS max_retail_price " +
-			    "FROM categories cc " +
+				"    COUNT(DISTINCT prd.upc_cd) AS product_count, " +
+				"    MAX(markdown_price.prc_val) AS max_markdown_price,  " +
+				"    MAX(retail_price.prc_val) AS max_retail_price " +
+				"FROM categories cc " +
 				"LEFT JOIN mochi.product_category pc ON cc.des_cat_id = pc.cat_id " +
 				"LEFT JOIN 	( " +
 				"		 SELECT prd.prd_id,  " +
@@ -124,7 +122,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 				"		 INNER JOIN mochi.product_status ps " +
 				"		 ON prd.prd_sts_id = ps.prd_sts_id " +
 				"		  " +
-				"		 WHERE prd_sts_cd = 'ACT01' " +
+				"		 WHERE prd_sts_cd = :activeProductCode " +
 				"		 ) prd  " +
 				"		 ON pc.prd_id = prd.prd_id " +
 				"		  " +
@@ -133,6 +131,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 				"			prc_typ_cd, " +
 				"			prc_val  " +
 				"		 FROM mochi.product prd " +
+				
 				"		 INNER JOIN mochi.price prc  " +
 				"		 ON prd.prd_id = prc.prd_id " +
 				"		  " +
@@ -141,13 +140,14 @@ public class CategoryDaoImpl implements ICategoryDao {
 				"		  " +
 				"		 INNER JOIN mochi.price_type pt  " +
 				"		 ON prc.prc_typ_id = pt.prc_typ_id " +
+
 				"		 INNER JOIN mochi.product_status ps " +
 				"		 ON prd.prd_sts_id = ps.prd_sts_id " +
 				"		  " +
 				"		 WHERE now() >= prc.prc_st_dt AND now() <= prc.prc_en_dt " +
-				"		 AND curr.ccy_cd = 'HKD' " +
-				"		 AND prc_typ_cd::text = 'RET01' " +
-				"		 AND prd_sts_cd = 'ACT01' " +
+				"		 AND curr.ccy_cd = :currency " +
+				"		 AND prc_typ_cd::text = :retailPriceCode " +
+				"		 AND prd_sts_cd = :activeProductCode " +
 				"		 ) retail_price " +
 				"		 ON pc.prd_id = retail_price.prd_id " +
 				"		  " +
@@ -155,6 +155,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 				"			prc_typ_cd, " +
 				"			prc_val  " +
 				"		 FROM mochi.product prd " +
+
 				"		 INNER JOIN mochi.price prc  " +
 				"		 ON prd.prd_id = prc.prd_id " +
 				"		  " +
@@ -163,13 +164,15 @@ public class CategoryDaoImpl implements ICategoryDao {
 				"		  " +
 				"		 INNER JOIN mochi.price_type pt  " +
 				"		 ON prc.prc_typ_id = pt.prc_typ_id " +
+
 				"		 INNER JOIN mochi.product_status ps " +
 				"		 ON prd.prd_sts_id = ps.prd_sts_id " +
 				"		  " +
-				"		 WHERE now() >= prc.prc_st_dt AND now() <= prc.prc_en_dt " +
-				"		 AND curr.ccy_cd = 'HKD' " +
-				"		 AND prc_typ_cd::text = 'MKD01' " +
-				"		 AND prd_sts_cd = 'ACT01' " +
+				"		 WHERE now() >= prc.prc_st_dt  " +
+				"		 AND now() <= prc.prc_en_dt " +
+				"		 AND curr.ccy_cd = :currency " +
+				"		 AND prc_typ_cd::text = :markdownPriceCode " +
+				"		 AND prd_sts_cd = :activeProductCode " +
 				"		 )  markdown_price		  " +
 				"		 ON pc.prd_id = markdown_price.prd_id " +
 				"	 " +
@@ -181,6 +184,100 @@ public class CategoryDaoImpl implements ICategoryDao {
 				"	 cc.des_cat_prnt_id, " +
 				"	 cc.des_cat_type_id, " +
 				"	 cc.node " +
+				"UNION ALL " +
+				"SELECT  " +
+				"    cc.des_cat_id 		AS cat_id, " +
+				"    cc.des_cat_cd 		AS cat_cd, " +
+				"    cc.des_cat_lvl 		AS cat_lvl, " +
+				"    cc.des_cat_prnt_id 	AS prnt_id, " +
+				"    cc.des_cat_type_id 	AS cat_type_id, " +
+				"    cc.node, " +
+				"    count(DISTINCT prd.bnd_cd) 	AS product_count, " +
+				"    max(markdown_price.prc_val) AS max_markdown_price,  " +
+				"    max(retail_price.prc_val) 	AS max_retail_price " +
+				"FROM categories cc " +
+				"LEFT JOIN mochi.brand_category pc  " +
+				"ON cc.des_cat_id = pc.cat_id " +
+
+				"LEFT JOIN 	( " +
+				"			SELECT  prd.bnd_id,  " +
+				"					bnd_cd " +
+				"			FROM mochi.brand bnd " +
+
+				"			INNER JOIN mochi.product prd " +
+				"			ON bnd.bnd_id =  prd.bnd_id " +
+		
+				"			INNER JOIN mochi.product_status ps " +
+				"			ON prd.prd_sts_id = ps.prd_sts_id " +
+		
+				"			WHERE prd_sts_cd = :activeProductCode " +
+				"			) prd  " +
+				"			ON pc.bnd_id = prd.bnd_id " +
+				"		  " +
+				"LEFT JOIN 	( " +
+				"			SELECT 	prd.bnd_id, " +
+				"					prc_typ_cd, " +
+				"					prc_val  " +
+				"			FROM mochi.brand bnd " +
+
+				"			INNER JOIN mochi.product prd " +
+				"			ON bnd.bnd_id =  prd.bnd_id " +
+
+				"			INNER JOIN mochi.price prc  " +
+				"			ON prd.prd_id = prc.prd_id " +
+				"		  " +
+				"			INNER JOIN mochi.currency curr  " +
+				"			ON prc.ccy_id = curr.ccy_id  " +
+				"		  " +
+				"			INNER JOIN mochi.price_type pt  " +
+				"			ON prc.prc_typ_id = pt.prc_typ_id " +
+
+				"			INNER JOIN mochi.product_status ps " +
+				"			ON prd.prd_sts_id = ps.prd_sts_id " +
+				"		  " +
+				"			WHERE now() >= prc.prc_st_dt AND now() <= prc.prc_en_dt " +
+				"			AND curr.ccy_cd = :currency " +
+				"			AND prc_typ_cd::text = :retailPriceCode " +
+				"			AND prd_sts_cd = :activeProductCode " +
+				"			) retail_price " +
+				"			ON pc.bnd_id = retail_price.bnd_id " +
+				"		  " +
+				"LEFT JOIN 	( " +
+				"			SELECT prd.bnd_id,  " +
+				"					prc_typ_cd, " +
+				"					prc_val  " +
+				"			FROM mochi.brand bnd " +
+
+				"			INNER JOIN mochi.product prd " +
+				"			ON bnd.bnd_id =  prd.bnd_id " +
+				"			  " +
+				"			INNER JOIN mochi.price prc  " +
+				"			ON prd.prd_id = prc.prd_id " +
+				"			  " +
+				"			INNER JOIN mochi.currency curr  " +
+				"			ON prc.ccy_id = curr.ccy_id  " +
+				"			  " +
+				"			INNER JOIN mochi.price_type pt  " +
+				"			ON prc.prc_typ_id = pt.prc_typ_id " +
+
+				"			INNER JOIN mochi.product_status ps " +
+				"			ON prd.prd_sts_id = ps.prd_sts_id " +
+				"			  " +
+				"			WHERE now() >= prc.prc_st_dt AND now() <= prc.prc_en_dt " +
+				"			AND curr.ccy_cd = :currency " +
+				"			AND prc_typ_cd::text = :markdownPriceCode " +
+				"			AND prd_sts_cd = :activeProductCode " +
+				"		 )  markdown_price		  " +
+				"		 ON pc.bnd_id = markdown_price.bnd_id " +
+				"	 " +
+				"WHERE cc.des_cat_type_id = 2 " +
+				"GROUP BY  " +
+				"	cc.des_cat_id, " +
+				"	cc.des_cat_cd, " +
+				"	cc.des_cat_lvl, " +
+				"	cc.des_cat_prnt_id, " +
+				"	cc.des_cat_type_id, " +
+				"	cc.node " +
 				"), summaries_ptb AS " +
 				"( " +
 				"SELECT 	 " +
@@ -190,7 +287,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 				"	s1.prnt_id, " +
 				"	s1.cat_type_id, " +
 				"	coalesce(s1.product_count, 0) + " +
-				"	sum(coalesce(s2.product_count,0)) as product_count, " +
+				"	sum(coalesce(s2.product_count,0)) as object_count, " +
 				"	greatest(0, s1.max_retail_price, max(s2.max_retail_price)) as max_retail_price, " +
 				"	greatest(0, s1.max_markdown_price, max(s2.max_markdown_price)) as max_markdown_price " +
 				"FROM summaries_pta s1 " +
@@ -215,22 +312,29 @@ public class CategoryDaoImpl implements ICategoryDao {
 				"       a.cat_img_pth, " +
 				"       ct.cat_typ_cd, " +
 				"       a.lcl_cd, " +
-				"       s.product_count, " +
+				"       s.object_count, " +
 				"       s.max_retail_price, " +
 				"       s.max_markdown_price " +
-				"        " +
+
 				"FROM summaries_ptb s " +
+
 				"INNER JOIN mochi.category_attr_lcl a " +
 				"ON s.cat_id = a.cat_id " +
+
 				"LEFT JOIN mochi.category parent " +
 				"ON s.prnt_id = parent.cat_id  " +
 
 				"INNER JOIN mochi.category_type ct " +
 				"ON s.cat_type_id = ct.cat_typ_id " +
-				"WHERE a.lcl_cd = 'zh-HK'; " 
-
-		).
-		
+				
+				"WHERE a.lcl_cd = :locale", Category.class
+				
+		).setParameter("locale", locale)
+		 .setParameter("currency", currency)
+		 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
+		 .setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
+		 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
+		 .getResultList();
 		
 		/*
 		CriteriaBuilder cb = em.getCriteriaBuilder();

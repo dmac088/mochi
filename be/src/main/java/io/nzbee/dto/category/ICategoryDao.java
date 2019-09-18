@@ -19,7 +19,7 @@ public interface ICategoryDao extends IDao<Category> {
 	List<Category> findChildrenByCriteria(String parentCategoryDesc, List<String> brandCodes, List<String> tagCodes,
 			String locale);
 
-	List<Category> findAll(String locale);
+	List<Category> findAll(String locale, String currency);
 
 	
 

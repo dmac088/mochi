@@ -34,14 +34,16 @@ public class Category {
 		super();
 	}
 	
-	public Category(Long id, 
-					String categoryCode, 
-					String categoryDesc, 
-					Long categoryLevel, 
-					String categoryType,
-					String lclCd, 
-					String parentCode,
-					Long objectCount) {
+	public Category(Long 	categoryid, 
+					String 	categoryCode,
+					Long 	categoryLevel,
+					String 	parentCategoryCode,
+					String 	categoryDesc, 
+					String  categoryImagePath,
+					String  categoryTypeCode,
+					String  locale,
+					Long  objectCount
+					) {
 		super();
 		this.id 			= id;
 		this.categoryCode 	= categoryCode;
