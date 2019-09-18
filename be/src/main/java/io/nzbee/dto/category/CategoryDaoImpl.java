@@ -77,7 +77,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 				"t.cat_prnt_id, " +
 				"t.cat_typ_id " +
 			    "FROM mochi.category AS t " +
-			    "WHERE t.cat_cd = \'FRT01\' " +       
+			    "WHERE t.cat_cd = :category " +       
 			    "), " +
 			    "descendants (cat_id, cat_cd, cat_lvl, cat_prnt_id, cat_typ_id) AS " +
 			    "(" +
@@ -85,9 +85,9 @@ public class CategoryDaoImpl implements ICategoryDao {
 				"t.cat_cd, " + 
 				"t.cat_lvl, " +
 				"t.cat_prnt_id, " + 
-				"t.cat_typ_id, " +
+				"t.cat_typ_id " +
 			    "FROM mochi.category AS t " +
-			    "WHERE t.cat_cd = \'FRT01\' " +
+			    "WHERE t.cat_cd = :category " +
 			    "UNION ALL " +
 			    "SELECT 	" +
 			     "	t.cat_id, " + 
@@ -131,11 +131,17 @@ public class CategoryDaoImpl implements ICategoryDao {
 					"		 FROM mochi.price prc  " +
 					"		 INNER JOIN mochi.currency curr  " +
 					"		 ON prc.ccy_id = curr.ccy_id  " +
-					"		 LEFT JOIN mochi.price_type pt  " +
+					
+					"		 INNER JOIN mochi.price_type pt  " +
 					"		 ON prc.prc_typ_id = pt.prc_typ_id " +
+					
+					"		 INNER JOIN mochi.product_status stts " +
+					"		 ON prd.prd_id = stts.prd_id " +
+					"		 AND prd_sts_cd = :productStatus " +
+					
 					"		 WHERE now() >= prc.prc_st_dt AND now() <= prc.prc_en_dt " +
-					"		 AND curr.ccy_cd = 'HKD' " +
-					"		 AND prc_typ_cd::text = 'RET01') retail_price " +
+					"		 AND curr.ccy_cd = :currencyCode " +
+					"		 AND prc_typ_cd::text = :retailPriceType) retail_price " +
 					"		 ON pc.prd_id = retail_price.prd_id " +
 							 
 					"LEFT JOIN 	(SELECT prd_id,  " +
@@ -144,11 +150,17 @@ public class CategoryDaoImpl implements ICategoryDao {
 					"		 FROM mochi.price prc  " +
 					"		 INNER JOIN mochi.currency curr  " +
 					"		 ON prc.ccy_id = curr.ccy_id  " +
-					"		 LEFT JOIN mochi.price_type pt  " +
+					
+					"		 INNER JOIN mochi.price_type pt  " +
 					"		 ON prc.prc_typ_id = pt.prc_typ_id " +
+					
+					"		 INNER JOIN mochi.product_status stts " +
+					"		 ON prd.prd_id = stts.prd_id " +
+					"		 AND prd_sts_cd = :productStatus " +
+					
 					"		 WHERE now() >= prc.prc_st_dt AND now() <= prc.prc_en_dt " +
-					"		 AND curr.ccy_cd = 'HKD' " +
-					"		 AND prc_typ_cd::text = 'MKD01')  markdown_price " +		 
+					"		 AND curr.ccy_cd = :currencyCode " +
+					"		 AND prc_typ_cd::text = :markdownPriceType)  markdown_price " +		 
 					"		 ON pc.prd_id = markdown_price.prd_id " +
 								
 					"WHERE cc.cat_typ_id = 1 " +
@@ -158,7 +170,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 					"	 cc.des_cat_prnt_id, " +
 					"	 cc.des_cat_type_id "
 		
-		)
+		).
 		
 		
 		/*
