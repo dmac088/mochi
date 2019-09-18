@@ -68,115 +68,110 @@ public class CategoryDaoImpl implements ICategoryDao {
 		//and create aggregate summaries
 		
 		em.createQuery(
-				WITH RECURSIVE 
-			    -- starting node(s)
-			    descendants (cat_id, cat_cd, cat_lvl, cat_prnt_id, cat_typ_id) AS
-			    (
-			      SELECT 	t.cat_id, 
-					t.cat_cd, 
-					t.cat_lvl,
-					t.cat_prnt_id, 
-					t.cat_typ_id,
-					cast('/' || cast(t.cat_id as text) || '/' as text) node
-			      FROM mochi.category AS t
-			      WHERE t.cat_cd = 'PRM01'
-			      UNION ALL
-			      SELECT 	t.cat_id, 
-					t.cat_cd, 
-					t.cat_lvl,
-					t.cat_prnt_id, 
-					t.cat_typ_id,
-					cast(d.node || CAST(t.cat_id as text) || '/' as text) node
-			      FROM mochi.category AS t 
-			      JOIN descendants AS d 
-			      ON t.cat_prnt_id = d.cat_id
-			    ),
-			    categories AS 
-			    (
-			      SELECT 	descendants.cat_id des_cat_id,
-					descendants.cat_cd des_cat_cd,
-					descendants.cat_lvl des_cat_lvl,
-					descendants.cat_prnt_id des_cat_prnt_id,
-					descendants.cat_typ_id des_cat_type_id,
-					descendants.node
-				FROM  descendants
-			    ), summaries
-			    AS
-			    (
-			    select
-				    cc.des_cat_id as cat_id,
-				    cc.des_cat_cd as cat_cd,
-				    cc.des_cat_lvl as cat_lvl,
-				    cc.des_cat_prnt_id as prnt_id,
-				    cc.des_cat_type_id as cat_type_id,
-				    cc.node,
-				    count(DISTINCT prd.upc_cd) AS product_count,
-				    max(markdown_price.prc_val) AS max_markdown_price, 
-				    max(retail_price.prc_val) AS max_retail_price
-			    from categories cc
-				LEFT JOIN mochi.product_category pc ON cc.des_cat_id = pc.cat_id
-				LEFT JOIN mochi.product prd ON pc.prd_id = prd.prd_id
-				LEFT JOIN 	(SELECT prd_id, 
-							prc_typ_cd,
-							prc_val 
-						 FROM mochi.price prc 
-						 INNER JOIN mochi.currency curr 
-						 ON prc.ccy_id = curr.ccy_id 
-						 LEFT JOIN mochi.price_type pt 
-						 ON prc.prc_typ_id = pt.prc_typ_id
-						 WHERE now() >= prc.prc_st_dt AND now() <= prc.prc_en_dt
-						 AND curr.ccy_cd = 'HKD'
-						 AND prc_typ_cd::text = 'RET01') retail_price
-						 ON pc.prd_id = retail_price.prd_id
-						 
-				LEFT JOIN 	(SELECT prd_id, 
-							prc_typ_cd,
-							prc_val 
-						 FROM mochi.price prc 
-						 INNER JOIN mochi.currency curr 
-						 ON prc.ccy_id = curr.ccy_id 
-						 LEFT JOIN mochi.price_type pt 
-						 ON prc.prc_typ_id = pt.prc_typ_id
-						 WHERE now() >= prc.prc_st_dt AND now() <= prc.prc_en_dt
-						 AND curr.ccy_cd = 'HKD'
-						 AND prc_typ_cd::text = 'MKD01')  markdown_price		 
-						 ON pc.prd_id = markdown_price.prd_id
-					
-				WHERE cc.des_cat_type_id = 1
-				GROUP BY 
-					 cc.des_cat_id,
-					 cc.des_cat_cd,
-					 cc.des_cat_lvl,
-					 cc.des_cat_prnt_id,
-					 cc.des_cat_type_id,
-					 cc.node
-				)
-
-
-				SELECT 	
-					s1.cat_id,
-					s1.cat_cd,
-					s1.cat_lvl,
-					s1.prnt_id,
-					s1.cat_type_id,
-					coalesce(s1.product_count, 0) +
-					sum(coalesce(s2.product_count,0)) as product_count,
-					greatest(0, s1.max_retail_price, max(s2.max_retail_price)) as max_retail_price,
-					greatest(0, s1.max_markdown_price, max(s2.max_markdown_price)) as max_markdown_price
-				FROM summaries s1
-				LEFT JOIN summaries s2
-				ON s1.node <> s2.Node and left(s2.node, length(s1.node)) = s1.node
-				group by 
-					s1.cat_id,
-					s1.cat_cd,
-					s1.cat_lvl,
-					s1.prnt_id,
-					s1.cat_type_id,
-					s1.product_count,
-					s1.max_retail_price,
-					s1.max_markdown_price
-				order by cat_lvl;
-
+						"WITH RECURSIVE  " +
+					    "descendants (cat_id, cat_cd, cat_lvl, cat_prnt_id, cat_typ_id) AS " +
+					    "( " +
+					    "  SELECT 	t.cat_id,  " +
+						"	t.cat_cd,  " +
+						"	t.cat_lvl, " +
+						"	t.cat_prnt_id,  " +
+						"	t.cat_typ_id, " +
+						"	cast('/' || cast(t.cat_id as text) || '/' as text) node " +
+					    "  FROM mochi.category AS t " +
+					    "  WHERE t.cat_cd = 'PRM01' " +
+					    "  UNION ALL " +
+					    "  SELECT 	t.cat_id,  " +
+						"	t.cat_cd,  " +
+						"	t.cat_lvl, " +
+						"	t.cat_prnt_id,  " +
+						"	t.cat_typ_id, " +
+						"	cast(d.node || CAST(t.cat_id as text) || '/' as text) node " +
+					    "  FROM mochi.category AS t  " +
+					    "  JOIN descendants AS d  " +
+					    "  ON t.cat_prnt_id = d.cat_id " +
+					    "), " +
+					    "categories AS  " +
+					    "( " +
+					    "  SELECT 	descendants.cat_id des_cat_id, " +
+						"	descendants.cat_cd des_cat_cd, " +
+						"	descendants.cat_lvl des_cat_lvl, " +
+						"	descendants.cat_prnt_id des_cat_prnt_id, " +
+						"	descendants.cat_typ_id des_cat_type_id, " +
+						"	descendants.node " +
+						"FROM  descendants " +
+					    "), summaries " +
+					    "AS " +
+					    "( " +
+					    "select " +
+						"    cc.des_cat_id as cat_id, " +
+						"    cc.des_cat_cd as cat_cd, " +
+						"    cc.des_cat_lvl as cat_lvl, " +
+						"    cc.des_cat_prnt_id as prnt_id, " +
+						"    cc.des_cat_type_id as cat_type_id, " +
+						"    cc.node, " +
+						"    count(DISTINCT prd.upc_cd) AS product_count, " +
+						"    max(markdown_price.prc_val) AS max_markdown_price,  " +
+						"    max(retail_price.prc_val) AS max_retail_price " +
+					    "from categories cc " +
+						"LEFT JOIN mochi.product_category pc ON cc.des_cat_id = pc.cat_id " +
+						"LEFT JOIN mochi.product prd ON pc.prd_id = prd.prd_id " +
+						"LEFT JOIN 	(SELECT prd_id,  " +
+						"			prc_typ_cd, " +
+						"			prc_val  " +
+						"		 FROM mochi.price prc  " +
+						"		 INNER JOIN mochi.currency curr  " +
+						"		 ON prc.ccy_id = curr.ccy_id  " +
+						"		 LEFT JOIN mochi.price_type pt  " +
+						"		 ON prc.prc_typ_id = pt.prc_typ_id " +
+						"		 WHERE now() >= prc.prc_st_dt AND now() <= prc.prc_en_dt " +
+						"		 AND curr.ccy_cd = 'HKD' " +
+						"		 AND prc_typ_cd::text = 'RET01') retail_price " +
+						"		 ON pc.prd_id = retail_price.prd_id " +
+						"		  " +
+						"LEFT JOIN 	(SELECT prd_id,  " +
+						"			prc_typ_cd, " +
+						"			prc_val  " +
+						"		 FROM mochi.price prc  " +
+						"		 INNER JOIN mochi.currency curr  " +
+						"		 ON prc.ccy_id = curr.ccy_id  " +
+						"		 LEFT JOIN mochi.price_type pt  " +
+						"		 ON prc.prc_typ_id = pt.prc_typ_id " +
+						"		 WHERE now() >= prc.prc_st_dt AND now() <= prc.prc_en_dt " +
+						"		 AND curr.ccy_cd = 'HKD' " +
+						"		 AND prc_typ_cd::text = 'MKD01')  markdown_price		  " +
+						"		 ON pc.prd_id = markdown_price.prd_id " +
+						"	 " +
+						"WHERE cc.des_cat_type_id = 1 " +
+						"GROUP BY  " +
+						"	 cc.des_cat_id, " +
+						"	 cc.des_cat_cd, " +
+						"	 cc.des_cat_lvl, " +
+						"	 cc.des_cat_prnt_id, " +
+						"	 cc.des_cat_type_id, " +
+						"	 cc.node " +
+						") " +
+						"SELECT 	 " +
+						"	s1.cat_id, " +
+						"	s1.cat_cd, " +
+						"	s1.cat_lvl, " +
+						"	s1.prnt_id, " +
+						"	s1.cat_type_id, " +
+						"	coalesce(s1.product_count, 0) + " +
+						"	sum(coalesce(s2.product_count,0)) as product_count, " +
+						"	greatest(0, s1.max_retail_price, max(s2.max_retail_price)) as max_retail_price, " +
+						"	greatest(0, s1.max_markdown_price, max(s2.max_markdown_price)) as max_markdown_price " +
+						"FROM summaries s1 " +
+						"LEFT JOIN summaries s2 " +
+						"ON s1.node <> s2.Node and left(s2.node, length(s1.node)) = s1.node " +
+						"group by  " +
+						"	s1.cat_id, " +
+						"	s1.cat_cd, " +
+						"	s1.cat_lvl, " +
+						"	s1.prnt_id, " +
+						"	s1.cat_type_id, " +
+						"	s1.product_count, " +
+						"	s1.max_retail_price, " +
+						"	s1.max_markdown_price "
 		).
 		
 		
