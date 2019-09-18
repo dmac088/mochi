@@ -9,22 +9,22 @@ import io.nzbee.dto.tag.Tag;
 
 public interface ICategoryService {
 	 
-	List<Category> findAllForLevel(String lcl, Long level);
+	List<CategoryWithNameAndStats> findAllForLevel(String lcl, Long level);
 	 
-	Optional<Category> findOne(String locale, Long categoryId);
+	Optional<CategoryWithNameAndStats> findOne(String locale, Long categoryId);
 
-	List<Category> findAll(String locale, String categoryDesc, List<Brand> brands, List<Tag> tags);
+	List<CategoryWithNameAndStats> findAll(String locale, String categoryDesc, List<Brand> brands, List<Tag> tags);
 
-	Optional<Category> findOne(String locale, String categoryCode);
+	Optional<CategoryWithNameAndStats> findOne(String locale, String categoryCode);
 
-	Optional<Category> findOneByCode(String locale, String categoryCode);
+	Optional<CategoryWithNameAndStats> findOneByCode(String locale, String categoryCode);
 
-	Optional<Category> findParent(String locale, String parentCategoryCode);
+	Optional<CategoryWithNameAndStats> findParent(String locale, String parentCategoryCode);
 
-	List<Category> findByParent(String locale, String parentCategoryCode);
+	List<CategoryWithNameAndStats> findByParent(String locale, String parentCategoryCode);
 
-	Optional<Category> findOneByDesc(String locale, String categoryDesc);
+	Optional<CategoryWithNameAndStats> findOneByDesc(String locale, String categoryDesc);
 
-	List<Category> findAll(String locale, String currency);
+	List<CategoryWithNameAndStats> findAll(String locale, String currency);
 
 }

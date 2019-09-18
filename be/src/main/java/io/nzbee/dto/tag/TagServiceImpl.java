@@ -10,7 +10,7 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 
 import io.nzbee.dto.brand.Brand;
-import io.nzbee.dto.category.Category;
+import io.nzbee.dto.category.CategoryWithNameAndStats;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.tag.IProductTagService;
@@ -38,7 +38,7 @@ public class TagServiceImpl implements ITagService {
 	IProductService productService;
 	
 	@Override
-	public List<Tag> findAll(String locale, String currency, String categoryDesc, List<Category> categories, List<Brand> brands) {
+	public List<Tag> findAll(String locale, String currency, String categoryDesc, List<CategoryWithNameAndStats> categories, List<Brand> brands) {
 		return productTagService.findAll(locale, 
 										null, 
 										null, 
@@ -54,7 +54,7 @@ public class TagServiceImpl implements ITagService {
 	}
 	
 	@Override
-	public List<Tag> findAll(String locale, String currency, String categoryDesc, Double price, List<Category> categories, List<Brand> brands) {
+	public List<Tag> findAll(String locale, String currency, String categoryDesc, Double price, List<CategoryWithNameAndStats> categories, List<Brand> brands) {
 		return productTagService.findAll(locale, 
 				new Double(0), 
 				price, 

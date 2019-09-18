@@ -3,7 +3,7 @@ package io.nzbee.dto.brand;
 
 import java.util.List;
 import java.util.Optional;
-import io.nzbee.dto.category.Category;
+import io.nzbee.dto.category.CategoryWithNameAndStats;
 import io.nzbee.dto.tag.Tag;
 
 public interface IBrandService {
@@ -16,7 +16,7 @@ public interface IBrandService {
 	
 	List<Brand> findAll(String lcl);
 
-	List<Brand> findAll(String locale, String currency, String categoryDesc, List<Category> categories, List<Tag> tags);
+	List<Brand> findAll(String locale, String currency, String categoryDesc, List<CategoryWithNameAndStats> categories, List<Tag> tags);
 
 	Brand converToBrandDO (io.nzbee.entity.brand.Brand brand, String locale);
 

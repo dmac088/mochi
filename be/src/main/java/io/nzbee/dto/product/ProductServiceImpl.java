@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Sort;
 
 import io.nzbee.dto.brand.Brand;
-import io.nzbee.dto.category.Category;
+import io.nzbee.dto.category.CategoryWithNameAndStats;
 import io.nzbee.dto.tag.Tag;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.GeneralVars;
@@ -53,7 +53,7 @@ public class ProductServiceImpl implements IProductService {
 								 int page, 
 								 int size, 
 								 String sortBy, 
-								 List<Category> categories,
+								 List<CategoryWithNameAndStats> categories,
 								 List<Brand> brands,
 								 List<Tag> tags) {
 	
@@ -81,7 +81,7 @@ public class ProductServiceImpl implements IProductService {
 								 int page, 
 								 int size, 
 								 String sortBy, 
-								 List<Category> categories,
+								 List<CategoryWithNameAndStats> categories,
 								 List<Brand> brands,
 								 List<Tag> tags) {
 	
@@ -243,7 +243,7 @@ public class ProductServiceImpl implements IProductService {
 								String locale, 
 								String markdownSkuDescription, 
 								String currency,
-								List<Category> categories, 
+								List<CategoryWithNameAndStats> categories, 
 								List<Brand> brands, 
 								List<Tag> tags) {
 		
@@ -293,7 +293,7 @@ public class ProductServiceImpl implements IProductService {
 							String locale, 
 							String currency,
 							String productStatusCode, 
-							List<Category> categories, 
+							List<CategoryWithNameAndStats> categories, 
 							List<Brand> brands, 
 							List<Tag> tags) {
 		

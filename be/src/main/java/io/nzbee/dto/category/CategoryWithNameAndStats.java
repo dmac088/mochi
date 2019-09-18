@@ -2,7 +2,7 @@ package io.nzbee.dto.category;
 
 import java.util.Objects;
 
-public class Category {
+public class CategoryWithNameAndStats {
 	
 	private Long categoryId;
 
@@ -34,11 +34,11 @@ public class Category {
 		this.categoryId = id;
 	}
 	
-	public Category() {
+	public CategoryWithNameAndStats() {
 		super();
 	}
 	
-	public Category(Long 	categoryid, 
+	public CategoryWithNameAndStats(Long 	categoryid, 
 					String 	categoryCode,
 					Long 	categoryLevel,
 					String 	parentCategoryCode,
@@ -147,7 +147,7 @@ public class Category {
 	public boolean equals(Object o) {
 		 if (this == o) return true;
 	     if (o == null || getClass() != o.getClass()) return false;
-	     Category pcDto = (Category) o;
+	     CategoryWithNameAndStats pcDto = (CategoryWithNameAndStats) o;
 	     return this.categoryCode == pcDto.categoryCode;
 	}
 
