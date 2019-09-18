@@ -29,7 +29,6 @@ import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.Product_;
 import io.nzbee.entity.product.tag.ProductTag;
 import io.nzbee.entity.product.tag.ProductTag_;
-import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.ProductVars;
 
 @Component(value="categoryDtoDao")
@@ -59,6 +58,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 		return Optional.ofNullable(query.getSingleResult());
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<io.nzbee.dto.category.Category> findAll(String locale, String currency) {
 
@@ -66,7 +66,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 		//hierarchically traverse the category hierarchy 
 		//and create aggregate summaries
 		
-		em.createNativeQuery(
+		return em.createNativeQuery(
 
 				"WITH RECURSIVE  " +
 				"descendants AS " +
@@ -213,7 +213,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 				"			WHERE prd_sts_cd = :activeProductCode " +
 				"			) prd  " +
 				"			ON pc.bnd_id = prd.bnd_id " +
-				"		  " +
+			
 				"LEFT JOIN 	( " +
 				"			SELECT 	prd.bnd_id, " +
 				"					prc_typ_cd, " +
@@ -225,23 +225,23 @@ public class CategoryDaoImpl implements ICategoryDao {
 
 				"			INNER JOIN mochi.price prc  " +
 				"			ON prd.prd_id = prc.prd_id " +
-				"		  " +
+		
 				"			INNER JOIN mochi.currency curr  " +
 				"			ON prc.ccy_id = curr.ccy_id  " +
-				"		  " +
+		
 				"			INNER JOIN mochi.price_type pt  " +
 				"			ON prc.prc_typ_id = pt.prc_typ_id " +
 
 				"			INNER JOIN mochi.product_status ps " +
 				"			ON prd.prd_sts_id = ps.prd_sts_id " +
-				"		  " +
+	
 				"			WHERE now() >= prc.prc_st_dt AND now() <= prc.prc_en_dt " +
 				"			AND curr.ccy_cd = :currency " +
 				"			AND prc_typ_cd::text = :retailPriceCode " +
 				"			AND prd_sts_cd = :activeProductCode " +
 				"			) retail_price " +
 				"			ON pc.bnd_id = retail_price.bnd_id " +
-				"		  " +
+
 				"LEFT JOIN 	( " +
 				"			SELECT prd.bnd_id,  " +
 				"					prc_typ_cd, " +
@@ -250,26 +250,26 @@ public class CategoryDaoImpl implements ICategoryDao {
 
 				"			INNER JOIN mochi.product prd " +
 				"			ON bnd.bnd_id =  prd.bnd_id " +
-				"			  " +
+	
 				"			INNER JOIN mochi.price prc  " +
 				"			ON prd.prd_id = prc.prd_id " +
-				"			  " +
+
 				"			INNER JOIN mochi.currency curr  " +
 				"			ON prc.ccy_id = curr.ccy_id  " +
-				"			  " +
+	
 				"			INNER JOIN mochi.price_type pt  " +
 				"			ON prc.prc_typ_id = pt.prc_typ_id " +
 
 				"			INNER JOIN mochi.product_status ps " +
 				"			ON prd.prd_sts_id = ps.prd_sts_id " +
-				"			  " +
+
 				"			WHERE now() >= prc.prc_st_dt AND now() <= prc.prc_en_dt " +
 				"			AND curr.ccy_cd = :currency " +
 				"			AND prc_typ_cd::text = :markdownPriceCode " +
 				"			AND prd_sts_cd = :activeProductCode " +
 				"		 )  markdown_price		  " +
 				"		 ON pc.bnd_id = markdown_price.bnd_id " +
-				"	 " +
+
 				"WHERE cc.des_cat_type_id = 2 " +
 				"GROUP BY  " +
 				"	cc.des_cat_id, " +
@@ -327,7 +327,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 				"INNER JOIN mochi.category_type ct " +
 				"ON s.cat_type_id = ct.cat_typ_id " +
 				
-				"WHERE a.lcl_cd = :locale", Category.class
+				"WHERE a.lcl_cd = :locale", io.nzbee.dto.category.Category.class
 				
 		).setParameter("locale", locale)
 		 .setParameter("currency", currency)
