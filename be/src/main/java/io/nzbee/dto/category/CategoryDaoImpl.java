@@ -335,52 +335,8 @@ public class CategoryDaoImpl implements ICategoryDao {
 		 .setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
 		 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
 		 .getResultList();
-		
-		/*
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		
-		CriteriaQuery<io.nzbee.dto.category.Category> cq = cb.createQuery(io.nzbee.dto.category.Category.class);
-		
-		Root<Category> root = cq.from(Category.class);
-		
-		Root<CategoryProduct> categoryProduct = cb.treat(root, CategoryProduct.class);
-		Root<CategoryBrand> categoryBrand = cb.treat(root, CategoryBrand.class);
-		
-
-		Join<Category, CategoryAttribute> categoryAttribute = root.join(Category_.attributes);
-		Join<Category, CategoryType> categoryType = root.join(Category_.categoryType);
-		Join<Category, Category> categoryParent = root.join(Category_.parent);
-		
-		List<Predicate> conditions = new ArrayList<Predicate>();
-		
-		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
-		
-		cq.select(cb.construct(
-				io.nzbee.dto.category.Category.class,
-				root.get(Category_.categoryId),
-				root.get(Category_.categoryCode),
-				categoryAttribute.get(CategoryAttribute_.categoryDesc),
-				root.get(Category_.categoryLevel),
-				categoryType.get(CategoryType_.code),
-				categoryAttribute.get(CategoryAttribute_.lclCd),
-				categoryParent.get(Category_.categoryCode),
-				cb.selectCase()
-				.when(cb.equal(categoryType.get(CategoryType_.code), CategoryVars.CATEGORY_TYPE_CODE_PRODUCT), categoryProduct.get(CategoryProduct_.productCount))
-				.when(cb.equal(categoryType.get(CategoryType_.code), CategoryVars.CATEGORY_TYPE_CODE_BRAND), categoryBrand.get(CategoryBrand_.brandCount))
-				.otherwise(new Long(0))
-				)
-		);
-		
-		TypedQuery<io.nzbee.dto.category.Category> query = em.createQuery(cq
-				.where(conditions.toArray(new Predicate[] {}))
-				.distinct(false)
-		);
-		
-		
-		return query.getResultList();
-		*/
+	
 	}
-
 
 	
 	public Optional<io.nzbee.dto.category.Category> findByCategoryDesc(String categoryDesc, String locale) {

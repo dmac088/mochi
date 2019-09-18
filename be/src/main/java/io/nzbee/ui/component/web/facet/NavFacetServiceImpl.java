@@ -42,7 +42,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		NavFacetContainer nfc = new NavFacetContainer();
 		NavFacetResult nfr = new NavFacetResult();
 		
-		nfc.getFacets().addAll(	categoryService.findAll(locale).stream().map(c -> {
+		nfc.getFacets().addAll(	categoryService.findAll(locale, currency).stream().map(c -> {
 									NavFacet<Category> cnf = this.convertCatToNavFacet(c);
 									return cnf;
 							})

@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Category {
 	
-	private Long id;
+	private Long categoryId;
 
 	private String categoryCode;
 	
@@ -22,12 +22,16 @@ public class Category {
 
 	private Long objectCount;
 	
-	public long getId() {
-		return id;
+	private Double retailPrice;
+	
+	private Double markdownPrice;
+	
+	public long getCategoryId() {
+		return categoryId;
 	}
 
 	public void setId(long id) {
-		this.id = id;
+		this.categoryId = id;
 	}
 	
 	public Category() {
@@ -42,17 +46,21 @@ public class Category {
 					String  categoryImagePath,
 					String  categoryTypeCode,
 					String  locale,
-					Long  objectCount
+					Long  	objectCount,
+					Double  retailPrice,
+					Double  markdownPrice
 					) {
 		super();
-		this.id 			= id;
+		this.categoryId 	= categoryid;
 		this.categoryCode 	= categoryCode;
 		this.categoryDesc 	= categoryDesc;
 		this.categoryLevel 	= categoryLevel;
-		this.categoryType 	= categoryType;
-		this.lclCd 			= lclCd;
-		this.parentCode 	= parentCode;
+		this.categoryType 	= categoryTypeCode;
+		this.lclCd 			= locale;
+		this.parentCode 	= parentCategoryCode;
 		this.objectCount	= objectCount;
+		this.retailPrice	= retailPrice;
+		this.markdownPrice	= markdownPrice;
 	}
 
 	public String getCategoryCode() {
@@ -111,12 +119,28 @@ public class Category {
 		this.categoryType = categoryType;
 	}
 	
-	public Long getCount() {
+	public Long getObjectCount() {
 		return objectCount;
 	}
 
-	public void setCount(Long objectCount) {
+	public void setObjectCount(Long objectCount) {
 		this.objectCount = objectCount;
+	}
+	
+	public Double getRetailPrice() {
+		return retailPrice;
+	}
+
+	public void setRetailPrice(Double retailPrice) {
+		this.retailPrice = retailPrice;
+	}
+
+	public Double getMarkdownPrice() {
+		return markdownPrice;
+	}
+
+	public void setMarkdownPrice(Double markdownPrice) {
+		this.markdownPrice = markdownPrice;
 	}
 
 	@Override

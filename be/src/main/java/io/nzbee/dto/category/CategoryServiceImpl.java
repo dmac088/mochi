@@ -18,14 +18,14 @@ import io.nzbee.variables.CategoryVars;
 public class CategoryServiceImpl implements ICategoryService {
     
     @Autowired
-    @Qualifier("categoryDomainDao")
+    @Qualifier("categoryDtoDao")
     private io.nzbee.dto.category.ICategoryDao categoryDao;
     
     @Override
 	@Transactional
 	//@Cacheable
-	public List<Category> findAll(String locale) {
-    	return  categoryDao.findAll(locale);
+	public List<Category> findAll(String locale, String currency) {
+    	return  categoryDao.findAll(locale, currency);
 	}	
 
 
@@ -90,29 +90,4 @@ public class CategoryServiceImpl implements ICategoryService {
 		return null;
 	}
     
-//	@Override
-// 	@Cacheable
-//    public Category createCategory(final io.nzbee.entity.category.Category pc, final String locale) {
-//	
-// 		//create a new product DTO
-//        final Category cDO = (pc.getCategoryType().getCode().equals(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT)) ? new ProductCategory() : new BrandCategory();
-//        cDO.setCategoryCode(pc.getCategoryCode());
-//        cDO.setCategoryLevel(pc.getCategoryLevel());
-//        cDO.setCount(pc.getCount());
-//       
-//        //set the parentId
-//        Optional<io.nzbee.entity.category.Category> parent = Optional.ofNullable(pc.getParent());
-//        if(parent.isPresent()) {
-//        	cDO.setParentCode(parent.get().getCategoryCode());
-//        }
-//        
-//        cDO.setCategoryDesc(pc.getAttributes().stream()
-//        		.filter( pa -> pa.getLclCd().equals(locale)).collect(Collectors.toList()).get(0).getCategoryDesc());
-//        cDO.setLclCd(locale);
-//        cDO.setChildCategoryCount(pc.getChildCategoryCount());
-//        
-//        cDO.setCategoryType(pc.getCategoryType().getCode());
-//        return cDO;
-//    }
-
 }

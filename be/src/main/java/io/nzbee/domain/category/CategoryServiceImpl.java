@@ -26,8 +26,8 @@ public class CategoryServiceImpl implements ICategoryService {
     @Override
 	@Transactional
 	//@Cacheable
-	public List<Category> findAll(String locale) {
-    	return  categoryService.findAll(locale)
+	public List<Category> findAll(String locale, String currency) {
+    	return  categoryService.findAll(locale, currency)
     			.stream().map(c -> convertCategoryDtoToCategoryDO(c))
     			.collect(Collectors.toList());
 	}
@@ -83,13 +83,14 @@ public class CategoryServiceImpl implements ICategoryService {
 	@Transactional
 	//@Cacheable
 	public List<Category> findAll(String locale, String categoryDesc, List<Brand> brands, List<Tag> tags) {
-    	return categoryService.findAll(
-    			 locale,
-				 categoryDesc, 
-				 brands,  
-				 tags)
-    			.stream().map(c -> convertCategoryDtoToCategoryDO(c))
-    			.collect(Collectors.toList());
+    	return null;
+//    	return categoryService.findAll(
+//    			 locale,
+//				 categoryDesc, 
+//				 brands,  
+//				 tags)
+//    			.stream().map(c -> convertCategoryDtoToCategoryDO(c))
+//    			.collect(Collectors.toList());
 	}
 
 
@@ -105,7 +106,7 @@ public class CategoryServiceImpl implements ICategoryService {
 		categoryDO.setCategoryDesc(categoryDto.getCategoryDesc());
 		categoryDO.setCategoryLevel(categoryDto.getCategoryLevel());
 		categoryDO.setCategoryType(categoryDto.getCategoryType());
-		categoryDO.setCount(categoryDto.getCount());
+		categoryDO.setCount(categoryDto.getObjectCount());
 							
 		return categoryDO;
 	}
