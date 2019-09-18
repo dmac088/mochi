@@ -44,7 +44,7 @@ public class ProductServiceImpl implements IProductService {
 								 List<Tag> tags) {
 	
     	
-    	//we need to convert to lists of IDs or codes here
+    	//need to map categories domain object to a DTO 
     	return productDtoService.findAll(
     			locale, 
     			currency,
@@ -122,50 +122,6 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public Double getMaxPrice(	String categoryDesc, 
-								String locale, 
-								String markdownSkuDescription, 
-								String currency,
-								List<Category> categories, 
-								List<Brand> brands, 
-								List<Tag> tags) {
-		
-		return productDtoService.getMaxPrice(
-				categoryDesc, 
-				locale, 
-				markdownSkuDescription, 
-				currency,
-				categories, 
-				brands, 
-				tags);
-	}
-	
-
-	@Override
-	public Long getCount(	String categoryTypeCode, 
-							String categoryDesc, 
-							String locale, 
-							String currency,
-							String productStatusCode, 
-							List<Category> categories, 
-							List<Brand> brands, 
-							List<Tag> tags) {
-		
-		return 
-			    productDtoService.getCount(
-									    categoryTypeCode,
-										categoryDesc, 
-										locale, 
-										currency,
-										productStatusCode,
-										categories,
-										brands,  
-										tags
-									    );
-				
-	}
-
-	@Override
 	public List<Product> findAll(String locale, String currency, List<String> productCodes) {
 		// TODO Auto-generated method stub
 		return null;
@@ -190,7 +146,7 @@ public class ProductServiceImpl implements IProductService {
 		domainProduct.setProductRetail(productDto.getProductRetail());
 		return domainProduct;
 	}
-
+	
 
 	@Override
 	public io.nzbee.dto.product.Product convertProductDOToProductDto(Product productDO) {
