@@ -102,7 +102,7 @@ public class CategoryDaoImpl implements ICategoryWithNameAndStatsDao, ICategoryD
 				root.get(Category_.categoryCode),
 				categoryAttribute.get(CategoryAttribute_.categoryDesc),
 				root.get(Category_.categoryLevel),
-				categoryType.get(CategoryType_.code),
+				categoryType.get(CategoryType_.categoryTypeCode),
 				categoryAttribute.get(CategoryAttribute_.lclCd),
 				categoryParent.get(Category_.categoryCode)
 				)
@@ -148,7 +148,7 @@ public class CategoryDaoImpl implements ICategoryWithNameAndStatsDao, ICategoryD
 				root.get(Category_.categoryCode),
 				categoryAttribute.get(CategoryAttribute_.categoryDesc),
 				root.get(Category_.categoryLevel),
-				categoryType.get(CategoryType_.code),
+				categoryType.get(CategoryType_.categoryTypeCode),
 				categoryAttribute.get(CategoryAttribute_.lclCd),
 				root.get(Category_.parent).get(Category_.categoryCode)
 				)
@@ -202,7 +202,7 @@ public class CategoryDaoImpl implements ICategoryWithNameAndStatsDao, ICategoryD
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 
-		conditions.add(cb.equal(categoryType.get(CategoryType_.code), categoryTypeCode));
+		conditions.add(cb.equal(categoryType.get(CategoryType_.categoryTypeCode), categoryTypeCode));
 	
 		if(!(parentCategoryCode == null)) {
 			conditions.add(cb.equal(parent.get(Category_.categoryCode), parentCategoryCode));
@@ -232,7 +232,7 @@ public class CategoryDaoImpl implements ICategoryWithNameAndStatsDao, ICategoryD
 		Join<Category, CategoryAttribute> categoryAttribute = root.join(Category_.attributes);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
-		conditions.add(cb.equal(categoryType.get(CategoryType_.code), categoryTypeCode));
+		conditions.add(cb.equal(categoryType.get(CategoryType_.categoryTypeCode), categoryTypeCode));
 		if(!(level == null)) {
 			conditions.add(cb.equal(root.get(Category_.categoryLevel), level));
 		}

@@ -19,7 +19,7 @@ public class CategoryAttributeService {
 	}
 	
 	public CategoryAttribute getPrimaryCategoryAttribute(String lcl, Long id) {
-		return categoryAttributeRepository.findByCategoryHierarchyCodeAndLclCdAndCategoryId(CategoryVars.PRIMARY_HIERARCHY_CODE,lcl, id);
+		return categoryAttributeRepository.findByCategoryHierarchyHierarchyCodeAndLclCdAndCategoryId(CategoryVars.PRIMARY_HIERARCHY_CODE,lcl, id);
 	}
 	
 	public void addCategory(CategoryAttribute CategoryAttribute) {

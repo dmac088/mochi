@@ -95,24 +95,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 
 	}
 
-	@Override
-	public NavFacet<Object> getMaxPrice(String categoryDesc, String locale, String currency,
-			NavFacetContainer selectedFacets) {
-
-		Double maxPrice = productService.getMaxPrice(
-				categoryDesc, 
-				locale, 
-				ProductVars.MARKDOWN_SKU_DESCRIPTION,
-				currency, 
-				selectedFacets.getProductCategories().stream().map(c -> c.getPayload()).collect(Collectors.toList()), 
-				selectedFacets.getBrands().stream().map(b -> b.getPayload()).collect(Collectors.toList()), 
-				selectedFacets.getTags().stream().map(t -> t.getPayload()).collect(Collectors.toList()));
-
-		NavFacet<Object> s = new NavFacet<Object>();
-		s.setToken(maxPrice.toString());
-
-		return s;
-	}
+	
 
 	private List<Facet> getDiscreteFacets(QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery jpaQuery,
 			String facetingName, String fieldReference) {
