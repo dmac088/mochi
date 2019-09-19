@@ -26,6 +26,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.ConstructorResult;
 import javax.persistence.ColumnResult;
+import javax.persistence.EntityResult;
+import javax.persistence.FieldResult;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Facet;
@@ -48,7 +50,6 @@ import io.nzbee.variables.GeneralVars;
 	    use = JsonTypeInfo.Id.MINIMAL_CLASS,
 	    include = JsonTypeInfo.As.PROPERTY,
 	    property = "@class")
-
 @NamedNativeQuery(
 	    name = "Category",
 	    query =
@@ -315,15 +316,23 @@ import io.nzbee.variables.GeneralVars;
 	        resultClass=Category.class
 	)
 	@SqlResultSetMapping(
-	    name = "Category",
-	    classes = @ConstructorResult(
-	        targetClass = Category.class,
-	        columns = {
-	            @ColumnResult(name = "id"),
-	            @ColumnResult(name = "title")
-	        }
-	    )
-	)
+	    name = "CategoryMapping",
+	    entities = {
+	            @EntityResult(
+	                    entityClass = Category.class,
+	                    fields = {
+	                        @FieldResult(name = "id", 			column = "id"),
+	                        @FieldResult(name = "title", 		column = "title"),
+	                        @FieldResult(name = "author", 		column = "author_id"),
+	                        @FieldResult(name = "version", 		column = "version")}),
+	            @EntityResult(
+	                    entityClass = CategoryAttribute.class,
+	                    fields = {
+	                        @FieldResult(name = "id", 			column = "authorId"),
+	                        @FieldResult(name = "firstName", 	column = "firstName"),
+	                        @FieldResult(name = "lastName", 	column = "lastName"),
+	                        @FieldResult(name = "version", 		column = "authorVersion")})})
+	
 public abstract class Category {
 
 	@Id
@@ -375,19 +384,6 @@ public abstract class Category {
 
 	@Transient
 	private Long childCount;
-	
-	public Category( 	String categoryCode, 
-						Long categoryLevel, 
-						Hierarchy hierarchy, 
-						List<Layout> layouts,
-						CategoryType categoryType,
-						Category parent, 
-						List<CategoryAttribute> attributes,
-						List<Category> children
-					) {
-		
-	}
-	
 	
 	@Field(analyze = Analyze.NO)
 	@Facet
