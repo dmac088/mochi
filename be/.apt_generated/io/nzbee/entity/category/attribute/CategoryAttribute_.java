@@ -10,7 +10,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class CategoryAttribute_ {
 
 	public static volatile SingularAttribute<CategoryAttribute, String> lclCd;
-	public static volatile SingularAttribute<CategoryAttribute, Long> Id;
+	public static volatile SingularAttribute<CategoryAttribute, Long> categoryAttributeId;
 	public static volatile SingularAttribute<CategoryAttribute, Category> category;
 	public static volatile SingularAttribute<CategoryAttribute, Long> categoryId;
 	public static volatile SingularAttribute<CategoryAttribute, String> categoryDesc;
