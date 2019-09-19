@@ -106,7 +106,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		//conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), hieararchyCode));
-		conditions.add(cb.equal(categoryType.get(CategoryType_.code), categoryTypeCode));
+		conditions.add(cb.equal(categoryType.get(CategoryType_.categoryTypeCode), categoryTypeCode));
 	
 		if(!(categoryDesc == null)) {
 			conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.categoryDesc), categoryDesc));
@@ -135,7 +135,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		//conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), hieararchyCode));
-		conditions.add(cb.equal(categoryType.get(CategoryType_.code), categoryTypeCode));
+		conditions.add(cb.equal(categoryType.get(CategoryType_.categoryTypeCode), categoryTypeCode));
 	
 		if(!(categoryCode == null)) {
 			conditions.add(cb.equal(root.get(Category_.categoryCode), categoryCode));
@@ -163,8 +163,8 @@ public class CategoryDaoImpl implements ICategoryDao {
 		Join<Category, Category> parent = root.join(Category_.parent);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
-		conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), hieararchyCode));
-		conditions.add(cb.equal(categoryType.get(CategoryType_.code), categoryTypeCode));
+		conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.hierarchyCode), hieararchyCode));
+		conditions.add(cb.equal(categoryType.get(CategoryType_.categoryTypeCode), categoryTypeCode));
 	
 		if(!(parentCategoryId == null)) {
 			conditions.add(cb.equal(parent.get(Category_.categoryId), parentCategoryId));
@@ -195,8 +195,8 @@ public class CategoryDaoImpl implements ICategoryDao {
 		Join<Category, Hierarchy> categoryHierarchy = root.join(Category_.hierarchy);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
-		conditions.add(cb.equal(categoryType.get(CategoryType_.code), categoryTypeCode));
-		conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), hieararchyCode));
+		conditions.add(cb.equal(categoryType.get(CategoryType_.categoryTypeCode), categoryTypeCode));
+		conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.hierarchyCode), hieararchyCode));
 		if(!(level == null)) {
 			conditions.add(cb.equal(root.get(Category_.categoryLevel), level));
 		}
@@ -229,8 +229,8 @@ public class CategoryDaoImpl implements ICategoryDao {
 		Join<Category, CategoryAttribute> parentCategoryAttribute = parent.join(Category_.attributes);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
-		conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), hieararchyCode));
-		conditions.add(cb.equal(categoryType.get(CategoryType_.code), categoryTypeCode));
+		conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.hierarchyCode), hieararchyCode));
+		conditions.add(cb.equal(categoryType.get(CategoryType_.categoryTypeCode), categoryTypeCode));
 		if(!brandCodes.isEmpty()) {
 			conditions.add(brand.get(Brand_.brandCode).in(brandCodes));
 		}

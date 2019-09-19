@@ -28,7 +28,7 @@ import io.nzbee.entity.category.Category_;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.attribute.CategoryAttribute_;
 import io.nzbee.entity.category.product.CategoryProduct;
-import io.nzbee.entity.category.product.readonly.CategoryProduct_;
+import io.nzbee.entity.category.product.CategoryProduct_;
 import io.nzbee.entity.PageableUtil;
 import io.nzbee.entity.product.Product_;
 import io.nzbee.entity.product.attribute.ProductAttribute;
@@ -258,7 +258,7 @@ public class ProductDaoImpl implements IProductDao {
 		}
 		conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.startDate), priceDateStart));
 		conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.endDate), priceDateEnd));
-		conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), CategoryVars.PRIMARY_HIERARCHY_CODE));		
+		conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.hierarchyCode), CategoryVars.PRIMARY_HIERARCHY_CODE));		
 		Long resultCount = this.getResultCountById(categoryIds, locale, priceStart, priceEnd, priceType, currency, priceDateStart, priceDateEnd, pageable, brandIds, tagIds);
 	
 		Order order = pageable.getSort().stream().map(o -> {

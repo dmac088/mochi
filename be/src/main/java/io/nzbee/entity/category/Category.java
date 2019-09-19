@@ -413,6 +413,7 @@ public abstract class Category {
 	@IndexedEmbedded(depth = 5)
 	private Category parent;
 	
+	//keep this for the index build
 	@OneToMany(mappedBy="category",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<CategoryAttribute> attributes;

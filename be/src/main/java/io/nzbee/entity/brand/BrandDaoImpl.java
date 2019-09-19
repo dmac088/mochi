@@ -18,7 +18,6 @@ import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.brand.attribute.BrandAttribute_;
 import io.nzbee.entity.category.Category_;
 import io.nzbee.entity.category.brand.CategoryBrand;
-import io.nzbee.entity.category.brand.readonly.CategoryBrand_;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.Product_;
@@ -222,7 +221,7 @@ public class BrandDaoImpl  implements IBrandDao {
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		
-		conditions.add(cb.equal(brand.get(CategoryBrand_.categoryCode), brandCategoryCode));
+		conditions.add(cb.equal(brand.get(io.nzbee.entity.category.brand.CategoryBrand_.categoryCode), brandCategoryCode));
 		
 		TypedQuery<Brand> query = em.createQuery(cq
 				.select(root)

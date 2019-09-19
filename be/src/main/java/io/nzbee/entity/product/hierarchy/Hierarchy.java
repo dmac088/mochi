@@ -45,11 +45,11 @@ public class Hierarchy {
 		this.hierarchyId = hierarchyId;
 	}
 	
-	public String getCode() {
+	public String getHierarchyCode() {
 		return hierarchyCode;
 	}
 
-	public void setCode(String hierarchyCode) {
+	public void setHierarchyCode(String hierarchyCode) {
 		this.hierarchyCode = hierarchyCode;
 	}
 

@@ -29,7 +29,7 @@ import io.nzbee.entity.category.Category_;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.attribute.CategoryAttribute_;
 import io.nzbee.entity.category.product.CategoryProduct;
-import io.nzbee.entity.category.product.readonly.CategoryProduct_;
+import io.nzbee.entity.category.product.CategoryProduct_;
 import io.nzbee.entity.PageableUtil;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.Product_;

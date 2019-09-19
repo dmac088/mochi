@@ -102,7 +102,7 @@ public class ProductAttribute {
 	@IndexedEmbedded
 	public Category getPrimaryCategory() {
 		return this.getProduct().getCategories().stream().filter(c -> {
-			 return c.getHierarchy().getCode().equals(CategoryVars.PRIMARY_HIERARCHY_CODE);
+			 return c.getHierarchy().getHierarchyCode().equals(CategoryVars.PRIMARY_HIERARCHY_CODE);
 		 		}).collect(Collectors.toList()).stream().findFirst().get();
 	}
 	
@@ -114,7 +114,7 @@ public class ProductAttribute {
 		if(lc.isPresent()) {
 			Optional<CategoryProduct> c = lc.get().stream().filter(b -> b.isPresent()).collect(Collectors.toList()).stream()
 					.map(d -> d.get()).collect(Collectors.toList())
-					.stream().filter(e -> e.getHierarchy().getCode().equals(CategoryVars.SECONDARY_HIERARCHY_CODE)).findFirst();
+					.stream().filter(e -> e.getHierarchy().getHierarchyCode().equals(CategoryVars.SECONDARY_HIERARCHY_CODE)).findFirst();
 			
 			if(c.isPresent()) { return c.get();}
 		}

@@ -26,13 +26,5 @@ public class SearchController {
     						@RequestBody  NavFacetContainer selectedFacets) {
     	return searchService.findAll(locale, currency, category, term, page, size, sortBy, selectedFacets);
     }
-    
-    @PostMapping("/Product/{locale}/{currency}/{category}/maxprice")
-    public Double getMaxPrice(	@PathVariable String locale, 
-    							@PathVariable String currency, 
-    							@PathVariable String category, 
-    							@RequestBody  NavFacetContainer selectedFacets) {
-    	return Double.parseDouble(searchService.getMaxPrice(category, locale, currency, selectedFacets).getToken());
-    }
 	
 }
