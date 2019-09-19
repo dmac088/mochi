@@ -31,8 +31,9 @@ import io.nzbee.entity.product.hierarchy.Hierarchy;
 import io.nzbee.entity.product.hierarchy.Hierarchy_;
 import io.nzbee.entity.product.tag.ProductTag;
 import io.nzbee.entity.product.tag.ProductTag_;
+import io.nzbee.variables.ProductVars;
 
-@Component
+@Component(value="categoryEntityDao")
 public class CategoryDaoImpl implements ICategoryDao {
 
 	@Autowired
@@ -59,20 +60,16 @@ public class CategoryDaoImpl implements ICategoryDao {
 		return Optional.ofNullable(query.getSingleResult());
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<Category> findAll() {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		
-		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
-		
-		Root<Category> root = cq.from(Category.class);
-				
-		TypedQuery<Category> query = em.createQuery(cq
-				.select(root)
-				.distinct(true)
-		);
-		
-		return query.getResultList();
+	public List<Category> findAll(String locale, String currency) {
+		return em.createNamedQuery("getAllCategories")
+				 .setParameter("locale", locale)
+				 .setParameter("currency", currency)
+				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
+				 .setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
+				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
+				 .getResultList();
 	}
 
 
@@ -259,6 +256,12 @@ public class CategoryDaoImpl implements ICategoryDao {
 	public List<Category> getAll() {
 		// TODO Auto-generated method stub
 		return this.findAll();
+	}
+
+	@Override
+	public List<Category> findAll() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

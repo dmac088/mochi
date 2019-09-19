@@ -19,25 +19,25 @@ public class CategoryType {
 	private Long categoryTypeId;
 	
 	@Column(name="cat_typ_cd")
-	private String code;
+	private String categoryTypeCode;
 	
 	@Column(name="cat_typ_desc")
-	private String desc;
+	private String categoryTypeDesc;
 
 	public String getCode() {
-		return code;
+		return categoryTypeCode;
 	}
 
 	public void setCode(String categoryTypeCode) {
-		this.code = categoryTypeCode;
+		this.categoryTypeCode = categoryTypeCode;
 	}
 
 	public String getDesc() {
-		return desc;
+		return categoryTypeDesc;
 	}
 
 	public void setDesc(String categoryTypeDesc) {
-		this.desc = categoryTypeDesc;
+		this.categoryTypeDesc = categoryTypeDesc;
 	}
 	
 }

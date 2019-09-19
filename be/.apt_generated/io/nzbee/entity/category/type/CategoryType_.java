@@ -8,9 +8,9 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(CategoryType.class)
 public abstract class CategoryType_ {
 
-	public static volatile SingularAttribute<CategoryType, String> code;
+	public static volatile SingularAttribute<CategoryType, String> categoryTypeDesc;
 	public static volatile SingularAttribute<CategoryType, Long> categoryTypeId;
-	public static volatile SingularAttribute<CategoryType, String> desc;
+	public static volatile SingularAttribute<CategoryType, String> categoryTypeCode;
 
 }
 
