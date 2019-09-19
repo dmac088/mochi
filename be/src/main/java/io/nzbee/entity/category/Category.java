@@ -291,6 +291,7 @@ import io.nzbee.variables.GeneralVars;
 	    				"       s.cat_lvl, " +
 	    				"       s.prnt_id, " +
 	    				"       parent.cat_cd as prnt_cd, " +
+	    				"       parent.cat_lvl as prnt_lvl, " +
 	    				"		a.cat_lcl_id as cat_attr_id, "	+	
 	    				"       a.cat_desc, " +
 	    				"       a.cat_img_pth, " +
@@ -337,8 +338,8 @@ import io.nzbee.variables.GeneralVars;
 			            entityClass = Category.class,
 		                fields = {
 		                    @FieldResult(name = "categoryId", 			column = "prnt_id"),
-		                    @FieldResult(name = "categoryCode", 		column = "prnt_cat_cd"),
-		                    @FieldResult(name = "categoryLevel", 		column = "prnt_cat_lvl")
+		                    @FieldResult(name = "categoryCode", 		column = "prnt_cd"),
+		                    @FieldResult(name = "categoryLevel", 		column = "prnt_lvl")
 		                })
 	    })
 	
