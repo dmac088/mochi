@@ -63,13 +63,17 @@ public class CategoryDaoImpl implements ICategoryDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Category> findAll(String locale, String currency) {
-		return em.createNamedQuery("getAllCategories")
+		Category c = (Category) em.createNamedQuery("getAllCategories")
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
 				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
 				 .setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
 				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
-				 .getResultList();
+				 .getResultList().get(0);
+		System.out.println(c.getCategoryCode());
+		
+		return null;
+		
 	}
 
 
