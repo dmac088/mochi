@@ -24,8 +24,6 @@ import javax.persistence.OrderBy;
 import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.persistence.ConstructorResult;
-import javax.persistence.ColumnResult;
 import javax.persistence.EntityResult;
 import javax.persistence.FieldResult;
 import org.hibernate.search.annotations.Analyze;
@@ -51,7 +49,7 @@ import io.nzbee.variables.GeneralVars;
 	    include = JsonTypeInfo.As.PROPERTY,
 	    property = "@class")
 @NamedNativeQuery(
-	    name = "Category",
+	    name = "getAllCategories",
 	    query =
 	    		"WITH RECURSIVE  " +
 	    				"descendants AS " +
@@ -293,6 +291,7 @@ import io.nzbee.variables.GeneralVars;
 	    				"       s.cat_lvl, " +
 	    				"       s.prnt_id, " +
 	    				"       parent.cat_cd as prnt_cd, " +
+	    				"		a.cat_lcl_id as cat_attr_id, "	+	
 	    				"       a.cat_desc, " +
 	    				"       a.cat_img_pth, " +
 	    				"       ct.cat_typ_cd, " +
@@ -321,17 +320,17 @@ import io.nzbee.variables.GeneralVars;
 	            @EntityResult(
 	                    entityClass = Category.class,
 	                    fields = {
-	                        @FieldResult(name = "id", 			column = "id"),
-	                        @FieldResult(name = "title", 		column = "title"),
-	                        @FieldResult(name = "author", 		column = "author_id"),
-	                        @FieldResult(name = "version", 		column = "version")}),
+	                        @FieldResult(name = "categoryId", 			column = "id"),
+	                        @FieldResult(name = "categoryCode", 		column = "title"),
+	                        @FieldResult(name = "categoryLevel", 		column = "cat_lvl")
+	                    }),
 	            @EntityResult(
 	                    entityClass = CategoryAttribute.class,
 	                    fields = {
-	                        @FieldResult(name = "id", 			column = "authorId"),
-	                        @FieldResult(name = "firstName", 	column = "firstName"),
-	                        @FieldResult(name = "lastName", 	column = "lastName"),
-	                        @FieldResult(name = "version", 		column = "authorVersion")})})
+	                        @FieldResult(name = "id", 			column = "cat_attr_id"),
+	                        @FieldResult(name = "categoryId", 	column = "cat_id"),
+	                        @FieldResult(name = "categoryDesc", column = "cat_desc"),
+	                        @FieldResult(name = "lclCd", 		column = "lcl_cd")})})
 	
 public abstract class Category {
 
