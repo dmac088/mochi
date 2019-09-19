@@ -20,6 +20,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedNativeQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
@@ -367,13 +368,6 @@ import io.nzbee.variables.GeneralVars;
 	            @EntityResult(
 			            entityClass = Hierarchy.class,
 		                fields = {
-		                    @FieldResult(name = "categoryTypeId", 			column = "cat_typ_id"),
-		                    @FieldResult(name = "categoryTypeCode", 		column = "cat_typ_cd"),
-		                    @FieldResult(name = "categoryTypeDesc", 		column = "cat_typ_desc")
-		                }),
-	            @EntityResult(
-			            entityClass = Hierarchy.class,
-		                fields = {
 		                    @FieldResult(name = "hierarchyId", 				column = "hir_id"),
 		                    @FieldResult(name = "hierarchyCode", 			column = "hir_cd"),
 		                    @FieldResult(name = "hierarchyDesc", 			column = "hir_desc")
@@ -422,6 +416,10 @@ public abstract class Category {
 	@OneToMany(mappedBy="category",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<CategoryAttribute> attributes;
+	
+	@OneToOne
+	@JsonIgnore
+	private CategoryAttribute categoryAttribute;
 
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumns({
@@ -507,6 +505,14 @@ public abstract class Category {
 
 	public void setParent(Category parent) {
 		this.parent = parent;
+	}
+
+	public CategoryAttribute getCategoryAttribute() {
+		return categoryAttribute;
+	}
+
+	public void setCategoryAttribute(CategoryAttribute categoryAttribute) {
+		this.categoryAttribute = categoryAttribute;
 	}
 	
 	public List<CategoryAttribute> getAttributes() {
