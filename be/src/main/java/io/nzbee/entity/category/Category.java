@@ -3,7 +3,6 @@ package io.nzbee.entity.category;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,12 +13,10 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedNativeQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.SqlResultSetMapping;
@@ -28,7 +25,6 @@ import javax.persistence.Transient;
 import javax.persistence.EntityResult;
 import javax.persistence.FieldResult;
 import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.IndexedEmbedded;
@@ -40,7 +36,6 @@ import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.entity.layout.Layout;
 import io.nzbee.entity.product.hierarchy.Hierarchy;
-import io.nzbee.variables.GeneralVars;
 
 @Entity
 @Table(name = "category", schema = "mochi")
@@ -414,20 +409,10 @@ public abstract class Category {
 	@IndexedEmbedded(depth = 5)
 	private Category parent;
 	
-	//keep this for the index build
-	@OneToMany(mappedBy="category",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JsonIgnore
-	private List<CategoryAttribute> attributes;
-	
 	@OneToOne
 	@JsonIgnore
 	private CategoryAttribute categoryAttribute;
-
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumns({
-		@JoinColumn(name="cat_prnt_id")
-	})
-	private List<Category> children;	
+	
 
 	@Transient
 	private Long childCount;
@@ -452,51 +437,6 @@ public abstract class Category {
 		return this.createCategoryToken(parent.get(), lc);
 	}
 	
-	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_ENGLISH))
-	public String getPrimaryCategoryDescENGB() {
-		Optional<CategoryAttribute> pca = this.getAttributes().stream().filter(ca -> {
-		 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH);
-		 		}).collect(Collectors.toList()).stream().findFirst();
-		if(!pca.isPresent()) { return "Unknown"; }
-		return pca.get().getCategoryDesc();
-	}
-	
-	
-	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_HK))
-	public String getPrimaryCategoryDescZHHK() {
-		Optional<CategoryAttribute> pca = this.getAttributes().stream().filter(ca -> {
-		 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_HK);
-		 		}).collect(Collectors.toList()).stream().findFirst();
-		if(!pca.isPresent()) { return "Unknown"; }
-		return pca.get().getCategoryDesc();
-	}
-	
-	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_ENGLISH))
-	public String getSecondaryCategoryDescENGB() {
-		Optional<CategoryAttribute> pca = this.getAttributes().stream().filter(ca -> {
-		 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH);
-		 		}).collect(Collectors.toList()).stream().findFirst();
-		if(!pca.isPresent()) { return "Unknown"; }
-		return pca.get().getCategoryDesc();
-	}
-
-	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_HK))
-	public String getSecondaryCategoryDescZHHK() {
-		Optional<CategoryAttribute> pca = this.getAttributes().stream().filter(ca -> {
-		 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_HK);
-		 		}).collect(Collectors.toList()).stream().findFirst();
-		if(!pca.isPresent()) { return "Unknown"; }
-		return pca.get().getCategoryDesc();
-	}
-	
-	public Long getChildCategoryCount() {
-		return new Long(this.children.size());
-	}
-
-	public List<Category> getChildren() {
-		return children;
-	}
-	
 	public Long getChildCount() {
 		return childCount;
 	}
@@ -515,14 +455,6 @@ public abstract class Category {
 
 	public void setCategoryAttribute(CategoryAttribute categoryAttribute) {
 		this.categoryAttribute = categoryAttribute;
-	}
-	
-	public List<CategoryAttribute> getAttributes() {
-		return attributes;
-	}
-
-	public void setAttributes(List<CategoryAttribute> categoryAttributes) {
-		this.attributes = categoryAttributes;
 	}
 
 	public Long getCategoryId() {
