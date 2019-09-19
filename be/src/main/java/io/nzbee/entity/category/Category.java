@@ -134,7 +134,7 @@ import io.nzbee.variables.GeneralVars;
 	    				"		  " +
 	    				"		 WHERE now() >= prc.prc_st_dt AND now() <= prc.prc_en_dt " +
 	    				"		 AND curr.ccy_cd = :currency " +
-	    				"		 AND prc_typ_cd::text = :retailPriceCode " +
+	    				"		 AND prc_typ_cd = :retailPriceCode " +
 	    				"		 AND prd_sts_cd = :activeProductCode " +
 	    				"		 ) retail_price " +
 	    				"		 ON pc.prd_id = retail_price.prd_id " +
@@ -159,7 +159,7 @@ import io.nzbee.variables.GeneralVars;
 	    				"		 WHERE now() >= prc.prc_st_dt  " +
 	    				"		 AND now() <= prc.prc_en_dt " +
 	    				"		 AND curr.ccy_cd = :currency " +
-	    				"		 AND prc_typ_cd::text = :markdownPriceCode " +
+	    				"		 AND prc_typ_cd = :markdownPriceCode " +
 	    				"		 AND prd_sts_cd = :activeProductCode " +
 	    				"		 )  markdown_price		  " +
 	    				"		 ON pc.prd_id = markdown_price.prd_id " +
@@ -227,7 +227,7 @@ import io.nzbee.variables.GeneralVars;
 	    	
 	    				"			WHERE now() >= prc.prc_st_dt AND now() <= prc.prc_en_dt " +
 	    				"			AND curr.ccy_cd = :currency " +
-	    				"			AND prc_typ_cd::text = :retailPriceCode " +
+	    				"			AND prc_typ_cd = :retailPriceCode " +
 	    				"			AND prd_sts_cd = :activeProductCode " +
 	    				"			) retail_price " +
 	    				"			ON pc.bnd_id = retail_price.bnd_id " +
@@ -255,7 +255,7 @@ import io.nzbee.variables.GeneralVars;
 
 	    				"			WHERE now() >= prc.prc_st_dt AND now() <= prc.prc_en_dt " +
 	    				"			AND curr.ccy_cd = :currency " +
-	    				"			AND prc_typ_cd::text = :markdownPriceCode " +
+	    				"			AND prc_typ_cd = :markdownPriceCode " +
 	    				"			AND prd_sts_cd = :activeProductCode " +
 	    				"		 )  markdown_price		  " +
 	    				"		 ON pc.bnd_id = markdown_price.bnd_id " +

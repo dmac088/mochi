@@ -1,7 +1,6 @@
 package io.nzbee.ui.component.web.search;
 
 import java.util.List;
-import io.nzbee.ui.component.web.facet.NavFacet;
 import io.nzbee.ui.component.web.facet.NavFacetContainer;
 
 public interface ISearchService {
