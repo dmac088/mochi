@@ -28,7 +28,7 @@ public class CategoryAttribute {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="cat_lcl_id")
-	private Long Id;
+	private Long categoryAttributeId;
 	
 	@Column(name="cat_id")
 	private Long categoryId;
@@ -46,6 +46,15 @@ public class CategoryAttribute {
 	@JoinColumn(name="cat_id", insertable=false, updatable=false)
 	@JsonBackReference
 	private Category category;
+	
+	
+	public Long getCategoryAttributeId() {
+		return categoryAttributeId;
+	}
+
+	public void setCategoryAttributeId(Long categoryAttributeId) {
+		this.categoryAttributeId = categoryAttributeId;
+	}
 	
 	public Long getCategoryId() {
 		return categoryId;

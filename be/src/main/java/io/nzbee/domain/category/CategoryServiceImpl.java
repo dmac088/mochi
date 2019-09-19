@@ -102,10 +102,10 @@ public class CategoryServiceImpl implements ICategoryService {
 							? new ProductCategory()
 							: new BrandCategory();
 		
-		categoryDO.setCategoryCode(category.getCategoryCode());
-		categoryDO.setCategoryDesc(category.getAttributes().stream().findFirst().get().getCategoryDesc());
-		categoryDO.setCategoryLevel(category.getCategoryLevel());
-		categoryDO.setCategoryType(category.getCategoryType().getCode());
+//		categoryDO.setCategoryCode(category.getCategoryCode());
+//		categoryDO.setCategoryDesc(category.getAttributes().stream().findFirst().get().getCategoryDesc());
+//		categoryDO.setCategoryLevel(category.getCategoryLevel());
+//		categoryDO.setCategoryType(category.getCategoryType().getCode());
 		//categoryDO.setCount(categoryDto.getObjectCount());
 							
 		return categoryDO;

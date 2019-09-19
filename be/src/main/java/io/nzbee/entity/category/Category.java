@@ -302,10 +302,10 @@ import io.nzbee.variables.GeneralVars;
 	    				"       h.hir_desc, " +
 	    				"       s.cat_cd, " +
 	    				"       s.cat_lvl, " +
-	    				"       s.prnt_id, " +
+	    				"       s.prnt_id as cat_prnt_id, " +
 	    				"       parent.cat_cd as prnt_cd, " +
 	    				"       parent.cat_lvl as prnt_lvl, " +
-	    				"		a.cat_lcl_id as cat_attr_id, "	+	
+	    				"		a.cat_lcl_id as categoryAttribute_cat_lcl_id, "	+	
 	    				"       a.cat_desc, " +
 	    				"       a.cat_img_pth, " +
 	    				"       ct.cat_typ_id, " +
@@ -313,7 +313,8 @@ import io.nzbee.variables.GeneralVars;
 	    				"       a.lcl_cd, " +
 	    				"       s.object_count, " +
 	    				"       s.max_retail_price, " +
-	    				"       s.max_markdown_price " +
+	    				"       s.max_markdown_price, " +
+	    				"		1 as clazz_ " +		
 
 	    				"FROM summaries_ptb s " +
 
@@ -346,15 +347,15 @@ import io.nzbee.variables.GeneralVars;
 	            @EntityResult(
 	                    entityClass = CategoryAttribute.class,
 	                    fields = {
-	                        @FieldResult(name = "id", 			column = "cat_attr_id"),
-	                        @FieldResult(name = "categoryId", 	column = "cat_id"),
-	                        @FieldResult(name = "categoryDesc", column = "cat_desc"),
-	                        @FieldResult(name = "lclCd", 		column = "lcl_cd")
+	                        @FieldResult(name = "categoryAttributeId", 			column = "cat_lcl_id"),
+	                        @FieldResult(name = "categoryId", 					column = "cat_id"),
+	                        @FieldResult(name = "categoryDesc", 				column = "cat_desc"),
+	                        @FieldResult(name = "lclCd", 						column = "lcl_cd")
 	                     }),
 	            @EntityResult(
 			            entityClass = Category.class,
 		                fields = {
-		                    @FieldResult(name = "categoryId", 			column = "prnt_id"),
+		                    @FieldResult(name = "categoryId", 			column = "cat_prnt_id"),
 		                    @FieldResult(name = "categoryCode", 		column = "prnt_cd"),
 		                    @FieldResult(name = "categoryLevel", 		column = "prnt_lvl")
 		                }),
