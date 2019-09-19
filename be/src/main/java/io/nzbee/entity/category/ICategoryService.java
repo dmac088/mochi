@@ -10,7 +10,7 @@ public interface ICategoryService {
 
 	Optional<Category> findById(long id);
 	
-	List<Category> findAll();
+	List<Category> findAll(String locale, String currency);
 	
 	List<Category> getAll();
 	

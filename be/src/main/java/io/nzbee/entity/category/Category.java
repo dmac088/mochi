@@ -55,6 +55,7 @@ import io.nzbee.variables.GeneralVars;
 	    				"descendants AS " +
 	    				"( " +
 	    				"  SELECT 	t.cat_id,  " +
+	    				"			t.hir_id, " +
 	    				"			t.cat_cd, " +
 	    				"			t.cat_lvl, " +
 	    				"			t.cat_prnt_id,  " +
@@ -64,6 +65,7 @@ import io.nzbee.variables.GeneralVars;
 	    				"  WHERE cat_prnt_id iS NULL " +
 	    				"  UNION ALL " +
 	    				"  SELECT 	t.cat_id,  " +
+	    				"			t.hir_id, " +
 	    				"			t.cat_cd,  " +
 	    				"			t.cat_lvl, " +
 	    				"			t.cat_prnt_id,  " +
@@ -76,6 +78,7 @@ import io.nzbee.variables.GeneralVars;
 	    				"categories AS  " +
 	    				"( " +
 	    				"  SELECT 	descendants.cat_id des_cat_id, " +
+	    				"			descendants.hir_id des_hir_id, " +
 	    				"			descendants.cat_cd des_cat_cd, " +
 	    				"			descendants.cat_lvl des_cat_lvl, " +
 	    				"			descendants.cat_prnt_id des_cat_prnt_id, " +
@@ -86,8 +89,9 @@ import io.nzbee.variables.GeneralVars;
 	    				"AS " +
 	    				"( " +
 	    				"select " +
-	    				"    cc.des_cat_id 				AS cat_id, " +
-	    				"    cc.des_cat_cd 				AS cat_cd, " +
+	    				"    cc.des_cat_id 					AS cat_id, " +
+	    				"    cc.des_hir_id 					AS hir_id, " +
+	    				"    cc.des_cat_cd 					AS cat_cd, " +
 	    				"    cc.des_cat_lvl 				AS cat_lvl, " +
 	    				"    cc.des_cat_prnt_id 			AS prnt_id, " +
 	    				"    cc.des_cat_type_id 			AS cat_type_id, " +
@@ -162,6 +166,7 @@ import io.nzbee.variables.GeneralVars;
 	    				"WHERE cc.des_cat_type_id = 1 " +
 	    				"GROUP BY  " +
 	    				"	 cc.des_cat_id, " +
+	    				"    cc.des_hir_id, " +
 	    				"	 cc.des_cat_cd, " +
 	    				"	 cc.des_cat_lvl, " +
 	    				"	 cc.des_cat_prnt_id, " +
@@ -170,6 +175,7 @@ import io.nzbee.variables.GeneralVars;
 	    				"UNION ALL " +
 	    				"SELECT  " +
 	    				"    cc.des_cat_id 		AS cat_id, " +
+	    				"    cc.des_hir_id 					AS hir_id, " +
 	    				"    cc.des_cat_cd 		AS cat_cd, " +
 	    				"    cc.des_cat_lvl 		AS cat_lvl, " +
 	    				"    cc.des_cat_prnt_id 	AS prnt_id, " +
@@ -256,6 +262,7 @@ import io.nzbee.variables.GeneralVars;
 	    				"WHERE cc.des_cat_type_id = 2 " +
 	    				"GROUP BY  " +
 	    				"	cc.des_cat_id, " +
+	    				"   cc.des_hir_id, " +
 	    				"	cc.des_cat_cd, " +
 	    				"	cc.des_cat_lvl, " +
 	    				"	cc.des_cat_prnt_id, " +
@@ -265,6 +272,7 @@ import io.nzbee.variables.GeneralVars;
 	    				"( " +
 	    				"SELECT 	 " +
 	    				"	s1.cat_id, " +
+	    				"	s1.hir_id, " +
 	    				"	s1.cat_cd, " +
 	    				"	s1.cat_lvl, " +
 	    				"	s1.prnt_id, " +
@@ -278,6 +286,7 @@ import io.nzbee.variables.GeneralVars;
 	    				"ON s1.node <> s2.Node and left(s2.node, length(s1.node)) = s1.node " +
 	    				"GROUP BY " +
 	    				"	s1.cat_id, " +
+	    				"	s1.hir_id, " +
 	    				"	s1.cat_cd, " +
 	    				"	s1.cat_lvl, " +
 	    				"	s1.prnt_id, " +
@@ -287,6 +296,9 @@ import io.nzbee.variables.GeneralVars;
 	    				"	s1.max_markdown_price " +
 	    				") " +
 	    				"SELECT s.cat_id, " +
+	    				"       s.hir_id, " +
+	    				"       h.hir_cd, " +
+	    				"       h.hir_desc, " +
 	    				"       s.cat_cd, " +
 	    				"       s.cat_lvl, " +
 	    				"       s.prnt_id, " +
@@ -295,6 +307,7 @@ import io.nzbee.variables.GeneralVars;
 	    				"		a.cat_lcl_id as cat_attr_id, "	+	
 	    				"       a.cat_desc, " +
 	    				"       a.cat_img_pth, " +
+	    				"       ct.cat_typ_id, " +
 	    				"       ct.cat_typ_cd, " +
 	    				"       a.lcl_cd, " +
 	    				"       s.object_count, " +
@@ -311,6 +324,9 @@ import io.nzbee.variables.GeneralVars;
 
 	    				"INNER JOIN mochi.category_type ct " +
 	    				"ON s.cat_type_id = ct.cat_typ_id " +
+	    				
+						"INNER JOIN mochi.hierarchy h " +
+						"ON s.hir_id = h.hir_id " +
 	    				
 	    				"WHERE a.lcl_cd = :locale",
 	        resultClass=Category.class
@@ -340,6 +356,27 @@ import io.nzbee.variables.GeneralVars;
 		                    @FieldResult(name = "categoryId", 			column = "prnt_id"),
 		                    @FieldResult(name = "categoryCode", 		column = "prnt_cd"),
 		                    @FieldResult(name = "categoryLevel", 		column = "prnt_lvl")
+		                }),
+	            @EntityResult(
+			            entityClass = CategoryType.class,
+		                fields = {
+		                    @FieldResult(name = "categoryTypeId", 			column = "cat_typ_id"),
+		                    @FieldResult(name = "categoryTypeCode", 		column = "cat_typ_cd"),
+		                    @FieldResult(name = "categoryTypeDesc", 		column = "cat_typ_desc")
+		                }),
+	            @EntityResult(
+			            entityClass = Hierarchy.class,
+		                fields = {
+		                    @FieldResult(name = "categoryTypeId", 			column = "cat_typ_id"),
+		                    @FieldResult(name = "categoryTypeCode", 		column = "cat_typ_cd"),
+		                    @FieldResult(name = "categoryTypeDesc", 		column = "cat_typ_desc")
+		                }),
+	            @EntityResult(
+			            entityClass = Hierarchy.class,
+		                fields = {
+		                    @FieldResult(name = "hierarchyId", 				column = "hir_id"),
+		                    @FieldResult(name = "hierarchyCode", 			column = "hir_cd"),
+		                    @FieldResult(name = "hierarchyDesc", 			column = "hir_desc")
 		                })
 	    })
 	

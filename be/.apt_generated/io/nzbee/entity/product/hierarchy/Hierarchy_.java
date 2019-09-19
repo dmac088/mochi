@@ -10,10 +10,10 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(Hierarchy.class)
 public abstract class Hierarchy_ {
 
-	public static volatile SingularAttribute<Hierarchy, String> code;
+	public static volatile SingularAttribute<Hierarchy, String> hierarchyDesc;
 	public static volatile SingularAttribute<Hierarchy, Long> hierarchyId;
+	public static volatile SingularAttribute<Hierarchy, String> hierarchyCode;
 	public static volatile ListAttribute<Hierarchy, Category> categories;
-	public static volatile SingularAttribute<Hierarchy, String> desc;
 
 }
 

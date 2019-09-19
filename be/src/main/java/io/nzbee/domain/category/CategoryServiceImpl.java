@@ -20,8 +20,8 @@ public class CategoryServiceImpl implements ICategoryService {
     
    
     @Autowired
-    @Qualifier("categoryDtoService")
-    private io.nzbee.dto.category.ICategoryService categoryService;
+    @Qualifier("categoryEntityService")
+    private io.nzbee.entity.category.ICategoryService categoryService;
     
     @Override
 	@Transactional
@@ -95,18 +95,18 @@ public class CategoryServiceImpl implements ICategoryService {
 
 
 	@Override
-	public Category convertCategoryDtoToCategoryDO(io.nzbee.dto.category.CategoryWithNameAndStats categoryDto) {
+	public Category convertCategoryDtoToCategoryDO(io.nzbee.entity.category.Category category) {
 		// TODO Auto-generated method stub
 		
-		Category categoryDO = categoryDto.getCategoryType().equals(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT) 
+		Category categoryDO = category.getCategoryType().getCode().equals(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT) 
 							? new ProductCategory()
 							: new BrandCategory();
 		
-		categoryDO.setCategoryCode(categoryDto.getCategoryCode());
-		categoryDO.setCategoryDesc(categoryDto.getCategoryDesc());
-		categoryDO.setCategoryLevel(categoryDto.getCategoryLevel());
-		categoryDO.setCategoryType(categoryDto.getCategoryType());
-		categoryDO.setCount(categoryDto.getObjectCount());
+		categoryDO.setCategoryCode(category.getCategoryCode());
+		categoryDO.setCategoryDesc(category.getAttributes().stream().findFirst().get().getCategoryDesc());
+		categoryDO.setCategoryLevel(category.getCategoryLevel());
+		categoryDO.setCategoryType(category.getCategoryType().getCode());
+		//categoryDO.setCount(categoryDto.getObjectCount());
 							
 		return categoryDO;
 	}
