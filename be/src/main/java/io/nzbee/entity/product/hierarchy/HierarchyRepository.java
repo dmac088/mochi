@@ -9,6 +9,6 @@ public interface HierarchyRepository extends CrudRepository<Hierarchy, Long> {
 	
 	Hierarchy findByHierarchyId(Long id);
 	
-	Hierarchy findByCode(String code);
+	Hierarchy findByHierarchyCode(String code);
 }
 
