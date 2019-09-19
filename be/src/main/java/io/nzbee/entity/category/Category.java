@@ -314,6 +314,7 @@ import io.nzbee.variables.GeneralVars;
 	    				"WHERE a.lcl_cd = :locale",
 	        resultClass=Category.class
 	)
+
 	@SqlResultSetMapping(
 	    name = "CategoryMapping",
 	    entities = {
@@ -321,7 +322,7 @@ import io.nzbee.variables.GeneralVars;
 	                    entityClass = Category.class,
 	                    fields = {
 	                        @FieldResult(name = "categoryId", 			column = "id"),
-	                        @FieldResult(name = "categoryCode", 		column = "title"),
+	                        @FieldResult(name = "categoryCode", 		column = "cat_cd"),
 	                        @FieldResult(name = "categoryLevel", 		column = "cat_lvl")
 	                    }),
 	            @EntityResult(
@@ -330,7 +331,16 @@ import io.nzbee.variables.GeneralVars;
 	                        @FieldResult(name = "id", 			column = "cat_attr_id"),
 	                        @FieldResult(name = "categoryId", 	column = "cat_id"),
 	                        @FieldResult(name = "categoryDesc", column = "cat_desc"),
-	                        @FieldResult(name = "lclCd", 		column = "lcl_cd")})})
+	                        @FieldResult(name = "lclCd", 		column = "lcl_cd")
+	                     }),
+	            @EntityResult(
+			            entityClass = Category.class,
+		                fields = {
+		                    @FieldResult(name = "categoryId", 			column = "prnt_id"),
+		                    @FieldResult(name = "categoryCode", 		column = "prnt_cat_cd"),
+		                    @FieldResult(name = "categoryLevel", 		column = "prnt_cat_lvl")
+		                })
+	    })
 	
 public abstract class Category {
 
