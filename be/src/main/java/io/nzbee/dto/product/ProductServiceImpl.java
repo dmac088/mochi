@@ -301,7 +301,8 @@ public class ProductServiceImpl implements IProductService {
 			    ?
 				productService.getCount(
 				categoryDesc, 
-				locale, 
+				locale,
+				currency,
 				productStatusCode, 
 				brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()),  
 				categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()))
@@ -309,6 +310,7 @@ public class ProductServiceImpl implements IProductService {
 				productService.getCountForTags(
 				categoryDesc, 
 				locale, 
+				currency,
 				productStatusCode, 
 				brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()),  
 				categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 

@@ -167,7 +167,7 @@ public class ProductDaoImpl implements IProductDao {
 		Join<ProductPrice, ProductPriceType> type 			= price.join(ProductPrice_.type);
 		Join<ProductPrice, Currency> curr 					= price.join(ProductPrice_.currency);
 		Join<Brand, BrandAttribute> brandAttribute 			= brand.join(Brand_.brandAttributes);
-		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(CategoryProduct_.attributes);
+		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(CategoryProduct_.categoryAttribute);
 		//Join<Category, Hierarchy> categoryHierarchy = category.join(Category_.hierarchy);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
@@ -232,7 +232,7 @@ public class ProductDaoImpl implements IProductDao {
 		Join<ProductPrice, ProductPriceType> type 			= price.join(ProductPrice_.type);
 		Join<ProductPrice, Currency> curr 					= price.join(ProductPrice_.currency);
 		Join<Brand, BrandAttribute> brandAttribute 			= brand.join(Brand_.brandAttributes);
-		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(CategoryProduct_.attributes);
+		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(CategoryProduct_.categoryAttribute);
 		Join<CategoryProduct, Hierarchy> categoryHierarchy 		= category.join(CategoryProduct_.hierarchy);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
@@ -297,7 +297,7 @@ public class ProductDaoImpl implements IProductDao {
 		Join<ProductPrice, ProductPriceType> type 			= price.join(ProductPrice_.type);
 		Join<ProductPrice, Currency> curr 					= price.join(ProductPrice_.currency);
 		Join<Brand, BrandAttribute> brandAttribute 			= brand.join(Brand_.brandAttributes);
-		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(CategoryProduct_.attributes);
+		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(CategoryProduct_.categoryAttribute);
 		//Join<Category, Hierarchy> categoryHierarchy 		= category.join(Category_.hierarchy);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
@@ -362,7 +362,7 @@ public class ProductDaoImpl implements IProductDao {
 		Join<ProductPrice, ProductPriceType> type 			= price.join(ProductPrice_.type);
 		Join<ProductPrice, Currency> curr 					= price.join(ProductPrice_.currency);
 		Join<Brand, BrandAttribute> brandAttribute 			= brand.join(Brand_.brandAttributes);
-		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(CategoryProduct_.attributes);
+		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(CategoryProduct_.categoryAttribute);
 		//Join<Category, Hierarchy> categoryHierarchy 		= category.join(Category_.hierarchy);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
@@ -421,7 +421,7 @@ public class ProductDaoImpl implements IProductDao {
 		Join<Product, ProductPrice> price = root.join(Product_.prices);
 		Join<ProductPrice, Currency> curr = price.join(ProductPrice_.currency);
 		Join<Brand, BrandAttribute> brandAttribute = brand.join(Brand_.brandAttributes);
-		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(CategoryProduct_.attributes);
+		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(CategoryProduct_.categoryAttribute);
 		//Join<Category, Hierarchy> categoryHierarchy = category.join(Category_.hierarchy);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
@@ -459,7 +459,7 @@ public class ProductDaoImpl implements IProductDao {
 		Join<ProductPrice, ProductPriceType> type = price.join(ProductPrice_.type);
 		Join<ProductPrice, Currency> curr = price.join(ProductPrice_.currency);
 		Join<Brand, BrandAttribute> brandAttribute = brand.join(Brand_.brandAttributes);
-		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
+		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(CategoryProduct_.categoryAttribute);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		if(!categoryIds.isEmpty()) {
@@ -503,7 +503,7 @@ public class ProductDaoImpl implements IProductDao {
 		Join<ProductPrice, ProductPriceType> type = price.join(ProductPrice_.type);
 		Join<ProductPrice, Currency> curr = price.join(ProductPrice_.currency);
 		Join<Brand, BrandAttribute> brandAttribute = brand.join(Brand_.brandAttributes);
-		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
+		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(CategoryProduct_.categoryAttribute);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		if(!categoryCodes.isEmpty()) {
@@ -545,7 +545,7 @@ public class ProductDaoImpl implements IProductDao {
 		Join<ProductPrice, ProductPriceType> type = price.join(ProductPrice_.type);
 		Join<ProductPrice, Currency> curr = price.join(ProductPrice_.currency);
 		Join<Brand, BrandAttribute> brandAttribute = brand.join(Brand_.brandAttributes);
-		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(Category_.attributes);
+		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(CategoryProduct_.categoryAttribute);
 		//Join<Category, Hierarchy> categoryHierarchy = category.join(Category_.hierarchy);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
@@ -593,7 +593,7 @@ public class ProductDaoImpl implements IProductDao {
 		Join<ProductPrice, ProductPriceType> type = price.join(ProductPrice_.type);
 		Join<ProductPrice, Currency> curr = price.join(ProductPrice_.currency);
 		Join<Brand, BrandAttribute> brandAttribute = brand.join(Brand_.brandAttributes);
-		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(CategoryProduct_.attributes);
+		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(CategoryProduct_.categoryAttribute);
 		//Join<Category, Hierarchy> categoryHierarchy = category.join(Category_.hierarchy);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
@@ -641,7 +641,7 @@ public class ProductDaoImpl implements IProductDao {
 		Join<ProductPrice, ProductPriceType> type = price.join(ProductPrice_.type);
 		Join<ProductPrice, Currency> curr = price.join(ProductPrice_.currency);
 		Join<Brand, BrandAttribute> brandAttribute = brand.join(Brand_.brandAttributes);
-		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(CategoryProduct_.attributes);
+		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(CategoryProduct_.categoryAttribute);
 		//Join<Category, Hierarchy> categoryHierarchy = category.join(Category_.hierarchy);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
