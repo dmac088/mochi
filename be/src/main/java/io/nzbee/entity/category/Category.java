@@ -325,7 +325,17 @@ import io.nzbee.entity.product.hierarchy.Hierarchy;
 						"INNER JOIN mochi.hierarchy h " +
 						"ON s.hir_id = h.hir_id " +
 	    				
-	    				"WHERE a.lcl_cd = :locale",
+	    				"WHERE a.lcl_cd = :locale " +
+	    				"AND case " +
+	    				"	 when :parentCategoryCode = '-1' "
+	    				+ "  then '0' "
+	    				+ "  else parent.cat_cd"
+	    				+ "	 end = "
+	    				+ "	 case"
+	    				+ "  when :parentCategoryCode = '-1' "
+	    				+ "  then '-1'"
+	    				+ "  else :parentCategoryCode"
+	    				+ "  end",
 	        resultClass=Category.class
 	)
 

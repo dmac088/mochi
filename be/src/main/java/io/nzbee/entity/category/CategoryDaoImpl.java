@@ -60,20 +60,37 @@ public class CategoryDaoImpl implements ICategoryDao {
 		return Optional.ofNullable(query.getSingleResult());
 	}
 
-	@SuppressWarnings("unchecked")
+	
 	@Override
 	public List<Category> findAll(String locale, String currency) {
-		Category c = (Category) em.createNamedQuery("getAllCategories")
+		
+		@SuppressWarnings("unchecked")
+		List<Category> c = em.createNamedQuery("getAllCategories")
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
+				 .setParameter("parentCategoryCode", "-1")
 				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
 				 .setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
 				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
-				 .getResultList().get(0);
-		System.out.println(c.getCategoryCode());
+				 .getResultList();
+	
+		return c;
+	}
+	
+	@Override 
+	public List<Category> getChildren(Category category, String currency) {
 		
-		return null;
-		
+		@SuppressWarnings("unchecked")
+		List<Category> c = em.createNamedQuery("getAllCategories")
+				 .setParameter("locale", category.getCategoryAttribute().getLclCd())
+				 .setParameter("currency", currency)
+				 .setParameter("parentCategoryCode", category.getParent().getCategoryCode())
+				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
+				 .setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
+				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
+				 .getResultList();
+	
+		return c;
 	}
 
 
