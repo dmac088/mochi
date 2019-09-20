@@ -19,5 +19,7 @@ public interface ICategoryDao extends IDao<Category> {
 
 	List<Category> findAll(String locale, String currency);
 
+	List<Category> getChildren(Category category, String currency);
+
 	
 }

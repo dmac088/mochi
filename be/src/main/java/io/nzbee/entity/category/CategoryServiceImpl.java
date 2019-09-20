@@ -58,13 +58,16 @@ public class CategoryServiceImpl implements ICategoryService {
 	}
 	
 	@Override
-	public Set<Category> recurseCategories(Set<Category> arrayList, Category pc) {
+	public Set<Category> recurseCategories(Set<Category> arrayList, Category pc, String currency) {
 		if(pc == null) { return arrayList; }
+		
+		List<Category> lc = categoryDAO.getChildren(pc, currency);
+		
 		arrayList.add(pc);
-		if(pc.getChildren().isEmpty()) { return arrayList; }
-		pc.getChildren().stream().forEach(c -> {
+		if(lc.isEmpty()) { return arrayList; }
+		lc.stream().forEach(c -> {
 			arrayList.add(c);
-			recurseCategories(arrayList, c); 
+			recurseCategories(arrayList, c, currency); 
 		});
 		return arrayList; 
 	}

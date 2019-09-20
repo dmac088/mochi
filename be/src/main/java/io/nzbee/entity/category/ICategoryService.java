@@ -25,6 +25,6 @@ public interface ICategoryService {
 	List<Category> find(String hieararchyCode, String categoryTypeCode, String parentCategoryDesc,
 			List<String> brandCodes, List<String> tagCodes, String locale);
 
-	Set<Category> recurseCategories(Set<Category> arrayList, Category pc);
+	Set<Category> recurseCategories(Set<Category> arrayList, Category pc, String currency);
 	
 }
