@@ -333,7 +333,7 @@ import io.nzbee.entity.product.hierarchy.Hierarchy;
 	    				+ "	 end = "
 	    				+ "	 case"
 	    				+ "  when :parentCategoryCode = '-1' "
-	    				+ "  then '-1'"
+	    				+ "  then '0' "
 	    				+ "  else :parentCategoryCode"
 	    				+ "  end",
 	        resultClass=Category.class
