@@ -245,28 +245,4 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
     	return className + ".token" + "[" + id + "]";
     }
 
-	@Override
-	public NavFacet<io.nzbee.dto.category.CategoryWithNameAndStats> convertCatToNavFacet(Category c) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public NavFacet<Tag> convertTagToNavFacet(Tag t) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public NavFacet<io.nzbee.dto.brand.Brand> convertBrandToNavFacet(io.nzbee.dto.brand.Brand b) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public NavFacet<io.nzbee.dto.tag.Tag> convertTagToNavFacet(io.nzbee.dto.tag.Tag t) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
