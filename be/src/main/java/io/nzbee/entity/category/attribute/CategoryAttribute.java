@@ -16,7 +16,6 @@ import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.AnalyzerDiscriminator;
 import org.hibernate.search.annotations.Field;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import io.nzbee.entity.LanguageDiscriminator;
 import io.nzbee.entity.category.Category;
 

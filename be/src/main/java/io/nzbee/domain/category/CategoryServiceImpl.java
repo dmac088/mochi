@@ -98,9 +98,9 @@ public class CategoryServiceImpl implements ICategoryService {
 	public Category convertCategoryDtoToCategoryDO(io.nzbee.entity.category.Category category) {
 		// TODO Auto-generated method stub
 		
-		Category categoryDO = category.getCategoryType().getCode().equals(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT) 
-							? new ProductCategory()
-							: new BrandCategory();
+//		Category categoryDO = category.getCategoryType().getCode().equals(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT) 
+//							? new ProductCategory()
+//							: new BrandCategory();
 		
 //		categoryDO.setCategoryCode(category.getCategoryCode());
 //		categoryDO.setCategoryDesc(category.getAttributes().stream().findFirst().get().getCategoryDesc());
@@ -108,7 +108,8 @@ public class CategoryServiceImpl implements ICategoryService {
 //		categoryDO.setCategoryType(category.getCategoryType().getCode());
 		//categoryDO.setCount(categoryDto.getObjectCount());
 							
-		return categoryDO;
+		//return categoryDO;
+		return null;
 	}
 
 }

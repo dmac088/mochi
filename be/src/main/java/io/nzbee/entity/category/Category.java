@@ -291,40 +291,35 @@ import io.nzbee.entity.product.hierarchy.Hierarchy;
 	    				"	s1.max_retail_price, " +
 	    				"	s1.max_markdown_price " +
 	    				") " +
-	    				"SELECT s.cat_id, " +
-	    				"       s.hir_id, " +
-	    				"       h.hir_cd, " +
-	    				"       h.hir_desc, " +
-	    				"       s.cat_cd, " +
-	    				"       s.cat_lvl, " +
-	    				"       s.prnt_id as cat_prnt_id, " +
-	    				"       parent.cat_cd as prnt_cd, " +
-	    				"       parent.cat_lvl as prnt_lvl, " +
-	    				"		a.cat_lcl_id as categoryAttribute_cat_lcl_id, "	+	
-	    				"       a.cat_desc, " +
-	    				"       a.cat_img_pth, " +
-	    				"       ct.cat_typ_id, " +
+	    				"SELECT s.cat_id 		as cat_id, " +
+	    				"       s.cat_cd 		as cat_cd, " +
+	    				"       s.cat_lvl 		as cat_lvl, " +
+	    				"       s.hir_id		as hir_id, " +
+	    				"		a.cat_lcl_id 	as cat_lcl_id, "	+	
+	    				"		s.cat_type_id 	as cat_typ_id, 	" +
 	    				"       ct.cat_typ_cd, " +
-	    				"       a.lcl_cd, " +
+	    				"       ct.cat_typ_desc, " +
+	    				"		a.cat_id 		as cat_id, " +	
+	    				"       a.cat_desc 		as cat_desc, " +
+	    				"       a.lcl_cd 		as lcl_cd, " +
+	    				"		s.prnt_id   	as cat_prnt_id, " +
+	    				"       a.cat_img_pth, " +
 	    				"       s.object_count, " +
 	    				"       s.max_retail_price, " +
 	    				"       s.max_markdown_price, " +
-	    				"		1 as clazz_ " +		
+	    				"		1 as clazz_0_ " +		
 
 	    				"FROM summaries_ptb s " +
 
 	    				"INNER JOIN mochi.category_attr_lcl a " +
 	    				"ON s.cat_id = a.cat_id " +
-
+	    				
 	    				"LEFT JOIN mochi.category parent " +
 	    				"ON s.prnt_id = parent.cat_id  " +
+	    				
+						"INNER JOIN mochi.category_type ct " +
+						"ON ct.cat_typ_id = s.cat_type_id  " +
 
-	    				"INNER JOIN mochi.category_type ct " +
-	    				"ON s.cat_type_id = ct.cat_typ_id " +
-	    				
-						"INNER JOIN mochi.hierarchy h " +
-						"ON s.hir_id = h.hir_id " +
-	    				
 	    				"WHERE a.lcl_cd = :locale " +
 	    				"AND case " +
 	    				"	 when :parentCategoryCode = '-1' "
@@ -336,7 +331,7 @@ import io.nzbee.entity.product.hierarchy.Hierarchy;
 	    				+ "  then '0' "
 	    				+ "  else :parentCategoryCode"
 	    				+ "  end",
-	        resultClass=Category.class
+	    			 resultSetMapping="CategoryMapping"
 	)
 
 	@SqlResultSetMapping(
@@ -345,41 +340,26 @@ import io.nzbee.entity.product.hierarchy.Hierarchy;
 	            @EntityResult(
 	                    entityClass = Category.class,
 	                    fields = {
-	                        @FieldResult(name = "categoryId", 			column = "id"),
-	                        @FieldResult(name = "categoryCode", 		column = "cat_cd"),
-	                        @FieldResult(name = "categoryLevel", 		column = "cat_lvl")
-	                    }),
-	            @EntityResult(
-	                    entityClass = CategoryAttribute.class,
-	                    fields = {
-	                        @FieldResult(name = "categoryAttributeId", 			column = "cat_lcl_id"),
 	                        @FieldResult(name = "categoryId", 					column = "cat_id"),
-	                        @FieldResult(name = "categoryDesc", 				column = "cat_desc"),
-	                        @FieldResult(name = "lclCd", 						column = "lcl_cd")
-	                     }),
+	                        @FieldResult(name = "categoryCode", 				column = "cat_cd"),
+	                        @FieldResult(name = "categoryLevel", 				column = "cat_lvl")
+	                    }),
+//	            @EntityResult(
+//	                    entityClass = CategoryAttribute.class,
+//	                    fields = {
+//	                        @FieldResult(name = "categoryAttributeId", 			column = "cat_lcl_id"),
+//	                        @FieldResult(name = "categoryId", 					column = "cat_cd"),
+//	                        @FieldResult(name = "lclCd", 						column = "lcl_cd"),
+//	                        @FieldResult(name = "categoryDesc", 				column = "cat_desc")
+//	                    }),
 	            @EntityResult(
-			            entityClass = Category.class,
-		                fields = {
-		                    @FieldResult(name = "categoryId", 			column = "cat_prnt_id"),
-		                    @FieldResult(name = "categoryCode", 		column = "prnt_cd"),
-		                    @FieldResult(name = "categoryLevel", 		column = "prnt_lvl")
-		                }),
-	            @EntityResult(
-			            entityClass = CategoryType.class,
-		                fields = {
-		                    @FieldResult(name = "categoryTypeId", 			column = "cat_typ_id"),
-		                    @FieldResult(name = "categoryTypeCode", 		column = "cat_typ_cd"),
-		                    @FieldResult(name = "categoryTypeDesc", 		column = "cat_typ_desc")
-		                }),
-	            @EntityResult(
-			            entityClass = Hierarchy.class,
-		                fields = {
-		                    @FieldResult(name = "hierarchyId", 				column = "hir_id"),
-		                    @FieldResult(name = "hierarchyCode", 			column = "hir_cd"),
-		                    @FieldResult(name = "hierarchyDesc", 			column = "hir_desc")
-		                })
+	                    entityClass = CategoryType.class,
+	                    fields = {
+	                        @FieldResult(name = "categoryTypeId", 				column = "cat_typ_id"),
+	                        @FieldResult(name = "categoryTypeCode", 			column = "cat_typ_cd"),
+	                        @FieldResult(name = "categoryTypeDesc", 			column = "cat_typ_desc")
+	                    })
 	    })
-	
 public abstract class Category {
 
 	@Id
@@ -423,7 +403,6 @@ public abstract class Category {
 	@JsonIgnore
 	private CategoryAttribute categoryAttribute;
 	
-
 	@Transient
 	private Long childCount;
 	
@@ -434,7 +413,6 @@ public abstract class Category {
 		if(token == null || token.isEmpty()) { return "Unknown"; }
 		return token;
 	}
-	
 	
 	private String createCategoryToken(Category category, List<String> lc) {
 		lc.add(category.getCategoryCode());
