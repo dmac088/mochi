@@ -126,7 +126,7 @@ public class ProductAttribute {
 		ca.setLclCd(this.getLclCd());
 		List<CategoryAttribute> lca = new ArrayList<CategoryAttribute>();
 		lca.add(ca);
-		c.setAttributes(lca);
+		//c.setAttributes(lca);
 		return c;
 	}
 	

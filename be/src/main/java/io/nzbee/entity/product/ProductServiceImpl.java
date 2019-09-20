@@ -55,7 +55,7 @@ public class ProductServiceImpl implements IProductService {
 									List<String> tagCodes) {
 		
 			return productDAO.findAllActiveSKUByCode(	
-					categoryCodes.isEmpty() ? this.getAllChildCodes(categoryDesc, locale).stream().collect(Collectors.toList())
+					categoryCodes.isEmpty() ? this.getAllChildCodes(categoryDesc, locale, currency).stream().collect(Collectors.toList())
 											: categoryCodes,
 					locale,
 					priceStart,
@@ -84,7 +84,7 @@ public class ProductServiceImpl implements IProductService {
 									List<String> tagCodes) {
 		
 			return productDAO.findAllActiveSKUByCode(	
-					categoryCodes.isEmpty() 	? this.getAllChildCodes(categoryDesc, locale).stream().collect(Collectors.toList())
+					categoryCodes.isEmpty() 	? this.getAllChildCodes(categoryDesc, locale, currency).stream().collect(Collectors.toList())
 												: categoryCodes,
 					locale,
 					priceType,
@@ -112,12 +112,12 @@ public class ProductServiceImpl implements IProductService {
 									String categoryTypeCode, 
 									String categoryDesc, 
 									String locale, 
-									String currencyCode, 
+									String currency, 
 									String productStatusCode, 
 									List<String> brandCodes,
 									List<String> categoryCodes) {
 		
-			List<String> children = this.getAllChildCodes(categoryDesc, locale).stream().collect(Collectors.toList());
+			List<String> children = this.getAllChildCodes(categoryDesc, locale, currency).stream().collect(Collectors.toList());
 		
 			//default element
 			List<String> de = Collections.singletonList("0");
@@ -126,7 +126,7 @@ public class ProductServiceImpl implements IProductService {
 					categoryTypeCode, 
 					categoryDesc, 
 					locale, 
-					currencyCode, 
+					currency, 
 					productStatusCode, 
 					brandCodes.isEmpty() ? de : brandCodes, 
 					brandCodes.isEmpty() ? 0 : -1,
@@ -143,13 +143,13 @@ public class ProductServiceImpl implements IProductService {
 				String categoryTypeCode, 
 				String categoryDesc, 
 				String locale,
-				String currencyCode, 
+				String currency, 
 				String productStatusCode, 
 				List<String> brandCodes, 
 				List<String> categoryCodes, 
 				List<String> tagCodes) {
 		
-			List<String> children = this.getAllChildCodes(categoryDesc, locale).stream().collect(Collectors.toList());;
+			List<String> children = this.getAllChildCodes(categoryDesc, locale, currency).stream().collect(Collectors.toList());;
 			
 			//default element
 			List<String> de = Collections.singletonList("0");
@@ -159,7 +159,7 @@ public class ProductServiceImpl implements IProductService {
 					categoryTypeCode, 
 					categoryDesc, 
 					locale, 
-					currencyCode, 
+					currency, 
 					productStatusCode, 
 					brandCodes.isEmpty() ? de : brandCodes, 
 					brandCodes.isEmpty() ? 0 : -1, 
@@ -176,13 +176,14 @@ public class ProductServiceImpl implements IProductService {
 	public Long getCount(
 				String categoryDesc, 
 				String locale,
+				String currency,
 				String productStatusCode, 
 				List<String> brandCodes, 
 				List<String> categoryCodes
 				) {
 		
 		// TODO Auto-generated method stub
-		List<String> children = this.getAllChildCodes(categoryDesc, locale).stream().collect(Collectors.toList());;
+		List<String> children = this.getAllChildCodes(categoryDesc, locale, currency).stream().collect(Collectors.toList());;
 		
 		//default element
 		List<String> de = Collections.singletonList("0");
@@ -204,11 +205,11 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public Long getCountForTags(String categoryDesc, String locale,
+	public Long getCountForTags(String categoryDesc, String locale, String currency,
 			String productStatusCode, List<String> brandCodes,
 			List<String> categoryCodes, List<String> tagCodes) {
 		
-			List<String> children = this.getAllChildCodes(categoryDesc, locale).stream().collect(Collectors.toList());
+			List<String> children = this.getAllChildCodes(categoryDesc, locale, currency).stream().collect(Collectors.toList());
 			// TODO Auto-generated method stub
 			
 			//default element
@@ -250,14 +251,14 @@ public class ProductServiceImpl implements IProductService {
 		
 	}
 	
-	private Set<String> getAllChildCodes(String categoryDesc, String locale ) {
+	private Set<String> getAllChildCodes(String categoryDesc, String locale, String currency ) {
 		Category pc = categoryService.findByCategoryDesc(
 				CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
 				categoryDesc, 
 				locale).get();
 
 		Set<Category> lc = new HashSet<Category>();
-		return categoryService.recurseCategories(lc, pc)
+		return categoryService.recurseCategories(lc, pc, currency)
 				.stream().map(c -> c.getCategoryCode()).collect(Collectors.toSet());
 	}
 

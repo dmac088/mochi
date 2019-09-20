@@ -15,6 +15,4 @@ public interface IBrandRepository extends CrudRepository<Brand, Long> {
 	 
 	List<Brand> findDistinctByProductsCategoriesCategoryIdIn(List<Long> categoryIds);
 	
-	List<Brand> findByProductsCategoriesAttributesLclCdAndProductsCategoriesAttributesCategoryDesc(String lcl, String categoryDesc);
-	
 }

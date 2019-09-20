@@ -159,7 +159,7 @@ public class ProductTagDaoImpl  implements IProductTagDao {
 		
 		
 		Join<Brand, BrandAttribute> brandAttribute = brand.join(Brand_.brandAttributes);
-		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(io.nzbee.entity.category.product.CategoryProduct_.attributes);
+		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(io.nzbee.entity.category.product.CategoryProduct_.categoryAttribute);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		if(!categoryCodes.isEmpty()) {
