@@ -30,9 +30,9 @@ public class Layout {
 	@Column(name="lay_desc")
 	private String desc;
 
-	@ManyToMany(mappedBy = "layouts")
-	@JsonIgnore
-	private List<Category> categories;
+//	@ManyToMany(mappedBy = "layouts")
+//	@JsonIgnore
+//	private List<Category> categories;
 	
 	public String getCode() {
 		return code;
@@ -50,11 +50,11 @@ public class Layout {
 		this.desc = layoutDesc;
 	}
 	
-	public List<Category> getCategories() {
-		return categories;
-	}
-
-	public void setCategories(List<Category> categories) {
-		this.categories = categories;
-	}
+//	public List<Category> getCategories() {
+//		return categories;
+//	}
+//
+//	public void setCategories(List<Category> categories) {
+//		this.categories = categories;
+//	}
 }

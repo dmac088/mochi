@@ -16,7 +16,6 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
-import io.nzbee.entity.category.brand.CategoryBrand;
 import io.nzbee.entity.product.Product;
 
 
@@ -36,9 +35,9 @@ public class Brand {
 	@JsonManagedReference
 	private List<Product> products;
 	
-	@ManyToMany(mappedBy = "brands")
-	@JsonIgnore
-	private List<CategoryBrand> categories;
+//	@ManyToMany(mappedBy = "brands")
+//	@JsonIgnore
+//	private List<CategoryBrand> categories;
 
 	@OneToMany(mappedBy="brand",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@IndexedEmbedded
