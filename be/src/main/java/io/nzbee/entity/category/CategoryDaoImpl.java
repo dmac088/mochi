@@ -376,6 +376,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 		List<Object[]> results = query.getResultList();
 		results.stream().forEach(c -> {
 			System.out.println(((Category)c[0]).getCategoryCode());
+			//instead of calling methods like this get from Object array index 1..2..3 etc
 			System.out.println(((Category)c[0]).getCategoryAttribute().getCategoryDesc());
 			System.out.println(((Category)c[0]).getParent().getCategoryCode());
 			System.out.println(((Category)c[0]).getClass().getSimpleName());
