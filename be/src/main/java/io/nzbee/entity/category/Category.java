@@ -63,13 +63,6 @@ import io.nzbee.entity.product.hierarchy.Hierarchy;
 	                        @FieldResult(name = "parent", 						column = "cat_prnt_id"),
 	                        @FieldResult(name = "categoryAttribute", 			column = "cat_lcl_id")
 	                    }),
-//	            @EntityResult(
-//	                    entityClass = Category.class,
-//	                    fields = {
-//	                        @FieldResult(name = "parent.categoryId", 			column = "cat_prnt_id"),
-//	                        @FieldResult(name = "parent.categoryCode", 			column = "cat_prnt_cd"),
-//	                        @FieldResult(name = "parent.categoryLevel", 		column = "cat_prnt_lvl")
-//	                    }),
 	            @EntityResult(
 	                    entityClass = CategoryAttribute.class,
 	                    fields = {
@@ -84,7 +77,18 @@ import io.nzbee.entity.product.hierarchy.Hierarchy;
 	                        @FieldResult(name = "categoryTypeId", 				column = "cat_typ_id"),
 	                        @FieldResult(name = "categoryTypeCode", 			column = "cat_typ_cd"),
 	                        @FieldResult(name = "categoryTypeDesc", 			column = "cat_typ_desc")
-	                    })
+	                    }),
+	            @EntityResult(
+	                    entityClass = Category.class,
+	                    discriminatorColumn="cat_typ_id",
+	                    fields = {
+	                        @FieldResult(name = "categoryId", 					column = "cat_prnt_id"),
+	                        @FieldResult(name = "categoryCode", 				column = "cat_prnt_cd"),
+	                        @FieldResult(name = "categoryLevel", 				column = "cat_prnt_lvl"),
+	                        @FieldResult(name = "categoryType", 				column = "cat_typ_id"),
+	                        @FieldResult(name = "parent", 						column = "cat_prnt_prnt_id"),
+	                        @FieldResult(name = "categoryAttribute", 			column = "cat_prnt_lcl_id")
+	                    }),
 	    })
 public /*abstract*/ class Category {
 
@@ -157,13 +161,13 @@ public /*abstract*/ class Category {
 //		return childCount;
 //	}
 //	
-//	public Category getParent() {
-//		return parent;
-//	}
-//
-//	public void setParent(Category parent) {
-//		this.parent = parent;
-//	}
+	public Category getParent() {
+		return parent;
+	}
+
+	public void setParent(Category parent) {
+		this.parent = parent;
+	}
 
 	public CategoryAttribute getCategoryAttribute() {
 		return categoryAttribute;
