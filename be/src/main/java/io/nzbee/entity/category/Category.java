@@ -79,6 +79,14 @@ import io.nzbee.entity.product.hierarchy.Hierarchy;
 	                        @FieldResult(name = "categoryTypeDesc", 			column = "cat_typ_desc")
 	                    }),
 	            @EntityResult(
+	                    entityClass = Hierarchy.class,
+	                    fields = {
+	                        @FieldResult(name = "hierarchyId", 					column = "hir_id"),
+	                        @FieldResult(name = "hierarchyCode", 				column = "hir_cd"),
+	                        @FieldResult(name = "hierarchyDesc", 				column = "hir_desc")
+	                    }),
+	            //now we initialize the parent category
+	            @EntityResult(
 	                    entityClass = Category.class,
 	                    discriminatorColumn="cat_typ_id",
 	                    fields = {
@@ -90,7 +98,7 @@ import io.nzbee.entity.product.hierarchy.Hierarchy;
 	                        @FieldResult(name = "categoryAttribute", 			column = "cat_prnt_lcl_id")
 	                    }),
 	    })
-public /*abstract*/ class Category {
+public abstract class Category {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -208,15 +216,14 @@ public /*abstract*/ class Category {
 	public void setCategoryCode(String categoryCode) {
 		this.categoryCode = categoryCode;
 	}
-	
-//	
-//	public CategoryType getCategoryType() {
-//		return categoryType;
-//	}
-//
-//	public void setCategoryType(CategoryType categoryType) {
-//		this.categoryType = categoryType;
-//	}
+		
+	public CategoryType getCategoryType() {
+		return categoryType;
+	}
+
+	public void setCategoryType(CategoryType categoryType) {
+		this.categoryType = categoryType;
+	}
 //
 //	public List<Layout> getLayouts() {
 //		return layouts;

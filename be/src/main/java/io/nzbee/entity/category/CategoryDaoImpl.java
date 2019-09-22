@@ -313,6 +313,8 @@ public class CategoryDaoImpl implements ICategoryDao {
 				"       s.cat_cd 		as cat_cd, " +
 				"       s.cat_lvl 		as cat_lvl, " +
 				"       s.hir_id		as hir_id, " +
+				"		h.hir_cd		as hir_cd, " + 
+				"		h.hir_desc 		as hir_desc, " +		
 				"		a.cat_lcl_id 	as cat_lcl_id, "	+	
 				"		s.cat_type_id 	as cat_typ_id, 	" +
 				"       ct.cat_typ_cd, " +
@@ -336,6 +338,9 @@ public class CategoryDaoImpl implements ICategoryDao {
 
 				"INNER JOIN mochi.category_attr_lcl a " +
 				"ON s.cat_id = a.cat_id " +
+				
+				"INNER JOIN mochi.hierarchy h " +
+				"ON s.hir_id = h.hir_id " +
 				
 				"LEFT JOIN mochi.category parent " +
 				"ON s.prnt_id = parent.cat_id  " +
