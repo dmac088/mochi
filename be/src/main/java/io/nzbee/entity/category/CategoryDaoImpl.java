@@ -322,7 +322,10 @@ public class CategoryDaoImpl implements ICategoryDao {
 				"       a.lcl_cd 		as lcl_cd, " +
 				"		s.prnt_id   	as cat_prnt_id, " +
 				"		pc.cat_cd   	as cat_prnt_cd, " +
-				"		pc.cat_lvl   	as cat_prnt_lcl, " +
+				"		pc.cat_lvl   	as cat_prnt_lvl, " +
+				"		pc.cat_typ_id 	as cat_prnt_typ_id, " +
+				"		pc.cat_prnt_id 	as cat_prnt_prnt_id, " + 
+				" 		pa.cat_lcl_id 	as cat_prnt_lcl_id, " +	
 				"		a.cat_lcl_id, " +
 				"       a.cat_img_pth, " +
 				"       s.object_count, " +
@@ -342,8 +345,12 @@ public class CategoryDaoImpl implements ICategoryDao {
 				
 				"LEFT JOIN mochi.category pc " +
 				"ON pc.cat_id = s.prnt_id  " +
-
+				
+				"LEFT OUTER JOIN mochi.category_attr_lcl pa " +
+				"ON pc.cat_id = pa.cat_id " +
+				
 				"WHERE a.lcl_cd = :locale " +
+				"AND pa.lcl_cd = :locale " +
 				"AND case " +
 				"	 when :parentCategoryCode = '-1' "
 				+ "  then '0' "
@@ -362,9 +369,13 @@ public class CategoryDaoImpl implements ICategoryDao {
 				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE);
 		
 		List<Object[]> results = query.getResultList();
-		System.out.println((((Category)results.get(0)[0]).getCategoryCode()));
-		System.out.println((((Category)results.get(0)[0]).getCategoryAttribute().getCategoryDesc()));
-		System.out.println((((Category)results.get(0)[0]).getClass().getSimpleName()));
+		results.stream().forEach(c -> {
+			System.out.println(((Category)c[0]).getCategoryCode());
+			System.out.println(((Category)c[0]).getCategoryAttribute().getCategoryDesc());
+			System.out.println(((Category)c[0]).getParent().getCategoryCode());
+			System.out.println(((Category)c[0]).getClass().getSimpleName());
+		});
+		
 		//System.out.println((results.get(0).getCategoryAttribute().getCategoryDesc()));
 		
 		return null;
