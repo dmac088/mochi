@@ -33,9 +33,9 @@ public class Hierarchy {
 	@Column(name="hir_desc")
 	private String hierarchyDesc;
 	
-	@OneToMany(mappedBy="hierarchy",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JsonManagedReference
-	private List<Category> categories;
+//	@OneToMany(mappedBy="hierarchy",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//	@JsonManagedReference
+//	private List<Category> categories;
 
 	public Long getHierarchyId() {
 		return hierarchyId;
@@ -61,11 +61,11 @@ public class Hierarchy {
 		this.hierarchyDesc = hierarchyDesc;
 	}
 	
-	public List<Category> getCategories() {
-		return categories;
-	}
-
-	public void setCategories(List<Category> categories) {
-		this.categories = categories;
-	}
+//	public List<Category> getCategories() {
+//		return categories;
+//	}
+//
+//	public void setCategories(List<Category> categories) {
+//		this.categories = categories;
+//	}
 }

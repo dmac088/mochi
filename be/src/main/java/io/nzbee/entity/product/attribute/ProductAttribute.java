@@ -39,7 +39,6 @@ import io.nzbee.entity.LanguageDiscriminator;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
-import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.tag.ProductTag;
 import io.nzbee.entity.product.tag.attribute.ProductTagAttribute;
@@ -98,37 +97,37 @@ public class ProductAttribute {
 		return this.product.getBrand().getCode();
 	}
 	
-	@Transient
-	@IndexedEmbedded
-	public Category getPrimaryCategory() {
-		return this.getProduct().getCategories().stream().filter(c -> {
-			 return c.getHierarchy().getHierarchyCode().equals(CategoryVars.PRIMARY_HIERARCHY_CODE);
-		 		}).collect(Collectors.toList()).stream().findFirst().get();
-	}
+//	@Transient
+//	@IndexedEmbedded
+//	public Category getPrimaryCategory() {
+//		return this.getProduct().getCategories().stream().filter(c -> {
+//			 return c.getHierarchy().getHierarchyCode().equals(CategoryVars.PRIMARY_HIERARCHY_CODE);
+//		 		}).collect(Collectors.toList()).stream().findFirst().get();
+//	}
 	
-	@Transient
-	@IndexedEmbedded
-	public Category getSecondaryCategory() {
-		Optional<Collection<Optional<CategoryProduct>>> lc = 
-		Optional.ofNullable(this.getProduct().getCategories().stream().map(a -> {return Optional.ofNullable(a);}).collect(Collectors.toList()));
-		if(lc.isPresent()) {
-			Optional<CategoryProduct> c = lc.get().stream().filter(b -> b.isPresent()).collect(Collectors.toList()).stream()
-					.map(d -> d.get()).collect(Collectors.toList())
-					.stream().filter(e -> e.getHierarchy().getHierarchyCode().equals(CategoryVars.SECONDARY_HIERARCHY_CODE)).findFirst();
-			
-			if(c.isPresent()) { return c.get();}
-		}
-		
-		lc = Optional.ofNullable(new ArrayList<Optional<CategoryProduct>>());
-		CategoryProduct c = new CategoryProduct();
-		CategoryAttribute ca = new CategoryAttribute();
-		c.setCategoryCode("UNK01");
-		ca.setLclCd(this.getLclCd());
-		List<CategoryAttribute> lca = new ArrayList<CategoryAttribute>();
-		lca.add(ca);
-		//c.setAttributes(lca);
-		return c;
-	}
+//	@Transient
+//	@IndexedEmbedded
+//	public Category getSecondaryCategory() {
+//		Optional<Collection<Optional<CategoryProduct>>> lc = 
+//		Optional.ofNullable(this.getProduct().getCategories().stream().map(a -> {return Optional.ofNullable(a);}).collect(Collectors.toList()));
+//		if(lc.isPresent()) {
+//			Optional<CategoryProduct> c = lc.get().stream().filter(b -> b.isPresent()).collect(Collectors.toList()).stream()
+//					.map(d -> d.get()).collect(Collectors.toList())
+//					.stream().filter(e -> e.getHierarchy().getHierarchyCode().equals(CategoryVars.SECONDARY_HIERARCHY_CODE)).findFirst();
+//			
+//			if(c.isPresent()) { return c.get();}
+//		}
+//		
+//		lc = Optional.ofNullable(new ArrayList<Optional<CategoryProduct>>());
+//		CategoryProduct c = new CategoryProduct();
+//		CategoryAttribute ca = new CategoryAttribute();
+//		c.setCategoryCode("UNK01");
+//		ca.setLclCd(this.getLclCd());
+//		List<CategoryAttribute> lca = new ArrayList<CategoryAttribute>();
+//		lca.add(ca);
+//		//c.setAttributes(lca);
+//		return c;
+//	}
 	
 	@Transient
 	@Field(analyze = Analyze.YES)

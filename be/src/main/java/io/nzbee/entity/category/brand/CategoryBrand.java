@@ -2,6 +2,7 @@ package io.nzbee.entity.category.brand;
 
 import java.util.List;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -17,22 +18,23 @@ import io.nzbee.entity.category.Category;
 @Entity
 @Table(name = "category_brand", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "cat_id")
+@DiscriminatorValue("2")
 public class CategoryBrand extends Category {
 
-	@ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "brand_category", schema="mochi", 
-    		   joinColumns 			= @JoinColumn(name = "cat_id"), 
-    		   inverseJoinColumns 	= @JoinColumn(name = "bnd_id"))
-    @OrderBy
-    @JsonIgnore
-    private List<Brand> brands;
+//	@ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "brand_category", schema="mochi", 
+//    		   joinColumns 			= @JoinColumn(name = "cat_id"), 
+//    		   inverseJoinColumns 	= @JoinColumn(name = "bnd_id"))
+//    @OrderBy
+//    @JsonIgnore
+//    private List<Brand> brands;
 	
 	public CategoryBrand() {
 		super();
 	}
 	
-	public List<Brand> getBrands() {
-		return brands;
-	}
+//	public List<Brand> getBrands() {
+//		return brands;
+//	}
 
 }

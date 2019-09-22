@@ -12,15 +12,15 @@ public class CategoryAttributeService {
 
 	@Autowired
 	private CategoryAttributeRepository categoryAttributeRepository; 
-	
-	
-	public List<CategoryAttribute> getAllCategoryAttributes(String lcl) {
-		return categoryAttributeRepository.findByLclCd(lcl);
-	}
-	
-	public CategoryAttribute getPrimaryCategoryAttribute(String lcl, Long id) {
-		return categoryAttributeRepository.findByCategoryHierarchyHierarchyCodeAndLclCdAndCategoryId(CategoryVars.PRIMARY_HIERARCHY_CODE,lcl, id);
-	}
+//	
+//	
+//	public List<CategoryAttribute> getAllCategoryAttributes(String lcl) {
+//		return categoryAttributeRepository.findByLclCd(lcl);
+//	}
+//	
+//	public CategoryAttribute getPrimaryCategoryAttribute(String lcl, Long id) {
+//		return categoryAttributeRepository.findByCategoryHierarchyHierarchyCodeAndLclCdAndCategoryId(CategoryVars.PRIMARY_HIERARCHY_CODE,lcl, id);
+//	}
 	
 	public void addCategory(CategoryAttribute CategoryAttribute) {
 		categoryAttributeRepository.save(CategoryAttribute);

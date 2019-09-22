@@ -41,11 +41,11 @@ public class CategoryAttribute {
 	@AnalyzerDiscriminator(impl = LanguageDiscriminator.class)
 	private String lclCd;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="cat_id", insertable=false, updatable=false)
-	@JsonBackReference
-	private Category category;
-	
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name="cat_id", insertable=false, updatable=false)
+//	@JsonBackReference
+//	private Category category;
+//	
 	
 	public Long getCategoryAttributeId() {
 		return categoryAttributeId;
@@ -62,14 +62,14 @@ public class CategoryAttribute {
 	public void setCategoryId(Long categoryId) {
 		this.categoryId = categoryId;
 	}
-
-	public Optional<Category> getCategory() {
-		return Optional.ofNullable(category);
-	}
-
-	public void setCategory(Optional<Category> productCategory) {
-		this.category = productCategory.get();
-	}
+//
+//	public Optional<Category> getCategory() {
+//		return Optional.ofNullable(category);
+//	}
+//
+//	public void setCategory(Optional<Category> productCategory) {
+//		this.category = productCategory.get();
+//	}
 
 	public String getCategoryDesc() {
 		return categoryDesc;

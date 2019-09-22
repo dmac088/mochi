@@ -21,7 +21,6 @@ import io.nzbee.entity.brand.attribute.BrandAttribute_;
 import io.nzbee.entity.category.Category_;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.attribute.CategoryAttribute_;
-import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.Product_;
 import io.nzbee.entity.product.attribute.ProductAttribute;
@@ -145,53 +144,54 @@ public class ProductTagDaoImpl  implements IProductTagDao {
 	@Override
 	public List<ProductTag> findAll(String locale, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, List<String> categoryCodes, List<String> brandCodes) {
 		
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-	
-		CriteriaQuery<ProductTag> cq = cb.createQuery(ProductTag.class);
-		
-		Root<ProductTag> root = cq.from(ProductTag.class);
-		//Join<ProductTagAttribute, ProductTag> tag = root.join(ProductTagAttribute_.tag);
-		Join<ProductTag, Product> product = root.join(ProductTag_.products);
-		Join<Product, ProductAttribute> productAttribute = product.join(Product_.attributes);
-		Join<Product, CategoryProduct> category = product.join(Product_.categories);
-		Join<Product, Brand> brand = product.join(Product_.brand);
-		Join<Product, ProductStatus> status = product.join(Product_.productStatus);
-		
-		
-		Join<Brand, BrandAttribute> brandAttribute = brand.join(Brand_.brandAttributes);
-		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(io.nzbee.entity.category.product.CategoryProduct_.categoryAttribute);
-		
-		List<Predicate> conditions = new ArrayList<Predicate>();
-		if(!categoryCodes.isEmpty()) {
-			conditions.add(category.get(Category_.categoryCode).in(categoryCodes));
-		}
-		if(!brandCodes.isEmpty()) {
-			conditions.add(brand.get(Brand_.brandCode).in(brandCodes));
-		}
-		if(!(priceStart == null && priceEnd == null)) {
-			Join<Product, ProductPrice> price = product.join(Product_.prices);
-			Join<ProductPrice, ProductPriceType> type = price.join(ProductPrice_.type);
-			Join<ProductPrice, Currency> curr = price.join(ProductPrice_.currency);
-			conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.priceValue), priceStart));
-			conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.priceValue), priceEnd));
-			conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.startDate), priceDateStart));
-			conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.endDate), priceDateEnd));
-			conditions.add(cb.equal(type.get(ProductPriceType_.desc), priceType));
-			conditions.add(cb.equal(curr.get(Currency_.code), currency));
-		}
-		
-		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), locale));
-		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale));
-		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
-		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
-
-		TypedQuery<ProductTag> query = em.createQuery(cq
-				.select(root)
-				.where(conditions.toArray(new Predicate[] {}))
-				.distinct(true)
-		);
-		
-		return query.getResultList();
+//		CriteriaBuilder cb = em.getCriteriaBuilder();
+//	
+//		CriteriaQuery<ProductTag> cq = cb.createQuery(ProductTag.class);
+//		
+//		Root<ProductTag> root = cq.from(ProductTag.class);
+//		//Join<ProductTagAttribute, ProductTag> tag = root.join(ProductTagAttribute_.tag);
+//		Join<ProductTag, Product> product = root.join(ProductTag_.products);
+//		Join<Product, ProductAttribute> productAttribute = product.join(Product_.attributes);
+//		Join<Product, CategoryProduct> category = product.join(Product_.categories);
+//		Join<Product, Brand> brand = product.join(Product_.brand);
+//		Join<Product, ProductStatus> status = product.join(Product_.productStatus);
+//		
+//		
+//		Join<Brand, BrandAttribute> brandAttribute = brand.join(Brand_.brandAttributes);
+//		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(io.nzbee.entity.category.product.CategoryProduct_.categoryAttribute);
+//		
+//		List<Predicate> conditions = new ArrayList<Predicate>();
+//		if(!categoryCodes.isEmpty()) {
+//			conditions.add(category.get(Category_.categoryCode).in(categoryCodes));
+//		}
+//		if(!brandCodes.isEmpty()) {
+//			conditions.add(brand.get(Brand_.brandCode).in(brandCodes));
+//		}
+//		if(!(priceStart == null && priceEnd == null)) {
+//			Join<Product, ProductPrice> price = product.join(Product_.prices);
+//			Join<ProductPrice, ProductPriceType> type = price.join(ProductPrice_.type);
+//			Join<ProductPrice, Currency> curr = price.join(ProductPrice_.currency);
+//			conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.priceValue), priceStart));
+//			conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.priceValue), priceEnd));
+//			conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.startDate), priceDateStart));
+//			conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.endDate), priceDateEnd));
+//			conditions.add(cb.equal(type.get(ProductPriceType_.desc), priceType));
+//			conditions.add(cb.equal(curr.get(Currency_.code), currency));
+//		}
+//		
+//		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), locale));
+//		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale));
+//		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
+//		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
+//
+//		TypedQuery<ProductTag> query = em.createQuery(cq
+//				.select(root)
+//				.where(conditions.toArray(new Predicate[] {}))
+//				.distinct(true)
+//		);
+//		
+//		return query.getResultList();
+		return null;
     }
 
 	
