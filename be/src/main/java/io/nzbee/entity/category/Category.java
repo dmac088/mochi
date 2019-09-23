@@ -94,8 +94,8 @@ import io.nzbee.entity.product.hierarchy.Hierarchy;
 	                        @FieldResult(name = "parent", 						column = "cat_prnt_prnt_id"),
 	                        @FieldResult(name = "categoryAttribute", 			column = "cat_prnt_lcl_id"),
 	                        @FieldResult(name = "hierarchy", 					column = "cat_prnt_hir_id"),
-	                        @FieldResult(name = "productCount", 				column = "object_count"),
-	                        @FieldResult(name = "brandCount", 					column = "object_count")
+	                        @FieldResult(name = "productCount", 				column = "cat_prnt_object_count"),
+	                        @FieldResult(name = "brandCount", 					column = "cat_prnt_object_count")
 	                    }),
 	            @EntityResult(
 	                    entityClass = CategoryAttribute.class,

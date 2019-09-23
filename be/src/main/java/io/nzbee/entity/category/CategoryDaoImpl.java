@@ -146,9 +146,9 @@ public class CategoryDaoImpl implements ICategoryDao {
 				"		 ON prd.prd_sts_id = ps.prd_sts_id " +
 				"		  " +
 				"		 WHERE now() >= prc.prc_st_dt AND now() <= prc.prc_en_dt " +
-				"		 AND curr.ccy_cd = :currency " +
-				"		 AND prc_typ_cd = :retailPriceCode " +
-				"		 AND prd_sts_cd = :activeProductCode " +
+				"		 AND curr.ccy_cd = 	:currency " +
+				"		 AND prc_typ_cd = 	:retailPriceCode " +
+				"		 AND prd_sts_cd = 	:activeProductCode " +
 				"		 ) retail_price " +
 				"		 ON pc.prd_id = retail_price.prd_id " +
 				"		  " +
@@ -171,9 +171,9 @@ public class CategoryDaoImpl implements ICategoryDao {
 				"		  " +
 				"		 WHERE now() >= prc.prc_st_dt  " +
 				"		 AND now() <= prc.prc_en_dt " +
-				"		 AND curr.ccy_cd = :currency " +
-				"		 AND prc_typ_cd = :markdownPriceCode " +
-				"		 AND prd_sts_cd = :activeProductCode " +
+				"		 AND curr.ccy_cd = 	:currency " +
+				"		 AND prc_typ_cd = 	:markdownPriceCode " +
+				"		 AND prd_sts_cd = 	:activeProductCode " +
 				"		 )  markdown_price		  " +
 				"		 ON pc.prd_id = markdown_price.prd_id " +
 				"	 " +
@@ -239,9 +239,9 @@ public class CategoryDaoImpl implements ICategoryDao {
 				"			ON prd.prd_sts_id = ps.prd_sts_id " +
 	
 				"			WHERE now() >= prc.prc_st_dt AND now() <= prc.prc_en_dt " +
-				"			AND curr.ccy_cd = :currency " +
-				"			AND prc_typ_cd = :retailPriceCode " +
-				"			AND prd_sts_cd = :activeProductCode " +
+				"			AND curr.ccy_cd = 	:currency " +
+				"			AND prc_typ_cd = 	:retailPriceCode " +
+				"			AND prd_sts_cd = 	:activeProductCode " +
 				"			) retail_price " +
 				"			ON pc.bnd_id = retail_price.bnd_id " +
 
@@ -267,9 +267,9 @@ public class CategoryDaoImpl implements ICategoryDao {
 				"			ON prd.prd_sts_id = ps.prd_sts_id " +
 
 				"			WHERE now() >= prc.prc_st_dt AND now() <= prc.prc_en_dt " +
-				"			AND curr.ccy_cd = :currency " +
-				"			AND prc_typ_cd = :markdownPriceCode " +
-				"			AND prd_sts_cd = :activeProductCode " +
+				"			AND curr.ccy_cd = 	:currency " +
+				"			AND prc_typ_cd = 	:markdownPriceCode " +
+				"			AND prd_sts_cd = 	:activeProductCode " +
 				"		 )  markdown_price		  " +
 				"		 ON pc.bnd_id = markdown_price.bnd_id " +
 
@@ -339,10 +339,16 @@ public class CategoryDaoImpl implements ICategoryDao {
 				"       a.cat_img_pth, " +
 				"       s.object_count, " +
 				"       s.max_retail_price, " +
-				"       s.max_markdown_price " +
+				"       s.max_markdown_price, " +
+				"       ps.object_count			AS cat_prnt_object_count, " +
+				"       ps.max_retail_price		AS cat_prnt_max_retail_price, " +
+				"       ps.max_markdown_price 	AS cat_prnt_max_markdown_price " +
 
 				"FROM summaries_ptb s " +
 
+				"LEFT JOIN summaries_ptb ps " +
+				"ON ps.cat_id = s.prnt_id " +
+				
 				"INNER JOIN mochi.category_attr_lcl a " +
 				"ON s.cat_id = a.cat_id " +
 				
@@ -394,7 +400,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 			System.out.println(c.getCategoryAttribute().getCategoryDesc());
 			System.out.println(c.getParent().getCategoryAttribute().getCategoryDesc());
 			System.out.println(c.getClass().getSimpleName());
-			System.out.println(c.getObjectCount());
+			System.out.println(c.getCategoryCode() + " - " + c.getObjectCount());
 		});
 		
 		return null;
