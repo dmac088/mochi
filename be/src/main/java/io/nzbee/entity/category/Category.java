@@ -61,7 +61,8 @@ import io.nzbee.entity.product.hierarchy.Hierarchy;
 	                        @FieldResult(name = "categoryLevel", 				column = "cat_lvl"),	
 	                        @FieldResult(name = "categoryType", 				column = "cat_typ_id"),
 	                        @FieldResult(name = "parent", 						column = "cat_prnt_id"),
-	                        @FieldResult(name = "categoryAttribute", 			column = "cat_lcl_id")
+	                        @FieldResult(name = "categoryAttribute", 			column = "cat_lcl_id"),
+	                        @FieldResult(name = "hierarchy", 					column = "hir_id")
 	                    }),
 	            @EntityResult(
 	                    entityClass = CategoryAttribute.class,
@@ -95,7 +96,8 @@ import io.nzbee.entity.product.hierarchy.Hierarchy;
 	                        @FieldResult(name = "categoryLevel", 				column = "cat_prnt_lvl"),
 	                        @FieldResult(name = "categoryType", 				column = "cat_typ_id"),
 	                        @FieldResult(name = "parent", 						column = "cat_prnt_prnt_id"),
-	                        @FieldResult(name = "categoryAttribute", 			column = "cat_prnt_lcl_id")
+	                        @FieldResult(name = "categoryAttribute", 			column = "cat_prnt_lcl_id"),
+	                        @FieldResult(name = "hierarchy", 					column = "hir_id")
 	                    }),
 	            @EntityResult(
 	                    entityClass = CategoryAttribute.class,
@@ -121,13 +123,13 @@ public abstract class Category {
 	@Column(name="cat_lvl")
 	private Long categoryLevel;
 
-//	
-//	
-//	@ManyToOne(fetch = FetchType.LAZY)
-//	@IndexedEmbedded
-//	@JoinColumn(name="hir_id", insertable=false, updatable=false)
-//	@JsonBackReference
-//	private Hierarchy hierarchy;
+	
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@IndexedEmbedded
+	@JoinColumn(name="hir_id", insertable=false, updatable=false)
+	@JsonBackReference
+	private Hierarchy hierarchy;
 //    
 //    @ManyToMany(fetch = FetchType.LAZY)
 //    @JoinTable(name = "layout_category", schema="mochi", 
@@ -208,14 +210,14 @@ public abstract class Category {
 	public void setCategoryLevel(Long categoryLevel) {
 		this.categoryLevel = categoryLevel;
 	}
-//	
-//    public Hierarchy getHierarchy() {
-//		return hierarchy;
-//	}
-//
-//	public void setHierarchy(Hierarchy hierarchy) {
-//		this.hierarchy = hierarchy;
-//	}
+	
+    public Hierarchy getHierarchy() {
+		return hierarchy;
+	}
+
+	public void setHierarchy(Hierarchy hierarchy) {
+		this.hierarchy = hierarchy;
+	}
 	
 	public String getCategoryCode() {
 		return categoryCode;
