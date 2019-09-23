@@ -188,16 +188,16 @@ public class CategoryDaoImpl implements ICategoryDao {
 				"	 cc.node " +
 				"UNION ALL " +
 				"SELECT  " +
-				"    cc.des_cat_id 		AS cat_id, " +
+				"    cc.des_cat_id 					AS cat_id, " +
 				"    cc.des_hir_id 					AS hir_id, " +
-				"    cc.des_cat_cd 		AS cat_cd, " +
-				"    cc.des_cat_lvl 		AS cat_lvl, " +
-				"    cc.des_cat_prnt_id 	AS prnt_id, " +
-				"    cc.des_cat_type_id 	AS cat_type_id, " +
-				"    cc.node, " +
+				"    cc.des_cat_cd 					AS cat_cd, " +
+				"    cc.des_cat_lvl 				AS cat_lvl, " +
+				"    cc.des_cat_prnt_id 			AS prnt_id, " +
+				"    cc.des_cat_type_id 			AS cat_type_id, " +
+				"    cc.node 						AS node, " +
 				"    count(DISTINCT prd.bnd_cd) 	AS product_count, " +
-				"    max(markdown_price.prc_val) AS max_markdown_price,  " +
-				"    max(retail_price.prc_val) 	AS max_retail_price " +
+				"    max(markdown_price.prc_val) 	AS max_markdown_price,  " +
+				"    max(retail_price.prc_val) 		AS max_retail_price " +
 				"FROM categories cc " +
 				"LEFT JOIN mochi.brand_category pc  " +
 				"ON cc.des_cat_id = pc.cat_id " +
@@ -309,25 +309,27 @@ public class CategoryDaoImpl implements ICategoryDao {
 				"	s1.max_retail_price, " +
 				"	s1.max_markdown_price " +
 				") " +
-				"SELECT s.cat_id 		as cat_id, " +
-				"       s.cat_cd 		as cat_cd, " +
-				"       s.cat_lvl 		as cat_lvl, " +
-				"       s.hir_id		as hir_id, " +
-				"		h.hir_cd		as hir_cd, " + 
-				"		h.hir_desc 		as hir_desc, " +		
-				"		a.cat_lcl_id 	as cat_lcl_id, "	+	
-				"		s.cat_type_id 	as cat_typ_id, 	" +
+				"SELECT s.cat_id 		AS cat_id, " +
+				"       s.cat_cd 		AS cat_cd, " +
+				"       s.cat_lvl 		AS cat_lvl, " +
+				"       s.hir_id		AS hir_id, " +
+				"		h.hir_cd		AS hir_cd, " + 
+				"		h.hir_desc 		AS hir_desc, " +		
+				"		a.cat_lcl_id 	AS cat_lcl_id, "	+	
+				"		s.cat_type_id 	AS cat_typ_id, 	" +
 				"       ct.cat_typ_cd, " +
 				"       ct.cat_typ_desc, " +
-				"		a.cat_id 		as cat_id, " +	
-				"       a.cat_desc 		as cat_desc, " +
-				"       a.lcl_cd 		as lcl_cd, " +
-				"		s.prnt_id   	as cat_prnt_id, " +
-				"		pc.cat_cd   	as cat_prnt_cd, " +
-				"		pc.cat_lvl   	as cat_prnt_lvl, " +
-				"		pc.cat_typ_id 	as cat_prnt_typ_id, " +
-				"		pc.cat_prnt_id 	as cat_prnt_prnt_id, " + 
-				" 		pa.cat_lcl_id 	as cat_prnt_lcl_id, " +	
+				"		a.cat_id 		AS cat_id, " +	
+				"       a.cat_desc 		AS cat_desc, " +
+				"       a.lcl_cd 		AS lcl_cd, " +
+				"		s.prnt_id   	AS cat_prnt_id, " +
+				"		pc.cat_cd   	AS cat_prnt_cd, " +
+				"		pc.cat_lvl   	AS cat_prnt_lvl, " +
+				"		pc.cat_typ_id 	AS cat_prnt_typ_id, " +
+				"		pc.cat_prnt_id 	AS cat_prnt_prnt_id, " + 
+				" 		pa.cat_lcl_id 	AS cat_prnt_lcl_id, " +
+				"       pa.cat_desc 	AS cat_prnt_desc, " +
+				"       pa.lcl_cd 		AS cat_prnt_lcl_cd, " +
 				"		a.cat_lcl_id, " +
 				"       a.cat_img_pth, " +
 				"       s.object_count, " +
@@ -375,11 +377,11 @@ public class CategoryDaoImpl implements ICategoryDao {
 		
 		List<Object[]> results = query.getResultList();
 		results.stream().forEach(c -> {
-			System.out.println(((Category)c[0]).getCategoryCode());
+			Category category = ((Category) c[0]);
+			CategoryAttribute categoryAttribute = ((CategoryAttribute) c[1]);
 			//instead of calling methods like this get from Object array index 1..2..3 etc
-			System.out.println(((Category)c[0]).getCategoryAttribute().getCategoryDesc());
-			System.out.println(((Category)c[0]).getParent().getCategoryCode());
-			System.out.println(((Category)c[0]).getClass().getSimpleName());
+			System.out.println(category.getCategoryCode());
+			System.out.println(categoryAttribute.getCategoryDesc());
 		});
 		
 		//System.out.println((results.get(0).getCategoryAttribute().getCategoryDesc()));

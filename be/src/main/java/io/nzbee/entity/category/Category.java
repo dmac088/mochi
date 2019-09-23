@@ -97,6 +97,14 @@ import io.nzbee.entity.product.hierarchy.Hierarchy;
 	                        @FieldResult(name = "parent", 						column = "cat_prnt_prnt_id"),
 	                        @FieldResult(name = "categoryAttribute", 			column = "cat_prnt_lcl_id")
 	                    }),
+	            @EntityResult(
+	                    entityClass = CategoryAttribute.class,
+	                    fields = {
+	                        @FieldResult(name = "categoryAttributeId", 			column = "cat_prnt_lcl_id"),
+	                        @FieldResult(name = "categoryId", 					column = "cat_prnt_id"),
+	                        @FieldResult(name = "lclCd", 						column = "cat_prnt_lcl_cd"),
+	                        @FieldResult(name = "categoryDesc", 				column = "cat_prnt_desc")
+	                    }),
 	    })
 public abstract class Category {
 
