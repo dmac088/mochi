@@ -3,6 +3,7 @@ package io.nzbee.entity.category;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
@@ -13,15 +14,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.EntityResult;
 import javax.persistence.FieldResult;
 import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.IndexedEmbedded;
@@ -31,7 +36,9 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.google.common.collect.Lists;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.type.CategoryType;
+import io.nzbee.entity.layout.Layout;
 import io.nzbee.entity.product.hierarchy.Hierarchy;
+import io.nzbee.variables.GeneralVars;
 
 @Entity
 @Table(name = "category", schema = "mochi")
@@ -150,6 +157,14 @@ public abstract class Category {
 	@JsonBackReference
 	private Hierarchy hierarchy;
 
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "layout_category", schema="mochi", 
+	    		   joinColumns 			= @JoinColumn(name = "cat_id"), 
+	    		   inverseJoinColumns 	= @JoinColumn(name = "lay_id"))
+	@OrderBy
+	@JsonIgnore
+	private List<Layout> layouts;
+	
 	@ManyToOne
 	@JoinColumn(name="cat_typ_id", nullable=false, updatable = false, insertable = false)
 	private CategoryType categoryType;
@@ -163,7 +178,7 @@ public abstract class Category {
 	@OneToMany(mappedBy="category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<CategoryAttribute> attributes;
-	
+
 	@OneToOne
 	@JsonIgnore
 	private CategoryAttribute categoryAttribute;
@@ -198,6 +213,43 @@ public abstract class Category {
 	
 	public abstract Long getObjectCount();
 
+	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_ENGLISH))
+	public String getPrimaryCategoryDescENGB() {
+		Optional<CategoryAttribute> pca = this.getAttributes().stream().filter(ca -> {
+		 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH);
+		 		}).collect(Collectors.toList()).stream().findFirst();
+		if(!pca.isPresent()) { return "Unknown"; }
+		return pca.get().getCategoryDesc();
+	}
+	
+	
+	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_HK))
+	public String getPrimaryCategoryDescZHHK() {
+		Optional<CategoryAttribute> pca = this.getAttributes().stream().filter(ca -> {
+		 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_HK);
+		 		}).collect(Collectors.toList()).stream().findFirst();
+		if(!pca.isPresent()) { return "Unknown"; }
+		return pca.get().getCategoryDesc();
+	}
+	
+	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_ENGLISH))
+	public String getSecondaryCategoryDescENGB() {
+		Optional<CategoryAttribute> pca = this.getAttributes().stream().filter(ca -> {
+		 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH);
+		 		}).collect(Collectors.toList()).stream().findFirst();
+		if(!pca.isPresent()) { return "Unknown"; }
+		return pca.get().getCategoryDesc();
+	}
+
+	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_HK))
+	public String getSecondaryCategoryDescZHHK() {
+		Optional<CategoryAttribute> pca = this.getAttributes().stream().filter(ca -> {
+		 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_HK);
+		 		}).collect(Collectors.toList()).stream().findFirst();
+		if(!pca.isPresent()) { return "Unknown"; }
+		return pca.get().getCategoryDesc();
+	}
+	
 	public Long getChildCount() {
 		return childCount;
 	}
@@ -276,5 +328,9 @@ public abstract class Category {
 
 	public void setMaxMarkdownPrice(Long maxMarkdownPrice) {
 		this.maxMarkdownPrice = maxMarkdownPrice;
+	}
+	
+	public List<CategoryAttribute> getAttributes() {
+		return attributes;
 	}
 }
