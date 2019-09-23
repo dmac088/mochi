@@ -309,37 +309,37 @@ public class CategoryDaoImpl implements ICategoryDao {
 				"	s1.max_retail_price, " +
 				"	s1.max_markdown_price " +
 				") " +
-				"SELECT s.cat_id 			AS cat_id, " +
-				"       s.cat_cd 			AS cat_cd, " +
-				"       s.cat_lvl 			AS cat_lvl, " +
-				"       s.hir_id			AS hir_id, " +
-				"		h.hir_cd			AS hir_cd, " + 
-				"		h.hir_desc 			AS hir_desc, " +		
-				"		a.cat_lcl_id 		AS cat_lcl_id, "	+	
-				"		s.cat_type_id 		AS cat_typ_id, 	" +
-				"       ct.cat_typ_cd		AS cat_typ_cd, " +
-				"       ct.cat_typ_desc 	AS cat_typ_desc, " +
-				"		a.cat_id 			AS cat_id, " +	
-				"       a.cat_desc 			AS cat_desc, " +
-				"       a.lcl_cd 			AS lcl_cd, " +
-				"		s.prnt_id   		AS cat_prnt_id, " +
-				"		pc.cat_cd   		AS cat_prnt_cd, " +
-				"		pc.cat_lvl   		AS cat_prnt_lvl, " +
-				"		pc.cat_typ_id 		AS cat_prnt_typ_id, " +
-				"		pct.cat_typ_cd		AS cat_prnt_typ_cd, " +
-				"		pct.cat_typ_desc	AS cat_prnt_typ_desc, " +
-				"		pc.cat_prnt_id 		AS cat_prnt_prnt_id, " + 
-				" 		pa.cat_lcl_id 		AS cat_prnt_lcl_id, " +
-				"       pa.cat_desc 		AS cat_prnt_desc, " +
-				"       pa.lcl_cd 			AS cat_prnt_lcl_cd, " +
-				"		ph.hir_id 			AS cat_prnt_hir_id, " +
-				"		ph.hir_cd 			AS cat_prnt_hir_cd, " +
-				"		ph.hir_desc 		AS cat_prnt_hir_desc, " +
-				"		a.cat_lcl_id, " +
-				"       a.cat_img_pth, " +
-				"       s.object_count, " +
-				"       s.max_retail_price, " +
-				"       s.max_markdown_price, " +
+				"SELECT s.cat_id 				AS cat_id, " +
+				"       s.cat_cd 				AS cat_cd, " +
+				"       s.cat_lvl 				AS cat_lvl, " +
+				"       s.hir_id				AS hir_id, " +
+				"		h.hir_cd				AS hir_cd, " + 
+				"		h.hir_desc 				AS hir_desc, " +		
+				"		a.cat_lcl_id 			AS cat_lcl_id, "	+	
+				"		s.cat_type_id 			AS cat_typ_id, 	" +
+				"       ct.cat_typ_cd			AS cat_typ_cd, " +
+				"       ct.cat_typ_desc 		AS cat_typ_desc, " +
+				"		a.cat_id 				AS cat_id, " +	
+				"       a.cat_desc 				AS cat_desc, " +
+				"       a.lcl_cd 				AS lcl_cd, " +
+				"		s.prnt_id   			AS cat_prnt_id, " +
+				"		pc.cat_cd   			AS cat_prnt_cd, " +
+				"		pc.cat_lvl   			AS cat_prnt_lvl, " +
+				"		pc.cat_typ_id 			AS cat_prnt_typ_id, " +
+				"		pct.cat_typ_cd			AS cat_prnt_typ_cd, " +
+				"		pct.cat_typ_desc		AS cat_prnt_typ_desc, " +
+				"		pc.cat_prnt_id 			AS cat_prnt_prnt_id, " + 
+				" 		pa.cat_lcl_id 			AS cat_prnt_lcl_id, " +
+				"       pa.cat_desc 			AS cat_prnt_desc, " +
+				"       pa.lcl_cd 				AS cat_prnt_lcl_cd, " +
+				"		ph.hir_id 				AS cat_prnt_hir_id, " +
+				"		ph.hir_cd 				AS cat_prnt_hir_cd, " +
+				"		ph.hir_desc 			AS cat_prnt_hir_desc, " +
+				"		a.cat_lcl_id			AS cat_lcl_id, " +
+				"       a.cat_img_pth			AS cat_img_pth, " +
+				"       s.object_count			AS object_count, " +
+				"       s.max_retail_price		AS max_retail_price, " +
+				"       s.max_markdown_price	AS max_markdown_price, " +
 				"       ps.object_count			AS cat_prnt_object_count, " +
 				"       ps.max_retail_price		AS cat_prnt_max_retail_price, " +
 				"       ps.max_markdown_price 	AS cat_prnt_max_markdown_price " +

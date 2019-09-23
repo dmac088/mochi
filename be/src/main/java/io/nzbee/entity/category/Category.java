@@ -58,7 +58,9 @@ import io.nzbee.entity.product.hierarchy.Hierarchy;
 	                        @FieldResult(name = "categoryAttribute", 			column = "cat_lcl_id"),
 	                        @FieldResult(name = "hierarchy", 					column = "hir_id"),
 	                        @FieldResult(name = "productCount", 				column = "object_count"),
-	                        @FieldResult(name = "brandCount", 					column = "object_count")
+	                        @FieldResult(name = "brandCount", 					column = "object_count"),
+	                        @FieldResult(name = "maxRetailPrice", 				column = "max_retail_price"),
+	                        @FieldResult(name = "maxMarkdownPrice", 			column = "max_markdown_price")
 	                    }),
 	            @EntityResult(
 	                    entityClass = CategoryAttribute.class,
@@ -90,12 +92,14 @@ import io.nzbee.entity.product.hierarchy.Hierarchy;
 	                        @FieldResult(name = "categoryId", 					column = "cat_prnt_id"),
 	                        @FieldResult(name = "categoryCode", 				column = "cat_prnt_cd"),
 	                        @FieldResult(name = "categoryLevel", 				column = "cat_prnt_lvl"),
-	                        @FieldResult(name = "categoryType", 				column = "cat_typ_id"),
+	                        @FieldResult(name = "categoryType", 				column = "cat_prnt_typ_id"),
 	                        @FieldResult(name = "parent", 						column = "cat_prnt_prnt_id"),
 	                        @FieldResult(name = "categoryAttribute", 			column = "cat_prnt_lcl_id"),
 	                        @FieldResult(name = "hierarchy", 					column = "cat_prnt_hir_id"),
 	                        @FieldResult(name = "productCount", 				column = "cat_prnt_object_count"),
-	                        @FieldResult(name = "brandCount", 					column = "cat_prnt_object_count")
+	                        @FieldResult(name = "brandCount", 					column = "cat_prnt_object_count"),
+	                        @FieldResult(name = "maxRetailPrice", 				column = "cat_prnt_max_retail_price"),
+	                        @FieldResult(name = "maxMarkdownPrice", 			column = "cat_prnt_max_markdown_price")
 	                    }),
 	            @EntityResult(
 	                    entityClass = CategoryAttribute.class,
@@ -157,6 +161,10 @@ public abstract class Category {
 	
 	@Transient
 	private Long childCount;
+	
+	private Long maxRetailPrice;
+	
+	private Long maxMarkdownPrice;
 	
 	@Field(analyze = Analyze.NO)
 	@Facet
@@ -241,5 +249,21 @@ public abstract class Category {
 
 	public void setCategoryType(CategoryType categoryType) {
 		this.categoryType = categoryType;
+	}
+
+	public Long getMaxRetailPrice() {
+		return maxRetailPrice;
+	}
+
+	public void setMaxRetailPrice(Long maxRetailPrice) {
+		this.maxRetailPrice = maxRetailPrice;
+	}
+
+	public Long getMaxMarkdownPrice() {
+		return maxMarkdownPrice;
+	}
+
+	public void setMaxMarkdownPrice(Long maxMarkdownPrice) {
+		this.maxMarkdownPrice = maxMarkdownPrice;
 	}
 }
