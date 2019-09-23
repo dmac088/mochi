@@ -6,7 +6,6 @@ import java.util.Optional;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,12 +13,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
-import javax.persistence.OrderBy;
 import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -35,7 +30,6 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.google.common.collect.Lists;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.type.CategoryType;
-import io.nzbee.entity.layout.Layout;
 import io.nzbee.entity.product.hierarchy.Hierarchy;
 
 @Entity
@@ -62,7 +56,9 @@ import io.nzbee.entity.product.hierarchy.Hierarchy;
 	                        @FieldResult(name = "categoryType", 				column = "cat_typ_id"),
 	                        @FieldResult(name = "parent", 						column = "cat_prnt_id"),
 	                        @FieldResult(name = "categoryAttribute", 			column = "cat_lcl_id"),
-	                        @FieldResult(name = "hierarchy", 					column = "hir_id")
+	                        @FieldResult(name = "hierarchy", 					column = "hir_id"),
+	                        @FieldResult(name = "productCount", 				column = "object_count"),
+	                        @FieldResult(name = "brandCount", 					column = "object_count")
 	                    }),
 	            @EntityResult(
 	                    entityClass = CategoryAttribute.class,
@@ -97,7 +93,9 @@ import io.nzbee.entity.product.hierarchy.Hierarchy;
 	                        @FieldResult(name = "categoryType", 				column = "cat_typ_id"),
 	                        @FieldResult(name = "parent", 						column = "cat_prnt_prnt_id"),
 	                        @FieldResult(name = "categoryAttribute", 			column = "cat_prnt_lcl_id"),
-	                        @FieldResult(name = "hierarchy", 					column = "cat_prnt_hir_id")
+	                        @FieldResult(name = "hierarchy", 					column = "cat_prnt_hir_id"),
+	                        @FieldResult(name = "productCount", 				column = "object_count"),
+	                        @FieldResult(name = "brandCount", 					column = "object_count")
 	                    }),
 	            @EntityResult(
 	                    entityClass = CategoryAttribute.class,
@@ -106,6 +104,13 @@ import io.nzbee.entity.product.hierarchy.Hierarchy;
 	                        @FieldResult(name = "categoryId", 					column = "cat_prnt_id"),
 	                        @FieldResult(name = "lclCd", 						column = "cat_prnt_lcl_cd"),
 	                        @FieldResult(name = "categoryDesc", 				column = "cat_prnt_desc")
+	                    }),
+	            @EntityResult(
+	                    entityClass = CategoryType.class,
+	                    fields = {
+	                        @FieldResult(name = "categoryTypeId", 				column = "cat_prnt_typ_id"),
+	                        @FieldResult(name = "categoryTypeCode", 			column = "cat_prnt_typ_cd"),
+	                        @FieldResult(name = "categoryTypeDesc", 			column = "cat_prnt_typ_desc")
 	                    }),
 	            @EntityResult(
 	                    entityClass = Hierarchy.class,
@@ -123,29 +128,19 @@ public abstract class Category {
 	private Long categoryId;
 
 	@Column(name="cat_cd")
-	//@Field(analyze = Analyze.NO)
-	//@Facet
+	@Field(analyze = Analyze.NO)
+	@Facet
 	private String categoryCode;
 
 	@Column(name="cat_lvl")
 	private Long categoryLevel;
 
-	
-	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@IndexedEmbedded
 	@JoinColumn(name="hir_id", insertable=false, updatable=false)
 	@JsonBackReference
 	private Hierarchy hierarchy;
-//    
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(name = "layout_category", schema="mochi", 
-//    		   joinColumns 			= @JoinColumn(name = "cat_id"), 
-//    		   inverseJoinColumns 	= @JoinColumn(name = "lay_id"))
-//    @OrderBy
-//    @JsonIgnore
-//    private List<Layout> layouts;
-//
+
 	@ManyToOne
 	@JoinColumn(name="cat_typ_id", nullable=false, updatable = false, insertable = false)
 	private CategoryType categoryType;
@@ -159,33 +154,39 @@ public abstract class Category {
 	@OneToOne
 	@JsonIgnore
 	private CategoryAttribute categoryAttribute;
-//	
-//	@Transient
-//	private Long childCount;
-//	
-//	@Field(analyze = Analyze.NO)
-//	@Facet
-//	public String getCategoryToken() {
-//		String token = createCategoryToken(this, new ArrayList<String>());
-//		if(token == null || token.isEmpty()) { return "Unknown"; }
-//		return token;
-//	}
-//	
-//	private String createCategoryToken(Category category, List<String> lc) {
-//		lc.add(category.getCategoryCode());
-//		Optional<Category> parent = Optional.ofNullable(category.getParent());
-//		if(!parent.isPresent()) {
-//			StringBuilder sb = new StringBuilder();
-//			Lists.reverse(lc).stream().forEach(s -> sb.append("/").append(s));
-//			return sb.toString();
-//		}
-//		return this.createCategoryToken(parent.get(), lc);
-//	}
-//	
-//	public Long getChildCount() {
-//		return childCount;
-//	}
-//	
+	
+	@Transient
+	private Long childCount;
+	
+	@Field(analyze = Analyze.NO)
+	@Facet
+	public String getCategoryToken() {
+		String token = createCategoryToken(this, new ArrayList<String>());
+		if(token == null || token.isEmpty()) { return "Unknown"; }
+		return token;
+	}
+	
+	private String createCategoryToken(Category category, List<String> lc) {
+		lc.add(category.getCategoryCode());
+		Optional<Category> parent = Optional.ofNullable(category.getParent());
+		if(!parent.isPresent()) {
+			StringBuilder sb = new StringBuilder();
+			Lists.reverse(lc).stream().forEach(s -> sb.append("/").append(s));
+			return sb.toString();
+		}
+		return this.createCategoryToken(parent.get(), lc);
+	}
+	
+	public abstract Long getObjectCount();
+
+	public Long getChildCount() {
+		return childCount;
+	}
+	
+	public void setChildCount(Long childCount) {
+		this.childCount = childCount;
+	}
+	
 	public Category getParent() {
 		return parent;
 	}
@@ -241,12 +242,4 @@ public abstract class Category {
 	public void setCategoryType(CategoryType categoryType) {
 		this.categoryType = categoryType;
 	}
-//
-//	public List<Layout> getLayouts() {
-//		return layouts;
-//	}
-//
-//	public void setLayouts(List<Layout> layouts) {
-//		this.layouts = layouts;
-//	}
 }

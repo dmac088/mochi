@@ -110,9 +110,9 @@ public class CategoryDaoImpl implements ICategoryDao {
 				"    cc.des_cat_prnt_id 			AS prnt_id, " +
 				"    cc.des_cat_type_id 			AS cat_type_id, " +
 				"    cc.node, " +
-				"    COUNT(DISTINCT prd.upc_cd) AS product_count, " +
-				"    MAX(markdown_price.prc_val) AS max_markdown_price,  " +
-				"    MAX(retail_price.prc_val) AS max_retail_price " +
+				"    COUNT(DISTINCT prd.upc_cd) 	AS object_count, " +
+				"    MAX(markdown_price.prc_val) 	AS max_markdown_price,  " +
+				"    MAX(retail_price.prc_val) 		AS max_retail_price " +
 				"FROM categories cc " +
 				"LEFT JOIN mochi.product_category pc ON cc.des_cat_id = pc.cat_id " +
 				"LEFT JOIN 	( " +
@@ -195,7 +195,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 				"    cc.des_cat_prnt_id 			AS prnt_id, " +
 				"    cc.des_cat_type_id 			AS cat_type_id, " +
 				"    cc.node 						AS node, " +
-				"    count(DISTINCT prd.bnd_cd) 	AS product_count, " +
+				"    count(DISTINCT prd.bnd_cd) 	AS object_count, " +
 				"    max(markdown_price.prc_val) 	AS max_markdown_price,  " +
 				"    max(retail_price.prc_val) 		AS max_retail_price " +
 				"FROM categories cc " +
@@ -291,8 +291,8 @@ public class CategoryDaoImpl implements ICategoryDao {
 				"	s1.cat_lvl, " +
 				"	s1.prnt_id, " +
 				"	s1.cat_type_id, " +
-				"	coalesce(s1.product_count, 0) + " +
-				"	sum(coalesce(s2.product_count,0)) as object_count, " +
+				"	coalesce(s1.object_count, 0) + " +
+				"	sum(coalesce(s2.object_count,0)) as object_count, " +
 				"	greatest(0, s1.max_retail_price, max(s2.max_retail_price)) as max_retail_price, " +
 				"	greatest(0, s1.max_markdown_price, max(s2.max_markdown_price)) as max_markdown_price " +
 				"FROM summaries_pta s1 " +
@@ -305,34 +305,36 @@ public class CategoryDaoImpl implements ICategoryDao {
 				"	s1.cat_lvl, " +
 				"	s1.prnt_id, " +
 				"	s1.cat_type_id, " +
-				"	s1.product_count, " +
+				"	s1.object_count, " +
 				"	s1.max_retail_price, " +
 				"	s1.max_markdown_price " +
 				") " +
-				"SELECT s.cat_id 		AS cat_id, " +
-				"       s.cat_cd 		AS cat_cd, " +
-				"       s.cat_lvl 		AS cat_lvl, " +
-				"       s.hir_id		AS hir_id, " +
-				"		h.hir_cd		AS hir_cd, " + 
-				"		h.hir_desc 		AS hir_desc, " +		
-				"		a.cat_lcl_id 	AS cat_lcl_id, "	+	
-				"		s.cat_type_id 	AS cat_typ_id, 	" +
-				"       ct.cat_typ_cd, " +
-				"       ct.cat_typ_desc, " +
-				"		a.cat_id 		AS cat_id, " +	
-				"       a.cat_desc 		AS cat_desc, " +
-				"       a.lcl_cd 		AS lcl_cd, " +
-				"		s.prnt_id   	AS cat_prnt_id, " +
-				"		pc.cat_cd   	AS cat_prnt_cd, " +
-				"		pc.cat_lvl   	AS cat_prnt_lvl, " +
-				"		pc.cat_typ_id 	AS cat_prnt_typ_id, " +
-				"		pc.cat_prnt_id 	AS cat_prnt_prnt_id, " + 
-				" 		pa.cat_lcl_id 	AS cat_prnt_lcl_id, " +
-				"       pa.cat_desc 	AS cat_prnt_desc, " +
-				"       pa.lcl_cd 		AS cat_prnt_lcl_cd, " +
-				"		ph.hir_id 		AS cat_prnt_hir_id, " +
-				"		ph.hir_cd 		AS cat_prnt_hir_cd, " +
-				"		ph.hir_desc 	AS cat_prnt_hir_desc, " +
+				"SELECT s.cat_id 			AS cat_id, " +
+				"       s.cat_cd 			AS cat_cd, " +
+				"       s.cat_lvl 			AS cat_lvl, " +
+				"       s.hir_id			AS hir_id, " +
+				"		h.hir_cd			AS hir_cd, " + 
+				"		h.hir_desc 			AS hir_desc, " +		
+				"		a.cat_lcl_id 		AS cat_lcl_id, "	+	
+				"		s.cat_type_id 		AS cat_typ_id, 	" +
+				"       ct.cat_typ_cd		AS cat_typ_cd, " +
+				"       ct.cat_typ_desc 	AS cat_typ_desc, " +
+				"		a.cat_id 			AS cat_id, " +	
+				"       a.cat_desc 			AS cat_desc, " +
+				"       a.lcl_cd 			AS lcl_cd, " +
+				"		s.prnt_id   		AS cat_prnt_id, " +
+				"		pc.cat_cd   		AS cat_prnt_cd, " +
+				"		pc.cat_lvl   		AS cat_prnt_lvl, " +
+				"		pc.cat_typ_id 		AS cat_prnt_typ_id, " +
+				"		pct.cat_typ_cd		AS cat_prnt_typ_cd, " +
+				"		pct.cat_typ_desc	AS cat_prnt_typ_desc, " +
+				"		pc.cat_prnt_id 		AS cat_prnt_prnt_id, " + 
+				" 		pa.cat_lcl_id 		AS cat_prnt_lcl_id, " +
+				"       pa.cat_desc 		AS cat_prnt_desc, " +
+				"       pa.lcl_cd 			AS cat_prnt_lcl_cd, " +
+				"		ph.hir_id 			AS cat_prnt_hir_id, " +
+				"		ph.hir_cd 			AS cat_prnt_hir_cd, " +
+				"		ph.hir_desc 		AS cat_prnt_hir_desc, " +
 				"		a.cat_lcl_id, " +
 				"       a.cat_img_pth, " +
 				"       s.object_count, " +
@@ -359,21 +361,24 @@ public class CategoryDaoImpl implements ICategoryDao {
 				"LEFT JOIN mochi.category pc " +
 				"ON pc.cat_id = s.prnt_id  " +
 				
+				"LEFT JOIN mochi.category_type pct " +
+				"ON pc.cat_typ_id = pct.cat_typ_id  " +
+				
 				"LEFT OUTER JOIN mochi.category_attr_lcl pa " +
 				"ON pc.cat_id = pa.cat_id " +
 				
 				"WHERE a.lcl_cd = :locale " +
 				"AND pa.lcl_cd = :locale " +
 				"AND case " +
-				"	 when :parentCategoryCode = '-1' "
-				+ "  then '0' "
-				+ "  else parent.cat_cd"
-				+ "	 end = "
-				+ "	 case"
-				+ "  when :parentCategoryCode = '-1' "
-				+ "  then '0' "
-				+ "  else :parentCategoryCode"
-				+ "  end", "CategoryMapping")
+				"	 when :parentCategoryCode = '-1' " +
+				"  then '0' " +
+				"  else parent.cat_cd" +
+				"	 end = " +
+				"	 case" +
+				"  when :parentCategoryCode = '-1' " +
+				"  then '0' " +
+				"  else :parentCategoryCode" +
+				"  end", "CategoryMapping")
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
 				 .setParameter("parentCategoryCode", "-1")
@@ -382,16 +387,15 @@ public class CategoryDaoImpl implements ICategoryDao {
 				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE);
 		
 		List<Object[]> results = query.getResultList();
-		results.stream().forEach(c -> {
-			Category category = ((Category) c[0]);
-			CategoryAttribute categoryAttribute = ((CategoryAttribute) c[1]);
-			//instead of calling methods like this get from Object array index 1..2..3 etc
-			System.out.println(category.getCategoryCode());
-			System.out.println(category.getCategoryAttribute().getCategoryDesc());
-			System.out.println(category.getParent().getCategoryAttribute().getCategoryDesc());
+		List<Category> lc = results.stream().map(c -> (Category) c[0]).collect(Collectors.toList());
+				
+		lc.stream().forEach(c -> {
+			System.out.println(c.getCategoryCode());
+			System.out.println(c.getCategoryAttribute().getCategoryDesc());
+			System.out.println(c.getParent().getCategoryAttribute().getCategoryDesc());
+			System.out.println(c.getClass().getSimpleName());
+			System.out.println(c.getObjectCount());
 		});
-		
-		//System.out.println((results.get(0).getCategoryAttribute().getCategoryDesc()));
 		
 		return null;
 	}
