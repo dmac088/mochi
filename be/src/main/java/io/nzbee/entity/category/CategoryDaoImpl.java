@@ -370,7 +370,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 				"LEFT JOIN mochi.category_type pct " +
 				"ON pc.cat_typ_id = pct.cat_typ_id  " +
 				
-				"LEFT OUTER JOIN mochi.category_attr_lcl pa " +
+				"LEFT JOIN mochi.category_attr_lcl pa " +
 				"ON pc.cat_id = pa.cat_id " +
 				
 				"WHERE a.lcl_cd = :locale " +
