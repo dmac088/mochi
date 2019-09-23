@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
@@ -60,7 +61,8 @@ import io.nzbee.entity.product.hierarchy.Hierarchy;
 	                        @FieldResult(name = "productCount", 				column = "object_count"),
 	                        @FieldResult(name = "brandCount", 					column = "object_count"),
 	                        @FieldResult(name = "maxRetailPrice", 				column = "max_retail_price"),
-	                        @FieldResult(name = "maxMarkdownPrice", 			column = "max_markdown_price")
+	                        @FieldResult(name = "maxMarkdownPrice", 			column = "max_markdown_price"),
+	                        @FieldResult(name = "attributes", 					column = "cat_id")
 	                    }),
 	            @EntityResult(
 	                    entityClass = CategoryAttribute.class,
@@ -68,7 +70,8 @@ import io.nzbee.entity.product.hierarchy.Hierarchy;
 	                        @FieldResult(name = "categoryAttributeId", 			column = "cat_lcl_id"),
 	                        @FieldResult(name = "categoryId", 					column = "cat_id"),
 	                        @FieldResult(name = "lclCd", 						column = "lcl_cd"),
-	                        @FieldResult(name = "categoryDesc", 				column = "cat_desc")
+	                        @FieldResult(name = "categoryDesc", 				column = "cat_desc"),
+	                        @FieldResult(name = "category", 					column = "cat_id")
 	                    }),
 	            @EntityResult(
 	                    entityClass = CategoryType.class,
@@ -99,7 +102,8 @@ import io.nzbee.entity.product.hierarchy.Hierarchy;
 	                        @FieldResult(name = "productCount", 				column = "cat_prnt_object_count"),
 	                        @FieldResult(name = "brandCount", 					column = "cat_prnt_object_count"),
 	                        @FieldResult(name = "maxRetailPrice", 				column = "cat_prnt_max_retail_price"),
-	                        @FieldResult(name = "maxMarkdownPrice", 			column = "cat_prnt_max_markdown_price")
+	                        @FieldResult(name = "maxMarkdownPrice", 			column = "cat_prnt_max_markdown_price"),
+	                        @FieldResult(name = "attributes", 					column = "cat_prnt_id")
 	                    }),
 	            @EntityResult(
 	                    entityClass = CategoryAttribute.class,
@@ -107,7 +111,8 @@ import io.nzbee.entity.product.hierarchy.Hierarchy;
 	                        @FieldResult(name = "categoryAttributeId", 			column = "cat_prnt_lcl_id"),
 	                        @FieldResult(name = "categoryId", 					column = "cat_prnt_id"),
 	                        @FieldResult(name = "lclCd", 						column = "cat_prnt_lcl_cd"),
-	                        @FieldResult(name = "categoryDesc", 				column = "cat_prnt_desc")
+	                        @FieldResult(name = "categoryDesc", 				column = "cat_prnt_desc"),
+	                        @FieldResult(name = "category", 					column = "cat_prnt_id")
 	                    }),
 	            @EntityResult(
 	                    entityClass = CategoryType.class,
@@ -155,6 +160,10 @@ public abstract class Category {
 	@IndexedEmbedded(depth = 5)
 	private Category parent;
 	
+	@OneToMany(mappedBy="category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonIgnore
+	private List<CategoryAttribute> attributes;
+	
 	@OneToOne
 	@JsonIgnore
 	private CategoryAttribute categoryAttribute;
@@ -162,8 +171,10 @@ public abstract class Category {
 	@Transient
 	private Long childCount;
 	
+	@Transient
 	private Long maxRetailPrice;
 	
+	@Transient
 	private Long maxMarkdownPrice;
 	
 	@Field(analyze = Analyze.NO)
