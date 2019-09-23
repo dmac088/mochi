@@ -1,7 +1,6 @@
 package io.nzbee.entity.product;
 
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,6 +27,7 @@ import org.hibernate.search.annotations.SortableField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.nzbee.entity.brand.Brand;
+import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.price.ProductPrice;
 import io.nzbee.entity.product.status.ProductStatus;
@@ -50,12 +50,12 @@ public class Product {
 	
 	@Column(name="prd_crtd_dt")
 	private Date productCreateDt;
-//
-//	@ManyToMany(mappedBy = "products")
-//	@IndexedEmbedded
-//	@JsonIgnore
-//	private List<CategoryProduct> categories;
-//	
+
+	@ManyToMany(mappedBy = "products")
+	@IndexedEmbedded
+	@JsonIgnore
+	private List<CategoryProduct> categories;
+	
 	@ManyToMany(mappedBy = "products")
 	@IndexedEmbedded
 	@JsonIgnore
@@ -131,10 +131,10 @@ public class Product {
 	public Long getProductId() {
 		return productId;
 	}
-//
-//	public Collection<CategoryProduct> getCategories() {
-//		return this.categories;
-//	}
+
+	public List<CategoryProduct> getCategories() {
+		return this.categories;
+	}
 	
 	public List<ProductTag> getTags() {
 		return tags;
@@ -147,10 +147,10 @@ public class Product {
 	public void setAttributes(List<ProductAttribute> productAttributes) {
 		this.attributes = productAttributes;
 	}
-//
-//	public void setCategories(List<CategoryProduct> categories) {
-//		this.categories = categories;
-//	}
+
+	public void setCategories(List<CategoryProduct> categories) {
+		this.categories = categories;
+	}
 
 	public void setProductId(Long productId) {
 		this.productId = productId;
