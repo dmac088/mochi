@@ -387,7 +387,8 @@ public class CategoryDaoImpl implements ICategoryDao {
 			CategoryAttribute categoryAttribute = ((CategoryAttribute) c[1]);
 			//instead of calling methods like this get from Object array index 1..2..3 etc
 			System.out.println(category.getCategoryCode());
-			System.out.println(categoryAttribute.getCategoryDesc());
+			System.out.println(category.getCategoryAttribute().getCategoryDesc());
+			System.out.println(category.getParent().getCategoryAttribute().getCategoryDesc());
 		});
 		
 		//System.out.println((results.get(0).getCategoryAttribute().getCategoryDesc()));
