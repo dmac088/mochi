@@ -10,6 +10,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.JoinColumn;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.nzbee.entity.category.Category;
@@ -29,6 +30,7 @@ public class CategoryProduct extends Category  {
     @JsonIgnore
     private List<Product> products;
 	
+	@Transient
 	private Long productCount;
 	
 	public CategoryProduct() {

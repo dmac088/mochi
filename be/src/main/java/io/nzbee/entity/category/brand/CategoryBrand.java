@@ -10,6 +10,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.JoinColumn;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.nzbee.entity.brand.Brand;
@@ -29,6 +30,7 @@ public class CategoryBrand extends Category {
     @JsonIgnore
     private List<Brand> brands;
 	
+	@Transient
 	private Long brandCount;
 	
 	public CategoryBrand() {
