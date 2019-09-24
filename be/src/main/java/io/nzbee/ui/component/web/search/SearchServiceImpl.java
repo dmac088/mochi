@@ -29,7 +29,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.google.common.collect.Lists;
-
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.brand.IBrandService;
 import io.nzbee.domain.category.Category;
@@ -284,11 +283,8 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		jpaQuery.setSort(sort);
 
 		// get the results using jpaQuery object
-		
-		
 		List results = jpaQuery.getResultList();
 
-		
 		Object[] firstResult = (Object[]) results.get(0);
 		System.out.println(firstResult[0]);
 		System.out.println(firstResult[1]);
