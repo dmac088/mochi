@@ -88,7 +88,7 @@ public class CategoryDaoImpl implements ICategoryWithNameAndStatsDao, ICategoryD
 		//Root<CategoryProduct> categoryProduct = cb.treat(root, CategoryProduct.class);
 		//Root<CategoryBrand> categoryBrand = cb.treat(root, CategoryBrand.class);
 		
-		Join<Category, CategoryAttribute> categoryAttribute = root.join(Category_.categoryAttribute);
+		Join<Category, CategoryAttribute> categoryAttribute = root.join(Category_.attributes);
 		Join<Category, CategoryType> categoryType = root.join(Category_.categoryType);
 		Join<Category, Category> categoryParent = root.join(Category_.parent);
 		
@@ -128,7 +128,7 @@ public class CategoryDaoImpl implements ICategoryWithNameAndStatsDao, ICategoryD
 		Root<Category> root = cq.from(Category.class);
 		
 		//Join<Category, CategoryType> categoryType = root.join(Category_.categoryType);
-		Join<Category, CategoryAttribute> categoryAttribute = root.join(Category_.categoryAttribute);
+		Join<Category, CategoryAttribute> categoryAttribute = root.join(Category_.attributes);
 		Join<Category, CategoryType> categoryType = root.join(Category_.categoryType);
 		//Join<Category, Hierarchy> categoryHierarchy = root.join(Category_.hierarchy);
 		
@@ -197,7 +197,7 @@ public class CategoryDaoImpl implements ICategoryWithNameAndStatsDao, ICategoryD
 		Root<Category> root = cq.from(Category.class);
 		
 		Join<Category, CategoryType> categoryType = root.join(Category_.categoryType);
-		Join<Category, CategoryAttribute> categoryAttribute = root.join(Category_.categoryAttribute);
+		Join<Category, CategoryAttribute> categoryAttribute = root.join(Category_.attributes);
 		Join<Category, Category> parent = root.join(Category_.parent);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
@@ -229,7 +229,7 @@ public class CategoryDaoImpl implements ICategoryWithNameAndStatsDao, ICategoryD
 		Root<Category> root = cq.from(Category.class);
 		
 		Join<Category, CategoryType> categoryType = root.join(Category_.categoryType);
-		Join<Category, CategoryAttribute> categoryAttribute = root.join(Category_.categoryAttribute);
+		Join<Category, CategoryAttribute> categoryAttribute = root.join(Category_.attributes);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		conditions.add(cb.equal(categoryType.get(CategoryType_.categoryTypeCode), categoryTypeCode));
@@ -261,16 +261,16 @@ public class CategoryDaoImpl implements ICategoryWithNameAndStatsDao, ICategoryD
 		Root<CategoryProduct> root = cq.from(CategoryProduct.class);
 		
 		//Join<CategoryProduct, CategoryType> categoryType = root.join(Category_.categoryType);
-		Join<CategoryProduct, CategoryAttribute> categoryAttribute = root.join(Category_.categoryAttribute);
+		Join<CategoryProduct, CategoryAttribute> categoryAttribute = root.join(Category_.attributes);
 		//Join<CategoryProduct, Hierarchy> categoryHierarchy = root.join(Category_.hierarchy);
 		Join<CategoryProduct, Product> product = root.join(CategoryProduct_.products);
 		Join<Product, Brand> brand = product.join(Product_.brand);
 		Join<CategoryProduct, Category> parent = root.join(Category_.parent);
-		Join<Category, CategoryAttribute> parentCategoryAttribute = parent.join(Category_.categoryAttribute);
+		Join<Category, CategoryAttribute> parentCategoryAttribute = parent.join(Category_.attributes);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		//conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), hieararchyCode));
-		//conditions.add(cb.equal(categoryType.get(CategoryType_.code), categoryTypeCode));
+		//conditions.add(cb.equal(categoryType.get(CategoryType_.categoryTypeCode), categoryTypeCode));
 		if(!brandCodes.isEmpty()) {
 			conditions.add(brand.get(Brand_.brandCode).in(brandCodes));
 		}

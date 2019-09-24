@@ -1,6 +1,7 @@
 package io.nzbee.entity.brand;
 
 import io.nzbee.entity.brand.attribute.BrandAttribute;
+import io.nzbee.entity.category.brand.CategoryBrand;
 import io.nzbee.entity.product.Product;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.ListAttribute;
@@ -12,6 +13,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class Brand_ {
 
 	public static volatile SingularAttribute<Brand, Long> brandId;
+	public static volatile ListAttribute<Brand, CategoryBrand> categories;
 	public static volatile ListAttribute<Brand, BrandAttribute> brandAttributes;
 	public static volatile SingularAttribute<Brand, String> brandCode;
 	public static volatile ListAttribute<Brand, Product> products;
