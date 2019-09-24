@@ -52,7 +52,7 @@ public class Product {
 	private Date productCreateDt;
 
 	@ManyToMany(mappedBy = "products")
-	//@IndexedEmbedded
+	@IndexedEmbedded
 	@JsonIgnore
 	private List<CategoryProduct> categories;
 	
