@@ -503,9 +503,9 @@ public abstract class Category {
 	@IndexedEmbedded(depth = 5)
 	private Category parent;
 	
-//	@OneToMany(mappedBy="category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//	@JsonIgnore
-//	private List<CategoryAttribute> attributes;
+	@OneToMany(mappedBy="category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonIgnore
+	private List<CategoryAttribute> attributes;
 //
 //	@OneToOne
 //	@JsonIgnore
@@ -593,7 +593,7 @@ public abstract class Category {
 	public void setParent(Category parent) {
 		this.parent = parent;
 	}
-//
+
 //	public CategoryAttribute getCategoryAttribute() {
 //		return categoryAttribute;
 //	}
@@ -656,9 +656,9 @@ public abstract class Category {
 
 	public void setMaxMarkdownPrice(Long maxMarkdownPrice) {
 		this.maxMarkdownPrice = maxMarkdownPrice;
-	}
+	} 
 	
-//	public List<CategoryAttribute> getAttributes() {
-//		return attributes;
-//	}
+	public List<CategoryAttribute> getAttributes() {
+		return attributes;
+	}
 }
