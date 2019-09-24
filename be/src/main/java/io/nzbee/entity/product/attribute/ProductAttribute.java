@@ -75,7 +75,7 @@ public class ProductAttribute {
 	 
 	@Field(analyze = Analyze.YES)
 	@Column(name="prd_desc")
-	private String productDesc;
+	private String productDesc; 
 
 	@Column(name="prd_img_pth")
 	private String ProductImage;
@@ -86,7 +86,7 @@ public class ProductAttribute {
 	private String lclCd;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-//	@IndexedEmbedded
+	@IndexedEmbedded
 	@JoinColumn(name="prd_id", insertable=false, updatable=false)
 	@JsonBackReference
 	private Product product;
