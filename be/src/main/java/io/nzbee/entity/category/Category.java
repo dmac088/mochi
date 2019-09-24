@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ColumnResult;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -381,6 +382,7 @@ import io.nzbee.variables.GeneralVars;
 
 @SqlResultSetMapping(
     name = "CategoryMapping",
+    columns = @ColumnResult(name = "object_count"),
     entities = {
             @EntityResult(
                     entityClass = Category.class,

@@ -77,7 +77,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 		List<Object[]> results = query.getResultList();
 		List<Category> lc = results.stream().map(c -> (Category) c[0]).collect(Collectors.toList());
 				
-		System.out.println(((Category)results.get(0)[0]).getObjectCount());
+		System.out.println((results.get(0)[8]));
 		
 		lc.stream().forEach(c -> {
 			System.out.println(c.getCategoryCode());
