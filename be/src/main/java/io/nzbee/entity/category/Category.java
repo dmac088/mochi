@@ -503,13 +503,13 @@ public abstract class Category {
 	@IndexedEmbedded(depth = 5)
 	private Category parent;
 	
-	@OneToMany(mappedBy="category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JsonIgnore
-	private List<CategoryAttribute> attributes;
-
-	@OneToOne
-	@JsonIgnore
-	private CategoryAttribute categoryAttribute;
+//	@OneToMany(mappedBy="category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//	@JsonIgnore
+//	private List<CategoryAttribute> attributes;
+//
+//	@OneToOne
+//	@JsonIgnore
+//	private CategoryAttribute categoryAttribute;
 	
 	@Transient
 	private Long childCount;
@@ -520,24 +520,24 @@ public abstract class Category {
 	@Transient
 	private Long maxMarkdownPrice;
 	
-	@Field(analyze = Analyze.NO)
-	@Facet
-	public String getCategoryToken() {
-		String token = createCategoryToken(this, new ArrayList<String>());
-		if(token == null || token.isEmpty()) { return "Unknown"; }
-		return token;
-	}
-	
-	private String createCategoryToken(Category category, List<String> lc) {
-		lc.add(category.getCategoryCode());
-		Optional<Category> parent = Optional.ofNullable(category.getParent());
-		if(!parent.isPresent()) {
-			StringBuilder sb = new StringBuilder();
-			Lists.reverse(lc).stream().forEach(s -> sb.append("/").append(s));
-			return sb.toString();
-		}
-		return this.createCategoryToken(parent.get(), lc);
-	}
+//	@Field(analyze = Analyze.NO)
+//	@Facet
+//	public String getCategoryToken() {
+//		String token = createCategoryToken(this, new ArrayList<String>());
+//		if(token == null || token.isEmpty()) { return "Unknown"; }
+//		return token;
+//	}
+//	
+//	private String createCategoryToken(Category category, List<String> lc) {
+//		lc.add(category.getCategoryCode());
+//		Optional<Category> parent = Optional.ofNullable(category.getParent());
+//		if(!parent.isPresent()) {
+//			StringBuilder sb = new StringBuilder();
+//			Lists.reverse(lc).stream().forEach(s -> sb.append("/").append(s));
+//			return sb.toString();
+//		}
+//		return this.createCategoryToken(parent.get(), lc);
+//	}
 	
 	public abstract Long getObjectCount();
 
@@ -593,14 +593,14 @@ public abstract class Category {
 	public void setParent(Category parent) {
 		this.parent = parent;
 	}
-
-	public CategoryAttribute getCategoryAttribute() {
-		return categoryAttribute;
-	}
-
-	public void setCategoryAttribute(CategoryAttribute categoryAttribute) {
-		this.categoryAttribute = categoryAttribute;
-	}
+//
+//	public CategoryAttribute getCategoryAttribute() {
+//		return categoryAttribute;
+//	}
+//
+//	public void setCategoryAttribute(CategoryAttribute categoryAttribute) {
+//		this.categoryAttribute = categoryAttribute;
+//	}
 
 	public Long getCategoryId() {
 		return categoryId;
@@ -658,7 +658,7 @@ public abstract class Category {
 		this.maxMarkdownPrice = maxMarkdownPrice;
 	}
 	
-	public List<CategoryAttribute> getAttributes() {
-		return attributes;
-	}
+//	public List<CategoryAttribute> getAttributes() {
+//		return attributes;
+//	}
 }
