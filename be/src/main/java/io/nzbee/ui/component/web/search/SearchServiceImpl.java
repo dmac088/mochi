@@ -119,7 +119,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		String transLcl = lcl.substring(0, 2).toUpperCase() + lcl.substring(3, 5).toUpperCase();
 
 		QueryBuilder productQueryBuilder = fullTextEntityManager.getSearchFactory().buildQueryBuilder()
-				.forEntity(io.nzbee.entity.product.Product.class)
+				.forEntity(io.nzbee.entity.product.attribute.ProductAttribute.class)
 				.overridesForField("productDesc", lcl)
 				.overridesForField("brandDesc", lcl)
 				.overridesForField("tagA", lcl)
@@ -148,19 +148,9 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 				.must(productQueryBuilder.keyword().onFields("lclCd").matching(lcl).createQuery()).createQuery();
 
 		org.hibernate.search.jpa.FullTextQuery jpaQuery = fullTextEntityManager.createFullTextQuery(searchQuery,
-				io.nzbee.entity.product.Product.class);
+				io.nzbee.entity.product.attribute.ProductAttribute.class);
 
-		jpaQuery.setProjection("productUPC",
-							   "productcreatedt",
-							   "attributes.productdesc",
-							   "attributes.productimage", /*this is not @IndexedEmbedded on the one side*/
-							   "brand.branddesc", /*this is not a collection or map so we are fine*/
-							   "productstatus.productstatusdesc"
-							  );
-		
-		
-		
-		
+			
 		final Set<Facet> allFacets = new HashSet<Facet>();
 		final Set<NavFacet<Category>> cs;
 		final Set<NavFacet<Brand>> bs;
@@ -374,14 +364,14 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		org.apache.lucene.search.Sort sort = getSortField("priceDesc", currency);
 		jpaQuery.setSort(sort);
 
-		List<io.nzbee.entity.product.Product> results = jpaQuery.getResultList();
+		List<io.nzbee.entity.product.attribute.ProductAttribute> results = jpaQuery.getResultList();
 
 		if (results.isEmpty()) {
 			return new ArrayList<Facet>();
 		}
 
-		Double maxPrice = results.stream().findFirst().get().getCurrentMarkdownPriceHKD();
-		Double minPrice = Lists.reverse(results).stream().findFirst().get().getCurrentMarkdownPriceHKD();
+		Double maxPrice = results.stream().findFirst().get().getProduct().getCurrentMarkdownPriceHKD();
+		Double minPrice = Lists.reverse(results).stream().findFirst().get().getProduct().getCurrentMarkdownPriceHKD();
 		Double inc = (maxPrice > 0) ? (maxPrice - ((minPrice.equals(maxPrice)) ? 0 : minPrice)) / 4 : maxPrice;
 
 		inc = new BigDecimal(inc).setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
