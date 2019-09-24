@@ -81,7 +81,8 @@ public class CategoryDaoImpl implements ICategoryDao {
 		results.stream().forEach(c -> {
 			Category category = (Category) c[0];
 			System.out.println(category.getCategoryCode());
-			System.out.println(((CategoryAttribute) c[1]).getCategoryDesc());
+			category.setCategoryAttribute(((CategoryAttribute) c[1]));
+			System.out.println(category.getCategoryAttribute().getCategoryDesc());
 			//System.out.println(category.getParent().getCategoryAttribute().getCategoryDesc());
 			System.out.println(category.getClass().getSimpleName());
 			System.out.println(category.getCategoryCode() + " - " + c[8]);

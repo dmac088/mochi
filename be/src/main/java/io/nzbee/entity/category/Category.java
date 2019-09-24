@@ -21,7 +21,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedNativeQueries;
 import javax.persistence.NamedNativeQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
@@ -522,63 +521,63 @@ public abstract class Category {
 	@Transient
 	private Long maxMarkdownPrice;
 	
-//	@Field(analyze = Analyze.NO)
-//	@Facet
-//	public String getCategoryToken() {
-//		String token = createCategoryToken(this, new ArrayList<String>());
-//		if(token == null || token.isEmpty()) { return "Unknown"; }
-//		return token;
-//	}
-//	
-//	private String createCategoryToken(Category category, List<String> lc) {
-//		lc.add(category.getCategoryCode());
-//		Optional<Category> parent = Optional.ofNullable(category.getParent());
-//		if(!parent.isPresent()) {
-//			StringBuilder sb = new StringBuilder();
-//			Lists.reverse(lc).stream().forEach(s -> sb.append("/").append(s));
-//			return sb.toString();
-//		}
-//		return this.createCategoryToken(parent.get(), lc);
-//	}
+	@Field(analyze = Analyze.NO)
+	@Facet
+	public String getCategoryToken() {
+		String token = createCategoryToken(this, new ArrayList<String>());
+		if(token == null || token.isEmpty()) { return "Unknown"; }
+		return token;
+	}
+	
+	private String createCategoryToken(Category category, List<String> lc) {
+		lc.add(category.getCategoryCode());
+		Optional<Category> parent = Optional.ofNullable(category.getParent());
+		if(!parent.isPresent()) {
+			StringBuilder sb = new StringBuilder();
+			Lists.reverse(lc).stream().forEach(s -> sb.append("/").append(s));
+			return sb.toString();
+		}
+		return this.createCategoryToken(parent.get(), lc);
+	}
 	
 	public abstract Long getObjectCount();
 
-//	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_ENGLISH))
-//	public String getPrimaryCategoryDescENGB() {
-//		Optional<CategoryAttribute> pca = this.getAttributes().stream().filter(ca -> {
-//		 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH);
-//		 		}).collect(Collectors.toList()).stream().findFirst();
-//		if(!pca.isPresent()) { return "Unknown"; }
-//		return pca.get().getCategoryDesc();
-//	}
-//	
-//	
-//	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_HK))
-//	public String getPrimaryCategoryDescZHHK() {
-//		Optional<CategoryAttribute> pca = this.getAttributes().stream().filter(ca -> {
-//		 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_HK);
-//		 		}).collect(Collectors.toList()).stream().findFirst();
-//		if(!pca.isPresent()) { return "Unknown"; }
-//		return pca.get().getCategoryDesc();
-//	}
-//	
-//	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_ENGLISH))
-//	public String getSecondaryCategoryDescENGB() {
-//		Optional<CategoryAttribute> pca = this.getAttributes().stream().filter(ca -> {
-//		 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH);
-//		 		}).collect(Collectors.toList()).stream().findFirst();
-//		if(!pca.isPresent()) { return "Unknown"; }
-//		return pca.get().getCategoryDesc();
-//	}
-//
-//	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_HK))
-//	public String getSecondaryCategoryDescZHHK() {
-//		Optional<CategoryAttribute> pca = this.getAttributes().stream().filter(ca -> {
-//		 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_HK);
-//		 		}).collect(Collectors.toList()).stream().findFirst();
-//		if(!pca.isPresent()) { return "Unknown"; }
-//		return pca.get().getCategoryDesc();
-//	}
+	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_ENGLISH))
+	public String getPrimaryCategoryDescENGB() {
+		Optional<CategoryAttribute> pca = this.getAttributes().stream().filter(ca -> {
+		 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH);
+		 		}).collect(Collectors.toList()).stream().findFirst();
+		if(!pca.isPresent()) { return "Unknown"; }
+		return pca.get().getCategoryDesc();
+	}
+	
+	
+	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_HK))
+	public String getPrimaryCategoryDescZHHK() {
+		Optional<CategoryAttribute> pca = this.getAttributes().stream().filter(ca -> {
+		 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_HK);
+		 		}).collect(Collectors.toList()).stream().findFirst();
+		if(!pca.isPresent()) { return "Unknown"; }
+		return pca.get().getCategoryDesc();
+	}
+	
+	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_ENGLISH))
+	public String getSecondaryCategoryDescENGB() {
+		Optional<CategoryAttribute> pca = this.getAttributes().stream().filter(ca -> {
+		 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH);
+		 		}).collect(Collectors.toList()).stream().findFirst();
+		if(!pca.isPresent()) { return "Unknown"; }
+		return pca.get().getCategoryDesc();
+	}
+
+	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_HK))
+	public String getSecondaryCategoryDescZHHK() {
+		Optional<CategoryAttribute> pca = this.getAttributes().stream().filter(ca -> {
+		 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_HK);
+		 		}).collect(Collectors.toList()).stream().findFirst();
+		if(!pca.isPresent()) { return "Unknown"; }
+		return pca.get().getCategoryDesc();
+	}
 	
 	public Long getChildCount() {
 		return childCount;
@@ -662,5 +661,9 @@ public abstract class Category {
 	
 	public List<CategoryAttribute> getAttributes() {
 		return attributes;
+	}
+	
+	public void setAttributes(List<CategoryAttribute> attributes) {
+		this.attributes = attributes;
 	}
 }
