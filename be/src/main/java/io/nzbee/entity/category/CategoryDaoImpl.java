@@ -22,6 +22,7 @@ import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.Category_;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.attribute.CategoryAttribute_;
+import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.category.product.CategoryProduct_;
 import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.entity.category.type.CategoryType_;
@@ -76,6 +77,8 @@ public class CategoryDaoImpl implements ICategoryDao {
 		List<Object[]> results = query.getResultList();
 		List<Category> lc = results.stream().map(c -> (Category) c[0]).collect(Collectors.toList());
 				
+		System.out.println(((Category)results.get(0)[0]).getObjectCount());
+		
 		lc.stream().forEach(c -> {
 			System.out.println(c.getCategoryCode());
 //			System.out.println(c.getCategoryAttribute().getCategoryDesc());

@@ -506,10 +506,10 @@ public abstract class Category {
 	@OneToMany(mappedBy="category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<CategoryAttribute> attributes;
-//
-//	@OneToOne
-//	@JsonIgnore
-//	private CategoryAttribute categoryAttribute;
+
+	@Transient
+	@JsonIgnore
+	private CategoryAttribute categoryAttribute;
 	
 	@Transient
 	private Long childCount;
@@ -594,13 +594,13 @@ public abstract class Category {
 		this.parent = parent;
 	}
 
-//	public CategoryAttribute getCategoryAttribute() {
-//		return categoryAttribute;
-//	}
-//
-//	public void setCategoryAttribute(CategoryAttribute categoryAttribute) {
-//		this.categoryAttribute = categoryAttribute;
-//	}
+	public CategoryAttribute getCategoryAttribute() {
+		return categoryAttribute;
+	}
+
+	public void setCategoryAttribute(CategoryAttribute categoryAttribute) {
+		this.categoryAttribute = categoryAttribute;
+	}
 
 	public Long getCategoryId() {
 		return categoryId;
