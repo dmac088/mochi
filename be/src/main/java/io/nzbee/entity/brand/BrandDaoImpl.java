@@ -17,6 +17,8 @@ import io.nzbee.entity.brand.Brand_;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.brand.attribute.BrandAttribute_;
 import io.nzbee.entity.category.Category_;
+import io.nzbee.entity.category.brand.CategoryBrand;
+import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.Product_;
 import io.nzbee.entity.product.status.ProductStatus;
@@ -178,58 +180,56 @@ public class BrandDaoImpl  implements IBrandDao {
 
 	@Override
 	public List<Brand> findAll(List<String> categoryCodes, List<String> tagCodes) {
-//		CriteriaBuilder cb = em.getCriteriaBuilder();
-//		
-//		CriteriaQuery<Brand> cq = cb.createQuery(Brand.class);
-//		
-//		Root<Brand> root = cq.from(Brand.class);
-//		
-//		Join<Brand, Product> brand = root.join(Brand_.products);
-//		Join<Product, ProductStatus> status = brand.join(Product_.productStatus);
-//		
-//		List<Predicate> conditions = new ArrayList<Predicate>();
-//		if(categoryCodes.size() > 0) {
-//			Join<Product, CategoryProduct> category = brand.join(Product_.categories);
-//			conditions.add(category.get(Category_.categoryCode).in(categoryCodes));
-//		}
-//		if(tagCodes.size() > 0) {
-//			Join<Product, ProductTag> productTag = brand.join(Product_.tags);
-//			conditions.add(productTag.get(ProductTag_.productTagCode).in(tagCodes));
-//		}
-//		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
-//		
-//		TypedQuery<Brand> query = em.createQuery(cq
-//				.select(root)
-//				.where(conditions.toArray(new Predicate[] {}))
-//				.distinct(true)
-//		);
-//
-//		return query.getResultList();
-		return null;
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<Brand> cq = cb.createQuery(Brand.class);
+		
+		Root<Brand> root = cq.from(Brand.class);
+		
+		Join<Brand, Product> brand = root.join(Brand_.products);
+		Join<Product, ProductStatus> status = brand.join(Product_.productStatus);
+		
+		List<Predicate> conditions = new ArrayList<Predicate>();
+		if(categoryCodes.size() > 0) {
+			Join<Product, CategoryProduct> category = brand.join(Product_.categories);
+			conditions.add(category.get(Category_.categoryCode).in(categoryCodes));
+		}
+		if(tagCodes.size() > 0) {
+			Join<Product, ProductTag> productTag = brand.join(Product_.tags);
+			conditions.add(productTag.get(ProductTag_.productTagCode).in(tagCodes));
+		}
+		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
+		
+		TypedQuery<Brand> query = em.createQuery(cq
+				.select(root)
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(true)
+		);
+
+		return query.getResultList();
 	}
 	
 	@Override
 	public List<Brand> findAll(String brandCategoryCode) {
-//		CriteriaBuilder cb = em.getCriteriaBuilder();
-//		
-//		CriteriaQuery<Brand> cq = cb.createQuery(Brand.class);
-//		
-//		Root<Brand> root = cq.from(Brand.class);
-//		
-//		Join<Brand, CategoryBrand> brand = root.join(Brand_.categories);
-//		
-//		List<Predicate> conditions = new ArrayList<Predicate>();
-//		
-//		conditions.add(cb.equal(brand.get(io.nzbee.entity.category.brand.CategoryBrand_.categoryCode), brandCategoryCode));
-//		
-//		TypedQuery<Brand> query = em.createQuery(cq
-//				.select(root)
-//				.where(conditions.toArray(new Predicate[] {}))
-//				.distinct(false)
-//		);
-//
-//		return query.getResultList();
-		return null;
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<Brand> cq = cb.createQuery(Brand.class);
+		
+		Root<Brand> root = cq.from(Brand.class);
+		
+		Join<Brand, CategoryBrand> brand = root.join(Brand_.categories);
+		
+		List<Predicate> conditions = new ArrayList<Predicate>();
+		
+		conditions.add(cb.equal(brand.get(io.nzbee.entity.category.brand.CategoryBrand_.categoryCode), brandCategoryCode));
+		
+		TypedQuery<Brand> query = em.createQuery(cq
+				.select(root)
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(false)
+		);
+
+		return query.getResultList();
 	}
 
 }

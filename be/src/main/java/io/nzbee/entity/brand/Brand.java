@@ -1,6 +1,7 @@
 package io.nzbee.entity.brand;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,11 +13,17 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
+import io.nzbee.entity.category.brand.CategoryBrand;
+import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.Product;
+import io.nzbee.variables.GeneralVars;
 
 
 @Entity
@@ -35,34 +42,36 @@ public class Brand {
 	@JsonManagedReference
 	private List<Product> products;
 	
-//	@ManyToMany(mappedBy = "brands")
-//	@JsonIgnore
-//	private List<CategoryBrand> categories;
+	@ManyToMany(mappedBy = "brands")
+	@IndexedEmbedded
+	@JsonIgnore
+	private List<CategoryBrand> categories;
+	
 
 	@OneToMany(mappedBy="brand",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@IndexedEmbedded
 	private List<BrandAttribute> brandAttributes;
 	
-//	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_ENGLISH))
-//	public String getBrandDescENGB() {
-//		List<BrandAttribute> lba = this.getAttributes().stream().filter(ca -> {
-// 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH);
-// 		}).collect(Collectors.toList());
-//
-//		//if (lba.isEmpty()) { return null; }
-//		return lba.get(0).getBrandDesc();
-//	}
-//	
-//	
-//	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_HK))
-//	public String getBrandDescZHHK() {
-//		List<BrandAttribute> lba = this.getAttributes().stream().filter(ca -> {
-//		 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_HK);
-//		 		}).collect(Collectors.toList());
-//		
-//		//if (lba.isEmpty()) { return null; }
-//		return lba.get(0).getBrandDesc();
-//	}
+	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_ENGLISH))
+	public String getBrandDescENGB() {
+		List<BrandAttribute> lba = this.getAttributes().stream().filter(ca -> {
+ 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH);
+ 		}).collect(Collectors.toList());
+
+		//if (lba.isEmpty()) { return null; }
+		return lba.get(0).getBrandDesc();
+	}
+	
+	
+	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_HK))
+	public String getBrandDescZHHK() {
+		List<BrandAttribute> lba = this.getAttributes().stream().filter(ca -> {
+		 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_HK);
+		 		}).collect(Collectors.toList());
+		
+		//if (lba.isEmpty()) { return null; }
+		return lba.get(0).getBrandDesc();
+	}
 	
 	public Long getId() {
 		return this.brandId;
