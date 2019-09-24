@@ -12,9 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import io.nzbee.entity.category.Category;
 
 @Entity
@@ -33,9 +31,9 @@ public class Hierarchy {
 	@Column(name="hir_desc")
 	private String hierarchyDesc;
 	
-//	@OneToMany(mappedBy="hierarchy",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//	@JsonManagedReference
-//	private List<Category> categories;
+	@OneToMany(mappedBy="hierarchy",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonManagedReference
+	private List<Category> categories;
 
 	public Long getHierarchyId() {
 		return hierarchyId;
@@ -61,11 +59,11 @@ public class Hierarchy {
 		this.hierarchyDesc = hierarchyDesc;
 	}
 	
-//	public List<Category> getCategories() {
-//		return categories;
-//	}
-//
-//	public void setCategories(List<Category> categories) {
-//		this.categories = categories;
-//	}
+	public List<Category> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
+	}
 }
