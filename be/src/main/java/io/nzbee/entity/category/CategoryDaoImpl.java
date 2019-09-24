@@ -91,21 +91,21 @@ public class CategoryDaoImpl implements ICategoryDao {
 		return null;
 	}
 	
-//	@Override 
-//	public List<Category> getChildren(Category category, String currency) {
-//		
-//		@SuppressWarnings("unchecked")
-//		List<Category> c = em.createNamedQuery("getAllCategories")
-//				 .setParameter("locale", category.getCategoryAttribute().getLclCd())
-//				 .setParameter("currency", currency)
-//				 .setParameter("parentCategoryCode", category.getParent().getCategoryCode())
-//				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
-//				 .setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
-//				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
-//				 .getResultList();
-//	
-//		return c;
-//	}
+	@Override 
+	public List<Category> getChildren(Category category, String currency) {
+		
+		@SuppressWarnings("unchecked")
+		List<Category> c = em.createNamedQuery("getAllCategories")
+				 .setParameter("locale", category.getCategoryAttribute().getLclCd())
+				 .setParameter("currency", currency)
+				 .setParameter("parentCategoryCode", category.getParent().getCategoryCode())
+				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
+				 .setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
+				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
+				 .getResultList();
+	
+		return c;
+	}
 
 
 	@Override
@@ -296,13 +296,6 @@ public class CategoryDaoImpl implements ICategoryDao {
 
 	@Override
 	public List<Category> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public List<Category> getChildren(Category category, String currency) {
 		// TODO Auto-generated method stub
 		return null;
 	}
