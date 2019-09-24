@@ -128,168 +128,164 @@ public class CategoryDaoImpl implements ICategoryDao {
 	
 	
 	public Optional<Category> findByCategoryDesc(String categoryTypeCode, String categoryDesc, String locale) {
-//		
-//		CriteriaBuilder cb = em.getCriteriaBuilder();
-//		
-//		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
-//		
-//		Root<Category> root = cq.from(Category.class);
-//		
-//		Join<Category, CategoryType> categoryType = root.join(Category_.categoryType);
-//		Join<Category, CategoryAttribute> categoryAttribute = root.join(Category_.categoryAttribute);
-//		//Join<Category, Hierarchy> categoryHierarchy = root.join(Category_.hierarchy);
-//		
-//		List<Predicate> conditions = new ArrayList<Predicate>();
-//		//conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), hieararchyCode));
-//		conditions.add(cb.equal(categoryType.get(CategoryType_.categoryTypeCode), categoryTypeCode));
-//	
-//		if(!(categoryDesc == null)) {
-//			conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.categoryDesc), categoryDesc));
-//		}
-//		
-//		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
-//		
-//		TypedQuery<Category> query = em.createQuery(cq
-//				.select(root)
-//				.where(conditions.toArray(new Predicate[] {}))
-//				.distinct(false)
-//		);
-//		
-//		return Optional.ofNullable(query.getSingleResult());
-		return null;
+		
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
+		
+		Root<Category> root = cq.from(Category.class);
+		
+		Join<Category, CategoryType> categoryType = root.join(Category_.categoryType);
+		Join<Category, CategoryAttribute> categoryAttribute = root.join(Category_.attributes);
+		//Join<Category, Hierarchy> categoryHierarchy = root.join(Category_.hierarchy);
+		
+		List<Predicate> conditions = new ArrayList<Predicate>();
+		//conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), hieararchyCode));
+		conditions.add(cb.equal(categoryType.get(CategoryType_.categoryTypeCode), categoryTypeCode));
+	
+		if(!(categoryDesc == null)) {
+			conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.categoryDesc), categoryDesc));
+		}
+		
+		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
+		
+		TypedQuery<Category> query = em.createQuery(cq
+				.select(root)
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(false)
+		);
+		
+		return Optional.ofNullable(query.getSingleResult());
+
 	}
 		
 	public Optional<Category> findByCategoryCode(String categoryTypeCode, String categoryCode, String locale) {
-//		CriteriaBuilder cb = em.getCriteriaBuilder();
-//
-//		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
-//		
-//		Root<Category> root = cq.from(Category.class);
-//		Join<Category, CategoryType> categoryType = root.join(Category_.categoryType);
-//		
-//		//Join<Category, Hierarchy> categoryHierarchy = root.join(Category_.hierarchy);
-//		
-//		List<Predicate> conditions = new ArrayList<Predicate>();
-//		//conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), hieararchyCode));
-//		conditions.add(cb.equal(categoryType.get(CategoryType_.categoryTypeCode), categoryTypeCode));
-//	
-//		if(!(categoryCode == null)) {
-//			conditions.add(cb.equal(root.get(Category_.categoryCode), categoryCode));
-//		}
-//		
-//		TypedQuery<Category> query = em.createQuery(cq
-//				.select(root)
-//				.where(conditions.toArray(new Predicate[] {}))
-//				.distinct(false)
-//		);
-//		
-//		return Optional.ofNullable(query.getSingleResult());
-		return null;
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+
+		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
+		
+		Root<Category> root = cq.from(Category.class);
+		Join<Category, CategoryType> categoryType = root.join(Category_.categoryType);
+		
+		//Join<Category, Hierarchy> categoryHierarchy = root.join(Category_.hierarchy);
+		
+		List<Predicate> conditions = new ArrayList<Predicate>();
+		//conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), hieararchyCode));
+		conditions.add(cb.equal(categoryType.get(CategoryType_.categoryTypeCode), categoryTypeCode));
+	
+		if(!(categoryCode == null)) {
+			conditions.add(cb.equal(root.get(Category_.categoryCode), categoryCode));
+		}
+		
+		TypedQuery<Category> query = em.createQuery(cq
+				.select(root)
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(false)
+		);
+		
+		return Optional.ofNullable(query.getSingleResult());
 	}
 	
 	public List<Category> findByParent(String hieararchyCode, String categoryTypeCode, Long parentCategoryId, String locale) {
-//		CriteriaBuilder cb = em.getCriteriaBuilder();
-//		
-//		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
-//		
-//		Root<Category> root = cq.from(Category.class);
-//		
-//		Join<Category, CategoryType> categoryType = root.join(Category_.categoryType);
-//		Join<Category, CategoryAttribute> categoryAttribute = root.join(Category_.categoryAttribute);
-//		Join<Category, Hierarchy> categoryHierarchy = root.join(Category_.hierarchy);
-//		Join<Category, Category> parent = root.join(Category_.parent);
-//		
-//		List<Predicate> conditions = new ArrayList<Predicate>();
-//		conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.hierarchyCode), hieararchyCode));
-//		conditions.add(cb.equal(categoryType.get(CategoryType_.categoryTypeCode), categoryTypeCode));
-//	
-//		if(!(parentCategoryId == null)) {
-//			conditions.add(cb.equal(parent.get(Category_.categoryId), parentCategoryId));
-//		}
-//		
-//		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
-//		
-//		TypedQuery<Category> query = em.createQuery(cq
-//				.select(root)
-//				.where(conditions.toArray(new Predicate[] {}))
-//				.distinct(true)
-//		);
-//		
-//		return query.getResultList();
-		return null;
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
+		
+		Root<Category> root = cq.from(Category.class);
+		
+		Join<Category, CategoryType> categoryType = root.join(Category_.categoryType);
+		Join<Category, CategoryAttribute> categoryAttribute = root.join(Category_.attributes);
+		Join<Category, Hierarchy> categoryHierarchy = root.join(Category_.hierarchy);
+		Join<Category, Category> parent = root.join(Category_.parent);
+		
+		List<Predicate> conditions = new ArrayList<Predicate>();
+		conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.hierarchyCode), hieararchyCode));
+		conditions.add(cb.equal(categoryType.get(CategoryType_.categoryTypeCode), categoryTypeCode));
+	
+		if(!(parentCategoryId == null)) {
+			conditions.add(cb.equal(parent.get(Category_.categoryId), parentCategoryId));
+		}
+		
+		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
+		
+		TypedQuery<Category> query = em.createQuery(cq
+				.select(root)
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(true)
+		);
+		
+		return query.getResultList();
 	}
 	
 	
 	
 	public List<Category> findByLevel(String hieararchyCode, String categoryTypeCode, Long level, String locale) {
-//		CriteriaBuilder cb = em.getCriteriaBuilder();
-//		
-//		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
-//		
-//		Root<Category> root = cq.from(Category.class);
-//		
-//		Join<Category, CategoryType> categoryType = root.join(Category_.categoryType);
-//		Join<Category, CategoryAttribute> categoryAttribute = root.join(Category_.categoryAttribute);
-//		Join<Category, Hierarchy> categoryHierarchy = root.join(Category_.hierarchy);
-//		
-//		List<Predicate> conditions = new ArrayList<Predicate>();
-//		conditions.add(cb.equal(categoryType.get(CategoryType_.categoryTypeCode), categoryTypeCode));
-//		conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.hierarchyCode), hieararchyCode));
-//		if(!(level == null)) {
-//			conditions.add(cb.equal(root.get(Category_.categoryLevel), level));
-//		}
-//	
-//		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
-//		
-//		TypedQuery<Category> query = em.createQuery(cq
-//				.select(root)
-//				.where(conditions.toArray(new Predicate[] {}))
-//				.distinct(true)
-//		);
-//		
-//		return query.getResultList();
-		return null;
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
+		
+		Root<Category> root = cq.from(Category.class);
+		
+		Join<Category, CategoryType> categoryType = root.join(Category_.categoryType);
+		Join<Category, CategoryAttribute> categoryAttribute = root.join(Category_.attributes);
+		Join<Category, Hierarchy> categoryHierarchy = root.join(Category_.hierarchy);
+		
+		List<Predicate> conditions = new ArrayList<Predicate>();
+		conditions.add(cb.equal(categoryType.get(CategoryType_.categoryTypeCode), categoryTypeCode));
+		conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.hierarchyCode), hieararchyCode));
+		if(!(level == null)) {
+			conditions.add(cb.equal(root.get(Category_.categoryLevel), level));
+		}
+	
+		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
+		
+		TypedQuery<Category> query = em.createQuery(cq
+				.select(root)
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(true)
+		);
+		
+		return query.getResultList();
 	}
 	
 	@Override
 	public List<Category> findChildrenByCriteria(String hieararchyCode, String categoryTypeCode, String parentCategoryDesc, List<String> brandCodes, List<String> tagCodes, String locale) {
-//		CriteriaBuilder cb = em.getCriteriaBuilder();
-//		
-//		CriteriaQuery<CategoryProduct> cq = cb.createQuery(CategoryProduct.class);
-//		
-//		Root<CategoryProduct> root = cq.from(CategoryProduct.class);
-//		
-//		Join<CategoryProduct, CategoryType> categoryType = root.join(Category_.categoryType);
-//		Join<CategoryProduct, CategoryAttribute> categoryAttribute = root.join(Category_.categoryAttribute);
-//		Join<CategoryProduct, Hierarchy> categoryHierarchy = root.join(Category_.hierarchy);
-//		Join<CategoryProduct, Product> product = root.join(CategoryProduct_.products);
-//		Join<Product, Brand> brand = product.join(Product_.brand);
-//		Join<CategoryProduct, Category> parent = root.join(Category_.parent);
-//		Join<Category, CategoryAttribute> parentCategoryAttribute = parent.join(Category_.categoryAttribute);
-//		
-//		List<Predicate> conditions = new ArrayList<Predicate>();
-//		conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.hierarchyCode), hieararchyCode));
-//		conditions.add(cb.equal(categoryType.get(CategoryType_.categoryTypeCode), categoryTypeCode));
-//		if(!brandCodes.isEmpty()) {
-//			conditions.add(brand.get(Brand_.brandCode).in(brandCodes));
-//		}
-//		if(!tagCodes.isEmpty()) {
-//			Join<Product, ProductTag> tags = product.join(Product_.tags);
-//			conditions.add(tags.get(ProductTag_.productTagCode).in(tagCodes));
-//		}
-//		if(!(parentCategoryDesc == null)) {
-//			conditions.add(cb.equal(parentCategoryAttribute.get(CategoryAttribute_.categoryDesc), parentCategoryDesc));
-//		}
-//		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
-//		
-//		TypedQuery<CategoryProduct> query = em.createQuery(cq
-//				.select(root)
-//				.where(conditions.toArray(new Predicate[] {}))
-//				.distinct(true)
-//		);
-//		
-//		return query.getResultList().stream().map(c -> (Category) c).collect(Collectors.toList());
-	return null;
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<CategoryProduct> cq = cb.createQuery(CategoryProduct.class);
+		
+		Root<CategoryProduct> root = cq.from(CategoryProduct.class);
+		
+		Join<CategoryProduct, CategoryType> categoryType = root.join(Category_.categoryType);
+		Join<CategoryProduct, CategoryAttribute> categoryAttribute = root.join(Category_.attributes);
+		Join<CategoryProduct, Hierarchy> categoryHierarchy = root.join(Category_.hierarchy);
+		Join<CategoryProduct, Product> product = root.join(CategoryProduct_.products);
+		Join<Product, Brand> brand = product.join(Product_.brand);
+		Join<CategoryProduct, Category> parent = root.join(Category_.parent);
+		Join<Category, CategoryAttribute> parentCategoryAttribute = parent.join(Category_.attributes);
+		
+		List<Predicate> conditions = new ArrayList<Predicate>();
+		conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.hierarchyCode), hieararchyCode));
+		conditions.add(cb.equal(categoryType.get(CategoryType_.categoryTypeCode), categoryTypeCode));
+		if(!brandCodes.isEmpty()) {
+			conditions.add(brand.get(Brand_.brandCode).in(brandCodes));
+		}
+		if(!tagCodes.isEmpty()) {
+			Join<Product, ProductTag> tags = product.join(Product_.tags);
+			conditions.add(tags.get(ProductTag_.productTagCode).in(tagCodes));
+		}
+		if(!(parentCategoryDesc == null)) {
+			conditions.add(cb.equal(parentCategoryAttribute.get(CategoryAttribute_.categoryDesc), parentCategoryDesc));
+		}
+		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
+		
+		TypedQuery<CategoryProduct> query = em.createQuery(cq
+				.select(root)
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(true)
+		);
+		
+		return query.getResultList().stream().map(c -> (Category) c).collect(Collectors.toList());
 	}
 
 	@Override
