@@ -283,6 +283,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		jpaQuery.setSort(sort);
 
 		// get the results using jpaQuery object
+		@SuppressWarnings("rawtypes")
 		List results = jpaQuery.getResultList();
 
 		Object[] firstResult = (Object[]) results.get(0);
