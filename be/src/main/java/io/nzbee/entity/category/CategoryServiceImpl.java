@@ -32,27 +32,26 @@ public class CategoryServiceImpl implements ICategoryService {
 	}
 
 	@Override
-	public List<Category> findByParent(String hieararchyCode, String categoryTypeCode, Long parentCategoryId,
-			String locale) {
+	public List<Category> findByParent(String parentCategoryCode, String locale) {
 		// TODO Auto-generated method stub
-		return categoryDAO.findByParent(hieararchyCode, categoryTypeCode, parentCategoryId, locale);
+		return categoryDAO.findByParent(parentCategoryCode, locale);
 	}
 
 	@Override
-	public Optional<Category> findByCategoryDesc(String categoryTypeCode, String categoryDesc, String locale) {
+	public Optional<Category> findByCategoryDesc(String categoryDesc, String locale) {
 		// TODO Auto-generated method stub
-		return categoryDAO.findByCategoryDesc(categoryTypeCode, categoryDesc, locale);
+		return categoryDAO.findByCategoryDesc(categoryDesc, locale);
 	}
 
 	@Override
-	public Optional<Category> findByCategoryCode(String categoryTypeCode, String categoryCode, String locale) {
+	public Optional<Category> findByCategoryCode(String categoryCode, String locale) {
 		// TODO Auto-generated method stub
-		return categoryDAO.findByCategoryCode(categoryTypeCode, categoryCode, locale);
+		return categoryDAO.findByCategoryCode(categoryCode, locale);
 	}
 
 
 	@Override
-	public List<Category> findByLevel(String hieararchyCode, String categoryTypeCode, Long level, String locale) {
+	public List<Category> findByLevel(Long level, String locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -73,10 +72,10 @@ public class CategoryServiceImpl implements ICategoryService {
 	}
 
 	@Override
-	public List<Category> find(String hieararchyCode, String categoryTypeCode, String parentCategoryDesc,
+	public List<Category> find(String parentCategoryDesc,
 			List<String> brandCodes, List<String> tagCodes, String locale) {
 		// TODO Auto-generated method stub
-		return categoryDAO.findChildrenByCriteria(hieararchyCode, categoryTypeCode, parentCategoryDesc, brandCodes, tagCodes, locale);
+		return categoryDAO.findChildrenByCriteria(parentCategoryDesc, brandCodes, tagCodes, locale);
 	}
 	
 
