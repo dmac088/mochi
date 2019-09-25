@@ -65,7 +65,6 @@ public class CategoryDaoImpl implements ICategoryDao {
 	@Override
 	public List<Category> findAll(String locale, String currency) {
 		
-		@SuppressWarnings("unchecked")
 		Query query = em.createNamedQuery("getCategories")
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
@@ -74,9 +73,9 @@ public class CategoryDaoImpl implements ICategoryDao {
 				 .setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
 				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE);
 		
+		@SuppressWarnings("unchecked")
 		List<Object[]> results = query.getResultList();
-		List<Category> lc = results.stream().map(c -> (Category) c[0]).collect(Collectors.toList());
-				
+		
 		results.stream().forEach(c -> {
 			Category category = (Category) c[0];
 			System.out.println(category.getCategoryCode());

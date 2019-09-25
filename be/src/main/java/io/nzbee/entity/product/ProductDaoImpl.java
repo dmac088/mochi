@@ -154,63 +154,62 @@ public class ProductDaoImpl implements IProductDao {
 	@Override
 	public Page<Product> findAllActiveSKU(List<Long> categoryIds, String locale, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, Pageable pageable, List<Long> brandIds, List<Long> tagIds) {
 	
-//		CriteriaBuilder cb = em.getCriteriaBuilder();
-//	
-//		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
-//		
-//		Root<Product> root 									= cq.from(Product.class);
-//		Join<Product, ProductAttribute> productAttribute 	= root.join(Product_.attributes);
-//		Join<Product, CategoryProduct> category 			= root.join(Product_.categories);
-//		Join<Product, Brand> brand 							= root.join(Product_.brand);
-//		Join<Product, ProductStatus> status 				= root.join(Product_.productStatus);
-//		Join<Product, ProductPrice> price 					= root.join(Product_.prices);
-//		Join<ProductPrice, ProductPriceType> type 			= price.join(ProductPrice_.type);
-//		Join<ProductPrice, Currency> curr 					= price.join(ProductPrice_.currency);
-//		Join<Brand, BrandAttribute> brandAttribute 			= brand.join(Brand_.brandAttributes);
-//		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(CategoryProduct_.categoryAttribute);
-//		//Join<Category, Hierarchy> categoryHierarchy = category.join(Category_.hierarchy);
-//		
-//		List<Predicate> conditions = new ArrayList<Predicate>();
-//		if(!categoryIds.isEmpty()) {
-//			conditions.add(category.get(CategoryProduct_.categoryId).in(categoryIds));
-//		}
-//		if(!brandIds.isEmpty()) {
-//			conditions.add(brand.get(Brand_.brandId).in(brandIds));
-//		}
-//		if(!tagIds.isEmpty()) {
-//			Join<Product, ProductTag> tag = root.join(Product_.tags);
-//			conditions.add(tag.get(ProductTag_.productTagId).in(tagIds));
-//		}
-//		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), locale));
-//		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale));
-//		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
-//		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
-//		conditions.add(cb.equal(type.get(ProductPriceType_.desc), priceType));
-//		conditions.add(cb.equal(curr.get(Currency_.code), currency));
-//		conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.priceValue), priceStart));
-//		conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.priceValue), priceEnd));
-//		conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.startDate), priceDateStart));
-//		conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.endDate), priceDateEnd));
-//		
-//		Long resultCount = this.getResultCountById(categoryIds, locale, priceStart, priceEnd, priceType, currency, priceDateStart, priceDateEnd, pageable, brandIds, tagIds);
-//	
-//		Order order = pageable.getSort().stream().map(o -> {
-//			return this.getOrder(o.getProperty().replaceAll(".*\\.", ""), o.getDirection(), cb, productAttribute, price);
-//		}).collect(Collectors.toList()).get(0);
-//		
-//		TypedQuery<Product> query = em.createQuery(cq
-//				.select(root)
-//				.where(conditions.toArray(new Predicate[] {}))
-//				.distinct(false)
-//				.orderBy(order)
-//		);
-//
-//		PageableUtil pageableUtil = new PageableUtil();
-//		query.setFirstResult(pageableUtil.getStartPosition(pageable));
-//		query.setMaxResults(pageable.getPageSize());
-//		
-//		return new PageImpl<Product>(query.getResultList(), pageable, resultCount);
-    return null;
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+	
+		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
+		
+		Root<Product> root 									= cq.from(Product.class);
+		Join<Product, ProductAttribute> productAttribute 	= root.join(Product_.attributes);
+		Join<Product, CategoryProduct> category 			= root.join(Product_.categories);
+		Join<Product, Brand> brand 							= root.join(Product_.brand);
+		Join<Product, ProductStatus> status 				= root.join(Product_.productStatus);
+		Join<Product, ProductPrice> price 					= root.join(Product_.prices);
+		Join<ProductPrice, ProductPriceType> type 			= price.join(ProductPrice_.type);
+		Join<ProductPrice, Currency> curr 					= price.join(ProductPrice_.currency);
+		Join<Brand, BrandAttribute> brandAttribute 			= brand.join(Brand_.brandAttributes);
+		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(CategoryProduct_.attributes);
+		//Join<Category, Hierarchy> categoryHierarchy = category.join(Category_.hierarchy);
+		
+		List<Predicate> conditions = new ArrayList<Predicate>();
+		if(!categoryIds.isEmpty()) {
+			conditions.add(category.get(CategoryProduct_.categoryId).in(categoryIds));
+		}
+		if(!brandIds.isEmpty()) {
+			conditions.add(brand.get(Brand_.brandId).in(brandIds));
+		}
+		if(!tagIds.isEmpty()) {
+			Join<Product, ProductTag> tag = root.join(Product_.tags);
+			conditions.add(tag.get(ProductTag_.productTagId).in(tagIds));
+		}
+		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), locale));
+		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale));
+		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
+		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
+		conditions.add(cb.equal(type.get(ProductPriceType_.desc), priceType));
+		conditions.add(cb.equal(curr.get(Currency_.code), currency));
+		conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.priceValue), priceStart));
+		conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.priceValue), priceEnd));
+		conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.startDate), priceDateStart));
+		conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.endDate), priceDateEnd));
+		
+		Long resultCount = this.getResultCountById(categoryIds, locale, priceStart, priceEnd, priceType, currency, priceDateStart, priceDateEnd, pageable, brandIds, tagIds);
+	
+		Order order = pageable.getSort().stream().map(o -> {
+			return this.getOrder(o.getProperty().replaceAll(".*\\.", ""), o.getDirection(), cb, productAttribute, price);
+		}).collect(Collectors.toList()).get(0);
+		
+		TypedQuery<Product> query = em.createQuery(cq
+				.select(root)
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(false)
+				.orderBy(order)
+		);
+
+		PageableUtil pageableUtil = new PageableUtil();
+		query.setFirstResult(pageableUtil.getStartPosition(pageable));
+		query.setMaxResults(pageable.getPageSize());
+		
+		return new PageImpl<Product>(query.getResultList(), pageable, resultCount);
 	}
 	
 	
@@ -219,66 +218,66 @@ public class ProductDaoImpl implements IProductDao {
 			Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd,
 			Pageable pageable, List<Long> brandIds, List<Long> tagIds) {
 		
+
+		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
-//		CriteriaBuilder cb = em.getCriteriaBuilder();
-//		
-//		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
-//		
-//		Root<Product> root 									= cq.from(Product.class);
-//		Join<Product, ProductAttribute> productAttribute 	= root.join(Product_.attributes);
-//		Join<Product, CategoryProduct> category 					= root.join(Product_.categories);
-//		Join<Product, Brand> brand 							= root.join(Product_.brand);
-//		Join<Product, ProductStatus> status 				= root.join(Product_.productStatus);
-//		Join<Product, ProductPrice> price 					= root.join(Product_.prices);
-//		Join<ProductPrice, ProductPriceType> type 			= price.join(ProductPrice_.type);
-//		Join<ProductPrice, Currency> curr 					= price.join(ProductPrice_.currency);
-//		Join<Brand, BrandAttribute> brandAttribute 			= brand.join(Brand_.brandAttributes);
-//		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(CategoryProduct_.categoryAttribute);
-//		Join<CategoryProduct, Hierarchy> categoryHierarchy 		= category.join(CategoryProduct_.hierarchy);
-//		
-//		List<Predicate> conditions = new ArrayList<Predicate>();
-//		if(!categoryIds.isEmpty()) {
-//			conditions.add(category.get(CategoryProduct_.categoryId).in(categoryIds));
-//		}
-//		if(!brandIds.isEmpty()) {
-//			conditions.add(brand.get(Brand_.brandId).in(brandIds));
-//		}
-//		if(!tagIds.isEmpty()) {
-//			Join<Product, ProductTag> tag = root.join(Product_.tags);
-//			conditions.add(tag.get(ProductTag_.productTagId).in(tagIds));
-//		}
-//		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), locale));
-//		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale));
-//		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
-//		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
-//		conditions.add(cb.equal(type.get(ProductPriceType_.desc), priceType));
-//		conditions.add(cb.equal(curr.get(Currency_.code), currency));
-//		if(priceStart != -1 && priceEnd != -1) {
-//			conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.priceValue), priceStart));
-//			conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.priceValue), priceEnd));
-//		}
-//		conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.startDate), priceDateStart));
-//		conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.endDate), priceDateEnd));
-//		conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.hierarchyCode), CategoryVars.PRIMARY_HIERARCHY_CODE));		
-//		Long resultCount = this.getResultCountById(categoryIds, locale, priceStart, priceEnd, priceType, currency, priceDateStart, priceDateEnd, pageable, brandIds, tagIds);
-//	
-//		Order order = pageable.getSort().stream().map(o -> {
-//			return this.getOrder(o.getProperty().replaceAll(".*\\.", ""), o.getDirection(), cb, productAttribute, price);
-//		}).collect(Collectors.toList()).get(0);
-//		
-//		TypedQuery<Product> query = em.createQuery(cq
-//				.select(root)
-//				.where(conditions.toArray(new Predicate[] {}))
-//				.distinct(false)
-//				.orderBy(order)
-//		);
-//
-//		PageableUtil pageableUtil = new PageableUtil();
-//		query.setFirstResult(pageableUtil.getStartPosition(pageable));
-//		query.setMaxResults(pageable.getPageSize());
-//		
-//		return new PageImpl<Product>(query.getResultList(), pageable, resultCount);
-	return null;
+		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
+		
+		Root<Product> root 									= cq.from(Product.class);
+		Join<Product, ProductAttribute> productAttribute 	= root.join(Product_.attributes);
+		Join<Product, CategoryProduct> category 					= root.join(Product_.categories);
+		Join<Product, Brand> brand 							= root.join(Product_.brand);
+		Join<Product, ProductStatus> status 				= root.join(Product_.productStatus);
+		Join<Product, ProductPrice> price 					= root.join(Product_.prices);
+		Join<ProductPrice, ProductPriceType> type 			= price.join(ProductPrice_.type);
+		Join<ProductPrice, Currency> curr 					= price.join(ProductPrice_.currency);
+		Join<Brand, BrandAttribute> brandAttribute 			= brand.join(Brand_.brandAttributes);
+		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(CategoryProduct_.attributes);
+		Join<CategoryProduct, Hierarchy> categoryHierarchy 		= category.join(CategoryProduct_.hierarchy);
+		
+		List<Predicate> conditions = new ArrayList<Predicate>();
+		if(!categoryIds.isEmpty()) {
+			conditions.add(category.get(CategoryProduct_.categoryId).in(categoryIds));
+		}
+		if(!brandIds.isEmpty()) {
+			conditions.add(brand.get(Brand_.brandId).in(brandIds));
+		}
+		if(!tagIds.isEmpty()) {
+			Join<Product, ProductTag> tag = root.join(Product_.tags);
+			conditions.add(tag.get(ProductTag_.productTagId).in(tagIds));
+		}
+		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), locale));
+		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale));
+		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
+		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
+		conditions.add(cb.equal(type.get(ProductPriceType_.desc), priceType));
+		conditions.add(cb.equal(curr.get(Currency_.code), currency));
+		if(priceStart != -1 && priceEnd != -1) {
+			conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.priceValue), priceStart));
+			conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.priceValue), priceEnd));
+		}
+		conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.startDate), priceDateStart));
+		conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.endDate), priceDateEnd));
+		conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.hierarchyCode), CategoryVars.PRIMARY_HIERARCHY_CODE));		
+		Long resultCount = this.getResultCountById(categoryIds, locale, priceStart, priceEnd, priceType, currency, priceDateStart, priceDateEnd, pageable, brandIds, tagIds);
+	
+		Order order = pageable.getSort().stream().map(o -> {
+			return this.getOrder(o.getProperty().replaceAll(".*\\.", ""), o.getDirection(), cb, productAttribute, price);
+		}).collect(Collectors.toList()).get(0);
+		
+		TypedQuery<Product> query = em.createQuery(cq
+				.select(root)
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(false)
+				.orderBy(order)
+		);
+
+		PageableUtil pageableUtil = new PageableUtil();
+		query.setFirstResult(pageableUtil.getStartPosition(pageable));
+		query.setMaxResults(pageable.getPageSize());
+		
+		return new PageImpl<Product>(query.getResultList(), pageable, resultCount);
+
 	}
 	
 	@Override
@@ -286,65 +285,65 @@ public class ProductDaoImpl implements IProductDao {
 			Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd,
 			Pageable pageable, List<String> brandCodes, List<String> tagCodes) {
 		// TODO Auto-generated method stub
-//		CriteriaBuilder cb = em.getCriteriaBuilder();
-//		
-//		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
-//		
-//		Root<Product> root 									= cq.from(Product.class);
-//		Join<Product, ProductAttribute> productAttribute 	= root.join(Product_.attributes);
-//		Join<Product, CategoryProduct> category 					= root.join(Product_.categories);
-//		Join<Product, Brand> brand 							= root.join(Product_.brand);
-//		Join<Product, ProductStatus> status 				= root.join(Product_.productStatus);
-//		Join<Product, ProductPrice> price 					= root.join(Product_.prices);
-//		Join<ProductPrice, ProductPriceType> type 			= price.join(ProductPrice_.type);
-//		Join<ProductPrice, Currency> curr 					= price.join(ProductPrice_.currency);
-//		Join<Brand, BrandAttribute> brandAttribute 			= brand.join(Brand_.brandAttributes);
-//		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(CategoryProduct_.categoryAttribute);
-//		//Join<Category, Hierarchy> categoryHierarchy 		= category.join(Category_.hierarchy);
-//		
-//		List<Predicate> conditions = new ArrayList<Predicate>();
-//		if(!categoryCodes.isEmpty()) {
-//			conditions.add(category.get(CategoryProduct_.categoryCode).in(categoryCodes));
-//		}
-//		if(!brandCodes.isEmpty()) {
-//			conditions.add(brand.get(Brand_.brandCode).in(brandCodes));
-//		}
-//		if(!tagCodes.isEmpty()) {
-//			Join<Product, ProductTag> tag = root.join(Product_.tags);
-//			conditions.add(tag.get(ProductTag_.productTagCode).in(tagCodes));
-//		}
-//		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), locale));
-//		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale));
-//		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
-//		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
-//		conditions.add(cb.equal(type.get(ProductPriceType_.desc), priceType));
-//		conditions.add(cb.equal(curr.get(Currency_.code), currency));
-//		if(priceStart != -1 && priceEnd != -1) {
-//			conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.priceValue), priceStart));
-//			conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.priceValue), priceEnd));
-//		}
-//		conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.startDate), priceDateStart));
-//		conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.endDate), priceDateEnd));
-//		//conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), CategoryVars.PRIMARY_HIERARCHY_CODE));		
-//		Long resultCount = this.getResultCountByCode(categoryCodes, locale, priceStart, priceEnd, priceType, currency, priceDateStart, priceDateEnd, pageable, brandCodes, tagCodes);
-//	
-//		Order order = pageable.getSort().stream().map(o -> {
-//			return this.getOrder(o.getProperty().replaceAll(".*\\.", ""), o.getDirection(), cb, productAttribute, price);
-//		}).collect(Collectors.toList()).get(0);
-//		
-//		TypedQuery<Product> query = em.createQuery(cq
-//				.select(root)
-//				.where(conditions.toArray(new Predicate[] {}))
-//				.distinct(false)
-//				.orderBy(order)
-//		);
-//
-//		PageableUtil pageableUtil = new PageableUtil();
-//		query.setFirstResult(pageableUtil.getStartPosition(pageable));
-//		query.setMaxResults(pageable.getPageSize());
-//		
-//		return new PageImpl<Product>(query.getResultList(), pageable, resultCount);
-	return null;
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
+		
+		Root<Product> root 									= cq.from(Product.class);
+		Join<Product, ProductAttribute> productAttribute 	= root.join(Product_.attributes);
+		Join<Product, CategoryProduct> category 					= root.join(Product_.categories);
+		Join<Product, Brand> brand 							= root.join(Product_.brand);
+		Join<Product, ProductStatus> status 				= root.join(Product_.productStatus);
+		Join<Product, ProductPrice> price 					= root.join(Product_.prices);
+		Join<ProductPrice, ProductPriceType> type 			= price.join(ProductPrice_.type);
+		Join<ProductPrice, Currency> curr 					= price.join(ProductPrice_.currency);
+		Join<Brand, BrandAttribute> brandAttribute 			= brand.join(Brand_.brandAttributes);
+		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(CategoryProduct_.attributes);
+		//Join<Category, Hierarchy> categoryHierarchy 		= category.join(Category_.hierarchy);
+		
+		List<Predicate> conditions = new ArrayList<Predicate>();
+		if(!categoryCodes.isEmpty()) {
+			conditions.add(category.get(CategoryProduct_.categoryCode).in(categoryCodes));
+		}
+		if(!brandCodes.isEmpty()) {
+			conditions.add(brand.get(Brand_.brandCode).in(brandCodes));
+		}
+		if(!tagCodes.isEmpty()) {
+			Join<Product, ProductTag> tag = root.join(Product_.tags);
+			conditions.add(tag.get(ProductTag_.productTagCode).in(tagCodes));
+		}
+		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), locale));
+		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale));
+		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
+		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
+		conditions.add(cb.equal(type.get(ProductPriceType_.desc), priceType));
+		conditions.add(cb.equal(curr.get(Currency_.code), currency));
+		if(priceStart != -1 && priceEnd != -1) {
+			conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.priceValue), priceStart));
+			conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.priceValue), priceEnd));
+		}
+		conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.startDate), priceDateStart));
+		conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.endDate), priceDateEnd));
+		//conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), CategoryVars.PRIMARY_HIERARCHY_CODE));		
+		Long resultCount = this.getResultCountByCode(categoryCodes, locale, priceStart, priceEnd, priceType, currency, priceDateStart, priceDateEnd, pageable, brandCodes, tagCodes);
+	
+		Order order = pageable.getSort().stream().map(o -> {
+			return this.getOrder(o.getProperty().replaceAll(".*\\.", ""), o.getDirection(), cb, productAttribute, price);
+		}).collect(Collectors.toList()).get(0);
+		
+		TypedQuery<Product> query = em.createQuery(cq
+				.select(root)
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(false)
+				.orderBy(order)
+		);
+
+		PageableUtil pageableUtil = new PageableUtil();
+		query.setFirstResult(pageableUtil.getStartPosition(pageable));
+		query.setMaxResults(pageable.getPageSize());
+		
+		return new PageImpl<Product>(query.getResultList(), pageable, resultCount);
+
 	}
 	
 	@Override
@@ -352,145 +351,142 @@ public class ProductDaoImpl implements IProductDao {
 			String priceType, String currency, Date priceDateStart, Date priceDateEnd,
 			Pageable pageable, List<String> brandCodes, List<String> tagCodes) {
 		// TODO Auto-generated method stub
-//		CriteriaBuilder cb = em.getCriteriaBuilder();
-//		
-//		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
-//		
-//		Root<Product> root 									= cq.from(Product.class);
-//		Join<Product, ProductAttribute> productAttribute 	= root.join(Product_.attributes);
-//		Join<Product, CategoryProduct> category 					= root.join(Product_.categories);
-//		Join<Product, Brand> brand 							= root.join(Product_.brand);
-//		Join<Product, ProductStatus> status 				= root.join(Product_.productStatus);
-//		Join<Product, ProductPrice> price 					= root.join(Product_.prices);
-//		Join<ProductPrice, ProductPriceType> type 			= price.join(ProductPrice_.type);
-//		Join<ProductPrice, Currency> curr 					= price.join(ProductPrice_.currency);
-//		Join<Brand, BrandAttribute> brandAttribute 			= brand.join(Brand_.brandAttributes);
-//		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(CategoryProduct_.categoryAttribute);
-//		//Join<Category, Hierarchy> categoryHierarchy 		= category.join(Category_.hierarchy);
-//		
-//		List<Predicate> conditions = new ArrayList<Predicate>();
-//		if(!categoryCodes.isEmpty()) {
-//			conditions.add(category.get(CategoryProduct_.categoryCode).in(categoryCodes));
-//		}
-//		if(!brandCodes.isEmpty()) {
-//			conditions.add(brand.get(Brand_.brandCode).in(brandCodes));
-//		}
-//		if(!tagCodes.isEmpty()) {
-//			Join<Product, ProductTag> tag = root.join(Product_.tags);
-//			conditions.add(tag.get(ProductTag_.productTagCode).in(tagCodes));
-//		}
-//		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), locale));
-//		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale));
-//		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
-//		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
-//		conditions.add(cb.equal(type.get(ProductPriceType_.desc), priceType));
-//		conditions.add(cb.equal(curr.get(Currency_.code), currency));
-//		conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.startDate), priceDateStart));
-//		conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.endDate), priceDateEnd));
-//		//conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), CategoryVars.PRIMARY_HIERARCHY_CODE));		
-//		Long resultCount = this.getResultCountByCode(categoryCodes, locale, priceType, currency, priceDateStart, priceDateEnd, pageable, brandCodes, tagCodes);
-//	
-//		Order order = pageable.getSort().stream().map(o -> {
-//			return this.getOrder(o.getProperty().replaceAll(".*\\.", ""), o.getDirection(), cb, productAttribute, price);
-//		}).collect(Collectors.toList()).get(0);
-//		
-//		TypedQuery<Product> query = em.createQuery(cq
-//				.select(root)
-//				.where(conditions.toArray(new Predicate[] {}))
-//				.distinct(false)
-//				.orderBy(order)
-//		);
-//
-//		PageableUtil pageableUtil = new PageableUtil();
-//		query.setFirstResult(pageableUtil.getStartPosition(pageable));
-//		query.setMaxResults(pageable.getPageSize());
-//		
-//		return new PageImpl<Product>(query.getResultList(), pageable, resultCount);
-	return null;
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
+		
+		Root<Product> root 									= cq.from(Product.class);
+		Join<Product, ProductAttribute> productAttribute 	= root.join(Product_.attributes);
+		Join<Product, CategoryProduct> category 					= root.join(Product_.categories);
+		Join<Product, Brand> brand 							= root.join(Product_.brand);
+		Join<Product, ProductStatus> status 				= root.join(Product_.productStatus);
+		Join<Product, ProductPrice> price 					= root.join(Product_.prices);
+		Join<ProductPrice, ProductPriceType> type 			= price.join(ProductPrice_.type);
+		Join<ProductPrice, Currency> curr 					= price.join(ProductPrice_.currency);
+		Join<Brand, BrandAttribute> brandAttribute 			= brand.join(Brand_.brandAttributes);
+		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(CategoryProduct_.attributes);
+		//Join<Category, Hierarchy> categoryHierarchy 		= category.join(Category_.hierarchy);
+		
+		List<Predicate> conditions = new ArrayList<Predicate>();
+		if(!categoryCodes.isEmpty()) {
+			conditions.add(category.get(CategoryProduct_.categoryCode).in(categoryCodes));
+		}
+		if(!brandCodes.isEmpty()) {
+			conditions.add(brand.get(Brand_.brandCode).in(brandCodes));
+		}
+		if(!tagCodes.isEmpty()) {
+			Join<Product, ProductTag> tag = root.join(Product_.tags);
+			conditions.add(tag.get(ProductTag_.productTagCode).in(tagCodes));
+		}
+		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), locale));
+		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale));
+		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
+		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
+		conditions.add(cb.equal(type.get(ProductPriceType_.desc), priceType));
+		conditions.add(cb.equal(curr.get(Currency_.code), currency));
+		conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.startDate), priceDateStart));
+		conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.endDate), priceDateEnd));
+		//conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), CategoryVars.PRIMARY_HIERARCHY_CODE));		
+		Long resultCount = this.getResultCountByCode(categoryCodes, locale, priceType, currency, priceDateStart, priceDateEnd, pageable, brandCodes, tagCodes);
+	
+		Order order = pageable.getSort().stream().map(o -> {
+			return this.getOrder(o.getProperty().replaceAll(".*\\.", ""), o.getDirection(), cb, productAttribute, price);
+		}).collect(Collectors.toList()).get(0);
+		
+		TypedQuery<Product> query = em.createQuery(cq
+				.select(root)
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(false)
+				.orderBy(order)
+		);
+
+		PageableUtil pageableUtil = new PageableUtil();
+		query.setFirstResult(pageableUtil.getStartPosition(pageable));
+		query.setMaxResults(pageable.getPageSize());
+		
+		return new PageImpl<Product>(query.getResultList(), pageable, resultCount);
 	}
 	
 	@Override
 	public List<Product> getAll(String locale, String currency, List<String> productCodes) {
 		
-//		CriteriaBuilder cb = em.getCriteriaBuilder();
-//	
-//		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
-//		
-//		Root<Product> root = cq.from(Product.class);
-//		
-//		Join<Product, ProductAttribute> productAttribute = root.join(Product_.attributes);
-//		Join<Product, CategoryProduct> category = root.join(Product_.categories);
-//		Join<Product, Brand> brand = root.join(Product_.brand);
-//		Join<Product, ProductStatus> status = root.join(Product_.productStatus);
-//		Join<Product, ProductPrice> price = root.join(Product_.prices);
-//		Join<ProductPrice, Currency> curr = price.join(ProductPrice_.currency);
-//		Join<Brand, BrandAttribute> brandAttribute = brand.join(Brand_.brandAttributes);
-//		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(CategoryProduct_.categoryAttribute);
-//		//Join<Category, Hierarchy> categoryHierarchy = category.join(Category_.hierarchy);
-//		
-//		List<Predicate> conditions = new ArrayList<Predicate>();
-//		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), locale));
-//		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale));
-//		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
-//		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
-//		conditions.add(cb.equal(curr.get(Currency_.code), currency));
-//		if(!productCodes.isEmpty()) {
-//			conditions.add(root.get(Product_.productUPC).in(productCodes));
-//		}
-//		
-//		TypedQuery<Product> query = em.createQuery(cq
-//				.select(root)
-//				.where(conditions.toArray(new Predicate[] {}))
-//				.distinct(true)
-//		);
-//
-//		return query.getResultList();
-		return null;
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+	
+		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
+		
+		Root<Product> root = cq.from(Product.class);
+		
+		Join<Product, ProductAttribute> productAttribute = root.join(Product_.attributes);
+		Join<Product, CategoryProduct> category = root.join(Product_.categories);
+		Join<Product, Brand> brand = root.join(Product_.brand);
+		Join<Product, ProductStatus> status = root.join(Product_.productStatus);
+		Join<Product, ProductPrice> price = root.join(Product_.prices);
+		Join<ProductPrice, Currency> curr = price.join(ProductPrice_.currency);
+		Join<Brand, BrandAttribute> brandAttribute = brand.join(Brand_.brandAttributes);
+		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(CategoryProduct_.attributes);
+		//Join<Category, Hierarchy> categoryHierarchy = category.join(Category_.hierarchy);
+		
+		List<Predicate> conditions = new ArrayList<Predicate>();
+		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), locale));
+		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale));
+		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
+		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
+		conditions.add(cb.equal(curr.get(Currency_.code), currency));
+		if(!productCodes.isEmpty()) {
+			conditions.add(root.get(Product_.productUPC).in(productCodes));
+		}
+		
+		TypedQuery<Product> query = em.createQuery(cq
+				.select(root)
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(true)
+		);
+
+		return query.getResultList();
     }
 	
 	@Override
 	public Double getMaxPriceById(String categoryDesc, String locale, String priceType, String currency, List<Long> categoryIds, List<Long> brandIds, List<Long> tagIds) {
 
-//		CriteriaBuilder cb = em.getCriteriaBuilder();
-//	
-//		CriteriaQuery<Double> cq = cb.createQuery(Double.class);
-//		
-//		Root<Product> root = cq.from(Product.class);
-//		Join<Product, CategoryProduct> category = root.join(Product_.categories);
-//		Join<Product, ProductAttribute> productAttribute = root.join(Product_.attributes);
-//		Join<Product, Brand> brand = root.join(Product_.brand);
-//		Join<Product, ProductStatus> status = root.join(Product_.productStatus);
-//		Join<Product, ProductPrice> price = root.join(Product_.prices);
-//		Join<ProductPrice, ProductPriceType> type = price.join(ProductPrice_.type);
-//		Join<ProductPrice, Currency> curr = price.join(ProductPrice_.currency);
-//		Join<Brand, BrandAttribute> brandAttribute = brand.join(Brand_.brandAttributes);
-//		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(CategoryProduct_.categoryAttribute);
-//		
-//		List<Predicate> conditions = new ArrayList<Predicate>();
-//		if(!categoryIds.isEmpty()) {
-//			conditions.add(category.get(CategoryProduct_.categoryId).in(categoryIds));
-//		}
-//		if(!brandIds.isEmpty()) {
-//			conditions.add(brand.get(Brand_.brandId).in(brandIds));
-//		}
-//		if(!tagIds.isEmpty()) {
-//			Join<Product, ProductTag> tag = root.join(Product_.tags);
-//			conditions.add(tag.get(ProductTag_.productTagId).in(tagIds));
-//		}
-//		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), locale));
-//		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale));
-//		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
-//		conditions.add(cb.equal(type.get(ProductPriceType_.desc), priceType));
-//		conditions.add(cb.equal(curr.get(Currency_.code), currency));
-//		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
-//		
-//		TypedQuery<Double> query = em.createQuery(cq
-//				.select(cb.max(price.<Double>get(ProductPrice_.priceValue)))
-//				.where(conditions.toArray(new Predicate[] {}))
-//				.distinct(false));
-//		 
-//		return query.getSingleResult();
-		return null;
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+	
+		CriteriaQuery<Double> cq = cb.createQuery(Double.class);
+		
+		Root<Product> root = cq.from(Product.class);
+		Join<Product, CategoryProduct> category = root.join(Product_.categories);
+		Join<Product, ProductAttribute> productAttribute = root.join(Product_.attributes);
+		Join<Product, Brand> brand = root.join(Product_.brand);
+		Join<Product, ProductStatus> status = root.join(Product_.productStatus);
+		Join<Product, ProductPrice> price = root.join(Product_.prices);
+		Join<ProductPrice, ProductPriceType> type = price.join(ProductPrice_.type);
+		Join<ProductPrice, Currency> curr = price.join(ProductPrice_.currency);
+		Join<Brand, BrandAttribute> brandAttribute = brand.join(Brand_.brandAttributes);
+		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(CategoryProduct_.attributes);
+		
+		List<Predicate> conditions = new ArrayList<Predicate>();
+		if(!categoryIds.isEmpty()) {
+			conditions.add(category.get(CategoryProduct_.categoryId).in(categoryIds));
+		}
+		if(!brandIds.isEmpty()) {
+			conditions.add(brand.get(Brand_.brandId).in(brandIds));
+		}
+		if(!tagIds.isEmpty()) {
+			Join<Product, ProductTag> tag = root.join(Product_.tags);
+			conditions.add(tag.get(ProductTag_.productTagId).in(tagIds));
+		}
+		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), locale));
+		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale));
+		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
+		conditions.add(cb.equal(type.get(ProductPriceType_.desc), priceType));
+		conditions.add(cb.equal(curr.get(Currency_.code), currency));
+		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
+		
+		TypedQuery<Double> query = em.createQuery(cq
+				.select(cb.max(price.<Double>get(ProductPrice_.priceValue)))
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(false));
+		 
+		return query.getSingleResult();
     }
 	
 	@Override
