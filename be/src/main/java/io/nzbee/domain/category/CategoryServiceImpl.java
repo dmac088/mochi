@@ -8,10 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
-
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.tag.Tag;
-import io.nzbee.variables.CategoryVars;
 
 @Service
 @Transactional
@@ -22,7 +20,7 @@ public class CategoryServiceImpl implements ICategoryService {
     @Autowired
     @Qualifier("categoryEntityService")
     private io.nzbee.entity.category.ICategoryService categoryService;
-    
+     
     @Override
 	@Transactional
 	//@Cacheable
@@ -42,7 +40,7 @@ public class CategoryServiceImpl implements ICategoryService {
 	@Override
 	public Optional<Category> findParent(String locale, String categoryCode) {
 		// TODO Auto-generated method stub
-		return Optional.ofNullable(convertCategoryDtoToCategoryDO(categoryService.findOne(locale, categoryService.findByCategoryCode(categoryCode, locale).get().getParentCode()).get()));
+		return Optional.ofNullable(convertCategoryDtoToCategoryDO(categoryService.findByCategoryCode(locale, categoryService.findByCategoryCode(categoryCode, locale).get().getParent().getCategoryCode()).get()));
 	}
     
     @Override
@@ -57,8 +55,8 @@ public class CategoryServiceImpl implements ICategoryService {
     @Override
   	@Transactional
   	//@Cacheable
-  	public List<Category> findAllForLevel(String locale, Long level) {
-     	return categoryService.findAllForLevel(locale, level)
+  	public List<Category> findAllForLevel(Long level, String locale) {
+     	return categoryService.findAllForLevel(level, locale)
      						  .stream().map(c -> convertCategoryDtoToCategoryDO(c))
      						  .collect(Collectors.toList());
   	}	
@@ -68,14 +66,14 @@ public class CategoryServiceImpl implements ICategoryService {
   	@Transactional
   	//@Cacheable
   	public Optional<Category> findOne(final String locale, final String categoryCode) {
-    	return Optional.ofNullable(convertCategoryDtoToCategoryDO(categoryService.findOneByCode(categoryCode, locale).get()));
+    	return Optional.ofNullable(convertCategoryDtoToCategoryDO(categoryService.findByCategoryCode(categoryCode, locale).get()));
   	}
     
     @Override
 	@Transactional
 	//@Cacheable
 	public Optional<Category> findOneByDesc(String locale, String categoryDesc) {
-    	return Optional.ofNullable(convertCategoryDtoToCategoryDO(categoryService.findOneByDesc(locale, categoryDesc).get()));
+    	return Optional.ofNullable(convertCategoryDtoToCategoryDO(categoryService.findByCategoryDesc(locale, categoryDesc).get()));
    
 	}
     

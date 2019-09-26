@@ -51,7 +51,7 @@ public class CategoryServiceImpl implements ICategoryService {
 
 
 	@Override
-	public List<Category> findByLevel(Long level, String locale) {
+	public List<Category> findAllForLevel(Long level, String locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}
