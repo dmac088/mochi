@@ -42,5 +42,11 @@ public class CategoryBrand extends Category {
 		// TODO Auto-generated method stub
 		return brandCount;
 	}
+
+	@Override
+	public Long setObjectCount(Long count) {
+		// TODO Auto-generated method stub
+		return this.brandCount = count;
+	}
 	
 }

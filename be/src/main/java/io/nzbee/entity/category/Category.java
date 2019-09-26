@@ -521,6 +521,10 @@ public abstract class Category {
 	@Transient
 	private Long maxMarkdownPrice;
 	
+	public abstract Long getObjectCount();
+	
+	public abstract Long setObjectCount(Long count);
+	
 	@Field(analyze = Analyze.NO)
 	@Facet
 	public String getCategoryToken() {
@@ -540,7 +544,7 @@ public abstract class Category {
 		return this.createCategoryToken(parent.get(), lc);
 	}
 	
-	public abstract Long getObjectCount();
+	
 
 	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_ENGLISH))
 	public String getPrimaryCategoryDescENGB() {
