@@ -10,6 +10,7 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.tag.Tag;
+import io.nzbee.variables.CategoryVars;
 
 @Service
 @Transactional
@@ -81,14 +82,13 @@ public class CategoryServiceImpl implements ICategoryService {
 	@Transactional
 	//@Cacheable
 	public List<Category> findAll(String locale, String categoryDesc, List<Brand> brands, List<Tag> tags) {
-    	return null;
-//    	return categoryService.findAll(
-//    			 locale,
-//				 categoryDesc, 
-//				 brands,  
-//				 tags)
-//    			.stream().map(c -> convertCategoryDtoToCategoryDO(c))
-//    			.collect(Collectors.toList());
+    	return categoryService.findAll(
+    			 categoryDesc, 
+				 brands.stream().map(b -> b.getBrandDesc()).collect(Collectors.toList()),  
+				 tags.stream().map(t -> t.getTagDesc()).collect(Collectors.toList()),
+				 locale)
+    			.stream().map(c -> convertCategoryDtoToCategoryDO(c))
+    			.collect(Collectors.toList());
 	}
 
 
@@ -96,18 +96,17 @@ public class CategoryServiceImpl implements ICategoryService {
 	public Category convertCategoryDtoToCategoryDO(io.nzbee.entity.category.Category category) {
 		// TODO Auto-generated method stub
 		
-//		Category categoryDO = category.getCategoryType().getCode().equals(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT) 
-//							? new ProductCategory()
-//							: new BrandCategory();
+		Category categoryDO = category.getCategoryType().getCode().equals(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT) 
+							? new ProductCategory()
+							: new BrandCategory();
 		
-//		categoryDO.setCategoryCode(category.getCategoryCode());
-//		categoryDO.setCategoryDesc(category.getAttributes().stream().findFirst().get().getCategoryDesc());
-//		categoryDO.setCategoryLevel(category.getCategoryLevel());
-//		categoryDO.setCategoryType(category.getCategoryType().getCode());
+		categoryDO.setCategoryCode(category.getCategoryCode());
+		categoryDO.setCategoryDesc(category.getAttributes().stream().findFirst().get().getCategoryDesc());
+		categoryDO.setCategoryLevel(category.getCategoryLevel());
+		categoryDO.setCategoryType(category.getCategoryType().getCode());
 		//categoryDO.setCount(categoryDto.getObjectCount());
 							
-		//return categoryDO;
-		return null;
+		return categoryDO;
 	}
 
 }

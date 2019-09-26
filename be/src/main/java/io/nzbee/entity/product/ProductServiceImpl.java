@@ -252,8 +252,7 @@ public class ProductServiceImpl implements IProductService {
 	}
 	
 	private Set<String> getAllChildCodes(String categoryDesc, String locale, String currency ) {
-		Category pc = categoryService.findByCategoryDesc(
-				CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
+		Category pc = categoryService.findByCategoryDesc( 
 				categoryDesc, 
 				locale).get();
 
