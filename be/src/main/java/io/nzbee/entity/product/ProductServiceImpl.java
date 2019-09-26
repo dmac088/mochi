@@ -14,8 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.ICategoryService;
-import io.nzbee.variables.CategoryVars;
-
 @Service(value = "productEntityService")
 public class ProductServiceImpl implements IProductService {
 	
