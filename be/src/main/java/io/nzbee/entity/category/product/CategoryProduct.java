@@ -42,4 +42,10 @@ public class CategoryProduct extends Category  {
 		// TODO Auto-generated method stub
 		return productCount;
 	}
+
+	@Override
+	public Long setObjectCount(Long count) {
+		// TODO Auto-generated method stub
+		return productCount = count;
+	}
 }

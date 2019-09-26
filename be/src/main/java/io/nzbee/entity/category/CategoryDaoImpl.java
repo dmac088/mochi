@@ -1,6 +1,7 @@
 
 package io.nzbee.entity.category;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -24,8 +25,10 @@ import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.attribute.CategoryAttribute_;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.category.product.CategoryProduct_;
+import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.Product_;
+import io.nzbee.entity.product.hierarchy.Hierarchy;
 import io.nzbee.entity.product.tag.ProductTag;
 import io.nzbee.entity.product.tag.ProductTag_;
 import io.nzbee.variables.ProductVars;
@@ -72,17 +75,21 @@ public class CategoryDaoImpl implements ICategoryDao {
 		@SuppressWarnings("unchecked")
 		List<Object[]> results = query.getResultList();
 		
-		results.stream().forEach(c -> {
+		return results.stream().map(c -> {
 			Category category = (Category) c[0];
-			System.out.println(category.getCategoryCode());
 			category.setCategoryAttribute(((CategoryAttribute) c[1]));
-			System.out.println(category.getCategoryAttribute().getCategoryDesc());
-			//System.out.println(category.getParent().getCategoryAttribute().getCategoryDesc());
-			System.out.println(category.getClass().getSimpleName());
-			System.out.println(category.getCategoryCode() + " - " + c[8]);
-		});
-		
-		return null;
+			category.setCategoryType((CategoryType) c[2]);
+			category.setHierarchy((Hierarchy) c[3]);
+			category.setObjectCount(((BigDecimal)c[8]).longValue());
+			
+			Category parentCategory = (Category) c[4];
+			parentCategory.setCategoryAttribute(((CategoryAttribute) c[5]));
+			parentCategory.setCategoryType((CategoryType) c[6]);
+			parentCategory.setHierarchy((Hierarchy) c[7]);
+			
+			category.setParent(parentCategory);
+			return category;
+		}).collect(Collectors.toList());
 	}
 	
 	@Override 
