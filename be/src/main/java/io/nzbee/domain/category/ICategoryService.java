@@ -9,9 +9,7 @@ import io.nzbee.domain.tag.Tag;
 
 
 public interface ICategoryService {
-	 
-	List<Category> findAllForLevel(String lcl, Long level);
-	 
+	 	 
 	List<Category> findByParent(String locale, String parentCategoryCode);
 
 	List<Category> findAll(String locale, String categoryDesc, List<Brand> brands, List<Tag> tags);
@@ -27,5 +25,7 @@ public interface ICategoryService {
 	List<Category> findAll(String locale, String currency);
 
 	Category convertCategoryDtoToCategoryDO(io.nzbee.entity.category.Category category);
+
+	List<Category> findAllForLevel(Long level, String locale);
 
 }
