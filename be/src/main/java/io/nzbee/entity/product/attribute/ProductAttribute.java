@@ -72,6 +72,7 @@ public class ProductAttribute {
 	private Long Id;
 
 	@Column(name="prd_id")
+	@Field(store=Store.YES)
 	private Long productId;
 	 
 	@Field(analyze = Analyze.YES, store=Store.YES)
@@ -79,6 +80,7 @@ public class ProductAttribute {
 	private String productDesc; 
 
 	@Column(name="prd_img_pth")
+	@Field(store=Store.YES)
 	private String ProductImage;
 	
 	@Column(name="lcl_cd")
@@ -94,7 +96,7 @@ public class ProductAttribute {
 	
 	@Transient
 	@Facet
-	@Field(analyze = Analyze.NO)
+	@Field(analyze = Analyze.NO, store=Store.YES)
 	public String getBrandCode() {
 		return this.product.getBrand().getCode();
 	}
@@ -132,7 +134,7 @@ public class ProductAttribute {
 	}
 	
 	@Transient
-	@Field(analyze = Analyze.YES)
+	@Field(analyze = Analyze.YES, store=Store.YES)
 	public String getTagA() {
 		Optional<List<ProductTag>> lpt = Optional.ofNullable(this.getProduct().getTags());
 		if(!lpt.isPresent());
@@ -145,7 +147,7 @@ public class ProductAttribute {
 	}
 	
 	@Transient
-	@Field(analyze = Analyze.YES)
+	@Field(analyze = Analyze.YES, store=Store.YES)
 	public String getTagB() {
 		Optional<List<ProductTag>> lpt = Optional.ofNullable(this.getProduct().getTags());
 		if(!lpt.isPresent());
@@ -159,7 +161,7 @@ public class ProductAttribute {
 	}
 	
 	@Transient
-	@Field(analyze = Analyze.YES)
+	@Field(analyze = Analyze.YES, store=Store.YES)
 	public String getTagC() {
 		Optional<List<ProductTag>> lpt = Optional.ofNullable(this.getProduct().getTags());
 		if(!lpt.isPresent());
@@ -173,7 +175,7 @@ public class ProductAttribute {
 		return "Empty";
 	}
 	
-	@Field(analyze = Analyze.YES)
+	@Field(analyze = Analyze.YES, store=Store.YES)
 	public String getBrandDesc() {
 		List<BrandAttribute> lba = this.getProduct().getBrand().getAttributes();
 		Optional<BrandAttribute> brandAttribute = lba.stream().filter(ba -> ba.getLclCd().equals(this.getLclCd())).findFirst();
