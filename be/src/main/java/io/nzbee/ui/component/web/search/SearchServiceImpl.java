@@ -318,7 +318,9 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 				
 		List<Product> lp = results.stream().map(r -> {
 			Product p = new Product();
+			p.setProductDesc(r[2].toString());
 			p.setProductUPC(r[5].toString());
+			p.setLclCd(r[4].toString());
 			return p;
 		}).collect(Collectors.toList());
 
