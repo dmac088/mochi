@@ -299,18 +299,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		// get the results using jpaQuery object
 		List<Object[]> results = jpaQuery.getResultList();
 
-		Object[] firstResult = results.get(0);
-		System.out.println(firstResult[0]);
-		System.out.println(firstResult[1]);
-		System.out.println(firstResult[2]);
-		System.out.println(firstResult[3]);
-		System.out.println(firstResult[4]);
-		System.out.println(firstResult[5]);
-		System.out.println(firstResult[6]);
-		System.out.println(firstResult[7]);
-		System.out.println(firstResult[8]);
-		System.out.println(firstResult[9]);
-		System.out.println(firstResult[10]);
+		
 		
 		
 		// convert the results of jpaQuery to product Data Transfer Objects
@@ -319,8 +308,20 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		List<Product> lp = results.stream().map(r -> {
 			Product p = new Product();
 			p.setProductDesc(r[2].toString());
+			p.setProductImage(r[3].toString());
 			p.setProductUPC(r[5].toString());
 			p.setLclCd(r[4].toString());
+			System.out.println(r[0]);
+			System.out.println(r[1]);
+			System.out.println(r[2]);
+			System.out.println(r[3]);
+			System.out.println(r[4]);
+			System.out.println(r[5]);
+			System.out.println(r[6]);
+			System.out.println(r[7]);
+			System.out.println(r[8]);
+			System.out.println(r[9]);
+			System.out.println(r[10]);
 			return p;
 		}).collect(Collectors.toList());
 
