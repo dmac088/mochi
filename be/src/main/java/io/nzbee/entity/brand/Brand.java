@@ -49,7 +49,6 @@ public class Brand {
 	private List<CategoryBrand> categories;
 	
 	@OneToMany(mappedBy="brand",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@IndexedEmbedded
 	private List<BrandAttribute> brandAttributes;
 	
 	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_ENGLISH))
