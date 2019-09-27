@@ -294,7 +294,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 							   "product.productStatus.productStatusCode",
 							   "product.productStatus.productStatusDesc",
 							   "product.brand.brandCode",
-							   "product.brand.BrandDesc" + transLcl);
+							   "brandDesc");
 
 		// get the results using jpaQuery object
 		List<Object[]> results = jpaQuery.getResultList();

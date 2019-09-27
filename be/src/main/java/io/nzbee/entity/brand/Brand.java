@@ -48,27 +48,6 @@ public class Brand {
 	@OneToMany(mappedBy="brand",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<BrandAttribute> brandAttributes;
 	
-	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_ENGLISH))
-	public String getBrandDescENGB() {
-		List<BrandAttribute> lba = this.getAttributes().stream().filter(ca -> {
- 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH);
- 		}).collect(Collectors.toList());
-
-		if (lba.isEmpty()) { return "Unknown"; }
-		return lba.get(0).getBrandDesc();
-	}
-	
-	
-	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_HK))
-	public String getBrandDescZHHK() {
-		List<BrandAttribute> lba = this.getAttributes().stream().filter(ca -> {
-		 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_HK);
-		 		}).collect(Collectors.toList());
-		
-		if (lba.isEmpty()) { return "Unknown"; }
-		return lba.get(0).getBrandDesc();
-	}
-	
 	public Long getId() {
 		return this.brandId;
 	}
