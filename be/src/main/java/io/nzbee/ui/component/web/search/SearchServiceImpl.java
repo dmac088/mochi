@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
@@ -295,10 +297,9 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 							   "product.brand.BrandDesc" + transLcl);
 
 		// get the results using jpaQuery object
-		@SuppressWarnings("rawtypes")
-		List results = jpaQuery.getResultList();
+		List<Object[]> results = jpaQuery.getResultList();
 
-		Object[] firstResult = (Object[]) results.get(0);
+		Object[] firstResult = results.get(0);
 		System.out.println(firstResult[0]);
 		System.out.println(firstResult[1]);
 		System.out.println(firstResult[2]);
@@ -310,8 +311,16 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		System.out.println(firstResult[8]);
 		System.out.println(firstResult[9]);
 		System.out.println(firstResult[10]);
+		
+		
 		// convert the results of jpaQuery to product Data Transfer Objects
-		List<Product> lp = results;
+		//List<Product> lp = 
+				
+		List<Product> lp = results.stream().map(r -> {
+			Product p = new Product();
+			p.setProductUPC(r[5].toString());
+			return p;
+		}).collect(Collectors.toList());
 
 		Search search = new Search();
 		search.setProducts(new PageImpl<Product>(lp, pageable, jpaQuery.getResultSize()));
