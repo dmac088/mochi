@@ -281,6 +281,18 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		// sort the results
 		org.apache.lucene.search.Sort sort = getSortField(sortBy, currency);
 		jpaQuery.setSort(sort);
+		
+		jpaQuery.setProjection("Id", 
+							   "productId", 
+							   "productDesc", 
+							   "ProductImage",
+							   "lclCd",
+							   "product.productUPC",
+							   "product.productCreateDt",
+							   "product.productStatus.productStatusCode",
+							   "product.productStatus.productStatusDesc",
+							   "product.brand.brandCode",
+							   "product.brand.BrandDesc" + transLcl);
 
 		// get the results using jpaQuery object
 		@SuppressWarnings("rawtypes")
@@ -292,7 +304,13 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		System.out.println(firstResult[2]);
 		System.out.println(firstResult[3]);
 		System.out.println(firstResult[4]);
-		
+		System.out.println(firstResult[5]);
+		System.out.println(firstResult[6]);
+		System.out.println(firstResult[7]);
+		System.out.println(firstResult[8]);
+		System.out.println(firstResult[9]);
+		System.out.println(firstResult[10]);
+		System.out.println(firstResult[11]);
 		// convert the results of jpaQuery to product Data Transfer Objects
 		List<Product> lp = results;
 
