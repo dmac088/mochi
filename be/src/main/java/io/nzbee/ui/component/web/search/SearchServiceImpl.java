@@ -310,7 +310,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		System.out.println(firstResult[8]);
 		System.out.println(firstResult[9]);
 		System.out.println(firstResult[10]);
-		System.out.println(firstResult[11]);
 		// convert the results of jpaQuery to product Data Transfer Objects
 		List<Product> lp = results;
 

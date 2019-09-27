@@ -10,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Store;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import io.nzbee.entity.product.Product;
@@ -23,9 +26,11 @@ public class ProductStatus {
 	private Long productStatusId;
 
 	@Column(name="prd_sts_cd")
+	@Field(store=Store.YES)
 	private String productStatusCode;
 	
 	@Column(name="prd_sts_desc")
+	@Field(store=Store.YES)
 	private String productStatusDesc;
 	
 	@OneToMany(mappedBy="productStatus", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

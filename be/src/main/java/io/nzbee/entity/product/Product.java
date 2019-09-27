@@ -24,6 +24,8 @@ import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
+import org.hibernate.search.annotations.Store;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.nzbee.entity.brand.Brand;
@@ -46,9 +48,11 @@ public class Product {
 	private Long productId;
 
 	@Column(name="upc_cd")
+	@Field(store=Store.YES)
 	private String productUPC;
 	
 	@Column(name="prd_crtd_dt")
+	@Field(store=Store.YES)
 	private Date productCreateDt;
 
 	@ManyToMany(mappedBy = "products")
@@ -82,7 +86,7 @@ public class Product {
 	@JsonManagedReference
 	List<ProductPrice> prices;
 
-	@Field
+	@Field(store=Store.YES)
 	@SortableField
 	@Transient
 	public Double getCurrentMarkdownPriceHKD() {
@@ -94,7 +98,7 @@ public class Product {
 		 ).collect(Collectors.toList()).get(0).getPriceValue();     
 	}
 	
-	@Field
+	@Field(store=Store.YES)
 	@SortableField
 	@Transient
 	public Double getCurrentMarkdownPriceUSD() {
@@ -107,21 +111,21 @@ public class Product {
 	}
 	
 	@Facet
-	@Field(analyze=Analyze.NO)
+	@Field(analyze=Analyze.NO, store=Store.YES)
 	@Transient
 	public Double getCurrentMarkdownPriceHKDFacet() {
 		return this.getCurrentMarkdownPriceHKD();
 	}
 	
 	@Facet
-	@Field(analyze=Analyze.NO)
+	@Field(analyze=Analyze.NO, store=Store.YES)
 	@Transient
 	public Double getCurrentMarkdownPriceUSDFacet() {
 		return this.getCurrentMarkdownPriceHKD();
 	}
 	
 	@Transient
-	@Field(analyze = Analyze.NO)
+	@Field(analyze = Analyze.NO, store=Store.YES)
 	@SortableField
 	private String getProductDesc() {
 		return this.attributes.stream().filter(p -> p.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH)).collect(Collectors.toList()).get(0).getProductDesc().toLowerCase();  

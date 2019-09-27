@@ -16,6 +16,8 @@ import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Store;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
@@ -34,6 +36,7 @@ public class Brand {
 	private Long brandId;
 	
 	@Column(name="bnd_cd")
+	@Field(store=Store.YES)
 	private String brandCode;
 
 	@OneToMany(mappedBy="brand", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -45,12 +48,11 @@ public class Brand {
 	@JsonIgnore
 	private List<CategoryBrand> categories;
 	
-
 	@OneToMany(mappedBy="brand",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@IndexedEmbedded
 	private List<BrandAttribute> brandAttributes;
 	
-	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_ENGLISH))
+	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_ENGLISH))
 	public String getBrandDescENGB() {
 		List<BrandAttribute> lba = this.getAttributes().stream().filter(ca -> {
  			return ca.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH);
@@ -61,7 +63,7 @@ public class Brand {
 	}
 	
 	
-	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_HK))
+	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_HK))
 	public String getBrandDescZHHK() {
 		List<BrandAttribute> lba = this.getAttributes().stream().filter(ca -> {
 		 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_HK);
