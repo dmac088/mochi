@@ -32,6 +32,8 @@ import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Store;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -481,7 +483,6 @@ public abstract class Category {
 	private Long categoryLevel;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@IndexedEmbedded
 	@JoinColumn(name="hir_id", insertable=false, updatable=false)
 	@JsonBackReference
 	private Hierarchy hierarchy;
@@ -546,7 +547,7 @@ public abstract class Category {
 	
 	
 
-	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_ENGLISH))
+	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_ENGLISH))
 	public String getPrimaryCategoryDescENGB() {
 		Optional<CategoryAttribute> pca = this.getAttributes().stream().filter(ca -> {
 		 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH);
@@ -556,7 +557,7 @@ public abstract class Category {
 	}
 	
 	
-	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_HK))
+	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_HK))
 	public String getPrimaryCategoryDescZHHK() {
 		Optional<CategoryAttribute> pca = this.getAttributes().stream().filter(ca -> {
 		 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_HK);
@@ -565,7 +566,7 @@ public abstract class Category {
 		return pca.get().getCategoryDesc();
 	}
 	
-	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_ENGLISH))
+	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_ENGLISH))
 	public String getSecondaryCategoryDescENGB() {
 		Optional<CategoryAttribute> pca = this.getAttributes().stream().filter(ca -> {
 		 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH);
@@ -574,7 +575,7 @@ public abstract class Category {
 		return pca.get().getCategoryDesc();
 	}
 
-	@Field(analyze = Analyze.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_HK))
+	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_HK))
 	public String getSecondaryCategoryDescZHHK() {
 		Optional<CategoryAttribute> pca = this.getAttributes().stream().filter(ca -> {
 		 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_HK);
