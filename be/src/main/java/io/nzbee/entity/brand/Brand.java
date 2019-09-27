@@ -15,9 +15,7 @@ import javax.persistence.Table;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Store;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
@@ -44,7 +42,6 @@ public class Brand {
 	private List<Product> products;
 	
 	@ManyToMany(mappedBy = "brands")
-	@IndexedEmbedded
 	@JsonIgnore
 	private List<CategoryBrand> categories;
 	
@@ -57,7 +54,7 @@ public class Brand {
  			return ca.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH);
  		}).collect(Collectors.toList());
 
-		//if (lba.isEmpty()) { return null; }
+		if (lba.isEmpty()) { return "Unknown"; }
 		return lba.get(0).getBrandDesc();
 	}
 	
@@ -68,7 +65,7 @@ public class Brand {
 		 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_HK);
 		 		}).collect(Collectors.toList());
 		
-		//if (lba.isEmpty()) { return null; }
+		if (lba.isEmpty()) { return "Unknown"; }
 		return lba.get(0).getBrandDesc();
 	}
 	
