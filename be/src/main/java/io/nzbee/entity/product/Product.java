@@ -129,7 +129,8 @@ import io.nzbee.variables.ProductVars;
 	            @EntityResult(
 	                    entityClass = Product.class,
 	                    fields = {
-	                        @FieldResult(name = "productId", column = "prd_id")
+	                        @FieldResult(name = "productId", column = "prd_id"),
+	                        @FieldResult(name = "productUPC", column = "upc_cd")
 	                    })
 	    })
 public class Product { 
