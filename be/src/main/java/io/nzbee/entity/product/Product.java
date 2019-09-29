@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ColumnResult;
 import javax.persistence.Entity;
 import javax.persistence.EntityResult;
 import javax.persistence.FetchType;
@@ -85,7 +84,10 @@ import io.nzbee.variables.ProductVars;
 		"	   bnd.bnd_id, " +
 		"	   bnd.bnd_cd, " +
 		"	   bal.bnd_lcl_id " + 		
-		"	   bal.bnd_desc " +
+		"	   bal.bnd_desc "
+		+ "	   ps.prd_sts_id, "
+		+ "	   ps.prd_sts_cd, "
+		+ "	   ps.prd_sts_desc " +
 		
 		"FROM descendants cc " + 
 		"	INNER JOIN mochi.product_category pc " + 
@@ -117,7 +119,7 @@ import io.nzbee.variables.ProductVars;
 				  
 		"WHERE now() >= prc.prc_st_dt AND now() <= prc.prc_en_dt " + 
 		"AND curr.ccy_cd = 	:currency  " +
-		"AND prc_typ_cd = 	:retailPriceCode " +
+		"AND prc_typ_cd = 	:priceTypeCode " +
 		"AND prd_sts_cd = 	:activeProductCode  " +
 		"AND bal.lcl_cd = 	:locale "
 		)
@@ -135,7 +137,7 @@ import io.nzbee.variables.ProductVars;
 	                        @FieldResult(name = "productStatus", 	column = "prd_sts_id")
 	                    }),
 	            @EntityResult(
-	            entityClass = ProductAttribute.class,
+	            		entityClass = ProductAttribute.class,
 		                fields = {
 		                    @FieldResult(name = "productId", 		column = "prd_id"),
 		                    @FieldResult(name = "productUPC", 		column = "upc_cd"),
@@ -146,16 +148,23 @@ import io.nzbee.variables.ProductVars;
 	            @EntityResult(
 	                    entityClass = Brand.class,
 	                    fields = {
-	                    	@FieldResult(name = "brandId", 			column = "prd_id"),
-		                    @FieldResult(name = "brandCode", 		column = "upc_cd"),
-		                    @FieldResult(name = "brandAttribute", 	column = "prd_crtd_dt")
+	                    	@FieldResult(name = "brandId", 			column = "bnd_id"),
+		                    @FieldResult(name = "brandCode", 		column = "bnd_cd"),
+		                    @FieldResult(name = "brandAttribute", 	column = "bnd_lcl_id")
 	                    }),
 	            @EntityResult(
 	                    entityClass = BrandAttribute.class,
 	                    fields = {
-	                    	@FieldResult(name = "brandId", 			column = "prd_id"),
-		                    @FieldResult(name = "brandCode", 		column = "upc_cd"),
-		                    @FieldResult(name = "brandAttribute", 	column = "prd_crtd_dt")
+	                    	@FieldResult(name = "Id", 				column = "bnd_lcl_id"),
+		                    @FieldResult(name = "brandId", 			column = "bnd_id"),
+		                    @FieldResult(name = "brandDesc", 		column = "bnd_desc")
+	                    }),
+	            @EntityResult(
+	                    entityClass = ProductStatus.class,
+	                    fields = {
+	                    	@FieldResult(name = "productStatusId", 		column = "prd_sts_id"),
+		                    @FieldResult(name = "productStatusCode", 	column = "prd_sts_cd"),
+		                    @FieldResult(name = "productStatusDesc", 	column = "prd_sts_desc")
 	                    })
 	    })
 public class Product { 
