@@ -486,6 +486,7 @@ public abstract class Category {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="hir_id", insertable=false, updatable=false)
 	@JsonBackReference
+	@IndexedEmbedded
 	private Hierarchy hierarchy;
 
 	@ManyToMany(fetch = FetchType.LAZY)

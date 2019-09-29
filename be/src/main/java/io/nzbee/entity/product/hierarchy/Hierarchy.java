@@ -12,6 +12,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Store;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.nzbee.entity.category.Category;
 
@@ -26,9 +31,11 @@ public class Hierarchy {
 	private Long hierarchyId;
 
 	@Column(name="hir_cd")
+	@Field(analyze = Analyze.NO, store=Store.YES)
 	private String hierarchyCode;
 	
 	@Column(name="hir_desc")
+	@Field(analyze = Analyze.NO, store=Store.YES)
 	private String hierarchyDesc;
 	
 	@OneToMany(mappedBy="hierarchy",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
