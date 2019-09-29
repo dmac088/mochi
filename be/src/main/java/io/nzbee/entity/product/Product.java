@@ -14,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -41,74 +43,80 @@ import io.nzbee.variables.ProductVars;
 @Table(name = "product", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "prd_id")
 
-"WITH RECURSIVE " + 
-"descendants AS " + 
-"( " + 
-"  SELECT 	t.cat_id, " +  
-"			t.hir_id, " + 
-"			t.cat_cd, " + 
-"			t.cat_lvl, " + 
-"			t.cat_prnt_id, " +
-"			t.cat_typ_id " +
-" FROM mochi.category AS t " +
-"	INNER JOIN mochi.category  AS pc " +
-"	ON t.cat_prnt_id = pc.cat_id " +
-	
-" WHERE pc.cat_cd = 'VEG01' " +
-" UNION ALL " + 
-" SELECT 	t.cat_id, " +  
-"			t.hir_id, " + 
-"			t.cat_cd, " +  
-"			t.cat_lvl, " + 
-"			t.cat_prnt_id, " +
-"			t.cat_typ_id " +
-  FROM mochi.category AS t  
-  JOIN descendants AS d " +
-  ON t.cat_prnt_id = d.cat_id " + 
-) " +
-select prd.prd_id, " +
-	   prd.upc_cd, " +
-	   prd.prd_crtd_dt, " +
-	   prdt.prd_typ_cd, " +
-	   prdt.prd_typ_desc, " +
-	   bnd.bnd_id, " +
-	   bnd.bnd_cd, " +
-	   bal.bnd_desc " +
-
-FROM descendants cc " + 
-	INNER JOIN mochi.product_category pc " + 
-	ON cc.cat_id = pc.cat_id " + 
-
-	INNER JOIN mochi.product prd " + 
-	ON pc.prd_id = prd.prd_id " +
-	
-	INNER JOIN mochi.product_type prdt " +
-	ON prd.prd_typ_id = prdt.prd_typ_id " +
-	
-	INNER JOIN mochi.brand bnd " +
-	ON prd.bnd_id = bnd.bnd_id " +
-	
-	INNER JOIN mochi.brand_attr_lcl bal " +
-	ON bnd.bnd_id = bal.bnd_id " +
-	
-	INNER JOIN mochi.price prc " +  
-	ON prd.prd_id = prc.prd_id " + 
-		  
-	INNER JOIN mochi.currency curr " +  
-	ON prc.ccy_id = curr.ccy_id " +
-		  
-	INNER JOIN mochi.price_type pt " +
-	ON prc.prc_typ_id = pt.prc_typ_id " +
-
-	INNER JOIN mochi.product_status ps " + 
-	ON prd.prd_sts_id = ps.prd_sts_id " +
-		  
-WHERE now() >= prc.prc_st_dt AND now() <= prc.prc_en_dt " + 
-AND curr.ccy_cd = 	'HKD' " +
-AND prc_typ_cd = 	'RET01' " +
-"AND prd_sts_cd = 	'ACT01' " +
-"AND bal.lcl_cd = 	'en-GB' " +
-
+@NamedNativeQueries({
+	@NamedNativeQuery(
+	name = "getProducts",
+	resultSetMapping = "ProductMapping",
+	query = 
+		"WITH RECURSIVE " + 
+		"descendants AS " + 
+		"( " + 
+		"  SELECT 	t.cat_id, " +  
+		"			t.hir_id, " + 
+		"			t.cat_cd, " + 
+		"			t.cat_lvl, " + 
+		"			t.cat_prnt_id, " +
+		"			t.cat_typ_id " +
+		" FROM mochi.category AS t " +
+		"	INNER JOIN mochi.category  AS pc " +
+		"	ON t.cat_prnt_id = pc.cat_id " +
+			
+		" WHERE pc.cat_cd = :categoryCode " +
+		" UNION ALL " + 
+		" SELECT 	t.cat_id, " +  
+		"			t.hir_id, " + 
+		"			t.cat_cd, " +  
+		"			t.cat_lvl, " + 
+		"			t.cat_prnt_id, " +
+		"			t.cat_typ_id " +
+		"  FROM mochi.category AS t  " +
+		"  JOIN descendants AS d " +
+		"  ON t.cat_prnt_id = d.cat_id " + 
+		") " +
+		"select prd.prd_id, " +
+		"	   prd.upc_cd, " +
+		"	   prd.prd_crtd_dt, " +
+		"	   prdt.prd_typ_cd, " +
+		"	   prdt.prd_typ_desc, " +
+		"	   bnd.bnd_id, " +
+		"	   bnd.bnd_cd, " +
+		"	   bal.bnd_desc " +
+		
+		"FROM descendants cc " + 
+		"	INNER JOIN mochi.product_category pc " + 
+		"	ON cc.cat_id = pc.cat_id " + 
+		
+		"	INNER JOIN mochi.product prd " + 
+		"	ON pc.prd_id = prd.prd_id " +
+			
+		"	INNER JOIN mochi.product_type prdt " +
+		"	ON prd.prd_typ_id = prdt.prd_typ_id " +
+			
+		"	INNER JOIN mochi.brand bnd " +
+		"	ON prd.bnd_id = bnd.bnd_id " +
+			
+		"	INNER JOIN mochi.brand_attr_lcl bal " +
+		"	ON bnd.bnd_id = bal.bnd_id " +
+			
+		"	INNER JOIN mochi.price prc " +  
+		"	ON prd.prd_id = prc.prd_id " + 
+				  
+		"	INNER JOIN mochi.currency curr " +  
+		"	ON prc.ccy_id = curr.ccy_id " +
+				  
+		"	INNER JOIN mochi.price_type pt " +
+		"	ON prc.prc_typ_id = pt.prc_typ_id " +
+		
+		"	INNER JOIN mochi.product_status ps " + 
+		"	ON prd.prd_sts_id = ps.prd_sts_id " +
+				  
+		"WHERE now() >= prc.prc_st_dt AND now() <= prc.prc_en_dt " + 
+		"AND curr.ccy_cd = 	:currency  " +
+		"AND prc_typ_cd = 	:retailPriceCode " +
+		"AND prd_sts_cd = 	:activeProductCode  " +
+		"AND bal.lcl_cd = 	:locale "
+		)
+	})
 
 public class Product { 
 	
