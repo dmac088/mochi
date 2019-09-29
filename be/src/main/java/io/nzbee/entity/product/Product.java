@@ -123,7 +123,7 @@ import io.nzbee.variables.ProductVars;
 		)
 	})
 @SqlResultSetMapping(
-	    name = "CategoryMapping",
+	    name = "ProductMapping",
 	    columns = @ColumnResult(name = "object_count"),
 	    entities = {
 	            @EntityResult(
