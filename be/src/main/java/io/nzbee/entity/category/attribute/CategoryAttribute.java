@@ -12,9 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.AnalyzerDiscriminator;
-import org.hibernate.search.annotations.Field;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.nzbee.entity.LanguageDiscriminator;
 import io.nzbee.entity.category.Category;
@@ -33,11 +31,9 @@ public class CategoryAttribute {
 	private Long categoryId;
 
 	@Column(name="cat_desc")
-	@Field(analyze = Analyze.YES)
 	private String categoryDesc;
 
 	@Column(name="lcl_cd")	
-	@Field
 	@AnalyzerDiscriminator(impl = LanguageDiscriminator.class)
 	private String lclCd;
 

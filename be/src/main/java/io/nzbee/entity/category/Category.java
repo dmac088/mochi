@@ -475,7 +475,7 @@ public abstract class Category {
 	private Long categoryId;
 
 	@Column(name="cat_cd")
-	@Field(analyze = Analyze.NO)
+	@Field(analyze = Analyze.NO, store=Store.YES)
 	@Facet
 	private String categoryCode;
 
@@ -526,7 +526,7 @@ public abstract class Category {
 	
 	public abstract Long setObjectCount(Long count);
 	
-	@Field(analyze = Analyze.NO)
+	@Field(analyze = Analyze.NO, store=Store.YES)
 	@Facet
 	public String getCategoryToken() {
 		String token = createCategoryToken(this, new ArrayList<String>());
