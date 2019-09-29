@@ -6,8 +6,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ColumnResult;
 import javax.persistence.Entity;
+import javax.persistence.EntityResult;
 import javax.persistence.FetchType;
+import javax.persistence.FieldResult;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,6 +21,7 @@ import javax.persistence.NamedNativeQueries;
 import javax.persistence.NamedNativeQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import org.codehaus.jackson.annotate.JsonBackReference;
@@ -31,6 +35,7 @@ import org.hibernate.search.annotations.Store;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.nzbee.entity.brand.Brand;
+import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.price.ProductPrice;
@@ -117,7 +122,16 @@ import io.nzbee.variables.ProductVars;
 		"AND bal.lcl_cd = 	:locale "
 		)
 	})
-
+@SqlResultSetMapping(
+	    name = "CategoryMapping",
+	    columns = @ColumnResult(name = "object_count"),
+	    entities = {
+	            @EntityResult(
+	                    entityClass = Product.class,
+	                    fields = {
+	                        @FieldResult(name = "productId", column = "prd_id")
+	                    })
+	    })
 public class Product { 
 	
 	@Id
