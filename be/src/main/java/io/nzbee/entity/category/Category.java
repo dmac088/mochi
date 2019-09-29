@@ -480,6 +480,7 @@ public abstract class Category {
 	private String categoryCode;
 
 	@Column(name="cat_lvl")
+	@Field(analyze = Analyze.NO, store=Store.YES)
 	private Long categoryLevel;
 
 	@ManyToOne(fetch = FetchType.LAZY)
