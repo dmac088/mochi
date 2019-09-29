@@ -34,6 +34,7 @@ import org.hibernate.search.annotations.Store;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.nzbee.entity.brand.Brand;
+import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.price.ProductPrice;
@@ -83,6 +84,7 @@ import io.nzbee.variables.ProductVars;
 		"	   prdt.prd_typ_desc, " +
 		"	   bnd.bnd_id, " +
 		"	   bnd.bnd_cd, " +
+		"	   bal.bnd_lcl_id " + 		
 		"	   bal.bnd_desc " +
 		
 		"FROM descendants cc " + 
@@ -122,13 +124,38 @@ import io.nzbee.variables.ProductVars;
 	})
 @SqlResultSetMapping(
 	    name = "ProductMapping",
-	    columns = @ColumnResult(name = "object_count"),
 	    entities = {
 	            @EntityResult(
 	                    entityClass = Product.class,
 	                    fields = {
-	                        @FieldResult(name = "productId", column = "prd_id"),
-	                        @FieldResult(name = "productUPC", column = "upc_cd")
+	                        @FieldResult(name = "productId", 		column = "prd_id"),
+	                        @FieldResult(name = "productUPC", 		column = "upc_cd"),
+	                        @FieldResult(name = "productCreateDt", 	column = "prd_crtd_dt"),
+	                        @FieldResult(name = "brand", 			column = "bnd_id"),
+	                        @FieldResult(name = "productStatus", 	column = "prd_sts_id")
+	                    }),
+	            @EntityResult(
+	            entityClass = ProductAttribute.class,
+		                fields = {
+		                    @FieldResult(name = "productId", 		column = "prd_id"),
+		                    @FieldResult(name = "productUPC", 		column = "upc_cd"),
+		                    @FieldResult(name = "productCreateDt", 	column = "prd_crtd_dt"),
+		                    @FieldResult(name = "brand", 			column = "bnd_id"),
+		                    @FieldResult(name = "productStatus", 	column = "prd_sts_id")
+		                }),
+	            @EntityResult(
+	                    entityClass = Brand.class,
+	                    fields = {
+	                    	@FieldResult(name = "brandId", 			column = "prd_id"),
+		                    @FieldResult(name = "brandCode", 		column = "upc_cd"),
+		                    @FieldResult(name = "brandAttribute", 	column = "prd_crtd_dt")
+	                    }),
+	            @EntityResult(
+	                    entityClass = BrandAttribute.class,
+	                    fields = {
+	                    	@FieldResult(name = "brandId", 			column = "prd_id"),
+		                    @FieldResult(name = "brandCode", 		column = "upc_cd"),
+		                    @FieldResult(name = "brandAttribute", 	column = "prd_crtd_dt")
 	                    })
 	    })
 public class Product { 
@@ -158,6 +185,10 @@ public class Product {
 	@OneToMany(mappedBy="product",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonManagedReference
 	private List<ProductAttribute> attributes;
+	
+	@Transient
+	@JsonIgnore
+	private List<ProductAttribute> productAttribute;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@IndexedEmbedded
@@ -220,6 +251,13 @@ public class Product {
 		return this.attributes.stream().filter(p -> p.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH)).collect(Collectors.toList()).get(0).getProductDesc().toLowerCase();  
 	}
 	
+	public List<ProductAttribute> getProductAttribute() {
+		return productAttribute;
+	}
+
+	public void setProductAttribute(List<ProductAttribute> productAttribute) {
+		this.productAttribute = productAttribute;
+	}
 	
 	public Long getProductId() {
 		return productId;

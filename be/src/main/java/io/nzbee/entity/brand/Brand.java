@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Store;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -43,6 +45,9 @@ public class Brand {
 	
 	@OneToMany(mappedBy="brand",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<BrandAttribute> brandAttributes;
+	
+	@Transient
+	private BrandAttribute brandAttribute;
 	
 	public Long getId() {
 		return this.brandId;
