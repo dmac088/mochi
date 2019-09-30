@@ -287,14 +287,7 @@ public class Product {
 	public Double getCurrentMarkdownPriceUSDFacet() {
 		return this.getCurrentMarkdownPriceHKD();
 	}
-	
-//	@Transient
-//	@Field(analyze = Analyze.NO, store=Store.YES)
-//	@SortableField
-//	private String getProductDescENGB() {
-//		return this.attributes.stream().filter(p -> p.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH)).collect(Collectors.toList()).get(0).getProductDesc().toLowerCase();  
-//	}
-	
+
 	public ProductAttribute getProductAttribute() {
 		return productAttribute;
 	} 
