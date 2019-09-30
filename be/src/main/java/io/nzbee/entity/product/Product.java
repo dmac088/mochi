@@ -40,7 +40,7 @@ import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.price.ProductPrice;
 import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.entity.product.tag.ProductTag;
-import io.nzbee.variables.GeneralVars;
+//import io.nzbee.variables.GeneralVars;
 import io.nzbee.variables.ProductVars;
 
 @Entity
@@ -90,12 +90,12 @@ import io.nzbee.variables.ProductVars;
 					"	   ps.prd_sts_cd,  " +
 					"	   ps.prd_sts_desc, " +
 					"	   max(case " +
-					"	   when prc_typ_cd = 'RET01' " +
+					"	   when prc_typ_cd = :retailPriceCode " +
 					"	   then prc.prc_val " +
 					"	   else 0 " +
 					"	   end) as retail_price, " +
 					"	   max(case " +
-					"	   when prc_typ_cd = 'MKD01' " +
+					"	   when prc_typ_cd = :markdownPriceCode " +
 					"	   then prc.prc_val " +
 					"	   else 0 " +
 					"	   end) as markdown_price " +
