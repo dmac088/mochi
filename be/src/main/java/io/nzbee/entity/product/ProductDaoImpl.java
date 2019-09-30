@@ -1,11 +1,13 @@
 package io.nzbee.entity.product;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -24,11 +26,13 @@ import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.brand.Brand_; 
 import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.brand.attribute.BrandAttribute_;
+import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.Category_;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.attribute.CategoryAttribute_;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.category.product.CategoryProduct_;
+import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.entity.PageableUtil;
 import io.nzbee.entity.product.Product_;
 import io.nzbee.entity.product.attribute.ProductAttribute;
@@ -55,6 +59,37 @@ public class ProductDaoImpl implements IProductDao {
 	@Qualifier("mochiEntityManagerFactory")
 	private EntityManager em;
 
+	
+	@Override
+	public List<Product> findAll(String locale, String currency) {
+		
+		Query query = em.createNamedQuery("getProducts")
+				 .setParameter("locale", locale)
+				 .setParameter("currency", currency)
+				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
+				 .setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
+				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE);
+		
+		@SuppressWarnings("unchecked")
+		List<Object[]> results = query.getResultList();
+		
+		return results.stream().map(p -> {
+			Product product = (Product) p[0];
+//			category.setCategoryAttribute(((CategoryAttribute) c[1]));
+//			category.setCategoryType((CategoryType) c[2]);
+//			category.setHierarchy((Hierarchy) c[3]);
+//			category.setObjectCount(((BigDecimal)c[8]).longValue());
+//			
+//			Category parentCategory = (Category) c[4];
+//			parentCategory.setCategoryAttribute(((CategoryAttribute) c[5]));
+//			parentCategory.setCategoryType((CategoryType) c[6]);
+//			parentCategory.setHierarchy((Hierarchy) c[7]);
+//			
+//			category.setParent(parentCategory);
+			return product;
+		}).collect(Collectors.toList());
+	}
+	
 	@Override
 	public List<Product> findAll() {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
