@@ -66,7 +66,7 @@ import io.nzbee.variables.ProductVars;
 					"	INNER JOIN mochi.category  AS pc  " +
 					"	ON t.cat_prnt_id = pc.cat_id  " +
 					
-					" WHERE pc.cat_cd = 'FRT01' " +
+					" WHERE pc.cat_cd = :categoryCode " +
 					" UNION ALL   " +
 					" SELECT 	t.cat_id,    " +
 					"			t.hir_id,   " +
@@ -78,7 +78,12 @@ import io.nzbee.variables.ProductVars;
 					"  JOIN descendants AS d  " +
 					"  ON t.cat_prnt_id = d.cat_id   " +
 					")  " +
-					"select 	   prd.prd_id,  " +
+					"select 	   " +
+					"	   cc.cat_id, " + 
+					"	   cc.cat_cd, " +	
+					"	   cc.cat_lvl, " +
+					"	   cc.cat_prnt_id, " +	
+					"	   prd.prd_id,  " +
 					"	   prd.upc_cd,  " +
 					"	   prd.prd_crtd_dt,  " +
 					"	   prdt.prd_typ_cd,  " +
@@ -104,6 +109,9 @@ import io.nzbee.variables.ProductVars;
 					"FROM descendants cc   " +
 					"	INNER JOIN mochi.product_category pc   " +
 					"	ON cc.cat_id = pc.cat_id   " +
+					
+					"	INNER JOIN mochi.category p1	" + 
+					"	ON cc.cat_prnt_id = p1.cat_id " + 
 
 					"	INNER JOIN mochi.product prd   " +
 					"	ON pc.prd_id = prd.prd_id  " +
