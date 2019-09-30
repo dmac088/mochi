@@ -60,13 +60,21 @@ public class Brand {
 	public void setCode(String brandCode) {
 		this.brandCode = brandCode;
 	}
-	
+
 	public List<BrandAttribute> getAttributes() {
 		return brandAttributes;
 	}
 	
 	public void setAttributes(List<BrandAttribute> brandAttributes) {
 		this.brandAttributes = brandAttributes;
+	}
+	
+	public BrandAttribute getBrandAttribute() {
+		return brandAttribute;
+	}
+
+	public void setBrandAttribute(BrandAttribute brandAttribute) {
+		this.brandAttribute = brandAttribute;
 	}
 
 	public void setProducts(List<Product> products) {
