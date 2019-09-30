@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ColumnResult;
 import javax.persistence.Entity;
 import javax.persistence.EntityResult;
 import javax.persistence.FetchType;
@@ -147,6 +148,10 @@ import io.nzbee.variables.ProductVars;
 	})
 @SqlResultSetMapping(
 	    name = "ProductMapping",
+	    columns = {
+	    			@ColumnResult(name = "retail_price"),
+	    			@ColumnResult(name = "markdown_price")
+	    },		
 	    entities = {
 	            @EntityResult(
 	                    entityClass = Product.class,
@@ -220,6 +225,14 @@ public class Product {
 	@JsonIgnore
 	private ProductAttribute productAttribute;
 	
+	@Transient
+	@JsonIgnore
+	private Double retailPrice;
+	
+	@Transient
+	@JsonIgnore
+	private Double markdownPrice;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@IndexedEmbedded
 	@JoinColumn(name="bnd_id", insertable=false, updatable=false)
@@ -355,6 +368,22 @@ public class Product {
 
 	public void setProductStatus(ProductStatus productStatus) {
 		this.productStatus = productStatus;
+	}
+	
+	public Double getRetailPrice() {
+		return retailPrice;
+	}
+
+	public void setRetailPrice(Double retailPrice) {
+		this.retailPrice = retailPrice;
+	}
+
+	public Double getMarkdownPrice() {
+		return markdownPrice;
+	}
+
+	public void setMarkdownPrice(Double markdownPrice) {
+		this.markdownPrice = markdownPrice;
 	}
 			
 }
