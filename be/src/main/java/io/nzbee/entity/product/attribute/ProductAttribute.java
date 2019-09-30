@@ -31,6 +31,7 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Parameter;
+import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
@@ -77,6 +78,7 @@ public class ProductAttribute {
 	 
 	@Field(analyze = Analyze.YES, store=Store.YES)
 	@Column(name="prd_desc")
+	@SortableField
 	private String productDesc; 
 
 	@Column(name="prd_img_pth")

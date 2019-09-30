@@ -40,6 +40,7 @@ import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.price.ProductPrice;
 import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.entity.product.tag.ProductTag;
+import io.nzbee.variables.GeneralVars;
 //import io.nzbee.variables.GeneralVars;
 import io.nzbee.variables.ProductVars;
 
@@ -290,7 +291,7 @@ public class Product {
 //	@Transient
 //	@Field(analyze = Analyze.NO, store=Store.YES)
 //	@SortableField
-//	private String getProductDesc() {
+//	private String getProductDescENGB() {
 //		return this.attributes.stream().filter(p -> p.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH)).collect(Collectors.toList()).get(0).getProductDesc().toLowerCase();  
 //	}
 	
