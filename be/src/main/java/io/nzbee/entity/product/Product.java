@@ -287,12 +287,12 @@ public class Product {
 		return this.getCurrentMarkdownPriceHKD();
 	}
 	
-	@Transient
-	@Field(analyze = Analyze.NO, store=Store.YES)
-	@SortableField
-	private String getProductDesc() {
-		return this.attributes.stream().filter(p -> p.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH)).collect(Collectors.toList()).get(0).getProductDesc().toLowerCase();  
-	}
+//	@Transient
+//	@Field(analyze = Analyze.NO, store=Store.YES)
+//	@SortableField
+//	private String getProductDesc() {
+//		return this.attributes.stream().filter(p -> p.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH)).collect(Collectors.toList()).get(0).getProductDesc().toLowerCase();  
+//	}
 	
 	public ProductAttribute getProductAttribute() {
 		return productAttribute;
