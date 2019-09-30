@@ -75,6 +75,11 @@ public class ProductDaoImpl implements IProductDao {
 		
 		return results.stream().map(p -> {
 			Product product = (Product) p[0];
+			product.setProductAttribute((ProductAttribute) p[1]); 
+			product.setBrand((Brand) p[2]);
+			product.getBrand().setBrandAttribute((BrandAttribute) p[3]);
+			
+			
 //			category.setCategoryAttribute(((CategoryAttribute) c[1]));
 //			category.setCategoryType((CategoryType) c[2]);
 //			category.setHierarchy((Hierarchy) c[3]);
