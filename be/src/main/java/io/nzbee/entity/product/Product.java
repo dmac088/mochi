@@ -112,6 +112,15 @@ import io.nzbee.variables.ProductVars;
 					
 					"	INNER JOIN mochi.category p1	" + 
 					"	ON cc.cat_prnt_id = p1.cat_id " + 
+					
+					"	INNER JOIN mochi.category p2	" + 
+					"	ON p1.cat_prnt_id = p2.cat_id " +
+					
+					"	INNER JOIN mochi.category p3	" + 
+					"	ON p2.cat_prnt_id = p3.cat_id " +
+					
+					"	INNER JOIN mochi.category p4	" + 
+					"	ON p3.cat_prnt_id = p4.cat_id " +
 
 					"	INNER JOIN mochi.product prd   " +
 					"	ON pc.prd_id = prd.prd_id  " +
@@ -141,6 +150,7 @@ import io.nzbee.variables.ProductVars;
 					"AND curr.ccy_cd = 	:currency " +
 					"AND prd_sts_cd = 	:activeProductCode " +
 					"AND bal.lcl_cd = 	:locale " +
+					
 					"GROUP BY prd.prd_id,  " +
 					"	   prd.upc_cd,  " +
 					"	   prd.prd_crtd_dt,  " +
