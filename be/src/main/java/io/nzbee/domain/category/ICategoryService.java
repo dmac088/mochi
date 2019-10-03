@@ -18,8 +18,6 @@ public interface ICategoryService {
 
 	Optional<Category> findOneByCode(String locale, String categoryCode);
 
-	Optional<Category> findParent(String locale, String parentCategoryCode);
-
 	Optional<Category> findOneByDesc(String locale, String categoryDesc);
 
 	List<Category> findAll(String locale, String currency);
