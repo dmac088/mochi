@@ -27,7 +27,7 @@ public class CategoryController {
     
     @GetMapping("/Category/{lcl}/{curr}/level/{level}")
     public List<Category> getCategoriesForLevel(@PathVariable String lcl, @PathVariable String curr, @PathVariable Long level) {
-    	return categoryService.findAllForLevel(lcl, level);
+    	return categoryService.findAllForLevel(level, lcl);
     }
     
     @GetMapping("/Category/{lcl}/{curr}/desc/{categoryDesc}")
