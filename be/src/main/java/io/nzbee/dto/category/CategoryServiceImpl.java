@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
+import io.nzbee.dto.category.Category;
 import io.nzbee.dto.brand.Brand;
 import io.nzbee.dto.tag.Tag;
-import io.nzbee.variables.CategoryVars;
 
 @Service(value = "categoryDtoService")
 @Transactional
@@ -19,75 +19,95 @@ public class CategoryServiceImpl implements ICategoryService {
     
     @Autowired
     @Qualifier("categoryDtoDao")
-    private io.nzbee.dto.category.ICategoryDao categoryDao;
+    private io.nzbee.entity.category.ICategoryService categoryService;
     
     @Override
 	@Transactional
 	//@Cacheable
-	public List<CategoryWithNameAndStats> findAll(String locale, String currency) {
-    	return  categoryDao.findAll(locale, currency);
+	public List<Category> findAll(String locale, String currency) {
+    	return categoryService.findAll(locale, currency)
+    			.stream().map(c -> convertCategoryEntityToCategoryDTO(c))
+    			.collect(Collectors.toList());
 	}	
 
 
 	@Override
-	public Optional<CategoryWithNameAndStats> findOneByCode(String locale, String categoryCode) {
+	public Optional<Category> findOneByCode(String locale, String categoryCode) {
 		// TODO Auto-generated method stub
-		return categoryDao.findByCategoryCode(categoryCode, 
-											  locale);
+		return Optional.ofNullable(convertCategoryEntityToCategoryDTO(categoryService.findByCategoryCode(categoryCode, locale).get()));
+			   
 	}
 	
-
-	@Override
-	public Optional<CategoryWithNameAndStats> findParent(String locale, String parentCategoryCode) {
-		// TODO Auto-generated method stub
-		return categoryDao.findByCategoryCode(parentCategoryCode, locale);
-	}
-    
     @Override
  	@Transactional
  	//@Cacheable
- 	public List<CategoryWithNameAndStats> findByParent(String locale, String parentCategoryCode) {
-    	return categoryDao.findByParent(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, parentCategoryCode, locale);
+ 	public List<Category> findByParent(String locale, String parentCategoryCode) {
+    	return categoryService.findByParent(parentCategoryCode, locale)
+		    	.stream().map(c -> convertCategoryEntityToCategoryDTO(c))
+				.collect(Collectors.toList());
  	}
     
     @Override
   	@Transactional
   	//@Cacheable
-  	public List<CategoryWithNameAndStats> findAllForLevel(final String locale, final Long level) {
-     	return categoryDao.findByLevel(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, level, locale);
+  	public List<Category> findAllForLevel(final String locale, final Long level) {
+     	return categoryService.findAllForLevel(level, locale)
+		    	.stream().map(c -> convertCategoryEntityToCategoryDTO(c))
+				.collect(Collectors.toList());
   	}	
     
     @Override
   	@Transactional
   	//@Cacheable
-  	public Optional<CategoryWithNameAndStats> findOne(String locale, String categoryCode) {
-    	return categoryDao.findByCategoryCode(categoryCode, locale);
+  	public Optional<Category> findOne(String locale, String categoryCode) {
+    	return Optional.ofNullable(convertCategoryEntityToCategoryDTO(categoryService.findByCategoryCode(categoryCode, locale).get()));
+    	
   	}
     
     @Override
 	@Transactional
 	//@Cacheable
-	public Optional<CategoryWithNameAndStats> findOneByDesc(String locale, String categoryDesc) {
-    	return categoryDao.findByCategoryDesc(categoryDesc, locale);
+	public Optional<Category> findOneByDesc(String locale, String categoryDesc) {
+    	return Optional.ofNullable(convertCategoryEntityToCategoryDTO(categoryService.findByCategoryDesc(categoryDesc, locale).get()));
+    	
    
 	}
     
     @Override
 	@Transactional
 	//@Cacheable
-	public List<CategoryWithNameAndStats> findAll(String locale, String categoryDesc, List<Brand> brands, List<Tag> tags) {
-    	return categoryDao.findChildrenByCriteria(
-				 categoryDesc, 
-				 brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()),  
-				 tags.stream().map(t -> t.getTagCode()).collect(Collectors.toList()),
-				 locale);
+	public List<Category> findAll(String locale, String categoryDesc, List<Brand> brands, List<Tag> tags) {
+    	return categoryService.findAll(
+    			categoryDesc, 
+    			brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()), 
+    			tags.stream().map(t -> t.getTagCode()).collect(Collectors.toList()), 
+    			locale)
+    			.stream().map(c -> convertCategoryEntityToCategoryDTO(c))
+				.collect(Collectors.toList());    			
 	}
 
 
 	@Override
-	public Optional<CategoryWithNameAndStats> findOne(String locale, Long categoryId) {
+	public Optional<Category> findOne(String locale, Long categoryId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public Category convertCategoryEntityToCategoryDTO(io.nzbee.entity.category.Category category) {
+		// TODO Auto-generated method stub
+		
+		Category categoryDTO = new Category();
+		
+		categoryDTO.setCategoryCode(category.getCategoryCode());
+		categoryDTO.setCategoryDesc(category.getCategoryAttribute().getCategoryDesc());
+		categoryDTO.setCategoryLevel(category.getCategoryLevel());
+		categoryDTO.setCategoryType(category.getCategoryType().getCode());
+		//categoryDTO.setCount(category.getObjectCount());
+							
+		return categoryDTO;
+	}
+
+
     
 }
