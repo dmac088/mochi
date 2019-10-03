@@ -36,13 +36,6 @@ public class CategoryServiceImpl implements ICategoryService {
 		// TODO Auto-generated method stub
 		return Optional.ofNullable(convertCategoryDtoToCategoryDO(categoryService.findByCategoryCode(categoryCode, locale).get()));
 	}
-	
-
-	@Override
-	public Optional<Category> findParent(String locale, String categoryCode) {
-		// TODO Auto-generated method stub
-		return Optional.ofNullable(convertCategoryDtoToCategoryDO(categoryService.findByCategoryCode(locale, categoryService.findByCategoryCode(categoryCode, locale).get().getParent().getCategoryCode()).get()));
-	}
     
     @Override
  	@Transactional
