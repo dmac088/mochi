@@ -26,6 +26,6 @@ public interface ICategoryService {
 
 	Category convertCategoryDtoToCategoryDO(io.nzbee.dto.category.Category category);
 
-	Category convertCategoryDOtoCategoryDto(Category category);
+	io.nzbee.dto.category.Category convertCategoryDOtoCategoryDto(Category category);
 
 }
