@@ -21,9 +21,11 @@ public interface ICategoryService {
 	Optional<Category> findOneByDesc(String locale, String categoryDesc);
 
 	List<Category> findAll(String locale, String currency);
-
-	Category convertCategoryDtoToCategoryDO(io.nzbee.entity.category.Category category);
-
+	
 	List<Category> findAllForLevel(Long level, String locale);
+
+	Category convertCategoryDtoToCategoryDO(io.nzbee.dto.category.Category category);
+
+	Category convertCategoryDOtoCategoryDto(Category category);
 
 }
