@@ -19,8 +19,8 @@ public class CategoryServiceImpl implements ICategoryService {
     
    
     @Autowired
-    @Qualifier("categoryEntityService")
-    private io.nzbee.entity.category.ICategoryService categoryService;
+    @Qualifier("categoryDtoService")
+    private io.nzbee.dto.category.ICategoryService categoryService;
      
     @Override
 	@Transactional
@@ -34,7 +34,7 @@ public class CategoryServiceImpl implements ICategoryService {
 	@Override
 	public Optional<Category> findOneByCode(String locale, String categoryCode) {
 		// TODO Auto-generated method stub
-		return Optional.ofNullable(convertCategoryDtoToCategoryDO(categoryService.findByCategoryCode(categoryCode, locale).get()));
+		return Optional.ofNullable(convertCategoryDtoToCategoryDO(categoryService.findOneByCode(categoryCode, locale).get()));
 	}
     
     @Override
@@ -50,7 +50,7 @@ public class CategoryServiceImpl implements ICategoryService {
   	@Transactional
   	//@Cacheable
   	public List<Category> findAllForLevel(Long level, String locale) {
-     	return categoryService.findAllForLevel(level, locale)
+     	return categoryService.findAllForLevel(locale, level)
      						  .stream().map(c -> convertCategoryDtoToCategoryDO(c))
      						  .collect(Collectors.toList());
   	}	
@@ -60,46 +60,62 @@ public class CategoryServiceImpl implements ICategoryService {
   	@Transactional
   	//@Cacheable
   	public Optional<Category> findOne(final String locale, final String categoryCode) {
-    	return Optional.ofNullable(convertCategoryDtoToCategoryDO(categoryService.findByCategoryCode(categoryCode, locale).get()));
+    	return Optional.ofNullable(convertCategoryDtoToCategoryDO(categoryService.findOneByCode(categoryCode, locale).get()));
   	}
     
     @Override
 	@Transactional
 	//@Cacheable
 	public Optional<Category> findOneByDesc(String locale, String categoryDesc) {
-    	return Optional.ofNullable(convertCategoryDtoToCategoryDO(categoryService.findByCategoryDesc(locale, categoryDesc).get()));
-   
+    	return Optional.ofNullable(convertCategoryDtoToCategoryDO(categoryService.findOneByDesc(locale, categoryDesc).get()));
 	}
     
     @Override
 	@Transactional
 	//@Cacheable
 	public List<Category> findAll(String locale, String categoryDesc, List<Brand> brands, List<Tag> tags) {
-    	return categoryService.findAll(
-    			 categoryDesc, 
-				 brands.stream().map(b -> b.getBrandDesc()).collect(Collectors.toList()),  
-				 tags.stream().map(t -> t.getTagDesc()).collect(Collectors.toList()),
-				 locale)
-    			.stream().map(c -> convertCategoryDtoToCategoryDO(c))
-    			.collect(Collectors.toList());
+    	return null;//categoryService.findAll(
+    			 //locale,
+    			 //categoryDesc,
+    			 //convert brand domain objects to brand DTOs
+				 //brands.stream().map(c -> this.co),  
+				//convert tag domain objects to tag DTOs
+				// tags
+				// )
+    			//.stream().map(c -> convertCategoryDtoToCategoryDO(c))
+    			//.collect(Collectors.toList());
 	}
 
 
 	@Override
-	public Category convertCategoryDtoToCategoryDO(io.nzbee.entity.category.Category category) {
+	public Category convertCategoryDtoToCategoryDO(io.nzbee.dto.category.Category category) {
 		// TODO Auto-generated method stub
 		
-		Category categoryDO = category.getCategoryType().getCode().equals(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT) 
+		Category categoryDO = category.getCategoryType().equals(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT) 
 							? new ProductCategory()
 							: new BrandCategory();
 		
 		categoryDO.setCategoryCode(category.getCategoryCode());
 		//categoryDO.setCategoryDesc(category.getCategoryAttribute().getCategoryDesc());
 		categoryDO.setCategoryLevel(category.getCategoryLevel());
-		categoryDO.setCategoryType(category.getCategoryType().getCode());
+		categoryDO.setCategoryType(category.getCategoryType());
 		categoryDO.setCount(category.getObjectCount());
 							
 		return categoryDO;
 	}
 
+	@Override
+	public Category convertCategoryDOtoCategoryDto(io.nzbee.domain.category.Category category) {
+		// TODO Auto-generated method stub
+		
+		io.nzbee.dto.category.Category categoryDto = new io.nzbee.dto.category.Category();
+		
+		categoryDto.setCategoryCode(category.getCategoryCode());
+		//categoryDO.setCategoryDesc(category.getCategoryAttribute().getCategoryDesc());
+		categoryDto.setCategoryLevel(category.getCategoryLevel());
+		categoryDto.setCategoryType(category.getCategoryType());
+		//categoryDto.setCount(category.getObjectCount());
+							
+		return categoryDto;
+	}
 }
