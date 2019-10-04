@@ -105,7 +105,7 @@ public class CategoryServiceImpl implements ICategoryService {
 	}
 
 	@Override
-	public Category convertCategoryDOtoCategoryDto(io.nzbee.domain.category.Category category) {
+	public io.nzbee.dto.category.Category convertCategoryDOtoCategoryDto(io.nzbee.domain.category.Category category) {
 		// TODO Auto-generated method stub
 		
 		io.nzbee.dto.category.Category categoryDto = new io.nzbee.dto.category.Category();
