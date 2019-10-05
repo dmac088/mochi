@@ -32,47 +32,47 @@ public class CategoryServiceImpl implements ICategoryService {
 	}
 	
 	@Override
-	public List<Category> findAll(String parentCategoryDesc, List<String> brandCodes, List<String> tagCodes, String locale) {
+	public List<Category> findAll(String locale, String parentCategoryDesc, List<String> brandCodes, List<String> tagCodes) {
 		// TODO Auto-generated method stub
-		return categoryDAO.findChildrenByCriteria(parentCategoryDesc, brandCodes, tagCodes, locale);
+		return categoryDAO.findChildrenByCriteria(locale, parentCategoryDesc, brandCodes, tagCodes);
 	}
 
 	@Override
-	public List<Category> findByParent(String parentCategoryCode, String locale) {
+	public List<Category> findByParent(String locale, String parentCategoryCode) {
 		// TODO Auto-generated method stub
-		return categoryDAO.findByParent(parentCategoryCode, locale);
+		return categoryDAO.findByParent(locale, parentCategoryCode);
 	}
 
 	@Override
-	public Optional<Category> findByCategoryDesc(String categoryDesc, String locale) {
+	public Optional<Category> findByCategoryDesc(String locale, String categoryDesc) {
 		// TODO Auto-generated method stub
-		return categoryDAO.findByCategoryDesc(categoryDesc, locale);
+		return categoryDAO.findByCategoryDesc(locale, categoryDesc);
 	}
 
 	@Override
-	public Optional<Category> findByCategoryCode(String categoryCode, String locale) {
+	public Optional<Category> findByCategoryCode(String locale, String categoryCode) {
 		// TODO Auto-generated method stub
-		return categoryDAO.findByCategoryCode(categoryCode, locale);
+		return categoryDAO.findByCategoryCode(locale, categoryCode);
 	}
 
 
 	@Override
-	public List<Category> findAllForLevel(Long level, String locale) {
+	public List<Category> findAllForLevel(String locale, Long level) {
 		// TODO Auto-generated method stub
-		return null;
+		return categoryDAO.findByLevel(locale, level);
 	}
 	
 	@Override
-	public Set<Category> recurseCategories(Set<Category> arrayList, Category pc, String currency) {
+	public Set<Category> recurseCategories(String currency, Set<Category> arrayList, Category pc) {
 		if(pc == null) { return arrayList; }
 		
-		List<Category> lc = categoryDAO.getChildren(pc, currency);
+		List<Category> lc = categoryDAO.getChildren(currency, pc);
 		
 		arrayList.add(pc);
 		if(lc.isEmpty()) { return arrayList; }
 		lc.stream().forEach(c -> {
 			arrayList.add(c);
-			recurseCategories(arrayList, c, currency); 
+			recurseCategories(currency, arrayList, c); 
 		});
 		return arrayList; 
 	}
