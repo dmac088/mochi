@@ -18,7 +18,7 @@ import io.nzbee.dto.tag.Tag;
 public class CategoryServiceImpl implements ICategoryService {
     
     @Autowired
-    @Qualifier("categoryDtoDao")
+    @Qualifier("categoryEntityService")
     private io.nzbee.entity.category.ICategoryService categoryService;
     
     @Override
