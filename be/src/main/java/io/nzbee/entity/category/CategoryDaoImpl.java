@@ -93,7 +93,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 	}
 	
 	@Override 
-	public List<Category> getChildren(Category category, String currency) {
+	public List<Category> getChildren(String currency, Category category) {
 		
 		@SuppressWarnings("unchecked")
 		List<Category> c = em.createNamedQuery("getAllCategories")
@@ -109,7 +109,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 	}
 	
 	@Override
-	public Optional<Category> findByCategoryDesc(String categoryDesc, String locale) {
+	public Optional<Category> findByCategoryDesc(String locale, String categoryDesc) {
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
@@ -190,7 +190,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 	
 	
 	@Override
-	public List<Category> findByLevel(Long level, String locale) {
+	public List<Category> findByLevel(String locale, Long level) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
@@ -216,7 +216,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 	}
 	
 	@Override
-	public List<Category> findChildrenByCriteria(String parentCategoryDesc, List<String> brandCodes, List<String> tagCodes, String locale) {
+	public List<Category> findChildrenByCriteria(String locale, String parentCategoryDesc, List<String> brandCodes, List<String> tagCodes) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<CategoryProduct> cq = cb.createQuery(CategoryProduct.class);

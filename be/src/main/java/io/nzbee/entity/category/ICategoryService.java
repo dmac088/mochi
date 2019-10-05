@@ -14,16 +14,16 @@ public interface ICategoryService {
 	
 	List<Category> getAll();
 	
-	Optional<Category> findByCategoryDesc(String categoryDesc, String locale);
+	Optional<Category> findByCategoryDesc(String locale, String categoryDesc);
 	
-	Optional<Category> findByCategoryCode(String categoryCode, String locale);
+	Optional<Category> findByCategoryCode(String locale, String categoryCode);
 
-	Set<Category> recurseCategories(Set<Category> arrayList, Category pc, String currency);
+	Set<Category> recurseCategories(String currency, Set<Category> arrayList, Category pc);
 
-	List<Category> findByParent(String parentCategoryCode, String locale);
+	List<Category> findByParent(String locale, String parentCategoryCode);
 
-	List<Category> findAllForLevel(Long level, String locale);
+	List<Category> findAllForLevel(String locale, Long level);
 
-	List<Category> findAll(String parentCategoryDesc, List<String> brandCodes, List<String> tagCodes, String locale);
+	List<Category> findAll(String locale, String parentCategoryDesc, List<String> brandCodes, List<String> tagCodes);
 	
 }

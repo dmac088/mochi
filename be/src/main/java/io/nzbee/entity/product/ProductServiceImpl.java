@@ -249,13 +249,13 @@ public class ProductServiceImpl implements IProductService {
 		
 	}
 	
-	private Set<String> getAllChildCodes(String categoryDesc, String locale, String currency ) {
+	private Set<String> getAllChildCodes(String locale, String currency, String categoryDesc) {
 		Category pc = categoryService.findByCategoryDesc( 
 				categoryDesc, 
 				locale).get();
 
 		Set<Category> lc = new HashSet<Category>();
-		return categoryService.recurseCategories(lc, pc, currency)
+		return categoryService.recurseCategories(currency, lc, pc)
 				.stream().map(c -> c.getCategoryCode()).collect(Collectors.toSet());
 	}
 

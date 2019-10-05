@@ -8,7 +8,7 @@ import io.nzbee.dto.tag.Tag;
 
 public interface ICategoryService {
 	 
-	List<Category> findAllForLevel(String lcl, Long level);
+	List<Category> findAllForLevel(String locale, Long level);
 	 
 	Optional<Category> findOne(String locale, Long categoryId);
 
