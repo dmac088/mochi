@@ -22,7 +22,6 @@ public class NavFacetController {
 	
     @GetMapping("/Category/{lcl}/{curr}")
     public NavFacetResult getCategories(@PathVariable String lcl, @PathVariable String curr) {
-    	System.out.println("Dan - " + navFacetService.findAll(lcl, curr).getResult().getProductCategories().size());
     	return navFacetService.findAll(lcl, curr);
     }
 
