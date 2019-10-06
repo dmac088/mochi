@@ -2,6 +2,7 @@
 package io.nzbee.entity.category;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -81,7 +82,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 			category.setCategoryType((CategoryType) c[2]);
 			category.setHierarchy((Hierarchy) c[3]);
 			category.setObjectCount(((BigDecimal)c[8]).longValue());
-			
+			category.setChildCount(((BigInteger)c[9]).longValue());
 			Category parentCategory = (Category) c[4];
 			parentCategory.setCategoryAttribute(((CategoryAttribute) c[5]));
 			parentCategory.setCategoryType((CategoryType) c[6]);

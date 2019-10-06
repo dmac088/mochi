@@ -286,7 +286,8 @@ import io.nzbee.variables.GeneralVars;
 			"	coalesce(s1.object_count, 0) + " +
 			"	sum(coalesce(s2.object_count,0)) as object_count, " +
 			"	greatest(0, s1.max_retail_price, max(s2.max_retail_price)) as max_retail_price, " +
-			"	greatest(0, s1.max_markdown_price, max(s2.max_markdown_price)) as max_markdown_price " +
+			"	greatest(0, s1.max_markdown_price, max(s2.max_markdown_price)) as max_markdown_price, " +
+			"   count(distinct s2.cat_id) as child_cat_count " +
 			"FROM summaries_pta s1 " +
 			"LEFT JOIN summaries_pta s2 " +
 			"ON s1.node <> s2.Node and left(s2.node, length(s1.node)) = s1.node " +
@@ -334,7 +335,8 @@ import io.nzbee.variables.GeneralVars;
 			"       s.max_markdown_price	AS max_markdown_price, " +
 			"       ps.object_count			AS cat_prnt_object_count, " +
 			"       ps.max_retail_price		AS cat_prnt_max_retail_price, " +
-			"       ps.max_markdown_price 	AS cat_prnt_max_markdown_price " +
+			"       ps.max_markdown_price 	AS cat_prnt_max_markdown_price, " +
+			"		ps.child_cat_count		AS child_cat_count " +	
 
 			"FROM summaries_ptb s " +
 
@@ -382,7 +384,10 @@ import io.nzbee.variables.GeneralVars;
 
 @SqlResultSetMapping(
     name = "CategoryMapping",
-    columns = @ColumnResult(name = "object_count"),
+    columns = {
+    		@ColumnResult(name = "object_count"),
+    		@ColumnResult(name = "child_cat_count")
+    },
     entities = {
             @EntityResult(
                     entityClass = Category.class,
@@ -425,7 +430,7 @@ import io.nzbee.variables.GeneralVars;
 	                    @FieldResult(name = "hierarchyDesc", 				column = "hir_desc")
 	                }),
 	            //now we initialize the parent category
-	            @EntityResult(
+	        @EntityResult(
 	                entityClass = Category.class,
 	                discriminatorColumn="cat_typ_id",
 	                fields = {
@@ -442,7 +447,7 @@ import io.nzbee.variables.GeneralVars;
                         @FieldResult(name = "maxMarkdownPrice", 			column = "cat_prnt_max_markdown_price"),
                         @FieldResult(name = "attributes", 					column = "cat_prnt_id")
 	                }),
-	            @EntityResult(
+	        @EntityResult(
 	                entityClass = CategoryAttribute.class,
 	                fields = {
 	                    @FieldResult(name = "categoryAttributeId", 			column = "cat_prnt_lcl_id"),
@@ -451,14 +456,14 @@ import io.nzbee.variables.GeneralVars;
 	                    @FieldResult(name = "categoryDesc", 				column = "cat_prnt_desc"),
 	                    @FieldResult(name = "category", 					column = "cat_prnt_id")
 	                }),
-	            @EntityResult(
+	        @EntityResult(
                     entityClass = CategoryType.class,
 	                fields = {
 	                    @FieldResult(name = "categoryTypeId", 				column = "cat_prnt_typ_id"),
 	                    @FieldResult(name = "categoryTypeCode", 			column = "cat_prnt_typ_cd"),
 	                    @FieldResult(name = "categoryTypeDesc", 			column = "cat_prnt_typ_desc")
 	                }),
-	            @EntityResult(
+	        @EntityResult(
 	                entityClass = Hierarchy.class,
 	                fields = {
 	                    @FieldResult(name = "hierarchyId", 					column = "cat_prnt_hir_id"),
