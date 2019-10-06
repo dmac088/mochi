@@ -9,10 +9,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.nzbee.domain.category.BrandCategory;
 import io.nzbee.domain.category.ProductCategory;
-import io.nzbee.dto.brand.Brand;
-import io.nzbee.dto.category.Category;
-import io.nzbee.dto.product.Product;
-import io.nzbee.dto.tag.Tag;
+import io.nzbee.domain.brand.Brand;
+import io.nzbee.domain.category.Category;
+import io.nzbee.domain.product.Product;
+import io.nzbee.domain.tag.Tag;
 
 public class NavFacetContainer {
 
