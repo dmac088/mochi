@@ -11,8 +11,6 @@ public abstract class Category {
 	private Long categoryLevel;
 	
 	private String categoryType;
-
-	private String lclCd;
 	
 	private String parentCode;	
 
@@ -37,7 +35,6 @@ public abstract class Category {
 		this.categoryDesc 	= categoryDesc;
 		this.categoryLevel 	= categoryLevel;
 		this.categoryType 	= categoryType;
-		this.lclCd 			= lclCd;
 		this.parentCode 	= parentCode;
 		this.objectCount	= objectCount;
 	}
@@ -72,14 +69,6 @@ public abstract class Category {
 
 	public void setCategoryLevel(Long categoryLevel) {
 		this.categoryLevel = categoryLevel;
-	}
-
-	public String getLclCd() {
-		return lclCd;
-	}
-
-	public void setLclCd(String lclCd) {
-		this.lclCd = lclCd;
 	}
 
 	public Long getChildCategoryCount() {
@@ -129,7 +118,6 @@ public abstract class Category {
         .append(", categoryType=").append(categoryType)
         .append(", parentCode=").append(parentCode)
         .append(", childCategoryCount=").append(childCategoryCount)
-        .append(", lclCd=").append(lclCd)
         .append("]");    	
         return builder.toString();
     }
