@@ -336,12 +336,20 @@ import io.nzbee.variables.GeneralVars;
 			"       ps.object_count			AS cat_prnt_object_count, " +
 			"       ps.max_retail_price		AS cat_prnt_max_retail_price, " +
 			"       ps.max_markdown_price 	AS cat_prnt_max_markdown_price, " +
-			"		ps.child_cat_count		AS child_cat_count " +	
+			"		coalesce(cs.child_cat_count,0)		AS child_cat_count " +	
 
 			"FROM summaries_ptb s " +
 
 			"LEFT JOIN summaries_ptb ps " +
 			"ON ps.cat_id = s.prnt_id " +
+
+			"LEFT JOIN ("
+			+ " SELECT 	prnt_id as cat_id, "
+			+ " 		count(distinct cat_id) as child_cat_count "
+			+ " FROM summaries_ptb cs "
+			+ " GROUP BY prnt_id"
+			+ ") cs " +
+			"ON s.cat_id = cs.cat_id " +
 			
 			"INNER JOIN mochi.category_attr_lcl a " +
 			"ON s.cat_id = a.cat_id " +
