@@ -343,12 +343,12 @@ import io.nzbee.variables.GeneralVars;
 			"LEFT JOIN summaries_ptb ps " +
 			"ON ps.cat_id = s.prnt_id " +
 
-			"LEFT JOIN ("
-			+ " SELECT 	prnt_id as cat_id, "
-			+ " 		count(distinct cat_id) as child_cat_count "
-			+ " FROM summaries_ptb cs "
-			+ " GROUP BY prnt_id"
-			+ ") cs " +
+			"LEFT JOIN (" + 
+			" SELECT 	prnt_id as cat_id, " +
+			" 		count(distinct cat_id) as child_cat_count " +
+			" FROM summaries_ptb cs " +
+			" GROUP BY prnt_id" +
+			") cs " +
 			"ON s.cat_id = cs.cat_id " +
 			
 			"INNER JOIN mochi.category_attr_lcl a " +
