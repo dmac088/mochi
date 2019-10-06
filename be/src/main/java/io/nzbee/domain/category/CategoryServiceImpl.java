@@ -74,16 +74,17 @@ public class CategoryServiceImpl implements ICategoryService {
 	@Transactional
 	//@Cacheable
 	public List<Category> findAll(String locale, String categoryDesc, List<Brand> brands, List<Tag> tags) {
-    	return null;//categoryService.findAll(
-    			 //locale,
-    			 //categoryDesc,
-    			 //convert brand domain objects to brand DTOs
-				 //brands.stream().map(c -> this.co),  
-				//convert tag domain objects to tag DTOs
-				// tags
-				// )
-    			//.stream().map(c -> convertCategoryDtoToCategoryDO(c))
-    			//.collect(Collectors.toList());
+    	return null;
+//    	return categoryService.findAll(
+//    			 locale,
+//    			 categoryDesc,
+//    			// convert brand domain objects to brand DTOs
+//				 brands.stream().map(c -> this.convertCategoryDOtoCategoryDto(c)),  
+//				//convert tag domain objects to tag DTOs
+//				 tags
+//				 )
+//    			.stream().map(c -> convertCategoryDtoToCategoryDO(c))
+//    			.collect(Collectors.toList());
 	}
 
 
@@ -96,7 +97,7 @@ public class CategoryServiceImpl implements ICategoryService {
 							: new BrandCategory();
 		
 		categoryDO.setCategoryCode(category.getCategoryCode());
-		//categoryDO.setCategoryDesc(category.getCategoryAttribute().getCategoryDesc());
+		categoryDO.setCategoryDesc(category.getCategoryDesc());
 		categoryDO.setCategoryLevel(category.getCategoryLevel());
 		categoryDO.setCategoryType(category.getCategoryType());
 		categoryDO.setCount(category.getObjectCount());
@@ -111,10 +112,11 @@ public class CategoryServiceImpl implements ICategoryService {
 		io.nzbee.dto.category.Category categoryDto = new io.nzbee.dto.category.Category();
 		
 		categoryDto.setCategoryCode(category.getCategoryCode());
-		//categoryDO.setCategoryDesc(category.getCategoryAttribute().getCategoryDesc());
+		categoryDto.setCategoryDesc(category.getCategoryDesc());
 		categoryDto.setCategoryLevel(category.getCategoryLevel());
 		categoryDto.setCategoryType(category.getCategoryType());
-		//categoryDto.setCount(category.getObjectCount());
+		categoryDto.setObjectCount(category.getCount());
+		
 							
 		return categoryDto;
 	}

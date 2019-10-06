@@ -189,7 +189,6 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 	@Override
     public NavFacet<Category> convertCatToNavFacet(final Category c) {
     	final NavFacet<Category> s = new NavFacet<Category>();
-    	System.out.println(c.getClass().getSimpleName());
     	s.setFacetClassName(c.getClass().getSimpleName());
     	s.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
     	s.setFacetId(calcFacetId(s.getFacetClassName(), c.getCategoryCode().toString()));
@@ -199,7 +198,6 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
     	}
     	s.setFacetChildCount(c.getChildCategoryCount());
     	s.setFacetProductCount(c.getCount());
-    	System.out.println("product count = "  +c.getCount());
     	s.setFacetDisplayValue(c.getCategoryDesc());
     	s.setToken(calcToken(s.getFacetClassName(), c.getCategoryCode()));
     	s.setFacetLevel(c.getCategoryLevel());

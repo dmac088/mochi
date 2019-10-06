@@ -3,8 +3,6 @@ package io.nzbee.domain.category;
 import java.util.Objects;
 
 public abstract class Category {
-	
-	private Long id;
 
 	private String categoryCode;
 	
@@ -22,19 +20,11 @@ public abstract class Category {
 
 	private Long objectCount;
 	
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-	
 	public Category() {
 		super();
 	}
 	
-	public Category(Long id, 
+	public Category(
 					String categoryCode, 
 					String categoryDesc, 
 					Long categoryLevel, 
@@ -43,7 +33,6 @@ public abstract class Category {
 					String parentCode,
 					Long objectCount) {
 		super();
-		this.id 			= id;
 		this.categoryCode 	= categoryCode;
 		this.categoryDesc 	= categoryDesc;
 		this.categoryLevel 	= categoryLevel;
