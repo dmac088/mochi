@@ -1,22 +1,11 @@
 package io.nzbee.entity.category;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
-
+import io.nzbee.entity.IService;
 import io.nzbee.entity.category.Category;
 
-public interface ICategoryService {
-
-	Optional<Category> findById(long id);
-	
-	List<Category> findAll(String locale, String currency);
-	
-	List<Category> getAll();
-	
-	Optional<Category> findByCategoryDesc(String locale, String categoryDesc);
-	
-	Optional<Category> findByCategoryCode(String locale, String categoryCode);
+public interface ICategoryService extends IService<Category> {
 
 	Set<Category> recurseCategories(String currency, Set<Category> arrayList, Category pc);
 

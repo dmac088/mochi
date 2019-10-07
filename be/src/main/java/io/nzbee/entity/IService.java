@@ -8,9 +8,11 @@ public interface IService<T> {
 	
 	public List<T> findAll(String locale, String currency);
 	
-	public Optional<T> findOne(Long id);
+	public Optional<T> findById(long id);
 	
-	public Optional<T> findOne(String code);
+	public Optional<T> findByCode(String code);
+	
+	public Optional<T> findByDesc(String locale, String desc);
 	
 	public void save(T t);
 	

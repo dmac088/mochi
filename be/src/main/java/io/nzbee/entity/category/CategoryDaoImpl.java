@@ -42,27 +42,6 @@ public class CategoryDaoImpl implements ICategoryDao {
 	private EntityManager em;
 
 	@Override
-	public Optional<Category> findById(long id) {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		
-		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
-		
-		Root<Category> root = cq.from(Category.class);
-		
-		List<Predicate> conditions = new ArrayList<Predicate>();
-		conditions.add(cb.equal(root.get(Category_.categoryId), id));
-	
-		TypedQuery<Category> query = em.createQuery(cq
-				.select(root)
-				.where(conditions.toArray(new Predicate[] {}))
-				.distinct(false)
-		);
-		
-		return Optional.ofNullable(query.getSingleResult());
-	}
-
-	
-	@Override
 	public List<Category> findAll(String locale, String currency) {
 		
 		Query query = em.createNamedQuery("getCategories")
@@ -93,24 +72,28 @@ public class CategoryDaoImpl implements ICategoryDao {
 		}).collect(Collectors.toList());
 	}
 	
-	@Override 
-	public List<Category> getChildren(String currency, Category category) {
+	@Override
+	public Optional<Category> findById(long id) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
-		@SuppressWarnings("unchecked")
-		List<Category> c = em.createNamedQuery("getAllCategories")
-				 .setParameter("locale", category.getCategoryAttribute().getLclCd())
-				 .setParameter("currency", currency)
-				 .setParameter("parentCategoryCode", category.getParent().getCategoryCode())
-				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
-				 .setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
-				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
-				 .getResultList();
+		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
+		
+		Root<Category> root = cq.from(Category.class);
+		
+		List<Predicate> conditions = new ArrayList<Predicate>();
+		conditions.add(cb.equal(root.get(Category_.categoryId), id));
 	
-		return c;
+		TypedQuery<Category> query = em.createQuery(cq
+				.select(root)
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(false)
+		);
+		
+		return Optional.ofNullable(query.getSingleResult());
 	}
 	
 	@Override
-	public Optional<Category> findByCategoryDesc(String locale, String categoryDesc) {
+	public Optional<Category> findByDesc(String locale, String categoryDesc) {
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
@@ -137,9 +120,9 @@ public class CategoryDaoImpl implements ICategoryDao {
 		return Optional.ofNullable(query.getSingleResult());
 
 	}
-		
+
 	@Override
-	public Optional<Category> findByCategoryCode(String categoryCode, String locale) {
+	public Optional<Category> findByCode(String code) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 
 		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
@@ -148,8 +131,8 @@ public class CategoryDaoImpl implements ICategoryDao {
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 	
-		if(!(categoryCode == null)) {
-			conditions.add(cb.equal(root.get(Category_.categoryCode), categoryCode));
+		if(!(code == null)) {
+			conditions.add(cb.equal(root.get(Category_.categoryCode), code));
 		}
 		
 		TypedQuery<Category> query = em.createQuery(cq
@@ -159,6 +142,22 @@ public class CategoryDaoImpl implements ICategoryDao {
 		);
 		
 		return Optional.ofNullable(query.getSingleResult());
+	}
+	
+	@Override 
+	public List<Category> getChildren(String currency, Category category) {
+		
+		@SuppressWarnings("unchecked")
+		List<Category> c = em.createNamedQuery("getAllCategories")
+				 .setParameter("locale", category.getCategoryAttribute().getLclCd())
+				 .setParameter("currency", currency)
+				 .setParameter("parentCategoryCode", category.getParent().getCategoryCode())
+				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
+				 .setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
+				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
+				 .getResultList();
+	
+		return c;
 	}
 	
 	@Override
@@ -253,17 +252,10 @@ public class CategoryDaoImpl implements ICategoryDao {
 	}
 
 	@Override
-	public List<Category> getAll() {
+	public List<Category> getAll(String locale, String currency) {
 		// TODO Auto-generated method stub
-		return this.findAll();
+		return this.findAll(locale, currency);
 	}
-
-	@Override
-	public List<Category> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}	
-	
 
 	@Override
 	public void save(Category t) {
@@ -281,5 +273,6 @@ public class CategoryDaoImpl implements ICategoryDao {
 	public void delete(Category t) {
 		// TODO Auto-generated method stub
 	}
+
 	
 }

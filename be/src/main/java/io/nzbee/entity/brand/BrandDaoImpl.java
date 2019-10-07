@@ -86,7 +86,7 @@ public class BrandDaoImpl  implements IBrandDao {
 	}
 	
 	@Override
-	public List<Brand> getAll() {
+	public List<Brand> getAll(String locale, String currency) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Brand> cq = cb.createQuery(Brand.class);
@@ -109,7 +109,7 @@ public class BrandDaoImpl  implements IBrandDao {
 	}
 	
 	@Override
-	public List<Brand> findAll() {
+	public List<Brand> findAll(String locale, String currency) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Brand> cq = cb.createQuery(Brand.class);
