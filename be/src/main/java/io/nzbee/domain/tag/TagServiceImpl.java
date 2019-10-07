@@ -109,9 +109,9 @@ public class TagServiceImpl implements ITagService {
 	}
 
 	@Override
-	public Tag findOneById(Long id, String lcl) {
+	public Tag findById(String locale, String currency, long id) {
 		// TODO Auto-generated method stub
-		ProductTag pt = productTagService.findOne(id).get();
+		ProductTag pt = productTagService.findById(id).get();
 		return this.convertToTagDO(pt, lcl);
 	}
 

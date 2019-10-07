@@ -27,7 +27,6 @@ public class BrandServiceImpl implements IBrandService {
     	List<io.nzbee.entity.brand.Brand> lpb = brandService.findAll(locale, currency);
     	return lpb.stream().map(pb -> this.entityToDTO(locale, currency, pb))
     								 .collect(Collectors.toList());
-
 	}	
     
 	@Override
