@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 
-import io.nzbee.domain.services.IService;
+import io.nzbee.dto.IService;
 import io.nzbee.dto.brand.Brand;
 import io.nzbee.dto.category.Category;
 import io.nzbee.dto.tag.Tag;
@@ -38,8 +38,5 @@ public interface IProductService extends IService<Product> {
 	Product convertToProductDO(String productCreatedDate, String productUPC, String productDesc,
 			Double productRetailPrice, Double productMarkdownPrice, String productImage, String productLocale,
 			String productCurrency, String productCategory);
-
-	
-
 	
 }

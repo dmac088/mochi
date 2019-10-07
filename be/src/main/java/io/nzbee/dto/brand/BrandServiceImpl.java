@@ -23,8 +23,8 @@ public class BrandServiceImpl implements IBrandService {
     @Override
 	@Transactional
 	@Cacheable
-	public List<Brand> findAll(String lcl) {
-    	List<io.nzbee.entity.brand.Brand> lpb = brandService.findAll();
+	public List<Brand> findAll(String locale, String currency) {
+    	List<io.nzbee.entity.brand.Brand> lpb = brandService.findAll(locale, currency);
     	List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, lcl).get())
 		.collect(Collectors.toList());
     	return lb;
@@ -48,18 +48,11 @@ public class BrandServiceImpl implements IBrandService {
      	return	createBrandDO(pb, lcl);
 	}
 	
-//	@Override
-//	@Transactional
-//	@Cacheable
-//	public Optional<Brand> findOne(Product product) {
-//    	io.nzbee.entity.brand.Brand pb = brandService.findByCode(product.getBrand().get().getBrandCode()).get();
-//     	return	createBrandDO(pb, product.getLclCd());
-//	}
 	
 	@Override
-	public Optional<Brand> findOneByCode(String lcl, String brandCode) {
+	public Optional<Brand> findByCode(String locale, String code) {
 		// TODO Auto-generated method stub
-		return createBrandDO(brandService.findByCode(brandCode).get(), lcl);
+		return this.entityToDO(locale, brandService.findByCode(code).get());
 	}
 
 	@Override
@@ -81,13 +74,6 @@ public class BrandServiceImpl implements IBrandService {
      	return lb;
 	}
     
-	@Override
-	public Brand convertToBrandDO(String brandCode, String brandDesc) {
-		Brand b = new Brand();
-		b.setBrandCode(brandCode);
-		b.setBrandDesc(brandDesc);
-		return b; 
-	}
 	
  	@Cacheable
     private Optional<Brand> createBrandDO(final io.nzbee.entity.brand.Brand b, final String lcl) {
@@ -100,10 +86,29 @@ public class BrandServiceImpl implements IBrandService {
     	return Optional.ofNullable(bDO);
     }
 
+
+
 	@Override
-	public Brand converToBrandDO(io.nzbee.entity.brand.Brand brand, String locale) {
-		
+	public Optional<Brand> findById(long brandId) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@Override
+	public Optional<Brand> findByCode(String code) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<Brand> findByDesc(String locale, String desc) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void entityToDTO(String locale, Brand object) {
+		// TODO Auto-generated method stub
+		
+	}
 }
