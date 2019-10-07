@@ -1,7 +1,5 @@
 package io.nzbee.ui.component.web.facet;
 
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
@@ -16,7 +14,6 @@ import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.tag.ITagService;
 import io.nzbee.domain.tag.Tag;
 import io.nzbee.ui.component.web.generic.UIService;
-import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.ProductVars;
 
 @Service(value = "SidebarService")
@@ -46,11 +43,6 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 									NavFacet<Category> cnf = this.convertCatToNavFacet(c);
 									return cnf;
 							})
-							.filter(c -> c.getFacetProductCount() > 0)
-							.sorted(Comparator.comparing(NavFacet::getFacetProductCount
-									, (s1, s2) -> {
-							            return s2.compareTo(s1);
-							        }))
 							.collect(Collectors.toList()));
 		
 		nfr.setResult(nfc);
@@ -89,43 +81,21 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		List<Category> categories = categoryService.findAll(locale, categoryDesc, lb, lt);
 		List<Brand> brands = brandService.findAll(locale, currency, categoryDesc, lc, lt);
 		List<Tag> tags = tagService.findAll(locale, currency, categoryDesc, lc, lb);
-		boolean allNUll = tags.isEmpty() && brands.isEmpty() && categories.isEmpty();
-	
+
 		List<NavFacet<Category>> catBars = categories.stream().map(c -> {
 			NavFacet<Category> s = convertCatToNavFacet(c);
-			s.setFacetProductCount(c.getCount());
 			return s;
-		}).collect(Collectors.toList()).stream()
-			.filter(c -> c.getFacetProductCount() > 0)
-			.sorted(Comparator.comparing(NavFacet::getFacetProductCount
-																			, (s1, s2) -> {
-																	            return s2.compareTo(s1);
-																	        }))
-			.collect(Collectors.toList());
+		}).collect(Collectors.toList());
 	
 		List<NavFacet<Brand>> brandBars = brands.stream().map(b -> {
 			NavFacet<Brand> s = convertBrandToNavFacet(b);
-			s.setFacetProductCount(this.getCountForBrand(locale, currency, categoryDesc, lc, b, lt));
 			return s;
-		}).collect(Collectors.toList()).stream()
-			.filter(c -> c.getFacetProductCount() > 0)
-			.sorted(Comparator.comparing(NavFacet::getFacetProductCount
-					, (s1, s2) -> {
-			            return s2.compareTo(s1);
-			        }))
-			.collect(Collectors.toList());
+		}).collect(Collectors.toList());
 		
 		List<NavFacet<Tag>> tagBars = tags.stream().map(t -> {
 			NavFacet<Tag> s = convertTagToNavFacet(t);
-			s.setFacetProductCount(this.getCountForTag(locale, currency, categoryDesc, lc, lb, t));
 			return s;
-		}).collect(Collectors.toList()).stream()
-			.filter(t -> t.getFacetProductCount() > 0)
-			.sorted(Comparator.comparing(NavFacet::getFacetProductCount
-					, (s1, s2) -> {
-			            return s2.compareTo(s1);
-			        }))
-			.collect(Collectors.toList());
+		}).collect(Collectors.toList());
 		
 		nfc.getFacets().addAll(brandBars);
 		nfc.getFacets().addAll(catBars);
@@ -137,54 +107,6 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		
 	}
 	
-	private Long getCountForBrand(String locale, String currency, String category, List<Category> categories, Brand brand, List<Tag> tags) {
-		List<Brand> brands = new ArrayList<Brand>();
-		brands.add(brand);
-		
-		return productService.getCount(
-		CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
-		category, 
-		locale, 
-		currency, 
-		ProductVars.ACTIVE_SKU_CODE,
-		categories, 
-		brands, 
-		tags
-		);
-	}
-	
-	
-	private Long getCountForTag(String locale, String currency, String category, List<Category> categories, List<Brand> brands, Tag tag) {
-		List<Tag> tags = new ArrayList<Tag>();
-		tags.add(tag);
-		
-		return productService.getCount(
-		CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
-		category, 
-		locale, 
-		currency, 
-		ProductVars.ACTIVE_SKU_CODE,
-		categories, 
-		brands, 
-		tags
-		);
-	}
-//	
-//	private Long getCountForCategory(String locale, String currency, String categoryDesc, Category category, List<Brand> brands, List<Tag> tags) {
-//		List<Category> categories = new ArrayList<Category>();
-//		categories.add(category);
-//		
-//		return productService.getCount(
-//		CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
-//		categoryDesc, 
-//		locale, 
-//		currency, 
-//		ProductVars.ACTIVE_SKU_CODE,
-//		categories, 
-//		brands, 
-//		tags
-//		);
-//	}
 
 	@Override
     public NavFacet<Category> convertCatToNavFacet(final Category c) {
@@ -192,15 +114,8 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
     	s.setFacetClassName(c.getClass().getSimpleName());
     	s.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
     	s.setFacetId(calcFacetId(s.getFacetClassName(), c.getCategoryCode().toString()));
-    	
-    	if(c.getParentCode() != null) {
-    		s.setFacetParentId(calcFacetId(s.getFacetClassName(), c.getParentCode().toString()));
-    	}
-    	s.setFacetChildCount(c.getChildCategoryCount());
-    	s.setFacetProductCount(c.getCount());
     	s.setFacetDisplayValue(c.getCategoryDesc());
     	s.setToken(calcToken(s.getFacetClassName(), c.getCategoryCode()));
-    	s.setFacetLevel(c.getCategoryLevel());
     	s.setPayload(c);
 		return s;
     } 
@@ -211,10 +126,8 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		s.setFacetClassName(t.getClass().getSimpleName());
 		s.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
 		s.setFacetId(calcFacetId(s.getFacetClassName(), t.getTagCode()));
-		s.setFacetChildCount(new Long(0));
 		s.setFacetDisplayValue(t.getTagDesc());
 		s.setToken(calcToken(s.getFacetClassName(), t.getTagCode()));
-		s.setFacetLevel(new Long(0));
 		s.setPayload(t);
 		return s;
 	}
@@ -225,10 +138,8 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
     	s.setFacetClassName(b.getClass().getSimpleName());
     	s.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
     	s.setFacetId(calcFacetId(s.getFacetClassName(), b.getBrandCode()));
-    	s.setFacetChildCount(new Long(0));
     	s.setFacetDisplayValue(b.getBrandDesc());
     	s.setToken(calcToken(s.getFacetClassName(), b.getBrandCode()));
-    	s.setFacetLevel(new Long(0));
     	s.setPayload(b);
 		return s;
     }
