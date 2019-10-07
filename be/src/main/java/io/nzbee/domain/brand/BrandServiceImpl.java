@@ -23,9 +23,9 @@ public class BrandServiceImpl implements IBrandService {
     @Override
 	@Transactional
 	@Cacheable
-	public List<Brand> findAll(String lcl) {
-    	List<io.nzbee.entity.brand.Brand> lpb = brandService.findAll();
-    	List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, lcl).get())
+	public List<Brand> findAll(String locale, String currency) {
+    	List<io.nzbee.entity.brand.Brand> lpb = brandService.findAll(locale, currency);
+    	List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, locale).get())
 		.collect(Collectors.toList());
     	return lb;
 	}	
@@ -33,9 +33,9 @@ public class BrandServiceImpl implements IBrandService {
     @Override
 	@Transactional
 	@Cacheable
-	public List<Brand> findAll(String category, String lcl) {
+	public List<Brand> findAll(String locale, String category) {
     	List<io.nzbee.entity.brand.Brand> lpb = brandService.findAll(category);
-    	List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, lcl).get())
+    	List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, locale).get())
 		.collect(Collectors.toList());
     	return lb;
 	}	
@@ -43,19 +43,19 @@ public class BrandServiceImpl implements IBrandService {
 	@Override
 	@Transactional
 	@Cacheable
-	public Optional<Brand> findOne(String lcl, Long brandId) {
+	public Optional<Brand> findById(long brandId) {
     	io.nzbee.entity.brand.Brand pb = brandService.findById(brandId).get();
-     	return	createBrandDO(pb, lcl);
+     	return	createBrandDO(pb, locale);
 	}
 	
 	@Override
-	public Optional<Brand> findOneByCode(String lcl, String brandCode) {
+	public Optional<Brand> findByCode(String locale, String brandCode) {
 		// TODO Auto-generated method stub
 		return createBrandDO(brandService.findByCode(brandCode).get(), lcl);
 	}
 
 	@Override
-	public Optional<Brand> findOneByDesc(String lcl, String brandDesc) {
+	public Optional<Brand> findByDesc(String locale, String brandDesc) {
 		// TODO Auto-generated method stub
 		return createBrandDO(brandService.findByDesc(brandDesc, lcl).get(), lcl);
 	}
