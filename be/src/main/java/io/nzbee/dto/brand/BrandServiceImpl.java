@@ -25,7 +25,7 @@ public class BrandServiceImpl implements IBrandService {
 	@Cacheable
 	public List<Brand> findAll(String locale, String currency) {
     	List<io.nzbee.entity.brand.Brand> lpb = brandService.findAll(locale, currency);
-    	return lpb.stream().map(pb -> this.entityToDTO(locale, pb))
+    	return lpb.stream().map(pb -> this.entityToDTO(locale, currency, pb))
     								 .collect(Collectors.toList());
 
 	}	
@@ -33,21 +33,21 @@ public class BrandServiceImpl implements IBrandService {
 	@Override
 	@Transactional
 	@Cacheable
-	public Optional<Brand> findById(String locale, long Id) {
+	public Optional<Brand> findById(String locale, String currency, long Id) {
     	io.nzbee.entity.brand.Brand pb = brandService.findById(Id).get();
-     	return	Optional.ofNullable(this.entityToDTO(locale, pb));
+     	return	Optional.ofNullable(this.entityToDTO(locale, currency, pb));
 	}
 	
 	@Override
-	public Optional<Brand> findByCode(String locale, String code) {
+	public Optional<Brand> findByCode(String locale, String currency, String code) {
 		// TODO Auto-generated method stub
-		return Optional.ofNullable(this.entityToDTO(locale, brandService.findByCode(code).get()));
+		return Optional.ofNullable(this.entityToDTO(locale, currency, brandService.findByCode(code).get()));
 	}
 
 	@Override
-	public Optional<Brand> findByDesc(String locale, String desc) {
+	public Optional<Brand> findByDesc(String locale, String currency, String desc) {
 		// TODO Auto-generated method stub
-		return Optional.ofNullable(this.entityToDTO(locale, brandService.findByDesc(locale, desc).get()));
+		return Optional.ofNullable(this.entityToDTO(locale, currency, brandService.findByDesc(locale, desc).get()));
 	}
  
 	@Override
@@ -59,11 +59,11 @@ public class BrandServiceImpl implements IBrandService {
 																	categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
 																	tags.stream().map(t -> t.getTagCode()).collect(Collectors.toList())
 																	);
-		return lpb.stream().map(pb -> entityToDTO(locale, pb)).collect(Collectors.toList());		
+		return lpb.stream().map(pb -> entityToDTO(locale, currency, pb)).collect(Collectors.toList());		
 	}
 
 	@Override
-	public Brand entityToDTO(String locale, Object entity) {
+	public Brand entityToDTO(String locale, String currency, Object entity) {
 		// TODO Auto-generated method stub
 		Brand brand = new Brand();
 		io.nzbee.entity.brand.Brand b = ((io.nzbee.entity.brand.Brand) entity);
