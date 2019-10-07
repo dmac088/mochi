@@ -20,12 +20,6 @@ public class CategoryServiceImpl implements ICategoryService {
 	}
 
 	@Override
-	public List<Category> getAll() {
-		// TODO Auto-generated method stub
-		return categoryDAO.getAll();
-	}
-
-	@Override
 	public List<Category> findAll(String locale, String currency) {
 		// TODO Auto-generated method stub
 		return categoryDAO.findAll(locale, currency);
@@ -44,17 +38,16 @@ public class CategoryServiceImpl implements ICategoryService {
 	}
 
 	@Override
-	public Optional<Category> findByCategoryDesc(String locale, String categoryDesc) {
+	public Optional<Category> findByDesc(String locale, String categoryDesc) {
 		// TODO Auto-generated method stub
-		return categoryDAO.findByCategoryDesc(locale, categoryDesc);
+		return categoryDAO.findByDesc(locale, categoryDesc);
 	}
 
 	@Override
-	public Optional<Category> findByCategoryCode(String locale, String categoryCode) {
+	public Optional<Category> findByCode(String code) {
 		// TODO Auto-generated method stub
-		return categoryDAO.findByCategoryCode(locale, categoryCode);
+		return categoryDAO.findByCode(code);
 	}
-
 
 	@Override
 	public List<Category> findAllForLevel(String locale, Long level) {
@@ -75,6 +68,24 @@ public class CategoryServiceImpl implements ICategoryService {
 			recurseCategories(currency, arrayList, c); 
 		});
 		return arrayList; 
+	}
+
+	@Override
+	public void save(Category t) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void update(Category t) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete(Category t) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 

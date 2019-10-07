@@ -14,16 +14,17 @@ public class BrandServiceImpl implements IBrandService {
 	private IBrandDao brandDao; 
 
 	@Override
-	public List<Brand> findAll() {
+	public List<Brand> findAll(String locale, String currency) {
 		// TODO Auto-generated method stub
-		return brandDao.findAll();
+		return brandDao.findAll(locale, currency);
 	}
 
 	@Override
-	public Optional<Brand> findById(Long Id) {
+	public Optional<Brand> findById(long Id) {
 		// TODO Auto-generated method stub
 		return brandDao.findById(Id);
 	}
+
 
 	@Override
 	public Optional<Brand> findByCode(String brandCode) {
@@ -54,5 +55,25 @@ public class BrandServiceImpl implements IBrandService {
 		// TODO Auto-generated method stub
 		return brandDao.findByDesc(brandDesc, locale);
 	}
+
+	@Override
+	public void save(Brand t) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void update(Brand t) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete(Brand t) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 	
 }

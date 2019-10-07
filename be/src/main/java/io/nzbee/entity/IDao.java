@@ -6,6 +6,10 @@ import java.util.Optional;
 public interface IDao<T> {
     
     Optional<T> findById(long id);
+    
+    Optional<T> findByCode(String code);
+    
+    Optional<T> findByDesc(String locale, String desc);
      
     List<T> getAll(String locale, String currency);
     
