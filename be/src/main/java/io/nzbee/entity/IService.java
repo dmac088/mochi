@@ -6,7 +6,7 @@ import java.util.Optional;
 public interface IService<T> {
 
 	
-	public List<T> findAll();
+	public List<T> findAll(String locale, String currency);
 	
 	public Optional<T> findOne(Long id);
 	

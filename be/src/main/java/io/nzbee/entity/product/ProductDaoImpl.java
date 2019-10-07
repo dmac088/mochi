@@ -92,23 +92,6 @@ public class ProductDaoImpl implements IProductDao {
 		}).collect(Collectors.toList());
 	}
 	
-	@Override
-	public List<Product> findAll() {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		
-		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
-		
-		Root<Product> root = cq.from(Product.class);
-		
-		List<Predicate> conditions = new ArrayList<Predicate>();		
-		TypedQuery<Product> query = em.createQuery(cq
-				.select(root)
-				.where(conditions.toArray(new Predicate[] {}))
-				.distinct(false)
-		);
-		
-		return query.getResultList();
-	}
 	
 	@Override
 	public Optional<Product> findById(long id) {
@@ -128,24 +111,6 @@ public class ProductDaoImpl implements IProductDao {
 		);
 		
 		return Optional.ofNullable(query.getSingleResult());
-	}
-
-	@Override
-	public List<Product> getAll() {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		
-		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
-		
-		Root<Product> root = cq.from(Product.class);
-
-		List<Predicate> conditions = new ArrayList<Predicate>();		
-		TypedQuery<Product> query = em.createQuery(cq
-				.select(root)
-				.where(conditions.toArray(new Predicate[] {}))
-				.distinct(false)
-		);
-		
-		return query.getResultList();
 	}
 
 	@Override
@@ -723,5 +688,11 @@ public class ProductDaoImpl implements IProductDao {
 		}
 		
 		return cb.asc(cb.lower(attributeJoin.get(ProductAttribute_.productDesc.getName())));
+	}
+
+	@Override
+	public List<Product> getAll(String locale, String currency) {
+		// TODO Auto-generated method stub
+		return this.findAll(locale, currency);
 	}
 }

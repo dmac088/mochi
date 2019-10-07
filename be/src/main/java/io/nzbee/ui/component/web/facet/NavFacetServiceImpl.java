@@ -107,7 +107,6 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		
 	}
 	
-
 	@Override
     public NavFacet<Category> convertCatToNavFacet(final Category c) {
     	final NavFacet<Category> s = new NavFacet<Category>();
