@@ -17,6 +17,8 @@ public class NavFacet<T> {
 	private String facetDisplayValue;
 
 	private String facetClassName;
+	
+	private Long facetProductCount;
 
 	private T payload;
 
@@ -67,6 +69,14 @@ public class NavFacet<T> {
 	public void setFacetClassName(String facetClassName) {
 		this.facetClassName = facetClassName;
 	}
+	
+	public Long getFacetProductCount() {
+		return facetProductCount;
+	}
+
+	public void setFacetProductCount(Long facetProductCount) {
+		this.facetProductCount = facetProductCount;
+	}
 
 	@Override
 	public boolean equals(Object o) {
@@ -92,5 +102,7 @@ public class NavFacet<T> {
         .append("]");
         return builder.toString();
     }
+
+	
 
 }

@@ -42,7 +42,6 @@ public class ProductServiceImpl implements IProductService {
 								 List<Category> categories,
 								 List<Brand> brands,
 								 List<Tag> tags) {
-	
     	
     	//need to map categories domain object to a DTO 
     	return productDtoService.findAll(
