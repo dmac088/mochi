@@ -21,14 +21,14 @@ public class PartyServiceImpl implements IPartyService {
 	@Override
 	@PreAuthorize("hasAuthority('PARTY_READER')")
 	@Transactional(readOnly = true)
-	public List<Party> findAll() {
+	public List<Party> findAll(String locale, String Currency) {
 		return partyRepository.findAll();
 	}
 
 	@Override
 	@PreAuthorize("hasAuthority('PARTY_READ')")
 	@Transactional(readOnly = true)
-	public Optional<Party> findOne(Long id) {
+	public Optional<Party> findById(long id) {
 		// TODO Auto-generated method stub
 		return partyRepository.findById(id);
 	}
@@ -37,9 +37,15 @@ public class PartyServiceImpl implements IPartyService {
 	//We need to ensure the user is logged in before invoking this method
 	//@PreAuthorize("hasAuthority('PARTY_READ')")
 	@Transactional(readOnly = true)
-	public Optional<Party> findOne(String code) {
+	public Optional<Party> findByCode(String code) {
 		// TODO Auto-generated method stub
 		return partyRepository.findByPartyUserUsername(code);
+	}
+	
+	@Override
+	public Optional<Party> findByDesc(String locale, String desc) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
