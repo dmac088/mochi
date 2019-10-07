@@ -61,7 +61,46 @@ public class ProductDaoImpl implements IProductDao {
 				 .setParameter("currency", currency)
 				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
 				 .setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
-				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE);
+				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
+				 
+				 //these should contain default values for these parameters
+				 .setParameter("orderby", "test")
+				 .setParameter("limit", "10")
+				 .setParameter("offset", "0");
+		
+				//we need to put out own pagination filters here
+		
+		
+		@SuppressWarnings("unchecked")
+		List<Object[]> results = query.getResultList();
+		
+		return results.stream().map(p -> {
+			Product product = (Product) p[0];
+			product.setProductAttribute((ProductAttribute) p[1]); 
+			product.setBrand((Brand) p[2]);
+			product.getBrand().setBrandAttribute((BrandAttribute) p[3]);
+			
+			return product;
+		}).collect(Collectors.toList());
+	}
+	
+	@Override
+	public List<Product> findAll(String locale, String currency, int page, int size, String orderby) {
+		// TODO Auto-generated method stub
+		Query query = em.createNamedQuery("getProducts")
+				 .setParameter("locale", locale)
+				 .setParameter("currency", currency)
+				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
+				 .setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
+				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
+				 
+				 //these should contain default values for these parameters
+				 .setParameter("orderby", orderby)
+				 .setParameter("limit", Integer.toString(size))
+				 .setParameter("offset", Integer.toString(0));
+		
+				//we need to put out own pagination filters here
+		
 		
 		@SuppressWarnings("unchecked")
 		List<Object[]> results = query.getResultList();
@@ -348,5 +387,8 @@ public class ProductDaoImpl implements IProductDao {
 		
 		return cb.asc(cb.lower(attributeJoin.get(ProductAttribute_.productDesc.getName())));
 	}
+
+
+
 
 }

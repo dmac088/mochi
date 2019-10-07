@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Sort;
@@ -84,18 +85,23 @@ public class ProductServiceImpl implements IProductService {
 	
     	
     	//we need to convert to lists of IDs or codes here
-    	return productDao.findAll(
-    			categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
-    			locale, 
-    			new Double(0), 
-    			price, 
-    			ProductVars.MARKDOWN_SKU_DESCRIPTION, 
-    			currency, 
-    			new Date(), 
-    			new Date(), 
-    			PageRequest.of(page, size, this.sortByParam(sortBy)), 
-    			brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()), 
-    			tags.stream().map(t -> t.getTagCode()).collect(Collectors.toList())); 
+    	Page<io.nzbee.entity.product.Product> pp
+    						=  productService.findAll( categoryDesc, 
+						    						   categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
+						    						   locale, 
+						    						   new Double(0), 
+						    			    		   price,
+						    			    		   ProductVars.PRICE_RETAIL_CODE, 
+						    						   currency, 
+						    						   new Date(), 
+						    						   new Date(), 
+						    						   PageRequest.of(page, size, this.sortByParam(sortBy)), 
+						    						   brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()), 
+						    						   tags.stream().map(t -> t.getTagCode()).collect(Collectors.toList()));
+    	
+    	
+    	Page<Product> ppDTO = PageImpl(pp.stream().map(p -> this.entityToDTO(locale, currency, p)).);
+    	
 	}
     
     @Override

@@ -11,6 +11,8 @@ import io.nzbee.entity.IDao;
 public interface IProductDao extends IDao<Product> {
 
 	List<Product> findAll(String locale, String currency, List<String> productCodes);
+	
+	List<Product> findAll(String locale, String currency, int page, int size, String orderby);
 
 	Page<Product> findAll(List<String> categoryCodes, String locale, String priceType, String currency,
 			Date priceDateStart, Date priceDateEnd, Pageable pageable, List<String> brandCodes, List<String> tagCodes);
