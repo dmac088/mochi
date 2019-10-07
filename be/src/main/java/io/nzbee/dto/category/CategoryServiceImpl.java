@@ -34,7 +34,7 @@ public class CategoryServiceImpl implements ICategoryService {
 	@Override
 	public Optional<Category> findOneByCode(String locale, String categoryCode) {
 		// TODO Auto-generated method stub
-		return Optional.ofNullable(convertCategoryEntityToCategoryDTO(categoryService.findByCategoryCode(categoryCode, locale).get()));
+		return Optional.ofNullable(convertCategoryEntityToCategoryDTO(categoryService.findByCode(categoryCode).get()));
 			   
 	}
 	
@@ -60,7 +60,7 @@ public class CategoryServiceImpl implements ICategoryService {
   	@Transactional
   	//@Cacheable
   	public Optional<Category> findOne(String locale, String categoryCode) {
-    	return Optional.ofNullable(convertCategoryEntityToCategoryDTO(categoryService.findByCategoryCode(categoryCode, locale).get()));
+    	return Optional.ofNullable(convertCategoryEntityToCategoryDTO(categoryService.findByCode(categoryCode).get()));
     	
   	}
     
@@ -68,7 +68,7 @@ public class CategoryServiceImpl implements ICategoryService {
 	@Transactional
 	//@Cacheable
 	public Optional<Category> findOneByDesc(String locale, String categoryDesc) {
-    	return Optional.ofNullable(convertCategoryEntityToCategoryDTO(categoryService.findByCategoryDesc(categoryDesc, locale).get()));
+    	return Optional.ofNullable(convertCategoryEntityToCategoryDTO(categoryService.findByDesc(locale, categoryDesc).get()));
     	
    
 	}
