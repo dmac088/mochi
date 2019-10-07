@@ -36,7 +36,7 @@ public class ProductServiceImpl implements IProductService {
 	@Override
 	public List<Product> findAll(String locale, String currency, List<String> productCodes) {
 		// TODO Auto-generated method stub
-		return productDAO.getAll(locale, currency, productCodes);
+		return productDAO.findAll(locale, currency, productCodes);
 	}
 	
 	@Override
@@ -53,7 +53,7 @@ public class ProductServiceImpl implements IProductService {
 									List<String> brandCodes, 
 									List<String> tagCodes) {
 		
-			return productDAO.findAllActiveSKUByCode(	
+			return productDAO.findAll(	
 					categoryCodes.isEmpty() ? this.getAllChildCodes(locale, currency, categoryDesc).stream().collect(Collectors.toList())
 											: categoryCodes,
 					locale,
@@ -82,7 +82,7 @@ public class ProductServiceImpl implements IProductService {
 									List<String> brandCodes, 
 									List<String> tagCodes) {
 		
-			return productDAO.findAllActiveSKUByCode(	
+			return productDAO.findAll(	
 					categoryCodes.isEmpty() 	? this.getAllChildCodes(locale, currency, categoryDesc).stream().collect(Collectors.toList())
 												: categoryCodes,
 					locale,
@@ -97,13 +97,19 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public Optional<Product> findOne(Long Id) {
+	public Optional<Product> findById(long Id) {
 		return productDAO.findById(Id);
 	}
 	
 	@Override
-	public Optional<Product> findOne(String upc) {
-		return productDAO.findByUPC(upc);
+	public Optional<Product> findByCode(String code) {
+		return productDAO.findByCode(code);
+	}
+	
+	@Override
+	public Optional<Product> findByDesc(String locale, String desc) {
+		// TODO Auto-generated method stub
+		return productDAO.findByDesc(locale, desc);
 	}
 
 	@Override
@@ -251,7 +257,7 @@ public class ProductServiceImpl implements IProductService {
 	}
 	
 	private Set<String> getAllChildCodes(String locale, String currency, String categoryDesc) {
-		Category pc = categoryService.findByCategoryDesc( 
+		Category pc = categoryService.findByDesc( 
 				categoryDesc, 
 				locale).get();
 
@@ -259,5 +265,7 @@ public class ProductServiceImpl implements IProductService {
 		return categoryService.recurseCategories(currency, lc, pc)
 				.stream().map(c -> c.getCategoryCode()).collect(Collectors.toSet());
 	}
+
+	
 
 }

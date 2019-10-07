@@ -22,15 +22,27 @@ public class ProductPriceServiceImpl implements IProductPriceService {
 	}
 
 	@Override
-	public List<ProductPrice> getAll() {
+	public List<ProductPrice> getAll(String locale, String currency) {
 		// TODO Auto-generated method stub
 		return productPriceRepository.findAll();
 	}
 
 	@Override
-	public List<ProductPrice> findAll() {
+	public List<ProductPrice> findAll(String locale, String currency) {
 		// TODO Auto-generated method stub
 		return productPriceRepository.findAll();
+	}
+	
+	@Override
+	public Optional<ProductPrice> findByCode(String code) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<ProductPrice> findByDesc(String locale, String desc) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -107,6 +119,8 @@ public class ProductPriceServiceImpl implements IProductPriceService {
 				ProductVars.CURRENCY_HONG_KONG 
 		);
 	}
+
+	
 
 	
 

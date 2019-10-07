@@ -21,25 +21,28 @@ public class ProductAttributeServiceImpl implements IProductAttributeService {
 	}
 	
 	@Override
-	public Optional<ProductAttribute> findByIdAndLocale(Long id, String lcl) {
-		return productAttributeRepository.findByLclCdAndProductId(lcl, id);
-	}
-	
-	@Override
-	public List<ProductAttribute> getAll() {
+	public List<ProductAttribute> getAll(String locale, String currency) {
 		// TODO Auto-generated method stub
-		return productAttributeRepository.findAll();
+		return null;//productAttributeRepository.findAll(locale, currency);
 	}
 
 	@Override
-	public List<ProductAttribute> findAll() {
+	public List<ProductAttribute> findAll(String locale, String currency) {
 		// TODO Auto-generated method stub
-		return productAttributeRepository.findAll();
+		return null;//productAttributeRepository.findAll();
 	}
 	
+
 	@Override
-	public List<ProductAttribute> findAll(String lcl) {
-		return productAttributeRepository.findByLclCd(lcl);
+	public Optional<ProductAttribute> findByCode(String code) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<ProductAttribute> findByDesc(String locale, String desc) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -74,5 +77,6 @@ public class ProductAttributeServiceImpl implements IProductAttributeService {
 	public Optional<ProductAttribute> getProductAttributeHK(Long id) {
 		return productAttributeRepository.findByLclCdAndProductId(GeneralVars.LANGUAGE_HK, id);
 	}
+
 	
 }

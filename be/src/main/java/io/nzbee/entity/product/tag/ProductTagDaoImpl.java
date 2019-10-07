@@ -39,7 +39,7 @@ import io.nzbee.entity.product.tag.attribute.ProductTagAttribute_;
 import io.nzbee.variables.ProductVars;
 
 @Component 
-public class ProductTagDaoImpl  implements IProductTagDao {
+public class ProductTagDaoImpl implements IProductTagDao {
 	
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
@@ -113,13 +113,13 @@ public class ProductTagDaoImpl  implements IProductTagDao {
 
 
 	@Override
-	public List<ProductTag> getAll() {
+	public List<ProductTag> getAll(String locale, String currency) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<ProductTag> findAll() {
+	public List<ProductTag> findAll(String locale, String currency) {
 		// TODO Auto-generated method stub
 		return null;
 	}
