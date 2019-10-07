@@ -48,14 +48,6 @@ public class BrandServiceImpl implements IBrandService {
      	return	createBrandDO(pb, lcl);
 	}
 	
-//	@Override
-//	@Transactional
-//	@Cacheable
-//	public Optional<Brand> findOne(Product product) {
-//    	io.nzbee.entity.brand.Brand pb = brandService.findByCode(product.getBrand().get().getBrandCode()).get();
-//     	return	createBrandDO(pb, product.getLclCd());
-//	}
-	
 	@Override
 	public Optional<Brand> findOneByCode(String lcl, String brandCode) {
 		// TODO Auto-generated method stub
