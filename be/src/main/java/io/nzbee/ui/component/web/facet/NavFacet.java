@@ -17,16 +17,6 @@ public class NavFacet<T> {
 	private String facetDisplayValue;
 
 	private String facetClassName;
-	
-	private Long facetLevel;
-	
-	private String facetParentId;
-	
-	private Long facetChildCount;
-
-	private Long facetProductCount;
-	
-	private Double facetMaxMarkdownPrice;
 
 	private T payload;
 
@@ -76,46 +66,6 @@ public class NavFacet<T> {
 	
 	public void setFacetClassName(String facetClassName) {
 		this.facetClassName = facetClassName;
-	}
-	
-	public Long getFacetLevel() {
-		return facetLevel;
-	}
-
-	public void setFacetLevel(Long facetLevel) {
-		this.facetLevel = facetLevel;
-	}
-
-	public Long getFacetChildCount() {
-		return facetChildCount;
-	}
-
-	public void setFacetChildCount(Long facetChildCount) {
-		this.facetChildCount = facetChildCount;
-	}
-	
-	public Long getFacetProductCount() {
-		return facetProductCount;
-	}
-
-	public void setFacetProductCount(Long facetProductCount) {
-		this.facetProductCount = facetProductCount;
-	}
-
-	public Double getFacetMaxMarkdownPrice() {
-		return facetMaxMarkdownPrice;
-	}
-
-	public void setFacetMaxMarkdownPrice(Double facetMaxMarkdownPrice) {
-		this.facetMaxMarkdownPrice = facetMaxMarkdownPrice;
-	}
-	
-	public String getFacetParentId() {
-		return facetParentId;
-	}
-
-	public void setFacetParentId(String facetParentId) {
-		this.facetParentId = facetParentId;
 	}
 
 	@Override
