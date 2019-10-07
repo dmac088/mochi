@@ -48,6 +48,62 @@ import io.nzbee.variables.ProductVars;
 
 @NamedNativeQueries({
 	@NamedNativeQuery(
+			name = "getProductsCount",
+			resultSetMapping = "ProductCountMapping",
+			query = "WITH RECURSIVE   " +
+					"descendants AS   " +
+					"(   " +
+					"  SELECT 	t.cat_id,    " +
+					"			t.hir_id,   " +
+					"			t.cat_cd,   " +
+					"			t.cat_lvl,   " +
+					"			t.cat_prnt_id,  " +
+					"			t.cat_typ_id  " +
+					" FROM mochi.category AS t  " +
+					"	INNER JOIN mochi.category  AS pc  " +
+					"	ON t.cat_prnt_id = pc.cat_id  " +
+					
+					" WHERE pc.cat_cd = :categoryCode " +
+					" UNION ALL   " +
+					" SELECT 	t.cat_id,    " +
+					"			t.hir_id,   " +
+					"			t.cat_cd,    " +
+					"			t.cat_lvl,   " +
+					"			t.cat_prnt_id,  " +
+					"			t.cat_typ_id  " +
+					"  FROM mochi.category AS t   " +
+					"  JOIN descendants AS d  " +
+					"  ON t.cat_prnt_id = d.cat_id   " +
+					")  " +
+					"select count(distinct prd.prd_id) as product_count  " +
+					
+					"FROM descendants cc   " +
+					"	INNER JOIN mochi.product_category pc   " +
+					"	ON cc.cat_id = pc.cat_id   " +
+					
+					"	INNER JOIN mochi.product prd   " +
+					"	ON pc.prd_id = prd.prd_id  " +
+					
+					"	INNER JOIN mochi.product_type prdt  " +
+					"	ON prd.prd_typ_id = prdt.prd_typ_id  " +
+
+					"	INNER JOIN mochi.price prc    " +
+					"	ON prd.prd_id = prc.prd_id   " +
+
+					"	INNER JOIN mochi.currency curr    " +
+					"	ON prc.ccy_id = curr.ccy_id  " +
+
+					"	INNER JOIN mochi.price_type pt  " +
+					"	ON prc.prc_typ_id = pt.prc_typ_id  " +
+
+					"	INNER JOIN mochi.product_status ps   " +
+					"	ON prd.prd_sts_id = ps.prd_sts_id  " +
+
+					"WHERE now() >= prc.prc_st_dt AND now() <= prc.prc_en_dt " +
+					"AND curr.ccy_cd = 	:currency " +
+					"AND prd_sts_cd = 	:activeProductCode " 
+	),
+	@NamedNativeQuery(
 	name = "getProducts",
 	resultSetMapping = "ProductMapping",
 	query = 
@@ -160,7 +216,10 @@ import io.nzbee.variables.ProductVars;
 					"	   bal.bnd_desc,  " +
 					"	   ps.prd_sts_id,  " +
 					"	   ps.prd_sts_cd,  " +
-					"	   ps.prd_sts_desc "
+					"	   ps.prd_sts_desc " + 
+					" ORDER BY :orderby " + 
+					" LIMIT :limit " +
+					" OFFSET :offset "
 		)
 	})
 @SqlResultSetMapping(

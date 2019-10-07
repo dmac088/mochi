@@ -15,7 +15,6 @@ import io.nzbee.dto.category.Category;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.tag.IProductTagService;
-import io.nzbee.entity.product.tag.ProductTag;
 import io.nzbee.variables.ProductVars;
 
 
