@@ -25,40 +25,29 @@ public class BrandServiceImpl implements IBrandService {
 	@Cacheable
 	public List<Brand> findAll(String locale, String currency) {
     	List<io.nzbee.entity.brand.Brand> lpb = brandService.findAll(locale, currency);
-    	List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, lcl).get())
-		.collect(Collectors.toList());
-    	return lb;
+    	return lpb.stream().map(pb -> this.entityToDTO(locale, pb))
+    								 .collect(Collectors.toList());
+
 	}	
     
-    @Override
-	@Transactional
-	@Cacheable
-	public List<Brand> findAll(String category, String lcl) {
-    	List<io.nzbee.entity.brand.Brand> lpb = brandService.findAll(category);
-    	List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, lcl).get())
-		.collect(Collectors.toList());
-    	return lb;
-	}	
-
 	@Override
 	@Transactional
 	@Cacheable
-	public Optional<Brand> findOne(String lcl, Long brandId) {
-    	io.nzbee.entity.brand.Brand pb = brandService.findById(brandId).get();
-     	return	createBrandDO(pb, lcl);
+	public Optional<Brand> findById(String locale, long Id) {
+    	io.nzbee.entity.brand.Brand pb = brandService.findById(Id).get();
+     	return	Optional.ofNullable(this.entityToDTO(locale, pb));
 	}
-	
 	
 	@Override
 	public Optional<Brand> findByCode(String locale, String code) {
 		// TODO Auto-generated method stub
-		return this.entityToDO(locale, brandService.findByCode(code).get());
+		return Optional.ofNullable(this.entityToDTO(locale, brandService.findByCode(code).get()));
 	}
 
 	@Override
-	public Optional<Brand> findOneByDesc(String lcl, String brandDesc) {
+	public Optional<Brand> findByDesc(String locale, String desc) {
 		// TODO Auto-generated method stub
-		return createBrandDO(brandService.findByDesc(brandDesc, lcl).get(), lcl);
+		return Optional.ofNullable(this.entityToDTO(locale, brandService.findByDesc(locale, desc).get()));
 	}
  
 	@Override
@@ -70,45 +59,17 @@ public class BrandServiceImpl implements IBrandService {
 																	categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
 																	tags.stream().map(t -> t.getTagCode()).collect(Collectors.toList())
 																	);
-		List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, locale).get()).collect(Collectors.toList());		
-     	return lb;
-	}
-    
-	
- 	@Cacheable
-    private Optional<Brand> createBrandDO(final io.nzbee.entity.brand.Brand b, final String lcl) {
-    	final Brand bDO = new Brand();
-    	bDO.setBrandCode(b.getCode());
-    	bDO.setBrandDesc(
-	    	b.getAttributes().stream()
-			.filter(ba -> ba.getLclCd().equals(lcl)
-			).collect(Collectors.toList()).get(0).getBrandDesc());
-    	return Optional.ofNullable(bDO);
-    }
-
-
-
-	@Override
-	public Optional<Brand> findById(long brandId) {
-		// TODO Auto-generated method stub
-		return null;
+		return lpb.stream().map(pb -> entityToDTO(locale, pb)).collect(Collectors.toList());		
 	}
 
 	@Override
-	public Optional<Brand> findByCode(String code) {
+	public Brand entityToDTO(String locale, Object entity) {
 		// TODO Auto-generated method stub
-		return null;
+		Brand brand = new Brand();
+		io.nzbee.entity.brand.Brand b = ((io.nzbee.entity.brand.Brand) entity);
+		brand.setBrandCode(b.getCode());
+		brand.setBrandDesc(b.getBrandAttribute().getBrandDesc());		
+		return brand;
 	}
 
-	@Override
-	public Optional<Brand> findByDesc(String locale, String desc) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void entityToDTO(String locale, Brand object) {
-		// TODO Auto-generated method stub
-		
-	}
 }

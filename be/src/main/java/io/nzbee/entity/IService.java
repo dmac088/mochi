@@ -19,6 +19,5 @@ public interface IService<T> {
 	public void update(T t);
 	
 	public void delete(T t);
-
-
+	
 }
