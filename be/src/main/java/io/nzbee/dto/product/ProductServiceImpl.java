@@ -18,6 +18,7 @@ import org.springframework.data.domain.Sort;
 import io.nzbee.dto.brand.Brand;
 import io.nzbee.dto.category.Category;
 import io.nzbee.dto.tag.Tag;
+import io.nzbee.entity.product.IProductDao;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.GeneralVars;
 import io.nzbee.variables.ProductVars;
@@ -32,18 +33,42 @@ public class ProductServiceImpl implements IProductService {
 	@Autowired 
 	@Qualifier("productEntityService")
 	private io.nzbee.entity.product.IProductService productService;
+    
 
-    @Autowired 
-    @Qualifier(value="productDomainDao")
-    private IProductDao productDao;
-    
-    @Override
-	@Transactional
-	@Cacheable(value="product")
-	public Optional<Product> findOne(String locale, String currency, String code) {
-    	return productDao.findByUPC(code, locale, currency);
-	}	
-    
+	@Override
+	public Optional<Product> findById(String locale, String currency, long Id) {
+		// TODO Auto-generated method stub
+		return Optional.ofNullable(this.entityToDTO(locale, currency, productService.findById(Id)));
+	}
+	
+	@Override
+	public Optional<Product> findByCode(String locale, String currency, String code) {
+		// TODO Auto-generated method stub
+		return Optional.ofNullable(this.entityToDTO(locale, currency, productService.findByCode(code)));
+	}
+
+	@Override
+	public Optional<Product> findByDesc(String locale, String currency, String desc) {
+		// TODO Auto-generated method stub
+		return Optional.ofNullable(this.entityToDTO(locale, currency, productService.findByDesc(locale, desc)));
+	}
+
+	@Override
+	public List<Product> findAll(String locale, String currency) {
+		// TODO Auto-generated method stub
+		return productService.findAll(locale, currency)
+							 .stream().map(p -> this.entityToDTO(locale, currency, p))
+							 .collect(Collectors.toList());
+	}
+	
+	@Override
+	public List<Product> findAll(String locale, String currency, List<String> productCodes) {
+		// TODO Auto-generated method stub
+		return productService.findAll(locale, currency, productCodes)
+							 .stream().map(p -> this.entityToDTO(locale, currency, p))
+							 .collect(Collectors.toList());
+	}
+
     @Override
     @Cacheable(value="products")
 	public Page<Product> findAll(String locale, 
@@ -97,99 +122,6 @@ public class ProductServiceImpl implements IProductService {
      							tags.stream().map(t -> t.getTagCode()).collect(Collectors.toList()));
 
 	}
-    
-    
-//    @Override
-//	@Cacheable(value="selectedProducts")
-//	public List<Product> findAll(String locale, String currency, List<String> productCodes) {
-//	     return productDao.findAll(locale, currency, productCodes);
-//	}
-    
-//    @Override
-//    public Product convertToProductDO(final io.nzbee.entity.product.Product product, String lcl, String currency) {
-//    	final Product pDo = new Product();
-//    	Optional<ProductAttribute> pa = productAttributeService.findByIdAndLocale(product.getProductId(), lcl);
-//        pDo.setProductUPC(product.getUPC());
-//        pDo.setProductCreateDt(product.getProductCreateDt());
-//        pDo.setProductUPC(product.getUPC());
-//        pDo.setProductDesc(pa.get().getProductDesc());
-//        pDo.setProductRetail(productPriceService.get(product.getProductId(), ProductVars.PRICE_RETAIL_CODE, new Date(), new Date(), currency).get().getPriceValue());
-//        pDo.setProductMarkdown(productPriceService.get(product.getProductId(), ProductVars.PRICE_MARKDOWN_CODE, new Date(), new Date(), currency).get().getPriceValue());
-//        pDo.setProductImage(pa.get().getProductImage());
-//        pDo.setLclCd(lcl);
-//        
-//        final Brand bDo = new Brand();
-//        bDo.setBrandCode(product.getBrand().getCode());
-//        bDo.setBrandDesc(product.getBrand().getAttributes().stream().filter(ba -> ba.getLclCd().equals(lcl)).findFirst().get().getBrandDesc());
-//        
-//        //we need to do something about brand being a reference object
-//        pDo.setBrand(Optional.ofNullable(bDo));
-//        
-//        StringBuilder sb = new StringBuilder();
-//        product.getCategories().stream().filter(c -> {return c.getHierarchy().getCode().equals(CategoryVars.PRIMARY_HIERARCHY_CODE);}).collect(Collectors.toList())
-//        .stream().forEach(c -> sb.append(c.getAttributes().stream().filter(ca -> { return ca.getLclCd().equals(lcl);}).collect(Collectors.toList()).get(0).getCategoryDesc()));
-//        pDo.setPrimaryCategoryPath(sb.toString());        
-//        return pDo;
-//    }
-    
-    
-//    @Override
-//    //evicts all from the "products" List cache, 
-//    @Caching(evict = { 
-//    	@CacheEvict(value="products", allEntries=true),
-//    	@CacheEvict(value="selectedProducts", allEntries=true) })
-//    //overwrites the existing product if it exists in the cache 
-//    @CachePut(value="product", key = "{ #p.getProductUPC().concat(#p.getLclCd()).concat(#p.getCurrency()) }") 
-//    public Product save(Product p) {
-//    	
-//    	System.out.println("Saving....." + p.getProductUPC());
-//    	
-//    	//use entity beans to save, and evict from domain cache, and entity level cache if caching exists there.
-//    	
-//    	//we need keys to drive an update
-//		Optional<io.nzbee.entity.product.Product> oProduct = productService.findOne(p.getProductUPC());
-//		io.nzbee.entity.product.Product product = oProduct.isPresent() ? oProduct.get() : new io.nzbee.entity.product.Product();
-//		product.setUPC(p.getProductUPC());
-//		product.setProductCreateDt(p.getProductCreateDt());
-//		
-//		List<ProductAttribute> lpa = new ArrayList<ProductAttribute>();
-//		//Product Attribute English
-//		Optional<ProductAttribute> oProductAttributeLcl = productAttributeService.getProductAttribute(product.getProductId(), p.getLclCd());
-//		ProductAttribute productAttribute = oProductAttributeLcl.isPresent() ? oProductAttributeLcl.get() : new ProductAttribute();
-//		productAttribute.setProductDesc(p.getProductDesc());
-//		productAttribute.setLclCd(p.getLclCd());
-//		productAttribute.setProductImage(p.getProductImage());
-//		productAttribute.setProduct(product);
-//		lpa.add(productAttribute);
-//
-//		product.setAttributes(lpa);
-//		
-//		//Brand
-//		Optional<io.nzbee.entity.brand.Brand> oBrand = brandService.findOne(product);
-//		io.nzbee.entity.brand.Brand brand = oBrand.isPresent() ? oBrand.get() : new io.nzbee.entity.brand.Brand();
-//		Optional<Brand> bDo = p.getBrand(); 
-//		brand.setCode(bDo.get().getBrandCode());
-//		
-//		//Brand Attributes
-//		List<BrandAttribute> lba = new ArrayList<BrandAttribute>();
-//		Optional<BrandAttribute> oBrandAttribute = brandAttributeService.getBrandAttributes(brand.getId(), p.getLclCd());
-//		BrandAttribute brandAttributeEN  = oBrandAttribute.isPresent() ? oBrandAttribute.get() : new io.nzbee.entity.brand.attribute.BrandAttribute();
-//		brandAttributeEN.setBrandDesc(brand.getAttributes().stream().filter(ba -> ba.getLclCd().equals(p.getLclCd())).findFirst().get().getBrandDesc());
-//		brandAttributeEN.setLclCd(p.getLclCd());
-//		lba.add(brandAttributeEN);
-//		
-//		brand.setAttributes(lba);
-//		
-//		product.setBrand(brand);
-//		return this.convertToProductDO(product, p.getLclCd(), p.getCurrency());
-//		
-//		//Price
-//		//ProductPriceType oPriceType = priceTypeService.
-//		
-//		//	Optional<ProductPriceType> oPriceType = productPriceTypeService;
-//		//	ProductPriceType priceType = oPriceType.isPresent() ? oPriceType.get() : new ProductPriceType();
-//
-//	}	
    
 	private Sort sortByParam(String param) {
     	switch (param) {
@@ -200,135 +132,23 @@ public class ProductServiceImpl implements IProductService {
     	default: return Sort.by(new Sort.Order(Sort.Direction.ASC, "attributes.ProductDesc"));
     	}
     }
-	
-	@Override
-	public Product load() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 
 	@Override
-	public void update(Product t) {
+	public Product entityToDTO(String locale, String currency, Object entity) {
 		// TODO Auto-generated method stub
+		io.nzbee.entity.product.Product p = ((io.nzbee.entity.product.Product) entity);
 		
-	}
-
-	@Override
-	public void delete(Product t) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Product findOne(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Product findOne(String code) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Product> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Double getMaxPrice(	String categoryDesc, 
-								String locale, 
-								String markdownSkuDescription, 
-								String currency,
-								List<Category> categories, 
-								List<Brand> brands, 
-								List<Tag> tags) {
-		
-		return productService.getMaxMarkDownPrice(
-				CategoryVars.CATEGORY_TYPE_CODE_PRODUCT, 
-				categoryDesc, 
-				locale, 
-				currency,  
-				ProductVars.ACTIVE_SKU_CODE, 
-				brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()), 
-				categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList())
-				);
-	}
-	
-
-    @Override
-    public Product convertToProductDO(
-    			String productCreatedDate,
-    			String productUPC,
-    			String productDesc,
-    			Double productRetailPrice,
-    			Double productMarkdownPrice,
-    			String productImage,
-    			String productLocale,
-    			String productCurrency,
-    			String productCategory
-    		) {
-    	final Product pDo = new Product();
-    	pDo.setProductUPC(productUPC);
-    	try {
-			pDo.setProductCreateDt(new SimpleDateFormat(GeneralVars.DEFAULT_DATE_FORMAT).parse(productCreatedDate));
-		} catch (ParseException e1) {
-			e1.printStackTrace();
-		}
-    	pDo.setProductDesc(productDesc);
-    	pDo.setProductRetail(productRetailPrice);
-    	pDo.setProductMarkdown(productMarkdownPrice);
-    	pDo.setProductImage(productImage);
-    	pDo.setLclCd(productLocale);
-    	pDo.setCurrency(productCurrency);
+		final Product pDo = new Product();
+    	pDo.setProductUPC(p.getUPC());
+    	pDo.setProductCreateDt(p.getProductCreateDt());
+    	pDo.setProductDesc(p.getProductAttribute().getBrandDesc());
+    	pDo.setProductRetail(p.getRetailPrice());
+    	pDo.setProductMarkdown(p.getMarkdownPrice());
+    	pDo.setProductImage(p.getProductAttribute().getProductImage());
+    	pDo.setLclCd(locale);
+    	pDo.setCurrency(currency);
     	return pDo;
-    }
-
-	@Override
-	public Long getCount(	String categoryTypeCode, 
-							String categoryDesc, 
-							String locale, 
-							String currency,
-							String productStatusCode, 
-							List<Category> categories, 
-							List<Brand> brands, 
-							List<Tag> tags) {
-		
-		return tags.isEmpty()
-			    ?
-				productService.getCount(
-				categoryDesc, 
-				locale,
-				currency,
-				productStatusCode, 
-				brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()),  
-				categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()))
-				:
-				productService.getCountForTags(
-				categoryDesc, 
-				locale, 
-				currency,
-				productStatusCode, 
-				brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()),  
-				categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
-				tags.stream().map(t -> t.getTagCode()).collect(Collectors.toList()));	
 	}
-
-	@Override
-	public List<Product> findAll(String locale, String currency, List<String> productCodes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Product save(Product t) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 
 
 }

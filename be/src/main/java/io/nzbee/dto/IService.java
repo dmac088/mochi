@@ -7,17 +7,17 @@ import java.util.Optional;
 public interface IService<T> {
 
 	//for a DTO we need the locale
-	Optional<T> findById(String locale, long brandId);
+	Optional<T> findById(String locale, String currency, long brandId);
 	
 	//for a DTO we need the locale
-	Optional<T> findByCode(String locale, String code);
+	Optional<T> findByCode(String locale, String currency, String code);
 	
 	//for a DTO we need the locale
-	Optional<T> findByDesc(String locale, String desc);
+	Optional<T> findByDesc(String locale, String currency, String desc);
 	
 	//for a DTO we need the locale
 	List<T> findAll(String locale, String currency);
 	
 	//for a DTO we need the locale
-	T entityToDTO(String locale, Object entity);
+	T entityToDTO(String locale, String currency, Object entity);
 }
