@@ -89,9 +89,6 @@ public class NavFacetContainer {
 		this.facets.addAll(brandCategories);
 	}
 	
-	
-
-
 	public void setFacets(List<NavFacet<?>> collect) {
 		// TODO Auto-generated method stub
 		this.facets = collect;

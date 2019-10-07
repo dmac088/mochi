@@ -28,8 +28,9 @@ public class ProductServiceImpl implements IProductService {
 	private ICategoryService categoryService;
 	
 	@Override
-	public List<Product> findAll() {
-		return productDAO.getAll();
+	public List<Product> findAll(String locale, String currency) {
+		// TODO Auto-generated method stub
+		return productDAO.findAll(locale, currency);
 	}
 	
 	@Override
