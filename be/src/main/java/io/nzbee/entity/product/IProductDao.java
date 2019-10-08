@@ -14,10 +14,17 @@ public interface IProductDao extends IDao<Product> {
 	
 	Page<Product> findAll(String locale, String currency, int page, int size, String orderby);
 
-	Page<Product> findAll(List<String> categoryCodes, String locale, String priceType, String currency,
-			Date priceDateStart, Date priceDateEnd, Pageable pageable, List<String> brandCodes, List<String> tagCodes);
+	Page<Product> findAll(	List<String> categoryCodes, 
+							String locale, 
+							String priceType, 
+							String currency,
+							Date priceDateStart, 
+							Date priceDateEnd, 
+							Pageable pageable, 
+							List<String> brandCodes, 
+							List<String> tagCodes);
 
 	Page<Product> findAll(List<String> categoryCodes, String locale, Double priceStart, Double priceEnd,
-			String priceType, String currency, Date priceDateStart, Date priceDateEnd, Pageable pageable,
+			String priceType, String currency, Date priceDateStart, Date priceDateEnd, int page, int size,
 			List<String> brandCodes, List<String> tagCodes);
 }

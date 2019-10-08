@@ -64,7 +64,7 @@ import io.nzbee.variables.ProductVars;
 					"	INNER JOIN mochi.category  AS pc  " +
 					"	ON t.cat_prnt_id = pc.cat_id  " +
 					
-					" WHERE pc.cat_cd = :categoryCode " +
+					" WHERE pc.cat_cd = :categoryCodes " +
 					" UNION ALL   " +
 					" SELECT 	t.cat_id,    " +
 					"			t.hir_id,   " +
