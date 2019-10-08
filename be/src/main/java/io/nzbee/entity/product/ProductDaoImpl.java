@@ -200,52 +200,21 @@ public class ProductDaoImpl implements IProductDao {
 									String orderby) {
 		// TODO Auto-generated method stub
 		//first get the result count
-		Query query = em.createNativeQuery(this.constructSQL(categoryCodes.size()>=1, 
-											   				 tagCodes.size()>=1,
-											   				 true), "ProductMapping")
-						.setParameter("locale", locale)
-						.setParameter("currency", currency)
-						.setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
-						.setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
-						.setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE);
-		
-		Object result = query.getSingleResult();
-		long total = ((long) result);
-				
-		query = em.createNativeQuery(this.constructSQL(categoryCodes.size()>=1, 
-  				 									   tagCodes.size()>=1,
-  				 									   false), "ProductMapping")
-				 .setParameter("locale", locale)
-				 .setParameter("currency", currency)
-				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
-				 .setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
-				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
-						 
-				 //these should contain default values for these parameters
-				 .setParameter("orderby", "1")
-				 .setParameter("limit", Integer.toString(size))
-				 .setParameter("offset", Integer.toString(page * size));
-				
-
-		@SuppressWarnings("unchecked")
-		List<Object[]> results = query.getResultList();
-				
-		List<Product> lp = 
-		results.stream().map(p -> {
-		Product product = (Product) p[0];
-				product.setProductAttribute((ProductAttribute) p[1]); 
-				product.setBrand((Brand) p[2]);
-				product.getBrand().setBrandAttribute((BrandAttribute) p[3]);
-					
-					return product;
-		}).collect(Collectors.toList());
-				
-		return new PageImpl<Product>(lp, PageRequest.of(page, size), total);
+		return this.findAll(locale, 
+							currency, 
+							new Double(-1), 
+							new Double(-1), 
+							page, 
+							size, 
+							categoryDesc, 
+							categoryCodes, 
+							brandCodes, 
+							tagCodes, 
+							orderby);
 	}
 
 	@Override
-	public Page<Product> findAll( 
-								 String locale,
+	public Page<Product> findAll(String locale,
 								 String currency,
 								 Double priceStart,
 								 Double priceEnd, 
@@ -258,43 +227,46 @@ public class ProductDaoImpl implements IProductDao {
 								 String orderby) {
 		
 		// TODO Auto-generated method stub
-		//first get the result count
-		Query query = em.createNamedQuery("Product.getProducts.count")
-					.setParameter("locale", locale)
-					.setParameter("currency", currency)
-					.setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
-					.setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
-					.setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE);
-				
+		Query query = em.createNativeQuery(this.constructSQL(categoryCodes.size()>=1, 
+  				 tagCodes.size()>=1,
+  				 true), "ProductMapping")
+		.setParameter("locale", locale)
+		.setParameter("currency", currency)
+		.setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
+		.setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
+		.setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE);
+		
 		Object result = query.getSingleResult();
 		long total = ((long) result);
-				
-		query = em.createNamedQuery("Product.getProducts")
-					.setParameter("locale", locale)
-					.setParameter("currency", currency)
-					.setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
-					.setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
-					.setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
-						 
-					//these should contain default values for these parameters
-					.setParameter("orderby", "1")
-					.setParameter("limit", Integer.toString(size))
-					.setParameter("offset", Integer.toString(page * size));
-				
-
+		
+		query = em.createNativeQuery(this.constructSQL(categoryCodes.size()>=1, 
+					   tagCodes.size()>=1,
+					   false), "ProductMapping")
+		.setParameter("locale", locale)
+		.setParameter("currency", currency)
+		.setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
+		.setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
+		.setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
+		
+		//these should contain default values for these parameters
+		.setParameter("orderby", "1")
+		.setParameter("limit", Integer.toString(size))
+		.setParameter("offset", Integer.toString(page * size));
+		
+		
 		@SuppressWarnings("unchecked")
 		List<Object[]> results = query.getResultList();
-				
+		
 		List<Product> lp = 
 		results.stream().map(p -> {
-			Product product = (Product) p[0];
-			product.setProductAttribute((ProductAttribute) p[1]); 
-			product.setBrand((Brand) p[2]);
-			product.getBrand().setBrandAttribute((BrandAttribute) p[3]);
-					
-			return product;
+		Product product = (Product) p[0];
+		product.setProductAttribute((ProductAttribute) p[1]); 
+		product.setBrand((Brand) p[2]);
+		product.getBrand().setBrandAttribute((BrandAttribute) p[3]);
+		
+		return product;
 		}).collect(Collectors.toList());
-				
+		
 		return new PageImpl<Product>(lp, PageRequest.of(page, size), total);
 	}
 	
