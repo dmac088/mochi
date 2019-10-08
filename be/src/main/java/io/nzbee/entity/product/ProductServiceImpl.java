@@ -1,7 +1,6 @@
 package io.nzbee.entity.product;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -14,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.ICategoryService;
+
+
 @Service(value = "productEntityService")
 public class ProductServiceImpl implements IProductService {
 	
@@ -34,66 +35,56 @@ public class ProductServiceImpl implements IProductService {
 	}
 	
 	@Override
-	public List<Product> findAll(String locale, String currency, List<String> productCodes) {
+	public Page<Product> findAll(String locale, String currency, List<String> productCodes) {
 		// TODO Auto-generated method stub
 		return productDAO.findAll(locale, currency, productCodes);
 	}
 	
 	@Override
-	public Page<Product> findAll(	String categoryDesc,
-									List<String> categoryCodes, 
+	public Page<Product> findAll(	
 									String locale, 
+									String currency, 
 									Double priceStart, 
 									Double priceEnd, 
 									String priceType, 
-									String currency, 
-									Date priceDateStart, 
-									Date priceDateEnd, 
 									Pageable pageable, 
+									String categoryDesc,
+									List<String> categoryCodes, 
 									List<String> brandCodes, 
 									List<String> tagCodes) {
 		
-			return productDAO.findAll(
-					locale,
-					currency,
-					categoryCodes.isEmpty() ? this.getAllChildCodes(locale, currency, categoryDesc).stream().collect(Collectors.toList())
-											: categoryCodes,
-					priceStart,
-					priceEnd,
-					priceType,
-					priceDateStart,
-					priceDateEnd,
-					pageable,
-					brandCodes,
-					tagCodes
-				 );
+		return productDAO.findAll(locale,
+		 		  currency,
+		 		  pageable.getPageNumber(), 
+		 		  pageable.getPageSize(),
+		 		  categoryDesc,
+		 		  categoryCodes,
+		 		  brandCodes, 
+		 		  tagCodes,
+		 		  "1");
 	}
 	
 	
 	@Override
-	public Page<Product> findAll(	String categoryDesc,
-									List<String> categoryCodes, 
+	public Page<Product> findAll(	
 									String locale, 
-									String priceType, 
 									String currency, 
-									Date priceDateStart, 
-									Date priceDateEnd, 
+									String priceType, 
 									Pageable pageable, 
+									String categoryDesc,
+									List<String> categoryCodes,
 									List<String> brandCodes, 
 									List<String> tagCodes) {
 		
-			return productDAO.findAll(	
-					categoryCodes.isEmpty() 	? this.getAllChildCodes(locale, currency, categoryDesc).stream().collect(Collectors.toList())
-												: categoryCodes,
-					locale,
-					priceType,
-					currency,
-					priceDateStart,
-					priceDateEnd,
-					pageable,
-					brandCodes,
-					tagCodes
-				 );
+			return productDAO.findAll(locale,
+							 		  currency,
+							 		  pageable.getPageNumber(), 
+							 		  pageable.getPageSize(),
+							 		  categoryDesc,
+							 		  categoryCodes,
+							 		  brandCodes, 
+							 		  tagCodes,
+							 		  "1");
 	}
 
 	@Override
