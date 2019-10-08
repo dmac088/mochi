@@ -61,10 +61,8 @@ import io.nzbee.variables.ProductVars;
 					"			t.cat_prnt_id,  " +
 					"			t.cat_typ_id  " +
 					" FROM mochi.category AS t  " +
-					"	INNER JOIN mochi.category  AS pc  " +
-					"	ON t.cat_prnt_id = pc.cat_id  " +
 					
-					" WHERE pc.cat_cd = :categoryCodes " +
+					" WHERE t.cat_cd = :categoryCode " +
 					" UNION ALL   " +
 					" SELECT 	t.cat_id,    " +
 					"			t.hir_id,   " +
@@ -118,10 +116,8 @@ import io.nzbee.variables.ProductVars;
 					"			t.cat_prnt_id,  " +
 					"			t.cat_typ_id  " +
 					" FROM mochi.category AS t  " +
-					"	INNER JOIN mochi.category  AS pc  " +
-					"	ON t.cat_prnt_id = pc.cat_id  " +
 					
-					" WHERE pc.cat_cd = :categoryCode " +
+					" WHERE t.cat_cd = :categoryCode " +
 					" UNION ALL   " +
 					" SELECT 	t.cat_id,    " +
 					"			t.hir_id,   " +
@@ -206,7 +202,12 @@ import io.nzbee.variables.ProductVars;
 					"AND prd_sts_cd = 	:activeProductCode " +
 					"AND bal.lcl_cd = 	:locale " +
 					
-					"GROUP BY prd.prd_id,  " +
+					"GROUP BY " +
+					"	   cc.cat_id, " + 
+					"	   cc.cat_cd, " +	
+					"	   cc.cat_lvl, " +
+					"	   cc.cat_prnt_id, " +	
+					"	   prd.prd_id,  " +
 					"	   prd.upc_cd,  " +
 					"	   prd.prd_crtd_dt,  " +
 					"	   prdt.prd_typ_cd,  " +
@@ -221,7 +222,172 @@ import io.nzbee.variables.ProductVars;
 					" ORDER BY :orderby " + 
 					" LIMIT :limit " +
 					" OFFSET :offset "
-		)
+		),
+	@NamedNativeQuery(
+			name = "Product.getProductsForCategoryAndBrand",
+			resultSetMapping = "ProductMapping",
+			query = 
+					"WITH RECURSIVE    " + 
+					"primary_descendants AS    " + 
+					"(    " + 
+					" SELECT 	t.cat_id,     " + 
+					"			t.hir_id,    " + 
+					"			t.cat_cd,    " + 
+					"			t.cat_lvl,    " + 
+					"			t.cat_prnt_id,   " + 
+					"			t.cat_typ_id   " + 
+					" FROM mochi.category AS t   " + 
+					"	 " + 
+					"	INNER JOIN mochi.category_attr_lcl AS attr  " + 
+					"	ON t.cat_id = attr.cat_id 	 " + 
+			
+					" WHERE  " + 
+					" attr.cat_desc = :categoryDesc " + 
+					" AND attr.lcl_cd = :locale " + 
+			
+					" UNION ALL    " + 
+					" SELECT 	t.cat_id,     " + 
+					"			t.hir_id,    " + 
+					"			t.cat_cd,     " + 
+					"			t.cat_lvl,    " + 
+					"			t.cat_prnt_id,   " + 
+					"			t.cat_typ_id   " + 
+					"  FROM mochi.category AS t    " + 
+					"  JOIN primary_descendants AS d   " + 
+					"  ON t.cat_prnt_id = d.cat_id    " + 
+					"),  secondary_descendants AS    " + 
+					"(    " + 
+					" SELECT 	t.cat_id,     " + 
+					"			t.hir_id,    " + 
+					"			t.cat_cd,    " + 
+					"			t.cat_lvl,    " + 
+					"			t.cat_prnt_id,   " + 
+					"			t.cat_typ_id   " + 
+					" FROM mochi.category AS t   " + 
+					" WHERE cat_cd in (:categoryCodes) " + 
+					"	 " + 
+					" UNION ALL    " + 
+					" SELECT 	t.cat_id,     " + 
+					"			t.hir_id,    " + 
+					"			t.cat_cd,     " + 
+					"			t.cat_lvl,    " + 
+					"			t.cat_prnt_id,   " + 
+					"			t.cat_typ_id   " + 
+					"  FROM mochi.category AS t    " + 
+					"  JOIN secondary_descendants AS d   " + 
+					"  ON t.cat_prnt_id = d.cat_id    " + 
+					"), descendants AS (   " + 
+					"select cat_id, " + 
+					"	   hir_id, " + 
+					"	   cat_cd, " + 
+					"	   cat_lvl, " + 
+					"	   cat_prnt_id, " + 
+					"	   cat_typ_id " + 
+					"from primary_descendants " + 
+					"INTERSECT " + 
+					"select cat_id, " + 
+					"	   hir_id, " + 
+					"	   cat_cd, " + 
+					"	   cat_lvl, " + 
+					"	   cat_prnt_id, " + 
+					"	   cat_typ_id  " + 
+					"from secondary_descendants " + 
+					") " + 
+					"select 	    " + 
+					"	   cc.cat_id, " + 
+					"	   cc.cat_cd, " +	
+					"	   cc.cat_lvl, " +
+					"	   cc.cat_prnt_id, " +	
+					"	   prd.prd_id,   " + 
+					"	   prd.upc_cd,   " + 
+					"	   prd.prd_crtd_dt,   " + 
+					"	   prdt.prd_typ_cd,   " + 
+					"	   prdt.prd_typ_desc,   " + 
+					"	   bnd.bnd_id,   " + 
+					"	   bnd.bnd_cd,   " + 
+					"	   bal.bnd_lcl_id,		  " + 
+					"	   bal.bnd_desc,   " + 
+					"	   ps.prd_sts_id,   " + 
+					"	   ps.prd_sts_cd,   " + 
+					"	   ps.prd_sts_desc,  " + 
+					"	   max(case  " + 
+					"	   when prc_typ_cd = :retailPriceCode " + 
+					"	   then prc.prc_val  " + 
+					"	   else 0  " + 
+					"	   end) as retail_price,  " + 
+					"	   max(case  " + 
+					"	   when prc_typ_cd = :markdownPriceCode  " + 
+					"	   then prc.prc_val  " + 
+					"	   else 0  " + 
+					"	   end) as markdown_price  " + 
+					"							 " + 
+					"FROM descendants cc    " + 
+					"	INNER JOIN mochi.product_category pc    " + 
+					"	ON cc.cat_id = pc.cat_id    " + 
+					"							 " + 
+					"	INNER JOIN mochi.category p1	  " + 
+					"	ON cc.cat_prnt_id = p1.cat_id   " + 
+					"							 " + 
+					"	LEFT JOIN mochi.category p2	  " + 
+					"	ON p1.cat_prnt_id = p2.cat_id  " + 
+					"							 " + 
+					"	LEFT JOIN mochi.category p3	  " + 
+					"	ON p2.cat_prnt_id = p3.cat_id  " + 
+					"							 " + 
+					"	LEFT JOIN mochi.category p4	  " + 
+					"	ON p3.cat_prnt_id = p4.cat_id  " + 
+				
+					"	INNER JOIN mochi.product prd    " + 
+					"	ON pc.prd_id = prd.prd_id   " + 
+					"							 " + 
+					"	INNER JOIN mochi.product_type prdt   " + 
+					"	ON prd.prd_typ_id = prdt.prd_typ_id   " + 
+						
+					"	INNER JOIN mochi.brand bnd   " + 
+					"	ON prd.bnd_id = bnd.bnd_id   " + 
+							" " + 
+					"	INNER JOIN mochi.brand_attr_lcl bal   " + 
+					"	ON bnd.bnd_id = bal.bnd_id   " + 
+						
+					"	INNER JOIN mochi.price prc     " + 
+					"	ON prd.prd_id = prc.prd_id    " + 
+						
+					"	INNER JOIN mochi.currency curr     " + 
+					"	ON prc.ccy_id = curr.ccy_id   " + 
+					
+					"	INNER JOIN mochi.price_type pt   " + 
+					"	ON prc.prc_typ_id = pt.prc_typ_id   " + 
+						 
+					"	INNER JOIN mochi.product_status ps    " + 
+					"	ON prd.prd_sts_id = ps.prd_sts_id   " + 
+				 
+					"WHERE now() >= prc.prc_st_dt AND now() <= prc.prc_en_dt  " + 
+					"AND curr.ccy_cd = 	:currency " + 
+					"AND prd_sts_cd = 	:activeProductCode  " + 
+					"AND bal.lcl_cd = 	:locale " + 
+					"AND bnd.bnd_cd in 	(:brandCodes) " + 
+				
+					"GROUP BY  " + 
+					"	   cc.cat_id, " + 
+					"	   cc.cat_cd, " +	
+					"	   cc.cat_lvl, " +
+					"	   cc.cat_prnt_id, " +	
+					"	   prd.prd_id,   " + 
+					"	   prd.upc_cd,   " + 
+					"	   prd.prd_crtd_dt,   " + 
+					"	   prdt.prd_typ_cd,   " + 
+					"	   prdt.prd_typ_desc,   " + 
+					"	   bnd.bnd_id,   " + 
+					"	   bnd.bnd_cd,   " + 
+					"	   bal.bnd_lcl_id,  " + 
+					"	   bal.bnd_desc,   " + 
+					"	   ps.prd_sts_id,   " + 
+					"	   ps.prd_sts_cd,   " + 
+					"	   ps.prd_sts_desc   " + 
+					" ORDER BY 	:orderby " + 
+					" LIMIT 	:limit " +
+					" OFFSET 	:offset "
+				)
 	})
 @SqlResultSetMappings({
 		@SqlResultSetMapping(
