@@ -54,14 +54,14 @@ public class ProductServiceImpl implements IProductService {
 									List<String> tagCodes) {
 		
 		return productDAO.findAll(locale,
-		 		  currency,
-		 		  pageable.getPageNumber(), 
-		 		  pageable.getPageSize(),
-		 		  categoryDesc,
-		 		  categoryCodes,
-		 		  brandCodes, 
-		 		  tagCodes,
-		 		  "1");
+						 		  currency,
+						 		  pageable.getPageNumber(), 
+						 		  pageable.getPageSize(),
+						 		  categoryDesc,
+						 		  categoryCodes,
+						 		  brandCodes, 
+						 		  tagCodes,
+						 		  "1");
 	}
 	
 	
