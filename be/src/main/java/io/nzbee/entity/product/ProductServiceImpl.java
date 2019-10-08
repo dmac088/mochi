@@ -53,14 +53,14 @@ public class ProductServiceImpl implements IProductService {
 									List<String> brandCodes, 
 									List<String> tagCodes) {
 		
-			return productDAO.findAll(	
+			return productDAO.findAll(
+					locale,
+					currency,
 					categoryCodes.isEmpty() ? this.getAllChildCodes(locale, currency, categoryDesc).stream().collect(Collectors.toList())
 											: categoryCodes,
-					locale,
 					priceStart,
 					priceEnd,
 					priceType,
-					currency,
 					priceDateStart,
 					priceDateEnd,
 					pageable,
