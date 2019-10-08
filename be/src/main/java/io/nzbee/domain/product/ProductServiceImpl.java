@@ -2,11 +2,15 @@ package io.nzbee.domain.product;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.category.Category;
 import io.nzbee.domain.brand.Brand;
@@ -71,16 +75,24 @@ public class ProductServiceImpl implements IProductService {
 								 List<Tag> tags,
 								 String sortBy) {
 	
-     	return productDtoService.findAll( 
-				     			 locale, 
-								 currency, 
-								 categoryDesc, 
-								 page, 
-								 size, 
-								 sortBy, 
-								 categories,
-								 brands,
-								 tags).map(c -> this.convertProductDtoToProductDO(c));
+    	Page<io.nzbee.dto.product.Product> pp
+								=   productDtoService.findAll( 
+										     			 locale, 
+														 currency,
+														 page, 
+														 size,
+														 categoryDesc,
+														 categories,
+														 brands,
+														 tags,
+														 sortBy);
+    	
+    							productDtoService.findAll(locale, currency, page, size, categoryDesc, categories, brands, tags, sortBy);
+     	
+     	return new PageImpl<Product>(
+    			pp.stream().map(p -> this.entityToDTO(locale, currency, p)).collect(Collectors.toList()),
+    			PageRequest.of(page, size),
+    			pp.getTotalElements());
 
 	}
 	
@@ -134,8 +146,10 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public Product convertProductDtoToProductDO(io.nzbee.dto.product.Product productDto) {
+	public io.nzbee.domain.product.Product dtoToDO(Object dto) {
 		// TODO Auto-generated method stub
+		io.nzbee.dto.product.Product productDto = (io.nzbee.dto.product.Product) dto;
+		
 		Product domainProduct = new Product();
 		domainProduct.setCurrency(productDto.getCurrency());
 		domainProduct.setLclCd(productDto.getLclCd());
@@ -149,8 +163,10 @@ public class ProductServiceImpl implements IProductService {
 	
 
 	@Override
-	public io.nzbee.dto.product.Product convertProductDOToProductDto(Product productDO) {
+	public io.nzbee.dto.product.Product doToDto(Object dO) {
 		// TODO Auto-generated method stub
+		Product productDO = (Product) dO;
+		
 		io.nzbee.dto.product.Product dtoProduct = new io.nzbee.dto.product.Product();
 		dtoProduct.setCurrency(productDO.getCurrency());
 		dtoProduct.setLclCd(productDO.getLclCd());
@@ -161,5 +177,7 @@ public class ProductServiceImpl implements IProductService {
 		dtoProduct.setProductRetail(productDO.getProductRetail());
 		return dtoProduct;
 	}
+
+	
 
 }
