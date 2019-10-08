@@ -47,6 +47,7 @@ import io.nzbee.entity.product.status.ProductStatus_;
 import io.nzbee.entity.product.tag.ProductTag;
 import io.nzbee.entity.product.tag.ProductTag_;
 import io.nzbee.variables.CategoryVars;
+import io.nzbee.variables.GeneralVars;
 import io.nzbee.variables.ProductVars;
 
 @Component(value = "productEntityDao")
@@ -56,176 +57,6 @@ public class ProductDaoImpl implements IProductDao {
 	@Qualifier("mochiEntityManagerFactory")
 	private EntityManager em;
 
-	
-	@Override
-	public List<Product> findAll(String locale, String currency) {
-		
-		List<String> categories = new ArrayList<String>();
-		categories.add(CategoryVars.PRIMARY_HIERARCHY_ROOT_CODE);
-		
-		
-		Query query = em.createNamedQuery("getProducts")
-				 .setParameter("categoryCodes", categories)
-				 .setParameter("locale", locale)
-				 .setParameter("currency", currency)
-				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
-				 .setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
-				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
-				 
-				 //these should contain default values for these parameters
-				 .setParameter("orderby", "test")
-				 .setParameter("limit", "10")
-				 .setParameter("offset", "0");
-		
-				//we need to put out own pagination filters here
-		
-		
-		@SuppressWarnings("unchecked")
-		List<Object[]> results = query.getResultList();
-		
-		return results.stream().map(p -> {
-			Product product = (Product) p[0];
-			product.setProductAttribute((ProductAttribute) p[1]); 
-			product.setBrand((Brand) p[2]);
-			product.getBrand().setBrandAttribute((BrandAttribute) p[3]);
-			
-			return product;
-		}).collect(Collectors.toList());
-	}
-	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@Override
-	public Page<Product> findAll(	String locale, 
-									String currency, 
-									int page, 
-									int size, 
-									String orderby) {
-		// TODO Auto-generated method stub
-		
-		//first get the result count
-		Query query = em.createNamedQuery("Product.getProducts.count")
-				 .setParameter("locale", locale)
-				 .setParameter("currency", currency)
-				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
-				 .setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
-				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE);
-		
-		Object result = query.getSingleResult();
-		long total = ((long) result);
-		
-		query = em.createNamedQuery("Product.getProducts")
-				 .setParameter("locale", locale)
-				 .setParameter("currency", currency)
-				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
-				 .setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
-				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
-				 
-				 //these should contain default values for these parameters
-				 .setParameter("orderby", orderby)
-				 .setParameter("limit", Integer.toString(size))
-				 .setParameter("offset", Integer.toString(0));
-		
-
-		@SuppressWarnings("unchecked")
-		List<Object[]> results = query.getResultList();
-		
-		List<Product> lp = 
-		results.stream().map(p -> {
-			Product product = (Product) p[0];
-			product.setProductAttribute((ProductAttribute) p[1]); 
-			product.setBrand((Brand) p[2]);
-			product.getBrand().setBrandAttribute((BrandAttribute) p[3]);
-			
-			return product;
-		}).collect(Collectors.toList());
-		
-		return new PageImpl(lp, PageRequest.of(page, size), total);
-	}
-	
-
-	@Override
-	public Page<Product> findAll(List<String> categoryCodes, 
-								 String locale, 
-								 Double priceStart,
-								 Double priceEnd, 
-								 String priceType, 
-								 String currency, 
-								 Date priceDateStart, 
-								 Date priceDateEnd,
-								 int page, 
-								 int size,  
-								 List<String> brandCodes, 
-								 List<String> tagCodes) {
-		
-		// TODO Auto-generated method stub
-		
-		
-		
-		return null;
-
-	}
-	
-	@Override
-	public Page<Product> findAll(List<String> categoryCodes, String locale, 
-			String priceType, String currency, Date priceDateStart, Date priceDateEnd,
-			Pageable pageable, List<String> brandCodes, List<String> tagCodes) {
-		// TODO Auto-generated method stub
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		
-		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
-		
-		Root<Product> root 									= cq.from(Product.class);
-		Join<Product, ProductAttribute> productAttribute 	= root.join(Product_.attributes);
-		Join<Product, CategoryProduct> category 					= root.join(Product_.categories);
-		Join<Product, Brand> brand 							= root.join(Product_.brand);
-		Join<Product, ProductStatus> status 				= root.join(Product_.productStatus);
-		Join<Product, ProductPrice> price 					= root.join(Product_.prices);
-		Join<ProductPrice, ProductPriceType> type 			= price.join(ProductPrice_.type);
-		Join<ProductPrice, Currency> curr 					= price.join(ProductPrice_.currency);
-		Join<Brand, BrandAttribute> brandAttribute 			= brand.join(Brand_.brandAttributes);
-		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(CategoryProduct_.attributes);
-		//Join<Category, Hierarchy> categoryHierarchy 		= category.join(Category_.hierarchy);
-		
-		List<Predicate> conditions = new ArrayList<Predicate>();
-		if(!categoryCodes.isEmpty()) {
-			conditions.add(category.get(CategoryProduct_.categoryCode).in(categoryCodes));
-		}
-		if(!brandCodes.isEmpty()) {
-			conditions.add(brand.get(Brand_.brandCode).in(brandCodes));
-		}
-		if(!tagCodes.isEmpty()) {
-			Join<Product, ProductTag> tag = root.join(Product_.tags);
-			conditions.add(tag.get(ProductTag_.productTagCode).in(tagCodes));
-		}
-		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), locale));
-		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale));
-		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
-		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
-		conditions.add(cb.equal(type.get(ProductPriceType_.desc), priceType));
-		conditions.add(cb.equal(curr.get(Currency_.code), currency));
-		conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.startDate), priceDateStart));
-		conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.endDate), priceDateEnd));
-		//conditions.add(cb.equal(categoryHierarchy.get(Hierarchy_.code), CategoryVars.PRIMARY_HIERARCHY_CODE));		
-		
-		Order order = pageable.getSort().stream().map(o -> {
-			return this.getOrder(o.getProperty().replaceAll(".*\\.", ""), o.getDirection(), cb, productAttribute, price);
-		}).collect(Collectors.toList()).get(0);
-		
-		TypedQuery<Product> query = em.createQuery(cq
-				.select(root)
-				.where(conditions.toArray(new Predicate[] {}))
-				.distinct(false)
-				.orderBy(order)
-		);
-
-		PageableUtil pageableUtil = new PageableUtil();
-		query.setFirstResult(pageableUtil.getStartPosition(pageable));
-		query.setMaxResults(pageable.getPageSize());
-		
-		return new PageImpl<Product>(query.getResultList(), pageable, query.getResultList().size());
-	}
-	
-	
 	@Override
 	public Optional<Product> findById(long id) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -295,43 +126,201 @@ public class ProductDaoImpl implements IProductDao {
 	}
 	
 	@Override
-	public Page<Product> findAll(String locale, String currency, List<String> productCodes) {
+	public List<Product> findAll(String locale, String currency) {
 		
-		CriteriaBuilder cb = em.getCriteriaBuilder();
+		List<String> categories = new ArrayList<String>();
+		categories.add(CategoryVars.PRIMARY_HIERARCHY_ROOT_CODE);
+		
+		
+		Query query = em.createNamedQuery("getProducts")
+				 .setParameter("categoryCodes", categories)
+				 .setParameter("locale", locale)
+				 .setParameter("currency", currency)
+				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
+				 .setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
+				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
+				 
+				 //these should contain default values for these parameters
+				 .setParameter("orderby", "test")
+				 .setParameter("limit", Integer.toString(GeneralVars.DEFAULT_PAGE_SIZE))
+				 .setParameter("offset", Integer.toString(GeneralVars.DEFAULT_PAGE * GeneralVars.DEFAULT_PAGE_SIZE));
+		
+		@SuppressWarnings("unchecked")
+		List<Object[]> results = query.getResultList();
+		
+		return results.stream().map(p -> {
+			Product product = (Product) p[0];
+			product.setProductAttribute((ProductAttribute) p[1]); 
+			product.setBrand((Brand) p[2]);
+			product.getBrand().setBrandAttribute((BrandAttribute) p[3]);
+			
+			return product;
+		}).collect(Collectors.toList());
+	}
 	
-		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
+	@Override
+	public Page<Product> findAll(	String locale, 
+									String currency, 
+									int page, 
+									int size, 
+									String orderby) {
+		// TODO Auto-generated method stub
 		
-		Root<Product> root = cq.from(Product.class);
+		//first get the result count
+		Query query = em.createNamedQuery("Product.getProducts.count")
+				 .setParameter("locale", locale)
+				 .setParameter("currency", currency)
+				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
+				 .setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
+				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE);
 		
-		Join<Product, ProductAttribute> productAttribute = root.join(Product_.attributes);
-		Join<Product, CategoryProduct> category = root.join(Product_.categories);
-		Join<Product, Brand> brand = root.join(Product_.brand);
-		Join<Product, ProductStatus> status = root.join(Product_.productStatus);
-		Join<Product, ProductPrice> price = root.join(Product_.prices);
-		Join<ProductPrice, Currency> curr = price.join(ProductPrice_.currency);
-		Join<Brand, BrandAttribute> brandAttribute = brand.join(Brand_.brandAttributes);
-		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(CategoryProduct_.attributes);
-		//Join<Category, Hierarchy> categoryHierarchy = category.join(Category_.hierarchy);
+		Object result = query.getSingleResult();
+		long total = ((long) result);
 		
-		List<Predicate> conditions = new ArrayList<Predicate>();
-		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), locale));
-		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale));
-		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
-		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
-		conditions.add(cb.equal(curr.get(Currency_.code), currency));
-		if(!productCodes.isEmpty()) {
-			conditions.add(root.get(Product_.productUPC).in(productCodes));
-		}
+		query = em.createNamedQuery("Product.getProducts")
+				 .setParameter("locale", locale)
+				 .setParameter("currency", currency)
+				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
+				 .setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
+				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
+				 
+				 //these should contain default values for these parameters
+				 .setParameter("orderby", orderby)
+				 .setParameter("limit", Integer.toString(size))
+				 .setParameter("offset", Integer.toString(page * size));
 		
-		TypedQuery<Product> query = em.createQuery(cq
-				.select(root)
-				.where(conditions.toArray(new Predicate[] {}))
-				.distinct(true)
-		);
 
-		return query.getResultList();
+		@SuppressWarnings("unchecked")
+		List<Object[]> results = query.getResultList();
+		
+		List<Product> lp = 
+		results.stream().map(p -> {
+			Product product = (Product) p[0];
+			product.setProductAttribute((ProductAttribute) p[1]); 
+			product.setBrand((Brand) p[2]);
+			product.getBrand().setBrandAttribute((BrandAttribute) p[3]);
+			
+			return product;
+		}).collect(Collectors.toList());
+		
+		return new PageImpl<Product>(lp, PageRequest.of(page, size), total);
+	}
+	
+	@Override
+	public Page<Product> findAll(	String locale, 
+									String currency, 
+									int page, 
+									int size,
+									String categoryDesc,
+									List<String> categoryCodes, 
+									List<String> brandCodes, 
+									List<String> tagCodes, 
+									String orderby) {
+		// TODO Auto-generated method stub
+		//first get the result count
+		Query query = em.createNamedQuery("Product.getProducts.count")
+				 .setParameter("locale", locale)
+				 .setParameter("currency", currency)
+				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
+				 .setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
+				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE);
+				
+		Object result = query.getSingleResult();
+		long total = ((long) result);
+				
+		query = em.createNamedQuery("Product.getProducts")
+				 .setParameter("locale", locale)
+				 .setParameter("currency", currency)
+				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
+				 .setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
+				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
+						 
+				 //these should contain default values for these parameters
+				 .setParameter("orderby", orderby)
+				 .setParameter("limit", Integer.toString(size))
+				 .setParameter("offset", Integer.toString(page * size));
+				
+
+		@SuppressWarnings("unchecked")
+		List<Object[]> results = query.getResultList();
+				
+		List<Product> lp = 
+		results.stream().map(p -> {
+		Product product = (Product) p[0];
+				product.setProductAttribute((ProductAttribute) p[1]); 
+				product.setBrand((Brand) p[2]);
+				product.getBrand().setBrandAttribute((BrandAttribute) p[3]);
+					
+					return product;
+		}).collect(Collectors.toList());
+				
+		return new PageImpl<Product>(lp, PageRequest.of(page, size), total);
+	}
+
+	@Override
+	public Page<Product> findAll( 
+								 String locale,
+								 String currency,
+								 Double priceStart,
+								 Double priceEnd, 
+								 int page, 
+								 int size,
+								 String categoryDesc,
+								 List<String> categoryCodes,
+								 List<String> brandCodes, 
+								 List<String> tagCodes,
+								 String orderby) {
+		
+		// TODO Auto-generated method stub
+		//first get the result count
+		Query query = em.createNamedQuery("Product.getProducts.count")
+					.setParameter("locale", locale)
+					.setParameter("currency", currency)
+					.setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
+					.setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
+					.setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE);
+				
+		Object result = query.getSingleResult();
+		long total = ((long) result);
+				
+		query = em.createNamedQuery("Product.getProducts")
+					.setParameter("locale", locale)
+					.setParameter("currency", currency)
+					.setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
+					.setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
+					.setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
+						 
+					//these should contain default values for these parameters
+					.setParameter("orderby", orderby)
+					.setParameter("limit", Integer.toString(size))
+					.setParameter("offset", Integer.toString(page * size));
+				
+
+		@SuppressWarnings("unchecked")
+		List<Object[]> results = query.getResultList();
+				
+		List<Product> lp = 
+		results.stream().map(p -> {
+			Product product = (Product) p[0];
+			product.setProductAttribute((ProductAttribute) p[1]); 
+			product.setBrand((Brand) p[2]);
+			product.getBrand().setBrandAttribute((BrandAttribute) p[3]);
+					
+			return product;
+		}).collect(Collectors.toList());
+				
+		return new PageImpl<Product>(lp, PageRequest.of(page, size), total);
+	}
+	
+	@Override
+	public Page<Product> findAll(	String locale, 
+									String currency, 
+									List<String> productCodes) {
+		// TODO Auto-generated method stub
+		
+		return null;
+		
     }
-
 
 	@Override
 	public List<Product> getAll(String locale, String currency) {
@@ -371,6 +360,8 @@ public class ProductDaoImpl implements IProductDao {
 		
 		return cb.asc(cb.lower(attributeJoin.get(ProductAttribute_.productDesc.getName())));
 	}
+
+	
 
 
 
