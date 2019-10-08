@@ -232,6 +232,7 @@ public class ProductDaoImpl implements IProductDao {
   				 true), "ProductMapping")
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
+		.setParameter("productTypeCode", ProductVars.PRODUCT_TYPE_RETAIL)
 		.setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
 		.setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
 		.setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE);
@@ -244,6 +245,7 @@ public class ProductDaoImpl implements IProductDao {
 					   false), "ProductMapping")
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
+		.setParameter("productTypeCode", ProductVars.PRODUCT_TYPE_RETAIL)
 		.setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
 		.setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
 		.setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
@@ -379,28 +381,28 @@ public class ProductDaoImpl implements IProductDao {
 		"FROM descendants cc    " + 
 		"	INNER JOIN mochi.product_category pc    " + 
 		"	ON cc.cat_id = pc.cat_id    " + 
-		"							 " + 
+		
 		"	INNER JOIN mochi.category p1	  " + 
 		"	ON cc.cat_prnt_id = p1.cat_id   " + 
-		"							 " + 
+		 
 		"	LEFT JOIN mochi.category p2	  " + 
 		"	ON p1.cat_prnt_id = p2.cat_id  " + 
-		"							 " + 
+		 
 		"	LEFT JOIN mochi.category p3	  " + 
 		"	ON p2.cat_prnt_id = p3.cat_id  " + 
-		"							 " + 
+		 
 		"	LEFT JOIN mochi.category p4	  " + 
 		"	ON p3.cat_prnt_id = p4.cat_id  " + 
 	
 		"	INNER JOIN mochi.product prd    " + 
 		"	ON pc.prd_id = prd.prd_id   " + 
-		"							 " + 
+		 
 		"	INNER JOIN mochi.product_type prdt   " + 
 		"	ON prd.prd_typ_id = prdt.prd_typ_id   " + 
 			
 		"	INNER JOIN mochi.brand bnd   " + 
 		"	ON prd.bnd_id = bnd.bnd_id   " + 
-				" " + 
+		 
 		"	INNER JOIN mochi.brand_attr_lcl bal   " + 
 		"	ON bnd.bnd_id = bal.bnd_id   " + 
 			
@@ -425,10 +427,11 @@ public class ProductDaoImpl implements IProductDao {
 				   : 	"") +
 		
 		"WHERE now() >= prc.prc_st_dt AND now() <= prc.prc_en_dt  " + 
-		"AND curr.ccy_cd = 	:currency " + 
-		"AND prd_sts_cd = 	:activeProductCode  " + 
-		"AND bal.lcl_cd = 	:locale " + 
-		"AND bnd.bnd_cd in 	(:brandCodes) " + 
+		"AND prdt.prd_typ_cd = :productTypeCode " +
+		"AND curr.ccy_cd = 		:currency " + 
+		"AND prd_sts_cd = 		:activeProductCode  " + 
+		"AND bal.lcl_cd = 		:locale " + 
+		"AND bnd.bnd_cd in 		(:brandCodes) " + 
 	
 		((countOnly) 
 					? 	""
@@ -448,10 +451,10 @@ public class ProductDaoImpl implements IProductDao {
 						"	   bal.bnd_desc,   " + 
 						"	   ps.prd_sts_id,   " + 
 						"	   ps.prd_sts_cd,   " + 
-						"	   ps.prd_sts_desc   ") + 
-		" ORDER BY 	:orderby " + 
-		" LIMIT 	:limit " +
-		" OFFSET 	:offset ";
+						"	   ps.prd_sts_desc   " + 
+						" ORDER BY 	:orderby " + 
+						" LIMIT 	:limit " +
+						" OFFSET 	:offset ");
 	}
 	
 	
