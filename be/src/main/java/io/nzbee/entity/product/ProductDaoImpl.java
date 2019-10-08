@@ -237,6 +237,9 @@ public class ProductDaoImpl implements IProductDao {
 		.setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
 		.setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
 		.setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
+		
+		//filtering is hardcoded to markdown price
+		.setParameter("priceTypeCode", ProductVars.PRICE_MARKDOWN_CODE)
 		.setParameter("priceStart", priceStart)
 		.setParameter("priceEnd", priceEnd);
 		
@@ -253,6 +256,9 @@ public class ProductDaoImpl implements IProductDao {
 		.setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
 		.setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
 		.setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
+		
+		//filtering is hardcoded to markdown price
+		.setParameter("priceTypeCode", ProductVars.PRICE_MARKDOWN_CODE)
 		
 		//these should contain default values for these parameters
 		.setParameter("orderby", "1")
@@ -440,7 +446,7 @@ public class ProductDaoImpl implements IProductDao {
 		"AND bnd.bnd_cd in 		(:brandCodes) " + 
 		((hasPrices) 
 				?   "	   AND  case  " + 
-					"	   		when prc_typ_cd = :markdownPriceCode  " + 
+					"	   		when prc_typ_cd = :priceTypeCode  " + 
 					"	   		then prc.prc_val  " + 
 					"	   		else 0  " + 
 					"	   		end between :priceStart AND :priceEnd " 
