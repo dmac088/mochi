@@ -22,6 +22,7 @@ import javax.persistence.NamedNativeQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SqlResultSetMapping;
+import javax.persistence.SqlResultSetMappings;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import org.codehaus.jackson.annotate.JsonBackReference;
@@ -48,7 +49,7 @@ import io.nzbee.variables.ProductVars;
 
 @NamedNativeQueries({
 	@NamedNativeQuery(
-			name = "getProductsCount",
+			name = "getProductCount",
 			resultSetMapping = "ProductCountMapping",
 			query = "WITH RECURSIVE   " +
 					"descendants AS   " +
@@ -222,7 +223,8 @@ import io.nzbee.variables.ProductVars;
 					" OFFSET :offset "
 		)
 	})
-@SqlResultSetMapping(
+@SqlResultSetMappings({
+		@SqlResultSetMapping(
 	    name = "ProductMapping",
 	    columns = {
 	    			@ColumnResult(name = "retail_price"),
@@ -268,7 +270,14 @@ import io.nzbee.variables.ProductVars;
 		                    @FieldResult(name = "productStatusCode", 	column = "prd_sts_cd"),
 		                    @FieldResult(name = "productStatusDesc", 	column = "prd_sts_desc")
 	                    })
-	    })
+	    }),
+		@SqlResultSetMapping(
+			    name = "ProductCountMapping",
+			    columns = {
+			    	@ColumnResult(name = "product_count")
+			    })
+})
+
 public class Product { 
 	
 	@Id
