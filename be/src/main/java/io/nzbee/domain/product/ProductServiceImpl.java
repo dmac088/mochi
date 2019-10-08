@@ -76,7 +76,8 @@ public class ProductServiceImpl implements IProductService {
 								 String sortBy) {
 	
     	Page<io.nzbee.dto.product.Product> pp
-								=   productDtoService.findAll( 
+								=   
+								productDtoService.findAll( 
 										     			 locale, 
 														 currency,
 														 page, 
@@ -87,10 +88,8 @@ public class ProductServiceImpl implements IProductService {
 														 tags,
 														 sortBy);
     	
-    							productDtoService.findAll(locale, currency, page, size, categoryDesc, categories, brands, tags, sortBy);
-     	
      	return new PageImpl<Product>(
-    			pp.stream().map(p -> this.entityToDTO(locale, currency, p)).collect(Collectors.toList()),
+    			pp.stream().map(p -> this.dtoToDO(p)).collect(Collectors.toList()),
     			PageRequest.of(page, size),
     			pp.getTotalElements());
 
@@ -160,24 +159,5 @@ public class ProductServiceImpl implements IProductService {
 		domainProduct.setProductRetail(productDto.getProductRetail());
 		return domainProduct;
 	}
-	
-
-	@Override
-	public io.nzbee.dto.product.Product doToDto(Object dO) {
-		// TODO Auto-generated method stub
-		Product productDO = (Product) dO;
-		
-		io.nzbee.dto.product.Product dtoProduct = new io.nzbee.dto.product.Product();
-		dtoProduct.setCurrency(productDO.getCurrency());
-		dtoProduct.setLclCd(productDO.getLclCd());
-		dtoProduct.setProductCreateDt(productDO.getProductCreateDt());
-		dtoProduct.setProductDesc(productDO.getProductDesc());
-		dtoProduct.setProductImage(productDO.getProductImage());
-		dtoProduct.setProductMarkdown(productDO.getProductMarkdown());
-		dtoProduct.setProductRetail(productDO.getProductRetail());
-		return dtoProduct;
-	}
-
-	
 
 }

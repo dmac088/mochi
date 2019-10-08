@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Sort;
+import io.nzbee.dto.product.Product;
 import io.nzbee.dto.brand.Brand;
 import io.nzbee.dto.category.Category;
 import io.nzbee.dto.tag.Tag;
@@ -154,5 +155,22 @@ public class ProductServiceImpl implements IProductService {
     	return pDo;
 	}
 
+	
+
+	@Override
+	public io.nzbee.dto.product.Product doToDto(Object dO) {
+		// TODO Auto-generated method stub
+		Product productDO = (Product) dO;
+		
+		io.nzbee.dto.product.Product dtoProduct = new io.nzbee.dto.product.Product();
+		dtoProduct.setCurrency(productDO.getCurrency());
+		dtoProduct.setLclCd(productDO.getLclCd());
+		dtoProduct.setProductCreateDt(productDO.getProductCreateDt());
+		dtoProduct.setProductDesc(productDO.getProductDesc());
+		dtoProduct.setProductImage(productDO.getProductImage());
+		dtoProduct.setProductMarkdown(productDO.getProductMarkdown());
+		dtoProduct.setProductRetail(productDO.getProductRetail());
+		return dtoProduct;
+	}
 
 }

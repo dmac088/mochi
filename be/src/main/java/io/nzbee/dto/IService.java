@@ -3,6 +3,8 @@ package io.nzbee.dto;
 import java.util.List;
 import java.util.Optional;
 
+import io.nzbee.dto.product.Product;
+
 
 public interface IService<T> {
 
@@ -20,4 +22,6 @@ public interface IService<T> {
 	
 	//for a DTO we need the locale
 	T entityToDTO(String locale, String currency, Object entity);
+
+	T doToDto(Object dO);
 }
