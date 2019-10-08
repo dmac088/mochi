@@ -228,21 +228,25 @@ public class ProductDaoImpl implements IProductDao {
 		
 		// TODO Auto-generated method stub
 		Query query = em.createNativeQuery(this.constructSQL(categoryCodes.size()>=1, 
-  				 tagCodes.size()>=1,
-  				 true), "ProductMapping")
+  				 											 tagCodes.size()>=1,
+  				 											 (!(priceStart.equals(new Double(-1)) && (priceEnd.equals(new Double(-1))))),
+  				 											 true), "ProductMapping")
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
 		.setParameter("productTypeCode", ProductVars.PRODUCT_TYPE_RETAIL)
 		.setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
 		.setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
-		.setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE);
+		.setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
+		.setParameter("priceStart", priceStart)
+		.setParameter("priceEnd", priceEnd);
 		
 		Object result = query.getSingleResult();
 		long total = ((long) result);
 		
-		query = em.createNativeQuery(this.constructSQL(categoryCodes.size()>=1, 
-					   tagCodes.size()>=1,
-					   false), "ProductMapping")
+		query = em.createNativeQuery(this.constructSQL(	categoryCodes.size()>=1, 
+					   									tagCodes.size()>=1,
+					   									(!(priceStart.equals(new Double(-1)) && (priceEnd.equals(new Double(-1))))),
+					   									false), "ProductMapping")
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
 		.setParameter("productTypeCode", ProductVars.PRODUCT_TYPE_RETAIL)
@@ -253,7 +257,9 @@ public class ProductDaoImpl implements IProductDao {
 		//these should contain default values for these parameters
 		.setParameter("orderby", "1")
 		.setParameter("limit", Integer.toString(size))
-		.setParameter("offset", Integer.toString(page * size));
+		.setParameter("offset", Integer.toString(page * size))
+		.setParameter("priceStart", priceStart)
+		.setParameter("priceEnd", priceEnd);
 		
 		
 		@SuppressWarnings("unchecked")
@@ -276,6 +282,7 @@ public class ProductDaoImpl implements IProductDao {
 	private String constructSQL(
 								boolean hasCategories, 
 								boolean hasTags,
+								boolean hasPrices,
 								boolean countOnly) {
 		//now we can implement conditional joins
 		//based on the parameters passed
@@ -432,7 +439,13 @@ public class ProductDaoImpl implements IProductDao {
 		"AND prd_sts_cd = 		:activeProductCode  " + 
 		"AND bal.lcl_cd = 		:locale " + 
 		"AND bnd.bnd_cd in 		(:brandCodes) " + 
-	
+		((hasPrices) 
+				?   "	   AND  case  " + 
+					"	   		when prc_typ_cd = :markdownPriceCode  " + 
+					"	   		then prc.prc_val  " + 
+					"	   		else 0  " + 
+					"	   		end between :priceStart AND :priceEnd " 
+				: 	"") +
 		((countOnly) 
 					? 	""
 					: 	"GROUP BY  " + 
