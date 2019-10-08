@@ -12,4 +12,9 @@ public class GeneralVars {
 	
 	public static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
 	
+	public static final int DEFAULT_PAGE = 0;
+	
+	public static final int DEFAULT_PAGE_SIZE = 10;
+	
+	
 }
