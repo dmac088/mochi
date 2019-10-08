@@ -278,7 +278,6 @@ public class ProductDaoImpl implements IProductDao {
 		return new PageImpl<Product>(lp, PageRequest.of(page, size), total);
 	}
 	
-	
 	private String constructSQL(
 								boolean hasCategories, 
 								boolean hasTags,
@@ -469,7 +468,6 @@ public class ProductDaoImpl implements IProductDao {
 						" LIMIT 	:limit " +
 						" OFFSET 	:offset ");
 	}
-	
 	
 	@Override
 	public Page<Product> findAll(	String locale, 
