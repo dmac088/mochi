@@ -49,8 +49,8 @@ import io.nzbee.variables.ProductVars;
 
 @NamedNativeQueries({
 	@NamedNativeQuery(
-			name = "getProductCount",
-			resultSetMapping = "ProductCountMapping",
+			name = "Product.getProducts.count",
+			resultSetMapping = "ProductMapping.count",
 			query = "WITH RECURSIVE   " +
 					"descendants AS   " +
 					"(   " +
@@ -105,7 +105,7 @@ import io.nzbee.variables.ProductVars;
 					"AND prd_sts_cd = 	:activeProductCode " 
 	),
 	@NamedNativeQuery(
-	name = "getProducts",
+	name = "Product.getProducts",
 	resultSetMapping = "ProductMapping",
 	query = 
 					"WITH RECURSIVE   " +
@@ -272,7 +272,7 @@ import io.nzbee.variables.ProductVars;
 	                    })
 	    }),
 		@SqlResultSetMapping(
-			    name = "ProductCountMapping",
+			    name = "ProductMapping.count",
 			    columns = {
 			    	@ColumnResult(name = "product_count")
 			    })

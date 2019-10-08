@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
@@ -84,10 +85,23 @@ public class ProductDaoImpl implements IProductDao {
 		}).collect(Collectors.toList());
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public List<Product> findAll(String locale, String currency, int page, int size, String orderby) {
+	public Page<Product> findAll(String locale, String currency, int page, int size, String orderby) {
 		// TODO Auto-generated method stub
-		Query query = em.createNamedQuery("getProducts")
+		
+		//first get the result count
+		Query query = em.createNamedQuery("Product.getProducts.count")
+				 .setParameter("locale", locale)
+				 .setParameter("currency", currency)
+				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
+				 .setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
+				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE);
+		
+		Object result = query.getSingleResult();
+		long total = ((long) result);
+		
+		query = em.createNamedQuery("Product.getProducts")
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
 				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
@@ -99,13 +113,12 @@ public class ProductDaoImpl implements IProductDao {
 				 .setParameter("limit", Integer.toString(size))
 				 .setParameter("offset", Integer.toString(0));
 		
-				//we need to put out own pagination filters here
-		
-		
+
 		@SuppressWarnings("unchecked")
 		List<Object[]> results = query.getResultList();
 		
-		return results.stream().map(p -> {
+		List<Product> lp = 
+		results.stream().map(p -> {
 			Product product = (Product) p[0];
 			product.setProductAttribute((ProductAttribute) p[1]); 
 			product.setBrand((Brand) p[2]);
@@ -113,6 +126,8 @@ public class ProductDaoImpl implements IProductDao {
 			
 			return product;
 		}).collect(Collectors.toList());
+		
+		return new PageImpl(lp, PageRequest.of(page, size), total);
 	}
 	
 
@@ -311,7 +326,7 @@ public class ProductDaoImpl implements IProductDao {
 	}
 	
 	@Override
-	public List<Product> findAll(String locale, String currency, List<String> productCodes) {
+	public Page<Product> findAll(String locale, String currency, List<String> productCodes) {
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 	
