@@ -83,9 +83,9 @@ public class ProductServiceImpl implements IProductService {
 														 page, 
 														 size,
 														 categoryDesc,
-														 categories,
-														 brands,
-														 tags,
+														 categories.stream().map(c->productDtoService.doToDto(c)).collect(Collectors.toList()),
+														 brands.stream().map(b->productDtoService.doToDto(b)).collect(Collectors.toList()),
+														 tags.stream().map(t->productDtoService.doToDto(t)).collect(Collectors.toList()),
 														 sortBy);
     	
      	return new PageImpl<Product>(
