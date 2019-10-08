@@ -1,7 +1,6 @@
 package io.nzbee.entity.product;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -14,38 +13,22 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-
-import org.assertj.core.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import io.nzbee.entity.brand.Brand;
-import io.nzbee.entity.brand.Brand_; 
 import io.nzbee.entity.brand.attribute.BrandAttribute;
-import io.nzbee.entity.brand.attribute.BrandAttribute_;
-import io.nzbee.entity.category.attribute.CategoryAttribute;
-import io.nzbee.entity.category.attribute.CategoryAttribute_;
-import io.nzbee.entity.category.product.CategoryProduct;
-import io.nzbee.entity.category.product.CategoryProduct_;
-import io.nzbee.entity.PageableUtil;
 import io.nzbee.entity.product.Product_;
 import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.attribute.ProductAttribute_;
-import io.nzbee.entity.product.currency.Currency;
-import io.nzbee.entity.product.currency.Currency_;
 import io.nzbee.entity.product.price.ProductPrice;
-import io.nzbee.entity.product.price.ProductPriceType;
-import io.nzbee.entity.product.price.ProductPriceType_;
 import io.nzbee.entity.product.price.ProductPrice_;
 import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.entity.product.status.ProductStatus_;
-import io.nzbee.entity.product.tag.ProductTag;
-import io.nzbee.entity.product.tag.ProductTag_;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.GeneralVars;
 import io.nzbee.variables.ProductVars;
@@ -99,7 +82,6 @@ public class ProductDaoImpl implements IProductDao {
 		return Optional.ofNullable(query.getSingleResult());
 	}
 	
-
 	@Override
 	public Optional<Product> findByDesc(String locale, String desc) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -141,7 +123,7 @@ public class ProductDaoImpl implements IProductDao {
 				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
 				 
 				 //these should contain default values for these parameters
-				 .setParameter("orderby", "test")
+				 .setParameter("orderby", "1")
 				 .setParameter("limit", Integer.toString(GeneralVars.DEFAULT_PAGE_SIZE))
 				 .setParameter("offset", Integer.toString(GeneralVars.DEFAULT_PAGE * GeneralVars.DEFAULT_PAGE_SIZE));
 		
@@ -185,7 +167,7 @@ public class ProductDaoImpl implements IProductDao {
 				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
 				 
 				 //these should contain default values for these parameters
-				 .setParameter("orderby", orderby)
+				 .setParameter("orderby", "1")
 				 .setParameter("limit", Integer.toString(size))
 				 .setParameter("offset", Integer.toString(page * size));
 		
@@ -236,7 +218,7 @@ public class ProductDaoImpl implements IProductDao {
 				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
 						 
 				 //these should contain default values for these parameters
-				 .setParameter("orderby", orderby)
+				 .setParameter("orderby", "1")
 				 .setParameter("limit", Integer.toString(size))
 				 .setParameter("offset", Integer.toString(page * size));
 				
@@ -291,7 +273,7 @@ public class ProductDaoImpl implements IProductDao {
 					.setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
 						 
 					//these should contain default values for these parameters
-					.setParameter("orderby", orderby)
+					.setParameter("orderby", "1")
 					.setParameter("limit", Integer.toString(size))
 					.setParameter("offset", Integer.toString(page * size));
 				
@@ -346,6 +328,7 @@ public class ProductDaoImpl implements IProductDao {
 		
 	}
 
+	@SuppressWarnings("unused")
 	private Order getOrder(String orderName, Sort.Direction orderDirection, CriteriaBuilder cb, Join<Product, ProductAttribute> attributeJoin, Join<Product, ProductPrice> priceJoin) {
 
 		if(orderName.toLowerCase().equals(ProductAttribute_.productDesc.getName().toLowerCase()) && orderDirection.equals(Sort.Direction.ASC)) {
