@@ -19,4 +19,6 @@ public class ProductVars {
 	public static final String FACET_TYPE_DISCRETE = "discrete";
 	
 	public static final String FACET_TYPE_RANGE = "range";
+	
+	public static final String PRODUCT_TYPE_RETAIL = "NML01";
 }
