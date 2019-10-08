@@ -27,7 +27,7 @@ public class ProductServiceImpl implements IProductService {
 	@Transactional
 	@Cacheable(value="product")
 	public Optional<Product> findOne(String locale, String currency, String code) {
-    	return Optional.ofNullable(convertProductDtoToProductDO(productDtoService.findOne(code, locale, currency).get()));
+    	return Optional.ofNullable(convertProductDtoToProductDO(productDtoService.findByCode(locale, currency, code).get()));
 	}	
     
     @Override
@@ -44,6 +44,7 @@ public class ProductServiceImpl implements IProductService {
 								 List<Tag> tags) {
     	
     	//need to map categories domain object to a DTO 
+   
     	return productDtoService.findAll(
     			locale, 
     			currency,
@@ -61,14 +62,14 @@ public class ProductServiceImpl implements IProductService {
     @Override
     @Cacheable(value="products")
 	public Page<Product> findAll(String locale, 
-								 String currency, 
-								 String categoryDesc, 
+								 String currency,
 								 int page, 
-								 int size, 
-								 String sortBy, 
+								 int size,
+								 String categoryDesc, 
 								 List<Category> categories,
 								 List<Brand> brands,
-								 List<Tag> tags) {
+								 List<Tag> tags,
+								 String sortBy) {
 	
      	return productDtoService.findAll( 
 				     			 locale, 

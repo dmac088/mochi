@@ -67,14 +67,14 @@ public class ProductServiceImpl implements IProductService {
     @Cacheable(value="products")
 	public Page<Product> findAll(String locale, 
 								 String currency, 
-								 String categoryDesc, 
 								 Double price, 
 								 int page, 
-								 int size, 
-								 String sortBy, 
+								 int size,
+								 String categoryDesc, 
 								 List<Category> categories,
 								 List<Brand> brands,
-								 List<Tag> tags) {
+								 List<Tag> tags,
+								 String sortBy ) {
 	
     	
     	//we need to convert to lists of IDs or codes here
@@ -101,13 +101,13 @@ public class ProductServiceImpl implements IProductService {
     @Cacheable(value="products")
 	public Page<Product> findAll(String locale, 
 								 String currency, 
-								 String categoryDesc, 
 								 int page, 
 								 int size, 
-								 String sortBy, 
+								 String categoryDesc,
 								 List<Category> categories,
 								 List<Brand> brands,
-								 List<Tag> tags) {
+								 List<Tag> tags,
+								 String sortBy) {
 	
     	Page<io.nzbee.entity.product.Product> pp
 				=  productService.findAll(	locale, 
