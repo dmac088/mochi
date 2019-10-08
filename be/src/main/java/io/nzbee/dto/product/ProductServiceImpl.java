@@ -1,8 +1,5 @@
 package io.nzbee.dto.product;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -15,13 +12,9 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Sort;
-
 import io.nzbee.dto.brand.Brand;
 import io.nzbee.dto.category.Category;
 import io.nzbee.dto.tag.Tag;
-import io.nzbee.entity.product.IProductDao;
-import io.nzbee.variables.CategoryVars;
-import io.nzbee.variables.GeneralVars;
 import io.nzbee.variables.ProductVars;
 
 @Service(value = "productDtoService")
