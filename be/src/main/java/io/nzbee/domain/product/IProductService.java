@@ -13,17 +13,17 @@ public interface IProductService extends IService<Product> {
 
 	Optional<Product> findOne(String lcl, String currency, String code);
 
-	Page<Product> findAll(String locale, String currency, String categoryDesc, Double price, int page, int size,
-			String sortBy, List<Category> categories, List<Brand> brands, List<Tag> tags);
-
 	List<Product> findAll(String locale, String currency, List<String> productCodes);
-
-	Page<Product> findAll(String locale, String currency, String categoryDesc, int page, int size, String sortBy,
-			List<Category> categories, List<Brand> brands, List<Tag> tags);
 
 	Product convertProductDtoToProductDO(io.nzbee.dto.product.Product productDto);
 
 	io.nzbee.dto.product.Product convertProductDOToProductDto(Product productDO);
+
+	Page<Product> findAll(String locale, String currency, int page, int size, String categoryDesc,
+			List<Category> categories, List<Brand> brands, List<Tag> tags, String sortBy);
+
+	Page<Product> findAll(String locale, String currency, String categoryDesc, Double price, int page, int size,
+			String sortBy, List<Category> categories, List<Brand> brands, List<Tag> tags);
 
 
 }
