@@ -86,22 +86,22 @@ public class ProductServiceImpl implements IProductService {
     	
     	//we need to convert to lists of IDs or codes here
     	Page<io.nzbee.entity.product.Product> pp
-    						=  productService.findAll( categoryDesc, 
-						    						   categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
-						    						   locale, 
+    						=  productService.findAll( locale,
+						    						   currency, 
 						    						   new Double(0), 
 						    			    		   price,
 						    			    		   ProductVars.PRICE_RETAIL_CODE, 
-						    						   currency, 
-						    						   new Date(), 
-						    						   new Date(), 
-						    						   PageRequest.of(page, size, this.sortByParam(sortBy)), 
+						    						   page, 
+						    						   size,
+						    						   categoryDesc,
+						    						   categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()),
 						    						   brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()), 
 						    						   tags.stream().map(t -> t.getTagCode()).collect(Collectors.toList()));
     	
-    	
-    	Page<Product> ppDTO = PageImpl(pp.stream().map(p -> this.entityToDTO(locale, currency, p)).);
-    	
+    	return new PageImpl<Product>(
+    			pp.stream().map(p -> this.entityToDTO(locale, currency, p)).collect(Collectors.toList()),
+    			PageRequest.of(page, size),
+    			pp.getTotalElements());
 	}
     
     @Override
@@ -116,16 +116,21 @@ public class ProductServiceImpl implements IProductService {
 								 List<Brand> brands,
 								 List<Tag> tags) {
 	
-     	return productDao.findAll( 
-     							categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
-     							locale, 
-     							ProductVars.MARKDOWN_SKU_DESCRIPTION, 
-     							currency, 
-     							new Date(), 
-     							new Date(), 
-     							PageRequest.of(page, size, this.sortByParam(sortBy)), 
-     							brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()), 
-     							tags.stream().map(t -> t.getTagCode()).collect(Collectors.toList()));
+    	Page<io.nzbee.entity.product.Product> pp
+				=  productService.findAll(	locale, 
+							    			currency, 
+							    			ProductVars.PRICE_MARKDOWN_CODE, 
+							    			page,
+							    			size,
+							    			categoryDesc, 
+							    			categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
+							    			brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()), 
+							    			tags.stream().map(t -> t.getTagCode()).collect(Collectors.toList()));
+    	
+    	return new PageImpl<Product>(
+    			pp.stream().map(p -> this.entityToDTO(locale, currency, p)).collect(Collectors.toList()),
+    			PageRequest.of(page, size),
+    			pp.getTotalElements());
 
 	}
    
