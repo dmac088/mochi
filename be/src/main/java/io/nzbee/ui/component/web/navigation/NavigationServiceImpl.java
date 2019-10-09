@@ -49,7 +49,7 @@ public class NavigationServiceImpl extends UIService implements INavigationServi
 		//add the page of objects to a new Search object and return it 
 		Search search = new Search();
 		search.setProducts(pp);
-		//search.setFacets(selectedFacets);
+		search.setFacets(selectedFacets);
 		return search;
 	}
 	
