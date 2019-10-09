@@ -2,6 +2,7 @@ package io.nzbee.domain.tag;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,55 @@ public class TagServiceImpl implements ITagService {
 	@Autowired
 	IProductService productService;
 	
+
+	@Override
+	public Optional<Tag> findById(Long Id) {
+		// TODO Auto-generated method stub
+		ProductTag pt = productTagService.findById(Id).get();
+		return Optional.ofNullable(this.dTOToDO(pt));
+	}
+
+	@Override
+	public Optional<Tag> findByCode(String code) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<Tag> findByDesc(String locale, String currency, String desc) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Tag> findAll(String locale, String currency) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+//
+//	@Override
+//	public Tag findById(long id) {
+//		// TODO Auto-generated method stub
+//		ProductTag pt = productTagService.findById(id).get();
+//		return this.convertToTagDO(pt, lcl);
+//	}
+//
+//	@Override
+//	public Tag findOneByCode(String locale, String code) {
+//		ProductTag pt = productTagService.findOne(code).get();
+//		return this.convertToTagDO(pt, lcl);
+//	}
+//	
+//	@Override
+//	public Tag findByDesc(String locale, String desc) {
+//		// TODO Auto-generated method stub
+//		ProductTag pt = productTagService.findOne(desc, lcl).get();
+//		return this.convertToTagDO(pt, lcl);
+//	}
+//	
+	
 	@Override
 	public List<Tag> findAll(String locale, String currency, String categoryDesc, List<Category> categories, List<Brand> brands) {
 		return productTagService.findAll(locale, 
@@ -47,7 +97,7 @@ public class TagServiceImpl implements ITagService {
 										categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
 										brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()))
 				.stream().map(pt -> {
-					return convertToTagDO(pt, locale);
+					return dTOToDO(pt);
 				}).collect(Collectors.toList());	
 	}
 	
@@ -63,83 +113,20 @@ public class TagServiceImpl implements ITagService {
 				categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
 				brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()))
 				.stream().map(pt -> {
-					return convertToTagDO(pt, locale);
+					return dTOToDO(pt);
 				}).collect(Collectors.toList());
 	}
-	
-	
-	private Tag convertToTagDO(ProductTag pt, String locale) {
+
+	@Override
+	public Tag dTOToDO(Object dTO) {
+		// TODO Auto-generated method stub
+		io.nzbee.dto.tag.Tag tagDTO = (io.nzbee.dto.tag.Tag) dTO;
+		
 		Tag t = new Tag();
-		t.setTagId(pt.getTagId());
-		t.setTagCode(pt.getCode());
-		t.setLocale(locale);
-		t.setTagDesc(pt.getAttributes().stream().filter(ta -> ta.getLclCd().equals(locale)).collect(Collectors.toList()).stream().findFirst().get().getTagDesc());
+		t.setTagId(tagDTO.getTagId());
+		t.setTagCode(tagDTO.getTagCode());
+		t.setLocale(tagDTO.getLocale());
+		t.setTagDesc(tagDTO.getTagDesc());
 		return t;
-	}
-	
-	@Override
-	public List<Tag> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Tag load() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Tag save(Tag t) {
-		return t;
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void update(Tag t) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void delete(Tag t) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Tag findById(String locale, String currency, long id) {
-		// TODO Auto-generated method stub
-		ProductTag pt = productTagService.findById(id).get();
-		return this.convertToTagDO(pt, lcl);
-	}
-
-	@Override
-	public Tag findOneByCode(String code, String lcl) {
-		ProductTag pt = productTagService.findOne(code).get();
-		return this.convertToTagDO(pt, lcl);
-	}
-	
-	@Override
-	public Tag findOneByDesc(String desc, String lcl) {
-		// TODO Auto-generated method stub
-		ProductTag pt = productTagService.findOne(desc, lcl).get();
-		return this.convertToTagDO(pt, lcl);
-	}
-	
-
-
-	@Override
-	public Tag findOne(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Tag findOne(String code) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	}	
 }
