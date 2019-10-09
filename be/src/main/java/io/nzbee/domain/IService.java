@@ -18,7 +18,5 @@ public interface IService<T> {
 	List<T> findAll(String locale, String currency);
 	
 	T dtoToDO(Object dto);
-
-	T doToDto(Object dO);
 	
 }

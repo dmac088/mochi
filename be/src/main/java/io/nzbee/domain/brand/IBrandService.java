@@ -11,8 +11,6 @@ public interface IBrandService extends IService<Brand> {
 	
 	List<Brand> findAll(String locale, String category);
 
-	Brand converToBrandDO (io.nzbee.entity.brand.Brand brand, String locale);
-
-	Brand convertToBrandDO(String brandCode, String brandDesc);
+	List<Brand> findAllByCategory(String locale, String category);
 
 }
