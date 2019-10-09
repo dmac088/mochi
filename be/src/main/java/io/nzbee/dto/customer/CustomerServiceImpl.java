@@ -67,7 +67,7 @@ public class CustomerServiceImpl implements ICustomerService {
 	@Override
 	@Transactional
 	public Customer findOne(String userName) {
-		Optional<Party> pr1 = partyService.findOne(userName);
+		Optional<Party> pr1 = partyService.findByCode(userName);
 		Customer c1 = convertToCustomerDO(pr1.get());
 		return c1;
 	}
@@ -120,14 +120,14 @@ public class CustomerServiceImpl implements ICustomerService {
 
     @Override
     public boolean customerExist(final String username) {
-        return partyService.findOne(username).isPresent();
+        return partyService.findByCode(username).isPresent();
     }
 
 	@Override
 	@Transactional
 	public void deleteCustomer(Customer customer) {
 		// TODO Auto-generated method stub
-		Party p = partyService.findOne(customer.getUserName()).get();
+		Party p = partyService.findByCode(customer.getUserName()).get();
 		partyService.delete(p);
 	}
 	
@@ -135,7 +135,7 @@ public class CustomerServiceImpl implements ICustomerService {
 	@Transactional
 	public void updateCustomer(Customer customer) {
 		// TODO Auto-generated method stub
-		Party p = partyService.findOne(customer.getUserName()).get();
+		Party p = partyService.findByCode(customer.getUserName()).get();
 		//partyRepository.delete(p);
 		
 		Person pp = null;
@@ -203,6 +203,20 @@ public class CustomerServiceImpl implements ICustomerService {
 	public void delete(Customer t) {
 		// TODO Auto-generated method stub
 		
+	}
+
+
+	@Override
+	public Customer dtoToDO(Object dto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Customer doToDto(Object dO) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
     

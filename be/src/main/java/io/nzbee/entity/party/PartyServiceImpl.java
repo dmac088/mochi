@@ -71,5 +71,11 @@ public class PartyServiceImpl implements IPartyService {
 		// TODO Auto-generated method stub
 		partyRepository.delete(t);
 	}
+
+	@Override
+	public List<Party> findAll() {
+		// TODO Auto-generated method stub
+		return partyRepository.findAll();
+	}
 	
 }
