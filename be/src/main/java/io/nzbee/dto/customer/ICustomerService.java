@@ -1,7 +1,7 @@
 package io.nzbee.dto.customer;
 import java.util.List;
 
-import io.nzbee.domain.services.IService;
+import io.nzbee.dto.IService;
 
 public interface ICustomerService extends IService<Customer> {
 
@@ -18,4 +18,8 @@ public interface ICustomerService extends IService<Customer> {
 	 Customer convertToCustomerDO(final io.nzbee.entity.party.Party party);
 	 
 	 void updateCustomer(Customer customer);
+
+	List<Customer> findAll();
+
+	Customer findByCode(String userName);
 }

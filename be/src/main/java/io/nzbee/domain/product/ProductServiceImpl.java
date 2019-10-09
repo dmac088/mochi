@@ -39,12 +39,42 @@ public class ProductServiceImpl implements IProductService {
     @Qualifier(value="tagDtoService")
     private io.nzbee.dto.tag.ITagService tagDtoService;
     
-    @Override
+	@Override
+	public Optional<Product> findById(String locale, String currency, Long Id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
 	@Transactional
 	@Cacheable(value="product")
-	public Optional<Product> findOne(String locale, String currency, String code) {
-    	return Optional.ofNullable(this.dtoToDO(productDtoService.findByCode(locale, currency, code).get()));
+	public Optional<Product> findByCode(String locale, String currency, String code) {
+	   	return Optional.ofNullable(this.dtoToDO(productDtoService.findByCode(locale, currency, code).get()));
 	}	
+
+	@Override
+	public Optional<Product> findByDesc(String locale, String currency, String desc) {
+		// TODO Auto-generated method stub
+		return Optional.ofNullable(this.dtoToDO(productDtoService.findByDesc(locale, currency, desc).get()));
+	}
+
+	@Override
+	public List<Product> findAll(String locale, String currency) {
+		// TODO Auto-generated method stub
+		return productDtoService.findAll(locale, currency)
+				.stream().map(p->this.dtoToDO(p))
+				.collect(Collectors.toList());
+	}
+    
+  
+    
+	@Override
+	public List<Product> findAll(String locale, String currency, List<String> productCodes) {
+		// TODO Auto-generated method stub
+		return productDtoService.findAll(locale, currency, productCodes)
+				.stream().map(p->this.dtoToDO(p))
+				.collect(Collectors.toList());
+	}
     
     @Override
     @Cacheable(value="products")
@@ -107,54 +137,9 @@ public class ProductServiceImpl implements IProductService {
 
 	}
 	
-	@Override
-	public Product load() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 
-	@Override
-	public void update(Product t) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void delete(Product t) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Product findOne(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Product findOne(String code) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Product> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Product> findAll(String locale, String currency, List<String> productCodes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Product save(Product t) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public io.nzbee.domain.product.Product dtoToDO(Object dto) {
@@ -177,5 +162,7 @@ public class ProductServiceImpl implements IProductService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
 
 }
