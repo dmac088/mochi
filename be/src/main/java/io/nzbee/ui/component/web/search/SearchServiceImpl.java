@@ -227,7 +227,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		bs = new HashSet<NavFacet<Brand>>();
 		allFacets.stream().filter(f -> f.getFacetingName().equals(CategoryVars.BRAND_FACET_NAME))
 				.collect(Collectors.toList()).forEach(bf -> {
-					Brand brand = brandService.findOneByCode(lcl, bf.getValue()).get();
+					Brand brand = brandService.findByCode(lcl, currency, bf.getValue()).get();
 					NavFacet<Brand> brandFacet = facetService.convertBrandToNavFacet(brand);
 					brandFacet.setFacetProductCount(new Long(bf.getCount()));
 					brandFacet.setToken(bf.getValue());
@@ -254,7 +254,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		allFacets.stream().filter(f -> f.getFacetingName().equals(CategoryVars.TAG_FACET_NAME))
 				.collect(Collectors.toList()).forEach(tf -> {
 					if(tf.getValue().equals("Empty"))  return; 
-					Tag tag = tagService.findOneByDesc(tf.getValue(), lcl);
+					Tag tag = tagService.findByDesc(lcl, currency, tf.getValue()).get();
 					NavFacet<Tag> tagFacet = facetService.convertTagToNavFacet(tag);
 					tagFacet.setFacetProductCount(new Long(tf.getCount()));
 					tagFacet.setToken(tf.getValue());
