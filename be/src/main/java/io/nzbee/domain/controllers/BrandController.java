@@ -22,14 +22,14 @@ public class BrandController {
         super();
     }
     
-    @GetMapping("/Brand/{lcl}/{curr}")
-    public List<Brand> getBrands(@PathVariable String lcl, @PathVariable String curr) {
-    	return brandService.findAll(lcl);
+    @GetMapping("/Brand/{locale}/{currency}")
+    public List<Brand> getBrands(@PathVariable String locale, @PathVariable String currency) {
+    	return brandService.findAll(locale, currency);
     }
 
-    @GetMapping("/Brand/{lcl}/{curr}/id/{brandId}")
-    public Brand getBrand(@PathVariable String lcl, @PathVariable String curr, @PathVariable Long brandId) {
-    	return brandService.findOne(lcl, brandId).get();
+    @GetMapping("/Brand/{locale}/{currency}/id/{brandId}")
+    public Brand getBrand(@PathVariable String locale, @PathVariable String currency, @PathVariable Long brandId) {
+    	return brandService.findById(locale, currency, brandId).get();
     }
 
 }

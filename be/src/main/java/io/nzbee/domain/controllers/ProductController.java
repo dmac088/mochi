@@ -21,7 +21,7 @@ public class ProductController {
     
     @GetMapping("/Product/{locale}/{currency}/code/{code}")
     public Product getProduct(@PathVariable String locale, @PathVariable String currency, @PathVariable String code) {
-    	return productService.findOne(locale, currency, code).get();
+    	return productService.findByCode(locale, currency, code).get();
     }
     
     @PostMapping("/Product/{locale}/{currency}")
