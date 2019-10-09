@@ -58,9 +58,10 @@ public class NavigationServiceImpl extends UIService implements INavigationServi
 							 String currency, 
 							 String categoryDesc,
 							 int page, 
-							 int size, 
-							 String sortBy, 
-							 NavFacetContainer selectedFacets) {
+							 int size,
+							 NavFacetContainer selectedFacets,
+							 String sortBy
+							 ) {
 
 		
 		Page<Product> pp = productService.findAll(locale, 
