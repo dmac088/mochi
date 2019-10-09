@@ -17,15 +17,35 @@ import io.nzbee.domain.tag.Tag;
 public class BrandServiceImpl implements IBrandService {
     
 	@Autowired
-    private io.nzbee.entity.brand.IBrandService brandService;
-    
+    private io.nzbee.dto.brand.IBrandService brandService;
+
+	
+	@Override
+	@Transactional
+	@Cacheable
+	public Optional<Brand> findById(String locale, String currency, Long Id) {
+    	io.nzbee.dto.brand.Brand pb = brandService.findById(locale, currency, Id).get();
+     	return	Optional.ofNullable(this.dtoToDO(pb));
+	}
+	
+	@Override
+	public Optional<Brand> findByCode(String locale, String currency, String code) {
+		// TODO Auto-generated method stub
+		return Optional.ofNullable(dtoToDO(brandService.findByCode(locale, currency, code)));
+	}
+
+	@Override
+	public Optional<Brand> findByDesc(String locale, String currency, String desc) {
+		// TODO Auto-generated method stub
+		return Optional.ofNullable(dtoToDO(brandService.findByDesc(locale, currency, desc)));
+	}
   
     @Override
 	@Transactional
 	@Cacheable
 	public List<Brand> findAll(String locale, String currency) {
-    	List<io.nzbee.entity.brand.Brand> lpb = brandService.findAll(locale, currency);
-    	List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, locale).get())
+    	List<io.nzbee.dto.brand.Brand> lpb = brandService.findAll(locale, currency);
+    	List<Brand> lb = lpb.stream().map(pb -> dtoToDO(pb))
 		.collect(Collectors.toList());
     	return lb;
 	}	
@@ -33,34 +53,14 @@ public class BrandServiceImpl implements IBrandService {
     @Override
 	@Transactional
 	@Cacheable
-	public List<Brand> findAll(String locale, String category) {
-    	List<io.nzbee.entity.brand.Brand> lpb = brandService.findAll(category);
-    	List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, locale).get())
+	public List<Brand> findAllByCategory(String locale, String category) {
+    	List<io.nzbee.dto.brand.Brand> lpb = brandService.findAll(category);
+    	List<Brand> lb = lpb.stream().map(pb -> dtoToDO(pb))
 		.collect(Collectors.toList());
     	return lb;
 	}	
-
-	@Override
-	@Transactional
-	@Cacheable
-	public Optional<Brand> findById(long Id) {
-    	io.nzbee.entity.brand.Brand pb = brandService.findById(Id).get();
-     	return	createBrandDO(pb, locale);
-	}
-	
-	@Override
-	public Optional<Brand> findByCode(String brandCode) {
-		// TODO Auto-generated method stub
-		return createBrandDO(brandService.findByCode(brandCode).get(), lcl);
-	}
-
-	@Override
-	public Optional<Brand> findByDesc(String locale, String brandDesc) {
-		// TODO Auto-generated method stub
-		return createBrandDO(brandService.findByDesc(brandDesc, lcl).get(), lcl);
-	}
- 
-	@Override
+    
+    @Override
 	@Transactional
 	//@Cacheable
 	public List<Brand> findAll(String locale, String currency, String categoryDesc, List<Category> categories, List<Tag> tags) {
@@ -69,57 +69,20 @@ public class BrandServiceImpl implements IBrandService {
 																	categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
 																	tags.stream().map(t -> t.getTagCode()).collect(Collectors.toList())
 																	);
-		List<Brand> lb = lpb.stream().map(pb -> createBrandDO(pb, locale).get()).collect(Collectors.toList());		
+		List<Brand> lb = lpb.stream().map(pb -> dtoToDO(pb)).collect(Collectors.toList());		
      	return lb;
 	}
     
 	@Override
-	public Brand convertToBrandDO(String brandCode, String brandDesc) {
-		Brand b = new Brand();
-		b.setBrandCode(brandCode);
-		b.setBrandDesc(brandDesc);
-		return b; 
-	}
-	
- 	@Cacheable
-    private Optional<Brand> createBrandDO(final io.nzbee.entity.brand.Brand b, final String lcl) {
-    	final Brand bDO = new Brand();
-    	bDO.setBrandCode(b.getCode());
-    	bDO.setBrandDesc(
-	    	b.getAttributes().stream()
-			.filter(ba -> ba.getLclCd().equals(lcl)
-			).collect(Collectors.toList()).get(0).getBrandDesc());
-    	return Optional.ofNullable(bDO);
-    }
-
-	@Override
-	public Brand converToBrandDO(io.nzbee.entity.brand.Brand brand, String locale) {
-		
-		return null;
-	}
-
-	@Override
-	public Optional<Brand> findByCode(String code) {
+	public Brand dtoToDO(Object dto) {
 		// TODO Auto-generated method stub
-		return null;
+		io.nzbee.dto.brand.Brand brandDTO = (io.nzbee.dto.brand.Brand) dto;
+		final Brand bDO = new Brand();
+    	bDO.setBrandCode(brandDTO.getBrandCode());
+    	bDO.setBrandDesc(brandDTO.getBrandDesc());
+    	return bDO;
 	}
 
-	@Override
-	public void save(Brand t) {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void update(Brand t) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void delete(Brand t) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

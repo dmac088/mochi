@@ -59,7 +59,7 @@ public class BrandDaoImpl  implements IBrandDao {
 	}
 	
 	@Override
-	public Optional<Brand> findByDesc(String brandDesc, String locale) {
+	public Optional<Brand> findByDesc(String locale, String brandDesc) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Brand> cq = cb.createQuery(Brand.class);

@@ -48,16 +48,23 @@ public class BrandServiceImpl implements IBrandService {
 		// TODO Auto-generated method stub
 		return Optional.ofNullable(this.entityToDTO(locale, currency, brandService.findByDesc(locale, desc).get()));
 	}
+	
+	@Override
+	public List<Brand> findByCategory(String locale, String currency, String code) {
+		// TODO Auto-generated method stub
+		return null;
+	}
  
 	@Override
 	@Transactional
 	//@Cacheable
 	public List<Brand> findAll(String locale, String currency, String categoryDesc, List<Category> categories, List<Tag> tags) {
 		//get a list of brands for the selected categories and tags
-		List<io.nzbee.entity.brand.Brand> lpb = brandService.findAll(
-																	categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
-																	tags.stream().map(t -> t.getTagCode()).collect(Collectors.toList())
-																	);
+		List<io.nzbee.entity.brand.Brand> lpb 
+			= brandService.findAll(
+							categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
+							tags.stream().map(t -> t.getTagCode()).collect(Collectors.toList())
+							);
 		return lpb.stream().map(pb -> entityToDTO(locale, currency, pb)).collect(Collectors.toList());		
 	}
 
@@ -74,6 +81,11 @@ public class BrandServiceImpl implements IBrandService {
 	@Override
 	public Brand doToDto(Object dO) {
 		// TODO Auto-generated method stub
+		io.nzbee.domain.brand.Brand brandDO = (io.nzbee.domain.brand.Brand) dO;
+		Brand brandDTO = new Brand();
+		brandDTO.setBrandCode(brandDO.getBrandCode());
+		brandDTO.setBrandDesc(brandDO.getBrandDesc());
+		
 		return null;
 	}
 
