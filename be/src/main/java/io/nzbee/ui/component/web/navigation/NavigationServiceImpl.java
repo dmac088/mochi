@@ -7,8 +7,8 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import io.nzbee.dto.product.IProductService;
-import io.nzbee.dto.product.Product;
+import io.nzbee.domain.product.IProductService;
+import io.nzbee.domain.product.Product;
 import io.nzbee.ui.component.web.facet.NavFacetContainer;
 import io.nzbee.ui.component.web.generic.UIService;
 import io.nzbee.ui.component.web.search.Search;
@@ -26,26 +26,25 @@ public class NavigationServiceImpl extends UIService implements INavigationServi
 
 	//returns a user interface object, rule broken, need to change to return a domain object 
 	@Override
-	public Search findAll(String locale, 
-			 String currency, 
-			 String categoryDesc,
-			 Double price,
-			 int page, 
-			 int size, 
-			 String sortBy, 
-			 NavFacetContainer selectedFacets) {
-
+	public Search findAll(	 String locale, 
+							 String currency, 
+							 Double price,
+							 int page, 
+							 int size, 
+							 String categoryDesc,
+							 NavFacetContainer selectedFacets,
+							 String sortBy) {
 		
 		Page<Product> pp = productService.findAll(locale, 
 												  currency, 
-												  categoryDesc, 
 												  price, 
 												  page, 
 												  size, 
-												  sortBy, 
+												  categoryDesc, 
 												  selectedFacets.getProductCategories().stream().map(c -> c.getPayload()).collect(Collectors.toList()), 
 												  selectedFacets.getBrands().stream().map(b -> b.getPayload()).collect(Collectors.toList()),
-												  selectedFacets.getTags().stream().map(t -> t.getPayload()).collect(Collectors.toList()));
+												  selectedFacets.getTags().stream().map(t -> t.getPayload()).collect(Collectors.toList()),
+												  sortBy);
 		
 		//add the page of objects to a new Search object and return it 
 		Search search = new Search();
@@ -55,24 +54,24 @@ public class NavigationServiceImpl extends UIService implements INavigationServi
 	}
 	
 	@Override
-	public Search findAll(String locale, 
-			 String currency, 
-			 String categoryDesc,
-			 int page, 
-			 int size, 
-			 String sortBy, 
-			 NavFacetContainer selectedFacets) {
+	public Search findAll(	 String locale, 
+							 String currency, 
+							 String categoryDesc,
+							 int page, 
+							 int size, 
+							 String sortBy, 
+							 NavFacetContainer selectedFacets) {
 
 		
 		Page<Product> pp = productService.findAll(locale, 
 												  currency, 
-												  categoryDesc, 
 												  page, 
 												  size, 
-												  sortBy, 
+												  categoryDesc, 
 												  selectedFacets.getProductCategories().stream().map(c -> c.getPayload()).collect(Collectors.toList()), 
 												  selectedFacets.getBrands().stream().map(b -> b.getPayload()).collect(Collectors.toList()),
-												  selectedFacets.getTags().stream().map(t -> t.getPayload()).collect(Collectors.toList()));
+												  selectedFacets.getTags().stream().map(t -> t.getPayload()).collect(Collectors.toList()),
+												  sortBy);
 		
 		//add the page of objects to a new Search object and return it 
 		Search search = new Search();
