@@ -114,7 +114,10 @@ public class ProductDaoImpl implements IProductDao {
 		categories.add(CategoryVars.PRIMARY_HIERARCHY_ROOT_CODE);
 		
 		
-		Query query = em.createNamedQuery("getProducts")
+		Query query = em.createNativeQuery(this.constructSQL(false, 
+															 false,
+															 false,
+															 false))
 				 .setParameter("categoryCodes", categories)
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
@@ -149,7 +152,10 @@ public class ProductDaoImpl implements IProductDao {
 		// TODO Auto-generated method stub
 		
 		//first get the result count
-		Query query = em.createNamedQuery("Product.getProducts.count")
+		Query query = em.createNativeQuery(this.constructSQL(false, 
+															 false,
+															 false,
+															 true))
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
 				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
@@ -159,7 +165,10 @@ public class ProductDaoImpl implements IProductDao {
 		Object result = query.getSingleResult();
 		long total = ((long) result);
 		
-		query = em.createNamedQuery("Product.getProducts")
+		query = em.createNamedQuery(this.constructSQL(false, 
+													  false,
+													  false,
+													  false))
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
 				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
@@ -234,14 +243,7 @@ public class ProductDaoImpl implements IProductDao {
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
 		.setParameter("productTypeCode", ProductVars.PRODUCT_TYPE_RETAIL)
-		.setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
-		.setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
-		.setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
-		
-		//filtering is hardcoded to markdown price
-		.setParameter("priceTypeCode", ProductVars.PRICE_MARKDOWN_CODE)
-		.setParameter("priceStart", priceStart)
-		.setParameter("priceEnd", priceEnd);
+		.setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE);
 		
 		Object result = query.getSingleResult();
 		long total = ((long) result);
