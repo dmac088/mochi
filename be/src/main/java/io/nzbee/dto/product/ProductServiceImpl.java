@@ -62,7 +62,7 @@ public class ProductServiceImpl implements IProductService {
 		return productService.findAll(locale, currency, productCodes)
 							 .stream().map(p -> this.entityToDTO(locale, currency, p))
 							 .collect(Collectors.toList());
-	}
+	} 
 
     @Override
     @Cacheable(value="products")
@@ -128,6 +128,7 @@ public class ProductServiceImpl implements IProductService {
 
 	}
    
+	@SuppressWarnings("unused")
 	private Sort sortByParam(String param) {
     	switch (param) {
     	case "priceAsc": return new Sort(Sort.Direction.ASC, "prices.PriceValue");
@@ -172,5 +173,6 @@ public class ProductServiceImpl implements IProductService {
 		dtoProduct.setProductRetail(productDO.getProductRetail());
 		return dtoProduct;
 	}
+
 
 }

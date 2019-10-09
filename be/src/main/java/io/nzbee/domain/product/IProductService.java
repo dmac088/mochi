@@ -15,10 +15,6 @@ public interface IProductService extends IService<Product> {
 
 	List<Product> findAll(String locale, String currency, List<String> productCodes);
 
-	Product convertProductDtoToProductDO(io.nzbee.dto.product.Product productDto);
-
-	io.nzbee.dto.product.Product convertProductDOToProductDto(Product productDO);
-
 	Page<Product> findAll(String locale, String currency, int page, int size, String categoryDesc,
 			List<Category> categories, List<Brand> brands, List<Tag> tags, String sortBy);
 
