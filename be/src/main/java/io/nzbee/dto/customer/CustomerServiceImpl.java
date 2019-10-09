@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import io.nzbee.entity.party.IPartyService;
 import io.nzbee.entity.party.Party;
 import io.nzbee.entity.party.person.IPersonService;
@@ -48,7 +47,7 @@ public class CustomerServiceImpl implements ICustomerService {
     
 	@Override
 	@Transactional
-	public List<Customer> getCustomers() {
+	public List<Customer> findAll() {
 		List<Customer> cl = new ArrayList<Customer>();
 		List<Party> pl = partyService.findAll();
 		for(Party p : pl) {
@@ -66,7 +65,7 @@ public class CustomerServiceImpl implements ICustomerService {
 	
 	@Override
 	@Transactional
-	public Customer findOne(String userName) {
+	public Customer findByCode(String userName) {
 		Optional<Party> pr1 = partyService.findByCode(userName);
 		Customer c1 = convertToCustomerDO(pr1.get());
 		return c1;
@@ -165,49 +164,35 @@ public class CustomerServiceImpl implements ICustomerService {
 
 
 	@Override
-	public Customer findOne(Long id) {
+	public List<Customer> findAll(String locale, String currency) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 
 	@Override
-	public List<Customer> findAll() {
+	public Optional<Customer> findById(String locale, String currency, long brandId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 
 	@Override
-	public Customer load() {
+	public Optional<Customer> findByCode(String locale, String currency, String code) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 
 	@Override
-	public Customer save(Customer t) {
+	public Optional<Customer> findByDesc(String locale, String currency, String desc) {
 		// TODO Auto-generated method stub
-		return t;
+		return null;
 	}
 
 
 	@Override
-	public void update(Customer t) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void delete(Customer t) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public Customer dtoToDO(Object dto) {
+	public Customer entityToDTO(String locale, String currency, Object entity) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -219,5 +204,11 @@ public class CustomerServiceImpl implements ICustomerService {
 		return null;
 	}
 
-    
+
+	@Override
+	public List<Customer> getCustomers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
