@@ -54,10 +54,11 @@ public class BrandServiceImpl implements IBrandService {
 	@Transactional
 	@Cacheable
 	public List<Brand> findAllByCategory(String locale, String category) {
-    	List<io.nzbee.dto.brand.Brand> lpb = brandService.findAll(category);
-    	List<Brand> lb = lpb.stream().map(pb -> dtoToDO(pb))
-		.collect(Collectors.toList());
-    	return lb;
+//    	List<io.nzbee.dto.brand.Brand> lpb = brandService.findAll(category);
+//    	List<Brand> lb = lpb.stream().map(pb -> dtoToDO(pb))
+//		.collect(Collectors.toList());
+//    	return lb;
+    	return null;
 	}	
     
     @Override
@@ -65,12 +66,13 @@ public class BrandServiceImpl implements IBrandService {
 	//@Cacheable
 	public List<Brand> findAll(String locale, String currency, String categoryDesc, List<Category> categories, List<Tag> tags) {
 		//get a list of brands for the selected categories and tags
-		List<io.nzbee.entity.brand.Brand> lpb = brandService.findAll(
-																	categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
-																	tags.stream().map(t -> t.getTagCode()).collect(Collectors.toList())
-																	);
-		List<Brand> lb = lpb.stream().map(pb -> dtoToDO(pb)).collect(Collectors.toList());		
-     	return lb;
+//		List<io.nzbee.entity.brand.Brand> lpb = brandService.findAll(
+//																	categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
+//																	tags.stream().map(t -> t.getTagCode()).collect(Collectors.toList())
+//																	);
+//		List<Brand> lb = lpb.stream().map(pb -> dtoToDO(pb)).collect(Collectors.toList());		
+//     	return lb;
+    	return null;
 	}
     
 	@Override

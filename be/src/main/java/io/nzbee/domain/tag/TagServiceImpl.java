@@ -123,10 +123,5 @@ public class TagServiceImpl implements ITagService {
 		return t;
 	}
 
-	@Override
-	public Tag doToDto(Object dO) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

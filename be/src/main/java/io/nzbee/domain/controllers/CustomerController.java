@@ -39,7 +39,7 @@ public class CustomerController {
     @GetMapping("/Customer/UserName/{userName}")
     public Customer getCustomer(@PathVariable String userName) {
     	LOGGER.debug("Finding an existing customer with user name: {}", userName);
-		return customerService.findOne(userName);
+		return customerService.findByCode(userName);
     }
     
 
