@@ -25,7 +25,7 @@ public class NavigationController {
 								@PathVariable int size, 
 								@PathVariable String sortBy,
 								@RequestBody final NavFacetContainer selectedFacets) {
-	   	return navigationService.findAll(locale, currency, category, price, page, size, sortBy, selectedFacets);
+	   	return navigationService.findAll(locale, currency, price, page, size, category, selectedFacets, sortBy);
 	}
 
 	@PostMapping("/Product/{locale}/{currency}/category/{category}/page/{page}/size/{size}/sortBy/{sortBy}")

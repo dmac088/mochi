@@ -4,9 +4,7 @@ package io.nzbee.ui.component.web.facet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import io.nzbee.domain.category.BrandCategory;
 import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.brand.Brand;
