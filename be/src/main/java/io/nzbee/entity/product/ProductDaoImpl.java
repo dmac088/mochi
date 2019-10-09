@@ -243,7 +243,8 @@ public class ProductDaoImpl implements IProductDao {
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
 		.setParameter("productTypeCode", ProductVars.PRODUCT_TYPE_RETAIL)
-		.setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE);
+		.setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
+		.setParameter("brandCodes", brandCodes);
 		
 		Object result = query.getSingleResult();
 		long total = ((long) result);
@@ -267,7 +268,8 @@ public class ProductDaoImpl implements IProductDao {
 		.setParameter("limit", Integer.toString(size))
 		.setParameter("offset", Integer.toString(page * size))
 		.setParameter("priceStart", priceStart)
-		.setParameter("priceEnd", priceEnd);
+		.setParameter("priceEnd", priceEnd)
+		.setParameter("brandCodes", brandCodes);
 		
 		
 		@SuppressWarnings("unchecked")
