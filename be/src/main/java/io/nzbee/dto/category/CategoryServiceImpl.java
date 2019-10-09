@@ -112,5 +112,40 @@ public class CategoryServiceImpl implements ICategoryService {
 	}
 
 
+	@Override
+	public Optional<Category> findById(String locale, String currency, long brandId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Optional<Category> findByCode(String locale, String currency, String code) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Optional<Category> findByDesc(String locale, String currency, String desc) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Category entityToDTO(String locale, String currency, Object entity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Category doToDto(Object dO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
     
 }

@@ -71,4 +71,10 @@ public class BrandServiceImpl implements IBrandService {
 		return brand;
 	}
 
+	@Override
+	public Brand doToDto(Object dO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

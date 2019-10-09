@@ -27,11 +27,23 @@ public class ProductServiceImpl implements IProductService {
     @Qualifier(value="productDtoService")
     private io.nzbee.dto.product.IProductService productDtoService;
     
+    @Autowired 
+    @Qualifier(value="categoryDtoService")
+    private io.nzbee.dto.category.ICategoryService categoryDtoService;
+    
+    @Autowired 
+    @Qualifier(value="brandDtoService")
+    private io.nzbee.dto.brand.IBrandService brandDtoService;
+    
+    @Autowired 
+    @Qualifier(value="tagDtoService")
+    private io.nzbee.dto.tag.ITagService tagDtoService;
+    
     @Override
 	@Transactional
 	@Cacheable(value="product")
 	public Optional<Product> findOne(String locale, String currency, String code) {
-    	return Optional.ofNullable(convertProductDtoToProductDO(productDtoService.findByCode(locale, currency, code).get()));
+    	return Optional.ofNullable(this.dtoToDO(productDtoService.findByCode(locale, currency, code).get()));
 	}	
     
     @Override
@@ -52,15 +64,15 @@ public class ProductServiceImpl implements IProductService {
     	return productDtoService.findAll(
     			locale, 
     			currency,
-    			categoryDesc,
     			price,  
     			page,
     			size,
-    			sortBy,
-    			categories,
-    			brands,
-    			tags
-    			).map(c -> convertProductDtoToProductDO(c)); 
+    			categoryDesc,
+    			categories.stream().map(c->categoryDtoService.doToDto(c)).collect(Collectors.toList()),
+				brands.stream().map(b->brandDtoService.doToDto(b)).collect(Collectors.toList()),
+				tags.stream().map(t->tagDtoService.doToDto(t)).collect(Collectors.toList()),
+				sortBy
+    			).map(c -> this.dtoToDO(c)); 
 	}
     
     @Override
@@ -83,9 +95,9 @@ public class ProductServiceImpl implements IProductService {
 														 page, 
 														 size,
 														 categoryDesc,
-														 categories.stream().map(c->productDtoService.doToDto(c)).collect(Collectors.toList()),
-														 brands.stream().map(b->productDtoService.doToDto(b)).collect(Collectors.toList()),
-														 tags.stream().map(t->productDtoService.doToDto(t)).collect(Collectors.toList()),
+														 categories.stream().map(c->categoryDtoService.doToDto(c)).collect(Collectors.toList()),
+														 brands.stream().map(b->brandDtoService.doToDto(b)).collect(Collectors.toList()),
+														 tags.stream().map(t->tagDtoService.doToDto(t)).collect(Collectors.toList()),
 														 sortBy);
     	
      	return new PageImpl<Product>(
@@ -158,6 +170,12 @@ public class ProductServiceImpl implements IProductService {
 		domainProduct.setProductMarkdown(productDto.getProductMarkdown());
 		domainProduct.setProductRetail(productDto.getProductRetail());
 		return domainProduct;
+	}
+
+	@Override
+	public Product doToDto(Object dO) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
