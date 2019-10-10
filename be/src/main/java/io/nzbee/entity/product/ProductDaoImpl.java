@@ -1,5 +1,6 @@
 package io.nzbee.entity.product;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -167,7 +168,7 @@ public class ProductDaoImpl implements IProductDao {
 				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE);
 		
 		Object result = query.getSingleResult();
-		long total = ((long) result);
+		long total = ((BigInteger) result).longValue();
 		
 		query = em.createNativeQuery(this.constructSQL(false,
 													  false, 
@@ -258,12 +259,14 @@ public class ProductDaoImpl implements IProductDao {
 		
 		
 		Object result = query.getSingleResult();
-		long total = ((long) result);
+		long total = ((BigInteger) result).longValue();
+		
+		boolean hasPrices = (!(priceStart.equals(new Double(-1)) && (priceEnd.equals(new Double(-1)))));
 		
 		query = em.createNativeQuery(this.constructSQL(	categoryCodes.size()>=1, 
 														brandCodes.size()>=1,
 					   									tagCodes.size()>=1,
-					   									(!(priceStart.equals(new Double(-1)) && (priceEnd.equals(new Double(-1))))),
+					   									hasPrices,
 					   									false), "ProductMapping")
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
@@ -271,18 +274,23 @@ public class ProductDaoImpl implements IProductDao {
 		.setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
 		.setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
 		.setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
+		.setParameter("categoryDesc", categoryDesc);
 		
 		//filtering is hardcoded to markdown price
-		.setParameter("priceTypeCode", ProductVars.PRICE_MARKDOWN_CODE)
+		if(hasPrices) {
+			query.setParameter("priceTypeCode", ProductVars.PRICE_MARKDOWN_CODE)
+					.setParameter("priceStart", priceStart)
+					.setParameter("priceEnd", priceEnd);
+		}
 		
 		//these should contain default values for these parameters
-		.setParameter("orderby", "1")
-		.setParameter("limit", Integer.toString(size))
-		.setParameter("offset", Integer.toString(page * size))
-		.setParameter("priceStart", priceStart)
-		.setParameter("priceEnd", priceEnd)
-		.setParameter("brandCodes", brandCodes);
+		query.setParameter("orderby", "1")
+		.setParameter("limit", size)
+		.setParameter("offset", page * size);
 		
+		if(!brandCodes.isEmpty()) {
+			query.setParameter("brandCodes", brandCodes);
+		}
 		
 		@SuppressWarnings("unchecked")
 		List<Object[]> results = query.getResultList();
