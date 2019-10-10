@@ -13,6 +13,8 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+
+import org.hibernate.jpamodelgen.xml.jaxb.TemporalType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
@@ -157,7 +159,7 @@ public class ProductDaoImpl implements IProductDao {
 															 false, 
 															 false,
 															 false,
-															 true))
+															 true), "ProductMapping.count")
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
 				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
@@ -171,7 +173,7 @@ public class ProductDaoImpl implements IProductDao {
 													  false, 
 													  false,
 													  false,
-													  false))
+													  false), "ProductMapping")
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
 				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
@@ -243,13 +245,16 @@ public class ProductDaoImpl implements IProductDao {
 															 brandCodes.size()>=1,
   				 											 tagCodes.size()>=1,
   				 											 (!(priceStart.equals(new Double(-1)) && (priceEnd.equals(new Double(-1))))),
-  				 											 true), "ProductMapping")
+  				 											 true), "ProductMapping.count")
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
 		.setParameter("productTypeCode", ProductVars.PRODUCT_TYPE_RETAIL)
 		.setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
-		.setParameter("brandCodes", brandCodes)
 		.setParameter("categoryDesc", categoryDesc);
+		
+		if(!brandCodes.isEmpty()) {
+			query.setParameter("brandCodes", brandCodes);
+		}
 		
 		
 		Object result = query.getSingleResult();
@@ -458,10 +463,6 @@ public class ProductDaoImpl implements IProductDao {
 		((hasBrands) 
 					? "AND bnd.bnd_cd in 		:brandCodes " 
 					: "") +
-		"AND bnd.bnd_cd in 		:brandCodes " +
-//		((!hasBrands)
-//					? "AND :brandCodes, '') is null "
-//					: "") +
 		((hasPrices) 
 				?   "	   AND  case  " + 
 					"	   		when prc_typ_cd = :priceTypeCode  " + 
