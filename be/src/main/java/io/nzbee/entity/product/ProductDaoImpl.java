@@ -169,7 +169,7 @@ public class ProductDaoImpl implements IProductDao {
 		Object result = query.getSingleResult();
 		long total = ((long) result);
 		
-		query = em.createNamedQuery(this.constructSQL(false,
+		query = em.createNativeQuery(this.constructSQL(false,
 													  false, 
 													  false,
 													  false,
