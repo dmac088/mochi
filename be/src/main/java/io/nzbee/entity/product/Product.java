@@ -64,11 +64,11 @@ import io.nzbee.variables.ProductVars;
 	            @EntityResult(
 	            		entityClass = ProductAttribute.class,
 		                fields = {
+		                    @FieldResult(name = "Id", 				column = "prd_lcl_id"),
 		                    @FieldResult(name = "productId", 		column = "prd_id"),
-		                    @FieldResult(name = "productUPC", 		column = "upc_cd"),
-		                    @FieldResult(name = "productCreateDt", 	column = "prd_crtd_dt"),
-		                    @FieldResult(name = "brand", 			column = "bnd_id"),
-		                    @FieldResult(name = "productStatus", 	column = "prd_sts_id")
+		                    @FieldResult(name = "productDesc", 		column = "prd_desc"),
+		                    @FieldResult(name = "ProductImage", 	column = "prd_img_pth"),
+		                    @FieldResult(name = "lclCd", 			column = "lcl_cd")
 		                }),
 	            @EntityResult(
 	                    entityClass = Brand.class,
