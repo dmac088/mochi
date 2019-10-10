@@ -48,8 +48,8 @@ import io.nzbee.variables.ProductVars;
 		@SqlResultSetMapping(
 	    name = "ProductMapping",
 	    columns = {
-	    			@ColumnResult(name = "retail_price"),
-	    			@ColumnResult(name = "markdown_price")
+	    		@ColumnResult(name = "retail_price"),
+	    		@ColumnResult(name = "markdown_price")
 	    },		
 	    entities = {
 	            @EntityResult(
