@@ -117,6 +117,7 @@ public class ProductDaoImpl implements IProductDao {
 		Query query = em.createNativeQuery(this.constructSQL(false, 
 															 false,
 															 false,
+															 false,
 															 false))
 				 .setParameter("categoryCodes", categories)
 				 .setParameter("locale", locale)
@@ -153,6 +154,7 @@ public class ProductDaoImpl implements IProductDao {
 		
 		//first get the result count
 		Query query = em.createNativeQuery(this.constructSQL(false, 
+															 false, 
 															 false,
 															 false,
 															 true))
@@ -165,7 +167,8 @@ public class ProductDaoImpl implements IProductDao {
 		Object result = query.getSingleResult();
 		long total = ((long) result);
 		
-		query = em.createNamedQuery(this.constructSQL(false, 
+		query = em.createNamedQuery(this.constructSQL(false,
+													  false, 
 													  false,
 													  false,
 													  false))
@@ -237,6 +240,7 @@ public class ProductDaoImpl implements IProductDao {
 		
 		// TODO Auto-generated method stub
 		Query query = em.createNativeQuery(this.constructSQL(categoryCodes.size()>=1, 
+															 brandCodes.size()>=1,
   				 											 tagCodes.size()>=1,
   				 											 (!(priceStart.equals(new Double(-1)) && (priceEnd.equals(new Double(-1))))),
   				 											 true), "ProductMapping")
@@ -244,12 +248,15 @@ public class ProductDaoImpl implements IProductDao {
 		.setParameter("currency", currency)
 		.setParameter("productTypeCode", ProductVars.PRODUCT_TYPE_RETAIL)
 		.setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
-		.setParameter("brandCodes", brandCodes);
+		.setParameter("brandCodes", brandCodes)
+		.setParameter("categoryDesc", categoryDesc);
+		
 		
 		Object result = query.getSingleResult();
 		long total = ((long) result);
 		
 		query = em.createNativeQuery(this.constructSQL(	categoryCodes.size()>=1, 
+														brandCodes.size()>=1,
 					   									tagCodes.size()>=1,
 					   									(!(priceStart.equals(new Double(-1)) && (priceEnd.equals(new Double(-1))))),
 					   									false), "ProductMapping")
@@ -289,7 +296,8 @@ public class ProductDaoImpl implements IProductDao {
 	}
 	
 	private String constructSQL(
-								boolean hasCategories, 
+								boolean hasCategories,
+								boolean hasBrands,
 								boolean hasTags,
 								boolean hasPrices,
 								boolean countOnly) {
@@ -447,7 +455,13 @@ public class ProductDaoImpl implements IProductDao {
 		"AND curr.ccy_cd = 		:currency " + 
 		"AND prd_sts_cd = 		:activeProductCode  " + 
 		"AND bal.lcl_cd = 		:locale " + 
-		"AND bnd.bnd_cd in 		(:brandCodes) " + 
+		((hasBrands) 
+					? "AND bnd.bnd_cd in 		:brandCodes " 
+					: "") +
+		"AND bnd.bnd_cd in 		:brandCodes " +
+//		((!hasBrands)
+//					? "AND :brandCodes, '') is null "
+//					: "") +
 		((hasPrices) 
 				?   "	   AND  case  " + 
 					"	   		when prc_typ_cd = :priceTypeCode  " + 
