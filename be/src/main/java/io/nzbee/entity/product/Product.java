@@ -85,7 +85,8 @@ import io.nzbee.variables.ProductVars;
 	                    fields = {
 	                    	@FieldResult(name = "brandId", 			column = "bnd_id"),
 		                    @FieldResult(name = "brandCode", 		column = "bnd_cd"),
-		                    @FieldResult(name = "brandAttribute", 	column = "bnd_lcl_id")
+		                    @FieldResult(name = "brandAttribute", 	column = "bnd_lcl_id"),
+		                    @FieldResult(name = "brandAttributes", 	column = "bnd_lcl_id")
 	                    }),
 	            @EntityResult(
 	                    entityClass = BrandAttribute.class,
@@ -93,8 +94,8 @@ import io.nzbee.variables.ProductVars;
 	                    	@FieldResult(name = "Id", 				column = "bnd_lcl_id"),
 		                    @FieldResult(name = "brandId", 			column = "bnd_id"),
 		                    @FieldResult(name = "brandDesc", 		column = "bnd_desc"),
-		                    @FieldResult(name = "brand", 			column = "bnd_id"),
-		                    @FieldResult(name = "lclCd", 			column = "lcl_cd")
+		                    @FieldResult(name = "lclCd", 			column = "lcl_cd"),
+		                    @FieldResult(name = "brand", 			column = "bnd_id")
 	                    }),
 
 	    }),
