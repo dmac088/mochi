@@ -65,7 +65,7 @@ public class ProductServiceImpl implements IProductService {
 	} 
 
     @Override
-    @Cacheable(value="products")
+    //@Cacheable(value="products")
 	public Page<Product> findAll(String locale, 
 								 String currency, 
 								 Double price, 
