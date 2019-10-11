@@ -100,7 +100,8 @@ public class ProductAttribute {
 	@Facet
 	@Field(analyze = Analyze.NO, store=Store.YES)
 	public String getBrandCode() {
-		return this.product.getBrand().getCode();
+		//return this.product.getBrand().getCode();
+		return "Empty";
 	}
 	
 	@Transient
@@ -179,9 +180,9 @@ public class ProductAttribute {
 	
 	@Field(analyze = Analyze.YES, store=Store.YES)
 	public String getBrandDesc() {
-		List<BrandAttribute> lba = this.getProduct().getBrand().getAttributes();
-		Optional<BrandAttribute> brandAttribute = lba.stream().filter(ba -> ba.getLclCd().equals(this.getLclCd())).findFirst();
-		if(brandAttribute.isPresent()) { return brandAttribute.get().getBrandDesc(); }
+//		List<BrandAttribute> lba = this.product.getBrand().getAttributes();
+//		Optional<BrandAttribute> brandAttribute = lba.stream().filter(ba -> ba.getLclCd().equals(this.getLclCd())).findFirst();
+//		if(brandAttribute.isPresent()) { return brandAttribute.get().getBrandDesc(); }
 		return "Empty";
 	}
 	

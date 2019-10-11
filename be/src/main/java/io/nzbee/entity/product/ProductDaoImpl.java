@@ -139,9 +139,9 @@ public class ProductDaoImpl implements IProductDao {
 		return results.stream().map(p -> {
 			Product product = (Product) p[0];
 			product.setProductAttribute((ProductAttribute) p[1]); 
-			Brand brand = (Brand) p[2];
-			brand.setBrandAttribute((BrandAttribute) p[3]);
-			product.setBrand(brand);
+			//Brand brand = (Brand) p[2];
+			//brand.setBrandAttribute((BrandAttribute) p[3]);
+			//product.setBrand(brand);
 			
 			return product;
 		}).collect(Collectors.toList());
@@ -194,9 +194,9 @@ public class ProductDaoImpl implements IProductDao {
 		results.stream().map(p -> {
 			Product product = (Product) p[0];
 			product.setProductAttribute((ProductAttribute) p[1]); 
-			Brand brand = (Brand) p[2];
-			brand.setBrandAttribute((BrandAttribute) p[3]);
-			product.setBrand(brand);
+			//Brand brand = (Brand) p[2];
+			//brand.setBrandAttribute((BrandAttribute) p[3]);
+			//product.setBrand(brand);
 			
 			return product;
 		}).collect(Collectors.toList());
@@ -301,8 +301,9 @@ public class ProductDaoImpl implements IProductDao {
 		product.setProductStatus((ProductStatus) p[1]);
 		product.setProductAttribute((ProductAttribute) p[2]);
 		Brand brand = (Brand) p[3];
-		brand.setBrandAttribute((BrandAttribute) p[4]);
 		product.setBrand(brand);
+		brand.setBrandAttribute((BrandAttribute) p[4]);
+		
 		product.setRetailPrice(((BigDecimal) p[5]).doubleValue());
 		product.setMarkdownPrice(((BigDecimal) p[6]).doubleValue());
 		
