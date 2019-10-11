@@ -79,8 +79,7 @@ import io.nzbee.variables.ProductVars;
 		                    @FieldResult(name = "ProductImage", 	column = "prd_img_pth"),
 		                    @FieldResult(name = "lclCd", 			column = "lcl_cd"),
 		                    @FieldResult(name = "product", 			column = "prd_id")
-		        }),
-//	            
+		        }),	            
 //	            @EntityResult(
 //	                    entityClass = Brand.class,
 //	                    fields = {
