@@ -119,7 +119,7 @@ public class ProductDaoImpl implements IProductDao {
 															 false,
 															 false,
 															 false,
-															 false))
+															 false), "ProductMapping")
 				 .setParameter("categoryCodes", categories)
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
@@ -392,7 +392,11 @@ public class ProductDaoImpl implements IProductDao {
 						"	   cc.cat_prnt_id, " +	
 						"	   prd.prd_id,   " + 
 						"	   prd.upc_cd,   " + 
-						"	   prd.prd_crtd_dt,   " + 
+						"	   prd.prd_crtd_dt,   " +
+						"	   attr.prd_lcl_id, " +
+						"	   attr.prd_desc, " +	
+						"	   attr.prd_img_pth, " +	
+						"	   attr.lcl_cd, " +
 						"	   prdt.prd_typ_cd,   " + 
 						"	   prdt.prd_typ_desc,   " + 
 						"	   bnd.bnd_id,   " + 
@@ -431,6 +435,9 @@ public class ProductDaoImpl implements IProductDao {
 	
 		"	INNER JOIN mochi.product prd    " + 
 		"	ON pc.prd_id = prd.prd_id   " + 
+		
+		"	INNER JOIN mochi.product_attr_lcl attr " +
+		"	ON prd.prd_id = attr.prd_id " + 
 		 
 		"	INNER JOIN mochi.product_type prdt   " + 
 		"	ON prd.prd_typ_id = prdt.prd_typ_id   " + 
@@ -462,10 +469,11 @@ public class ProductDaoImpl implements IProductDao {
 				   : 	"") +
 		
 		"WHERE now() >= prc.prc_st_dt AND now() <= prc.prc_en_dt  " + 
-		"AND prdt.prd_typ_cd = :productTypeCode " +
+		"AND prdt.prd_typ_cd = 	:productTypeCode " +
 		"AND curr.ccy_cd = 		:currency " + 
 		"AND prd_sts_cd = 		:activeProductCode  " + 
-		"AND bal.lcl_cd = 		:locale " + 
+		"AND bal.lcl_cd = 		:locale " +
+		"AND attr.lcl_cd = 		:locale " +	
 		((hasBrands) 
 					? "AND bnd.bnd_cd in 		:brandCodes " 
 					: "") +
@@ -485,7 +493,11 @@ public class ProductDaoImpl implements IProductDao {
 						"	   cc.cat_prnt_id, " +	
 						"	   prd.prd_id,   " + 
 						"	   prd.upc_cd,   " + 
-						"	   prd.prd_crtd_dt,   " + 
+						"	   prd.prd_crtd_dt,   " +
+						"	   attr.prd_lcl_id, " +
+						"	   attr.prd_desc, " +	
+						"	   attr.prd_img_pth, " +	
+						"	   attr.lcl_cd, " +
 						"	   prdt.prd_typ_cd,   " + 
 						"	   prdt.prd_typ_desc,   " + 
 						"	   bnd.bnd_id,   " + 
