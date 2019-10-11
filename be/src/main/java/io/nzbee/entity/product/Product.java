@@ -59,7 +59,8 @@ import io.nzbee.variables.ProductVars;
 	                        @FieldResult(name = "productUPC", 		column = "upc_cd"),
 	                        @FieldResult(name = "productCreateDt", 	column = "prd_crtd_dt"),
 	                        @FieldResult(name = "brand", 			column = "bnd_id"),
-	                        @FieldResult(name = "productStatus", 	column = "prd_sts_id")
+	                        @FieldResult(name = "productStatus", 	column = "prd_sts_id"),
+	                        @FieldResult(name = "productAttribute", column = "prd_lcl_id")	                        
 	                    }),
 	            @EntityResult(
 	            		entityClass = ProductAttribute.class,
