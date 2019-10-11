@@ -80,20 +80,22 @@ import io.nzbee.variables.ProductVars;
 		                    @FieldResult(name = "lclCd", 			column = "lcl_cd"),
 		                    @FieldResult(name = "product", 			column = "prd_id")
 		        }),	            
-//	            @EntityResult(
-//	                    entityClass = Brand.class,
-//	                    fields = {
-//	                    	@FieldResult(name = "brandId", 			column = "bnd_id"),
-//		                    @FieldResult(name = "brandCode", 		column = "bnd_cd"),
-//		                    @FieldResult(name = "brandAttribute", 	column = "bnd_lcl_id")
-//	                    }),
-//	            @EntityResult(
-//	                    entityClass = BrandAttribute.class,
-//	                    fields = {
-//	                    	@FieldResult(name = "Id", 				column = "bnd_lcl_id"),
-//		                    @FieldResult(name = "brandId", 			column = "bnd_id"),
-//		                    @FieldResult(name = "brandDesc", 		column = "bnd_desc")
-//	                    }),
+	            @EntityResult(
+	                    entityClass = Brand.class,
+	                    fields = {
+	                    	@FieldResult(name = "brandId", 			column = "bnd_id"),
+		                    @FieldResult(name = "brandCode", 		column = "bnd_cd"),
+		                    @FieldResult(name = "brandAttribute", 	column = "bnd_lcl_id")
+	                    }),
+	            @EntityResult(
+	                    entityClass = BrandAttribute.class,
+	                    fields = {
+	                    	@FieldResult(name = "Id", 				column = "bnd_lcl_id"),
+		                    @FieldResult(name = "brandId", 			column = "bnd_id"),
+		                    @FieldResult(name = "brandDesc", 		column = "bnd_desc"),
+		                    @FieldResult(name = "brand", 			column = "bnd_id"),
+		                    @FieldResult(name = "lclCd", 			column = "lcl_cd")
+	                    }),
 
 	    }),
 		@SqlResultSetMapping(
