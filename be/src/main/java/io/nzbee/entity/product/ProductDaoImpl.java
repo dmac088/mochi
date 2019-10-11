@@ -255,7 +255,6 @@ public class ProductDaoImpl implements IProductDao {
 			query.setParameter("brandCodes", brandCodes);
 		}
 		
-		
 		Object result = query.getSingleResult();
 		long total = ((BigInteger) result).longValue();
 		
@@ -296,9 +295,9 @@ public class ProductDaoImpl implements IProductDao {
 		List<Product> lp = 
 		results.stream().map(p -> {
 		Product product = (Product) p[0];
-		product.setProductAttribute((ProductAttribute) p[1]); 
-		product.setBrand((Brand) p[2]);
-		product.getBrand().setBrandAttribute((BrandAttribute) p[3]);
+		//product.setProductAttribute((ProductAttribute) p[1]); 
+		//product.setBrand((Brand) p[2]);
+		//product.getBrand().setBrandAttribute((BrandAttribute) p[3]);
 		
 		return product;
 		}).collect(Collectors.toList());

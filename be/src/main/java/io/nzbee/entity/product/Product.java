@@ -60,8 +60,16 @@ import io.nzbee.variables.ProductVars;
 	                        @FieldResult(name = "productCreateDt", 	column = "prd_crtd_dt"),
 	                        @FieldResult(name = "brand", 			column = "bnd_id"),
 	                        @FieldResult(name = "productStatus", 	column = "prd_sts_id"),
-	                        @FieldResult(name = "productAttribute", column = "prd_lcl_id")	                        
+	                        @FieldResult(name = "productAttribute", column = "prd_lcl_id"),	      
+	                        @FieldResult(name = "attributes", 		column = "prd_lcl_id"),
 	                    }),
+	            @EntityResult(
+		                entityClass = ProductStatus.class,
+		                fields = {
+		                	@FieldResult(name = "productStatusId", 		column = "prd_sts_id"),
+		                    @FieldResult(name = "productStatusCode", 	column = "prd_sts_cd"),
+		                    @FieldResult(name = "productStatusDesc", 	column = "prd_sts_desc")
+                }),
 	            @EntityResult(
 	            		entityClass = ProductAttribute.class,
 		                fields = {
@@ -69,29 +77,25 @@ import io.nzbee.variables.ProductVars;
 		                    @FieldResult(name = "productId", 		column = "prd_id"),
 		                    @FieldResult(name = "productDesc", 		column = "prd_desc"),
 		                    @FieldResult(name = "ProductImage", 	column = "prd_img_pth"),
-		                    @FieldResult(name = "lclCd", 			column = "lcl_cd")
-		                }),
-	            @EntityResult(
-	                    entityClass = Brand.class,
-	                    fields = {
-	                    	@FieldResult(name = "brandId", 			column = "bnd_id"),
-		                    @FieldResult(name = "brandCode", 		column = "bnd_cd"),
-		                    @FieldResult(name = "brandAttribute", 	column = "bnd_lcl_id")
-	                    }),
-	            @EntityResult(
-	                    entityClass = BrandAttribute.class,
-	                    fields = {
-	                    	@FieldResult(name = "Id", 				column = "bnd_lcl_id"),
-		                    @FieldResult(name = "brandId", 			column = "bnd_id"),
-		                    @FieldResult(name = "brandDesc", 		column = "bnd_desc")
-	                    }),
-	            @EntityResult(
-	                    entityClass = ProductStatus.class,
-	                    fields = {
-	                    	@FieldResult(name = "productStatusId", 		column = "prd_sts_id"),
-		                    @FieldResult(name = "productStatusCode", 	column = "prd_sts_cd"),
-		                    @FieldResult(name = "productStatusDesc", 	column = "prd_sts_desc")
-	                    })
+		                    @FieldResult(name = "lclCd", 			column = "lcl_cd"),
+		                    @FieldResult(name = "product", 			column = "prd_id")
+		        }),
+//	            
+//	            @EntityResult(
+//	                    entityClass = Brand.class,
+//	                    fields = {
+//	                    	@FieldResult(name = "brandId", 			column = "bnd_id"),
+//		                    @FieldResult(name = "brandCode", 		column = "bnd_cd"),
+//		                    @FieldResult(name = "brandAttribute", 	column = "bnd_lcl_id")
+//	                    }),
+//	            @EntityResult(
+//	                    entityClass = BrandAttribute.class,
+//	                    fields = {
+//	                    	@FieldResult(name = "Id", 				column = "bnd_lcl_id"),
+//		                    @FieldResult(name = "brandId", 			column = "bnd_id"),
+//		                    @FieldResult(name = "brandDesc", 		column = "bnd_desc")
+//	                    }),
+
 	    }),
 		@SqlResultSetMapping(
 			    name = "ProductMapping.count",
