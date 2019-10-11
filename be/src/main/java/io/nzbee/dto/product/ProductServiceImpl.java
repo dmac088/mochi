@@ -164,6 +164,7 @@ public class ProductServiceImpl implements IProductService {
 		Product productDO = (Product) dO;
 		
 		io.nzbee.dto.product.Product dtoProduct = new io.nzbee.dto.product.Product();
+		dtoProduct.setProductUPC(productDO.getProductUPC());
 		dtoProduct.setCurrency(productDO.getCurrency());
 		dtoProduct.setLclCd(productDO.getLclCd());
 		dtoProduct.setProductCreateDt(productDO.getProductCreateDt());
