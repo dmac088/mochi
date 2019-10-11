@@ -1,5 +1,6 @@
 package io.nzbee.entity.product;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -295,9 +296,12 @@ public class ProductDaoImpl implements IProductDao {
 		List<Product> lp = 
 		results.stream().map(p -> {
 		Product product = (Product) p[0];
-		product.setProductAttribute((ProductAttribute) p[1]); 
-		product.setBrand((Brand) p[2]);
-		product.getBrand().setBrandAttribute((BrandAttribute) p[3]);
+		product.setProductStatus((ProductStatus) p[1]);
+		product.setProductAttribute((ProductAttribute) p[2]); 
+		product.setBrand((Brand) p[3]);
+		product.getBrand().setBrandAttribute((BrandAttribute) p[4]);
+		product.setRetailPrice(((BigDecimal) p[5]).doubleValue());
+		product.setMarkdownPrice(((BigDecimal) p[6]).doubleValue());
 		
 		return product;
 		}).collect(Collectors.toList());
