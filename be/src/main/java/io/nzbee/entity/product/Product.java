@@ -61,7 +61,7 @@ import io.nzbee.variables.ProductVars;
 	                        @FieldResult(name = "brand", 			column = "bnd_id"),
 	                        @FieldResult(name = "productStatus", 	column = "prd_sts_id"),
 	                        @FieldResult(name = "productAttribute", column = "prd_lcl_id"),	      
-	                        @FieldResult(name = "attributes", 		column = "prd_lcl_id"),
+	                        @FieldResult(name = "attributes", 		column = "prd_id"),
 	                    }),
 	            @EntityResult(
 		                entityClass = ProductStatus.class,
@@ -86,7 +86,8 @@ import io.nzbee.variables.ProductVars;
 	                    	@FieldResult(name = "brandId", 			column = "bnd_id"),
 		                    @FieldResult(name = "brandCode", 		column = "bnd_cd"),
 		                    @FieldResult(name = "brandAttribute", 	column = "bnd_lcl_id"),
-		                    @FieldResult(name = "brandAttributes", 	column = "bnd_lcl_id")
+		                    @FieldResult(name = "brandAttributes", 	column = "bnd_lcl_id"),
+		                    @FieldResult(name = "products", 		column = "prd_id")
 	                    }),
 	            @EntityResult(
 	                    entityClass = BrandAttribute.class,
@@ -149,7 +150,7 @@ public class Product {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@IndexedEmbedded
 	@JoinColumn(name="bnd_id", insertable=false, updatable=false)
-	@JsonBackReference
+	//@JsonBackReference
 	private Brand brand;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
