@@ -21,81 +21,91 @@ public class CategoryServiceImpl implements ICategoryService {
     @Autowired
     @Qualifier("categoryDtoService")
     private io.nzbee.dto.category.ICategoryService categoryService;
+    
+    @Autowired
+    @Qualifier("brandDtoService")
+    private io.nzbee.dto.brand.IBrandService brandService;
+    
+    @Autowired
+    @Qualifier("tagDtoService")
+    private io.nzbee.dto.tag.ITagService tagService;
      
     @Override
 	@Transactional
 	//@Cacheable
 	public List<Category> findAll(String locale, String currency) {
     	return  categoryService.findAll(locale, currency)
-    			.stream().map(c -> convertCategoryDtoToCategoryDO(c))
+    			.stream().map(c -> dtoToDO(c))
     			.collect(Collectors.toList());
+	}
+    
+
+
+	@Override
+	public Optional<Category> findById(String locale, String currency, Long Id) {
+		// TODO Auto-generated method stub
+		return Optional.ofNullable(dtoToDO(categoryService.findById(locale, currency, Id).get()));
 	}
 
 	@Override
-	public Optional<Category> findOneByCode(String locale, String categoryCode) {
+	public Optional<Category> findByCode(String locale, String currency, String code) {
 		// TODO Auto-generated method stub
-		return Optional.ofNullable(convertCategoryDtoToCategoryDO(categoryService.findOneByCode(locale, categoryCode).get()));
+		return Optional.ofNullable(dtoToDO(categoryService.findByCode(locale, currency, code).get()));
+	}
+	
+	@Override
+	public Optional<Category> findByDesc(String locale, String currency, String desc) {
+		// TODO Auto-generated method stub
+		return Optional.ofNullable(dtoToDO(categoryService.findByDesc(locale, currency, desc).get()));
 	}
     
     @Override
  	@Transactional
  	//@Cacheable
- 	public List<Category> findByParent(String locale, String parentCategoryCode) {
-    	return categoryService.findByParent(parentCategoryCode, locale)
-							  .stream().map(c -> convertCategoryDtoToCategoryDO(c))
+ 	public List<Category> findByParent(String locale, String currency, String parentCategoryCode) {
+    	return categoryService.findByParent(parentCategoryCode, currency, locale)
+							  .stream().map(c -> dtoToDO(c))
 							  .collect(Collectors.toList());
  	}
     
     @Override
   	@Transactional
   	//@Cacheable
-  	public List<Category> findAllForLevel(Long level, String locale) {
-     	return categoryService.findAllForLevel(locale, level)
-     						  .stream().map(c -> convertCategoryDtoToCategoryDO(c))
+  	public List<Category> findAllForLevel(Long level, String currency, String locale) {
+     	return categoryService.findAllForLevel(locale, currency, level)
+     						  .stream().map(c -> dtoToDO(c))
      						  .collect(Collectors.toList());
   	}	
     
-  
-    @Override
-  	@Transactional
-  	//@Cacheable
-  	public Optional<Category> findOne(final String locale, final String categoryCode) {
-    	return Optional.ofNullable(convertCategoryDtoToCategoryDO(categoryService.findOneByCode(categoryCode, locale).get()));
-  	}
-    
+ 
     @Override
 	@Transactional
 	//@Cacheable
-	public Optional<Category> findOneByDesc(String locale, String categoryDesc) {
-    	return Optional.ofNullable(convertCategoryDtoToCategoryDO(categoryService.findOneByDesc(locale, categoryDesc).get()));
-	}
-    
-    @Override
-	@Transactional
-	//@Cacheable
-	public List<Category> findAll(String locale, String categoryDesc, List<Brand> brands, List<Tag> tags) {
-    	return null;
-//    	return categoryService.findAll(
-//    			 locale,
-//    			 categoryDesc,
-//    			// convert brand domain objects to brand DTOs
-//				 brands.stream().map(c -> this.convertCategoryDOtoCategoryDto(c)),  
-//				//convert tag domain objects to tag DTOs
-//				 tags
-//				 )
-//    			.stream().map(c -> convertCategoryDtoToCategoryDO(c))
-//    			.collect(Collectors.toList());
+	public List<Category> findAll(String locale, String currency, String categoryDesc, List<Brand> brands, List<Tag> tags) {
+
+    	return categoryService.findAll(
+    			 locale,
+    			 currency,
+    			 categoryDesc,
+    			// convert brand domain objects to brand DTOs
+				 brands.stream().map(b -> brandService.doToDto(b)).collect(Collectors.toList()),  
+				//convert tag domain objects to tag DTOs
+				 tags.stream().map(t -> tagService.doToDto(t)).collect(Collectors.toList())  
+				 )
+    			.stream().map(c -> this.dtoToDO(c))
+    			.collect(Collectors.toList());
 	}
 
 
 	@Override
-	public Category convertCategoryDtoToCategoryDO(io.nzbee.dto.category.Category category) {
+	public Category dtoToDO(Object dto) {
 		// TODO Auto-generated method stub
+		io.nzbee.dto.category.Category category = (io.nzbee.dto.category.Category) dto;
 		
 		Category categoryDO = category.getCategoryType().equals(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT) 
-							? new ProductCategory()
-							: new BrandCategory();
-		
+				? new ProductCategory()
+				: new BrandCategory();
+
 		categoryDO.setCategoryCode(category.getCategoryCode());
 		categoryDO.setCategoryDesc(category.getCategoryDesc());
 		categoryDO.setCategoryLevel(category.getCategoryLevel());
@@ -106,21 +116,7 @@ public class CategoryServiceImpl implements ICategoryService {
 		
 		return categoryDO;
 	}
+	
 
-	@Override
-	public io.nzbee.dto.category.Category convertCategoryDOtoCategoryDto(io.nzbee.domain.category.Category category) {
-		// TODO Auto-generated method stub
-		
-		io.nzbee.dto.category.Category categoryDto = new io.nzbee.dto.category.Category();
-		
-		categoryDto.setCategoryCode(category.getCategoryCode());
-		categoryDto.setCategoryDesc(category.getCategoryDesc());
-		categoryDto.setCategoryLevel(category.getCategoryLevel());
-		categoryDto.setCategoryType(category.getCategoryType());
-		categoryDto.setObjectCount(category.getCount());
-		categoryDto.setParentCode(category.getParentCode());
-		categoryDto.setChildCategoryCount(category.getChildCategoryCount());
-							
-		return categoryDto;
-	}
+	
 }
