@@ -1,7 +1,7 @@
 package io.nzbee.ui.component.web.search;
 
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -299,19 +299,14 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		// convert the results of jpaQuery to product Data Transfer Objects			
 		List<io.nzbee.dto.product.Product> lp = results.stream().map(r -> {
 			io.nzbee.dto.product.Product p = new io.nzbee.dto.product.Product();
-			p.setProductUPC(r[0].toString());
-		//	p.setProductCreateDt((Date) r[1]);
+
 			p.setProductDesc(r[2].toString());
 			p.setProductImage(r[3].toString());
-			p.setLclCd(r[4].toString());
-			System.out.println(r[0]);
-			System.out.println(r[1]);
-			System.out.println(r[2]);
-			System.out.println(r[3]);
-			System.out.println(r[4]);
-			System.out.println(r[5]);
-			System.out.println(r[6]);
-			System.out.println(r[7]);
+			p.setLclCd(lcl);
+			p.setProductUPC(r[5].toString());
+			p.setProductCreateDt((Date) r[6]);
+			p.setCurrency(currency);
+			//what about the category code?
 			return p;
 		}).collect(Collectors.toList());
 
