@@ -26,11 +26,11 @@ public class ProductStatus {
 	private Long productStatusId;
 
 	@Column(name="prd_sts_cd")
-	@Field(store=Store.YES)
+	@Field(store=Store.NO)
 	private String productStatusCode;
 	
 	@Column(name="prd_sts_desc")
-	@Field(store=Store.YES)
+	@Field(store=Store.NO)
 	private String productStatusDesc;
 	
 	@OneToMany(mappedBy="productStatus", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
