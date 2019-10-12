@@ -38,8 +38,6 @@ public class CategoryServiceImpl implements ICategoryService {
     			.stream().map(c -> dtoToDO(c))
     			.collect(Collectors.toList());
 	}
-    
-
 
 	@Override
 	public Optional<Category> findById(String locale, String currency, Long Id) {
