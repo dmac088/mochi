@@ -13,8 +13,8 @@ public interface ICategoryService extends IService<Category> {
 
 	List<Category> findByParent(String locale, String currency, String parentCategoryCode);
 
-	List<Category> findAllForLevel(Long level, String currency, String locale);
-
 	List<Category> findAll(String locale, String currency, String categoryDesc, List<Brand> brands, List<Tag> tags);
+
+	List<Category> findAllForLevel(String locale, String currency, Long level);
 
 }

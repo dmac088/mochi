@@ -69,7 +69,7 @@ public class CategoryServiceImpl implements ICategoryService {
     @Override
   	@Transactional
   	//@Cacheable
-  	public List<Category> findAllForLevel(Long level, String currency, String locale) {
+  	public List<Category> findAllForLevel(String locale, String currency, Long level) {
      	return categoryService.findAllForLevel(locale, currency, level)
      						  .stream().map(c -> dtoToDO(c))
      						  .collect(Collectors.toList());

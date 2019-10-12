@@ -20,14 +20,14 @@ public class CategoryController {
         super();
     }
     
-    @GetMapping("/Category/{lcl}/{curr}/level/{level}")
-    public List<Category> getCategoriesForLevel(@PathVariable String lcl, @PathVariable String curr, @PathVariable Long level) {
-    	return categoryService.findAllForLevel(level, lcl);
+    @GetMapping("/Category/{locale}/{currency}/level/{level}")
+    public List<Category> getCategoriesForLevel(@PathVariable String locale, @PathVariable String currency, @PathVariable Long level) {
+    	return categoryService.findAllForLevel(locale, currency, level);
     }
     
-    @GetMapping("/Category/{lcl}/{curr}/desc/{categoryDesc}")
-    public Category getCategory(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc) {
-    	return categoryService.findOneByDesc(lcl, categoryDesc).get();
+    @GetMapping("/Category/{locale}/{currency}/desc/{categoryDesc}")
+    public Category getCategory(@PathVariable String locale, @PathVariable String currency, @PathVariable String categoryDesc) {
+    	return categoryService.findByDesc(locale, currency, categoryDesc).get();
     }
    
 }
