@@ -123,6 +123,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 
 	@Override
 	public Optional<Category> findByCode(String code) {
+		System.out.println(code);
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 
 		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
