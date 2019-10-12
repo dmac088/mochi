@@ -150,123 +150,123 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 				io.nzbee.entity.product.attribute.ProductAttribute.class);
 
 			
-		final Set<Facet> allFacets = new HashSet<Facet>();
-		final Set<NavFacet<Category>> cs;
-		final Set<NavFacet<Brand>> bs;
-		List<Facet> lf;
+//		final Set<Facet> allFacets = new HashSet<Facet>();
+//		final Set<NavFacet<Category>> cs;
+//		final Set<NavFacet<Brand>> bs;
+//		List<Facet> lf;
 
 		// initialize the facets
-		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, jpaQuery, CategoryVars.PRIMARY_CATEGORY_FACET_NAME,
-				"primaryCategory.categoryToken"));
-		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, jpaQuery, CategoryVars.PRIMARY_CATEGORY_FACET_NAME,
-				"secondaryCategory.categoryToken"));
-		allFacets.addAll(
-				this.getDiscreteFacets(productQueryBuilder, jpaQuery, CategoryVars.BRAND_FACET_NAME, "brandCode"));
-		allFacets.addAll(this.getRangeFacets(productQueryBuilder, jpaQuery, currency));
-		allFacets.addAll(
-				this.getDiscreteFacets(productQueryBuilder, jpaQuery, CategoryVars.TAG_FACET_NAME, "tagAFacet"));
-		allFacets.addAll(
-				this.getDiscreteFacets(productQueryBuilder, jpaQuery, CategoryVars.TAG_FACET_NAME, "tagBFacet"));
-		allFacets.addAll(
-				this.getDiscreteFacets(productQueryBuilder, jpaQuery, CategoryVars.TAG_FACET_NAME, "tagCFacet"));
-
-		allFacets.addAll(allFacets.stream()
-				.filter(f -> f.getFacetingName().equals(CategoryVars.PRIMARY_CATEGORY_FACET_NAME)).map(f -> {
-					return getParentCategoryFacets(new HashSet<Facet>(), f, productQueryBuilder, jpaQuery, lcl,
-							currency);
-				}).collect(Collectors.toSet()).stream().flatMap(Set::stream).collect(Collectors.toSet()));
-		
-		List<String> allTokens = new ArrayList<String>();
-		allTokens.addAll(categoryTokens);
-		allTokens.addAll(brandTokens);
-		allTokens.addAll(tagTokens);
-		allTokens.addAll(priceTokens);
+//		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, jpaQuery, CategoryVars.PRIMARY_CATEGORY_FACET_NAME,
+//				"primaryCategory.categoryToken"));
+//		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, jpaQuery, CategoryVars.PRIMARY_CATEGORY_FACET_NAME,
+//				"secondaryCategory.categoryToken"));
+//		allFacets.addAll(
+//				this.getDiscreteFacets(productQueryBuilder, jpaQuery, CategoryVars.BRAND_FACET_NAME, "brandCode"));
+//		allFacets.addAll(this.getRangeFacets(productQueryBuilder, jpaQuery, currency));
+//		allFacets.addAll(
+//				this.getDiscreteFacets(productQueryBuilder, jpaQuery, CategoryVars.TAG_FACET_NAME, "tagAFacet"));
+//		allFacets.addAll(
+//				this.getDiscreteFacets(productQueryBuilder, jpaQuery, CategoryVars.TAG_FACET_NAME, "tagBFacet"));
+//		allFacets.addAll(
+//				this.getDiscreteFacets(productQueryBuilder, jpaQuery, CategoryVars.TAG_FACET_NAME, "tagCFacet"));
+//
+//		allFacets.addAll(allFacets.stream()
+//				.filter(f -> f.getFacetingName().equals(CategoryVars.PRIMARY_CATEGORY_FACET_NAME)).map(f -> {
+//					return getParentCategoryFacets(new HashSet<Facet>(), f, productQueryBuilder, jpaQuery, lcl,
+//							currency);
+//				}).collect(Collectors.toSet()).stream().flatMap(Set::stream).collect(Collectors.toSet()));
+//		
+//		List<String> allTokens = new ArrayList<String>();
+//		allTokens.addAll(categoryTokens);
+//		allTokens.addAll(brandTokens);
+//		allTokens.addAll(tagTokens);
+//		allTokens.addAll(priceTokens);
 
 		// filter to get the facets that are selected
-		lf = allTokens.stream().flatMap(x -> {
-			return allFacets.stream().filter(y -> x.equals(y.getValue()));
-		}).collect(Collectors.toList());
+//		lf = allTokens.stream().flatMap(x -> {
+//			return allFacets.stream().filter(y -> x.equals(y.getValue()));
+//		}).collect(Collectors.toList());
+//
+//		
+//		cs = new HashSet<NavFacet<Category>>();
+//		lf.stream().forEach(f -> {
+//			jpaQuery.getFacetManager().getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
+//			processFacets(allFacets, productQueryBuilder, jpaQuery, currency, f.getFacetingName());
+//			if (f.getFacetingName().equals(CategoryVars.PRIMARY_CATEGORY_FACET_NAME)) {
+//				allFacets.addAll(
+//						getParentCategoryFacets(new HashSet<Facet>(), f, productQueryBuilder, jpaQuery, lcl, currency));
+//			}
+//		});
+//		
+//	
+//		lf = allTokens.stream().flatMap(x -> {
+//			return allFacets.stream().filter(y -> x.equals(y.getValue()));
+//		}).collect(Collectors.toList());
+//
+//		lf.stream().forEach(f -> {
+//			jpaQuery.getFacetManager().getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
+//		});
+//
+//		allFacets.stream().filter(f -> f.getFacetingName().equals(CategoryVars.PRIMARY_CATEGORY_FACET_NAME))
+//				.collect(Collectors.toList()).stream().forEach(cf -> {
+//					
+//					String categoryCode = (new LinkedList<String>(Arrays.asList(cf.getValue().split("/")))).getLast();
+//					Optional<Category> category = categoryService.findByCode(lcl, currency, categoryCode);
+////					System.out.println(category.getCategoryDesc());
+////					System.out.println(category.getCategoryType());
+////					System.out.println(category.getClass().getSimpleName());
+//					NavFacet<Category> categoryFacet = facetService.convertCatToNavFacet(category.get());
+//					categoryFacet.setFacetProductCount(new Long(cf.getCount()));
+//					categoryFacet.setToken(cf.getValue());
+//					categoryFacet.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
+//					cs.add(categoryFacet);
+//				});
 
-		
-		cs = new HashSet<NavFacet<Category>>();
-		lf.stream().forEach(f -> {
-			jpaQuery.getFacetManager().getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
-			processFacets(allFacets, productQueryBuilder, jpaQuery, currency, f.getFacetingName());
-			if (f.getFacetingName().equals(CategoryVars.PRIMARY_CATEGORY_FACET_NAME)) {
-				allFacets.addAll(
-						getParentCategoryFacets(new HashSet<Facet>(), f, productQueryBuilder, jpaQuery, lcl, currency));
-			}
-		});
-		
-	
-		lf = allTokens.stream().flatMap(x -> {
-			return allFacets.stream().filter(y -> x.equals(y.getValue()));
-		}).collect(Collectors.toList());
-
-		lf.stream().forEach(f -> {
-			jpaQuery.getFacetManager().getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
-		});
-
-		allFacets.stream().filter(f -> f.getFacetingName().equals(CategoryVars.PRIMARY_CATEGORY_FACET_NAME))
-				.collect(Collectors.toList()).stream().forEach(cf -> {
-					
-					String categoryCode = (new LinkedList<String>(Arrays.asList(cf.getValue().split("/")))).getLast();
-					Optional<Category> category = categoryService.findByCode(lcl, currency, categoryCode);
-//					System.out.println(category.getCategoryDesc());
-//					System.out.println(category.getCategoryType());
-//					System.out.println(category.getClass().getSimpleName());
-					NavFacet<Category> categoryFacet = facetService.convertCatToNavFacet(category.get());
-					categoryFacet.setFacetProductCount(new Long(cf.getCount()));
-					categoryFacet.setToken(cf.getValue());
-					categoryFacet.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
-					cs.add(categoryFacet);
-				});
-
-	
-		
-		bs = new HashSet<NavFacet<Brand>>();
-		allFacets.stream().filter(f -> f.getFacetingName().equals(CategoryVars.BRAND_FACET_NAME))
-				.collect(Collectors.toList()).forEach(bf -> {
-					Brand brand = brandService.findByCode(lcl, currency, bf.getValue()).get();
-					NavFacet<Brand> brandFacet = facetService.convertBrandToNavFacet(brand);
-					brandFacet.setFacetProductCount(new Long(bf.getCount()));
-					brandFacet.setToken(bf.getValue());
-					brandFacet.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
-					bs.add(brandFacet);
-				});
-
-		// for each of the baseline facets, convert them to Facet DTOs for the client
-		// and add them to "s"
-		final List<NavFacet<Object>> ps = new ArrayList<NavFacet<Object>>();
-		allFacets.stream().filter(f -> f.getFacetingName().equals(CategoryVars.PRICE_FACET_NAME))
-				.collect(Collectors.toList()).forEach(pf -> {
-					NavFacet<Object> priceFacet = new NavFacet<Object>();
-					priceFacet.setFacetClassName("Product.productMarkdown");
-					priceFacet.setFacetId(facetService.calcFacetId(priceFacet.getFacetClassName(), pf.getValue()));
-					priceFacet.setFacetDisplayValue(pf.getValue());
-					priceFacet.setFacetProductCount(new Long(pf.getCount()));
-					priceFacet.setToken(pf.getValue());
-					priceFacet.setFacetType(ProductVars.FACET_TYPE_RANGE);
-					ps.add(priceFacet);
-				});
-
-		final List<NavFacet<Tag>> ts = new ArrayList<NavFacet<Tag>>();
-		allFacets.stream().filter(f -> f.getFacetingName().equals(CategoryVars.TAG_FACET_NAME))
-				.collect(Collectors.toList()).forEach(tf -> {
-					if(tf.getValue().equals("Empty"))  return; 
-					Tag tag = tagService.findByDesc(lcl, currency, tf.getValue()).get();
-					NavFacet<Tag> tagFacet = facetService.convertTagToNavFacet(tag);
-					tagFacet.setFacetProductCount(new Long(tf.getCount()));
-					tagFacet.setToken(tf.getValue());
-					tagFacet.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
-					ts.add(tagFacet);
-				});
-
-		List<NavFacet<?>> returnFacets = new ArrayList<NavFacet<?>>();
-		returnFacets.addAll(cs);
-		returnFacets.addAll(bs);
-		returnFacets.addAll(ts);
-		returnFacets.addAll(ps);
+//	
+//		
+//		bs = new HashSet<NavFacet<Brand>>();
+//		allFacets.stream().filter(f -> f.getFacetingName().equals(CategoryVars.BRAND_FACET_NAME))
+//				.collect(Collectors.toList()).forEach(bf -> {
+//					Brand brand = brandService.findByCode(lcl, currency, bf.getValue()).get();
+//					NavFacet<Brand> brandFacet = facetService.convertBrandToNavFacet(brand);
+//					brandFacet.setFacetProductCount(new Long(bf.getCount()));
+//					brandFacet.setToken(bf.getValue());
+//					brandFacet.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
+//					bs.add(brandFacet);
+//				});
+//
+//		// for each of the baseline facets, convert them to Facet DTOs for the client
+//		// and add them to "s"
+//		final List<NavFacet<Object>> ps = new ArrayList<NavFacet<Object>>();
+//		allFacets.stream().filter(f -> f.getFacetingName().equals(CategoryVars.PRICE_FACET_NAME))
+//				.collect(Collectors.toList()).forEach(pf -> {
+//					NavFacet<Object> priceFacet = new NavFacet<Object>();
+//					priceFacet.setFacetClassName("Product.productMarkdown");
+//					priceFacet.setFacetId(facetService.calcFacetId(priceFacet.getFacetClassName(), pf.getValue()));
+//					priceFacet.setFacetDisplayValue(pf.getValue());
+//					priceFacet.setFacetProductCount(new Long(pf.getCount()));
+//					priceFacet.setToken(pf.getValue());
+//					priceFacet.setFacetType(ProductVars.FACET_TYPE_RANGE);
+//					ps.add(priceFacet);
+//				});
+//
+//		final List<NavFacet<Tag>> ts = new ArrayList<NavFacet<Tag>>();
+//		allFacets.stream().filter(f -> f.getFacetingName().equals(CategoryVars.TAG_FACET_NAME))
+//				.collect(Collectors.toList()).forEach(tf -> {
+//					if(tf.getValue().equals("Empty"))  return; 
+//					Tag tag = tagService.findByDesc(lcl, currency, tf.getValue()).get();
+//					NavFacet<Tag> tagFacet = facetService.convertTagToNavFacet(tag);
+//					tagFacet.setFacetProductCount(new Long(tf.getCount()));
+//					tagFacet.setToken(tf.getValue());
+//					tagFacet.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
+//					ts.add(tagFacet);
+//				});
+//
+//		List<NavFacet<?>> returnFacets = new ArrayList<NavFacet<?>>();
+//		returnFacets.addAll(cs);
+//		returnFacets.addAll(bs);
+//		returnFacets.addAll(ts);
+//		returnFacets.addAll(ps);
 //		
 //		returnFacets.stream().forEach(f -> {
 //			System.out.println(f.getFacetDisplayValue() + " " + f.getFacetClassName());
@@ -324,7 +324,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		Search search = new Search();
 		search.setProducts(new PageImpl<Product>(lp, pageable, jpaQuery.getResultSize()));
 		NavFacetContainer nfc = new NavFacetContainer();
-		nfc.setFacets(returnFacets);
+		//nfc.setFacets(returnFacets);
 		search.setFacets(nfc);
 		return search;
 	}
