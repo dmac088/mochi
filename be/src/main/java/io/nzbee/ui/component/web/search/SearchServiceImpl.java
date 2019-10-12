@@ -301,8 +301,8 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		
 		
 		// convert the results of jpaQuery to product Data Transfer Objects			
-		List<Product> lp = results.stream().map(r -> {
-			Product p = new Product();
+		List<io.nzbee.dto.product.Product> lp = results.stream().map(r -> {
+			io.nzbee.dto.product.Product p = new io.nzbee.dto.product.Product();
 			p.setProductDesc(r[2].toString());
 			p.setProductImage(r[3].toString());
 			p.setProductUPC(r[5].toString());
@@ -322,62 +322,62 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		}).collect(Collectors.toList());
 
 		Search search = new Search();
-		search.setProducts(new PageImpl<Product>(lp, pageable, jpaQuery.getResultSize()));
+		search.setProducts(new PageImpl<io.nzbee.dto.product.Product>(lp, pageable, jpaQuery.getResultSize()));
 		NavFacetContainer nfc = new NavFacetContainer();
 		//nfc.setFacets(returnFacets);
 		search.setFacets(nfc);
 		return search;
 	}
 
-	private Set<Facet> getParentCategoryFacets(Set<Facet> cfs, Facet sf, QueryBuilder qb,
-			org.hibernate.search.jpa.FullTextQuery q, String locale, String currency) {
-		if (sf == null) {
-			return cfs;
-		}
-
-		String categoryCode = (new LinkedList<String>(Arrays.asList(sf.getValue().split("/")))).getLast();
-
-		Optional<Category> c = categoryService.findByCode(locale, currency, categoryCode);
-		if (!c.isPresent()) {
-			return cfs;
-		}
-		if (c.get().getParentCode() == null) {
-			return cfs;
-		}
-		
-		Optional<Category> oParent = categoryService.findByCode(locale, currency, c.get().getParentCode());
-		
-		if (!oParent.isPresent()) {
-			return cfs;
-		}
-		
-		Category parent = oParent.get();
-
-		// if we hit the root node, there are no parents
-		if (parent.getCategoryCode().equals(CategoryVars.PRIMARY_HIERARCHY_ROOT_CODE)) {
-			return cfs;
-		}
-		
-		Long parentLevel = parent.getCategoryLevel();
-		
-		String frName = sf.getFacetingName();
-		String frField = sf.getFieldName().split("\\.")[0]
-				+ StringUtils.repeat(".parent", c.get().getCategoryLevel().intValue() - parentLevel.intValue())
-				+ ".categoryToken";
-
-		Optional<Facet> oParentFacet = this.getDiscreteFacets(qb, q, frName, frField).stream()
-				.filter(f -> f.getValue().equals(sf.getValue().replace("/" + categoryCode, ""))).findFirst();
-		
-		if (!oParentFacet.isPresent()) {
-			return cfs;	
-		} 
-		
-		Facet parentFacet = oParentFacet.get();
-		
-		cfs.add(parentFacet);
-		
-		return this.getParentCategoryFacets(cfs, parentFacet, qb, q, locale, currency);
-	}
+//	private Set<Facet> getParentCategoryFacets(Set<Facet> cfs, Facet sf, QueryBuilder qb,
+//			org.hibernate.search.jpa.FullTextQuery q, String locale, String currency) {
+//		if (sf == null) {
+//			return cfs;
+//		}
+//
+//		String categoryCode = (new LinkedList<String>(Arrays.asList(sf.getValue().split("/")))).getLast();
+//
+//		Optional<Category> c = categoryService.findByCode(locale, currency, categoryCode);
+//		if (!c.isPresent()) {
+//			return cfs;
+//		}
+//		if (c.get().getParentCode() == null) {
+//			return cfs;
+//		}
+//		
+//		Optional<Category> oParent = categoryService.findByCode(locale, currency, c.get().getParentCode());
+//		
+//		if (!oParent.isPresent()) {
+//			return cfs;
+//		}
+//		
+//		Category parent = oParent.get();
+//
+//		// if we hit the root node, there are no parents
+//		if (parent.getCategoryCode().equals(CategoryVars.PRIMARY_HIERARCHY_ROOT_CODE)) {
+//			return cfs;
+//		}
+//		
+//		Long parentLevel = parent.getCategoryLevel();
+//		
+//		String frName = sf.getFacetingName();
+//		String frField = sf.getFieldName().split("\\.")[0]
+//				+ StringUtils.repeat(".parent", c.get().getCategoryLevel().intValue() - parentLevel.intValue())
+//				+ ".categoryToken";
+//
+//		Optional<Facet> oParentFacet = this.getDiscreteFacets(qb, q, frName, frField).stream()
+//				.filter(f -> f.getValue().equals(sf.getValue().replace("/" + categoryCode, ""))).findFirst();
+//		
+//		if (!oParentFacet.isPresent()) {
+//			return cfs;	
+//		} 
+//		
+//		Facet parentFacet = oParentFacet.get();
+//		
+//		cfs.add(parentFacet);
+//		
+//		return this.getParentCategoryFacets(cfs, parentFacet, qb, q, locale, currency);
+//	}
 
 	@SuppressWarnings("unchecked")
 	private List<Facet> getRangeFacets(QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery jpaQuery,
