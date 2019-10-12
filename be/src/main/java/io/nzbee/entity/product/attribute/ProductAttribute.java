@@ -44,6 +44,7 @@ import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.tag.ProductTag;
 import io.nzbee.entity.product.tag.attribute.ProductTagAttribute;
 import io.nzbee.variables.CategoryVars;
+import io.nzbee.variables.GeneralVars;
 
 @Entity
 @Indexed
@@ -176,9 +177,15 @@ public class ProductAttribute {
 		return "Empty";
 	}
 	
-	@Field(analyze = Analyze.YES, store=Store.YES)
 	public String getBrandDesc() {
 		return this.getProduct().getBrand().getBrandAttribute().getBrandDesc();
+	}
+	
+	@Field(analyze = Analyze.YES, store=Store.YES)
+	public String getBrandDescForIndex() {
+		return this.getProduct().getBrand().getAttributes()
+			.stream().filter(b -> b.getLclCd().equals(this.lclCd))
+			.findFirst().get().getBrandDesc();
 	}
 	
 	@Transient
