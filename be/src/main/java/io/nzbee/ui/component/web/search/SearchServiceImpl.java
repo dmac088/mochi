@@ -211,7 +211,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 				.collect(Collectors.toList()).stream().forEach(cf -> {
 					
 					String categoryCode = (new LinkedList<String>(Arrays.asList(cf.getValue().split("/")))).getLast();
-					Optional<Category> category = categoryService.findOneByCode(lcl, categoryCode);
+					Optional<Category> category = categoryService.findByCode(lcl, currency, categoryCode);
 //					System.out.println(category.getCategoryDesc());
 //					System.out.println(category.getCategoryType());
 //					System.out.println(category.getClass().getSimpleName());
@@ -337,7 +337,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 
 		String categoryCode = (new LinkedList<String>(Arrays.asList(sf.getValue().split("/")))).getLast();
 
-		Optional<Category> c = categoryService.findOneByCode(locale, categoryCode);
+		Optional<Category> c = categoryService.findByCode(locale, currency, categoryCode);
 		if (!c.isPresent()) {
 			return cfs;
 		}
@@ -345,7 +345,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			return cfs;
 		}
 		
-		Optional<Category> oParent = categoryService.findOneByCode(locale, c.get().getParentCode());
+		Optional<Category> oParent = categoryService.findByCode(locale, currency, c.get().getParentCode());
 		
 		if (!oParent.isPresent()) {
 			return cfs;
