@@ -290,8 +290,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 							   "lclCd",
 							   "product.productUPC",
 							   "product.productCreateDt",
-							   "product.productStatus.productStatusCode",
-							   "product.productStatus.productStatusDesc",
 							   "product.brand.brandCode",
 							   "brandDescForIndex");
 
@@ -314,9 +312,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			System.out.println(r[5]);
 			System.out.println(r[6]);
 			System.out.println(r[7]);
-			System.out.println(r[8]);
-			System.out.println(r[9]);
-			System.out.println(r[10]);
 			return p;
 		}).collect(Collectors.toList());
 
