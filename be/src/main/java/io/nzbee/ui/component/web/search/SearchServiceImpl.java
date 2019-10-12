@@ -300,9 +300,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		
 		
 		
-		// convert the results of jpaQuery to product Data Transfer Objects
-		//List<Product> lp = 
-				
+		// convert the results of jpaQuery to product Data Transfer Objects			
 		List<Product> lp = results.stream().map(r -> {
 			Product p = new Product();
 			p.setProductDesc(r[2].toString());

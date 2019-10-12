@@ -34,7 +34,7 @@ public class CategoryServiceImpl implements ICategoryService {
 	@Override
 	public Optional<Category> findOneByCode(String locale, String categoryCode) {
 		// TODO Auto-generated method stub
-		return Optional.ofNullable(convertCategoryDtoToCategoryDO(categoryService.findOneByCode(categoryCode, locale).get()));
+		return Optional.ofNullable(convertCategoryDtoToCategoryDO(categoryService.findOneByCode(locale, categoryCode).get()));
 	}
     
     @Override

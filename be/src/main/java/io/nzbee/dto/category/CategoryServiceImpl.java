@@ -26,80 +26,73 @@ public class CategoryServiceImpl implements ICategoryService {
 	//@Cacheable
 	public List<Category> findAll(String locale, String currency) {
     	return categoryService.findAll(locale, currency)
-    			.stream().map(c -> convertCategoryEntityToCategoryDTO(c))
+    			.stream().map(c -> entityToDTO(locale, currency ,c))
     			.collect(Collectors.toList());
 	}	
+    
+    
+    @Override
+	public Optional<Category> findById(String locale, String currency, long Id) {
+		// TODO Auto-generated method stub
+		return Optional.ofNullable(entityToDTO(locale, currency, categoryService.findById(Id).get()));
+	}
 
 
 	@Override
-	public Optional<Category> findOneByCode(String locale, String categoryCode) {
+	public Optional<Category> findByCode(String locale, String currency, String code) {
 		// TODO Auto-generated method stub
-		return Optional.ofNullable(convertCategoryEntityToCategoryDTO(categoryService.findByCode(categoryCode).get()));
-			   
+		return Optional.ofNullable(entityToDTO(locale, currency, categoryService.findByCode(code).get()));
 	}
+	
+
+
+	@Override
+	public Optional<Category> findByDesc(String locale, String currency, String desc) {
+		// TODO Auto-generated method stub
+		return Optional.ofNullable(entityToDTO(locale, currency, categoryService.findByDesc(locale, desc).get()));
+	}
+
 	
     @Override
  	@Transactional
  	//@Cacheable
- 	public List<Category> findByParent(String locale, String parentCategoryCode) {
-    	return categoryService.findByParent(parentCategoryCode, locale)
-		    	.stream().map(c -> convertCategoryEntityToCategoryDTO(c))
+ 	public List<Category> findByParent(String locale, String currency, String parentCategoryCode) {
+    	return categoryService.findByParent(locale, parentCategoryCode)
+		    	.stream().map(c -> entityToDTO(locale, currency, c))
 				.collect(Collectors.toList());
  	}
     
     @Override
   	@Transactional
   	//@Cacheable
-  	public List<Category> findAllForLevel(String locale, Long level) {
+  	public List<Category> findAllForLevel(String locale, String currency, Long level) {
      	return categoryService.findAllForLevel(locale, level)
-		    	.stream().map(c -> convertCategoryEntityToCategoryDTO(c))
+		    	.stream().map(c -> entityToDTO(locale, currency, c))
 				.collect(Collectors.toList());
   	}	
     
-    @Override
-  	@Transactional
-  	//@Cacheable
-  	public Optional<Category> findOne(String locale, String categoryCode) {
-    	return Optional.ofNullable(convertCategoryEntityToCategoryDTO(categoryService.findByCode(categoryCode).get()));
-    	
-  	}
     
     @Override
 	@Transactional
 	//@Cacheable
-	public Optional<Category> findOneByDesc(String locale, String categoryDesc) {
-    	return Optional.ofNullable(convertCategoryEntityToCategoryDTO(categoryService.findByDesc(locale, categoryDesc).get()));
-    	
-   
-	}
-    
-    @Override
-	@Transactional
-	//@Cacheable
-	public List<Category> findAll(String locale, String categoryDesc, List<Brand> brands, List<Tag> tags) {
+	public List<Category> findAll(String locale, String currency, String categoryDesc, List<Brand> brands, List<Tag> tags) {
     	return categoryService.findAll(
     			locale,
     			categoryDesc, 
     			brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()), 
     			tags.stream().map(t -> t.getTagCode()).collect(Collectors.toList()) 
     			)
-    			.stream().map(c -> convertCategoryEntityToCategoryDTO(c))
+    			.stream().map(c -> entityToDTO(locale, currency, c))
 				.collect(Collectors.toList());    			
 	}
 
-
 	@Override
-	public Optional<Category> findOne(String locale, Long categoryId) {
+	public Category entityToDTO(String locale, String currency, Object entity) {
 		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	@Override
-	public Category convertCategoryEntityToCategoryDTO(io.nzbee.entity.category.Category category) {
-		// TODO Auto-generated method stub
+		io.nzbee.entity.category.Category category = (io.nzbee.entity.category.Category) entity;
 		
 		Category categoryDTO = new Category();
-		
+				
 		categoryDTO.setCategoryCode(category.getCategoryCode());
 		categoryDTO.setCategoryDesc(category.getCategoryAttribute().getCategoryDesc());
 		categoryDTO.setCategoryLevel(category.getCategoryLevel());
@@ -107,36 +100,8 @@ public class CategoryServiceImpl implements ICategoryService {
 		categoryDTO.setObjectCount(category.getObjectCount());
 		categoryDTO.setParentCode(category.getParent().getCategoryCode());
 		categoryDTO.setChildCategoryCount(category.getChildCount());					
-		
+				
 		return categoryDTO;
-	}
-
-
-	@Override
-	public Optional<Category> findById(String locale, String currency, long brandId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public Optional<Category> findByCode(String locale, String currency, String code) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public Optional<Category> findByDesc(String locale, String currency, String desc) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public Category entityToDTO(String locale, String currency, Object entity) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 
