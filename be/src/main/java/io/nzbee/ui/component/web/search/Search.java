@@ -2,7 +2,7 @@ package io.nzbee.ui.component.web.search;
 
 import org.springframework.data.domain.Page;
 
-import io.nzbee.domain.product.Product;
+import io.nzbee.dto.product.Product;
 import io.nzbee.ui.component.web.facet.NavFacetContainer;
 
 public class Search {
@@ -11,7 +11,7 @@ public class Search {
 	
 	NavFacetContainer navFacets;
 
-	public Page<Product> getProducts() {
+	public Page<io.nzbee.dto.product.Product> getProducts() {
 		return products;
 	}
 
