@@ -138,7 +138,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 						"secondaryCategory.parent.parent." + "secondaryCategoryDesc" + transLcl,
 						"secondaryCategory.parent." + "secondaryCategoryDesc" + transLcl,
 						"secondaryCategory." + "secondaryCategoryDesc" + transLcl, 
-						"brandDesc",
+						"brandDescForIndex",
 						"productDesc", 
 						"tagA",
 						"tagB", 
@@ -293,19 +293,16 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 							   "product.productStatus.productStatusCode",
 							   "product.productStatus.productStatusDesc",
 							   "product.brand.brandCode",
-							   "brandDesc");
+							   "brandDescForIndex");
 
 		// get the results using jpaQuery object
 		List<Object[]> results = jpaQuery.getResultList();
-
-		
-		
 		
 		// convert the results of jpaQuery to product Data Transfer Objects			
 		List<io.nzbee.dto.product.Product> lp = results.stream().map(r -> {
 			io.nzbee.dto.product.Product p = new io.nzbee.dto.product.Product();
 			p.setProductUPC(r[0].toString());
-			p.setProductCreateDt((Date) r[1]);
+		//	p.setProductCreateDt((Date) r[1]);
 			p.setProductDesc(r[2].toString());
 			p.setProductImage(r[3].toString());
 			p.setLclCd(r[4].toString());
