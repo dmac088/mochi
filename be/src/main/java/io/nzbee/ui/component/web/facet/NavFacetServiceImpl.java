@@ -78,7 +78,7 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 		NavFacetContainer nfc = new NavFacetContainer();
 		NavFacetResult nfr = new NavFacetResult();
 		
-		List<Category> categories = categoryService.findAll(locale, categoryDesc, lb, lt);
+		List<Category> categories = categoryService.findAll(locale, currency, categoryDesc, lb, lt);
 		List<Brand> brands = brandService.findAll(locale, currency, categoryDesc, lc, lt);
 		List<Tag> tags = tagService.findAll(locale, currency, categoryDesc, lc, lb);
 
