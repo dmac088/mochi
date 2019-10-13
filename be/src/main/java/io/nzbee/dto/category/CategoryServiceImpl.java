@@ -66,11 +66,18 @@ public class CategoryServiceImpl implements ICategoryService {
   	@Transactional
   	//@Cacheable
   	public List<Category> findAllForLevel(String locale, String currency, Long level) {
-     	return categoryService.findAllForLevel(locale, level)
+     	return categoryService.findAllForLevel(locale, currency, level)
 		    	.stream().map(c -> entityToDTO(locale, currency, c))
 				.collect(Collectors.toList());
   	}	
     
+	@Override
+	public List<Category> findAll(String locale, String currency, List<String> categoryCodes) {
+		// TODO Auto-generated method stub
+		return categoryService.findAll(locale, currency, categoryCodes)
+			   .stream().map(c -> entityToDTO(locale, currency, c))
+			   .collect(Collectors.toList());
+	}
     
     @Override
 	@Transactional
@@ -110,7 +117,5 @@ public class CategoryServiceImpl implements ICategoryService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-
     
 }

@@ -41,6 +41,7 @@ import io.nzbee.domain.tag.Tag;
 import io.nzbee.entity.PageableUtil;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.ProductVars;
+import io.nzbee.ui.component.web.facet.EntityFacet;
 import io.nzbee.ui.component.web.facet.INavFacetService;
 import io.nzbee.ui.component.web.facet.NavFacet;
 import io.nzbee.ui.component.web.facet.NavFacetContainer;
@@ -96,17 +97,26 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 	}
 
 	
-//
-//	private List<Facet> getDiscreteFacets(QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery jpaQuery,
-//			String facetingName, String fieldReference) {
-//		// create a category faceting request for the base level
-//		FacetingRequest facetRequest = qb.facet().name(facetingName).onField(fieldReference) // in category class
-//				.discrete().orderedBy(FacetSortOrder.COUNT_DESC).includeZeroCounts(false).createFacetingRequest();
-//
-//		// add all the base level facets to categoryFacets List
-//		jpaQuery.getFacetManager().enableFaceting(facetRequest);
-//		return jpaQuery.getFacetManager().getFacets(facetingName);
-//	}
+
+	private <T> List<EntityFacet<T>> getDiscreteFacets(QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery jpaQuery,
+			String facetingName, String fieldReference) {
+		// create a category faceting request for the base level
+		FacetingRequest facetRequest = qb.facet().name(facetingName).onField(fieldReference) // in category class
+				.discrete().orderedBy(FacetSortOrder.COUNT_DESC).includeZeroCounts(false).createFacetingRequest();
+
+		// add all the base level facets to categoryFacets List
+		jpaQuery.getFacetManager().enableFaceting(facetRequest);
+		
+		//get all the id's of the facets in one go
+		List<String> facetIds = jpaQuery.getFacetManager().getFacets(facetingName).stream()
+				.map(f -> f.getValue()).collect(Collectors.toList());
+		
+		//get the object array for the ids in previous step
+		categoryService.find
+		
+		
+		return null;
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -150,17 +160,21 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		org.hibernate.search.jpa.FullTextQuery jpaQuery = fullTextEntityManager.createFullTextQuery(searchQuery,
 				io.nzbee.entity.product.attribute.ProductAttribute.class);
 
-		
-		
-		
-//		final Set<Facet> allFacets = new HashSet<Facet>();
+		final Set<EntityFacet> facetList 
+									= new HashSet<EntityFacet>();
 //		final Set<NavFacet<Category>> cs;
 //		final Set<NavFacet<Brand>> bs;
 //		List<Facet> lf;
 
 		// initialize the facets
-//		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, jpaQuery, CategoryVars.PRIMARY_CATEGORY_FACET_NAME,
-//				"primaryCategory.categoryToken"));
+		facetList.addAll(this.getDiscreteFacets(productQueryBuilder, jpaQuery, CategoryVars.PRIMARY_CATEGORY_FACET_NAME,
+				"primaryCategory.categoryToken"));
+		
+		facetList.stream().forEach(f -> {
+			System.out.println(f.getEntity().getClass().getSimpleName());
+		});
+		
+		
 //		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, jpaQuery, CategoryVars.PRIMARY_CATEGORY_FACET_NAME,
 //				"secondaryCategory.categoryToken"));
 //		allFacets.addAll(
@@ -315,6 +329,8 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		Search search = new Search();
 		search.setProducts(new PageImpl<Product>(lp.stream().map(p->productService.dtoToDO(p))
 				.collect(Collectors.toList()), pageable, jpaQuery.getResultSize()));
+		
+		
 		NavFacetContainer nfc = new NavFacetContainer();
 		//nfc.setFacets(returnFacets);
 		search.setFacets(nfc);
