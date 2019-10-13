@@ -75,6 +75,11 @@ public class CategoryServiceImpl implements ICategoryService {
      						  .collect(Collectors.toList());
   	}	
     
+    @Override
+	public List<Category> findAll(String locale, String currency, List<String> categoryCodes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
  
     @Override
 	@Transactional
@@ -114,7 +119,5 @@ public class CategoryServiceImpl implements ICategoryService {
 		
 		return categoryDO;
 	}
-	
-
 	
 }

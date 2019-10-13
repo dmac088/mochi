@@ -13,6 +13,8 @@ public interface ICategoryDao extends IDao<Category> {
 			List<String> brandCodes, List<String> tagCodes);
 
 	List<Category> findAll(String locale, String currency);
+	
+	List<Category> findAll(String locale, String currency, List<String> categoryCodes);
 
 	List<Category> getChildren(String currency, Category category);
 }

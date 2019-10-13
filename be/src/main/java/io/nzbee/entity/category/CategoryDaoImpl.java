@@ -73,6 +73,37 @@ public class CategoryDaoImpl implements ICategoryDao {
 	}
 	
 	@Override
+	public List<Category> findAll(String locale, String currency, List<String> categoryCodes) {
+		// TODO Auto-generated method stub
+		Query query = em.createNamedQuery("getCategories")
+				 .setParameter("locale", locale)
+				 .setParameter("currency", currency)
+				 .setParameter("parentCategoryCode", "-1")
+				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
+				 .setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
+				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE);
+		
+		@SuppressWarnings("unchecked")
+		List<Object[]> results = query.getResultList();
+		
+		return results.stream().map(c -> {
+			Category category = (Category) c[0];
+			category.setCategoryAttribute(((CategoryAttribute) c[1]));
+			category.setCategoryType((CategoryType) c[2]);
+			category.setHierarchy((Hierarchy) c[3]);
+			category.setObjectCount(((BigDecimal)c[8]).longValue());
+			category.setChildCount(((BigInteger)c[9]).longValue());
+			Category parentCategory = (Category) c[4];
+			parentCategory.setCategoryAttribute(((CategoryAttribute) c[5]));
+			parentCategory.setCategoryType((CategoryType) c[6]);
+			parentCategory.setHierarchy((Hierarchy) c[7]);
+			
+			category.setParent(parentCategory);
+			return category;
+		}).collect(Collectors.toList());
+	}
+	
+	@Override
 	public Optional<Category> findById(long id) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
@@ -273,7 +304,5 @@ public class CategoryDaoImpl implements ICategoryDao {
 	@Override
 	public void delete(Category t) {
 		// TODO Auto-generated method stub
-	}
-
-	
+	}	
 }
