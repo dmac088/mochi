@@ -112,19 +112,31 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		jpaQuery.getFacetManager().enableFaceting(facetRequest);
 		
 		//get all the id's of the facets in one go
-		List<String> facetIds = jpaQuery.getFacetManager().getFacets(facetingName).stream()
-				.map(f -> f.getValue()).collect(Collectors.toList());
+		List<String> facetTokens = jpaQuery.getFacetManager().getFacets(facetingName).stream()
+				.map(f -> {
+					String s = f.getValue();
+					return s.substring(s.lastIndexOf('/')+1,s.length());
+				}).collect(Collectors.toList());
 		
-		List<Category> lc = categoryService.findAll(locale, currency, facetIds);
 		
-		List<EntityFacet<T>> lef = new ArrayList<>(facetIds.size());
+//		System.out.println(facetTokens.size());
+//		System.out.println(facetTokens.get(0));
+		
+		List<Category> lc = categoryService.findAll(locale, currency, facetTokens);
+		
+		List<EntityFacet<T>> lef = new ArrayList<>(facetTokens.size());
+		
+		//System.out.println(facetTokens.size());
+		System.out.println(lc.size());
 		
 		for (int i = 0; i < lef.size(); i++ ) {
+			System.out.println(((Category)lef.get(i).getEntity()).getCategoryCode() + " - "
+					+ lc.get(i).getCategoryCode());
+			
 			lef.add(new EntityFacet(lef.get(i), lc.get(i)));
 		}
 		
 		//get the object array for the ids in previous step
-		
 		return lef;
 	}
 
@@ -182,6 +194,8 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 												 jpaQuery, 
 												 CategoryVars.PRIMARY_CATEGORY_FACET_NAME,
 												 "primaryCategory.categoryToken"));
+		
+		System.out.println(facetList.size());
 		
 		facetList.stream().forEach(f -> {
 			System.out.println(f.getEntity().getClass().getSimpleName());
