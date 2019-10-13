@@ -170,15 +170,18 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		org.hibernate.search.jpa.FullTextQuery jpaQuery = fullTextEntityManager.createFullTextQuery(searchQuery,
 				io.nzbee.entity.product.attribute.ProductAttribute.class);
 
-		final Set<EntityFacet> facetList 
-									= new HashSet<EntityFacet>();
+		final Set<EntityFacet> facetList = new HashSet<EntityFacet>();
 //		final Set<NavFacet<Category>> cs;
 //		final Set<NavFacet<Brand>> bs;
 //		List<Facet> lf;
 
 		// initialize the facets
-		facetList.addAll(this.getDiscreteFacets(productQueryBuilder, jpaQuery, CategoryVars.PRIMARY_CATEGORY_FACET_NAME,
-				"primaryCategory.categoryToken"));
+		facetList.addAll( this.getDiscreteFacets(lcl,
+												 currency,
+												 productQueryBuilder, 
+												 jpaQuery, 
+												 CategoryVars.PRIMARY_CATEGORY_FACET_NAME,
+												 "primaryCategory.categoryToken"));
 		
 		facetList.stream().forEach(f -> {
 			System.out.println(f.getEntity().getClass().getSimpleName());
