@@ -44,7 +44,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 	@Override
 	public List<Category> findAll(String locale, String currency) {
 		
-		Query query = em.createNamedQuery("getCategories")
+		Query query = em.createNativeQuery(constructSQL(false), "CategoryMapping")
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
 				 .setParameter("parentCategoryCode", "-1")
@@ -75,13 +75,17 @@ public class CategoryDaoImpl implements ICategoryDao {
 	@Override
 	public List<Category> findAll(String locale, String currency, List<String> categoryCodes) {
 		// TODO Auto-generated method stub
-		Query query = em.createNamedQuery("getCategories")
+		Query query = em.createNativeQuery(constructSQL(!categoryCodes.isEmpty()), "CategoryMapping")
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
 				 .setParameter("parentCategoryCode", "-1")
 				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
 				 .setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
 				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE);
+		
+		if(!categoryCodes.isEmpty()) {
+			query.setParameter("categoryCodes", categoryCodes);
+		}
 		
 		@SuppressWarnings("unchecked")
 		List<Object[]> results = query.getResultList();
@@ -323,7 +327,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 				"  FROM mochi.category AS t " +
 				"  WHERE 0=0 " +
 				"  AND cat_prnt_id iS NULL " +
-				((hasCategories) ? " AND cat_cd in :categoryCodes" : "") +
+				((hasCategories) ? " AND cat_cd in :categoryCodes" : "  AND cat_prnt_id iS NULL ") +
 				"  UNION ALL " +
 				"  SELECT 	t.cat_id,  " +
 				"			t.hir_id, " +
