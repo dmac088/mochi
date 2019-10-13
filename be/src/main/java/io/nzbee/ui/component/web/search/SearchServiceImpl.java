@@ -98,8 +98,12 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 
 	
 
-	private <T> List<EntityFacet<T>> getDiscreteFacets(QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery jpaQuery,
-			String facetingName, String fieldReference) {
+	private <T> List<EntityFacet<T>> getDiscreteFacets(String locale, 
+													   String currency, 
+													   QueryBuilder qb, 
+													   org.hibernate.search.jpa.FullTextQuery jpaQuery,
+													   String facetingName, 
+													   String fieldReference) {
 		// create a category faceting request for the base level
 		FacetingRequest facetRequest = qb.facet().name(facetingName).onField(fieldReference) // in category class
 				.discrete().orderedBy(FacetSortOrder.COUNT_DESC).includeZeroCounts(false).createFacetingRequest();
@@ -111,11 +115,17 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		List<String> facetIds = jpaQuery.getFacetManager().getFacets(facetingName).stream()
 				.map(f -> f.getValue()).collect(Collectors.toList());
 		
+		List<Category> lc = categoryService.findAll(locale, currency, facetIds);
+		
+		List<EntityFacet<T>> lef = new ArrayList<>(facetIds.size());
+		
+		for (int i = 0; i < lef.size(); i++ ) {
+			lef.add(new EntityFacet(lef.get(i), lc.get(i)));
+		}
+		
 		//get the object array for the ids in previous step
-		categoryService.find
 		
-		
-		return null;
+		return lef;
 	}
 
 	@SuppressWarnings("unchecked")
