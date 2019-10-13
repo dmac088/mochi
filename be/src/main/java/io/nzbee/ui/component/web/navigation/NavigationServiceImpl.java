@@ -50,8 +50,9 @@ public class NavigationServiceImpl extends UIService implements INavigationServi
 		//add the page of objects to a new Search object and return it 
 		Search search = new Search();
 		Page<Product> products = new PageImpl<Product>(pp.stream().map(p->productService.dtoToDO(p)).collect(Collectors.toList()), 
-													   pp.getTotalElements()));
-		search.setProducts(products);
+													   pp.getPageable(), pp.getTotalElements());
+		
+		search.setProducts(pp);
 		search.setFacets(selectedFacets);
 		return search;
 	}
