@@ -326,7 +326,6 @@ public class CategoryDaoImpl implements ICategoryDao {
 				"			cast('/' || cast(t.cat_id as text) || '/' as text) node " +
 				"  FROM mochi.category AS t " +
 				"  WHERE 0=0 " +
-				"  AND cat_prnt_id iS NULL " +
 				((hasCategories) ? " AND cat_cd in :categoryCodes" : "  AND cat_prnt_id iS NULL ") +
 				"  UNION ALL " +
 				"  SELECT 	t.cat_id,  " +

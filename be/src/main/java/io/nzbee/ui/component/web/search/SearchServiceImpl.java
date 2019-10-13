@@ -72,17 +72,24 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 	private EntityManager em;
 
 	@Override
-	public Search findAll(String locale, String currency, String categoryDesc, String searchTerm, int page, int size,
-			String sortBy, NavFacetContainer selectedFacets) {
+	public Search findAll(		String locale, 
+								String currency, 
+								String categoryDesc, 
+								String searchTerm, 
+								int page,
+								int size,
+								String sortBy, 
+								NavFacetContainer selectedFacets) {
 
 		// convert selected facets into token lists
 		List<String> categoryTokens = this.getFacetTokens(selectedFacets.getProductCategories());
 		List<String> brandTokens 	= this.getFacetTokens(selectedFacets.getBrands());
 		List<String> tagTokens 		= this.getFacetTokens(selectedFacets.getTags());
 		List<String> priceTokens 	= this.getFacetTokens(selectedFacets.getPrices());
-
+		
 		// call the domain layer service to get a Page of Products
-		return this.findAll(locale, 
+		return this.findAll(
+							locale, 
 							currency, 
 							categoryDesc, 
 							searchTerm, 
@@ -112,7 +119,9 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		jpaQuery.getFacetManager().enableFaceting(facetRequest);
 		
 		//get all the id's of the facets in one go
-		List<String> facetTokens = jpaQuery.getFacetManager().getFacets(facetingName).stream()
+		List<Facet> facets = jpaQuery.getFacetManager().getFacets(facetingName);
+		
+		List<String> categoryCodes = facets.stream()
 				.map(f -> {
 					String s = f.getValue();
 					return s.substring(s.lastIndexOf('/')+1,s.length());
@@ -122,18 +131,21 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 //		System.out.println(facetTokens.size());
 //		System.out.println(facetTokens.get(0));
 		
-		List<Category> lc = categoryService.findAll(locale, currency, facetTokens);
+		List<Category> lc = categoryService.findAll(locale, currency, categoryCodes);
+		System.out.println(lc.isEmpty());
 		
-		List<EntityFacet<T>> lef = new ArrayList<>(facetTokens.size());
 		
-		//System.out.println(facetTokens.size());
-		System.out.println(lc.size());
+		List<EntityFacet<T>> lef = new ArrayList<EntityFacet<T>>(categoryCodes.size());
 		
-		for (int i = 0; i < lef.size(); i++ ) {
+		System.out.println("facets size = " + facets.size());
+		System.out.println("lc size = " + lc.size());
+		
+		for (int i = 0; i < facets.size(); i++ ) {
+		
 			System.out.println(((Category)lef.get(i).getEntity()).getCategoryCode() + " - "
 					+ lc.get(i).getCategoryCode());
 			
-			lef.add(new EntityFacet(lef.get(i), lc.get(i)));
+			lef.add(new EntityFacet((org.hibernate.search.annotations.Facet) facets.get(i), lc.get(i)));
 		}
 		
 		//get the object array for the ids in previous step
