@@ -319,9 +319,9 @@ public class ProductDaoImpl implements IProductDao {
 								boolean hasTags,
 								boolean hasPrices,
 								boolean countOnly) {
+		
 		//now we can implement conditional joins
 		//based on the parameters passed
-		
 		return "WITH RECURSIVE    " + 
 		"primary_descendants AS    " + 
 		"(    " + 
