@@ -311,7 +311,8 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		}).collect(Collectors.toList());
 
 		Search search = new Search();
-		search.setProducts(new PageImpl<io.nzbee.dto.product.Product>(lp, pageable, jpaQuery.getResultSize()));
+		search.setProducts(new PageImpl<Product>(lp.stream().map(p->productService.dtoToDO(p))
+				.collect(Collectors.toList()), pageable, jpaQuery.getResultSize()));
 		NavFacetContainer nfc = new NavFacetContainer();
 		//nfc.setFacets(returnFacets);
 		search.setFacets(nfc);
