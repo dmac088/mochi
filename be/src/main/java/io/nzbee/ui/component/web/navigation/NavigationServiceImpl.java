@@ -5,6 +5,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 
 import io.nzbee.domain.product.IProductService;
@@ -48,7 +49,9 @@ public class NavigationServiceImpl extends UIService implements INavigationServi
 		
 		//add the page of objects to a new Search object and return it 
 		Search search = new Search();
-		search.setProducts(pp);
+		Page<Product> products = new PageImpl<Product>(pp.stream().map(p->productService.dtoToDO(p)).collect(Collectors.toList()), 
+													   pp.getTotalElements()));
+		search.setProducts(products);
 		search.setFacets(selectedFacets);
 		return search;
 	}

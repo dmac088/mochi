@@ -11,7 +11,7 @@ public class Search {
 	
 	NavFacetContainer navFacets;
 
-	public Page<io.nzbee.dto.product.Product> getProducts() {
+	public Page<Product> getProducts() {
 		return products;
 	}
 

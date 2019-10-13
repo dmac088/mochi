@@ -96,17 +96,17 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 	}
 
 	
-
-	private List<Facet> getDiscreteFacets(QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery jpaQuery,
-			String facetingName, String fieldReference) {
-		// create a category faceting request for the base level
-		FacetingRequest facetRequest = qb.facet().name(facetingName).onField(fieldReference) // in category class
-				.discrete().orderedBy(FacetSortOrder.COUNT_DESC).includeZeroCounts(false).createFacetingRequest();
-
-		// add all the base level facets to categoryFacets List
-		jpaQuery.getFacetManager().enableFaceting(facetRequest);
-		return jpaQuery.getFacetManager().getFacets(facetingName);
-	}
+//
+//	private List<Facet> getDiscreteFacets(QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery jpaQuery,
+//			String facetingName, String fieldReference) {
+//		// create a category faceting request for the base level
+//		FacetingRequest facetRequest = qb.facet().name(facetingName).onField(fieldReference) // in category class
+//				.discrete().orderedBy(FacetSortOrder.COUNT_DESC).includeZeroCounts(false).createFacetingRequest();
+//
+//		// add all the base level facets to categoryFacets List
+//		jpaQuery.getFacetManager().enableFaceting(facetRequest);
+//		return jpaQuery.getFacetManager().getFacets(facetingName);
+//	}
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -401,20 +401,20 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		jpaQuery.getFacetManager().enableFaceting(facetRequest);
 		return jpaQuery.getFacetManager().getFacets(CategoryVars.PRICE_FACET_NAME);
 	}
-
-	private Set<Facet> processFacets(Set<Facet> allFacets, QueryBuilder qb,
-			org.hibernate.search.jpa.FullTextQuery jpaQuery, String currency, String facetingName) {
-		List<Facet> processlf = allFacets.stream().filter(c -> (!c.getFacetingName().equals(facetingName)))
-				.collect(Collectors.toList());
-		allFacets.removeAll(processlf);
-		allFacets.addAll(processlf.stream().map(pf -> {
-			return (pf.getFacetingName().equals(CategoryVars.PRICE_FACET_NAME))
-					? this.getRangeFacets(qb, jpaQuery, currency)
-					: this.getDiscreteFacets(qb, jpaQuery, pf.getFacetingName(), pf.getFieldName());
-
-		}).collect(Collectors.toList()).stream().flatMap(List::stream).collect(Collectors.toSet()));
-		return allFacets;
-	}
+//
+//	private Set<Facet> processFacets(Set<Facet> allFacets, QueryBuilder qb,
+//			org.hibernate.search.jpa.FullTextQuery jpaQuery, String currency, String facetingName) {
+//		List<Facet> processlf = allFacets.stream().filter(c -> (!c.getFacetingName().equals(facetingName)))
+//				.collect(Collectors.toList());
+//		allFacets.removeAll(processlf);
+//		allFacets.addAll(processlf.stream().map(pf -> {
+//			return (pf.getFacetingName().equals(CategoryVars.PRICE_FACET_NAME))
+//					? this.getRangeFacets(qb, jpaQuery, currency)
+//					: this.getDiscreteFacets(qb, jpaQuery, pf.getFacetingName(), pf.getFieldName());
+//
+//		}).collect(Collectors.toList()).stream().flatMap(List::stream).collect(Collectors.toSet()));
+//		return allFacets;
+//	}
 
 	private org.apache.lucene.search.Sort getSortField(String field, String currency) {
 		switch (field) {
