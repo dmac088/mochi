@@ -6,42 +6,43 @@ import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.FacetEncodingType;
 
 public class EntityFacet<T> implements Facet {
-	  private final Facet delegate;
-	  private final T entity;
+	
+	private final Facet delegate;
+	private final T entity;
 	  
 	  
-	  public EntityFacet(Facet delegate, T entity) {
-	    this.delegate = delegate;
-	    this.entity = entity;
-	  }
+	public EntityFacet(Facet delegate, T entity) {
+	  this.delegate = delegate;
+	  this.entity = entity;
+	}
 
 	  // delegate all Facet methods to the delegate
 
-	  public T getEntity() {
-	    return entity;
-	  }
+	public T getEntity() {
+	   return entity;
+	}
 
 	@Override
 	public Class<? extends Annotation> annotationType() {
 		// TODO Auto-generated method stub
-		return null;
+		return delegate.annotationType();
 	}
 
 	@Override
 	public String name() {
 		// TODO Auto-generated method stub
-		return null;
+		return delegate.name();
 	}
 
 	@Override
 	public String forField() {
 		// TODO Auto-generated method stub
-		return null;
+		return delegate.forField();
 	}
 
 	@Override
 	public FacetEncodingType encoding() {
 		// TODO Auto-generated method stub
-		return null;
+		return delegate.encoding();
 	}
-	}
+}

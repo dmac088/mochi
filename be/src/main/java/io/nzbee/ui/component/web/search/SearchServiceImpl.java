@@ -150,7 +150,9 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		org.hibernate.search.jpa.FullTextQuery jpaQuery = fullTextEntityManager.createFullTextQuery(searchQuery,
 				io.nzbee.entity.product.attribute.ProductAttribute.class);
 
-			
+		
+		
+		
 //		final Set<Facet> allFacets = new HashSet<Facet>();
 //		final Set<NavFacet<Category>> cs;
 //		final Set<NavFacet<Brand>> bs;
