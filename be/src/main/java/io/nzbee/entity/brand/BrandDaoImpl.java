@@ -3,6 +3,8 @@ package io.nzbee.entity.brand;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
@@ -169,47 +171,45 @@ public class BrandDaoImpl  implements IBrandDao {
 	public List<Brand> findAll(String locale, String currency) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
-		CriteriaQuery<Brand> cq = cb.createQuery(Brand.class);
+		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
 		
 		Root<Brand> root = cq.from(Brand.class);
-		
 		Join<Brand, Product> brand = root.join(Brand_.products);
 		Join<Product, ProductStatus> status = brand.join(Product_.productStatus);
+		Join<Brand, BrandAttribute> attribute = root.join(Brand_.brandAttributes);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
-		//conditions.add(cb.equal(root.get(Brand_.brandCode), brandCode));
+		conditions.add(cb.equal(attribute.get(BrandAttribute_.lclCd), locale));
 
-		TypedQuery<Brand> query = em.createQuery(cq
-				.select(root)
-				.where(conditions.toArray(new Predicate[] {}))
-				.distinct(false)
+		cq.multiselect(	root.get(Brand_.brandId).alias("brandId"),
+						root.get(Brand_.brandCode).alias("brandCode"),
+						attribute.get(BrandAttribute_.Id).alias("brandAttributeId"),
+						attribute.get(BrandAttribute_.brandDesc).alias("brnadDesc")
 		);
-
-		return query.getResultList();
-	}
-	
-	@Override
-	public void save(Brand t) {
-		// TODO Auto-generated method stub
+		
+		TypedQuery<Tuple> query = em.createQuery(cq);
+		
+		List<Tuple> tuples = query.getResultList();
+		
+		return tuples.stream().map(t -> {
+			Brand brandEntity = new Brand();
+			BrandAttribute brandAttribute = new BrandAttribute();
+			
+			brandAttribute.setId(Long.parseLong(t.get("brandAttributeId").toString()));
+			brandAttribute.setBrandId(Long.parseLong(t.get("brandId").toString()));
+			brandAttribute.setBrandDesc(t.get("brnadDesc").toString());
+			brandAttribute.setLclCd(locale);
+			
+			brandEntity.setBrandAttribute(brandAttribute);
+			brandEntity.setId(Long.parseLong(t.get("brandId").toString()));
+			brandEntity.setCode(t.get("brandCode").toString());
+			
+			return brandEntity;
+		}).collect(Collectors.toList());
 		
 	}
 	
-	@Override
-	public void update(Brand t, String[] params) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	@Override
-	public void delete(Brand t) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
-	
-
 	@Override
 	public List<Brand> findAll(String locale, String currency, List<String> categoryCodes, List<String> tagCodes) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -241,4 +241,22 @@ public class BrandDaoImpl  implements IBrandDao {
 		return query.getResultList();
 	}
 	
+	@Override
+	public void save(Brand t) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void update(Brand t, String[] params) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void delete(Brand t) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
