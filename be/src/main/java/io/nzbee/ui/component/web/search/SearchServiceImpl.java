@@ -200,7 +200,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		System.out.println(facetList.size());
 		
 		facetList.stream().forEach(f -> {
-			System.out.println(f.getEntity().getClass().getSimpleName());
+			System.out.println(f.getEntity().getClass().getSimpleName() + " - " + f.getCount());
 		});
 		
 		
