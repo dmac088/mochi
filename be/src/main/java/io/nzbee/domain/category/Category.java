@@ -2,7 +2,9 @@ package io.nzbee.domain.category;
 
 import java.util.Objects;
 
-public abstract class Category {
+import io.nzbee.domain.IDomainObject;
+
+public abstract class Category implements IDomainObject {
 
 	private String categoryCode;
 	

@@ -77,9 +77,9 @@ public class CategoryServiceImpl implements ICategoryService {
     
 
     @Override
-	public List<Category> findAll(String locale, String currency, List<String> categoryCodes) {
+	public List<Category> findAll(String locale, String currency, List<String> codes) {
 		// TODO Auto-generated method stub
-		return categoryService.findAll(locale, currency, categoryCodes)
+		return categoryService.findAll(locale, currency, codes)
 							  .stream().map(c -> dtoToDO(c))
 							  .collect(Collectors.toList());
 	}

@@ -12,8 +12,6 @@ public interface ICategoryService extends IService<Category> {
 	List<Category> findAll(String locale, String currency);
 
 	List<Category> findByParent(String locale, String currency, String parentCategoryCode);
-	
-	List<Category> findAll(String locale, String currency, List<String> categoryCodes);
 
 	List<Category> findAll(String locale, String currency, String categoryDesc, List<Brand> brands, List<Tag> tags);
 
