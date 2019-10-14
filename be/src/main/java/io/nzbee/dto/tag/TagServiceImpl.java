@@ -37,6 +37,13 @@ public class TagServiceImpl implements ITagService {
 	@Autowired
 	IProductService productService;
 	
+
+	@Override
+	public List<Tag> findAll(String locale, String currency, List<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	@Override
 	public List<Tag> findAll(String locale, String currency, String categoryDesc, List<Category> categories, List<Brand> brands) {
 		return productTagService.findAll(locale, 
@@ -110,5 +117,6 @@ public class TagServiceImpl implements ITagService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 }

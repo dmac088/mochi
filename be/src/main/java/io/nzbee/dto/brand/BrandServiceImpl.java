@@ -29,6 +29,15 @@ public class BrandServiceImpl implements IBrandService {
     								 .collect(Collectors.toList());
 	}	
     
+
+	@Override
+	public List<Brand> findAll(String locale, String currency, List<String> codes) {
+		// TODO Auto-generated method stub
+		List<io.nzbee.entity.brand.Brand> lpb = brandService.findAll(locale, currency, codes);
+    	return lpb.stream().map(pb -> this.entityToDTO(locale, currency, pb))
+    								 .collect(Collectors.toList());
+	}
+    
 	@Override
 	@Transactional
 	@Cacheable
@@ -90,5 +99,6 @@ public class BrandServiceImpl implements IBrandService {
 		
 		return null;
 	}
+
 
 }
