@@ -30,7 +30,7 @@ public class Brand {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="bnd_id")
 	private Long brandId;
-	
+
 	@Column(name="bnd_cd")
 	@Field(store=Store.YES)
 	private String brandCode;
@@ -51,6 +51,10 @@ public class Brand {
 	
 	public Long getId() {
 		return this.brandId;
+	}
+	
+	public void setId(Long id) {
+		this.brandId = id;
 	}
 
 	public String getCode() {

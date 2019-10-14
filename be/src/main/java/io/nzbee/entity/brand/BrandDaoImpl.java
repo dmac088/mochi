@@ -57,6 +57,46 @@ public class BrandDaoImpl  implements IBrandDao {
 						attribute.get(BrandAttribute_.brandDesc).alias("brnadDesc")
 		);
 		
+		TypedQuery<Tuple> query = em.createQuery(cq);
+		
+		Tuple tuple = query.getSingleResult();
+		
+		Brand brandEntity = new Brand();
+		BrandAttribute brandAttribute = new BrandAttribute();
+		
+		brandAttribute.setId(Long.parseLong(tuple.get("brandAttributeId").toString()));
+		brandAttribute.setBrandId(Long.parseLong(tuple.get("brandId").toString()));
+		brandAttribute.setBrandDesc(tuple.get("brnadDesc").toString());
+		brandAttribute.setLclCd(locale);
+		
+		brandEntity.setBrandAttribute(brandAttribute);
+		brandEntity.setId(Long.parseLong(tuple.get("brandId").toString()));
+		brandEntity.setCode(tuple.get("brandCode").toString());
+		
+		return Optional.ofNullable(brandEntity);
+	}
+	
+	@Override
+	public Optional<Brand> findByCode(String locale, String currency, String code) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
+		
+		Root<Brand> root = cq.from(Brand.class);
+		Join<Brand, Product> brand = root.join(Brand_.products);
+		Join<Product, ProductStatus> status = brand.join(Product_.productStatus);
+		Join<Brand, BrandAttribute> attribute = root.join(Brand_.brandAttributes);
+		
+		List<Predicate> conditions = new ArrayList<Predicate>();
+		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
+		conditions.add(cb.equal(root.get(Brand_.brandCode), code));
+		conditions.add(cb.equal(attribute.get(BrandAttribute_.lclCd), locale));
+
+		cq.multiselect(	root.get(Brand_.brandId).alias("brandId"),
+						root.get(Brand_.brandCode).alias("brandCode"),
+						attribute.get(BrandAttribute_.Id).alias("brandAttributeId"),
+						attribute.get(BrandAttribute_.brandDesc).alias("brnadDesc")
+		);
 		
 		TypedQuery<Tuple> query = em.createQuery(cq);
 		
@@ -68,66 +108,61 @@ public class BrandDaoImpl  implements IBrandDao {
 		brandAttribute.setId(Long.parseLong(tuple.get("brandAttributeId").toString()));
 		brandAttribute.setBrandId(Long.parseLong(tuple.get("brandId").toString()));
 		brandAttribute.setBrandDesc(tuple.get("brnadDesc").toString());
+		brandAttribute.setLclCd(locale);
+		
+		brandEntity.setBrandAttribute(brandAttribute);
+		brandEntity.setId(Long.parseLong(tuple.get("brandId").toString()));
 		brandEntity.setCode(tuple.get("brandCode").toString());
 		
 		return Optional.ofNullable(brandEntity);
 	}
+
 	
 	@Override
-	public Optional<Brand> findByDesc(String locale, String brandDesc) {
+	public Optional<Brand> findByDesc(String locale, String currency, String desc) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
-		CriteriaQuery<Brand> cq = cb.createQuery(Brand.class);
+		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
 		
 		Root<Brand> root = cq.from(Brand.class);
-		
 		Join<Brand, Product> brand = root.join(Brand_.products);
 		Join<Product, ProductStatus> status = brand.join(Product_.productStatus);
 		Join<Brand, BrandAttribute> attribute = root.join(Brand_.brandAttributes);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
-		conditions.add(cb.equal(attribute.get(BrandAttribute_.brandDesc), brandDesc));
+		conditions.add(cb.equal(attribute.get(BrandAttribute_.brandDesc), desc));
 		conditions.add(cb.equal(attribute.get(BrandAttribute_.lclCd), locale));
-		//conditions.add(cb.equal(root.get(Brand_.brandId), id));
 
-		TypedQuery<Brand> query = em.createQuery(cq
-				.select(root)
-				.where(conditions.toArray(new Predicate[] {}))
-				.distinct(false)
+		cq.multiselect(	root.get(Brand_.brandId).alias("brandId"),
+						root.get(Brand_.brandCode).alias("brandCode"),
+						attribute.get(BrandAttribute_.Id).alias("brandAttributeId"),
+						attribute.get(BrandAttribute_.brandDesc).alias("brnadDesc")
 		);
-
-		return Optional.ofNullable(query.getSingleResult());
+		
+		TypedQuery<Tuple> query = em.createQuery(cq);
+		
+		Tuple tuple = query.getSingleResult();
+		
+		Brand brandEntity = new Brand();
+		BrandAttribute brandAttribute = new BrandAttribute();
+		
+		brandAttribute.setId(Long.parseLong(tuple.get("brandAttributeId").toString()));
+		brandAttribute.setBrandId(Long.parseLong(tuple.get("brandId").toString()));
+		brandAttribute.setBrandDesc(tuple.get("brnadDesc").toString());
+		brandAttribute.setLclCd(locale);
+		
+		brandEntity.setBrandAttribute(brandAttribute);
+		brandEntity.setId(Long.parseLong(tuple.get("brandId").toString()));
+		brandEntity.setCode(tuple.get("brandCode").toString());
+		
+		return Optional.ofNullable(brandEntity);
 	}
 	
 	@Override
 	public List<Brand> findAll(String locale, String currency, List<String> brandCodes) {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	
-	@Override
-	public List<Brand> getAll(String locale, String currency) {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		
-		CriteriaQuery<Brand> cq = cb.createQuery(Brand.class);
-		
-		Root<Brand> root = cq.from(Brand.class);
-		
-		Join<Brand, Product> brand = root.join(Brand_.products);
-		Join<Product, ProductStatus> status = brand.join(Product_.productStatus);
-		
-		List<Predicate> conditions = new ArrayList<Predicate>();
-		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
-
-		TypedQuery<Brand> query = em.createQuery(cq
-				.select(root)
-				.where(conditions.toArray(new Predicate[] {}))
-				.distinct(true)
-		);
-
-		return query.getResultList();
 	}
 	
 	@Override
@@ -173,35 +208,10 @@ public class BrandDaoImpl  implements IBrandDao {
 	}
 
 	
-	@Override
-	public Optional<Brand> findByCode(String brandCode) {
-
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		
-		CriteriaQuery<Brand> cq = cb.createQuery(Brand.class);
-		
-		Root<Brand> root = cq.from(Brand.class);
-		
-		Join<Brand, Product> brand = root.join(Brand_.products);
-		Join<Product, ProductStatus> status = brand.join(Product_.productStatus);
-		
-		List<Predicate> conditions = new ArrayList<Predicate>();
-		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
-		conditions.add(cb.equal(root.get(Brand_.brandCode), brandCode));
-
-		TypedQuery<Brand> query = em.createQuery(cq
-				.select(root)
-				.where(conditions.toArray(new Predicate[] {}))
-				.distinct(false)
-		);
-
-		return Optional.ofNullable(query.getSingleResult());
-	}
-	
 	
 
 	@Override
-	public List<Brand> findAll(List<String> categoryCodes, List<String> tagCodes) {
+	public List<Brand> findAll(String locale, String currency, List<String> categoryCodes, List<String> tagCodes) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Brand> cq = cb.createQuery(Brand.class);
@@ -230,29 +240,5 @@ public class BrandDaoImpl  implements IBrandDao {
 
 		return query.getResultList();
 	}
-	
-	@Override
-	public List<Brand> findAll(String brandCategoryCode) {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		
-		CriteriaQuery<Brand> cq = cb.createQuery(Brand.class);
-		
-		Root<Brand> root = cq.from(Brand.class);
-		
-		Join<Brand, CategoryBrand> brand = root.join(Brand_.categories);
-		
-		List<Predicate> conditions = new ArrayList<Predicate>();
-		
-		conditions.add(cb.equal(brand.get(io.nzbee.entity.category.brand.CategoryBrand_.categoryCode), brandCategoryCode));
-		
-		TypedQuery<Brand> query = em.createQuery(cq
-				.select(root)
-				.where(conditions.toArray(new Predicate[] {}))
-				.distinct(false)
-		);
-
-		return query.getResultList();
-	}
-
 	
 }
