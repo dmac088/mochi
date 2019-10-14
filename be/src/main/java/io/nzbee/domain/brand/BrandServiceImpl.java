@@ -50,6 +50,13 @@ public class BrandServiceImpl implements IBrandService {
     	return lb;
 	}	
     
+
+	@Override
+	public List<Brand> findAll(String locale, String currency, List<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+    
     @Override
 	@Transactional
 	@Cacheable
@@ -84,7 +91,4 @@ public class BrandServiceImpl implements IBrandService {
     	bDO.setBrandDesc(brandDTO.getBrandDesc());
     	return bDO;
 	}
-
-
-
 }
