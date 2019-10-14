@@ -203,6 +203,16 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 												 "primaryCategory.categoryToken",
 												 categoryService));
 		
+		facetList.addAll( this.getDiscreteFacets(lcl,
+												 currency,
+												 productQueryBuilder, 
+												 jpaQuery, 
+												 CategoryVars.BRAND_FACET_NAME,
+												 "brandCode",
+												 brandService));
+
+		
+		
 		System.out.println(facetList.size());
 		
 		facetList.stream().forEach(f -> {
