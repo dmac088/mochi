@@ -86,6 +86,13 @@ public class BrandDaoImpl  implements IBrandDao {
 	}
 	
 	@Override
+	public List<Brand> findAll(String locale, String currency, List<String> brandCodes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+	@Override
 	public List<Brand> getAll(String locale, String currency) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
@@ -232,4 +239,5 @@ public class BrandDaoImpl  implements IBrandDao {
 		return query.getResultList();
 	}
 
+	
 }
