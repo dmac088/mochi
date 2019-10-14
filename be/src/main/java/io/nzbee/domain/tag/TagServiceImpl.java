@@ -127,4 +127,10 @@ public class TagServiceImpl implements ITagService {
 		t.setTagDesc(tagDTO.getTagDesc());
 		return t;
 	}
+
+	@Override
+	public String tokenToCode(String token) {
+		// TODO Auto-generated method stub
+		return token;
+	}
 }

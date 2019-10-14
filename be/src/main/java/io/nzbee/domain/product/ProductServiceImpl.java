@@ -158,4 +158,10 @@ public class ProductServiceImpl implements IProductService {
 		return domainProduct;
 	}
 
+	@Override
+	public String tokenToCode(String token) {
+		// TODO Auto-generated method stub
+		return token;
+	}
+
 }

@@ -129,7 +129,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		List<String> codes = facets.stream()
 				.map(f -> {
 					String s = f.getValue();
-					return s.substring(s.lastIndexOf('/')+1,s.length());
+					return service.tokenToCode(s);
 				}).collect(Collectors.toList());
 		
 		List<IDomainObject> lc = service.findAll(locale, currency, codes);
@@ -137,8 +137,8 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		List<EntityFacet<T>> lef = new ArrayList<EntityFacet<T>>(codes.size());
 		
 		facets.stream().forEach(f -> {
-				IDomainObject dO = lc.stream().filter(c -> c.getCode().equals(
-													f.getValue().substring(f.getValue().lastIndexOf('/')+1,f.getValue().length())
+				IDomainObject dO = lc.stream().filter(c -> 
+													c.getCode().equals(service.tokenToCode(f.getValue())
 												)).findFirst().get();
 				
 				lef.add(new EntityFacet(f, dO));

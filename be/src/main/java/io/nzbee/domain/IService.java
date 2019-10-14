@@ -21,4 +21,5 @@ public interface IService<T> {
 	
 	T dtoToDO(Object dto);
 	
+	String tokenToCode(String token);
 }
