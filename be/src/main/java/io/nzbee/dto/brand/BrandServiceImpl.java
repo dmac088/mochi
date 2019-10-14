@@ -33,20 +33,20 @@ public class BrandServiceImpl implements IBrandService {
 	@Transactional
 	@Cacheable
 	public Optional<Brand> findById(String locale, String currency, long Id) {
-    	io.nzbee.entity.brand.Brand pb = brandService.findById(Id).get();
+    	io.nzbee.entity.brand.Brand pb = brandService.findById(locale, currency, Id).get();
      	return	Optional.ofNullable(this.entityToDTO(locale, currency, pb));
 	}
 	
 	@Override
 	public Optional<Brand> findByCode(String locale, String currency, String code) {
 		// TODO Auto-generated method stub
-		return Optional.ofNullable(this.entityToDTO(locale, currency, brandService.findByCode(code).get()));
+		return Optional.ofNullable(this.entityToDTO(locale, currency, brandService.findByCode(locale, currency, code).get()));
 	}
 
 	@Override
 	public Optional<Brand> findByDesc(String locale, String currency, String desc) {
 		// TODO Auto-generated method stub
-		return Optional.ofNullable(this.entityToDTO(locale, currency, brandService.findByDesc(locale, desc).get()));
+		return Optional.ofNullable(this.entityToDTO(locale, currency, brandService.findByDesc(locale, currency, desc).get()));
 	}
 	
 	@Override
@@ -62,6 +62,8 @@ public class BrandServiceImpl implements IBrandService {
 		//get a list of brands for the selected categories and tags
 		List<io.nzbee.entity.brand.Brand> lpb 
 			= brandService.findAll(
+							locale, 
+							currency, 
 							categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
 							tags.stream().map(t -> t.getTagCode()).collect(Collectors.toList())
 							);

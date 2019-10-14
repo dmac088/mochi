@@ -16,15 +16,9 @@ public class ProductPriceServiceImpl implements IProductPriceService {
 	private ProductPriceRepository productPriceRepository; 
 	
 	@Override
-	public Optional<ProductPrice> findById(long id) {
+	public Optional<ProductPrice> findById(String locale, String currency, long id) {
 		// TODO Auto-generated method stub
 		return productPriceRepository.findById(id);
-	}
-
-	@Override
-	public List<ProductPrice> getAll(String locale, String currency) {
-		// TODO Auto-generated method stub
-		return productPriceRepository.findAll();
 	}
 
 	@Override
@@ -33,14 +27,21 @@ public class ProductPriceServiceImpl implements IProductPriceService {
 		return productPriceRepository.findAll();
 	}
 	
+
 	@Override
-	public Optional<ProductPrice> findByCode(String code) {
+	public List<ProductPrice> findAll(String locale, String currency, List<String> codes) {
+		// TODO Auto-generated method stub
+		return productPriceRepository.findAll();
+	}
+	
+	@Override
+	public Optional<ProductPrice> findByCode(String locale, String currency, String code) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<ProductPrice> findByDesc(String locale, String desc) {
+	public Optional<ProductPrice> findByDesc(String locale, String currency, String desc) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -52,10 +53,16 @@ public class ProductPriceServiceImpl implements IProductPriceService {
 	}
 
 	@Override
-	public void update(ProductPrice t, String[] params) {
+	public void update(ProductPrice t) {
 		// TODO Auto-generated method stub
-		productPriceRepository.save(t);
+		
 	}
+	
+//	@Override
+//	public void update(ProductPrice t, String[] params) {
+//		// TODO Auto-generated method stub
+//		productPriceRepository.save(t);
+//	}
 
 	@Override
 	public void delete(ProductPrice t) {
@@ -120,8 +127,5 @@ public class ProductPriceServiceImpl implements IProductPriceService {
 		);
 	}
 
-	
-
-	
 
 }

@@ -14,9 +14,9 @@ public class CategoryServiceImpl implements ICategoryService {
 	private CategoryDaoImpl categoryDAO;
 	
 	@Override
-	public Optional<Category> findById(long id) {
+	public Optional<Category> findById(String locale, String currency, long id) {
 		// TODO Auto-generated method stub
-		return categoryDAO.findById(id);
+		return categoryDAO.findById(locale, currency, id);
 	}
 
 	@Override
@@ -44,15 +44,15 @@ public class CategoryServiceImpl implements ICategoryService {
 	}
 
 	@Override
-	public Optional<Category> findByDesc(String locale, String categoryDesc) {
+	public Optional<Category> findByDesc(String locale, String currency, String categoryDesc) {
 		// TODO Auto-generated method stub
-		return categoryDAO.findByDesc(locale, categoryDesc);
+		return categoryDAO.findByDesc(locale, currency, categoryDesc);
 	}
 
 	@Override
-	public Optional<Category> findByCode(String code) {
+	public Optional<Category> findByCode(String locale, String currency, String code) {
 		// TODO Auto-generated method stub
-		return categoryDAO.findByCode(code);
+		return categoryDAO.findByCode(locale, currency, code);
 	}
 
 	@Override

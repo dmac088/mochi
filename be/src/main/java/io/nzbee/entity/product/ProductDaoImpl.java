@@ -43,7 +43,7 @@ public class ProductDaoImpl implements IProductDao {
 	private EntityManager em;
 
 	@Override
-	public Optional<Product> findById(long id) {
+	public Optional<Product> findById(String locale, String currency, long id) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
@@ -63,7 +63,7 @@ public class ProductDaoImpl implements IProductDao {
 	}
 	
 	@Override
-	public Optional<Product> findByCode(String code) {
+	public Optional<Product> findByCode(String locale, String currency, String code) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
@@ -85,7 +85,7 @@ public class ProductDaoImpl implements IProductDao {
 	}
 	
 	@Override
-	public Optional<Product> findByDesc(String locale, String desc) {
+	public Optional<Product> findByDesc(String locale, String currency, String desc) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
@@ -146,6 +146,16 @@ public class ProductDaoImpl implements IProductDao {
 			return product;
 		}).collect(Collectors.toList());
 	}
+	
+
+	@Override
+	public List<Product> findAll(	String locale, 
+									String currency, 
+									List<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 	@Override
 	public Page<Product> findAll(	String locale, 
@@ -518,22 +528,6 @@ public class ProductDaoImpl implements IProductDao {
 						" LIMIT 	:limit " +
 						" OFFSET 	:offset ");
 	}
-	
-	@Override
-	public Page<Product> findAll(	String locale, 
-									String currency, 
-									List<String> productCodes) {
-		// TODO Auto-generated method stub
-		
-		return null;
-		
-    }
-
-	@Override
-	public List<Product> getAll(String locale, String currency) {
-		// TODO Auto-generated method stub
-		return this.findAll(locale, currency);
-	}
 
 	@Override
 	public void save(Product t) {
@@ -568,10 +562,6 @@ public class ProductDaoImpl implements IProductDao {
 		
 		return cb.asc(cb.lower(attributeJoin.get(ProductAttribute_.productDesc.getName())));
 	}
-
-	
-
-
 
 
 }

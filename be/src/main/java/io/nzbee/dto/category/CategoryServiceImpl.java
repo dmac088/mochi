@@ -34,14 +34,14 @@ public class CategoryServiceImpl implements ICategoryService {
     @Override
 	public Optional<Category> findById(String locale, String currency, long Id) {
 		// TODO Auto-generated method stub
-		return Optional.ofNullable(entityToDTO(locale, currency, categoryService.findById(Id).get()));
+		return Optional.ofNullable(entityToDTO(locale, currency, categoryService.findById(locale, currency, Id).get()));
 	}
 
 
 	@Override
 	public Optional<Category> findByCode(String locale, String currency, String code) {
 		// TODO Auto-generated method stub
-		return Optional.ofNullable(entityToDTO(locale, currency, categoryService.findByCode(code).get()));
+		return Optional.ofNullable(entityToDTO(locale, currency, categoryService.findByCode(locale, currency, code).get()));
 	}
 	
 
@@ -49,7 +49,7 @@ public class CategoryServiceImpl implements ICategoryService {
 	@Override
 	public Optional<Category> findByDesc(String locale, String currency, String desc) {
 		// TODO Auto-generated method stub
-		return Optional.ofNullable(entityToDTO(locale, currency, categoryService.findByDesc(locale, desc).get()));
+		return Optional.ofNullable(entityToDTO(locale, currency, categoryService.findByDesc(locale, currency, desc).get()));
 	}
 
 	

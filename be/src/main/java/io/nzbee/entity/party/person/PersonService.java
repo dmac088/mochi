@@ -18,7 +18,7 @@ public class PersonService implements IPersonService {
 	@Override
 	@PreAuthorize("hasAuthority('PERSON_READER')")
 	@Transactional(readOnly = true)
-	public List<Person> findAll(String locale, String currency) {
+	public List<Person> findAll() {
 		List<Person> Persons = new ArrayList<>();
 		Iterator<Person> i = personRepository.findAll().iterator();
 		while(i.hasNext()) {
@@ -37,12 +37,6 @@ public class PersonService implements IPersonService {
 	
 	@Override
 	public Optional<Person> findByCode(String code) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Optional<Person> findByDesc(String locale, String desc) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -67,7 +61,5 @@ public class PersonService implements IPersonService {
 	public void delete(Person p) {
 		personRepository.delete(p);
 	}
-
-
 	
 }

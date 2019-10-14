@@ -18,34 +18,34 @@ public class BrandServiceImpl implements IBrandService {
 	}
 
 	@Override
-	public Optional<Brand> findById(long Id) {
+	public Optional<Brand> findById(String locale, String currency, long Id) {
 		// TODO Auto-generated method stub
-		return brandDao.findById(Id);
+		return brandDao.findById(locale, currency, Id);
 	}
 
 
 	@Override
-	public Optional<Brand> findByCode(String brandCode) {
+	public Optional<Brand> findByCode(String locale, String currency, String brandCode) {
 		// TODO Auto-generated method stub
-		return brandDao.findByCode(brandCode);
+		return brandDao.findByCode(locale, currency, brandCode);
 	}
 
 	@Override
-	public List<Brand> findAll(List<String> productCategoryCodes, List<String> tagCodes) {
+	public List<Brand> findAll(String locale, String currency, List<String> categoryCodes, List<String> tagCodes) {
 		// TODO Auto-generated method stub
-		return brandDao.findAll(productCategoryCodes, tagCodes);
+		return brandDao.findAll(locale, currency, categoryCodes, tagCodes);
 	}
 	
 	@Override
-	public List<Brand> findAll(String brandCategoryCode) {
+	public List<Brand> findAll(String locale, String currency, List<String> codes) {
 		// TODO Auto-generated method stub
-		return brandDao.findAll(brandCategoryCode);
+		return brandDao.findAll(locale, currency, codes);
 	}
 	
 	@Override
-	public Optional<Brand> findByDesc(String brandDesc, String locale) {
+	public Optional<Brand> findByDesc(String locale, String currency, String brandDesc) {
 		// TODO Auto-generated method stub
-		return brandDao.findByDesc(brandDesc, locale);
+		return brandDao.findByDesc(locale, currency, brandDesc);
 	}
 
 	@Override
@@ -65,7 +65,5 @@ public class BrandServiceImpl implements IBrandService {
 		// TODO Auto-generated method stub
 		
 	}
-
-
 	
 }

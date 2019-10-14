@@ -2,9 +2,9 @@ package io.nzbee.entity.product.attribute;
 
 import java.util.Optional;
 
-import io.nzbee.entity.IDao;
+import io.nzbee.entity.ILocalizedDao;
 
-public interface IProductAttributeService extends IDao<ProductAttribute> {
+public interface IProductAttributeService extends ILocalizedDao<ProductAttribute> {
 	
 	Optional<ProductAttribute> getProductAttributeEN(Long id);
 	

@@ -15,17 +15,11 @@ public class ProductAttributeServiceImpl implements IProductAttributeService {
 	private ProductAttributeRepository productAttributeRepository; 
 	
 	@Override
-	public Optional<ProductAttribute> findById(long id) {
+	public Optional<ProductAttribute> findById(String locale, String currency, long id) {
 		// TODO Auto-generated method stub
 		return productAttributeRepository.findById(id);
 	}
 	
-	@Override
-	public List<ProductAttribute> getAll(String locale, String currency) {
-		// TODO Auto-generated method stub
-		return null;//productAttributeRepository.findAll(locale, currency);
-	}
-
 	@Override
 	public List<ProductAttribute> findAll(String locale, String currency) {
 		// TODO Auto-generated method stub
@@ -34,16 +28,23 @@ public class ProductAttributeServiceImpl implements IProductAttributeService {
 	
 
 	@Override
-	public Optional<ProductAttribute> findByCode(String code) {
+	public Optional<ProductAttribute> findByCode(String locale, String currency, String code) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<ProductAttribute> findByDesc(String locale, String desc) {
+	public Optional<ProductAttribute> findByDesc(String locale, String currency, String desc) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public List<ProductAttribute> findAll(String locale, String currency, List<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 	@Override
 	public void save(ProductAttribute t) {
@@ -77,6 +78,5 @@ public class ProductAttributeServiceImpl implements IProductAttributeService {
 	public Optional<ProductAttribute> getProductAttributeHK(Long id) {
 		return productAttributeRepository.findByLclCdAndProductId(GeneralVars.LANGUAGE_HK, id);
 	}
-
 	
 }
