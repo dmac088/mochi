@@ -140,13 +140,19 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		System.out.println("facets size = " + facets.size());
 		System.out.println("lc size = " + lc.size());
 		
-		for (int i = 0; i < facets.size(); i++ ) {
-		
-			System.out.println(facets.get(i).getValue() + " - "
-					+ lc.get(i).getCategoryCode());
+		facets.stream().forEach(f -> {
+			System.out.println(f.getValue() + " - "
+			+ 
+				lc.stream().filter(c -> c.getCategoryCode().equals(
+							f.getValue().substring(f.getValue().lastIndexOf('/')+1,f.getValue().length())
+						)).findFirst().get().getCategoryCode());
+		});
 			
+					
+		
+					
 		//	lef.add(new EntityFacet((org.hibernate.search.annotations.Facet) facets.get(i), lc.get(i)));
-		}
+		
 		
 		//get the object array for the ids in previous step
 		return null;
