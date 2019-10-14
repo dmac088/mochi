@@ -6,15 +6,15 @@ import java.util.Optional;
 
 public interface IDao<T> {
     
-    Optional<T> findById(long id);
+    Optional<T> findById(String locale, String currency, long id);
     
-    Optional<T> findByCode(String code);
+    Optional<T> findByCode(String locale, String currency, String code);
     
-    Optional<T> findByDesc(String locale, String desc);
-     
-    List<T> getAll(String locale, String currency);
+    Optional<T> findByDesc(String locale, String currency, String desc);
     
     List<T> findAll(String locale, String currency);
+    
+    List<T> findAll(String locale, String currency, List<String> codes);
      
     void save(T t);
      

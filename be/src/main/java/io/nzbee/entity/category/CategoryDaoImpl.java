@@ -108,7 +108,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 	}
 	
 	@Override
-	public Optional<Category> findById(long id) {
+	public Optional<Category> findById(String locale, String currency, long id) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
@@ -128,7 +128,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 	}
 	
 	@Override
-	public Optional<Category> findByDesc(String locale, String categoryDesc) {
+	public Optional<Category> findByDesc(String locale, String currency, String categoryDesc) {
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
@@ -157,7 +157,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 	}
 
 	@Override
-	public Optional<Category> findByCode(String code) {
+	public Optional<Category> findByCode(String locale, String currency, String code) {
 		System.out.println(code);
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 
@@ -285,12 +285,6 @@ public class CategoryDaoImpl implements ICategoryDao {
 		);
 		
 		return query.getResultList().stream().map(c -> (Category) c).collect(Collectors.toList());
-	}
-
-	@Override
-	public List<Category> getAll(String locale, String currency) {
-		// TODO Auto-generated method stub
-		return this.findAll(locale, currency);
 	}
 
 	@Override
