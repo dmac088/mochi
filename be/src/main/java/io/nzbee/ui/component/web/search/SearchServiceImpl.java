@@ -132,12 +132,11 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		List<EntityFacet<T>> lef = new ArrayList<EntityFacet<T>>(categoryCodes.size());
 		
 		facets.stream().forEach(f -> {
-
 				Category category = lc.stream().filter(c -> c.getCategoryCode().equals(
 							f.getValue().substring(f.getValue().lastIndexOf('/')+1,f.getValue().length())
 						)).findFirst().get();
 				
-				lef.add(new EntityFacet(f,  category));
+				lef.add(new EntityFacet(f, category));
 		});
 		//get the object array for the ids in previous step
 		return lef;
