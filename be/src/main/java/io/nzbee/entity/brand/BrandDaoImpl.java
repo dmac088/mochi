@@ -62,9 +62,15 @@ public class BrandDaoImpl  implements IBrandDao {
 		
 		Tuple tuple = query.getSingleResult();
 		
-		tuple.get("");
+		Brand brandEntity = new Brand();
+		BrandAttribute brandAttribute = new BrandAttribute();
 		
-		return Optional.ofNullable(query.getSingleResult());
+		brandAttribute.setId(Long.parseLong(tuple.get("brandAttributeId").toString()));
+		brandAttribute.setBrandId(Long.parseLong(tuple.get("brandId").toString()));
+		brandAttribute.setBrandDesc(tuple.get("brnadDesc").toString());
+		brandEntity.setCode(tuple.get("brandCode").toString());
+		
+		return Optional.ofNullable(brandEntity);
 	}
 	
 	@Override

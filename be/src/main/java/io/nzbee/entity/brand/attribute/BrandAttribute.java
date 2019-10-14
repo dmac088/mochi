@@ -43,10 +43,18 @@ public class BrandAttribute {
 	private Brand brand;
 	
 	public Long getId() {
+		return Id;
+	}
+
+	public void setId(Long id) {
+		Id = id;
+	}
+	
+	public Long getBrandId() {
 		return brandId;
 	}
 
-	public void setId(Long brandId) {
+	public void setBrandId(Long brandId) {
 		this.brandId = brandId;
 	}
 
