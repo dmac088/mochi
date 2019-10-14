@@ -61,6 +61,11 @@ public class TagServiceImpl implements ITagService {
 		return null;
 	}
 	
+	@Override
+	public List<Tag> findAll(String locale, String currency, List<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
 	public List<Tag> findAll(String locale, String currency, String categoryDesc, List<Category> categories,
@@ -122,6 +127,4 @@ public class TagServiceImpl implements ITagService {
 		t.setTagDesc(tagDTO.getTagDesc());
 		return t;
 	}
-
-
 }

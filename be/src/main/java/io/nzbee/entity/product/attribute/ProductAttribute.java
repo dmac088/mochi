@@ -44,7 +44,6 @@ import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.tag.ProductTag;
 import io.nzbee.entity.product.tag.attribute.ProductTagAttribute;
 import io.nzbee.variables.CategoryVars;
-import io.nzbee.variables.GeneralVars;
 
 @Entity
 @Indexed
