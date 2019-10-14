@@ -1,18 +1,14 @@
 package io.nzbee.ui.component.web.facet;
+import org.apache.lucene.search.Query;
 
-import java.lang.annotation.Annotation;
-
-import org.hibernate.search.annotations.Facet;
-import org.hibernate.search.annotations.FacetEncodingType;
-
-public class EntityFacet<T> implements Facet {
+public class EntityFacet<T> implements org.hibernate.search.query.facet.Facet {
 	
-	private final Facet delegate;
+	private final org.hibernate.search.query.facet.Facet delegate;
 	private final T entity;
 	  
 	  
-	public EntityFacet(Facet delegate, T entity) {
-	  this.delegate = delegate;
+	public EntityFacet(org.hibernate.search.query.facet.Facet f, T entity) {
+	  this.delegate = f;
 	  this.entity = entity;
 	}
 
@@ -23,26 +19,33 @@ public class EntityFacet<T> implements Facet {
 	}
 
 	@Override
-	public Class<? extends Annotation> annotationType() {
+	public String getFacetingName() {
 		// TODO Auto-generated method stub
-		return delegate.annotationType();
+		return delegate.getFacetingName();
 	}
 
 	@Override
-	public String name() {
+	public String getFieldName() {
 		// TODO Auto-generated method stub
-		return delegate.name();
+		return delegate.getFieldName();
 	}
 
 	@Override
-	public String forField() {
+	public String getValue() {
 		// TODO Auto-generated method stub
-		return delegate.forField();
+		return delegate.getValue();
 	}
 
 	@Override
-	public FacetEncodingType encoding() {
+	public int getCount() {
 		// TODO Auto-generated method stub
-		return delegate.encoding();
+		return delegate.getCount();
 	}
+
+	@Override
+	public Query getFacetQuery() {
+		// TODO Auto-generated method stub
+		return delegate.getFacetQuery();
+	}
+
 }
