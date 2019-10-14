@@ -65,10 +65,10 @@ public class CustomerServiceImpl implements ICustomerService {
 	
 	@Override
 	@Transactional
-	public Customer findByCode(String userName) {
+	public Optional<Customer> findByCode(String userName) {
 		Optional<Party> pr1 = partyService.findByCode(userName);
 		Customer c1 = convertToCustomerDO(pr1.get());
-		return c1;
+		return Optional.ofNullable(c1);
 	}
 	
 	
@@ -162,42 +162,6 @@ public class CustomerServiceImpl implements ICustomerService {
 		return cDo;
 	}
 
-
-	@Override
-	public List<Customer> findAll(String locale, String currency) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public Optional<Customer> findById(String locale, String currency, long brandId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public Optional<Customer> findByCode(String locale, String currency, String code) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public Optional<Customer> findByDesc(String locale, String currency, String desc) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public Customer entityToDTO(String locale, String currency, Object entity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
 	@Override
 	public Customer doToDto(Object dO) {
 		// TODO Auto-generated method stub
@@ -207,6 +171,34 @@ public class CustomerServiceImpl implements ICustomerService {
 
 	@Override
 	public List<Customer> getCustomers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Optional<Customer> findById(long brandId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Optional<Customer> findByDesc(String desc) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public List<Customer> findAll(List<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Customer entityToDTO(Object entity) {
 		// TODO Auto-generated method stub
 		return null;
 	}

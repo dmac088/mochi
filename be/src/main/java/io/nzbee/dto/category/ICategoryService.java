@@ -2,11 +2,11 @@ package io.nzbee.dto.category;
 
 
 import java.util.List;
-import io.nzbee.dto.IService;
+import io.nzbee.dto.ILocalizedService;
 import io.nzbee.dto.brand.Brand;
 import io.nzbee.dto.tag.Tag;
 
-public interface ICategoryService extends IService<Category> {
+public interface ICategoryService extends ILocalizedService<Category> {
 	 
 	List<Category> findAllForLevel(String locale, String currency, Long level);
 	 
