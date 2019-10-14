@@ -127,18 +127,9 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 					return s.substring(s.lastIndexOf('/')+1,s.length());
 				}).collect(Collectors.toList());
 		
-		
-//		System.out.println(facetTokens.size());
-//		System.out.println(facetTokens.get(0));
-		
 		List<Category> lc = categoryService.findAll(locale, currency, categoryCodes);
-		System.out.println(lc.isEmpty());
-		
-		
+
 		List<EntityFacet<T>> lef = new ArrayList<EntityFacet<T>>(categoryCodes.size());
-		
-		System.out.println("facets size = " + facets.size());
-		System.out.println("lc size = " + lc.size());
 		
 		facets.stream().forEach(f -> {
 
