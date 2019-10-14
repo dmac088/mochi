@@ -91,4 +91,10 @@ public class BrandServiceImpl implements IBrandService {
     	bDO.setBrandDesc(brandDTO.getBrandDesc());
     	return bDO;
 	}
+
+	@Override
+	public String tokenToCode(String token) {
+		// TODO Auto-generated method stub
+		return token;
+	}
 }

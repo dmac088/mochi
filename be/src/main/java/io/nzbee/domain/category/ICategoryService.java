@@ -17,4 +17,5 @@ public interface ICategoryService extends IService<Category> {
 
 	List<Category> findAllForLevel(String locale, String currency, Long level);
 
+	
 }

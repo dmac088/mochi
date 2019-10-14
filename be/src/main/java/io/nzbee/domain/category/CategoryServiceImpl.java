@@ -122,5 +122,11 @@ public class CategoryServiceImpl implements ICategoryService {
 		
 		return categoryDO;
 	}
+
+	@Override
+	public String tokenToCode(String token) {
+		// TODO Auto-generated method stub
+		return token.substring(token.lastIndexOf('/')+1,token.length());
+	}
 	
 }
