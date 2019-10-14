@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
+import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -35,26 +36,34 @@ public class BrandDaoImpl  implements IBrandDao {
 	private EntityManager em;
 	
 	@Override
-	public Optional<Brand> findById(long id) {
+	public Optional<Brand> findById(String locale, String currency, long id) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
-		CriteriaQuery<Brand> cq = cb.createQuery(Brand.class);
+		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
 		
 		Root<Brand> root = cq.from(Brand.class);
-		
 		Join<Brand, Product> brand = root.join(Brand_.products);
 		Join<Product, ProductStatus> status = brand.join(Product_.productStatus);
+		Join<Brand, BrandAttribute> attribute = root.join(Brand_.brandAttributes);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
 		conditions.add(cb.equal(root.get(Brand_.brandId), id));
+		conditions.add(cb.equal(attribute.get(BrandAttribute_.lclCd), locale));
 
-		TypedQuery<Brand> query = em.createQuery(cq
-				.select(root)
-				.where(conditions.toArray(new Predicate[] {}))
-				.distinct(false)
+		cq.multiselect(	root.get(Brand_.brandId).alias("brandId"),
+						root.get(Brand_.brandCode).alias("brandCode"),
+						attribute.get(BrandAttribute_.Id).alias("brandAttributeId"),
+						attribute.get(BrandAttribute_.brandDesc).alias("brnadDesc")
 		);
-
+		
+		
+		TypedQuery<Tuple> query = em.createQuery(cq);
+		
+		Tuple tuple = query.getSingleResult();
+		
+		tuple.get("");
+		
 		return Optional.ofNullable(query.getSingleResult());
 	}
 	
