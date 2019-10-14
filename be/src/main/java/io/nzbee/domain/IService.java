@@ -17,6 +17,8 @@ public interface IService<T> {
 	//for a DTO we need the locale
 	List<T> findAll(String locale, String currency);
 	
+	List<T> findAll(String locale, String currency, List<String> codes);
+	
 	T dtoToDO(Object dto);
 	
 }

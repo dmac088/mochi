@@ -21,5 +21,17 @@ public class BrandCategory extends Category {
 		this.brands = brands;
 	}
 
+	@Override
+	public String getCode() {
+		// TODO Auto-generated method stub
+		return super.getCategoryCode();
+	}
+
+	@Override
+	public String getDesc() {
+		// TODO Auto-generated method stub
+		return super.getCategoryDesc();
+	}
+
 	
 }

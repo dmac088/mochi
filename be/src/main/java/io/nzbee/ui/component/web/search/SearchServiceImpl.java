@@ -30,6 +30,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.google.common.collect.Lists;
+
+import io.nzbee.domain.IDomainObject;
+import io.nzbee.domain.IService;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.brand.IBrandService;
 import io.nzbee.domain.category.Category;
@@ -110,7 +113,9 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 													   QueryBuilder qb, 
 													   org.hibernate.search.jpa.FullTextQuery jpaQuery,
 													   String facetingName, 
-													   String fieldReference) {
+													   String fieldReference,
+													   IService service) {
+		
 		// create a category faceting request for the base level
 		FacetingRequest facetRequest = qb.facet().name(facetingName).onField(fieldReference) // in category class
 				.discrete().orderedBy(FacetSortOrder.COUNT_DESC).includeZeroCounts(false).createFacetingRequest();
@@ -121,18 +126,20 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		//get all the id's of the facets in one go
 		List<Facet> facets = jpaQuery.getFacetManager().getFacets(facetingName);
 		
-		List<String> categoryCodes = facets.stream()
+		List<String> codes = facets.stream()
 				.map(f -> {
 					String s = f.getValue();
 					return s.substring(s.lastIndexOf('/')+1,s.length());
 				}).collect(Collectors.toList());
 		
-		List<Category> lc = categoryService.findAll(locale, currency, categoryCodes);
+		List<IDomainObject> lc = service.findAll(locale, currency, codes);
 
-		List<EntityFacet<T>> lef = new ArrayList<EntityFacet<T>>(categoryCodes.size());
+		List<EntityFacet<T>> lef = new ArrayList<EntityFacet<T>>(codes.size());
 		
 		facets.stream().forEach(f -> {
-				Category category = lc.stream().filter(c -> c.getCategoryCode().equals(
+				lc.stream().filter(c ->
+						
+						c.getCode().equals(
 							f.getValue().substring(f.getValue().lastIndexOf('/')+1,f.getValue().length())
 						)).findFirst().get();
 				
@@ -195,7 +202,8 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 												 productQueryBuilder, 
 												 jpaQuery, 
 												 CategoryVars.PRIMARY_CATEGORY_FACET_NAME,
-												 "primaryCategory.categoryToken"));
+												 "primaryCategory.categoryToken",
+												 categoryService));
 		
 		System.out.println(facetList.size());
 		

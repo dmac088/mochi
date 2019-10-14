@@ -20,5 +20,18 @@ public class ProductCategory extends Category {
 	public void setProducts(List<Product> products) {
 		this.products = products;
 	}
+
+	@Override
+	public String getCode() {
+		// TODO Auto-generated method stub
+		return super.getCategoryCode();
+	}
+	
+	@Override
+	public String getDesc() {
+		// TODO Auto-generated method stub
+		return super.getCategoryDesc();
+	}
+
 	
 }
