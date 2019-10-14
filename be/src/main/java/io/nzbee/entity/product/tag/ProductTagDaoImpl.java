@@ -46,7 +46,7 @@ public class ProductTagDaoImpl implements IProductTagDao {
 	private EntityManager em;
 	
 	@Override
-	public Optional<ProductTag> findById(long id) {
+	public Optional<ProductTag> findById(String locale, String currency, long id) {
 		// TODO Auto-generated method stub
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
@@ -67,7 +67,7 @@ public class ProductTagDaoImpl implements IProductTagDao {
 	}
 	
 	@Override
-	public Optional<ProductTag> findByCode(String code) {
+	public Optional<ProductTag> findByCode(String locale, String currency, String code) {
 		// TODO Auto-generated method stub
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
@@ -89,7 +89,7 @@ public class ProductTagDaoImpl implements IProductTagDao {
 
 	
 	@Override
-	public Optional<ProductTag> findByDesc(String desc, String locale) {
+	public Optional<ProductTag> findByDesc(String locale, String currency, String desc) {
 		// TODO Auto-generated method stub
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
@@ -111,37 +111,6 @@ public class ProductTagDaoImpl implements IProductTagDao {
 		return Optional.ofNullable(query.getSingleResult());
 	}
 
-
-	@Override
-	public List<ProductTag> getAll(String locale, String currency) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<ProductTag> findAll(String locale, String currency) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void save(ProductTag t) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void update(ProductTag t, String[] params) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void delete(ProductTag t) {
-		// TODO Auto-generated method stub
-		
-	}
-	
 	@Override
 	public List<ProductTag> findAll(String locale, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, List<String> categoryCodes, List<String> brandCodes) {
 		
@@ -193,6 +162,35 @@ public class ProductTagDaoImpl implements IProductTagDao {
 		
 		return query.getResultList();
     }
-
 	
+	@Override
+	public void save(ProductTag t) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void update(ProductTag t, String[] params) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete(ProductTag t) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<ProductTag> findAll(String locale, String currency) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ProductTag> findAll(String locale, String currency, List<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

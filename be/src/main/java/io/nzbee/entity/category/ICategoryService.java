@@ -2,10 +2,10 @@ package io.nzbee.entity.category;
 
 import java.util.List;
 import java.util.Set;
-import io.nzbee.entity.IService;
+import io.nzbee.entity.ILocalizedService;
 import io.nzbee.entity.category.Category;
 
-public interface ICategoryService extends IService<Category> {
+public interface ICategoryService extends ILocalizedService<Category> {
 
 	Set<Category> recurseCategories(String currency, Set<Category> arrayList, Category pc);
 

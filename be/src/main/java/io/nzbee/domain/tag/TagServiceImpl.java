@@ -37,21 +37,21 @@ public class TagServiceImpl implements ITagService {
 	@Override
 	public Optional<Tag> findById(String locale, String currency, Long Id) {
 		// TODO Auto-generated method stub
-		ProductTag pt = productTagService.findById(Id).get();
+		ProductTag pt = productTagService.findById(locale, currency, Id).get();
 		return Optional.ofNullable(this.dtoToDO(pt));
 	}
 
 	@Override
 	public Optional<Tag> findByCode(String locale, String currency, String code) {
 		// TODO Auto-generated method stub
-		ProductTag pt = productTagService.findByCode(code).get();
+		ProductTag pt = productTagService.findByCode(locale, currency, code).get();
 		return Optional.ofNullable(this.dtoToDO(pt));
 	}
 
 	@Override
 	public Optional<Tag> findByDesc(String locale, String currency, String desc) {
 		// TODO Auto-generated method stub
-		ProductTag pt = productTagService.findByDesc(locale, desc).get();
+		ProductTag pt = productTagService.findByDesc(locale, currency, desc).get();
 		return Optional.ofNullable(this.dtoToDO(pt));
 	}
 

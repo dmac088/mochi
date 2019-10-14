@@ -21,7 +21,7 @@ public class PartyServiceImpl implements IPartyService {
 	@Override
 	@PreAuthorize("hasAuthority('PARTY_READER')")
 	@Transactional(readOnly = true)
-	public List<Party> findAll(String locale, String Currency) {
+	public List<Party> findAll() {
 		return partyRepository.findAll();
 	}
 
@@ -40,12 +40,6 @@ public class PartyServiceImpl implements IPartyService {
 	public Optional<Party> findByCode(String code) {
 		// TODO Auto-generated method stub
 		return partyRepository.findByPartyUserUsername(code);
-	}
-	
-	@Override
-	public Optional<Party> findByDesc(String locale, String desc) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -72,10 +66,6 @@ public class PartyServiceImpl implements IPartyService {
 		partyRepository.delete(t);
 	}
 
-	@Override
-	public List<Party> findAll() {
-		// TODO Auto-generated method stub
-		return partyRepository.findAll();
-	}
 	
+
 }

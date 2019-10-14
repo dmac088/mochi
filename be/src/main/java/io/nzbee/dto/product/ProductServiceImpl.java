@@ -32,19 +32,19 @@ public class ProductServiceImpl implements IProductService {
 	@Override
 	public Optional<Product> findById(String locale, String currency, long Id) {
 		// TODO Auto-generated method stub
-		return Optional.ofNullable(this.entityToDTO(locale, currency, productService.findById(Id)));
+		return Optional.ofNullable(this.entityToDTO(locale, currency, productService.findById(locale, currency, Id)));
 	}
 	
 	@Override
 	public Optional<Product> findByCode(String locale, String currency, String code) {
 		// TODO Auto-generated method stub
-		return Optional.ofNullable(this.entityToDTO(locale, currency, productService.findByCode(code)));
+		return Optional.ofNullable(this.entityToDTO(locale, currency, productService.findByCode(locale, currency, code)));
 	}
 
 	@Override
 	public Optional<Product> findByDesc(String locale, String currency, String desc) {
 		// TODO Auto-generated method stub
-		return Optional.ofNullable(this.entityToDTO(locale, currency, productService.findByDesc(locale, desc)));
+		return Optional.ofNullable(this.entityToDTO(locale, currency, productService.findByDesc(locale, currency, desc)));
 	}
 
 	@Override

@@ -31,25 +31,31 @@ public class ProductTagServiceImpl implements IProductTagService {
 	@Override
 	public List<ProductTag> findAll(String locale, String currency) {
 		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Optional<ProductTag> findById(long id) {
-		// TODO Auto-generated method stub
-		return productTagDAO.findById(id);
-	}
-
-	@Override
-	public Optional<ProductTag> findByCode(String code) {
-		// TODO Auto-generated method stub
-		return productTagDAO.findByCode(code);
+		return productTagDAO.findAll(locale, currency);
 	}
 	
 	@Override
-	public Optional<ProductTag> findByDesc(String locale, String desc) {
+	public List<ProductTag> findAll(String locale, String currency, List<String> codes) {
 		// TODO Auto-generated method stub
-		return productTagDAO.findByDesc(desc, locale);
+		return productTagDAO.findAll(locale, currency, codes);
+	}
+
+	@Override
+	public Optional<ProductTag> findById(String locale, String currency, long id) {
+		// TODO Auto-generated method stub
+		return productTagDAO.findById(locale, currency, id);
+	}
+
+	@Override
+	public Optional<ProductTag> findByCode(String locale, String currency, String code) {
+		// TODO Auto-generated method stub
+		return productTagDAO.findByCode(locale, currency, code);
+	}
+	
+	@Override
+	public Optional<ProductTag> findByDesc(String locale, String currency, String desc) {
+		// TODO Auto-generated method stub
+		return productTagDAO.findByDesc(locale, currency, desc);
 	}
 
 	@Override

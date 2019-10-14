@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import javax.persistence.EntityManager;
 import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
@@ -20,7 +19,6 @@ import io.nzbee.entity.brand.Brand_;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.brand.attribute.BrandAttribute_;
 import io.nzbee.entity.category.Category_;
-import io.nzbee.entity.category.brand.CategoryBrand;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.Product_;

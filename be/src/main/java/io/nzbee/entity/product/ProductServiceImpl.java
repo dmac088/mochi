@@ -20,13 +20,31 @@ public class ProductServiceImpl implements IProductService {
 	private ICategoryService categoryService;
 	
 	@Override
+	public Optional<Product> findById(String locale, String currency, long id) {
+		// TODO Auto-generated method stub
+		return productDAO.findById(locale, currency, id);
+	}
+
+	@Override
+	public Optional<Product> findByCode(String locale, String currency, String code) {
+		// TODO Auto-generated method stub
+		return productDAO.findByCode(locale, currency, code);
+	}
+
+	@Override
+	public Optional<Product> findByDesc(String locale, String currency, String desc) {
+		// TODO Auto-generated method stub
+		return productDAO.findByDesc(locale, currency, desc);
+	}
+	
+	@Override
 	public List<Product> findAll(String locale, String currency) {
 		// TODO Auto-generated method stub
 		return productDAO.findAll(locale, currency);
 	}
 	
 	@Override
-	public Page<Product> findAll(String locale, String currency, List<String> productCodes) {
+	public List<Product> findAll(String locale, String currency, List<String> productCodes) {
 		// TODO Auto-generated method stub
 		return productDAO.findAll(locale, currency, productCodes);
 	}
@@ -80,22 +98,6 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public Optional<Product> findById(long Id) {
-		return productDAO.findById(Id);
-	}
-	
-	@Override
-	public Optional<Product> findByCode(String code) {
-		return productDAO.findByCode(code);
-	}
-	
-	@Override
-	public Optional<Product> findByDesc(String locale, String desc) {
-		// TODO Auto-generated method stub
-		return productDAO.findByDesc(locale, desc);
-	}
-	
-	@Override
 	public void save(Product t) {
 		// TODO Auto-generated method stub
 		
@@ -112,5 +114,7 @@ public class ProductServiceImpl implements IProductService {
 		// TODO Auto-generated method stub
 		
 	}
+
+	
 
 }

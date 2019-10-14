@@ -6,13 +6,11 @@ import java.util.Optional;
 public interface IService<T> {
 
 	
-	public List<T> findAll(String locale, String currency);
+	public List<T> findAll();
 	
 	public Optional<T> findById(long id);
 	
 	public Optional<T> findByCode(String code);
-	
-	public Optional<T> findByDesc(String locale, String desc);
 	
 	public void save(T t);
 	

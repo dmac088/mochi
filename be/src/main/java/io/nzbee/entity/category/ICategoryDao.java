@@ -1,9 +1,9 @@
 package io.nzbee.entity.category;
 
 import java.util.List;
-import io.nzbee.entity.IDao;
+import io.nzbee.entity.ILocalizedDao;
 
-public interface ICategoryDao extends IDao<Category> {
+public interface ICategoryDao extends ILocalizedDao<Category> {
 	
 	List<Category> findByParent(String locale, String parentCategoryCode);
 	
