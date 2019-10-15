@@ -127,6 +127,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		//get all the id's of the facets in one go
 		List<Facet> facets = jpaQuery.getFacetManager().getFacets(facetingName);
 		
+		//only the lowest level codes will be parsed according to this logic
 		List<String> codes = facets.stream()
 				.map(f -> {
 					String s = f.getValue();
@@ -138,24 +139,32 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		List<EntityFacet<T>> lef = new ArrayList<EntityFacet<T>>(codes.size());
 		
 		facets.stream().forEach(f -> {
-				IDomainObject dO = lc.stream().filter(c -> c.getCode().equals(service.tokenToCode(f.getValue())))
+				Optional<IDomainObject> dO = lc.stream().filter(c -> c.getCode().equals(service.tokenToCode(f.getValue())))
 											  .map(o -> {
 												  if(o.isHierarchical()) {
 														IHierarchicalDomainObject hdO = (IHierarchicalDomainObject) o;
-														String frField = f.getFieldName().split("\\.")[0]
-														+ StringUtils.repeat(".parent", hdO.getLevel().intValue())
-														+ ".categoryToken";
-														System.out.println(f.getValue());
-														System.out.println(frField);
+
+														if(hdO.getLevel() > 0) {
+															String frField = String.join(".",Arrays.copyOfRange(f.getFieldName().split("\\."), 0, f.getFieldName().split("\\.").length-1))
+																	+ ".parent"
+																	+ ".categoryToken";
+														
+															this.getDiscreteFacets(	locale, 
+																					currency, 
+																					qb, 
+																					jpaQuery, 
+																					facetingName, 
+																					frField, 
+																					service);
+														} 
+														return o;
 													}
-													//System.out.println(f.getFieldName());
-													//System.out.println("isHierarchical = " + o.isHierarchical());
-													//System.out.println(f.getValue());
 													return o;
-											  }).findFirst().get();
+											  }).findFirst();
 						
-				
-				lef.add(new EntityFacet(f, dO));
+				if(dO.isPresent()) {
+					lef.add(new EntityFacet(f, dO.get()));
+				}
 		});
 		//get the object array for the ids in previous step
 		return lef;
@@ -230,7 +239,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		System.out.println(facetList.size());
 		
 		facetList.stream().forEach(f -> {
-			System.out.println(f.getEntity().getClass().getSimpleName() + " - " + f.getCount());
+			System.out.println(f.getEntity().getClass().getSimpleName() + " - " + f.getValue() + " - " + f.getCount());
 		});
 		
 		
