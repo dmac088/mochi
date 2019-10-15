@@ -124,19 +124,45 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		// add all the base level facets to categoryFacets List
 		jpaQuery.getFacetManager().enableFaceting(facetRequest);
 		
-		//get all the id's of the facets in one go
+		//Get all the id's of the facets in one go
 		List<Facet> facets = jpaQuery.getFacetManager().getFacets(facetingName);
 		
-		//only the lowest level codes will be parsed according to this logic
-		List<String> codes = facets.stream()
-				.map(f -> {
-					String s = f.getValue();
-					return service.tokenToCode(s);
-				}).collect(Collectors.toList());
+		Set<String> uniqueCodes = new HashSet<String>();
 		
-		List<IDomainObject> lc = service.findAll(locale, currency, codes);
+		//Add all the category codes up the hierarchy
+		facets.stream().forEach(f -> {
+			List<String> codes = Arrays.asList(f.getValue().split("/")).stream().filter(o -> !o.isEmpty()).collect(Collectors.toList());
+			
+			
+			//we need to use a standard loop to extract a range
+			for (int i=0; i < codes.size(); i++) {
+					//we need to store this information in something like an enum
+					//parse this to a token to fetch and use the ordinal to retrieve the Lucene fieldReference
+					List<String> ls = codes.subList(0, i+1).stream().filter(o -> !(o.isEmpty())).collect(Collectors.toList());
+					String prefix = f.getFieldName().split("\\.")[0];
+					int numParents = codes.size() - ls.size();
+					
+					System.out.println("token = " + "/" + String.join("/", ls));
+					System.out.println("fieldReference = " + prefix +  StringUtils.repeat(".parent", numParents) + ".categoryToken");
+			}
+			
+//			uniqueCodes.addAll(codes);
+//			
+//
+//			uniqueCodes.stream().forEach(c -> {
+//				String.join(".",Arrays.copyOfRange(f.getFieldName().split("\\."), 0, f.getFieldName().split("\\.").length-1))
+//				+ ".parent"
+//				+ ".categoryToken";
+//			});
+			
+			
+		});
+		
+		//query the domain objects from the DB
+		List<IDomainObject> lc = service.findAll(locale, currency, new ArrayList<String>(uniqueCodes));
 
-		List<EntityFacet<T>> lef = new ArrayList<EntityFacet<T>>(codes.size());
+		//create a new array of entity facets
+		List<EntityFacet<T>> lef = new ArrayList<EntityFacet<T>>(uniqueCodes.size());
 		
 		facets.stream().forEach(f -> {
 				Optional<IDomainObject> dO = lc.stream().filter(c -> c.getCode().equals(service.tokenToCode(f.getValue())))
@@ -234,8 +260,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 												 "brandCode",
 												 brandService));
 
-		
-		
 		System.out.println(facetList.size());
 		
 		facetList.stream().forEach(f -> {
