@@ -126,7 +126,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		//Get all the id's of the facets in one go
 		List<Facet> facets = jpaQuery.getFacetManager().getFacets(facetingName);
 		
-		Set<String> uniqueCodes = new HashSet<String>();
+		Set<String> uniqueCodes, uniqueFieldRefs = new HashSet<String>();
 		
 		//Add all the category codes up the hierarchy
 		facets.stream().forEach(f -> {
@@ -141,23 +141,35 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 					String prefix = f.getFieldName().split("\\.")[0];
 					int numParents = codes.size() - ls.size();
 					
-					System.out.println("token = " + "/" + String.join("/", ls));
-					System.out.println("fieldReference = " + prefix +  StringUtils.repeat(".parent", numParents) + ".categoryToken");
+					String newToken = "/" + String.join("/", ls);
+					String newFieldReference = prefix +  StringUtils.repeat(".parent", numParents) + ".categoryToken";
 					
-					//now we need to get the additional facets and added them to List facets
-			}
-			
-//			uniqueCodes.addAll(codes);
-//			
-//
-//			uniqueCodes.stream().forEach(c -> {
-//				String.join(".",Arrays.copyOfRange(f.getFieldName().split("\\."), 0, f.getFieldName().split("\\.").length-1))
-//				+ ".parent"
-//				+ ".categoryToken";
-//			});
-			
-			
+					//System.out.println("token = " + "/" + String.join("/", ls));
+					//System.out.println("fieldReference = " + prefix +  StringUtils.repeat(".parent", numParents) + ".categoryToken");
+					
+					uniqueFieldRefs.add(newFieldReference);
+			}			
 		});
+		
+		uniqueFieldRefs.stream().forEach(fr -> {
+			FacetingRequest frq = qb.facet().name(facetingName).onField(fr) // in category class
+					.discrete().orderedBy(FacetSortOrder.COUNT_DESC).includeZeroCounts(false).createFacetingRequest();
+					
+			facets.addAll(jpaQuery.getFacetManager().getFacets(facetingName));
+		});
+		
+		
+		
+//		uniqueCodes.addAll(codes);
+//		
+//
+//		uniqueCodes.stream().forEach(c -> {
+//			String.join(".",Arrays.copyOfRange(f.getFieldName().split("\\."), 0, f.getFieldName().split("\\.").length-1))
+//			+ ".parent"
+//			+ ".categoryToken";
+//		});
+		
+
 		
 		//query the domain objects from the DB
 		List<IDomainObject> lc = service.findAll(locale, currency, new ArrayList<String>(uniqueCodes));
