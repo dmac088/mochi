@@ -104,7 +104,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 							brandTokens,
 							tagTokens,
 							priceTokens);
-
 	}
 
 	
