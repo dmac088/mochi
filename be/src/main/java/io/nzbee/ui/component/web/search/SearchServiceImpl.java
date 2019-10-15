@@ -143,6 +143,8 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 					
 					System.out.println("token = " + "/" + String.join("/", ls));
 					System.out.println("fieldReference = " + prefix +  StringUtils.repeat(".parent", numParents) + ".categoryToken");
+					
+					//now we need to get the additional facets and added them to List facets
 			}
 			
 //			uniqueCodes.addAll(codes);
