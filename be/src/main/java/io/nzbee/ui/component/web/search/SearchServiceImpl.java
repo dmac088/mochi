@@ -137,9 +137,11 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		List<EntityFacet<T>> lef = new ArrayList<EntityFacet<T>>(codes.size());
 		
 		facets.stream().forEach(f -> {
-				IDomainObject dO = lc.stream().filter(c -> 
-													c.getCode().equals(service.tokenToCode(f.getValue())
-												)).findFirst().get();
+				IDomainObject dO = lc.stream().filter(c -> {
+													System.out.println(f.getFieldName());
+													System.out.println("Level = " + (StringUtils.countMatches(f.getValue(), "/")-1));
+													return c.getCode().equals(service.tokenToCode(f.getValue()));
+													}).findFirst().get();
 				
 				lef.add(new EntityFacet(f, dO));
 		});
