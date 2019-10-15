@@ -139,6 +139,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		facets.stream().forEach(f -> {
 				IDomainObject dO = lc.stream().filter(c -> {
 													System.out.println(f.getFieldName());
+													System.out.println("isHierarchical = " + c.isHierarchical());
 													System.out.println("Level = " + (StringUtils.countMatches(f.getValue(), "/")-1));
 													return c.getCode().equals(service.tokenToCode(f.getValue()));
 													}).findFirst().get();
