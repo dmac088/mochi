@@ -126,12 +126,12 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		//Get all the id's of the facets in one go
 		List<Facet> facets = jpaQuery.getFacetManager().getFacets(facetingName);
 		
-		Set<String> uniqueCodes, uniqueFieldRefs = new HashSet<String>();
+		Set<String> uniqueCodes = new HashSet<String>(), uniqueFieldRefs = new HashSet<String>();
 		
 		//Add all the category codes up the hierarchy
 		facets.stream().forEach(f -> {
 			List<String> codes = Arrays.asList(f.getValue().split("/")).stream().filter(o -> !o.isEmpty()).collect(Collectors.toList());
-			
+			uniqueCodes.addAll(codes);
 			
 			//we need to use a standard loop to extract a range
 			for (int i=0; i < codes.size(); i++) {
@@ -154,22 +154,11 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		uniqueFieldRefs.stream().forEach(fr -> {
 			FacetingRequest frq = qb.facet().name(facetingName).onField(fr) // in category class
 					.discrete().orderedBy(FacetSortOrder.COUNT_DESC).includeZeroCounts(false).createFacetingRequest();
-					
-			facets.addAll(jpaQuery.getFacetManager().getFacets(facetingName));
+			System.out.println(fr);		
+			System.out.println(StringUtils.join(jpaQuery.getFacetManager().getFacets(facetingName)));
+			//facets.addAll(jpaQuery.getFacetManager().getFacets(facetingName));
 		});
 		
-		
-		
-//		uniqueCodes.addAll(codes);
-//		
-//
-//		uniqueCodes.stream().forEach(c -> {
-//			String.join(".",Arrays.copyOfRange(f.getFieldName().split("\\."), 0, f.getFieldName().split("\\.").length-1))
-//			+ ".parent"
-//			+ ".categoryToken";
-//		});
-		
-
 		
 		//query the domain objects from the DB
 		List<IDomainObject> lc = service.findAll(locale, currency, new ArrayList<String>(uniqueCodes));
@@ -178,28 +167,9 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		List<EntityFacet<T>> lef = new ArrayList<EntityFacet<T>>(uniqueCodes.size());
 		
 		facets.stream().forEach(f -> {
-				Optional<IDomainObject> dO = lc.stream().filter(c -> c.getCode().equals(service.tokenToCode(f.getValue())))
-											  .map(o -> {
-												  if(o.isHierarchical()) {
-														IHierarchicalDomainObject hdO = (IHierarchicalDomainObject) o;
-
-														if(hdO.getLevel() > 0) {
-															String frField = String.join(".",Arrays.copyOfRange(f.getFieldName().split("\\."), 0, f.getFieldName().split("\\.").length-1))
-																	+ ".parent"
-																	+ ".categoryToken";
-														
-															this.getDiscreteFacets(	locale, 
-																					currency, 
-																					qb, 
-																					jpaQuery, 
-																					facetingName, 
-																					frField, 
-																					service);
-														} 
-														return o;
-													}
-													return o;
-											  }).findFirst();
+				Optional<IDomainObject> dO = lc.stream()
+											  .filter(c -> c.getCode().equals(service.tokenToCode(f.getValue())))
+											  .findFirst();
 						
 				if(dO.isPresent()) {
 					lef.add(new EntityFacet(f, dO.get()));
@@ -273,12 +243,12 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 												 "brandCode",
 												 brandService));
 
-		System.out.println(facetList.size());
-		
-		facetList.stream().forEach(f -> {
-			System.out.println(f.getEntity().getClass().getSimpleName() + " - " + f.getValue() + " - " + f.getCount());
-		});
-		
+//		System.out.println(facetList.size());
+//		
+//		facetList.stream().forEach(f -> {
+//			System.out.println(f.getEntity().getClass().getSimpleName() + " - " + f.getValue() + " - " + f.getCount());
+//		});
+//		
 		
 //		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, jpaQuery, CategoryVars.PRIMARY_CATEGORY_FACET_NAME,
 //				"secondaryCategory.categoryToken"));
