@@ -142,11 +142,15 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 											  .map(o -> {
 												  if(o.isHierarchical()) {
 														IHierarchicalDomainObject hdO = (IHierarchicalDomainObject) o;
-														System.out.println("level = " +  hdO.getLevel());
+														String frField = f.getFieldName().split("\\.")[0]
+														+ StringUtils.repeat(".parent", hdO.getLevel().intValue())
+														+ ".categoryToken";
+														System.out.println(f.getValue());
+														System.out.println(frField);
 													}
-													System.out.println(f.getFieldName());
-													System.out.println("isHierarchical = " + o.isHierarchical());
-													System.out.println(f.getValue());
+													//System.out.println(f.getFieldName());
+													//System.out.println("isHierarchical = " + o.isHierarchical());
+													//System.out.println(f.getValue());
 													return o;
 											  }).findFirst().get();
 						
