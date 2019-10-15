@@ -33,5 +33,11 @@ public class ProductCategory extends Category {
 		return super.getCategoryDesc();
 	}
 
+	@Override
+	public boolean isHierarchical() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
 	
 }
