@@ -124,13 +124,14 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		jpaQuery.getFacetManager().enableFaceting(facetRequest);
 		
 		//Get all the id's of the facets in one go
-		List<Facet> facets = jpaQuery.getFacetManager().getFacets(facetingName);
+		final List<Facet> facets = jpaQuery.getFacetManager().getFacets(facetingName);
 		
 		Set<String> uniqueCodes = new HashSet<String>(), uniqueFieldRefs = new HashSet<String>();
 		
 		//Add all the category codes up the hierarchy
 		facets.stream().forEach(f -> {
 			List<String> codes = Arrays.asList(f.getValue().split("/")).stream().filter(o -> !o.isEmpty()).collect(Collectors.toList());
+			
 			uniqueCodes.addAll(codes);
 			
 			//we need to use a standard loop to extract a range
@@ -150,13 +151,17 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 					uniqueFieldRefs.add(newFieldReference);
 			}			
 		});
+
 		
 		uniqueFieldRefs.stream().forEach(fr -> {
+			
 			FacetingRequest frq = qb.facet().name(facetingName).onField(fr) // in category class
 					.discrete().orderedBy(FacetSortOrder.COUNT_DESC).includeZeroCounts(false).createFacetingRequest();
-			System.out.println(fr);		
-			System.out.println(StringUtils.join(jpaQuery.getFacetManager().getFacets(facetingName)));
-			//facets.addAll(jpaQuery.getFacetManager().getFacets(facetingName));
+			
+			jpaQuery.getFacetManager().enableFaceting(frq);
+			//System.out.println(fr);		
+			//System.out.println(StringUtils.join(jpaQuery.getFacetManager().getFacets(facetingName)));
+			facets.addAll(jpaQuery.getFacetManager().getFacets(facetingName));
 		});
 		
 		
