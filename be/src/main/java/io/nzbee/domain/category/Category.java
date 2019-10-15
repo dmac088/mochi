@@ -1,10 +1,9 @@
 package io.nzbee.domain.category;
 
 import java.util.Objects;
+import io.nzbee.domain.IHierarchicalDomainObject;
 
-import io.nzbee.domain.IDomainObject;
-
-public abstract class Category implements IDomainObject {
+public abstract class Category implements IHierarchicalDomainObject {
 
 	private String categoryCode;
 	

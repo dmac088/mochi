@@ -39,5 +39,11 @@ public class ProductCategory extends Category {
 		return true;
 	}
 
+	@Override
+	public Long getLevel() {
+		// TODO Auto-generated method stub
+		return super.getCategoryLevel();
+	}
+
 	
 }

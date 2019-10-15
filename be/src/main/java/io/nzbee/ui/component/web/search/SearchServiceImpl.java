@@ -32,6 +32,7 @@ import org.springframework.stereotype.Service;
 import com.google.common.collect.Lists;
 
 import io.nzbee.domain.IDomainObject;
+import io.nzbee.domain.IHierarchicalDomainObject;
 import io.nzbee.domain.IService;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.brand.IBrandService;
@@ -137,12 +138,18 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		List<EntityFacet<T>> lef = new ArrayList<EntityFacet<T>>(codes.size());
 		
 		facets.stream().forEach(f -> {
-				IDomainObject dO = lc.stream().filter(c -> {
+				IDomainObject dO = lc.stream().filter(c -> c.getCode().equals(service.tokenToCode(f.getValue())))
+											  .map(o -> {
+												  if(o.isHierarchical()) {
+														IHierarchicalDomainObject hdO = (IHierarchicalDomainObject) o;
+														System.out.println("level = " +  hdO.getLevel());
+													}
 													System.out.println(f.getFieldName());
-													System.out.println("isHierarchical = " + c.isHierarchical());
-													System.out.println("Level = " + (StringUtils.countMatches(f.getValue(), "/")-1));
-													return c.getCode().equals(service.tokenToCode(f.getValue()));
-													}).findFirst().get();
+													System.out.println("isHierarchical = " + o.isHierarchical());
+													System.out.println(f.getValue());
+													return o;
+											  }).findFirst().get();
+						
 				
 				lef.add(new EntityFacet(f, dO));
 		});

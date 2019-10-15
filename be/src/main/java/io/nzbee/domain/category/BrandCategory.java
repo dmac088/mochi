@@ -39,5 +39,11 @@ public class BrandCategory extends Category {
 		return false;
 	}
 
+	@Override
+	public Long getLevel() {
+		// TODO Auto-generated method stub
+		return super.getCategoryLevel();
+	}
+
 	
 }
