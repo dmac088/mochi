@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import io.nzbee.ui.component.web.facet.NavFacetContainer;
+import io.nzbee.ui.component.web.facet.EntityFacetContainer;
 import io.nzbee.ui.component.web.search.Search;
 
 @RestController
@@ -24,7 +24,7 @@ public class NavigationController {
 								@PathVariable int page, 
 								@PathVariable int size, 
 								@PathVariable String sortBy,
-								@RequestBody final NavFacetContainer selectedFacets) {
+								@RequestBody final EntityFacetContainer selectedFacets) {
 	   	return navigationService.findAll(locale, currency, price, page, size, category, selectedFacets, sortBy);
 	}
 
@@ -35,7 +35,7 @@ public class NavigationController {
 								@PathVariable int 		page, 
 								@PathVariable int 		size, 
 								@PathVariable String 	sortBy,
-								@RequestBody final NavFacetContainer selectedFacets) {
+								@RequestBody final EntityFacetContainer selectedFacets) {
 	   	return navigationService.findAll(locale, currency, category, page, size, selectedFacets, sortBy);
 	}
 	
