@@ -166,6 +166,30 @@ public class Product {
 	@Field(store=Store.YES)
 	@SortableField
 	@Transient
+	public Double getCurrentRetailPriceHKD() {
+		 return this.prices.stream().filter(p ->
+		 	p.getStartDate().before(Calendar.getInstance().getTime())
+		 	&& p.getEndDate().after(Calendar.getInstance().getTime())
+		 	&& p.getCurrency().getCode().equals(ProductVars.CURRENCY_HONG_KONG)
+		 	&& p.getType().getDesc().equals(ProductVars.RETAIL_SKU_DESCRIPTION)
+		 ).collect(Collectors.toList()).get(0).getPriceValue();     
+	}
+	
+	@Field(store=Store.YES)
+	@SortableField
+	@Transient
+	public Double getCurrentRetailPriceUSD() {
+		 return this.prices.stream().filter(p ->
+		 	p.getStartDate().before(Calendar.getInstance().getTime())
+		 	&& p.getEndDate().after(Calendar.getInstance().getTime())
+		 	&& p.getCurrency().getCode().equals(ProductVars.CURRENCY_US)
+		 	&& p.getType().getDesc().equals(ProductVars.RETAIL_SKU_DESCRIPTION)
+		 ).collect(Collectors.toList()).get(0).getPriceValue();     
+	}
+	
+	@Field(store=Store.YES)
+	@SortableField
+	@Transient
 	public Double getCurrentMarkdownPriceHKD() {
 		 return this.prices.stream().filter(p ->
 		 	p.getStartDate().before(Calendar.getInstance().getTime())

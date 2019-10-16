@@ -137,10 +137,6 @@ public class ProductServiceImpl implements IProductService {
 
 	}
 	
-	
-
-
-
 	@Override
 	public io.nzbee.domain.product.Product dtoToDO(Object dto) {
 		// TODO Auto-generated method stub
@@ -153,8 +149,8 @@ public class ProductServiceImpl implements IProductService {
 		domainProduct.setProductCreateDt(productDto.getProductCreateDt());
 		domainProduct.setProductDesc(productDto.getProductDesc());
 		domainProduct.setProductImage(productDto.getProductImage());
-		//domainProduct.setProductMarkdown(productDto.getProductMarkdown());
-		//domainProduct.setProductRetail(productDto.getProductRetail());
+		domainProduct.setProductMarkdown(productDto.getProductMarkdown());
+		domainProduct.setProductRetail(productDto.getProductRetail());
 		return domainProduct;
 	}
 

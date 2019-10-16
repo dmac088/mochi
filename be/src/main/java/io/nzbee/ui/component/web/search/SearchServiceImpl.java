@@ -218,8 +218,17 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 	@SuppressWarnings("unchecked")
 	@Override
 	// @Cacheable
-	public Search findAll(String lcl, String currency, String categoryDesc, String searchTerm, int page, int size,
-			String sortBy, List<String> categoryTokens, List<String> brandTokens, List<String> tagTokens, List<String> priceTokens) {
+	public Search findAll(String lcl, 
+						  String currency, 
+						  String categoryDesc, 
+						  String searchTerm, 
+						  int page, 
+						  int size,
+						  String sortBy, 
+						  List<String> categoryTokens, 
+						  List<String> brandTokens, 
+						  List<String> tagTokens, 
+						  List<String> priceTokens) {
 
 		FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
 
@@ -421,7 +430,9 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 							   "product.productUPC",
 							   "product.productCreateDt",
 							   "product.brand.brandCode",
-							   "brandDescForIndex");
+							   "brandDescForIndex",
+							   "product.currentRetailPrice"		+ currency,
+							   "product.currentMarkdownPrice" 	+ currency);
 
 		// get the results using jpaQuery object
 		List<Object[]> results = jpaQuery.getResultList();
@@ -435,8 +446,9 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			p.setLclCd(lcl);
 			p.setProductUPC(r[5].toString());
 			p.setProductCreateDt((Date) r[6]);
+			p.setProductRetail(Double.parseDouble(r[9].toString()));
+			p.setProductMarkdown(Double.parseDouble(r[10].toString()));
 			p.setCurrency(currency);
-			//what about the category code?
 			return p;
 		}).collect(Collectors.toList());
 
