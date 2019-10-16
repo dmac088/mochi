@@ -134,33 +134,19 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			
 			uniqueCodes.addAll(codes);
 			
-			//we need to use a standard loop to extract a range
-			for (int i=0; i < codes.size(); i++) {
-					//we need to store this information in something like an enum
-					//parse this to a token to fetch and use the ordinal to retrieve the Lucene fieldReference
-					List<String> ls = codes.subList(0, i+1).stream().filter(o -> !(o.isEmpty())).collect(Collectors.toList());
-					String prefix = f.getFieldName().split("\\.")[0];
-					int numParents = codes.size() - ls.size();
-					
-					String newToken = "/" + String.join("/", ls);
-					String newFieldReference = prefix +  StringUtils.repeat(".parent", numParents) + ".categoryToken";
-					
-					//System.out.println("token = " + "/" + String.join("/", ls));
-					//System.out.println("fieldReference = " + prefix +  StringUtils.repeat(".parent", numParents) + ".categoryToken");
-					
-					uniqueFieldRefs.add(newFieldReference);
-			}			
+			//if codes array length is > 1 then the facet is hierarchical
+			if(codes.size() > 1) {
+				getFieldRefs(f, codes, uniqueFieldRefs);
+			}
+			
 		});
 
 		
 		uniqueFieldRefs.stream().forEach(fr -> {
-			
 			FacetingRequest frq = qb.facet().name(facetingName).onField(fr) // in category class
 					.discrete().orderedBy(FacetSortOrder.COUNT_DESC).includeZeroCounts(false).createFacetingRequest();
 			
 			jpaQuery.getFacetManager().enableFaceting(frq);
-			//System.out.println(fr);		
-			//System.out.println(StringUtils.join(jpaQuery.getFacetManager().getFacets(facetingName)));
 			facets.addAll(jpaQuery.getFacetManager().getFacets(facetingName));
 		});
 		
@@ -182,6 +168,24 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		});
 		//get the object array for the ids in previous step
 		return lef;
+	}
+	
+	
+	private void getFieldRefs(Facet f, List<String> codes, final Set<String> fieldRefs) { 
+		//we need to use a standard loop to extract a range
+		for (int i=0; i < codes.size(); i++) {
+				//we need to store this information in something like an enum
+				//parse this to a token to fetch and use the ordinal to retrieve the Lucene fieldReference
+				List<String> ls = codes.subList(0, i+1).stream().filter(o -> !(o.isEmpty())).collect(Collectors.toList());
+				String prefix = f.getFieldName().split("\\.")[0];
+				String suffix = f.getFieldName().split("\\.")[1];
+				int numParents = codes.size() - ls.size();
+				
+				String newToken = "/" + String.join("/", ls);
+				String newFieldReference = prefix +  StringUtils.repeat(".parent", numParents) + "." + suffix;
+
+				fieldRefs.add(newFieldReference);
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -248,11 +252,11 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 												 "brandCode",
 												 brandService));
 
-//		System.out.println(facetList.size());
-//		
-//		facetList.stream().forEach(f -> {
-//			System.out.println(f.getEntity().getClass().getSimpleName() + " - " + f.getValue() + " - " + f.getCount());
-//		});
+		System.out.println(facetList.size());
+		
+		facetList.stream().forEach(f -> {
+			System.out.println(f.getEntity().getClass().getSimpleName() + " - " + f.getValue() + " - " + f.getCount());
+		});
 //		
 		
 //		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, jpaQuery, CategoryVars.PRIMARY_CATEGORY_FACET_NAME,
