@@ -107,8 +107,34 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 	}
 
 	
+	private List<EntityFacet> processFacets(	String locale, 
+											String currency,
+											QueryBuilder qb,
+											org.hibernate.search.jpa.FullTextQuery jpaQuery, 
+											List<EntityFacet> facets, 
+											String facetingName,
+											IService service) {
+		
+		List<EntityFacet> lf = facets.stream().filter(c -> (!c.getFacetingName().equals(facetingName))).collect(Collectors.toList());
+		
+		facets.removeAll(lf);
+		
+		facets.addAll(lf.stream()
+						.map(f -> this.getDiscreteFacets(	
+															locale,
+															currency,
+															qb, 
+															jpaQuery, 
+															f.getFacetingName(), 
+															f.getFieldName(),
+															service
+														)
+							).collect(Collectors.toList()).stream().flatMap(List<EntityFacet>::stream).collect(Collectors.toList()));
+		return facets;
+	}
+	
 
-	private <T> List<EntityFacet<T>> getDiscreteFacets(String locale, 
+	private  List<EntityFacet> getDiscreteFacets(	   String locale, 
 													   String currency, 
 													   QueryBuilder qb, 
 													   org.hibernate.search.jpa.FullTextQuery jpaQuery,
@@ -155,7 +181,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		List<IDomainObject> lc = service.findAll(locale, currency, new ArrayList<String>(uniqueCodes));
 
 		//create a new array of entity facets
-		List<EntityFacet<T>> lef = new ArrayList<EntityFacet<T>>(uniqueCodes.size());
+		List<EntityFacet> lef = new ArrayList<EntityFacet>(uniqueCodes.size());
 		
 		facets.stream().forEach(f -> {
 				Optional<IDomainObject> dO = lc.stream()
@@ -166,6 +192,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 					lef.add(new EntityFacet(f, dO.get()));
 				}
 		});
+		
 		//get the object array for the ids in previous step
 		return lef;
 	}
@@ -251,12 +278,15 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 												 CategoryVars.BRAND_FACET_NAME,
 												 "brandCode",
 												 brandService));
-
-		System.out.println(facetList.size());
 		
 		facetList.stream().forEach(f -> {
 			System.out.println(f.getEntity().getClass().getSimpleName() + " - " + f.getValue() + " - " + f.getCount());
 		});
+		
+		//we need to combine the passed facets, then reprocess them
+		//jpaQuery.getFacetManager().getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
+		
+		
 //		
 		
 //		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, jpaQuery, CategoryVars.PRIMARY_CATEGORY_FACET_NAME,
@@ -471,53 +501,40 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 //		return this.getParentCategoryFacets(cfs, parentFacet, qb, q, locale, currency);
 //	}
 
-	@SuppressWarnings("unchecked")
-	private List<Facet> getRangeFacets(QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery jpaQuery,
-			String currency) {
-
-		org.apache.lucene.search.Sort sort = getSortField("priceDesc", currency);
-		jpaQuery.setSort(sort);
-
-		List<io.nzbee.entity.product.attribute.ProductAttribute> results = jpaQuery.getResultList();
-
-		if (results.isEmpty()) {
-			return new ArrayList<Facet>();
-		}
-
-		Double maxPrice = results.stream().findFirst().get().getProduct().getCurrentMarkdownPriceHKD();
-		Double minPrice = Lists.reverse(results).stream().findFirst().get().getProduct().getCurrentMarkdownPriceHKD();
-		Double inc = (maxPrice > 0) ? (maxPrice - ((minPrice.equals(maxPrice)) ? 0 : minPrice)) / 4 : maxPrice;
-
-		inc = new BigDecimal(inc).setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
-
-		Double below = inc,
-				froma = (new BigDecimal(inc + new Double(0.01)).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()),
-				toa = (new BigDecimal(inc * 2).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()),
-				fromb = (new BigDecimal(toa + new Double(0.01)).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()),
-				tob = (new BigDecimal(inc * 4).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()), above = tob;
-
-		FacetingRequest facetRequest = qb.facet().name(CategoryVars.PRICE_FACET_NAME)
-				.onField("product.currentMarkdownPrice" + currency + "Facet") // In product class
-				.range().below(below).from(froma).to(toa).from(fromb).to(tob).above(above)
-				.orderedBy(FacetSortOrder.RANGE_DEFINITION_ORDER).createFacetingRequest();
-
-		jpaQuery.getFacetManager().enableFaceting(facetRequest);
-		return jpaQuery.getFacetManager().getFacets(CategoryVars.PRICE_FACET_NAME);
-	}
+//	@SuppressWarnings("unchecked")
+//	private List<Facet> getRangeFacets(QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery jpaQuery,
+//			String currency) {
 //
-//	private Set<Facet> processFacets(Set<Facet> allFacets, QueryBuilder qb,
-//			org.hibernate.search.jpa.FullTextQuery jpaQuery, String currency, String facetingName) {
-//		List<Facet> processlf = allFacets.stream().filter(c -> (!c.getFacetingName().equals(facetingName)))
-//				.collect(Collectors.toList());
-//		allFacets.removeAll(processlf);
-//		allFacets.addAll(processlf.stream().map(pf -> {
-//			return (pf.getFacetingName().equals(CategoryVars.PRICE_FACET_NAME))
-//					? this.getRangeFacets(qb, jpaQuery, currency)
-//					: this.getDiscreteFacets(qb, jpaQuery, pf.getFacetingName(), pf.getFieldName());
+//		org.apache.lucene.search.Sort sort = getSortField("priceDesc", currency);
+//		jpaQuery.setSort(sort);
 //
-//		}).collect(Collectors.toList()).stream().flatMap(List::stream).collect(Collectors.toSet()));
-//		return allFacets;
+//		List<io.nzbee.entity.product.attribute.ProductAttribute> results = jpaQuery.getResultList();
+//
+//		if (results.isEmpty()) {
+//			return new ArrayList<Facet>();
+//		}
+//
+//		Double maxPrice = results.stream().findFirst().get().getProduct().getCurrentMarkdownPriceHKD();
+//		Double minPrice = Lists.reverse(results).stream().findFirst().get().getProduct().getCurrentMarkdownPriceHKD();
+//		Double inc = (maxPrice > 0) ? (maxPrice - ((minPrice.equals(maxPrice)) ? 0 : minPrice)) / 4 : maxPrice;
+//
+//		inc = new BigDecimal(inc).setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
+//
+//		Double below = inc,
+//				froma = (new BigDecimal(inc + new Double(0.01)).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()),
+//				toa = (new BigDecimal(inc * 2).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()),
+//				fromb = (new BigDecimal(toa + new Double(0.01)).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()),
+//				tob = (new BigDecimal(inc * 4).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()), above = tob;
+//
+//		FacetingRequest facetRequest = qb.facet().name(CategoryVars.PRICE_FACET_NAME)
+//				.onField("product.currentMarkdownPrice" + currency + "Facet") // In product class
+//				.range().below(below).from(froma).to(toa).from(fromb).to(tob).above(above)
+//				.orderedBy(FacetSortOrder.RANGE_DEFINITION_ORDER).createFacetingRequest();
+//
+//		jpaQuery.getFacetManager().enableFaceting(facetRequest);
+//		return jpaQuery.getFacetManager().getFacets(CategoryVars.PRICE_FACET_NAME);
 //	}
+
 
 	private org.apache.lucene.search.Sort getSortField(String field, String currency) {
 		switch (field) {
