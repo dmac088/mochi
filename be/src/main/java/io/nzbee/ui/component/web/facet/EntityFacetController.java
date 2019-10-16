@@ -10,33 +10,33 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
-public class NavFacetController {
+public class EntityFacetController {
     
 	@Autowired
-	private INavFacetService navFacetService;
+	private IEntityFacetService navFacetService;
 
 	@PostMapping("/Product/{locale}/{currency}/{categoryDesc}/tags")
-	public NavFacetResult getTags(@PathVariable String locale, @PathVariable String currency, @PathVariable String categoryDesc, @RequestBody final NavFacetContainer selectedFacets) {
+	public EntityFacetResult getTags(@PathVariable String locale, @PathVariable String currency, @PathVariable String categoryDesc, @RequestBody final EntityFacetContainer selectedFacets) {
 		return navFacetService.findAll(locale, currency, categoryDesc, selectedFacets);
 	} 
 	
     @GetMapping("/Category/{lcl}/{curr}")
-    public NavFacetResult getCategories(@PathVariable String lcl, @PathVariable String curr) {
+    public EntityFacetResult getCategories(@PathVariable String lcl, @PathVariable String curr) {
     	return navFacetService.findAll(lcl, curr);
     }
 
     @PostMapping("/Category/{lcl}/{curr}/desc/{categoryDesc}/children")
-    public NavFacetResult getCategoryChildren(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody NavFacetContainer selectedFacets) {
+    public EntityFacetResult getCategoryChildren(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody EntityFacetContainer selectedFacets) {
     	return navFacetService.findAll(lcl, curr, categoryDesc, selectedFacets);
     }
     
     @GetMapping("/Brand/{lcl}/{curr}/category/{categoryCode}")
-    public NavFacetResult getBrands(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryCode) {
+    public EntityFacetResult getBrands(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryCode) {
     	return navFacetService.findAllBrands(lcl, categoryCode);
     }
 	
     @PostMapping("/Product/{lcl}/{curr}/category/{categoryDesc}")
-    public NavFacetResult getAll(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody NavFacetContainer selectedFacets) {
+    public EntityFacetResult getAll(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody EntityFacetContainer selectedFacets) {
     	return navFacetService.findAll(lcl, curr, categoryDesc, selectedFacets);
     }
     

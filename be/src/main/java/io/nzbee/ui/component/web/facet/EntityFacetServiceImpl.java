@@ -19,7 +19,7 @@ import io.nzbee.variables.ProductVars;
 @Service(value = "SidebarService")
 @Transactional
 //@CacheConfig(cacheNames="products")
-public class NavFacetServiceImpl extends UIService implements INavFacetService {
+public class EntityFacetServiceImpl extends UIService implements IEntityFacetService {
 
 	@Autowired
 	private ITagService tagService;
@@ -35,9 +35,9 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 	private IProductService productService;
 
 	@Override
-	public NavFacetResult findAll(String locale, String currency) {
-		NavFacetContainer nfc = new NavFacetContainer();
-		NavFacetResult nfr = new NavFacetResult();
+	public EntityFacetResult findAll(String locale, String currency) {
+		EntityFacetContainer nfc = new EntityFacetContainer();
+		EntityFacetResult nfr = new EntityFacetResult();
 		
 		nfc.getFacets().addAll(	categoryService.findAll(locale, currency).stream().map(c -> {
 									EntityFacet<Category> cnf = c.toFacet();
@@ -51,11 +51,11 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 	}
 	
 	@Override
-	public NavFacetResult findAllBrands(String locale, String category) {
+	public EntityFacetResult findAllBrands(String locale, String category) {
 		List<Brand> brands = brandService.findAll(category, locale);
 		
-		NavFacetContainer nfc = new NavFacetContainer();
-		NavFacetResult nfr = new NavFacetResult();
+		EntityFacetContainer nfc = new EntityFacetContainer();
+		EntityFacetResult nfr = new EntityFacetResult();
 		
 		List<NavFacet<Brand>> brandBars = brands.stream().map(b -> {
 			NavFacet<Brand> s = convertBrandToNavFacet(b);
@@ -70,13 +70,13 @@ public class NavFacetServiceImpl extends UIService implements INavFacetService {
 	}
 	
 	@Override
-	public NavFacetResult findAll(String locale, String currency, String categoryDesc, NavFacetContainer selectedFacets) {
+	public EntityFacetResult findAll(String locale, String currency, String categoryDesc, EntityFacetContainer selectedFacets) {
 		List<Tag> lt = selectedFacets.getTags().stream().map(t -> t.getPayload()).collect(Collectors.toList());
 		List<Brand> lb = selectedFacets.getBrands().stream().map(t -> t.getPayload()).collect(Collectors.toList());
 		List<Category> lc = selectedFacets.getProductCategories().stream().map(t -> t.getPayload()).collect(Collectors.toList());
 		
-		NavFacetContainer nfc = new NavFacetContainer();
-		NavFacetResult nfr = new NavFacetResult();
+		EntityFacetContainer nfc = new EntityFacetContainer();
+		EntityFacetResult nfr = new EntityFacetResult();
 		
 		List<Category> categories = categoryService.findAll(locale, currency, categoryDesc, lb, lt);
 		List<Brand> brands = brandService.findAll(locale, currency, categoryDesc, lc, lt);

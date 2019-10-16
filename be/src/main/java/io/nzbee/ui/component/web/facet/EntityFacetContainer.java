@@ -12,7 +12,7 @@ import io.nzbee.domain.category.Category;
 import io.nzbee.domain.product.Product;
 import io.nzbee.domain.tag.Tag;
 
-public class NavFacetContainer {
+public class EntityFacetContainer {
 
 	
 	private List<EntityFacet<?>> facets = new ArrayList<EntityFacet<?>>();
