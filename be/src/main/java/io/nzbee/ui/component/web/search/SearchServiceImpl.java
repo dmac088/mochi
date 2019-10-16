@@ -86,10 +86,10 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 								NavFacetContainer selectedFacets) {
 
 		// convert selected facets into token lists
-		List<String> categoryTokens = this.getFacetTokens(selectedFacets.getProductCategories());
-		List<String> brandTokens 	= this.getFacetTokens(selectedFacets.getBrands());
-		List<String> tagTokens 		= this.getFacetTokens(selectedFacets.getTags());
-		List<String> priceTokens 	= this.getFacetTokens(selectedFacets.getPrices());
+		List<String> categoryTokens = selectedFacets.getProductCategories().stream().map(f->f.getValue()).collect(Collectors.toList());
+		List<String> brandTokens 	= selectedFacets.getBrands().stream().map(f->f.getValue()).collect(Collectors.toList());
+		List<String> tagTokens 		= selectedFacets.getTags().stream().map(f->f.getValue()).collect(Collectors.toList());
+		List<String> priceTokens 	= selectedFacets.getPrices().stream().map(f->f.getValue()).collect(Collectors.toList());
 		
 		// call the domain layer service to get a Page of Products
 		return this.findAll(
@@ -458,7 +458,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		
 		
 		NavFacetContainer nfc = new NavFacetContainer();
-		//nfc.setFacets(returnFacets);
+		nfc.setFacets(facetList.stream().collect(Collectors.toList()));
 		search.setFacets(nfc);
 		return search;
 	}

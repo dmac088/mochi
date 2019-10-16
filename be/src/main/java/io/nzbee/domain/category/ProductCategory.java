@@ -3,6 +3,7 @@ package io.nzbee.domain.category;
 import java.util.List;
 
 import io.nzbee.domain.product.Product;
+import io.nzbee.ui.component.web.facet.EntityFacet;
 
 public class ProductCategory extends Category {
 
@@ -43,6 +44,12 @@ public class ProductCategory extends Category {
 	public Long getLevel() {
 		// TODO Auto-generated method stub
 		return super.getCategoryLevel();
+	}
+
+	@Override
+	public EntityFacet toFacet() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

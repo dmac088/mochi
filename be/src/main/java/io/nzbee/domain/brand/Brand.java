@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import io.nzbee.domain.IDomainObject;
 import io.nzbee.domain.category.BrandCategory;
+import io.nzbee.ui.component.web.facet.EntityFacet;
 
 public class Brand implements IDomainObject {
 
@@ -66,6 +67,12 @@ public class Brand implements IDomainObject {
 	public boolean isHierarchical() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public EntityFacet toFacet() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

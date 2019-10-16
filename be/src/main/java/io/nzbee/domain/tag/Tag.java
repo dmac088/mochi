@@ -1,6 +1,9 @@
 package io.nzbee.domain.tag;
 
-public class Tag {
+import io.nzbee.domain.IDomainObject;
+import io.nzbee.ui.component.web.facet.EntityFacet;
+
+public class Tag implements IDomainObject{
 
 	private Long tagId;
 	
@@ -59,6 +62,30 @@ public class Tag {
         		.append(", tagDesc=").append(tagDesc)
                 .append(", locale=").append(locale);
         return builder.toString();
+	}
+
+	@Override
+	public String getCode() {
+		// TODO Auto-generated method stub
+		return this.tagCode;
+	}
+
+	@Override
+	public String getDesc() {
+		// TODO Auto-generated method stub
+		return this.tagDesc;
+	}
+
+	@Override
+	public boolean isHierarchical() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public EntityFacet toFacet() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
