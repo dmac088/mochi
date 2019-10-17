@@ -6,6 +6,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+
+import io.nzbee.domain.IDomainObject;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.brand.IBrandService;
 import io.nzbee.domain.category.Category;
@@ -57,8 +59,8 @@ public class EntityFacetServiceImpl extends UIService implements IEntityFacetSer
 		EntityFacetContainer nfc = new EntityFacetContainer();
 		EntityFacetResult nfr = new EntityFacetResult();
 		
-		List<NavFacet<Brand>> brandBars = brands.stream().map(b -> {
-			NavFacet<Brand> s = convertBrandToNavFacet(b);
+		List<EntityFacet<Brand>> brandBars = brands.stream().map(b -> {
+			EntityFacet<Brand> s = convertBrandToNavFacet(b);
 			return s;
 		}).collect(Collectors.toList());
 		
@@ -71,9 +73,7 @@ public class EntityFacetServiceImpl extends UIService implements IEntityFacetSer
 	
 	@Override
 	public EntityFacetResult findAll(String locale, String currency, String categoryDesc, EntityFacetContainer selectedFacets) {
-		List<Tag> lt = selectedFacets.getTags().stream().map(t -> t.getPayload()).collect(Collectors.toList());
-		List<Brand> lb = selectedFacets.getBrands().stream().map(t -> t.getPayload()).collect(Collectors.toList());
-		List<Category> lc = selectedFacets.getProductCategories().stream().map(t -> t.getPayload()).collect(Collectors.toList());
+		List<IDomainObject> lt = selectedFacets.getFacets().stream().map(t -> (IDomainObject) t.getEntity()).collect(Collectors.toList());
 		
 		EntityFacetContainer nfc = new EntityFacetContainer();
 		EntityFacetResult nfr = new EntityFacetResult();
@@ -82,18 +82,18 @@ public class EntityFacetServiceImpl extends UIService implements IEntityFacetSer
 		List<Brand> brands = brandService.findAll(locale, currency, categoryDesc, lc, lt);
 		List<Tag> tags = tagService.findAll(locale, currency, categoryDesc, lc, lb);
 
-		List<NavFacet<Category>> catBars = categories.stream().map(c -> {
-			NavFacet<Category> s = convertCatToNavFacet(c);
+		List<EntityFacet<Category>> catBars = categories.stream().map(c -> {
+			EntityFacet<Category> s = convertCatToNavFacet(c);
 			return s;
 		}).collect(Collectors.toList());
 	
-		List<NavFacet<Brand>> brandBars = brands.stream().map(b -> {
-			NavFacet<Brand> s = convertBrandToNavFacet(b);
+		List<EntityFacet<Brand>> brandBars = brands.stream().map(b -> {
+			EntityFacet<Brand> s = convertBrandToNavFacet(b);
 			return s;
 		}).collect(Collectors.toList());
 		
-		List<NavFacet<Tag>> tagBars = tags.stream().map(t -> {
-			NavFacet<Tag> s = convertTagToNavFacet(t);
+		List<EntityFacet<Tag>> tagBars = tags.stream().map(t -> {
+			EntityFacet<Tag> s = convertTagToNavFacet(t);
 			return s;
 		}).collect(Collectors.toList());
 		
@@ -108,8 +108,8 @@ public class EntityFacetServiceImpl extends UIService implements IEntityFacetSer
 	}
 	
 	@Override
-    public NavFacet<Category> convertCatToNavFacet(final Category c) {
-    	final NavFacet<Category> s = new NavFacet<Category>();
+    public EntityFacet<Category> convertCatToNavFacet(final Category c) {
+    	final EntityFacet<Category> s = new EntityFacet<Category>();
     	s.setFacetClassName(c.getClass().getSimpleName());
     	s.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
     	s.setFacetId(calcFacetId(s.getFacetClassName(), c.getCategoryCode().toString()));
@@ -120,8 +120,8 @@ public class EntityFacetServiceImpl extends UIService implements IEntityFacetSer
     } 
 	
     @Override
-	public NavFacet<Tag> convertTagToNavFacet(Tag t) {
-		NavFacet<Tag> s = new NavFacet<Tag>();
+	public EntityFacet<Tag> convertTagToNavFacet(Tag t) {
+		EntityFacet<Tag> s = new EntityFacet<Tag>();
 		s.setFacetClassName(t.getClass().getSimpleName());
 		s.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
 		s.setFacetId(calcFacetId(s.getFacetClassName(), t.getTagCode()));
@@ -132,8 +132,8 @@ public class EntityFacetServiceImpl extends UIService implements IEntityFacetSer
 	}
 	
     @Override
-    public NavFacet<Brand> convertBrandToNavFacet(final Brand b) {
-    	final NavFacet<Brand> s = new NavFacet<Brand>();
+    public EntityFacet<Brand> convertBrandToNavFacet(final Brand b) {
+    	final EntityFacet<Brand> s = new EntityFacet<Brand>();
     	s.setFacetClassName(b.getClass().getSimpleName());
     	s.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
     	s.setFacetId(calcFacetId(s.getFacetClassName(), b.getBrandCode()));
@@ -152,5 +152,11 @@ public class EntityFacetServiceImpl extends UIService implements IEntityFacetSer
     public String calcToken(String className, String id) {
     	return className + ".token" + "[" + id + "]";
     }
+
+	@Override
+	public EntityFacet toEntityFacet(IDomainObject dO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

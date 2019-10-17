@@ -68,11 +68,5 @@ public class Brand implements IDomainObject {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
-	@Override
-	public EntityFacet toFacet() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 }

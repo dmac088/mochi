@@ -19,6 +19,8 @@ public interface IService<T> {
 	
 	List<T> findAll(String locale, String currency, List<String> codes);
 	
+	List<T> findAll(String locale, String currency, String categoryDesc, List<IDomainObject> lDo);
+	
 	T dtoToDO(Object dto);
 	
 	String tokenToCode(String token);
