@@ -10,6 +10,4 @@ public interface IDomainObject<T> {
 	
 	public boolean isHierarchical();
 	
-	public EntityFacet<T> toFacet();
-	
 }
