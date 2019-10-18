@@ -2,11 +2,11 @@ package io.nzbee.ui.component.web.search.facet;
 
 import io.nzbee.domain.IDomainObject;
 
-public class EntityFacet<T> implements IFacet<T> {
+public class EntityFacet implements IFacet {
 
-	private final IDomainObject<T> entity;
+	private final IDomainObject entity;
 
-	public EntityFacet(IDomainObject<T> entity) {
+	public EntityFacet(IDomainObject entity) {
 	  this.entity = entity;
 	}
 	
@@ -29,7 +29,7 @@ public class EntityFacet<T> implements IFacet<T> {
 	}
 
 	@Override
-	public IDomainObject<T> getEntity() {
+	public IDomainObject getEntity() {
 		// TODO Auto-generated method stub
 		return this.entity;
 	}
