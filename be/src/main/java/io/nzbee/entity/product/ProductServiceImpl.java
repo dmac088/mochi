@@ -68,8 +68,6 @@ public class ProductServiceImpl implements IProductService {
 									String categoryDesc,
 									List<IDto> ldto) {
 		
-		List<String> a = ldto.stream().filter(dto -> dto.getClass().equals(Category.class)).map(c -> c.getCode()).collect(Collectors.toList());
-		
 		return productDAO.findAll(locale,
 						 		  currency,
 						 		  page, 

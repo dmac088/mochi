@@ -2,7 +2,7 @@ package io.nzbee.ui.component.web.search.facet;
 
 import io.nzbee.domain.IDomainObject;
 
-public interface IFacet<T> {
+public interface IFacet {
 
 	String getCode();
 	
@@ -11,6 +11,4 @@ public interface IFacet<T> {
 	boolean isHierarchical();
 	
 	IDomainObject getEntity();
-
-	
 }

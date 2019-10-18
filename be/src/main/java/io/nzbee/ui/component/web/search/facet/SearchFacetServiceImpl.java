@@ -91,7 +91,7 @@ public class SearchFacetServiceImpl extends UIService implements ISearchFacetSer
 										.stream().filter(o -> !o.getEntity().getClass().equals(Category.class))
 										.map(c -> (IDomainObject) c.getEntity()).collect(Collectors.toList()))
 									.stream().map(dO -> new EntityFacet(dO))
-									.collect(Collectors.toList());
+									.collect(Collectors.toList()); 
 									
 		
 //		List<Brand> brands = brandDomainService.findAll(locale, currency, categoryDesc, selectedFacets.getFacets());
