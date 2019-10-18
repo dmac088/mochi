@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import io.nzbee.domain.IDomainObject;
 import io.nzbee.variables.CategoryVars;
 
-@Service
+@Service(value = "categoryDomainService")
 @Transactional
 @CacheConfig(cacheNames="categories")
 public class CategoryServiceImpl implements ICategoryService {
