@@ -25,7 +25,7 @@ public class SearchFacetContainer {
 		return this.facets.stream()
 				.filter(f -> 
 				f.getEntity().getClass().getSimpleName().equals(ProductCategory.class.getSimpleName()))
-				.map(f -> (SearchFacet) f)
+				.map(f -> (IFacet) f)
 				.collect(Collectors.toList());
 	}
 	
@@ -33,7 +33,7 @@ public class SearchFacetContainer {
 		return this.facets.stream()
 				.filter(f -> 
 				f.getEntity().getClass().getSimpleName().equals(BrandCategory.class.getSimpleName()))
-				.map(f -> (SearchFacet) f)
+				.map(f -> (IFacet) f)
 				.collect(Collectors.toList());
 	}
 
@@ -41,7 +41,7 @@ public class SearchFacetContainer {
 		return this.facets.stream()
 				.filter(f -> 
 				f.getEntity().getClass().getSimpleName().equals(Brand.class.getSimpleName()))
-				.map(f -> (SearchFacet) f)
+				.map(f -> (IFacet) f)
 				.collect(Collectors.toList());
 	}
 
@@ -49,17 +49,17 @@ public class SearchFacetContainer {
 		return this.facets.stream()
 				.filter(f -> 
 				f.getEntity().getClass().getSimpleName().equals(Tag.class.getSimpleName()))
-				.map(f -> (SearchFacet) f)
+				.map(f -> (IFacet) f)
 				.collect(Collectors.toList());
 	}
 
-	public List<SearchFacet> getPrices() {
+	public List<IFacet> getPrices() {
 		return this.facets.stream()
 				.filter(f -> 
 				f.getEntity().getClass().getSimpleName().equals(Product.class.getSimpleName() 
 														  + ".productMarkdown"
 														   ))
-				.map(f -> (SearchFacet) f).collect(Collectors.toList());
+				.map(f -> (IFacet) f).collect(Collectors.toList());
 	}
 	
 	public void setCategories(List<IFacet> categories) {
