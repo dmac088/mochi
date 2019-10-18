@@ -7,13 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.IDomainObject;
-import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.brand.IBrandService;
 import io.nzbee.domain.category.Category;
 import io.nzbee.domain.category.ICategoryService;
 import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.tag.ITagService;
-import io.nzbee.domain.tag.Tag;
 import io.nzbee.ui.component.web.generic.UIService;
 import io.nzbee.variables.ProductVars;
 
@@ -31,7 +29,7 @@ public class SearchFacetServiceImpl extends UIService implements ISearchFacetSer
 	private ICategoryService categoryDomainService;
 	
 	@Autowired
-	@Qualifier("categoryDTOService")
+	@Qualifier("categoryDtoService")
 	private io.nzbee.dto.category.ICategoryService categoryDTOService;
 
 	@Autowired
