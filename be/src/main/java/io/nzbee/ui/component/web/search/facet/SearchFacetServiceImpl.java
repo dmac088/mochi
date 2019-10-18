@@ -42,18 +42,18 @@ public class SearchFacetServiceImpl extends UIService implements ISearchFacetSer
 
 	@Override
 	public SearchFacetResult findAll(String locale, String currency) {
-//		SearchFacetContainer nfc = new SearchFacetContainer();
-//		SearchFacetResult nfr = new SearchFacetResult();
-//		
-//		nfc.getFacets().addAll(	categoryDomainService.findAll(locale, currency).stream().map(c -> {
-//									SearchFacet<Category> cnf = c.toFacet();
-//									return cnf;
-//							})
-//							.collect(Collectors.toList()));
-//		
-//		nfr.setResult(nfc);
-//		return nfr;
-		return null;
+		SearchFacetContainer nfc = new SearchFacetContainer();
+		SearchFacetResult nfr = new SearchFacetResult();
+		
+		nfc.getFacets().addAll(	categoryDomainService.findAll(locale, currency).stream().map(c -> {
+									IFacet cnf = new EntityFacet(c);
+									return cnf;
+							})
+							.collect(Collectors.toList()));
+		
+		nfr.setResult(nfc);
+		return nfr;
+		
 	}
 	
 	@Override
