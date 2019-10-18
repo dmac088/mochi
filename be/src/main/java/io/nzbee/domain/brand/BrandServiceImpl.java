@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-
 import io.nzbee.domain.IDomainObject;
-import io.nzbee.domain.category.Category;
-import io.nzbee.domain.tag.Tag;
 
 @Service(value = "brandDomainService")
 @Transactional
@@ -61,23 +58,13 @@ public class BrandServiceImpl implements IBrandService {
 		.collect(Collectors.toList());
     	return lb;
 	}
-    
-    @Override
-	@Transactional
-	@Cacheable
-	public List<Brand> findAllByCategory(String locale, String category) {
-//    	List<io.nzbee.dto.brand.Brand> lpb = brandService.findAll(category);
-//    	List<Brand> lb = lpb.stream().map(pb -> dtoToDO(pb))
-//		.collect(Collectors.toList());
-//    	return lb;
-    	return null;
-	}	
-    
-    @Override
+	
+	@Override
 	public List<Brand> findAll(String locale, String currency, String categoryDesc, List<IDomainObject> lDo) {
 		// TODO Auto-generated method stub
-		return null;
+		return null;//brandService.finall;
 	}
+
     
 	@Override
 	public Brand dtoToDO(Object dto) {
@@ -94,6 +81,8 @@ public class BrandServiceImpl implements IBrandService {
 		// TODO Auto-generated method stub
 		return token;
 	}
+
+
 
 	
 }

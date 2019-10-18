@@ -83,6 +83,14 @@ public class CategoryServiceImpl implements ICategoryService {
 							  .collect(Collectors.toList());
 	}
  
+	@Override
+	public List<Category> findAll(String locale, String currency, String categoryDesc,
+			List<IDomainObject> lDo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+    
 //    @Override
 //	@Transactional
 //	//@Cacheable
@@ -101,14 +109,7 @@ public class CategoryServiceImpl implements ICategoryService {
 //    			.collect(Collectors.toList());
 //	}
     
-    @Override
-	public List<Category> findAll(String locale, String currency, String categoryDesc, List<IDomainObject> lDo) {
-    	// TODO Auto-generated method stub
-  
-    	//lDo.stream().map(o -> categoryService.doToDto(dO));
-    	
-		return null;
-	}
+    
 
 
 	@Override
@@ -136,6 +137,7 @@ public class CategoryServiceImpl implements ICategoryService {
 		// TODO Auto-generated method stub
 		return token.substring(token.lastIndexOf('/')+1,token.length());
 	}
-	
+
+
 	
 }

@@ -3,8 +3,6 @@ package io.nzbee.domain.category;
 import java.util.List;
 
 import io.nzbee.domain.brand.Brand;
-import io.nzbee.ui.component.web.search.facet.SearchFacet;
-
 public class BrandCategory extends Category {
 
 

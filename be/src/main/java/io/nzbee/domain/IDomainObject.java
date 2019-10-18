@@ -1,8 +1,6 @@
 package io.nzbee.domain;
 
-import io.nzbee.ui.component.web.search.facet.SearchFacet;
-
-public interface IDomainObject<T> {
+public interface IDomainObject {
 
 	public String getCode();
 	

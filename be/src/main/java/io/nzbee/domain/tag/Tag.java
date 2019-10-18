@@ -1,7 +1,6 @@
 package io.nzbee.domain.tag;
 
 import io.nzbee.domain.IDomainObject;
-import io.nzbee.ui.component.web.search.facet.SearchFacet;
 
 public class Tag implements IDomainObject{
 
@@ -80,12 +79,6 @@ public class Tag implements IDomainObject{
 	public boolean isHierarchical() {
 		// TODO Auto-generated method stub
 		return false;
-	}
-
-	@Override
-	public SearchFacet toFacet() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }
