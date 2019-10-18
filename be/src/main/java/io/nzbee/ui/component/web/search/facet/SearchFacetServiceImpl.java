@@ -85,14 +85,14 @@ public class SearchFacetServiceImpl extends UIService implements ISearchFacetSer
 		SearchFacetContainer nfc = new SearchFacetContainer();
 		SearchFacetResult nfr = new SearchFacetResult();
 		
-		List<IFacet<?>> facets = categoryDomainService.findAll(
+		List<EntityFacet<?>> facets = categoryDomainService.findAll(
 										locale, 
 										currency, 
 										categoryDesc, 
 										selectedFacets.getFacets()
 										.stream().filter(o -> !o.getEntity().getClass().equals(Category.class))
-										.map(c -> (IDomainObject<?>) c.getEntity()).collect(Collectors.toList()))
-									.stream().map(dO -> (IFacet<?>) dO)
+										.map(c -> (IDomainObject) c.getEntity()).collect(Collectors.toList()))
+									.stream().map(dO -> new EntityFacet(dO))
 									.collect(Collectors.toList());
 									
 		

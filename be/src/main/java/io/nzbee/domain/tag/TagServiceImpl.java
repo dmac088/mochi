@@ -10,8 +10,7 @@ import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.tag.IProductTagService;
 import io.nzbee.entity.product.tag.ProductTag;
-import io.nzbee.domain.brand.Brand;
-import io.nzbee.domain.category.Category;
+import io.nzbee.domain.IDomainObject;
 
 
 //The Domain object service should be simple and dumb
@@ -67,19 +66,25 @@ public class TagServiceImpl implements ITagService {
 		return null;
 	}
 
+//	@Override
+//	public List<Tag> findAll(String locale, String currency, String categoryDesc, List<Category> categories,
+//			List<Brand> brands) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+//
+//	@Override
+//	public List<Tag> findAll(String locale, String currency, String categoryDesc, Double price,
+//			List<Category> categories, List<Brand> brands) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}	
+	
 	@Override
-	public List<Tag> findAll(String locale, String currency, String categoryDesc, List<Category> categories,
-			List<Brand> brands) {
+	public List<Tag> findAll(String locale, String currency, String categoryDesc, List<IDomainObject> lDo) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	@Override
-	public List<Tag> findAll(String locale, String currency, String categoryDesc, Double price,
-			List<Category> categories, List<Brand> brands) {
-		// TODO Auto-generated method stub
-		return null;
-	}	
 	
 //	@Override
 //	public List<Tag> findAll(String locale, String currency, String categoryDesc, List<Category> categories, List<Brand> brands) {

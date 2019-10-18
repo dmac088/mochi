@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import io.nzbee.dto.IDto;
 import io.nzbee.entity.party.IPartyService;
 import io.nzbee.entity.party.Party;
 import io.nzbee.entity.party.person.IPersonService;
@@ -182,23 +184,21 @@ public class CustomerServiceImpl implements ICustomerService {
 		return null;
 	}
 
-
 	@Override
 	public Optional<Customer> findByDesc(String desc) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-
 	@Override
-	public List<Customer> findAll(List<String> codes) {
+	public Customer entityToDTO(Object entity) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 
 	@Override
-	public Customer entityToDTO(Object entity) {
+	public List<Customer> findAll(List<IDto> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

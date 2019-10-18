@@ -14,14 +14,15 @@ public interface IService<T> {
 	//for a DTO we need the locale
 	Optional<T> findByDesc(String locale, String currency, String desc);
 	
-	//for a DTO we need the locale
 	List<T> findAll(String locale, String currency);
 	
 	List<T> findAll(String locale, String currency, List<String> codes);
 	
-	List<T> findAll(String locale, String currency, String categoryDesc, List<IDomainObject<T>> lDo);
+	List<T> findAll(String locale, String currency, String categoryDesc, List<IDomainObject> lDo);
 	
 	T dtoToDO(Object dto);
 	
 	String tokenToCode(String token);
+
+	
 }

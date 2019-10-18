@@ -15,15 +15,15 @@ import io.nzbee.domain.tag.Tag;
 public class SearchFacetContainer {
 
 	
-	private List<IFacet<?>> facets = new ArrayList<IFacet<?>>();
+	private List<IFacet> facets = new ArrayList<IFacet>();
 
 	@JsonIgnore
-	public List<IFacet<?>> getFacets() {
+	public List<IFacet> getFacets() {
 		return facets;
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<SearchFacet<ProductCategory>> getProductCategories() {
+	public List<IFacet<ProductCategory>> getProductCategories() {
 		return this.facets.stream()
 				.filter(f -> 
 				f.getEntity().getClass().getSimpleName().equals(ProductCategory.class.getSimpleName()))
@@ -32,7 +32,7 @@ public class SearchFacetContainer {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<SearchFacet<BrandCategory>> getBrandCategories() {
+	public List<IFacet<BrandCategory>> getBrandCategories() {
 		return this.facets.stream()
 				.filter(f -> 
 				f.getEntity().getClass().getSimpleName().equals(BrandCategory.class.getSimpleName()))
@@ -41,7 +41,7 @@ public class SearchFacetContainer {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<SearchFacet<Brand>> getBrands() {
+	public List<IFacet<Brand>> getBrands() {
 		return this.facets.stream()
 				.filter(f -> 
 				f.getEntity().getClass().getSimpleName().equals(Brand.class.getSimpleName()))
@@ -50,7 +50,7 @@ public class SearchFacetContainer {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<SearchFacet<Tag>> getTags() {
+	public List<IFacet<Tag>> getTags() {
 		return this.facets.stream()
 				.filter(f -> 
 				f.getEntity().getClass().getSimpleName().equals(Tag.class.getSimpleName()))
@@ -92,7 +92,7 @@ public class SearchFacetContainer {
 		this.facets.addAll(brandCategories);
 	}
 	
-	public void setFacets(List<IFacet<?>> collect) {
+	public void setFacets(List<IFacet> collect) {
 		// TODO Auto-generated method stub
 		this.facets = collect;
 	}

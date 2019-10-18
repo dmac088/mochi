@@ -70,7 +70,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 	private ITagService tagService;
 	
 	@Autowired
-	private ISearchFacetService facetService;
+	private ISearchFacetService<?> facetService;
 
 	@PersistenceContext(unitName = "mochiEntityManagerFactory")
 	private EntityManager em;

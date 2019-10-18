@@ -3,7 +3,6 @@ package io.nzbee.domain.category;
 import java.util.List;
 
 import io.nzbee.domain.product.Product;
-import io.nzbee.ui.component.web.search.facet.SearchFacet;
 
 public class ProductCategory extends Category {
 

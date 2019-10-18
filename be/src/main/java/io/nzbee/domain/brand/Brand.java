@@ -4,7 +4,6 @@ import java.util.Objects;
 
 import io.nzbee.domain.IDomainObject;
 import io.nzbee.domain.category.BrandCategory;
-import io.nzbee.ui.component.web.search.facet.SearchFacet;
 
 public class Brand implements IDomainObject {
 
