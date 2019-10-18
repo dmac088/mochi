@@ -8,8 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
-import io.nzbee.domain.brand.Brand;
-import io.nzbee.domain.tag.Tag;
+import io.nzbee.domain.IDomainObject;
 import io.nzbee.variables.CategoryVars;
 
 @Service
@@ -84,22 +83,31 @@ public class CategoryServiceImpl implements ICategoryService {
 							  .collect(Collectors.toList());
 	}
  
+//    @Override
+//	@Transactional
+//	//@Cacheable
+//	public List<Category> findAll(String locale, String currency, String categoryDesc, List<Brand> brands, List<Tag> tags) {
+//
+//    	return categoryService.findAll(
+//    			 locale,
+//    			 currency,
+//    			 categoryDesc,
+//    			// convert brand domain objects to brand DTOs
+//				 brands.stream().map(b -> brandService.doToDto(b)).collect(Collectors.toList()),  
+//				//convert tag domain objects to tag DTOs
+//				 tags.stream().map(t -> tagService.doToDto(t)).collect(Collectors.toList())  
+//				 )
+//    			.stream().map(c -> this.dtoToDO(c))
+//    			.collect(Collectors.toList());
+//	}
+    
     @Override
-	@Transactional
-	//@Cacheable
-	public List<Category> findAll(String locale, String currency, String categoryDesc, List<Brand> brands, List<Tag> tags) {
-
-    	return categoryService.findAll(
-    			 locale,
-    			 currency,
-    			 categoryDesc,
-    			// convert brand domain objects to brand DTOs
-				 brands.stream().map(b -> brandService.doToDto(b)).collect(Collectors.toList()),  
-				//convert tag domain objects to tag DTOs
-				 tags.stream().map(t -> tagService.doToDto(t)).collect(Collectors.toList())  
-				 )
-    			.stream().map(c -> this.dtoToDO(c))
-    			.collect(Collectors.toList());
+	public List<Category> findAll(String locale, String currency, String categoryDesc, List<IDomainObject> lDo) {
+    	// TODO Auto-generated method stub
+  
+    	//lDo.stream().map(o -> categoryService.doToDto(dO));
+    	
+		return null;
 	}
 
 
@@ -128,5 +136,6 @@ public class CategoryServiceImpl implements ICategoryService {
 		// TODO Auto-generated method stub
 		return token.substring(token.lastIndexOf('/')+1,token.length());
 	}
+	
 	
 }

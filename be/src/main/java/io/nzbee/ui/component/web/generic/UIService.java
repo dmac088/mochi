@@ -3,7 +3,7 @@ package io.nzbee.ui.component.web.generic;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import io.nzbee.ui.component.web.facet.NavFacet;
+import io.nzbee.ui.component.web.search.facet.NavFacet;
 
 public abstract class UIService {
 	

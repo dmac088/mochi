@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 
 import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.product.Product;
-import io.nzbee.ui.component.web.facet.EntityFacetContainer;
 import io.nzbee.ui.component.web.generic.UIService;
 import io.nzbee.ui.component.web.search.Search;
+import io.nzbee.ui.component.web.search.facet.SearchFacetContainer;
 
 @Service(value = "NavigationService")
 @Transactional
@@ -33,7 +33,7 @@ public class NavigationServiceImpl extends UIService implements INavigationServi
 							 int page, 
 							 int size, 
 							 String categoryDesc,
-							 EntityFacetContainer selectedFacets,
+							 SearchFacetContainer selectedFacets,
 							 String sortBy) {
 		
 		Page<Product> pp = productService.findAll(locale, 
@@ -63,7 +63,7 @@ public class NavigationServiceImpl extends UIService implements INavigationServi
 							 String categoryDesc,
 							 int page, 
 							 int size,
-							 EntityFacetContainer selectedFacets,
+							 SearchFacetContainer selectedFacets,
 							 String sortBy
 							 ) {
 

@@ -3,7 +3,7 @@ package io.nzbee.domain.category;
 import java.util.List;
 
 import io.nzbee.domain.brand.Brand;
-import io.nzbee.ui.component.web.facet.EntityFacet;
+import io.nzbee.ui.component.web.search.facet.SearchFacet;
 
 public class BrandCategory extends Category {
 
@@ -46,11 +46,6 @@ public class BrandCategory extends Category {
 		return super.getCategoryLevel();
 	}
 
-	@Override
-	public EntityFacet toFacet() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	
 }

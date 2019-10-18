@@ -19,7 +19,7 @@ public interface IService<T> {
 	
 	List<T> findAll(String locale, String currency, List<String> codes);
 	
-	List<T> findAll(String locale, String currency, String categoryDesc, List<IDomainObject> lDo);
+	List<T> findAll(String locale, String currency, String categoryDesc, List<IDomainObject<T>> lDo);
 	
 	T dtoToDO(Object dto);
 	

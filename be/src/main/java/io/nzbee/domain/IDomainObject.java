@@ -1,6 +1,6 @@
 package io.nzbee.domain;
 
-import io.nzbee.ui.component.web.facet.EntityFacet;
+import io.nzbee.ui.component.web.search.facet.SearchFacet;
 
 public interface IDomainObject<T> {
 
