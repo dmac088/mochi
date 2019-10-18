@@ -30,7 +30,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.google.common.collect.Lists;
-
 import io.nzbee.domain.IDomainObject;
 import io.nzbee.domain.IHierarchicalDomainObject;
 import io.nzbee.domain.IService;
@@ -49,7 +48,6 @@ import io.nzbee.ui.component.web.generic.UIService;
 import io.nzbee.ui.component.web.search.facet.SearchFacet;
 import io.nzbee.ui.component.web.search.facet.SearchFacetContainer;
 import io.nzbee.ui.component.web.search.facet.ISearchFacetService;
-import io.nzbee.ui.component.web.search.facet.NavFacet;
 
 @Service(value = "SearchService")
 @Transactional

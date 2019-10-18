@@ -4,12 +4,13 @@ import io.nzbee.domain.IDomainObject;
 
 public interface IFacet<T> {
 
-	public String getCode();
+	String getCode();
 	
-	public String getDesc();
+	String getDesc();
 	
-	public boolean isHierarchical();
+	boolean isHierarchical();
 	
-	public IDomainObject<T> getEntity();
+	IDomainObject getEntity();
+
 	
 }

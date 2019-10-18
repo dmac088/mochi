@@ -8,7 +8,7 @@ public interface ISearchFacetService<T> {
 
 	SearchFacetResult findAll(String locale, String currency, String category, SearchFacetContainer selectedFacets);
 
-	SearchFacet<T> toEntityFacet(IDomainObject<T> dO);
+	SearchFacet<T> toEntityFacet(IDomainObject dO);
 
 	String calcFacetId(String className, String id);
 

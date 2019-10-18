@@ -85,7 +85,7 @@ public class SearchFacetServiceImpl extends UIService implements ISearchFacetSer
 		SearchFacetContainer nfc = new SearchFacetContainer();
 		SearchFacetResult nfr = new SearchFacetResult();
 		
-		List<EntityFacet<?>> facets = categoryDomainService.findAll(
+		List<EntityFacet> facets = categoryDomainService.findAll(
 										locale, 
 										currency, 
 										categoryDesc, 
