@@ -45,11 +45,11 @@ import io.nzbee.domain.tag.Tag;
 import io.nzbee.entity.PageableUtil;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.ProductVars;
-import io.nzbee.ui.component.web.facet.EntityFacet;
-import io.nzbee.ui.component.web.facet.IEntityFacetService;
-import io.nzbee.ui.component.web.facet.NavFacet;
-import io.nzbee.ui.component.web.facet.EntityFacetContainer;
 import io.nzbee.ui.component.web.generic.UIService;
+import io.nzbee.ui.component.web.search.facet.SearchFacet;
+import io.nzbee.ui.component.web.search.facet.SearchFacetContainer;
+import io.nzbee.ui.component.web.search.facet.ISearchFacetService;
+import io.nzbee.ui.component.web.search.facet.NavFacet;
 
 @Service(value = "SearchService")
 @Transactional
@@ -70,7 +70,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 	private ITagService tagService;
 	
 	@Autowired
-	private IEntityFacetService facetService;
+	private ISearchFacetService facetService;
 
 	@PersistenceContext(unitName = "mochiEntityManagerFactory")
 	private EntityManager em;
@@ -83,7 +83,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 								int page,
 								int size,
 								String sortBy, 
-								EntityFacetContainer selectedFacets) {
+								SearchFacetContainer selectedFacets) {
 
 		// convert selected facets into token lists
 		List<String> categoryTokens = selectedFacets.getProductCategories().stream().map(f->f.getValue()).collect(Collectors.toList());
@@ -107,15 +107,15 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 	}
 
 	
-	private List<EntityFacet> processFacets(	String locale, 
+	private List<SearchFacet> processFacets(	String locale, 
 											String currency,
 											QueryBuilder qb,
 											org.hibernate.search.jpa.FullTextQuery jpaQuery, 
-											List<EntityFacet> facets, 
+											List<SearchFacet> facets, 
 											String facetingName,
 											IService service) {
 		
-		List<EntityFacet> lf = facets.stream().filter(c -> (!c.getFacetingName().equals(facetingName))).collect(Collectors.toList());
+		List<SearchFacet> lf = facets.stream().filter(c -> (!c.getFacetingName().equals(facetingName))).collect(Collectors.toList());
 		
 		facets.removeAll(lf);
 		
@@ -129,12 +129,12 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 															f.getFieldName(),
 															service
 														)
-							).collect(Collectors.toList()).stream().flatMap(List<EntityFacet>::stream).collect(Collectors.toList()));
+							).collect(Collectors.toList()).stream().flatMap(List<SearchFacet>::stream).collect(Collectors.toList()));
 		return facets;
 	}
 	
 
-	private  List<EntityFacet> getDiscreteFacets(	   String locale, 
+	private  List<SearchFacet> getDiscreteFacets(	   String locale, 
 													   String currency, 
 													   QueryBuilder qb, 
 													   org.hibernate.search.jpa.FullTextQuery jpaQuery,
@@ -181,7 +181,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		List<IDomainObject> lc = service.findAll(locale, currency, new ArrayList<String>(uniqueCodes));
 
 		//create a new array of entity facets
-		List<EntityFacet> lef = new ArrayList<EntityFacet>(uniqueCodes.size());
+		List<SearchFacet> lef = new ArrayList<SearchFacet>(uniqueCodes.size());
 		
 		facets.stream().forEach(f -> {
 				Optional<IDomainObject> dO = lc.stream()
@@ -189,7 +189,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 											  .findFirst();
 						
 				if(dO.isPresent()) {
-					lef.add(new EntityFacet(f, dO.get()));
+					lef.add(new SearchFacet(f, dO.get()));
 				}
 		});
 		
@@ -266,7 +266,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		org.hibernate.search.jpa.FullTextQuery jpaQuery = fullTextEntityManager.createFullTextQuery(searchQuery,
 				io.nzbee.entity.product.attribute.ProductAttribute.class);
 
-		final Set<EntityFacet> facetList = new HashSet<EntityFacet>();
+		final Set<SearchFacet> facetList = new HashSet<SearchFacet>();
 //		final Set<NavFacet<Category>> cs;
 //		final Set<NavFacet<Brand>> bs;
 //		List<Facet> lf;
@@ -457,7 +457,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 				.collect(Collectors.toList()), pageable, jpaQuery.getResultSize()));
 		
 		
-		EntityFacetContainer nfc = new EntityFacetContainer();
+		SearchFacetContainer nfc = new SearchFacetContainer();
 		nfc.setFacets(facetList.stream().collect(Collectors.toList()));
 		search.setFacets(nfc);
 		return search;
