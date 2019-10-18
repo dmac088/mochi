@@ -12,9 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Sort;
 import io.nzbee.dto.product.Product;
-import io.nzbee.dto.brand.Brand;
-import io.nzbee.dto.category.Category;
-import io.nzbee.dto.tag.Tag;
+import io.nzbee.dto.IDto;
 import io.nzbee.variables.ProductVars;
 
 @Service(value = "productDtoService")
@@ -71,12 +69,9 @@ public class ProductServiceImpl implements IProductService {
 								 int page, 
 								 int size,
 								 String categoryDesc, 
-								 List<Category> categories,
-								 List<Brand> brands,
-								 List<Tag> tags,
+								 List<IDto> ldto,
 								 String sortBy ) {
 	
-    	
     	//we need to convert to lists of IDs or codes here
     	Page<io.nzbee.entity.product.Product> pp
     						=  productService.findAll( locale,
@@ -87,9 +82,7 @@ public class ProductServiceImpl implements IProductService {
 						    						   page, 
 						    						   size,
 						    						   categoryDesc,
-						    						   categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()),
-						    						   brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()), 
-						    						   tags.stream().map(t -> t.getTagCode()).collect(Collectors.toList()));
+						    						   ldto);
     	
     	return new PageImpl<Product>(
     			pp.stream().map(p -> this.entityToDTO(locale, currency, p)).collect(Collectors.toList()),
@@ -104,9 +97,7 @@ public class ProductServiceImpl implements IProductService {
 								 int page, 
 								 int size, 
 								 String categoryDesc,
-								 List<Category> categories,
-								 List<Brand> brands,
-								 List<Tag> tags,
+								 List<IDto> ldto,
 								 String sortBy) {
 	
     	Page<io.nzbee.entity.product.Product> pp
@@ -116,9 +107,7 @@ public class ProductServiceImpl implements IProductService {
 							    			page,
 							    			size,
 							    			categoryDesc, 
-							    			categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
-							    			brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()), 
-							    			tags.stream().map(t -> t.getTagCode()).collect(Collectors.toList()));
+							    			ldto);
     	
     	return new PageImpl<Product>(
     			pp.stream().map(p -> this.entityToDTO(locale, currency, p)).collect(Collectors.toList()),

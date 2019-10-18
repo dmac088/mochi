@@ -12,10 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import io.nzbee.domain.category.Category;
 import io.nzbee.domain.IDomainObject;
-import io.nzbee.domain.brand.Brand;
-import io.nzbee.domain.tag.Tag;
 import io.nzbee.ui.component.web.search.facet.IFacet;
 
 @Service(value = "productDomainService")

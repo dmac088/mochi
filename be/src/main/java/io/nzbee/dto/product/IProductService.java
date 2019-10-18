@@ -3,10 +3,8 @@ package io.nzbee.dto.product;
 import java.util.List;
 import org.springframework.data.domain.Page;
 
+import io.nzbee.dto.IDto;
 import io.nzbee.dto.ILocalizedService;
-import io.nzbee.dto.brand.Brand;
-import io.nzbee.dto.category.Category;
-import io.nzbee.dto.tag.Tag;
 
 public interface IProductService  extends ILocalizedService<Product> {
 
@@ -19,9 +17,9 @@ public interface IProductService  extends ILocalizedService<Product> {
 	List<Product> findAll(String locale, String currency, List<String> productCodes);
 
 	Page<Product> findAll(String locale, String currency, Double price, int page, int size, String categoryDesc,
-			List<Category> categories, List<Brand> brands, List<Tag> tags, String sortBy);
+			List<IDto> ldto, String sortBy);
 
 	Page<Product> findAll(String locale, String currency, int page, int size, String categoryDesc,
-			List<Category> categories, List<Brand> brands, List<Tag> tags, String sortBy);
+			List<IDto> ldto, String sortBy);
 	
 }

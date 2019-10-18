@@ -17,7 +17,7 @@ import io.nzbee.domain.tag.Tag;
 import io.nzbee.ui.component.web.generic.UIService;
 import io.nzbee.variables.ProductVars;
 
-@Service(value = "SidebarService")
+@Service(value = "searchFacetService")
 @Transactional
 //@CacheConfig(cacheNames="products")
 public class SearchFacetServiceImpl extends UIService implements ISearchFacetService {
