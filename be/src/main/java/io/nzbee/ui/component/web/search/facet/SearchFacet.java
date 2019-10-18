@@ -1,10 +1,9 @@
 package io.nzbee.ui.component.web.search.facet;
-import org.apache.lucene.search.Query;
-import org.hibernate.search.query.facet.Facet;
 
+import org.apache.lucene.search.Query;
 import io.nzbee.domain.IDomainObject;
 
-public class SearchFacet<T> implements org.hibernate.search.query.facet.Facet, IFacet<T> {
+public class SearchFacet implements org.hibernate.search.query.facet.Facet, IFacet {
 	
 	private final org.hibernate.search.query.facet.Facet delegate;
 	private final IDomainObject entity;

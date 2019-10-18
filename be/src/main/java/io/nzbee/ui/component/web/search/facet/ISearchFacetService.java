@@ -1,14 +1,14 @@
 package io.nzbee.ui.component.web.search.facet;
-
+ 
 import io.nzbee.domain.IDomainObject;
 
-public interface ISearchFacetService<T> {
+public interface ISearchFacetService {
 
 	SearchFacetResult findAll(String locale, String currency);
 
 	SearchFacetResult findAll(String locale, String currency, String category, SearchFacetContainer selectedFacets);
 
-	SearchFacet<T> toEntityFacet(IDomainObject dO);
+	SearchFacet toEntityFacet(IDomainObject dO);
 
 	String calcFacetId(String className, String id);
 

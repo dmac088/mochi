@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import io.nzbee.ui.component.web.search.Search;
 import io.nzbee.ui.component.web.search.facet.SearchFacetContainer;
 
@@ -14,7 +13,7 @@ import io.nzbee.ui.component.web.search.facet.SearchFacetContainer;
 @RequestMapping("/api")
 public class NavigationController {
 
-	@Autowired
+	@Autowired 
 	private INavigationService navigationService;
 	
 	@PostMapping("/Product/{locale}/{currency}/category/{category}/maxPrice/{price}/page/{page}/size/{size}/sortBy/{sortBy}")

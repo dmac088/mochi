@@ -69,7 +69,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 	private ITagService tagService;
 	
 	@Autowired
-	private ISearchFacetService<?> facetService;
+	private ISearchFacetService facetService;
 
 	@PersistenceContext(unitName = "mochiEntityManagerFactory")
 	private EntityManager em;
@@ -86,7 +86,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		
 		// call the domain layer service to get a Page of Products
 		
-		
 		return this.findAll(
 							locale, 
 							currency, 
@@ -95,11 +94,11 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 							page, 
 							size, 
 							sortBy, 
-							selectedFacets);
+							selectedFacets.getFacets());
 	}
 
 	
-	private List<SearchFacet> processFacets(	String locale, 
+	private List<SearchFacet> processFacets(String locale, 
 											String currency,
 											QueryBuilder qb,
 											org.hibernate.search.jpa.FullTextQuery jpaQuery, 
@@ -217,7 +216,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 						  int page, 
 						  int size,
 						  String sortBy, 
-						  List<SearchFacet> selectedFacets) {
+						  List<IFacet> selectedFacets) {
 
 		FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
 
@@ -441,7 +440,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			return p;
 		}).collect(Collectors.toList());
 
-		Search search = new Search();
+		Search search = new Search(); 
 		search.setProducts(new PageImpl<Product>(lp.stream().map(p->productService.dtoToDO(p))
 				.collect(Collectors.toList()), pageable, jpaQuery.getResultSize()));
 		

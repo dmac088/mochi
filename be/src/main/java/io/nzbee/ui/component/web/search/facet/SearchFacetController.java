@@ -1,5 +1,6 @@
 package io.nzbee.ui.component.web.search.facet;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +26,7 @@ public class SearchFacetController {
     @GetMapping("/Category/{lcl}/{curr}")
     public SearchFacetResult getCategories(@PathVariable String lcl, @PathVariable String curr) {
     	return navFacetService.findAll(lcl, curr);
-    }
+    } 
 
     @PostMapping("/Category/{lcl}/{curr}/desc/{categoryDesc}/children")
     public SearchFacetResult getCategoryChildren(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody SearchFacetContainer selectedFacets) {

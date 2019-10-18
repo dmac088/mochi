@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.nzbee.domain.category.BrandCategory;
 import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.brand.Brand;
-import io.nzbee.domain.category.Category;
 import io.nzbee.domain.product.Product;
 import io.nzbee.domain.tag.Tag;
 
@@ -22,73 +21,68 @@ public class SearchFacetContainer {
 		return facets;
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<IFacet<ProductCategory>> getProductCategories() {
+	public List<IFacet> getProductCategories() {
 		return this.facets.stream()
 				.filter(f -> 
 				f.getEntity().getClass().getSimpleName().equals(ProductCategory.class.getSimpleName()))
-				.map(f -> (SearchFacet<ProductCategory>) f)
+				.map(f -> (SearchFacet) f)
 				.collect(Collectors.toList());
 	}
 	
-	@SuppressWarnings("unchecked")
-	public List<IFacet<BrandCategory>> getBrandCategories() {
+	public List<IFacet> getBrandCategories() {
 		return this.facets.stream()
 				.filter(f -> 
 				f.getEntity().getClass().getSimpleName().equals(BrandCategory.class.getSimpleName()))
-				.map(f -> (SearchFacet<BrandCategory>) f)
+				.map(f -> (SearchFacet) f)
 				.collect(Collectors.toList());
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<IFacet<Brand>> getBrands() {
+	public List<IFacet> getBrands() {
 		return this.facets.stream()
 				.filter(f -> 
 				f.getEntity().getClass().getSimpleName().equals(Brand.class.getSimpleName()))
-				.map(f -> (SearchFacet<Brand>) f)
+				.map(f -> (SearchFacet) f)
 				.collect(Collectors.toList());
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<IFacet<Tag>> getTags() {
+	public List<IFacet> getTags() {
 		return this.facets.stream()
 				.filter(f -> 
 				f.getEntity().getClass().getSimpleName().equals(Tag.class.getSimpleName()))
-				.map(f -> (SearchFacet<Tag>) f)
+				.map(f -> (SearchFacet) f)
 				.collect(Collectors.toList());
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<SearchFacet<Object>> getPrices() {
+	public List<SearchFacet> getPrices() {
 		return this.facets.stream()
 				.filter(f -> 
 				f.getEntity().getClass().getSimpleName().equals(Product.class.getSimpleName() 
 														  + ".productMarkdown"
 														   ))
-				.map(f -> (SearchFacet<Object>) f).collect(Collectors.toList());
+				.map(f -> (SearchFacet) f).collect(Collectors.toList());
 	}
 	
-	public void setCategories(List<IFacet<Category>> categories) {
+	public void setCategories(List<IFacet> categories) {
 		this.facets.addAll(categories);
 	}
 	
-	public void setBrands(List<IFacet<Brand>> brands) {
+	public void setBrands(List<IFacet> brands) {
 		this.facets.addAll(brands);
 	}
 	
-	public void setTags(List<IFacet<Tag>> tags) {
+	public void setTags(List<IFacet> tags) {
 		this.facets.addAll(tags);
 	}
 	
-	public void setPrices(List<IFacet<Object>> prices) {
+	public void setPrices(List<IFacet> prices) {
 		this.facets.addAll(prices);
 	}
 	
-	public void setProductCategories(List<IFacet<ProductCategory>> productCategories) {
+	public void setProductCategories(List<IFacet> productCategories) {
 		this.facets.addAll(productCategories);
 	}
 	
-	public void setBrandCategories(List<IFacet<BrandCategory>> brandCategories) {
+	public void setBrandCategories(List<IFacet> brandCategories) {
 		this.facets.addAll(brandCategories);
 	}
 	
