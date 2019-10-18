@@ -17,7 +17,7 @@ public interface IService<T> {
 	//for a DTO we need the locale
 	List<T> findAll();
 	
-	List<T> findAll(List<IDto> codes);
+	List<T> findAll(List<IDto> dtos);
 	
 	//for a DTO we need the locale
 	T entityToDTO(Object entity);

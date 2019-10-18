@@ -47,6 +47,7 @@ import io.nzbee.variables.ProductVars;
 import io.nzbee.ui.component.web.generic.UIService;
 import io.nzbee.ui.component.web.search.facet.SearchFacet;
 import io.nzbee.ui.component.web.search.facet.SearchFacetContainer;
+import io.nzbee.ui.component.web.search.facet.IFacet;
 import io.nzbee.ui.component.web.search.facet.ISearchFacetService;
 
 @Service(value = "SearchService")
@@ -82,14 +83,10 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 								int size,
 								String sortBy, 
 								SearchFacetContainer selectedFacets) {
-
-		// convert selected facets into token lists
-		List<String> categoryTokens = selectedFacets.getProductCategories().stream().map(f->f.getValue()).collect(Collectors.toList());
-		List<String> brandTokens 	= selectedFacets.getBrands().stream().map(f->f.getValue()).collect(Collectors.toList());
-		List<String> tagTokens 		= selectedFacets.getTags().stream().map(f->f.getValue()).collect(Collectors.toList());
-		List<String> priceTokens 	= selectedFacets.getPrices().stream().map(f->f.getValue()).collect(Collectors.toList());
 		
 		// call the domain layer service to get a Page of Products
+		
+		
 		return this.findAll(
 							locale, 
 							currency, 
@@ -98,10 +95,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 							page, 
 							size, 
 							sortBy, 
-							categoryTokens,
-							brandTokens,
-							tagTokens,
-							priceTokens);
+							selectedFacets);
 	}
 
 	
@@ -223,10 +217,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 						  int page, 
 						  int size,
 						  String sortBy, 
-						  List<String> categoryTokens, 
-						  List<String> brandTokens, 
-						  List<String> tagTokens, 
-						  List<String> priceTokens) {
+						  List<SearchFacet> selectedFacets) {
 
 		FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
 

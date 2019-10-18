@@ -2,19 +2,18 @@ package io.nzbee.ui.component.web.generic;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
-import io.nzbee.ui.component.web.search.facet.NavFacet;
+import io.nzbee.ui.component.web.search.facet.SearchFacet;
 
 public abstract class UIService {
 	
-	protected <T> List<String> getFacetTokens(List<NavFacet<T>> facets) {
-		return facets.stream().map(c -> c.getToken()).collect(Collectors.toList());
+	protected <T> List<String> getFacetTokens(List<SearchFacet<T>> facets) {
+		return facets.stream().map(c -> c.getValue()).collect(Collectors.toList());
 	}
 	
-	protected <T> List<String> getFacetIds(List<NavFacet<T>> facets) {
+	protected <T> List<String> getFacetIds(List<SearchFacet<T>> facets) {
 		return facets.stream().filter(t -> {
-			return t.getFacetClassName() != null && t.getFacetClassName().equals(t.getClass().getSimpleName());
-		}).map(c -> c.getFacetId()).collect(Collectors.toList());
+			return t.getEntity().getClass().equals(t.getClass());
+		}).map(c -> c.getCode()).collect(Collectors.toList());
 	}
 	
 }
