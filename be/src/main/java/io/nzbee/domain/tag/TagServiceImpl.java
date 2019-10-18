@@ -18,7 +18,7 @@ import io.nzbee.domain.IDomainObject;
 //that are constructed from relevant entity objects
 //its simplicity helps us with unit testing
 
-@Service
+@Service(value = "tagDomainService")
 @Transactional
 @CacheConfig(cacheNames="tags")
 public class TagServiceImpl implements ITagService {
