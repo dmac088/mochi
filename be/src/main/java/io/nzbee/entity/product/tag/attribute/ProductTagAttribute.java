@@ -40,7 +40,7 @@ public class ProductTagAttribute {
 	@AnalyzerDiscriminator(impl = LanguageDiscriminator.class)
 	private String lclCd;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="tag_id", insertable=false, updatable=false)
 	private ProductTag tag;
 	

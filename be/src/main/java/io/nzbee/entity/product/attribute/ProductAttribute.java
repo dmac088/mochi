@@ -88,7 +88,7 @@ public class ProductAttribute {
 	@AnalyzerDiscriminator(impl = LanguageDiscriminator.class)
 	private String lclCd;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@IndexedEmbedded
 	@JoinColumn(name="prd_id", insertable=false, updatable=false)
 	@JsonBackReference

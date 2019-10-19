@@ -37,7 +37,7 @@ public class BrandAttribute {
 	@Column(name="lcl_cd")	
 	private String lclCd;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="bnd_id", insertable=false, updatable=false)
 	@JsonBackReference
 	private Brand brand;
