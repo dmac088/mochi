@@ -40,12 +40,20 @@ public abstract class Category implements IHierarchicalDomainObject {
 		this.objectCount	= objectCount;
 	}
 
-	public String getCategoryCode() {
+	protected String getCategoryCode() {
 		return categoryCode;
 	}
 
-	public void setCategoryCode(String categoryCode) {
+	protected void setCategoryCode(String categoryCode) {
 		this.categoryCode = categoryCode;
+	}
+	
+	protected String getCategoryDesc() {
+		return categoryDesc;
+	}
+
+	protected void setCategoryDesc(String categoryDesc) {
+		this.categoryDesc = categoryDesc;
 	}
 
 	public String getParentCode() {
@@ -56,19 +64,11 @@ public abstract class Category implements IHierarchicalDomainObject {
 		this.parentCode = parentCode;
 	}
 
-	public String getCategoryDesc() {
-		return categoryDesc;
-	}
-
-	public void setCategoryDesc(String categoryDesc) {
-		this.categoryDesc = categoryDesc;
-	}
-	
-	public Long getCategoryLevel() {
+	protected Long getCategoryLevel() {
 		return categoryLevel;
 	}
 
-	public void setCategoryLevel(Long categoryLevel) {
+	protected void setCategoryLevel(Long categoryLevel) {
 		this.categoryLevel = categoryLevel;
 	}
 
