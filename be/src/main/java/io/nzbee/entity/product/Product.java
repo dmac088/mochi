@@ -127,7 +127,7 @@ public class Product {
 	@ManyToMany(mappedBy = "products")
 	private List<ProductTag> tags;
 
-	@OneToMany(	mappedBy="product", 
+	@OneToMany(	mappedBy="product",  
 				cascade = CascadeType.ALL,
 				orphanRemoval = true)
 	@JsonManagedReference

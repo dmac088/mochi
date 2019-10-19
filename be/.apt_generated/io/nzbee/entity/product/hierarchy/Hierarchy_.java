@@ -1,8 +1,6 @@
 package io.nzbee.entity.product.hierarchy;
 
-import io.nzbee.entity.category.Category;
 import javax.annotation.Generated;
-import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
@@ -13,7 +11,6 @@ public abstract class Hierarchy_ {
 	public static volatile SingularAttribute<Hierarchy, String> hierarchyDesc;
 	public static volatile SingularAttribute<Hierarchy, Long> hierarchyId;
 	public static volatile SingularAttribute<Hierarchy, String> hierarchyCode;
-	public static volatile ListAttribute<Hierarchy, Category> categories;
 
 }
 
