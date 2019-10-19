@@ -55,7 +55,11 @@ public class CategoryDaoImpl implements ICategoryDao {
 		@SuppressWarnings("unchecked")
 		List<Object[]> results = query.getResultList();
 		
+		
+		
 		return results.stream().map(c -> {
+			System.out.println(((CategoryType)c[2]).getDesc());
+			
 			Category category = (Category) c[0];
 			category.setCategoryAttribute(((CategoryAttribute) c[1]));
 			category.setCategoryType((CategoryType) c[2]);
@@ -626,6 +630,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 				
 				"LEFT JOIN mochi.category_attr_lcl pa " +
 				"ON pc.cat_id = pa.cat_id " +
+				
 				
 				"WHERE a.lcl_cd = :locale " +
 				"AND pa.lcl_cd = :locale " +

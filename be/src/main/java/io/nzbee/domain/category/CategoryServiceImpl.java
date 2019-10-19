@@ -89,28 +89,7 @@ public class CategoryServiceImpl implements ICategoryService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
     
-//    @Override
-//	@Transactional
-//	//@Cacheable
-//	public List<Category> findAll(String locale, String currency, String categoryDesc, List<Brand> brands, List<Tag> tags) {
-//
-//    	return categoryService.findAll(
-//    			 locale,
-//    			 currency,
-//    			 categoryDesc,
-//    			// convert brand domain objects to brand DTOs
-//				 brands.stream().map(b -> brandService.doToDto(b)).collect(Collectors.toList()),  
-//				//convert tag domain objects to tag DTOs
-//				 tags.stream().map(t -> tagService.doToDto(t)).collect(Collectors.toList())  
-//				 )
-//    			.stream().map(c -> this.dtoToDO(c))
-//    			.collect(Collectors.toList());
-//	}
-    
-    
-
 
 	@Override
 	public Category dtoToDO(Object dto) {
