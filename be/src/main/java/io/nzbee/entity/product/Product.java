@@ -23,14 +23,12 @@ import javax.persistence.SqlResultSetMapping;
 import javax.persistence.SqlResultSetMappings;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import org.codehaus.jackson.annotate.JsonBackReference;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
@@ -124,11 +122,9 @@ public class Product {
 
 	@ManyToMany(mappedBy = "products")
 	@IndexedEmbedded
-	@JsonIgnore
 	private List<CategoryProduct> categories;
 	
 	@ManyToMany(mappedBy = "products")
-	@JsonIgnore
 	private List<ProductTag> tags;
 
 	@OneToMany(	mappedBy="product", 
@@ -138,34 +134,27 @@ public class Product {
 	private List<ProductAttribute> attributes;
 	
 	@Transient
-	@JsonIgnore
 	private ProductAttribute productAttribute;
 	
 	@Transient
-	@JsonIgnore
 	private Double retailPrice;
 	
 	@Transient
-	@JsonIgnore
 	private Double markdownPrice;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@IndexedEmbedded
 	@JoinColumn(name="bnd_id", insertable=false, updatable=false)
-	//@JsonBackReference
 	private Brand brand;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@IndexedEmbedded
 	@JoinColumn(name="prd_sts_id", insertable=false, updatable=false)
-	@JsonBackReference
 	private ProductStatus productStatus;
 
 	@OneToMany(	mappedBy="product",
 				cascade = CascadeType.ALL,
-				orphanRemoval = true
-				)
-	@JsonManagedReference
+				orphanRemoval = true)
 	List<ProductPrice> prices;
 
 	@Field(store=Store.YES)

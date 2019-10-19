@@ -44,7 +44,6 @@ public class ProductTagAttribute {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="tag_id", insertable=false, updatable=false)
-	@JsonBackReference
 	private ProductTag tag;
 	
 	public Long getTagId() {

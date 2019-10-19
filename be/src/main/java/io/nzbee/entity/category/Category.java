@@ -31,8 +31,6 @@ import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Store;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.google.common.collect.Lists;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
@@ -157,7 +155,6 @@ public abstract class Category {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="hir_id", insertable=false, updatable=false)
-	@JsonBackReference
 	@IndexedEmbedded
 	private Hierarchy hierarchy;
 
@@ -166,14 +163,12 @@ public abstract class Category {
 	    		   joinColumns 			= @JoinColumn(name = "cat_id"), 
 	    		   inverseJoinColumns 	= @JoinColumn(name = "lay_id"))
 	@OrderBy
-	@JsonIgnore
 	private List<Layout> layouts;
 	
 	@ManyToOne
 	@JoinColumn(name="cat_typ_id", nullable=false, updatable = false, insertable = false)
 	private CategoryType categoryType;
 
-	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional=false)
 	@JoinColumn(name="cat_prnt_id", nullable=false)
 	@IndexedEmbedded(depth = 5)
@@ -181,13 +176,10 @@ public abstract class Category {
 	
 	@OneToMany(	mappedBy="category",
 				cascade = CascadeType.ALL,
-				orphanRemoval = true
-				)
-	@JsonIgnore
+				orphanRemoval = true)
 	private List<CategoryAttribute> attributes;
 
 	@Transient
-	@JsonIgnore
 	private CategoryAttribute categoryAttribute;
 	
 	@Transient
@@ -223,7 +215,6 @@ public abstract class Category {
 	}
 	
 	
-
 	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_ENGLISH))
 	public String getPrimaryCategoryDescENGB() {
 		Optional<CategoryAttribute> pca = this.getAttributes().stream().filter(ca -> {

@@ -5,20 +5,15 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Store;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.nzbee.entity.category.Category;
 
 @Entity
@@ -42,7 +37,6 @@ public class Hierarchy {
 	@OneToMany(	mappedBy="hierarchy", 
 				cascade = CascadeType.ALL,
 				orphanRemoval = true)
-	@JsonManagedReference
 	private List<Category> categories;
 
 	public Long getHierarchyId() {
@@ -75,5 +69,15 @@ public class Hierarchy {
 
 	public void setCategories(List<Category> categories) {
 		this.categories = categories;
+	}
+	
+	public void addCategory(Category category) {
+		this.categories.add(category);
+		category.setHierarchy(this);
+	}
+	
+	public void removeCategory(Category category) {
+		this.categories.remove(category);
+		category.setHierarchy(null);
 	}
 }
