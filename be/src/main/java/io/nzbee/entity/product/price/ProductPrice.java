@@ -35,7 +35,7 @@ public class ProductPrice {
 	@Column(name="prc_en_dt")
 	private Date endDate; 
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="prc_typ_id", nullable=false, updatable = false, insertable = true)
 	private ProductPriceType type;
 	

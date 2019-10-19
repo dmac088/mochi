@@ -13,8 +13,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.tag.attribute.ProductTagAttribute;
 
@@ -34,13 +32,11 @@ public class ProductTag {
     		   joinColumns 			= @JoinColumn(name = "tag_id"), 
     		   inverseJoinColumns 	= @JoinColumn(name = "prd_id"))
     @OrderBy
-    @JsonIgnore
     private List<Product> products;
 
 	@OneToMany(	mappedBy="tag", 
 				cascade = CascadeType.ALL,
 				orphanRemoval = true)
-	@JsonIgnore
 	private List<ProductTagAttribute> attributes;
 	
 	public Long getTagId() {
