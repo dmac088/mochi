@@ -179,7 +179,10 @@ public abstract class Category {
 	@IndexedEmbedded(depth = 5)
 	private Category parent;
 	
-	@OneToMany(mappedBy="category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(	mappedBy="category",
+				cascade = CascadeType.ALL,
+				orphanRemoval = true
+				)
 	@JsonIgnore
 	private List<CategoryAttribute> attributes;
 

@@ -41,7 +41,10 @@ public abstract class Party {
 	@JoinColumn(name="pty_typ_id", nullable=false, updatable = false, insertable = true)
 	private PartyType partyType;
 
-	@OneToMany(mappedBy="roleParty", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(	mappedBy="roleParty",
+				cascade = CascadeType.ALL,
+				orphanRemoval = true
+				)
 	@JsonManagedReference
 	private List<Role> partyRoles = new ArrayList<Role>();
 	

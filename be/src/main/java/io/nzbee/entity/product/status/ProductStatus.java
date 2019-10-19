@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -33,7 +34,9 @@ public class ProductStatus {
 	@Field(store=Store.NO)
 	private String productStatusDesc;
 	
-	@OneToMany(mappedBy="productStatus", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(	mappedBy="productStatus", 
+				cascade = CascadeType.ALL,
+				orphanRemoval = true)
 	@JsonManagedReference
 	private List<Product> products;
 
