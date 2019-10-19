@@ -37,7 +37,9 @@ public class ProductTag {
     @JsonIgnore
     private List<Product> products;
 
-	@OneToMany(mappedBy="tag",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(	mappedBy="tag", 
+				cascade = CascadeType.ALL,
+				orphanRemoval = true)
 	@JsonIgnore
 	private List<ProductTagAttribute> attributes;
 	
@@ -63,5 +65,15 @@ public class ProductTag {
 
 	public List<ProductTagAttribute> getAttributes() {
 		return attributes;
+	}
+	
+	public void addTagAttribute(ProductTagAttribute tagAttribute) {
+		this.attributes.add(tagAttribute);
+		tagAttribute.setProductTag(this);
+	}
+	
+	public void removeTagAttribute(ProductTagAttribute tagAttribute) {
+		this.attributes.remove(tagAttribute);
+		tagAttribute.setProductTag(null);
 	}
 }

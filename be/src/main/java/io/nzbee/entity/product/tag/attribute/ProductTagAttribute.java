@@ -55,8 +55,8 @@ public class ProductTagAttribute {
 		return Optional.ofNullable(tag);
 	}
 
-	public void setCategory(Optional<ProductTag> productTag) {
-		this.tag = productTag.get();
+	public void setProductTag(ProductTag productTag) {
+		this.tag = productTag;
 	}
 
 	public String getTagDesc() {

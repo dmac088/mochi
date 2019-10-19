@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -35,7 +36,10 @@ public class Brand {
 	@Field(store=Store.YES)
 	private String brandCode;
 
-	@OneToMany(mappedBy="brand", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(	mappedBy="brand",  
+				cascade = CascadeType.ALL,
+				orphanRemoval = true
+				)
 	@JsonManagedReference
 	private List<Product> products;
 	
@@ -43,7 +47,9 @@ public class Brand {
 	@JsonIgnore
 	private List<CategoryBrand> categories;
 	
-	@OneToMany(mappedBy="brand",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(	mappedBy="brand",
+				cascade = CascadeType.ALL,
+				orphanRemoval = true)
 	private List<BrandAttribute> brandAttributes;
 	
 	@Transient

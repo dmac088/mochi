@@ -131,7 +131,9 @@ public class Product {
 	@JsonIgnore
 	private List<ProductTag> tags;
 
-	@OneToMany(mappedBy="product",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(	mappedBy="product", 
+				cascade = CascadeType.ALL,
+				orphanRemoval = true)
 	@JsonManagedReference
 	private List<ProductAttribute> attributes;
 	
@@ -159,7 +161,10 @@ public class Product {
 	@JsonBackReference
 	private ProductStatus productStatus;
 
-	@OneToMany(mappedBy="product",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(	mappedBy="product",
+				cascade = CascadeType.ALL,
+				orphanRemoval = true
+				)
 	@JsonManagedReference
 	List<ProductPrice> prices;
 
@@ -315,6 +320,26 @@ public class Product {
 
 	public void setMarkdownPrice(Double markdownPrice) {
 		this.markdownPrice = markdownPrice;
+	}
+	
+	public void addProductAttribute(ProductAttribute productAttribute) {
+		this.attributes.add(productAttribute);
+		productAttribute.setProduct(this);
+	}
+	
+	public void removeProductAttribute(ProductAttribute productAttribute) {
+		this.attributes.remove(productAttribute);
+		productAttribute.setProduct(null);
+	}
+	
+	public void addProductPrice(ProductPrice productPrice) {
+		this.prices.add(productPrice);
+		productPrice.setProduct(this);
+	}
+	
+	public void removeProductPrice(ProductPrice productPrice) {
+		this.prices.remove(productPrice);
+		productPrice.setProduct(null);
 	}
 			
 }

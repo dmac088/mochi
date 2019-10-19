@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -38,7 +39,9 @@ public class Hierarchy {
 	@Field(analyze = Analyze.NO, store=Store.YES)
 	private String hierarchyDesc;
 	
-	@OneToMany(mappedBy="hierarchy",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(	mappedBy="hierarchy", 
+				cascade = CascadeType.ALL,
+				orphanRemoval = true)
 	@JsonManagedReference
 	private List<Category> categories;
 

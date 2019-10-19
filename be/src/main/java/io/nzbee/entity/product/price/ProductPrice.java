@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,11 +39,11 @@ public class ProductPrice {
 	@JoinColumn(name="prc_typ_id", nullable=false, updatable = false, insertable = true)
 	private ProductPriceType type;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="ccy_id", nullable=false, updatable = false, insertable = true)
 	private Currency currency;
-	
-	@ManyToOne
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="prd_id", nullable=false, updatable = false, insertable = true)
 	private Product product;
 
@@ -84,6 +85,14 @@ public class ProductPrice {
 
 	public void setEndDate(Date priceEndDate) {
 		this.endDate = priceEndDate;
+	}
+	
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 	
 }
