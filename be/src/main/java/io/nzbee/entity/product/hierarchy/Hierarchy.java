@@ -33,11 +33,6 @@ public class Hierarchy {
 	@Column(name="hir_desc")
 	@Field(analyze = Analyze.NO, store=Store.YES)
 	private String hierarchyDesc;
-	
-	@OneToMany(	mappedBy="hierarchy", 
-				cascade = CascadeType.ALL,
-				orphanRemoval = true)
-	private List<Category> categories;
 
 	public Long getHierarchyId() {
 		return hierarchyId;
@@ -63,21 +58,4 @@ public class Hierarchy {
 		this.hierarchyDesc = hierarchyDesc;
 	}
 	
-	public List<Category> getCategories() {
-		return categories;
-	}
-
-	public void setCategories(List<Category> categories) {
-		this.categories = categories;
-	}
-	
-	public void addCategory(Category category) {
-		this.categories.add(category);
-		category.setHierarchy(this);
-	}
-	
-	public void removeCategory(Category category) {
-		this.categories.remove(category);
-		category.setHierarchy(null);
-	}
 }
