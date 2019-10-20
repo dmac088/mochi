@@ -79,7 +79,7 @@ public class ProductTagAttribute {
     public int hashCode() {
         HashCodeBuilder hcb = new HashCodeBuilder();
         hcb.append(tag.getCode());
-        hcb.append(this);
+        hcb.append(lclCd);
         return hcb.toHashCode();
     }
  
@@ -94,7 +94,7 @@ public class ProductTagAttribute {
 	    ProductTagAttribute that = (ProductTagAttribute) obj;
 	      EqualsBuilder eb = new EqualsBuilder();
 	      eb.append(tag.getCode(), that.tag.getCode());
-	      eb.append(this, that);
+	      eb.append(lclCd, that.lclCd);
 	      return eb.isEquals();
 	}
 }

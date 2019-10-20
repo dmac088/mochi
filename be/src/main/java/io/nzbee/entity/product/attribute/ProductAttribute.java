@@ -18,6 +18,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.lucene.analysis.cjk.CJKBigramFilterFactory;
 import org.apache.lucene.analysis.cjk.CJKWidthFilterFactory;
 import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
@@ -242,5 +245,28 @@ public class ProductAttribute {
 
 	public void setProductImage(String productImage) {
 		ProductImage = productImage;
+	}
+	
+	@Override
+    public int hashCode() {
+        HashCodeBuilder hcb = new HashCodeBuilder();
+        hcb.append(product.getUPC());
+        hcb.append(lclCd);
+        return hcb.toHashCode();
+    }
+ 
+	@Override
+	public boolean equals(Object obj) {
+	    if (this == obj) {
+	        return true;
+        }
+	    if (!(obj instanceof ProductAttribute)) {
+	            return false;
+	    }
+	    ProductAttribute that = (ProductAttribute) obj;
+	      EqualsBuilder eb = new EqualsBuilder();
+	      eb.append(product.getUPC(), that.product.getUPC());
+	      eb.append(lclCd, that.lclCd);
+	      return eb.isEquals();
 	}
 }

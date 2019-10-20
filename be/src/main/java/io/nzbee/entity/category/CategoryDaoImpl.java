@@ -55,8 +55,6 @@ public class CategoryDaoImpl implements ICategoryDao {
 		@SuppressWarnings("unchecked")
 		List<Object[]> results = query.getResultList();
 		
-		
-		
 		return results.stream().map(c -> {
 			Category category = (Category) c[0];
 			category.setCategoryAttribute(((CategoryAttribute) c[1]));

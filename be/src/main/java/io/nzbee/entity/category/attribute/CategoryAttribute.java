@@ -89,7 +89,7 @@ public class CategoryAttribute {
     public int hashCode() {
         HashCodeBuilder hcb = new HashCodeBuilder();
         hcb.append(category.getCategoryCode());
-        hcb.append(this);
+        hcb.append(lclCd);
         return hcb.toHashCode();
     }
  
@@ -104,7 +104,7 @@ public class CategoryAttribute {
 	    CategoryAttribute that = (CategoryAttribute) obj;
 	      EqualsBuilder eb = new EqualsBuilder();
 	      eb.append(category.getCategoryCode(), that.category.getCategoryCode());
-	      eb.append(this, that);
+	      eb.append(lclCd, that.lclCd);
 	      return eb.isEquals();
 	}
 }
