@@ -33,7 +33,7 @@ public class UserRole implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(						//the table that manages the many to many relationship
     								name = "ROLE_PERMISSION", schema="security", 
     								joinColumns 		= @JoinColumn(name = "role_id"), 
