@@ -29,7 +29,7 @@ public class Brand {
 	@Column(name="bnd_id")
 	private Long brandId;
 
-	@Column(name="bnd_cd")
+	@Column(name="bnd_cd", unique = true, updatable = false)
 	@Field(store=Store.YES)
 	private String brandCode;
 

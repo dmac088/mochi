@@ -24,7 +24,7 @@ public class ProductTag {
 	@Column(name="tag_id")
 	private Long productTagId;
 	
-	@Column(name="tag_cd")
+	@Column(name="tag_cd", unique = true, updatable = false)
 	private String productTagCode;
 
 	@ManyToMany(fetch = FetchType.LAZY)
