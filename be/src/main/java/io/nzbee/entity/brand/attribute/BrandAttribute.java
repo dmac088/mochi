@@ -84,7 +84,7 @@ public class BrandAttribute {
     public int hashCode() {
         HashCodeBuilder hcb = new HashCodeBuilder();
         hcb.append(brand.getCode());
-        hcb.append(this);
+        hcb.append(lclCd);
         return hcb.toHashCode();
     }
  
@@ -99,7 +99,7 @@ public class BrandAttribute {
 	    BrandAttribute that = (BrandAttribute) obj;
 	      EqualsBuilder eb = new EqualsBuilder();
 	      eb.append(brand.getCode(), that.brand.getCode());
-	      eb.append(this, that);
+	      eb.append(lclCd, that.lclCd);
 	      return eb.isEquals();
 	}
 }
