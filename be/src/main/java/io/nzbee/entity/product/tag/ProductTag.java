@@ -13,6 +13,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.NaturalId;
+
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.tag.attribute.ProductTagAttribute;
 
@@ -24,6 +27,7 @@ public class ProductTag {
 	@Column(name="tag_id")
 	private Long productTagId;
 	
+	@NaturalId
 	@Column(name="tag_cd", unique = true, updatable = false)
 	private String productTagCode;
 
