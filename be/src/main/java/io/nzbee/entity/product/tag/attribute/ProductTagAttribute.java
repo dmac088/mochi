@@ -12,6 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.AnalyzerDiscriminator;
 import org.hibernate.search.annotations.Field;
@@ -40,7 +43,7 @@ public class ProductTagAttribute {
 	@AnalyzerDiscriminator(impl = LanguageDiscriminator.class)
 	private String lclCd;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="tag_id", insertable=false, updatable=false)
 	private ProductTag tag;
 	
@@ -70,5 +73,28 @@ public class ProductTagAttribute {
 
 	public void setLclCd(String lclCd) {
 		this.lclCd = lclCd;
+	}
+	
+	@Override
+    public int hashCode() {
+        HashCodeBuilder hcb = new HashCodeBuilder();
+        hcb.append(tag.getCode());
+        hcb.append(this);
+        return hcb.toHashCode();
+    }
+ 
+	@Override
+	public boolean equals(Object obj) {
+	    if (this == obj) {
+	        return true;
+        }
+	    if (!(obj instanceof ProductTagAttribute)) {
+	            return false;
+	    }
+	    ProductTagAttribute that = (ProductTagAttribute) obj;
+	      EqualsBuilder eb = new EqualsBuilder();
+	      eb.append(tag.getCode(), that.tag.getCode());
+	      eb.append(this, that);
+	      return eb.isEquals();
 	}
 }

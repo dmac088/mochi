@@ -112,7 +112,7 @@ public class Product {
 	@Column(name="prd_id")
 	private Long productId;
 
-	@Column(name="upc_cd")
+	@Column(name="upc_cd", unique = true, updatable = false)
 	@Field(store=Store.YES)
 	private String productUPC;
 	

@@ -144,7 +144,7 @@ public abstract class Category {
 	@Column(name="cat_id")
 	private Long categoryId;
 
-	@Column(name="cat_cd")
+	@Column(name="cat_cd", unique = true, updatable = false)
 	@Field(analyze = Analyze.NO, store=Store.YES)
 	@Facet
 	private String categoryCode;
