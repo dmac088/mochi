@@ -15,6 +15,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -44,7 +46,9 @@ public class CategoryDaoImpl implements ICategoryDao {
 	@Override
 	public List<Category> findAll(String locale, String currency) {
 		
-		Query query = em.createNativeQuery(constructSQL(false), "CategoryMapping")
+		Session session = em.unwrap(Session.class);
+		
+		Query query = session.createNativeQuery(constructSQL(false), "CategoryMapping")
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
 				 .setParameter("parentCategoryCode", "-1")
@@ -74,8 +78,10 @@ public class CategoryDaoImpl implements ICategoryDao {
 	
 	@Override
 	public List<Category> findAll(String locale, String currency, List<String> categoryCodes) {
-		// TODO Auto-generated method stub
-		Query query = em.createNativeQuery(constructSQL(!categoryCodes.isEmpty()), "CategoryMapping")
+		
+		Session session = em.unwrap(Session.class);
+
+		Query query = session.createNativeQuery(constructSQL(!categoryCodes.isEmpty()), "CategoryMapping")
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
 				 .setParameter("parentCategoryCode", "-1")
@@ -109,7 +115,9 @@ public class CategoryDaoImpl implements ICategoryDao {
 	
 	@Override
 	public Optional<Category> findById(String locale, String currency, long id) {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
+		Session session = em.unwrap(Session.class);
+		
+		CriteriaBuilder cb = session.getCriteriaBuilder();
 		
 		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
 		
