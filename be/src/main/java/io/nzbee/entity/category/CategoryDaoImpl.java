@@ -58,8 +58,6 @@ public class CategoryDaoImpl implements ICategoryDao {
 		
 		
 		return results.stream().map(c -> {
-			System.out.println(((CategoryType)c[2]).getDesc());
-			
 			Category category = (Category) c[0];
 			category.setCategoryAttribute(((CategoryAttribute) c[1]));
 			category.setCategoryType((CategoryType) c[2]);
