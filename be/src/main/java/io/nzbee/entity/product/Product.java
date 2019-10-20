@@ -23,6 +23,8 @@ import javax.persistence.SqlResultSetMapping;
 import javax.persistence.SqlResultSetMappings;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import org.hibernate.annotations.NaturalId;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
@@ -112,6 +114,7 @@ public class Product {
 	@Column(name="prd_id")
 	private Long productId;
 
+	@NaturalId
 	@Column(name="upc_cd", unique = true, updatable = false)
 	@Field(store=Store.YES)
 	private String productUPC;
