@@ -22,7 +22,7 @@ import io.nzbee.entity.category.Category;
 @DiscriminatorValue("2")
 public class CategoryBrand extends Category {
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "brand_category", schema="mochi", 
     		   joinColumns 			= @JoinColumn(name = "cat_id"), 
     		   inverseJoinColumns 	= @JoinColumn(name = "bnd_id"))

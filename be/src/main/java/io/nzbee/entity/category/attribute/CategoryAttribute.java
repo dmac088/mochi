@@ -37,7 +37,7 @@ public class CategoryAttribute {
 	@AnalyzerDiscriminator(impl = LanguageDiscriminator.class)
 	private String lclCd;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="cat_id", insertable=false, updatable=false)
 	@JsonBackReference
 	private Category category;
