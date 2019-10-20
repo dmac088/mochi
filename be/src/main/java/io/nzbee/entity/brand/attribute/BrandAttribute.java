@@ -10,17 +10,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Store;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import io.nzbee.entity.brand.Brand;
-import io.nzbee.entity.product.tag.attribute.ProductTagAttribute;
 
 @Entity
 @Table(name = "brand_attr_lcl", schema = "mochi")
@@ -43,7 +38,6 @@ public class BrandAttribute {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="bnd_id", insertable=false, updatable=false)
-	@JsonBackReference
 	private Brand brand;
 	
 	public Long getId() {
