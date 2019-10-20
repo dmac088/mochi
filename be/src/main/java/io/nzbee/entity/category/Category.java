@@ -25,6 +25,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.EntityResult;
 import javax.persistence.FieldResult;
+
+import org.hibernate.annotations.NaturalId;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Facet;
@@ -144,6 +146,7 @@ public abstract class Category {
 	@Column(name="cat_id")
 	private Long categoryId;
 
+	@NaturalId
 	@Column(name="cat_cd", unique = true, updatable = false)
 	@Field(analyze = Analyze.NO, store=Store.YES)
 	@Facet

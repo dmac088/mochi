@@ -11,6 +11,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import org.hibernate.annotations.NaturalId;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Store;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -29,6 +31,7 @@ public class Brand {
 	@Column(name="bnd_id")
 	private Long brandId;
 
+	@NaturalId
 	@Column(name="bnd_cd", unique = true, updatable = false)
 	@Field(store=Store.YES)
 	private String brandCode;
