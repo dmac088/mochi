@@ -20,9 +20,6 @@ import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.entity.category.type.CategoryTypeRepository;
-import io.nzbee.entity.product.hierarchy.Hierarchy;
-import io.nzbee.entity.product.hierarchy.HierarchyRepository;
-import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.GeneralVars;
 
 @RunWith(SpringRunner.class)

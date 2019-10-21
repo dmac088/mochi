@@ -2,6 +2,8 @@ package io.nzbee.domain.category;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.nzbee.domain.brand.Brand;
 public class BrandCategory extends Category {
 
@@ -10,6 +12,7 @@ public class BrandCategory extends Category {
 		super();
 	}
 
+	@JsonIgnore
 	private List<Brand> brands;
 	
 	public List<Brand> getBrands() {
