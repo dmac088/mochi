@@ -39,16 +39,10 @@ public class IT_CategoryRepository {
 
     @Autowired
     private CategoryTypeRepository categoryTypeRepository;
-
-    @Autowired
-    private HierarchyRepository hierarchyRepository;
     
-
-
     public Category persistNewCategory() {
     	Category 		category 		= new CategoryProduct();
     	CategoryType 	categoryType 	= categoryTypeRepository.findByCategoryTypeId(new Long(1));
-    	Hierarchy 		hierarchy 		= hierarchyRepository.findByHierarchyCode(CategoryVars.PRIMARY_HIERARCHY_CODE);
     	Category 		parentCategory 	= categoryService.findByCode(GeneralVars.LANGUAGE_ENGLISH, 
     																 GeneralVars.CURRENCY_USD, 
     																 category.getCategoryCode()).get();
@@ -56,7 +50,6 @@ public class IT_CategoryRepository {
     	category.setCategoryCode("TST01");
     	category.setCategoryLevel(new Long(1));
     	category.setCategoryType(categoryType);
-    	category.setHierarchy(hierarchy);
     	category.setParent(parentCategory);
     	entityManager.persist(category);
     	

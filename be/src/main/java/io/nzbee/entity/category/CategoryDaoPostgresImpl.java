@@ -36,8 +36,8 @@ import io.nzbee.entity.product.tag.ProductTag_;
 import io.nzbee.entity.tag.Tag;
 import io.nzbee.variables.ProductVars;
 
-@Component(value="categoryEntityDao")
-public class CategoryDaoImpl implements ICategoryDao {
+@Component(value="categoryEntityPostgresDao")
+public class CategoryDaoPostgresImpl implements ICategoryDao {
 
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")

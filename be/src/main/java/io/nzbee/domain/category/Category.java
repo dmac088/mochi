@@ -1,5 +1,6 @@
 package io.nzbee.domain.category;
 
+import java.util.List;
 import java.util.Objects;
 import io.nzbee.domain.IHierarchicalDomainObject;
 
@@ -19,6 +20,8 @@ public abstract class Category implements IHierarchicalDomainObject {
 
 	private Long objectCount;
 	
+	private List<String> layoutCodes;
+
 	public Category() {
 		super();
 	}
@@ -30,7 +33,8 @@ public abstract class Category implements IHierarchicalDomainObject {
 					String categoryType,
 					String lclCd, 
 					String parentCode,
-					Long objectCount) {
+					Long objectCount,
+					List<String> layoutCodes) {
 		super();
 		this.categoryCode 	= categoryCode;
 		this.categoryDesc 	= categoryDesc;
@@ -95,6 +99,14 @@ public abstract class Category implements IHierarchicalDomainObject {
 	public void setCount(Long objectCount) {
 		this.objectCount = objectCount;
 	}
+	
+	public List<String> getLayoutCodes() {
+		return layoutCodes;
+	}
+
+	public void setLayoutCodes(List<String> layoutCodes) {
+		this.layoutCodes = layoutCodes;
+	}
 
 	@Override
 	public boolean equals(Object o) {
@@ -119,9 +131,9 @@ public abstract class Category implements IHierarchicalDomainObject {
         .append(", categoryType=").append(categoryType)
         .append(", parentCode=").append(parentCode)
         .append(", childCategoryCount=").append(childCategoryCount)
+        .append(", layoutCodes=").append(String.join(",", layoutCodes))
         .append("]");    	
         return builder.toString();
     }
-
 
 }
