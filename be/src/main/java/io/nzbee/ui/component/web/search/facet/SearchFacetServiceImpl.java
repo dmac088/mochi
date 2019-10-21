@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.IDomainObject;
+import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.brand.IBrandService;
 import io.nzbee.domain.category.Category;
 import io.nzbee.domain.category.ICategoryService;
@@ -57,22 +58,19 @@ public class SearchFacetServiceImpl extends UIService implements ISearchFacetSer
 	
 	@Override
 	public SearchFacetResult findAllBrands(String locale, String category) {
-//		List<Brand> brands = brandDomainService.findAll(category, locale);
-//		
-//		SearchFacetContainer nfc = new SearchFacetContainer();
-//		SearchFacetResult nfr = new SearchFacetResult();
-//		
-//		List<SearchFacet<Brand>> brandBars = brands.stream().map(b -> {
-//			SearchFacet<Brand> s = convertBrandToNavFacet(b);
-//			return s;
-//		}).collect(Collectors.toList());
-//		
-//		nfc.getFacets().addAll(brandBars);
-//		
-//		nfr.setResult(nfc);
-//		
-//		return nfr;
-		return null;
+		List<Brand> brands = brandDomainService.findAll(category, locale);
+		
+		SearchFacetContainer nfc = new SearchFacetContainer();
+		SearchFacetResult nfr = new SearchFacetResult();
+		
+		nfc.getFacets().addAll(	brands.stream().map(b -> {
+			IFacet brand = new EntityFacet(b);
+			return brand;
+		}).collect(Collectors.toList()));
+		
+		nfr.setResult(nfc);
+
+		return nfr;
 	}
 	
 	@Override

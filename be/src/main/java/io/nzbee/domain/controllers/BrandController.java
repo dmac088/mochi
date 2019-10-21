@@ -32,11 +32,11 @@ public class BrandController {
     	return brandService.findById(locale, currency, brandId).get();
     }
 
-    @GetMapping("/Brand/{locale}/{currency}/category/{categoryDesc}")
-    public List<Brand> getBrands(	@PathVariable String locale, 
-    						@PathVariable String currency, 
-    						@PathVariable String categoryDesc) {
-   
-    	return brandService.findAll(locale, currency, categoryDesc);
-    }
+//    @GetMapping("/Brand/{locale}/{currency}/category/{categoryDesc}")
+//    public List<Brand> getBrands(	@PathVariable String locale, 
+//    						@PathVariable String currency, 
+//    						@PathVariable String categoryDesc) {
+//   
+//    	return brandService.findAll(locale, currency, categoryDesc);
+//    }
 }
