@@ -1662,7 +1662,7 @@ COPY mochi.category (cat_id, cat_cd, cat_prnt_id, cat_lvl, cat_typ_id, hir_id) F
 2	PRM01	\N	0	1	41
 7	BAP01	4	2	1	41
 44	UNK01	39	1	1	42
-45	FBR01	\N	0	2	43
+45	FBR01	40	0	2	43
 \.
 
 
