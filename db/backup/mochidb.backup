@@ -356,33 +356,6 @@ CREATE TABLE mochi.category_brand (
 ALTER TABLE mochi.category_brand OWNER TO mochidb_owner;
 
 --
--- Name: layout_category_lay_cat_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
---
-
-CREATE SEQUENCE mochi.layout_category_lay_cat_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE mochi.layout_category_lay_cat_id_seq OWNER TO mochidb_owner;
-
---
--- Name: category_layout; Type: TABLE; Schema: mochi; Owner: mochidb_owner
---
-
-CREATE TABLE mochi.category_layout (
-    lay_cat_id bigint DEFAULT nextval('mochi.layout_category_lay_cat_id_seq'::regclass) NOT NULL,
-    lay_id bigint,
-    cat_id bigint
-);
-
-
-ALTER TABLE mochi.category_layout OWNER TO mochidb_owner;
-
---
 -- Name: category_product; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -572,6 +545,33 @@ CREATE TABLE mochi.layout (
 
 
 ALTER TABLE mochi.layout OWNER TO mochidb_owner;
+
+--
+-- Name: layout_category_lay_cat_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE SEQUENCE mochi.layout_category_lay_cat_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE mochi.layout_category_lay_cat_id_seq OWNER TO mochidb_owner;
+
+--
+-- Name: layout_category; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE mochi.layout_category (
+    lay_cat_id bigint DEFAULT nextval('mochi.layout_category_lay_cat_id_seq'::regclass) NOT NULL,
+    lay_id bigint,
+    cat_id bigint
+);
+
+
+ALTER TABLE mochi.layout_category OWNER TO mochidb_owner;
 
 --
 -- Name: locale; Type: TABLE; Schema: mochi; Owner: mochidb_owner
@@ -1784,14 +1784,6 @@ SELECT pg_catalog.setval('mochi.category_cat_id_seq', 7, true);
 
 
 --
--- Data for Name: category_layout; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-COPY mochi.category_layout (lay_cat_id, lay_id, cat_id) FROM stdin;
-\.
-
-
---
 -- Data for Name: category_product; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -1976,6 +1968,14 @@ COPY mochi.layout (lay_id, lay_cd, lay_desc) FROM stdin;
 3	LNDPC01	landing preview categories 01
 4	LNDBS01	landing best selling products 01
 5	LNDHM01	landing header menu brands
+\.
+
+
+--
+-- Data for Name: layout_category; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+COPY mochi.layout_category (lay_cat_id, lay_id, cat_id) FROM stdin;
 \.
 
 
@@ -3357,7 +3357,7 @@ ALTER TABLE ONLY mochi.hierarchy
 -- Name: layout_category_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY mochi.category_layout
+ALTER TABLE ONLY mochi.layout_category
     ADD CONSTRAINT layout_category_pkey PRIMARY KEY (lay_cat_id);
 
 
@@ -3669,7 +3669,7 @@ ALTER TABLE ONLY mochi.layout
 -- Name: uc_layout_category; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY mochi.category_layout
+ALTER TABLE ONLY mochi.layout_category
     ADD CONSTRAINT uc_layout_category UNIQUE (lay_id, cat_id);
 
 
@@ -3924,7 +3924,7 @@ ALTER TABLE ONLY mochi.customer
 -- Name: layout_category_cat_id_category_cat_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY mochi.category_layout
+ALTER TABLE ONLY mochi.layout_category
     ADD CONSTRAINT layout_category_cat_id_category_cat_id_fkey FOREIGN KEY (cat_id) REFERENCES mochi.category(cat_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
@@ -3932,7 +3932,7 @@ ALTER TABLE ONLY mochi.category_layout
 -- Name: layout_category_lay_id_layout_lay_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY mochi.category_layout
+ALTER TABLE ONLY mochi.layout_category
     ADD CONSTRAINT layout_category_lay_id_layout_lay_id_fkey FOREIGN KEY (lay_id) REFERENCES mochi.layout(lay_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
@@ -4232,16 +4232,6 @@ GRANT SELECT ON TABLE mochi.category_brand TO mochi_app;
 
 
 --
--- Name: TABLE category_layout; Type: ACL; Schema: mochi; Owner: mochidb_owner
---
-
-REVOKE ALL ON TABLE mochi.category_layout FROM PUBLIC;
-REVOKE ALL ON TABLE mochi.category_layout FROM mochidb_owner;
-GRANT ALL ON TABLE mochi.category_layout TO mochidb_owner;
-GRANT SELECT ON TABLE mochi.category_layout TO mochi_app;
-
-
---
 -- Name: TABLE category_product; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -4330,6 +4320,16 @@ REVOKE ALL ON TABLE mochi.layout FROM PUBLIC;
 REVOKE ALL ON TABLE mochi.layout FROM mochidb_owner;
 GRANT ALL ON TABLE mochi.layout TO mochidb_owner;
 GRANT SELECT ON TABLE mochi.layout TO mochi_app;
+
+
+--
+-- Name: TABLE layout_category; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+REVOKE ALL ON TABLE mochi.layout_category FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.layout_category FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.layout_category TO mochidb_owner;
+GRANT SELECT ON TABLE mochi.layout_category TO mochi_app;
 
 
 --
