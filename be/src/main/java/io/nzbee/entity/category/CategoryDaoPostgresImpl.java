@@ -66,7 +66,9 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 			category.setHierarchy((Hierarchy) c[3]);
 			category.setObjectCount(((BigDecimal)c[8]).longValue());
 			category.setChildCount(((BigInteger)c[9]).longValue());
-			category.setCatgoryLayouts(((String)c[10]).split(","));
+			category.setCategoryLayouts((((String)c[10]) != null)
+										? ((String)c[10]).split(",", -1)
+										: new String[0]);
 			Category parentCategory = (Category) c[4];
 			parentCategory.setCategoryAttribute(((CategoryAttribute) c[5]));
 			parentCategory.setCategoryType((CategoryType) c[6]);
@@ -105,7 +107,9 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 			category.setHierarchy((Hierarchy) c[3]);
 			category.setObjectCount(((BigDecimal)c[8]).longValue());
 			category.setChildCount(((BigInteger)c[9]).longValue());
-			category.setCatgoryLayouts(((String)c[10]).split(","));
+			category.setCategoryLayouts((((String)c[10]) != null)
+					? ((String)c[10]).split(",", -1)
+					: new String[0]);
 			Category parentCategory = (Category) c[4];
 			parentCategory.setCategoryAttribute(((CategoryAttribute) c[5]));
 			parentCategory.setCategoryType((CategoryType) c[6]);
@@ -600,7 +604,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"       ps.max_retail_price		AS cat_prnt_max_retail_price, " +
 				"       ps.max_markdown_price 	AS cat_prnt_max_markdown_price, " +
 				"		coalesce(cs.child_cat_count,0)		AS child_cat_count, " +
-				"		coalesce(layouts.category_layouts, '') as category_layouts " +
+				"		layouts.category_layouts AS category_layouts " +
 
 				"FROM summaries_ptb s " +
 

@@ -107,7 +107,7 @@ public class CategoryServiceImpl implements ICategoryService {
 		categoryDTO.setObjectCount(category.getObjectCount());
 		categoryDTO.setParentCode(category.getParent().getCategoryCode());
 		categoryDTO.setChildCategoryCount(category.getChildCount());					
-		categoryDTO.setLayoutCodes(category.getCatgoryLayouts());
+		categoryDTO.setLayoutCodes(category.getCategoryLayouts());
 		
 		return categoryDTO;
 	}

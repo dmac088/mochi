@@ -187,7 +187,7 @@ public abstract class Category {
 	private CategoryAttribute categoryAttribute;
 	
 	@Transient
-	private String[] catgoryLayouts;
+	private String[] categoryLayouts;
 
 	@Transient
 	private Long childCount;
@@ -347,12 +347,12 @@ public abstract class Category {
 		this.attributes = attributes;
 	}
 	
-	public String[] getCatgoryLayouts() {
-		return catgoryLayouts;
+	public String[] getCategoryLayouts() {
+		return categoryLayouts;
 	}
 
-	public void setCatgoryLayouts(String[] catgoryLayouts) {
-		this.catgoryLayouts = catgoryLayouts;
+	public void setCategoryLayouts(String[] categoryLayouts) {
+		this.categoryLayouts = categoryLayouts;
 	}
 	
 	
