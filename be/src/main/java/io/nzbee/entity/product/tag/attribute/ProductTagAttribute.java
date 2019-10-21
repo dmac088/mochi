@@ -19,7 +19,7 @@ import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.AnalyzerDiscriminator;
 import org.hibernate.search.annotations.Field;
 import io.nzbee.entity.LanguageDiscriminator;
-import io.nzbee.entity.product.tag.ProductTag;
+import io.nzbee.entity.tag.Tag;
 
 @Entity
 @Table(name = "tag_attr_lcl", schema = "mochi")
@@ -45,17 +45,17 @@ public class ProductTagAttribute {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="tag_id", insertable=false, updatable=false)
-	private ProductTag tag;
+	private Tag tag;
 	
 	public Long getTagId() {
 		return tagId;
 	}
 	
-	public Optional<ProductTag> getTag() {
+	public Optional<Tag> getTag() {
 		return Optional.ofNullable(tag);
 	}
 
-	public void setProductTag(ProductTag productTag) {
+	public void setProductTag(Tag productTag) {
 		this.tag = productTag;
 	}
 

@@ -6,11 +6,9 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
-import io.nzbee.entity.category.ICategoryService;
-import io.nzbee.entity.product.IProductService;
-import io.nzbee.entity.product.tag.IProductTagService;
-import io.nzbee.entity.product.tag.ProductTag;
 import io.nzbee.domain.IDomainObject;
+import io.nzbee.domain.category.ICategoryService;
+import io.nzbee.domain.product.IProductService;
 
 
 //The Domain object service should be simple and dumb
@@ -27,7 +25,7 @@ public class TagServiceImpl implements ITagService {
 	ICategoryService categoryService;
 	
 	@Autowired
-	IProductTagService productTagService;
+	ITagService productTagService;
 	
 	@Autowired
 	IProductService productService;
@@ -36,21 +34,21 @@ public class TagServiceImpl implements ITagService {
 	@Override
 	public Optional<Tag> findById(String locale, String currency, Long Id) {
 		// TODO Auto-generated method stub
-		ProductTag pt = productTagService.findById(locale, currency, Id).get();
+		Tag pt = productTagService.findById(locale, currency, Id).get();
 		return Optional.ofNullable(this.dtoToDO(pt));
 	}
 
 	@Override
 	public Optional<Tag> findByCode(String locale, String currency, String code) {
 		// TODO Auto-generated method stub
-		ProductTag pt = productTagService.findByCode(locale, currency, code).get();
+		Tag pt = productTagService.findByCode(locale, currency, code).get();
 		return Optional.ofNullable(this.dtoToDO(pt));
 	}
 
 	@Override
 	public Optional<Tag> findByDesc(String locale, String currency, String desc) {
 		// TODO Auto-generated method stub
-		ProductTag pt = productTagService.findByDesc(locale, currency, desc).get();
+		Tag pt = productTagService.findByDesc(locale, currency, desc).get();
 		return Optional.ofNullable(this.dtoToDO(pt));
 	}
 

@@ -1,7 +1,7 @@
 package io.nzbee.entity.category.brand;
 
-import java.util.List;
-
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -22,13 +22,14 @@ import io.nzbee.entity.category.Category;
 @DiscriminatorValue("2")
 public class CategoryBrand extends Category {
 
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY, 
+				cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "brand_category", schema="mochi", 
     		   joinColumns 			= @JoinColumn(name = "cat_id"), 
     		   inverseJoinColumns 	= @JoinColumn(name = "bnd_id"))
     @OrderBy
     @JsonIgnore
-    private List<Brand> brands;
+    private Set<Brand> brands;
 	
 	@Transient
 	private Long brandCount;
@@ -47,6 +48,16 @@ public class CategoryBrand extends Category {
 	public Long setObjectCount(Long count) {
 		// TODO Auto-generated method stub
 		return this.brandCount = count;
+	}
+	
+	public void addBrand(Brand brand) {
+		this.brands.add(brand);
+		brand.addBrandCategory(this);
+	}
+	
+	public void removeBrand(Brand brand) {
+		this.brands.remove(brand);
+		brand.removeBrandCategory(this);
 	}
 	
 }

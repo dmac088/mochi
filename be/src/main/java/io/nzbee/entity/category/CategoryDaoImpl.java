@@ -32,8 +32,8 @@ import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.Product_;
 import io.nzbee.entity.product.hierarchy.Hierarchy;
-import io.nzbee.entity.product.tag.ProductTag;
 import io.nzbee.entity.product.tag.ProductTag_;
+import io.nzbee.entity.tag.Tag;
 import io.nzbee.variables.ProductVars;
 
 @Component(value="categoryEntityDao")
@@ -278,7 +278,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 			conditions.add(brand.get(Brand_.brandCode).in(brandCodes));
 		}
 		if(!tagCodes.isEmpty()) {
-			Join<Product, ProductTag> tags = product.join(Product_.tags);
+			Join<Product, Tag> tags = product.join(Product_.tags);
 			conditions.add(tags.get(ProductTag_.productTagCode).in(tagCodes));
 		}
 		if(!(parentCategoryDesc == null)) {

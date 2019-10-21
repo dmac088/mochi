@@ -3,6 +3,7 @@ package io.nzbee.entity.product;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,7 +24,6 @@ import javax.persistence.SqlResultSetMapping;
 import javax.persistence.SqlResultSetMappings;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Facet;
@@ -38,7 +38,7 @@ import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.price.ProductPrice;
 import io.nzbee.entity.product.status.ProductStatus;
-import io.nzbee.entity.product.tag.ProductTag;
+import io.nzbee.entity.tag.Tag;
 import io.nzbee.variables.ProductVars;
 
 @Entity
@@ -125,10 +125,11 @@ public class Product {
 
 	@ManyToMany(mappedBy = "products")
 	@IndexedEmbedded
-	private List<CategoryProduct> categories;
+	private Set<CategoryProduct> categories;
 	
-	@ManyToMany(mappedBy = "products")
-	private List<ProductTag> tags;
+	@ManyToMany(mappedBy = "products", 
+				cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	private Set<Tag> tags;
 
 	@OneToMany(	mappedBy="product",  
 				cascade = CascadeType.ALL,
@@ -234,11 +235,15 @@ public class Product {
 		return productId;
 	}
 
-	public List<CategoryProduct> getCategories() {
+	public Set<CategoryProduct> getCategories() {
 		return this.categories;
 	}
 	
-	public List<ProductTag> getTags() {
+	public void setCategories(Set<CategoryProduct> categories) {
+		this.categories = categories;
+	}
+	
+	public Set<Tag> getTags() {
 		return tags;
 	}
 	
@@ -248,10 +253,6 @@ public class Product {
 
 	public void setAttributes(List<ProductAttribute> productAttributes) {
 		this.attributes = productAttributes;
-	}
-
-	public void setCategories(List<CategoryProduct> categories) {
-		this.categories = categories;
 	}
 
 	public void setProductId(Long productId) {
@@ -312,6 +313,16 @@ public class Product {
 
 	public void setMarkdownPrice(Double markdownPrice) {
 		this.markdownPrice = markdownPrice;
+	}
+	
+	public void addProductCategory(CategoryProduct categoryProduct) {
+		this.categories.add(categoryProduct);
+		categoryProduct.addProduct(this);
+	}
+	
+	public void removeProductCategory(CategoryProduct categoryProduct) {
+		this.categories.remove(categoryProduct);
+		categoryProduct.removeProduct(this);
 	}
 	
 	public void addProductAttribute(ProductAttribute productAttribute) {

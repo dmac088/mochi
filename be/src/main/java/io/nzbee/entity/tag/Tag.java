@@ -1,7 +1,7 @@
-package io.nzbee.entity.product.tag;
+package io.nzbee.entity.tag;
 
 import java.util.List;
-
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,7 +21,7 @@ import io.nzbee.entity.product.tag.attribute.ProductTagAttribute;
 
 @Entity
 @Table(name = "tag", schema = "mochi")
-public class ProductTag {
+public class Tag {
 	
 	@Id
 	@Column(name="tag_id")
@@ -36,7 +36,7 @@ public class ProductTag {
     		   joinColumns 			= @JoinColumn(name = "tag_id"), 
     		   inverseJoinColumns 	= @JoinColumn(name = "prd_id"))
     @OrderBy
-    private List<Product> products;
+    private Set<Product> products;
 
 	@OneToMany(	mappedBy="tag", 
 				cascade = CascadeType.ALL,
@@ -59,7 +59,7 @@ public class ProductTag {
 		this.productTagCode = productTagCode;
 	}
 
-	public List<Product> getProducts() {
+	public Set<Product> getProducts() {
 		return products;
 	}
 

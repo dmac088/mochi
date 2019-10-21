@@ -94,5 +94,15 @@ public class Brand {
 	public List<Product> getProducts() {
 		return products;
 	}
+	
+	public void addBrandCategory(CategoryBrand categoryBrand) {
+		this.categories.add(categoryBrand);
+		categoryBrand.addBrand(this);
+	}
+	
+	public void removeBrandCategory(CategoryBrand categoryBrand) {
+		this.categories.remove(categoryBrand);
+		categoryBrand.removeBrand(this);
+	}
 
 }
