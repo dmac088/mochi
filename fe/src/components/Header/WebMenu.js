@@ -44,6 +44,8 @@ const BrandCategoryMenu = (props) => {
   if(brandCategoryList.length === 0) { return null; }
 
   return brandCategoryList.map(bc => {
+
+    console.log(bc);
     return (
       <li key={bc.facetId} className="menu-item-has-children">
         <a href="#">{bc.facetDisplayValue}</a>
