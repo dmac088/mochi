@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,7 +30,6 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.json.JSONObject;
-
 import io.nzbee.dto.customer.Customer;
 import io.nzbee.dto.customer.ICustomerService;
 import io.nzbee.entity.party.person.Person;
@@ -147,7 +147,7 @@ public class UT_Customer {
 	    User u1 = new User();
 	    u1.setUsername(CUSTOMER_USERNAME);
 	    u1.setEnabled(true);
-	    u1.setUserRoles(new ArrayList<UserRole>());
+	    u1.setUserRoles(new HashSet<UserRole>());
 	    u1.addUserRole(userRoleService.loadUserRoleByRoleName(USER_ROLE));
 	    u1.setPassword(CUSTOMER_PASSWORD);
 			

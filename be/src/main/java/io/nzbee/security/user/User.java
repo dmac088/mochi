@@ -1,23 +1,17 @@
 package io.nzbee.security.user;
 
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
-
 import io.nzbee.entity.party.Party;
 import io.nzbee.security.Encoders;
 import io.nzbee.security.user.role.UserRole;
-
+import org.hibernate.annotations.NaturalId;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -30,7 +24,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -40,20 +33,17 @@ import lombok.Setter;
 @Setter
 public class User implements UserDetails, Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id
     @Column(name = "pty_id")
     private Long Id;
     
+	@NaturalId
 	@Column(name = "USER_NAME")
     private String username;
 
     @Column(name = "PASSWORD")
-    @JsonProperty(access = Access.WRITE_ONLY)
     private String password;
 
     @Column(name = "ACCOUNT_EXPIRED")
@@ -69,19 +59,18 @@ public class User implements UserDetails, Serializable {
     private boolean enabled;
 
     @OneToOne
-    @JsonBackReference
     @MapsId
     @JoinColumn(name="pty_id")
     private Party userParty;
     
     
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, 
+				cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "USER_ROLE", schema="security", 
     		   joinColumns 			= @JoinColumn(name = "pty_id"), 
     		   inverseJoinColumns 	= @JoinColumn(name = "role_id"))
     @OrderBy
-    @JsonIgnore
-    private List<UserRole> roles;
+    private Set<UserRole> roles;
     
 	@Override
     public boolean isAccountNonExpired() {
@@ -99,11 +88,10 @@ public class User implements UserDetails, Serializable {
     }
 
 	@Override
-	@JsonIgnore
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
 		//create a new array and return it
-		Collection<GrantedAuthority> colNewAuth = new ArrayList<GrantedAuthority>();
+		Set<GrantedAuthority> colNewAuth = new HashSet<GrantedAuthority>();
 		
 		 for(UserRole ur : roles) {
 	            colNewAuth.addAll(ur.getAuthorities());
@@ -152,15 +140,21 @@ public class User implements UserDetails, Serializable {
 	}
 	
 	public void addUserRole(UserRole ur) {
-		this.getUserRoles().add(ur);
+		this.roles.add(ur);
+		ur.addUser(this);
 	}
 	
-	@JsonIgnore
-	public List<UserRole> getUserRoles() {
+	public void removeUserRole(UserRole ur) {
+		this.roles.remove(ur);
+		ur.removeUser(this);
+	}
+	
+	public Set<UserRole> getUserRoles() {
 		return roles;
 	}
 
-	public void setUserRoles(List<UserRole> roles) {
+	public void setUserRoles(Set<UserRole> roles) {
 		this.roles = roles;
 	}
+	
 }

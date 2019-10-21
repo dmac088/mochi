@@ -1,6 +1,7 @@
 package io.nzbee.dto.customer;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
@@ -8,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import io.nzbee.dto.IDto;
 import io.nzbee.entity.party.IPartyService;
 import io.nzbee.entity.party.Party;
@@ -95,7 +95,7 @@ public class CustomerServiceImpl implements ICustomerService {
 		User u1 = new User();
 		u1.setUsername(customer.getUserName());
 		u1.setEnabled(true);
-		u1.setUserRoles(new ArrayList<UserRole>());
+		u1.setUserRoles(new HashSet<UserRole>());
 		u1.addUserRole(userRoleService.loadUserRoleByRoleName(USER_ROLE_NAME));
 		u1.setPassword(customer.getPassword());
 		

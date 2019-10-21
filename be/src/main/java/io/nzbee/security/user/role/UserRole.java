@@ -1,7 +1,7 @@
 package io.nzbee.security.user.role;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,8 +13,10 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import org.hibernate.annotations.NaturalId;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.nzbee.security.authority.Authority;
 import io.nzbee.security.user.User;
 import lombok.EqualsAndHashCode;
@@ -40,20 +42,17 @@ public class UserRole implements Serializable {
     								inverseJoinColumns 	= @JoinColumn(name = "permission_id"))
 	@OrderBy
     @JsonIgnore
-    private Collection<Authority> authorities;
+    private Set<Authority> authorities;
 
 	@ManyToMany(mappedBy = "roles")
-    private Collection<User> Users;
-	
-    public Collection<Authority> getAuthorities() {
-		return authorities;
-	}
+    private Set<User> Users;
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long Id;
 
+	@NaturalId
     @Column(name = "NAME")
     private String name;
     
@@ -75,5 +74,19 @@ public class UserRole implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+    public Set<Authority> getAuthorities() {
+		return authorities;
+	}
+	
+	public void addUser(User user) {
+		this.Users.add(user);
+		user.addUserRole(this);
+	}
+	
+	public void removeUser(User user) {
+		this.Users.remove(user);
+		user.addUserRole(this);
 	}
 }
