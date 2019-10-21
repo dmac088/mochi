@@ -48,7 +48,9 @@ public abstract class Party {
 	@JsonManagedReference
 	private List<Role> partyRoles = new ArrayList<Role>();
 	
-	@OneToOne(mappedBy="userParty", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(	mappedBy="userParty", 
+				fetch = FetchType.LAZY, 
+				cascade = CascadeType.ALL)
 	@JsonManagedReference
     private User partyUser;
 
