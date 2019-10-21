@@ -1976,6 +1976,12 @@ COPY mochi.layout (lay_id, lay_cd, lay_desc) FROM stdin;
 --
 
 COPY mochi.layout_category (lay_cat_id, lay_id, cat_id) FROM stdin;
+17	1	2
+18	2	38
+19	3	3
+20	3	4
+21	4	43
+22	5	45
 \.
 
 
@@ -1983,7 +1989,7 @@ COPY mochi.layout_category (lay_cat_id, lay_id, cat_id) FROM stdin;
 -- Name: layout_category_lay_cat_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('mochi.layout_category_lay_cat_id_seq', 16, true);
+SELECT pg_catalog.setval('mochi.layout_category_lay_cat_id_seq', 22, true);
 
 
 --
