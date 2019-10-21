@@ -9,6 +9,6 @@ public interface IFacet {
 	String getDesc();
 	
 	boolean isHierarchical();
-	
-	IDomainObject getEntity();
+
+	IDomainObject getPayload();
 }

@@ -87,8 +87,8 @@ public class SearchFacetServiceImpl extends UIService implements ISearchFacetSer
 										currency, 
 										categoryDesc, 
 										selectedFacets.getFacets()
-										.stream().filter(o -> !o.getEntity().getClass().equals(Category.class))
-										.map(c -> (IDomainObject) c.getEntity()).collect(Collectors.toList()))
+										.stream().filter(o -> !o.getPayload().getClass().equals(Category.class))
+										.map(c -> (IDomainObject) c.getPayload()).collect(Collectors.toList()))
 									.stream().map(dO -> new EntityFacet(dO))
 									.collect(Collectors.toList()); 
 									
