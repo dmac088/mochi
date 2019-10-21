@@ -10,6 +10,6 @@ public interface IBrandService extends ILocalizedService<Brand> {
 
 	List<Brand> findAll(String locale, String currency, String categoryDesc, List<Category> categories, List<Tag> tags);
 
-	List<Brand> findByCategory(String locale, String currency, String code);
+	List<Brand> findAll(String locale, String currency, String code);
 
 }
