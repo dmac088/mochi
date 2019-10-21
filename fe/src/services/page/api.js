@@ -3,8 +3,8 @@ import { fetchApi } from '../../services/api';
 const endPoints = {
 	get: '/api/Search/',
 	search: '/SearchTerm/',
-	category: /Category/,
-	maxPrice: /maxPrice/,
+	category: '/Category/',
+	maxPrice: '/maxPrice/',
 	page: '/Page/',
 	size: '/Size/',
 	sort: '/SortBy/',

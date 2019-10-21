@@ -18,7 +18,6 @@ public class BrandServiceImpl implements IBrandService {
 	@Autowired
     private io.nzbee.dto.brand.IBrandService brandService;
 
-	
 	@Override
 	@Transactional
 	@Cacheable
@@ -49,7 +48,14 @@ public class BrandServiceImpl implements IBrandService {
     	return lb;
 	}	
     
-
+    @Override
+	public List<Brand> findAll(String locale, String currency, String category) {
+    	List<io.nzbee.dto.brand.Brand> lpb = brandService.findByCategory(locale, currency, category);
+    	List<Brand> lb = lpb.stream().map(pb -> dtoToDO(pb))
+    			.collect(Collectors.toList());
+		return lb;
+	}
+	
 	@Override
 	public List<Brand> findAll(String locale, String currency, List<String> codes) {
 		// TODO Auto-generated method stub
@@ -81,8 +87,5 @@ public class BrandServiceImpl implements IBrandService {
 		// TODO Auto-generated method stub
 		return token;
 	}
-
-
-
 	
 }
