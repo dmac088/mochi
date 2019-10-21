@@ -50,7 +50,7 @@ public class BrandServiceImpl implements IBrandService {
     
     @Override
 	public List<Brand> findAll(String locale, String currency, String category) {
-    	List<io.nzbee.dto.brand.Brand> lpb = brandService.findByCategory(locale, currency, category);
+    	List<io.nzbee.dto.brand.Brand> lpb = brandService.findAll(locale, currency, category);
     	List<Brand> lb = lpb.stream().map(pb -> dtoToDO(pb))
     			.collect(Collectors.toList());
 		return lb;

@@ -15,10 +15,13 @@ import javax.persistence.criteria.Root;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+
+import io.nzbee.domain.category.BrandCategory;
 import io.nzbee.entity.brand.Brand_;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.brand.attribute.BrandAttribute_;
 import io.nzbee.entity.category.Category_;
+import io.nzbee.entity.category.brand.CategoryBrand_;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.Product_;
@@ -175,6 +178,51 @@ public class BrandDaoImpl  implements IBrandDao {
 		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
 		conditions.add(cb.equal(attribute.get(BrandAttribute_.lclCd), locale));
 		conditions.add(root.in(Brand_.brandCode).in(brandCodes));
+
+		cq.multiselect(	root.get(Brand_.brandId).alias("brandId"),
+						root.get(Brand_.brandCode).alias("brandCode"),
+						attribute.get(BrandAttribute_.Id).alias("brandAttributeId"),
+						attribute.get(BrandAttribute_.brandDesc).alias("brnadDesc")
+		);
+		
+		TypedQuery<Tuple> query = em.createQuery(cq);
+		
+		List<Tuple> tuples = query.getResultList();
+		
+		return tuples.stream().map(t -> {
+			Brand brandEntity = new Brand();
+			BrandAttribute brandAttribute = new BrandAttribute();
+			
+			brandAttribute.setId(Long.parseLong(t.get("brandAttributeId").toString()));
+			brandAttribute.setBrandId(Long.parseLong(t.get("brandId").toString()));
+			brandAttribute.setBrandDesc(t.get("brnadDesc").toString());
+			brandAttribute.setLclCd(locale);
+			
+			brandEntity.setBrandAttribute(brandAttribute);
+			brandEntity.setId(Long.parseLong(t.get("brandId").toString()));
+			brandEntity.setCode(t.get("brandCode").toString());
+			
+			return brandEntity;
+		}).collect(Collectors.toList());
+	}
+	
+	@Override
+	public List<Brand> findAllByCategory(String locale, String currency, String categoryCode) {
+		// TODO Auto-generated method stub
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
+		
+		Root<Brand> root = cq.from(Brand.class);
+		Join<Brand, Product> brand = root.join(Brand_.products);
+		Join<Brand, BrandCategory> category = brand.join(Brand_.categories);
+		Join<Product, ProductStatus> status = brand.join(Product_.productStatus);
+		Join<Brand, BrandAttribute> attribute = root.join(Brand_.brandAttributes);
+		
+		List<Predicate> conditions = new ArrayList<Predicate>();
+		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
+		conditions.add(cb.equal(attribute.get(BrandAttribute_.lclCd), locale));
+		conditions.add(cb.equal(category.get(CategoryBrand_.categoryCode), categoryCode));
 
 		cq.multiselect(	root.get(Brand_.brandId).alias("brandId"),
 						root.get(Brand_.brandCode).alias("brandCode"),

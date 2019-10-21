@@ -59,9 +59,10 @@ public class BrandServiceImpl implements IBrandService {
 	}
 	
 	@Override
-	public List<Brand> findByCategory(String locale, String currency, String code) {
+	public List<Brand> findAll(String locale, String currency, String categoryCode) {
 		// TODO Auto-generated method stub
-		return null;
+		 List<io.nzbee.entity.brand.Brand> lpb = brandService.findAllByCategory(locale, currency, categoryCode)
+			;
 	}
  
 	@Override
