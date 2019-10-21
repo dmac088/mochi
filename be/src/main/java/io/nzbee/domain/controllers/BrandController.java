@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.nzbee.dto.brand.Brand;
-import io.nzbee.dto.brand.IBrandService;
+import io.nzbee.domain.brand.Brand;
+import io.nzbee.domain.brand.IBrandService;
 
 @RestController
 @RequestMapping("/api")
@@ -32,4 +32,11 @@ public class BrandController {
     	return brandService.findById(locale, currency, brandId).get();
     }
 
+    @GetMapping("/Brand/{locale}/{currency}/category/{categoryDesc}")
+    public List<Brand> getBrands(	@PathVariable String locale, 
+    						@PathVariable String currency, 
+    						@PathVariable String categoryDesc) {
+   
+    	return brandService.findAll(locale, currency, categoryDesc);
+    }
 }
