@@ -1,7 +1,6 @@
 package io.nzbee.entity.layout;
 
-import java.util.List;
-
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,8 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.NaturalId;
 
 import io.nzbee.entity.category.Category;
 
@@ -25,15 +23,15 @@ public class Layout {
 	@Column(name="lay_id")
 	private Long layoutId;
 	
-	@Column(name="lay_cd")
+	@NaturalId
+	@Column(name="lay_cd", unique = true, updatable = false)
 	private String code;
 	
 	@Column(name="lay_desc")
 	private String desc;
 	
 	@ManyToMany(mappedBy = "layouts")
-	@JsonIgnore
-	private List<Category> categories;
+	private Set<Category> categories;
 	
 	public String getCode() {
 		return code;
