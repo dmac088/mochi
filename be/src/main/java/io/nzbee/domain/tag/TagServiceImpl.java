@@ -64,60 +64,12 @@ public class TagServiceImpl implements ITagService {
 		return null;
 	}
 
-//	@Override
-//	public List<Tag> findAll(String locale, String currency, String categoryDesc, List<Category> categories,
-//			List<Brand> brands) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	@Override
-//	public List<Tag> findAll(String locale, String currency, String categoryDesc, Double price,
-//			List<Category> categories, List<Brand> brands) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}	
-	
 	@Override
 	public List<Tag> findAll(String locale, String currency, String categoryDesc, List<IDomainObject> lDo) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	
-//	@Override
-//	public List<Tag> findAll(String locale, String currency, String categoryDesc, List<Category> categories, List<Brand> brands) {
-//		return productTagService.findAll(locale, 
-//										null, 
-//										null, 
-//										ProductVars.MARKDOWN_SKU_DESCRIPTION, 
-//										currency, 
-//										new Date(), 
-//										new Date(), 
-//										categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
-//										brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()))
-//				.stream().map(pt -> {
-//					return dTOToDO(pt);
-//				}).collect(Collectors.toList());	
-//	}
-//	
-//	@Override
-//	public List<Tag> findAll(String locale, String currency, String categoryDesc, Double price, List<Category> categories, List<Brand> brands) {
-//		return productTagService.findAll(locale, 
-//				new Double(0), 
-//				price, 
-//				ProductVars.MARKDOWN_SKU_DESCRIPTION, 
-//				currency, 
-//				new Date(), 
-//				new Date(), 
-//				categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
-//				brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()))
-//				.stream().map(pt -> {
-//					return dTOToDO(pt);
-//				}).collect(Collectors.toList());
-//	}
-
-
-
 	@Override
 	public Tag dtoToDO(Object dto) {
 		// TODO Auto-generated method stub
