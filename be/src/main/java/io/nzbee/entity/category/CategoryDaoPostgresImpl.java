@@ -66,10 +66,12 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 			category.setHierarchy((Hierarchy) c[3]);
 			category.setObjectCount(((BigDecimal)c[8]).longValue());
 			category.setChildCount(((BigInteger)c[9]).longValue());
+			category.setCatgoryLayouts(((String)c[10]).split(","));
 			Category parentCategory = (Category) c[4];
 			parentCategory.setCategoryAttribute(((CategoryAttribute) c[5]));
 			parentCategory.setCategoryType((CategoryType) c[6]);
 			parentCategory.setHierarchy((Hierarchy) c[7]);
+			
 			
 			category.setParent(parentCategory);
 			return category;
@@ -103,6 +105,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 			category.setHierarchy((Hierarchy) c[3]);
 			category.setObjectCount(((BigDecimal)c[8]).longValue());
 			category.setChildCount(((BigInteger)c[9]).longValue());
+			category.setCatgoryLayouts(((String)c[10]).split(","));
 			Category parentCategory = (Category) c[4];
 			parentCategory.setCategoryAttribute(((CategoryAttribute) c[5]));
 			parentCategory.setCategoryType((CategoryType) c[6]);
@@ -596,7 +599,8 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"       ps.object_count			AS cat_prnt_object_count, " +
 				"       ps.max_retail_price		AS cat_prnt_max_retail_price, " +
 				"       ps.max_markdown_price 	AS cat_prnt_max_markdown_price, " +
-				"		coalesce(cs.child_cat_count,0)		AS child_cat_count " +	
+				"		coalesce(cs.child_cat_count,0)		AS child_cat_count, " +
+				"		coalesce(layouts.category_layouts, '') as category_layouts " +
 
 				"FROM summaries_ptb s " +
 
@@ -605,7 +609,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 
 				"LEFT JOIN (" + 
 				" SELECT 	prnt_id as cat_id, " +
-				" 		count(distinct cat_id) as child_cat_count " +
+				" 			count(distinct cat_id) as child_cat_count " +
 				" FROM summaries_ptb cs " +
 				" GROUP BY prnt_id" +
 				") cs " +
@@ -635,6 +639,20 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"LEFT JOIN mochi.category_attr_lcl pa " +
 				"ON pc.cat_id = pa.cat_id " +
 				
+				"LEFT JOIN (" +
+				"SELECT cat.cat_id, " +
+				" cat.cat_cd, " +
+				" string_agg(coalesce(lay_cd, ''), ',') as category_layouts " +
+				"FROM mochi.layout l " +
+				"	INNER JOIN mochi.layout_category lc " +
+				"	ON l.lay_id = lc.lay_id " +
+
+				"	INNER JOIN mochi.category cat " +
+				"	ON lc.cat_id = cat.cat_id " +
+				"GROUP BY cat.cat_id, " + 
+				"	cat.cat_cd" +
+				") layouts " +
+				"ON s.cat_id = layouts.cat_id " + 
 				
 				"WHERE a.lcl_cd = :locale " +
 				"AND pa.lcl_cd = :locale " +

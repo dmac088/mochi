@@ -55,7 +55,7 @@ import io.nzbee.variables.GeneralVars;
     columns = {
     		@ColumnResult(name = "object_count"),
     		@ColumnResult(name = "child_cat_count"),
-    		@ColumnResult(name = "caetgory_layouts")
+    		@ColumnResult(name = "category_layouts")
     },
     entities = {
             @EntityResult(
@@ -187,7 +187,7 @@ public abstract class Category {
 	private CategoryAttribute categoryAttribute;
 	
 	@Transient
-	private String catgoryLayouts;
+	private String[] catgoryLayouts;
 
 	@Transient
 	private Long childCount;
@@ -347,7 +347,13 @@ public abstract class Category {
 		this.attributes = attributes;
 	}
 	
-	public String getCatgoryLayouts() {
+	public String[] getCatgoryLayouts() {
 		return catgoryLayouts;
 	}
+
+	public void setCatgoryLayouts(String[] catgoryLayouts) {
+		this.catgoryLayouts = catgoryLayouts;
+	}
+	
+	
 }
