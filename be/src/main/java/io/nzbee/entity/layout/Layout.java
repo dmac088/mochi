@@ -1,8 +1,11 @@
 package io.nzbee.entity.layout;
 
 import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,7 +33,9 @@ public class Layout {
 	@Column(name="lay_desc")
 	private String desc;
 	
-	@ManyToMany(mappedBy = "layouts")
+	@ManyToMany(mappedBy = "layouts", 
+				fetch = FetchType.LAZY, 
+				cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private Set<Category> categories;
 	
 	public String getCode() {
