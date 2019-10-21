@@ -34,8 +34,8 @@ import io.nzbee.entity.product.price.ProductPriceType_;
 import io.nzbee.entity.product.price.ProductPrice_;
 import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.entity.product.status.ProductStatus_;
-import io.nzbee.entity.product.tag.ProductTag_;
-import io.nzbee.entity.product.tag.attribute.ProductTagAttribute;
+import io.nzbee.entity.tag.Tag_;
+import io.nzbee.entity.tag.attribute.TagAttribute;
 import io.nzbee.entity.product.tag.attribute.ProductTagAttribute_;
 import io.nzbee.variables.ProductVars;
 
@@ -56,7 +56,7 @@ public class TagDaoImpl implements ITagDao {
 		Root<Tag> root = cq.from(Tag.class);
 
 		List<Predicate> conditions = new ArrayList<Predicate>();	
-		conditions.add(cb.equal(root.get(ProductTag_.productTagId), id));
+		conditions.add(cb.equal(root.get(Tag_.productTagId), id));
 		
 		TypedQuery<Tag> query = em.createQuery(cq
 				.select(root)
@@ -77,7 +77,7 @@ public class TagDaoImpl implements ITagDao {
 		Root<Tag> root = cq.from(Tag.class);
 
 		List<Predicate> conditions = new ArrayList<Predicate>();	
-		conditions.add(cb.equal(root.get(ProductTag_.productTagCode), code));
+		conditions.add(cb.equal(root.get(Tag_.productTagCode), code));
 		
 		TypedQuery<Tag> query = em.createQuery(cq
 				.select(root)
@@ -96,7 +96,7 @@ public class TagDaoImpl implements ITagDao {
 		
 		CriteriaQuery<Tag> cq = cb.createQuery(Tag.class);
 		Root<Tag> root = cq.from(Tag.class);
-		Join<Tag, ProductTagAttribute> attribute = root.join(ProductTag_.attributes);
+		Join<Tag, TagAttribute> attribute = root.join(Tag_.attributes);
 		
 
 		List<Predicate> conditions = new ArrayList<Predicate>();	
@@ -121,7 +121,7 @@ public class TagDaoImpl implements ITagDao {
 		
 		Root<Tag> root = cq.from(Tag.class);
 		//Join<ProductTagAttribute, ProductTag> tag = root.join(ProductTagAttribute_.tag);
-		Join<Tag, Product> product = root.join(ProductTag_.products);
+		Join<Tag, Product> product = root.join(Tag_.products);
 		Join<Product, ProductAttribute> productAttribute = product.join(Product_.attributes);
 		Join<Product, CategoryProduct> category = product.join(Product_.categories);
 		Join<Product, Brand> brand = product.join(Product_.brand);

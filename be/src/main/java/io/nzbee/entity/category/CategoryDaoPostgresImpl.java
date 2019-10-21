@@ -15,7 +15,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -32,7 +31,6 @@ import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.Product_;
 import io.nzbee.entity.product.hierarchy.Hierarchy;
-import io.nzbee.entity.product.tag.ProductTag_;
 import io.nzbee.entity.tag.Tag;
 import io.nzbee.variables.ProductVars;
 
@@ -286,7 +284,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		}
 		if(!tagCodes.isEmpty()) {
 			Join<Product, Tag> tags = product.join(Product_.tags);
-			conditions.add(tags.get(ProductTag_.productTagCode).in(tagCodes));
+			conditions.add(tags.get(io.nzbee.entity.tag.ProductTag_.productTagCode).in(tagCodes));
 		}
 		if(!(parentCategoryDesc == null)) {
 			conditions.add(cb.equal(parentCategoryAttribute.get(CategoryAttribute_.categoryDesc), parentCategoryDesc));

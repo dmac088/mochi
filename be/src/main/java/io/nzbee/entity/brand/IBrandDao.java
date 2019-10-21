@@ -9,6 +9,6 @@ public interface IBrandDao extends ILocalizedDao<Brand> {
 	
 	List<Brand> findAll(String locale, String currency, List<String> brandCodes);
 
+
 	List<Brand> findAllByCategory(String locale, String currency, String categoryCode);
-	
 }

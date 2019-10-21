@@ -17,7 +17,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.NaturalId;
 
 import io.nzbee.entity.product.Product;
-import io.nzbee.entity.product.tag.attribute.ProductTagAttribute;
+import io.nzbee.entity.tag.attribute.TagAttribute;
 
 @Entity
 @Table(name = "tag", schema = "mochi")
@@ -41,7 +41,7 @@ public class Tag {
 	@OneToMany(	mappedBy="tag", 
 				cascade = CascadeType.ALL,
 				orphanRemoval = true)
-	private List<ProductTagAttribute> attributes;
+	private List<TagAttribute> attributes;
 	
 	public Long getTagId() {
 		return productTagId;
@@ -63,16 +63,16 @@ public class Tag {
 		return products;
 	}
 
-	public List<ProductTagAttribute> getAttributes() {
+	public List<TagAttribute> getAttributes() {
 		return attributes;
 	}
 	
-	public void addTagAttribute(ProductTagAttribute tagAttribute) {
+	public void addTagAttribute(TagAttribute tagAttribute) {
 		this.attributes.add(tagAttribute);
 		tagAttribute.setProductTag(this);
 	}
 	
-	public void removeTagAttribute(ProductTagAttribute tagAttribute) {
+	public void removeTagAttribute(TagAttribute tagAttribute) {
 		this.attributes.remove(tagAttribute);
 		tagAttribute.setProductTag(null);
 	}
