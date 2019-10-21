@@ -50,7 +50,8 @@ public abstract class Party {
 	
 	@OneToOne(	mappedBy="userParty", 
 				fetch = FetchType.LAZY, 
-				cascade = CascadeType.ALL)
+				cascade = CascadeType.ALL,
+				optional = false)
 	@JsonManagedReference
     private User partyUser;
 
