@@ -20,7 +20,7 @@ public abstract class Category implements IHierarchicalDomainObject {
 
 	private Long objectCount;
 	
-	private List<String> layoutCodes;
+	private String[] layoutCodes;
 
 	public Category() {
 		super();
@@ -100,11 +100,11 @@ public abstract class Category implements IHierarchicalDomainObject {
 		this.objectCount = objectCount;
 	}
 	
-	public List<String> getLayoutCodes() {
+	public String[] getLayoutCodes() {
 		return layoutCodes;
 	}
 
-	public void setLayoutCodes(List<String> layoutCodes) {
+	public void setLayoutCodes(String[] layoutCodes) {
 		this.layoutCodes = layoutCodes;
 	}
 

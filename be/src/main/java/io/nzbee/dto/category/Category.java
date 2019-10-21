@@ -1,6 +1,5 @@
 package io.nzbee.dto.category;
 
-import java.util.List;
 import java.util.Objects;
 
 public class Category {
@@ -27,7 +26,7 @@ public class Category {
 	
 	private Double markdownPrice;
 	
-	List<String> layoutCodes;
+	private String[] layoutCodes;
 
 	public long getCategoryId() {
 		return categoryId;
@@ -146,11 +145,11 @@ public class Category {
 		this.markdownPrice = markdownPrice;
 	}
 	
-	public List<String> getLayoutCodes() {
+	public String[] getLayoutCodes() {
 		return layoutCodes;
 	}
 
-	public void setLayoutCodes(List<String> layoutCodes) {
+	public void setLayoutCodes(String[] layoutCodes) {
 		this.layoutCodes = layoutCodes;
 	}
 
