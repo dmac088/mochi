@@ -1,7 +1,6 @@
 package io.nzbee.dto.tag;
 
 import java.util.List;
-
 import io.nzbee.dto.ILocalizedService;
 import io.nzbee.dto.brand.Brand;
 import io.nzbee.dto.category.Category;

@@ -2,6 +2,7 @@ package io.nzbee.entity.category.product;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -22,7 +23,8 @@ import io.nzbee.entity.product.Product;
 @DiscriminatorValue("1")
 public class CategoryProduct extends Category  {
 	
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY, 
+				cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "product_category", schema="mochi", 
     		   joinColumns 			= @JoinColumn(name = "cat_id"), 
     		   inverseJoinColumns 	= @JoinColumn(name = "prd_id"))
@@ -37,6 +39,10 @@ public class CategoryProduct extends Category  {
 		super();
 	}
 
+	public List<Product> getProducts() {
+		return products;
+	}
+
 	@Override
 	public Long getObjectCount() {
 		// TODO Auto-generated method stub
@@ -47,5 +53,15 @@ public class CategoryProduct extends Category  {
 	public Long setObjectCount(Long count) {
 		// TODO Auto-generated method stub
 		return productCount = count;
+	}
+	
+	public void addProduct(Product product) {
+		this.products.add(product);
+		product.addProductCategory(this);
+	}
+	
+	public void removeProduct(Product product) {
+		this.products.remove(product);
+		product.removeProductCategory(this);
 	}
 }

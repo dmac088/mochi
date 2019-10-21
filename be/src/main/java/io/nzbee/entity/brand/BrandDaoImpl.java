@@ -24,8 +24,8 @@ import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.Product_;
 import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.entity.product.status.ProductStatus_;
-import io.nzbee.entity.product.tag.ProductTag;
 import io.nzbee.entity.product.tag.ProductTag_;
+import io.nzbee.entity.tag.Tag;
 import io.nzbee.variables.ProductVars;
 
 @Component
@@ -263,7 +263,7 @@ public class BrandDaoImpl  implements IBrandDao {
 			conditions.add(category.get(Category_.categoryCode).in(categoryCodes));
 		}
 		if(tagCodes.size() > 0) {
-			Join<Product, ProductTag> productTag = brand.join(Product_.tags);
+			Join<Product, Tag> productTag = brand.join(Product_.tags);
 			conditions.add(productTag.get(ProductTag_.productTagCode).in(tagCodes));
 		}
 		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));

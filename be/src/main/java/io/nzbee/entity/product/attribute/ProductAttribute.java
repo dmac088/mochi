@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -44,8 +45,8 @@ import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.Product;
-import io.nzbee.entity.product.tag.ProductTag;
 import io.nzbee.entity.product.tag.attribute.ProductTagAttribute;
+import io.nzbee.entity.tag.Tag;
 import io.nzbee.variables.CategoryVars;
 
 @Entity
@@ -140,7 +141,7 @@ public class ProductAttribute {
 	@Transient
 	@Field(analyze = Analyze.YES, store=Store.YES)
 	public String getTagA() {
-		Optional<List<ProductTag>> lpt = Optional.ofNullable(this.getProduct().getTags());
+		Optional<Set<Tag>> lpt = Optional.ofNullable(this.getProduct().getTags());
 		if(!lpt.isPresent());
 		List<Optional<ProductTagAttribute>> lpa = lpt.get().stream().map(t -> {
 			return t.getAttributes().stream().filter(ta -> ta.getLclCd().equals(this.getLclCd())).findFirst();
@@ -153,7 +154,7 @@ public class ProductAttribute {
 	@Transient
 	@Field(analyze = Analyze.YES, store=Store.YES)
 	public String getTagB() {
-		Optional<List<ProductTag>> lpt = Optional.ofNullable(this.getProduct().getTags());
+		Optional<Set<Tag>> lpt = Optional.ofNullable(this.getProduct().getTags());
 		if(!lpt.isPresent());
 		List<Optional<ProductTagAttribute>> lpa = lpt.get().stream().map(t -> {
 			return t.getAttributes().stream().filter(ta -> ta.getLclCd().equals(this.getLclCd())).findFirst();
@@ -167,7 +168,7 @@ public class ProductAttribute {
 	@Transient
 	@Field(analyze = Analyze.YES, store=Store.YES)
 	public String getTagC() {
-		Optional<List<ProductTag>> lpt = Optional.ofNullable(this.getProduct().getTags());
+		Optional<Set<Tag>> lpt = Optional.ofNullable(this.getProduct().getTags());
 		if(!lpt.isPresent());
 		List<Optional<ProductTagAttribute>> lpa = lpt.get().stream().map(t -> {
 			return t.getAttributes().stream().filter(ta -> ta.getLclCd().equals(this.getLclCd())).findFirst();

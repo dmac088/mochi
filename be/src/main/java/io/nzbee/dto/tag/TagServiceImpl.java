@@ -5,16 +5,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
-
 import io.nzbee.dto.brand.Brand;
 import io.nzbee.dto.category.Category;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.product.IProductService;
-import io.nzbee.entity.product.tag.IProductTagService;
 import io.nzbee.variables.ProductVars;
 
 
@@ -32,7 +29,7 @@ public class TagServiceImpl implements ITagService {
 	ICategoryService categoryService;
 	
 	@Autowired
-	IProductTagService productTagService;
+	io.nzbee.entity.tag.ITagService productTagService;
 	
 	@Autowired
 	IProductService productService;
@@ -103,7 +100,7 @@ public class TagServiceImpl implements ITagService {
 	@Override
 	public Tag entityToDTO(String locale, String currency, Object entity) {
 		// TODO Auto-generated method stub
-		io.nzbee.entity.product.tag.ProductTag tag = ((io.nzbee.entity.product.tag.ProductTag) entity);
+		io.nzbee.entity.tag.Tag tag = ((io.nzbee.entity.tag.Tag) entity);
 		Tag t = new Tag();
 		t.setTagId(tag.getTagId());
 		t.setTagCode(tag.getCode());

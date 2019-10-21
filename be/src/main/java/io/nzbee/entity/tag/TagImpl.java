@@ -1,4 +1,4 @@
-package io.nzbee.entity.product.tag;
+package io.nzbee.entity.tag;
 
 import java.util.Date;
 import java.util.List;
@@ -8,13 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service(value = "productTagService")
-public class ProductTagServiceImpl implements IProductTagService {
+public class TagImpl implements ITagService {
 
 	@Autowired
-	private IProductTagDao productTagDAO;
+	private ITagDao productTagDAO;
 	
 	@Override
-	public List<ProductTag> findAll(String locale, Double priceStart, Double priceEnd,
+	public List<Tag> findAll(String locale, Double priceStart, Double priceEnd,
 			String priceType, String currency, Date priceDateStart, Date priceDateEnd, List<String> categoryCodes, List<String> brandCodes) {
 		// TODO Auto-generated method stub
 		return productTagDAO.findAll(locale, 
@@ -29,49 +29,49 @@ public class ProductTagServiceImpl implements IProductTagService {
 	}
 
 	@Override
-	public List<ProductTag> findAll(String locale, String currency) {
+	public List<Tag> findAll(String locale, String currency) {
 		// TODO Auto-generated method stub
 		return productTagDAO.findAll(locale, currency);
 	}
 	
 	@Override
-	public List<ProductTag> findAll(String locale, String currency, List<String> codes) {
+	public List<Tag> findAll(String locale, String currency, List<String> codes) {
 		// TODO Auto-generated method stub
 		return productTagDAO.findAll(locale, currency, codes);
 	}
 
 	@Override
-	public Optional<ProductTag> findById(String locale, String currency, long id) {
+	public Optional<Tag> findById(String locale, String currency, long id) {
 		// TODO Auto-generated method stub
 		return productTagDAO.findById(locale, currency, id);
 	}
 
 	@Override
-	public Optional<ProductTag> findByCode(String locale, String currency, String code) {
+	public Optional<Tag> findByCode(String locale, String currency, String code) {
 		// TODO Auto-generated method stub
 		return productTagDAO.findByCode(locale, currency, code);
 	}
 	
 	@Override
-	public Optional<ProductTag> findByDesc(String locale, String currency, String desc) {
+	public Optional<Tag> findByDesc(String locale, String currency, String desc) {
 		// TODO Auto-generated method stub
 		return productTagDAO.findByDesc(locale, currency, desc);
 	}
 
 	@Override
-	public void save(ProductTag t) {
+	public void save(Tag t) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void update(ProductTag t) {
+	public void update(Tag t) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void delete(ProductTag t) {
+	public void delete(Tag t) {
 		// TODO Auto-generated method stub
 		
 	}
