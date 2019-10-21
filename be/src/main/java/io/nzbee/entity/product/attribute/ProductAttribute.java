@@ -45,8 +45,8 @@ import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.Product;
-import io.nzbee.entity.product.tag.attribute.ProductTagAttribute;
 import io.nzbee.entity.tag.Tag;
+import io.nzbee.entity.tag.attribute.TagAttribute;
 import io.nzbee.variables.CategoryVars;
 
 @Entity
@@ -143,10 +143,10 @@ public class ProductAttribute {
 	public String getTagA() {
 		Optional<Set<Tag>> lpt = Optional.ofNullable(this.getProduct().getTags());
 		if(!lpt.isPresent());
-		List<Optional<ProductTagAttribute>> lpa = lpt.get().stream().map(t -> {
+		List<Optional<TagAttribute>> lpa = lpt.get().stream().map(t -> {
 			return t.getAttributes().stream().filter(ta -> ta.getLclCd().equals(this.getLclCd())).findFirst();
 		}).collect(Collectors.toList());
-		Iterator<ProductTagAttribute> i = lpa.stream().filter(ta -> ta.isPresent()).map(t -> { return t.get();}).sorted(Comparator.comparing(ProductTagAttribute::getTagDesc)).iterator();
+		Iterator<TagAttribute> i = lpa.stream().filter(ta -> ta.isPresent()).map(t -> { return t.get();}).sorted(Comparator.comparing(TagAttribute::getTagDesc)).iterator();
 		if(i.hasNext()) { return i.next().getTagDesc(); }
 		return "Empty";
 	}
@@ -156,10 +156,10 @@ public class ProductAttribute {
 	public String getTagB() {
 		Optional<Set<Tag>> lpt = Optional.ofNullable(this.getProduct().getTags());
 		if(!lpt.isPresent());
-		List<Optional<ProductTagAttribute>> lpa = lpt.get().stream().map(t -> {
+		List<Optional<TagAttribute>> lpa = lpt.get().stream().map(t -> {
 			return t.getAttributes().stream().filter(ta -> ta.getLclCd().equals(this.getLclCd())).findFirst();
 		}).collect(Collectors.toList());
-		Iterator<ProductTagAttribute> i = lpa.stream().filter(ta -> ta.isPresent()).map(t -> { return t.get();}).sorted(Comparator.comparing(ProductTagAttribute::getTagDesc)).iterator();
+		Iterator<TagAttribute> i = lpa.stream().filter(ta -> ta.isPresent()).map(t -> { return t.get();}).sorted(Comparator.comparing(TagAttribute::getTagDesc)).iterator();
 		if(i.hasNext()) { i.next(); }
 		if(i.hasNext()) {  return i.next().getTagDesc(); }
 		return "Empty";
@@ -170,10 +170,10 @@ public class ProductAttribute {
 	public String getTagC() {
 		Optional<Set<Tag>> lpt = Optional.ofNullable(this.getProduct().getTags());
 		if(!lpt.isPresent());
-		List<Optional<ProductTagAttribute>> lpa = lpt.get().stream().map(t -> {
+		List<Optional<TagAttribute>> lpa = lpt.get().stream().map(t -> {
 			return t.getAttributes().stream().filter(ta -> ta.getLclCd().equals(this.getLclCd())).findFirst();
 		}).collect(Collectors.toList());
-		Iterator<ProductTagAttribute> i = lpa.stream().filter(ta -> ta.isPresent()).map(t -> { return t.get();}).sorted(Comparator.comparing(ProductTagAttribute::getTagDesc)).iterator();
+		Iterator<TagAttribute> i = lpa.stream().filter(ta -> ta.isPresent()).map(t -> { return t.get();}).sorted(Comparator.comparing(TagAttribute::getTagDesc)).iterator();
 		if(i.hasNext()) { i.next(); }
 		if(i.hasNext()) { i.next(); }
 		if(i.hasNext()) { return i.next().getTagDesc(); }

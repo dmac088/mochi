@@ -1,4 +1,4 @@
-package io.nzbee.entity.product.tag.attribute;
+package io.nzbee.entity.tag.attribute;
 
 import java.util.Optional;
 
@@ -24,7 +24,7 @@ import io.nzbee.entity.tag.Tag;
 @Entity
 @Table(name = "tag_attr_lcl", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "tag_lcl_id")
-public class ProductTagAttribute {
+public class TagAttribute {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -88,10 +88,10 @@ public class ProductTagAttribute {
 	    if (this == obj) {
 	        return true;
         }
-	    if (!(obj instanceof ProductTagAttribute)) {
+	    if (!(obj instanceof TagAttribute)) {
 	            return false;
 	    }
-	    ProductTagAttribute that = (ProductTagAttribute) obj;
+	    TagAttribute that = (TagAttribute) obj;
 	      EqualsBuilder eb = new EqualsBuilder();
 	      eb.append(tag.getCode(), that.tag.getCode());
 	      eb.append(lclCd, that.lclCd);

@@ -45,7 +45,7 @@ public class BrandServiceImpl implements IBrandService {
 	@Override
 	public List<Brand> findAll(String locale, String currency, String categoryCode) {
 		// TODO Auto-generated method stub
-		return brandDao.findAll(locale, currency, categoryCode);
+		return brandDao.findAllByCategory(locale, currency, categoryCode);
 	}
 	
 	@Override

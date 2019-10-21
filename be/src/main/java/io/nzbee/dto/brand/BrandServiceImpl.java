@@ -61,8 +61,8 @@ public class BrandServiceImpl implements IBrandService {
 	@Override
 	public List<Brand> findAll(String locale, String currency, String categoryCode) {
 		// TODO Auto-generated method stub
-		 List<io.nzbee.entity.brand.Brand> lpb = brandService.findAllByCategory(locale, currency, categoryCode)
-			;
+		List<io.nzbee.entity.brand.Brand> lpb = brandService.findAll(locale, currency, categoryCode);
+		return lpb.stream().map(pb -> entityToDTO(locale, currency, pb)).collect(Collectors.toList());
 	}
  
 	@Override

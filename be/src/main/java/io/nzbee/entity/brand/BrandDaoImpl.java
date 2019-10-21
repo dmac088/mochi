@@ -15,19 +15,18 @@ import javax.persistence.criteria.Root;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-
-import io.nzbee.domain.category.BrandCategory;
 import io.nzbee.entity.brand.Brand_;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.brand.attribute.BrandAttribute_;
 import io.nzbee.entity.category.Category_;
+import io.nzbee.entity.category.brand.CategoryBrand;
 import io.nzbee.entity.category.brand.CategoryBrand_;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.Product_;
 import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.entity.product.status.ProductStatus_;
-import io.nzbee.entity.product.tag.ProductTag_;
+import io.nzbee.entity.tag.Tag_;
 import io.nzbee.entity.tag.Tag;
 import io.nzbee.variables.ProductVars;
 
@@ -215,7 +214,7 @@ public class BrandDaoImpl  implements IBrandDao {
 		
 		Root<Brand> root = cq.from(Brand.class);
 		Join<Brand, Product> brand = root.join(Brand_.products);
-		Join<Brand, BrandCategory> category = brand.join(Brand_.categories);
+		Join<Brand, CategoryBrand> category = root.join(Brand_.categories);
 		Join<Product, ProductStatus> status = brand.join(Product_.productStatus);
 		Join<Brand, BrandAttribute> attribute = root.join(Brand_.brandAttributes);
 		
@@ -302,17 +301,17 @@ public class BrandDaoImpl  implements IBrandDao {
 		
 		Root<Brand> root = cq.from(Brand.class);
 		
-		Join<Brand, Product> brand = root.join(Brand_.products);
-		Join<Product, ProductStatus> status = brand.join(Product_.productStatus);
+		Join<Brand, Product> product = root.join(Brand_.products);
+		Join<Product, ProductStatus> status = product.join(Product_.productStatus);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		if(categoryCodes.size() > 0) {
-			Join<Product, CategoryProduct> category = brand.join(Product_.categories);
+			Join<Product, CategoryProduct> category = product.join(Product_.categories);
 			conditions.add(category.get(Category_.categoryCode).in(categoryCodes));
 		}
 		if(tagCodes.size() > 0) {
-			Join<Product, Tag> productTag = brand.join(Product_.tags);
-			conditions.add(productTag.get(ProductTag_.productTagCode).in(tagCodes));
+			Join<Product, Tag> productTag = product.join(Product_.tags);
+			conditions.add(productTag.get(Tag_.productTagCode).in(tagCodes));
 		}
 		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
 		
