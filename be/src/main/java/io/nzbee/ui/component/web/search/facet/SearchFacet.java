@@ -16,23 +16,23 @@ public class SearchFacet implements org.hibernate.search.query.facet.Facet, IFac
 	@Override
 	public String getCode() {
 		// TODO Auto-generated method stub
-		return ((IDomainObject)this.getEntity()).getCode();
+		return ((IDomainObject)this.getPayload()).getCode();
 	}
 
 	@Override
 	public String getDesc() {
 		// TODO Auto-generated method stub
-		return ((IDomainObject)this.getEntity()).getDesc();
+		return ((IDomainObject)this.getPayload()).getDesc();
 	}
 
 	@Override
 	public boolean isHierarchical() {
 		// TODO Auto-generated method stub
-		return ((IDomainObject)this.getEntity()).isHierarchical();
+		return ((IDomainObject)this.getPayload()).isHierarchical();
 	}
 
 	@Override
-	public IDomainObject getEntity() {
+	public IDomainObject getPayload() {
 	   return this.entity;
 	} 
 	

@@ -277,7 +277,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 												 brandService));
 		
 		facetList.stream().forEach(f -> {
-			System.out.println(f.getEntity().getClass().getSimpleName() + " - " + f.getValue() + " - " + f.getCount());
+			System.out.println(f.getPayload().getClass().getSimpleName() + " - " + f.getValue() + " - " + f.getCount());
 		});
 		
 		//we need to combine the passed facets, then reprocess them

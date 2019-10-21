@@ -24,7 +24,7 @@ public class SearchFacetContainer {
 	public List<IFacet> getProductCategories() {
 		return this.facets.stream()
 				.filter(f -> 
-				f.getEntity().getClass().getSimpleName().equals(ProductCategory.class.getSimpleName()))
+				f.getPayload().getClass().getSimpleName().equals(ProductCategory.class.getSimpleName()))
 				.map(f -> (IFacet) f)
 				.collect(Collectors.toList());
 	}
@@ -32,7 +32,7 @@ public class SearchFacetContainer {
 	public List<IFacet> getBrandCategories() {
 		return this.facets.stream()
 				.filter(f -> 
-				f.getEntity().getClass().getSimpleName().equals(BrandCategory.class.getSimpleName()))
+				f.getPayload().getClass().getSimpleName().equals(BrandCategory.class.getSimpleName()))
 				.map(f -> (IFacet) f)
 				.collect(Collectors.toList());
 	}
@@ -40,7 +40,7 @@ public class SearchFacetContainer {
 	public List<IFacet> getBrands() {
 		return this.facets.stream()
 				.filter(f -> 
-				f.getEntity().getClass().getSimpleName().equals(Brand.class.getSimpleName()))
+				f.getPayload().getClass().getSimpleName().equals(Brand.class.getSimpleName()))
 				.map(f -> (IFacet) f)
 				.collect(Collectors.toList());
 	}
@@ -48,7 +48,7 @@ public class SearchFacetContainer {
 	public List<IFacet> getTags() {
 		return this.facets.stream()
 				.filter(f -> 
-				f.getEntity().getClass().getSimpleName().equals(Tag.class.getSimpleName()))
+				f.getPayload().getClass().getSimpleName().equals(Tag.class.getSimpleName()))
 				.map(f -> (IFacet) f)
 				.collect(Collectors.toList());
 	}
@@ -56,7 +56,7 @@ public class SearchFacetContainer {
 	public List<IFacet> getPrices() {
 		return this.facets.stream()
 				.filter(f -> 
-				f.getEntity().getClass().getSimpleName().equals(Product.class.getSimpleName() 
+				f.getPayload().getClass().getSimpleName().equals(Product.class.getSimpleName() 
 														  + ".productMarkdown"
 														   ))
 				.map(f -> (IFacet) f).collect(Collectors.toList());
