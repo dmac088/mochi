@@ -13,7 +13,6 @@ import io.nzbee.domain.category.ICategoryService;
 import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.tag.ITagService;
 import io.nzbee.ui.component.web.generic.UIService;
-import io.nzbee.variables.ProductVars;
 
 @Service(value = "searchFacetService")
 @Transactional
