@@ -39,7 +39,7 @@ public class IT_CategoryRepository {
     
     public Category persistNewCategory() {
     	Category 		category 		= new CategoryProduct();
-    	CategoryType 	categoryType 	= categoryTypeRepository.findByCategoryTypeId(new Long(1));
+    	CategoryType 	categoryType 	= categoryTypeRepository.findById(new Long(1)).get();
     	Category 		parentCategory 	= categoryService.findByCode(GeneralVars.LANGUAGE_ENGLISH, 
     																 GeneralVars.CURRENCY_USD, 
     																 category.getCategoryCode()).get();
