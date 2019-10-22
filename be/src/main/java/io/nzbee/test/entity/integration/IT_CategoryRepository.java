@@ -19,7 +19,7 @@ import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.category.type.CategoryType;
-import io.nzbee.entity.category.type.CategoryTypeRepository;
+import io.nzbee.entity.category.type.ICategoryTypeRepository;
 import io.nzbee.variables.GeneralVars;
 
 @RunWith(SpringRunner.class)
@@ -35,14 +35,14 @@ public class IT_CategoryRepository {
     private ICategoryService categoryService;
 
     @Autowired
-    private CategoryTypeRepository categoryTypeRepository;
+    private ICategoryTypeRepository categoryTypeRepository;
     
     public Category persistNewCategory() {
     	Category 		category 		= new CategoryProduct();
     	CategoryType 	categoryType 	= categoryTypeRepository.findById(new Long(1)).get();
     	Category 		parentCategory 	= categoryService.findByCode(GeneralVars.LANGUAGE_ENGLISH, 
     																 GeneralVars.CURRENCY_USD, 
-    																 category.getCategoryCode()).get();
+    																 "PRM01").get();
     	
     	category.setCategoryCode("TST01");
     	category.setCategoryLevel(new Long(1));
