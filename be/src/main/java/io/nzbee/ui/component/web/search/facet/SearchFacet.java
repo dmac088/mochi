@@ -14,13 +14,13 @@ public class SearchFacet implements org.hibernate.search.query.facet.Facet, IFac
 	}
 	
 	@Override
-	public String getCode() {
+	public String getId() {
 		// TODO Auto-generated method stub
 		return ((IDomainObject)this.getPayload()).getCode();
 	}
 
 	@Override
-	public String getDesc() {
+	public String getDisplayValue() {
 		// TODO Auto-generated method stub
 		return ((IDomainObject)this.getPayload()).getDesc();
 	}
@@ -64,6 +64,18 @@ public class SearchFacet implements org.hibernate.search.query.facet.Facet, IFac
 	public Query getFacetQuery() {
 		// TODO Auto-generated method stub
 		return delegate.getFacetQuery();
+	}
+
+	@Override
+	public String getType() {
+		// TODO Auto-generated method stub
+		return this.getClass().getSimpleName();
+	}
+
+	@Override
+	public String getPayloadType() {
+		// TODO Auto-generated method stub
+		return this.getPayload().getClass().getSimpleName();
 	}
 
 }

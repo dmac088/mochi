@@ -11,13 +11,13 @@ public class EntityFacet implements IFacet {
 	}
 	
 	@Override
-	public String getCode() {
+	public String getId() {
 		// TODO Auto-generated method stub
 		return this.payload.getCode();
 	}
 
 	@Override
-	public String getDesc() {
+	public String getDisplayValue() {
 		// TODO Auto-generated method stub
 		return this.payload.getDesc();
 	}
@@ -34,5 +34,16 @@ public class EntityFacet implements IFacet {
 		return this.payload;
 	}
 
+	@Override
+	public String getType() {
+		// TODO Auto-generated method stub
+		return this.getClass().getSimpleName();
+	}
+	
+	@Override
+	public String getPayloadType() {
+		// TODO Auto-generated method stub
+		return this.getPayload().getClass().getSimpleName();
+	}
 	
 }
