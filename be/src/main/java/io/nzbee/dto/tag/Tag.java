@@ -60,12 +60,6 @@ public class Tag implements IDto {
 	}
 
 	@Override
-	public String getDesc() {
-		// TODO Auto-generated method stub
-		return this.tagDesc;
-	}
-
-	@Override
 	public String getType() {
 		// TODO Auto-generated method stub
 		return this.getClass().getSimpleName();

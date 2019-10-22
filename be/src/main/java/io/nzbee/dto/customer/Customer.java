@@ -5,6 +5,8 @@ import java.util.Objects;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import io.nzbee.dto.IDto;
+
 
 //this is the grand daddy DTO
 /*---------------------------testing DTO JSON---------------------------
@@ -19,7 +21,7 @@ import javax.validation.constraints.Size;
 
 //@JsonTypeName(value = "customer")
 //@JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.NAME)
-public class Customer {
+public class Customer implements IDto {
     @NotNull
     @Size(min = 1, message = "{Size.userDto.firstName}")
     private String givenName;
@@ -137,5 +139,17 @@ public class Customer {
         				.append(", role=").append("]");
         return builder.toString();
     }
+ 
+	@Override
+	public String getCode() {
+		// TODO Auto-generated method stub
+		return this.getCustomerID();
+	}
+
+	@Override
+	public String getType() {
+		// TODO Auto-generated method stub
+		return this.getClass().getSimpleName();
+	}
 
 }
