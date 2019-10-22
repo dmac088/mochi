@@ -1,14 +1,14 @@
 package io.nzbee.dto.tag;
 
-public class Tag {
+import io.nzbee.dto.IDto;
+
+public class Tag implements IDto {
 
 	private Long tagId;
 	
 	private String tagCode;
 
 	private String tagDesc;
-	
-	//private String tagType;
 	
 	private String locale;
 
@@ -35,14 +35,6 @@ public class Tag {
 	public void setTagDesc(String tagDesc) {
 		this.tagDesc = tagDesc;
 	}
-	
-//	public String getTagType() {
-//		return tagType;
-//	}
-//
-//	public void setTagType(String tagType) {
-//		this.tagType = tagType;
-//	}
 
 	public String getLocale() {
 		return locale;
@@ -59,6 +51,24 @@ public class Tag {
         		.append(", tagDesc=").append(tagDesc)
                 .append(", locale=").append(locale);
         return builder.toString();
+	}
+
+	@Override
+	public String getCode() {
+		// TODO Auto-generated method stub
+		return this.tagCode;
+	}
+
+	@Override
+	public String getDesc() {
+		// TODO Auto-generated method stub
+		return this.tagDesc;
+	}
+
+	@Override
+	public String getType() {
+		// TODO Auto-generated method stub
+		return this.getClass().getSimpleName();
 	}
 
 }

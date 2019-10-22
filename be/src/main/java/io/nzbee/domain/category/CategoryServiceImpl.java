@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.IDomainObject;
-import io.nzbee.variables.CategoryVars;
 
 @Service(value = "categoryDomainService")
 @Transactional

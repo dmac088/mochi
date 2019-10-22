@@ -3,7 +3,9 @@ package io.nzbee.dto.product;
 import java.util.Date;
 import java.util.Objects;
 
-public class Product {
+import io.nzbee.dto.IDto;
+
+public class Product implements IDto {
 
 	private String productUPC;
 	
@@ -133,6 +135,24 @@ public class Product {
                 .append(", lclCd=").append(lclCd);
         return builder.toString();
     }
+
+	@Override
+	public String getCode() {
+		// TODO Auto-generated method stub
+		return this.getProductUPC();
+	}
+
+	@Override
+	public String getDesc() {
+		// TODO Auto-generated method stub
+		return this.getDesc();
+	}
+
+	@Override
+	public String getType() {
+		// TODO Auto-generated method stub
+		return this.getClass().getSimpleName();
+	}
 
 
 }

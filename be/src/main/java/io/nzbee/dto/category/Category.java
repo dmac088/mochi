@@ -188,6 +188,18 @@ public class Category implements IDto {
         return builder.toString();
     }
 
+	@Override
+	public String getCode() {
+		// TODO Auto-generated method stub
+		return this.getCategoryCode();
+	}
+
+	@Override
+	public String getDesc() {
+		// TODO Auto-generated method stub
+		return this.getCategoryDesc();
+	}
+
 
 
 }

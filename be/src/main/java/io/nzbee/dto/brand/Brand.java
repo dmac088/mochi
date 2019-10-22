@@ -3,8 +3,9 @@ package io.nzbee.dto.brand;
 import java.util.Objects;
 
 import io.nzbee.domain.category.BrandCategory;
+import io.nzbee.dto.IDto;
 
-public class Brand {
+public class Brand implements IDto {
 
 	private String brandCode;
 
@@ -47,6 +48,24 @@ public class Brand {
 	@Override
 	public int hashCode() {
 		return Objects.hash(brandCode);
+	}
+
+	@Override
+	public String getCode() {
+		// TODO Auto-generated method stub
+		return this.getBrandCode();
+	}
+
+	@Override
+	public String getDesc() {
+		// TODO Auto-generated method stub
+		return this.getBrandDesc();
+	}
+
+	@Override
+	public String getType() {
+		// TODO Auto-generated method stub
+		return this.getClass().getSimpleName();
 	}
 	
 }
