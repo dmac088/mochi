@@ -198,9 +198,9 @@ public abstract class Category {
 	@Transient
 	private Long maxMarkdownPrice;
 	
-	public abstract Long getObjectCount();
+	public abstract int getObjectCount();
 	
-	public abstract Long setObjectCount(Long count);
+	public abstract void setObjectCount(int count);
 	
 	@Field(analyze = Analyze.NO, store=Store.YES)
 	@Facet

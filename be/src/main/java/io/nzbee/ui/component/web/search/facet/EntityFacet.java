@@ -19,7 +19,7 @@ public class EntityFacet implements IFacet {
 	@Override
 	public String getDisplayValue() {
 		// TODO Auto-generated method stub
-		return this.payload.getDesc();
+		return this.payload.getDesc() + " (" + this.payload.getCount() + ")";
 	}
 
 	@Override

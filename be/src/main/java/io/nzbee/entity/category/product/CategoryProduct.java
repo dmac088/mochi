@@ -33,7 +33,7 @@ public class CategoryProduct extends Category  {
     private List<Product> products;
 	
 	@Transient
-	private Long productCount;
+	private int productCount;
 	
 	public CategoryProduct() {
 		super();
@@ -44,15 +44,15 @@ public class CategoryProduct extends Category  {
 	}
 
 	@Override
-	public Long getObjectCount() {
+	public int getObjectCount() {
 		// TODO Auto-generated method stub
 		return productCount;
 	}
 
 	@Override
-	public Long setObjectCount(Long count) {
+	public void setObjectCount(int count) {
 		// TODO Auto-generated method stub
-		return productCount = count;
+		productCount = count;
 	}
 	
 	public void addProduct(Product product) {

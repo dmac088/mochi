@@ -32,22 +32,22 @@ public class CategoryBrand extends Category {
     private Set<Brand> brands;
 	
 	@Transient
-	private Long brandCount;
+	private int brandCount;
 	
 	public CategoryBrand() {
 		super();
 	}
 
 	@Override
-	public Long getObjectCount() {
+	public int getObjectCount() {
 		// TODO Auto-generated method stub
 		return brandCount;
 	}
 
 	@Override
-	public Long setObjectCount(Long count) {
+	public void setObjectCount(int count) {
 		// TODO Auto-generated method stub
-		return this.brandCount = count;
+		this.brandCount = count;
 	}
 	
 	public void addBrand(Brand brand) {

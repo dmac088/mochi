@@ -20,7 +20,7 @@ public class Category {
 
 	private Long childCategoryCount;
 
-	private Long objectCount;
+	private int objectCount;
 	
 	private Double retailPrice;
 	
@@ -48,7 +48,7 @@ public class Category {
 					String  categoryImagePath,
 					String  categoryTypeCode,
 					String  locale,
-					Long  	objectCount,
+					int  	objectCount,
 					Double  retailPrice,
 					Double  markdownPrice
 					) {
@@ -121,11 +121,11 @@ public class Category {
 		this.categoryType = categoryType;
 	}
 	
-	public Long getObjectCount() {
+	public int getObjectCount() {
 		return objectCount;
 	}
 
-	public void setObjectCount(Long objectCount) {
+	public void setObjectCount(int objectCount) {
 		this.objectCount = objectCount;
 	}
 	
