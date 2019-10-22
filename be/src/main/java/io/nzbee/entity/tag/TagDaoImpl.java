@@ -36,7 +36,7 @@ import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.entity.product.status.ProductStatus_;
 import io.nzbee.entity.tag.Tag_;
 import io.nzbee.entity.tag.attribute.TagAttribute;
-import io.nzbee.entity.product.tag.attribute.ProductTagAttribute_;
+import io.nzbee.entity.tag.attribute.TagAttribute_;
 import io.nzbee.variables.ProductVars;
 
 @Component 
@@ -100,8 +100,8 @@ public class TagDaoImpl implements ITagDao {
 		
 
 		List<Predicate> conditions = new ArrayList<Predicate>();	
-		conditions.add(cb.equal(attribute.get(ProductTagAttribute_.lclCd), locale));
-		conditions.add(cb.equal(attribute.get(ProductTagAttribute_.tagDesc), desc));
+		conditions.add(cb.equal(attribute.get(TagAttribute_.lclCd), locale));
+		conditions.add(cb.equal(attribute.get(TagAttribute_.tagDesc), desc));
 		
 		TypedQuery<Tag> query = em.createQuery(cq
 				.select(root)
