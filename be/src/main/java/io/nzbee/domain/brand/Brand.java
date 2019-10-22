@@ -9,6 +9,8 @@ public class Brand implements IDomainObject {
 
 	private String brandDesc;
 	
+	private int objectCount;
+	
 	public String getBrandCode() {
 		return brandCode;
 	}
@@ -54,6 +56,12 @@ public class Brand implements IDomainObject {
 	public boolean isHierarchical() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public int getCount() {
+		// TODO Auto-generated method stub
+		return objectCount;
 	}
 	
 }

@@ -62,7 +62,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 			category.setCategoryAttribute(((CategoryAttribute) c[1]));
 			category.setCategoryType((CategoryType) c[2]);
 			category.setHierarchy((Hierarchy) c[3]);
-			category.setObjectCount(((BigDecimal)c[8]).longValue());
+			category.setObjectCount(((BigDecimal)c[8]).intValue());
 			category.setChildCount(((BigInteger)c[9]).longValue());
 			category.setCategoryLayouts((((String)c[10]) != null)
 										? ((String)c[10]).split(",", -1)
@@ -103,7 +103,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 			category.setCategoryAttribute(((CategoryAttribute) c[1]));
 			category.setCategoryType((CategoryType) c[2]);
 			category.setHierarchy((Hierarchy) c[3]);
-			category.setObjectCount(((BigDecimal)c[8]).longValue());
+			category.setObjectCount(((BigDecimal)c[8]).intValue());
 			category.setChildCount(((BigInteger)c[9]).longValue());
 			category.setCategoryLayouts((((String)c[10]) != null)
 					? ((String)c[10]).split(",", -1)

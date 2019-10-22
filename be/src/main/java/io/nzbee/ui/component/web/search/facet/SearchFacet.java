@@ -1,6 +1,9 @@
 package io.nzbee.ui.component.web.search.facet;
 
 import org.apache.lucene.search.Query;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.nzbee.domain.IDomainObject;
 
 public class SearchFacet implements org.hibernate.search.query.facet.Facet, IFacet {
@@ -55,6 +58,7 @@ public class SearchFacet implements org.hibernate.search.query.facet.Facet, IFac
 	}
 
 	@Override
+	@JsonIgnore
 	public int getCount() {
 		// TODO Auto-generated method stub
 		return delegate.getCount();

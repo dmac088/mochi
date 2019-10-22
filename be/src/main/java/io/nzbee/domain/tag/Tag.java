@@ -10,7 +10,7 @@ public class Tag implements IDomainObject{
 
 	private String tagDesc;
 	
-	//private String tagType;
+	private int objectCount;
 	
 	private String locale;
 
@@ -79,6 +79,12 @@ public class Tag implements IDomainObject{
 	public boolean isHierarchical() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public int getCount() {
+		// TODO Auto-generated method stub
+		return objectCount;
 	}
 
 }

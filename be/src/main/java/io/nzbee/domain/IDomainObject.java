@@ -6,6 +6,8 @@ public interface IDomainObject {
 	
 	public String getDesc();
 	
+	public int getCount();
+	
 	public boolean isHierarchical();
 	
 }

@@ -3,7 +3,7 @@ package io.nzbee.domain.category;
 import java.util.List;
 import java.util.Objects;
 import io.nzbee.domain.IHierarchicalDomainObject;
-
+ 
 public abstract class Category implements IHierarchicalDomainObject {
 
 	private String categoryCode;
@@ -18,7 +18,7 @@ public abstract class Category implements IHierarchicalDomainObject {
 
 	private Long childCategoryCount;
 
-	private Long objectCount;
+	private int objectCount;
 	
 	private String[] layoutCodes;
 
@@ -33,7 +33,7 @@ public abstract class Category implements IHierarchicalDomainObject {
 					String categoryType,
 					String lclCd, 
 					String parentCode,
-					Long objectCount,
+					int objectCount,
 					List<String> layoutCodes) {
 		super();
 		this.categoryCode 	= categoryCode;
@@ -92,11 +92,11 @@ public abstract class Category implements IHierarchicalDomainObject {
 		this.categoryType = categoryType;
 	}
 	
-	public Long getCount() {
+	public int getCount() {
 		return objectCount;
 	}
 
-	public void setCount(Long objectCount) {
+	public void setCount(int objectCount) {
 		this.objectCount = objectCount;
 	}
 	
