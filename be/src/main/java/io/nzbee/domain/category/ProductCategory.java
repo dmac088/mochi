@@ -42,5 +42,11 @@ public class ProductCategory extends Category {
 		return super.getCategoryLevel();
 	}
 
+	@Override
+	public String getDesc() {
+		// TODO Auto-generated method stub
+		return super.getCategoryDesc();
+	}
+
 	
 }

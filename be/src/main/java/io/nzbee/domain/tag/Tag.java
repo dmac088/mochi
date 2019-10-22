@@ -81,4 +81,10 @@ public class Tag implements IDomainObject{
 		return objectCount;
 	}
 
+	@Override
+	public String getDesc() {
+		// TODO Auto-generated method stub
+		return this.getTagDesc();
+	}
+
 }
