@@ -1,17 +1,13 @@
 package io.nzbee.domain.brand;
 
 import java.util.Objects;
-
 import io.nzbee.domain.IDomainObject;
-import io.nzbee.domain.category.BrandCategory;
 
 public class Brand implements IDomainObject {
 
 	private String brandCode;
 
 	private String brandDesc;
-	
-	private BrandCategory category;
 	
 	public String getBrandCode() {
 		return brandCode;
@@ -27,14 +23,6 @@ public class Brand implements IDomainObject {
 
 	public void setBrandDesc(String brandDesc) {
 		this.brandDesc = brandDesc;
-	}
-	
-	public BrandCategory getCategory() {
-		return category;
-	}
-
-	public void setCategory(BrandCategory category) {
-		this.category = category;
 	}
 	
 	@Override

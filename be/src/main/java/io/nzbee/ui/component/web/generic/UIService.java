@@ -12,8 +12,8 @@ public abstract class UIService {
 	
 	protected <T> List<String> getFacetIds(List<SearchFacet> facets) {
 		return facets.stream().filter(t -> {
-			return t.getPayload().getClass().equals(t.getClass());
-		}).map(c -> c.getCode()).collect(Collectors.toList());
+			return t.getPayloadType().equals(t.getClass().getSimpleName());
+		}).map(c -> c.getId()).collect(Collectors.toList());
 	}
 	
 }

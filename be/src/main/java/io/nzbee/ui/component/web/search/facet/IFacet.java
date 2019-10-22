@@ -4,11 +4,15 @@ import io.nzbee.domain.IDomainObject;
 
 public interface IFacet {
 
-	String getCode();
+	String getId();
 	
-	String getDesc();
+	String getDisplayValue();
 	
 	boolean isHierarchical();
 
 	IDomainObject getPayload();
+	
+	String getType();
+	
+	String getPayloadType();
 }
