@@ -80,7 +80,7 @@ public class ProductServiceImpl implements IProductService {
 	}
 	
 	private <T> List<String> getCodes(List<IDto> l, Class<T> classType) {
-		return l.stream().filter(dto -> dto.getClass().equals(classType)).map(c -> c.getCode()).collect(Collectors.toList());
+		return l.stream().filter(dto -> dto.getType().equals(classType.getSimpleName())).map(c -> c.getCode()).collect(Collectors.toList());
 	}
 	
 	@Override

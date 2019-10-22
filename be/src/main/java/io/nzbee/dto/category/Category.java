@@ -2,7 +2,9 @@ package io.nzbee.dto.category;
 
 import java.util.Objects;
 
-public class Category {
+import io.nzbee.dto.IDto;
+
+public class Category implements IDto {
 	
 	private Long categoryId;
 
@@ -152,6 +154,11 @@ public class Category {
 	public void setLayoutCodes(String[] layoutCodes) {
 		this.layoutCodes = layoutCodes;
 	}
+	
+	@Override
+	public String getType() {
+		return this.getClass().getSimpleName();
+	}
 
 	@Override
 	public boolean equals(Object o) {
@@ -180,6 +187,7 @@ public class Category {
         .append("]");    	
         return builder.toString();
     }
+
 
 
 }
