@@ -57,5 +57,11 @@ public class Brand implements IDomainObject {
 		// TODO Auto-generated method stub
 		return objectCount;
 	}
+
+	@Override
+	public String getDesc() {
+		// TODO Auto-generated method stub
+		return this.brandDesc;
+	}
 	
 }
