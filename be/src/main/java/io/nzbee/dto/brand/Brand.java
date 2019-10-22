@@ -57,12 +57,6 @@ public class Brand implements IDto {
 	}
 
 	@Override
-	public String getDesc() {
-		// TODO Auto-generated method stub
-		return this.getBrandDesc();
-	}
-
-	@Override
 	public String getType() {
 		// TODO Auto-generated method stub
 		return this.getClass().getSimpleName();

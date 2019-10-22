@@ -30,12 +30,6 @@ public class BrandCategory extends Category {
 	}
 
 	@Override
-	public String getDesc() {
-		// TODO Auto-generated method stub
-		return super.getCategoryDesc();
-	}
-
-	@Override
 	public boolean isHierarchical() {
 		// TODO Auto-generated method stub
 		return false;

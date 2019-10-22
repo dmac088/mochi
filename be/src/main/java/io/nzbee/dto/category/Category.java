@@ -194,12 +194,5 @@ public class Category implements IDto {
 		return this.getCategoryCode();
 	}
 
-	@Override
-	public String getDesc() {
-		// TODO Auto-generated method stub
-		return this.getCategoryDesc();
-	}
-
-
 
 }

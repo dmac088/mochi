@@ -70,12 +70,6 @@ public class Tag implements IDomainObject{
 	}
 
 	@Override
-	public String getDesc() {
-		// TODO Auto-generated method stub
-		return this.tagDesc;
-	}
-
-	@Override
 	public boolean isHierarchical() {
 		// TODO Auto-generated method stub
 		return false;
