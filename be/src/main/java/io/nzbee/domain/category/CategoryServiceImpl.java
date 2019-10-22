@@ -96,7 +96,7 @@ public class CategoryServiceImpl implements ICategoryService {
 		// TODO Auto-generated method stub
 		io.nzbee.dto.category.Category category = (io.nzbee.dto.category.Category) dto;
 		
-		Category categoryDO = category.getCategoryType().equals(CategoryVars.CATEGORY_TYPE_CODE_PRODUCT) 
+		Category categoryDO = category.getCategoryType().equals("product") 
 				? new ProductCategory()
 				: new BrandCategory();
 
