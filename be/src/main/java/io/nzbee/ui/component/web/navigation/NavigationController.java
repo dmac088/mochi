@@ -6,8 +6,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import io.nzbee.ui.component.web.facet.FacetContainer;
 import io.nzbee.ui.component.web.search.Search;
-import io.nzbee.ui.component.web.search.facet.SearchFacetContainer;
 
 @RestController
 @RequestMapping("/api")
@@ -24,7 +25,7 @@ public class NavigationController {
 								@PathVariable int page, 
 								@PathVariable int size, 
 								@PathVariable String sortBy,
-								@RequestBody final SearchFacetContainer selectedFacets) {
+								@RequestBody final FacetContainer selectedFacets) {
 	   	return navigationService.findAll(locale, currency, price, page, size, category, selectedFacets, sortBy);
 	}
 
@@ -35,7 +36,7 @@ public class NavigationController {
 								@PathVariable int 		page, 
 								@PathVariable int 		size, 
 								@PathVariable String 	sortBy,
-								@RequestBody final SearchFacetContainer selectedFacets) {
+								@RequestBody final FacetContainer selectedFacets) {
 	   	return navigationService.findAll(locale, currency, category, page, size, selectedFacets, sortBy);
 	}
 	

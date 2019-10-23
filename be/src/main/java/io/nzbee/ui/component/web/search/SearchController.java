@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.nzbee.ui.component.web.search.facet.SearchFacetContainer;
+import io.nzbee.ui.component.web.facet.FacetContainer;
 
 @RestController
 @RequestMapping("/api")
@@ -24,7 +24,7 @@ public class SearchController {
     						@PathVariable int page, 
     						@PathVariable int size, 
     						@PathVariable String sortBy, 
-    						@RequestBody  SearchFacetContainer selectedFacets) {
+    						@RequestBody  FacetContainer selectedFacets) {
     	return searchService.findAll(locale, currency, category, term, page, size, sortBy, selectedFacets);
     }
 	

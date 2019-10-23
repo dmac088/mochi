@@ -14,7 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.IDomainObject;
 import io.nzbee.dto.IDto;
-import io.nzbee.ui.component.web.search.facet.IFacet;
+import io.nzbee.ui.component.web.facet.IFacet;
 
 @Service(value = "productDomainService")
 @Transactional

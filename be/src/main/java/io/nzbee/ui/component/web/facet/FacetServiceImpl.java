@@ -1,4 +1,4 @@
-package io.nzbee.ui.component.web.search.facet;
+package io.nzbee.ui.component.web.facet;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,12 +13,14 @@ import io.nzbee.domain.category.Category;
 import io.nzbee.domain.category.ICategoryService;
 import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.tag.ITagService;
+import io.nzbee.ui.component.web.facet.navigation.EntityFacet;
+import io.nzbee.ui.component.web.facet.search.SearchFacet;
 import io.nzbee.ui.component.web.generic.UIService;
 
 @Service(value = "searchFacetService")
 @Transactional
 //@CacheConfig(cacheNames="products")
-public class SearchFacetServiceImpl extends UIService implements ISearchFacetService {
+public class FacetServiceImpl extends UIService implements IFacetService {
 
 	@Autowired
 	@Qualifier("tagDomainService")
@@ -41,9 +43,9 @@ public class SearchFacetServiceImpl extends UIService implements ISearchFacetSer
 	private IProductService productService;
 
 	@Override
-	public SearchFacetResult findAll(String locale, String currency) {
-		SearchFacetContainer nfc = new SearchFacetContainer();
-		SearchFacetResult nfr = new SearchFacetResult();
+	public FacetResult findAll(String locale, String currency) {
+		FacetContainer nfc = new FacetContainer();
+		FacetResult nfr = new FacetResult();
 		
 		nfc.getFacets().addAll(	categoryDomainService.findAll(locale, currency).stream().map(c -> {
 									IFacet cnf = new EntityFacet(c);
@@ -57,11 +59,11 @@ public class SearchFacetServiceImpl extends UIService implements ISearchFacetSer
 	}
 	
 	@Override
-	public SearchFacetResult findAllBrands(String locale, String category) {
+	public FacetResult findAllBrands(String locale, String category) {
 		List<Brand> brands = brandDomainService.findAll(category, locale);
 		
-		SearchFacetContainer nfc = new SearchFacetContainer();
-		SearchFacetResult nfr = new SearchFacetResult();
+		FacetContainer nfc = new FacetContainer();
+		FacetResult nfr = new FacetResult();
 		
 		nfc.getFacets().addAll(	brands.stream().map(b -> {
 			IFacet brand = new EntityFacet(b);
@@ -74,11 +76,11 @@ public class SearchFacetServiceImpl extends UIService implements ISearchFacetSer
 	}
 	
 	@Override
-	public SearchFacetResult findAll(String locale, String currency, String categoryDesc, SearchFacetContainer selectedFacets) {
+	public FacetResult findAll(String locale, String currency, String categoryDesc, FacetContainer selectedFacets) {
 		//List<IDomainObject<?>> lt = selectedFacets.getFacets().stream().map(t -> (IDomainObject<?>) t.getEntity()).collect(Collectors.toList());
 		
-		SearchFacetContainer nfc = new SearchFacetContainer();
-		SearchFacetResult nfr = new SearchFacetResult();
+		FacetContainer nfc = new FacetContainer();
+		FacetResult nfr = new FacetResult();
 		
 		List<EntityFacet> facets = categoryDomainService.findAll(
 										locale, 

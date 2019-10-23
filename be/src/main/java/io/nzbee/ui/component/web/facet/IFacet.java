@@ -1,4 +1,6 @@
-package io.nzbee.ui.component.web.search.facet;
+package io.nzbee.ui.component.web.facet;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.nzbee.domain.IDomainObject;
 
@@ -10,6 +12,7 @@ public interface IFacet {
 	
 	boolean isHierarchical();
 
+	@JsonIgnore
 	IDomainObject getPayload();
 	
 	String getType();

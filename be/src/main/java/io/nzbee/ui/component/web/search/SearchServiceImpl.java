@@ -44,11 +44,11 @@ import io.nzbee.domain.tag.Tag;
 import io.nzbee.entity.PageableUtil;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.ProductVars;
+import io.nzbee.ui.component.web.facet.IFacet;
+import io.nzbee.ui.component.web.facet.IFacetService;
+import io.nzbee.ui.component.web.facet.FacetContainer;
+import io.nzbee.ui.component.web.facet.search.SearchFacet;
 import io.nzbee.ui.component.web.generic.UIService;
-import io.nzbee.ui.component.web.search.facet.SearchFacet;
-import io.nzbee.ui.component.web.search.facet.SearchFacetContainer;
-import io.nzbee.ui.component.web.search.facet.IFacet;
-import io.nzbee.ui.component.web.search.facet.ISearchFacetService;
 
 @Service(value = "SearchService")
 @Transactional
@@ -69,7 +69,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 	private ITagService tagService;
 	
 	@Autowired
-	private ISearchFacetService facetService;
+	private IFacetService facetService;
 
 	@PersistenceContext(unitName = "mochiEntityManagerFactory")
 	private EntityManager em;
@@ -82,7 +82,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 								int page,
 								int size,
 								String sortBy, 
-								SearchFacetContainer selectedFacets) {
+								FacetContainer selectedFacets) {
 		
 		// call the domain layer service to get a Page of Products
 		
@@ -445,7 +445,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 				.collect(Collectors.toList()), pageable, jpaQuery.getResultSize()));
 		
 		
-		SearchFacetContainer nfc = new SearchFacetContainer();
+		FacetContainer nfc = new FacetContainer();
 		nfc.setFacets(facetList.stream().collect(Collectors.toList()));
 		search.setFacets(nfc);
 		return search;
