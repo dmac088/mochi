@@ -1,6 +1,7 @@
-package io.nzbee.ui.component.web.search.facet;
+package io.nzbee.ui.component.web.facet.navigation;
 
 import io.nzbee.domain.IDomainObject;
+import io.nzbee.ui.component.web.facet.IFacet;
 
 public class EntityFacet implements IFacet {
 

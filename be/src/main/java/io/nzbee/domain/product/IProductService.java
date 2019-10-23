@@ -3,7 +3,7 @@ package io.nzbee.domain.product;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import io.nzbee.domain.IService;
-import io.nzbee.ui.component.web.search.facet.IFacet;
+import io.nzbee.ui.component.web.facet.IFacet;
 
 public interface IProductService extends IService<Product> {
 

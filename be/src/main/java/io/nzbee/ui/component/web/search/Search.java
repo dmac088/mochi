@@ -3,13 +3,13 @@ package io.nzbee.ui.component.web.search;
 import org.springframework.data.domain.Page;
 
 import io.nzbee.domain.product.Product;
-import io.nzbee.ui.component.web.search.facet.SearchFacetContainer;
+import io.nzbee.ui.component.web.facet.FacetContainer;
 
 public class Search {
 	
 	Page<Product> products;
 	
-	SearchFacetContainer navFacets;
+	FacetContainer navFacets;
 
 	public Page<Product> getProducts() {
 		return products;
@@ -19,11 +19,11 @@ public class Search {
 		this.products = products;
 	}
 	
-	public SearchFacetContainer getFacets() {
+	public FacetContainer getFacets() {
 		return navFacets;
 	}
 
-	public void setFacets(SearchFacetContainer navFacets) {
+	public void setFacets(FacetContainer navFacets) {
 		this.navFacets = navFacets;
 	}
 }

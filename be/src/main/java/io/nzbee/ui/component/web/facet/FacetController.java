@@ -1,4 +1,4 @@
-package io.nzbee.ui.component.web.search.facet;
+package io.nzbee.ui.component.web.facet;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,34 +12,34 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
-public class SearchFacetController {
+public class FacetController {
     
 	@Autowired
 	@Qualifier(value = "searchFacetService")
-	private ISearchFacetService navFacetService;
+	private IFacetService navFacetService;
 
 	@PostMapping("/Product/{locale}/{currency}/{categoryDesc}/tags")
-	public SearchFacetResult getTags(@PathVariable String locale, @PathVariable String currency, @PathVariable String categoryDesc, @RequestBody final SearchFacetContainer selectedFacets) {
+	public FacetResult getTags(@PathVariable String locale, @PathVariable String currency, @PathVariable String categoryDesc, @RequestBody final FacetContainer selectedFacets) {
 		return navFacetService.findAll(locale, currency, categoryDesc, selectedFacets);
 	} 
 	
     @GetMapping("/Category/{lcl}/{curr}")
-    public SearchFacetResult getCategories(@PathVariable String lcl, @PathVariable String curr) {
+    public FacetResult getCategories(@PathVariable String lcl, @PathVariable String curr) {
     	return navFacetService.findAll(lcl, curr);
     } 
 
     @PostMapping("/Category/{lcl}/{curr}/desc/{categoryDesc}/children")
-    public SearchFacetResult getCategoryChildren(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody SearchFacetContainer selectedFacets) {
+    public FacetResult getCategoryChildren(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody FacetContainer selectedFacets) {
     	return navFacetService.findAll(lcl, curr, categoryDesc, selectedFacets);
     }
     
     @GetMapping("/Brand/{lcl}/{curr}/category/{categoryCode}")
-    public SearchFacetResult getBrands(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryCode) {
+    public FacetResult getBrands(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryCode) {
     	return navFacetService.findAllBrands(lcl, categoryCode);
     }
 	
     @PostMapping("/Product/{lcl}/{curr}/category/{categoryDesc}")
-    public SearchFacetResult getAll(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody SearchFacetContainer selectedFacets) {
+    public FacetResult getAll(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody FacetContainer selectedFacets) {
     	return navFacetService.findAll(lcl, curr, categoryDesc, selectedFacets);
     }
     

@@ -1,4 +1,4 @@
-package io.nzbee.ui.component.web.search.facet;
+package io.nzbee.ui.component.web.facet;
 
 
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.product.Product;
 import io.nzbee.domain.tag.Tag;
 
-public class SearchFacetContainer {
+public class FacetContainer {
 
 	
 	private List<IFacet> facets = new ArrayList<IFacet>();
