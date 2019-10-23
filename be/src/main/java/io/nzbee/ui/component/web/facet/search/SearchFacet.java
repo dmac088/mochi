@@ -26,7 +26,7 @@ public class SearchFacet implements org.hibernate.search.query.facet.Facet, IFac
 	@Override
 	public String getDisplayValue() {
 		// TODO Auto-generated method stub
-		return ((IDomainObject)this.getPayload()).getDesc();
+		return ((IDomainObject)this.getPayload()).getDesc() + " (" + this.getCount() + ")";
 	}
 
 	@Override
@@ -36,6 +36,7 @@ public class SearchFacet implements org.hibernate.search.query.facet.Facet, IFac
 	}
 
 	@Override
+	@JsonIgnore
 	public IDomainObject getPayload() {
 	   return this.entity;
 	} 
