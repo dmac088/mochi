@@ -12,7 +12,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 @Getter
 public class CategoryResource extends ResourceSupport {
 
-	private final Category category;
+	public final Category category;
 	
 	public CategoryResource(final Category category) {
 		
