@@ -12,7 +12,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 @Getter
 public class CategoryResource extends ResourceSupport {
 
-	public final Category category;
+	private final Category category;
 	
 	public CategoryResource(final Category category) {
 		
@@ -23,5 +23,9 @@ public class CategoryResource extends ResourceSupport {
        // add(ControllerLinkBuilder.linkTo(methodOn(GymMembershipController.class).all(id)).withRel("memberships"));
        // add(ControllerLinkBuilder.linkTo(methodOn(PersonController.class).get(id)).withSelfRel());
     }
+
+	public Category getCategory() {
+		return category;
+	}
 	
 }
