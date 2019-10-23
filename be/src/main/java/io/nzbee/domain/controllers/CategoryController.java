@@ -10,7 +10,7 @@ import io.nzbee.domain.category.Category;
 import io.nzbee.domain.category.ICategoryService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api", produces = "application/hal+json")
 public class CategoryController {
 
     @Autowired
