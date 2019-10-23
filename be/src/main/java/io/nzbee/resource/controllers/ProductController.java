@@ -1,4 +1,4 @@
-package io.nzbee.domain.controllers;
+package io.nzbee.resource.controllers;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
