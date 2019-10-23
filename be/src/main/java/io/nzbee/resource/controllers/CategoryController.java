@@ -2,7 +2,6 @@ package io.nzbee.resource.controllers;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resources;
@@ -12,8 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import io.nzbee.domain.category.Category;
 import io.nzbee.domain.category.ICategoryService;
 import io.nzbee.resources.category.CategoryResource;
 
