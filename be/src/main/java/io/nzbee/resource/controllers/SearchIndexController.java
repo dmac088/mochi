@@ -1,4 +1,4 @@
-package io.nzbee.domain.controllers;
+package io.nzbee.resource.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
