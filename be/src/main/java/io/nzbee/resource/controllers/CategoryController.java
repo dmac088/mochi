@@ -41,10 +41,10 @@ public class CategoryController {
     */
     
     @GetMapping("/{locale}/{currency}/test")
-    	public ResponseEntity<Resources<CategoryResource>> getCategories(@PathVariable String locale, @PathVariable String currency) {
+    public ResponseEntity<Resources<CategoryResource>> getCategories(@PathVariable String locale, @PathVariable String currency) {
         final List<CategoryResource> collection = 
         		categoryService.findAll(locale, currency).stream()
-        		.map(c -> new CategoryResource(c))
+        		.map(CategoryResource::new)
         		.collect(Collectors.toList());
         
         final Resources <CategoryResource> resources = new Resources <> (collection);
