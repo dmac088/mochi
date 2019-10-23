@@ -18,7 +18,7 @@ import io.nzbee.domain.category.ICategoryService;
 import io.nzbee.resources.category.CategoryResource;
 
 @RestController
-@RequestMapping(value = "/api/categories", produces = "application/hal+json")
+@RequestMapping(value = "/api/Category", produces = "application/hal+json")
 public class CategoryController {
 
     @Autowired
@@ -40,14 +40,14 @@ public class CategoryController {
     }
     */
     
-    @GetMapping("/test")
-    	public ResponseEntity<Resources<CategoryResource >> getCategories(String locale, String currency) {
+    @GetMapping("/{locale}/{currency}/test")
+    	public ResponseEntity<Resources<CategoryResource>> getCategories(@PathVariable String locale, @PathVariable String currency) {
         final List<CategoryResource> collection = 
         		categoryService.findAll(locale, currency).stream()
         		.map(c -> new CategoryResource(c))
         		.collect(Collectors.toList());
         
-        final Resources <CategoryResource> resources = new Resources < > (collection);
+        final Resources <CategoryResource> resources = new Resources <> (collection);
         final String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
         resources.add(new Link(uriString, "self"));
         return ResponseEntity.ok(resources);
