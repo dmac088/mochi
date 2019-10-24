@@ -36,7 +36,7 @@ import io.nzbee.variables.GeneralVars;
 import io.nzbee.variables.ProductVars;
 
 @Component(value = "productEntityDao")
-public class ProductDaoImpl implements IProductDao {
+public class ProductDaoPostgresImpl implements IProductDao {
 
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
