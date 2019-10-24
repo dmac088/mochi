@@ -9,6 +9,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -21,6 +22,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.brand.Brand_;
+import io.nzbee.entity.brand.attribute.BrandAttribute;
+import io.nzbee.entity.brand.attribute.BrandAttribute_;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.Category_;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
@@ -31,6 +34,8 @@ import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.Product_;
 import io.nzbee.entity.product.hierarchy.Hierarchy;
+import io.nzbee.entity.product.status.ProductStatus;
+import io.nzbee.entity.product.status.ProductStatus_;
 import io.nzbee.entity.tag.Tag;
 import io.nzbee.variables.ProductVars;
 
@@ -171,26 +176,41 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 
 	@Override
 	public Optional<Category> findByCode(String locale, String currency, String code) {
-		System.out.println(code);
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-
-		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
 		
-		Root<Category> root = cq.from(Category.class);
+		Session session = em.unwrap(Session.class);
+		List<String> categoryCodes = new ArrayList<String>();
+		categoryCodes.add(code);
 		
-		List<Predicate> conditions = new ArrayList<Predicate>();
-	
-		if(!(code == null)) {
-			conditions.add(cb.equal(root.get(Category_.categoryCode), code));
+		Query query = session.createNativeQuery(constructSQL(!categoryCodes.isEmpty()), "CategoryMapping")
+				 .setParameter("locale", locale)
+				 .setParameter("currency", currency)
+				 .setParameter("parentCategoryCode", "-1")
+				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
+				 .setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
+				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE);
+		
+		if(!categoryCodes.isEmpty()) {
+			query.setParameter("categoryCodes", categoryCodes);
 		}
 		
-		TypedQuery<Category> query = em.createQuery(cq
-				.select(root)
-				.where(conditions.toArray(new Predicate[] {}))
-				.distinct(false)
-		);
+		Object[] c = (Object[])query.getSingleResult();
+		Category category = (Category) c[0];
+		category.setCategoryAttribute(((CategoryAttribute) c[1]));
+		category.setCategoryType((CategoryType) c[2]);
+		category.setHierarchy((Hierarchy) c[3]);
+		category.setObjectCount(((BigDecimal)c[8]).intValue());
+		category.setChildCount(((BigInteger)c[9]).longValue());
+		category.setCategoryLayouts((((String)c[10]) != null)
+				? ((String)c[10]).split(",", -1)
+				: new String[0]);
+		Category parentCategory = (Category) c[4];
+		parentCategory.setCategoryAttribute(((CategoryAttribute) c[5]));
+		parentCategory.setCategoryType((CategoryType) c[6]);
+		parentCategory.setHierarchy((Hierarchy) c[7]);
+			
+		category.setParent(parentCategory);
 		
-		return Optional.ofNullable(query.getSingleResult());
+		return Optional.ofNullable(category);
 	}
 	
 	@Override 
