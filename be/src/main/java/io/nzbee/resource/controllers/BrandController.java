@@ -12,11 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.brand.IBrandService;
 import io.nzbee.resources.brand.BrandResource;
-import io.nzbee.resources.category.CategoryResource;
 
 @RestController
 @RequestMapping("/api")
@@ -40,7 +38,6 @@ public class BrandController {
         final String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
         resources.add(new Link(uriString, "brands"));
         return ResponseEntity.ok(resources);
-    	
     }
     
     @GetMapping("/Brand/{locale}/{currency}")

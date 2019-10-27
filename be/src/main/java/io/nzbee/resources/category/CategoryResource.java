@@ -4,8 +4,10 @@ import org.springframework.hateoas.ResourceSupport;
 
 import io.nzbee.domain.category.BrandCategory;
 import io.nzbee.domain.category.Category;
+import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.resource.controllers.BrandController;
 import io.nzbee.resource.controllers.CategoryController;
+import io.nzbee.resource.controllers.ProductController;
 import lombok.Getter;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
@@ -31,6 +33,8 @@ public class CategoryResource extends ResourceSupport {
         
        if(category instanceof BrandCategory) {
     	   add(linkTo(methodOn(BrandController.class).getBrands(locale, currency, category.getCode())).withRel("brands"));
+       } else if (category instanceof ProductCategory) {
+    	   add(linkTo(methodOn(ProductController.class).getProducts(locale, currency, category.getCode())).withRel("products"));
        }
        
        // add(ControllerLinkBuilder.linkTo(methodOn(GymMembershipController.class).all(id)).withRel("memberships"));
