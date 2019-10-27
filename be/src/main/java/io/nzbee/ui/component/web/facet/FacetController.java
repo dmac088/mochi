@@ -33,11 +33,6 @@ public class FacetController {
     	return navFacetService.findAll(lcl, curr, categoryDesc, selectedFacets);
     }
     
-    @GetMapping("/Brand/{lcl}/{curr}/category/{categoryCode}")
-    public FacetResult getBrands(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryCode) {
-    	return navFacetService.findAllBrands(lcl, categoryCode);
-    }
-	
     @PostMapping("/Product/{lcl}/{curr}/category/{categoryDesc}")
     public FacetResult getAll(@PathVariable String lcl, @PathVariable String curr, @PathVariable String categoryDesc, @RequestBody FacetContainer selectedFacets) {
     	return navFacetService.findAll(lcl, curr, categoryDesc, selectedFacets);
