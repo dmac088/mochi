@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import io.nzbee.dto.IDto;
@@ -63,15 +64,13 @@ public class ProductServiceImpl implements IProductService {
 									Double priceStart, 
 									Double priceEnd, 
 									String priceType, 
-									int page,
-									int size,
+									Pageable pageable,
 									String categoryDesc,
 									List<IDto> ldto) {
 		
 		return productDAO.findAll(locale,
 						 		  currency,
-						 		  page, 
-						 		  size,
+						 		  pageable,
 						 		  categoryDesc,
 						 		  this.getCodes(ldto, Category.class),
 						 		  this.getCodes(ldto, Brand.class), 
@@ -88,15 +87,13 @@ public class ProductServiceImpl implements IProductService {
 									String locale, 
 									String currency, 
 									String priceType, 
-									int page,
-									int size,
+									Pageable pageable,
 									String categoryDesc,
 									List<IDto> ldto) {
 		
 			return productDAO.findAll(locale,
 							 		  currency,
-							 		  page, 
-							 		  size,
+							 		  pageable,
 							 		  categoryDesc,
 							 		  this.getCodes(ldto, Category.class),
 							 		  this.getCodes(ldto, Brand.class), 

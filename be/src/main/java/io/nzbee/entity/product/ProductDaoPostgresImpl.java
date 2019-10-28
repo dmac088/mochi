@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import io.nzbee.entity.brand.Brand;
@@ -163,8 +163,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	@Override
 	public Page<Product> findAll(	String locale, 
 									String currency, 
-									int page, 
-									int size, 
+									Pageable pageable, 
 									String orderby) {
 		// TODO Auto-generated method stub
 		
@@ -196,8 +195,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 				 
 				 //these should contain default values for these parameters
 				 .setParameter("orderby", "1")
-				 .setParameter("limit", Integer.toString(size))
-				 .setParameter("offset", Integer.toString(page * size));
+				 .setParameter("limit", pageable.getPageSize())
+				 .setParameter("offset", pageable.getOffset());
 		
 
 		@SuppressWarnings("unchecked")
@@ -217,14 +216,13 @@ public class ProductDaoPostgresImpl implements IProductDao {
 			return product;
 		}).collect(Collectors.toList());
 		
-		return new PageImpl<Product>(lp, PageRequest.of(page, size), total);
+		return new PageImpl<Product>(lp, pageable, total);
 	}
 	
 	@Override
 	public Page<Product> findAll(	String locale, 
 									String currency, 
-									int page, 
-									int size,
+									Pageable pageable,
 									String categoryDesc,
 									List<String> categoryCodes, 
 									List<String> brandCodes, 
@@ -236,8 +234,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 							currency, 
 							new Double(-1), 
 							new Double(-1), 
-							page, 
-							size, 
+							pageable, 
 							categoryDesc, 
 							categoryCodes, 
 							brandCodes, 
@@ -250,8 +247,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 								 String currency,
 								 Double priceStart,
 								 Double priceEnd, 
-								 int page, 
-								 int size,
+								 Pageable pageable,
 								 String categoryDesc,
 								 List<String> categoryCodes,
 								 List<String> brandCodes, 
@@ -301,8 +297,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		
 		//these should contain default values for these parameters
 		query.setParameter("orderby", "1")
-		.setParameter("limit", size)
-		.setParameter("offset", page * size);
+		.setParameter("limit", pageable.getPageSize())
+		.setParameter("offset", pageable.getOffset());
 		
 		if(!brandCodes.isEmpty()) {
 			query.setParameter("brandCodes", brandCodes);
@@ -326,7 +322,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 			return product;
 		}).collect(Collectors.toList());
 		
-		return new PageImpl<Product>(lp, PageRequest.of(page, size), total);
+		return new PageImpl<Product>(lp, pageable, total);
 	}
 	
 	private String constructSQL(

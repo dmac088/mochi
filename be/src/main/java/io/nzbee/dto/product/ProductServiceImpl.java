@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Sort;
 import io.nzbee.dto.product.Product;
@@ -66,8 +67,7 @@ public class ProductServiceImpl implements IProductService {
 	public Page<Product> findAll(String locale, 
 								 String currency, 
 								 Double price, 
-								 int page, 
-								 int size,
+								 Pageable pageable,
 								 String categoryDesc, 
 								 List<IDto> ldto,
 								 String sortBy ) {
@@ -79,14 +79,13 @@ public class ProductServiceImpl implements IProductService {
 						    						   new Double(0), 
 						    			    		   price,
 						    			    		   ProductVars.PRICE_RETAIL_CODE, 
-						    						   page, 
-						    						   size,
+						    			    		   pageable,
 						    						   categoryDesc,
 						    						   ldto);
     	
     	return new PageImpl<Product>(
     			pp.stream().map(p -> this.entityToDTO(locale, currency, p)).collect(Collectors.toList()),
-    			PageRequest.of(page, size),
+    			pageable,
     			pp.getTotalElements());
 	}
     
@@ -94,8 +93,7 @@ public class ProductServiceImpl implements IProductService {
     //@Cacheable(value="products")
 	public Page<Product> findAll(String locale, 
 								 String currency, 
-								 int page, 
-								 int size, 
+								 Pageable pageable, 
 								 String categoryDesc,
 								 List<IDto> ldto,
 								 String sortBy) {
@@ -104,14 +102,13 @@ public class ProductServiceImpl implements IProductService {
 				=  productService.findAll(	locale, 
 							    			currency, 
 							    			ProductVars.PRICE_MARKDOWN_CODE, 
-							    			page,
-							    			size,
+							    			pageable,
 							    			categoryDesc, 
 							    			ldto);
     	
     	return new PageImpl<Product>(
     			pp.stream().map(p -> this.entityToDTO(locale, currency, p)).collect(Collectors.toList()),
-    			PageRequest.of(page, size),
+    			pageable,
     			pp.getTotalElements());
 
 	}
