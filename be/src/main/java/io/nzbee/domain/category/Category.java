@@ -45,7 +45,7 @@ public abstract class Category implements IHierarchicalDomainObject {
 	}
 
 	protected String getCategoryCode() {
-		return categoryCode;
+		return this.categoryCode;
 	}
 
 	protected void setCategoryCode(String categoryCode) {
@@ -53,7 +53,7 @@ public abstract class Category implements IHierarchicalDomainObject {
 	}
 	
 	protected String getCategoryDesc() {
-		return categoryDesc;
+		return this.categoryDesc;
 	}
 
 	protected void setCategoryDesc(String categoryDesc) {
@@ -61,7 +61,7 @@ public abstract class Category implements IHierarchicalDomainObject {
 	}
 
 	public String getParentCode() {
-		return parentCode;
+		return this.parentCode;
 	}
 
 	public void setParentCode(String parentCode) {
@@ -69,7 +69,7 @@ public abstract class Category implements IHierarchicalDomainObject {
 	}
 
 	protected Long getCategoryLevel() {
-		return categoryLevel;
+		return this.categoryLevel;
 	}
 
 	protected void setCategoryLevel(Long categoryLevel) {
