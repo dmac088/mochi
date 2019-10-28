@@ -5,17 +5,23 @@ import org.springframework.hateoas.ResourceSupport;
 import io.nzbee.domain.category.BrandCategory;
 import io.nzbee.domain.category.Category;
 import io.nzbee.domain.category.ProductCategory;
+import io.nzbee.domain.product.Product;
 import io.nzbee.resource.controllers.BrandController;
 import io.nzbee.resource.controllers.CategoryController;
 import io.nzbee.resource.controllers.ProductController;
 import lombok.Getter;
-
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.web.PagedResourcesAssembler;
 
 @Getter
 public class CategoryResource extends ResourceSupport {
 
+	@Autowired
+	private PagedResourcesAssembler<Product> parAssembler;
+	
+	
 	private final Category category;
 	
 	public CategoryResource(String locale, String currency, final Category category) {
@@ -42,8 +48,8 @@ public class CategoryResource extends ResourceSupport {
     			   													category.getCode(),
     			   													//hardcoded values for page and size
     			   													0,
-    			   													10
-    			   													)).withRel("products"));
+    			   													10,
+    			   													parAssembler)).withRel("products"));
        }
        
        // add(ControllerLinkBuilder.linkTo(methodOn(GymMembershipController.class).all(id)).withRel("memberships"));
