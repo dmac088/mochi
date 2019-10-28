@@ -11,6 +11,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.IDomainObject;
 import io.nzbee.dto.IDto;
@@ -81,14 +82,17 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public Page<Product> findAll(String locale, String currency, int page, int size, String categoryDesc,
-			List<IFacet> facets, String sortBy) {
+	public Page<Product> findAll(	String locale, 
+									String currency, 
+									Pageable pageable, 
+									String categoryDesc,
+									List<IFacet> facets, 
+									String sortBy) {
 		// TODO Auto-generated method stub
 		Page<io.nzbee.dto.product.Product> pp =
 			productDtoService.findAll(locale, 
 									  currency, 
-									  page, 
-									  size, 
+									  pageable, 
 									  categoryDesc, 
 									  facets.stream()
 									  .map(f -> (IDto) productDtoService.doToDto(f.getPayload())).collect(Collectors.toList()), 
@@ -101,15 +105,19 @@ public class ProductServiceImpl implements IProductService {
 	}
 	
 	@Override
-	public Page<Product> findAll(String locale, String currency, Double price, int page, int size, String categoryDesc,
-			List<IFacet> facets, String sortBy) {
+	public Page<Product> findAll(	String locale, 
+									String currency, 
+									Double price, 
+									Pageable pageable, 
+									String categoryDesc,
+									List<IFacet> facets, 
+									String sortBy) {
 		// TODO Auto-generated method stub
     	Page<io.nzbee.dto.product.Product> pp =
-		   productDtoService.findAll(locale, 
+		   productDtoService.findAll(	 locale, 
 										 currency, 
 										 price, 
-										 page, 
-										 size, 
+										 pageable, 
 										 categoryDesc, 
 										 facets.stream()
 										 .map(f -> (IDto) productDtoService.doToDto(f.getPayload())).collect(Collectors.toList()), 
