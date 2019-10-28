@@ -16,5 +16,4 @@ public interface ICategoryDao extends ILocalizedDao<Category> {
 	
 	List<Category> findAll(String locale, String currency, List<String> categoryCodes);
 
-	List<Category> getChildren(String currency, Category category);
 }
