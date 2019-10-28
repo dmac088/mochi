@@ -4,9 +4,12 @@ import org.springframework.hateoas.Link;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
+import org.springframework.stereotype.Component;
+
 import io.nzbee.domain.product.Product;
 import io.nzbee.resource.controllers.ProductController;
 
+@Component
 public class ProductAssembler extends ResourceAssemblerSupport<Product, ProductResource> {
 
     public ProductAssembler() {

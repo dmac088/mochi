@@ -44,7 +44,7 @@ public class ProductController {
 															    	   @PathVariable String categoryCode,
 															    	   @RequestParam("page") int page,
 															    	   @RequestParam("size") int size,
-															    	   PagedResourcesAssembler<Product> assembler) {
+															    	   PagedResourcesAssembler assembler) {
     	final Page<Product> pages =
     					productService.findAll(	
     									locale, 
@@ -55,7 +55,7 @@ public class ProductController {
     									"1");
     			
 
-    	return new ResponseEntity<>(assembler.toResource(pages), HttpStatus.OK);
+    	return new ResponseEntity< >(assembler.toResource(pages), HttpStatus.OK);
     	
 //    	final Resources <BrandResource> resources = new Resources <> (collection);
 //        final String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
