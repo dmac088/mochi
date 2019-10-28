@@ -673,7 +673,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"  then '0' " +
 				"  else :parentCategoryCode" +
 				"  end" +
-				(withChildren ? "" : " AND s.cat_cd in :categoryCodes");
+				(!withChildren && hasCategories ? " AND s.cat_cd in :categoryCodes" : "");
 		
 	}
 	
