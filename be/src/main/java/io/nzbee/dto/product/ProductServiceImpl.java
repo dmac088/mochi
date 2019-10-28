@@ -131,7 +131,7 @@ public class ProductServiceImpl implements IProductService {
 		final Product pDo = new Product();
     	pDo.setProductUPC(p.getUPC());
     	pDo.setProductCreateDt(p.getProductCreateDt());
-    	pDo.setProductDesc(p.getProductAttribute().getBrandDesc());
+    	pDo.setProductDesc(p.getProductAttribute().getProductDesc());
     	pDo.setProductRetail(p.getRetailPrice());
     	pDo.setProductMarkdown(p.getMarkdownPrice());
     	pDo.setProductImage(p.getProductAttribute().getProductImage());
