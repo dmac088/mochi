@@ -3,14 +3,12 @@ package io.nzbee.domain.product;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.IDomainObject;
@@ -100,7 +98,7 @@ public class ProductServiceImpl implements IProductService {
 				
 		    return new PageImpl<Product>(
 			pp.stream().map(p -> this.dtoToDO(p)).collect(Collectors.toList()),
-			PageRequest.of(page, size),
+			pageable,
 			pp.getTotalElements());
 	}
 	
@@ -125,7 +123,7 @@ public class ProductServiceImpl implements IProductService {
 		
      	return new PageImpl<Product>(
 		pp.stream().map(p -> this.dtoToDO(p)).collect(Collectors.toList()),
-		PageRequest.of(page, size),
+		pageable,
 		pp.getTotalElements());
     	
 	}
@@ -153,8 +151,5 @@ public class ProductServiceImpl implements IProductService {
 		// TODO Auto-generated method stub
 		return token;
 	}
-
-	
-
 	
 }

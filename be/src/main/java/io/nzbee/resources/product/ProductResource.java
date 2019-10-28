@@ -7,11 +7,11 @@ public class ProductResource  extends ResourceSupport {
 
 	private final Product product;
 	
-	public ProductResource(String locale, String currency, final Product product) {
+	public ProductResource(final Product product) {
 		this.product = product;
-		
 	}
 	
+
 	public Product getProduct() {
 		return product;
 	}

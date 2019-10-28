@@ -32,9 +32,18 @@ public class CategoryResource extends ResourceSupport {
 //			      category.getCode())).withSelfRel());
         
        if(category instanceof BrandCategory) {
-    	   add(linkTo(methodOn(BrandController.class).getBrands(locale, currency, category.getCode())).withRel("brands"));
+    	   add(linkTo(methodOn(BrandController.class).getBrands(locale, 
+    			   												currency, 
+    			   												category.getCode()
+    			   												)).withRel("brands"));
        } else if (category instanceof ProductCategory) {
-    	   add(linkTo(methodOn(ProductController.class).getProducts(locale, currency, category.getCode())).withRel("products"));
+    	   add(linkTo(methodOn(ProductController.class).getProducts(locale, 
+    			   													currency, 
+    			   													category.getCode(),
+    			   													//hardcoded values for page and size
+    			   													0,
+    			   													10
+    			   													)).withRel("products"));
        }
        
        // add(ControllerLinkBuilder.linkTo(methodOn(GymMembershipController.class).all(id)).withRel("memberships"));
