@@ -46,7 +46,8 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		
 		Session session = em.unwrap(Session.class);
 		
-		Query query = session.createNativeQuery(constructSQL(false), "CategoryMapping")
+		Query query = session.createNativeQuery(constructSQL(false, 
+															 false), "CategoryMapping")
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
 				 .setParameter("parentCategoryCode", "-1")
@@ -83,7 +84,8 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		
 		Session session = em.unwrap(Session.class);
 
-		Query query = session.createNativeQuery(constructSQL(!categoryCodes.isEmpty()), "CategoryMapping")
+		Query query = session.createNativeQuery(constructSQL(!categoryCodes.isEmpty(),
+												false), "CategoryMapping")
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
 				 .setParameter("parentCategoryCode", "-1")
@@ -176,7 +178,8 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		List<String> categoryCodes = new ArrayList<String>();
 		categoryCodes.add(code);
 		
-		Query query = session.createNativeQuery(constructSQL(!categoryCodes.isEmpty()), "CategoryMapping")
+		Query query = session.createNativeQuery(constructSQL(!categoryCodes.isEmpty(),
+															 false), "CategoryMapping")
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
 				 .setParameter("parentCategoryCode", "-1")
@@ -208,21 +211,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		return Optional.ofNullable(category);
 	}
 	
-	@Override 
-	public List<Category> getChildren(String currency, Category category) {
-		
-		@SuppressWarnings("unchecked")
-		List<Category> c = em.createNamedQuery("getAllCategories")
-				 .setParameter("locale", category.getCategoryAttribute().getLclCd())
-				 .setParameter("currency", currency)
-				 .setParameter("parentCategoryCode", category.getParent().getCategoryCode())
-				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
-				 .setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
-				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
-				 .getResultList();
-	
-		return c;
-	}
+
 	
 	@Override
 	public List<Category> findByParent(String parentCategoryCode, String locale) {
@@ -334,7 +323,8 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	
 	
 	private String constructSQL(
-				boolean hasCategories
+				boolean hasCategories,
+				boolean withChildren
 			) {
 		return "WITH RECURSIVE  " +
 				"descendants AS " +
@@ -682,7 +672,8 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"  when :parentCategoryCode = '-1' " +
 				"  then '0' " +
 				"  else :parentCategoryCode" +
-				"  end";
+				"  end" +
+				(withChildren ? "" : " AND s.cat_cd in :categoryCodes");
 		
 	}
 	
