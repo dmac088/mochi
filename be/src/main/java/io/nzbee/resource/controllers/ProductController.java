@@ -1,13 +1,18 @@
 package io.nzbee.resource.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.Resources;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,10 +23,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import io.nzbee.dto.product.IProductService;
-import io.nzbee.dto.product.Product;
+import io.nzbee.dto.IDto;
+import io.nzbee.domain.product.IProductService;
+import io.nzbee.domain.product.Product;
 import io.nzbee.resources.brand.BrandResource;
 import io.nzbee.resources.product.ProductResource;
+import io.nzbee.ui.component.web.facet.IFacet;
 
 @RestController
 @RequestMapping("/api")
@@ -36,17 +43,27 @@ public class ProductController {
 															    	   @PathVariable String currency, 
 															    	   @PathVariable String categoryCode,
 															    	   @RequestParam("page") int page,
-															    	   @RequestParam("size") int size) {
-    	final Page<ProductResource> collection = 
-    			productService.findAll(locale, currency, page, size, categoryDesc, ldto, sortBy)
-    			productService.findAll(locale, currency, categoryCode).stream()
-        		.map(b -> new BrandResource(locale, currency, b))
-        		.collect(Collectors.toList());
+															    	   @RequestParam("size") int size,
+															    	   PagedResourcesAssembler<Product> assembler) {
+    	final Page<ProductResource> pages =
+    			new PageImpl<ProductResource>(
+    					productService.findAll(	
+    									locale, 
+    									currency,
+    									PageRequest.of(page, size), 
+    									categoryCode, 
+    									new ArrayList<IFacet>(), 
+    									"1")
+    			.stream()
+        		.map(p -> new ProductResource(locale, currency, p))
+        		.collect(Collectors.toList()));
+
+        return new ResponseEntity<ProductResource>(pages, HttpStatus.OK);
     	
-    	final Resources <BrandResource> resources = new Resources <> (collection);
-        final String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
-        resources.add(new Link(uriString, "brands"));
-        return ResponseEntity.ok(resources);
+//    	final Resources <BrandResource> resources = new Resources <> (collection);
+//        final String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
+//        resources.add(new Link(uriString, "brands"));
+//        return ResponseEntity.ok(resources);
     }
     
     @GetMapping("/Product/{locale}/{currency}/code/{code}")
