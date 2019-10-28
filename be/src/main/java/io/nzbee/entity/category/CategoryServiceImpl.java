@@ -2,7 +2,6 @@ package io.nzbee.entity.category;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -63,20 +62,6 @@ public class CategoryServiceImpl implements ICategoryService {
 		return categoryDAO.findByLevel(locale, level);
 	}
 	
-	@Override
-	public Set<Category> recurseCategories(String currency, Set<Category> arrayList, Category pc) {
-		if(pc == null) { return arrayList; }
-		
-		List<Category> lc = categoryDAO.getChildren(currency, pc);
-		
-		arrayList.add(pc);
-		if(lc.isEmpty()) { return arrayList; }
-		lc.stream().forEach(c -> {
-			arrayList.add(c);
-			recurseCategories(currency, arrayList, c); 
-		});
-		return arrayList; 
-	}
 
 	@Override
 	public void save(Category t) {
