@@ -173,10 +173,10 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 false,
 															 true), "ProductMapping.count")
-				 .setParameter("locale", locale)
-				 .setParameter("currency", currency)
+				 .setParameter("locale", 			locale)
+				 .setParameter("currency", 			currency)
 				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
-				 .setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
+				 .setParameter("retailPriceCode", 	ProductVars.PRICE_RETAIL_CODE)
 				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE);
 		
 		Object result = query.getSingleResult();
@@ -190,7 +190,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
 				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
-				 .setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
+				 .setParameter("retailPriceCode", 	ProductVars.PRICE_RETAIL_CODE)
 				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
 				 
 				 //these should contain default values for these parameters
@@ -223,7 +223,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	public Page<Product> findAll(	String locale, 
 									String currency, 
 									Pageable pageable,
-									String categoryDesc,
+									String categoryCode,
 									List<String> categoryCodes, 
 									List<String> brandCodes, 
 									List<String> tagCodes, 
@@ -235,7 +235,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 							new Double(-1), 
 							new Double(-1), 
 							pageable, 
-							categoryDesc, 
+							categoryCode, 
 							categoryCodes, 
 							brandCodes, 
 							tagCodes, 
@@ -248,7 +248,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 								 Double priceStart,
 								 Double priceEnd, 
 								 Pageable pageable,
-								 String categoryDesc,
+								 String categoryCode,
 								 List<String> categoryCodes,
 								 List<String> brandCodes, 
 								 List<String> tagCodes,
@@ -264,7 +264,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		.setParameter("currency", currency)
 		.setParameter("productTypeCode", ProductVars.PRODUCT_TYPE_RETAIL)
 		.setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
-		.setParameter("categoryDesc", categoryDesc);
+		.setParameter("categoryCode", categoryCode);
 		
 		if(!brandCodes.isEmpty()) {
 			query.setParameter("brandCodes", brandCodes);
@@ -286,7 +286,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		.setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
 		.setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
 		.setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
-		.setParameter("categoryDesc", categoryDesc);
+		.setParameter("categoryCode", categoryCode);
 		
 		//filtering is hardcoded to markdown price
 		if(hasPrices) {
@@ -344,13 +344,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		"			t.cat_prnt_id,   " + 
 		"			t.cat_typ_id   " + 
 		" FROM mochi.category AS t   " + 
-	
-		"	INNER JOIN mochi.category_attr_lcl AS attr  " + 
-		"	ON t.cat_id = attr.cat_id 	 " + 
-
 		" WHERE  " + 
-		" attr.cat_desc = :categoryDesc " + 
-		" AND attr.lcl_cd = :locale " + 
+		" t.cat_cd = :categoryCode " + 
 
 		" UNION ALL    " + 
 		" SELECT 	t.cat_id,     " + 
