@@ -4,7 +4,6 @@ import org.springframework.hateoas.Link;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
-
 import io.nzbee.domain.product.Product;
 import io.nzbee.resource.controllers.ProductController;
 

@@ -45,20 +45,17 @@ public class ProductController {
 															    	   @RequestParam("page") int page,
 															    	   @RequestParam("size") int size,
 															    	   PagedResourcesAssembler<Product> assembler) {
-    	final Page<ProductResource> pages =
-    			new PageImpl<ProductResource>(
+    	final Page<Product> pages =
     					productService.findAll(	
     									locale, 
     									currency,
     									PageRequest.of(page, size), 
     									categoryCode, 
     									new ArrayList<IFacet>(), 
-    									"1")
-    			.stream()
-        		.map(p -> new ProductResource(locale, currency, p))
-        		.collect(Collectors.toList()));
+    									"1");
+    			
 
-        return new ResponseEntity<ProductResource>(pages, HttpStatus.OK);
+    	return new ResponseEntity<>(assembler.toResource(pages), HttpStatus.OK);
     	
 //    	final Resources <BrandResource> resources = new Resources <> (collection);
 //        final String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
