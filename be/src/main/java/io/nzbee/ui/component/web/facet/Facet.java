@@ -11,14 +11,9 @@ import io.nzbee.ui.component.web.facet.search.SearchFacet;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonTypeInfo(
-	    use = JsonTypeInfo.Id.MINIMAL_CLASS,
+	    use = JsonTypeInfo.Id.CLASS,
 	    include = JsonTypeInfo.As.PROPERTY,
 	    property = "@class")
-//@JsonSubTypes({
-//    @JsonSubTypes.Type(value = SearchFacet.class, name = "SearchFacet"),
-//
-//    @JsonSubTypes.Type(value = EntityFacet.class, name = "EntityFacet") }
-//)
 public abstract class Facet {
 
 	public abstract String getId();
@@ -33,5 +28,7 @@ public abstract class Facet {
 	public abstract String getType();
 	
 	public abstract String getPayloadType();
+
+	public abstract String getValue();
 	
 }
