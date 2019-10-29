@@ -96,10 +96,12 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 							page, 
 							size, 
 							sortBy, 
-							selectedFacets);
+							selectedFacets.getFacets());
+		
 	}
 
-	
+
+
 	private List<SearchFacet> processFacets(String locale, 
 											String currency,
 											QueryBuilder qb,
@@ -241,13 +243,13 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 						  int page, 
 						  int size,
 						  String sortBy, 
-						  List<Facet> selectedFacets) {
+						  List<io.nzbee.ui.component.web.facet.Facet> selectedFacets) {
 
 		System.out.println("Facets....");
 		System.out.println(selectedFacets.size());
 		selectedFacets.stream().forEach(f -> {
-			System.out.println(f.getFieldName());
-			System.out.println(f.getValue());
+			System.out.println(f.getDisplayValue());
+			System.out.println(f.getType());
 		});
 		
 		

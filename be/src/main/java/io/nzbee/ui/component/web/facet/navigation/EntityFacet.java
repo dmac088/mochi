@@ -9,7 +9,6 @@ public class EntityFacet extends Facet {
 
 	public EntityFacet(IDomainObject entity) {
 		this.payload = entity;
-		this.setName(this.getClass().getSimpleName());
 	}
 	
 	@Override
@@ -46,12 +45,6 @@ public class EntityFacet extends Facet {
 	public String getPayloadType() {
 		// TODO Auto-generated method stub
 		return this.getPayload().getClass().getSimpleName();
-	}
-
-	@Override
-	protected String getValue() {
-		// TODO Auto-generated method stub
-		return "Empty";
 	}
 	
 }
