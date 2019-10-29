@@ -1,14 +1,15 @@
 package io.nzbee.ui.component.web.facet.navigation;
 
 import io.nzbee.domain.IDomainObject;
-import io.nzbee.ui.component.web.facet.IFacet;
+import io.nzbee.ui.component.web.facet.Facet;
 
-public class EntityFacet implements IFacet {
+public class EntityFacet extends Facet {
 
 	private final IDomainObject payload;
 
 	public EntityFacet(IDomainObject entity) {
 		this.payload = entity;
+		this.setName(this.getClass().getSimpleName());
 	}
 	
 	@Override
@@ -45,6 +46,12 @@ public class EntityFacet implements IFacet {
 	public String getPayloadType() {
 		// TODO Auto-generated method stub
 		return this.getPayload().getClass().getSimpleName();
+	}
+
+	@Override
+	protected String getValue() {
+		// TODO Auto-generated method stub
+		return "Empty";
 	}
 	
 }

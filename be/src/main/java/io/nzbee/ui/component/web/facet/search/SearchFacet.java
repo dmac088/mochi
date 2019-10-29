@@ -5,9 +5,9 @@ import org.apache.lucene.search.Query;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.nzbee.domain.IDomainObject;
-import io.nzbee.ui.component.web.facet.IFacet;
+import io.nzbee.ui.component.web.facet.Facet;
 
-public class SearchFacet implements org.hibernate.search.query.facet.Facet, IFacet {
+public class SearchFacet extends Facet implements org.hibernate.search.query.facet.Facet {
 	
 	private final org.hibernate.search.query.facet.Facet delegate;
 	private final IDomainObject entity;
@@ -15,6 +15,7 @@ public class SearchFacet implements org.hibernate.search.query.facet.Facet, IFac
 	public SearchFacet(org.hibernate.search.query.facet.Facet f, IDomainObject entity) {
 	  this.delegate = f;
 	  this.entity = entity;
+	  this.setName(this.getClass().getSimpleName());
 	}
 	
 	@Override

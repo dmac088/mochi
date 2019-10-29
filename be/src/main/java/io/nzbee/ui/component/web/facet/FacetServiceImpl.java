@@ -48,7 +48,7 @@ public class FacetServiceImpl extends UIService implements IFacetService {
 		FacetResult nfr = new FacetResult();
 		
 		nfc.getFacets().addAll(	categoryDomainService.findAll(locale, currency).stream().map(c -> {
-									IFacet cnf = new EntityFacet(c);
+									Facet cnf = new EntityFacet(c);
 									return cnf;
 							})
 							.collect(Collectors.toList()));
@@ -66,7 +66,7 @@ public class FacetServiceImpl extends UIService implements IFacetService {
 		FacetResult nfr = new FacetResult();
 		
 		nfc.getFacets().addAll(	brands.stream().map(b -> {
-			IFacet brand = new EntityFacet(b);
+			Facet brand = new EntityFacet(b);
 			return brand;
 		}).collect(Collectors.toList()));
 		
