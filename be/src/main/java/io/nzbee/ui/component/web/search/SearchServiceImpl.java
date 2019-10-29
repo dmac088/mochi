@@ -206,6 +206,29 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		}
 	}
 
+	/*
+	 {
+	"facets": {
+        "tags": [],
+        "brands": [
+            {
+                "value": "DLE01",
+                "id": "DLE01",
+                "type": "SearchFacet",
+                "fieldName": "brandCode",
+                "payloadType": "Brand",
+                "facetingName": "BrandFR",
+                "displayValue": "Dole (3)",
+                "hierarchical": false,
+                "facetQuery": {
+                    "boost": 1,
+                    "term": {}
+                }
+            }
+		]
+	}
+	 */
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	// @Cacheable
@@ -218,6 +241,13 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 						  String sortBy, 
 						  List<IFacet> selectedFacets) {
 
+		System.out.println("Facets....");
+		System.out.println(selectedFacets.size());
+		selectedFacets.stream().forEach(f -> {
+			System.out.println(f.getDisplayValue());
+		});
+		
+		
 		FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
 
 		String transLcl = lcl.substring(0, 2).toUpperCase() + lcl.substring(3, 5).toUpperCase();
@@ -276,9 +306,9 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 												 "brandCode",
 												 brandService));
 		
-		facetList.stream().forEach(f -> {
-			System.out.println(f.getPayload().getClass().getSimpleName() + " - " + f.getValue() + " - " + f.getCount());
-		});
+//		facetList.stream().forEach(f -> {
+//			System.out.println(f.getPayload().getClass().getSimpleName() + " - " + f.getValue() + " - " + f.getCount());
+//		});
 		
 		//we need to combine the passed facets, then reprocess them
 		//jpaQuery.getFacetManager().getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
