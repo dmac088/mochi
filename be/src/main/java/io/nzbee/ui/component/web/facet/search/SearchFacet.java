@@ -15,7 +15,6 @@ public class SearchFacet extends Facet implements org.hibernate.search.query.fac
 	public SearchFacet(org.hibernate.search.query.facet.Facet f, IDomainObject entity) {
 	  this.delegate = f;
 	  this.entity = entity;
-	  this.setName(this.getClass().getSimpleName());
 	}
 	
 	@Override
