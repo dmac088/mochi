@@ -59,7 +59,8 @@ public class FacetContainer {
 				f.getPayload().getClass().getSimpleName().equals(Product.class.getSimpleName() 
 														  + ".productMarkdown"
 														   ))
-				.map(f -> (IFacet) f).collect(Collectors.toList());
+				.map(f -> (IFacet) f)
+				.collect(Collectors.toList());
 	}
 	
 	public void setCategories(List<IFacet> categories) {
@@ -87,9 +88,6 @@ public class FacetContainer {
 	}
 	
 	public void setFacets(List<IFacet> collect) {
-		// TODO Auto-generated method stub
 		this.facets = collect;
 	}
-
-	
 }
