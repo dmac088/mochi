@@ -8,7 +8,7 @@ public class EntityFacet implements IFacet {
 	private final IDomainObject payload;
 
 	public EntityFacet(IDomainObject entity) {
-	  this.payload = entity;
+		this.payload = entity;
 	}
 	
 	@Override
