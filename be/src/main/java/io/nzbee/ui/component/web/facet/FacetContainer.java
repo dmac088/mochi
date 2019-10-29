@@ -14,80 +14,80 @@ import io.nzbee.domain.tag.Tag;
 public class FacetContainer {
 
 	
-	private List<IFacet> facets = new ArrayList<IFacet>();
+	private List<Facet> facets = new ArrayList<Facet>();
 
 	@JsonIgnore
-	public List<IFacet> getFacets() {
+	public List<Facet> getFacets() {
 		return facets;
 	}
 
-	public List<IFacet> getProductCategories() {
+	public List<Facet> getProductCategories() {
 		return this.facets.stream()
 				.filter(f -> 
 				f.getPayload().getClass().getSimpleName().equals(ProductCategory.class.getSimpleName()))
-				.map(f -> (IFacet) f)
+				.map(f -> (Facet) f)
 				.collect(Collectors.toList());
 	}
 	
-	public List<IFacet> getBrandCategories() {
+	public List<Facet> getBrandCategories() {
 		return this.facets.stream()
 				.filter(f -> 
 				f.getPayload().getClass().getSimpleName().equals(BrandCategory.class.getSimpleName()))
-				.map(f -> (IFacet) f)
+				.map(f -> (Facet) f)
 				.collect(Collectors.toList());
 	}
 
-	public List<IFacet> getBrands() {
+	public List<Facet> getBrands() {
 		return this.facets.stream()
 				.filter(f -> 
 				f.getPayload().getClass().getSimpleName().equals(Brand.class.getSimpleName()))
-				.map(f -> (IFacet) f)
+				.map(f -> (Facet) f)
 				.collect(Collectors.toList());
 	}
 
-	public List<IFacet> getTags() {
+	public List<Facet> getTags() {
 		return this.facets.stream()
 				.filter(f -> 
 				f.getPayload().getClass().getSimpleName().equals(Tag.class.getSimpleName()))
-				.map(f -> (IFacet) f)
+				.map(f -> (Facet) f)
 				.collect(Collectors.toList());
 	}
 
-	public List<IFacet> getPrices() {
+	public List<Facet> getPrices() {
 		return this.facets.stream()
 				.filter(f -> 
 				f.getPayload().getClass().getSimpleName().equals(Product.class.getSimpleName() 
 														  + ".productMarkdown"
 														   ))
-				.map(f -> (IFacet) f)
+				.map(f -> (Facet) f)
 				.collect(Collectors.toList());
 	}
 	
-	public void setCategories(List<IFacet> categories) {
+	public void setCategories(List<Facet> categories) {
 		this.facets.addAll(categories);
 	}
 	
-	public void setBrands(List<IFacet> brands) {
+	public void setBrands(List<Facet> brands) {
 		this.facets.addAll(brands);
 	}
 	
-	public void setTags(List<IFacet> tags) {
+	public void setTags(List<Facet> tags) {
 		this.facets.addAll(tags);
 	}
 	
-	public void setPrices(List<IFacet> prices) {
+	public void setPrices(List<Facet> prices) {
 		this.facets.addAll(prices);
 	}
 	
-	public void setProductCategories(List<IFacet> productCategories) {
+	public void setProductCategories(List<Facet> productCategories) {
 		this.facets.addAll(productCategories);
 	}
 	
-	public void setBrandCategories(List<IFacet> brandCategories) {
+	public void setBrandCategories(List<Facet> brandCategories) {
 		this.facets.addAll(brandCategories);
 	}
 	
-	public void setFacets(List<IFacet> collect) {
+	public void setFacets(List<Facet> collect) {
 		this.facets = collect;
 	}
 }

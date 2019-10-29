@@ -44,7 +44,6 @@ import io.nzbee.domain.tag.Tag;
 import io.nzbee.entity.PageableUtil;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.ProductVars;
-import io.nzbee.ui.component.web.facet.IFacet;
 import io.nzbee.ui.component.web.facet.IFacetService;
 import io.nzbee.ui.component.web.facet.FacetContainer;
 import io.nzbee.ui.component.web.facet.search.SearchFacet;
@@ -84,8 +83,11 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 								String sortBy, 
 								FacetContainer selectedFacets) {
 		
-		// call the domain layer service to get a Page of Products
+		//IFacet to org.hibernate.search.query.facet.Facet
+		//payload to?
 		
+		
+		// call the domain layer service to get a Page of Products
 		return this.findAll(
 							locale, 
 							currency, 
@@ -94,7 +96,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 							page, 
 							size, 
 							sortBy, 
-							selectedFacets.getFacets());
+							selectedFacets);
 	}
 
 	
@@ -239,12 +241,13 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 						  int page, 
 						  int size,
 						  String sortBy, 
-						  List<IFacet> selectedFacets) {
+						  List<Facet> selectedFacets) {
 
 		System.out.println("Facets....");
 		System.out.println(selectedFacets.size());
 		selectedFacets.stream().forEach(f -> {
-			System.out.println(f.getDisplayValue());
+			System.out.println(f.getFieldName());
+			System.out.println(f.getValue());
 		});
 		
 		
