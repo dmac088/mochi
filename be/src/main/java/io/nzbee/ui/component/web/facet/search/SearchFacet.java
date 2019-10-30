@@ -10,7 +10,8 @@ import io.nzbee.ui.component.web.facet.Facet;
 public class SearchFacet extends Facet implements org.hibernate.search.query.facet.Facet {
 	
 	private final org.hibernate.search.query.facet.Facet delegate;
-	private final IDomainObject entity;
+	
+	private IDomainObject entity;
 	 
 	public SearchFacet(org.hibernate.search.query.facet.Facet f, IDomainObject entity) {
 	  this.delegate = f;
@@ -26,7 +27,7 @@ public class SearchFacet extends Facet implements org.hibernate.search.query.fac
 	@Override
 	public String getDisplayValue() {
 		// TODO Auto-generated method stub
-		return ((IDomainObject)this.getPayload()).getDesc() + " (" + this.getCount() + ")";
+		return ((IDomainObject)this.getPayload()).getDesc() + " (" + delegate.getCount() + ")";
 	}
 
 	@Override
@@ -36,10 +37,13 @@ public class SearchFacet extends Facet implements org.hibernate.search.query.fac
 	}
 
 	@Override
-	@JsonIgnore
 	public IDomainObject getPayload() {
 	   return this.entity;
 	} 
+	
+	public void setPayload(IDomainObject domainObject) {
+		this.entity = domainObject;
+	}
 	
 	@Override
 	public String getFacetingName() {
@@ -60,12 +64,11 @@ public class SearchFacet extends Facet implements org.hibernate.search.query.fac
 	}
 
 	@Override
-	@JsonIgnore
 	public int getCount() {
 		// TODO Auto-generated method stub
 		return delegate.getCount();
 	}
-
+	
 	@Override
 	public Query getFacetQuery() {
 		// TODO Auto-generated method stub
@@ -83,5 +86,7 @@ public class SearchFacet extends Facet implements org.hibernate.search.query.fac
 		// TODO Auto-generated method stub
 		return this.getPayload().getClass().getSimpleName();
 	}
+
+	
 
 }
