@@ -27,7 +27,7 @@ public class SearchFacet extends Facet implements org.hibernate.search.query.fac
 	@Override
 	public String getDisplayValue() {
 		// TODO Auto-generated method stub
-		return ((IDomainObject)this.getPayload()).getDesc() + " (" + delegate.getCount() + ")";
+		return ((IDomainObject)this.getPayload()).getDesc() /*+ " (" + delegate.getCount() + ")"*/;
 	}
 
 	@Override
