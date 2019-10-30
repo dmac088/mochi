@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
 import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.product.Product;
 import io.nzbee.ui.component.web.facet.FacetContainer;
@@ -39,8 +39,7 @@ public class NavigationServiceImpl extends UIService implements INavigationServi
 		Page<Product> pp = productService.findAll(locale, 
 												  currency, 
 												  price, 
-												  page, 
-												  size, 
+												  PageRequest.of(page, size), 
 												  categoryDesc, 
 												  selectedFacets.getFacets(),
 												  sortBy);
@@ -68,8 +67,7 @@ public class NavigationServiceImpl extends UIService implements INavigationServi
 		
 		Page<Product> pp = productService.findAll(locale, 
 												  currency, 
-												  page, 
-												  size, 
+												  PageRequest.of(page, size),
 												  categoryDesc, 
 												  selectedFacets.getFacets(),
 												  sortBy);
