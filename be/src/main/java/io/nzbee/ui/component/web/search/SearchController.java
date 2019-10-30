@@ -27,6 +27,7 @@ public class SearchController {
 					    	@RequestParam("size") int size, 
     						@PathVariable String sortBy, 
     						@RequestBody  FacetContainer selectedFacets) {
+    	System.out.println(selectedFacets.getFacets().size());
     	return searchService.findAll(locale, currency, category, term, page, size, sortBy, selectedFacets);
     }
 	

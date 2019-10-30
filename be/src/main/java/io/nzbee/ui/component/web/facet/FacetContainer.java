@@ -16,7 +16,7 @@ public class FacetContainer {
 	
 	private List<Facet> facets = new ArrayList<Facet>();
 
-	@JsonIgnore
+	//@JsonIgnore
 	public List<Facet> getFacets() {
 		return facets;
 	}
