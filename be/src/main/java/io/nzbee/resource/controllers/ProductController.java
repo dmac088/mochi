@@ -27,7 +27,7 @@ import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.product.Product;
 import io.nzbee.resources.brand.BrandResource;
 import io.nzbee.resources.product.ProductResource;
-import io.nzbee.ui.component.web.facet.Facet;
+import io.nzbee.ui.component.web.facet.IFacet;
 
 @RestController
 @RequestMapping("/api")
@@ -50,7 +50,7 @@ public class ProductController {
     									currency,
     									PageRequest.of(page, size), 
     									categoryCode, 
-    									new ArrayList<Facet>(), 
+    									new ArrayList<IFacet>(), 
     									"1");
     			
 
