@@ -212,34 +212,42 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 
 	/*
 	{
-
+{
+	"facets": [],
 	"brands": [
-            {
-                "@class": "io.nzbee.ui.component.web.facet.search.SearchFacet",
-                "desc": "Glorys",
-                "value": "GLO01",
-                "id": "GLO01",
+		{
+       "@class": "io.nzbee.ui.component.web.facet.search.SearchFacet",
+                "value": "/PRM01/FRT01/POM01",
+                "id": "POM01",
                 "type": "SearchFacet",
                 "payload": {
-                    "brandCode": "GLO01",
-                    "brandDesc": "Glorys",
-                    "desc": "Glorys",
-                    "count": 0,
-                    "code": "GLO01",
-                    "hierarchical": false
+                    "@class": "io.nzbee.domain.category.ProductCategory",
+                    "categoryType": "product",
+                    "parentCode": "FRT01",
+                    "layoutCodes": [],
+                    "level": 2,
+                    "desc": "Pomes",
+                    "code": "POM01",
+                    "hierarchical": true,
+                    "count": 3,
+                    "childCount": 0
                 },
-                "fieldName": "brandCode",
-                "payloadType": "Brand",
-                "facetingName": "BrandFR",
-                "hierarchical": false,
-                "displayValue": "Glorys (4)",
+                "count": 3,
+                "fieldName": "primaryCategory.categoryToken",
+                "payloadType": "ProductCategory",
+                "facetingName": "CategoryFR",
+                "hierarchical": true,
+                "displayValue": "Pomes (3)",
                 "facetQuery": {
                     "boost": 1,
                     "term": {}
                 }
             }
+       
+       
         ]
-	}
+
+}
 	 */
 	
 	@SuppressWarnings("unchecked")
@@ -252,7 +260,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 						  int page, 
 						  int size,
 						  String sortBy, 
-						  List<io.nzbee.ui.component.web.facet.Facet> selectedFacets) {
+						  List<io.nzbee.ui.component.web.facet.IFacet> selectedFacets) {
 
 		System.out.println("Facets....");
 		System.out.println(selectedFacets.size());

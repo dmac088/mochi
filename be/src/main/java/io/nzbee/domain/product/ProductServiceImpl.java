@@ -13,7 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.IDomainObject;
 import io.nzbee.dto.IDto;
-import io.nzbee.ui.component.web.facet.Facet;
+import io.nzbee.ui.component.web.facet.IFacet;
 
 @Service(value = "productDomainService")
 @Transactional
@@ -84,7 +84,7 @@ public class ProductServiceImpl implements IProductService {
 									String currency, 
 									Pageable pageable, 
 									String categoryDesc,
-									List<Facet> facets, 
+									List<IFacet> facets, 
 									String sortBy) {
 		// TODO Auto-generated method stub
 		Page<io.nzbee.dto.product.Product> pp =
@@ -108,7 +108,7 @@ public class ProductServiceImpl implements IProductService {
 									Double price, 
 									Pageable pageable, 
 									String categoryDesc,
-									List<Facet> facets, 
+									List<IFacet> facets, 
 									String sortBy) {
 		// TODO Auto-generated method stub
     	Page<io.nzbee.dto.product.Product> pp =

@@ -10,20 +10,20 @@ import io.nzbee.domain.IDomainObject;
 	    use = JsonTypeInfo.Id.CLASS,
 	    include = JsonTypeInfo.As.PROPERTY,
 	    property = "@class")
-public abstract class Facet {
+public interface IFacet {
 
-	public abstract String getId();
+	String getId();
 	
-	public abstract String getDisplayValue();
+	String getDisplayValue();
 	
-	public abstract boolean isHierarchical();
+	boolean isHierarchical();
 
-	public abstract IDomainObject getPayload();
+	IDomainObject getPayload();
 	
-	public abstract String getType();
+	String getType();
 	
-	public abstract String getPayloadType();
+	String getPayloadType();
 
-	public abstract String getValue();
+	String getValue();
 	
 }

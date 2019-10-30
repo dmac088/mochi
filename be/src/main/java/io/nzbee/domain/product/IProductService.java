@@ -4,7 +4,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import io.nzbee.domain.IService;
-import io.nzbee.ui.component.web.facet.Facet;
+import io.nzbee.ui.component.web.facet.IFacet;
 
 public interface IProductService extends IService<Product> {
 
@@ -15,14 +15,14 @@ public interface IProductService extends IService<Product> {
 							Double price, 
 							Pageable pageable, 
 							String categoryDesc,
-							List<Facet> facets, 
+							List<IFacet> facets, 
 							String sortBy);
 
 	Page<Product> findAll(	String locale, 
 							String currency, 
 							Pageable pageable, 
 							String categoryDesc, 
-							List<Facet> facets,
+							List<IFacet> facets,
 							String sortBy);
 
 }
