@@ -46,7 +46,7 @@ public class EntityFacet extends Facet {
 		// TODO Auto-generated method stub
 		return this.getPayload().getClass().getSimpleName();
 	}
-	
+
 	@Override
 	public String getValue() {
 		// TODO Auto-generated method stub
