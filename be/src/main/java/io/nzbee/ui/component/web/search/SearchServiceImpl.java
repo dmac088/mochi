@@ -211,24 +211,35 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 	}
 
 	/*
-	{"brands": [
+	{
+
+	"brands": [
             {
                 "@class": "io.nzbee.ui.component.web.facet.search.SearchFacet",
-                "value": "DIV01",
-                "id": "DIV01",
+                "desc": "Glorys",
+                "value": "GLO01",
+                "id": "GLO01",
                 "type": "SearchFacet",
+                "payload": {
+                    "brandCode": "GLO01",
+                    "brandDesc": "Glorys",
+                    "desc": "Glorys",
+                    "count": 0,
+                    "code": "GLO01",
+                    "hierarchical": false
+                },
                 "fieldName": "brandCode",
                 "payloadType": "Brand",
                 "facetingName": "BrandFR",
                 "hierarchical": false,
-                "displayValue": "Diva (3)",
+                "displayValue": "Glorys (4)",
                 "facetQuery": {
                     "boost": 1,
                     "term": {}
                 }
             }
         ]
-}
+	}
 	 */
 	
 	@SuppressWarnings("unchecked")
