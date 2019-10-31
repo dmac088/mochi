@@ -2,6 +2,8 @@ package io.nzbee.domain.brand;
 
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.nzbee.SpringContext;
 import io.nzbee.domain.IDomainObject;
 import io.nzbee.domain.IService;
@@ -52,7 +54,7 @@ public class Brand implements IDomainObject {
 	@Override
 	public boolean isHierarchical() {
 		// TODO Auto-generated method stub
-		return false;
+		return false; 
 	}
 
 	@Override
@@ -68,6 +70,7 @@ public class Brand implements IDomainObject {
 	}
 
 	@Override
+	@JsonIgnore
 	public IService getServiceBean() {
 		// TODO Auto-generated method stub
 		return SpringContext.getBean(BrandServiceImpl.class);

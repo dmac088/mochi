@@ -1,6 +1,11 @@
 package io.nzbee.ui.component.web.facet.search;
 
+import java.util.Optional;
+
 import org.apache.lucene.search.Query;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.nzbee.domain.IDomainObject;
 import io.nzbee.domain.IService;
 import io.nzbee.ui.component.web.facet.IFacet;
@@ -10,10 +15,13 @@ public class SearchFacet  implements org.hibernate.search.query.facet.Facet, IFa
 	private final org.hibernate.search.query.facet.Facet delegate;
 	
 	private IDomainObject entity;
+	
+	private String value;
 	 
 	public SearchFacet(org.hibernate.search.query.facet.Facet f, IDomainObject entity) {
 	  this.delegate = f;
 	  this.entity = entity;
+	  System.out.println(f==null);
 	}
 	
 	@Override
@@ -58,7 +66,7 @@ public class SearchFacet  implements org.hibernate.search.query.facet.Facet, IFa
 	@Override
 	public String getValue() {
 		// TODO Auto-generated method stub
-		return delegate.getValue();
+		return value;
 	}
 
 	@Override
@@ -86,9 +94,14 @@ public class SearchFacet  implements org.hibernate.search.query.facet.Facet, IFa
 	}
 
 	@Override
+	@JsonIgnore
 	public IService getPayloadServiceBean() {
 		// TODO Auto-generated method stub
 		return this.getPayload().getServiceBean();
+	}
+
+	public void setValue(String value) {
+		this.value = value;
 	}
 
 	

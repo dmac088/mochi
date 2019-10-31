@@ -51,6 +51,7 @@ public class ProductCategory extends Category {
 	}
 
 	@Override
+	@JsonIgnore
 	public IService getServiceBean() {
 		// TODO Auto-generated method stub
 		return SpringContext.getBean(CategoryServiceImpl.class);

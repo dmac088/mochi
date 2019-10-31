@@ -1,5 +1,7 @@
 package io.nzbee.ui.component.web.facet.navigation;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.nzbee.SpringContext;
 import io.nzbee.domain.IDomainObject;
 import io.nzbee.domain.IService;
@@ -56,6 +58,7 @@ public class EntityFacet implements IFacet {
 	}
 
 	@Override
+	@JsonIgnore
 	public IService getPayloadServiceBean() {
 		// TODO Auto-generated method stub
 		return this.getPayload().getServiceBean();
