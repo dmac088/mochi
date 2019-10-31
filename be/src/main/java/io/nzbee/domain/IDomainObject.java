@@ -18,4 +18,5 @@ public interface IDomainObject {
 	
 	public boolean isHierarchical();
 	
+	public IService getServiceBean();
 }

@@ -102,19 +102,18 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 
 
 
-	private List<SearchFacet> processFacets(String locale, 
+	private Set<SearchFacet> processFacets(String locale, 
 											String currency,
 											QueryBuilder qb,
 											org.hibernate.search.jpa.FullTextQuery jpaQuery, 
-											List<SearchFacet> facets, 
-											String facetingName,
-											IService service) {
+											Set<SearchFacet> facetList, 
+											String facetingName) {
 		
-		List<SearchFacet> lf = facets.stream().filter(c -> (!c.getFacetingName().equals(facetingName))).collect(Collectors.toList());
+		List<SearchFacet> lf = facetList.stream().filter(c -> (!c.getFacetingName().equals(facetingName))).collect(Collectors.toList());
 		
-		facets.removeAll(lf);
+		facetList.removeAll(lf);
 		
-		facets.addAll(lf.stream()
+		facetList.addAll(lf.stream()
 						.map(f -> this.getDiscreteFacets(	
 															locale,
 															currency,
@@ -122,10 +121,12 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 															jpaQuery, 
 															f.getFacetingName(), 
 															f.getFieldName(),
-															service
+															f.getPayloadServiceBean()
 														)
-							).collect(Collectors.toList()).stream().flatMap(List<SearchFacet>::stream).collect(Collectors.toList()));
-		return facets;
+							).collect(Collectors.toList()).stream()
+							 .flatMap(List<SearchFacet>::stream)
+							 .collect(Collectors.toSet()));
+		return facetList;
 	}
 	
 
@@ -261,14 +262,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 						  int size,
 						  String sortBy, 
 						  List<io.nzbee.ui.component.web.facet.IFacet> selectedFacets) {
-
-		System.out.println("Facets....");
-		System.out.println(selectedFacets.size());
-		selectedFacets.stream().forEach(f -> {
-			System.out.println(f.getDisplayValue());
-			System.out.println(f.getType());
-		});
-		
 		
 		FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
 
@@ -328,9 +321,29 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 												 "brandCode",
 												 brandService));
 		
-//		facetList.stream().forEach(f -> {
-//			System.out.println(f.getPayload().getClass().getSimpleName() + " - " + f.getValue() + " - " + f.getCount());
-//		});
+		facetList.stream().forEach(f -> {
+			System.out.println(f.getPayload().getClass().getSimpleName() + " - " + f.getValue() + " - " + f.getCount());
+		});
+		
+		
+		//get the list of tokens from the selected facets
+		List<String> sft = selectedFacets.stream().map(f -> f.getValue()).collect(Collectors.toList());
+		
+		List<SearchFacet> lsf = sft.stream().flatMap(x -> {
+														return facetList.stream().filter(y -> x.equals(y.getValue()));
+						  							}).collect(Collectors.toList());
+		
+		lsf.stream().forEach(f -> {
+			jpaQuery.getFacetManager().getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
+			//processFacets(facetList, productQueryBuilder, jpaQuery, currency, f.getFacetingName());
+			
+			this.processFacets(lcl, 
+							   currency, 
+							   productQueryBuilder, 
+							   jpaQuery, 
+							   facetList, 
+							   f.getFacetingName());
+		});
 		
 		//we need to combine the passed facets, then reprocess them
 		//jpaQuery.getFacetManager().getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);

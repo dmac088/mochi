@@ -1,6 +1,8 @@
 package io.nzbee.ui.component.web.facet.navigation;
 
+import io.nzbee.SpringContext;
 import io.nzbee.domain.IDomainObject;
+import io.nzbee.domain.IService;
 import io.nzbee.ui.component.web.facet.IFacet;
 
 public class EntityFacet implements IFacet {
@@ -51,6 +53,12 @@ public class EntityFacet implements IFacet {
 	public String getValue() {
 		// TODO Auto-generated method stub
 		return "Empty";
+	}
+
+	@Override
+	public IService getPayloadServiceBean() {
+		// TODO Auto-generated method stub
+		return this.getPayload().getServiceBean();
 	}
 	
 }

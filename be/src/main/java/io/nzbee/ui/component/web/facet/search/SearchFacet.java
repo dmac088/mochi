@@ -2,6 +2,7 @@ package io.nzbee.ui.component.web.facet.search;
 
 import org.apache.lucene.search.Query;
 import io.nzbee.domain.IDomainObject;
+import io.nzbee.domain.IService;
 import io.nzbee.ui.component.web.facet.IFacet;
 
 public class SearchFacet  implements org.hibernate.search.query.facet.Facet, IFacet {
@@ -82,6 +83,12 @@ public class SearchFacet  implements org.hibernate.search.query.facet.Facet, IFa
 	public String getPayloadType() {
 		// TODO Auto-generated method stub
 		return this.getPayload().getClass().getSimpleName();
+	}
+
+	@Override
+	public IService getPayloadServiceBean() {
+		// TODO Auto-generated method stub
+		return this.getPayload().getServiceBean();
 	}
 
 	

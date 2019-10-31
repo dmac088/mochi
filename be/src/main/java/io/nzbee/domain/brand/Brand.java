@@ -1,7 +1,10 @@
 package io.nzbee.domain.brand;
 
 import java.util.Objects;
+
+import io.nzbee.SpringContext;
 import io.nzbee.domain.IDomainObject;
+import io.nzbee.domain.IService;
 
 public class Brand implements IDomainObject {
 
@@ -62,6 +65,12 @@ public class Brand implements IDomainObject {
 	public String getDesc() {
 		// TODO Auto-generated method stub
 		return this.brandDesc;
+	}
+
+	@Override
+	public IService getServiceBean() {
+		// TODO Auto-generated method stub
+		return SpringContext.getBean(BrandServiceImpl.class);
 	}
 	
 }

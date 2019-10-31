@@ -1,6 +1,8 @@
 package io.nzbee.domain.tag;
 
+import io.nzbee.SpringContext;
 import io.nzbee.domain.IDomainObject;
+import io.nzbee.domain.IService;
 
 public class Tag implements IDomainObject{
 
@@ -87,4 +89,9 @@ public class Tag implements IDomainObject{
 		return this.getTagDesc();
 	}
 
+	@Override
+	public IService getServiceBean() {
+		// TODO Auto-generated method stub
+		return SpringContext.getBean(TagServiceImpl.class);
+	}
 }

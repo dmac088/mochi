@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.nzbee.SpringContext;
+import io.nzbee.domain.IService;
 import io.nzbee.domain.product.Product;
 
 public class ProductCategory extends Category {
@@ -48,6 +50,10 @@ public class ProductCategory extends Category {
 		return super.getCategoryLevel();
 	}
 
-	
+	@Override
+	public IService getServiceBean() {
+		// TODO Auto-generated method stub
+		return SpringContext.getBean(CategoryServiceImpl.class);
+	}
 	
 }
