@@ -1,5 +1,7 @@
 package io.nzbee.domain.tag;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.nzbee.SpringContext;
 import io.nzbee.domain.IDomainObject;
 import io.nzbee.domain.IService;
@@ -89,9 +91,4 @@ public class Tag implements IDomainObject{
 		return this.getTagDesc();
 	}
 
-	@Override
-	public IService getServiceBean() {
-		// TODO Auto-generated method stub
-		return SpringContext.getBean(TagServiceImpl.class);
-	}
 }

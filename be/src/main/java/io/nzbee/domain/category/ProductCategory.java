@@ -49,12 +49,5 @@ public class ProductCategory extends Category {
 		// TODO Auto-generated method stub
 		return super.getCategoryLevel();
 	}
-
-	@Override
-	@JsonIgnore
-	public IService getServiceBean() {
-		// TODO Auto-generated method stub
-		return SpringContext.getBean(CategoryServiceImpl.class);
-	}
 	
 }

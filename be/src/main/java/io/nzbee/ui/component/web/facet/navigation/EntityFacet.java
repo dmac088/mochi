@@ -56,12 +56,5 @@ public class EntityFacet implements IFacet {
 		// TODO Auto-generated method stub
 		return "Empty";
 	}
-
-	@Override
-	@JsonIgnore
-	public IService getPayloadServiceBean() {
-		// TODO Auto-generated method stub
-		return this.getPayload().getServiceBean();
-	}
 	
 }

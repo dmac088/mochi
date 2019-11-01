@@ -21,8 +21,6 @@ public interface IFacet {
 
 	IDomainObject getPayload();
 	
-	IService getPayloadServiceBean();
-	
 	String getType();
 	
 	String getPayloadType();

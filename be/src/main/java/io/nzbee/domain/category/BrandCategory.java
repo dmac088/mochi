@@ -49,12 +49,5 @@ public class BrandCategory extends Category {
 		// TODO Auto-generated method stub
 		return super.getCategoryDesc();
 	}
-
-	@Override
-	@JsonIgnore
-	public IService getServiceBean() {
-		// TODO Auto-generated method stub
-		return SpringContext.getBean(CategoryServiceImpl.class);
-	}
 	
 }

@@ -68,13 +68,5 @@ public class Brand implements IDomainObject {
 		// TODO Auto-generated method stub
 		return this.brandDesc;
 	}
-
-	@SuppressWarnings("rawtypes")
-	@Override
-	@JsonIgnore
-	public IService getServiceBean() {
-		// TODO Auto-generated method stub
-		return SpringContext.getBean(BrandServiceImpl.class);
-	}
 	
 }
