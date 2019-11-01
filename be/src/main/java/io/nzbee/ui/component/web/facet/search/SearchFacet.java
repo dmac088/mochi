@@ -91,18 +91,8 @@ public class SearchFacet  implements org.hibernate.search.query.facet.Facet, IFa
 		return this.getPayload().getClass().getSimpleName();
 	}
 
-	@SuppressWarnings("rawtypes")
-	@Override
-	@JsonIgnore
-	public IService getPayloadServiceBean() {
-		// TODO Auto-generated method stub
-		return this.getPayload().getServiceBean();
-	}
-
 	public void setValue(String value) {
 		this.value = value;
 	}
-
-	
 
 }

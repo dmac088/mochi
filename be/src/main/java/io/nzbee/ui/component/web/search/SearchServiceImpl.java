@@ -121,7 +121,9 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 															jpaQuery, 
 															f.getFacetingName(), 
 															f.getFieldName(),
-															f.getPayloadServiceBean()
+															(f.getFacetingName().equals("CategoryFR") 
+															? categoryService
+															: null)		
 														)
 							).collect(Collectors.toList()).stream()
 							 .flatMap(List<SearchFacet>::stream)
@@ -300,9 +302,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 				io.nzbee.entity.product.attribute.ProductAttribute.class);
 
 		final Set<SearchFacet> facetList = new HashSet<SearchFacet>();
-//		final Set<NavFacet<Category>> cs;
-//		final Set<NavFacet<Brand>> bs;
-//		List<Facet> lf;
 
 		// initialize the facets
 		facetList.addAll( this.getDiscreteFacets(lcl,
@@ -321,29 +320,41 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 												 "brandCode",
 												 brandService));
 		
-		facetList.stream().forEach(f -> {
-			System.out.println(f.getPayload().getClass().getSimpleName() + " - " + f.getValue() + " - " + f.getCount());
+		
+		//get the list of tokens from the selected facets passed as parameter
+		List<String> sft = selectedFacets.stream().map(f -> f.getValue()).collect(Collectors.toList());
+		
+		//pull the selected from facetList using the tokens from JSON payload
+		List<SearchFacet> lsf = sft.stream().flatMap(x -> {
+														return facetList.stream().filter(y -> x.equals(y.getValue()));
+						  							}).collect(Collectors.toList());
+		
+		//combine the selected facets
+		lsf.stream().forEach(f -> {
+			jpaQuery.getFacetManager().getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
 		});
 		
+		lsf.stream().map(sf -> sf.getFacetingName()).collect(Collectors.toSet())
+								 .stream().forEach(f -> {
+										this.processFacets(lcl, 
+														   currency, 
+														   productQueryBuilder, 
+														   jpaQuery, 
+														   facetList, 
+														   f
+									   );
+								 });
+		//re-process the facets
+
 		
-		//get the list of tokens from the selected facets
-//		List<String> sft = selectedFacets.stream().map(f -> f.getValue()).collect(Collectors.toList());
-//		
-//		List<SearchFacet> lsf = sft.stream().flatMap(x -> {
-//														return facetList.stream().filter(y -> x.equals(y.getValue()));
-//						  							}).collect(Collectors.toList());
-//		
-//		lsf.stream().forEach(f -> {
-//			jpaQuery.getFacetManager().getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
-//			//processFacets(facetList, productQueryBuilder, jpaQuery, currency, f.getFacetingName());
-//			
-//			this.processFacets(lcl, 
-//							   currency, 
-//							   productQueryBuilder, 
-//							   jpaQuery, 
-//							   facetList, 
-//							   f.getFacetingName());
+		
+		
+		
+		
+//		facetList.stream().forEach(f -> {
+//			System.out.println(f.getPayload().getClass().getSimpleName() + " - " + f.getValue() + " - " + f.getCount());
 //		});
+		
 		
 		//we need to combine the passed facets, then reprocess them
 		//jpaQuery.getFacetManager().getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);

@@ -17,6 +17,5 @@ public interface IDomainObject {
 	public int getCount();
 	
 	public boolean isHierarchical();
-	
-	public IService getServiceBean();
+
 }
