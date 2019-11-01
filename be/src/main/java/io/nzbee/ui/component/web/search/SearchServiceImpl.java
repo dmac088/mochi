@@ -102,7 +102,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 
 
 
-	private Set<SearchFacet> processFacets(String locale, 
+	private Set<SearchFacet> processFacets( String locale, 
 											String currency,
 											QueryBuilder qb,
 											org.hibernate.search.jpa.FullTextQuery jpaQuery, 
@@ -327,23 +327,23 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		
 		
 		//get the list of tokens from the selected facets
-		List<String> sft = selectedFacets.stream().map(f -> f.getValue()).collect(Collectors.toList());
-		
-		List<SearchFacet> lsf = sft.stream().flatMap(x -> {
-														return facetList.stream().filter(y -> x.equals(y.getValue()));
-						  							}).collect(Collectors.toList());
-		
-		lsf.stream().forEach(f -> {
-			jpaQuery.getFacetManager().getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
-			//processFacets(facetList, productQueryBuilder, jpaQuery, currency, f.getFacetingName());
-			
-			this.processFacets(lcl, 
-							   currency, 
-							   productQueryBuilder, 
-							   jpaQuery, 
-							   facetList, 
-							   f.getFacetingName());
-		});
+//		List<String> sft = selectedFacets.stream().map(f -> f.getValue()).collect(Collectors.toList());
+//		
+//		List<SearchFacet> lsf = sft.stream().flatMap(x -> {
+//														return facetList.stream().filter(y -> x.equals(y.getValue()));
+//						  							}).collect(Collectors.toList());
+//		
+//		lsf.stream().forEach(f -> {
+//			jpaQuery.getFacetManager().getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
+//			//processFacets(facetList, productQueryBuilder, jpaQuery, currency, f.getFacetingName());
+//			
+//			this.processFacets(lcl, 
+//							   currency, 
+//							   productQueryBuilder, 
+//							   jpaQuery, 
+//							   facetList, 
+//							   f.getFacetingName());
+//		});
 		
 		//we need to combine the passed facets, then reprocess them
 		//jpaQuery.getFacetManager().getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
