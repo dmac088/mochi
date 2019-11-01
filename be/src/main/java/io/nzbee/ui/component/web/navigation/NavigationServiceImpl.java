@@ -62,7 +62,7 @@ public class NavigationServiceImpl extends UIService implements INavigationServi
 							 int size,
 							 FacetContainer selectedFacets,
 							 String sortBy
-							 ) {
+						 ) {
 
 		
 		Page<Product> pp = productService.findAll(locale, 

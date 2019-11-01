@@ -1,11 +1,7 @@
 package io.nzbee.ui.component.web.facet.search;
 
-import java.util.Optional;
-
 import org.apache.lucene.search.Query;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import io.nzbee.domain.IDomainObject;
 import io.nzbee.domain.IService;
 import io.nzbee.ui.component.web.facet.IFacet;
@@ -21,7 +17,9 @@ public class SearchFacet  implements org.hibernate.search.query.facet.Facet, IFa
 	public SearchFacet(org.hibernate.search.query.facet.Facet f, IDomainObject entity) {
 	  this.delegate = f;
 	  this.entity = entity;
-	  System.out.println(f==null);
+	  if(!(f==null)) {
+		 this.value = f.getValue();
+	  }
 	}
 	
 	@Override
@@ -93,6 +91,7 @@ public class SearchFacet  implements org.hibernate.search.query.facet.Facet, IFa
 		return this.getPayload().getClass().getSimpleName();
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	@JsonIgnore
 	public IService getPayloadServiceBean() {

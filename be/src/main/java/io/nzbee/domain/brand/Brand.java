@@ -69,6 +69,7 @@ public class Brand implements IDomainObject {
 		return this.brandDesc;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	@JsonIgnore
 	public IService getServiceBean() {
