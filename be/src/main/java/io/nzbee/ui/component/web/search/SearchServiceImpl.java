@@ -243,11 +243,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 				String newToken = "/" + String.join("/", ls);
 				String newFieldReference = prefix +  StringUtils.repeat(".parent", numParents) + "." + suffix;
 				
-				System.out.println("actual field name = " + f.getFieldName());
-				System.out.println("suffix = " + suffix);
-				System.out.println("newToken = " + newToken);
-				System.out.println(newFieldReference);
-				
 				fieldRefs.add(newFieldReference);
 		}
 	}
