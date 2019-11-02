@@ -107,32 +107,58 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 											QueryBuilder qb,
 											org.hibernate.search.jpa.FullTextQuery jpaQuery, 
 											Set<SearchFacet> facetList, 
-											Set<SearchFacet> SelectedFacetList 
+											Set<SearchFacet> selectedFacetList 
 											) {
 		
-		List<SearchFacet> lf = facetList.stream().filter(c -> (!c.getFacetingName().equals(facetingName))).collect(Collectors.toList());
 		
-		facetList.removeAll(lf);
+		Set<String> facetingNames = selectedFacetList.stream()
+													 .map(f -> f.getFacetingName())
+													 .collect(Collectors.toSet());
 		
-		System.out.println(facetingName + " size = " + lf.size());
-//		String[]
+		//we need a list of unique FacetingName and FieldName
+//		List<String[]> lf = facetList.stream()
+//										.filter(c -> (!facetingNames.contains(c.getFacetingName())))
+//										.map(f -> {
+//											String[] sa = {f.getFacetingName(),
+//											               f.getFieldName()};
+//											return sa;
+//										})
+//										.collect(Collectors.toList());
 		
-//		facetList.addAll(lf.stream()
-//						.map(f -> this.getDiscreteFacets(	
-//															locale,
-//															currency,
-//															qb, 
-//															jpaQuery, 
-//															f.getFacetingName(), 
-//															f.getFieldName(),
-//															(f.getFacetingName().equals("CategoryFR") 
-//															? categoryService
-//															: brandService)		
-//														)
-//							).collect(Collectors.toList()).stream()
-//							 .flatMap(List<SearchFacet>::stream)
-//							 .collect(Collectors.toSet()));
-		return facetList;
+		List<SearchFacet> lf = facetList.stream()
+		.filter(c -> (!facetingNames.contains(c.getFacetingName())))
+//		.map(f -> {
+//			String[] sa = {f.getFacetingName(),
+//			               f.getFieldName()};
+//			return sa;
+//		})
+		.collect(Collectors.toList());
+		
+		
+//		ulf.stream().forEach(sas -> {
+//			System.out.println(sas[0]);
+//			System.out.println(sas[1]);
+//		});
+		
+		
+		//all we need to do is get the distinct getFacetingName, and getFieldName from facetList
+		//where the FacetingName is not in selectedFacetLis
+		return lf.stream()
+				 .map(f -> this.getDiscreteFacets(	
+											locale,
+											currency,
+											qb, 
+											jpaQuery, 
+											f.getFacetingName(), 
+											f.getFieldName(),
+											(f.getFacetingName().equals("CategoryFR") 
+											? categoryService
+											: brandService)		
+											)
+					  ).collect(Collectors.toList()).stream()
+					   .flatMap(List<SearchFacet>::stream)
+					   .collect(Collectors.toSet());
+		
 	}
 	
 
@@ -170,6 +196,10 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		});
 		
 		uniqueFieldRefs.stream().forEach(fr -> {
+			System.out.println(fr);
+		});
+		
+		uniqueFieldRefs.stream().forEach(fr -> {
 			FacetingRequest frq = qb.facet().name(facetingName).onField(fr) // in category class
 					.discrete().orderedBy(FacetSortOrder.COUNT_DESC).includeZeroCounts(false).createFacetingRequest();
 			
@@ -179,6 +209,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		
 		
 		//query the domain objects from the DB
+		@SuppressWarnings("unchecked")
 		List<IDomainObject> lc = service.findAll(locale, currency, new ArrayList<String>(uniqueCodes));
 
 		//create a new array of entity facets
@@ -206,12 +237,17 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 				//parse this to a token to fetch and use the ordinal to retrieve the Lucene fieldReference
 				List<String> ls = codes.subList(0, i+1).stream().filter(o -> !(o.isEmpty())).collect(Collectors.toList());
 				String prefix = f.getFieldName().split("\\.")[0];
-				String suffix = f.getFieldName().split("\\.")[1];
+				String suffix = f.getFieldName().split("\\.")[f.getFieldName().split("\\.").length-1];
 				int numParents = codes.size() - ls.size();
 				
 				String newToken = "/" + String.join("/", ls);
 				String newFieldReference = prefix +  StringUtils.repeat(".parent", numParents) + "." + suffix;
-
+				
+				System.out.println("actual field name = " + f.getFieldName());
+				System.out.println("suffix = " + suffix);
+				System.out.println("newToken = " + newToken);
+				System.out.println(newFieldReference);
+				
 				fieldRefs.add(newFieldReference);
 		}
 	}
@@ -266,7 +302,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 						  int page, 
 						  int size,
 						  String sortBy, 
-						  List<io.nzbee.ui.component.web.facet.IFacet> selectedFacets) {
+						  List<io.nzbee.ui.component.web.facet.IFacet> facetPayload) {
 		
 		FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
 
@@ -325,33 +361,34 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		
 		
 		//get the list of tokens from the selected facets passed as parameter
-		List<String> sft = selectedFacets.stream().map(f -> f.getValue()).collect(Collectors.toList());
+		List<String> sft = facetPayload.stream().map(f -> f.getValue()).collect(Collectors.toList());
 		
 		//pull the selected from facetList using the tokens from JSON payload
-		Set<SearchFacet> lsf = sft.stream().flatMap(x -> {
-														return facetList.stream().filter(y -> x.equals(y.getValue()));
+		Set<SearchFacet> selectedFacets = sft.stream().flatMap(x -> {
+														return facetList.stream()
+																.filter(y -> x.equals(y.getValue()));
 						  							}).collect(Collectors.toSet());
 		
 		//combine the selected facets
-		lsf.stream().forEach(f -> {
+		selectedFacets.stream().forEach(f -> {
 			//System.out.println(f.getPayload().getClass().getSimpleName() + " - " + f.getValue() + " - " + f.getCount());
 			jpaQuery.getFacetManager().getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
 		});
 		
 		//re-process the facets
-		this.processFacets(lcl, 
-						   currency, 
-						   productQueryBuilder, 
-						   jpaQuery, 
-						   facetList, 
-						   lsf
-			   );
+		Set<SearchFacet> processedFacets = this.processFacets(lcl, 
+															   currency, 
+															   productQueryBuilder, 
+															   jpaQuery, 
+															   facetList, 
+															   selectedFacets
+												   );
 		
 		
 		
-//		facetList.stream().forEach(f -> {
-//			System.out.println(f.getPayload().getClass().getSimpleName() + " - " + f.getValue() + " - " + f.getCount());
-//		});
+		processedFacets.stream().forEach(f -> {
+			System.out.println(f.getPayload().getClass().getSimpleName() + " - " + f.getValue() + " - " + f.getCount());
+		});
 		
 		
 		//we need to combine the passed facets, then reprocess them
