@@ -42,6 +42,7 @@ import io.nzbee.domain.product.Product;
 import io.nzbee.domain.tag.ITagService;
 import io.nzbee.domain.tag.Tag;
 import io.nzbee.entity.PageableUtil;
+import io.nzbee.helpers.StringPair;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.ProductVars;
 import io.nzbee.ui.component.web.facet.IFacetService;
@@ -116,48 +117,34 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 													 .collect(Collectors.toSet());
 		
 		//we need a list of unique FacetingName and FieldName
-//		List<String[]> lf = facetList.stream()
-//										.filter(c -> (!facetingNames.contains(c.getFacetingName())))
-//										.map(f -> {
-//											String[] sa = {f.getFacetingName(),
-//											               f.getFieldName()};
-//											return sa;
-//										})
-//										.collect(Collectors.toList());
-		
-		List<SearchFacet> lf = facetList.stream()
-		.filter(c -> (!facetingNames.contains(c.getFacetingName())))
-//		.map(f -> {
-//			String[] sa = {f.getFacetingName(),
-//			               f.getFieldName()};
-//			return sa;
-//		})
-		.collect(Collectors.toList());
-		
-		
-//		ulf.stream().forEach(sas -> {
-//			System.out.println(sas[0]);
-//			System.out.println(sas[1]);
-//		});
+		Set<StringPair> lf = facetList.stream()
+										.filter(c -> (!facetingNames.contains(c.getFacetingName())))
+										.map(f -> {
+											StringPair sp = new StringPair(); 
+											sp.setValueA(f.getFacetingName());
+											sp.setValueB(f.getFieldName());
+											return sp;
+										})
+										.collect(Collectors.toSet());
 		
 		
 		//all we need to do is get the distinct getFacetingName, and getFieldName from facetList
-		//where the FacetingName is not in selectedFacetLis
+		//where the FacetingName is not in selectedFacetList
 		return lf.stream()
 				 .map(f -> this.getDiscreteFacets(	
-											locale,
-											currency,
-											qb, 
-											jpaQuery, 
-											f.getFacetingName(), 
-											f.getFieldName(),
-											(f.getFacetingName().equals("CategoryFR") 
-											? categoryService
-											: brandService)		
-											)
-					  ).collect(Collectors.toList()).stream()
-					   .flatMap(List<SearchFacet>::stream)
-					   .collect(Collectors.toSet());
+							locale,
+							currency,
+							qb, 
+							jpaQuery, 
+							f.getValueA(), 
+							f.getValueB(),
+							(f.getValueA().equals("CategoryFR") 
+							? categoryService
+							: brandService)		
+							)
+			  ).collect(Collectors.toList()).stream()
+			   .flatMap(List<SearchFacet>::stream)
+			   .collect(Collectors.toSet());
 		
 	}
 	
