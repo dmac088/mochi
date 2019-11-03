@@ -39,6 +39,7 @@ import io.nzbee.domain.IService;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.brand.IBrandService;
 import io.nzbee.domain.category.Category;
+import io.nzbee.domain.category.CategoryServiceImpl;
 import io.nzbee.domain.category.ICategoryService;
 import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.product.Product;
@@ -145,7 +146,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 							f.getValueA(), 
 							f.getValueB(),
 							(f.getValueA().equals("CategoryFR") 
-							? appContext.getBean(categoryService.getClass())
+							? appContext.getBean(CategoryServiceImpl.class)
 							: brandService)		
 							)
 			  ).collect(Collectors.toList()).stream()
