@@ -1,4 +1,4 @@
-package io.nzbee.ui.component.web.facet;
+package io.nzbee.ui.component.web.facet.search;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -7,7 +7,7 @@ import org.springframework.context.ApplicationContext;
 
 import io.nzbee.domain.IService;
 
-public class FacetHelper {
+public class SearchFacetHelper {
 
 	private String facetingName;
 	
@@ -49,10 +49,10 @@ public class FacetHelper {
 	    if (this == obj) {
 	        return true;
         }
-	    if (!(obj instanceof FacetHelper)) {
+	    if (!(obj instanceof SearchFacetHelper)) {
 	            return false;
 	    }
-	    FacetHelper that = (FacetHelper) obj;
+	    SearchFacetHelper that = (SearchFacetHelper) obj;
 	      EqualsBuilder eb = new EqualsBuilder();
 	      eb.append(this.facetingName, that.facetingName);
 	      eb.append(this.fieldName, that.fieldName);
