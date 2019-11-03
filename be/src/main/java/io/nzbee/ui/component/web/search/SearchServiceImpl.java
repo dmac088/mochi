@@ -321,12 +321,13 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 				.matching(searchTerm).createQuery())
 				.must(productQueryBuilder.keyword().onFields("lclCd").matching(lcl).createQuery()).createQuery();
 
-		org.hibernate.search.jpa.FullTextQuery jpaQuery = fullTextEntityManager.createFullTextQuery(searchQuery,
+		final org.hibernate.search.jpa.FullTextQuery jpaQuery = fullTextEntityManager.createFullTextQuery(searchQuery,
 				io.nzbee.entity.product.attribute.ProductAttribute.class);
 
 		final Set<SearchFacet> facetList = new HashSet<SearchFacet>();
 
 		// initialize the facets
+		//these should not have hardcoded services, they should be coded to an interface
 		facetList.addAll( this.getDiscreteFacets(lcl,
 												 currency,
 												 productQueryBuilder, 
@@ -355,7 +356,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		
 		//combine the selected facets
 		selectedFacets.stream().forEach(f -> {
-			//System.out.println(f.getPayload().getClass().getSimpleName() + " - " + f.getValue() + " - " + f.getCount());
+			System.out.println(f.getPayload().getClass().getSimpleName() + " - " + f.getValue() + " - " + f.getCount());
 			jpaQuery.getFacetManager().getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
 		});
 		
@@ -369,10 +370,10 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 												   );
 		
 		
-		
-		processedFacets.stream().forEach(f -> {
-			System.out.println(f.getPayload().getClass().getSimpleName() + " - " + f.getValue() + " - " + f.getCount());
-		});
+//		
+//		processedFacets.stream().forEach(f -> {
+//			System.out.println(f.getPayload().getClass().getSimpleName() + " - " + f.getValue() + " - " + f.getCount());
+//		});
 		
 		
 		//we need to combine the passed facets, then reprocess them
@@ -538,7 +539,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		Search search = new Search(); 
 		search.setProducts(new PageImpl<Product>(lp.stream().map(p->productService.dtoToDO(p))
 				.collect(Collectors.toList()), pageable, jpaQuery.getResultSize()));
-		
 		
 		FacetContainer nfc = new FacetContainer();
 		nfc.setFacets(facetList.stream().collect(Collectors.toList()));
