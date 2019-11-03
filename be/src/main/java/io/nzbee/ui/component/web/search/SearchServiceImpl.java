@@ -46,7 +46,7 @@ import io.nzbee.domain.product.Product;
 import io.nzbee.domain.tag.ITagService;
 import io.nzbee.domain.tag.Tag;
 import io.nzbee.entity.PageableUtil;
-import io.nzbee.helpers.StringPair;
+import io.nzbee.helpers.FacetHelper;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.ProductVars;
 import io.nzbee.ui.component.web.facet.IFacetService;
@@ -68,15 +68,15 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 
 	@Autowired
 	private IBrandService brandService;
-
-	@Autowired
-	private ApplicationContext appContext;
 	
 	@Autowired
 	private ITagService tagService;
 	
 	@Autowired
 	private IFacetService facetService;
+	
+	@Autowired
+	private ApplicationContext appContext;
 
 	@PersistenceContext(unitName = "mochiEntityManagerFactory")
 	private EntityManager em;
@@ -124,15 +124,18 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 													 .collect(Collectors.toSet());
 		
 		//we need a list of unique FacetingName and FieldName
-		Set<StringPair> lf = facetList.stream()
+		Set<FacetHelper> lf = facetList.stream()
 										.filter(c -> (!facetingNames.contains(c.getFacetingName())))
 										.map(f -> {
-											StringPair sp = new StringPair(); 
-											sp.setValueA(f.getFacetingName());
-											sp.setValueB(f.getFieldName());
+											FacetHelper sp = new FacetHelper(); 
+											sp.setFacetingName(f.getFacetingName());
+											sp.setFieldName(f.getFieldName());			
+											
 											return sp;
 										})
 										.collect(Collectors.toSet());
+		
+		
 		
 		
 		//all we need to do is get the distinct getFacetingName, and getFieldName from facetList
@@ -143,11 +146,9 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 							currency,
 							qb, 
 							jpaQuery, 
-							f.getValueA(), 
-							f.getValueB(),
-							(f.getValueA().equals("CategoryFR") 
-							? appContext.getBean(CategoryServiceImpl.class)
-							: brandService)		
+							f.getFacetingName(), 
+							f.getFieldName(),
+							f.getBean(appContext)		
 							)
 			  ).collect(Collectors.toList()).stream()
 			   .flatMap(List<SearchFacet>::stream)
