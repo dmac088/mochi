@@ -50,8 +50,8 @@ import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.ProductVars;
 import io.nzbee.ui.component.web.facet.IFacetService;
 import io.nzbee.ui.component.web.facet.FacetContainer;
-import io.nzbee.ui.component.web.facet.FacetHelper;
 import io.nzbee.ui.component.web.facet.search.SearchFacet;
+import io.nzbee.ui.component.web.facet.search.SearchFacetHelper;
 import io.nzbee.ui.component.web.generic.UIService;
 
 @Service(value = "SearchService")
@@ -118,10 +118,10 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 													 .collect(Collectors.toSet());
 		
 		//we need a list of unique FacetingName and FieldName
-		Set<FacetHelper> lf = facetList.stream()
+		Set<SearchFacetHelper> lf = facetList.stream()
 										.filter(c -> (!facetingNames.contains(c.getFacetingName())))
 										.map(f -> {
-											FacetHelper sp = new FacetHelper(); 
+											SearchFacetHelper sp = new SearchFacetHelper(); 
 											sp.setFacetingName(f.getFacetingName());
 											sp.setFieldName(f.getFieldName());			
 											
