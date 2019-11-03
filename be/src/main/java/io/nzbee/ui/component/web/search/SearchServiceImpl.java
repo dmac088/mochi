@@ -25,11 +25,14 @@ import org.hibernate.search.query.facet.FacetingRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.context.ApplicationContext;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.google.common.collect.Lists;
+
+import io.nzbee.SpringContext;
 import io.nzbee.domain.IDomainObject;
 import io.nzbee.domain.IHierarchicalDomainObject;
 import io.nzbee.domain.IService;
@@ -65,6 +68,9 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 	@Autowired
 	private IBrandService brandService;
 
+	@Autowired
+	private ApplicationContext appContext;
+	
 	@Autowired
 	private ITagService tagService;
 	
@@ -139,7 +145,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 							f.getValueA(), 
 							f.getValueB(),
 							(f.getValueA().equals("CategoryFR") 
-							? categoryService
+							? appContext.getBean(categoryService.getClass())
 							: brandService)		
 							)
 			  ).collect(Collectors.toList()).stream()
