@@ -46,11 +46,11 @@ import io.nzbee.domain.product.Product;
 import io.nzbee.domain.tag.ITagService;
 import io.nzbee.domain.tag.Tag;
 import io.nzbee.entity.PageableUtil;
-import io.nzbee.helpers.FacetHelper;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.ProductVars;
 import io.nzbee.ui.component.web.facet.IFacetService;
 import io.nzbee.ui.component.web.facet.FacetContainer;
+import io.nzbee.ui.component.web.facet.FacetHelper;
 import io.nzbee.ui.component.web.facet.search.SearchFacet;
 import io.nzbee.ui.component.web.generic.UIService;
 
@@ -68,12 +68,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 
 	@Autowired
 	private IBrandService brandService;
-	
-	@Autowired
-	private ITagService tagService;
-	
-	@Autowired
-	private IFacetService facetService;
 	
 	@Autowired
 	private ApplicationContext appContext;

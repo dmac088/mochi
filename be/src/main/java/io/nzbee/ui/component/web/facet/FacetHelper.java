@@ -1,4 +1,4 @@
-package io.nzbee.helpers;
+package io.nzbee.ui.component.web.facet;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
