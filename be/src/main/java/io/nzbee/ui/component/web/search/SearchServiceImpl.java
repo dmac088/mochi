@@ -28,16 +28,12 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import io.nzbee.domain.FacetServices;
 import io.nzbee.domain.IDomainObject;
 import io.nzbee.domain.IService;
-import io.nzbee.domain.brand.IBrandService;
-import io.nzbee.domain.category.ICategoryService;
 import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.product.Product;
 import io.nzbee.entity.PageableUtil;
-import io.nzbee.variables.CategoryVars;
 import io.nzbee.ui.component.web.facet.FacetContainer;
 import io.nzbee.ui.component.web.facet.search.SearchFacet;
 import io.nzbee.ui.component.web.facet.search.SearchFacetHelper;

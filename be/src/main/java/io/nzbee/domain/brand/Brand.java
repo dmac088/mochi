@@ -2,7 +2,6 @@ package io.nzbee.domain.brand;
 
 import java.util.Objects;
 import io.nzbee.domain.IDomainObject;
-import io.nzbee.domain.IFacetService;
 
 public class Brand implements IDomainObject {
 

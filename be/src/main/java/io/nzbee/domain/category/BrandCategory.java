@@ -4,10 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import io.nzbee.SpringContext;
-import io.nzbee.domain.IService;
 import io.nzbee.domain.brand.Brand;
-import io.nzbee.domain.brand.BrandServiceImpl;
 public class BrandCategory extends Category {
 
 
