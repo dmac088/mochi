@@ -20,7 +20,7 @@ import io.nzbee.domain.product.IProductService;
 @Service(value = "tagDomainService")
 @Transactional
 @CacheConfig(cacheNames="tags")
-public class TagServiceImpl implements ITagService, IFacetService {
+public class TagServiceImpl implements ITagService/*, IFacetService*/ {
 
 	@Autowired
 	ICategoryService categoryService;
@@ -90,15 +90,15 @@ public class TagServiceImpl implements ITagService, IFacetService {
 		return token;
 	}
 
-	@Override
-	public String getFacetField() {
-		// TODO Auto-generated method stub
-		return "";
-	}
+//	@Override
+//	public String getFacetField() {
+//		// TODO Auto-generated method stub
+//		return "tagAFacet";
+//	}
 
-	@Override
-	public String getFacetCategory() {
-		// TODO Auto-generated method stub
-		return "";
-	}
+//	@Override
+//	public String getFacetCategory() {
+//		// TODO Auto-generated method stub
+//		return "TagFR";
+//	}
 }

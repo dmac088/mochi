@@ -51,12 +51,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 	@Autowired
 	@Qualifier("productDomainService")
 	private IProductService productService;
-
-	@Autowired
-	private ICategoryService categoryService;
-
-	@Autowired
-	private IBrandService brandService;
 	
 	@Autowired
 	private ApplicationContext appContext;
@@ -323,8 +317,8 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		// initialize the facets
 		//these should not have hardcoded services, they should be coded to an interface
 		facetServices.getFacets().stream().forEach(f -> {
-//			System.out.println(f.getFacetCategory());
-//			System.out.println(f.getFacetField());
+			System.out.println(f.getFacetCategory());
+			System.out.println(f.getFacetField());
 			facetList.addAll( this.getDiscreteFacets(
 					 lcl,
 					 currency,
