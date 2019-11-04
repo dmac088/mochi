@@ -139,7 +139,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 													   org.hibernate.search.jpa.FullTextQuery jpaQuery,
 													   String facetingName, 
 													   String fieldReference,
-													   IService service) {
+													   @SuppressWarnings("rawtypes") IService service) {
 		
 		// create a category faceting request for the base level
 		FacetingRequest facetRequest = qb.facet().name(facetingName).onField(fieldReference) // in category class
@@ -207,7 +207,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 				String suffix = f.getFieldName().split("\\.")[f.getFieldName().split("\\.").length-1];
 				int numParents = codes.size() - ls.size();
 				
-				String newToken = "/" + String.join("/", ls);
 				String newFieldReference = prefix +  StringUtils.repeat(".parent", numParents) + "." + suffix;
 				
 				fieldRefs.add(newFieldReference);
@@ -254,7 +253,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 }
 	 */
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	// @Cacheable
 	public Search findAll(String lcl, 
@@ -331,17 +330,18 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		
 		//combine the selected facets
 		selectedFacets.stream().forEach(f -> {
+			System.out.println(f.getPayload().getClass().getSimpleName() + " - " + f.getValue() + " - " + f.getCount());
 			jpaQuery.getFacetManager().getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
 		});
 		
 		//re-process the facets
-		Set<SearchFacet> processedFacets = this.processFacets(lcl, 
-															   currency, 
-															   queryBuilder, 
-															   jpaQuery, 
-															   facetList, 
-															   selectedFacets
-												   );
+		Set<SearchFacet> processedFacets =
+						this.processFacets(	lcl, 
+							currency, 
+							queryBuilder, 
+							jpaQuery, 
+							facetList, 
+							selectedFacets);
 		
 
 		// set pageable definition for jpaQuery
@@ -389,7 +389,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 				.collect(Collectors.toList()), pageable, jpaQuery.getResultSize()));
 		
 		FacetContainer nfc = new FacetContainer();
-		nfc.setFacets(facetList.stream().collect(Collectors.toList()));
+		nfc.setFacets(processedFacets.stream().collect(Collectors.toList()));
 		search.setFacets(nfc);
 		return search;
 	}
