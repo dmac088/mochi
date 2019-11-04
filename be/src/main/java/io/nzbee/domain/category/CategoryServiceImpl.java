@@ -9,11 +9,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.IDomainObject;
+import io.nzbee.domain.IFacetService;
 
 @Service(value = "categoryDomainService")
 @Transactional
 @CacheConfig(cacheNames="categories")
-public class CategoryServiceImpl implements ICategoryService {
+public class CategoryServiceImpl implements ICategoryService, IFacetService {
     
    
     @Autowired
@@ -115,6 +116,18 @@ public class CategoryServiceImpl implements ICategoryService {
 	public String tokenToCode(String token) {
 		// TODO Auto-generated method stub
 		return token.substring(token.lastIndexOf('/')+1,token.length());
+	}
+
+	@Override
+	public String getFacetField() {
+		// TODO Auto-generated method stub
+		return "primaryCategory.categoryToken";
+	}
+
+	@Override
+	public String getFacetCategory() {
+		// TODO Auto-generated method stub
+		return "CategoryFR";
 	}
 
 

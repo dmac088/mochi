@@ -5,6 +5,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.nzbee.SpringContext;
+import io.nzbee.domain.IFacetService;
 import io.nzbee.domain.IService;
 import io.nzbee.domain.product.Product;
 

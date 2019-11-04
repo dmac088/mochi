@@ -4,9 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.nzbee.SpringContext;
 import io.nzbee.domain.IDomainObject;
+import io.nzbee.domain.IFacetService;
 import io.nzbee.domain.IService;
 
-public class Tag implements IDomainObject{
+public class Tag implements IDomainObject {
 
 	private Long tagId;
 	

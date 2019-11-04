@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.IDomainObject;
+import io.nzbee.domain.IFacetService;
 import io.nzbee.domain.category.ICategoryService;
 import io.nzbee.domain.product.IProductService;
 
@@ -19,7 +20,7 @@ import io.nzbee.domain.product.IProductService;
 @Service(value = "tagDomainService")
 @Transactional
 @CacheConfig(cacheNames="tags")
-public class TagServiceImpl implements ITagService {
+public class TagServiceImpl implements ITagService, IFacetService {
 
 	@Autowired
 	ICategoryService categoryService;
@@ -87,5 +88,17 @@ public class TagServiceImpl implements ITagService {
 	public String tokenToCode(String token) {
 		// TODO Auto-generated method stub
 		return token;
+	}
+
+	@Override
+	public String getFacetField() {
+		// TODO Auto-generated method stub
+		return "";
+	}
+
+	@Override
+	public String getFacetCategory() {
+		// TODO Auto-generated method stub
+		return "";
 	}
 }

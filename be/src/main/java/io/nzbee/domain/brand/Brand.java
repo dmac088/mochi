@@ -1,12 +1,8 @@
 package io.nzbee.domain.brand;
 
 import java.util.Objects;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import io.nzbee.SpringContext;
 import io.nzbee.domain.IDomainObject;
-import io.nzbee.domain.IService;
+import io.nzbee.domain.IFacetService;
 
 public class Brand implements IDomainObject {
 
@@ -68,5 +64,5 @@ public class Brand implements IDomainObject {
 		// TODO Auto-generated method stub
 		return this.brandDesc;
 	}
-	
+
 }

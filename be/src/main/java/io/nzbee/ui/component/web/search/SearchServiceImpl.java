@@ -1,11 +1,9 @@
 package io.nzbee.ui.component.web.search;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -30,25 +28,14 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import com.google.common.collect.Lists;
-
-import io.nzbee.SpringContext;
 import io.nzbee.domain.IDomainObject;
-import io.nzbee.domain.IHierarchicalDomainObject;
 import io.nzbee.domain.IService;
-import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.brand.IBrandService;
-import io.nzbee.domain.category.Category;
-import io.nzbee.domain.category.CategoryServiceImpl;
 import io.nzbee.domain.category.ICategoryService;
 import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.product.Product;
-import io.nzbee.domain.tag.ITagService;
-import io.nzbee.domain.tag.Tag;
 import io.nzbee.entity.PageableUtil;
 import io.nzbee.variables.CategoryVars;
-import io.nzbee.variables.ProductVars;
-import io.nzbee.ui.component.web.facet.IFacetService;
 import io.nzbee.ui.component.web.facet.FacetContainer;
 import io.nzbee.ui.component.web.facet.search.SearchFacet;
 import io.nzbee.ui.component.web.facet.search.SearchFacetHelper;

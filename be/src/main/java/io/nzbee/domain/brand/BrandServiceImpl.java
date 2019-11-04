@@ -9,11 +9,12 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.IDomainObject;
+import io.nzbee.domain.IFacetService;
 
 @Service(value = "brandDomainService")
 @Transactional
 @CacheConfig(cacheNames="brands")
-public class BrandServiceImpl implements IBrandService {
+public class BrandServiceImpl implements IBrandService, IFacetService {
     
 	@Autowired
     private io.nzbee.dto.brand.IBrandService brandService;
@@ -86,6 +87,18 @@ public class BrandServiceImpl implements IBrandService {
 	public String tokenToCode(String token) {
 		// TODO Auto-generated method stub
 		return token;
+	}
+
+	@Override
+	public String getFacetField() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getFacetCategory() {
+		// TODO Auto-generated method stub
+		return "BrandFR";
 	}
 	
 }
