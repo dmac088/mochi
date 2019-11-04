@@ -167,10 +167,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		});
 		
 		uniqueFieldRefs.stream().forEach(fr -> {
-			System.out.println(fr);
-		});
-		
-		uniqueFieldRefs.stream().forEach(fr -> {
 			FacetingRequest frq = qb.facet().name(facetingName).onField(fr) // in category class
 					.discrete().orderedBy(FacetSortOrder.COUNT_DESC).includeZeroCounts(false).createFacetingRequest();
 			
@@ -313,8 +309,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		// initialize the facets
 		//these should not have hardcoded services, they should be coded to an interface
 		facetServices.getFacets().stream().forEach(f -> {
-			System.out.println(f.getFacetCategory());
-			System.out.println(f.getFacetField());
 			facetList.addAll( this.getDiscreteFacets(
 					 lcl,
 					 currency,
@@ -337,7 +331,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		
 		//combine the selected facets
 		selectedFacets.stream().forEach(f -> {
-			System.out.println(f.getPayload().getClass().getSimpleName() + " - " + f.getValue() + " - " + f.getCount());
 			jpaQuery.getFacetManager().getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
 		});
 		
