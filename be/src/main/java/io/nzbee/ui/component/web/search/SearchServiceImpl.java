@@ -28,6 +28,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import io.nzbee.domain.FacetServices;
 import io.nzbee.domain.IDomainObject;
 import io.nzbee.domain.IService;
 import io.nzbee.domain.brand.IBrandService;
@@ -58,6 +60,9 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 	
 	@Autowired
 	private ApplicationContext appContext;
+	
+	@Autowired
+	private FacetServices facetServices;
 
 	@PersistenceContext(unitName = "mochiEntityManagerFactory")
 	private EntityManager em;
@@ -279,7 +284,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 
 		String transLcl = lcl.substring(0, 2).toUpperCase() + lcl.substring(3, 5).toUpperCase();
 
-		QueryBuilder productQueryBuilder = fullTextEntityManager.getSearchFactory().buildQueryBuilder()
+		QueryBuilder queryBuilder = fullTextEntityManager.getSearchFactory().buildQueryBuilder()
 				.forEntity(io.nzbee.entity.product.attribute.ProductAttribute.class)
 				.overridesForField("productDesc", lcl)
 				.overridesForField("brandDesc", lcl)
@@ -289,7 +294,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 				.get();
 
 		// this is a Lucene query using the Lucene api
-		org.apache.lucene.search.Query searchQuery = productQueryBuilder.bool().must(productQueryBuilder.keyword()
+		org.apache.lucene.search.Query searchQuery = queryBuilder.bool().must(queryBuilder.keyword()
 				.onFields(
 						"primaryCategory.parent.parent.parent." + "primaryCategoryDesc" + transLcl,
 						"primaryCategory.parent.parent." + "primaryCategoryDesc" + transLcl,
@@ -306,31 +311,30 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 						"tagC"
 						)
 				.matching(searchTerm).createQuery())
-				.must(productQueryBuilder.keyword().onFields("lclCd").matching(lcl).createQuery()).createQuery();
+				.must(queryBuilder.keyword().onFields("lclCd").matching(lcl).createQuery()).createQuery();
 
 		final org.hibernate.search.jpa.FullTextQuery jpaQuery = fullTextEntityManager.createFullTextQuery(searchQuery,
 				io.nzbee.entity.product.attribute.ProductAttribute.class);
 
 		final Set<SearchFacet> facetList = new HashSet<SearchFacet>();
 
+		
+		
 		// initialize the facets
 		//these should not have hardcoded services, they should be coded to an interface
-		facetList.addAll( this.getDiscreteFacets(lcl,
-												 currency,
-												 productQueryBuilder, 
-												 jpaQuery, 
-												 CategoryVars.PRIMARY_CATEGORY_FACET_NAME,
-												 "primaryCategory.categoryToken",
-												 categoryService));
-		
-		facetList.addAll( this.getDiscreteFacets(lcl,
-												 currency,
-												 productQueryBuilder, 
-												 jpaQuery, 
-												 CategoryVars.BRAND_FACET_NAME,
-												 "brandCode",
-												 brandService));
-		
+		facetServices.getFacets().stream().forEach(f -> {
+//			System.out.println(f.getFacetCategory());
+//			System.out.println(f.getFacetField());
+			facetList.addAll( this.getDiscreteFacets(
+					 lcl,
+					 currency,
+					 queryBuilder, 
+					 jpaQuery, 
+					 f.getFacetField(),
+					 f.getFacetField(),
+					 (IService) f));
+		});
+
 		
 		//get the list of tokens from the selected facets passed as parameter
 		List<String> sft = facetPayload.stream().map(f -> f.getValue()).collect(Collectors.toList());
@@ -350,138 +354,12 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		//re-process the facets
 		Set<SearchFacet> processedFacets = this.processFacets(lcl, 
 															   currency, 
-															   productQueryBuilder, 
+															   queryBuilder, 
 															   jpaQuery, 
 															   facetList, 
 															   selectedFacets
 												   );
 		
-		
-//		
-//		processedFacets.stream().forEach(f -> {
-//			System.out.println(f.getPayload().getClass().getSimpleName() + " - " + f.getValue() + " - " + f.getCount());
-//		});
-		
-		
-		//we need to combine the passed facets, then reprocess them
-		//jpaQuery.getFacetManager().getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
-		
-		
-//		
-		
-//		allFacets.addAll(this.getDiscreteFacets(productQueryBuilder, jpaQuery, CategoryVars.PRIMARY_CATEGORY_FACET_NAME,
-//				"secondaryCategory.categoryToken"));
-//		allFacets.addAll(
-//				this.getDiscreteFacets(productQueryBuilder, jpaQuery, CategoryVars.BRAND_FACET_NAME, "brandCode"));
-//		allFacets.addAll(this.getRangeFacets(productQueryBuilder, jpaQuery, currency));
-//		allFacets.addAll(
-//				this.getDiscreteFacets(productQueryBuilder, jpaQuery, CategoryVars.TAG_FACET_NAME, "tagAFacet"));
-//		allFacets.addAll(
-//				this.getDiscreteFacets(productQueryBuilder, jpaQuery, CategoryVars.TAG_FACET_NAME, "tagBFacet"));
-//		allFacets.addAll(
-//				this.getDiscreteFacets(productQueryBuilder, jpaQuery, CategoryVars.TAG_FACET_NAME, "tagCFacet"));
-//
-//		allFacets.addAll(allFacets.stream()
-//				.filter(f -> f.getFacetingName().equals(CategoryVars.PRIMARY_CATEGORY_FACET_NAME)).map(f -> {
-//					return getParentCategoryFacets(new HashSet<Facet>(), f, productQueryBuilder, jpaQuery, lcl,
-//							currency);
-//				}).collect(Collectors.toSet()).stream().flatMap(Set::stream).collect(Collectors.toSet()));
-//		
-//		List<String> allTokens = new ArrayList<String>();
-//		allTokens.addAll(categoryTokens);
-//		allTokens.addAll(brandTokens);
-//		allTokens.addAll(tagTokens);
-//		allTokens.addAll(priceTokens);
-
-		// filter to get the facets that are selected
-//		lf = allTokens.stream().flatMap(x -> {
-//			return allFacets.stream().filter(y -> x.equals(y.getValue()));
-//		}).collect(Collectors.toList());
-//
-//		
-//		cs = new HashSet<NavFacet<Category>>();
-//		lf.stream().forEach(f -> {
-//			jpaQuery.getFacetManager().getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
-//			processFacets(allFacets, productQueryBuilder, jpaQuery, currency, f.getFacetingName());
-//			if (f.getFacetingName().equals(CategoryVars.PRIMARY_CATEGORY_FACET_NAME)) {
-//				allFacets.addAll(
-//						getParentCategoryFacets(new HashSet<Facet>(), f, productQueryBuilder, jpaQuery, lcl, currency));
-//			}
-//		});
-//		
-//	
-//		lf = allTokens.stream().flatMap(x -> {
-//			return allFacets.stream().filter(y -> x.equals(y.getValue()));
-//		}).collect(Collectors.toList());
-//
-//		lf.stream().forEach(f -> {
-//			jpaQuery.getFacetManager().getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
-//		});
-//
-//		allFacets.stream().filter(f -> f.getFacetingName().equals(CategoryVars.PRIMARY_CATEGORY_FACET_NAME))
-//				.collect(Collectors.toList()).stream().forEach(cf -> {
-//					
-//					String categoryCode = (new LinkedList<String>(Arrays.asList(cf.getValue().split("/")))).getLast();
-//					Optional<Category> category = categoryService.findByCode(lcl, currency, categoryCode);
-////					System.out.println(category.getCategoryDesc());
-////					System.out.println(category.getCategoryType());
-////					System.out.println(category.getClass().getSimpleName());
-//					NavFacet<Category> categoryFacet = facetService.convertCatToNavFacet(category.get());
-//					categoryFacet.setFacetProductCount(new Long(cf.getCount()));
-//					categoryFacet.setToken(cf.getValue());
-//					categoryFacet.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
-//					cs.add(categoryFacet);
-//				});
-
-//	
-//		
-//		bs = new HashSet<NavFacet<Brand>>();
-//		allFacets.stream().filter(f -> f.getFacetingName().equals(CategoryVars.BRAND_FACET_NAME))
-//				.collect(Collectors.toList()).forEach(bf -> {
-//					Brand brand = brandService.findByCode(lcl, currency, bf.getValue()).get();
-//					NavFacet<Brand> brandFacet = facetService.convertBrandToNavFacet(brand);
-//					brandFacet.setFacetProductCount(new Long(bf.getCount()));
-//					brandFacet.setToken(bf.getValue());
-//					brandFacet.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
-//					bs.add(brandFacet);
-//				});
-//
-//		// for each of the baseline facets, convert them to Facet DTOs for the client
-//		// and add them to "s"
-//		final List<NavFacet<Object>> ps = new ArrayList<NavFacet<Object>>();
-//		allFacets.stream().filter(f -> f.getFacetingName().equals(CategoryVars.PRICE_FACET_NAME))
-//				.collect(Collectors.toList()).forEach(pf -> {
-//					NavFacet<Object> priceFacet = new NavFacet<Object>();
-//					priceFacet.setFacetClassName("Product.productMarkdown");
-//					priceFacet.setFacetId(facetService.calcFacetId(priceFacet.getFacetClassName(), pf.getValue()));
-//					priceFacet.setFacetDisplayValue(pf.getValue());
-//					priceFacet.setFacetProductCount(new Long(pf.getCount()));
-//					priceFacet.setToken(pf.getValue());
-//					priceFacet.setFacetType(ProductVars.FACET_TYPE_RANGE);
-//					ps.add(priceFacet);
-//				});
-//
-//		final List<NavFacet<Tag>> ts = new ArrayList<NavFacet<Tag>>();
-//		allFacets.stream().filter(f -> f.getFacetingName().equals(CategoryVars.TAG_FACET_NAME))
-//				.collect(Collectors.toList()).forEach(tf -> {
-//					if(tf.getValue().equals("Empty"))  return; 
-//					Tag tag = tagService.findByDesc(lcl, currency, tf.getValue()).get();
-//					NavFacet<Tag> tagFacet = facetService.convertTagToNavFacet(tag);
-//					tagFacet.setFacetProductCount(new Long(tf.getCount()));
-//					tagFacet.setToken(tf.getValue());
-//					tagFacet.setFacetType(ProductVars.FACET_TYPE_DISCRETE);
-//					ts.add(tagFacet);
-//				});
-//
-//		List<NavFacet<?>> returnFacets = new ArrayList<NavFacet<?>>();
-//		returnFacets.addAll(cs);
-//		returnFacets.addAll(bs);
-//		returnFacets.addAll(ts);
-//		returnFacets.addAll(ps);
-//		
-//		returnFacets.stream().forEach(f -> {
-//			System.out.println(f.getFacetDisplayValue() + " " + f.getFacetClassName());
-//		});
 
 		// set pageable definition for jpaQuery
 		Pageable pageable = PageRequest.of(page, size);
@@ -532,90 +410,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		search.setFacets(nfc);
 		return search;
 	}
-
-//	private Set<Facet> getParentCategoryFacets(Set<Facet> cfs, Facet sf, QueryBuilder qb,
-//			org.hibernate.search.jpa.FullTextQuery q, String locale, String currency) {
-//		if (sf == null) {
-//			return cfs;
-//		}
-//
-//		String categoryCode = (new LinkedList<String>(Arrays.asList(sf.getValue().split("/")))).getLast();
-//
-//		Optional<Category> c = categoryService.findByCode(locale, currency, categoryCode);
-//		if (!c.isPresent()) {
-//			return cfs;
-//		}
-//		if (c.get().getParentCode() == null) {
-//			return cfs;
-//		}
-//		
-//		Optional<Category> oParent = categoryService.findByCode(locale, currency, c.get().getParentCode());
-//		
-//		if (!oParent.isPresent()) {
-//			return cfs;
-//		}
-//		
-//		Category parent = oParent.get();
-//
-//		// if we hit the root node, there are no parents
-//		if (parent.getCategoryCode().equals(CategoryVars.PRIMARY_HIERARCHY_ROOT_CODE)) {
-//			return cfs;
-//		}
-//		
-//		Long parentLevel = parent.getCategoryLevel();
-//		
-//		String frName = sf.getFacetingName();
-//		String frField = sf.getFieldName().split("\\.")[0]
-//				+ StringUtils.repeat(".parent", c.get().getCategoryLevel().intValue() - parentLevel.intValue())
-//				+ ".categoryToken";
-//
-//		Optional<Facet> oParentFacet = this.getDiscreteFacets(qb, q, frName, frField).stream()
-//				.filter(f -> f.getValue().equals(sf.getValue().replace("/" + categoryCode, ""))).findFirst();
-//		
-//		if (!oParentFacet.isPresent()) {
-//			return cfs;	
-//		} 
-//		
-//		Facet parentFacet = oParentFacet.get();
-//		
-//		cfs.add(parentFacet);
-//		
-//		return this.getParentCategoryFacets(cfs, parentFacet, qb, q, locale, currency);
-//	}
-
-//	@SuppressWarnings("unchecked")
-//	private List<Facet> getRangeFacets(QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery jpaQuery,
-//			String currency) {
-//
-//		org.apache.lucene.search.Sort sort = getSortField("priceDesc", currency);
-//		jpaQuery.setSort(sort);
-//
-//		List<io.nzbee.entity.product.attribute.ProductAttribute> results = jpaQuery.getResultList();
-//
-//		if (results.isEmpty()) {
-//			return new ArrayList<Facet>();
-//		}
-//
-//		Double maxPrice = results.stream().findFirst().get().getProduct().getCurrentMarkdownPriceHKD();
-//		Double minPrice = Lists.reverse(results).stream().findFirst().get().getProduct().getCurrentMarkdownPriceHKD();
-//		Double inc = (maxPrice > 0) ? (maxPrice - ((minPrice.equals(maxPrice)) ? 0 : minPrice)) / 4 : maxPrice;
-//
-//		inc = new BigDecimal(inc).setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
-//
-//		Double below = inc,
-//				froma = (new BigDecimal(inc + new Double(0.01)).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()),
-//				toa = (new BigDecimal(inc * 2).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()),
-//				fromb = (new BigDecimal(toa + new Double(0.01)).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()),
-//				tob = (new BigDecimal(inc * 4).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()), above = tob;
-//
-//		FacetingRequest facetRequest = qb.facet().name(CategoryVars.PRICE_FACET_NAME)
-//				.onField("product.currentMarkdownPrice" + currency + "Facet") // In product class
-//				.range().below(below).from(froma).to(toa).from(fromb).to(tob).above(above)
-//				.orderedBy(FacetSortOrder.RANGE_DEFINITION_ORDER).createFacetingRequest();
-//
-//		jpaQuery.getFacetManager().enableFaceting(facetRequest);
-//		return jpaQuery.getFacetManager().getFacets(CategoryVars.PRICE_FACET_NAME);
-//	}
 
 
 	private org.apache.lucene.search.Sort getSortField(String field, String currency) {
