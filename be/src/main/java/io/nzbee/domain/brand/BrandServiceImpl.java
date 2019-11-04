@@ -92,7 +92,7 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	@Override
 	public String getFacetField() {
 		// TODO Auto-generated method stub
-		return null;
+		return "brandCode";
 	}
 
 	@Override
