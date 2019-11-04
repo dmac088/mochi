@@ -1,9 +1,7 @@
 package io.nzbee.ui.component.web.facet.search;
 
 import org.apache.lucene.search.Query;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.nzbee.domain.IDomainObject;
-import io.nzbee.domain.IService;
 import io.nzbee.ui.component.web.facet.IFacet;
 
 public class SearchFacet  implements org.hibernate.search.query.facet.Facet, IFacet {
