@@ -1,10 +1,6 @@
 package io.nzbee.ui.component.web.facet.navigation;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import io.nzbee.SpringContext;
 import io.nzbee.domain.IDomainObject;
-import io.nzbee.domain.IService;
 import io.nzbee.ui.component.web.facet.IFacet;
 
 public class EntityFacet implements IFacet {

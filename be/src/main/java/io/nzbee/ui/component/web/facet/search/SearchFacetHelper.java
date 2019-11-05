@@ -28,6 +28,7 @@ public class SearchFacetHelper {
 		this.fieldName = fieldName;
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public IService getBean(ApplicationContext appContext) {
 		
 		return this.facetingName.equals("CategoryFR" )
