@@ -27,15 +27,12 @@ public class CategoryResource extends ResourceSupport {
 	public CategoryResource(String locale, String currency, final Category category) {
 		
        this.category = category;
-       //final String id = category.getCode();
-       // add(linkTo(CategoryController.class).withRel("self"));
+       
        add(linkTo(methodOn(CategoryController.class).get(locale,
         											      currency,
         											      category.getCode())).withSelfRel());
-//        
-//       add(linkTo(methodOn(CategoryController.class).get(locale,
-//			      currency,
-//			      category.getCode())).withSelfRel());
+
+       
         
        if(category instanceof BrandCategory) {
     	   add(linkTo(methodOn(BrandController.class).getBrands(locale, 
@@ -46,14 +43,11 @@ public class CategoryResource extends ResourceSupport {
     	   add(linkTo(methodOn(ProductController.class).getProducts(locale, 
     			   													currency, 
     			   													category.getCode(),
-    			   													//hardcoded values for page and size
     			   													0,
     			   													10,
     			   													parAssembler)).withRel("products"));
        }
        
-       // add(ControllerLinkBuilder.linkTo(methodOn(GymMembershipController.class).all(id)).withRel("memberships"));
-       // add(ControllerLinkBuilder.linkTo(methodOn(PersonController.class).get(id)).withSelfRel());
     }
 
 	public Category getCategory() {
