@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.context.ApplicationContext;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -58,7 +59,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 	private EntityManager em;
 
 	@Override
-	public Search findAll(		String locale, 
+	public Page<Product> findAll(		String locale, 
 								String currency, 
 								String categoryDesc, 
 								String searchTerm, 
@@ -256,7 +257,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	// @Cacheable
-	public Search findAll(String lcl, 
+	public Page<Product> findAll(String lcl, 
 						  String currency, 
 						  String categoryDesc, 
 						  String searchTerm, 
@@ -385,13 +386,10 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		}).collect(Collectors.toList());
 
 		Search search = new Search();
-		search.setProducts(new PageImpl<Product>(lp.stream().map(p->productService.dtoToDO(p))
-				.collect(Collectors.toList()), pageable, jpaQuery.getResultSize()));
 		
-		FacetContainer nfc = new FacetContainer();
-		nfc.setFacets(processedFacets.stream().collect(Collectors.toList()));
-		search.setFacets(nfc);
-		return search;
+		return new PageImpl<Product>(lp.stream().map(p->productService.dtoToDO(p))
+				.collect(Collectors.toList()), pageable, jpaQuery.getResultSize());
+		
 	}
 
 

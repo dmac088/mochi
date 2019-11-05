@@ -15,7 +15,7 @@ public interface ISearchService {
 	Page<Product> findAll(String locale, String currency, String categoryDesc, String searchTerm, int page, int size,
 			String sortBy, FacetContainer selectedFacets);
 
-	Search findAll(String lcl, String currency, String categoryDesc, String searchTerm, int page, int size,
+	Page<Product> findAll(String lcl, String currency, String categoryDesc, String searchTerm, int page, int size,
 			String sortBy, List<IFacet> facetPayload);
 
 
