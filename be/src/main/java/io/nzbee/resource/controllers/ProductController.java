@@ -28,14 +28,15 @@ public class ProductController {
     @Autowired
     private IProductService productService;
     
-    @GetMapping(value = "/Product/{locale}/{currency}/category/{categoryCode}", 
+    @SuppressWarnings("unchecked")
+	@GetMapping(value = "/Product/{locale}/{currency}/category/{categoryCode}", 
     			params = { "page", "size" })
     public ResponseEntity<PagedResources<ProductResource>> getProducts(@PathVariable String locale, 
 															    	   @PathVariable String currency, 
 															    	   @PathVariable String categoryCode,
 															    	   @RequestParam("page") int page,
 															    	   @RequestParam("size") int size,
-															    	   PagedResourcesAssembler assembler) {
+															    	   @SuppressWarnings("rawtypes") PagedResourcesAssembler assembler) {
     	final Page<Product> pages =
     					productService.findAll(	
     									locale, 
