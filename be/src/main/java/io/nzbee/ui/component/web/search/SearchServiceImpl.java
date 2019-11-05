@@ -384,7 +384,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			return p;
 		}).collect(Collectors.toList());
 
-		Search search = new Search(); 
+		Search search = new Search();
 		search.setProducts(new PageImpl<Product>(lp.stream().map(p->productService.dtoToDO(p))
 				.collect(Collectors.toList()), pageable, jpaQuery.getResultSize()));
 		

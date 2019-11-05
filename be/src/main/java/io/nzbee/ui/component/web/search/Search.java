@@ -1,21 +1,20 @@
 package io.nzbee.ui.component.web.search;
 
-import org.springframework.data.domain.Page;
-
-import io.nzbee.domain.product.Product;
+import org.springframework.hateoas.PagedResources;
+import io.nzbee.resources.product.ProductResource;
 import io.nzbee.ui.component.web.facet.FacetContainer;
 
 public class Search {
 	
-	Page<Product> products;
+	PagedResources<ProductResource> products;
 	
 	FacetContainer navFacets;
 
-	public Page<Product> getProducts() {
+	public PagedResources<ProductResource> getProducts() {
 		return products;
 	}
 
-	public void setProducts(Page<Product> products) {
+	public void setProducts(PagedResources<ProductResource> products) {
 		this.products = products;
 	}
 	
