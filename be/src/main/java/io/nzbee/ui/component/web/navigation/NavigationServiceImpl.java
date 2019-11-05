@@ -12,7 +12,6 @@ import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.product.Product;
 import io.nzbee.ui.component.web.facet.FacetContainer;
 import io.nzbee.ui.component.web.generic.UIService;
-import io.nzbee.ui.component.web.search.Search;
 
 @Service(value = "NavigationService")
 @Transactional
@@ -27,7 +26,7 @@ public class NavigationServiceImpl extends UIService implements INavigationServi
 
 	//returns a user interface object, rule broken, need to change to return a domain object 
 	@Override
-	public Search findAll(	 String locale, 
+	public Page<Product> findAll(	 String locale, 
 							 String currency, 
 							 Double price,
 							 int page, 
@@ -44,18 +43,14 @@ public class NavigationServiceImpl extends UIService implements INavigationServi
 												  selectedFacets.getFacets(),
 												  sortBy);
 		
-		//add the page of objects to a new Search object and return it 
-		Search search = new Search();
-		Page<Product> products = new PageImpl<Product>(pp.stream().map(p->productService.dtoToDO(p)).collect(Collectors.toList()), 
-													   pp.getPageable(), pp.getTotalElements());
 		
-		search.setProducts(products);
-		search.setFacets(selectedFacets);
-		return search;
+		return new PageImpl<Product>(pp.stream().map(p->productService.dtoToDO(p)).collect(Collectors.toList()), 
+													   pp.getPageable(), pp.getTotalElements());
+
 	}
 	
 	@Override
-	public Search findAll(	 String locale, 
+	public Page<Product> findAll(	 String locale, 
 							 String currency, 
 							 String categoryDesc,
 							 int page, 
@@ -65,18 +60,14 @@ public class NavigationServiceImpl extends UIService implements INavigationServi
 						 ) {
 
 		
-		Page<Product> pp = productService.findAll(locale, 
+		return productService.findAll(locale, 
 												  currency, 
 												  PageRequest.of(page, size),
 												  categoryDesc, 
 												  selectedFacets.getFacets(),
 												  sortBy);
 		
-		//add the page of objects to a new Search object and return it 
-		Search search = new Search();
-		search.setProducts(pp);
-		//search.setFacets(selectedFacets);
-		return search;
+		
 	}
     
 }

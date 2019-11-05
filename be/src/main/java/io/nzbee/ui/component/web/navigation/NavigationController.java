@@ -1,14 +1,14 @@
 package io.nzbee.ui.component.web.navigation;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import io.nzbee.domain.product.Product;
 import io.nzbee.ui.component.web.facet.FacetContainer;
-import io.nzbee.ui.component.web.search.Search;
 
 @RestController
 @RequestMapping("/api")
@@ -18,7 +18,7 @@ public class NavigationController {
 	private INavigationService navigationService;
 	
 	@PostMapping("/Product/{locale}/{currency}/category/{category}/maxPrice/{price}/page/{page}/size/{size}/sortBy/{sortBy}")
-	public Search getProducts(	@PathVariable String locale, 
+	public Page<Product> getProducts(	@PathVariable String locale, 
 								@PathVariable String currency, 
 								@PathVariable String category,
 								@PathVariable Double price, 
@@ -30,7 +30,7 @@ public class NavigationController {
 	}
 
 	@PostMapping("/Product/{locale}/{currency}/category/{category}/page/{page}/size/{size}/sortBy/{sortBy}")
-	public Search getProducts(	@PathVariable String 	locale, 
+	public Page<Product>  getProducts(	@PathVariable String 	locale, 
 								@PathVariable String 	currency, 
 								@PathVariable String 	category,
 								@PathVariable int 		page, 
