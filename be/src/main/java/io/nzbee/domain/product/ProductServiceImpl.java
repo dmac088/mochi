@@ -94,7 +94,7 @@ public class ProductServiceImpl implements IProductService {
 									  pageable, 
 									  categoryDesc, 
 									  facets.stream()
-									  .map(f -> (IDto) productDtoService.doToDto(f.getPayload())).collect(Collectors.toList()), 
+									  .map(f -> (IDto) productDtoService.doToDto((Product)f.getPayload())).collect(Collectors.toList()), 
 									  sortBy);
 				
 		    return new PageImpl<Product>(
@@ -119,7 +119,7 @@ public class ProductServiceImpl implements IProductService {
 										 pageable, 
 										 categoryDesc, 
 										 facets.stream()
-										 .map(f -> (IDto) productDtoService.doToDto(f.getPayload())).collect(Collectors.toList()), 
+										 .map(f -> (IDto) productDtoService.doToDto((Product)f.getPayload())).collect(Collectors.toList()), 
 										 sortBy);
 		
      	return new PageImpl<Product>(pp.stream().map(p -> this.dtoToDO(p)).collect(Collectors.toList()),

@@ -25,33 +25,33 @@ import io.nzbee.domain.product.IProductService;
 public class TagServiceImpl implements ITagService/*, IFacetService*/ {
 
 	@Autowired
-	ICategoryService categoryService;
+	io.nzbee.dto.category.ICategoryService categoryService;
 	
 	@Autowired
-	ITagService productTagService;
+	io.nzbee.dto.tag.ITagService productTagService;
 	
 	@Autowired
-	IProductService productService;
+	io.nzbee.dto.product.IProductService productService;
 	
 
 	@Override
 	public Optional<Tag> findById(String locale, String currency, Long Id) {
 		// TODO Auto-generated method stub
-		Tag pt = productTagService.findById(locale, currency, Id).get();
+		io.nzbee.dto.tag.Tag pt = productTagService.findById(locale, currency, Id).get();
 		return Optional.ofNullable(this.dtoToDO(pt));
 	}
 
 	@Override
 	public Optional<Tag> findByCode(String locale, String currency, String code) {
-		// TODO Auto-generated method stub
-		Tag pt = productTagService.findByCode(locale, currency, code).get();
+		// TODO Auto-generated method stub	
+		io.nzbee.dto.tag.Tag  pt = productTagService.findByCode(locale, currency, code).get();
 		return Optional.ofNullable(this.dtoToDO(pt));
 	}
 
 	@Override
 	public Optional<Tag> findByDesc(String locale, String currency, String desc) {
 		// TODO Auto-generated method stub
-		Tag pt = productTagService.findByDesc(locale, currency, desc).get();
+		io.nzbee.dto.tag.Tag  pt = productTagService.findByDesc(locale, currency, desc).get();
 		return Optional.ofNullable(this.dtoToDO(pt));
 	}
 
@@ -73,23 +73,22 @@ public class TagServiceImpl implements ITagService/*, IFacetService*/ {
 		return null;
 	}
 	
+
 	@Override
-	public Tag dtoToDO(Object dto) {
+	public String tokenToCode(String token) {
 		// TODO Auto-generated method stub
-		io.nzbee.dto.tag.Tag tagDTO = (io.nzbee.dto.tag.Tag) dto;
-				
+		return token;
+	}
+
+	@Override
+	public Tag dtoToDO(io.nzbee.dto.tag.Tag tagDTO) {
+		// TODO Auto-generated method stub
 		Tag t = new Tag();
 		t.setTagId(tagDTO.getTagId());
 		t.setTagCode(tagDTO.getTagCode());
 		t.setLocale(tagDTO.getLocale());
 		t.setTagDesc(tagDTO.getTagDesc());
 		return t;
-	}
-
-	@Override
-	public String tokenToCode(String token) {
-		// TODO Auto-generated method stub
-		return token;
 	}
 
 //	@Override
