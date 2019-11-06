@@ -2,6 +2,8 @@ package io.nzbee.domain.tag;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -54,19 +56,19 @@ public class TagServiceImpl implements ITagService/*, IFacetService*/ {
 	}
 
 	@Override
-	public List<Tag> findAll(String locale, String currency) {
+	public Set<Tag> findAll(String locale, String currency) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	
 	@Override
-	public List<Tag> findAll(String locale, String currency, List<String> codes) {
+	public Set<Tag> findAll(String locale, String currency, List<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Tag> findAll(String locale, String currency, String categoryDesc, List<IDomainObject> lDo) {
+	public Set<Tag> findAll(String locale, String currency, String categoryDesc, List<IDomainObject> lDo) {
 		// TODO Auto-generated method stub
 		return null;
 	}

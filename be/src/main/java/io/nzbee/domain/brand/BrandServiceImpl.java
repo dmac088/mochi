@@ -2,6 +2,7 @@ package io.nzbee.domain.brand;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,32 +43,32 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
     @Override
 	@Transactional
 	@Cacheable
-	public List<Brand> findAll(String locale, String currency) {
+	public Set<Brand> findAll(String locale, String currency) {
     	List<io.nzbee.dto.brand.Brand> lpb = brandService.findAll(locale, currency);
-    	List<Brand> lb = lpb.stream().map(pb -> dtoToDO(pb))
-		.collect(Collectors.toList());
+    	Set<Brand> lb = lpb.stream().map(pb -> dtoToDO(pb))
+    			.collect(Collectors.toSet());
     	return lb;
 	}	
     
     @Override
-	public List<Brand> findAll(String locale, String currency, String category) {
+	public Set<Brand> findAll(String locale, String currency, String category) {
     	List<io.nzbee.dto.brand.Brand> lpb = brandService.findAll(locale, currency, category);
-    	List<Brand> lb = lpb.stream().map(pb -> dtoToDO(pb))
-    			.collect(Collectors.toList());
+    	Set<Brand> lb = lpb.stream().map(pb -> dtoToDO(pb))
+    			.collect(Collectors.toSet());
 		return lb;
 	}
 	
 	@Override
-	public List<Brand> findAll(String locale, String currency, List<String> codes) {
+	public Set<Brand> findAll(String locale, String currency, List<String> codes) {
 		// TODO Auto-generated method stub
 		List<io.nzbee.dto.brand.Brand> lpb = brandService.findAll(locale, currency, codes);
-    	List<Brand> lb = lpb.stream().map(pb -> dtoToDO(pb))
-		.collect(Collectors.toList());
+    	Set<Brand> lb = lpb.stream().map(pb -> dtoToDO(pb))
+		.collect(Collectors.toSet());
     	return lb;
 	}
 	
 	@Override
-	public List<Brand> findAll(String locale, String currency, String categoryDesc, List<IDomainObject> lDo) {
+	public Set<Brand> findAll(String locale, String currency, String categoryDesc, List<IDomainObject> lDo) {
 		// TODO Auto-generated method stub
 		return null;//brandService.finall;
 	}

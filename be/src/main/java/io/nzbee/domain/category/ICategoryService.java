@@ -1,17 +1,17 @@
 package io.nzbee.domain.category;
 
 
-import java.util.List;
+import java.util.Set;
 import io.nzbee.domain.IService;
 
 
 public interface ICategoryService extends IService<Category> {
 
-	List<Category> findAll(String locale, String currency);
+	Set<Category> findAll(String locale, String currency);
 
-	List<Category> findByParent(String locale, String currency, String parentCategoryCode);
+	Set<Category> findByParent(String locale, String currency, String parentCategoryCode);
 
-	List<Category> findAllForLevel(String locale, String currency, Long level);
+	Set<Category> findAllForLevel(String locale, String currency, Long level);
 
 	
 }

@@ -1,6 +1,7 @@
 package io.nzbee.resource.controllers;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,7 @@ public class BrandController {
     }
     
     @GetMapping("/Brand/{locale}/{currency}")
-    public List<Brand> getBrands(@PathVariable String locale, @PathVariable String currency) {
+    public Set<Brand> getBrands(@PathVariable String locale, @PathVariable String currency) {
     	return brandService.findAll(locale, currency);
     }
 

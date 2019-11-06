@@ -2,6 +2,7 @@ package io.nzbee.domain.category;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,10 +33,10 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
     @Override
 	@Transactional
 	//@Cacheable
-	public List<Category> findAll(String locale, String currency) {
+	public Set<Category> findAll(String locale, String currency) {
     	return  categoryService.findAll(locale, currency)
     			.stream().map(c -> dtoToDO(c))
-    			.collect(Collectors.toList());
+    			.collect(Collectors.toSet());
 	}
 
 	@Override
@@ -59,32 +60,32 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
     @Override
  	@Transactional
  	//@Cacheable
- 	public List<Category> findByParent(String locale, String currency, String parentCategoryCode) {
+ 	public Set<Category> findByParent(String locale, String currency, String parentCategoryCode) {
     	return categoryService.findByParent(parentCategoryCode, currency, locale)
 							  .stream().map(c -> dtoToDO(c))
-							  .collect(Collectors.toList());
+							  .collect(Collectors.toSet());
  	}
     
     @Override
   	@Transactional
   	//@Cacheable
-  	public List<Category> findAllForLevel(String locale, String currency, Long level) {
+  	public Set<Category> findAllForLevel(String locale, String currency, Long level) {
      	return categoryService.findAllForLevel(locale, currency, level)
      						  .stream().map(c -> dtoToDO(c))
-     						  .collect(Collectors.toList());
+     						  .collect(Collectors.toSet());
   	}	
     
 
     @Override
-	public List<Category> findAll(String locale, String currency, List<String> codes) {
+	public Set<Category> findAll(String locale, String currency, List<String> codes) {
 		// TODO Auto-generated method stub
 		return categoryService.findAll(locale, currency, codes)
 							  .stream().map(c -> dtoToDO(c))
-							  .collect(Collectors.toList());
+							  .collect(Collectors.toSet());
 	}
  
 	@Override
-	public List<Category> findAll(String locale, String currency, String categoryDesc,
+	public Set<Category> findAll(String locale, String currency, String categoryDesc,
 			List<IDomainObject> lDo) {
 		// TODO Auto-generated method stub
 		return null;
