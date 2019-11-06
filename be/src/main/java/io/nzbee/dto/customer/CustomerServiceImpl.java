@@ -176,4 +176,39 @@ public class CustomerServiceImpl implements ICustomerService {
 	}
 
 
+	@Override
+	public Optional<Customer> findById(long brandId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Optional<Customer> findByDesc(String desc) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public List<Customer> findAll(List<IDto> dtos) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Customer entityToDTO(io.nzbee.entity.role.customer.Customer entity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Customer doToDto(io.nzbee.domain.customer.Customer domainObject) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 }
