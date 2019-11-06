@@ -172,7 +172,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		
 		//query the domain objects from the DB
 		@SuppressWarnings("unchecked")
-		List<IDomainObject> lc = service.findAll(locale, currency, new ArrayList<String>(uniqueCodes));
+		Set<IDomainObject> lc = service.findAll(locale, currency, new ArrayList<String>(uniqueCodes));
 
 		//create a new array of entity facets
 		List<SearchFacet> lef = new ArrayList<SearchFacet>(uniqueCodes.size());
