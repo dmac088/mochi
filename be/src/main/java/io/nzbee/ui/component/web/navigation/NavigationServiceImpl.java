@@ -22,8 +22,6 @@ public class NavigationServiceImpl extends UIService implements INavigationServi
 
 	@Autowired
 	IProductService productService;
-	
-	@Autowired
 
 	//returns a user interface object, rule broken, need to change to return a domain object 
 	@Override
