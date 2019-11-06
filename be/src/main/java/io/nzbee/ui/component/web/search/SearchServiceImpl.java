@@ -68,10 +68,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 								String sortBy, 
 								FacetContainer selectedFacets) {
 		
-		//IFacet to org.hibernate.search.query.facet.Facet
-		//payload to?
-		
-		
+		final Set<io.nzbee.ui.component.web.facet.IFacet> returnFacets = new HashSet<io.nzbee.ui.component.web.facet.IFacet>();
 		// call the domain layer service to get a Page of Products
 		return this.findAll(
 							locale, 
@@ -81,7 +78,8 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 							page, 
 							size, 
 							sortBy, 
-							selectedFacets.getFacets());
+							selectedFacets.getFacets(),
+							returnFacets);
 		
 	}
 
@@ -92,8 +90,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 											QueryBuilder qb,
 											org.hibernate.search.jpa.FullTextQuery jpaQuery, 
 											Set<SearchFacet> facetList, 
-											Set<SearchFacet> selectedFacetList 
-											) {
+											Set<SearchFacet> selectedFacetList) {
 		
 		
 		Set<String> facetingNames = selectedFacetList.stream()
@@ -111,9 +108,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 											return sp;
 										})
 										.collect(Collectors.toSet());
-		
-		
-		
 		
 		//all we need to do is get the distinct getFacetingName, and getFieldName from facetList
 		//where the FacetingName is not in selectedFacetList
@@ -213,46 +207,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 				fieldRefs.add(newFieldReference);
 		}
 	}
-
-	/*
-	{
-{
-	"facets": [],
-	"brands": [
-		{
-       "@class": "io.nzbee.ui.component.web.facet.search.SearchFacet",
-                "value": "/PRM01/FRT01/POM01",
-                "id": "POM01",
-                "type": "SearchFacet",
-                "payload": {
-                    "@class": "io.nzbee.domain.category.ProductCategory",
-                    "categoryType": "product",
-                    "parentCode": "FRT01",
-                    "layoutCodes": [],
-                    "level": 2,
-                    "desc": "Pomes",
-                    "code": "POM01",
-                    "hierarchical": true,
-                    "count": 3,
-                    "childCount": 0
-                },
-                "count": 3,
-                "fieldName": "primaryCategory.categoryToken",
-                "payloadType": "ProductCategory",
-                "facetingName": "CategoryFR",
-                "hierarchical": true,
-                "displayValue": "Pomes (3)",
-                "facetQuery": {
-                    "boost": 1,
-                    "term": {}
-                }
-            }
-       
-       
-        ]
-
-}
-	 */
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
@@ -264,7 +218,8 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 						  int page, 
 						  int size,
 						  String sortBy, 
-						  List<io.nzbee.ui.component.web.facet.IFacet> facetPayload) {
+						  Set<io.nzbee.ui.component.web.facet.IFacet> facetPayload,
+						  Set<io.nzbee.ui.component.web.facet.IFacet> returnFacets) {
 		
 		FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
 
@@ -304,19 +259,16 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 
 		final Set<SearchFacet> facetList = new HashSet<SearchFacet>();
 
-		
-		
 		// initialize the facets
 		//these should not have hardcoded services, they should be coded to an interface
 		facetServices.getFacets().stream().forEach(f -> {
-			facetList.addAll( this.getDiscreteFacets(
-					 lcl,
-					 currency,
-					 queryBuilder, 
-					 jpaQuery, 
-					 f.getFacetField(),
-					 f.getFacetField(),
-					 (IService) f));
+			facetList.addAll( this.getDiscreteFacets(lcl,
+													 currency,
+													 queryBuilder, 
+													 jpaQuery, 
+													 f.getFacetField(),
+													 f.getFacetField(),
+													 (IService) f));
 		});
 
 		
@@ -336,15 +288,13 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		});
 		
 		//re-process the facets
-		Set<SearchFacet> processedFacets =
-						this.processFacets(	lcl, 
-							currency, 
-							queryBuilder, 
-							jpaQuery, 
-							facetList, 
-							selectedFacets);
+		returnFacets.addAll(this.processFacets(	lcl, 
+												currency, 
+												queryBuilder, 
+												jpaQuery, 
+												facetList, 
+												selectedFacets));
 		
-
 		// set pageable definition for jpaQuery
 		Pageable pageable = PageRequest.of(page, size);
 		PageableUtil pageableUtil = new PageableUtil();

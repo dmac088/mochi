@@ -1,14 +1,15 @@
 package io.nzbee.ui.component.web.search;
 
+import java.util.Set;
 import org.springframework.hateoas.PagedResources;
 import io.nzbee.resources.product.ProductResource;
-import io.nzbee.ui.component.web.facet.FacetContainer;
+import io.nzbee.ui.component.web.facet.IFacet;
 
 public class Search {
 	
 	PagedResources<ProductResource> products;
 	
-	FacetContainer navFacets;
+	Set<IFacet> facets;
 
 	public PagedResources<ProductResource> getProducts() {
 		return products;
@@ -18,11 +19,11 @@ public class Search {
 		this.products = products;
 	}
 	
-	public FacetContainer getFacets() {
-		return navFacets;
+	public Set<IFacet> getFacets() {
+		return facets;
 	}
 
-	public void setFacets(FacetContainer navFacets) {
-		this.navFacets = navFacets;
+	public void setFacets(Set<IFacet> navFacets) {
+		this.facets = navFacets;
 	}
 }
