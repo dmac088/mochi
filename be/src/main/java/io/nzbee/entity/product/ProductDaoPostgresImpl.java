@@ -24,9 +24,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import io.nzbee.entity.brand.Brand;
-import io.nzbee.entity.brand.Brand_;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
-import io.nzbee.entity.brand.attribute.BrandAttribute_;
 import io.nzbee.entity.product.Product_;
 import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.attribute.ProductAttribute_;
@@ -75,15 +73,17 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		Join<Product, ProductAttribute> productAttribute = root.join(Product_.attributes);
 		Join<Product, ProductStatus> status = root.join(Product_.productStatus);
 
-		List<Predicate> conditions = new ArrayList<Predicate>();	
-		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale));
-		conditions.add(cb.equal(root.get(Product_.productUPC), code));
-		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
-		
 		cq.multiselect(	root.get(Product_.productId).alias("productId"),
 				root.get(Product_.productUPC).alias("productCode"),
 				productAttribute.get(ProductAttribute_.Id).alias("productAttributeId"),
 				productAttribute.get(ProductAttribute_.productDesc).alias("productDesc"));
+		
+		cq.where(cb.and(
+				cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale),
+				cb.equal(root.get(Product_.productUPC), code),
+				cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE)
+				)
+		);
 		
 		TypedQuery<Tuple> query = em.createQuery(cq);
 		
@@ -115,16 +115,17 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		Join<Product, ProductAttribute> productAttribute = root.join(Product_.attributes);
 		Join<Product, ProductStatus> status = root.join(Product_.productStatus);
 		
-		List<Predicate> conditions = new ArrayList<Predicate>();
-		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale));
-		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
-		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.productDesc), desc));
-		
 		cq.multiselect(	root.get(Product_.productId).alias("productId"),
 				root.get(Product_.productUPC).alias("productCode"),
 				productAttribute.get(ProductAttribute_.Id).alias("productAttributeId"),
 				productAttribute.get(ProductAttribute_.productDesc).alias("productDesc"));
 		
+		cq.where(cb.and(
+				cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale),
+				cb.equal(productAttribute.get(ProductAttribute_.productDesc),
+				cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE)
+				)
+		));
 		
 		TypedQuery<Tuple> query = em.createQuery(cq);
 		
