@@ -19,24 +19,24 @@ public class NavigationController {
 	
 	@PostMapping("/Product/{locale}/{currency}/category/{category}/maxPrice/{price}/page/{page}/size/{size}/sortBy/{sortBy}")
 	public Page<Product> getProducts(	@PathVariable String locale, 
-								@PathVariable String currency, 
-								@PathVariable String category,
-								@PathVariable Double price, 
-								@PathVariable int page, 
-								@PathVariable int size, 
-								@PathVariable String sortBy,
-								@RequestBody final FacetContainer selectedFacets) {
+										@PathVariable String currency, 
+										@PathVariable String category,
+										@PathVariable Double price, 
+										@PathVariable int page, 
+										@PathVariable int size, 
+										@PathVariable String sortBy,
+										@RequestBody final FacetContainer selectedFacets) {
 	   	return navigationService.findAll(locale, currency, price, page, size, category, selectedFacets.getFacets(), sortBy);
 	}
 
 	@PostMapping("/Product/{locale}/{currency}/category/{category}/page/{page}/size/{size}/sortBy/{sortBy}")
 	public Page<Product>  getProducts(	@PathVariable String 	locale, 
-								@PathVariable String 	currency, 
-								@PathVariable String 	category,
-								@PathVariable int 		page, 
-								@PathVariable int 		size, 
-								@PathVariable String 	sortBy,
-								@RequestBody final FacetContainer selectedFacets) {
+										@PathVariable String 	currency, 
+										@PathVariable String 	category,
+										@PathVariable int 		page, 
+										@PathVariable int 		size, 
+										@PathVariable String 	sortBy,
+										@RequestBody final FacetContainer selectedFacets) {
 	   	return navigationService.findAll(locale, currency, category, page, size, selectedFacets.getFacets(), sortBy);
 	}
 	

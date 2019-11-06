@@ -1,9 +1,7 @@
 package io.nzbee.resource.controllers;
-
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -45,7 +43,7 @@ public class ProductController {
     									currency,
     									PageRequest.of(page, size), 
     									categoryCode, 
-    									new ArrayList<IFacet>(), 
+    									new HashSet<IFacet>(), 
     									"1");
     			
 
