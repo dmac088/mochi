@@ -2,7 +2,8 @@ package io.nzbee.domain.tag;
 
 import io.nzbee.domain.IService;
 
-public interface ITagService extends IService<Tag> {
+public interface ITagService extends IService<Tag,
+											 io.nzbee.dto.tag.Tag> {
 
 
 
