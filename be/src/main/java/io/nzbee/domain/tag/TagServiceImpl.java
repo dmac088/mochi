@@ -9,11 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.IDomainObject;
-//import io.nzbee.domain.IFacetService;
-import io.nzbee.domain.category.ICategoryService;
-import io.nzbee.domain.product.IProductService;
-
-
 //The Domain object service should be simple and dumb
 //it received primitive types and responds with domain objects,
 //that are constructed from relevant entity objects
