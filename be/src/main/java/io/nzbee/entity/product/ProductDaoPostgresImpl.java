@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -23,7 +24,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import io.nzbee.entity.brand.Brand;
+import io.nzbee.entity.brand.Brand_;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
+import io.nzbee.entity.brand.attribute.BrandAttribute_;
 import io.nzbee.entity.product.Product_;
 import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.attribute.ProductAttribute_;
@@ -66,29 +69,46 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	public Optional<Product> findByCode(String locale, String currency, String code) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
-		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
+		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
 		
 		Root<Product> root = cq.from(Product.class);
+		Join<Product, ProductAttribute> productAttribute = root.join(Product_.attributes);
 		Join<Product, ProductStatus> status = root.join(Product_.productStatus);
 
 		List<Predicate> conditions = new ArrayList<Predicate>();	
+		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale));
 		conditions.add(cb.equal(root.get(Product_.productUPC), code));
 		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
 		
-		TypedQuery<Product> query = em.createQuery(cq
-				.select(root)
-				.where(conditions.toArray(new Predicate[] {}))
-				.distinct(false)
-		);
+		cq.multiselect(	root.get(Product_.productId).alias("productId"),
+				root.get(Product_.productUPC).alias("productCode"),
+				productAttribute.get(ProductAttribute_.Id).alias("productAttributeId"),
+				productAttribute.get(ProductAttribute_.productDesc).alias("productDesc"));
 		
-		return Optional.ofNullable(query.getSingleResult());
+		TypedQuery<Tuple> query = em.createQuery(cq);
+		
+		Tuple tuple = query.getSingleResult();
+		
+		Product pe = new Product();
+		ProductAttribute pa = new ProductAttribute();
+		
+		pa.setId(Long.parseLong(tuple.get("productAttributeId").toString()));
+		pa.setProductId(Long.parseLong(tuple.get("productId").toString()));
+		pa.setProductDesc(tuple.get("productDesc").toString());
+		pa.setLclCd(locale);
+		
+		pe.setProductAttribute(pa);
+		pe.setProductId(Long.parseLong(tuple.get("productId").toString()));
+		pe.setUPC(tuple.get("productCode").toString());
+		
+		return Optional.ofNullable(pe);
 	}
 	
 	@Override
 	public Optional<Product> findByDesc(String locale, String currency, String desc) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
-		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
+		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
 		
 		Root<Product> root = cq.from(Product.class);
 		
@@ -100,13 +120,29 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
 		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.productDesc), desc));
 		
-		TypedQuery<Product> query = em.createQuery(cq
-				.select(root)
-				.where(conditions.toArray(new Predicate[] {}))
-				.distinct(true)
-		);
-
-		return Optional.ofNullable(query.getSingleResult());
+		cq.multiselect(	root.get(Product_.productId).alias("productId"),
+				root.get(Product_.productUPC).alias("productCode"),
+				productAttribute.get(ProductAttribute_.Id).alias("productAttributeId"),
+				productAttribute.get(ProductAttribute_.productDesc).alias("productDesc"));
+		
+		
+		TypedQuery<Tuple> query = em.createQuery(cq);
+		
+		Tuple tuple = query.getSingleResult();
+		
+		Product pe = new Product();
+		ProductAttribute pa = new ProductAttribute();
+		
+		pa.setId(Long.parseLong(tuple.get("productAttributeId").toString()));
+		pa.setProductId(Long.parseLong(tuple.get("productId").toString()));
+		pa.setProductDesc(tuple.get("productDesc").toString());
+		pa.setLclCd(locale);
+		
+		pe.setProductAttribute(pa);
+		pe.setProductId(Long.parseLong(tuple.get("productId").toString()));
+		pe.setUPC(tuple.get("productCode").toString());
+		
+		return Optional.ofNullable(pe);
 	}
 	
 	@Override
