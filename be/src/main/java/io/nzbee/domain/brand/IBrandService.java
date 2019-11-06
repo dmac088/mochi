@@ -1,9 +1,9 @@
 package io.nzbee.domain.brand;
 
-import java.util.List;
+import java.util.Set;
 import io.nzbee.domain.IService;
 
 public interface IBrandService extends IService<Brand> {
 	
-	List<Brand> findAll(String locale, String currency, String category);
+	Set<Brand> findAll(String locale, String currency, String category);
 }

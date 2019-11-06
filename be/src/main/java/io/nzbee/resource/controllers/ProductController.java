@@ -2,6 +2,8 @@ package io.nzbee.resource.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -61,7 +63,7 @@ public class ProductController {
     }
     
     @PostMapping("/Product/{locale}/{currency}")
-    public List<Product> getProducts(@PathVariable String locale, @PathVariable String currency, @RequestBody final List<String> productCodes) {
+    public Set<Product> getProducts(@PathVariable String locale, @PathVariable String currency, @RequestBody final List<String> productCodes) {
     	return productService.findAll(locale, currency, productCodes);
     }
     

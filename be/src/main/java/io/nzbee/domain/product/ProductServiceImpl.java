@@ -2,6 +2,7 @@ package io.nzbee.domain.product;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,23 +59,23 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public List<Product> findAll(String locale, String currency) {
+	public Set<Product> findAll(String locale, String currency) {
 		// TODO Auto-generated method stub
 		return productDtoService.findAll(locale, currency)
 				.stream().map(p->this.dtoToDO(p))
-				.collect(Collectors.toList());
+				.collect(Collectors.toSet());
 	}
     
 	@Override
-	public List<Product> findAll(String locale, String currency, List<String> productCodes) {
+	public Set<Product> findAll(String locale, String currency, List<String> productCodes) {
 		// TODO Auto-generated method stub
 		return productDtoService.findAll(locale, currency, productCodes)
 				.stream().map(p->this.dtoToDO(p))
-				.collect(Collectors.toList());
+				.collect(Collectors.toSet());
 	}
 	
 	@Override
-	public List<Product> findAll(String locale, String currency, String categoryDesc, List<IDomainObject> lDo) {
+	public Set<Product> findAll(String locale, String currency, String categoryDesc, List<IDomainObject> lDo) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -1,6 +1,7 @@
 package io.nzbee.ui.component.web.facet;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +61,7 @@ public class FacetServiceImpl extends UIService implements IFacetService {
 	
 	@Override
 	public FacetResult findAllBrands(String locale, String category) {
-		List<Brand> brands = brandDomainService.findAll(category, locale);
+		Set<Brand> brands = brandDomainService.findAll(category, locale);
 		
 		FacetContainer nfc = new FacetContainer();
 		FacetResult nfr = new FacetResult();
