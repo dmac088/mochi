@@ -4,15 +4,11 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-
-import javax.persistence.Entity;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import io.nzbee.domain.IDomainObject;
 import io.nzbee.dto.IDto;
 import io.nzbee.entity.party.IPartyService;
 import io.nzbee.entity.party.Party;
