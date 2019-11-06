@@ -17,14 +17,14 @@ public interface IProductService extends IService<Product> {
 							Double price, 
 							Pageable pageable, 
 							String categoryDesc,
-							List<IFacet> facets, 
+							Set<IFacet> selectedFacets, 
 							String sortBy);
 
 	Page<Product> findAll(	String locale, 
 							String currency, 
 							Pageable pageable, 
 							String categoryDesc, 
-							List<IFacet> facets,
+							Set<IFacet> facets,
 							String sortBy);
 
 }
