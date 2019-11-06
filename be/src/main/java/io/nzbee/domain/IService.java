@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-public interface IService<T> {
+public interface IService<T, X> {
 
 	//for a DTO we need the locale
 	Optional<T> findById(String locale, String currency, Long Id);
@@ -21,7 +21,7 @@ public interface IService<T> {
 	
 	Set<T> findAll(String locale, String currency, String categoryDesc, List<IDomainObject> lDo);
 	
-	T dtoToDO(Object dto);
+	T dtoToDO(X dto);
 	
 	String tokenToCode(String token);
 

@@ -3,7 +3,7 @@ package io.nzbee.dto;
 import java.util.List;
 import java.util.Optional;
 
-public interface ILocalizedService<T> {
+public interface ILocalizedService<T, X, Y> {
 
 	//for a DTO we need the locale
 	Optional<T> findById(String locale, String currency, long brandId);
@@ -20,7 +20,7 @@ public interface ILocalizedService<T> {
 	List<T> findAll(String locale, String currency, List<String> codes);
 	
 	//for a DTO we need the locale
-	T entityToDTO(String locale, String currency, Object entity);
+	T entityToDTO(String locale, String currency, X entity);
 
-	T doToDto(Object dO);
+	T doToDto(Y dO);
 }
