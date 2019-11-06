@@ -3,11 +3,12 @@ package io.nzbee.dto.product;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
 import io.nzbee.dto.IDto;
 import io.nzbee.dto.ILocalizedService;
 
-public interface IProductService  extends ILocalizedService<Product> {
+public interface IProductService  extends ILocalizedService<io.nzbee.dto.product.Product, 
+															io.nzbee.entity.product.Product,
+															io.nzbee.domain.product.Product> {
 
 	//Only domain objects should be returned from the below methods
 	//User Interface objects should be returned from one or more DTO (data transfer object) services

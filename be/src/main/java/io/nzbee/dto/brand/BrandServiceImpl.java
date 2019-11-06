@@ -79,9 +79,10 @@ public class BrandServiceImpl implements IBrandService {
 							);
 		return lpb.stream().map(pb -> entityToDTO(locale, currency, pb)).collect(Collectors.toList());		
 	}
+	
 
 	@Override
-	public Brand entityToDTO(String locale, String currency, Object entity) {
+	public Brand entityToDTO(String locale, String currency, io.nzbee.entity.brand.Brand entity) {
 		// TODO Auto-generated method stub
 		Brand brand = new Brand();
 		io.nzbee.entity.brand.Brand b = ((io.nzbee.entity.brand.Brand) entity);
@@ -90,8 +91,9 @@ public class BrandServiceImpl implements IBrandService {
 		return brand;
 	}
 
+
 	@Override
-	public Brand doToDto(Object dO) {
+	public Brand doToDto(io.nzbee.domain.brand.Brand dO) {
 		// TODO Auto-generated method stub
 		io.nzbee.domain.brand.Brand brandDO = (io.nzbee.domain.brand.Brand) dO;
 		Brand brandDTO = new Brand();

@@ -4,11 +4,15 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+
+import javax.persistence.Entity;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import io.nzbee.domain.IDomainObject;
 import io.nzbee.dto.IDto;
 import io.nzbee.entity.party.IPartyService;
 import io.nzbee.entity.party.Party;
@@ -164,12 +168,6 @@ public class CustomerServiceImpl implements ICustomerService {
 		return cDo;
 	}
 
-	@Override
-	public Customer doToDto(Object dO) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 
 	@Override
 	public List<Customer> getCustomers() {
@@ -177,30 +175,5 @@ public class CustomerServiceImpl implements ICustomerService {
 		return null;
 	}
 
-
-	@Override
-	public Optional<Customer> findById(long brandId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Optional<Customer> findByDesc(String desc) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Customer entityToDTO(Object entity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public List<Customer> findAll(List<IDto> codes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }
