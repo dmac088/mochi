@@ -56,7 +56,7 @@ public class BrandDaoImpl  implements IBrandDao {
 		cq.multiselect(	root.get(Brand_.brandId).alias("brandId"),
 						root.get(Brand_.brandCode).alias("brandCode"),
 						attribute.get(BrandAttribute_.Id).alias("brandAttributeId"),
-						attribute.get(BrandAttribute_.brandDesc).alias("brnadDesc")
+						attribute.get(BrandAttribute_.brandDesc).alias("brandDesc")
 		);
 		
 		TypedQuery<Tuple> query = em.createQuery(cq);
@@ -68,7 +68,7 @@ public class BrandDaoImpl  implements IBrandDao {
 		
 		brandAttribute.setId(Long.parseLong(tuple.get("brandAttributeId").toString()));
 		brandAttribute.setBrandId(Long.parseLong(tuple.get("brandId").toString()));
-		brandAttribute.setBrandDesc(tuple.get("brnadDesc").toString());
+		brandAttribute.setBrandDesc(tuple.get("brandDesc").toString());
 		brandAttribute.setLclCd(locale);
 		
 		brandEntity.setBrandAttribute(brandAttribute);
