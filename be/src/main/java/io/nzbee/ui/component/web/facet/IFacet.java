@@ -2,14 +2,13 @@ package io.nzbee.ui.component.web.facet;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import io.nzbee.domain.IDomainObject;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonTypeInfo(
 	    use = JsonTypeInfo.Id.CLASS,
 	    include = JsonTypeInfo.As.PROPERTY,
 	    property = "@class")
-public interface IFacet {
+public interface IFacet<T> {
 
 	String getId();
 	
@@ -17,7 +16,7 @@ public interface IFacet {
 	
 	boolean isHierarchical();
 
-	IDomainObject getPayload();
+	T getPayload();
 	
 	String getType();
 	
