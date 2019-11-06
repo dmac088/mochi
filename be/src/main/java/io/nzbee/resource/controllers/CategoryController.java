@@ -27,13 +27,6 @@ public class CategoryController {
         super();
     }
     
-    /*
-    @GetMapping("/Category/{locale}/{currency}/level/{level}")
-    public List<Category> getCategoriesForLevel(@PathVariable String locale, @PathVariable String currency, @PathVariable Long level) {
-    	return categoryService.findAllForLevel(locale, currency, level);
-    }
-    */
-    
     @GetMapping("/Category/{locale}/{currency}/code/{categoryCode}")
     public ResponseEntity<CategoryResource> get(@PathVariable String locale, @PathVariable String currency, @PathVariable String categoryCode) {
     	Category c = categoryService.findByCode(locale, currency, categoryCode).get();

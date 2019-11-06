@@ -122,10 +122,9 @@ public class ProductServiceImpl implements IProductService {
 										 .map(f -> (IDto) productDtoService.doToDto(f.getPayload())).collect(Collectors.toList()), 
 										 sortBy);
 		
-     	return new PageImpl<Product>(
-		pp.stream().map(p -> this.dtoToDO(p)).collect(Collectors.toList()),
-		pageable,
-		pp.getTotalElements());
+     	return new PageImpl<Product>(pp.stream().map(p -> this.dtoToDO(p)).collect(Collectors.toList()),
+									 pageable,
+								 	 pp.getTotalElements());
     	
 	}
 
