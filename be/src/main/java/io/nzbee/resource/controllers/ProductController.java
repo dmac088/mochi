@@ -48,15 +48,10 @@ public class ProductController {
     			
 
     	return new ResponseEntity< >(assembler.toResource(pages), HttpStatus.OK);
-    	
-//    	final Resources <BrandResource> resources = new Resources <> (collection);
-//        final String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
-//        resources.add(new Link(uriString, "brands"));
-//        return ResponseEntity.ok(resources);
     }
     
     @GetMapping("/Product/{locale}/{currency}/code/{code}")
-    public Product getProduct(@PathVariable String locale, @PathVariable String currency, @PathVariable String code) {
+    public Product get(@PathVariable String locale, @PathVariable String currency, @PathVariable String code) {
     	return productService.findByCode(locale, currency, code).get();
     }
     
