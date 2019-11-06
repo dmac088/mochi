@@ -12,7 +12,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.product.Product;
-import io.nzbee.ui.component.web.facet.FacetContainer;
 import io.nzbee.ui.component.web.facet.IFacet;
 import io.nzbee.ui.component.web.generic.UIService;
 
@@ -35,6 +34,7 @@ public class NavigationServiceImpl extends UIService implements INavigationServi
 							 Set<IFacet> selectedFacets,
 							 String sortBy) {
 		
+		@SuppressWarnings("unused")
 		Set<IFacet> returnFacets = new HashSet<IFacet>();
 		
 		Page<Product> pp = productService.findAll(locale, 

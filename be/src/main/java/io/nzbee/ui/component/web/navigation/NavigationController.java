@@ -26,7 +26,7 @@ public class NavigationController {
 								@PathVariable int size, 
 								@PathVariable String sortBy,
 								@RequestBody final FacetContainer selectedFacets) {
-	   	return navigationService.findAll(locale, currency, price, page, size, category, selectedFacets, sortBy);
+	   	return navigationService.findAll(locale, currency, price, page, size, category, selectedFacets.getFacets(), sortBy);
 	}
 
 	@PostMapping("/Product/{locale}/{currency}/category/{category}/page/{page}/size/{size}/sortBy/{sortBy}")
@@ -37,7 +37,7 @@ public class NavigationController {
 								@PathVariable int 		size, 
 								@PathVariable String 	sortBy,
 								@RequestBody final FacetContainer selectedFacets) {
-	   	return navigationService.findAll(locale, currency, category, page, size, selectedFacets, sortBy);
+	   	return navigationService.findAll(locale, currency, category, page, size, selectedFacets.getFacets(), sortBy);
 	}
 	
 }
