@@ -407,8 +407,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"		 INNER JOIN mochi.product_status ps " +
 				"		 ON prd.prd_sts_id = ps.prd_sts_id " +
 				"		  " +
-				"		 WHERE now() >= prc.prc_st_dt AND now() <= prc.prc_en_dt " +
-				"		 AND curr.ccy_cd = 	:currency " +
+				"		 WHERE curr.ccy_cd = 	:currency " +
 				"		 AND prc_typ_cd = 	:retailPriceCode " +
 				"		 AND prd_sts_cd = 	:activeProductCode " +
 				"		 ) retail_price " +
@@ -431,9 +430,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"		 INNER JOIN mochi.product_status ps " +
 				"		 ON prd.prd_sts_id = ps.prd_sts_id " +
 				"		  " +
-				"		 WHERE now() >= prc.prc_st_dt  " +
-				"		 AND now() <= prc.prc_en_dt " +
-				"		 AND curr.ccy_cd = 	:currency " +
+				"		 WHERE curr.ccy_cd = 	:currency " +
 				"		 AND prc_typ_cd = 	:markdownPriceCode " +
 				"		 AND prd_sts_cd = 	:activeProductCode " +
 				"		 )  markdown_price		  " +
@@ -500,8 +497,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"			INNER JOIN mochi.product_status ps " +
 				"			ON prd.prd_sts_id = ps.prd_sts_id " +
 
-				"			WHERE now() >= prc.prc_st_dt AND now() <= prc.prc_en_dt " +
-				"			AND curr.ccy_cd = 	:currency " +
+				"			WHERE curr.ccy_cd = 	:currency " +
 				"			AND prc_typ_cd = 	:retailPriceCode " +
 				"			AND prd_sts_cd = 	:activeProductCode " +
 				"			) retail_price " +
@@ -528,8 +524,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"			INNER JOIN mochi.product_status ps " +
 				"			ON prd.prd_sts_id = ps.prd_sts_id " +
 
-				"			WHERE now() >= prc.prc_st_dt AND now() <= prc.prc_en_dt " +
-				"			AND curr.ccy_cd = 	:currency " +
+				"			WHERE curr.ccy_cd = 	:currency " +
 				"			AND prc_typ_cd = 	:markdownPriceCode " +
 				"			AND prd_sts_cd = 	:activeProductCode " +
 				"		 )  markdown_price		  " +
