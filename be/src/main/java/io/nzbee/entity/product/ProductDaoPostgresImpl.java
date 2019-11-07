@@ -13,6 +13,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -28,7 +29,11 @@ import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.product.Product_;
 import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.attribute.ProductAttribute_;
+import io.nzbee.entity.product.currency.Currency;
+import io.nzbee.entity.product.currency.Currency_;
 import io.nzbee.entity.product.price.ProductPrice;
+import io.nzbee.entity.product.price.ProductPriceType;
+import io.nzbee.entity.product.price.ProductPriceType_;
 import io.nzbee.entity.product.price.ProductPrice_;
 import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.entity.product.status.ProductStatus_;
@@ -72,18 +77,30 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		Root<Product> root = cq.from(Product.class);
 		Join<Product, ProductAttribute> productAttribute = root.join(Product_.attributes);
 		Join<Product, ProductStatus> status = root.join(Product_.productStatus);
-
+		Join<Product, ProductPrice> retailPrice = root.join(Product_.prices, JoinType.LEFT);
+		Join<ProductPrice, ProductPriceType> retailPriceType = retailPrice.join(ProductPrice_.type);
+		Join<ProductPrice, Currency> retailCurrency = retailPrice.join(ProductPrice_.currency);
+		
+		Join<Product, ProductPrice> markdownPrice = root.join(Product_.prices, JoinType.LEFT);
+		Join<ProductPrice, ProductPriceType> markdownPriceType = markdownPrice.join(ProductPrice_.type);
+		Join<ProductPrice, Currency> markdownCurrency = markdownPrice.join(ProductPrice_.currency);
+		
+		retailPriceType.on(cb.equal(retailPriceType.get(ProductPriceType_.code), ProductVars.PRICE_RETAIL_CODE));
+		markdownPriceType.on(cb.equal(markdownPriceType.get(ProductPriceType_.code), ProductVars.PRICE_MARKDOWN_CODE));
+		
 		cq.multiselect(	root.get(Product_.productId).alias("productId"),
-				root.get(Product_.productUPC).alias("productCode"),
-				productAttribute.get(ProductAttribute_.Id).alias("productAttributeId"),
-				productAttribute.get(ProductAttribute_.productDesc).alias("productDesc"));
+						root.get(Product_.productUPC).alias("productCode"),
+						productAttribute.get(ProductAttribute_.Id).alias("productAttributeId"),
+						productAttribute.get(ProductAttribute_.productDesc).alias("productDesc"),
+						retailPrice.get(ProductPrice_.priceValue).alias("retailPrice"),
+						markdownPrice.get(ProductPrice_.priceValue).alias("markdownPrice"));
 		
 		cq.where(cb.and(
-				cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale),
-				cb.equal(root.get(Product_.productUPC), code),
-				cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE)
-				)
-		);
+				 cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale),
+				 cb.equal(root.get(Product_.productUPC), code),
+				 cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE),
+				 cb.equal(retailCurrency.get(Currency_.code), currency),
+				 cb.equal(markdownCurrency.get(Currency_.code), currency)));
 		
 		TypedQuery<Tuple> query = em.createQuery(cq);
 		
@@ -100,6 +117,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		pe.setProductAttribute(pa);
 		pe.setProductId(Long.parseLong(tuple.get("productId").toString()));
 		pe.setUPC(tuple.get("productCode").toString());
+		pe.setRetailPrice(Double.parseDouble(tuple.get("retailPrice").toString()));
+		pe.setMarkdownPrice(Double.parseDouble(tuple.get("markdownPrice").toString()));
 		
 		return Optional.ofNullable(pe);
 	}
@@ -111,20 +130,33 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
 		
 		Root<Product> root = cq.from(Product.class);
-		
 		Join<Product, ProductAttribute> productAttribute = root.join(Product_.attributes);
 		Join<Product, ProductStatus> status = root.join(Product_.productStatus);
+		Join<Product, ProductPrice> retailPrice = root.join(Product_.prices, JoinType.LEFT);
+		Join<ProductPrice, ProductPriceType> retailPriceType = retailPrice.join(ProductPrice_.type);
+		Join<ProductPrice, Currency> retailCurrency = retailPrice.join(ProductPrice_.currency);
+		
+		Join<Product, ProductPrice> markdownPrice = root.join(Product_.prices, JoinType.LEFT);
+		Join<ProductPrice, ProductPriceType> markdownPriceType = markdownPrice.join(ProductPrice_.type);
+		Join<ProductPrice, Currency> markdownCurrency = markdownPrice.join(ProductPrice_.currency);
+		
+		retailPriceType.on(cb.equal(retailPriceType.get(ProductPriceType_.code), ProductVars.PRICE_RETAIL_CODE));
+		markdownPriceType.on(cb.equal(markdownPriceType.get(ProductPriceType_.code), ProductVars.PRICE_MARKDOWN_CODE));
 		
 		cq.multiselect(	root.get(Product_.productId).alias("productId"),
 				root.get(Product_.productUPC).alias("productCode"),
 				productAttribute.get(ProductAttribute_.Id).alias("productAttributeId"),
-				productAttribute.get(ProductAttribute_.productDesc).alias("productDesc"));
+				productAttribute.get(ProductAttribute_.productDesc).alias("productDesc"),
+				retailPrice.get(ProductPrice_.priceValue).alias("retailPrice"),
+				markdownPrice.get(ProductPrice_.priceValue).alias("markdownPrice"));
 		
 		cq.where(cb.and(
 				cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale),
-				cb.equal(productAttribute.get(ProductAttribute_.productDesc),
-				cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE)
-				)
+				cb.equal(productAttribute.get(ProductAttribute_.productDesc), desc),
+				cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE),
+				cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE),
+				cb.equal(retailCurrency.get(Currency_.code), currency),
+				cb.equal(markdownCurrency.get(Currency_.code), currency)
 		));
 		
 		TypedQuery<Tuple> query = em.createQuery(cq);
@@ -142,6 +174,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		pe.setProductAttribute(pa);
 		pe.setProductId(Long.parseLong(tuple.get("productId").toString()));
 		pe.setUPC(tuple.get("productCode").toString());
+		pe.setRetailPrice(Double.parseDouble(tuple.get("retailPrice").toString()));
+		pe.setMarkdownPrice(Double.parseDouble(tuple.get("markdownPrice").toString()));
 		
 		return Optional.ofNullable(pe);
 	}

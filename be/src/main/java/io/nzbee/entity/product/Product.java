@@ -1,6 +1,5 @@
 package io.nzbee.entity.product;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -166,9 +165,7 @@ public class Product {
 	@Transient
 	public Double getCurrentRetailPriceHKD() {
 		 return this.prices.stream().filter(p ->
-		 	p.getStartDate().before(Calendar.getInstance().getTime())
-		 	&& p.getEndDate().after(Calendar.getInstance().getTime())
-		 	&& p.getCurrency().getCode().equals(ProductVars.CURRENCY_HONG_KONG)
+		 	p.getCurrency().getCode().equals(ProductVars.CURRENCY_HONG_KONG)
 		 	&& p.getType().getDesc().equals(ProductVars.RETAIL_SKU_DESCRIPTION)
 		 ).collect(Collectors.toList()).get(0).getPriceValue();     
 	}
@@ -178,9 +175,7 @@ public class Product {
 	@Transient
 	public Double getCurrentRetailPriceUSD() {
 		 return this.prices.stream().filter(p ->
-		 	p.getStartDate().before(Calendar.getInstance().getTime())
-		 	&& p.getEndDate().after(Calendar.getInstance().getTime())
-		 	&& p.getCurrency().getCode().equals(ProductVars.CURRENCY_US)
+		 	p.getCurrency().getCode().equals(ProductVars.CURRENCY_US)
 		 	&& p.getType().getDesc().equals(ProductVars.RETAIL_SKU_DESCRIPTION)
 		 ).collect(Collectors.toList()).get(0).getPriceValue();     
 	}
@@ -190,9 +185,7 @@ public class Product {
 	@Transient
 	public Double getCurrentMarkdownPriceHKD() {
 		 return this.prices.stream().filter(p ->
-		 	p.getStartDate().before(Calendar.getInstance().getTime())
-		 	&& p.getEndDate().after(Calendar.getInstance().getTime())
-		 	&& p.getCurrency().getCode().equals(ProductVars.CURRENCY_HONG_KONG)
+		 	p.getCurrency().getCode().equals(ProductVars.CURRENCY_HONG_KONG)
 		 	&& p.getType().getDesc().equals(ProductVars.MARKDOWN_SKU_DESCRIPTION)
 		 ).collect(Collectors.toList()).get(0).getPriceValue();     
 	}
@@ -202,9 +195,7 @@ public class Product {
 	@Transient
 	public Double getCurrentMarkdownPriceUSD() {
 		 return this.prices.stream().filter(p ->
-		 	p.getStartDate().before(Calendar.getInstance().getTime())
-		 	&& p.getEndDate().after(Calendar.getInstance().getTime())
-		 	&& p.getCurrency().getCode().equals(ProductVars.CURRENCY_US)
+		 	p.getCurrency().getCode().equals(ProductVars.CURRENCY_US)
 		 	&& p.getType().getDesc().equals(ProductVars.MARKDOWN_SKU_DESCRIPTION)
 		 ).collect(Collectors.toList()).get(0).getPriceValue();     
 	}
