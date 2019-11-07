@@ -21,7 +21,7 @@ public class ProductAssembler extends ResourceAssemblerSupport<Product, ProductR
         ProductResource resource = new ProductResource(product);
 
         Link selfLink = linkTo(
-                methodOn(ProductController.class).getProduct(product.getLclCd(), product.getCurrency(), product.getProductUPC()))
+                methodOn(ProductController.class).get(product.getLclCd(), product.getCurrency(), product.getProductUPC()))
                 .withSelfRel();
         resource.add(selfLink);
 
