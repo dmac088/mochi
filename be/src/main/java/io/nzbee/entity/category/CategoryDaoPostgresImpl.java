@@ -175,7 +175,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	public Optional<Category> findByCode(String locale, String currency, String code) {
 		
 		Session session = em.unwrap(Session.class);
-		List<String> categoryCodes = new ArrayList<String>();
+		final List<String> categoryCodes = new ArrayList<String>();
 		categoryCodes.add(code);
 		
 		Query query = session.createNativeQuery(constructSQL(!categoryCodes.isEmpty(),
@@ -190,6 +190,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		if(!categoryCodes.isEmpty()) {
 			query.setParameter("categoryCodes", categoryCodes);
 		}
+
 		
 		Object[] c = (Object[])query.getSingleResult();
 		Category category = (Category) c[0];
@@ -326,7 +327,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				boolean hasCategories,
 				boolean withChildren
 			) {
-		return "WITH RECURSIVE  " +
+		String sql = "WITH RECURSIVE  " +
 				"descendants AS " +
 				"( " +
 				"  SELECT 	t.cat_id,  " +
@@ -640,6 +641,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				
 				"LEFT JOIN mochi.category_attr_lcl pa " +
 				"ON pc.cat_id = pa.cat_id " +
+				"AND pa.lcl_cd = :locale " +
 				
 				"LEFT JOIN (" +
 				"SELECT cat.cat_id, " +
@@ -657,7 +659,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"ON s.cat_id = layouts.cat_id " + 
 				
 				"WHERE a.lcl_cd = :locale " +
-				"AND pa.lcl_cd = :locale " +
 				"AND case " +
 				"	 when :parentCategoryCode = '-1' " +
 				"  then '0' " +
@@ -669,7 +670,8 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"  else :parentCategoryCode" +
 				"  end" +
 				(!withChildren && hasCategories ? " AND s.cat_cd in :categoryCodes" : "");
-		
+			
+		return sql;
 	}
 	
 }
