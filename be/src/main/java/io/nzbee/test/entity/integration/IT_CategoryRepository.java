@@ -38,9 +38,9 @@ public class IT_CategoryRepository {
     private ICategoryTypeRepository categoryTypeRepository;
     
     public Category persistNewCategory() {
-    	final Category 		category 		= new CategoryProduct();
-    	final CategoryType 	categoryType 	= categoryTypeRepository.findById(new Long(1)).get();
-    	final Category 		parentCategory 	= categoryService.findByCode(GeneralVars.LANGUAGE_ENGLISH, 
+    	Category 		category 		= new CategoryProduct();
+    	CategoryType 	categoryType 	= categoryTypeRepository.findById(new Long(1)).get();
+    	Category 		parentCategory 	= categoryService.findByCode(GeneralVars.LANGUAGE_ENGLISH, 
     																 	 GeneralVars.CURRENCY_USD, 
     																 	 "PRM01").get();
     	
@@ -69,10 +69,10 @@ public class IT_CategoryRepository {
     // write test cases here
     @Test
     public void whenFindByCode_thenReturnCategory() {
-    	final Category category = this.persistNewCategory();
+    	Category category = this.persistNewCategory();
         
         // when
-    	final Category found = categoryService.findByCode(GeneralVars.LANGUAGE_ENGLISH, 
+    	Category found = categoryService.findByCode(GeneralVars.LANGUAGE_ENGLISH, 
 				 									GeneralVars.CURRENCY_USD, 
 				 									category.getCategoryCode()).get();
      
@@ -82,10 +82,13 @@ public class IT_CategoryRepository {
     
     @Test
     public void whenFindById_thenReturnCategory() {
-    	final Category category = this.persistNewCategory();
+    	Category category = this.persistNewCategory();
         
+    	System.out.println(category == null);
+    	System.out.println(category.getCategoryId());
+    	
         // when
-    	final Category found = categoryService.findById(GeneralVars.LANGUAGE_ENGLISH, 
+    	Category found = categoryService.findById(GeneralVars.LANGUAGE_ENGLISH, 
 													GeneralVars.CURRENCY_USD,  
     												category.getCategoryId()).get();
      
