@@ -6,7 +6,9 @@ import io.nzbee.dto.ILocalizedService;
 import io.nzbee.dto.brand.Brand;
 import io.nzbee.dto.tag.Tag;
 
-public interface ICategoryService extends ILocalizedService<Category> {
+public interface ICategoryService extends ILocalizedService<Category,
+															io.nzbee.entity.category.Category,
+															io.nzbee.domain.category.Category> {
 	 
 	List<Category> findAllForLevel(String locale, String currency, Long level);
 	 

@@ -30,19 +30,19 @@ public class ProductServiceImpl implements IProductService {
 	@Override
 	public Optional<Product> findById(String locale, String currency, long Id) {
 		// TODO Auto-generated method stub
-		return Optional.ofNullable(this.entityToDTO(locale, currency, productService.findById(locale, currency, Id)));
+		return Optional.ofNullable(this.entityToDTO(locale, currency, productService.findById(locale, currency, Id).get()));
 	}
 	
 	@Override
 	public Optional<Product> findByCode(String locale, String currency, String code) {
 		// TODO Auto-generated method stub
-		return Optional.ofNullable(this.entityToDTO(locale, currency, productService.findByCode(locale, currency, code)));
+		return Optional.ofNullable(this.entityToDTO(locale, currency, productService.findByCode(locale, currency, code).get()));
 	}
 
 	@Override
 	public Optional<Product> findByDesc(String locale, String currency, String desc) {
 		// TODO Auto-generated method stub
-		return Optional.ofNullable(this.entityToDTO(locale, currency, productService.findByDesc(locale, currency, desc)));
+		return Optional.ofNullable(this.entityToDTO(locale, currency, productService.findByDesc(locale, currency, desc).get()));
 	}
 
 	@Override
@@ -124,29 +124,23 @@ public class ProductServiceImpl implements IProductService {
     }
 
 	@Override
-	public Product entityToDTO(String locale, String currency, Object entity) {
+	public Product entityToDTO(String locale, String currency, io.nzbee.entity.product.Product p) {
 		// TODO Auto-generated method stub
-		io.nzbee.entity.product.Product p = ((io.nzbee.entity.product.Product) entity);
-		
 		final Product pDo = new Product();
-    	pDo.setProductUPC(p.getUPC());
-    	pDo.setProductCreateDt(p.getProductCreateDt());
-    	pDo.setProductDesc(p.getProductAttribute().getProductDesc());
-    	pDo.setProductRetail(p.getRetailPrice());
-    	pDo.setProductMarkdown(p.getMarkdownPrice());
-    	pDo.setProductImage(p.getProductAttribute().getProductImage());
-    	pDo.setLclCd(locale);
-    	pDo.setCurrency(currency);
-    	return pDo;
+		pDo.setProductUPC(p.getUPC());
+		pDo.setProductCreateDt(p.getProductCreateDt());
+		pDo.setProductDesc(p.getProductAttribute().getProductDesc());
+		pDo.setProductRetail(p.getRetailPrice());
+		pDo.setProductMarkdown(p.getMarkdownPrice());
+		pDo.setProductImage(p.getProductAttribute().getProductImage());
+		pDo.setLclCd(locale);
+		pDo.setCurrency(currency);
+		return pDo;
 	}
 
-	
-
 	@Override
-	public io.nzbee.dto.product.Product doToDto(Object dO) {
+	public Product doToDto(io.nzbee.domain.product.Product productDO) {
 		// TODO Auto-generated method stub
-		Product productDO = (Product) dO;
-		
 		io.nzbee.dto.product.Product dtoProduct = new io.nzbee.dto.product.Product();
 		dtoProduct.setProductUPC(productDO.getProductUPC());
 		dtoProduct.setCurrency(productDO.getCurrency());

@@ -77,7 +77,7 @@ public class ProductAttribute {
 	@Column(name="prd_id")
 	@Field(store=Store.YES)
 	private Long productId;
-	 
+
 	@Field(analyze = Analyze.YES, store=Store.YES)
 	@Column(name="prd_desc")
 	@SortableField
@@ -212,8 +212,20 @@ public class ProductAttribute {
 		return this.getTagC();
 	}
 	
+	public Long getId() {
+		return Id;
+	}
+
+	public void setId(Long id) {
+		Id = id;
+	}
+
 	public Long getProductId() {
 		return productId;
+	}
+	
+	public void setProductId(Long productId) {
+		this.productId = productId;
 	}
 	
 	public Product getProduct() {

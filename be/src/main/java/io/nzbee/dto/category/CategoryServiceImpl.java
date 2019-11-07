@@ -93,13 +93,11 @@ public class CategoryServiceImpl implements ICategoryService {
 				.collect(Collectors.toList());    			
 	}
 
+
 	@Override
-	public Category entityToDTO(String locale, String currency, Object entity) {
+	public Category entityToDTO(String locale, String currency, io.nzbee.entity.category.Category category) {
 		// TODO Auto-generated method stub
-		io.nzbee.entity.category.Category category = (io.nzbee.entity.category.Category) entity;
-		
 		Category categoryDTO = new Category();
-				
 		categoryDTO.setCategoryCode(category.getCategoryCode());
 		categoryDTO.setCategoryDesc(category.getCategoryAttribute().getCategoryDesc());
 		categoryDTO.setCategoryLevel(category.getCategoryLevel());
@@ -108,13 +106,12 @@ public class CategoryServiceImpl implements ICategoryService {
 		categoryDTO.setParentCode(category.getParent().getCategoryCode());
 		categoryDTO.setChildCategoryCount(category.getChildCount());					
 		categoryDTO.setLayoutCodes(category.getCategoryLayouts());
-		
 		return categoryDTO;
 	}
 
 
 	@Override
-	public Category doToDto(Object dO) {
+	public Category doToDto(io.nzbee.domain.category.Category dO) {
 		// TODO Auto-generated method stub
 		return null;
 	}
