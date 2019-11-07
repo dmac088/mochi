@@ -144,8 +144,6 @@ public class TagDaoImpl implements ITagDao {
 			Join<ProductPrice, Currency> curr = price.join(ProductPrice_.currency);
 			conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.priceValue), priceStart));
 			conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.priceValue), priceEnd));
-			conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.startDate), priceDateStart));
-			conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.endDate), priceDateEnd));
 			conditions.add(cb.equal(type.get(ProductPriceType_.desc), priceType));
 			conditions.add(cb.equal(curr.get(Currency_.code), currency));
 		}

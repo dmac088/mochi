@@ -1,7 +1,5 @@
 package io.nzbee.entity.product.price;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,7 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.currency.Currency;
 
@@ -28,12 +25,6 @@ public class ProductPrice {
 	
 	@Column(name="prc_val")
 	private Double priceValue;
-
-	@Column(name="prc_st_dt")
-	private Date startDate;
-	
-	@Column(name="prc_en_dt")
-	private Date endDate; 
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="prc_typ_id", nullable=false, updatable = false, insertable = true)
@@ -69,22 +60,6 @@ public class ProductPrice {
 
 	public void setCurrency(Currency priceCurrency) {
 		this.currency = priceCurrency;
-	}
-	
-	public Date getStartDate() {
-		return startDate;
-	}
-
-	public void setStartDate(Date priceStartDate) {
-		this.startDate = priceStartDate;
-	}
-
-	public Date getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(Date priceEndDate) {
-		this.endDate = priceEndDate;
 	}
 	
 	public Product getProduct() {
