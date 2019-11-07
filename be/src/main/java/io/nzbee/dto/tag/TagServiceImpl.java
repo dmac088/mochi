@@ -98,9 +98,8 @@ public class TagServiceImpl implements ITagService {
 	}
 
 	@Override
-	public Tag entityToDTO(String locale, String currency, Object entity) {
+	public Tag entityToDTO(String locale, String currency, io.nzbee.entity.tag.Tag tag) {
 		// TODO Auto-generated method stub
-		io.nzbee.entity.tag.Tag tag = ((io.nzbee.entity.tag.Tag) entity);
 		Tag t = new Tag();
 		t.setTagId(tag.getTagId());
 		t.setTagCode(tag.getCode());
@@ -110,7 +109,7 @@ public class TagServiceImpl implements ITagService {
 	}
 
 	@Override
-	public Tag doToDto(Object dO) {
+	public Tag doToDto(io.nzbee.domain.tag.Tag dO) {
 		// TODO Auto-generated method stub
 		return null;
 	}

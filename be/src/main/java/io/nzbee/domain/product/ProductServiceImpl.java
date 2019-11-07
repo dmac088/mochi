@@ -94,7 +94,7 @@ public class ProductServiceImpl implements IProductService {
 									  pageable, 
 									  categoryDesc, 
 									  facets.stream()
-									  .map(f -> (IDto) productDtoService.doToDto(f.getPayload())).collect(Collectors.toList()), 
+									  .map(f -> (IDto) productDtoService.doToDto((Product)f.getPayload())).collect(Collectors.toList()), 
 									  sortBy);
 				
 		    return new PageImpl<Product>(
@@ -119,7 +119,7 @@ public class ProductServiceImpl implements IProductService {
 										 pageable, 
 										 categoryDesc, 
 										 facets.stream()
-										 .map(f -> (IDto) productDtoService.doToDto(f.getPayload())).collect(Collectors.toList()), 
+										 .map(f -> (IDto) productDtoService.doToDto((Product)f.getPayload())).collect(Collectors.toList()), 
 										 sortBy);
 		
      	return new PageImpl<Product>(pp.stream().map(p -> this.dtoToDO(p)).collect(Collectors.toList()),
@@ -128,12 +128,15 @@ public class ProductServiceImpl implements IProductService {
     	
 	}
 
-	
 	@Override
-	public io.nzbee.domain.product.Product dtoToDO(Object dto) {
+	public String tokenToCode(String token) {
 		// TODO Auto-generated method stub
-		io.nzbee.dto.product.Product productDto = (io.nzbee.dto.product.Product) dto;
-		
+		return token;
+	}
+
+	@Override
+	public Product dtoToDO(io.nzbee.dto.product.Product productDto) {
+		// TODO Auto-generated method stub
 		Product domainProduct = new Product();
 		domainProduct.setProductUPC(productDto.getProductUPC());
 		domainProduct.setCurrency(productDto.getCurrency());
@@ -144,12 +147,6 @@ public class ProductServiceImpl implements IProductService {
 		domainProduct.setProductMarkdown(productDto.getProductMarkdown());
 		domainProduct.setProductRetail(productDto.getProductRetail());
 		return domainProduct;
-	}
-
-	@Override
-	public String tokenToCode(String token) {
-		// TODO Auto-generated method stub
-		return token;
 	}
 	
 }

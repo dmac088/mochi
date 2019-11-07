@@ -164,12 +164,6 @@ public class CustomerServiceImpl implements ICustomerService {
 		return cDo;
 	}
 
-	@Override
-	public Customer doToDto(Object dO) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 
 	@Override
 	public List<Customer> getCustomers() {
@@ -184,23 +178,33 @@ public class CustomerServiceImpl implements ICustomerService {
 		return null;
 	}
 
+
 	@Override
 	public Optional<Customer> findByDesc(String desc) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+
 	@Override
-	public Customer entityToDTO(Object entity) {
+	public List<Customer> findAll(List<IDto> dtos) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 
 	@Override
-	public List<Customer> findAll(List<IDto> codes) {
+	public Customer entityToDTO(io.nzbee.entity.role.customer.Customer entity) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+	@Override
+	public Customer doToDto(io.nzbee.domain.customer.Customer domainObject) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

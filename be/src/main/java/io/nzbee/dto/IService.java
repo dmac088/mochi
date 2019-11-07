@@ -3,24 +3,20 @@ package io.nzbee.dto;
 import java.util.List;
 import java.util.Optional;
 
-public interface IService<T> {
+public interface IService<T, X, Y> {
 
-	//for a DTO we need the locale
 	Optional<T> findById(long brandId);
 	
 	//for a DTO we need the locale
 	Optional<T> findByCode(String code);
 	
-	//for a DTO we need the locale
 	Optional<T> findByDesc(String desc);
 	
-	//for a DTO we need the locale
 	List<T> findAll();
 	
 	List<T> findAll(List<IDto> dtos);
 	
-	//for a DTO we need the locale
-	T entityToDTO(Object entity);
+	T entityToDTO(X entity);
 
-	T doToDto(Object dO);
+	T doToDto(Y domainObject);
 }

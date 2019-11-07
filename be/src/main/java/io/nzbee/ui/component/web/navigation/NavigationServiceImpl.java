@@ -45,8 +45,10 @@ public class NavigationServiceImpl extends UIService implements INavigationServi
 												  selectedFacets,
 												  sortBy);
 		
-		return new PageImpl<Product>(pp.stream().map(p->productService.dtoToDO(p)).collect(Collectors.toList()), 
-													   pp.getPageable(), pp.getTotalElements());
+		return new PageImpl<Product>(pp.stream().map(p-> p)
+														.collect(Collectors.toList()), 
+														pp.getPageable(), 
+														pp.getTotalElements());
 
 	}
 	

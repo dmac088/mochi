@@ -19,11 +19,11 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
     
 	@Autowired
     private io.nzbee.dto.brand.IBrandService brandService;
-
+	
 	@Override
 	@Transactional
 	@Cacheable
-	public Optional<Brand> findById(String locale, String currency, Long Id) {
+	public Optional<Brand> findById(String locale, String currency, Long Id) {		
     	io.nzbee.dto.brand.Brand pb = brandService.findById(locale, currency, Id).get();
      	return	Optional.ofNullable(this.dtoToDO(pb));
 	}
@@ -31,13 +31,13 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	@Override
 	public Optional<Brand> findByCode(String locale, String currency, String code) {
 		// TODO Auto-generated method stub
-		return Optional.ofNullable(dtoToDO(brandService.findByCode(locale, currency, code)));
+		return Optional.ofNullable(dtoToDO(brandService.findByCode(locale, currency, code).get()));
 	}
 
 	@Override
 	public Optional<Brand> findByDesc(String locale, String currency, String desc) {
 		// TODO Auto-generated method stub
-		return Optional.ofNullable(dtoToDO(brandService.findByDesc(locale, currency, desc)));
+		return Optional.ofNullable(dtoToDO(brandService.findByDesc(locale, currency, desc).get()));
 	}
   
     @Override
@@ -73,9 +73,9 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 		return null;//brandService.finall;
 	}
 
-    
+	
 	@Override
-	public Brand dtoToDO(Object dto) {
+	public Brand dtoToDO(io.nzbee.dto.brand.Brand dto) {
 		// TODO Auto-generated method stub
 		io.nzbee.dto.brand.Brand brandDTO = (io.nzbee.dto.brand.Brand) dto;
 		final Brand bDO = new Brand();
@@ -101,5 +101,7 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 		// TODO Auto-generated method stub
 		return "BrandFR";
 	}
+
+
 	
 }
