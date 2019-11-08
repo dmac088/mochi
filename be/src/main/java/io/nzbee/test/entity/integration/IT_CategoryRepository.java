@@ -46,8 +46,6 @@ public class IT_CategoryRepository {
     																 	 "PRM01").get();
     	Hierarchy 		hierarchy 		= parentCategory.getHierarchy();
     	
-    	System.out.println(hierarchy.getHierarchyCode());
-    	
     	category.setCategoryCode("TST01");
     	category.setCategoryLevel(new Long(1));
     	category.setCategoryType(categoryType);
