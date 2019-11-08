@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.ICategoryService;
@@ -20,6 +21,7 @@ import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.entity.category.type.ICategoryTypeRepository;
+import io.nzbee.entity.product.hierarchy.Hierarchy;
 import io.nzbee.variables.GeneralVars;
 
 @RunWith(SpringRunner.class)
@@ -33,7 +35,7 @@ public class IT_CategoryRepository {
  
     @Autowired
     private ICategoryService categoryService;
-
+    
     @Autowired
     private ICategoryTypeRepository categoryTypeRepository;
     
@@ -43,14 +45,16 @@ public class IT_CategoryRepository {
     	Category 		parentCategory 	= categoryService.findByCode(GeneralVars.LANGUAGE_ENGLISH, 
     																 	 GeneralVars.CURRENCY_USD, 
     																 	 "PRM01").get();
+    	Hierarchy 		hierarchy 		= parentCategory.getHierarchy();
+    	
+    	System.out.println(hierarchy.getHierarchyCode());
     	
     	category.setCategoryCode("TST01");
     	category.setCategoryLevel(new Long(1));
     	category.setCategoryType(categoryType);
     	category.setParent(parentCategory);
+    	category.setHierarchy(hierarchy);
     	entityManager.persist(category);
-    	
-    	System.out.println(category.getCategoryCode());
     	
     	List<CategoryAttribute> categoryAttributes = new ArrayList<CategoryAttribute>();
     	CategoryAttribute categoryAttribute = new CategoryAttribute();
@@ -70,7 +74,7 @@ public class IT_CategoryRepository {
     @Test
     public void whenFindByCode_thenReturnCategory() {
     	Category category = this.persistNewCategory();
-        
+    	
         // when
     	Category found = categoryService.findByCode(GeneralVars.LANGUAGE_ENGLISH, 
 				 									GeneralVars.CURRENCY_USD, 
@@ -83,14 +87,12 @@ public class IT_CategoryRepository {
     @Test
     public void whenFindById_thenReturnCategory() {
     	Category category = this.persistNewCategory();
-        
-    	System.out.println(category == null);
-    	System.out.println(category.getCategoryId());
+       
     	
         // when
     	Category found = categoryService.findById(GeneralVars.LANGUAGE_ENGLISH, 
-													GeneralVars.CURRENCY_USD,  
-    												category.getCategoryId()).get();
+												  GeneralVars.CURRENCY_USD,  
+    											  category.getCategoryId()).get();
      
         // then
     	assertFound(category, found);
@@ -98,6 +100,7 @@ public class IT_CategoryRepository {
     
     private void assertFound(final Category category, final Category found) {
 
+    	
     	assertThat(found.getCategoryCode())
         .isEqualTo(category.getCategoryCode());
 //	    assertThat(found.getCategoryLevel())
