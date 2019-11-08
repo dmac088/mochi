@@ -103,12 +103,12 @@ public class IT_CategoryRepository {
     	
     	assertThat(found.getCategoryCode())
         .isEqualTo(category.getCategoryCode());
-//	    assertThat(found.getCategoryLevel())
-//	    .isEqualTo(category.getCategoryLevel());
-//	    assertThat(found.getCategoryType().getCode())
-//	    .isEqualTo(category.getCategoryType().getCode());
-	  //  assertThat(found.getAttributes().stream().filter(a -> a.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH)).findFirst().get().getCategoryDesc())
-	  //  .isEqualTo(category.getAttributes().stream().filter(a -> a.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH)).findFirst().get().getCategoryDesc());
+	    assertThat(found.getCategoryLevel())
+	    .isEqualTo(category.getCategoryLevel());
+	    assertThat(found.getCategoryType().getCode())
+	    .isEqualTo(category.getCategoryType().getCode());
+	    assertThat(found.getAttributes().stream().filter(a -> a.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH)).findFirst().get().getCategoryDesc())
+	    .isEqualTo(category.getAttributes().stream().filter(a -> a.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH)).findFirst().get().getCategoryDesc());
     }
  
 }
