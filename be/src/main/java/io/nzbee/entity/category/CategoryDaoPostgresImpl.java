@@ -1,6 +1,8 @@
 
 package io.nzbee.entity.category;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -191,23 +193,24 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 			query.setParameter("categoryCodes", categoryCodes);
 		}
 
-		
 		Object[] c = (Object[])query.getSingleResult();
+		
 		Category category = (Category) c[0];
 		category.setCategoryAttribute(((CategoryAttribute) c[1]));
 		category.setCategoryType((CategoryType) c[2]);
 		category.setHierarchy((Hierarchy) c[3]);
+		if(!(c[4] == null) ) {
+			Category parentCategory = (Category) c[4];
+			parentCategory.setCategoryAttribute(((CategoryAttribute) c[5]));
+			parentCategory.setCategoryType((CategoryType) c[6]);
+			parentCategory.setHierarchy((Hierarchy) c[7]);
+			category.setParent(parentCategory);
+		}
 		category.setObjectCount(((BigDecimal)c[8]).intValue());
 		category.setChildCount(((BigInteger)c[9]).longValue());
 		category.setCategoryLayouts((((String)c[10]) != null)
 				? ((String)c[10]).split(",", -1)
-				: new String[0]);
-		Category parentCategory = (Category) c[4];
-		parentCategory.setCategoryAttribute(((CategoryAttribute) c[5]));
-		parentCategory.setCategoryType((CategoryType) c[6]);
-		parentCategory.setHierarchy((Hierarchy) c[7]);
-			
-		category.setParent(parentCategory);
+				: new String[0]);	
 		
 		return Optional.ofNullable(category);
 	}

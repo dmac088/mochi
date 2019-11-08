@@ -158,7 +158,7 @@ public abstract class Category {
 	private Long categoryLevel;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="hir_id", insertable=false, updatable=false)
+	@JoinColumn(name="hir_id")
 	@IndexedEmbedded
 	private Hierarchy hierarchy;
 
