@@ -1,8 +1,6 @@
 
 package io.nzbee.entity.category;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
