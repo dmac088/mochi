@@ -61,10 +61,26 @@ public class IT_CategoryRepository {
     	categoryAttribute.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
     	categoryAttributes.add(categoryAttribute);
     	category.setAttributes(categoryAttributes);
+    	category.setCategoryAttribute(categoryAttribute);
     	entityManager.persist(categoryAttribute);
     	entityManager.flush();
     	
     	return category;
+    }
+   
+    
+    @Test
+    public void whenFindById_thenReturnCategory() {
+    	Category category = this.persistNewCategory();
+       
+    	
+        // when
+    	Category found = categoryService.findById(GeneralVars.LANGUAGE_ENGLISH, 
+												  GeneralVars.CURRENCY_USD,  
+    											  category.getCategoryId()).get();
+     
+        // then
+    	assertFound(category, found);
     }
     
     // write test cases here
@@ -81,15 +97,15 @@ public class IT_CategoryRepository {
     	assertFound(category, found);
     }
     
+ // write test cases here
     @Test
-    public void whenFindById_thenReturnCategory() {
+    public void whenFindByDesc_thenReturnCategory() {
     	Category category = this.persistNewCategory();
-       
     	
         // when
-    	Category found = categoryService.findById(GeneralVars.LANGUAGE_ENGLISH, 
-												  GeneralVars.CURRENCY_USD,  
-    											  category.getCategoryId()).get();
+    	Category found = categoryService.findByDesc(GeneralVars.LANGUAGE_ENGLISH, 
+				 									GeneralVars.CURRENCY_USD, 
+				 									category.getCategoryAttribute().getCategoryDesc()).get();
      
         // then
     	assertFound(category, found);
