@@ -21,6 +21,7 @@ import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.entity.category.type.ICategoryTypeRepository;
 import io.nzbee.entity.product.hierarchy.Hierarchy;
+import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.GeneralVars;
 
 @RunWith(SpringRunner.class)
@@ -42,8 +43,8 @@ public class IT_CategoryRepository {
     	Category 		category 		= new CategoryProduct();
     	CategoryType 	categoryType 	= categoryTypeRepository.findById(new Long(1)).get();
     	Category 		parentCategory 	= categoryService.findByCode(GeneralVars.LANGUAGE_ENGLISH, 
-    																 	 GeneralVars.CURRENCY_USD, 
-    																 	 "PRM01").get();
+    																 GeneralVars.CURRENCY_USD, 
+    																 CategoryVars.PRIMARY_HIERARCHY_ROOT_CODE).get();
     	Hierarchy 		hierarchy 		= parentCategory.getHierarchy();
     	
     	category.setCategoryCode("TST01");
@@ -113,15 +114,14 @@ public class IT_CategoryRepository {
     
     private void assertFound(final Category category, final Category found) {
 
-    	
     	assertThat(found.getCategoryCode())
         .isEqualTo(category.getCategoryCode());
 	    assertThat(found.getCategoryLevel())
 	    .isEqualTo(category.getCategoryLevel());
 	    assertThat(found.getCategoryType().getCode())
 	    .isEqualTo(category.getCategoryType().getCode());
-	    assertThat(found.getAttributes().stream().filter(a -> a.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH)).findFirst().get().getCategoryDesc())
-	    .isEqualTo(category.getAttributes().stream().filter(a -> a.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH)).findFirst().get().getCategoryDesc());
+	    assertThat(found.getCategoryAttribute().getCategoryDesc())
+	    .isEqualTo(category.getCategoryAttribute().getCategoryDesc());
     }
  
 }
