@@ -40,8 +40,7 @@ public class IT_CategoryServiceImplIntegrationTest {
     }
 
 	@Autowired
-	@InjectMocks
-    private CategoryServiceImpl categoryService;
+    private ICategoryService categoryService;
  
 	@MockBean
     private ICategoryDao categoryDao;
