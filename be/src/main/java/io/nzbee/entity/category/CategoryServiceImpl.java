@@ -12,7 +12,7 @@ public class CategoryServiceImpl implements ICategoryService {
 
 	@Autowired
 	@Qualifier(value = "categoryEntityPostgresDao")
-	private CategoryDaoPostgresImpl categoryDAO;
+	private ICategoryDao categoryDAO;
 	
 	@Override
 	public Optional<Category> findById(String locale, String currency, long id) {
