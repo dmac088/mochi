@@ -70,12 +70,17 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 										: new String[0]);
 			
 			
-			if(c[4] != null) {
-				Category parentCategory = (Category) c[4];
-				parentCategory.setCategoryAttribute(((CategoryAttribute) c[5]));
-				parentCategory.setCategoryType((CategoryType) c[6]);
-				parentCategory.setHierarchy((Hierarchy) c[7]);
-				category.setParent(parentCategory);
+			//if c[4] is null then the category does not have a parent
+			if(category instanceof CategoryProduct) {
+				((CategoryProduct) category).setHasParent(c[4] != null);
+				if(((CategoryProduct) category).hasParent()) {
+					//we have a parent
+					Category parentCategory = (Category) c[4];
+					parentCategory.setCategoryAttribute(((CategoryAttribute) c[5]));
+					parentCategory.setCategoryType((CategoryType) c[6]);
+					parentCategory.setHierarchy((Hierarchy) c[7]);
+					category.setParent(parentCategory);
+				}
 			}
 			
 			return category;
@@ -114,12 +119,17 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 					? ((String)c[10]).split(",", -1)
 					: new String[0]);
 			
-			if(c[4] != null) {
-				Category parentCategory = (Category) c[4];
-				parentCategory.setCategoryAttribute(((CategoryAttribute) c[5]));
-				parentCategory.setCategoryType((CategoryType) c[6]);
-				parentCategory.setHierarchy((Hierarchy) c[7]);
-				category.setParent(parentCategory);
+			//if c[4] is null then the category does not have a parent
+			if(category instanceof CategoryProduct) {
+				((CategoryProduct) category).setHasParent(c[4] != null);
+				if(((CategoryProduct) category).hasParent()) {
+					//we have a parent
+					Category parentCategory = (Category) c[4];
+					parentCategory.setCategoryAttribute(((CategoryAttribute) c[5]));
+					parentCategory.setCategoryType((CategoryType) c[6]);
+					parentCategory.setHierarchy((Hierarchy) c[7]);
+					category.setParent(parentCategory);
+				}
 			}
 			return category;
 		}).collect(Collectors.toList());
@@ -202,12 +212,16 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		category.setCategoryAttribute(((CategoryAttribute) c[1]));
 		category.setCategoryType((CategoryType) c[2]);
 		category.setHierarchy((Hierarchy) c[3]);
-		if(!(c[4] == null) ) {
-			Category parentCategory = (Category) c[4];
-			parentCategory.setCategoryAttribute(((CategoryAttribute) c[5]));
-			parentCategory.setCategoryType((CategoryType) c[6]);
-			parentCategory.setHierarchy((Hierarchy) c[7]);
-			category.setParent(parentCategory);
+		if(category instanceof CategoryProduct) {
+			((CategoryProduct) category).setHasParent(c[4] != null);
+			if(((CategoryProduct) category).hasParent()) {
+				//we have a parent
+				Category parentCategory = (Category) c[4];
+				parentCategory.setCategoryAttribute(((CategoryAttribute) c[5]));
+				parentCategory.setCategoryType((CategoryType) c[6]);
+				parentCategory.setHierarchy((Hierarchy) c[7]);
+				category.setParent(parentCategory);
+			}
 		}
 		category.setObjectCount(((BigDecimal)c[8]).intValue());
 		category.setChildCount(((BigInteger)c[9]).longValue());

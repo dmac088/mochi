@@ -182,7 +182,7 @@ public abstract class Category {
 				cascade = CascadeType.ALL,
 				orphanRemoval = true)
 	private List<CategoryAttribute> attributes;
-
+	
 	@Transient
 	private CategoryAttribute categoryAttribute;
 	

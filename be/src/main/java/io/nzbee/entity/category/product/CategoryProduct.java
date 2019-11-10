@@ -35,6 +35,17 @@ public class CategoryProduct extends Category  {
 	@Transient
 	private int productCount;
 	
+	@Transient
+	private boolean hasParent;
+	
+	public boolean hasParent() {
+		return hasParent;
+	}
+
+	public void setHasParent(boolean hasParent) {
+		this.hasParent = hasParent;
+	}
+
 	public CategoryProduct() {
 		super();
 	}
