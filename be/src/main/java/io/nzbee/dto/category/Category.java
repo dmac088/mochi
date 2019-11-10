@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import io.nzbee.dto.IDto;
 
-public class Category implements IDto {
+public abstract class Category implements IDto {
 	
 	private Long categoryId;
 
@@ -13,12 +13,8 @@ public class Category implements IDto {
 	private String categoryDesc;
 	
 	private Long categoryLevel;
-	
-	private String categoryType;
 
 	private String lclCd;
-	
-	private String parentCode;	
 
 	private Long childCategoryCount;
 
@@ -59,9 +55,7 @@ public class Category implements IDto {
 		this.categoryCode 	= categoryCode;
 		this.categoryDesc 	= categoryDesc;
 		this.categoryLevel 	= categoryLevel;
-		this.categoryType 	= categoryTypeCode;
 		this.lclCd 			= locale;
-		this.parentCode 	= parentCategoryCode;
 		this.objectCount	= objectCount;
 		this.retailPrice	= retailPrice;
 		this.markdownPrice	= markdownPrice;
@@ -73,14 +67,6 @@ public class Category implements IDto {
 
 	public void setCategoryCode(String categoryCode) {
 		this.categoryCode = categoryCode;
-	}
-
-	public String getParentCode() {
-		return parentCode;
-	}
-
-	public void setParentCode(String parentCode) {
-		this.parentCode = parentCode;
 	}
 
 	public String getCategoryDesc() {
@@ -113,14 +99,6 @@ public class Category implements IDto {
 
 	public void setChildCategoryCount(Long childCategoryCount) {
 		this.childCategoryCount = childCategoryCount;
-	}
-	
-	public String getCategoryType() {
-		return categoryType;
-	}
-	
-	public void setCategoryType(String categoryType) {
-		this.categoryType = categoryType;
 	}
 	
 	public int getObjectCount() {
@@ -180,8 +158,6 @@ public class Category implements IDto {
         .append("categoryCode=").append(categoryCode)
         .append(", categoryDesc=").append(categoryDesc)
         .append(", categoryLevel=").append(categoryLevel)
-        .append(", categoryType=").append(categoryType)
-        .append(", parentCode=").append(parentCode)
         .append(", childCategoryCount=").append(childCategoryCount)
         .append(", lclCd=").append(lclCd)
         .append("]");    	
