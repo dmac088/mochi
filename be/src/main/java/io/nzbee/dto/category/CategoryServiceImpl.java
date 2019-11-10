@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import io.nzbee.dto.category.Category;
 import io.nzbee.dto.brand.Brand;
 import io.nzbee.dto.tag.Tag;
+import io.nzbee.entity.category.product.CategoryProduct;
+import io.nzbee.dto.category.brand.BrandCategory;
+import io.nzbee.dto.category.product.ProductCategory;
 
 @Service(value = "categoryDtoService")
 @Transactional
@@ -95,15 +98,20 @@ public class CategoryServiceImpl implements ICategoryService {
 
 
 	@Override
-	public Category entityToDTO(String locale, String currency, io.nzbee.entity.category.Category category) {
+	public Category entityToDTO(String locale, String currency, final io.nzbee.entity.category.Category category) {
 		// TODO Auto-generated method stub
-		Category categoryDTO = new Category();
+		
+		final Category categoryDTO = (category instanceof CategoryProduct) 
+										? new ProductCategory() 
+										: new BrandCategory();
+										
 		categoryDTO.setCategoryCode(category.getCategoryCode());
 		categoryDTO.setCategoryDesc(category.getCategoryAttribute().getCategoryDesc());
 		categoryDTO.setCategoryLevel(category.getCategoryLevel());
-		categoryDTO.setCategoryType(category.getCategoryType().getDesc());
 		categoryDTO.setObjectCount(category.getObjectCount());
-		categoryDTO.setParentCode(category.getParent().getCategoryCode());
+		if(categoryDTO.getType().equals(ProductCategory.class)) {
+			((ProductCategory) categoryDTO).setParentCode(category.getParent().getCategoryCode());
+		}
 		categoryDTO.setChildCategoryCount(category.getChildCount());					
 		categoryDTO.setLayoutCodes(category.getCategoryLayouts());
 		return categoryDTO;

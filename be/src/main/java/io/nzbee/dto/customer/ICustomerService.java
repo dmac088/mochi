@@ -4,7 +4,7 @@ import java.util.Optional;
 import io.nzbee.dto.IService;
 
 public interface ICustomerService extends IService<Customer,
-												  io.nzbee.entity.role.customer.Customer,
+												  io.nzbee.entity.party.Party,
 												  io.nzbee.domain.customer.Customer> {
 
 	 boolean customerExist(final String username);

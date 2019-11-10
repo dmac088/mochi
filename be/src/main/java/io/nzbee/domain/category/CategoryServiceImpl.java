@@ -90,29 +90,7 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-    
-
-//	@Override
-//	public Category dtoToDO(Object dto) {
-//		// TODO Auto-generated method stub
-//		io.nzbee.dto.category.Category category = (io.nzbee.dto.category.Category) dto;
-//		
-//		Category categoryDO = category.getCategoryType().equals("product") 
-//				? new ProductCategory()
-//				: new BrandCategory();
-//
-//		categoryDO.setCategoryCode(category.getCategoryCode());
-//		categoryDO.setCategoryDesc(category.getCategoryDesc());
-//		categoryDO.setCategoryLevel(category.getCategoryLevel());
-//		categoryDO.setCategoryType(category.getCategoryType());
-//		categoryDO.setCount(category.getObjectCount());
-//		categoryDO.setParentCode(category.getParentCode());
-//		categoryDO.setChildCount(category.getChildCategoryCount());
-//		categoryDO.setLayoutCodes(category.getLayoutCodes());
-//		
-//		return categoryDO;
-//	}
-
+   
 	@Override
 	public String tokenToCode(String token) {
 		// TODO Auto-generated method stub
@@ -134,16 +112,17 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	@Override
 	public Category dtoToDO(io.nzbee.dto.category.Category category) {
 		// TODO Auto-generated method stub
-		Category categoryDO = category.getCategoryType().equals("product") 
+		Category categoryDO = category.getType().equals(io.nzbee.dto.category.product.ProductCategory.class.toString()) 
 		? new ProductCategory()
 		: new BrandCategory();
 
 		categoryDO.setCategoryCode(category.getCategoryCode());
 		categoryDO.setCategoryDesc(category.getCategoryDesc());
 		categoryDO.setCategoryLevel(category.getCategoryLevel());
-		categoryDO.setCategoryType(category.getCategoryType());
 		categoryDO.setCount(category.getObjectCount());
-		categoryDO.setParentCode(category.getParentCode());
+		if(category.getType().equals(io.nzbee.dto.category.product.ProductCategory.class.toString())) {
+			((ProductCategory) categoryDO).setParentCode(((io.nzbee.dto.category.product.ProductCategory) category).getParentCode());
+		}
 		categoryDO.setChildCount(category.getChildCategoryCount());
 		categoryDO.setLayoutCodes(category.getLayoutCodes());
 		
