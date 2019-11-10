@@ -27,6 +27,7 @@ public class NavigationController {
 	@Autowired 
 	private INavigationService navigationService;
 	
+	@SuppressWarnings("unchecked")
 	@PostMapping(value = "/Product/{locale}/{currency}/category/{category}/maxPrice/{price}/sortBy/{sortBy}",
 				 params = { "page", "size" })
 	public ResponseEntity<PagedResources<ProductResource>> getProducts(	
@@ -58,6 +59,7 @@ public class NavigationController {
 		return new ResponseEntity< >(assembler.toResource(prPages), HttpStatus.OK); 
 	}
 
+	@SuppressWarnings("unchecked")
 	@PostMapping(value = "/Product/{locale}/{currency}/category/{category}/sortBy/{sortBy}",
 			 	 params = { "page", "size" })
 	public ResponseEntity<PagedResources<ProductResource>> getProducts(	@PathVariable String 	locale, 
