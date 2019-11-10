@@ -3,7 +3,7 @@ package io.nzbee.resources.search;
 import org.springframework.hateoas.ResourceSupport;
 
 import io.nzbee.domain.product.Product;
-import io.nzbee.resource.controllers.SearchController;
+import io.nzbee.resources.controllers.SearchController;
 import io.nzbee.ui.component.web.facet.FacetContainer;
 import lombok.Getter;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
