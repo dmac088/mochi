@@ -344,6 +344,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		Object result = query.getSingleResult();
 		long total = ((BigInteger) result).longValue();
 		
+		System.out.println("rowcount = " + total);
+		
 		boolean hasPrices = (!(priceStart.equals(new Double(-1)) && (priceEnd.equals(new Double(-1)))));
 		
 		query = em.createNativeQuery(this.constructSQL(	categoryCodes.size()>=1, 
@@ -553,12 +555,11 @@ public class ProductDaoPostgresImpl implements IProductDao {
 						"	ON ptags.tag_id = tag.tag_id "
 				   : 	"") +
 		
-		"WHERE now() >= prc.prc_st_dt AND now() <= prc.prc_en_dt  " + 
-		"AND prdt.prd_typ_cd = 	:productTypeCode " +
-		"AND curr.ccy_cd = 		:currency " + 
-		"AND prd_sts_cd = 		:activeProductCode  " + 
-		"AND bal.lcl_cd = 		:locale " +
-		"AND attr.lcl_cd = 		:locale " +	
+		"WHERE prdt.prd_typ_cd = 	:productTypeCode " +
+		"AND curr.ccy_cd = 			:currency " + 
+		"AND prd_sts_cd = 			:activeProductCode  " + 
+		"AND bal.lcl_cd = 			:locale " +
+		"AND attr.lcl_cd = 			:locale " +	
 		((hasBrands) 
 					? "AND bnd.bnd_cd in 		:brandCodes " 
 					: "") +
