@@ -7,7 +7,7 @@ import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Component;
 
 import io.nzbee.domain.product.Product;
-import io.nzbee.resource.controllers.ProductController;
+import io.nzbee.resources.controllers.ProductController;
 
 @Component
 public class ProductAssembler extends ResourceAssemblerSupport<Product, ProductResource> {
