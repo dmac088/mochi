@@ -112,7 +112,11 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	@Override
 	public Category dtoToDO(io.nzbee.dto.category.Category category) {
 		// TODO Auto-generated method stub
-		Category categoryDO = category.getType().equals(io.nzbee.dto.category.product.ProductCategory.class.toString()) 
+		
+		System.out.println(category.getType());
+		System.out.println(io.nzbee.dto.category.product.ProductCategory.class.getSimpleName());
+		
+		Category categoryDO = category.getType().equals(io.nzbee.dto.category.product.ProductCategory.class.getSimpleName()) 
 		? new ProductCategory()
 		: new BrandCategory();
 
@@ -120,7 +124,8 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 		categoryDO.setCategoryDesc(category.getCategoryDesc());
 		categoryDO.setCategoryLevel(category.getCategoryLevel());
 		categoryDO.setCount(category.getObjectCount());
-		if(category.getType().equals(io.nzbee.dto.category.product.ProductCategory.class.toString())) {
+		if(category.getType().equals(io.nzbee.dto.category.product.ProductCategory.class.getSimpleName())) {
+			System.out.println(((io.nzbee.dto.category.product.ProductCategory) category).getParentCode());
 			((ProductCategory) categoryDO).setParentCode(((io.nzbee.dto.category.product.ProductCategory) category).getParentCode());
 		}
 		categoryDO.setChildCount(category.getChildCategoryCount());

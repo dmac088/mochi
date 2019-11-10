@@ -15,6 +15,8 @@ public class ProductCategory extends Category {
 	@JsonIgnore
 	private List<Product> products;
 	
+	private String parentCode;
+	
 	public List<Product> getProducts() {
 		return products;
 	}
@@ -45,6 +47,14 @@ public class ProductCategory extends Category {
 	public Long getLevel() {
 		// TODO Auto-generated method stub
 		return super.getCategoryLevel();
+	}
+
+	public String getParentCode() {
+		return parentCode;
+	}
+
+	public void setParentCode(String parentCode) {
+		this.parentCode = parentCode;
 	}
 	
 }

@@ -109,7 +109,7 @@ public class CategoryServiceImpl implements ICategoryService {
 		categoryDTO.setCategoryDesc(category.getCategoryAttribute().getCategoryDesc());
 		categoryDTO.setCategoryLevel(category.getCategoryLevel());
 		categoryDTO.setObjectCount(category.getObjectCount());
-		if(categoryDTO.getType().equals(ProductCategory.class)) {
+		if(categoryDTO.getType().equals(ProductCategory.class.getSimpleName())) {
 			((ProductCategory) categoryDTO).setParentCode(category.getParent().getCategoryCode());
 		}
 		categoryDTO.setChildCategoryCount(category.getChildCount());					

@@ -13,8 +13,6 @@ public abstract class Category implements IHierarchicalDomainObject {
 	private Long categoryLevel;
 	
 	private String categoryType;
-	
-	private String parentCode;	
 
 	private Long childCategoryCount;
 
@@ -40,7 +38,6 @@ public abstract class Category implements IHierarchicalDomainObject {
 		this.categoryDesc 	= categoryDesc;
 		this.categoryLevel 	= categoryLevel;
 		this.categoryType 	= categoryType;
-		this.parentCode 	= parentCode;
 		this.objectCount	= objectCount;
 	}
 
@@ -58,14 +55,6 @@ public abstract class Category implements IHierarchicalDomainObject {
 
 	protected void setCategoryDesc(String categoryDesc) {
 		this.categoryDesc = categoryDesc;
-	}
-
-	public String getParentCode() {
-		return this.parentCode;
-	}
-
-	public void setParentCode(String parentCode) {
-		this.parentCode = parentCode;
 	}
 
 	protected Long getCategoryLevel() {
@@ -129,7 +118,6 @@ public abstract class Category implements IHierarchicalDomainObject {
         .append(", categoryDesc=").append(categoryDesc)
         .append(", categoryLevel=").append(categoryLevel)
         .append(", categoryType=").append(categoryType)
-        .append(", parentCode=").append(parentCode)
         .append(", childCategoryCount=").append(childCategoryCount)
         .append(", layoutCodes=").append(String.join(",", layoutCodes))
         .append("]");    	
