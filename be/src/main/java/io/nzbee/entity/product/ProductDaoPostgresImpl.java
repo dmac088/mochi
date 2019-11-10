@@ -335,6 +335,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		.setParameter("currency", currency)
 		.setParameter("productTypeCode", ProductVars.PRODUCT_TYPE_RETAIL)
 		.setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
+		.setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
+		.setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
 		.setParameter("categoryCode", categoryCode);
 		
 		if(!brandCodes.isEmpty()) {
@@ -493,16 +495,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 						"	   ps.prd_sts_id,   " + 
 						"	   ps.prd_sts_cd,   " + 
 						"	   ps.prd_sts_desc,  " + 
-						"	   max(case  " + 
-						"	   when prc_typ_cd = :retailPriceCode " + 
-						"	   then prc.prc_val  " + 
-						"	   else 0  " + 
-						"	   end) as retail_price,  " + 
-						"	   max(case  " + 
-						"	   when prc_typ_cd = :markdownPriceCode  " + 
-						"	   then prc.prc_val  " + 
-						"	   else 0  " + 
-						"	   end) as markdown_price  ") + 
+						"	   rprc.prc_val as retail_price,  " + 
+						"	   mprc.prc_val as markdown_price  ") + 
 		
 		"FROM descendants cc    " + 
 		"	INNER JOIN mochi.product_category pc    " + 
@@ -535,14 +529,29 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		"	INNER JOIN mochi.brand_attr_lcl bal   " + 
 		"	ON bnd.bnd_id = bal.bnd_id   " + 
 			
-		"	INNER JOIN mochi.price prc     " + 
-		"	ON prd.prd_id = prc.prd_id    " + 
-			
-		"	INNER JOIN mochi.currency curr     " + 
-		"	ON prc.ccy_id = curr.ccy_id   " + 
 		
-		"	INNER JOIN mochi.price_type pt   " + 
-		"	ON prc.prc_typ_id = pt.prc_typ_id   " + 
+		"	LEFT JOIN mochi.price rprc     " + 
+		"	ON prd.prd_id = rprc.prd_id    " + 
+			
+		"	INNER JOIN mochi.currency rcurr     " + 
+		"	ON rprc.ccy_id 		= rcurr.ccy_id   " + 
+		"	AND rcurr.ccy_cd 	= :currency " + 
+		
+		"	INNER JOIN mochi.price_type rpt   " + 
+		"	ON rprc.prc_typ_id 	= rpt.prc_typ_id   " + 
+		"	AND rpt.prc_typ_cd = :retailPriceCode " +
+		
+		
+		"	LEFT JOIN mochi.price mprc     " + 
+		"	ON prd.prd_id = mprc.prd_id    " + 
+			
+		"	INNER JOIN mochi.currency mcurr     " + 
+		"	ON mprc.ccy_id 		= mcurr.ccy_id   " + 
+		"	AND mcurr.ccy_cd 	= :currency " + 
+		
+		"	INNER JOIN mochi.price_type mpt   " + 
+		"	ON mprc.prc_typ_id 	= mpt.prc_typ_id   " + 
+		"	AND mpt.prc_typ_cd = :markdownPriceCode " +
 			 
 		"	INNER JOIN mochi.product_status ps    " + 
 		"	ON prd.prd_sts_id = ps.prd_sts_id   " + 
@@ -556,7 +565,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 				   : 	"") +
 		
 		"WHERE prdt.prd_typ_cd = 	:productTypeCode " +
-		"AND curr.ccy_cd = 			:currency " + 
 		"AND prd_sts_cd = 			:activeProductCode  " + 
 		"AND bal.lcl_cd = 			:locale " +
 		"AND attr.lcl_cd = 			:locale " +	
@@ -565,35 +573,16 @@ public class ProductDaoPostgresImpl implements IProductDao {
 					: "") +
 		((hasPrices) 
 				?   "	   AND  case  " + 
-					"	   		when prc_typ_cd = :priceTypeCode  " + 
-					"	   		then prc.prc_val  " + 
+					"	   		when rpt.prc_typ_cd = :priceTypeCode  " + 
+					"	   		then rprc.prc_val  " + 
+					"			when mpt.prc_typ_cd = :priceTypeCode  "	+
+					"			then mprc.prc_val " + 		
 					"	   		else 0  " + 
 					"	   		end between :priceStart AND :priceEnd " 
 				: 	"") +
 		((countOnly) 
 					? 	""
-					: 	"GROUP BY  " + 
-						"	   cc.cat_id, " + 
-						"	   cc.cat_cd, " +	
-						"	   cc.cat_lvl, " +
-						"	   cc.cat_prnt_id, " +	
-						"	   prd.prd_id,   " + 
-						"	   prd.upc_cd,   " + 
-						"	   prd.prd_crtd_dt,   " +
-						"	   attr.prd_lcl_id, " +
-						"	   attr.prd_desc, " +	
-						"	   attr.prd_img_pth, " +	
-						"	   attr.lcl_cd, " +
-						"	   prdt.prd_typ_cd,   " + 
-						"	   prdt.prd_typ_desc,   " + 
-						"	   bnd.bnd_id,   " + 
-						"	   bnd.bnd_cd,   " + 
-						"	   bal.bnd_lcl_id,  " + 
-						"	   bal.bnd_desc,   " + 
-						"	   ps.prd_sts_id,   " + 
-						"	   ps.prd_sts_cd,   " + 
-						"	   ps.prd_sts_desc   " + 
-						" ORDER BY 	:orderby " + 
+					: 	" ORDER BY 	:orderby " + 
 						" LIMIT 	:limit " +
 						" OFFSET 	:offset ");
 	}
