@@ -1,7 +1,10 @@
 package io.nzbee.domain.tag;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import io.nzbee.domain.IDomainObject;
 
+@JsonTypeName("tag")
 public class Tag implements IDomainObject {
 
 	private Long tagId;

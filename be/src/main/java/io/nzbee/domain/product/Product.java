@@ -3,7 +3,9 @@ package io.nzbee.domain.product;
 import java.util.Date;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
+@JsonTypeName("productcategory")
 public class Product {
 
 	private String productUPC;

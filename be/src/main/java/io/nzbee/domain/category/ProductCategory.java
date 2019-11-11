@@ -3,8 +3,11 @@ package io.nzbee.domain.category;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import io.nzbee.domain.product.Product;
 
+@JsonTypeName("productcategory")
 public class ProductCategory extends Category {
 
 

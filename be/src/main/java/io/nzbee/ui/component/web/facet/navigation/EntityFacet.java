@@ -1,8 +1,11 @@
 package io.nzbee.ui.component.web.facet.navigation;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import io.nzbee.domain.IDomainObject;
 import io.nzbee.ui.component.web.facet.IFacet;
 
+@JsonTypeName("entityfacet")
 public class EntityFacet implements IFacet {
 
 	private final IDomainObject payload;
