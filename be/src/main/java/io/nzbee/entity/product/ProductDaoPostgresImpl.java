@@ -346,8 +346,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		Object result = query.getSingleResult();
 		long total = ((BigInteger) result).longValue();
 		
-		System.out.println("rowcount = " + total);
-		
 		boolean hasPrices = (!(priceStart.equals(new Double(-1)) && (priceEnd.equals(new Double(-1)))));
 		
 		query = em.createNativeQuery(this.constructSQL(	categoryCodes.size()>=1, 

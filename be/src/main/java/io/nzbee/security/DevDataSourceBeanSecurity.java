@@ -1,6 +1,4 @@
-package io.nzbee.entity;
-
-
+package io.nzbee.security;
 
 import java.util.Properties;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -8,7 +6,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -16,7 +14,6 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
 import com.zaxxer.hikari.HikariDataSource;
 
 
@@ -24,22 +21,20 @@ import com.zaxxer.hikari.HikariDataSource;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-        entityManagerFactoryRef = "mochiEntityManagerFactory", 
-        transactionManagerRef = "mochiTransactionManager"
-        )
-public class DataSourceBeanMochi {
+        entityManagerFactoryRef = "securityEntityManagerFactory", 
+        transactionManagerRef = "securityTransactionManager")
+@Profile("dev")
+public class DevDataSourceBeanSecurity {
 	
-	@Primary
-	@Bean(name = "mochiDataSourceProperties")
-    @ConfigurationProperties("spring.datasource.mochi")
+	@Bean(name = "securityDataSourceProperties")
+    @ConfigurationProperties("spring.datasource.security")
     public DataSourceProperties dataSourceProperties() {
         return new DataSourceProperties();
     }
 	
-	@Primary
-	@Bean(name = "mochiDataSource")
-    @ConfigurationProperties("spring.datasource.mochi")
-    public HikariDataSource dataSource(@Qualifier("mochiDataSourceProperties") DataSourceProperties properties) {
+	@Bean(name = "securityDataSource")
+    @ConfigurationProperties("spring.datasource.security")
+    public HikariDataSource dataSource(@Qualifier("securityDataSourceProperties") DataSourceProperties properties) {
         return properties.initializeDataSourceBuilder().type(HikariDataSource.class)
         		.driverClassName("org.postgresql.Driver")
                 .build();
@@ -47,29 +42,29 @@ public class DataSourceBeanMochi {
 	
 	private Properties additionalJpaProperties(){
 		Properties properties = new Properties();
+		//properties.setProperty("hibernate.hbm2ddl.auto", "update");
 		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
 		properties.setProperty("hibernate.show_sql", "true");
-		return properties;
-	}
+		
+		return properties; 
+	} 
      
-	@Primary
-	@Bean(name = "mochiEntityManagerFactory") 
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(@Qualifier("mochiDataSource") HikariDataSource dataSource) {
-       LocalContainerEntityManagerFactoryBean em 
+	@Bean(name = "securityEntityManagerFactory") 
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(@Qualifier("securityDataSource") HikariDataSource dataSource) {
+		LocalContainerEntityManagerFactoryBean em 
          = new LocalContainerEntityManagerFactoryBean();
        em.setDataSource(dataSource);
-       em.setPackagesToScan(new String[] 
-    		   {"io.nzbee.*"}
-        );
+       em.setPackagesToScan(new String[] {
+    		   								"io.nzbee.*"
+    		   							 });
        JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
        em.setJpaVendorAdapter(vendorAdapter);
        em.setJpaProperties(additionalJpaProperties());
        return em;
     }
     
-	@Primary
-	@Bean(name = "mochiTransactionManager")
-    public PlatformTransactionManager TransactionManager(@Qualifier("mochiEntityManagerFactory") LocalContainerEntityManagerFactoryBean entityManagerFactory) {
+	@Bean(name = "securityTransactionManager")
+    public PlatformTransactionManager TransactionManager(@Qualifier("securityEntityManagerFactory") LocalContainerEntityManagerFactoryBean entityManagerFactory) {
         JpaTransactionManager transactionManager
                 = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(

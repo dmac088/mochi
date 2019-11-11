@@ -2,8 +2,11 @@ package io.nzbee.resources.controllers;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedResources;
@@ -47,7 +50,14 @@ public class ProductController {
     									"1");
     			
 
-    	return new ResponseEntity< >(assembler.toResource(pages), HttpStatus.OK);
+    	//convert the page of products to a page of product resources
+    	final Page<ProductResource> prPages = new PageImpl<ProductResource>(pages.stream()
+							    											.map(p -> new ProductResource(p))
+							    											.collect(Collectors.toList()),
+							    											pages.getPageable(),
+							    											pages.getTotalElements());
+    	
+    	return new ResponseEntity< >(assembler.toResource(prPages), HttpStatus.OK);
     }
     
     @GetMapping("/Product/{locale}/{currency}/code/{code}")
