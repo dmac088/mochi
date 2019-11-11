@@ -1,15 +1,20 @@
 package io.nzbee.ui.component.web.facet;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import io.nzbee.domain.IDomainObject;
+import io.nzbee.ui.component.web.facet.navigation.EntityFacet;
+import io.nzbee.ui.component.web.facet.search.SearchFacet;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonTypeInfo(
-	    use = JsonTypeInfo.Id.CLASS,
+	    use = JsonTypeInfo.Id.NAME,
 	    include = JsonTypeInfo.As.PROPERTY,
-	    property = "@class")
+	    property="type")
+@JsonSubTypes( {@JsonSubTypes.Type(value = SearchFacet.class, name = "searchfacet"),
+			    @JsonSubTypes.Type(value = EntityFacet.class, name = "entityfacet")})
 public interface IFacet {
 
 	String getId();

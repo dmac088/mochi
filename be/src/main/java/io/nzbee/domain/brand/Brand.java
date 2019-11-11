@@ -1,8 +1,12 @@
 package io.nzbee.domain.brand;
 
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import io.nzbee.domain.IDomainObject;
 
+@JsonTypeName("brand")
 public class Brand implements IDomainObject {
 
 	private String brandCode;

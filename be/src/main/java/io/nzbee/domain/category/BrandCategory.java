@@ -1,12 +1,12 @@
 package io.nzbee.domain.category;
 
 import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import io.nzbee.domain.brand.Brand;
-public class BrandCategory extends Category {
 
+@JsonTypeName("brandcategory")
+public class BrandCategory extends Category {
 
 	public BrandCategory() {
 		super();
