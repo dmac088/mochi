@@ -1,4 +1,4 @@
-package io.nzbee.test.entity.integration;
+package io.nzbee.test.integration.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -27,7 +27,7 @@ import io.nzbee.variables.GeneralVars;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-public class IT_CategoryRepository {
+public class IT_CategoryRepositoryIntegrationTest {
  
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
