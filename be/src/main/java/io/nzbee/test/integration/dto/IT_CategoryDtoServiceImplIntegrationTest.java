@@ -2,6 +2,8 @@ package io.nzbee.test.integration.dto;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,7 +17,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.dto.category.ICategoryService;
 import io.nzbee.dto.category.product.ProductCategory;
+import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.product.CategoryProduct;
+import io.nzbee.entity.category.type.CategoryType;
+import io.nzbee.entity.product.hierarchy.Hierarchy;
+import io.nzbee.variables.CategoryVars;
+import io.nzbee.variables.GeneralVars;
 import io.nzbee.dto.category.Category;
 import io.nzbee.dto.category.CategoryServiceImpl;
 
@@ -46,13 +53,35 @@ public class IT_CategoryDtoServiceImplIntegrationTest {
     public void setUp() {
     	//we setup a mock so that when 
     	MockitoAnnotations.initMocks(this);
+        
+        io.nzbee.entity.category.Category 			category 		= new CategoryProduct();
+        CategoryType 								categoryType 	= new CategoryType();
+        io.nzbee.entity.category.Category 			parentCategory 	= new CategoryProduct();
+        
+        categoryType.setId(new Long(1));
+    	Hierarchy 		hierarchy 		= parentCategory.getHierarchy();
     	
-        io.nzbee.entity.category.Category testCategory = new CategoryProduct();
-        testCategory.setCategoryCode("TST01");
+    	category.setCategoryCode("TST01");
+    	category.setCategoryLevel(new Long(1));
+    	category.setCategoryType(categoryType);
+    	category.setParent(parentCategory);
+    	category.setHierarchy(hierarchy);
+    	
+    	List<CategoryAttribute> categoryAttributes = new ArrayList<CategoryAttribute>();
+    	CategoryAttribute categoryAttribute = new CategoryAttribute();
+    	categoryAttribute.setCategory(Optional.ofNullable(category));
+    	categoryAttribute.setCategoryId(category.getCategoryId());
+    	categoryAttribute.setCategoryDesc("testCategory");
+    	categoryAttribute.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
+    	categoryAttributes.add(categoryAttribute);
+    	category.setAttributes(categoryAttributes);
+    	category.setCategoryAttribute(categoryAttribute);
+        
+        
         //need to fill more of the properties here
         
-        Mockito.when(categoryEntityService.findByCode("en-GB", "HKD", testCategory.getCategoryCode()))
-          .thenReturn(Optional.ofNullable(testCategory));
+        Mockito.when(categoryEntityService.findByCode("en-GB", "HKD", category.getCategoryCode()))
+          .thenReturn(Optional.ofNullable(category));
     }
     
     @Test
