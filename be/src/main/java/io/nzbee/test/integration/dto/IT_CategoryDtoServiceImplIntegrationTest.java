@@ -87,12 +87,15 @@ public class IT_CategoryDtoServiceImplIntegrationTest {
     @Test
     public void whenValidName_thenEmployeeShouldBeFound() {
         String code = "TST01";
+        String desc = "testCategory";
         
         Optional<Category> found = categoryDtoService.findByCode("en-GB", "HKD", code);
       
         
          assertThat(found.get().getCategoryCode())
           .isEqualTo(code);
+         assertThat(found.get().getCategoryDesc())
+          .isEqualTo(desc);
      }
     
 }
