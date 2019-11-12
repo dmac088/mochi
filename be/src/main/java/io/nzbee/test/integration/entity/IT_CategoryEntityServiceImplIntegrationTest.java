@@ -21,7 +21,7 @@ import io.nzbee.entity.category.CategoryServiceImpl;
 import io.nzbee.entity.category.ICategoryDao;
 
 @RunWith(SpringRunner.class)
-public class IT_CategoryServiceImplIntegrationTest {
+public class IT_CategoryEntityServiceImplIntegrationTest {
 
 	@TestConfiguration
     static class CategoryServiceImplIntegrationTestConfiguration {

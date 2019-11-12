@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +21,7 @@ import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.entity.product.hierarchy.Hierarchy;
+import io.nzbee.test.integration.entity.beans.CategoryEntityBeanFactory;
 import io.nzbee.variables.GeneralVars;
 import io.nzbee.dto.category.Category;
 import io.nzbee.dto.category.CategoryServiceImpl;
@@ -39,10 +41,18 @@ public class IT_CategoryDtoServiceImplIntegrationTest {
         public io.nzbee.entity.category.ICategoryService categoryService() {
             return new io.nzbee.entity.category.CategoryServiceImpl();
         }
+        
+        @Bean(value = "categoryEntityBeanFactory")
+        public CategoryEntityBeanFactory categoryFactoryBean() {
+            return new CategoryEntityBeanFactory();
+        }
     }
 
 	@Autowired
     private ICategoryService categoryDtoService;
+	
+	@Autowired
+	private CategoryEntityBeanFactory categoryEntityBeanFactory;
  
 	@MockBean
     private io.nzbee.entity.category.ICategoryService categoryEntityService;
@@ -52,29 +62,7 @@ public class IT_CategoryDtoServiceImplIntegrationTest {
     	//we setup a mock so that when 
     	MockitoAnnotations.initMocks(this);
         
-        io.nzbee.entity.category.Category 			category 		= new CategoryProduct();
-        CategoryType 								categoryType 	= new CategoryType();
-        io.nzbee.entity.category.Category 			parentCategory 	= new CategoryProduct();
-        
-        categoryType.setId(new Long(1));
-    	Hierarchy 		hierarchy 		= parentCategory.getHierarchy();
-    	
-    	category.setCategoryCode("TST01");
-    	category.setCategoryLevel(new Long(1));
-    	category.setCategoryType(categoryType);
-    	category.setParent(parentCategory);
-    	category.setHierarchy(hierarchy);
-    	
-    	List<CategoryAttribute> categoryAttributes = new ArrayList<CategoryAttribute>();
-    	CategoryAttribute categoryAttribute = new CategoryAttribute();
-    	categoryAttribute.setCategory(Optional.ofNullable(category));
-    	categoryAttribute.setCategoryId(category.getCategoryId());
-    	categoryAttribute.setCategoryDesc("testCategory");
-    	categoryAttribute.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
-    	categoryAttributes.add(categoryAttribute);
-    	category.setAttributes(categoryAttributes);
-    	category.setCategoryAttribute(categoryAttribute);
-        
+        io.nzbee.entity.category.Category category = categoryEntityBeanFactory.getCategoryEntityBean();
         
         //need to fill more of the properties here
         
