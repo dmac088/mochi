@@ -2,8 +2,6 @@ package io.nzbee.test.integration.dto;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,18 +9,12 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.dto.category.ICategoryService;
-import io.nzbee.entity.category.attribute.CategoryAttribute;
-import io.nzbee.entity.category.product.CategoryProduct;
-import io.nzbee.entity.category.type.CategoryType;
-import io.nzbee.entity.product.hierarchy.Hierarchy;
 import io.nzbee.test.integration.entity.beans.CategoryEntityBeanFactory;
-import io.nzbee.variables.GeneralVars;
 import io.nzbee.dto.category.Category;
 import io.nzbee.dto.category.CategoryServiceImpl;
 
