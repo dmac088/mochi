@@ -22,29 +22,33 @@ public class CategoryEntityBeanFactory {
 
 	@Bean
 	public final Category getCategoryEntityBean() {
-		final Category 			category 		= new CategoryProduct();
-	
+		final Category category = new CategoryProduct();
 		
-		final Category 			parentCategory 	= new CategoryProduct();
-		parentCategory.setCategoryId(new Long(2));
-	    
-		final CategoryType 		categoryType 	= new CategoryType();
-	    categoryType.setId(new Long(1));
-	    
-	    final Hierarchy 		hierarchy 		= new Hierarchy();
-	    hierarchy.setHierarchyId(new Long(41));
+		final CategoryType 	categoryType = new CategoryType();
+	    categoryType.setCode("TST01");
+	    categoryType.setDesc("test category type");
 		
-		category.setCategoryCode("TST01");
+	    final Hierarchy hierarchy = new Hierarchy();
+	    hierarchy.setHierarchyCode("TST01");
+	    hierarchy.setDesc("test hierarchy");
+	    
+		final Category parentCategory 	= new CategoryProduct();
+		parentCategory.setCategoryCode("TST01");
+		parentCategory.setCategoryLevel(new Long(0));
+		parentCategory.setCategoryType(categoryType);
+		parentCategory.setHierarchy(hierarchy);
+		
+		category.setCategoryCode("TST02");
 		category.setCategoryLevel(new Long(1));
 		category.setCategoryType(categoryType);
 		category.setParent(parentCategory);
 		category.setHierarchy(hierarchy);
-		
+
 		final List<CategoryAttribute> categoryAttributes = new ArrayList<CategoryAttribute>();
 		final CategoryAttribute categoryAttribute = new CategoryAttribute();
-		categoryAttribute.setCategory(Optional.ofNullable(category));
+		categoryAttribute.setCategory(category);
 		categoryAttribute.setCategoryId(category.getCategoryId());
-		categoryAttribute.setCategoryDesc("testCategory");
+		categoryAttribute.setCategoryDesc("test category");
 		categoryAttribute.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
 		categoryAttributes.add(categoryAttribute);
 		category.setAttributes(categoryAttributes);

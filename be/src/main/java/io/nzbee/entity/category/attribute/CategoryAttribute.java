@@ -65,8 +65,8 @@ public class CategoryAttribute {
 		return Optional.ofNullable(category);
 	}
 
-	public void setCategory(Optional<Category> productCategory) {
-		this.category = productCategory.get();
+	public void setCategory(Category productCategory) {
+		this.category = productCategory;
 	}
 
 	public String getCategoryDesc() {
@@ -102,9 +102,9 @@ public class CategoryAttribute {
 	            return false;
 	    }
 	    CategoryAttribute that = (CategoryAttribute) obj;
-	      EqualsBuilder eb = new EqualsBuilder();
-	      eb.append(category.getCategoryCode(), that.category.getCategoryCode());
-	      eb.append(lclCd, that.lclCd);
-	      return eb.isEquals();
+	    EqualsBuilder eb = new EqualsBuilder();
+	    eb.append(category.getCategoryCode(), that.category.getCategoryCode());
+	    eb.append(lclCd, that.lclCd);
+	    return eb.isEquals();
 	}
 }
