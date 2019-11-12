@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.dto.category.ICategoryService;
 import io.nzbee.test.integration.entity.beans.CategoryEntityBeanFactory;
@@ -19,6 +20,7 @@ import io.nzbee.dto.category.Category;
 import io.nzbee.dto.category.CategoryServiceImpl;
 
 @RunWith(SpringRunner.class)
+@ActiveProfiles(profiles = "dev")
 public class IT_CategoryDtoServiceImplIntegrationTest {
 
 	@TestConfiguration
@@ -57,7 +59,6 @@ public class IT_CategoryDtoServiceImplIntegrationTest {
         io.nzbee.entity.category.Category category = categoryEntityBeanFactory.getCategoryEntityBean();
         
         //need to fill more of the properties here
-        
         Mockito.when(categoryEntityService.findByCode("en-GB", "HKD", category.getCategoryCode()))
           .thenReturn(Optional.ofNullable(category));
     }
@@ -69,7 +70,6 @@ public class IT_CategoryDtoServiceImplIntegrationTest {
         
         Optional<Category> found = categoryDtoService.findByCode("en-GB", "HKD", code);
       
-        
          assertThat(found.get().getCategoryCode())
           .isEqualTo(code);
          assertThat(found.get().getCategoryDesc())

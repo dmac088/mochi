@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.ICategoryService;
@@ -21,6 +22,7 @@ import io.nzbee.variables.GeneralVars;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
+@ActiveProfiles(profiles = "dev")
 public class IT_CategoryEntityRepositoryIntegrationTest {
  
 	@TestConfiguration
@@ -53,6 +55,12 @@ public class IT_CategoryEntityRepositoryIntegrationTest {
     	final Category category = categoryEntityBeanFactory.getCategoryEntityBean();
     	
     	System.out.println(category.getCategoryCode());
+    	
+    	entityManager.persist(category.getCategoryType());
+    	entityManager.flush();
+    	
+    	entityManager.persist(category.getHierarchy());
+    	entityManager.flush();
     	
     	entityManager.persist(category);
     	entityManager.flush();
