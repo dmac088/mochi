@@ -21,14 +21,18 @@ import io.nzbee.variables.GeneralVars;
 public class CategoryEntityBeanFactory {
 
 	@Bean
-	public Category getCategoryEntityBean() {
-		Category 			category 		= new CategoryProduct();
+	public final Category getCategoryEntityBean() {
+		final Category 			category 		= new CategoryProduct();
 	
-	    CategoryType 		categoryType 	= new CategoryType();
-	    Category 			parentCategory 	= new CategoryProduct();
+		
+		final Category 			parentCategory 	= new CategoryProduct();
+		parentCategory.setCategoryId(new Long(2));
 	    
+		final CategoryType 		categoryType 	= new CategoryType();
 	    categoryType.setId(new Long(1));
-		Hierarchy 		hierarchy 		= parentCategory.getHierarchy();
+	    
+	    final Hierarchy 		hierarchy 		= new Hierarchy();
+	    hierarchy.setHierarchyId(new Long(41));
 		
 		category.setCategoryCode("TST01");
 		category.setCategoryLevel(new Long(1));
@@ -36,8 +40,8 @@ public class CategoryEntityBeanFactory {
 		category.setParent(parentCategory);
 		category.setHierarchy(hierarchy);
 		
-		List<CategoryAttribute> categoryAttributes = new ArrayList<CategoryAttribute>();
-		CategoryAttribute categoryAttribute = new CategoryAttribute();
+		final List<CategoryAttribute> categoryAttributes = new ArrayList<CategoryAttribute>();
+		final CategoryAttribute categoryAttribute = new CategoryAttribute();
 		categoryAttribute.setCategory(Optional.ofNullable(category));
 		categoryAttribute.setCategoryId(category.getCategoryId());
 		categoryAttribute.setCategoryDesc("testCategory");
