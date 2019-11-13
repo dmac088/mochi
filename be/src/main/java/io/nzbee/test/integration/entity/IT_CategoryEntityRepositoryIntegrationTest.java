@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.category.Category;
@@ -54,13 +55,11 @@ public class IT_CategoryEntityRepositoryIntegrationTest {
     	
     	final Category category = categoryEntityBeanFactory.getCategoryEntityBean();
     	
-    	System.out.println(category.getCategoryCode());
-    	
     	entityManager.persist(category.getCategoryType());
-    	entityManager.flush();
     	
     	entityManager.persist(category.getHierarchy());
-    	entityManager.flush();
+    	
+    	entityManager.persist(category.getParent());
     	
     	entityManager.persist(category);
     	entityManager.flush();
@@ -85,6 +84,7 @@ public class IT_CategoryEntityRepositoryIntegrationTest {
     
     // write test cases here
     @Test
+    //@Rollback(false)
     public void whenFindByCode_thenReturnCategory() {
     	Category category = this.persistNewCategory();
     	
