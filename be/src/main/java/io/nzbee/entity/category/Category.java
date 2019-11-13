@@ -173,7 +173,7 @@ public abstract class Category {
 	@JoinColumn(name="cat_typ_id", nullable=false, updatable = false, insertable = false)
 	private CategoryType categoryType;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional=false)
+	@ManyToOne(fetch = FetchType.LAZY, optional=false)
 	@JoinColumn(name="cat_prnt_id", nullable=false)
 	@IndexedEmbedded(depth = 5)
 	private Category parent;
@@ -181,7 +181,7 @@ public abstract class Category {
 	@OneToMany(	mappedBy="category",
 				cascade = CascadeType.ALL,
 				orphanRemoval = true)
-	private List<CategoryAttribute> attributes;
+	private List<CategoryAttribute> attributes = new ArrayList<CategoryAttribute>();
 	
 	@Transient
 	private CategoryAttribute categoryAttribute;
@@ -343,8 +343,14 @@ public abstract class Category {
 		return attributes;
 	}
 	
-	public void setAttributes(List<CategoryAttribute> attributes) {
-		this.attributes = attributes;
+	public void addAttribute(CategoryAttribute categoryAttribute) {
+		attributes.add(categoryAttribute);
+		categoryAttribute.setCategory(this);		
+	}
+	
+	public void removeAttribute(CategoryAttribute categoryAttribute) {
+		attributes.remove(categoryAttribute);
+		categoryAttribute.setCategory(null);
 	}
 	
 	public String[] getCategoryLayouts() {
