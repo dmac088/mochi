@@ -69,7 +69,7 @@ public class BrandDaoImpl  implements IBrandDao {
 		BrandAttribute brandAttribute = new BrandAttribute();
 		
 		brandAttribute.setId(Long.parseLong(tuple.get("brandAttributeId").toString()));
-		brandAttribute.setBrandId(Long.parseLong(tuple.get("brandId").toString()));
+		brandAttribute.setBrand(brandEntity);
 		brandAttribute.setBrandDesc(tuple.get("brandDesc").toString());
 		brandAttribute.setLclCd(locale);
 		
@@ -110,7 +110,7 @@ public class BrandDaoImpl  implements IBrandDao {
 		BrandAttribute brandAttribute = new BrandAttribute();
 		
 		brandAttribute.setId(Long.parseLong(tuple.get("brandAttributeId").toString()));
-		brandAttribute.setBrandId(Long.parseLong(tuple.get("brandId").toString()));
+		brandAttribute.setBrand(brandEntity);
 		brandAttribute.setBrandDesc(tuple.get("brnadDesc").toString());
 		brandAttribute.setLclCd(locale);
 		
@@ -152,7 +152,7 @@ public class BrandDaoImpl  implements IBrandDao {
 		BrandAttribute brandAttribute = new BrandAttribute();
 		
 		brandAttribute.setId(Long.parseLong(tuple.get("brandAttributeId").toString()));
-		brandAttribute.setBrandId(Long.parseLong(tuple.get("brandId").toString()));
+		brandAttribute.setBrand(brandEntity);
 		brandAttribute.setBrandDesc(tuple.get("brnadDesc").toString());
 		brandAttribute.setLclCd(locale);
 		
@@ -195,7 +195,7 @@ public class BrandDaoImpl  implements IBrandDao {
 			BrandAttribute brandAttribute = new BrandAttribute();
 			
 			brandAttribute.setId(Long.parseLong(t.get("brandAttributeId").toString()));
-			brandAttribute.setBrandId(Long.parseLong(t.get("brandId").toString()));
+			brandAttribute.setBrand(brandEntity);
 			brandAttribute.setBrandDesc(t.get("brnadDesc").toString());
 			brandAttribute.setLclCd(locale);
 			
@@ -240,7 +240,7 @@ public class BrandDaoImpl  implements IBrandDao {
 			BrandAttribute brandAttribute = new BrandAttribute();
 			
 			brandAttribute.setId(Long.parseLong(t.get("brandAttributeId").toString()));
-			brandAttribute.setBrandId(Long.parseLong(t.get("brandId").toString()));
+			brandAttribute.setBrand(brandEntity);
 			brandAttribute.setBrandDesc(t.get("brnadDesc").toString());
 			brandAttribute.setLclCd(locale);
 			
@@ -282,7 +282,7 @@ public class BrandDaoImpl  implements IBrandDao {
 			BrandAttribute brandAttribute = new BrandAttribute();
 			
 			brandAttribute.setId(Long.parseLong(t.get("brandAttributeId").toString()));
-			brandAttribute.setBrandId(Long.parseLong(t.get("brandId").toString()));
+			brandAttribute.setBrand(brandEntity);
 			brandAttribute.setBrandDesc(t.get("brnadDesc").toString());
 			brandAttribute.setLclCd(locale);
 			
