@@ -170,7 +170,10 @@ public abstract class Category {
 	private List<Layout> layouts;
 	
 	@ManyToOne
-	@JoinColumn(name="cat_typ_id", nullable=false, updatable = false, insertable = false)
+	@JoinColumn(name="cat_typ_id", 
+				nullable = false, 
+				updatable = false, 
+				insertable = false)
 	private CategoryType categoryType;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional=false)

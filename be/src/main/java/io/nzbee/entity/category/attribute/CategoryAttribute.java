@@ -28,9 +28,6 @@ public class CategoryAttribute {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="cat_lcl_id")
 	private Long categoryAttributeId;
-	
-	@Column(name="cat_id")
-	private Long categoryId;
 
 	@Column(name="cat_desc")
 	private String categoryDesc;
@@ -39,8 +36,8 @@ public class CategoryAttribute {
 	@AnalyzerDiscriminator(impl = LanguageDiscriminator.class)
 	private String lclCd;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="cat_id", insertable=false, updatable=false)
+	@ManyToOne(fetch = FetchType.EAGER, optional=false)
+	@JoinColumn(name="cat_id")
 	@JsonBackReference
 	private Category category;
 
@@ -51,14 +48,6 @@ public class CategoryAttribute {
 
 	public void setCategoryAttributeId(Long categoryAttributeId) {
 		this.categoryAttributeId = categoryAttributeId;
-	}
-	
-	public Long getCategoryId() {
-		return categoryId;
-	}
-	
-	public void setCategoryId(Long categoryId) {
-		this.categoryId = categoryId;
 	}
 
 	public Optional<Category> getCategory() {
