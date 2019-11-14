@@ -58,9 +58,6 @@ public class IT_CategoryDtoServiceImplIntegrationTest {
         
         io.nzbee.entity.category.Category category = categoryEntityBeanFactory.getCategoryEntityBean();
         
-        System.out.println("test");
-        System.out.println(category.getCategoryCode());
-        
         //need to fill more of the properties here
         Mockito.when(categoryEntityService.findByCode("en-GB", "HKD", category.getCategoryCode()))
           .thenReturn(Optional.ofNullable(category));
@@ -69,7 +66,7 @@ public class IT_CategoryDtoServiceImplIntegrationTest {
     @Test
     public void whenValidCode_thenCategoryShouldBeFound() {
         String code = "TST02";
-        String desc = "testCategory";
+        String desc = "test category";
         
         Optional<Category> found = categoryDtoService.findByCode("en-GB", "HKD", code);
       
