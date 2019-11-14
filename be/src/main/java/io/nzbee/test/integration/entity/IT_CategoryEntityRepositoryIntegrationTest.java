@@ -55,12 +55,13 @@ public class IT_CategoryEntityRepositoryIntegrationTest {
     	
     	final Category category = categoryEntityBeanFactory.getCategoryEntityBean();
     	
+    	//persist a new transient test category type
     	entityManager.persist(category.getCategoryType());
     	
+    	//persist a new transient test hierarchy
     	entityManager.persist(category.getHierarchy());
     	
-    	entityManager.persist(category.getParent());
-    	
+    	//persist a new transient test category
     	entityManager.persist(category);
     	entityManager.flush();
     	
@@ -84,7 +85,6 @@ public class IT_CategoryEntityRepositoryIntegrationTest {
     
     // write test cases here
     @Test
-    //@Rollback(false)
     public void whenFindByCode_thenReturnCategory() {
     	Category category = this.persistNewCategory();
     	
