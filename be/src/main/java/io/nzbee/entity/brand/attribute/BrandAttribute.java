@@ -26,9 +26,6 @@ public class BrandAttribute {
 	@Column(name="bnd_lcl_id")
 	private Long Id;
 
-	@Column(name="bnd_id")
-	private Long brandId;
-
 	@Column(name="bnd_desc")
 	@Field(analyze = Analyze.YES, store=Store.YES)
 	private String brandDesc;
@@ -36,8 +33,9 @@ public class BrandAttribute {
 	@Column(name="lcl_cd")	
 	private String lclCd;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="bnd_id", insertable=false, updatable=false)
+	@ManyToOne(fetch = FetchType.EAGER,
+			   optional=false)
+	@JoinColumn(name="bnd_id")
 	private Brand brand;
 	
 	public Long getId() {
@@ -46,14 +44,6 @@ public class BrandAttribute {
 
 	public void setId(Long id) {
 		Id = id;
-	}
-	
-	public Long getBrandId() {
-		return brandId;
-	}
-
-	public void setBrandId(Long brandId) {
-		this.brandId = brandId;
 	}
 
 	public Brand getBrand() {

@@ -132,9 +132,7 @@ public class ProductAttribute {
 		CategoryAttribute ca = new CategoryAttribute();
 		c.setCategoryCode("UNK01");
 		ca.setLclCd(this.getLclCd());
-		List<CategoryAttribute> lca = new ArrayList<CategoryAttribute>();
-		lca.add(ca);
-		c.setAttributes(lca); 
+		ca.setCategory(c);
 		return c;
 	}
 	
