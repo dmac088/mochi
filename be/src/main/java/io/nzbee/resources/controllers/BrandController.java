@@ -3,7 +3,6 @@ package io.nzbee.resources.controllers;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resources;
@@ -16,7 +15,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.brand.IBrandService;
 import io.nzbee.resources.brand.BrandResource;
-import io.nzbee.resources.category.CategoryResource;
 
 @RestController
 @RequestMapping("/api")
