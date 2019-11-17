@@ -46,8 +46,8 @@ public class BrandController {
     	return brandService.findAll(locale, currency);
     }
 
-    @GetMapping("/Brand/{locale}/{currency}/id/{brandId}")
-    public Brand getBrand(@PathVariable String locale, @PathVariable String currency, @PathVariable Long brandId) {
-    	return brandService.findById(locale, currency, brandId).get();
+    @GetMapping("/Brand/{locale}/{currency}/code/{brandCode}")
+    public Brand get(@PathVariable String locale, @PathVariable String currency, @PathVariable String brandCode) {
+    	return brandService.findByCode(locale, currency, brandCode).get();
     }
 }
