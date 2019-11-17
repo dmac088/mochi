@@ -3,7 +3,6 @@ package io.nzbee.ui.component.web.facet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,6 @@ import io.nzbee.ui.component.web.facet.search.SearchFacet;
 import io.nzbee.ui.component.web.generic.UIService;
 
 @Service(value = "searchFacetService")
-@Transactional
 //@CacheConfig(cacheNames="products")
 public class FacetServiceImpl extends UIService implements IFacetService {
 

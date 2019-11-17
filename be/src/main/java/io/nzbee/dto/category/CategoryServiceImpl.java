@@ -3,7 +3,6 @@ package io.nzbee.dto.category;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheConfig;
@@ -16,7 +15,6 @@ import io.nzbee.dto.category.brand.BrandCategory;
 import io.nzbee.dto.category.product.ProductCategory;
 
 @Service(value = "categoryDtoService")
-@Transactional
 @CacheConfig(cacheNames="categories")
 public class CategoryServiceImpl implements ICategoryService {
     
@@ -25,7 +23,6 @@ public class CategoryServiceImpl implements ICategoryService {
     private io.nzbee.entity.category.ICategoryService categoryService;
     
     @Override
-	@Transactional
 	//@Cacheable
 	public List<Category> findAll(String locale, String currency) {
     	return categoryService.findAll(locale, currency)
@@ -57,7 +54,6 @@ public class CategoryServiceImpl implements ICategoryService {
 
 	
     @Override
- 	@Transactional
  	//@Cacheable
  	public List<Category> findByParent(String locale, String currency, String parentCategoryCode) {
     	return categoryService.findByParent(locale, parentCategoryCode)
@@ -66,7 +62,6 @@ public class CategoryServiceImpl implements ICategoryService {
  	}
     
     @Override
-  	@Transactional
   	//@Cacheable
   	public List<Category> findAllForLevel(String locale, String currency, Long level) {
      	return categoryService.findAllForLevel(locale, currency, level)
@@ -83,7 +78,6 @@ public class CategoryServiceImpl implements ICategoryService {
 	}
     
     @Override
-	@Transactional
 	//@Cacheable
 	public List<Category> findAll(String locale, String currency, String categoryDesc, List<Brand> brands, List<Tag> tags) {
     	return categoryService.findAll(

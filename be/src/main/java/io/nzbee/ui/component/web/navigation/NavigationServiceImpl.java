@@ -3,7 +3,6 @@ package io.nzbee.ui.component.web.navigation;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
-import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.data.domain.Page;
@@ -16,7 +15,6 @@ import io.nzbee.ui.component.web.facet.IFacet;
 import io.nzbee.ui.component.web.generic.UIService;
 
 @Service(value = "NavigationService")
-@Transactional
 @CacheConfig(cacheNames="products")
 public class NavigationServiceImpl extends UIService implements INavigationService {
 

@@ -10,7 +10,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.SortedNumericSortField;
@@ -41,7 +40,6 @@ import io.nzbee.ui.component.web.facet.search.SearchFacetHelper;
 import io.nzbee.ui.component.web.generic.UIService;
 
 @Service(value = "SearchService")
-@Transactional
 @CacheConfig(cacheNames = "products")
 public class SearchServiceImpl extends UIService implements ISearchService {
 

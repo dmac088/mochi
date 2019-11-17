@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.Cacheable;
@@ -17,7 +17,6 @@ import io.nzbee.dto.IDto;
 import io.nzbee.ui.component.web.facet.IFacet;
 
 @Service(value = "productDomainService")
-@Transactional
 public class ProductServiceImpl implements IProductService {
 	//In service classes, we should only call methods of entity service classes
 	//the repositories themselves should not be referenced outside the entity service class

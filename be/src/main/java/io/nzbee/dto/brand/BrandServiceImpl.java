@@ -3,7 +3,6 @@ package io.nzbee.dto.brand;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
@@ -12,7 +11,6 @@ import io.nzbee.dto.category.Category;
 import io.nzbee.dto.tag.Tag;
 
 @Service(value="brandDtoService")
-@Transactional
 @CacheConfig(cacheNames="brands")
 public class BrandServiceImpl implements IBrandService {
     
@@ -21,7 +19,6 @@ public class BrandServiceImpl implements IBrandService {
     
   
     @Override
-	@Transactional
 	@Cacheable
 	public List<Brand> findAll(String locale, String currency) {
     	List<io.nzbee.entity.brand.Brand> lpb = brandService.findAll(locale, currency);
@@ -39,7 +36,6 @@ public class BrandServiceImpl implements IBrandService {
 	}
     
 	@Override
-	@Transactional
 	@Cacheable
 	public Optional<Brand> findById(String locale, String currency, long Id) {
     	io.nzbee.entity.brand.Brand pb = brandService.findById(locale, currency, Id).get();
@@ -66,7 +62,6 @@ public class BrandServiceImpl implements IBrandService {
 	}
  
 	@Override
-	@Transactional
 	//@Cacheable
 	public List<Brand> findAll(String locale, String currency, String categoryDesc, List<Category> categories, List<Tag> tags) {
 		//get a list of brands for the selected categories and tags

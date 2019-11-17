@@ -3,7 +3,6 @@ package io.nzbee.dto.product;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
@@ -16,7 +15,6 @@ import io.nzbee.dto.IDto;
 import io.nzbee.variables.ProductVars;
 
 @Service(value = "productDtoService")
-@Transactional
 public class ProductServiceImpl implements IProductService {
 	//In service classes, we should only call methods of entity service classes
 	//the repositories themselves should not be referenced outside the entity service class

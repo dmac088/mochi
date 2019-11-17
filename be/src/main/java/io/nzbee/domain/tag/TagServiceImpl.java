@@ -3,8 +3,7 @@ package io.nzbee.domain.tag;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
@@ -15,7 +14,6 @@ import io.nzbee.domain.IDomainObject;
 //its simplicity helps us with unit testing
 
 @Service(value = "tagDomainService")
-@Transactional
 @CacheConfig(cacheNames="tags")
 public class TagServiceImpl implements ITagService/*, IFacetService*/ {
 
@@ -30,6 +28,7 @@ public class TagServiceImpl implements ITagService/*, IFacetService*/ {
 	
 
 	@Override
+	@Transactional
 	public Optional<Tag> findById(String locale, String currency, Long Id) {
 		// TODO Auto-generated method stub
 		io.nzbee.dto.tag.Tag pt = productTagService.findById(locale, currency, Id).get();
@@ -37,6 +36,7 @@ public class TagServiceImpl implements ITagService/*, IFacetService*/ {
 	}
 
 	@Override
+	@Transactional
 	public Optional<Tag> findByCode(String locale, String currency, String code) {
 		// TODO Auto-generated method stub	
 		io.nzbee.dto.tag.Tag  pt = productTagService.findByCode(locale, currency, code).get();
@@ -44,6 +44,7 @@ public class TagServiceImpl implements ITagService/*, IFacetService*/ {
 	}
 
 	@Override
+	@Transactional
 	public Optional<Tag> findByDesc(String locale, String currency, String desc) {
 		// TODO Auto-generated method stub
 		io.nzbee.dto.tag.Tag  pt = productTagService.findByDesc(locale, currency, desc).get();
@@ -51,18 +52,21 @@ public class TagServiceImpl implements ITagService/*, IFacetService*/ {
 	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public Set<Tag> findAll(String locale, String currency) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	
 	@Override
+	@Transactional(readOnly=true)
 	public Set<Tag> findAll(String locale, String currency, List<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public Set<Tag> findAll(String locale, String currency, String categoryDesc, List<IDomainObject> lDo) {
 		// TODO Auto-generated method stub
 		return null;
