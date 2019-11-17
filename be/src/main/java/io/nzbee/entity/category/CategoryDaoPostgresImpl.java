@@ -383,11 +383,11 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"  FROM mochi.category AS t " +
 				
 				"  INNER JOIN mochi.category_attr_lcl a " +
-				"  ON s.cat_id = a.cat_id " +
+				"  ON t.cat_id = a.cat_id " +
 				
 				"  WHERE 0=0 " +
-				((hasCategoryDesc) ? " AND a.cate_desc = :categoryDesc " : "  AND cat_prnt_id iS NULL ") + 
-				((hasCategories) ? " AND cat_cd in :categoryCodes" : "  AND cat_prnt_id iS NULL ") +
+				((hasCategoryDesc && !hasCategories) ? " AND a.cat_desc = :categoryDesc " : "  AND cat_prnt_id iS NULL ") + 
+				((hasCategories && !hasCategoryDesc) ? " AND cat_cd in :categoryCodes" : "  AND cat_prnt_id iS NULL ") +
 				"  UNION ALL " +
 				"  SELECT 	t.cat_id,  " +
 				"			t.hir_id, " +
@@ -718,7 +718,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"  else :parentCategoryCode" +
 				"  end" +
 				((!withChildren && hasCategories) ? " AND s.cat_cd in :categoryCodes" : "") +
-				((!withChildren && hasCategoryDesc) ? " AND a.cate_desc = :categoryDesc " : "");
+				((!withChildren && hasCategoryDesc) ? " AND a.cat_desc = :categoryDesc " : "");
 			
 		return sql;
 	}
