@@ -16,6 +16,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.brand.IBrandService;
 import io.nzbee.resources.brand.BrandResource;
+import io.nzbee.resources.category.CategoryResource;
 
 @RestController
 @RequestMapping("/api")
@@ -47,7 +48,9 @@ public class BrandController {
     }
 
     @GetMapping("/Brand/{locale}/{currency}/code/{brandCode}")
-    public Brand get(@PathVariable String locale, @PathVariable String currency, @PathVariable String brandCode) {
-    	return brandService.findByCode(locale, currency, brandCode).get();
+    public ResponseEntity<BrandResource> get(@PathVariable String locale, @PathVariable String currency, @PathVariable String brandCode) {
+    	Brand b = brandService.findByCode(locale, currency, brandCode).get();
+    	BrandResource br = new BrandResource(locale, currency, b);
+    	return ResponseEntity.ok(br);
     }
 }
