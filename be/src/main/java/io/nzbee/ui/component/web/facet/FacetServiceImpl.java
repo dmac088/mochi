@@ -81,16 +81,28 @@ public class FacetServiceImpl extends UIService implements IFacetService {
 		FacetContainer nfc = new FacetContainer();
 		FacetResult nfr = new FacetResult();
 		
-		List<EntityFacet> facets = categoryDomainService.findAll(
+		System.out.println(selectedFacets.getFacets().size());
+		
+		List<EntityFacet> facets = null;
+									categoryDomainService.findAll(
 										locale, 
 										currency, 
 										categoryDesc, 
 										selectedFacets.getFacets()
-										.stream().filter(o -> !o.getPayload().getClass().equals(Category.class))
-										
-										.map(c -> (IDomainObject) c.getPayload()).collect(Collectors.toList()))
-									.stream().map(dO -> new EntityFacet(dO))
-									.collect(Collectors.toList()); 
+											.stream().filter(o -> {
+												System.out.println(o.getPayload().getClass());
+												System.out.println(Category.class);
+												return !o.getPayload().getClass().equals(Category.class);
+											})
+											.map(c -> (IDomainObject) c.getPayload())
+											.collect(Collectors.toList())
+									)
+									.stream()
+									.forEach(f -> {
+										System.out.println(f.getCode());
+									});
+									//.map(dO -> new EntityFacet(dO))
+									//.collect(Collectors.toList()); 
 									
 		
 //		List<Brand> brands = brandDomainService.findAll(locale, currency, categoryDesc, selectedFacets.getFacets());
