@@ -47,6 +47,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		Session session = em.unwrap(Session.class);
 		
 		Query query = session.createNativeQuery(constructSQL(false, 
+															 false,
 															 false), "CategoryMapping")
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
@@ -93,7 +94,8 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		Session session = em.unwrap(Session.class);
 
 		Query query = session.createNativeQuery(constructSQL(!categoryCodes.isEmpty(),
-												false), "CategoryMapping")
+															 false,
+															 false), "CategoryMapping")
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
 				 .setParameter("parentCategoryCode", "-1")
@@ -158,31 +160,50 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	}
 	
 	@Override
-	public Optional<Category> findByDesc(String locale, String currency, String categoryDesc) {
+	public Optional<Category> findByDesc(String locale, String currency, String desc) {
 		
-		CriteriaBuilder cb = em.getCriteriaBuilder();
+		Session session = em.unwrap(Session.class);
+		final List<String> categoryCodes = new ArrayList<String>();
 		
-		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
+		Query query = session.createNativeQuery(constructSQL(!categoryCodes.isEmpty(),
+															 false,
+															 true), "CategoryMapping")
+				 .setParameter("locale", locale)
+				 .setParameter("currency", currency)
+				 .setParameter("parentCategoryCode", "-1")
+				 .setParameter("categoryDesc", desc)
+				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
+				 .setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
+				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE);
 		
-		Root<Category> root = cq.from(Category.class);
-	
-		Join<Category, CategoryAttribute> categoryAttribute = root.join(Category_.attributes);
-		
-		List<Predicate> conditions = new ArrayList<Predicate>();
-	
-		if(!(categoryDesc == null)) {
-			conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.categoryDesc), categoryDesc));
+		if(!categoryCodes.isEmpty()) {
+			query.setParameter("categoryCodes", categoryCodes);
 		}
+
+		Object[] c = (Object[])query.getSingleResult();
 		
-		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
+		Category category = (Category) c[0];
+		category.setCategoryAttribute(((CategoryAttribute) c[1]));
+		category.setCategoryType((CategoryType) c[2]);
+		category.setHierarchy((Hierarchy) c[3]);
+		if(category instanceof CategoryProduct) {
+			((CategoryProduct) category).setHasParent(c[4] != null);
+			if(((CategoryProduct) category).hasParent()) {
+				//we have a parent
+				Category parentCategory = (Category) c[4];
+				parentCategory.setCategoryAttribute(((CategoryAttribute) c[5]));
+				parentCategory.setCategoryType((CategoryType) c[6]);
+				parentCategory.setHierarchy((Hierarchy) c[7]);
+				category.setParent(parentCategory);
+			}
+		}
+		category.setObjectCount(((BigDecimal)c[8]).intValue());
+		category.setChildCount(((BigInteger)c[9]).longValue());
+		category.setCategoryLayouts((((String)c[10]) != null)
+				? ((String)c[10]).split(",", -1)
+				: new String[0]);	
 		
-		TypedQuery<Category> query = em.createQuery(cq
-				.select(root)
-				.where(conditions.toArray(new Predicate[] {}))
-				.distinct(false)
-		);
-		
-		return Optional.ofNullable(query.getSingleResult());
+		return Optional.ofNullable(category);
 
 	}
 
@@ -194,6 +215,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		categoryCodes.add(code);
 		
 		Query query = session.createNativeQuery(constructSQL(!categoryCodes.isEmpty(),
+															 false,
 															 false), "CategoryMapping")
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
@@ -345,7 +367,8 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	
 	private String constructSQL(
 				boolean hasCategories,
-				boolean withChildren
+				boolean withChildren,
+				boolean hasCategoryDesc
 			) {
 		String sql = "WITH RECURSIVE  " +
 				"descendants AS " +
@@ -358,7 +381,12 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"			t.cat_typ_id, " +
 				"			cast('/' || cast(t.cat_id as text) || '/' as text) node " +
 				"  FROM mochi.category AS t " +
+				
+				"  INNER JOIN mochi.category_attr_lcl a " +
+				"  ON s.cat_id = a.cat_id " +
+				
 				"  WHERE 0=0 " +
+				((hasCategoryDesc) ? " AND a.cate_desc = :categoryDesc " : "  AND cat_prnt_id iS NULL ") + 
 				((hasCategories) ? " AND cat_cd in :categoryCodes" : "  AND cat_prnt_id iS NULL ") +
 				"  UNION ALL " +
 				"  SELECT 	t.cat_id,  " +
@@ -689,7 +717,8 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"  then '0' " +
 				"  else :parentCategoryCode" +
 				"  end" +
-				(!withChildren && hasCategories ? " AND s.cat_cd in :categoryCodes" : "");
+				((!withChildren && hasCategories) ? " AND s.cat_cd in :categoryCodes" : "") +
+				((!withChildren && hasCategoryDesc) ? " AND a.cate_desc = :categoryDesc " : "");
 			
 		return sql;
 	}

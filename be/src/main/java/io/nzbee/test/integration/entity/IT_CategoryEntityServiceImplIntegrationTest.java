@@ -16,6 +16,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.product.CategoryProduct;
+import io.nzbee.test.integration.entity.beans.CategoryEntityBeanFactory;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.CategoryDaoPostgresImpl;
 import io.nzbee.entity.category.CategoryServiceImpl;
@@ -37,6 +38,11 @@ public class IT_CategoryEntityServiceImplIntegrationTest {
         public ICategoryDao categoryDao() {
             return new CategoryDaoPostgresImpl();
         }
+        
+        @Bean(value = "categoryEntityBeanFactory")
+        public CategoryEntityBeanFactory categoryFactoryBean() {
+            return new CategoryEntityBeanFactory();
+        }
 
     }
 
@@ -46,25 +52,38 @@ public class IT_CategoryEntityServiceImplIntegrationTest {
 	@MockBean
     private ICategoryDao categoryDao;
 	
+	@Autowired
+	private CategoryEntityBeanFactory categoryEntityBeanFactory;
+	
     @Before
     public void setUp() {
     	//we setup a mock so that when 
     	MockitoAnnotations.initMocks(this);
+    	final Category testCategory = categoryEntityBeanFactory.getCategoryEntityBean();
     	
-        Category testCategory = new CategoryProduct();
-        testCategory.setCategoryCode("TST01");
-     
         Mockito.when(categoryDao.findByCode("en-GB", "HKD", testCategory.getCategoryCode()))
           .thenReturn(Optional.ofNullable(testCategory));
+        
+        Mockito.when(categoryDao.findByDesc("en-GB", "HKD", testCategory.getCategoryAttribute().getCategoryDesc()))
+        .thenReturn(Optional.ofNullable(testCategory));
     }
     
     @Test
-    public void whenValidName_thenEmployeeShouldBeFound() {
+    public void whenValidCode_thenCategoryShouldBeFound() {
         String code = "TST01";
         Optional<Category> found = categoryService.findByCode("en-GB", "HKD", code);
       
          assertThat(found.get().getCategoryCode())
           .isEqualTo(code);
+     }
+    
+    @Test
+    public void whenValidDesc_thenCategoryShouldBeFound() {
+        String desc = "test category";
+        Optional<Category> found = categoryService.findByDesc("en-GB", "HKD", desc);
+      
+         assertThat(found.get().getCategoryAttribute().getCategoryDesc())
+          .isEqualTo(desc);
      }
     
 }
