@@ -106,7 +106,7 @@ public class IT_CategoryEntityRepositoryIntegrationTest {
 				 									GeneralVars.CURRENCY_USD, 
 				 									category.getCategoryAttribute().getCategoryDesc()).get();
      
-        // then
+        //then
     	assertFound(category, found);
     }
     

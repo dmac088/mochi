@@ -386,8 +386,9 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"  ON t.cat_id = a.cat_id " +
 				
 				"  WHERE 0=0 " +
-				((hasCategoryDesc && !hasCategories) ? " AND a.cat_desc = :categoryDesc " : "  AND cat_prnt_id iS NULL ") + 
-				((hasCategories && !hasCategoryDesc) ? " AND cat_cd in :categoryCodes" : "  AND cat_prnt_id iS NULL ") +
+				((hasCategoryDesc && !hasCategories)  ? " AND a.cat_desc = :categoryDesc " : "") + 
+				((hasCategories && !hasCategoryDesc)  ? " AND cat_cd in :categoryCodes" : "") +
+				((!hasCategories && !hasCategoryDesc) ? "  AND cat_prnt_id iS NULL " : "") +
 				"  UNION ALL " +
 				"  SELECT 	t.cat_id,  " +
 				"			t.hir_id, " +
