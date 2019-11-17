@@ -15,7 +15,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.category.ICategoryService;
-import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.test.integration.entity.beans.CategoryEntityBeanFactory;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.CategoryDaoPostgresImpl;
@@ -70,7 +69,7 @@ public class IT_CategoryEntityServiceImplIntegrationTest {
     
     @Test
     public void whenValidCode_thenCategoryShouldBeFound() {
-        String code = "TST01";
+        String code = "TST02";
         Optional<Category> found = categoryService.findByCode("en-GB", "HKD", code);
       
          assertThat(found.get().getCategoryCode())
