@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-import javax.transaction.Transactional;
+import  org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheConfig;
@@ -13,7 +13,6 @@ import io.nzbee.domain.IDomainObject;
 import io.nzbee.domain.IFacetService;
 
 @Service(value = "categoryDomainService")
-@Transactional
 @CacheConfig(cacheNames="categories")
 public class CategoryServiceImpl implements ICategoryService, IFacetService {
     
@@ -31,7 +30,7 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
     private io.nzbee.dto.tag.ITagService tagService;
      
     @Override
-	@Transactional
+	@Transactional(readOnly = true)
 	//@Cacheable
 	public Set<Category> findAll(String locale, String currency) {
     	return  categoryService.findAll(locale, currency)

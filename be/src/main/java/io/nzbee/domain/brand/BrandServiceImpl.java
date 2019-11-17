@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
@@ -13,7 +13,6 @@ import io.nzbee.domain.IDomainObject;
 import io.nzbee.domain.IFacetService;
 
 @Service(value = "brandDomainService")
-@Transactional
 @CacheConfig(cacheNames="brands")
 public class BrandServiceImpl implements IBrandService, IFacetService {
     
@@ -21,28 +20,30 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
     private io.nzbee.dto.brand.IBrandService brandService;
 	
 	@Override
-	@Transactional
 	@Cacheable
+	@Transactional
 	public Optional<Brand> findById(String locale, String currency, Long Id) {		
     	io.nzbee.dto.brand.Brand pb = brandService.findById(locale, currency, Id).get();
      	return	Optional.ofNullable(this.dtoToDO(pb));
 	}
 	
 	@Override
+	@Transactional
 	public Optional<Brand> findByCode(String locale, String currency, String code) {
 		// TODO Auto-generated method stub
 		return Optional.ofNullable(dtoToDO(brandService.findByCode(locale, currency, code).get()));
 	}
 
 	@Override
+	@Transactional
 	public Optional<Brand> findByDesc(String locale, String currency, String desc) {
 		// TODO Auto-generated method stub
 		return Optional.ofNullable(dtoToDO(brandService.findByDesc(locale, currency, desc).get()));
 	}
   
     @Override
-	@Transactional
 	@Cacheable
+	@Transactional(readOnly=true)
 	public Set<Brand> findAll(String locale, String currency) {
     	List<io.nzbee.dto.brand.Brand> lpb = brandService.findAll(locale, currency);
     	Set<Brand> lb = lpb.stream().map(pb -> dtoToDO(pb))
@@ -51,6 +52,7 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	}	
     
     @Override
+    @Transactional(readOnly=true)
 	public Set<Brand> findAll(String locale, String currency, String category) {
     	List<io.nzbee.dto.brand.Brand> lpb = brandService.findAll(locale, currency, category);
     	Set<Brand> lb = lpb.stream().map(pb -> dtoToDO(pb))
@@ -59,6 +61,7 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	}
 	
 	@Override
+	@Transactional(readOnly=true)
 	public Set<Brand> findAll(String locale, String currency, List<String> codes) {
 		// TODO Auto-generated method stub
 		List<io.nzbee.dto.brand.Brand> lpb = brandService.findAll(locale, currency, codes);
@@ -68,6 +71,7 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	}
 	
 	@Override
+	@Transactional(readOnly=true)
 	public Set<Brand> findAll(String locale, String currency, String categoryDesc, List<IDomainObject> lDo) {
 		// TODO Auto-generated method stub
 		return null;//brandService.finall;

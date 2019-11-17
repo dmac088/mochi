@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,6 @@ import io.nzbee.variables.ProductVars;
 //its simplicity helps us with unit testing
 
 @Service(value="tagDtoService")
-@Transactional
 @CacheConfig(cacheNames="tags")
 public class TagServiceImpl implements ITagService {
 
