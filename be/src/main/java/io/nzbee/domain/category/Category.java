@@ -19,6 +19,10 @@ public abstract class Category implements IHierarchicalDomainObject {
 	private int objectCount;
 	
 	private String[] layoutCodes;
+	
+	private String locale;
+	
+	private String currency;
 
 	public Category() {
 		super();
@@ -96,6 +100,22 @@ public abstract class Category implements IHierarchicalDomainObject {
 	public void setLayoutCodes(String[] layoutCodes) {
 		this.layoutCodes = layoutCodes;
 	}
+	
+	public String getLocale() {
+		return locale;
+	}
+
+	public void setLocale(String locale) {
+		this.locale = locale;
+	}
+
+	public String getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(String currency) {
+		this.currency = currency;
+	}
 
 	@Override
 	public boolean equals(Object o) {
@@ -123,5 +143,6 @@ public abstract class Category implements IHierarchicalDomainObject {
         .append("]");    	
         return builder.toString();
     }
+
 
 }

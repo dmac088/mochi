@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.PagedResources;
+import org.springframework.hateoas.ResourceAssembler;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +41,8 @@ public class ProductController {
 															    	   @PathVariable String categoryCode,
 															    	   @RequestParam("page") int page,
 															    	   @RequestParam("size") int size,
-															    	   @SuppressWarnings("rawtypes") PagedResourcesAssembler assembler) {
+															    	   @SuppressWarnings("rawtypes") PagedResourcesAssembler assembler,
+															    	   ResourceAssembler<Product, ProductResource> prodAssembler) {
     	final Page<Product> pages =
     					productService.findAll(	
     									locale, 
@@ -53,7 +55,7 @@ public class ProductController {
 
     	//convert the page of products to a page of product resources
     	final Page<ProductResource> prPages = new PageImpl<ProductResource>(pages.stream()
-							    											.map(p -> new ProductResource(p))
+							    											.map(p -> prodAssembler.toResource(p))
 							    											.collect(Collectors.toList()),
 							    											pages.getPageable(),
 							    											pages.getTotalElements());
@@ -63,12 +65,13 @@ public class ProductController {
     
 	@GetMapping(value = "/Product/{locale}/{currency}/brand/code/{brandCode}", 
     			params = { "page", "size" })
-    public ResponseEntity<PagedResources<ProductResource>> getProductsByBrand(@PathVariable String locale, 
-															    	   @PathVariable String currency, 
-															    	   @PathVariable String brandCode,
-															    	   @RequestParam("page") int page,
-															    	   @RequestParam("size") int size,
-															    	   @SuppressWarnings("rawtypes") PagedResourcesAssembler assembler) {
+    public ResponseEntity<PagedResources<ProductResource>> getProductsByBrand(	@PathVariable String locale, 
+															    	   			@PathVariable String currency, 
+															    	   			@PathVariable String brandCode,
+															    	   			@RequestParam("page") int page,
+															    	   			@RequestParam("size") int size,
+															    	   			@SuppressWarnings("rawtypes") PagedResourcesAssembler assembler,
+															    	   			@SuppressWarnings("rawtypes") ResourceAssembler prodAssembler) {
     	return null;
     }
     
@@ -79,7 +82,9 @@ public class ProductController {
     }
     
     @PostMapping("/Product/{locale}/{currency}")
-    public ResponseEntity<Resources<ProductResource>> getProducts(@PathVariable String locale, @PathVariable String currency, @RequestBody final List<String> productCodes) {
+    public ResponseEntity<Resources<ProductResource>> getProducts(	@PathVariable String locale, 
+    																@PathVariable String currency, 
+    																@RequestBody final List<String> productCodes) {
     	
     	final List<ProductResource> collection = 
     			productService.findAll(locale, currency, productCodes)

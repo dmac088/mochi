@@ -1,6 +1,7 @@
 package io.nzbee.resources.search;
 
 import org.springframework.hateoas.PagedResources;
+import org.springframework.hateoas.ResourceAssembler;
 import org.springframework.hateoas.ResourceSupport;
 import io.nzbee.domain.product.Product;
 import io.nzbee.resources.controllers.SearchController;
@@ -22,7 +23,7 @@ import org.springframework.data.web.PagedResourcesAssembler;
 public class SearchResource extends ResourceSupport {
 
 	@Autowired
-	private PagedResourcesAssembler<Product> parAssembler;
+	private PagedResourcesAssembler<ProductResource> parAssembler;
 	
     private PagedResources<ProductResource> products;
     
@@ -35,13 +36,12 @@ public class SearchResource extends ResourceSupport {
 						  int size,
 						  String sortBy,
 						  Set<IFacet> searchFacets,
-  						  @SuppressWarnings("rawtypes") PagedResourcesAssembler assembler,
+  						  PagedResourcesAssembler assembler,
+  						  ResourceAssembler<Product, ProductResource> prodAssembler,
   						  ISearchService iss) {
 
 		
 		final Set<IFacet> returnFacets = new HashSet<IFacet>();
-		
-		System.out.println(iss == null);
 		
     	//get the resulting pages of product
     	final Page<Product> pages = iss.findAll(	locale, 
@@ -56,7 +56,7 @@ public class SearchResource extends ResourceSupport {
     	
     	//convert the page of products to a page of product resources
     	final Page<ProductResource> prPages = new PageImpl<ProductResource>(pages.stream()
-							    											.map(p -> new ProductResource(p))
+							    											.map(p -> prodAssembler.toResource(p))
 							    											.collect(Collectors.toList()),
 							    											pages.getPageable(),
 							    											pages.getTotalElements());
