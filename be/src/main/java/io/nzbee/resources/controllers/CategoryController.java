@@ -45,19 +45,5 @@ public class CategoryController {
     	CategoryResource cr = new CategoryResource(locale, currency, c);
     	return ResponseEntity.ok(cr);
     }
-
-    
-//    @GetMapping("/Category/{locale}/{currency}/test")
-//    public ResponseEntity<Resources<CategoryResource>> getCategories(@PathVariable String locale, @PathVariable String currency) {
-//        final List<CategoryResource> collection = 
-//        		categoryService.findAll(locale, currency).stream()
-//        		.map(c -> new CategoryResource(locale, currency, c))
-//        		.collect(Collectors.toList());
-//        
-//        final Resources <CategoryResource> resources = new Resources <> (collection);
-//        final String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
-//        resources.add(new Link(uriString, "self"));
-//        return ResponseEntity.ok(resources);
-//    }
    
 }
