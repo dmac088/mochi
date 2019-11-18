@@ -65,7 +65,7 @@ public class ProductController {
     			params = { "page", "size" })
     public ResponseEntity<PagedResources<ProductResource>> getProductsByBrand(@PathVariable String locale, 
 															    	   @PathVariable String currency, 
-															    	   @PathVariable String categoryCode,
+															    	   @PathVariable String brandCode,
 															    	   @RequestParam("page") int page,
 															    	   @RequestParam("size") int size,
 															    	   @SuppressWarnings("rawtypes") PagedResourcesAssembler assembler) {

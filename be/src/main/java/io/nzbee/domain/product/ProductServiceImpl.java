@@ -126,6 +126,22 @@ public class ProductServiceImpl implements IProductService {
 								 	 pp.getTotalElements());
     	
 	}
+	
+	@Override
+	public Page<Product> findAllByBrand(	
+									String locale, 
+									String currency, 
+									Double price, 
+									Pageable pageable, 
+									String categoryDesc,
+									String brandCode,
+									String sortBy) {
+	
+		
+     	return null;
+    	
+	}
+
 
 	@Override
 	public String tokenToCode(String token) {

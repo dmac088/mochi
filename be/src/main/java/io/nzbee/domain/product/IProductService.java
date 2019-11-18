@@ -27,4 +27,12 @@ public interface IProductService extends IService<io.nzbee.domain.product.Produc
 							Set<IFacet> facets,
 							String sortBy);
 
+	Page<Product> findAllByBrand(	String locale, 
+									String currency, 
+									Double price, 
+									Pageable pageable, 
+									String categoryDesc,
+									String brandCode, 
+									String sortBy);
+
 }
