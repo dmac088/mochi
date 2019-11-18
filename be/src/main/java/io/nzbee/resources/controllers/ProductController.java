@@ -61,6 +61,17 @@ public class ProductController {
     	return new ResponseEntity< >(assembler.toResource(prPages), HttpStatus.OK);
     }
     
+	@GetMapping(value = "/Product/{locale}/{currency}/brand/code/{brandCode}", 
+    			params = { "page", "size" })
+    public ResponseEntity<PagedResources<ProductResource>> getProductsByBrand(@PathVariable String locale, 
+															    	   @PathVariable String currency, 
+															    	   @PathVariable String categoryCode,
+															    	   @RequestParam("page") int page,
+															    	   @RequestParam("size") int size,
+															    	   @SuppressWarnings("rawtypes") PagedResourcesAssembler assembler) {
+    	return null;
+    }
+    
     @GetMapping("/Product/{locale}/{currency}/code/{code}")
     public ResponseEntity<ProductResource> get(@PathVariable String locale, @PathVariable String currency, @PathVariable String code) {
     	ProductResource pr = new ProductResource(productService.findByCode(locale, currency, code).get());
