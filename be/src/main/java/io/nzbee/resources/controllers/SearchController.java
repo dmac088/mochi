@@ -44,7 +44,7 @@ public class SearchController {
     	
     	final Set<IFacet> returnFacets = new HashSet<IFacet>();
     	
-    	//get teh resulting pages of product
+    	//get the resulting pages of product
     	final Page<Product> pages = searchService.findAll(	locale, 
     														currency, 
     														category, 
