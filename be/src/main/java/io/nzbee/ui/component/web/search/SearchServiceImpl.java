@@ -58,13 +58,13 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 
 	@Override
 	public Page<Product> findAll(		String locale, 
-								String currency, 
-								String categoryDesc, 
-								String searchTerm, 
-								int page,
-								int size,
-								String sortBy, 
-								FacetContainer selectedFacets) {
+										String currency, 
+										String categoryDesc, 
+										String searchTerm, 
+										int page,
+										int size,
+										String sortBy, 
+										FacetContainer selectedFacets) {
 		
 		final Set<io.nzbee.ui.component.web.facet.IFacet> returnFacets = new HashSet<io.nzbee.ui.component.web.facet.IFacet>();
 		// call the domain layer service to get a Page of Products

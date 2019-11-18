@@ -8,8 +8,6 @@ import io.nzbee.ui.component.web.facet.IFacet;
 
 public interface ISearchService {
 
-	String searchService = null;
-
 	Page<Product> findAll(String locale, String currency, String categoryDesc, String searchTerm, int page, int size,
 			String sortBy, FacetContainer selectedFacets);
 
