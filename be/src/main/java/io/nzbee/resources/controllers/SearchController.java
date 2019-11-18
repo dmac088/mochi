@@ -5,6 +5,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.ResourceAssembler;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import io.nzbee.domain.product.Product;
+import io.nzbee.resources.product.ProductResource;
 import io.nzbee.resources.search.SearchResource;
 import io.nzbee.ui.component.web.facet.IFacet;
 import io.nzbee.ui.component.web.search.ISearchService;
@@ -24,6 +28,9 @@ public class SearchController {
 	@Autowired
     @Qualifier(value = "SearchService")
     private ISearchService searchService;
+	
+	@Autowired
+    private ResourceAssembler<Product, ProductResource> prodAssembler;
 	
 	@PostMapping(value = "/Search/{locale}/{currency}/Category/{category}/SortBy/{sortBy}",
     					params = { "q", "page", "size" })
@@ -47,6 +54,7 @@ public class SearchController {
 													 sortBy, 
 													 selectedFacets,
 													 assembler,
+													 prodAssembler,
 													 searchService);
     	
     	return new ResponseEntity< >(sr, HttpStatus.OK);

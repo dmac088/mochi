@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedResources;
+import org.springframework.hateoas.ResourceAssembler;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,7 +40,8 @@ public class NavigationController {
 								    	@RequestParam("size") int size, 
 										@PathVariable String sortBy,
 										@RequestBody final FacetContainer selectedFacets,
-			    						@SuppressWarnings("rawtypes") PagedResourcesAssembler assembler) {
+			    						@SuppressWarnings("rawtypes") PagedResourcesAssembler assembler,
+			    						ResourceAssembler<Product, ProductResource> prodAssembler) {
 		
 		final Page<Product> pages = navigationService.findAll(	locale, 
 																currency, 
@@ -51,7 +53,7 @@ public class NavigationController {
 																sortBy);
 		
 		final Page<ProductResource> prPages = new PageImpl<ProductResource>(pages.stream()
-				.map(p -> new ProductResource(p))
+				.map(p -> prodAssembler.toResource(p))
 				.collect(Collectors.toList()),
 				pages.getPageable(),
 				pages.getTotalElements());
