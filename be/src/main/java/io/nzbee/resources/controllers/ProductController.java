@@ -61,8 +61,9 @@ public class ProductController {
     }
     
     @GetMapping("/Product/{locale}/{currency}/code/{code}")
-    public Product get(@PathVariable String locale, @PathVariable String currency, @PathVariable String code) {
-    	return productService.findByCode(locale, currency, code).get();
+    public ResponseEntity<ProductResource> get(@PathVariable String locale, @PathVariable String currency, @PathVariable String code) {
+    	ProductResource pr = new ProductResource(productService.findByCode(locale, currency, code).get());
+    	return new ResponseEntity< >(pr, HttpStatus.OK);
     }
     
     @PostMapping("/Product/{locale}/{currency}")
