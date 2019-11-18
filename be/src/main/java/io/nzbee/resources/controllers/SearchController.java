@@ -30,12 +30,12 @@ public class SearchController {
     private ISearchService searchService;
 
     @SuppressWarnings("unchecked")
-	@PostMapping(value = "/Search/{locale}/{currency}/Category/{category}/SearchTerm/{term}/SortBy/{sortBy}",
-    					params = { "page", "size" })
+	@PostMapping(value = "/Search/{locale}/{currency}/Category/{category}/SortBy/{sortBy}",
+    					params = { "q", "page", "size" })
     public ResponseEntity<PagedResources<ProductResource>> search(	@PathVariable String locale, 
     						@PathVariable String currency, 
     						@PathVariable String category,
-    						@PathVariable String term, 
+    						@RequestParam("q") String term, 
     						@RequestParam("page") int page,
 					    	@RequestParam("size") int size, 
     						@PathVariable String sortBy, 
