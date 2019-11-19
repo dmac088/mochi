@@ -23,9 +23,6 @@ public class CategoryResource extends ResourceSupport {
 	@Autowired
 	private PagedResourcesAssembler<Product> parAssembler;
 	
-	@Autowired
-	private ResourceAssembler<Product, ProductResource>  prodAssembler;
-	
 	private final Category category;
 	
 	public CategoryResource(String locale, String currency, final Category category) {
@@ -49,8 +46,7 @@ public class CategoryResource extends ResourceSupport {
     			   													category.getCode(),
     			   													0,
     			   													10,
-    			   													parAssembler,
-    			   													prodAssembler)).withRel("products"));
+    			   													parAssembler)).withRel("products"));
        }
        
     }
