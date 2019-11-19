@@ -33,6 +33,9 @@ public class ProductController {
     @Autowired
     private IProductService productService;
     
+    @Autowired
+    private ResourceAssembler<Product, ProductResource> prodAssembler;
+    
     @SuppressWarnings("unchecked")
 	@GetMapping(value = "/Product/{locale}/{currency}/category/{categoryCode}", 
     			params = { "page", "size" })
@@ -41,8 +44,7 @@ public class ProductController {
 															    	   @PathVariable String categoryCode,
 															    	   @RequestParam("page") int page,
 															    	   @RequestParam("size") int size,
-															    	   @SuppressWarnings("rawtypes") PagedResourcesAssembler assembler,
-															    	   ResourceAssembler<Product, ProductResource> prodAssembler) {
+															    	   @SuppressWarnings("rawtypes") PagedResourcesAssembler assembler) {
     	final Page<Product> pages =
     					productService.findAll(	
     									locale, 
@@ -76,8 +78,10 @@ public class ProductController {
     }
     
     @GetMapping("/Product/{locale}/{currency}/code/{code}")
-    public ResponseEntity<ProductResource> get(@PathVariable String locale, @PathVariable String currency, @PathVariable String code) {
-    	ProductResource pr = new ProductResource(productService.findByCode(locale, currency, code).get());
+    public ResponseEntity<ProductResource> get(	@PathVariable String locale, 
+    											@PathVariable String currency, 
+    											@PathVariable String code) {
+    	ProductResource pr = prodAssembler.toResource(productService.findByCode(locale, currency, code).get());
     	return new ResponseEntity< >(pr, HttpStatus.OK);
     }
     
@@ -88,7 +92,7 @@ public class ProductController {
     	
     	final List<ProductResource> collection = 
     			productService.findAll(locale, currency, productCodes)
-    			.stream().map(p -> new ProductResource(p))
+    			.stream().map(p -> prodAssembler.toResource(p))
     			.collect(Collectors.toList());
     	
     	final Resources <ProductResource> resources = new Resources <> (collection);
