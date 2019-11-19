@@ -64,16 +64,16 @@ public class SearchResource extends ResourceSupport {
     	this.products = (assembler.toResource(prPages));
     	
 		
-		add(linkTo(methodOn(SearchController.class).search(	locale, 
-															currency, 
-															category, 
-															term, 
-															page, 
-															size, 
-															sortBy, 
-															searchFacets,
-															parAssembler)).withSelfRel());
-		
+//		add(linkTo(methodOn(SearchController.class).search(	locale, 
+//															currency, 
+//															category, 
+//															term, 
+//															page, 
+//															size, 
+//															sortBy, 
+//															searchFacets,
+//															parAssembler)).withSelfRel());
+//		
     }
 
 	public PagedResources<ProductResource> getProducts() {
