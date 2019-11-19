@@ -160,8 +160,12 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		});
 		
 		uniqueFieldRefs.stream().forEach(fr -> {
-			FacetingRequest frq = qb.facet().name(facetingName).onField(fr) // in category class
-					.discrete().orderedBy(FacetSortOrder.COUNT_DESC).includeZeroCounts(false).createFacetingRequest();
+			FacetingRequest frq = qb.facet().name(facetingName)
+											.onField(fr) // in category class
+											.discrete()
+											.orderedBy(FacetSortOrder.COUNT_DESC)
+											.includeZeroCounts(false)
+											.createFacetingRequest();
 			
 			jpaQuery.getFacetManager().enableFaceting(frq);
 			facets.addAll(jpaQuery.getFacetManager().getFacets(facetingName));
