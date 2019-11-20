@@ -27,6 +27,8 @@ public class SearchResource extends ResourceSupport {
 	
     private PagedResources<ProductResource> products;
     
+    private Set<IFacet> facets;
+    
 	@SuppressWarnings("unchecked")
 	public SearchResource(String locale, 
 						  String currency, 
@@ -45,14 +47,14 @@ public class SearchResource extends ResourceSupport {
 		
     	//get the resulting pages of product
     	final Page<Product> pages = iss.findAll(	locale, 
-    														currency, 
-    														category, 
-    														term, 
-    														page,
-    														size, 
-    														sortBy, 
-    														searchFacets,
-    														returnFacets);
+    												currency, 
+    												category, 
+    												term, 
+    												page,
+    												size, 
+    												sortBy, 
+    												searchFacets,
+    												returnFacets);
     	
     	//convert the page of products to a page of product resources
     	final Page<ProductResource> prPages = new PageImpl<ProductResource>(pages.stream()
@@ -63,21 +65,15 @@ public class SearchResource extends ResourceSupport {
     	
     	this.products = (assembler.toResource(prPages));
     	
-		
-//		add(linkTo(methodOn(SearchController.class).search(	locale, 
-//															currency, 
-//															category, 
-//															term, 
-//															page, 
-//															size, 
-//															sortBy, 
-//															searchFacets,
-//															parAssembler)).withSelfRel());
-//		
+		this.facets = returnFacets;
     }
 
 	public PagedResources<ProductResource> getProducts() {
 		return products;
+	}
+
+	public Set<IFacet> getFacets() {
+		return facets;
 	}
 	
 }

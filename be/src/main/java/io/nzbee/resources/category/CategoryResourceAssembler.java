@@ -8,9 +8,9 @@ import io.nzbee.domain.category.Category;
 import io.nzbee.resources.controllers.CategoryController;
 
 @Component
-public class CategoryAssembler extends ResourceAssemblerSupport<Category, CategoryResource> {
+public class CategoryResourceAssembler extends ResourceAssemblerSupport<Category, CategoryResource> {
 
-    public CategoryAssembler() {
+    public CategoryResourceAssembler() {
         super(CategoryController.class, CategoryResource.class);
     }
 
