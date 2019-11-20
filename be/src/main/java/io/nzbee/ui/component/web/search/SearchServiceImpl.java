@@ -114,25 +114,37 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		//where the FacetingName is not in selectedFacetList
 		final Set<Facet> facets = new HashSet<Facet>(); 
 		
+		
 		Set<SearchFacetHelper> lsfh = new HashSet<SearchFacetHelper>();
-		lf.stream()
-		  .forEach(f -> {
-			    SearchFacetHelper sfh = new SearchFacetHelper();
-			  	this.getDiscreteFacets(	
-		  
-											locale,
-											currency,
-											qb, 
-											jpaQuery, 
-											f.getFacetingName(), 
-											f.getFieldName(),
-											facets,
-											sfh		
-											);
-			  	lsfh.add(sfh);
+		
+		
+		lf.stream().map(f -> f.getFacetingName()).collect(Collectors.toSet())
+		  .stream().forEach(s -> {
+			  Set<String> ss = new HashSet<String>();
+			  SearchFacetHelper sfh = new SearchFacetHelper();
+			  
+			  lf.stream()
+			  .filter(f -> f.getFacetingName().equals(s))
+			  .forEach(f -> {
+				  	this.getDiscreteFacets(	
+			  
+												locale,
+												currency,
+												qb, 
+												jpaQuery, 
+												f.getFacetingName(), 
+												f.getFieldName(),
+												facets,
+												ss		
+												);
+				 
+			  });
+			  
+			  sfh.setFacetingName(s);
+			  sfh.setCodes(ss);
+			  lsfh.add(sfh);
 		  });
-		
-		
+	
 		
 		lsfh.stream().forEach(sfh -> {
 			@SuppressWarnings("unchecked")
@@ -157,14 +169,14 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 	}
 	
 
-	private  SearchFacetHelper getDiscreteFacets(	   String locale, 
+	private  Set<String> getDiscreteFacets(	   String locale, 
 													   String currency, 
 													   QueryBuilder qb, 
 													   org.hibernate.search.jpa.FullTextQuery jpaQuery,
 													   String facetingName, 
 													   String fieldReference,
 													   Set<Facet> facets,
-													   SearchFacetHelper sfh) {
+													   Set<String> ss) {
 		
 		// create a category faceting request for the base level
 		FacetingRequest facetRequest = qb.facet()
@@ -200,8 +212,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			
 		});
 		
-		sfh.setFacetingName(facetingName);
-		sfh.getCodes().addAll(uniqueCodes);
+		ss.addAll(uniqueCodes);
 		
 		uniqueFieldRefs.stream().forEach(fr -> {
 			FacetingRequest frq = qb.facet().name(facetingName)
@@ -216,7 +227,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		});
 		
 		//get the object array for the ids in previous step
-		return sfh;
+		return ss;
 	}
 	
 	
@@ -289,8 +300,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 
 		// initialize the facets
 		Set<Facet> facets = new HashSet<Facet>();
-		Set<SearchFacetHelper> lsfh = new HashSet<SearchFacetHelper>();
-		
+		Set<String> codes = new HashSet<String>();
 		facetServices.getFacetServices().stream().forEach(f -> {
 			SearchFacetHelper sfh = new SearchFacetHelper();
 			this.getDiscreteFacets(lcl,
@@ -301,8 +311,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 								   f.getFacetField(),
 								   //facets will contain an initialized list of facets
 								   facets,
-								   sfh);
-			lsfh.add(sfh);
+								   codes);
 		});
 		
 //		lsfh.stream().forEach(sfh -> {
