@@ -299,6 +299,9 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		});
 		
 		lsfh.stream().forEach(sfh -> {
+			System.out.println(sfh.getFacetingName());
+			System.out.println(sfh.getCodes());
+			
 			@SuppressWarnings("unchecked")
 			Set<IDomainObject> lc = sfh.getBean(appContext).findAll(lcl, currency, new ArrayList<String>(sfh.getCodes()));
 
@@ -333,13 +336,13 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		});
 		
 		//re-process the facets
-		returnFacets.addAll(
-											this.processFacets(	lcl, 
-												currency, 
-												queryBuilder, 
-												jpaQuery, 
-												facetList, 
-												selectedFacets)
+		returnFacets.addAll(facetList
+//											this.processFacets(	lcl, 
+//												currency, 
+//												queryBuilder, 
+//												jpaQuery, 
+//												facetList, 
+//												selectedFacets)
 											
 		);
 		// set pageable definition for jpaQuery
