@@ -277,9 +277,10 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		// initialize the facets
 		//these should not have hardcoded services, they should be coded to an interface
 		Set<Facet> facets = new HashSet<Facet>();
-		SearchFacetHelper sfh = new SearchFacetHelper();
+		Set<SearchFacetHelper> lsfh = new HashSet<SearchFacetHelper>();
 		
 		facetServices.getFacetServices().stream().forEach(f -> {
+			SearchFacetHelper sfh = new SearchFacetHelper();
 			this.getDiscreteFacets(lcl,
 								   currency,
 								   queryBuilder, 
@@ -287,29 +288,29 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 								   f.getFacetCategory(),
 								   f.getFacetField(),
 								   facets,
-								   sfh);	
+								   sfh);
+			lsfh.add(sfh);
+			System.out.println(StringUtils.join(sfh.getCodes()));
 		});
 		
-		//query the domain objects from the DB
-		@SuppressWarnings("unchecked")
-		Set<IDomainObject> lc = sfh.getBean(appContext).findAll(lcl, currency, new ArrayList<String>(sfh.getCodes()));
+		lsfh.stream().forEach(sfh -> {
+			@SuppressWarnings("unchecked")
+			Set<IDomainObject> lc = sfh.getBean(appContext).findAll(lcl, currency, new ArrayList<String>(sfh.getCodes()));
 
-		//create a new array of entity facets
-		final Set<SearchFacet> lef = new HashSet<SearchFacet>(sfh.getCodes().size());
-		IService service = sfh.getBean(appContext);
-				
-		facets.stream().forEach(f -> {
-			Optional<IDomainObject> dO = lc.stream()
-										  .filter(c -> c.getCode().equals(service.tokenToCode(f.getValue())))
-										  .findFirst();
-						
-				if(dO.isPresent()) {
-					lef.add(new SearchFacet(f, dO.get()));
-				}
+			//create a new array of entity facets
+			
+			IService service = sfh.getBean(appContext);
+					
+			facets.stream().forEach(f -> {
+				Optional<IDomainObject> dO = lc.stream()
+											  .filter(c -> c.getCode().equals(service.tokenToCode(f.getValue())))
+											  .findFirst();
+							
+					if(dO.isPresent()) {
+						facetList.add(new SearchFacet(f, dO.get()));
+					}
+			});
 		});
-
-		facetList.addAll(lef);
-
 		
 		//get the list of tokens from the selected facets passed as parameter
 		List<String> sft = facetPayload.stream().map(f -> f.getValue()).collect(Collectors.toList());
