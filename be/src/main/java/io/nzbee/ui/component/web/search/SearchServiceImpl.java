@@ -143,7 +143,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			IService service = sfh.getBean(appContext);
 					
 			facets.stream().forEach(f -> {
-				System.out.println(f.getValue());
 				Optional<IDomainObject> dO = lc.stream()
 											  .filter(c -> c.getCode().equals(service.tokenToCode(f.getValue())))
 											  .findFirst();
@@ -297,7 +296,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 								   facets,
 								   sfh);
 			lsfh.add(sfh);
-			System.out.println(StringUtils.join(sfh.getCodes()));
 		});
 		
 		lsfh.stream().forEach(sfh -> {
@@ -309,7 +307,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			IService service = sfh.getBean(appContext);
 					
 			facets.stream().forEach(f -> {
-				System.out.println(f.getValue());
 				Optional<IDomainObject> dO = lc.stream()
 											  .filter(c -> c.getCode().equals(service.tokenToCode(f.getValue())))
 											  .findFirst();
