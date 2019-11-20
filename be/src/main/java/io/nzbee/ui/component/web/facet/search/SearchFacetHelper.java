@@ -57,6 +57,7 @@ public class SearchFacetHelper {
 	    SearchFacetHelper that = (SearchFacetHelper) obj;
 	      EqualsBuilder eb = new EqualsBuilder();
 	      eb.append(this.facetingName, that.facetingName);
+	      eb.append(this.codes, that.codes);
 	      return eb.isEquals();
 	}
 	
