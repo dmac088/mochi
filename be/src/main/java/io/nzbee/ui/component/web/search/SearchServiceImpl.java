@@ -279,12 +279,12 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		Set<Facet> facets = new HashSet<Facet>();
 		SearchFacetHelper sfh = new SearchFacetHelper();
 		
-		facetServices.getFacets().stream().forEach(f -> {
+		facetServices.getFacetServices().stream().forEach(f -> {
 			this.getDiscreteFacets(lcl,
 								   currency,
 								   queryBuilder, 
 								   jpaQuery, 
-								   f.getFacetField(),
+								   f.getFacetCategory(),
 								   f.getFacetField(),
 								   facets,
 								   sfh);	
