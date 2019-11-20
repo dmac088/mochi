@@ -7,22 +7,23 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class FacetServices {
-	List<IFacetService> facets;
-
+	
 	@Autowired
+	List<IFacetService> facetServices;
+
 	public FacetServices(List<IFacetService> facets) {
-		this.facets = facets;
+		this.facetServices = facets;
 	}
 
-	public List<IFacetService> getFacets() {
-		return facets;
+	public List<IFacetService> getFacetServices() {
+		return facetServices;
 	}
 
-	public void setFacets(List<IFacetService> facets) {
-		this.facets = facets;
+	public void setFacetServices(List<IFacetService> facets) {
+		this.facetServices = facets;
 	}
 
-	public void showFacets() {
-		facets.forEach(System.out::println);
+	public void showFacetServices() {
+		facetServices.forEach(System.out::println);
 	}
 }
