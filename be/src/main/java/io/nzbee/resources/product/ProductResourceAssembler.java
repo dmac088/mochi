@@ -9,9 +9,9 @@ import io.nzbee.domain.product.Product;
 import io.nzbee.resources.controllers.ProductController;
 
 @Component(value = "ProductResourceAssembler")
-public class ProductAssembler extends ResourceAssemblerSupport<Product, ProductResource> {
+public class ProductResourceAssembler extends ResourceAssemblerSupport<Product, ProductResource> {
 
-    public ProductAssembler() {
+    public ProductResourceAssembler() {
         super(ProductController.class, ProductResource.class);
     }
 
