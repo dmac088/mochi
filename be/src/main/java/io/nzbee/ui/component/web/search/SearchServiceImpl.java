@@ -98,7 +98,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		
 		//we need a list of unique FacetingName and FieldName
 		Set<SearchFacetWithFieldHelper> lf = facetList.stream()
-										.filter(c -> (!facetingNames.contains(c.getFacetingName())))
+										//.filter(c -> (!facetingNames.contains(c.getFacetingName())))
 										.map(f -> {
 											SearchFacetWithFieldHelper sp = new SearchFacetWithFieldHelper(); 
 											sp.setFacetingName(f.getFacetingName());
