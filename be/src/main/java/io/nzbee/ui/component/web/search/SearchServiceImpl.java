@@ -302,6 +302,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			IService service = sfh.getBean(appContext);
 					
 			facets.stream().forEach(f -> {
+				System.out.println(f.getValue());
 				Optional<IDomainObject> dO = lc.stream()
 											  .filter(c -> c.getCode().equals(service.tokenToCode(f.getValue())))
 											  .findFirst();
@@ -328,13 +329,17 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		});
 		
 		//re-process the facets
-		returnFacets.addAll(this.processFacets(	lcl, 
+		returnFacets.addAll(facetList
+						/*
+											this.processFacets(	lcl, 
 												currency, 
 												queryBuilder, 
 												jpaQuery, 
 												facetList, 
-												selectedFacets));
-		
+												selectedFacets)
+											);
+						*/
+		);
 		// set pageable definition for jpaQuery
 		Pageable pageable = PageRequest.of(page, size);
 		PageableUtil pageableUtil = new PageableUtil();
