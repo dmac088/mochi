@@ -112,11 +112,14 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		
 		//all we need to do is get the distinct getFacetingName, and getFieldName from facetList
 		//where the FacetingName is not in selectedFacetList
-		SearchFacetHelper sfh = new SearchFacetHelper();
 		final Set<Facet> facets = new HashSet<Facet>(); 
 		
+		Set<SearchFacetHelper> lsfh = new HashSet<SearchFacetHelper>();
 		lf.stream()
-		  .forEach(f -> this.getDiscreteFacets(	
+		  .forEach(f -> {
+			    SearchFacetHelper sfh = new SearchFacetHelper();
+			  	this.getDiscreteFacets(	
+		  
 											locale,
 											currency,
 											qb, 
@@ -125,29 +128,33 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 											f.getFieldName(),
 											facets,
 											sfh		
-											)
-				  );
+											);
+			  	lsfh.add(sfh);
+		  });
 		
 		
-		//query the domain objects from the DB
-		@SuppressWarnings("unchecked")
-		Set<IDomainObject> lc = sfh.getBean(appContext).findAll(locale, currency, new ArrayList<String>(sfh.getCodes()));
+		
+		lsfh.stream().forEach(sfh -> {
+			@SuppressWarnings("unchecked")
+			Set<IDomainObject> lc = sfh.getBean(appContext).findAll(locale, currency, new ArrayList<String>(sfh.getCodes()));
 
-		//create a new array of entity facets
-		final Set<SearchFacet> lef = new HashSet<SearchFacet>(sfh.getCodes().size());
-		IService service = sfh.getBean(appContext);
-		
-		facets.stream().forEach(f -> {
+			//create a new array of entity facets
+			
+			IService service = sfh.getBean(appContext);
+					
+			facets.stream().forEach(f -> {
+				System.out.println(f.getValue());
 				Optional<IDomainObject> dO = lc.stream()
 											  .filter(c -> c.getCode().equals(service.tokenToCode(f.getValue())))
 											  .findFirst();
-						
-				if(dO.isPresent()) {
-					lef.add(new SearchFacet(f, dO.get()));
-				}
+							
+					if(dO.isPresent()) {
+						facetList.add(new SearchFacet(f, dO.get()));
+					}
+			});
 		});
-		 
-		return lef;
+		
+		return facetList;
 	}
 	
 
@@ -329,16 +336,14 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		});
 		
 		//re-process the facets
-		returnFacets.addAll(facetList
-						/*
+		returnFacets.addAll(
 											this.processFacets(	lcl, 
 												currency, 
 												queryBuilder, 
 												jpaQuery, 
 												facetList, 
 												selectedFacets)
-											);
-						*/
+											
 		);
 		// set pageable definition for jpaQuery
 		Pageable pageable = PageRequest.of(page, size);
