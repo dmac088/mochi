@@ -84,77 +84,77 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 
 
 
-	private Set<SearchFacet> processFacets( String locale, 
-											String currency,
-											QueryBuilder qb,
-											org.hibernate.search.jpa.FullTextQuery jpaQuery, 
-											Set<SearchFacet> facetList, 
-											Set<SearchFacet> selectedFacetList) {
-		
-		
-		Set<String> facetingNames = selectedFacetList.stream()
-													 .map(f -> f.getFacetingName())
-													 .collect(Collectors.toSet());
-		
-		//we need a list of unique FacetingName and FieldName
-		Set<SearchFacetWithFieldHelper> lf = facetList.stream()
-										.filter(c -> (!facetingNames.contains(c.getFacetingName())))
-										.map(f -> {
-											SearchFacetWithFieldHelper sp = new SearchFacetWithFieldHelper(); 
-											sp.setFacetingName(f.getFacetingName());
-											sp.setFieldName(f.getFieldName());			
-											
-											return sp;
-										})
-										.collect(Collectors.toSet());
-		
-	
-		
-		//all we need to do is get the distinct getFacetingName, and getFieldName from facetList
-		//where the FacetingName is not in selectedFacetList
-		final Set<Facet> facets = new HashSet<Facet>(); 
-		
-		Set<SearchFacetHelper> lsfh = new HashSet<SearchFacetHelper>();
-		lf.stream()
-		  .forEach(f -> {
-			    SearchFacetHelper sfh = new SearchFacetHelper();
-			  	this.getDiscreteFacets(	
-		  
-											locale,
-											currency,
-											qb, 
-											jpaQuery, 
-											f.getFacetingName(), 
-											f.getFieldName(),
-											facets,
-											sfh		
-											);
-			  	lsfh.add(sfh);
-		  });
-		
-		
-		
-		lsfh.stream().forEach(sfh -> {
-			@SuppressWarnings("unchecked")
-			Set<IDomainObject> lc = sfh.getBean(appContext).findAll(locale, currency, new ArrayList<String>(sfh.getCodes()));
-
-			//create a new array of entity facets
-			
-			IService service = sfh.getBean(appContext);
-					
-			facets.stream().forEach(f -> {
-				Optional<IDomainObject> dO = lc.stream()
-											  .filter(c -> c.getCode().equals(service.tokenToCode(f.getValue())))
-											  .findFirst();
-							
-					if(dO.isPresent()) {
-						facetList.add(new SearchFacet(f, dO.get()));
-					}
-			});
-		});
-		
-		return facetList;
-	}
+//	private Set<SearchFacet> processFacets( String locale, 
+//											String currency,
+//											QueryBuilder qb,
+//											org.hibernate.search.jpa.FullTextQuery jpaQuery, 
+//											Set<SearchFacet> facetList, 
+//											Set<SearchFacet> selectedFacetList) {
+//		
+//		
+//		Set<String> facetingNames = selectedFacetList.stream()
+//													 .map(f -> f.getFacetingName())
+//													 .collect(Collectors.toSet());
+//		
+//		//we need a list of unique FacetingName and FieldName
+//		Set<SearchFacetWithFieldHelper> lf = facetList.stream()
+//										.filter(c -> (!facetingNames.contains(c.getFacetingName())))
+//										.map(f -> {
+//											SearchFacetWithFieldHelper sp = new SearchFacetWithFieldHelper(); 
+//											sp.setFacetingName(f.getFacetingName());
+//											sp.setFieldName(f.getFieldName());			
+//											
+//											return sp;
+//										})
+//										.collect(Collectors.toSet());
+//		
+//	
+//		
+//		//all we need to do is get the distinct getFacetingName, and getFieldName from facetList
+//		//where the FacetingName is not in selectedFacetList
+//		final Set<Facet> facets = new HashSet<Facet>(); 
+//		
+//		Set<SearchFacetHelper> lsfh = new HashSet<SearchFacetHelper>();
+//		lf.stream()
+//		  .forEach(f -> {
+//			    SearchFacetHelper sfh = new SearchFacetHelper();
+//			  	this.getDiscreteFacets(	
+//		  
+//											locale,
+//											currency,
+//											qb, 
+//											jpaQuery, 
+//											f.getFacetingName(), 
+//											f.getFieldName(),
+//											facets,
+//											sfh		
+//											);
+//			  	lsfh.add(sfh);
+//		  });
+//		
+//		
+//		
+//		lsfh.stream().forEach(sfh -> {
+//			@SuppressWarnings("unchecked")
+//			Set<IDomainObject> lc = sfh.getBean(appContext).findAll(locale, currency, new ArrayList<String>(sfh.getCodes()));
+//
+//			//create a new array of entity facets
+//			
+//			IService service = sfh.getBean(appContext);
+//					
+//			facets.stream().forEach(f -> {
+//				Optional<IDomainObject> dO = lc.stream()
+//											  .filter(c -> c.getCode().equals(service.tokenToCode(f.getValue())))
+//											  .findFirst();
+//							
+//					if(dO.isPresent()) {
+//						facetList.add(new SearchFacet(f, dO.get()));
+//					}
+//			});
+//		});
+//		
+//		return facetList;
+//	}
 	
 
 	private  SearchFacetHelper getDiscreteFacets(	   String locale, 
@@ -180,7 +180,10 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		Set<String>	uniqueFieldRefs = new HashSet<String>();
 		
 		//Add all the category codes up the hierarchy
-		facets.stream().forEach(f -> {
+		facets.stream().filter(f -> f.getFacetingName().equals(facetingName)).forEach(f -> {
+			
+		
+			//this is concatenating both brand and category codes
 			List<String> codes = Arrays.asList(f.getValue().split("/")).stream().filter(o -> !o.isEmpty()).collect(Collectors.toList());
 			
 			uniqueCodes.addAll(codes);
@@ -191,6 +194,9 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			}
 			
 		});
+		
+		sfh.setFacetingName(facetingName);
+		sfh.getCodes().addAll(uniqueCodes);
 		
 		uniqueFieldRefs.stream().forEach(fr -> {
 			FacetingRequest frq = qb.facet().name(facetingName)
@@ -204,10 +210,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			facets.addAll(jpaQuery.getFacetManager().getFacets(facetingName));
 		});
 		
-		sfh.setFacetingName(facetingName);
-		sfh.getCodes().addAll(uniqueCodes);
-		
-
 		//get the object array for the ids in previous step
 		return sfh;
 	}
