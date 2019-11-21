@@ -183,9 +183,9 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 											   Set<String> ss) {
 		
 		
-		facets.removeAll(facets.stream()
-							   .filter(c -> !(c.getFacetingName().equals(facetingName)))
-							   .collect(Collectors.toList()));
+//		facets.removeAll(facets.stream()
+//							   .filter(c -> !(c.getFacetingName().equals(facetingName)))
+//							   .collect(Collectors.toList()));
 		
 		// create a category faceting request for the base level
 		FacetingRequest facetRequest = qb.facet()
