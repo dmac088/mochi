@@ -140,10 +140,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			  sfh.setCodes(ss);
 			  lsfh.add(sfh);
 		  });
-		
-		facets.stream().forEach(f -> {
-			System.out.println(f.getValue());
-		});
 	
 		
 		lsfh.stream().forEach(sfh -> {
@@ -333,7 +329,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		
 		//this needs a bit more work to handle the brands
 		//we need to remove whatever the user selected from the full list
-		//facets.removeAll(selectedFacets);
+		
 		
 		//combine the selected facets
 		selectedFacets.stream()
@@ -353,6 +349,12 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 												facets)
 											
 		);
+		
+		facets.removeAll(selectedFacets);
+		facets.stream().forEach(f -> {
+			System.out.println(f.getValue());
+		});
+		
 		// set pageable definition for jpaQuery
 		Pageable pageable = PageRequest.of(page, size);
 		PageableUtil pageableUtil = new PageableUtil();
