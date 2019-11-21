@@ -93,7 +93,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		
 		Set<SearchFacet> returnFacets = new HashSet<SearchFacet>();
 		
-		//we need a list of unique FacetingName and FieldName
+		//we need a list of unique FacetingName and FieldName, use facets Set to create the helpers
 		Set<SearchFacetWithFieldHelper> lf = facets.stream()
 										//.filter(c -> (!facetingNames.contains(c.getFacetingName())))
 										.map(f -> {
@@ -106,13 +106,12 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 										.collect(Collectors.toSet());
 		
 	
+		//we don't need the facets anymore, we will re-process them
+		facets.clear();
 		
 		//all we need to do is get the distinct getFacetingName, and getFieldName from facetList
 		//where the FacetingName is not in selectedFacetList
 		Set<SearchFacetHelper> lsfh = new HashSet<SearchFacetHelper>();
-		
-		
-		facets.clear();
 		lf.stream().map(f -> f.getFacetingName()).collect(Collectors.toSet())
 		  .stream().forEach(s -> {
 			  Set<String> ss = new HashSet<String>();
