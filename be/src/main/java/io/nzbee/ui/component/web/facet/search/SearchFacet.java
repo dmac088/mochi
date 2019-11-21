@@ -1,10 +1,13 @@
 package io.nzbee.ui.component.web.facet.search;
 
+import java.util.Objects;
+
 import org.apache.lucene.search.Query;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import io.nzbee.domain.IDomainObject;
+import io.nzbee.dto.category.Category;
 import io.nzbee.ui.component.web.facet.IFacet;
 
 @JsonTypeName("searchfacet")
@@ -95,6 +98,19 @@ public class SearchFacet  implements org.hibernate.search.query.facet.Facet, IFa
 
 	public void setValue(String value) {
 		this.value = value;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		 if (this == o) return true;
+	     if (o == null || getClass() != o.getClass()) return false;
+	     SearchFacet sf = (SearchFacet) o;
+	     return this.value == sf.value;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.value);
 	}
 
 }
