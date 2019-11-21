@@ -93,11 +93,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 											Set<Facet> selectedFacets) {
 		
 		
-		Set<String> selectedFacetingNames = selectedFacets.stream().map(f -> f.getFacetingName()).collect(Collectors.toSet());
-		
 		Set<SearchFacet> returnFacets = new HashSet<SearchFacet>();
-		
-		
 		
 		//we need a list of unique FacetingName and FieldName, use facets Set to create the helpers
 		Set<SearchFacetWithFieldHelper> lf = facets.stream()
@@ -110,16 +106,14 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 										})
 										.collect(Collectors.toSet());
 		
-		facets.removeAll(facets.stream().filter(f -> !selectedFacetingNames.contains(f.getFacetingName())).collect(Collectors.toSet()));
+		//facets.removeAll(facets.stream().filter(f -> !selectedFacetingNames.contains(f.getFacetingName())).collect(Collectors.toSet()));
+		facets.clear();
+		
 		
 		//all we need to do is get the distinct getFacetingName, and getFieldName from facetList
 		//where the FacetingName is not in selectedFacetList
 		Set<SearchFacetHelper> lsfh = new HashSet<SearchFacetHelper>();
 		lf.stream()
-//		  .filter(c -> {
-//			  	System.out.println(c.getFacetingName());
-//			  	return !selectedFacetingNames.contains(c.getFacetingName());
-//		  })
 		  .map(f -> f.getFacetingName()).collect(Collectors.toSet())
 		  .stream().forEach(s -> {
 			  
@@ -146,10 +140,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			  lsfh.add(sfh);
 		  });
 	
-		System.out.println(lsfh.size());
 		lsfh.stream().forEach(sfh -> {
-			System.out.println(sfh.getFacetingName());
-			
 			@SuppressWarnings("unchecked")
 			Set<IDomainObject> lc = sfh.getBean(appContext).findAll(locale, currency, new ArrayList<String>(sfh.getCodes()));
 
@@ -320,16 +311,12 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 								   codes);
 		});
 		
-		//get the list of tokens from the selected facets passed as parameter
-		List<String> sft = facetPayload.stream().map(f -> f.getValue()).collect(Collectors.toList());
-		
 		//pull the selected from facetList using the tokens from JSON payload
-		Set<Facet> selectedFacets = sft.stream().flatMap(x -> {
+		Set<Facet> selectedFacets = facetPayload.stream().flatMap(x -> {
 														return facets.stream()
-																.filter(y -> x.equals(y.getValue()));
+																.filter(y -> x.getValue().equals(y.getValue()));
 						  							}).collect(Collectors.toSet());
 		
-	
 		//combine the selected facets
 		selectedFacets.stream()
 					  .forEach(f -> {
@@ -354,9 +341,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 					.filter(y -> x.getValue().equals(y.getValue()));
 			}).collect(Collectors.toSet());
 		
-		facets.removeAll(selectedFacets);
-		returnFacets.removeAll(removeFacets);
-		
+		//returnFacets.removeAll(removeFacets);
 		
 		returnFacets.stream().forEach(f -> {
 			System.out.println(f.getValue());
