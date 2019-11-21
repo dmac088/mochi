@@ -88,16 +88,13 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 											String currency,
 											QueryBuilder qb,
 											org.hibernate.search.jpa.FullTextQuery jpaQuery, 
-											Set<Facet> facetList, 
-											Set<Facet> selectedFacetList) {
+											Set<Facet> facets) {
+		
 		
 		Set<SearchFacet> returnFacets = new HashSet<SearchFacet>();
-		Set<String> facetingNames = selectedFacetList.stream()
-													 .map(f -> f.getFacetingName())
-													 .collect(Collectors.toSet());
 		
 		//we need a list of unique FacetingName and FieldName
-		Set<SearchFacetWithFieldHelper> lf = facetList.stream()
+		Set<SearchFacetWithFieldHelper> lf = facets.stream()
 										//.filter(c -> (!facetingNames.contains(c.getFacetingName())))
 										.map(f -> {
 											SearchFacetWithFieldHelper sp = new SearchFacetWithFieldHelper(); 
@@ -112,7 +109,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		
 		//all we need to do is get the distinct getFacetingName, and getFieldName from facetList
 		//where the FacetingName is not in selectedFacetList
-		final Set<Facet> facets = new HashSet<Facet>(); 
 		
 		
 		Set<SearchFacetHelper> lsfh = new HashSet<SearchFacetHelper>();
@@ -144,6 +140,10 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			  sfh.setCodes(ss);
 			  lsfh.add(sfh);
 		  });
+		
+		facets.stream().forEach(f -> {
+			System.out.println(f.getValue());
+		});
 	
 		
 		lsfh.stream().forEach(sfh -> {
@@ -154,10 +154,14 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			
 			IService service = sfh.getBean(appContext);
 					
-			facets.stream().forEach(f -> {
-				Optional<IDomainObject> dO = lc.stream()
-											  .filter(c -> c.getCode().equals(service.tokenToCode(f.getValue())))
-											  .findFirst();
+			facets.stream()
+				  .filter(f -> sfh.getFacetingName().equals(f.getFacetingName()))
+				  .forEach(f -> {
+					  Optional<IDomainObject> dO = lc.stream()
+											  		 .filter(c -> {
+												  		return (c.getCode().equals(service.tokenToCode(f.getValue())));
+											  		  })
+											  		 .findFirst();
 							
 					if(dO.isPresent()) {
 						returnFacets.add(new SearchFacet(f, dO.get()));
@@ -170,13 +174,13 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 	
 
 	private  Set<String> getDiscreteFacets(	   String locale, 
-													   String currency, 
-													   QueryBuilder qb, 
-													   org.hibernate.search.jpa.FullTextQuery jpaQuery,
-													   String facetingName, 
-													   String fieldReference,
-													   Set<Facet> facets,
-													   Set<String> ss) {
+											   String currency, 
+											   QueryBuilder qb, 
+											   org.hibernate.search.jpa.FullTextQuery jpaQuery,
+											   String facetingName, 
+											   String fieldReference,
+											   Set<Facet> facets,
+											   Set<String> ss) {
 		
 		// create a category faceting request for the base level
 		FacetingRequest facetRequest = qb.facet()
@@ -197,18 +201,18 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		Set<String>	uniqueFieldRefs = new HashSet<String>();
 		
 		//Add all the category codes up the hierarchy
-		facets.stream().filter(f -> f.getFacetingName().equals(facetingName)).forEach(f -> {
-			
-		
-			//this is concatenating both brand and category codes
-			List<String> codes = Arrays.asList(f.getValue().split("/")).stream().filter(o -> !o.isEmpty()).collect(Collectors.toList());
-			
-			uniqueCodes.addAll(codes);
-			
-			//if codes array length is > 1 then the facet is hierarchical
-			if(codes.size() > 1) {
-				getFieldRefs(f, codes, uniqueFieldRefs);
-			}
+		facets.stream()
+			  .filter(f -> f.getFacetingName().equals(facetingName))
+			  .forEach(f -> {
+					//this is concatenating both brand and category codes
+					List<String> codes = Arrays.asList(f.getValue().split("/")).stream().filter(o -> !o.isEmpty()).collect(Collectors.toList());
+					
+					uniqueCodes.addAll(codes);
+					
+					//if codes array length is > 1 then the facet is hierarchical
+					if(codes.size() > 1) {
+						getFieldRefs(f, codes, uniqueFieldRefs);
+					}
 			
 		});
 		
@@ -216,7 +220,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		
 		uniqueFieldRefs.stream().forEach(fr -> {
 			FacetingRequest frq = qb.facet().name(facetingName)
-											.onField(fr) // in category class
+											.onField(fr) 
 											.discrete()
 											.orderedBy(FacetSortOrder.COUNT_DESC)
 											.includeZeroCounts(false)
@@ -225,7 +229,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			jpaQuery.getFacetManager().enableFaceting(frq);
 			facets.addAll(jpaQuery.getFacetManager().getFacets(facetingName));
 		});
-		
+				
 		//get the object array for the ids in previous step
 		return ss;
 	}
@@ -308,7 +312,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 								   jpaQuery, 
 								   f.getFacetCategory(),
 								   f.getFacetField(),
-								   //facets will contain an initialized list of facets
+								   //facets will contain a fully initialized list of facets
 								   facets,
 								   codes);
 		});
@@ -322,21 +326,26 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 																.filter(y -> x.equals(y.getValue()));
 						  							}).collect(Collectors.toSet());
 		
+		//this needs a bit more work to handle the brands
+		//we need to remove whatever the user selected from the full list
+		facets.removeAll(selectedFacets);
+		
 		//combine the selected facets
-		selectedFacets.stream().forEach(f -> {
-			System.out.println(f.getClass().getSimpleName() + " - " + f.getValue() + " - " + f.getCount());
-			jpaQuery.getFacetManager().getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
+		selectedFacets.stream()
+					  .forEach(f -> {
+						System.out.println(f.getClass().getSimpleName() + " - " + f.getValue() + " - " + f.getCount());
+						jpaQuery.getFacetManager().getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
 		});
 		
-		//re-process the facets
+	
+		//re-process the facets and fetch the domain objects
 		returnFacets.addAll(//facetList
-											this.processFacets(	
+							this.processFacets(	
 												lcl, 
 												currency, 
 												queryBuilder, 
 												jpaQuery, 
-												facets, 
-												selectedFacets)
+												facets)
 											
 		);
 		// set pageable definition for jpaQuery
