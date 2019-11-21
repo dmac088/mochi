@@ -1,13 +1,9 @@
 package io.nzbee.ui.component.web.facet.search;
 
 import java.util.Objects;
-
 import org.apache.lucene.search.Query;
-
 import com.fasterxml.jackson.annotation.JsonTypeName;
-
 import io.nzbee.domain.IDomainObject;
-import io.nzbee.dto.category.Category;
 import io.nzbee.ui.component.web.facet.IFacet;
 
 @JsonTypeName("searchfacet")
