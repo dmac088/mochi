@@ -182,6 +182,11 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 											   Set<Facet> facets,
 											   Set<String> ss) {
 		
+		
+		facets.removeAll(facets.stream()
+							   .filter(c -> !(c.getFacetingName().equals(facetingName)))
+							   .collect(Collectors.toList()));
+		
 		// create a category faceting request for the base level
 		FacetingRequest facetRequest = qb.facet()
 										 .name(facetingName)
@@ -328,7 +333,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		
 		//this needs a bit more work to handle the brands
 		//we need to remove whatever the user selected from the full list
-		facets.removeAll(selectedFacets);
+		//facets.removeAll(selectedFacets);
 		
 		//combine the selected facets
 		selectedFacets.stream()
