@@ -302,7 +302,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		Set<Facet> facets = new HashSet<Facet>();
 		Set<String> codes = new HashSet<String>();
 		facetServices.getFacetServices().stream().forEach(f -> {
-			SearchFacetHelper sfh = new SearchFacetHelper();
 			this.getDiscreteFacets(lcl,
 								   currency,
 								   queryBuilder, 
@@ -313,30 +312,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 								   facets,
 								   codes);
 		});
-		
-//		lsfh.stream().forEach(sfh -> {
-//			System.out.println(sfh.getFacetingName());
-//			System.out.println(sfh.getCodes());
-//			
-//			//for the initialized list get the associated domain objects
-//			@SuppressWarnings("unchecked")
-//			Set<IDomainObject> lc = sfh.getBean(appContext).findAll(lcl, currency, new ArrayList<String>(sfh.getCodes()));
-//
-//			//create a new array of entity facets
-//			
-//			IService service = sfh.getBean(appContext);
-//					
-//			//create a list of SearchFacet from the resulting domain objects from the lucene index
-//			facets.stream().forEach(f -> {
-//				Optional<IDomainObject> dO = lc.stream()
-//											  .filter(c -> c.getCode().equals(service.tokenToCode(f.getValue())))
-//											  .findFirst();
-//							
-//					if(dO.isPresent()) {
-//						facetList.add(new SearchFacet(f, dO.get()));
-//					}
-//			});
-//		});
 		
 		//get the list of tokens from the selected facets passed as parameter
 		List<String> sft = facetPayload.stream().map(f -> f.getValue()).collect(Collectors.toList());
