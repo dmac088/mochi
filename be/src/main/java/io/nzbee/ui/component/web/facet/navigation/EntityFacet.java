@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import io.nzbee.domain.IDomainObject;
 import io.nzbee.ui.component.web.facet.IFacet;
 
-@JsonTypeName("entityfacet")
+@JsonTypeName("EntityFacet")
 public class EntityFacet implements IFacet {
 
 	private final IDomainObject payload;

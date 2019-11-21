@@ -13,8 +13,8 @@ import io.nzbee.ui.component.web.facet.search.SearchFacet;
 	    use = JsonTypeInfo.Id.NAME,
 	    include = JsonTypeInfo.As.PROPERTY,
 	    property="type")
-@JsonSubTypes( {@JsonSubTypes.Type(value = SearchFacet.class, name = "searchfacet"),
-			    @JsonSubTypes.Type(value = EntityFacet.class, name = "entityfacet")})
+@JsonSubTypes( {@JsonSubTypes.Type(value = SearchFacet.class, name = "SearchFacet"),
+			    @JsonSubTypes.Type(value = EntityFacet.class, name = "EntityFacet")})
 public interface IFacet {
 
 	String getId();
