@@ -336,13 +336,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 											
 		);
 		
-		Set<IFacet> removeFacets = selectedFacets.stream().flatMap(x -> {
-			return returnFacets.stream()
-					.filter(y -> x.getValue().equals(y.getValue()));
-			}).collect(Collectors.toSet());
-		
-		//returnFacets.removeAll(removeFacets);
-		
 		returnFacets.stream().forEach(f -> {
 			System.out.println(f.getValue());
 		});
