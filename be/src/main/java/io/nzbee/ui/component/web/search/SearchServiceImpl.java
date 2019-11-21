@@ -109,11 +109,10 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		
 		//all we need to do is get the distinct getFacetingName, and getFieldName from facetList
 		//where the FacetingName is not in selectedFacetList
-		
-		
 		Set<SearchFacetHelper> lsfh = new HashSet<SearchFacetHelper>();
 		
 		
+		facets.clear();
 		lf.stream().map(f -> f.getFacetingName()).collect(Collectors.toSet())
 		  .stream().forEach(s -> {
 			  Set<String> ss = new HashSet<String>();
@@ -122,17 +121,14 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			  lf.stream()
 			  .filter(f -> f.getFacetingName().equals(s))
 			  .forEach(f -> {
-				  	this.getDiscreteFacets(	
-			  
-												locale,
+				  	this.getDiscreteFacets(		locale,
 												currency,
 												qb, 
 												jpaQuery, 
 												f.getFacetingName(), 
 												f.getFieldName(),
 												facets,
-												ss		
-												);
+												ss);
 				 
 			  });
 			  
@@ -341,8 +337,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 	
 		//re-process the facets and fetch the domain objects
 		returnFacets.addAll(//facetList
-							this.processFacets(	
-												lcl, 
+							this.processFacets( lcl, 
 												currency, 
 												queryBuilder, 
 												jpaQuery, 
