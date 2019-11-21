@@ -35,6 +35,7 @@ import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.product.Product;
 import io.nzbee.entity.PageableUtil;
 import io.nzbee.ui.component.web.facet.FacetContainer;
+import io.nzbee.ui.component.web.facet.IFacet;
 import io.nzbee.ui.component.web.facet.search.SearchFacet;
 import io.nzbee.ui.component.web.facet.search.SearchFacetHelper;
 import io.nzbee.ui.component.web.facet.search.SearchFacetWithFieldHelper;
@@ -100,7 +101,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		
 		//we need a list of unique FacetingName and FieldName, use facets Set to create the helpers
 		Set<SearchFacetWithFieldHelper> lf = facets.stream()
-										.filter(c -> (!selectedFacetingNames.contains(c.getFacetingName())))
+										//.filter(c -> (!selectedFacetingNames.contains(c.getFacetingName())))
 										.map(f -> {
 											SearchFacetWithFieldHelper sp = new SearchFacetWithFieldHelper(); 
 											sp.setFacetingName(f.getFacetingName());
@@ -115,10 +116,10 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		//where the FacetingName is not in selectedFacetList
 		Set<SearchFacetHelper> lsfh = new HashSet<SearchFacetHelper>();
 		lf.stream()
-		  .filter(c -> {
-			  	System.out.println(c.getFacetingName());
-			  	return !selectedFacetingNames.contains(c.getFacetingName());
-		  })
+//		  .filter(c -> {
+//			  	System.out.println(c.getFacetingName());
+//			  	return !selectedFacetingNames.contains(c.getFacetingName());
+//		  })
 		  .map(f -> f.getFacetingName()).collect(Collectors.toSet())
 		  .stream().forEach(s -> {
 			  
@@ -128,7 +129,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			  lf.stream()
 			  .filter(f -> f.getFacetingName().equals(s))
 			  .forEach(f -> {
-				    System.out.println(f.getFacetingName());
+				  //  System.out.println(f.getFacetingName());
 				  	this.getDiscreteFacets(	locale,
 											currency,
 											qb, 
@@ -145,8 +146,10 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			  lsfh.add(sfh);
 		  });
 	
-		
+		System.out.println(lsfh.size());
 		lsfh.stream().forEach(sfh -> {
+			System.out.println(sfh.getFacetingName());
+			
 			@SuppressWarnings("unchecked")
 			Set<IDomainObject> lc = sfh.getBean(appContext).findAll(locale, currency, new ArrayList<String>(sfh.getCodes()));
 
@@ -346,8 +349,16 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 											
 		);
 		
+		Set<IFacet> removeFacets = selectedFacets.stream().flatMap(x -> {
+			return returnFacets.stream()
+					.filter(y -> x.getValue().equals(y.getValue()));
+			}).collect(Collectors.toSet());
+		
 		facets.removeAll(selectedFacets);
-		facets.stream().forEach(f -> {
+		returnFacets.removeAll(removeFacets);
+		
+		
+		returnFacets.stream().forEach(f -> {
 			System.out.println(f.getValue());
 		});
 		
