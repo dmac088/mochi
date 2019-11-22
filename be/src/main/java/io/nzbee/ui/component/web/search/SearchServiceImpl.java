@@ -158,18 +158,18 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		return newLsfh;
 	}
 	
-	private Set<SearchFacetHelper> initializeHelpers(Set<SearchFacetHelper> lsfh, Set<Facet> facets) {
+	private Set<SearchFacetHelper> initializeFacetHelpers(Set<SearchFacetHelper> lsfh, Set<Facet> facets) {
 		//check if we actually have any selected facets
 		//if not we need to initialize the array lsfh
-		if(lsfh.isEmpty()) {
-			facets.stream().map(f -> f.getFacetingName()).collect(Collectors.toSet())
+		
+		facets.stream().map(f -> f.getFacetingName()).collect(Collectors.toSet())
 						   .stream()
 						   .forEach(str -> {
 							   				SearchFacetHelper sfh = new SearchFacetHelper();
 							   				sfh.setFacetingName(str);
 							   				lsfh.add(sfh);
 						   				  });
-		}
+		
 		return lsfh;
 	}
 	
@@ -346,11 +346,15 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 											lsfh);
 		});
 		
-		initializeHelpers(lsfh, facets);
+		//if there are no selected facets the facets set will be initialized with all facets
+		if(selectedFacets.isEmpty()) {
+			initializeFacetHelpers(lsfh, facets);
+		}
 		
+		//we need to aggregate the codes of each helper 
 		Set<SearchFacetHelper> aggLsfh = aggregateFacetHelpers(lsfh);
 		
-		//select the domain object from DB for each of the facets
+		//select the domain object from DB for each of the aggregated facet helpers
 		aggLsfh.stream().forEach(sfh -> {
 			Set<IDomainObject> lc = sfh.getBean(appContext).findAll(lcl, currency, new ArrayList<String>(sfh.getCodes()));
 
