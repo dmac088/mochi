@@ -139,7 +139,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		return facets;
 	}
 	
-	private Set<SearchFacetHelper> aggregateHelper(Set<SearchFacetHelper> lsfh) {
+	private Set<SearchFacetHelper> aggregateFacetHelpers(Set<SearchFacetHelper> lsfh) {
 		Set<SearchFacetHelper> newLsfh = new HashSet<SearchFacetHelper>();
 		lsfh.stream().map(sfh -> sfh.getFacetingName()).collect(Collectors.toSet())
 					   .stream()
@@ -348,7 +348,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		
 		initializeHelpers(lsfh, facets);
 		
-		Set<SearchFacetHelper> aggLsfh = aggregateHelper(lsfh);
+		Set<SearchFacetHelper> aggLsfh = aggregateFacetHelpers(lsfh);
 		
 		//select the domain object from DB for each of the facets
 		aggLsfh.stream().forEach(sfh -> {
