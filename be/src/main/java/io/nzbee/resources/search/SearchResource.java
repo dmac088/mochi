@@ -4,26 +4,19 @@ import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.ResourceAssembler;
 import org.springframework.hateoas.ResourceSupport;
 import io.nzbee.domain.product.Product;
-import io.nzbee.resources.controllers.SearchController;
 import io.nzbee.resources.product.ProductResource;
 import io.nzbee.ui.component.web.facet.IFacet;
 import io.nzbee.ui.component.web.search.ISearchService;
 import lombok.Getter;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.web.PagedResourcesAssembler;
 
 @Getter
 public class SearchResource extends ResourceSupport {
-
-	@Autowired
-	private PagedResourcesAssembler<ProductResource> parAssembler;
 	
     private PagedResources<ProductResource> products;
     
