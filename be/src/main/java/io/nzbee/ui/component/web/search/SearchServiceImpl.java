@@ -35,7 +35,6 @@ import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.product.Product;
 import io.nzbee.entity.PageableUtil;
 import io.nzbee.ui.component.web.facet.FacetContainer;
-import io.nzbee.ui.component.web.facet.IFacet;
 import io.nzbee.ui.component.web.facet.search.SearchFacet;
 import io.nzbee.ui.component.web.facet.search.SearchFacetHelper;
 import io.nzbee.ui.component.web.facet.search.SearchFacetWithFieldHelper;
@@ -110,9 +109,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		
 		facets.removeAll(facets.stream().filter(f -> !selectedFacet.getFacetingName()
 				.contains(f.getFacetingName())).collect(Collectors.toSet()));
-	
-		//all we need to do is get the distinct getFacetingName, and getFieldName from facetList
-		//where the FacetingName is not in selectedFacetList
 		
 		lf.stream()
 		  .map(f -> f.getFacetingName()).collect(Collectors.toSet())
@@ -305,19 +301,19 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 						jpaQuery.getFacetManager().getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
 						
 						//this will not refetch from DB
-						this.processFacet( lcl, 
-								currency, 
-								queryBuilder, 
-								jpaQuery, 
-								facets,
-								f,
-								lsfh);
+						this.processFacet( 	lcl, 
+											currency, 
+											queryBuilder, 
+											jpaQuery, 
+											facets,
+											f,
+											lsfh);
 		});
 		
 		
 		//select the domain object from DB for each of the facets
 		lsfh.stream().forEach(sfh -> {
-			@SuppressWarnings("unchecked")
+			
 			Set<IDomainObject> lc = sfh.getBean(appContext).findAll(lcl, currency, new ArrayList<String>(sfh.getCodes()));
 
 			//create a new array of entity facets
@@ -325,7 +321,14 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			IService service = sfh.getBean(appContext);
 					
 			facets.stream()
+			      .filter(x -> {
+									return !selectedFacets.stream()
+											.filter(y -> (x.getValue().equals(y.getValue())))
+											.findFirst().isPresent();
+								}).collect(Collectors.toSet())
+			      .stream()
 				  .filter(f -> sfh.getFacetingName().equals(f.getFacetingName()))
+				  
 				  .forEach(f -> {
 					  Optional<IDomainObject> dO = lc.stream()
 											  		 .filter(c -> {
@@ -339,7 +342,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			});
 		});
 		
-	
 		returnFacets.stream().forEach(f -> {
 			System.out.println(f.getValue());
 		});
