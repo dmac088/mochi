@@ -98,17 +98,22 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 											Set<SearchFacetHelper> setSearchFacetHelper) {
 		
 		//we need a list of unique FacetingName and FieldName, use facets Set to create the helpers
-		Set<SearchFacetWithFieldHelper> lf = facets.stream()
-										.map(f -> {
-											SearchFacetWithFieldHelper sp = new SearchFacetWithFieldHelper(); 
-											sp.setFacetingName(f.getFacetingName());
-											sp.setFieldName(f.getFieldName());			
-											return sp;
-										})
-										.collect(Collectors.toSet());
+		Set<SearchFacetWithFieldHelper> lf = facets
+													.stream()
+													.map(f -> {
+																SearchFacetWithFieldHelper sp = new SearchFacetWithFieldHelper(); 
+																sp.setFacetingName(f.getFacetingName());
+																sp.setFieldName(f.getFieldName());			
+																return sp;
+													})
+													.collect(Collectors.toSet());
 		
-		facets.removeAll(facets.stream().filter(f -> !selectedFacet.getFacetingName()
-				.contains(f.getFacetingName())).collect(Collectors.toSet()));
+		facets.removeAll(facets
+								.stream()
+								.filter(f -> !selectedFacet.getFacetingName().contains(f.getFacetingName()))
+								.collect(Collectors.toSet()));
+		
+		
 		
 		lf.stream()
 		  .map(f -> f.getFacetingName()).collect(Collectors.toSet())
@@ -273,7 +278,10 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		// initialize the facets
 		Set<Facet> facets = new HashSet<Facet>();
 		Set<String> codes = new HashSet<String>();
-		facetServices.getFacetServices().stream().forEach(f -> {
+		facetServices
+			.getFacetServices()
+			.stream()
+			.forEach(f -> {
 			this.getDiscreteFacets(lcl,
 								   currency,
 								   queryBuilder, 
@@ -310,10 +318,20 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 											lsfh);
 		});
 		
+		//check if we actually have any selected facets
+		//if not we need to initialize the array lsfh
+		if(lsfh.isEmpty()) {
+			facets.stream().map(f -> f.getFacetingName()).collect(Collectors.toSet())
+						   .stream()
+						   .forEach(str -> {
+							   				SearchFacetHelper sfh = new SearchFacetHelper();
+							   				sfh.setFacetingName(str);
+							   				lsfh.add(sfh);
+						   				  });
+		}
 		
 		//select the domain object from DB for each of the facets
 		lsfh.stream().forEach(sfh -> {
-			
 			Set<IDomainObject> lc = sfh.getBean(appContext).findAll(lcl, currency, new ArrayList<String>(sfh.getCodes()));
 
 			//create a new array of entity facets
@@ -330,6 +348,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 				  .filter(f -> sfh.getFacetingName().equals(f.getFacetingName()))
 				  
 				  .forEach(f -> {
+					  
 					  Optional<IDomainObject> dO = lc.stream()
 											  		 .filter(c -> {
 												  		return (c.getCode().equals(service.tokenToCode(f.getValue())));
