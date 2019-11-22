@@ -335,7 +335,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			Set<IDomainObject> lc = sfh.getBean(appContext).findAll(lcl, currency, new ArrayList<String>(sfh.getCodes()));
 
 			//create a new array of entity facets
-			
 			IService service = sfh.getBean(appContext);
 					
 			facets.stream()
@@ -355,9 +354,9 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 											  		  })
 											  		 .findFirst();
 							
-					if(dO.isPresent()) {
-						returnFacets.add(new SearchFacet(f, dO.get()));
-					}
+					  if(dO.isPresent()) {
+						  returnFacets.add(new SearchFacet(f, dO.get()));
+					  }
 			});
 		});
 		
