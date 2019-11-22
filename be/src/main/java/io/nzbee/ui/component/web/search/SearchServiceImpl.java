@@ -82,12 +82,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		
 	}
 
-
-
-	//this method takes:
-			//a list of initialized facets (full list)
-			//a list of selected facets (from api post)
-	
 	
 	private Set<Facet> processFacet( String locale, 
 											String currency,
@@ -143,6 +137,40 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		  });
 	
 		return facets;
+	}
+	
+	private Set<SearchFacetHelper> aggregateHelper(Set<SearchFacetHelper> lsfh) {
+		Set<SearchFacetHelper> newLsfh = new HashSet<SearchFacetHelper>();
+		lsfh.stream().map(sfh -> sfh.getFacetingName()).collect(Collectors.toSet())
+					   .stream()
+					   .forEach(f -> {
+						   Set<String> sstr = new HashSet<String>(); 
+						   lsfh.stream().filter(fh -> fh.getFacetingName().equals(f))
+						   				.collect(Collectors.toSet())
+						   				.stream()
+						   				.forEach(l -> {sstr.addAll(l.getCodes());});
+						   
+						   SearchFacetHelper nsfh = new SearchFacetHelper();
+						   nsfh.setFacetingName(f);
+						   nsfh.setCodes(sstr);
+						   newLsfh.add(nsfh);
+					   });
+		return newLsfh;
+	}
+	
+	private Set<SearchFacetHelper> initializeHelpers(Set<SearchFacetHelper> lsfh, Set<Facet> facets) {
+		//check if we actually have any selected facets
+		//if not we need to initialize the array lsfh
+		if(lsfh.isEmpty()) {
+			facets.stream().map(f -> f.getFacetingName()).collect(Collectors.toSet())
+						   .stream()
+						   .forEach(str -> {
+							   				SearchFacetHelper sfh = new SearchFacetHelper();
+							   				sfh.setFacetingName(str);
+							   				lsfh.add(sfh);
+						   				  });
+		}
+		return lsfh;
 	}
 	
 
@@ -318,38 +346,12 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 											lsfh);
 		});
 		
-		Set<SearchFacetHelper> newLsfh = new HashSet<SearchFacetHelper>();
-		lsfh.stream().map(sfh -> sfh.getFacetingName()).collect(Collectors.toSet())
-					   .stream()
-					   .forEach(f -> {
-						   Set<String> sstr = new HashSet<String>(); 
-						   lsfh.stream().filter(fh -> fh.getFacetingName().equals(f))
-						   				.collect(Collectors.toSet())
-						   				.stream()
-						   				.forEach(l -> {sstr.addAll(l.getCodes());});
-						   
-						   SearchFacetHelper nsfh = new SearchFacetHelper();
-						   nsfh.setFacetingName(f);
-						   nsfh.setCodes(sstr);
-						   newLsfh.add(nsfh);
-					   });
+		initializeHelpers(lsfh, facets);
 		
-		//check if we actually have any selected facets
-		//if not we need to initialize the array lsfh
-		if(newLsfh.isEmpty()) {
-			facets.stream().map(f -> f.getFacetingName()).collect(Collectors.toSet())
-						   .stream()
-						   .forEach(str -> {
-							   				SearchFacetHelper sfh = new SearchFacetHelper();
-							   				sfh.setFacetingName(str);
-							   				newLsfh.add(sfh);
-						   				  });
-		}
+		Set<SearchFacetHelper> aggLsfh = aggregateHelper(lsfh);
 		
 		//select the domain object from DB for each of the facets
-		newLsfh.stream().forEach(sfh -> {
-			System.out.println(sfh.getFacetingName());
-			System.out.println(StringUtils.join(sfh.getCodes()));
+		aggLsfh.stream().forEach(sfh -> {
 			Set<IDomainObject> lc = sfh.getBean(appContext).findAll(lcl, currency, new ArrayList<String>(sfh.getCodes()));
 
 			//create a new array of entity facets
@@ -378,9 +380,9 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			});
 		});
 		
-//		returnFacets.stream().forEach(f -> {
-//			System.out.println(f.getValue());
-//		});
+		returnFacets.stream().forEach(f -> {
+			System.out.println(f.getValue());
+		});
 		
 		// set pageable definition for jpaQuery
 		Pageable pageable = PageRequest.of(page, size);
