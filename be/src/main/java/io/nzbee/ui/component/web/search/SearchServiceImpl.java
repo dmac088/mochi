@@ -384,9 +384,12 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			});
 		});
 		
-		returnFacets.stream().forEach(f -> {
-			System.out.println(f.getValue());
+		returnFacets.stream()
+		.sorted( (a, b) -> a.getValue().compareTo(b.getValue()))
+		.forEach(f -> {
+			System.out.println(f.getValue() + " -> " +  f.getDisplayValue() + " -> " + f.getCount());
 		});
+
 		
 		// set pageable definition for jpaQuery
 		Pageable pageable = PageRequest.of(page, size);
