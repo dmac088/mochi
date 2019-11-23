@@ -55,5 +55,11 @@ public class EntityFacet implements IFacet {
 		// TODO Auto-generated method stub
 		return "Empty";
 	}
+
+	@Override
+	public int getCount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 }
