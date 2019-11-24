@@ -1,7 +1,6 @@
 package io.nzbee.domain.brand;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,23 +21,23 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	@Override
 	@Cacheable
 	@Transactional
-	public Optional<Brand> findById(String locale, String currency, Long Id) {		
-    	io.nzbee.dto.brand.Brand pb = brandService.findById(locale, currency, Id).get();
-     	return	Optional.ofNullable(this.dtoToDO(pb));
+	public Brand findById(String locale, String currency, Long Id) {		
+    	io.nzbee.dto.brand.Brand pb = brandService.findById(locale, currency, Id);
+     	return	this.dtoToDO(pb);
 	}
 	
 	@Override
 	@Transactional
-	public Optional<Brand> findByCode(String locale, String currency, String code) {
+	public Brand findByCode(String locale, String currency, String code) {
 		// TODO Auto-generated method stub
-		return Optional.ofNullable(dtoToDO(brandService.findByCode(locale, currency, code).get()));
+		return dtoToDO(brandService.findByCode(locale, currency, code));
 	}
 
 	@Override
 	@Transactional
-	public Optional<Brand> findByDesc(String locale, String currency, String desc) {
+	public Brand findByDesc(String locale, String currency, String desc) {
 		// TODO Auto-generated method stub
-		return Optional.ofNullable(dtoToDO(brandService.findByDesc(locale, currency, desc).get()));
+		return dtoToDO(brandService.findByDesc(locale, currency, desc));
 	}
   
     @Override

@@ -1,7 +1,6 @@
 package io.nzbee.domain.tag;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,26 +28,26 @@ public class TagServiceImpl implements ITagService/*, IFacetService*/ {
 
 	@Override
 	@Transactional
-	public Optional<Tag> findById(String locale, String currency, Long Id) {
+	public Tag findById(String locale, String currency, Long Id) {
 		// TODO Auto-generated method stub
-		io.nzbee.dto.tag.Tag pt = productTagService.findById(locale, currency, Id).get();
-		return Optional.ofNullable(this.dtoToDO(pt));
+		io.nzbee.dto.tag.Tag pt = productTagService.findById(locale, currency, Id);
+		return this.dtoToDO(pt);
 	}
 
 	@Override
 	@Transactional
-	public Optional<Tag> findByCode(String locale, String currency, String code) {
+	public Tag findByCode(String locale, String currency, String code) {
 		// TODO Auto-generated method stub	
-		io.nzbee.dto.tag.Tag  pt = productTagService.findByCode(locale, currency, code).get();
-		return Optional.ofNullable(this.dtoToDO(pt));
+		io.nzbee.dto.tag.Tag  pt = productTagService.findByCode(locale, currency, code);
+		return this.dtoToDO(pt);
 	}
 
 	@Override
 	@Transactional
-	public Optional<Tag> findByDesc(String locale, String currency, String desc) {
+	public Tag findByDesc(String locale, String currency, String desc) {
 		// TODO Auto-generated method stub
-		io.nzbee.dto.tag.Tag  pt = productTagService.findByDesc(locale, currency, desc).get();
-		return Optional.ofNullable(this.dtoToDO(pt));
+		io.nzbee.dto.tag.Tag  pt = productTagService.findByDesc(locale, currency, desc);
+		return this.dtoToDO(pt);
 	}
 
 	@Override

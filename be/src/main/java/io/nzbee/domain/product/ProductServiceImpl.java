@@ -1,7 +1,6 @@
 package io.nzbee.domain.product;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,7 +38,7 @@ public class ProductServiceImpl implements IProductService {
     private io.nzbee.dto.tag.ITagService tagDtoService;
     
 	@Override
-	public Optional<Product> findById(String locale, String currency, Long Id) {
+	public Product findById(String locale, String currency, Long Id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -47,14 +46,14 @@ public class ProductServiceImpl implements IProductService {
 	@Override
 	@Transactional
 	@Cacheable(value="product")
-	public Optional<Product> findByCode(String locale, String currency, String code) {
-	   	return Optional.ofNullable(this.dtoToDO(productDtoService.findByCode(locale, currency, code).get()));
+	public Product findByCode(String locale, String currency, String code) {
+	   	return this.dtoToDO(productDtoService.findByCode(locale, currency, code));
 	}	
 
 	@Override
-	public Optional<Product> findByDesc(String locale, String currency, String desc) {
+	public Product findByDesc(String locale, String currency, String desc) {
 		// TODO Auto-generated method stub
-		return Optional.ofNullable(this.dtoToDO(productDtoService.findByDesc(locale, currency, desc).get()));
+		return this.dtoToDO(productDtoService.findByDesc(locale, currency, desc));
 	}
 
 	@Override

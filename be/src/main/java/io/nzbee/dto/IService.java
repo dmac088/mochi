@@ -1,16 +1,15 @@
 package io.nzbee.dto;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface IService<T, X, Y> {
 
-	Optional<T> findById(long Id);
+	T findById(long Id);
 	
 	//for a DTO we need the locale
-	Optional<T> findByCode(String code);
+	T findByCode(String code);
 	
-	Optional<T> findByDesc(String desc);
+	T findByDesc(String desc);
 	
 	List<T> findAll();
 	

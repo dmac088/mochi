@@ -1,6 +1,5 @@
 package io.nzbee.dto.customer;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import io.nzbee.dto.IDto;
@@ -14,37 +13,37 @@ public class CustomerServiceImpl implements ICustomerService {
 	IPartyService customerService;
 	
 	@Override
-	public Optional<io.nzbee.dto.customer.Customer> findById(long Id) {
+	public Customer findById(long Id) {
 		// TODO Auto-generated method stub
-		return Optional.ofNullable(this.entityToDTO(customerService.findById(Id).get()));
+		return this.entityToDTO(customerService.findById(Id).get());
 	}
 	
 	@Override
-	public Optional<io.nzbee.dto.customer.Customer> findByCode(String userName) {
+	public Customer findByCode(String userName) {
 		// TODO Auto-generated method stub
-		return Optional.ofNullable(this.entityToDTO(customerService.findByCode(userName).get()));
+		return this.entityToDTO(customerService.findByCode(userName).get());
 	}
 
 	@Override
-	public Optional<io.nzbee.dto.customer.Customer> findByDesc(String desc) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<io.nzbee.dto.customer.Customer> findAll(List<IDto> dtos) {
+	public Customer findByDesc(String desc) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public io.nzbee.dto.customer.Customer entityToDTO(Party entity) {
+	public List<Customer> findAll(List<IDto> dtos) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public io.nzbee.dto.customer.Customer doToDto(io.nzbee.domain.customer.Customer domainObject) {
+	public Customer entityToDTO(Party entity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Customer doToDto(io.nzbee.domain.customer.Customer domainObject) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -56,44 +55,40 @@ public class CustomerServiceImpl implements ICustomerService {
 	}
 
 	@Override
-	public void registerNewCustomer(io.nzbee.dto.customer.Customer customer) {
+	public void registerNewCustomer(Customer customer) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public List<io.nzbee.dto.customer.Customer> getCustomers() {
+	public List<Customer> getCustomers() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void deleteCustomer(io.nzbee.dto.customer.Customer customer) {
+	public void deleteCustomer(Customer customer) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public io.nzbee.dto.customer.Customer convertToCustomerDO(Party party) {
+	public Customer convertToCustomerDO(Party party) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void updateCustomer(io.nzbee.dto.customer.Customer customer) {
+	public void updateCustomer(Customer customer) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public List<io.nzbee.dto.customer.Customer> findAll() {
+	public List<Customer> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-
-
-  
 	
     // API
     //This method should accept a DTO and return a DTO
