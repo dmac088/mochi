@@ -109,9 +109,15 @@ public class ProductAttribute {
 	@Transient
 	@IndexedEmbedded
 	public Category getPrimaryCategory() {
-		return this.getProduct().getCategories().stream().filter(c -> {
-			 return c.getHierarchy().getHierarchyCode().equals(CategoryVars.PRIMARY_HIERARCHY_CODE);
-		 		}).collect(Collectors.toList()).stream().findFirst().get();
+		 Optional<CategoryProduct> category = 
+				 this.getProduct().getCategories().stream().filter(c -> {
+					 return c.getHierarchy().getHierarchyCode().equals(CategoryVars.PRIMARY_HIERARCHY_CODE);
+		 			}).collect(Collectors.toList()).stream().findFirst();
+		 
+		 if(category.isPresent()) { return category.get();}
+		 CategoryProduct c = new CategoryProduct();
+		 c.setCategoryCode("UNK01");
+		 return c;
 	}
 	
 	@Transient
