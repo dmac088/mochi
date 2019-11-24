@@ -1,8 +1,6 @@
 package io.nzbee.resources.category;
 
-import org.springframework.hateoas.ResourceAssembler;
 import org.springframework.hateoas.ResourceSupport;
-
 import io.nzbee.domain.category.BrandCategory;
 import io.nzbee.domain.category.Category;
 import io.nzbee.domain.category.ProductCategory;
@@ -10,7 +8,6 @@ import io.nzbee.domain.product.Product;
 import io.nzbee.resources.controllers.BrandController;
 import io.nzbee.resources.controllers.CategoryController;
 import io.nzbee.resources.controllers.ProductController;
-import io.nzbee.resources.product.ProductResource;
 import lombok.Getter;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
