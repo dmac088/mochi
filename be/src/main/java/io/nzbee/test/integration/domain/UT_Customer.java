@@ -192,7 +192,7 @@ public class UT_Customer {
 	    
 	    uri = restTemplate.exchange(UT_Customer.CUSTOMER_READ_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.GET, customerEntity, Customer.class);
 	    System.out.println(uri.getBody());
-	    Customer c = customerService.findByCode(uri.getBody().getUserName()).get();
+	    Customer c = customerService.findByCode(uri.getBody().getUserName());
 	    
 	    assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value());
 	    assertEquals(CUSTOMER_GIVEN_NAME_EN, c.getGivenName());

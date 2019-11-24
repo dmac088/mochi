@@ -68,11 +68,11 @@ public class IT_CategoryDtoServiceImplIntegrationTest {
         String code = "TST02";
         String desc = "test category";
         
-        Optional<Category> found = categoryDtoService.findByCode("en-GB", "HKD", code);
+        Category found = categoryDtoService.findByCode("en-GB", "HKD", code);
       
-         assertThat(found.get().getCategoryCode())
+         assertThat(found.getCategoryCode())
           .isEqualTo(code);
-         assertThat(found.get().getCategoryDesc())
+         assertThat(found.getCategoryDesc())
           .isEqualTo(desc);
      }
     
