@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -19,6 +20,7 @@ import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+
 import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.brand.Brand_;
 import io.nzbee.entity.category.Category;
@@ -32,6 +34,7 @@ import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.Product_;
 import io.nzbee.entity.product.hierarchy.Hierarchy;
 import io.nzbee.entity.tag.Tag;
+import io.nzbee.exceptions.CategoryException;
 import io.nzbee.variables.ProductVars;
 
 @Component(value="categoryEntityPostgresDao")
@@ -228,30 +231,34 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 			query.setParameter("categoryCodes", categoryCodes);
 		}
 
-		Object[] c = (Object[])query.getSingleResult();
-		
-		Category category = (Category) c[0];
-		category.setCategoryAttribute(((CategoryAttribute) c[1]));
-		category.setCategoryType((CategoryType) c[2]);
-		category.setHierarchy((Hierarchy) c[3]);
-		if(category instanceof CategoryProduct) {
-			((CategoryProduct) category).setHasParent(c[4] != null);
-			if(((CategoryProduct) category).hasParent()) {
-				//we have a parent
-				Category parentCategory = (Category) c[4];
-				parentCategory.setCategoryAttribute(((CategoryAttribute) c[5]));
-				parentCategory.setCategoryType((CategoryType) c[6]);
-				parentCategory.setHierarchy((Hierarchy) c[7]);
-				category.setParent(parentCategory);
+		try {
+			Object[] c = (Object[])query.getSingleResult();
+			
+			Category category = (Category) c[0];
+			category.setCategoryAttribute(((CategoryAttribute) c[1]));
+			category.setCategoryType((CategoryType) c[2]);
+			category.setHierarchy((Hierarchy) c[3]);
+			if(category instanceof CategoryProduct) {
+				((CategoryProduct) category).setHasParent(c[4] != null);
+				if(((CategoryProduct) category).hasParent()) {
+					//we have a parent
+					Category parentCategory = (Category) c[4];
+					parentCategory.setCategoryAttribute(((CategoryAttribute) c[5]));
+					parentCategory.setCategoryType((CategoryType) c[6]);
+					parentCategory.setHierarchy((Hierarchy) c[7]);
+					category.setParent(parentCategory);
+				}
 			}
+			category.setObjectCount(((BigDecimal)c[8]).intValue());
+			category.setChildCount(((BigInteger)c[9]).longValue());
+			category.setCategoryLayouts((((String)c[10]) != null)
+					? ((String)c[10]).split(",", -1)
+					: new String[0]);	
+			return Optional.ofNullable(category);
+		} 
+		catch(NoResultException nre) {
+			throw new CategoryException("Category with code " + code + " was not found");
 		}
-		category.setObjectCount(((BigDecimal)c[8]).intValue());
-		category.setChildCount(((BigInteger)c[9]).longValue());
-		category.setCategoryLayouts((((String)c[10]) != null)
-				? ((String)c[10]).split(",", -1)
-				: new String[0]);	
-		
-		return Optional.ofNullable(category);
 	}
 	
 
