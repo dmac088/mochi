@@ -34,7 +34,7 @@ public class BrandController {
     
     @GetMapping("/Brand/{locale}/{currency}/category/{categoryCode}")
     public ResponseEntity<Resources<BrandResource>> getBrands(@PathVariable String locale, @PathVariable String currency, @PathVariable String categoryCode) {
-    	LOGGER.info("Fetching brands for parameters : {}, {}, {}", locale, currency, categoryCode);
+    	LOGGER.debug("Fetching brands for parameters : {}, {}, {}", locale, currency, categoryCode);
     	
     	final List<BrandResource> collection = 
     			brandService.findAll(locale, currency, categoryCode).stream()
@@ -49,14 +49,14 @@ public class BrandController {
     
     @GetMapping("/Brand/{locale}/{currency}")
     public Set<Brand> getBrands(@PathVariable String locale, @PathVariable String currency) {
-    	LOGGER.info("Fetching brands for parameters : {}, {}", locale, currency);
+    	LOGGER.debug("Fetching brands for parameters : {}, {}", locale, currency);
     	
     	return brandService.findAll(locale, currency);
     }
 
     @GetMapping("/Brand/{locale}/{currency}/code/{brandCode}")
     public ResponseEntity<BrandResource> get(@PathVariable String locale, @PathVariable String currency, @PathVariable String brandCode) {
-    	LOGGER.info("Fetching brand for parameters : {}, {}, {}", locale, currency, brandCode);
+    	LOGGER.debug("Fetching brand for parameters : {}, {}, {}", locale, currency, brandCode);
     	
     	Brand b = brandService.findByCode(locale, currency, brandCode);
     	BrandResource br = new BrandResource(locale, currency, b);
