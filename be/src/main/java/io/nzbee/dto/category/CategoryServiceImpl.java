@@ -1,7 +1,6 @@
 package io.nzbee.dto.category;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -32,24 +31,24 @@ public class CategoryServiceImpl implements ICategoryService {
     
     
     @Override
-	public Optional<Category> findById(String locale, String currency, long Id) {
+	public Category findById(String locale, String currency, long Id) {
 		// TODO Auto-generated method stub
-		return Optional.ofNullable(entityToDTO(locale, currency, categoryService.findById(locale, currency, Id).get()));
+		return entityToDTO(locale, currency, categoryService.findById(locale, currency, Id).get());
 	}
 
 
 	@Override
-	public Optional<Category> findByCode(String locale, String currency, String code) {
+	public Category findByCode(String locale, String currency, String code) {
 		// TODO Auto-generated method stub
-		return Optional.ofNullable(entityToDTO(locale, currency, categoryService.findByCode(locale, currency, code).get()));
+		return entityToDTO(locale, currency, categoryService.findByCode(locale, currency, code).get());
 	}
 	
 
 
 	@Override
-	public Optional<Category> findByDesc(String locale, String currency, String desc) {
+	public Category findByDesc(String locale, String currency, String desc) {
 		// TODO Auto-generated method stub
-		return Optional.ofNullable(entityToDTO(locale, currency, categoryService.findByDesc(locale, currency, desc).get()));
+		return entityToDTO(locale, currency, categoryService.findByDesc(locale, currency, desc).get());
 	}
 
 	

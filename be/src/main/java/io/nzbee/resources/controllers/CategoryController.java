@@ -41,7 +41,7 @@ public class CategoryController {
     
     @GetMapping("/Category/{locale}/{currency}/code/{categoryCode}")
     public ResponseEntity<CategoryResource> get(@PathVariable String locale, @PathVariable String currency, @PathVariable String categoryCode) {
-    	Category c = categoryService.findByCode(locale, currency, categoryCode).get();
+    	Category c = categoryService.findByCode(locale, currency, categoryCode);
     	CategoryResource cr = new CategoryResource(locale, currency, c);
     	return ResponseEntity.ok(cr);
     }

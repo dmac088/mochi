@@ -1,7 +1,6 @@
 package io.nzbee.domain.category;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import  org.springframework.transaction.annotation.Transactional;
@@ -39,21 +38,21 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	}
 
 	@Override
-	public Optional<Category> findById(String locale, String currency, Long Id) {
+	public Category findById(String locale, String currency, Long Id) {
 		// TODO Auto-generated method stub
-		return Optional.ofNullable(dtoToDO(categoryService.findById(locale, currency, Id).get()));
+		return dtoToDO(categoryService.findById(locale, currency, Id));
 	}
 
 	@Override
-	public Optional<Category> findByCode(String locale, String currency, String code) {
+	public Category findByCode(String locale, String currency, String code) {
 		// TODO Auto-generated method stub
-		return Optional.ofNullable(dtoToDO(categoryService.findByCode(locale, currency, code).get()));
+		return dtoToDO(categoryService.findByCode(locale, currency, code));
 	}
 	
 	@Override
-	public Optional<Category> findByDesc(String locale, String currency, String desc) {
+	public Category findByDesc(String locale, String currency, String desc) {
 		// TODO Auto-generated method stub
-		return Optional.ofNullable(dtoToDO(categoryService.findByDesc(locale, currency, desc).get()));
+		return dtoToDO(categoryService.findByDesc(locale, currency, desc));
 	}
     
     @Override

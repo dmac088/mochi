@@ -1,7 +1,6 @@
 package io.nzbee.dto.product;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,21 +25,21 @@ public class ProductServiceImpl implements IProductService {
     
 
 	@Override
-	public Optional<Product> findById(String locale, String currency, long Id) {
+	public Product findById(String locale, String currency, long Id) {
 		// TODO Auto-generated method stub
-		return Optional.ofNullable(this.entityToDTO(locale, currency, productService.findById(locale, currency, Id).get()));
+		return this.entityToDTO(locale, currency, productService.findById(locale, currency, Id).get());
 	}
 	
 	@Override
-	public Optional<Product> findByCode(String locale, String currency, String code) {
+	public Product findByCode(String locale, String currency, String code) {
 		// TODO Auto-generated method stub
-		return Optional.ofNullable(this.entityToDTO(locale, currency, productService.findByCode(locale, currency, code).get()));
+		return this.entityToDTO(locale, currency, productService.findByCode(locale, currency, code).get());
 	}
 
 	@Override
-	public Optional<Product> findByDesc(String locale, String currency, String desc) {
+	public Product findByDesc(String locale, String currency, String desc) {
 		// TODO Auto-generated method stub
-		return Optional.ofNullable(this.entityToDTO(locale, currency, productService.findByDesc(locale, currency, desc).get()));
+		return this.entityToDTO(locale, currency, productService.findByDesc(locale, currency, desc).get());
 	}
 
 	@Override

@@ -2,7 +2,6 @@ package io.nzbee.dto.tag;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -72,19 +71,19 @@ public class TagServiceImpl implements ITagService {
 	}
 	
 	@Override
-	public Optional<Tag> findById(String locale, String currency, long brandId) {
+	public Tag findById(String locale, String currency, long brandId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<Tag> findByCode(String locale, String currency, String code) {
+	public Tag findByCode(String locale, String currency, String code) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<Tag> findByDesc(String locale, String currency, String desc) {
+	public Tag findByDesc(String locale, String currency, String desc) {
 		// TODO Auto-generated method stub
 		return null;
 	}

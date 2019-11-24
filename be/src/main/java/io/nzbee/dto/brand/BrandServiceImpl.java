@@ -1,7 +1,6 @@
 package io.nzbee.dto.brand;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -37,21 +36,21 @@ public class BrandServiceImpl implements IBrandService {
     
 	@Override
 	@Cacheable
-	public Optional<Brand> findById(String locale, String currency, long Id) {
+	public Brand findById(String locale, String currency, long Id) {
     	io.nzbee.entity.brand.Brand pb = brandService.findById(locale, currency, Id).get();
-     	return	Optional.ofNullable(this.entityToDTO(locale, currency, pb));
+     	return	this.entityToDTO(locale, currency, pb);
 	}
 	
 	@Override
-	public Optional<Brand> findByCode(String locale, String currency, String code) {
+	public Brand findByCode(String locale, String currency, String code) {
 		// TODO Auto-generated method stub
-		return Optional.ofNullable(this.entityToDTO(locale, currency, brandService.findByCode(locale, currency, code).get()));
+		return this.entityToDTO(locale, currency, brandService.findByCode(locale, currency, code).get());
 	}
 
 	@Override
-	public Optional<Brand> findByDesc(String locale, String currency, String desc) {
+	public Brand findByDesc(String locale, String currency, String desc) {
 		// TODO Auto-generated method stub
-		return Optional.ofNullable(this.entityToDTO(locale, currency, brandService.findByDesc(locale, currency, desc).get()));
+		return this.entityToDTO(locale, currency, brandService.findByDesc(locale, currency, desc).get());
 	}
 	
 	@Override
