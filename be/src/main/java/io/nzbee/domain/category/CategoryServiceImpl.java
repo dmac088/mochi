@@ -1,6 +1,7 @@
 package io.nzbee.domain.category;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import  org.springframework.transaction.annotation.Transactional;
@@ -10,6 +11,7 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.IDomainObject;
 import io.nzbee.domain.IFacetService;
+import io.nzbee.exceptions.CategoryException;
 
 @Service(value = "categoryDomainService")
 @CacheConfig(cacheNames="categories")
@@ -40,13 +42,16 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	@Override
 	public Category findById(String locale, String currency, Long Id) {
 		// TODO Auto-generated method stub
-		return dtoToDO(categoryService.findById(locale, currency, Id));
+		
+		return Optional.ofNullable(dtoToDO(categoryService.findById(locale, currency, Id)))
+				.orElseThrow(() -> new CategoryException("Category with Id " + Id + " not found"));
 	}
 
 	@Override
 	public Category findByCode(String locale, String currency, String code) {
 		// TODO Auto-generated method stub
-		return dtoToDO(categoryService.findByCode(locale, currency, code));
+		return Optional.ofNullable(dtoToDO(categoryService.findByCode(locale, currency, code)))
+				.orElseThrow(() -> new CategoryException("Category with code " + code + " not found"));
 	}
 	
 	@Override
