@@ -2,6 +2,7 @@ package io.nzbee.dto.tag;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -50,7 +51,7 @@ public class TagServiceImpl implements ITagService {
 										categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
 										brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()))
 				.stream().map(pt -> {
-					return entityToDTO(locale, currency, pt);
+					return entityToDTO(locale, currency, Optional.ofNullable(pt)).get();
 				}).collect(Collectors.toList());	
 	}
 	
@@ -66,26 +67,26 @@ public class TagServiceImpl implements ITagService {
 				categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
 				brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()))
 				.stream().map(pt -> {
-					return entityToDTO(locale, currency, pt);
+					return entityToDTO(locale, currency, Optional.ofNullable(pt)).get();
 				}).collect(Collectors.toList());
 	}
 	
 	@Override
-	public Tag findById(String locale, String currency, long brandId) {
+	public Optional<Tag> findById(String locale, String currency, long brandId) {
 		// TODO Auto-generated method stub
-		return null;
+		return Optional.empty();
 	}
 
 	@Override
-	public Tag findByCode(String locale, String currency, String code) {
+	public Optional<Tag> findByCode(String locale, String currency, String code) {
 		// TODO Auto-generated method stub
-		return null;
+		return Optional.empty();
 	}
 
 	@Override
-	public Tag findByDesc(String locale, String currency, String desc) {
+	public Optional<Tag> findByDesc(String locale, String currency, String desc) {
 		// TODO Auto-generated method stub
-		return null;
+		return Optional.empty();
 	}
 
 	@Override
@@ -95,20 +96,23 @@ public class TagServiceImpl implements ITagService {
 	}
 
 	@Override
-	public Tag entityToDTO(String locale, String currency, io.nzbee.entity.tag.Tag tag) {
+	public Optional<Tag> entityToDTO(String locale, String currency, Optional<io.nzbee.entity.tag.Tag> tag) {
 		// TODO Auto-generated method stub
-		Tag t = new Tag();
-		t.setTagId(tag.getTagId());
-		t.setTagCode(tag.getCode());
-		t.setLocale(locale);
-		t.setTagDesc(tag.getAttributes().stream().filter(ta -> ta.getLclCd().equals(locale)).collect(Collectors.toList()).stream().findFirst().get().getTagDesc());
-		return t;
+		if(tag.isPresent()) {
+			Tag t = new Tag();
+			t.setTagId(tag.get().getTagId());
+			t.setTagCode(tag.get().getCode());
+			t.setLocale(locale);
+			t.setTagDesc(tag.get().getAttributes().stream().filter(ta -> ta.getLclCd().equals(locale)).collect(Collectors.toList()).stream().findFirst().get().getTagDesc());
+			return Optional.ofNullable(t);
+		} 
+		return Optional.empty();
 	}
 
 	@Override
-	public Tag doToDto(io.nzbee.domain.tag.Tag dO) {
+	public Optional<Tag> doToDto(Optional<io.nzbee.domain.tag.Tag> dO) {
 		// TODO Auto-generated method stub
-		return null;
+		return Optional.empty();
 	}
 
 

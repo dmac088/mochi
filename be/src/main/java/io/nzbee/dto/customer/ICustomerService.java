@@ -1,5 +1,7 @@
 package io.nzbee.dto.customer;
 import java.util.List;
+import java.util.Optional;
+
 import io.nzbee.dto.IService;
 
 public interface ICustomerService extends IService<Customer,
@@ -22,5 +24,5 @@ public interface ICustomerService extends IService<Customer,
 
 	 List<Customer> findAll();
 
-	 Customer findByCode(String userName);
+	 Optional<Customer> findByCode(String userName);
 }

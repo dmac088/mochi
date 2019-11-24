@@ -1,6 +1,7 @@
 package io.nzbee.dto.brand;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -21,7 +22,7 @@ public class BrandServiceImpl implements IBrandService {
 	@Cacheable
 	public List<Brand> findAll(String locale, String currency) {
     	List<io.nzbee.entity.brand.Brand> lpb = brandService.findAll(locale, currency);
-    	return lpb.stream().map(pb -> this.entityToDTO(locale, currency, pb))
+    	return lpb.stream().map(pb -> this.entityToDTO(locale, currency, Optional.ofNullable(pb)).get())
     								 .collect(Collectors.toList());
 	}	
     
@@ -30,34 +31,34 @@ public class BrandServiceImpl implements IBrandService {
 	public List<Brand> findAll(String locale, String currency, List<String> codes) {
 		// TODO Auto-generated method stub
 		List<io.nzbee.entity.brand.Brand> lpb = brandService.findAll(locale, currency, codes);
-    	return lpb.stream().map(pb -> this.entityToDTO(locale, currency, pb))
+    	return lpb.stream().map(pb -> this.entityToDTO(locale, currency, Optional.ofNullable(pb)).get())
     								 .collect(Collectors.toList());
 	}
     
 	@Override
 	@Cacheable
-	public Brand findById(String locale, String currency, long Id) {
+	public Optional<Brand> findById(String locale, String currency, long Id) {
     	io.nzbee.entity.brand.Brand pb = brandService.findById(locale, currency, Id).get();
-     	return	this.entityToDTO(locale, currency, pb);
+     	return	this.entityToDTO(locale, currency, Optional.ofNullable(pb));
 	}
 	
 	@Override
-	public Brand findByCode(String locale, String currency, String code) {
+	public Optional<Brand> findByCode(String locale, String currency, String code) {
 		// TODO Auto-generated method stub
-		return this.entityToDTO(locale, currency, brandService.findByCode(locale, currency, code).get());
+		return this.entityToDTO(locale, currency, brandService.findByCode(locale, currency, code));
 	}
 
 	@Override
-	public Brand findByDesc(String locale, String currency, String desc) {
+	public Optional<Brand> findByDesc(String locale, String currency, String desc) {
 		// TODO Auto-generated method stub
-		return this.entityToDTO(locale, currency, brandService.findByDesc(locale, currency, desc).get());
+		return this.entityToDTO(locale, currency, brandService.findByDesc(locale, currency, desc));
 	}
 	
 	@Override
 	public List<Brand> findAll(String locale, String currency, String categoryCode) {
 		// TODO Auto-generated method stub
 		List<io.nzbee.entity.brand.Brand> lpb = brandService.findAll(locale, currency, categoryCode);
-		return lpb.stream().map(pb -> entityToDTO(locale, currency, pb)).collect(Collectors.toList());
+		return lpb.stream().map(pb -> entityToDTO(locale, currency, Optional.ofNullable(pb)).get()).collect(Collectors.toList());
 	}
  
 	@Override
@@ -71,30 +72,30 @@ public class BrandServiceImpl implements IBrandService {
 							categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
 							tags.stream().map(t -> t.getTagCode()).collect(Collectors.toList())
 							);
-		return lpb.stream().map(pb -> entityToDTO(locale, currency, pb)).collect(Collectors.toList());		
+		return lpb.stream().map(pb -> entityToDTO(locale, currency, Optional.ofNullable(pb)).get()).collect(Collectors.toList());		
 	}
 	
 
 	@Override
-	public Brand entityToDTO(String locale, String currency, io.nzbee.entity.brand.Brand entity) {
+	public Optional<Brand> entityToDTO(String locale, String currency, Optional<io.nzbee.entity.brand.Brand> entity) {
 		// TODO Auto-generated method stub
 		Brand brand = new Brand();
-		io.nzbee.entity.brand.Brand b = ((io.nzbee.entity.brand.Brand) entity);
+		io.nzbee.entity.brand.Brand b = ((io.nzbee.entity.brand.Brand) entity.get());
 		brand.setBrandCode(b.getCode());
 		brand.setBrandDesc(b.getBrandAttribute().getBrandDesc());		
-		return brand;
+		return Optional.ofNullable(brand);
 	}
 
 
 	@Override
-	public Brand doToDto(io.nzbee.domain.brand.Brand dO) {
+	public Optional<Brand> doToDto(Optional<io.nzbee.domain.brand.Brand> dO) {
 		// TODO Auto-generated method stub
-		io.nzbee.domain.brand.Brand brandDO = (io.nzbee.domain.brand.Brand) dO;
+		io.nzbee.domain.brand.Brand brandDO = (io.nzbee.domain.brand.Brand) dO.get();
 		Brand brandDTO = new Brand();
 		brandDTO.setBrandCode(brandDO.getBrandCode());
 		brandDTO.setBrandDesc(brandDO.getBrandDesc());
 		
-		return null;
+		return Optional.ofNullable(brandDTO);
 	}
 
 

@@ -1,6 +1,7 @@
 package io.nzbee.domain.brand;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,22 +23,21 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	@Cacheable
 	@Transactional
 	public Brand findById(String locale, String currency, Long Id) {		
-    	io.nzbee.dto.brand.Brand pb = brandService.findById(locale, currency, Id);
-     	return	this.dtoToDO(pb);
+     	return	this.dtoToDO(brandService.findById(locale, currency, Id)).get();
 	}
 	
 	@Override
 	@Transactional
 	public Brand findByCode(String locale, String currency, String code) {
 		// TODO Auto-generated method stub
-		return dtoToDO(brandService.findByCode(locale, currency, code));
+		return dtoToDO(brandService.findByCode(locale, currency, code)).get();
 	}
 
 	@Override
 	@Transactional
 	public Brand findByDesc(String locale, String currency, String desc) {
 		// TODO Auto-generated method stub
-		return dtoToDO(brandService.findByDesc(locale, currency, desc));
+		return dtoToDO(brandService.findByDesc(locale, currency, desc)).get();
 	}
   
     @Override
@@ -45,7 +45,7 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	@Transactional(readOnly=true)
 	public Set<Brand> findAll(String locale, String currency) {
     	List<io.nzbee.dto.brand.Brand> lpb = brandService.findAll(locale, currency);
-    	Set<Brand> lb = lpb.stream().map(pb -> dtoToDO(pb))
+    	Set<Brand> lb = lpb.stream().map(pb -> dtoToDO(Optional.ofNullable(pb)).get())
     			.collect(Collectors.toSet());
     	return lb;
 	}	
@@ -54,7 +54,7 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
     @Transactional(readOnly=true)
 	public Set<Brand> findAll(String locale, String currency, String category) {
     	List<io.nzbee.dto.brand.Brand> lpb = brandService.findAll(locale, currency, category);
-    	Set<Brand> lb = lpb.stream().map(pb -> dtoToDO(pb))
+    	Set<Brand> lb = lpb.stream().map(pb -> dtoToDO(Optional.ofNullable(pb)).get())
     			.collect(Collectors.toSet());
 		return lb;
 	}
@@ -64,7 +64,7 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	public Set<Brand> findAll(String locale, String currency, List<String> codes) {
 		// TODO Auto-generated method stub
 		List<io.nzbee.dto.brand.Brand> lpb = brandService.findAll(locale, currency, codes);
-    	Set<Brand> lb = lpb.stream().map(pb -> dtoToDO(pb))
+    	Set<Brand> lb = lpb.stream().map(pb -> dtoToDO(Optional.ofNullable(pb)).get())
 		.collect(Collectors.toSet());
     	return lb;
 	}
@@ -78,13 +78,13 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 
 	
 	@Override
-	public Brand dtoToDO(io.nzbee.dto.brand.Brand dto) {
+	public Optional<Brand> dtoToDO(Optional<io.nzbee.dto.brand.Brand> dto) {
 		// TODO Auto-generated method stub
-		io.nzbee.dto.brand.Brand brandDTO = (io.nzbee.dto.brand.Brand) dto;
+		io.nzbee.dto.brand.Brand brandDTO = (io.nzbee.dto.brand.Brand) dto.get();
 		final Brand bDO = new Brand();
     	bDO.setBrandCode(brandDTO.getBrandCode());
     	bDO.setBrandDesc(brandDTO.getBrandDesc());
-    	return bDO;
+    	return Optional.ofNullable(bDO);
 	}
 
 	@Override
