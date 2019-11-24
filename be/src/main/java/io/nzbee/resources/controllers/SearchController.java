@@ -49,7 +49,7 @@ public class SearchController {
 						    						@RequestBody  Set<IFacet> 	 selectedFacets,
 						    						@SuppressWarnings("rawtypes") PagedResourcesAssembler assembler) {
 
-		LOGGER.info("Searching for products with patameters: {}, {}, {}", locale, currency, term);
+		LOGGER.debug("Searching for products with patameters: {}, {}, {}", locale, currency, term);
 		
     	final SearchResource sr = new SearchResource(locale, 
 													 currency, 

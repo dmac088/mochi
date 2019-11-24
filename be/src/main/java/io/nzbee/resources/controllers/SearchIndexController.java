@@ -25,7 +25,7 @@ public class SearchIndexController {
     @GetMapping("/CreateSearchIndex")
     public String createSearchIndex() {
  
-    	LOGGER.info("Creating search index");
+    	LOGGER.debug("Creating search index");
     	
     	searchIndexService.createSearchIndex();
     	return "Search Index Created!";

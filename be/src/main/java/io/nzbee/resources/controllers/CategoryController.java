@@ -33,7 +33,7 @@ public class CategoryController {
 	
     @GetMapping("/Category/{locale}/{currency}")
     public ResponseEntity<Resources<CategoryResource>> getCategories(@PathVariable String locale, @PathVariable String currency) {
-    	LOGGER.info("Fetching categories for parameters : {}, {}", locale, currency);
+    	LOGGER.debug("Fetching categories for parameters : {}, {}", locale, currency);
 
     	final List<CategoryResource> collection = 
         		categoryService.findAll(locale, currency).stream()
@@ -48,7 +48,7 @@ public class CategoryController {
     
     @GetMapping("/Category/{locale}/{currency}/code/{categoryCode}")
     public ResponseEntity<CategoryResource> get(@PathVariable String locale, @PathVariable String currency, @PathVariable String categoryCode) {
-    	LOGGER.info("Fetching category for parameters : {}, {}, {}", locale, currency, categoryCode);
+    	LOGGER.debug("Fetching category for parameters : {}, {}, {}", locale, currency, categoryCode);
     	
     	Category c = categoryService.findByCode(locale, currency, categoryCode);
     	CategoryResource cr = new CategoryResource(locale, currency, c);
