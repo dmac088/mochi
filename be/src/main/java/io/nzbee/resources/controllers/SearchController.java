@@ -2,6 +2,8 @@ package io.nzbee.resources.controllers;
 
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.web.PagedResourcesAssembler;
@@ -25,6 +27,8 @@ import io.nzbee.ui.component.web.search.ISearchService;
 @RequestMapping(value = "/api", produces = "application/hal+json")
 public class SearchController {
 
+	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
+	
 	@Autowired
     @Qualifier(value = "SearchService")
     private ISearchService searchService;
@@ -45,6 +49,8 @@ public class SearchController {
 						    						@RequestBody  Set<IFacet> 	 selectedFacets,
 						    						@SuppressWarnings("rawtypes") PagedResourcesAssembler assembler) {
 
+		LOGGER.info("Searching for products with patameters: {}, {}, {}", locale, currency, term);
+		
     	final SearchResource sr = new SearchResource(locale, 
 													 currency, 
 													 category, 

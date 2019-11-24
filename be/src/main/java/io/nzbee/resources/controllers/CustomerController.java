@@ -38,7 +38,7 @@ public class CustomerController {
     
     @GetMapping("/Customer/UserName/{userName}")
     public Customer getCustomer(@PathVariable String userName) {
-    	LOGGER.debug("Finding an existing customer with user name: {}", userName);
+    	LOGGER.info("Finding an existing customer with user name: {}", userName);
 		return customerService.findByCode(userName);
     }
     
@@ -46,7 +46,7 @@ public class CustomerController {
     //Registration
     @PostMapping("/Customer/Signup")
     public GenericResponse registerNewCustomer(@RequestBody final Customer customer) {
-        LOGGER.debug("Creating a new customer with information: {}", customer);
+        LOGGER.info("Creating a new customer with information: {}", customer);
         
         try {
 			customerService.registerNewCustomer(customer);
@@ -61,7 +61,7 @@ public class CustomerController {
     
     @PostMapping("/Customer/Delete")
     public GenericResponse deleteCustomer(@RequestBody final Customer customer) {
-        LOGGER.debug("Deleting user account with information: {}", customer);
+        LOGGER.info("Deleting user account with information: {}", customer);
         
         try {
 			customerService.deleteCustomer(customer);
@@ -76,7 +76,7 @@ public class CustomerController {
     
     @PostMapping("/Customer/Update")
     public GenericResponse updateCustomer(@RequestBody final Customer customer) {
-        LOGGER.debug("Updating user account with information: {}", customer);
+        LOGGER.info("Updating user account with information: {}", customer);
         
         try {
 			customerService.updateCustomer(customer);

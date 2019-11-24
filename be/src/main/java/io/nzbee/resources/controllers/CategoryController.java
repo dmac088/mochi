@@ -2,6 +2,9 @@ package io.nzbee.resources.controllers;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resources;
@@ -19,6 +22,8 @@ import io.nzbee.resources.category.CategoryResource;
 @RequestMapping(value = "/api", produces = "application/hal+json")
 public class CategoryController {
 
+	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
+	
     @Autowired
     private ICategoryService categoryService;
 
@@ -28,6 +33,8 @@ public class CategoryController {
 	
     @GetMapping("/Category/{locale}/{currency}")
     public ResponseEntity<Resources<CategoryResource>> getCategories(@PathVariable String locale, @PathVariable String currency) {
+    	LOGGER.info("Fetching categories for parameters : {}, {}", locale, currency);
+
     	final List<CategoryResource> collection = 
         		categoryService.findAll(locale, currency).stream()
         		.map(c -> new CategoryResource(locale, currency, c))
@@ -41,6 +48,8 @@ public class CategoryController {
     
     @GetMapping("/Category/{locale}/{currency}/code/{categoryCode}")
     public ResponseEntity<CategoryResource> get(@PathVariable String locale, @PathVariable String currency, @PathVariable String categoryCode) {
+    	LOGGER.info("Fetching category for parameters : {}, {}, {}", locale, currency, categoryCode);
+    	
     	Category c = categoryService.findByCode(locale, currency, categoryCode);
     	CategoryResource cr = new CategoryResource(locale, currency, c);
     	return ResponseEntity.ok(cr);
