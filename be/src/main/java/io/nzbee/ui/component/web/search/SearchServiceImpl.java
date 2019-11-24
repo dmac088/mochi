@@ -19,6 +19,8 @@ import org.hibernate.search.query.facet.Facet;
 import org.hibernate.search.query.facet.FacetCombine;
 import org.hibernate.search.query.facet.FacetSortOrder;
 import org.hibernate.search.query.facet.FacetingRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheConfig;
@@ -44,6 +46,8 @@ import io.nzbee.ui.component.web.generic.UIService;
 @CacheConfig(cacheNames = "products")
 public class SearchServiceImpl extends UIService implements ISearchService {
 
+	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
+	
 	@Autowired
 	@Qualifier("productDomainService")
 	private IProductService productService;
@@ -331,7 +335,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		Set<SearchFacetHelper> lsfh = new HashSet<SearchFacetHelper>();
 		selectedFacets.stream()
 					  .forEach(f -> {
-						System.out.println(f.getClass().getSimpleName() + " - " + f.getValue() + " - " + f.getCount());
+						LOGGER.debug(f.getClass().getSimpleName() + " - " + f.getValue() + " - " + f.getCount());
 						
 						//apply facets one by on in the order that they are selected
 						jpaQuery.getFacetManager().getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
@@ -387,7 +391,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		returnFacets.stream()
 		.sorted( (a, b) -> a.getValue().compareTo(b.getValue()))
 		.forEach(f -> {
-			System.out.println(f.getValue() + " -> " +  f.getDisplayValue() + " -> " + f.getCount());
+			LOGGER.debug(f.getValue() + " -> " +  f.getDisplayValue() + " -> " + f.getCount());
 		});
 
 		
