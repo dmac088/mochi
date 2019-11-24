@@ -1,6 +1,7 @@
 package io.nzbee.domain.tag;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,24 +31,24 @@ public class TagServiceImpl implements ITagService/*, IFacetService*/ {
 	@Transactional
 	public Tag findById(String locale, String currency, Long Id) {
 		// TODO Auto-generated method stub
-		io.nzbee.dto.tag.Tag pt = productTagService.findById(locale, currency, Id);
-		return this.dtoToDO(pt);
+		io.nzbee.dto.tag.Tag pt = productTagService.findById(locale, currency, Id).get();
+		return this.dtoToDO(Optional.ofNullable(pt)).get();
 	}
 
 	@Override
 	@Transactional
 	public Tag findByCode(String locale, String currency, String code) {
 		// TODO Auto-generated method stub	
-		io.nzbee.dto.tag.Tag  pt = productTagService.findByCode(locale, currency, code);
-		return this.dtoToDO(pt);
+		io.nzbee.dto.tag.Tag  pt = productTagService.findByCode(locale, currency, code).get();
+		return this.dtoToDO(Optional.ofNullable(pt)).get();
 	}
 
 	@Override
 	@Transactional
 	public Tag findByDesc(String locale, String currency, String desc) {
 		// TODO Auto-generated method stub
-		io.nzbee.dto.tag.Tag  pt = productTagService.findByDesc(locale, currency, desc);
-		return this.dtoToDO(pt);
+		io.nzbee.dto.tag.Tag  pt = productTagService.findByDesc(locale, currency, desc).get();
+		return this.dtoToDO(Optional.ofNullable(pt)).get();
 	}
 
 	@Override
@@ -79,14 +80,17 @@ public class TagServiceImpl implements ITagService/*, IFacetService*/ {
 	}
 
 	@Override
-	public Tag dtoToDO(io.nzbee.dto.tag.Tag tagDTO) {
+	public Optional<Tag> dtoToDO(Optional<io.nzbee.dto.tag.Tag> tagDTO) {
 		// TODO Auto-generated method stub
-		Tag t = new Tag();
-		t.setTagId(tagDTO.getTagId());
-		t.setTagCode(tagDTO.getTagCode());
-		t.setLocale(tagDTO.getLocale());
-		t.setTagDesc(tagDTO.getTagDesc());
-		return t;
+		if(tagDTO.isPresent()) {
+			Tag t = new Tag();
+			t.setTagId(tagDTO.get().getTagId());
+			t.setTagCode(tagDTO.get().getTagCode());
+			t.setLocale(tagDTO.get().getLocale());
+			t.setTagDesc(tagDTO.get().getTagDesc());
+			return Optional.ofNullable(t);
+		}
+		return Optional.empty();
 	}
 
 //	@Override

@@ -1,6 +1,7 @@
 package io.nzbee.dto.product;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -25,28 +26,28 @@ public class ProductServiceImpl implements IProductService {
     
 
 	@Override
-	public Product findById(String locale, String currency, long Id) {
+	public Optional<Product> findById(String locale, String currency, long Id) {
 		// TODO Auto-generated method stub
-		return this.entityToDTO(locale, currency, productService.findById(locale, currency, Id).get());
+		return this.entityToDTO(locale, currency, productService.findById(locale, currency, Id));
 	}
 	
 	@Override
-	public Product findByCode(String locale, String currency, String code) {
+	public Optional<Product> findByCode(String locale, String currency, String code) {
 		// TODO Auto-generated method stub
-		return this.entityToDTO(locale, currency, productService.findByCode(locale, currency, code).get());
+		return this.entityToDTO(locale, currency, productService.findByCode(locale, currency, code));
 	}
 
 	@Override
-	public Product findByDesc(String locale, String currency, String desc) {
+	public Optional<Product> findByDesc(String locale, String currency, String desc) {
 		// TODO Auto-generated method stub
-		return this.entityToDTO(locale, currency, productService.findByDesc(locale, currency, desc).get());
+		return this.entityToDTO(locale, currency, productService.findByDesc(locale, currency, desc));
 	}
 
 	@Override
 	public List<Product> findAll(String locale, String currency) {
 		// TODO Auto-generated method stub
 		return productService.findAll(locale, currency)
-							 .stream().map(p -> this.entityToDTO(locale, currency, p))
+							 .stream().map(p -> this.entityToDTO(locale, currency, Optional.ofNullable(p)).get())
 							 .collect(Collectors.toList());
 	}
 	
@@ -54,7 +55,7 @@ public class ProductServiceImpl implements IProductService {
 	public List<Product> findAll(String locale, String currency, List<String> productCodes) {
 		// TODO Auto-generated method stub
 		return productService.findAll(locale, currency, productCodes)
-							 .stream().map(p -> this.entityToDTO(locale, currency, p))
+							 .stream().map(p -> this.entityToDTO(locale, currency, Optional.ofNullable(p)).get())
 							 .collect(Collectors.toList());
 	} 
 
@@ -80,7 +81,7 @@ public class ProductServiceImpl implements IProductService {
 						    						   ldto);
     	
     	return new PageImpl<Product>(
-    			pp.stream().map(p -> this.entityToDTO(locale, currency, p)).collect(Collectors.toList()),
+    			pp.stream().map(p -> this.entityToDTO(locale, currency, Optional.ofNullable(p)).get()).collect(Collectors.toList()),
     			pageable,
     			pp.getTotalElements());
 	}
@@ -103,7 +104,7 @@ public class ProductServiceImpl implements IProductService {
 							    			ldto);
     	
     	return new PageImpl<Product>(
-    			pp.stream().map(p -> this.entityToDTO(locale, currency, p)).collect(Collectors.toList()),
+    			pp.stream().map(p -> this.entityToDTO(locale, currency, Optional.ofNullable(p)).get()).collect(Collectors.toList()),
     			pageable,
     			pp.getTotalElements());
 
@@ -121,33 +122,42 @@ public class ProductServiceImpl implements IProductService {
     }
 
 	@Override
-	public Product entityToDTO(String locale, String currency, io.nzbee.entity.product.Product p) {
+	public Optional<Product> entityToDTO(String locale, String currency, Optional<io.nzbee.entity.product.Product> p) {
 		// TODO Auto-generated method stub
-		final Product pDo = new Product();
-		pDo.setProductUPC(p.getUPC());
-		pDo.setProductCreateDt(p.getProductCreateDt());
-		pDo.setProductDesc(p.getProductAttribute().getProductDesc());
-		pDo.setProductRetail(p.getRetailPrice());
-		pDo.setProductMarkdown(p.getMarkdownPrice());
-		pDo.setProductImage(p.getProductAttribute().getProductImage());
-		pDo.setLclCd(locale);
-		pDo.setCurrency(currency);
-		return pDo;
+		if(p.isPresent()) {
+			io.nzbee.entity.product.Product product = p.get();
+		
+			final Product pDo = new Product();
+			pDo.setProductUPC(product.getUPC());
+			pDo.setProductCreateDt(product.getProductCreateDt());
+			pDo.setProductDesc(product.getProductAttribute().getProductDesc());
+			pDo.setProductRetail(product.getRetailPrice());
+			pDo.setProductMarkdown(product.getMarkdownPrice());
+			pDo.setProductImage(product.getProductAttribute().getProductImage());
+			pDo.setLclCd(locale);
+			pDo.setCurrency(currency);
+			return Optional.ofNullable(pDo);
+		}
+		return Optional.empty();
 	}
 
 	@Override
-	public Product doToDto(io.nzbee.domain.product.Product productDO) {
+	public Optional<Product> doToDto(Optional<io.nzbee.domain.product.Product> p) {
 		// TODO Auto-generated method stub
-		io.nzbee.dto.product.Product dtoProduct = new io.nzbee.dto.product.Product();
-		dtoProduct.setProductUPC(productDO.getProductUPC());
-		dtoProduct.setCurrency(productDO.getCurrency());
-		dtoProduct.setLclCd(productDO.getLclCd());
-		dtoProduct.setProductCreateDt(productDO.getProductCreateDt());
-		dtoProduct.setProductDesc(productDO.getProductDesc());
-		dtoProduct.setProductImage(productDO.getProductImage());
-		dtoProduct.setProductMarkdown(productDO.getProductMarkdown());
-		dtoProduct.setProductRetail(productDO.getProductRetail());
-		return dtoProduct;
+		if(p.isPresent()) {
+			io.nzbee.domain.product.Product productDO = p.get();
+		
+			io.nzbee.dto.product.Product dtoProduct = new io.nzbee.dto.product.Product();
+			dtoProduct.setProductUPC(productDO.getProductUPC());
+			dtoProduct.setCurrency(productDO.getCurrency());
+			dtoProduct.setLclCd(productDO.getLclCd());
+			dtoProduct.setProductCreateDt(productDO.getProductCreateDt());
+			dtoProduct.setProductDesc(productDO.getProductDesc());
+			dtoProduct.setProductImage(productDO.getProductImage());
+			dtoProduct.setProductMarkdown(productDO.getProductMarkdown());
+			dtoProduct.setProductRetail(productDO.getProductRetail());
+		}
+		return Optional.empty();
 	}
 
 

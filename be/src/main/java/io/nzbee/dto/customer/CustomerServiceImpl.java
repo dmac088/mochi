@@ -1,5 +1,7 @@
 package io.nzbee.dto.customer;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import io.nzbee.dto.IDto;
@@ -13,19 +15,19 @@ public class CustomerServiceImpl implements ICustomerService {
 	IPartyService customerService;
 	
 	@Override
-	public Customer findById(long Id) {
+	public Optional<Customer> findById(long Id) {
 		// TODO Auto-generated method stub
 		return this.entityToDTO(customerService.findById(Id).get());
 	}
 	
 	@Override
-	public Customer findByCode(String userName) {
+	public Optional<Customer> findByCode(String userName) {
 		// TODO Auto-generated method stub
 		return this.entityToDTO(customerService.findByCode(userName).get());
 	}
 
 	@Override
-	public Customer findByDesc(String desc) {
+	public Optional<Customer> findByDesc(String desc) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -37,13 +39,13 @@ public class CustomerServiceImpl implements ICustomerService {
 	}
 
 	@Override
-	public Customer entityToDTO(Party entity) {
+	public Optional<Customer> entityToDTO(Party entity) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Customer doToDto(io.nzbee.domain.customer.Customer domainObject) {
+	public Optional<Customer> doToDto(io.nzbee.domain.customer.Customer domainObject) {
 		// TODO Auto-generated method stub
 		return null;
 	}

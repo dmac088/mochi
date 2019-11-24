@@ -1,7 +1,9 @@
 package io.nzbee.domain;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+
 
 public interface IService<T, X> {
 
@@ -20,9 +22,9 @@ public interface IService<T, X> {
 	
 	Set<T> findAll(String locale, String currency, String categoryDesc, List<IDomainObject> lDo);
 	
-	T dtoToDO(X dto);
-	
 	String tokenToCode(String token);
+
+	Optional<T> dtoToDO(Optional<X> category);
 
 	
 }

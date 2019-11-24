@@ -1,6 +1,7 @@
 package io.nzbee.domain.product;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,20 +48,20 @@ public class ProductServiceImpl implements IProductService {
 	@Transactional
 	@Cacheable(value="product")
 	public Product findByCode(String locale, String currency, String code) {
-	   	return this.dtoToDO(productDtoService.findByCode(locale, currency, code));
+	   	return this.dtoToDO(productDtoService.findByCode(locale, currency, code)).get();
 	}	
 
 	@Override
 	public Product findByDesc(String locale, String currency, String desc) {
 		// TODO Auto-generated method stub
-		return this.dtoToDO(productDtoService.findByDesc(locale, currency, desc));
+		return this.dtoToDO(productDtoService.findByDesc(locale, currency, desc)).get();
 	}
 
 	@Override
 	public Set<Product> findAll(String locale, String currency) {
 		// TODO Auto-generated method stub
 		return productDtoService.findAll(locale, currency)
-				.stream().map(p->this.dtoToDO(p))
+				.stream().map(p->this.dtoToDO(Optional.ofNullable(p)).get())
 				.collect(Collectors.toSet());
 	}
     
@@ -68,7 +69,7 @@ public class ProductServiceImpl implements IProductService {
 	public Set<Product> findAll(String locale, String currency, List<String> productCodes) {
 		// TODO Auto-generated method stub
 		return productDtoService.findAll(locale, currency, productCodes)
-				.stream().map(p->this.dtoToDO(p))
+				.stream().map(p->this.dtoToDO(Optional.ofNullable(p)).get())
 				.collect(Collectors.toSet());
 	}
 	
@@ -92,11 +93,11 @@ public class ProductServiceImpl implements IProductService {
 									  pageable, 
 									  categoryDesc, 
 									  facets.stream()
-									  .map(f -> (IDto) productDtoService.doToDto((Product)f.getPayload())).collect(Collectors.toList()), 
+									  .map(f -> (IDto) productDtoService.doToDto(Optional.ofNullable((Product)f.getPayload())).get()).collect(Collectors.toList()), 
 									  sortBy);
 				
 		    return new PageImpl<Product>(
-			pp.stream().map(p -> this.dtoToDO(p)).collect(Collectors.toList()),
+			pp.stream().map(p -> this.dtoToDO(Optional.ofNullable(p)).get()).collect(Collectors.toList()),
 			pageable,
 			pp.getTotalElements());
 	}
@@ -117,10 +118,10 @@ public class ProductServiceImpl implements IProductService {
 										 pageable, 
 										 categoryDesc, 
 										 facets.stream()
-										 .map(f -> (IDto) productDtoService.doToDto((Product)f.getPayload())).collect(Collectors.toList()), 
+										 .map(f -> (IDto) productDtoService.doToDto(Optional.ofNullable((Product)f.getPayload())).get()).collect(Collectors.toList()), 
 										 sortBy);
 		
-     	return new PageImpl<Product>(pp.stream().map(p -> this.dtoToDO(p)).collect(Collectors.toList()),
+     	return new PageImpl<Product>(pp.stream().map(p -> this.dtoToDO(Optional.ofNullable(p)).get()).collect(Collectors.toList()),
 									 pageable,
 								 	 pp.getTotalElements());
     	
@@ -149,18 +150,22 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public Product dtoToDO(io.nzbee.dto.product.Product productDto) {
+	public Optional<Product> dtoToDO(Optional<io.nzbee.dto.product.Product> p) {
 		// TODO Auto-generated method stub
-		Product domainProduct = new Product();
-		domainProduct.setProductUPC(productDto.getProductUPC());
-		domainProduct.setCurrency(productDto.getCurrency());
-		domainProduct.setLclCd(productDto.getLclCd());
-		domainProduct.setProductCreateDt(productDto.getProductCreateDt());
-		domainProduct.setProductDesc(productDto.getProductDesc());
-		domainProduct.setProductImage(productDto.getProductImage());
-		domainProduct.setProductMarkdown(productDto.getProductMarkdown());
-		domainProduct.setProductRetail(productDto.getProductRetail());
-		return domainProduct;
+		if(p.isPresent()) {
+			io.nzbee.dto.product.Product productDto = p.get();
+			Product domainProduct = new Product();
+			domainProduct.setProductUPC(productDto.getProductUPC());
+			domainProduct.setCurrency(productDto.getCurrency());
+			domainProduct.setLclCd(productDto.getLclCd());
+			domainProduct.setProductCreateDt(productDto.getProductCreateDt());
+			domainProduct.setProductDesc(productDto.getProductDesc());
+			domainProduct.setProductImage(productDto.getProductImage());
+			domainProduct.setProductMarkdown(productDto.getProductMarkdown());
+			domainProduct.setProductRetail(productDto.getProductRetail());
+			return Optional.ofNullable(domainProduct);
+		}
+		return Optional.empty();
 	}
 	
 }

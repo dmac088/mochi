@@ -257,7 +257,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 			return Optional.ofNullable(category);
 		} 
 		catch(NoResultException nre) {
-			throw new CategoryException("Category with code " + code + " was not found");
+			return Optional.empty();
 		}
 	}
 	
