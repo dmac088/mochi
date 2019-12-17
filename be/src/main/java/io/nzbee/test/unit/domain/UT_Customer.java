@@ -1,4 +1,4 @@
-package io.nzbee.test.integration.domain;
+package io.nzbee.test.unit.domain;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

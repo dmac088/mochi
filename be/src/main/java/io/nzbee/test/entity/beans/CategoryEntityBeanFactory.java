@@ -1,4 +1,4 @@
-package io.nzbee.test.integration.entity.beans;
+package io.nzbee.test.entity.beans;
 
 
 import org.springframework.context.annotation.Bean;
