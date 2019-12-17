@@ -1,4 +1,4 @@
-package io.nzbee.test.integration.dto;
+package io.nzbee.test.unit.dto;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -15,13 +15,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.dto.category.ICategoryService;
-import io.nzbee.test.integration.entity.beans.CategoryEntityBeanFactory;
+import io.nzbee.test.entity.beans.CategoryEntityBeanFactory;
 import io.nzbee.dto.category.Category;
 import io.nzbee.dto.category.CategoryServiceImpl;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles(profiles = "dev")
-public class IT_CategoryDtoServiceImplIntegrationTest {
+public class UT_CategoryDtoServiceImplIntegrationTest {
 
 	@TestConfiguration
     static class CategoryDtoServiceImplIntegrationTest {

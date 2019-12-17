@@ -20,7 +20,6 @@ import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-
 import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.brand.Brand_;
 import io.nzbee.entity.category.Category;
@@ -34,7 +33,6 @@ import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.Product_;
 import io.nzbee.entity.product.hierarchy.Hierarchy;
 import io.nzbee.entity.tag.Tag;
-import io.nzbee.exceptions.CategoryException;
 import io.nzbee.variables.ProductVars;
 
 @Component(value="categoryEntityPostgresDao")

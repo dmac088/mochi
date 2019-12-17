@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.category.ICategoryService;
-import io.nzbee.test.integration.entity.beans.CategoryEntityBeanFactory;
+import io.nzbee.test.entity.beans.CategoryEntityBeanFactory;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.CategoryDaoPostgresImpl;
 import io.nzbee.entity.category.CategoryServiceImpl;
