@@ -27,7 +27,7 @@ public class CategoryEntityBeanFactory {
 	    final Hierarchy hierarchy = new Hierarchy();
 	    hierarchy.setHierarchyCode("TST01");
 	    hierarchy.setDesc("test hierarchy");
-	    
+	
 		category.setCategoryCode("TST02");
 		category.setCategoryLevel(new Long(1));
 		category.setCategoryType(categoryType);
@@ -42,5 +42,6 @@ public class CategoryEntityBeanFactory {
 		
 		return category;
 	}
+	
 	
 }
