@@ -18,6 +18,7 @@ public class CategoryEntityBeanFactory {
 
 	@Bean
 	public final Category getCategoryEntityBean() {
+//		we are creating a product of type category, therefore the category type is already determined
 		final Category category = new CategoryProduct();
 		
 		final CategoryType 	categoryType = new CategoryType();

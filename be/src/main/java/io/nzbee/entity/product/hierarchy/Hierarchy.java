@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
@@ -13,7 +12,6 @@ import org.hibernate.search.annotations.Store;
 
 @Entity
 @Table(name = "hierarchy", schema = "mochi")
-@PrimaryKeyJoinColumn(name = "hir_id")
 public class Hierarchy {
 
 	@Id
