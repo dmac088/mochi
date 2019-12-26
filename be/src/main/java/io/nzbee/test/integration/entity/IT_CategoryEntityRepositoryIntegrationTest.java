@@ -3,8 +3,6 @@ package io.nzbee.test.integration.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import javax.persistence.EntityManager;
-
-import org.hibernate.usertype.LoggableUserType;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +62,7 @@ public class IT_CategoryEntityRepositoryIntegrationTest {
     	
     	//persist a new transient test category
     	entityManager.persist(category);
-    	entityManager.flush();
+    	//entityManager.flush();
     	
     	return category;
     }
@@ -122,6 +120,8 @@ public class IT_CategoryEntityRepositoryIntegrationTest {
 	    assertThat(found.getCategoryLevel())
 	    .isEqualTo(new Long(1));
 	    assertThat(found.getCategoryType().getCode())
+	    .isEqualTo("TST01");
+	    assertThat(found.getHierarchy().getHierarchyCode())
 	    .isEqualTo("TST01");
 	    assertThat(found.getCategoryAttribute().getCategoryDesc())
 	    .isEqualTo("test category");
