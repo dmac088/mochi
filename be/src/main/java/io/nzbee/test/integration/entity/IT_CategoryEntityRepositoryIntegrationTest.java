@@ -112,8 +112,8 @@ public class IT_CategoryEntityRepositoryIntegrationTest {
     }
     
     private void assertFound(final Category found) {
-     	System.out.println(found.getCategoryId());
      	System.out.println(found.getCategoryCode());
+     	System.out.println(found.getCategoryType().getCode());
      	System.out.println(found.getCategoryAttribute().getCategoryDesc());
     	
     	
