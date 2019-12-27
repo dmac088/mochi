@@ -23,7 +23,7 @@ import io.nzbee.variables.GeneralVars;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles(profiles = "dev")
-public class IT_CategoryEntityRepositoryIntegrationTest {
+public class IT_ProductCategoryEntityRepositoryIntegrationTest {
  
 	@TestConfiguration
     static class CategoryDtoServiceImplIntegrationTest {
@@ -69,7 +69,7 @@ public class IT_CategoryEntityRepositoryIntegrationTest {
    
     
     @Test
-    public void whenFindById_thenReturnCategory() {
+    public void whenFindById_thenReturnProductCategory() {
     	Category category = this.persistNewCategory();
     	
         // when
@@ -83,7 +83,7 @@ public class IT_CategoryEntityRepositoryIntegrationTest {
     
     // write test cases here
     @Test
-    public void whenFindByCode_thenReturnCategory() {
+    public void whenFindByCode_thenReturnProductCategory() {
     	this.persistNewCategory();
     	
         // when
@@ -97,7 +97,7 @@ public class IT_CategoryEntityRepositoryIntegrationTest {
     
  // write test cases here
     @Test
-    public void whenFindByDesc_thenReturnCategory() {
+    public void whenFindByDesc_thenReturnProductCategory() {
     	this.persistNewCategory();
     	
         // when

@@ -23,7 +23,7 @@ import io.nzbee.entity.category.ICategoryDao;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles(profiles = "dev")
-public class IT_CategoryEntityServiceImplIntegrationTest {
+public class IT_ProductCategoryEntityServiceImplIntegrationTest {
 
 	@TestConfiguration
     static class CategoryServiceImplIntegrationTestConfiguration {
@@ -72,7 +72,7 @@ public class IT_CategoryEntityServiceImplIntegrationTest {
    
     
     @Test
-    public void whenValidId_thenCategoryShouldBeFound() {
+    public void whenValidId_thenProductCategoryShouldBeFound() {
         Long Id = new Long(1);
         String code = "TST02";
         Optional<Category> found = categoryService.findById("en-GB", "HKD", Id);
@@ -82,7 +82,7 @@ public class IT_CategoryEntityServiceImplIntegrationTest {
      }
     
     @Test
-    public void whenValidCode_thenCategoryShouldBeFound() {
+    public void whenValidCode_thenProductCategoryShouldBeFound() {
         String code = "TST02";
         Optional<Category> found = categoryService.findByCode("en-GB", "HKD", code);
       
@@ -91,7 +91,7 @@ public class IT_CategoryEntityServiceImplIntegrationTest {
      }
     
     @Test
-    public void whenValidDesc_thenCategoryShouldBeFound() {
+    public void whenValidDesc_thenProductCategoryShouldBeFound() {
     	String code = "TST02";
         Optional<Category> found = categoryService.findByDesc("en-GB", "HKD", "test product category");
       
