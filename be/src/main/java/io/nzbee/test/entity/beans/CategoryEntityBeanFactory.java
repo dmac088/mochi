@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.product.CategoryProduct;
-import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.entity.product.hierarchy.Hierarchy;
 import io.nzbee.variables.GeneralVars;
 
