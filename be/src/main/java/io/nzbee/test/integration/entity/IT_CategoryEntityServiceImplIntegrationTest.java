@@ -63,9 +63,23 @@ public class IT_CategoryEntityServiceImplIntegrationTest {
         Mockito.when(categoryDao.findByCode("en-GB", "HKD", "TST02"))
           .thenReturn(Optional.ofNullable(testCategory));
         
+        Mockito.when(categoryDao.findById("en-GB", "HKD", new Long(1)))
+        .thenReturn(Optional.ofNullable(testCategory));
+        
         Mockito.when(categoryDao.findByDesc("en-GB", "HKD", "test category"))
         .thenReturn(Optional.ofNullable(testCategory));
     }
+   
+    
+    @Test
+    public void whenValidId_thenCategoryShouldBeFound() {
+        Long Id = new Long(1);
+        String code = "TST02";
+        Optional<Category> found = categoryService.findById("en-GB", "HKD", Id);
+      
+         assertThat(found.get().getCategoryCode())
+          .isEqualTo(code);
+     }
     
     @Test
     public void whenValidCode_thenCategoryShouldBeFound() {
@@ -78,11 +92,11 @@ public class IT_CategoryEntityServiceImplIntegrationTest {
     
     @Test
     public void whenValidDesc_thenCategoryShouldBeFound() {
-        String desc = "test category";
-        Optional<Category> found = categoryService.findByDesc("en-GB", "HKD", desc);
+    	String code = "TST02";
+        Optional<Category> found = categoryService.findByDesc("en-GB", "HKD", "test category");
       
-         assertThat(found.get().getCategoryAttribute().getCategoryDesc())
-          .isEqualTo(desc);
+         assertThat(found.get().getCategoryCode())
+          .isEqualTo(code);
      }
     
 }
