@@ -56,7 +56,7 @@ public class UT_CategoryTest {
     	//we setup a mock so that when 
     	MockitoAnnotations.initMocks(this);
         
-        io.nzbee.entity.category.Category category = categoryEntityBeanFactory.getCategoryEntityBean();
+        io.nzbee.entity.category.Category category = categoryEntityBeanFactory.getProductCategoryEntityBean();
         
         //need to fill more of the properties here
         Mockito.when(categoryEntityService.findByCode("en-GB", "HKD", category.getCategoryCode()))
@@ -69,7 +69,7 @@ public class UT_CategoryTest {
     @Test
     public void whenValidCode_thenCategoryShouldBeFound() {
         String code = "TST02";
-        String desc = "test category";
+        String desc = "test product category";
         
         Category found = categoryDtoService.findByCode("en-GB", "HKD", code).get();
       
@@ -82,7 +82,7 @@ public class UT_CategoryTest {
     @Test
     public void whenValidDesc_thenCategoryShouldBeFound() {
         String code = "TST02";
-        String desc = "test category";
+        String desc = "test product category";
         
         Category found = categoryDtoService.findByDesc("en-GB", "HKD", desc).get();
       

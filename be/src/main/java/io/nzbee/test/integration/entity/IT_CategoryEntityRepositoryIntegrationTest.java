@@ -52,7 +52,7 @@ public class IT_CategoryEntityRepositoryIntegrationTest {
     
     public Category persistNewCategory() {
     	
-    	final Category category = categoryEntityBeanFactory.getCategoryEntityBean();
+    	final Category category = categoryEntityBeanFactory.getProductCategoryEntityBean();
     	
     	//persist a new transient test category type
     	//entityManager.persist(category.getCategoryType());
@@ -103,17 +103,13 @@ public class IT_CategoryEntityRepositoryIntegrationTest {
         // when
     	Category found = categoryService.findByDesc(GeneralVars.LANGUAGE_ENGLISH, 
 				 									GeneralVars.CURRENCY_USD, 
-				 									"test category").get();
+				 									"test product category").get();
      
         //then
     	assertFound(found);
     }
     
     private void assertFound(final Category found) {
-     	System.out.println(found.getCategoryCode());
-     	System.out.println(found.getCategoryType().getCode());
-     	System.out.println(found.getCategoryAttribute().getCategoryDesc());
-    	
     	
     	assertThat(found.getCategoryCode())
         .isEqualTo("TST02");
@@ -124,7 +120,7 @@ public class IT_CategoryEntityRepositoryIntegrationTest {
 	    assertThat(found.getHierarchy().getHierarchyCode())
 	    .isEqualTo("TST01");
 	    assertThat(found.getCategoryAttribute().getCategoryDesc())
-	    .isEqualTo("test category");
+	    .isEqualTo("test product category");
     }
  
 }

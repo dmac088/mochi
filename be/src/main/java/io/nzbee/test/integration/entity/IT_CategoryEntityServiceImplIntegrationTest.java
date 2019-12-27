@@ -58,7 +58,7 @@ public class IT_CategoryEntityServiceImplIntegrationTest {
     public void setUp() {
     	//we setup a mock so that when 
     	MockitoAnnotations.initMocks(this);
-    	final Category testCategory = categoryEntityBeanFactory.getCategoryEntityBean();
+    	final Category testCategory = categoryEntityBeanFactory.getProductCategoryEntityBean();
     	
         Mockito.when(categoryDao.findByCode("en-GB", "HKD", "TST02"))
           .thenReturn(Optional.ofNullable(testCategory));
@@ -66,7 +66,7 @@ public class IT_CategoryEntityServiceImplIntegrationTest {
         Mockito.when(categoryDao.findById("en-GB", "HKD", new Long(1)))
         .thenReturn(Optional.ofNullable(testCategory));
         
-        Mockito.when(categoryDao.findByDesc("en-GB", "HKD", "test category"))
+        Mockito.when(categoryDao.findByDesc("en-GB", "HKD", "test product category"))
         .thenReturn(Optional.ofNullable(testCategory));
     }
    
@@ -93,7 +93,7 @@ public class IT_CategoryEntityServiceImplIntegrationTest {
     @Test
     public void whenValidDesc_thenCategoryShouldBeFound() {
     	String code = "TST02";
-        Optional<Category> found = categoryService.findByDesc("en-GB", "HKD", "test category");
+        Optional<Category> found = categoryService.findByDesc("en-GB", "HKD", "test product category");
       
          assertThat(found.get().getCategoryCode())
           .isEqualTo(code);
