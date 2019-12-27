@@ -1,6 +1,9 @@
 package io.nzbee.test.entity.beans;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -17,20 +20,14 @@ public class CategoryEntityBeanFactory {
 
 	@Bean
 	public final Category getCategoryEntityBean() {
-//		we are creating a product of type category, therefore the category type is already determined
 		final Category category = new CategoryProduct();
 		
-//		final CategoryType 	categoryType = new CategoryType();
-//	    categoryType.setCode("TST01");
-//	    categoryType.setDesc("test category type");
-	    
 	    final Hierarchy hierarchy = new Hierarchy();
 	    hierarchy.setHierarchyCode("TST01");
 	    hierarchy.setDesc("test hierarchy");
 	
 		category.setCategoryCode("TST02");
 		category.setCategoryLevel(new Long(1));
-//		category.setCategoryType(categoryType);
 		category.setHierarchy(hierarchy);
 
 		final CategoryAttribute categoryAttribute = new CategoryAttribute();
@@ -41,6 +38,18 @@ public class CategoryEntityBeanFactory {
 		category.setCategoryAttribute(categoryAttribute);
 		
 		return category;
+	}
+	
+	
+	@Bean
+	public final List<Category> getCategoryEntityListBean() {
+		List<Category> lc = new ArrayList<Category>();
+		
+		final Category category = this.getCategoryEntityBean();
+		
+		lc.add(category);
+		
+		return lc;
 	}
 	
 	

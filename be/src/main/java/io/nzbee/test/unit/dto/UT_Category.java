@@ -21,10 +21,10 @@ import io.nzbee.dto.category.CategoryServiceImpl;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles(profiles = "dev")
-public class UT_CategoryDtoServiceImplIntegrationTest {
+public class UT_Category {
 
 	@TestConfiguration
-    static class CategoryDtoServiceImplIntegrationTest {
+    static class CategoryDtoServiceImplUnitTest {
 		//the beans that we need to run this integration test
         @Bean(value = "categoryDtoService")
         public ICategoryService categoryDtoService() {
