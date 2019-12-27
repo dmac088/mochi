@@ -61,6 +61,9 @@ public class UT_CategoryTest {
         //need to fill more of the properties here
         Mockito.when(categoryEntityService.findByCode("en-GB", "HKD", category.getCategoryCode()))
           .thenReturn(Optional.ofNullable(category));
+        
+        Mockito.when(categoryEntityService.findByDesc("en-GB", "HKD", category.getCategoryAttribute().getCategoryDesc()))
+        .thenReturn(Optional.ofNullable(category));
     }
     
     @Test
@@ -69,6 +72,19 @@ public class UT_CategoryTest {
         String desc = "test category";
         
         Category found = categoryDtoService.findByCode("en-GB", "HKD", code).get();
+      
+         assertThat(found.getCategoryCode())
+          .isEqualTo(code);
+         assertThat(found.getCategoryDesc())
+          .isEqualTo(desc);
+     }
+    
+    @Test
+    public void whenValidDesc_thenCategoryShouldBeFound() {
+        String code = "TST02";
+        String desc = "test category";
+        
+        Category found = categoryDtoService.findByDesc("en-GB", "HKD", desc).get();
       
          assertThat(found.getCategoryCode())
           .isEqualTo(code);
