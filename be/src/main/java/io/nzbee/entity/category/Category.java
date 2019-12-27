@@ -145,7 +145,7 @@ public abstract class Category {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="cat_id")
-	private Long categoryId;
+	private Long categoryId; 
 
 	@NaturalId
 	@Column(name="cat_cd", unique = true, updatable = false)
@@ -162,6 +162,13 @@ public abstract class Category {
 	@IndexedEmbedded
 	private Hierarchy hierarchy;
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="cat_typ_id",
+				nullable = false,  
+				updatable = false, 
+				insertable = false)
+	private CategoryType categoryType;
+	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "layout_category", schema="mochi", 
 	    		   joinColumns 			= @JoinColumn(name = "cat_id"), 
@@ -169,13 +176,6 @@ public abstract class Category {
 	@OrderBy
 	private List<Layout> layouts;
 	
-	@ManyToOne
-	@JoinColumn(name="cat_typ_id", 
-				nullable = false, 
-				updatable = false, 
-				insertable = false)
-	private CategoryType categoryType;
-
 	@ManyToOne(fetch = FetchType.LAZY, optional=false)
 	@JoinColumn(name="cat_prnt_id", nullable=false)
 	@IndexedEmbedded(depth = 5)
