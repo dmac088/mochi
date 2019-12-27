@@ -20,7 +20,7 @@ import io.nzbee.variables.GeneralVars;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles(profiles = "dev")
-public class UT_Category {
+public class UT_CategoryTest {
  
 	@TestConfiguration
     static class CategoryDtoServiceImplIntegrationTest {

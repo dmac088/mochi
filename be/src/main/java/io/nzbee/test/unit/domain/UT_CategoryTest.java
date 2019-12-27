@@ -22,7 +22,7 @@ import io.nzbee.variables.GeneralVars;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles(profiles = "dev")
-public class UT_Category {
+public class UT_CategoryTest {
 
 	@TestConfiguration
     static class CategoryDomainServiceImplUnitTest {
@@ -32,9 +32,9 @@ public class UT_Category {
             return new CategoryServiceImpl();
         }
         
-        @Bean(value = "categoryEntityService")
-        public io.nzbee.entity.category.ICategoryService categoryService() {
-            return new io.nzbee.entity.category.CategoryServiceImpl();
+        @Bean(value = "categoryDtoService")
+        public io.nzbee.dto.category.ICategoryService categoryDtoService() {
+            return new io.nzbee.dto.category.CategoryServiceImpl();
         }
         
         @Bean(value = "categoryEntityBeanFactory")

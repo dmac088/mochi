@@ -21,7 +21,7 @@ import io.nzbee.dto.category.CategoryServiceImpl;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles(profiles = "dev")
-public class UT_Category {
+public class UT_CategoryTest {
 
 	@TestConfiguration
     static class CategoryDtoServiceImplUnitTest {

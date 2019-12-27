@@ -22,13 +22,6 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
     @Qualifier("categoryDtoService")
     private io.nzbee.dto.category.ICategoryService categoryService;
     
-    @Autowired
-    @Qualifier("brandDtoService")
-    private io.nzbee.dto.brand.IBrandService brandService;
-    
-    @Autowired
-    @Qualifier("tagDtoService")
-    private io.nzbee.dto.tag.ITagService tagService;
      
     @Override
 	@Transactional(readOnly = true)
