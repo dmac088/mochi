@@ -55,14 +55,14 @@ public class IT_CategoryEntityRepositoryIntegrationTest {
     	final Category category = categoryEntityBeanFactory.getCategoryEntityBean();
     	
     	//persist a new transient test category type
-    	entityManager.persist(category.getCategoryType());
+    	//entityManager.persist(category.getCategoryType());
     	
     	//persist a new transient test hierarchy
     	entityManager.persist(category.getHierarchy());
     	
     	//persist a new transient test category
     	entityManager.persist(category);
-    	//entityManager.flush();
+    	entityManager.flush();
     	
     	return category;
     }
@@ -120,7 +120,7 @@ public class IT_CategoryEntityRepositoryIntegrationTest {
 	    assertThat(found.getCategoryLevel())
 	    .isEqualTo(new Long(1));
 	    assertThat(found.getCategoryType().getCode())
-	    .isEqualTo("TST01");
+	    .isEqualTo("PRD01");
 	    assertThat(found.getHierarchy().getHierarchyCode())
 	    .isEqualTo("TST01");
 	    assertThat(found.getCategoryAttribute().getCategoryDesc())
