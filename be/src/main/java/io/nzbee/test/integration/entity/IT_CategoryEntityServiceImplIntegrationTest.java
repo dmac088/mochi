@@ -60,10 +60,10 @@ public class IT_CategoryEntityServiceImplIntegrationTest {
     	MockitoAnnotations.initMocks(this);
     	final Category testCategory = categoryEntityBeanFactory.getCategoryEntityBean();
     	
-        Mockito.when(categoryDao.findByCode("en-GB", "HKD", testCategory.getCategoryCode()))
+        Mockito.when(categoryDao.findByCode("en-GB", "HKD", "TST02"))
           .thenReturn(Optional.ofNullable(testCategory));
         
-        Mockito.when(categoryDao.findByDesc("en-GB", "HKD", testCategory.getCategoryAttribute().getCategoryDesc()))
+        Mockito.when(categoryDao.findByDesc("en-GB", "HKD", "test category"))
         .thenReturn(Optional.ofNullable(testCategory));
     }
     

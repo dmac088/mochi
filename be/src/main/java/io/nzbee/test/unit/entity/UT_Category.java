@@ -1,29 +1,34 @@
-package io.nzbee.test.integration.entity;
+package io.nzbee.test.unit.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Optional;
+
 import javax.persistence.EntityManager;
+
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+//import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+//import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
+//import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.ICategoryService;
-import io.nzbee.test.entity.beans.CategoryEntityBeanFactory;
+import io.nzbee.test.integration.entity.beans.CategoryEntityBeanFactory;
 import io.nzbee.variables.GeneralVars;
 
 @RunWith(SpringRunner.class)
-@DataJpaTest
-@AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles(profiles = "dev")
-public class IT_CategoryEntityRepositoryIntegrationTest {
+public class UT_Category {
  
 	@TestConfiguration
     static class CategoryDtoServiceImplIntegrationTest {
@@ -40,42 +45,47 @@ public class IT_CategoryEntityRepositoryIntegrationTest {
     }
 	
 	@Autowired
-	@Qualifier("mochiEntityManagerFactory")
-	private EntityManager entityManager;
-	
-	@Autowired
 	private CategoryEntityBeanFactory categoryEntityBeanFactory;
  
-    @Autowired
+	@MockBean
     private ICategoryService categoryService;
     
-    
-    public Category persistNewCategory() {
-    	
-    	final Category category = categoryEntityBeanFactory.getCategoryEntityBean();
-    	
-    	//persist a new transient test category type
-    	entityManager.persist(category.getCategoryType());
-    	
-    	//persist a new transient test hierarchy
-    	entityManager.persist(category.getHierarchy());
-    	
-    	//persist a new transient test category
-    	entityManager.persist(category);
-    	//entityManager.flush();
-    	
-    	return category;
+	@Before
+    public void setUp() {
+    	//we setup a mock so that when 
+    	MockitoAnnotations.initMocks(this);
+        
+        io.nzbee.entity.category.Category category = categoryEntityBeanFactory.getCategoryEntityBean();
+        category.setCategoryId(new Long(-1));
+        
+        //need to fill more of the properties here
+        Mockito.when(categoryService.findByCode(
+        									GeneralVars.LANGUAGE_ENGLISH, 
+        									GeneralVars.CURRENCY_USD, 
+        									category.getCategoryCode()))
+          .thenReturn(Optional.ofNullable(category));
+        
+        Mockito.when(categoryService.findById(
+        									GeneralVars.LANGUAGE_ENGLISH, 
+											GeneralVars.CURRENCY_USD, 
+											new Long(-1)))
+        .thenReturn(Optional.ofNullable(category));
+        
+        Mockito.when(categoryService.findByDesc(
+							        		GeneralVars.LANGUAGE_ENGLISH, 
+											GeneralVars.CURRENCY_USD, 
+											category.getCategoryAttribute().getCategoryDesc()))
+        .thenReturn(Optional.ofNullable(category));
     }
-   
-    
+     
     @Test
     public void whenFindById_thenReturnCategory() {
-    	Category category = this.persistNewCategory();
+    	
     	
         // when
     	Category found = categoryService.findById(GeneralVars.LANGUAGE_ENGLISH, 
 												  GeneralVars.CURRENCY_USD,  
-												  category.getCategoryId()).get();
+    											  new Long(-1)).get();
      
         // then
     	assertFound(found);
@@ -84,7 +94,6 @@ public class IT_CategoryEntityRepositoryIntegrationTest {
     // write test cases here
     @Test
     public void whenFindByCode_thenReturnCategory() {
-    	this.persistNewCategory();
     	
         // when
     	Category found = categoryService.findByCode(GeneralVars.LANGUAGE_ENGLISH, 
@@ -95,10 +104,10 @@ public class IT_CategoryEntityRepositoryIntegrationTest {
     	assertFound(found);
     }
     
- // write test cases here
+    // write test cases here
     @Test
     public void whenFindByDesc_thenReturnCategory() {
-    	this.persistNewCategory();
+    	
     	
         // when
     	Category found = categoryService.findByDesc(GeneralVars.LANGUAGE_ENGLISH, 
@@ -110,19 +119,16 @@ public class IT_CategoryEntityRepositoryIntegrationTest {
     }
     
     private void assertFound(final Category found) {
-     	System.out.println(found.getCategoryCode());
-     	System.out.println(found.getCategoryType().getCode());
-     	System.out.println(found.getCategoryAttribute().getCategoryDesc());
-    	
-    	
+
     	assertThat(found.getCategoryCode())
         .isEqualTo("TST02");
+    	
 	    assertThat(found.getCategoryLevel())
 	    .isEqualTo(new Long(1));
+	    
 	    assertThat(found.getCategoryType().getCode())
 	    .isEqualTo("TST01");
-	    assertThat(found.getHierarchy().getHierarchyCode())
-	    .isEqualTo("TST01");
+	    
 	    assertThat(found.getCategoryAttribute().getCategoryDesc())
 	    .isEqualTo("test category");
     }

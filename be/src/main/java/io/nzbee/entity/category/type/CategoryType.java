@@ -5,12 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "category_type", schema = "mochi")
-@PrimaryKeyJoinColumn(name = "cat_typ_id")
 public class CategoryType {
 
 	@Id
