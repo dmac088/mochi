@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
+import io.nzbee.entity.category.brand.CategoryBrand;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.hierarchy.Hierarchy;
 import io.nzbee.variables.GeneralVars;
@@ -19,12 +20,12 @@ import io.nzbee.variables.GeneralVars;
 public class CategoryEntityBeanFactory {
 
 	@Bean
-	public final Category getCategoryEntityBean() {
+	public final Category getProductCategoryEntityBean() {
 		final Category category = new CategoryProduct();
 		
 	    final Hierarchy hierarchy = new Hierarchy();
 	    hierarchy.setHierarchyCode("TST01");
-	    hierarchy.setDesc("test hierarchy");
+	    hierarchy.setDesc("test product hierarchy");
 	
 		category.setCategoryCode("TST02");
 		category.setCategoryLevel(new Long(1));
@@ -32,7 +33,29 @@ public class CategoryEntityBeanFactory {
 
 		final CategoryAttribute categoryAttribute = new CategoryAttribute();
 		categoryAttribute.setCategory(category);
-		categoryAttribute.setCategoryDesc("test category");
+		categoryAttribute.setCategoryDesc("test product category");
+		categoryAttribute.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
+		category.addAttribute(categoryAttribute);
+		category.setCategoryAttribute(categoryAttribute);
+		
+		return category;
+	}
+	
+	@Bean
+	public final Category getBrandCategoryEntityBean() {
+		final Category category = new CategoryBrand();
+		
+	    final Hierarchy hierarchy = new Hierarchy();
+	    hierarchy.setHierarchyCode("TST01");
+	    hierarchy.setDesc("test brand hierarchy");
+	
+		category.setCategoryCode("TST02");
+		category.setCategoryLevel(new Long(2));
+		category.setHierarchy(hierarchy);
+
+		final CategoryAttribute categoryAttribute = new CategoryAttribute();
+		categoryAttribute.setCategory(category);
+		categoryAttribute.setCategoryDesc("test brand category");
 		categoryAttribute.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
 		category.addAttribute(categoryAttribute);
 		category.setCategoryAttribute(categoryAttribute);
@@ -42,10 +65,21 @@ public class CategoryEntityBeanFactory {
 	
 	
 	@Bean
-	public final List<Category> getCategoryEntityListBean() {
+	public final List<Category> getProductCategoryEntityListBean() {
 		List<Category> lc = new ArrayList<Category>();
 		
-		final Category category = this.getCategoryEntityBean();
+		final Category category = this.getProductCategoryEntityBean();
+		
+		lc.add(category);
+		
+		return lc;
+	}
+	
+	@Bean
+	public final List<Category> getBrandCategoryEntityListBean() {
+		List<Category> lc = new ArrayList<Category>();
+		
+		final Category category = this.getBrandCategoryEntityBean();
 		
 		lc.add(category);
 		

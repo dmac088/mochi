@@ -47,7 +47,7 @@ public class UT_CategoryTest {
     	//we setup a mock so that when 
     	MockitoAnnotations.initMocks(this);
         
-        io.nzbee.entity.category.Category category = categoryEntityBeanFactory.getCategoryEntityBean();
+        io.nzbee.entity.category.Category category = categoryEntityBeanFactory.getProductCategoryEntityBean();
         category.setCategoryId(new Long(-1));
         
         //need to fill more of the properties here
@@ -104,7 +104,7 @@ public class UT_CategoryTest {
         // when
     	Category found = categoryService.findByDesc(GeneralVars.LANGUAGE_ENGLISH, 
 				 									GeneralVars.CURRENCY_USD, 
-				 									"test category").get();
+				 									"test product category").get();
      
         //then
     	assertFound(found);
@@ -122,7 +122,7 @@ public class UT_CategoryTest {
 //	    .isEqualTo("TST01");
 	    
 	    assertThat(found.getCategoryAttribute().getCategoryDesc())
-	    .isEqualTo("test category");
+	    .isEqualTo("test product category");
     }
  
 }
