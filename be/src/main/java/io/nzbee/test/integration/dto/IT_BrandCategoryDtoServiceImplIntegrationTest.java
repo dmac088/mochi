@@ -26,7 +26,7 @@ import io.nzbee.entity.category.ICategoryDao;
 public class IT_BrandCategoryDtoServiceImplIntegrationTest {
 
 	@TestConfiguration
-    static class CategoryServiceImplIntegrationTestConfiguration {
+    static class BrandCategoryEntityServiceImplIntegrationTestConfiguration {
 		//the beans that we need to run this integration test
         @Bean(value = "categoryEntityService")
         public ICategoryService categoryService() {

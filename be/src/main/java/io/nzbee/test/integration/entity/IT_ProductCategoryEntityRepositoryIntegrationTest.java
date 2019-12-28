@@ -26,7 +26,7 @@ import io.nzbee.variables.GeneralVars;
 public class IT_ProductCategoryEntityRepositoryIntegrationTest {
  
 	@TestConfiguration
-    static class CategoryDtoServiceImplIntegrationTest {
+    static class ProductCategoryEntityRepositoryIntegrationTest {
         
         @Bean(value = "categoryEntityService")
         public io.nzbee.entity.category.ICategoryService categoryService() {
