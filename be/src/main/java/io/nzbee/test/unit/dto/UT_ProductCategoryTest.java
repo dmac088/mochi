@@ -1,4 +1,4 @@
-package io.nzbee.test.unit.entity;
+package io.nzbee.test.unit.dto;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -76,8 +76,7 @@ public class UT_ProductCategoryTest {
         Long Id = new Long(1);
         Optional<Category> found = categoryService.findById("en-GB", "HKD", Id);
       
-        //then
-    	assertFound(found.get());
+        assertFound(found.get());
      }
     
     @Test
@@ -85,19 +84,15 @@ public class UT_ProductCategoryTest {
         String code = "TST02";
         Optional<Category> found = categoryService.findByCode("en-GB", "HKD", code);
       
-        //then
-    	assertFound(found.get());
+        assertFound(found.get());
      }
     
     @Test
     public void whenValidDesc_thenProductCategoryShouldBeFound() {
-        Optional<Category> found = categoryService.findByDesc(	"en-GB", 
-        														"HKD", 
-        														"test product category");
+        Optional<Category> found = categoryService.findByDesc("en-GB", "HKD", "test product category");
       
-        //then
-    	assertFound(found.get());
-     }
+        assertFound(found.get());
+    }
     
     private void assertFound(final Category found) {
 
@@ -113,5 +108,4 @@ public class UT_ProductCategoryTest {
 	    assertThat(found.getCategoryAttribute().getCategoryDesc())
 	    .isEqualTo("test product category");
     }
-    
 }
