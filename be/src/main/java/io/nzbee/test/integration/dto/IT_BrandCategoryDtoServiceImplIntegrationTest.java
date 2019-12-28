@@ -1,4 +1,4 @@
-package io.nzbee.test.integration.entity;
+package io.nzbee.test.integration.dto;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -23,7 +23,7 @@ import io.nzbee.entity.category.ICategoryDao;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles(profiles = "dev")
-public class IT_BrandCategoryEntityServiceImplIntegrationTest {
+public class IT_BrandCategoryDtoServiceImplIntegrationTest {
 
 	@TestConfiguration
     static class CategoryServiceImplIntegrationTestConfiguration {
