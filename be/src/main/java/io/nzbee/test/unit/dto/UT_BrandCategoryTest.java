@@ -1,4 +1,4 @@
-package io.nzbee.test.unit.entity;
+package io.nzbee.test.unit.dto;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -23,7 +23,7 @@ import io.nzbee.entity.category.ICategoryDao;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles(profiles = "dev")
-public class UT_ProductCategoryTest {
+public class UT_BrandCategoryTest {
 
 	@TestConfiguration
     static class CategoryServiceImplIntegrationTestConfiguration {
@@ -58,7 +58,7 @@ public class UT_ProductCategoryTest {
     public void setUp() {
     	//we setup a mock so that when 
     	MockitoAnnotations.initMocks(this);
-    	final Category testCategory = categoryEntityBeanFactory.getProductCategoryEntityBean();
+    	final Category testCategory = categoryEntityBeanFactory.getBrandCategoryEntityBean();
     	
         Mockito.when(categoryDao.findByCode("en-GB", "HKD", "TST02"))
           .thenReturn(Optional.ofNullable(testCategory));
@@ -66,37 +66,33 @@ public class UT_ProductCategoryTest {
         Mockito.when(categoryDao.findById("en-GB", "HKD", new Long(1)))
         .thenReturn(Optional.ofNullable(testCategory));
         
-        Mockito.when(categoryDao.findByDesc("en-GB", "HKD", "test product category"))
+        Mockito.when(categoryDao.findByDesc("en-GB", "HKD", "test brand category"))
         .thenReturn(Optional.ofNullable(testCategory));
     }
    
     
     @Test
-    public void whenValidId_thenProductCategoryShouldBeFound() {
+    public void whenValidId_thenBrnadCategoryShouldBeFound() {
         Long Id = new Long(1);
         Optional<Category> found = categoryService.findById("en-GB", "HKD", Id);
       
-        //then
-    	assertFound(found.get());
+        assertFound(found.get());
      }
     
     @Test
-    public void whenValidCode_thenProductCategoryShouldBeFound() {
+    public void whenValidCode_thenBrandCategoryShouldBeFound() {
         String code = "TST02";
         Optional<Category> found = categoryService.findByCode("en-GB", "HKD", code);
       
-        //then
-    	assertFound(found.get());
+        assertFound(found.get());
      }
     
     @Test
-    public void whenValidDesc_thenProductCategoryShouldBeFound() {
-        Optional<Category> found = categoryService.findByDesc(	"en-GB", 
-        														"HKD", 
-        														"test product category");
+    public void whenValidDesc_thenBrandCategoryShouldBeFound() {
+    
+        Optional<Category> found = categoryService.findByDesc("en-GB", "HKD", "test brand category");
       
-        //then
-    	assertFound(found.get());
+        assertFound(found.get());
      }
     
     private void assertFound(final Category found) {
@@ -105,13 +101,13 @@ public class UT_ProductCategoryTest {
         .isEqualTo("TST02");
     	
 	    assertThat(found.getCategoryLevel())
-	    .isEqualTo(new Long(1));
+	    .isEqualTo(new Long(2));
 	    
 //	    assertThat(found.getCategoryType().getCode())
 //	    .isEqualTo("TST01");
 	    
 	    assertThat(found.getCategoryAttribute().getCategoryDesc())
-	    .isEqualTo("test product category");
+	    .isEqualTo("test brand category");
     }
     
 }
