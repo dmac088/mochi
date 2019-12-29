@@ -18,13 +18,26 @@ import io.nzbee.variables.GeneralVars;
 public class CategoryDtoBeanFactory {
 
 	@Bean
-	public final Category getCategoryDtoBean() {
+	public final Category getProductCategoryDtoBean() {
 		
 		ProductCategory category = new ProductCategory();
 		
 		category.setCategoryCode("TST02");
 		category.setCategoryLevel(new Long(1));
-		category.setCategoryDesc("test category");
+		category.setCategoryDesc("test product category");
+		category.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
+		
+		return category;
+	}
+	
+	@Bean
+	public final Category getBrandCategoryDtoBean() {
+		
+		ProductCategory category = new ProductCategory();
+		
+		category.setCategoryCode("TST01");
+		category.setCategoryLevel(new Long(2));
+		category.setCategoryDesc("test brand category");
 		category.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
 		
 		return category;
@@ -32,10 +45,10 @@ public class CategoryDtoBeanFactory {
 	
 	
 	@Bean
-	public final List<Category> getCategoryDtoListBean() {
+	public final List<Category> getProductCategoryDtoListBean() {
 		List<Category> lc = new ArrayList<Category>();
 		
-		final Category category = this.getCategoryDtoBean();
+		final Category category = this.getProductCategoryDtoBean();
 		
 		lc.add(category);
 		

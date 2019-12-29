@@ -21,10 +21,10 @@ import io.nzbee.variables.GeneralVars;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles(profiles = "dev")
-public class UT_CategoryTest {
+public class UT_ProductCategoryTest {
 
 	@TestConfiguration
-	static class CategoryDomainServiceImplUnitTest {
+	static class ProductCategoryDomainServiceImplUnitTest {
 		// the beans that we need to run this integration test
 		@Bean(value = "categoryDomainService")
 		public ICategoryService categoryDomainService() {
@@ -56,7 +56,7 @@ public class UT_CategoryTest {
 		// we setup a mock so that when
 		MockitoAnnotations.initMocks(this);
 
-		io.nzbee.dto.category.Category category = categoryDtoBeanFactory.getCategoryDtoBean();
+		io.nzbee.dto.category.Category category = categoryDtoBeanFactory.getProductCategoryDtoBean();
 
 		// need to fill more of the properties here
 		Mockito.when(categoryDtoService.findByCode(GeneralVars.LANGUAGE_ENGLISH, GeneralVars.CURRENCY_HKD,
@@ -67,24 +67,26 @@ public class UT_CategoryTest {
 	}
 
 	@Test
-	public void whenValidCode_thenCategoryShouldBeFound() {
+	public void whenValidCode_thenProductCategoryShouldBeFound() {
 		String code = "TST02";
-		String desc = "test category";
+		String desc = "test product category";
 
-		io.nzbee.domain.category.Category found = categoryDomainService.findByCode(GeneralVars.LANGUAGE_ENGLISH,
-				GeneralVars.CURRENCY_HKD, code);
+		io.nzbee.domain.category.Category found = categoryDomainService.findByCode(	GeneralVars.LANGUAGE_ENGLISH,
+																					GeneralVars.CURRENCY_HKD, 
+																					code);
 
 		assertThat(found.getCode()).isEqualTo(code);
 		assertThat(found.getDesc()).isEqualTo(desc);
 	}
 	
 	@Test
-	public void whenValidDesc_thenCategoryShouldBeFound() {
+	public void whenValidDesc_thenProductCategoryShouldBeFound() {
 		String code = "TST02";
-		String desc = "test category";
+		String desc = "test product category";
 
-		io.nzbee.domain.category.Category found = categoryDomainService.findByDesc(GeneralVars.LANGUAGE_ENGLISH,
-				GeneralVars.CURRENCY_HKD, desc);
+		io.nzbee.domain.category.Category found = categoryDomainService.findByDesc(	GeneralVars.LANGUAGE_ENGLISH,
+																					GeneralVars.CURRENCY_HKD, 
+																					desc);
 
 		assertThat(found.getCode()).isEqualTo(code);
 		assertThat(found.getDesc()).isEqualTo(desc);
