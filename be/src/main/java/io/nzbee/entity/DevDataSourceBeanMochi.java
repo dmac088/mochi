@@ -24,7 +24,7 @@ import com.zaxxer.hikari.HikariDataSource;
 @EnableTransactionManagement
 @EnableJpaRepositories(
         entityManagerFactoryRef = "mochiEntityManagerFactory", 
-        transactionManagerRef = "mochiTransactionManager"
+        transactionManagerRef 	= "mochiTransactionManager"
         )
 @Profile("dev")
 public class DevDataSourceBeanMochi {
@@ -40,7 +40,8 @@ public class DevDataSourceBeanMochi {
 	@Bean(name = "mochiDataSource")
     @ConfigurationProperties("spring.datasource.mochi")
     public HikariDataSource dataSource(@Qualifier("mochiDataSourceProperties") DataSourceProperties properties) {
-        return properties.initializeDataSourceBuilder().type(HikariDataSource.class)
+        return properties.initializeDataSourceBuilder()
+        		.type(HikariDataSource.class)
         		.driverClassName("org.postgresql.Driver")
                 .build();
     }

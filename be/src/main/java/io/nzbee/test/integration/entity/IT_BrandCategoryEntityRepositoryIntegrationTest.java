@@ -69,7 +69,7 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
 	    entityManager.persist(category);
 	    entityManager.flush();
 	    entityManager.close();
-	    	
+	    
 	    return category;
 	}
    
