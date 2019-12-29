@@ -2,11 +2,8 @@ package io.nzbee.test.integration.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.List;
 import java.util.Set;
-
 import javax.persistence.EntityManager;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
