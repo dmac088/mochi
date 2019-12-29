@@ -3,6 +3,8 @@ package io.nzbee.test.integration.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import javax.persistence.EntityManager;
+
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,28 +51,31 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     @Autowired
     private ICategoryService categoryService;
     
+    private io.nzbee.entity.category.Category category = null;
     
-    public Category persistNewCategory() {
-    	
-    	final Category category = categoryEntityBeanFactory.getProductCategoryEntityBean();
-    	
-    	//persist a new transient test category type
-    	//entityManager.persist(category.getCategoryType());
-    	
-    	//persist a new transient test hierarchy
-    	entityManager.persist(category.getHierarchy());
-    	
-    	//persist a new transient test category
-    	entityManager.persist(category);
-    	entityManager.flush();
-    	
-    	return category;
+    @Before
+    public void setUp() { 
+    	this.persistNewCategory();
     }
+    
+    
+	public io.nzbee.entity.category.Category persistNewCategory() {
+    	
+		category = categoryEntityBeanFactory.getProductCategoryEntityBean();
+	    	
+	    //persist a new transient test hierarchy
+	    entityManager.persist(category.getHierarchy());
+	    	
+	    //persist a new transient test category
+	    entityManager.persist(category);
+	    entityManager.flush();
+	    	
+	    return category;
+	}
    
     
     @Test
     public void whenFindById_thenReturnProductCategory() {
-    	Category category = this.persistNewCategory();
     	
         // when
     	Category found = categoryService.findById(GeneralVars.LANGUAGE_ENGLISH, 
@@ -84,7 +89,6 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     // write test cases here
     @Test
     public void whenFindByCode_thenReturnProductCategory() {
-    	this.persistNewCategory();
     	
         // when
     	Category found = categoryService.findByCode(GeneralVars.LANGUAGE_ENGLISH, 
@@ -98,7 +102,6 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
  // write test cases here
     @Test
     public void whenFindByDesc_thenReturnProductCategory() {
-    	this.persistNewCategory();
     	
         // when
     	Category found = categoryService.findByDesc(GeneralVars.LANGUAGE_ENGLISH, 
