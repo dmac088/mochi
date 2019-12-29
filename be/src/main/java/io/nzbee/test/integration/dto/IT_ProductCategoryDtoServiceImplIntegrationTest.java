@@ -74,6 +74,7 @@ public class IT_ProductCategoryDtoServiceImplIntegrationTest {
 	    //persist a new transient test category
 	    entityManager.persist(category);
 	    entityManager.flush();
+	    entityManager.close();
 	    	
 	    return category;
 	}

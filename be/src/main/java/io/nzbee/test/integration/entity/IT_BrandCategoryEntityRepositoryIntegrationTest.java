@@ -68,6 +68,7 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
 	    //persist a new transient test category
 	    entityManager.persist(category);
 	    entityManager.flush();
+	    entityManager.close();
 	    	
 	    return category;
 	}

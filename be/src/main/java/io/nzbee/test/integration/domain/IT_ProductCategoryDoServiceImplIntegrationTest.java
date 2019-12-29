@@ -1,7 +1,6 @@
 package io.nzbee.test.integration.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import java.util.Optional;
 import javax.persistence.EntityManager;
 import org.junit.Before;
 import org.junit.Test;
@@ -74,6 +73,7 @@ public class IT_ProductCategoryDoServiceImplIntegrationTest {
 	    //persist a new transient test category
 	    entityManager.persist(category);
 	    entityManager.flush();
+	    entityManager.close();
 	    	
 	    return category;
 	}
