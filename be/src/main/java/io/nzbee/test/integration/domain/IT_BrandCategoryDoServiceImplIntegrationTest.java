@@ -75,6 +75,7 @@ public class IT_BrandCategoryDoServiceImplIntegrationTest {
 	    //persist a new transient test category
 	    entityManager.persist(category);
 	    entityManager.flush();
+	    entityManager.close();
 	    	
 	    return category;
 	}
@@ -91,7 +92,7 @@ public class IT_BrandCategoryDoServiceImplIntegrationTest {
         Category found = categoryService.findByCode("en-GB", "HKD", code);
       
         assertFound(found);
-     }
+    }
     
     @Test
     public void whenValidDesc_thenBrandCategoryShouldBeFound() {
