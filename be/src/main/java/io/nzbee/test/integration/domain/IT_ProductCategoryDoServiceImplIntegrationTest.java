@@ -15,9 +15,9 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-import io.nzbee.dto.category.ICategoryService;
-import io.nzbee.dto.category.Category;
-import io.nzbee.dto.category.CategoryServiceImpl;
+import io.nzbee.domain.category.ICategoryService;
+import io.nzbee.domain.category.Category;
+import io.nzbee.domain.category.CategoryServiceImpl;
 import io.nzbee.test.entity.beans.CategoryEntityBeanFactory;
 import io.nzbee.entity.category.CategoryDaoPostgresImpl;
 import io.nzbee.entity.category.ICategoryDao;
@@ -31,7 +31,7 @@ public class IT_ProductCategoryDoServiceImplIntegrationTest {
 	@TestConfiguration
     static class CategoryServiceImplIntegrationTestConfiguration {
 		//the beans that we need to run this integration test
-        @Bean(value = "categoryDtoService")
+        @Bean(value = "categoryDomainService")
         public ICategoryService categoryService() {
             return new CategoryServiceImpl();
         }
@@ -89,28 +89,28 @@ public class IT_ProductCategoryDoServiceImplIntegrationTest {
     @Test
     public void whenValidCode_thenProductCategoryShouldBeFound() {
         String code = "TST02";
-        Optional<Category> found = categoryService.findByCode("en-GB", "HKD", code);
+        Category found = categoryService.findByCode("en-GB", "HKD", code);
       
-        assertFound(found.get());
+        assertFound(found);
      }
     
     @Test
     public void whenValidDesc_thenProductCategoryShouldBeFound() {
     	String desc = "test product category";
-        Optional<Category> found = categoryService.findByDesc("en-GB", "HKD", desc);
+        Category found = categoryService.findByDesc("en-GB", "HKD", desc);
       
-        assertFound(found.get());
+        assertFound(found);
      }
     
     private void assertFound(final Category found) {
 
-    	assertThat(found.getCategoryCode())
+    	assertThat(found.getCode())
         .isEqualTo("TST02");
     	
-	    assertThat(found.getCategoryLevel())
+	    assertThat(found.getLevel())
 	    .isEqualTo(new Long(1));
 	    
-	    assertThat(found.getCategoryDesc())
+	    assertThat(found.getDesc())
 	    .isEqualTo("test product category");
     }
     
