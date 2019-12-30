@@ -32,7 +32,7 @@ import com.zaxxer.hikari.HikariDataSource;
 public class DataSourceBeanMochiProd {
 	
 	@Primary
-	@Bean(name = "mochiDataSourcePropertiesDev")
+	@Bean(name = "mochiDataSourcePropertiesProd")
     @ConfigurationProperties("spring.datasource.mochi")
     public DataSourceProperties dataSourceProperties() {
         return new DataSourceProperties();
