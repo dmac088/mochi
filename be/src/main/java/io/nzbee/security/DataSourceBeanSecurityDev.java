@@ -30,7 +30,7 @@ import io.nzbee.security.user.IUserRepository;
 @Order(1)
 public class DataSourceBeanSecurityDev {
 	
-	@Bean(name = "securityDataSourceProperties")
+	@Bean(name = "securityDataSourcePropertiesDev")
     @ConfigurationProperties("spring.datasource.security")
     public DataSourceProperties dataSourceProperties() {
         return new DataSourceProperties();

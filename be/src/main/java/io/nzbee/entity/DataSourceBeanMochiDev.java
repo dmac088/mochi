@@ -41,7 +41,7 @@ public class DataSourceBeanMochiDev {
 	@Primary
 	@Bean(name = "mochiDataSource")
     @ConfigurationProperties("spring.datasource.mochi")
-    public HikariDataSource dataSource(@Qualifier("mochiDataSourceProperties") DataSourceProperties properties) {
+    public HikariDataSource dataSource(@Qualifier("mochiDataSourcePropertiesDev") DataSourceProperties properties) {
         return properties.initializeDataSourceBuilder()
         		.type(HikariDataSource.class)
         		.driverClassName("org.postgresql.Driver")

@@ -36,7 +36,7 @@ public class DataSourceBeanSecurityTest {
 	
 	@Bean(name = "securityDataSource")
     @ConfigurationProperties("spring.datasource.security")
-    public HikariDataSource dataSource(@Qualifier("securityDataSourceProperties") DataSourceProperties properties) {
+    public HikariDataSource dataSource(@Qualifier("securityDataSourcePropertiesTest") DataSourceProperties properties) {
         return properties.initializeDataSourceBuilder().type(HikariDataSource.class)
         		.driverClassName("org.postgresql.Driver")
                 .build();

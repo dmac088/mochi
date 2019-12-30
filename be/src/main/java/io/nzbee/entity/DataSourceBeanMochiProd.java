@@ -32,7 +32,7 @@ import com.zaxxer.hikari.HikariDataSource;
 public class DataSourceBeanMochiProd {
 	
 	@Primary
-	@Bean(name = "mochiDataSourceProperties")
+	@Bean(name = "mochiDataSourcePropertiesDev")
     @ConfigurationProperties("spring.datasource.mochi")
     public DataSourceProperties dataSourceProperties() {
         return new DataSourceProperties();
@@ -41,7 +41,7 @@ public class DataSourceBeanMochiProd {
 	@Primary
 	@Bean(name = "mochiDataSource")
     @ConfigurationProperties("spring.datasource.mochi")
-    public HikariDataSource dataSource(@Qualifier("mochiDataSourceProperties") DataSourceProperties properties) {
+    public HikariDataSource dataSource(@Qualifier("mochiDataSourcePropertiesProd") DataSourceProperties properties) {
         return properties.initializeDataSourceBuilder()
         		.type(HikariDataSource.class)
         		.driverClassName("org.postgresql.Driver")
