@@ -19,8 +19,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
-//@ContextConfiguration(classes = {CategoryController.class, 
-//							     CategoryServiceImpl.class})
+@ContextConfiguration(classes = {CategoryController.class, 
+							     CategoryServiceImpl.class,
+							     io.nzbee.dto.category.CategoryServiceImpl.class,
+							     io.nzbee.entity.category.CategoryServiceImpl.class,
+							     io.nzbee.entity.category.CategoryDaoPostgresImpl.class,
+							     io.nzbee.entity.DevDataSourceBeanMochi.class})
 @WebMvcTest
 public class IT_CategoryControllerIntegrationTest {
 
