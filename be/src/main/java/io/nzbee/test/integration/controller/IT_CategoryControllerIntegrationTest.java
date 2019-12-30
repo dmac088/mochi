@@ -2,13 +2,13 @@ package io.nzbee.test.integration.controller;
 
 import static org.junit.Assert.assertNotNull;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -18,19 +18,20 @@ import io.nzbee.resources.controllers.CategoryController;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc()
 @ContextConfiguration(classes = {CategoryController.class, 
 							     CategoryServiceImpl.class,
 							     io.nzbee.dto.category.CategoryServiceImpl.class,
 							     io.nzbee.entity.category.CategoryServiceImpl.class,
 							     io.nzbee.entity.category.CategoryDaoPostgresImpl.class,
-							     io.nzbee.entity.DevDataSourceBeanMochi.class})
-@WebMvcTest
+							     io.nzbee.entity.DataSourceBeanMochiDev.class})
+@WebMvcTest(CategoryController.class)
+@ActiveProfiles(profiles = "dev")
 public class IT_CategoryControllerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
-	
+
     @Test
     public void testFindAll() throws Exception {
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/Category/en-GB/HKD")
