@@ -12,6 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @EnableWebMvc
 @Profile(value = "prod")
+@Order(3)
 public class WebMvcConfigProd implements WebMvcConfigurer {
 
     private static final String[] CLASSPATH_RESOURCE_LOCATIONS = { "classpath:/public/" };
