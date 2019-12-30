@@ -33,14 +33,14 @@ public class DataSourceBeanMochiTest {
 	
 	@Primary
 	@Bean(name = "mochiDataSourcePropertiesTest")
-    @ConfigurationProperties("spring.datasource.mochi")
+    @ConfigurationProperties("spring.datasource.mochi.test")
     public DataSourceProperties dataSourceProperties() {
         return new DataSourceProperties();
     }
 	
 	@Primary
 	@Bean(name = "mochiDataSource")
-    @ConfigurationProperties("spring.datasource.mochi")
+    @ConfigurationProperties("spring.datasource.mochi.test")
     public HikariDataSource dataSource(@Qualifier("mochiDataSourcePropertiesTest") DataSourceProperties properties) {
         return properties.initializeDataSourceBuilder()
         		.type(HikariDataSource.class)

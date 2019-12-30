@@ -1,7 +1,9 @@
 package io.nzbee.test.integration.controller;
 
 import static org.junit.Assert.assertNotNull;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +16,15 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 import io.nzbee.domain.category.CategoryServiceImpl;
 import io.nzbee.resources.controllers.CategoryController;
 import io.nzbee.security.WebSecurityConfig;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-@AutoConfigureMockMvc(addFilters = false)
+@AutoConfigureMockMvc(/*addFilters = false*/)
 @ContextConfiguration(classes = {CategoryController.class, 
 							     CategoryServiceImpl.class,
 							     io.nzbee.dto.category.CategoryServiceImpl.class,
@@ -40,6 +44,17 @@ public class IT_CategoryControllerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    private WebApplicationContext webApplicationContext;
+    
+    @Before
+    public void setUp() throws Exception {
+        mockMvc = MockMvcBuilders
+                .webAppContextSetup(webApplicationContext)
+                .apply(springSecurity())
+                .build();
+    }
     
     @Test
     public void testFindAll() throws Exception {

@@ -29,13 +29,13 @@ import com.zaxxer.hikari.HikariDataSource;
 public class DataSourceBeanSecurityTest {
 	
 	@Bean(name = "securityDataSourcePropertiesTest")
-    @ConfigurationProperties("spring.datasource.security")
+    @ConfigurationProperties("spring.datasource.security.test")
     public DataSourceProperties dataSourceProperties() {
         return new DataSourceProperties();
     }
 	
 	@Bean(name = "securityDataSource")
-    @ConfigurationProperties("spring.datasource.security")
+    @ConfigurationProperties("spring.datasource.security.test")
     public HikariDataSource dataSource(@Qualifier("securityDataSourcePropertiesTest") DataSourceProperties properties) {
         return properties.initializeDataSourceBuilder().type(HikariDataSource.class)
         		.driverClassName("org.postgresql.Driver")
