@@ -2,11 +2,13 @@ package io.nzbee;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 @Configuration
+@Profile(value="dev")
 public class JacksonConfig {
 
     @Bean
