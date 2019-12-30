@@ -1,6 +1,7 @@
 package io.nzbee.test.integration.controller;
 
 import static org.junit.Assert.assertNotNull;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Before;
@@ -54,7 +55,7 @@ public class IT_CategoryControllerIntegrationTest {
     	
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(webApplicationContext)
-                //.apply(springSecurity())
+                .apply(springSecurity())
                 .build();
     }
     
