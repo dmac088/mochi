@@ -33,7 +33,7 @@ public class DataSourceBeanMochiProd {
 	
 	@Primary
 	@Bean(name = "mochiDataSourcePropertiesProd")
-    @ConfigurationProperties("spring.datasource.mochi")
+    @ConfigurationProperties("spring.datasource.mochi.prod")
     public DataSourceProperties dataSourceProperties() {
         return new DataSourceProperties();
     }

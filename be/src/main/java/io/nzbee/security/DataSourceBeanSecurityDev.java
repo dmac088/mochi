@@ -31,13 +31,13 @@ import io.nzbee.security.user.IUserRepository;
 public class DataSourceBeanSecurityDev {
 	
 	@Bean(name = "securityDataSourcePropertiesDev")
-    @ConfigurationProperties("spring.datasource.security")
+    @ConfigurationProperties("spring.datasource.security.dev")
     public DataSourceProperties dataSourceProperties() {
         return new DataSourceProperties();
     }
 	
 	@Bean(name = "securityDataSource")
-    @ConfigurationProperties("spring.datasource.security")
+    @ConfigurationProperties("spring.datasource.security.dev")
     public HikariDataSource dataSource(@Qualifier("securityDataSourcePropertiesDev") DataSourceProperties properties) {
         return properties.initializeDataSourceBuilder().type(HikariDataSource.class)
         		.driverClassName("org.postgresql.Driver")

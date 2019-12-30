@@ -29,7 +29,7 @@ import com.zaxxer.hikari.HikariDataSource;
 public class DataSourceBeanSecurityProd {
 	
 	@Bean(name = "securityDataSourcePropertiesProd")
-    @ConfigurationProperties("spring.datasource.security")
+    @ConfigurationProperties("spring.datasource.security.prod")
     public DataSourceProperties dataSourceProperties() {
         return new DataSourceProperties();
     }
