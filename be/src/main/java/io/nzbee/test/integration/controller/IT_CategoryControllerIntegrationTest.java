@@ -1,6 +1,7 @@
 package io.nzbee.test.integration.controller;
 
 import static org.junit.Assert.assertNotNull;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -35,7 +36,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 							     io.nzbee.security.DataSourceBeanSecurityDev.class,
 							     io.nzbee.WebMvcConfigDev.class,
 							     io.nzbee.security.user.UserService.class,
-							     io.nzbee.security.user.IUserRepository.class
+							     io.nzbee.security.user.IUserRepository.class,
+							     io.nzbee.security.ResourceServerConfiguration.class
 							     })
 
 @WebMvcTest(CategoryController.class)
@@ -63,7 +65,7 @@ public class IT_CategoryControllerIntegrationTest {
     public void testFindAll() throws Exception {
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/Category/en-GB/HKD")
                 //.with(user(TEST_USER_ID))
-               //.with(csrf())
+                .with(csrf())
                 //.content(birthday)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.ALL))
