@@ -1,24 +1,17 @@
 package io.nzbee.entity.party.organization;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-
 import io.nzbee.entity.party.Party;
 
 @Entity
 @Table(name = "organisation", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "org_id")
-public class Organization extends Party implements Serializable  {
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
+@DiscriminatorValue("2")
+public class Organization extends Party  {
 	
 	@Column(name="org_nme")
 	private String OrganizationName;

@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -25,11 +25,13 @@ import io.nzbee.security.user.User;
 
 @Entity
 @Table(name = "party", schema = "mochi")
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance
+@DiscriminatorColumn(name="pty_typ_id")
 @JsonTypeInfo(
 	    use = JsonTypeInfo.Id.MINIMAL_CLASS,
 	    include = JsonTypeInfo.As.PROPERTY,
 	    property = "@class")
+
 public abstract class Party {
 	
 	@Id
@@ -38,13 +40,17 @@ public abstract class Party {
 	private Long partyId;
 	
 	@ManyToOne
-	@JoinColumn(name="pty_typ_id", nullable=false, updatable = false, insertable = true)
+	@JoinColumn(name="pty_typ_id", 
+				nullable=false, 
+				updatable = false, 
+				insertable = false)
 	private PartyType partyType;
 
-	@OneToMany(	mappedBy="roleParty",
+	@OneToMany(	
+				mappedBy="roleParty",
 				cascade = CascadeType.ALL,
 				orphanRemoval = true
-				)
+			  )
 	@JsonManagedReference
 	private List<Role> partyRoles = new ArrayList<Role>();
 	
@@ -97,26 +103,12 @@ public abstract class Party {
 	
 	public void addRole(Role role) {
 		this.partyRoles.add(role);
+		role.setRoleParty(this);
 	}
 	
-	public Role getPartyRole(Long roleId) {
-		Role retRole = null;
-		for(Role r : partyRoles) {
-			if (r.getRoleId().equals(roleId)) {
-				retRole = r;
-			}
-		}
-		return retRole;
-	}
-	
-	public Role getPartyRole(String roleTypeDesc) {
-		Role retRole = null;
-		for(Role r : partyRoles) {
-			if (r.getRoleType().getRoleTypeDesc().equals(roleTypeDesc)) {
-				retRole = r;
-			}
-		}
-		return retRole;
+	public void removeRole(Role role) {
+		this.partyRoles.remove(role);
+		role.setRoleParty(null);
 	}
 	
 	public void addUser(User user) {
