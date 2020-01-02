@@ -20,6 +20,8 @@ import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
 import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.brand.Brand_;
 import io.nzbee.entity.category.Category;
@@ -36,6 +38,7 @@ import io.nzbee.entity.tag.Tag;
 import io.nzbee.variables.ProductVars;
 
 @Component(value="categoryEntityPostgresDao")
+@Transactional
 public class CategoryDaoPostgresImpl implements ICategoryDao {
 
 	@Autowired
