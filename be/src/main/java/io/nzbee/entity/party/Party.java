@@ -113,5 +113,6 @@ public abstract class Party {
 	
 	public void addUser(User user) {
 		this.partyUser = user;
+		user.setUserParty(this);
 	}
 } 
