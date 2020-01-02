@@ -1,26 +1,20 @@
 package io.nzbee.entity.party.person;
 
 
-import java.io.Serializable;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
 import io.nzbee.entity.party.Party;
 import io.nzbee.entity.party.PartyType;
-
 
 @Entity
 @Table(name = "person", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "psn_id")
-public class Person extends Party implements Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -5851002761066421365L;
+@DiscriminatorValue("1")
+public class Person extends Party {
 
 	@Transient
 	private Long partyTypeId = (long) 1;
