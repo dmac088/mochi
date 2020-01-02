@@ -1,8 +1,11 @@
 package io.nzbee.test.integration.entity;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import javax.persistence.EntityManager;
 
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,7 +22,6 @@ import io.nzbee.entity.party.IPartyService;
 import io.nzbee.entity.party.Party;
 import io.nzbee.entity.party.PartyDaoImpl;
 import io.nzbee.entity.party.PartyServiceImpl;
-import io.nzbee.test.entity.beans.CategoryEntityBeanFactory;
 import io.nzbee.test.entity.beans.PartyEntityBeanFactory;
 
 
@@ -31,9 +33,9 @@ public class IT_PartyEntityRepositoryIntegrationTest {
 
 	
 	@TestConfiguration
-    static class BrandCategoryServiceImplIntegrationTestConfiguration {
+    static class PartyServiceImplIntegrationTestConfiguration {
 		//the beans that we need to run this integration test
-        @Bean(value = "partyyService")
+        @Bean(value = "partyService")
         public IPartyService partyService() {
             return new PartyServiceImpl();
         }
@@ -63,6 +65,8 @@ public class IT_PartyEntityRepositoryIntegrationTest {
 	@Autowired
 	private PartyEntityBeanFactory partyEntityBeanFactory;
 	
+	private io.nzbee.entity.party.Party customer = null;
+	
     @Before
     public void setUp() { 
     	this.persistNewCustomer();
@@ -71,7 +75,7 @@ public class IT_PartyEntityRepositoryIntegrationTest {
     
 	public Party persistNewCustomer() {
     	
-		Party customer = partyEntityBeanFactory.getCustomerEntityBean();
+		customer = partyEntityBeanFactory.getCustomerEntityBean();
 	    	
 	    //persist a new transient test category
 	    entityManager.persist(customer);
@@ -82,10 +86,31 @@ public class IT_PartyEntityRepositoryIntegrationTest {
 	}
 	
 	
-//	@Autowired
-//	private CategoryEntityBeanFactory categoryEntityBeanFactory;
-
+	@Test
+    public void whenFindById_thenReturnCustomer() {
+    	
+        // when
+    	Party found = partyService.findById(customer.getPartyId()).get();
+     
+        // then
+    	assertFound(found);
+    }
 	
+	
+    private void assertFound(final Party found) {
+    	System.out.println(found.getPartyType());
+    	
+//    	assertThat(found.getPartyType())
+//        .isEqualTo("TST02");
+//	    assertThat(found.getCategoryLevel())
+//	    .isEqualTo(new Long(1));
+//	    assertThat(found.getCategoryType().getCode())
+//	    .isEqualTo("PRD01");
+//	    assertThat(found.getHierarchy().getHierarchyCode())
+//	    .isEqualTo("TST01");
+//	    assertThat(found.getCategoryAttribute().getCategoryDesc())
+//	    .isEqualTo("test product category");
+    }
 	
 	
 }
