@@ -80,5 +80,25 @@ public class IT_CategoryControllerIntegrationTest {
        // assertEquals(dow, resultDOW);
     }
     
+    
+    @Test
+    public void testFindOne() throws Exception {
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/Category/en-GB/HKD/code/FRT01")
+                //.with(user(TEST_USER_ID))
+                .with(csrf())
+                //.content(birthday)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.ALL))
+                .andExpect(status().isOk())
+                .andReturn();
+        
+        
+        String response = result.getResponse().getContentAsString();
+        
+        
+        assertNotNull(response);
+       // assertEquals(dow, resultDOW);
+    }
+    
 
 }
