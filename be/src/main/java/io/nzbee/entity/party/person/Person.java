@@ -15,17 +15,21 @@ import io.nzbee.entity.party.Party;
 public class Person extends Party {
 	
 	@Column(name="psn_gvn_nm")
-	private String GivenName;
+	private String givenName;
 	
 	@Column(name="psn_fml_nm")
 	private String FamilyName;
 	
+	public Person() {
+		super();
+	}
+	
 	public String getGivenName() {
-		return GivenName; 
+		return givenName; 
 	}	
 	
 	public void setGivenName(String givenName) {
-		GivenName = givenName;
+		this.givenName = givenName;
 	}
 
 	public String getFamilyName() {

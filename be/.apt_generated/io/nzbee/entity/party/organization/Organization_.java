@@ -8,7 +8,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(Organization.class)
 public abstract class Organization_ extends io.nzbee.entity.party.Party_ {
 
-	public static volatile SingularAttribute<Organization, String> OrganizationName;
+	public static volatile SingularAttribute<Organization, String> organizationName;
 
 }
 
