@@ -1,5 +1,7 @@
 package io.nzbee.test.entity.beans;
 
+import java.util.Date;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ public class PartyEntityBeanFactory {
 		person.setGivenName("Test Given Name");
 
 		final Customer partyRole = new Customer();
+		partyRole.setRoleStart(new Date());
 		
 		person.addRole(partyRole);
 		partyRole.setRoleParty(person);

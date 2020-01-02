@@ -20,10 +20,6 @@ public class Person extends Party {
 	@Column(name="psn_fml_nm")
 	private String FamilyName;
 	
-	public Person() {
-		super();
-	}
-	
 	public String getGivenName() {
 		return givenName; 
 	}	

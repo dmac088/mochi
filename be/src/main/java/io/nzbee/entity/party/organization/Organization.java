@@ -15,10 +15,6 @@ public class Organization extends Party  {
 	
 	@Column(name="org_nme")
 	private String organizationName;
-
-	public Organization() {
-		super();
-	}
 	
 	public String getOrganizationName() {
 		return organizationName;
