@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import io.nzbee.dto.category.Category;
 import io.nzbee.dto.brand.Brand;
 import io.nzbee.dto.tag.Tag;
@@ -16,6 +18,7 @@ import io.nzbee.dto.category.product.ProductCategory;
 
 @Service(value = "categoryDtoService")
 @CacheConfig(cacheNames="categories")
+@Transactional
 public class CategoryServiceImpl implements ICategoryService {
     
     @Autowired
