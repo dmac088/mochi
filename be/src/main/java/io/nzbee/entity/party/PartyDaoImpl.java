@@ -27,7 +27,7 @@ public class PartyDaoImpl implements IPartyDao {
 	private EntityManager em;
 	
 	@Override
-	public List<Party> findAllByRoleName(Class<Role> roleClassType) {
+	public List<Party> findAllByRoleName(Class<?> roleClassType) {
 		// TODO Auto-generated method stub
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		

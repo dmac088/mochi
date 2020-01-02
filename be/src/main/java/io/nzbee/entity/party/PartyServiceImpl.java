@@ -18,6 +18,12 @@ public class PartyServiceImpl implements IPartyService {
 	@Qualifier(value = "partyDao")
 	private IPartyDao partyDAO;
 	
+	@Override
+	public List<Party> findByRoleTypeDesc(Class<?> roleType) {
+		// TODO Auto-generated method stub
+		return partyDAO.findAllByRoleName(roleType);
+	}
+	
 	@PreAuthorize("hasAuthority('PARTY_READER')")
 	@Transactional(readOnly = true)
 	public List<Party> findByRoleTypeDesc(String roleTypeDesc) {
@@ -71,6 +77,8 @@ public class PartyServiceImpl implements IPartyService {
 		// TODO Auto-generated method stub
 		partyRepository.delete(t);
 	}
+
+
 
 	
 

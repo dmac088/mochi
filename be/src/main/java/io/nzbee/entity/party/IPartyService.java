@@ -6,7 +6,8 @@ import io.nzbee.entity.IService;
 
 public interface IPartyService extends IService<Party> {
 	
-	List<Party> findByRoleTypeDesc(String roleTypeDesc);
-	
 	List<Party> findAll();
+
+	List<Party> findByRoleTypeDesc(Class<?> roleType);
+	
 }

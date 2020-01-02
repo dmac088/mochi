@@ -2,6 +2,8 @@ package io.nzbee.test.integration.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import org.junit.Before;
@@ -22,6 +24,7 @@ import io.nzbee.entity.party.IPartyService;
 import io.nzbee.entity.party.Party;
 import io.nzbee.entity.party.PartyDaoImpl;
 import io.nzbee.entity.party.PartyServiceImpl;
+import io.nzbee.entity.role.customer.Customer;
 import io.nzbee.test.entity.beans.PartyEntityBeanFactory;
 
 
@@ -86,18 +89,33 @@ public class IT_PartyEntityRepositoryIntegrationTest {
 	}
 	
 	
+//	@Test
+//    public void whenFindById_thenReturnParty() {
+//    	
+//        // when
+//    	Party found = partyService.findById(customer.getPartyId()).get();
+//     
+//        // then
+//    	assertFound(found);
+//    }
+
+	
 	@Test
-    public void whenFindById_thenReturnCustomer() {
+    public void whenFindByRoleName_thenReturnAllParties() {
     	
         // when
-    	Party found = partyService.findById(customer.getPartyId()).get();
+    	List<Party> found = partyService.findByRoleTypeDesc(Customer.class);
      
         // then
-    	assertFound(found);
+    	found.stream().forEach(c -> {
+    		System.out.println(c.getPartyType());
+    		assertFound(c);
+    	});
+    	
     }
 	
-	
     private void assertFound(final Party found) {
+    	System.out.println("test");
     	System.out.println(found.getPartyType());
     	
 //    	assertThat(found.getPartyType())
