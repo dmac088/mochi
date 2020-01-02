@@ -14,14 +14,18 @@ import io.nzbee.entity.party.Party;
 public class Organization extends Party  {
 	
 	@Column(name="org_nme")
-	private String OrganizationName;
+	private String organizationName;
 
+	public Organization() {
+		super();
+	}
+	
 	public String getOrganizationName() {
-		return OrganizationName;
+		return organizationName;
 	}
 
-	public void setOrganizationName(String OrganizationName) {
-		this.OrganizationName = OrganizationName;
+	public void setOrganizationName(String organizationName) {
+		this.organizationName = organizationName;
 	}
 	
 }
