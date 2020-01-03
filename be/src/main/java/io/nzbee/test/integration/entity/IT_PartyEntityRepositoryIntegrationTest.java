@@ -17,6 +17,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.party.IPartyDao;
@@ -43,11 +44,6 @@ public class IT_PartyEntityRepositoryIntegrationTest {
             return new PartyServiceImpl();
         }
         
-        @Bean(value = "partyDao")
-        public IPartyDao partyDao() {
-            return new PartyDaoImpl();
-        }
-        
         @Bean(value = "partyEntityBeanFactory")
         public PartyEntityBeanFactory partyFactoryBean() {
             return new PartyEntityBeanFactory();
@@ -61,9 +57,6 @@ public class IT_PartyEntityRepositoryIntegrationTest {
 	
 	@Autowired
     private IPartyService partyService;
- 
-	@MockBean
-    private IPartyDao partyDao;
 	
 	@Autowired
 	private PartyEntityBeanFactory partyEntityBeanFactory;
@@ -101,11 +94,14 @@ public class IT_PartyEntityRepositoryIntegrationTest {
 
 	
 	@Test
+	//@Rollback(false)
     public void whenFindByRoleName_thenReturnAllParties() {
     	
         // when
-    	List<Party> found = partyService.findByRoleTypeDesc(Customer.class);
+    	List<Party> found = partyService.findByRoleType(Customer.class);
      
+    	System.out.println(found.size());
+    	
         // then
     	found.stream().forEach(c -> {
     		System.out.println(c.getPartyType());

@@ -8,6 +8,6 @@ public interface IPartyService extends IService<Party> {
 	
 	List<Party> findAll();
 
-	List<Party> findByRoleTypeDesc(Class<?> roleType);
+	List<Party> findByRoleType(Class<?> roleType);
 	
 }
