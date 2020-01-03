@@ -38,7 +38,7 @@ public abstract class Party {
 	@Column(name="pty_id")
 	private Long partyId;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="pty_typ_id", 
 				nullable=false, 
 				updatable = false, 
@@ -46,6 +46,7 @@ public abstract class Party {
 	private PartyType partyType;
 
 	@OneToMany(	
+				fetch = FetchType.LAZY, 
 				mappedBy="roleParty",
 				cascade = CascadeType.ALL,
 				orphanRemoval = true
