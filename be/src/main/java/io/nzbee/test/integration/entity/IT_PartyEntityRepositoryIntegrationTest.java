@@ -94,26 +94,24 @@ public class IT_PartyEntityRepositoryIntegrationTest {
 	}
 	
 	
-//	@Test
-//    public void whenFindById_thenReturnParty() {
-//    	
-//        // when
-//    	Party found = partyService.findById(customer.getPartyId()).get();
-//     
-//        // then
-//    	assertFound(found);
-//    }
+	@Test
+    public void whenFindById_thenReturnParty() {
+		login("admin", "admin1234");
+		
+        // when
+    	Party found = partyService.findById(customer.getPartyId()).get();
+     
+        // then
+    	assertFound(found);
+    }
 
 	
 	@Test
-	//@Rollback(false)
     public void whenFindByRoleName_thenReturnAllParties() {
 		login("admin", "admin1234");
         // when
     	List<Party> found = partyService.findByRoleType(Customer.class);
      
-    	System.out.println(found.size());
-    	
         // then
     	found.stream().filter(f -> f.getPartyId().equals(customer.getPartyId())).forEach(p -> assertFound(p));
     	
@@ -121,8 +119,6 @@ public class IT_PartyEntityRepositoryIntegrationTest {
 	
     private void assertFound(final Party found) {
     	
-//    	assertThat(((Person) found).getPartyType().getPartyTypeId())
-//        .isEqualTo("Customer");
 	    assertThat(((Person) found).getGivenName())
 	    .isEqualTo("Test Given Name");
 	    assertThat(((Person) found).getFamilyName())
