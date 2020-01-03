@@ -13,6 +13,8 @@ import javax.persistence.criteria.Root;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
 import io.nzbee.entity.role.Role;
 import io.nzbee.entity.role.RoleType;
 import io.nzbee.entity.role.RoleType_;
@@ -20,6 +22,7 @@ import io.nzbee.entity.role.Role_;
 
 
 @Component(value="partyDao")
+@Transactional
 public class PartyDaoImpl implements IPartyDao {
 
 	@Autowired
@@ -27,7 +30,10 @@ public class PartyDaoImpl implements IPartyDao {
 	private EntityManager em;
 	
 	@Override
-	public List<Party> findAllByRoleName(Class<?> roleClassType) {
+	public List<Party> findAllByRoleName(String roleClassType) {
+		
+		System.out.println("the class type is = " + roleClassType);
+		
 		// TODO Auto-generated method stub
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
@@ -40,12 +46,12 @@ public class PartyDaoImpl implements IPartyDao {
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		
-		conditions.add(cb.equal(roleType.get(RoleType_.roleTypeDesc), roleClassType.getSimpleName()));
+		conditions.add(cb.equal(roleType.get(RoleType_.roleTypeDesc), roleClassType));
 		
 		TypedQuery<Party> query = em.createQuery(cq
 				.select(root)
 				.where(conditions.toArray(new Predicate[] {}))
-				.distinct(true)
+				.distinct(false)
 		);
 		
 		return query.getResultList();

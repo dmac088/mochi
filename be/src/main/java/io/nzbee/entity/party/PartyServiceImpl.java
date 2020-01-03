@@ -19,27 +19,23 @@ public class PartyServiceImpl implements IPartyService {
 	private IPartyDao partyDAO;
 	
 	@Override
-	public List<Party> findByRoleTypeDesc(Class<?> roleType) {
-		// TODO Auto-generated method stub
-		return partyDAO.findAllByRoleName(roleType);
+	public List<Party> findByRoleType(Class<?> roleType) {
+		return partyDAO.findAllByRoleName(roleType.getSimpleName());
 	}
 	
 	@PreAuthorize("hasAuthority('PARTY_READER')")
-	@Transactional(readOnly = true)
 	public List<Party> findByRoleTypeDesc(String roleTypeDesc) {
 		return partyRepository.findByPartyRolesRoleTypeRoleTypeDesc(roleTypeDesc);
 	}
 	
 	@Override
 	@PreAuthorize("hasAuthority('PARTY_READER')")
-	@Transactional(readOnly = true)
 	public List<Party> findAll() {
 		return partyRepository.findAll();
 	}
 
 	@Override
 	@PreAuthorize("hasAuthority('PARTY_READ')")
-	@Transactional(readOnly = true)
 	public Optional<Party> findById(long id) {
 		// TODO Auto-generated method stub
 		return partyRepository.findById(id);
@@ -48,7 +44,6 @@ public class PartyServiceImpl implements IPartyService {
 	@Override
 	//We need to ensure the user is logged in before invoking this method
 	//@PreAuthorize("hasAuthority('PARTY_READ')")
-	@Transactional(readOnly = true)
 	public Optional<Party> findByCode(String code) {
 		// TODO Auto-generated method stub
 		return partyRepository.findByPartyUserUsername(code);
@@ -56,7 +51,6 @@ public class PartyServiceImpl implements IPartyService {
 
 	@Override
 	@PreAuthorize("hasAuthority('PARTY_CREATE')")
-	@Transactional
 	public void save(Party Party) {
 		// TODO Auto-generated method stub
 		partyRepository.save(Party);
@@ -64,7 +58,6 @@ public class PartyServiceImpl implements IPartyService {
 	
 	@Override
 	@PreAuthorize("hasAuthority('PARTY_UPDATE')")
-	@Transactional
 	public void update(Party t) {
 		// TODO Auto-generated method stub
 		partyRepository.save(t);
@@ -72,7 +65,6 @@ public class PartyServiceImpl implements IPartyService {
 
 	@Override
 	@PreAuthorize("hasAuthority('PARTY_DELETE')")
-	@Transactional
 	public void delete(Party t) {
 		// TODO Auto-generated method stub
 		partyRepository.delete(t);

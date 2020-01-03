@@ -6,6 +6,6 @@ import io.nzbee.entity.IDao;
 
 public interface IPartyDao extends IDao<Party> {
 	
-	List<Party> findAllByRoleName(Class<?> roleClassType);
+	List<Party> findAllByRoleName(String roleClassType);
 
 }
