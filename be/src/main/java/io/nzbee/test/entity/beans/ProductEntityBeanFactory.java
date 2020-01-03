@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
+import io.nzbee.entity.category.attribute.CategoryAttribute;
+import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.currency.Currency;
@@ -37,19 +39,29 @@ public class ProductEntityBeanFactory {
 		BrandAttribute brandAttribute = new BrandAttribute();
 		brandAttribute.setBrandDesc("test brand description");
 		brandAttribute.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
-		brand.setBrandAttribute(brandAttribute);
+		brand.getAttributes().add(brandAttribute);
+		
+		CategoryAttribute categoryAttribute = new CategoryAttribute();
+		categoryAttribute.setCategoryDesc("test category attribute");
+		categoryAttribute.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
+		
+		CategoryProduct categoryProduct = new CategoryProduct();
+		categoryProduct.setCategoryCode("TST01");
+		categoryProduct.setCategoryLevel(new Long(1));
+		categoryProduct.getAttributes().add(categoryAttribute);
 		
 		ProductAttribute productAttribute = new ProductAttribute();
 		productAttribute.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
 		productAttribute.setProductDesc("test product description");
+		product.getAttributes().add(productAttribute);
+		product.addProductCategory(categoryProduct);
 		
 		retailPrice.setPriceValue(new Double(10));
 		retailPrice.setCurrency(currency);
 		
 		markdownPrice.setPriceValue(new Double(7));
 		
-		
-		return null;
+		return product;
 	}
 	
 }
