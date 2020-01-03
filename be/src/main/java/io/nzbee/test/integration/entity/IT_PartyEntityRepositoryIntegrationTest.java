@@ -23,6 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.party.IPartyService;
 import io.nzbee.entity.party.Party;
 import io.nzbee.entity.party.PartyServiceImpl;
+import io.nzbee.entity.party.person.Person;
 import io.nzbee.entity.role.customer.Customer;
 import io.nzbee.test.entity.beans.PartyEntityBeanFactory;
 
@@ -114,27 +115,18 @@ public class IT_PartyEntityRepositoryIntegrationTest {
     	System.out.println(found.size());
     	
         // then
-    	found.stream().forEach(c -> {
-    		System.out.println(c.getPartyType());
-    		assertFound(c);
-    	});
+    	found.stream().filter(f -> f.getPartyId().equals(customer.getPartyId())).forEach(p -> assertFound(p));
     	
     }
 	
     private void assertFound(final Party found) {
-    	System.out.println("test");
-    	System.out.println(found.getPartyType());
     	
-//    	assertThat(found.getPartyType())
-//        .isEqualTo("TST02");
-//	    assertThat(found.getCategoryLevel())
-//	    .isEqualTo(new Long(1));
-//	    assertThat(found.getCategoryType().getCode())
-//	    .isEqualTo("PRD01");
-//	    assertThat(found.getHierarchy().getHierarchyCode())
-//	    .isEqualTo("TST01");
-//	    assertThat(found.getCategoryAttribute().getCategoryDesc())
-//	    .isEqualTo("test product category");
+//    	assertThat(((Person) found).getPartyType().getPartyTypeId())
+//        .isEqualTo("Customer");
+	    assertThat(((Person) found).getGivenName())
+	    .isEqualTo("Test Given Name");
+	    assertThat(((Person) found).getFamilyName())
+	    .isEqualTo("Test Family Name");
     }
 	
 	
