@@ -1,11 +1,9 @@
 package io.nzbee.test.integration.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.List;
-
 import javax.persistence.EntityManager;
-
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,15 +13,15 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.test.annotation.Rollback;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-import io.nzbee.entity.party.IPartyDao;
 import io.nzbee.entity.party.IPartyService;
 import io.nzbee.entity.party.Party;
-import io.nzbee.entity.party.PartyDaoImpl;
 import io.nzbee.entity.party.PartyServiceImpl;
 import io.nzbee.entity.role.customer.Customer;
 import io.nzbee.test.entity.beans.PartyEntityBeanFactory;
@@ -52,6 +50,9 @@ public class IT_PartyEntityRepositoryIntegrationTest {
     }
     
 	@Autowired
+    private AuthenticationManager am;
+	
+	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
 	private EntityManager entityManager;
 	
@@ -68,6 +69,16 @@ public class IT_PartyEntityRepositoryIntegrationTest {
     	this.persistNewCustomer();
     }
     
+    
+    @After
+    public void clear() {
+        SecurityContextHolder.clearContext();
+    }
+    
+    protected void login(String name, String password) {
+        Authentication auth = new UsernamePasswordAuthenticationToken(name, password);
+        SecurityContextHolder.getContext().setAuthentication(am.authenticate(auth));
+    }
     
 	public Party persistNewCustomer() {
     	
@@ -96,7 +107,7 @@ public class IT_PartyEntityRepositoryIntegrationTest {
 	@Test
 	//@Rollback(false)
     public void whenFindByRoleName_thenReturnAllParties() {
-    	
+		login("admin", "admin1234");
         // when
     	List<Party> found = partyService.findByRoleType(Customer.class);
      

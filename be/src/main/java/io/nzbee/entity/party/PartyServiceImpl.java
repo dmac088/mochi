@@ -19,13 +19,9 @@ public class PartyServiceImpl implements IPartyService {
 	private IPartyDao partyDAO;
 	
 	@Override
+	@PreAuthorize("hasAuthority('PARTY_READER')")
 	public List<Party> findByRoleType(Class<?> roleType) {
 		return partyDAO.findAllByRoleName(roleType.getSimpleName());
-	}
-	
-	@PreAuthorize("hasAuthority('PARTY_READER')")
-	public List<Party> findByRoleTypeDesc(String roleTypeDesc) {
-		return partyRepository.findByPartyRolesRoleTypeRoleTypeDesc(roleTypeDesc);
 	}
 	
 	@Override
