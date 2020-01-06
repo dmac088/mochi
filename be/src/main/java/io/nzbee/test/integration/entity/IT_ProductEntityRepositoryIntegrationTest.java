@@ -57,14 +57,16 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     
 	public io.nzbee.entity.product.Product persistNewProduct() {
     	
-		product = productEntityBeanFactory.getProductEntityBean();
-	    	
-	    //persist a new transient test category
-	    entityManager.persist(product);
-	    entityManager.flush();
-	    entityManager.close();
-	    	
-	    return product;
+//		product = productEntityBeanFactory.getProductEntityBean();
+//	    	
+//	    //persist a new transient test category
+//	    entityManager.persist(product);
+//	    entityManager.flush();
+//	    entityManager.close();
+//	    	
+//	    return product;
+		
+		return null;
 	}
 	
 }
