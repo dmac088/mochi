@@ -27,6 +27,10 @@ public class ProductEntityBeanFactory {
 		product.setProductCreateDt(new Date());
 		product.setUPC("123456789");
 		
+		ProductType productType = new ProductType();
+		
+		
+		
 //		ProductPrice retailPrice = new ProductPrice();
 //		ProductPrice markdownPrice = new ProductPrice();
 		
@@ -35,13 +39,14 @@ public class ProductEntityBeanFactory {
 //		
 		Brand brand = new Brand();
 		brand.setCode("TST01");
+		product.setBrand(brand);
 		
 //		BrandAttribute brandAttribute = new BrandAttribute();
 //		brandAttribute.setBrandDesc("test brand description");
 //		brandAttribute.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
 //		brand.getAttributes().add(brandAttribute);
-		product.setBrand(brand);
-		brand.getProducts().add(product);
+		
+//		brand.getProducts().add(product);
 //		
 //		CategoryAttribute categoryAttribute = new CategoryAttribute();
 //		categoryAttribute.setCategoryDesc("test category attribute");
