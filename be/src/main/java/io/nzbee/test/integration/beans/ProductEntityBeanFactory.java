@@ -14,6 +14,7 @@ import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.currency.Currency;
 import io.nzbee.entity.product.price.ProductPrice;
+import io.nzbee.entity.product.type.ProductType;
 import io.nzbee.variables.GeneralVars;
 
 @Service(value = "productEntityBeanFactory")
@@ -28,7 +29,9 @@ public class ProductEntityBeanFactory {
 		product.setUPC("123456789");
 		
 		ProductType productType = new ProductType();
-		
+		productType.setCode("TST01");
+		productType.setDesc("test product type");
+		product.setProductType(productType);
 		
 		
 //		ProductPrice retailPrice = new ProductPrice();
