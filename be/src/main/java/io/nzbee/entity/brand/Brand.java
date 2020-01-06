@@ -1,5 +1,6 @@
 package io.nzbee.entity.brand;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -41,7 +42,7 @@ public class Brand {
 				orphanRemoval = true
 				)
 	@JsonManagedReference
-	private List<Product> products;
+	private List<Product> products = new ArrayList<Product>();
 	
 	@ManyToMany(mappedBy = "brands")
 	@JsonIgnore
