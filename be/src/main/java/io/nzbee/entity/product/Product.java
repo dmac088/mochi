@@ -158,7 +158,7 @@ public class Product {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@IndexedEmbedded
-	@JoinColumn(name="prd_sts_id", insertable=false, updatable=false)
+	@JoinColumn(name="prd_sts_id")
 	private ProductStatus productStatus;
 
 	@OneToMany(	mappedBy="product",

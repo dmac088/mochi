@@ -14,6 +14,7 @@ import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.currency.Currency;
 import io.nzbee.entity.product.price.ProductPrice;
+import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.entity.product.type.ProductType;
 import io.nzbee.variables.GeneralVars;
 
@@ -33,7 +34,10 @@ public class ProductEntityBeanFactory {
 		productType.setDesc("test product type");
 		product.setProductType(productType);
 		
-		
+		ProductStatus productStatus = new ProductStatus();
+		productStatus.setProductStatusCode("TST01");
+		productStatus.setProductStatusDesc("test product status");
+		product.setProductStatus(productStatus);
 //		ProductPrice retailPrice = new ProductPrice();
 //		ProductPrice markdownPrice = new ProductPrice();
 		

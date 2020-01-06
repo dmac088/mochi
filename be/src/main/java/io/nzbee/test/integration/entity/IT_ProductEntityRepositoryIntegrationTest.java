@@ -62,6 +62,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	    
 		entityManager.persist(product.getProductType());
 		entityManager.persist(product.getBrand());
+		entityManager.persist(product.getProductStatus());
 		
 	    entityManager.persist(product);
 	    entityManager.flush();
