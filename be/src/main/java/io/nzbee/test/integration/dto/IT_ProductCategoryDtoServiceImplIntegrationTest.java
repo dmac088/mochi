@@ -18,9 +18,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.dto.category.ICategoryService;
 import io.nzbee.dto.category.Category;
 import io.nzbee.dto.category.CategoryServiceImpl;
-import io.nzbee.test.entity.beans.CategoryEntityBeanFactory;
 import io.nzbee.entity.category.CategoryDaoPostgresImpl;
 import io.nzbee.entity.category.ICategoryDao;
+import io.nzbee.test.integration.beans.CategoryEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest

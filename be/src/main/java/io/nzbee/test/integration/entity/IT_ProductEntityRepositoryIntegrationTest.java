@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.product.IProductService;
-import io.nzbee.test.entity.beans.ProductEntityBeanFactory;
+import io.nzbee.test.integration.beans.ProductEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
