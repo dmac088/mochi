@@ -59,10 +59,9 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	public io.nzbee.entity.product.Product persistNewProduct() {
     	
 		product = productEntityBeanFactory.getProductEntityBean();
-	    	
+	    
+		entityManager.persist(product.getProductType());
 		entityManager.persist(product.getBrand());
-		System.out.println("brandId = " + product.getBrand().getId());
-		entityManager.flush();
 		
 	    entityManager.persist(product);
 	    entityManager.flush();

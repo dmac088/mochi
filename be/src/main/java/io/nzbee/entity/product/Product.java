@@ -38,6 +38,7 @@ import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.price.ProductPrice;
 import io.nzbee.entity.product.status.ProductStatus;
+import io.nzbee.entity.product.type.ProductType;
 import io.nzbee.entity.tag.Tag;
 import io.nzbee.variables.ProductVars;
 
@@ -152,6 +153,10 @@ public class Product {
 	private Brand brand;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="prd_typ_id")
+	private ProductType productType;
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	@IndexedEmbedded
 	@JoinColumn(name="prd_sts_id", insertable=false, updatable=false)
 	private ProductStatus productStatus;
@@ -257,6 +262,14 @@ public class Product {
 
 	public void setUPC(String productUPC) {
 		this.productUPC = productUPC;
+	}
+	
+	public ProductType getProductType() {
+		return productType;
+	}
+
+	public void setProductType(ProductType productType) {
+		this.productType = productType;
 	}
 
 	public Date getProductCreateDt() {
