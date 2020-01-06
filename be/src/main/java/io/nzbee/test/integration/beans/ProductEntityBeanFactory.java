@@ -20,26 +20,28 @@ import io.nzbee.variables.GeneralVars;
 @Profile(value = "dev")
 public class ProductEntityBeanFactory {
 
-//	@Bean
-//	public final Product getProductEntityBean() {
-//		
-//		Product product = new Product();
-//		product.setProductCreateDt(new Date());
-//		product.setUPC("123456789");
-//		
+	@Bean
+	public final Product getProductEntityBean() {
+		
+		Product product = new Product();
+		product.setProductCreateDt(new Date());
+		product.setUPC("123456789");
+		
 //		ProductPrice retailPrice = new ProductPrice();
 //		ProductPrice markdownPrice = new ProductPrice();
-//		
+		
 //		Currency currency = new Currency();
 //		currency.setCode("HKD");
 //		
-//		Brand brand = new Brand();
-//		brand.setCode("TST01");
-//		
+		Brand brand = new Brand();
+		brand.setCode("TST01");
+		
 //		BrandAttribute brandAttribute = new BrandAttribute();
 //		brandAttribute.setBrandDesc("test brand description");
 //		brandAttribute.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
 //		brand.getAttributes().add(brandAttribute);
+		product.setBrand(brand);
+		brand.getProducts().add(product);
 //		
 //		CategoryAttribute categoryAttribute = new CategoryAttribute();
 //		categoryAttribute.setCategoryDesc("test category attribute");
@@ -49,6 +51,7 @@ public class ProductEntityBeanFactory {
 //		categoryProduct.setCategoryCode("TST01");
 //		categoryProduct.setCategoryLevel(new Long(1));
 //		categoryProduct.getAttributes().add(categoryAttribute);
+//		product.addProductCategory(categoryProduct);
 //		
 //		ProductAttribute productAttribute = new ProductAttribute();
 //		productAttribute.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
@@ -60,8 +63,8 @@ public class ProductEntityBeanFactory {
 //		retailPrice.setCurrency(currency);
 //		
 //		markdownPrice.setPriceValue(new Double(7));
-//		
-//		return product;
-//	}
+		
+		return product;
+	}
 	
 }

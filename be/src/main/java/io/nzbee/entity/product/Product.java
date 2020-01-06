@@ -1,5 +1,6 @@
 package io.nzbee.entity.product;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -134,7 +135,7 @@ public class Product {
 				cascade = CascadeType.ALL,
 				orphanRemoval = true)
 	@JsonManagedReference
-	private List<ProductAttribute> attributes;
+	private List<ProductAttribute> attributes = new ArrayList<ProductAttribute>();
 	
 	@Transient
 	private ProductAttribute productAttribute;
@@ -147,7 +148,10 @@ public class Product {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@IndexedEmbedded
-	@JoinColumn(name="bnd_id", insertable=false, updatable=false)
+	@JoinColumn(name="bnd_id",
+				nullable=false,
+				insertable=false, 
+				updatable=false)
 	private Brand brand;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
