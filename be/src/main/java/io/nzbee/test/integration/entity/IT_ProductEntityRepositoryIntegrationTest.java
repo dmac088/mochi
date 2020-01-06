@@ -62,8 +62,8 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	    	
 		entityManager.persist(product.getBrand());
 		System.out.println("brandId = " + product.getBrand().getId());
+		entityManager.flush();
 		
-	    //persist a new transient test category
 	    entityManager.persist(product);
 	    entityManager.flush();
 	    entityManager.close();

@@ -148,10 +148,7 @@ public class Product {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@IndexedEmbedded
-	@JoinColumn(name="bnd_id",
-				nullable=false,
-				insertable=false, 
-				updatable=false)
+	@JoinColumn(name="bnd_id")
 	private Brand brand;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
