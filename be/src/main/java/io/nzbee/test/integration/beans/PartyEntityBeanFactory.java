@@ -1,4 +1,4 @@
-package io.nzbee.test.entity.beans;
+package io.nzbee.test.integration.beans;
 
 import java.util.Date;
 

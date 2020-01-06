@@ -16,7 +16,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.domain.category.CategoryServiceImpl;
 import io.nzbee.domain.category.ICategoryService;
-import io.nzbee.test.entity.beans.CategoryDtoBeanFactory;
+import io.nzbee.test.integration.beans.CategoryDtoBeanFactory;
 import io.nzbee.variables.GeneralVars;
 
 @RunWith(SpringRunner.class)
