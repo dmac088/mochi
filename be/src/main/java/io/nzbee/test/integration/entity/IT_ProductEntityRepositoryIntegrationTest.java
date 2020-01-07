@@ -3,6 +3,7 @@ package io.nzbee.test.integration.entity;
 import javax.persistence.EntityManager;
 
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -51,22 +52,29 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     
     @Before
     public void setUp() { 
-    	this.persistNewProduct();
+    	//this.persistNewProduct();
     }
     
     
 	public io.nzbee.entity.product.Product persistNewProduct() {
     	
-//		product = productEntityBeanFactory.getProductEntityBean();
-//	    	
-//	    //persist a new transient test category
-//	    entityManager.persist(product);
-//	    entityManager.flush();
-//	    entityManager.close();
-//	    	
-//	    return product;
+		product = productEntityBeanFactory.getProductEntityBean();
+	    
+		entityManager.persist(product.getProductType());
+		entityManager.persist(product.getBrand());
+		entityManager.persist(product.getProductStatus());
 		
-		return null;
+	    entityManager.persist(product);
+	    entityManager.flush();
+	    entityManager.close();
+	    	
+	    return product;
+	}
+	
+	@Test
+	public void persistANewProduct() {
+		
+		this.persistNewProduct();
 	}
 	
 }

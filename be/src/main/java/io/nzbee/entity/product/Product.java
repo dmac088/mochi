@@ -1,5 +1,6 @@
 package io.nzbee.entity.product;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -37,6 +38,7 @@ import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.price.ProductPrice;
 import io.nzbee.entity.product.status.ProductStatus;
+import io.nzbee.entity.product.type.ProductType;
 import io.nzbee.entity.tag.Tag;
 import io.nzbee.variables.ProductVars;
 
@@ -134,7 +136,7 @@ public class Product {
 				cascade = CascadeType.ALL,
 				orphanRemoval = true)
 	@JsonManagedReference
-	private List<ProductAttribute> attributes;
+	private List<ProductAttribute> attributes = new ArrayList<ProductAttribute>();
 	
 	@Transient
 	private ProductAttribute productAttribute;
@@ -147,12 +149,16 @@ public class Product {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@IndexedEmbedded
-	@JoinColumn(name="bnd_id", insertable=false, updatable=false)
+	@JoinColumn(name="bnd_id")
 	private Brand brand;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="prd_typ_id")
+	private ProductType productType;
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	@IndexedEmbedded
-	@JoinColumn(name="prd_sts_id", insertable=false, updatable=false)
+	@JoinColumn(name="prd_sts_id")
 	private ProductStatus productStatus;
 
 	@OneToMany(	mappedBy="product",
@@ -256,6 +262,14 @@ public class Product {
 
 	public void setUPC(String productUPC) {
 		this.productUPC = productUPC;
+	}
+	
+	public ProductType getProductType() {
+		return productType;
+	}
+
+	public void setProductType(ProductType productType) {
+		this.productType = productType;
 	}
 
 	public Date getProductCreateDt() {

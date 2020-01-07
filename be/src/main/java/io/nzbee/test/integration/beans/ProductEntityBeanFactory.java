@@ -14,32 +14,46 @@ import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.currency.Currency;
 import io.nzbee.entity.product.price.ProductPrice;
+import io.nzbee.entity.product.status.ProductStatus;
+import io.nzbee.entity.product.type.ProductType;
 import io.nzbee.variables.GeneralVars;
 
 @Service(value = "productEntityBeanFactory")
 @Profile(value = "dev")
 public class ProductEntityBeanFactory {
 
-//	@Bean
-//	public final Product getProductEntityBean() {
-//		
-//		Product product = new Product();
-//		product.setProductCreateDt(new Date());
-//		product.setUPC("123456789");
-//		
+	@Bean
+	public final Product getProductEntityBean() {
+		
+		Product product = new Product();
+		product.setProductCreateDt(new Date());
+		product.setUPC("123456789");
+		
+		ProductType productType = new ProductType();
+		productType.setCode("TST01");
+		productType.setDesc("test product type");
+		product.setProductType(productType);
+		
+		ProductStatus productStatus = new ProductStatus();
+		productStatus.setProductStatusCode("TST01");
+		productStatus.setProductStatusDesc("test product status");
+		product.setProductStatus(productStatus);
 //		ProductPrice retailPrice = new ProductPrice();
 //		ProductPrice markdownPrice = new ProductPrice();
-//		
+		
 //		Currency currency = new Currency();
 //		currency.setCode("HKD");
 //		
-//		Brand brand = new Brand();
-//		brand.setCode("TST01");
-//		
+		Brand brand = new Brand();
+		brand.setCode("TST01");
+		product.setBrand(brand);
+		
 //		BrandAttribute brandAttribute = new BrandAttribute();
 //		brandAttribute.setBrandDesc("test brand description");
 //		brandAttribute.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
 //		brand.getAttributes().add(brandAttribute);
+		
+//		brand.getProducts().add(product);
 //		
 //		CategoryAttribute categoryAttribute = new CategoryAttribute();
 //		categoryAttribute.setCategoryDesc("test category attribute");
@@ -49,6 +63,7 @@ public class ProductEntityBeanFactory {
 //		categoryProduct.setCategoryCode("TST01");
 //		categoryProduct.setCategoryLevel(new Long(1));
 //		categoryProduct.getAttributes().add(categoryAttribute);
+//		product.addProductCategory(categoryProduct);
 //		
 //		ProductAttribute productAttribute = new ProductAttribute();
 //		productAttribute.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
@@ -60,8 +75,8 @@ public class ProductEntityBeanFactory {
 //		retailPrice.setCurrency(currency);
 //		
 //		markdownPrice.setPriceValue(new Double(7));
-//		
-//		return product;
-//	}
+		
+		return product;
+	}
 	
 }
