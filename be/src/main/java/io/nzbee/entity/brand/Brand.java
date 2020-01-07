@@ -17,6 +17,7 @@ import org.hibernate.search.annotations.Store;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.category.brand.CategoryBrand;
+import io.nzbee.entity.product.Product;
 
 
 @Entity
@@ -36,7 +37,12 @@ public class Brand {
 	@ManyToMany(mappedBy = "brands")
 	@JsonIgnore
 	private List<CategoryBrand> categories;
-	
+
+	@OneToMany(	mappedBy="brand",
+				cascade = CascadeType.ALL,
+				orphanRemoval = true)
+	private List<Product> products;
+
 	@OneToMany(	mappedBy="brand",
 				cascade = CascadeType.ALL,
 				orphanRemoval = true)
@@ -67,6 +73,14 @@ public class Brand {
 	
 	public void setAttributes(List<BrandAttribute> brandAttributes) {
 		this.brandAttributes = brandAttributes;
+	}
+	
+	public List<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(List<Product> products) {
+		this.products = products;
 	}
 	
 	public BrandAttribute getBrandAttribute() {
