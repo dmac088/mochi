@@ -2,6 +2,8 @@ package io.nzbee.entity.product.status;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import org.hibernate.search.annotations.Field;
@@ -12,6 +14,7 @@ import org.hibernate.search.annotations.Store;
 public class ProductStatus {
 	
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="prd_sts_id")
 	private Long productStatusId;
 
