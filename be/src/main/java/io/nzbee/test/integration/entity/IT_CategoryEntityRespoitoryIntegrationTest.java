@@ -13,6 +13,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlConfig;
+import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
+import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.ICategoryService;
@@ -22,6 +26,11 @@ import io.nzbee.variables.GeneralVars;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles(profiles = "dev")
+@SqlGroup({
+	@Sql(scripts = "/database/mochidb_schema.sql",
+			config = @SqlConfig(transactionMode = TransactionMode.ISOLATED)), 
+	@Sql(scripts = "/database/mochidb_data.sql")
+})
 public class IT_CategoryEntityRespoitoryIntegrationTest {
 
 	@TestConfiguration
