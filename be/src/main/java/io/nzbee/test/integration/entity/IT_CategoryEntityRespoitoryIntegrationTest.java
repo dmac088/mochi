@@ -25,11 +25,11 @@ import io.nzbee.variables.GeneralVars;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-@ActiveProfiles(profiles = "dev")
+@ActiveProfiles(profiles = "test")
 @SqlGroup({
-	@Sql(scripts = "/database/mochidb_schema.sql",
+	@Sql(scripts = "/database/mochi_schema.sql",
 			config = @SqlConfig(transactionMode = TransactionMode.ISOLATED)), 
-	@Sql(scripts = "/database/mochidb_data.sql")
+	@Sql(scripts = "/database/mochi_data.sql")
 })
 public class IT_CategoryEntityRespoitoryIntegrationTest {
 
