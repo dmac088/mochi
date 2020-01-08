@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-pg_dump -U mochidb_owner -E UTF8 mochidb > mochidb.backup
+pg_dumpall -U mochidb_owner --clean --database=mochidb > mochidb.backup
