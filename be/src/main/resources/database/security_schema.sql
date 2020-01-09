@@ -324,24 +324,24 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: address; Type: TABLE; Schema: mochi; Owner: postgres
+-- Name: address; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
 CREATE TABLE mochi.address (
 );
 
 
-ALTER TABLE mochi.address OWNER TO postgres;
+ALTER TABLE mochi.address OWNER TO mochidb_owner;
 
 --
--- Name: address_type; Type: TABLE; Schema: mochi; Owner: postgres
+-- Name: address_type; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
 CREATE TABLE mochi.address_type (
 );
 
 
-ALTER TABLE mochi.address_type OWNER TO postgres;
+ALTER TABLE mochi.address_type OWNER TO mochidb_owner;
 
 --
 -- Name: brand_bnd_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
@@ -587,7 +587,7 @@ CREATE TABLE mochi.discount (
 ALTER TABLE mochi.discount OWNER TO mochidb_owner;
 
 --
--- Name: discount_type; Type: TABLE; Schema: mochi; Owner: postgres
+-- Name: discount_type; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
 CREATE TABLE mochi.discount_type (
@@ -596,7 +596,7 @@ CREATE TABLE mochi.discount_type (
 );
 
 
-ALTER TABLE mochi.discount_type OWNER TO postgres;
+ALTER TABLE mochi.discount_type OWNER TO mochidb_owner;
 
 --
 -- Name: hibernate_sequence; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
@@ -640,24 +640,24 @@ CREATE TABLE mochi.hierarchy (
 ALTER TABLE mochi.hierarchy OWNER TO mochidb_owner;
 
 --
--- Name: inventory_on_hand; Type: TABLE; Schema: mochi; Owner: postgres
+-- Name: inventory_on_hand; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
 CREATE TABLE mochi.inventory_on_hand (
 );
 
 
-ALTER TABLE mochi.inventory_on_hand OWNER TO postgres;
+ALTER TABLE mochi.inventory_on_hand OWNER TO mochidb_owner;
 
 --
--- Name: inventory_transaction; Type: TABLE; Schema: mochi; Owner: postgres
+-- Name: inventory_transaction; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
 CREATE TABLE mochi.inventory_transaction (
 );
 
 
-ALTER TABLE mochi.inventory_transaction OWNER TO postgres;
+ALTER TABLE mochi.inventory_transaction OWNER TO mochidb_owner;
 
 --
 -- Name: layout_lay_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
@@ -725,14 +725,14 @@ CREATE TABLE mochi.locale (
 ALTER TABLE mochi.locale OWNER TO mochidb_owner;
 
 --
--- Name: location; Type: TABLE; Schema: mochi; Owner: postgres
+-- Name: location; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
 CREATE TABLE mochi.location (
 );
 
 
-ALTER TABLE mochi.location OWNER TO postgres;
+ALTER TABLE mochi.location OWNER TO mochidb_owner;
 
 --
 -- Name: order; Type: TABLE; Schema: mochi; Owner: mochidb_owner
@@ -1008,14 +1008,14 @@ CREATE TABLE mochi.product_status (
 ALTER TABLE mochi.product_status OWNER TO mochidb_owner;
 
 --
--- Name: product_supplier; Type: TABLE; Schema: mochi; Owner: postgres
+-- Name: product_supplier; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
 CREATE TABLE mochi.product_supplier (
 );
 
 
-ALTER TABLE mochi.product_supplier OWNER TO postgres;
+ALTER TABLE mochi.product_supplier OWNER TO mochidb_owner;
 
 --
 -- Name: product_tag_prd_tag_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
@@ -1045,7 +1045,7 @@ CREATE TABLE mochi.product_tag (
 ALTER TABLE mochi.product_tag OWNER TO mochidb_owner;
 
 --
--- Name: product_tag_attr_lcl_tag_id_seq; Type: SEQUENCE; Schema: mochi; Owner: postgres
+-- Name: product_tag_attr_lcl_tag_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
 CREATE SEQUENCE mochi.product_tag_attr_lcl_tag_id_seq
@@ -1056,7 +1056,7 @@ CREATE SEQUENCE mochi.product_tag_attr_lcl_tag_id_seq
     CACHE 1;
 
 
-ALTER TABLE mochi.product_tag_attr_lcl_tag_id_seq OWNER TO postgres;
+ALTER TABLE mochi.product_tag_attr_lcl_tag_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: product_type_prd_typ_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
@@ -1103,14 +1103,14 @@ CREATE TABLE mochi.promotion (
 ALTER TABLE mochi.promotion OWNER TO mochidb_owner;
 
 --
--- Name: promotion_brand; Type: TABLE; Schema: mochi; Owner: postgres
+-- Name: promotion_brand; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
 CREATE TABLE mochi.promotion_brand (
 );
 
 
-ALTER TABLE mochi.promotion_brand OWNER TO postgres;
+ALTER TABLE mochi.promotion_brand OWNER TO mochidb_owner;
 
 --
 -- Name: promotion_category_prm_cat_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
@@ -1140,27 +1140,27 @@ CREATE TABLE mochi.promotion_category (
 ALTER TABLE mochi.promotion_category OWNER TO mochidb_owner;
 
 --
--- Name: promotion_order; Type: TABLE; Schema: mochi; Owner: postgres
+-- Name: promotion_order; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
 CREATE TABLE mochi.promotion_order (
 );
 
 
-ALTER TABLE mochi.promotion_order OWNER TO postgres;
+ALTER TABLE mochi.promotion_order OWNER TO mochidb_owner;
 
 --
--- Name: promotion_product; Type: TABLE; Schema: mochi; Owner: postgres
+-- Name: promotion_product; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
 CREATE TABLE mochi.promotion_product (
 );
 
 
-ALTER TABLE mochi.promotion_product OWNER TO postgres;
+ALTER TABLE mochi.promotion_product OWNER TO mochidb_owner;
 
 --
--- Name: promotion_type; Type: TABLE; Schema: mochi; Owner: postgres
+-- Name: promotion_type; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
 CREATE TABLE mochi.promotion_type (
@@ -1169,7 +1169,7 @@ CREATE TABLE mochi.promotion_type (
 );
 
 
-ALTER TABLE mochi.promotion_type OWNER TO postgres;
+ALTER TABLE mochi.promotion_type OWNER TO mochidb_owner;
 
 --
 -- Name: role_rle_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
@@ -1247,14 +1247,14 @@ CREATE SEQUENCE mochi.role_type_role_typ_id_seq
 ALTER TABLE mochi.role_type_role_typ_id_seq OWNER TO mochidb_owner;
 
 --
--- Name: supplier; Type: TABLE; Schema: mochi; Owner: postgres
+-- Name: supplier; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
 CREATE TABLE mochi.supplier (
 );
 
 
-ALTER TABLE mochi.supplier OWNER TO postgres;
+ALTER TABLE mochi.supplier OWNER TO mochidb_owner;
 
 --
 -- Name: tag_tag_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
@@ -1283,7 +1283,7 @@ CREATE TABLE mochi.tag (
 ALTER TABLE mochi.tag OWNER TO mochidb_owner;
 
 --
--- Name: tag_attr_lcl_tag_id_seq; Type: SEQUENCE; Schema: mochi; Owner: postgres
+-- Name: tag_attr_lcl_tag_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
 CREATE SEQUENCE mochi.tag_attr_lcl_tag_id_seq
@@ -1294,7 +1294,7 @@ CREATE SEQUENCE mochi.tag_attr_lcl_tag_id_seq
     CACHE 1;
 
 
-ALTER TABLE mochi.tag_attr_lcl_tag_id_seq OWNER TO postgres;
+ALTER TABLE mochi.tag_attr_lcl_tag_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: tag_attr_lcl; Type: TABLE; Schema: mochi; Owner: mochidb_owner
@@ -1503,7 +1503,7 @@ ALTER TABLE ONLY mochi.discount
 
 
 --
--- Name: discount_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: postgres
+-- Name: discount_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
 ALTER TABLE ONLY mochi.discount_type
@@ -1695,7 +1695,7 @@ ALTER TABLE ONLY mochi.promotion
 
 
 --
--- Name: promotion_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: postgres
+-- Name: promotion_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
 ALTER TABLE ONLY mochi.promotion_type
@@ -2178,22 +2178,22 @@ GRANT USAGE ON SCHEMA mochi TO security_app;
 
 
 --
--- Name: TABLE address; Type: ACL; Schema: mochi; Owner: postgres
+-- Name: TABLE address; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
 REVOKE ALL ON TABLE mochi.address FROM PUBLIC;
-REVOKE ALL ON TABLE mochi.address FROM postgres;
-GRANT ALL ON TABLE mochi.address TO postgres;
+REVOKE ALL ON TABLE mochi.address FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.address TO mochidb_owner;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.address TO mochi_app;
 
 
 --
--- Name: TABLE address_type; Type: ACL; Schema: mochi; Owner: postgres
+-- Name: TABLE address_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
 REVOKE ALL ON TABLE mochi.address_type FROM PUBLIC;
-REVOKE ALL ON TABLE mochi.address_type FROM postgres;
-GRANT ALL ON TABLE mochi.address_type TO postgres;
+REVOKE ALL ON TABLE mochi.address_type FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.address_type TO mochidb_owner;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.address_type TO mochi_app;
 
 
@@ -2329,12 +2329,12 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.discount TO mochi_app;
 
 
 --
--- Name: TABLE discount_type; Type: ACL; Schema: mochi; Owner: postgres
+-- Name: TABLE discount_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
 REVOKE ALL ON TABLE mochi.discount_type FROM PUBLIC;
-REVOKE ALL ON TABLE mochi.discount_type FROM postgres;
-GRANT ALL ON TABLE mochi.discount_type TO postgres;
+REVOKE ALL ON TABLE mochi.discount_type FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.discount_type TO mochidb_owner;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.discount_type TO mochi_app;
 
 
@@ -2369,22 +2369,22 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.hierarchy TO mochi_app;
 
 
 --
--- Name: TABLE inventory_on_hand; Type: ACL; Schema: mochi; Owner: postgres
+-- Name: TABLE inventory_on_hand; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
 REVOKE ALL ON TABLE mochi.inventory_on_hand FROM PUBLIC;
-REVOKE ALL ON TABLE mochi.inventory_on_hand FROM postgres;
-GRANT ALL ON TABLE mochi.inventory_on_hand TO postgres;
+REVOKE ALL ON TABLE mochi.inventory_on_hand FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.inventory_on_hand TO mochidb_owner;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.inventory_on_hand TO mochi_app;
 
 
 --
--- Name: TABLE inventory_transaction; Type: ACL; Schema: mochi; Owner: postgres
+-- Name: TABLE inventory_transaction; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
 REVOKE ALL ON TABLE mochi.inventory_transaction FROM PUBLIC;
-REVOKE ALL ON TABLE mochi.inventory_transaction FROM postgres;
-GRANT ALL ON TABLE mochi.inventory_transaction TO postgres;
+REVOKE ALL ON TABLE mochi.inventory_transaction FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.inventory_transaction TO mochidb_owner;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.inventory_transaction TO mochi_app;
 
 
@@ -2419,12 +2419,12 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.locale TO mochi_app;
 
 
 --
--- Name: TABLE location; Type: ACL; Schema: mochi; Owner: postgres
+-- Name: TABLE location; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
 REVOKE ALL ON TABLE mochi.location FROM PUBLIC;
-REVOKE ALL ON TABLE mochi.location FROM postgres;
-GRANT ALL ON TABLE mochi.location TO postgres;
+REVOKE ALL ON TABLE mochi.location FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.location TO mochidb_owner;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.location TO mochi_app;
 
 
@@ -2603,12 +2603,12 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.product_status TO mochi_app;
 
 
 --
--- Name: TABLE product_supplier; Type: ACL; Schema: mochi; Owner: postgres
+-- Name: TABLE product_supplier; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
 REVOKE ALL ON TABLE mochi.product_supplier FROM PUBLIC;
-REVOKE ALL ON TABLE mochi.product_supplier FROM postgres;
-GRANT ALL ON TABLE mochi.product_supplier TO postgres;
+REVOKE ALL ON TABLE mochi.product_supplier FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.product_supplier TO mochidb_owner;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.product_supplier TO mochi_app;
 
 
@@ -2643,12 +2643,12 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.promotion TO mochi_app;
 
 
 --
--- Name: TABLE promotion_brand; Type: ACL; Schema: mochi; Owner: postgres
+-- Name: TABLE promotion_brand; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
 REVOKE ALL ON TABLE mochi.promotion_brand FROM PUBLIC;
-REVOKE ALL ON TABLE mochi.promotion_brand FROM postgres;
-GRANT ALL ON TABLE mochi.promotion_brand TO postgres;
+REVOKE ALL ON TABLE mochi.promotion_brand FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.promotion_brand TO mochidb_owner;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.promotion_brand TO mochi_app;
 
 
@@ -2663,32 +2663,32 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.promotion_category TO mochi_app
 
 
 --
--- Name: TABLE promotion_order; Type: ACL; Schema: mochi; Owner: postgres
+-- Name: TABLE promotion_order; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
 REVOKE ALL ON TABLE mochi.promotion_order FROM PUBLIC;
-REVOKE ALL ON TABLE mochi.promotion_order FROM postgres;
-GRANT ALL ON TABLE mochi.promotion_order TO postgres;
+REVOKE ALL ON TABLE mochi.promotion_order FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.promotion_order TO mochidb_owner;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.promotion_order TO mochi_app;
 
 
 --
--- Name: TABLE promotion_product; Type: ACL; Schema: mochi; Owner: postgres
+-- Name: TABLE promotion_product; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
 REVOKE ALL ON TABLE mochi.promotion_product FROM PUBLIC;
-REVOKE ALL ON TABLE mochi.promotion_product FROM postgres;
-GRANT ALL ON TABLE mochi.promotion_product TO postgres;
+REVOKE ALL ON TABLE mochi.promotion_product FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.promotion_product TO mochidb_owner;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.promotion_product TO mochi_app;
 
 
 --
--- Name: TABLE promotion_type; Type: ACL; Schema: mochi; Owner: postgres
+-- Name: TABLE promotion_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
 REVOKE ALL ON TABLE mochi.promotion_type FROM PUBLIC;
-REVOKE ALL ON TABLE mochi.promotion_type FROM postgres;
-GRANT ALL ON TABLE mochi.promotion_type TO postgres;
+REVOKE ALL ON TABLE mochi.promotion_type FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.promotion_type TO mochidb_owner;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.promotion_type TO mochi_app;
 
 
@@ -2745,12 +2745,12 @@ GRANT SELECT,USAGE ON SEQUENCE mochi.role_type_role_typ_id_seq TO mochi_app;
 
 
 --
--- Name: TABLE supplier; Type: ACL; Schema: mochi; Owner: postgres
+-- Name: TABLE supplier; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
 REVOKE ALL ON TABLE mochi.supplier FROM PUBLIC;
-REVOKE ALL ON TABLE mochi.supplier FROM postgres;
-GRANT ALL ON TABLE mochi.supplier TO postgres;
+REVOKE ALL ON TABLE mochi.supplier FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.supplier TO mochidb_owner;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.supplier TO mochi_app;
 
 
