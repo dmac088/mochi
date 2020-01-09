@@ -42,8 +42,8 @@ public class DataSourceBeanMochiDev {
     @ConfigurationProperties("spring.datasource.mochi.dev")
     public DataSourceProperties dataSourceProperties() {
 		DataSourceProperties dsp = new DataSourceProperties();
-		dsp.setUsername("spring.datasource.mochi.dev.application.username");
-		dsp.setPassword("spring.datasource.mochi.dev.application.password");
+		dsp.setUsername(env.getProperty("spring.datasource.mochi.dev.application.username"));
+		dsp.setPassword(env.getProperty("spring.datasource.mochi.dev.application.password"));
 		return dsp;
     }
 	
