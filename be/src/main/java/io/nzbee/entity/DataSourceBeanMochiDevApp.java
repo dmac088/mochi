@@ -3,8 +3,6 @@ package io.nzbee.entity;
 
 
 import java.util.Properties;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -13,7 +11,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
-import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -32,24 +29,18 @@ import com.zaxxer.hikari.HikariDataSource;
         )
 @Profile("dev")
 @Order(1)
-public class DataSourceBeanMochiDev {
-	
-	@Autowired
-	Environment env;
+public class DataSourceBeanMochiDevApp {
 	
 	@Primary
-	@Bean(name = "mochiDataSourcePropertiesDev")
-    @ConfigurationProperties("spring.datasource.mochi.dev")
+	@Bean(name = "mochiDataSourcePropertiesDevApp")
+    @ConfigurationProperties("spring.datasource.mochi.dev.app")
     public DataSourceProperties dataSourceProperties() {
-		DataSourceProperties dsp = new DataSourceProperties();
-		dsp.setUsername("spring.datasource.mochi.dev.application.username");
-		dsp.setPassword("spring.datasource.mochi.dev.application.password");
-		return dsp;
+        return new DataSourceProperties();
     }
 	
 	@Primary
 	@Bean(name = "mochiDataSource")
-    @ConfigurationProperties("spring.datasource.mochi.dev")
+    @ConfigurationProperties("spring.datasource.mochi.dev.app")
     public HikariDataSource dataSource(@Qualifier("mochiDataSourcePropertiesDev") DataSourceProperties properties) {
         return properties.initializeDataSourceBuilder()
         		.type(HikariDataSource.class)
