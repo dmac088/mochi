@@ -2,19 +2,17 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.6.5
--- Dumped by pg_dump version 9.6.5
+-- Dumped from database version 9.5.14
+-- Dumped by pg_dump version 9.5.14
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 SET row_security = off;
-
-SET search_path = mochi, pg_catalog;
 
 ALTER TABLE ONLY mochi.tag_attr_lcl DROP CONSTRAINT tag_attr_lcl_tag_id_fkey;
 ALTER TABLE ONLY mochi.tag_attr_lcl DROP CONSTRAINT tag_attr_lcl_lcl_cd_fkey;
@@ -203,44 +201,42 @@ CREATE SCHEMA mochi;
 
 ALTER SCHEMA mochi OWNER TO mochidb_owner;
 
-SET search_path = mochi, pg_catalog;
-
 --
 -- Name: ft_brand_categories(text, text); Type: FUNCTION; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE FUNCTION ft_brand_categories(text, text) RETURNS TABLE(cat_id bigint, cat_cd text, cat_lvl bigint, hir_id bigint, cat_prnt_id bigint, cat_typ_id bigint, product_count bigint, child_cat_count bigint, max_price numeric)
+CREATE FUNCTION mochi.ft_brand_categories(text, text) RETURNS TABLE(cat_id bigint, cat_cd text, cat_lvl bigint, hir_id bigint, cat_prnt_id bigint, cat_typ_id bigint, product_count bigint, child_cat_count bigint, max_price numeric)
     LANGUAGE sql
-    AS $_$
- SELECT p.cat_id,
-    p.cat_cd,
-    p.cat_lvl,
-    p.hir_id,
-    p.cat_typ_id,
-    p.cat_prnt_id,
-    count(DISTINCT prd.upc_cd) AS product_count,
-    count(DISTINCT cc.cat_cd) AS child_cat_count,
-    coalesce(
-    max(CASE
-	WHEN pt.prc_typ_cd = 'MKD01'
-	THEN prc.prc_val
-	END),
-    max(CASE
-	WHEN pt.prc_typ_cd = 'RET01'
-	THEN prc.prc_val
-	END)) as max_price
-   FROM mochi.category p
-     JOIN LATERAL mochi.ft_categories(p.cat_cd::text) cc(cat_id, cat_cd, cat_prnt_id, cat_typ_id) ON 1 = 1
-     LEFT JOIN mochi.brand_category pc ON cc.cat_id = pc.cat_id
-     LEFT JOIN mochi.brand bnd ON pc.bnd_id = bnd.bnd_id
-     LEFT JOIN mochi.product prd ON pc.bnd_id = prd.bnd_id
-     LEFT JOIN mochi.price prc ON prd.prd_id = prc.prd_id AND now() between prc.prc_st_dt and prc.prc_en_dt
-     LEFT JOIN mochi.currency curr ON prc.ccy_id = curr.ccy_id 
-     LEFT JOIN mochi.price_type pt ON prc.prc_typ_id = pt.prc_typ_id 
-  WHERE cc.cat_typ_id = 2
-  AND p.cat_cd = $1
-  AND ccy_cd = $2
-  GROUP BY p.cat_id, p.cat_cd, p.cat_lvl, p.hir_id, p.cat_typ_id, p.cat_prnt_id;
+    AS $_$
+ SELECT p.cat_id,
+    p.cat_cd,
+    p.cat_lvl,
+    p.hir_id,
+    p.cat_typ_id,
+    p.cat_prnt_id,
+    count(DISTINCT prd.upc_cd) AS product_count,
+    count(DISTINCT cc.cat_cd) AS child_cat_count,
+    coalesce(
+    max(CASE
+	WHEN pt.prc_typ_cd = 'MKD01'
+	THEN prc.prc_val
+	END),
+    max(CASE
+	WHEN pt.prc_typ_cd = 'RET01'
+	THEN prc.prc_val
+	END)) as max_price
+   FROM mochi.category p
+     JOIN LATERAL mochi.ft_categories(p.cat_cd::text) cc(cat_id, cat_cd, cat_prnt_id, cat_typ_id) ON 1 = 1
+     LEFT JOIN mochi.brand_category pc ON cc.cat_id = pc.cat_id
+     LEFT JOIN mochi.brand bnd ON pc.bnd_id = bnd.bnd_id
+     LEFT JOIN mochi.product prd ON pc.bnd_id = prd.bnd_id
+     LEFT JOIN mochi.price prc ON prd.prd_id = prc.prd_id AND now() between prc.prc_st_dt and prc.prc_en_dt
+     LEFT JOIN mochi.currency curr ON prc.ccy_id = curr.ccy_id 
+     LEFT JOIN mochi.price_type pt ON prc.prc_typ_id = pt.prc_typ_id 
+  WHERE cc.cat_typ_id = 2
+  AND p.cat_cd = $1
+  AND ccy_cd = $2
+  GROUP BY p.cat_id, p.cat_cd, p.cat_lvl, p.hir_id, p.cat_typ_id, p.cat_prnt_id;
 $_$;
 
 
@@ -250,34 +246,34 @@ ALTER FUNCTION mochi.ft_brand_categories(text, text) OWNER TO mochidb_owner;
 -- Name: ft_categories(text); Type: FUNCTION; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE FUNCTION ft_categories(text) RETURNS TABLE(cat_id bigint, cat_cd text, cat_prnt_id bigint, cat_typ_id bigint)
+CREATE FUNCTION mochi.ft_categories(text) RETURNS TABLE(cat_id bigint, cat_cd text, cat_prnt_id bigint, cat_typ_id bigint)
     LANGUAGE sql
-    AS $_$
-WITH RECURSIVE 
-    -- starting node(s)
-    starting (cat_id, cat_cd, cat_prnt_id, cat_typ_id) AS
-    (
-      SELECT t.cat_id, t.cat_cd, t.cat_prnt_id, t.cat_typ_id
-      FROM mochi.category AS t
-      WHERE t.cat_cd = $1        
-    ),
-    descendants (cat_id, cat_cd, cat_prnt_id, cat_typ_id) AS
-    (
-      SELECT t.cat_id, t.cat_cd, t.cat_prnt_id, t.cat_typ_id
-      FROM mochi.category AS t
-      WHERE t.cat_cd = $1
-      UNION ALL
-      SELECT t.cat_id, t.cat_cd, t.cat_prnt_id, t.cat_typ_id
-      FROM mochi.category AS t 
-		JOIN descendants AS d 
-		ON t.cat_prnt_id = d.cat_id
-    )
-
-SELECT 	descendants.cat_id,
-		descendants.cat_cd,
-		descendants.cat_prnt_id,
-		descendants.cat_typ_id
-FROM  starting 
+    AS $_$
+WITH RECURSIVE 
+    -- starting node(s)
+    starting (cat_id, cat_cd, cat_prnt_id, cat_typ_id) AS
+    (
+      SELECT t.cat_id, t.cat_cd, t.cat_prnt_id, t.cat_typ_id
+      FROM mochi.category AS t
+      WHERE t.cat_cd = $1        
+    ),
+    descendants (cat_id, cat_cd, cat_prnt_id, cat_typ_id) AS
+    (
+      SELECT t.cat_id, t.cat_cd, t.cat_prnt_id, t.cat_typ_id
+      FROM mochi.category AS t
+      WHERE t.cat_cd = $1
+      UNION ALL
+      SELECT t.cat_id, t.cat_cd, t.cat_prnt_id, t.cat_typ_id
+      FROM mochi.category AS t 
+		JOIN descendants AS d 
+		ON t.cat_prnt_id = d.cat_id
+    )
+
+SELECT 	descendants.cat_id,
+		descendants.cat_cd,
+		descendants.cat_prnt_id,
+		descendants.cat_typ_id
+FROM  starting 
 		cross join descendants $_$;
 
 
@@ -287,37 +283,37 @@ ALTER FUNCTION mochi.ft_categories(text) OWNER TO mochidb_owner;
 -- Name: ft_product_categories(text, text); Type: FUNCTION; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE FUNCTION ft_product_categories(text, text) RETURNS TABLE(cat_id bigint, cat_cd text, cat_lvl bigint, hir_id bigint, cat_prnt_id bigint, cat_typ_id bigint, product_count bigint, child_cat_count bigint, max_price numeric)
+CREATE FUNCTION mochi.ft_product_categories(text, text) RETURNS TABLE(cat_id bigint, cat_cd text, cat_lvl bigint, hir_id bigint, cat_prnt_id bigint, cat_typ_id bigint, product_count bigint, child_cat_count bigint, max_price numeric)
     LANGUAGE sql
-    AS $_$
- SELECT p.cat_id,
-    p.cat_cd,
-    p.cat_lvl,
-    p.hir_id,
-    p.cat_typ_id,
-    p.cat_prnt_id,
-    count(DISTINCT prd.upc_cd) AS product_count,
-    count(DISTINCT cc.cat_cd) AS child_cat_count,
-    coalesce(
-    max(CASE
-	WHEN pt.prc_typ_cd = 'MKD01'
-	THEN prc.prc_val
-	END),
-    max(CASE
-	WHEN pt.prc_typ_cd = 'RET01'
-	THEN prc.prc_val
-	END)) as max_price
-   FROM mochi.category p
-     JOIN LATERAL mochi.ft_categories(p.cat_cd::text) cc(cat_id, cat_cd, cat_prnt_id, cat_typ_id) ON 1 = 1
-     LEFT JOIN mochi.product_category pc ON cc.cat_id = pc.cat_id
-     LEFT JOIN mochi.product prd ON pc.prd_id = prd.prd_id
-     LEFT JOIN mochi.price prc ON prd.prd_id = prc.prd_id AND now() between prc.prc_st_dt and prc.prc_en_dt
-     LEFT JOIN mochi.currency curr ON prc.ccy_id = curr.ccy_id 
-     LEFT JOIN mochi.price_type pt ON prc.prc_typ_id = pt.prc_typ_id 
-  WHERE cc.cat_typ_id = 1
-  AND p.cat_cd = $1
-  AND ccy_cd = $2
-  GROUP BY p.cat_id, p.cat_cd, p.cat_lvl, p.hir_id, p.cat_typ_id, p.cat_prnt_id;
+    AS $_$
+ SELECT p.cat_id,
+    p.cat_cd,
+    p.cat_lvl,
+    p.hir_id,
+    p.cat_typ_id,
+    p.cat_prnt_id,
+    count(DISTINCT prd.upc_cd) AS product_count,
+    count(DISTINCT cc.cat_cd) AS child_cat_count,
+    coalesce(
+    max(CASE
+	WHEN pt.prc_typ_cd = 'MKD01'
+	THEN prc.prc_val
+	END),
+    max(CASE
+	WHEN pt.prc_typ_cd = 'RET01'
+	THEN prc.prc_val
+	END)) as max_price
+   FROM mochi.category p
+     JOIN LATERAL mochi.ft_categories(p.cat_cd::text) cc(cat_id, cat_cd, cat_prnt_id, cat_typ_id) ON 1 = 1
+     LEFT JOIN mochi.product_category pc ON cc.cat_id = pc.cat_id
+     LEFT JOIN mochi.product prd ON pc.prd_id = prd.prd_id
+     LEFT JOIN mochi.price prc ON prd.prd_id = prc.prd_id AND now() between prc.prc_st_dt and prc.prc_en_dt
+     LEFT JOIN mochi.currency curr ON prc.ccy_id = curr.ccy_id 
+     LEFT JOIN mochi.price_type pt ON prc.prc_typ_id = pt.prc_typ_id 
+  WHERE cc.cat_typ_id = 1
+  AND p.cat_cd = $1
+  AND ccy_cd = $2
+  GROUP BY p.cat_id, p.cat_cd, p.cat_lvl, p.hir_id, p.cat_typ_id, p.cat_prnt_id;
 $_$;
 
 
@@ -331,27 +327,27 @@ SET default_with_oids = false;
 -- Name: address; Type: TABLE; Schema: mochi; Owner: postgres
 --
 
-CREATE TABLE address (
+CREATE TABLE mochi.address (
 );
 
 
-ALTER TABLE address OWNER TO postgres;
+ALTER TABLE mochi.address OWNER TO postgres;
 
 --
 -- Name: address_type; Type: TABLE; Schema: mochi; Owner: postgres
 --
 
-CREATE TABLE address_type (
+CREATE TABLE mochi.address_type (
 );
 
 
-ALTER TABLE address_type OWNER TO postgres;
+ALTER TABLE mochi.address_type OWNER TO postgres;
 
 --
 -- Name: brand_bnd_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE brand_bnd_id_seq
+CREATE SEQUENCE mochi.brand_bnd_id_seq
     START WITH 6
     INCREMENT BY 1
     NO MINVALUE
@@ -359,25 +355,25 @@ CREATE SEQUENCE brand_bnd_id_seq
     CACHE 1;
 
 
-ALTER TABLE brand_bnd_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.brand_bnd_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: brand; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE brand (
-    bnd_id bigint DEFAULT nextval('brand_bnd_id_seq'::regclass) NOT NULL,
+CREATE TABLE mochi.brand (
+    bnd_id bigint DEFAULT nextval('mochi.brand_bnd_id_seq'::regclass) NOT NULL,
     bnd_cd character(5)
 );
 
 
-ALTER TABLE brand OWNER TO mochidb_owner;
+ALTER TABLE mochi.brand OWNER TO mochidb_owner;
 
 --
 -- Name: brand_attr_lcl_bnd_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE brand_attr_lcl_bnd_id_seq
+CREATE SEQUENCE mochi.brand_attr_lcl_bnd_id_seq
     START WITH 19
     INCREMENT BY 1
     NO MINVALUE
@@ -385,14 +381,14 @@ CREATE SEQUENCE brand_attr_lcl_bnd_id_seq
     CACHE 1;
 
 
-ALTER TABLE brand_attr_lcl_bnd_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.brand_attr_lcl_bnd_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: brand_attr_lcl; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE brand_attr_lcl (
-    bnd_lcl_id bigint DEFAULT nextval('brand_attr_lcl_bnd_id_seq'::regclass) NOT NULL,
+CREATE TABLE mochi.brand_attr_lcl (
+    bnd_lcl_id bigint DEFAULT nextval('mochi.brand_attr_lcl_bnd_id_seq'::regclass) NOT NULL,
     bnd_id bigint NOT NULL,
     bnd_desc character varying(100),
     bnd_img_pth character varying(100),
@@ -400,13 +396,13 @@ CREATE TABLE brand_attr_lcl (
 );
 
 
-ALTER TABLE brand_attr_lcl OWNER TO mochidb_owner;
+ALTER TABLE mochi.brand_attr_lcl OWNER TO mochidb_owner;
 
 --
 -- Name: brand_category_bnd_cat_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE brand_category_bnd_cat_id_seq
+CREATE SEQUENCE mochi.brand_category_bnd_cat_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -414,26 +410,26 @@ CREATE SEQUENCE brand_category_bnd_cat_id_seq
     CACHE 1;
 
 
-ALTER TABLE brand_category_bnd_cat_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.brand_category_bnd_cat_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: brand_category; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE brand_category (
-    bnd_cat_id bigint DEFAULT nextval('brand_category_bnd_cat_id_seq'::regclass) NOT NULL,
+CREATE TABLE mochi.brand_category (
+    bnd_cat_id bigint DEFAULT nextval('mochi.brand_category_bnd_cat_id_seq'::regclass) NOT NULL,
     bnd_id bigint,
     cat_id bigint
 );
 
 
-ALTER TABLE brand_category OWNER TO mochidb_owner;
+ALTER TABLE mochi.brand_category OWNER TO mochidb_owner;
 
 --
 -- Name: category_cat_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE category_cat_id_seq
+CREATE SEQUENCE mochi.category_cat_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -441,14 +437,14 @@ CREATE SEQUENCE category_cat_id_seq
     CACHE 1;
 
 
-ALTER TABLE category_cat_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.category_cat_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: category; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE category (
-    cat_id bigint DEFAULT nextval('category_cat_id_seq'::regclass) NOT NULL,
+CREATE TABLE mochi.category (
+    cat_id bigint DEFAULT nextval('mochi.category_cat_id_seq'::regclass) NOT NULL,
     cat_cd character varying(5) NOT NULL,
     cat_prnt_id bigint,
     cat_lvl bigint,
@@ -457,13 +453,13 @@ CREATE TABLE category (
 );
 
 
-ALTER TABLE category OWNER TO mochidb_owner;
+ALTER TABLE mochi.category OWNER TO mochidb_owner;
 
 --
 -- Name: category_attr_lcl_cat_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE category_attr_lcl_cat_id_seq
+CREATE SEQUENCE mochi.category_attr_lcl_cat_id_seq
     START WITH 4
     INCREMENT BY 1
     NO MINVALUE
@@ -471,14 +467,14 @@ CREATE SEQUENCE category_attr_lcl_cat_id_seq
     CACHE 1;
 
 
-ALTER TABLE category_attr_lcl_cat_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.category_attr_lcl_cat_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: category_attr_lcl; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE category_attr_lcl (
-    cat_lcl_id bigint DEFAULT nextval('category_attr_lcl_cat_id_seq'::regclass) NOT NULL,
+CREATE TABLE mochi.category_attr_lcl (
+    cat_lcl_id bigint DEFAULT nextval('mochi.category_attr_lcl_cat_id_seq'::regclass) NOT NULL,
     cat_id bigint NOT NULL,
     cat_desc character varying(100),
     cat_img_pth character varying(100),
@@ -486,35 +482,35 @@ CREATE TABLE category_attr_lcl (
 );
 
 
-ALTER TABLE category_attr_lcl OWNER TO mochidb_owner;
+ALTER TABLE mochi.category_attr_lcl OWNER TO mochidb_owner;
 
 --
 -- Name: category_brand; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE category_brand (
-    cat_id bigint DEFAULT nextval('category_cat_id_seq'::regclass) NOT NULL
+CREATE TABLE mochi.category_brand (
+    cat_id bigint DEFAULT nextval('mochi.category_cat_id_seq'::regclass) NOT NULL
 );
 
 
-ALTER TABLE category_brand OWNER TO mochidb_owner;
+ALTER TABLE mochi.category_brand OWNER TO mochidb_owner;
 
 --
 -- Name: category_product; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE category_product (
-    cat_id bigint DEFAULT nextval('category_cat_id_seq'::regclass) NOT NULL
+CREATE TABLE mochi.category_product (
+    cat_id bigint DEFAULT nextval('mochi.category_cat_id_seq'::regclass) NOT NULL
 );
 
 
-ALTER TABLE category_product OWNER TO mochidb_owner;
+ALTER TABLE mochi.category_product OWNER TO mochidb_owner;
 
 --
 -- Name: category_type_cat_typ_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE category_type_cat_typ_id_seq
+CREATE SEQUENCE mochi.category_type_cat_typ_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -522,38 +518,38 @@ CREATE SEQUENCE category_type_cat_typ_id_seq
     CACHE 1;
 
 
-ALTER TABLE category_type_cat_typ_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.category_type_cat_typ_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: category_type; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE category_type (
-    cat_typ_id bigint DEFAULT nextval('category_type_cat_typ_id_seq'::regclass) NOT NULL,
+CREATE TABLE mochi.category_type (
+    cat_typ_id bigint DEFAULT nextval('mochi.category_type_cat_typ_id_seq'::regclass) NOT NULL,
     cat_typ_cd character varying(5) NOT NULL,
     cat_typ_desc character varying(20)
 );
 
 
-ALTER TABLE category_type OWNER TO mochidb_owner;
+ALTER TABLE mochi.category_type OWNER TO mochidb_owner;
 
 --
 -- Name: currency; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE currency (
+CREATE TABLE mochi.currency (
     ccy_id bigint NOT NULL,
     ccy_cd character(3)
 );
 
 
-ALTER TABLE currency OWNER TO mochidb_owner;
+ALTER TABLE mochi.currency OWNER TO mochidb_owner;
 
 --
 -- Name: customer_cst_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE customer_cst_id_seq
+CREATE SEQUENCE mochi.customer_cst_id_seq
     START WITH 1000000001
     INCREMENT BY 1
     NO MINVALUE
@@ -561,25 +557,25 @@ CREATE SEQUENCE customer_cst_id_seq
     CACHE 1;
 
 
-ALTER TABLE customer_cst_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.customer_cst_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: customer; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE customer (
+CREATE TABLE mochi.customer (
     rle_id bigint NOT NULL,
-    cst_id character(10) DEFAULT nextval('customer_cst_id_seq'::regclass)
+    cst_id character(10) DEFAULT nextval('mochi.customer_cst_id_seq'::regclass)
 );
 
 
-ALTER TABLE customer OWNER TO mochidb_owner;
+ALTER TABLE mochi.customer OWNER TO mochidb_owner;
 
 --
 -- Name: discount; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE discount (
+CREATE TABLE mochi.discount (
     dis_id bigint NOT NULL,
     dis_cd character(5),
     prm_id bigint,
@@ -588,25 +584,25 @@ CREATE TABLE discount (
 );
 
 
-ALTER TABLE discount OWNER TO mochidb_owner;
+ALTER TABLE mochi.discount OWNER TO mochidb_owner;
 
 --
 -- Name: discount_type; Type: TABLE; Schema: mochi; Owner: postgres
 --
 
-CREATE TABLE discount_type (
+CREATE TABLE mochi.discount_type (
     dis_typ_id bigint NOT NULL,
     dis_typ_desc character varying NOT NULL
 );
 
 
-ALTER TABLE discount_type OWNER TO postgres;
+ALTER TABLE mochi.discount_type OWNER TO postgres;
 
 --
 -- Name: hibernate_sequence; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE hibernate_sequence
+CREATE SEQUENCE mochi.hibernate_sequence
     START WITH 232134
     INCREMENT BY 1
     NO MINVALUE
@@ -614,13 +610,13 @@ CREATE SEQUENCE hibernate_sequence
     CACHE 1;
 
 
-ALTER TABLE hibernate_sequence OWNER TO mochidb_owner;
+ALTER TABLE mochi.hibernate_sequence OWNER TO mochidb_owner;
 
 --
 -- Name: hierarchy_hir_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE hierarchy_hir_id_seq
+CREATE SEQUENCE mochi.hierarchy_hir_id_seq
     START WITH 41
     INCREMENT BY 1
     NO MINVALUE
@@ -628,46 +624,46 @@ CREATE SEQUENCE hierarchy_hir_id_seq
     CACHE 1;
 
 
-ALTER TABLE hierarchy_hir_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.hierarchy_hir_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: hierarchy; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE hierarchy (
-    hir_id bigint DEFAULT nextval('hierarchy_hir_id_seq'::regclass) NOT NULL,
+CREATE TABLE mochi.hierarchy (
+    hir_id bigint DEFAULT nextval('mochi.hierarchy_hir_id_seq'::regclass) NOT NULL,
     hir_cd character varying(5) NOT NULL,
     hir_desc character varying(100) NOT NULL
 );
 
 
-ALTER TABLE hierarchy OWNER TO mochidb_owner;
+ALTER TABLE mochi.hierarchy OWNER TO mochidb_owner;
 
 --
 -- Name: inventory_on_hand; Type: TABLE; Schema: mochi; Owner: postgres
 --
 
-CREATE TABLE inventory_on_hand (
+CREATE TABLE mochi.inventory_on_hand (
 );
 
 
-ALTER TABLE inventory_on_hand OWNER TO postgres;
+ALTER TABLE mochi.inventory_on_hand OWNER TO postgres;
 
 --
 -- Name: inventory_transaction; Type: TABLE; Schema: mochi; Owner: postgres
 --
 
-CREATE TABLE inventory_transaction (
+CREATE TABLE mochi.inventory_transaction (
 );
 
 
-ALTER TABLE inventory_transaction OWNER TO postgres;
+ALTER TABLE mochi.inventory_transaction OWNER TO postgres;
 
 --
 -- Name: layout_lay_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE layout_lay_id_seq
+CREATE SEQUENCE mochi.layout_lay_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -675,26 +671,26 @@ CREATE SEQUENCE layout_lay_id_seq
     CACHE 1;
 
 
-ALTER TABLE layout_lay_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.layout_lay_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: layout; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE layout (
-    lay_id bigint DEFAULT nextval('layout_lay_id_seq'::regclass) NOT NULL,
+CREATE TABLE mochi.layout (
+    lay_id bigint DEFAULT nextval('mochi.layout_lay_id_seq'::regclass) NOT NULL,
     lay_cd character varying(10) NOT NULL,
     lay_desc character varying(100) NOT NULL
 );
 
 
-ALTER TABLE layout OWNER TO mochidb_owner;
+ALTER TABLE mochi.layout OWNER TO mochidb_owner;
 
 --
 -- Name: layout_category_lay_cat_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE layout_category_lay_cat_id_seq
+CREATE SEQUENCE mochi.layout_category_lay_cat_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -702,97 +698,97 @@ CREATE SEQUENCE layout_category_lay_cat_id_seq
     CACHE 1;
 
 
-ALTER TABLE layout_category_lay_cat_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.layout_category_lay_cat_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: layout_category; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE layout_category (
-    lay_cat_id bigint DEFAULT nextval('layout_category_lay_cat_id_seq'::regclass) NOT NULL,
+CREATE TABLE mochi.layout_category (
+    lay_cat_id bigint DEFAULT nextval('mochi.layout_category_lay_cat_id_seq'::regclass) NOT NULL,
     lay_id bigint,
     cat_id bigint
 );
 
 
-ALTER TABLE layout_category OWNER TO mochidb_owner;
+ALTER TABLE mochi.layout_category OWNER TO mochidb_owner;
 
 --
 -- Name: locale; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE locale (
+CREATE TABLE mochi.locale (
     lcl_cd character varying(20) NOT NULL
 );
 
 
-ALTER TABLE locale OWNER TO mochidb_owner;
+ALTER TABLE mochi.locale OWNER TO mochidb_owner;
 
 --
 -- Name: location; Type: TABLE; Schema: mochi; Owner: postgres
 --
 
-CREATE TABLE location (
+CREATE TABLE mochi.location (
 );
 
 
-ALTER TABLE location OWNER TO postgres;
+ALTER TABLE mochi.location OWNER TO postgres;
 
 --
 -- Name: order; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE "order" (
+CREATE TABLE mochi."order" (
     ord_id bigint NOT NULL,
     pty_id bigint NOT NULL
 );
 
 
-ALTER TABLE "order" OWNER TO mochidb_owner;
+ALTER TABLE mochi."order" OWNER TO mochidb_owner;
 
 --
 -- Name: order_line; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE order_line (
+CREATE TABLE mochi.order_line (
     ord_id bigint NOT NULL,
     prd_id bigint NOT NULL,
     ord_lne_no bigint NOT NULL
 );
 
 
-ALTER TABLE order_line OWNER TO mochidb_owner;
+ALTER TABLE mochi.order_line OWNER TO mochidb_owner;
 
 --
 -- Name: organisation; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE organisation (
+CREATE TABLE mochi.organisation (
     org_id bigint NOT NULL,
     org_nme character varying(100) NOT NULL,
     org_reg_no character varying(50) NOT NULL
 );
 
 
-ALTER TABLE organisation OWNER TO mochidb_owner;
+ALTER TABLE mochi.organisation OWNER TO mochidb_owner;
 
 --
 -- Name: party; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE party (
+CREATE TABLE mochi.party (
     pty_id bigint NOT NULL,
     pty_typ_id bigint NOT NULL
 );
 
 
-ALTER TABLE party OWNER TO mochidb_owner;
+ALTER TABLE mochi.party OWNER TO mochidb_owner;
 
 --
 -- Name: party_party_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE party_party_id_seq
+CREATE SEQUENCE mochi.party_party_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -800,13 +796,13 @@ CREATE SEQUENCE party_party_id_seq
     CACHE 1;
 
 
-ALTER TABLE party_party_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.party_party_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: party_pty_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE party_pty_id_seq
+CREATE SEQUENCE mochi.party_pty_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -814,32 +810,32 @@ CREATE SEQUENCE party_pty_id_seq
     CACHE 1;
 
 
-ALTER TABLE party_pty_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.party_pty_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: party_pty_id_seq; Type: SEQUENCE OWNED BY; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER SEQUENCE party_pty_id_seq OWNED BY party.pty_id;
+ALTER SEQUENCE mochi.party_pty_id_seq OWNED BY mochi.party.pty_id;
 
 
 --
 -- Name: party_type; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE party_type (
+CREATE TABLE mochi.party_type (
     pty_typ_id bigint NOT NULL,
     pty_typ_desc character varying NOT NULL
 );
 
 
-ALTER TABLE party_type OWNER TO mochidb_owner;
+ALTER TABLE mochi.party_type OWNER TO mochidb_owner;
 
 --
 -- Name: party_type_pty_typ_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE party_type_pty_typ_id_seq
+CREATE SEQUENCE mochi.party_type_pty_typ_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -847,20 +843,20 @@ CREATE SEQUENCE party_type_pty_typ_id_seq
     CACHE 1;
 
 
-ALTER TABLE party_type_pty_typ_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.party_type_pty_typ_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: party_type_pty_typ_id_seq; Type: SEQUENCE OWNED BY; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER SEQUENCE party_type_pty_typ_id_seq OWNED BY party_type.pty_typ_id;
+ALTER SEQUENCE mochi.party_type_pty_typ_id_seq OWNED BY mochi.party_type.pty_typ_id;
 
 
 --
 -- Name: person; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE person (
+CREATE TABLE mochi.person (
     psn_id bigint NOT NULL,
     psn_gvn_nm character varying,
     psn_fml_nm character varying,
@@ -868,13 +864,13 @@ CREATE TABLE person (
 );
 
 
-ALTER TABLE person OWNER TO mochidb_owner;
+ALTER TABLE mochi.person OWNER TO mochidb_owner;
 
 --
 -- Name: person_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE person_id_seq
+CREATE SEQUENCE mochi.person_id_seq
     START WITH 6
     INCREMENT BY 1
     NO MINVALUE
@@ -882,13 +878,13 @@ CREATE SEQUENCE person_id_seq
     CACHE 1;
 
 
-ALTER TABLE person_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.person_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: price_prc_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE price_prc_id_seq
+CREATE SEQUENCE mochi.price_prc_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -896,14 +892,14 @@ CREATE SEQUENCE price_prc_id_seq
     CACHE 1;
 
 
-ALTER TABLE price_prc_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.price_prc_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: price; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE price (
-    prc_id bigint DEFAULT nextval('price_prc_id_seq'::regclass) NOT NULL,
+CREATE TABLE mochi.price (
+    prc_id bigint DEFAULT nextval('mochi.price_prc_id_seq'::regclass) NOT NULL,
     prc_typ_id bigint NOT NULL,
     prd_id bigint NOT NULL,
     prc_val numeric NOT NULL,
@@ -911,26 +907,26 @@ CREATE TABLE price (
 );
 
 
-ALTER TABLE price OWNER TO mochidb_owner;
+ALTER TABLE mochi.price OWNER TO mochidb_owner;
 
 --
 -- Name: price_type; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE price_type (
+CREATE TABLE mochi.price_type (
     prc_typ_id bigint NOT NULL,
     prc_typ_desc character varying,
     prc_typ_cd character varying
 );
 
 
-ALTER TABLE price_type OWNER TO mochidb_owner;
+ALTER TABLE mochi.price_type OWNER TO mochidb_owner;
 
 --
 -- Name: product; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE product (
+CREATE TABLE mochi.product (
     prd_id bigint NOT NULL,
     upc_cd character varying(12) NOT NULL,
     prd_crtd_dt date NOT NULL,
@@ -940,13 +936,13 @@ CREATE TABLE product (
 );
 
 
-ALTER TABLE product OWNER TO mochidb_owner;
+ALTER TABLE mochi.product OWNER TO mochidb_owner;
 
 --
 -- Name: product_attr_lcl; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE product_attr_lcl (
+CREATE TABLE mochi.product_attr_lcl (
     prd_lcl_id bigint NOT NULL,
     prd_id bigint NOT NULL,
     prd_desc character varying(100),
@@ -955,13 +951,13 @@ CREATE TABLE product_attr_lcl (
 );
 
 
-ALTER TABLE product_attr_lcl OWNER TO mochidb_owner;
+ALTER TABLE mochi.product_attr_lcl OWNER TO mochidb_owner;
 
 --
 -- Name: product_category_prd_cat_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE product_category_prd_cat_id_seq
+CREATE SEQUENCE mochi.product_category_prd_cat_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -969,26 +965,26 @@ CREATE SEQUENCE product_category_prd_cat_id_seq
     CACHE 1;
 
 
-ALTER TABLE product_category_prd_cat_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.product_category_prd_cat_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: product_category; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE product_category (
-    prd_cat_id bigint DEFAULT nextval('product_category_prd_cat_id_seq'::regclass) NOT NULL,
+CREATE TABLE mochi.product_category (
+    prd_cat_id bigint DEFAULT nextval('mochi.product_category_prd_cat_id_seq'::regclass) NOT NULL,
     prd_id bigint,
     cat_id bigint
 );
 
 
-ALTER TABLE product_category OWNER TO mochidb_owner;
+ALTER TABLE mochi.product_category OWNER TO mochidb_owner;
 
 --
 -- Name: product_status_prd_sts_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE product_status_prd_sts_id_seq
+CREATE SEQUENCE mochi.product_status_prd_sts_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -996,36 +992,36 @@ CREATE SEQUENCE product_status_prd_sts_id_seq
     CACHE 1;
 
 
-ALTER TABLE product_status_prd_sts_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.product_status_prd_sts_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: product_status; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE product_status (
-    prd_sts_id bigint DEFAULT nextval('product_status_prd_sts_id_seq'::regclass) NOT NULL,
+CREATE TABLE mochi.product_status (
+    prd_sts_id bigint DEFAULT nextval('mochi.product_status_prd_sts_id_seq'::regclass) NOT NULL,
     prd_sts_cd character varying(5) NOT NULL,
     prd_sts_desc character varying(20)
 );
 
 
-ALTER TABLE product_status OWNER TO mochidb_owner;
+ALTER TABLE mochi.product_status OWNER TO mochidb_owner;
 
 --
 -- Name: product_supplier; Type: TABLE; Schema: mochi; Owner: postgres
 --
 
-CREATE TABLE product_supplier (
+CREATE TABLE mochi.product_supplier (
 );
 
 
-ALTER TABLE product_supplier OWNER TO postgres;
+ALTER TABLE mochi.product_supplier OWNER TO postgres;
 
 --
 -- Name: product_tag_prd_tag_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE product_tag_prd_tag_id_seq
+CREATE SEQUENCE mochi.product_tag_prd_tag_id_seq
     START WITH 25
     INCREMENT BY 1
     NO MINVALUE
@@ -1033,26 +1029,26 @@ CREATE SEQUENCE product_tag_prd_tag_id_seq
     CACHE 1;
 
 
-ALTER TABLE product_tag_prd_tag_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.product_tag_prd_tag_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: product_tag; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE product_tag (
-    prd_tag_id bigint DEFAULT nextval('product_tag_prd_tag_id_seq'::regclass) NOT NULL,
+CREATE TABLE mochi.product_tag (
+    prd_tag_id bigint DEFAULT nextval('mochi.product_tag_prd_tag_id_seq'::regclass) NOT NULL,
     prd_id bigint,
     tag_id bigint
 );
 
 
-ALTER TABLE product_tag OWNER TO mochidb_owner;
+ALTER TABLE mochi.product_tag OWNER TO mochidb_owner;
 
 --
 -- Name: product_tag_attr_lcl_tag_id_seq; Type: SEQUENCE; Schema: mochi; Owner: postgres
 --
 
-CREATE SEQUENCE product_tag_attr_lcl_tag_id_seq
+CREATE SEQUENCE mochi.product_tag_attr_lcl_tag_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1060,13 +1056,13 @@ CREATE SEQUENCE product_tag_attr_lcl_tag_id_seq
     CACHE 1;
 
 
-ALTER TABLE product_tag_attr_lcl_tag_id_seq OWNER TO postgres;
+ALTER TABLE mochi.product_tag_attr_lcl_tag_id_seq OWNER TO postgres;
 
 --
 -- Name: product_type_prd_typ_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE product_type_prd_typ_id_seq
+CREATE SEQUENCE mochi.product_type_prd_typ_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1074,26 +1070,26 @@ CREATE SEQUENCE product_type_prd_typ_id_seq
     CACHE 1;
 
 
-ALTER TABLE product_type_prd_typ_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.product_type_prd_typ_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: product_type; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE product_type (
-    prd_typ_id bigint DEFAULT nextval('product_type_prd_typ_id_seq'::regclass) NOT NULL,
+CREATE TABLE mochi.product_type (
+    prd_typ_id bigint DEFAULT nextval('mochi.product_type_prd_typ_id_seq'::regclass) NOT NULL,
     prd_typ_cd character varying(5) NOT NULL,
     prd_typ_desc character varying(20)
 );
 
 
-ALTER TABLE product_type OWNER TO mochidb_owner;
+ALTER TABLE mochi.product_type OWNER TO mochidb_owner;
 
 --
 -- Name: promotion; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE promotion (
+CREATE TABLE mochi.promotion (
     prm_id bigint NOT NULL,
     prm_cd character(5) NOT NULL,
     prm_sht_desc character varying,
@@ -1104,23 +1100,23 @@ CREATE TABLE promotion (
 );
 
 
-ALTER TABLE promotion OWNER TO mochidb_owner;
+ALTER TABLE mochi.promotion OWNER TO mochidb_owner;
 
 --
 -- Name: promotion_brand; Type: TABLE; Schema: mochi; Owner: postgres
 --
 
-CREATE TABLE promotion_brand (
+CREATE TABLE mochi.promotion_brand (
 );
 
 
-ALTER TABLE promotion_brand OWNER TO postgres;
+ALTER TABLE mochi.promotion_brand OWNER TO postgres;
 
 --
 -- Name: promotion_category_prm_cat_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE promotion_category_prm_cat_id_seq
+CREATE SEQUENCE mochi.promotion_category_prm_cat_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1128,58 +1124,58 @@ CREATE SEQUENCE promotion_category_prm_cat_id_seq
     CACHE 1;
 
 
-ALTER TABLE promotion_category_prm_cat_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.promotion_category_prm_cat_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: promotion_category; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE promotion_category (
-    prm_cat_id bigint DEFAULT nextval('promotion_category_prm_cat_id_seq'::regclass) NOT NULL,
+CREATE TABLE mochi.promotion_category (
+    prm_cat_id bigint DEFAULT nextval('mochi.promotion_category_prm_cat_id_seq'::regclass) NOT NULL,
     prm_id bigint,
     cat_id bigint
 );
 
 
-ALTER TABLE promotion_category OWNER TO mochidb_owner;
+ALTER TABLE mochi.promotion_category OWNER TO mochidb_owner;
 
 --
 -- Name: promotion_order; Type: TABLE; Schema: mochi; Owner: postgres
 --
 
-CREATE TABLE promotion_order (
+CREATE TABLE mochi.promotion_order (
 );
 
 
-ALTER TABLE promotion_order OWNER TO postgres;
+ALTER TABLE mochi.promotion_order OWNER TO postgres;
 
 --
 -- Name: promotion_product; Type: TABLE; Schema: mochi; Owner: postgres
 --
 
-CREATE TABLE promotion_product (
+CREATE TABLE mochi.promotion_product (
 );
 
 
-ALTER TABLE promotion_product OWNER TO postgres;
+ALTER TABLE mochi.promotion_product OWNER TO postgres;
 
 --
 -- Name: promotion_type; Type: TABLE; Schema: mochi; Owner: postgres
 --
 
-CREATE TABLE promotion_type (
+CREATE TABLE mochi.promotion_type (
     prm_typ_id bigint NOT NULL,
     prm_typ_desc character varying
 );
 
 
-ALTER TABLE promotion_type OWNER TO postgres;
+ALTER TABLE mochi.promotion_type OWNER TO postgres;
 
 --
 -- Name: role_rle_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE role_rle_id_seq
+CREATE SEQUENCE mochi.role_rle_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1187,39 +1183,39 @@ CREATE SEQUENCE role_rle_id_seq
     CACHE 1;
 
 
-ALTER TABLE role_rle_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.role_rle_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: role; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE role (
-    rle_id bigint DEFAULT nextval('role_rle_id_seq'::regclass) NOT NULL,
+CREATE TABLE mochi.role (
+    rle_id bigint DEFAULT nextval('mochi.role_rle_id_seq'::regclass) NOT NULL,
     rle_typ_id bigint NOT NULL,
     rle_start_dttm date DEFAULT now() NOT NULL,
     pty_id bigint NOT NULL
 );
 
 
-ALTER TABLE role OWNER TO mochidb_owner;
+ALTER TABLE mochi.role OWNER TO mochidb_owner;
 
 --
 -- Name: role_type; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE role_type (
+CREATE TABLE mochi.role_type (
     rle_typ_id bigint NOT NULL,
     rle_typ_desc character varying NOT NULL
 );
 
 
-ALTER TABLE role_type OWNER TO mochidb_owner;
+ALTER TABLE mochi.role_type OWNER TO mochidb_owner;
 
 --
 -- Name: role_type_rle_typ_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE role_type_rle_typ_id_seq
+CREATE SEQUENCE mochi.role_type_rle_typ_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1227,20 +1223,20 @@ CREATE SEQUENCE role_type_rle_typ_id_seq
     CACHE 1;
 
 
-ALTER TABLE role_type_rle_typ_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.role_type_rle_typ_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: role_type_rle_typ_id_seq; Type: SEQUENCE OWNED BY; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER SEQUENCE role_type_rle_typ_id_seq OWNED BY role_type.rle_typ_id;
+ALTER SEQUENCE mochi.role_type_rle_typ_id_seq OWNED BY mochi.role_type.rle_typ_id;
 
 
 --
 -- Name: role_type_role_typ_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE role_type_role_typ_id_seq
+CREATE SEQUENCE mochi.role_type_role_typ_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1248,23 +1244,23 @@ CREATE SEQUENCE role_type_role_typ_id_seq
     CACHE 1;
 
 
-ALTER TABLE role_type_role_typ_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.role_type_role_typ_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: supplier; Type: TABLE; Schema: mochi; Owner: postgres
 --
 
-CREATE TABLE supplier (
+CREATE TABLE mochi.supplier (
 );
 
 
-ALTER TABLE supplier OWNER TO postgres;
+ALTER TABLE mochi.supplier OWNER TO postgres;
 
 --
 -- Name: tag_tag_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE tag_tag_id_seq
+CREATE SEQUENCE mochi.tag_tag_id_seq
     START WITH 15
     INCREMENT BY 1
     NO MINVALUE
@@ -1272,25 +1268,25 @@ CREATE SEQUENCE tag_tag_id_seq
     CACHE 1;
 
 
-ALTER TABLE tag_tag_id_seq OWNER TO mochidb_owner;
+ALTER TABLE mochi.tag_tag_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: tag; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE tag (
-    tag_id bigint DEFAULT nextval('tag_tag_id_seq'::regclass) NOT NULL,
+CREATE TABLE mochi.tag (
+    tag_id bigint DEFAULT nextval('mochi.tag_tag_id_seq'::regclass) NOT NULL,
     tag_cd character(5) NOT NULL
 );
 
 
-ALTER TABLE tag OWNER TO mochidb_owner;
+ALTER TABLE mochi.tag OWNER TO mochidb_owner;
 
 --
 -- Name: tag_attr_lcl_tag_id_seq; Type: SEQUENCE; Schema: mochi; Owner: postgres
 --
 
-CREATE SEQUENCE tag_attr_lcl_tag_id_seq
+CREATE SEQUENCE mochi.tag_attr_lcl_tag_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1298,14 +1294,14 @@ CREATE SEQUENCE tag_attr_lcl_tag_id_seq
     CACHE 1;
 
 
-ALTER TABLE tag_attr_lcl_tag_id_seq OWNER TO postgres;
+ALTER TABLE mochi.tag_attr_lcl_tag_id_seq OWNER TO postgres;
 
 --
 -- Name: tag_attr_lcl; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE tag_attr_lcl (
-    tag_lcl_id bigint DEFAULT nextval('tag_attr_lcl_tag_id_seq'::regclass) NOT NULL,
+CREATE TABLE mochi.tag_attr_lcl (
+    tag_lcl_id bigint DEFAULT nextval('mochi.tag_attr_lcl_tag_id_seq'::regclass) NOT NULL,
     tag_id bigint NOT NULL,
     tag_desc character varying(100),
     tag_img_pth character varying(100),
@@ -1313,13 +1309,13 @@ CREATE TABLE tag_attr_lcl (
 );
 
 
-ALTER TABLE tag_attr_lcl OWNER TO mochidb_owner;
+ALTER TABLE mochi.tag_attr_lcl OWNER TO mochidb_owner;
 
 --
 -- Name: vw_category_brand; Type: VIEW; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE VIEW vw_category_brand AS
+CREATE VIEW mochi.vw_category_brand AS
  SELECT p.cat_id,
     p.cat_cd,
     p.cat_lvl,
@@ -1338,25 +1334,25 @@ CREATE VIEW vw_category_brand AS
             WHEN ((pt.prc_typ_cd)::text = 'RET01'::text) THEN prc.prc_val
             ELSE NULL::numeric
         END)) AS max_price
-   FROM (((((((category p
-     JOIN LATERAL ft_categories((p.cat_cd)::text) cc(cat_id, cat_cd, cat_prnt_id, cat_typ_id) ON ((1 = 1)))
-     LEFT JOIN brand_category pc ON ((cc.cat_id = pc.cat_id)))
-     LEFT JOIN brand bnd ON ((pc.bnd_id = bnd.bnd_id)))
-     LEFT JOIN product prd ON ((pc.bnd_id = prd.bnd_id)))
-     LEFT JOIN price prc ON ((prd.prd_id = prc.prd_id)))
-     LEFT JOIN currency curr ON ((prc.ccy_id = curr.ccy_id)))
-     LEFT JOIN price_type pt ON ((prc.prc_typ_id = pt.prc_typ_id)))
+   FROM (((((((mochi.category p
+     JOIN LATERAL mochi.ft_categories((p.cat_cd)::text) cc(cat_id, cat_cd, cat_prnt_id, cat_typ_id) ON ((1 = 1)))
+     LEFT JOIN mochi.brand_category pc ON ((cc.cat_id = pc.cat_id)))
+     LEFT JOIN mochi.brand bnd ON ((pc.bnd_id = bnd.bnd_id)))
+     LEFT JOIN mochi.product prd ON ((pc.bnd_id = prd.bnd_id)))
+     LEFT JOIN mochi.price prc ON ((prd.prd_id = prc.prd_id)))
+     LEFT JOIN mochi.currency curr ON ((prc.ccy_id = curr.ccy_id)))
+     LEFT JOIN mochi.price_type pt ON ((prc.prc_typ_id = pt.prc_typ_id)))
   WHERE (cc.cat_typ_id = 2)
   GROUP BY p.cat_id, p.cat_cd, p.cat_lvl, p.hir_id, p.cat_typ_id, p.cat_prnt_id, curr.ccy_cd;
 
 
-ALTER TABLE vw_category_brand OWNER TO mochidb_owner;
+ALTER TABLE mochi.vw_category_brand OWNER TO mochidb_owner;
 
 --
 -- Name: vw_category_product; Type: VIEW; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE VIEW vw_category_product AS
+CREATE VIEW mochi.vw_category_product AS
  SELECT p.cat_id,
     p.cat_cd,
     p.cat_lvl,
@@ -1375,542 +1371,542 @@ CREATE VIEW vw_category_product AS
             WHEN ((pt.prc_typ_cd)::text = 'RET01'::text) THEN prc.prc_val
             ELSE NULL::numeric
         END)) AS max_price
-   FROM ((((((category p
-     JOIN LATERAL ft_categories((p.cat_cd)::text) cc(cat_id, cat_cd, cat_prnt_id, cat_typ_id) ON ((1 = 1)))
-     LEFT JOIN product_category pc ON ((cc.cat_id = pc.cat_id)))
-     LEFT JOIN product prd ON ((pc.prd_id = prd.prd_id)))
-     LEFT JOIN price prc ON ((prd.prd_id = prc.prd_id)))
-     LEFT JOIN currency curr ON ((prc.ccy_id = curr.ccy_id)))
-     LEFT JOIN price_type pt ON ((prc.prc_typ_id = pt.prc_typ_id)))
+   FROM ((((((mochi.category p
+     JOIN LATERAL mochi.ft_categories((p.cat_cd)::text) cc(cat_id, cat_cd, cat_prnt_id, cat_typ_id) ON ((1 = 1)))
+     LEFT JOIN mochi.product_category pc ON ((cc.cat_id = pc.cat_id)))
+     LEFT JOIN mochi.product prd ON ((pc.prd_id = prd.prd_id)))
+     LEFT JOIN mochi.price prc ON ((prd.prd_id = prc.prd_id)))
+     LEFT JOIN mochi.currency curr ON ((prc.ccy_id = curr.ccy_id)))
+     LEFT JOIN mochi.price_type pt ON ((prc.prc_typ_id = pt.prc_typ_id)))
   WHERE (cc.cat_typ_id = 1)
   GROUP BY p.cat_id, p.cat_cd, p.cat_lvl, p.hir_id, p.cat_typ_id, p.cat_prnt_id, curr.ccy_cd
  HAVING (count(DISTINCT prd.upc_cd) <> 0);
 
 
-ALTER TABLE vw_category_product OWNER TO mochidb_owner;
+ALTER TABLE mochi.vw_category_product OWNER TO mochidb_owner;
 
 --
--- Name: party pty_id; Type: DEFAULT; Schema: mochi; Owner: mochidb_owner
+-- Name: pty_id; Type: DEFAULT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY party ALTER COLUMN pty_id SET DEFAULT nextval('party_pty_id_seq'::regclass);
-
-
---
--- Name: party_type pty_typ_id; Type: DEFAULT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY party_type ALTER COLUMN pty_typ_id SET DEFAULT nextval('party_type_pty_typ_id_seq'::regclass);
+ALTER TABLE ONLY mochi.party ALTER COLUMN pty_id SET DEFAULT nextval('mochi.party_pty_id_seq'::regclass);
 
 
 --
--- Name: role_type rle_typ_id; Type: DEFAULT; Schema: mochi; Owner: mochidb_owner
+-- Name: pty_typ_id; Type: DEFAULT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY role_type ALTER COLUMN rle_typ_id SET DEFAULT nextval('role_type_rle_typ_id_seq'::regclass);
+ALTER TABLE ONLY mochi.party_type ALTER COLUMN pty_typ_id SET DEFAULT nextval('mochi.party_type_pty_typ_id_seq'::regclass);
 
 
 --
--- Name: brand_attr_lcl brand_attr_lcl_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: rle_typ_id; Type: DEFAULT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY brand_attr_lcl
+ALTER TABLE ONLY mochi.role_type ALTER COLUMN rle_typ_id SET DEFAULT nextval('mochi.role_type_rle_typ_id_seq'::regclass);
+
+
+--
+-- Name: brand_attr_lcl_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY mochi.brand_attr_lcl
     ADD CONSTRAINT brand_attr_lcl_pkey PRIMARY KEY (bnd_lcl_id);
 
 
 --
--- Name: brand_category brand_category_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: brand_category_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY brand_category
+ALTER TABLE ONLY mochi.brand_category
     ADD CONSTRAINT brand_category_pkey PRIMARY KEY (bnd_cat_id);
 
 
 --
--- Name: brand brand_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: brand_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY brand
+ALTER TABLE ONLY mochi.brand
     ADD CONSTRAINT brand_pkey PRIMARY KEY (bnd_id);
 
 
 --
--- Name: category_attr_lcl category_attr_lcl_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: category_attr_lcl_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY category_attr_lcl
+ALTER TABLE ONLY mochi.category_attr_lcl
     ADD CONSTRAINT category_attr_lcl_pkey PRIMARY KEY (cat_lcl_id);
 
 
 --
--- Name: category_brand category_brand_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: category_brand_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY category_brand
+ALTER TABLE ONLY mochi.category_brand
     ADD CONSTRAINT category_brand_pkey PRIMARY KEY (cat_id);
 
 
 --
--- Name: category category_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: category_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY category
+ALTER TABLE ONLY mochi.category
     ADD CONSTRAINT category_pkey PRIMARY KEY (cat_id);
 
 
 --
--- Name: category_product category_product_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: category_product_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY category_product
+ALTER TABLE ONLY mochi.category_product
     ADD CONSTRAINT category_product_pkey PRIMARY KEY (cat_id);
 
 
 --
--- Name: category_type category_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: category_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY category_type
+ALTER TABLE ONLY mochi.category_type
     ADD CONSTRAINT category_type_pkey PRIMARY KEY (cat_typ_id);
 
 
 --
--- Name: currency currency_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: currency_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY currency
+ALTER TABLE ONLY mochi.currency
     ADD CONSTRAINT currency_pkey PRIMARY KEY (ccy_id);
 
 
 --
--- Name: customer customer_cst_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: customer_cst_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY customer
+ALTER TABLE ONLY mochi.customer
     ADD CONSTRAINT customer_cst_id_key UNIQUE (cst_id);
 
 
 --
--- Name: customer customer_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: customer_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY customer
+ALTER TABLE ONLY mochi.customer
     ADD CONSTRAINT customer_pkey PRIMARY KEY (rle_id);
 
 
 --
--- Name: discount discount_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: discount_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY discount
+ALTER TABLE ONLY mochi.discount
     ADD CONSTRAINT discount_pkey PRIMARY KEY (dis_id);
 
 
 --
--- Name: discount_type discount_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: postgres
+-- Name: discount_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: postgres
 --
 
-ALTER TABLE ONLY discount_type
+ALTER TABLE ONLY mochi.discount_type
     ADD CONSTRAINT discount_type_pkey PRIMARY KEY (dis_typ_id);
 
 
 --
--- Name: hierarchy hierarchy_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: hierarchy_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY hierarchy
+ALTER TABLE ONLY mochi.hierarchy
     ADD CONSTRAINT hierarchy_pkey PRIMARY KEY (hir_id);
 
 
 --
--- Name: layout_category layout_category_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: layout_category_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY layout_category
+ALTER TABLE ONLY mochi.layout_category
     ADD CONSTRAINT layout_category_pkey PRIMARY KEY (lay_cat_id);
 
 
 --
--- Name: layout layout_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: layout_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY layout
+ALTER TABLE ONLY mochi.layout
     ADD CONSTRAINT layout_pkey PRIMARY KEY (lay_id);
 
 
 --
--- Name: order_line order_line_ord_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: order_line_ord_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY order_line
+ALTER TABLE ONLY mochi.order_line
     ADD CONSTRAINT order_line_ord_id_key UNIQUE (ord_id);
 
 
 --
--- Name: order_line order_line_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: order_line_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY order_line
+ALTER TABLE ONLY mochi.order_line
     ADD CONSTRAINT order_line_pkey PRIMARY KEY (ord_id, prd_id, ord_lne_no);
 
 
 --
--- Name: order orders_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: orders_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY "order"
+ALTER TABLE ONLY mochi."order"
     ADD CONSTRAINT orders_pkey PRIMARY KEY (ord_id);
 
 
 --
--- Name: order orders_pty_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: orders_pty_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY "order"
+ALTER TABLE ONLY mochi."order"
     ADD CONSTRAINT orders_pty_id_key UNIQUE (pty_id);
 
 
 --
--- Name: organisation organisation_org_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: organisation_org_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY organisation
+ALTER TABLE ONLY mochi.organisation
     ADD CONSTRAINT organisation_org_id_key UNIQUE (org_id);
 
 
 --
--- Name: party party_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: party_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY party
+ALTER TABLE ONLY mochi.party
     ADD CONSTRAINT party_pkey PRIMARY KEY (pty_id);
 
 
 --
--- Name: party_type party_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: party_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY party_type
+ALTER TABLE ONLY mochi.party_type
     ADD CONSTRAINT party_type_pkey PRIMARY KEY (pty_typ_id);
 
 
 --
--- Name: party_type party_type_pty_typ_desc_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: party_type_pty_typ_desc_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY party_type
+ALTER TABLE ONLY mochi.party_type
     ADD CONSTRAINT party_type_pty_typ_desc_key UNIQUE (pty_typ_desc);
 
 
 --
--- Name: person person_psn_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: person_psn_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY person
+ALTER TABLE ONLY mochi.person
     ADD CONSTRAINT person_psn_id_key UNIQUE (psn_id);
 
 
 --
--- Name: locale pk_locale; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: pk_locale; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY locale
+ALTER TABLE ONLY mochi.locale
     ADD CONSTRAINT pk_locale PRIMARY KEY (lcl_cd);
 
 
 --
--- Name: price price_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: price_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY price
+ALTER TABLE ONLY mochi.price
     ADD CONSTRAINT price_pkey PRIMARY KEY (prc_id);
 
 
 --
--- Name: price_type price_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: price_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY price_type
+ALTER TABLE ONLY mochi.price_type
     ADD CONSTRAINT price_type_pkey PRIMARY KEY (prc_typ_id);
 
 
 --
--- Name: product_attr_lcl product_attr_lcl_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: product_attr_lcl_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY product_attr_lcl
+ALTER TABLE ONLY mochi.product_attr_lcl
     ADD CONSTRAINT product_attr_lcl_pkey PRIMARY KEY (prd_lcl_id);
 
 
 --
--- Name: product_category product_category_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: product_category_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY product_category
+ALTER TABLE ONLY mochi.product_category
     ADD CONSTRAINT product_category_pkey PRIMARY KEY (prd_cat_id);
 
 
 --
--- Name: product product_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: product_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY product
+ALTER TABLE ONLY mochi.product
     ADD CONSTRAINT product_pkey PRIMARY KEY (prd_id);
 
 
 --
--- Name: product_status product_status_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: product_status_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY product_status
+ALTER TABLE ONLY mochi.product_status
     ADD CONSTRAINT product_status_pkey PRIMARY KEY (prd_sts_id);
 
 
 --
--- Name: product_tag product_tag_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: product_tag_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY product_tag
+ALTER TABLE ONLY mochi.product_tag
     ADD CONSTRAINT product_tag_pkey PRIMARY KEY (prd_tag_id);
 
 
 --
--- Name: product_type product_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: product_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY product_type
+ALTER TABLE ONLY mochi.product_type
     ADD CONSTRAINT product_type_pkey PRIMARY KEY (prd_typ_id);
 
 
 --
--- Name: promotion_category promotion_category_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: promotion_category_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY promotion_category
+ALTER TABLE ONLY mochi.promotion_category
     ADD CONSTRAINT promotion_category_pkey PRIMARY KEY (prm_cat_id);
 
 
 --
--- Name: promotion promotion_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: promotion_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY promotion
+ALTER TABLE ONLY mochi.promotion
     ADD CONSTRAINT promotion_pkey PRIMARY KEY (prm_id);
 
 
 --
--- Name: promotion_type promotion_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: postgres
+-- Name: promotion_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: postgres
 --
 
-ALTER TABLE ONLY promotion_type
+ALTER TABLE ONLY mochi.promotion_type
     ADD CONSTRAINT promotion_type_pkey PRIMARY KEY (prm_typ_id);
 
 
 --
--- Name: role role_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: role_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY role
+ALTER TABLE ONLY mochi.role
     ADD CONSTRAINT role_pkey PRIMARY KEY (rle_id);
 
 
 --
--- Name: role role_pty_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: role_pty_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY role
+ALTER TABLE ONLY mochi.role
     ADD CONSTRAINT role_pty_id_key UNIQUE (pty_id);
 
 
 --
--- Name: role_type role_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: role_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY role_type
+ALTER TABLE ONLY mochi.role_type
     ADD CONSTRAINT role_type_pkey PRIMARY KEY (rle_typ_id);
 
 
 --
--- Name: role_type role_type_rle_typ_desc_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: role_type_rle_typ_desc_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY role_type
+ALTER TABLE ONLY mochi.role_type
     ADD CONSTRAINT role_type_rle_typ_desc_key UNIQUE (rle_typ_desc);
 
 
 --
--- Name: tag_attr_lcl tag_attr_lcl_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: tag_attr_lcl_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY tag_attr_lcl
+ALTER TABLE ONLY mochi.tag_attr_lcl
     ADD CONSTRAINT tag_attr_lcl_pkey PRIMARY KEY (tag_lcl_id);
 
 
 --
--- Name: tag tag_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: tag_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY tag
+ALTER TABLE ONLY mochi.tag
     ADD CONSTRAINT tag_pkey PRIMARY KEY (tag_id);
 
 
 --
--- Name: brand_attr_lcl uc_bnd_desc_lcl_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_bnd_desc_lcl_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY brand_attr_lcl
+ALTER TABLE ONLY mochi.brand_attr_lcl
     ADD CONSTRAINT uc_bnd_desc_lcl_cd UNIQUE (bnd_desc, lcl_cd);
 
 
 --
--- Name: brand_attr_lcl uc_bnd_lcl; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_bnd_lcl; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY brand_attr_lcl
+ALTER TABLE ONLY mochi.brand_attr_lcl
     ADD CONSTRAINT uc_bnd_lcl UNIQUE (bnd_id, lcl_cd);
 
 
 --
--- Name: brand_category uc_brand_category; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_brand_category; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY brand_category
+ALTER TABLE ONLY mochi.brand_category
     ADD CONSTRAINT uc_brand_category UNIQUE (bnd_id, cat_id);
 
 
 --
--- Name: category uc_cat_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_cat_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY category
+ALTER TABLE ONLY mochi.category
     ADD CONSTRAINT uc_cat_cd UNIQUE (cat_cd);
 
 
 --
--- Name: category_attr_lcl uc_cat_desc; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_cat_desc; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY category_attr_lcl
+ALTER TABLE ONLY mochi.category_attr_lcl
     ADD CONSTRAINT uc_cat_desc UNIQUE (cat_desc, lcl_cd);
 
 
 --
--- Name: category_attr_lcl uc_cat_lcl; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_cat_lcl; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY category_attr_lcl
+ALTER TABLE ONLY mochi.category_attr_lcl
     ADD CONSTRAINT uc_cat_lcl UNIQUE (cat_id, lcl_cd);
 
 
 --
--- Name: category_type uc_cat_typ_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_cat_typ_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY category_type
+ALTER TABLE ONLY mochi.category_type
     ADD CONSTRAINT uc_cat_typ_cd UNIQUE (cat_typ_cd);
 
 
 --
--- Name: hierarchy uc_hir_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_hir_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY hierarchy
+ALTER TABLE ONLY mochi.hierarchy
     ADD CONSTRAINT uc_hir_cd UNIQUE (hir_cd);
 
 
 --
--- Name: layout uc_lay_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_lay_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY layout
+ALTER TABLE ONLY mochi.layout
     ADD CONSTRAINT uc_lay_cd UNIQUE (lay_cd);
 
 
 --
--- Name: layout uc_lay_desc; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_lay_desc; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY layout
+ALTER TABLE ONLY mochi.layout
     ADD CONSTRAINT uc_lay_desc UNIQUE (lay_desc);
 
 
 --
--- Name: layout_category uc_layout_category; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_layout_category; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY layout_category
+ALTER TABLE ONLY mochi.layout_category
     ADD CONSTRAINT uc_layout_category UNIQUE (lay_id, cat_id);
 
 
 --
--- Name: product_attr_lcl uc_prd_lcl_1; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_prd_lcl_1; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY product_attr_lcl
+ALTER TABLE ONLY mochi.product_attr_lcl
     ADD CONSTRAINT uc_prd_lcl_1 UNIQUE (prd_id, lcl_cd);
 
 
 --
--- Name: product_status uc_prd_sts_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_prd_sts_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY product_status
+ALTER TABLE ONLY mochi.product_status
     ADD CONSTRAINT uc_prd_sts_cd UNIQUE (prd_sts_cd);
 
 
 --
--- Name: product_type uc_prd_typ_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_prd_typ_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY product_type
+ALTER TABLE ONLY mochi.product_type
     ADD CONSTRAINT uc_prd_typ_cd UNIQUE (prd_typ_cd);
 
 
 --
--- Name: promotion uc_prm_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_prm_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY promotion
+ALTER TABLE ONLY mochi.promotion
     ADD CONSTRAINT uc_prm_cd UNIQUE (prm_cd);
 
 
 --
--- Name: product_category uc_product_category; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_product_category; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY product_category
+ALTER TABLE ONLY mochi.product_category
     ADD CONSTRAINT uc_product_category UNIQUE (prd_id, cat_id);
 
 
 --
--- Name: product_tag uc_product_tag; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_product_tag; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY product_tag
+ALTER TABLE ONLY mochi.product_tag
     ADD CONSTRAINT uc_product_tag UNIQUE (prd_id, tag_id);
 
 
 --
--- Name: promotion_category uc_promotion_category; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_promotion_category; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY promotion_category
+ALTER TABLE ONLY mochi.promotion_category
     ADD CONSTRAINT uc_promotion_category UNIQUE (prm_id, cat_id);
 
 
 --
--- Name: tag_attr_lcl uc_tag_desc; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_tag_desc; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY tag_attr_lcl
+ALTER TABLE ONLY mochi.tag_attr_lcl
     ADD CONSTRAINT uc_tag_desc UNIQUE (tag_desc, lcl_cd);
 
 
 --
--- Name: tag_attr_lcl uc_tag_lcl; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: uc_tag_lcl; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY tag_attr_lcl
+ALTER TABLE ONLY mochi.tag_attr_lcl
     ADD CONSTRAINT uc_tag_lcl UNIQUE (tag_id, lcl_cd);
 
 
@@ -1918,698 +1914,884 @@ ALTER TABLE ONLY tag_attr_lcl
 -- Name: role_role_typ_id_role_start_dttm_party_id_key; Type: INDEX; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE UNIQUE INDEX role_role_typ_id_role_start_dttm_party_id_key ON role USING btree (rle_typ_id, rle_start_dttm, pty_id);
+CREATE UNIQUE INDEX role_role_typ_id_role_start_dttm_party_id_key ON mochi.role USING btree (rle_typ_id, rle_start_dttm, pty_id);
 
 
 --
--- Name: brand_attr_lcl brand_attr_lcl_bnd_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: brand_attr_lcl_bnd_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY brand_attr_lcl
-    ADD CONSTRAINT brand_attr_lcl_bnd_id_fkey FOREIGN KEY (bnd_id) REFERENCES brand(bnd_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.brand_attr_lcl
+    ADD CONSTRAINT brand_attr_lcl_bnd_id_fkey FOREIGN KEY (bnd_id) REFERENCES mochi.brand(bnd_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: brand_attr_lcl brand_attr_lcl_lcl_cd_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: brand_attr_lcl_lcl_cd_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY brand_attr_lcl
-    ADD CONSTRAINT brand_attr_lcl_lcl_cd_fkey FOREIGN KEY (lcl_cd) REFERENCES locale(lcl_cd);
+ALTER TABLE ONLY mochi.brand_attr_lcl
+    ADD CONSTRAINT brand_attr_lcl_lcl_cd_fkey FOREIGN KEY (lcl_cd) REFERENCES mochi.locale(lcl_cd);
 
 
 --
--- Name: brand_category brand_category_bnd_id_brand_bnd_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: brand_category_bnd_id_brand_bnd_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY brand_category
-    ADD CONSTRAINT brand_category_bnd_id_brand_bnd_id_fkey FOREIGN KEY (bnd_id) REFERENCES brand(bnd_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.brand_category
+    ADD CONSTRAINT brand_category_bnd_id_brand_bnd_id_fkey FOREIGN KEY (bnd_id) REFERENCES mochi.brand(bnd_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: brand_category brand_category_cat_id_category_cat_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: brand_category_cat_id_category_cat_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY brand_category
-    ADD CONSTRAINT brand_category_cat_id_category_cat_id_fkey FOREIGN KEY (cat_id) REFERENCES category(cat_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.brand_category
+    ADD CONSTRAINT brand_category_cat_id_category_cat_id_fkey FOREIGN KEY (cat_id) REFERENCES mochi.category(cat_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: category_attr_lcl category_attr_lcl_cat_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: category_attr_lcl_cat_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY category_attr_lcl
-    ADD CONSTRAINT category_attr_lcl_cat_id_fkey FOREIGN KEY (cat_id) REFERENCES category(cat_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.category_attr_lcl
+    ADD CONSTRAINT category_attr_lcl_cat_id_fkey FOREIGN KEY (cat_id) REFERENCES mochi.category(cat_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: category_attr_lcl category_attr_lcl_lcl_cd_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: category_attr_lcl_lcl_cd_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY category_attr_lcl
-    ADD CONSTRAINT category_attr_lcl_lcl_cd_fkey FOREIGN KEY (lcl_cd) REFERENCES locale(lcl_cd);
+ALTER TABLE ONLY mochi.category_attr_lcl
+    ADD CONSTRAINT category_attr_lcl_lcl_cd_fkey FOREIGN KEY (lcl_cd) REFERENCES mochi.locale(lcl_cd);
 
 
 --
--- Name: category_brand category_brand_cat_id_category_cat_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: category_brand_cat_id_category_cat_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY category_brand
-    ADD CONSTRAINT category_brand_cat_id_category_cat_id_fkey FOREIGN KEY (cat_id) REFERENCES category(cat_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.category_brand
+    ADD CONSTRAINT category_brand_cat_id_category_cat_id_fkey FOREIGN KEY (cat_id) REFERENCES mochi.category(cat_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: category category_hir_id_hierarchy_hir_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: category_hir_id_hierarchy_hir_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY category
-    ADD CONSTRAINT category_hir_id_hierarchy_hir_id_fkey FOREIGN KEY (hir_id) REFERENCES hierarchy(hir_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.category
+    ADD CONSTRAINT category_hir_id_hierarchy_hir_id_fkey FOREIGN KEY (hir_id) REFERENCES mochi.hierarchy(hir_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: category_product category_product_cat_id_category_cat_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: category_product_cat_id_category_cat_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY category_product
-    ADD CONSTRAINT category_product_cat_id_category_cat_id_fkey FOREIGN KEY (cat_id) REFERENCES category(cat_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.category_product
+    ADD CONSTRAINT category_product_cat_id_category_cat_id_fkey FOREIGN KEY (cat_id) REFERENCES mochi.category(cat_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: customer customer_role_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: customer_role_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY customer
-    ADD CONSTRAINT customer_role_id_fkey FOREIGN KEY (rle_id) REFERENCES role(rle_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.customer
+    ADD CONSTRAINT customer_role_id_fkey FOREIGN KEY (rle_id) REFERENCES mochi.role(rle_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: layout_category layout_category_cat_id_category_cat_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: layout_category_cat_id_category_cat_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY layout_category
-    ADD CONSTRAINT layout_category_cat_id_category_cat_id_fkey FOREIGN KEY (cat_id) REFERENCES category(cat_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.layout_category
+    ADD CONSTRAINT layout_category_cat_id_category_cat_id_fkey FOREIGN KEY (cat_id) REFERENCES mochi.category(cat_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: layout_category layout_category_lay_id_layout_lay_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: layout_category_lay_id_layout_lay_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY layout_category
-    ADD CONSTRAINT layout_category_lay_id_layout_lay_id_fkey FOREIGN KEY (lay_id) REFERENCES layout(lay_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.layout_category
+    ADD CONSTRAINT layout_category_lay_id_layout_lay_id_fkey FOREIGN KEY (lay_id) REFERENCES mochi.layout(lay_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: order_line order_line_order_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: order_line_order_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY order_line
-    ADD CONSTRAINT order_line_order_id_fkey FOREIGN KEY (ord_id) REFERENCES "order"(ord_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.order_line
+    ADD CONSTRAINT order_line_order_id_fkey FOREIGN KEY (ord_id) REFERENCES mochi."order"(ord_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: order_line order_line_product_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: order_line_product_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY order_line
-    ADD CONSTRAINT order_line_product_id_fkey FOREIGN KEY (prd_id) REFERENCES product(prd_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.order_line
+    ADD CONSTRAINT order_line_product_id_fkey FOREIGN KEY (prd_id) REFERENCES mochi.product(prd_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: order orders_party_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: orders_party_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY "order"
-    ADD CONSTRAINT orders_party_id_fkey FOREIGN KEY (pty_id) REFERENCES party(pty_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi."order"
+    ADD CONSTRAINT orders_party_id_fkey FOREIGN KEY (pty_id) REFERENCES mochi.party(pty_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: organisation organisation_org_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: organisation_org_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY organisation
-    ADD CONSTRAINT organisation_org_id_fkey FOREIGN KEY (org_id) REFERENCES party(pty_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.organisation
+    ADD CONSTRAINT organisation_org_id_fkey FOREIGN KEY (org_id) REFERENCES mochi.party(pty_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: party party_pty_typ_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: party_pty_typ_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY party
-    ADD CONSTRAINT party_pty_typ_id_fkey FOREIGN KEY (pty_typ_id) REFERENCES party_type(pty_typ_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.party
+    ADD CONSTRAINT party_pty_typ_id_fkey FOREIGN KEY (pty_typ_id) REFERENCES mochi.party_type(pty_typ_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: person person_person_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: person_person_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY person
-    ADD CONSTRAINT person_person_id_fkey FOREIGN KEY (psn_id) REFERENCES party(pty_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.person
+    ADD CONSTRAINT person_person_id_fkey FOREIGN KEY (psn_id) REFERENCES mochi.party(pty_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: product_attr_lcl product_attr_lcl_lcl_cd_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: product_attr_lcl_lcl_cd_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY product_attr_lcl
-    ADD CONSTRAINT product_attr_lcl_lcl_cd_fkey FOREIGN KEY (lcl_cd) REFERENCES locale(lcl_cd);
+ALTER TABLE ONLY mochi.product_attr_lcl
+    ADD CONSTRAINT product_attr_lcl_lcl_cd_fkey FOREIGN KEY (lcl_cd) REFERENCES mochi.locale(lcl_cd);
 
 
 --
--- Name: product_category product_category_cat_id_category_cat_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: product_category_cat_id_category_cat_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY product_category
-    ADD CONSTRAINT product_category_cat_id_category_cat_id_fkey FOREIGN KEY (cat_id) REFERENCES category(cat_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.product_category
+    ADD CONSTRAINT product_category_cat_id_category_cat_id_fkey FOREIGN KEY (cat_id) REFERENCES mochi.category(cat_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: product_category product_category_prd_id_product_prd_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: product_category_prd_id_product_prd_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY product_category
-    ADD CONSTRAINT product_category_prd_id_product_prd_id_fkey FOREIGN KEY (prd_id) REFERENCES product(prd_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.product_category
+    ADD CONSTRAINT product_category_prd_id_product_prd_id_fkey FOREIGN KEY (prd_id) REFERENCES mochi.product(prd_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: product product_sts_id_product_status_sts_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: product_sts_id_product_status_sts_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY product
-    ADD CONSTRAINT product_sts_id_product_status_sts_id_fkey FOREIGN KEY (prd_sts_id) REFERENCES product_status(prd_sts_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.product
+    ADD CONSTRAINT product_sts_id_product_status_sts_id_fkey FOREIGN KEY (prd_sts_id) REFERENCES mochi.product_status(prd_sts_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: product_tag product_tag_prd_id_product_prd_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: product_tag_prd_id_product_prd_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY product_tag
-    ADD CONSTRAINT product_tag_prd_id_product_prd_id_fkey FOREIGN KEY (prd_id) REFERENCES product(prd_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.product_tag
+    ADD CONSTRAINT product_tag_prd_id_product_prd_id_fkey FOREIGN KEY (prd_id) REFERENCES mochi.product(prd_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: product_tag product_tag_tag_id_tag_tag_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: product_tag_tag_id_tag_tag_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY product_tag
-    ADD CONSTRAINT product_tag_tag_id_tag_tag_id_fkey FOREIGN KEY (tag_id) REFERENCES tag(tag_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.product_tag
+    ADD CONSTRAINT product_tag_tag_id_tag_tag_id_fkey FOREIGN KEY (tag_id) REFERENCES mochi.tag(tag_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: product product_typ_id_product_type_typ_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: product_typ_id_product_type_typ_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY product
-    ADD CONSTRAINT product_typ_id_product_type_typ_id_fkey FOREIGN KEY (prd_typ_id) REFERENCES product_type(prd_typ_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.product
+    ADD CONSTRAINT product_typ_id_product_type_typ_id_fkey FOREIGN KEY (prd_typ_id) REFERENCES mochi.product_type(prd_typ_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: promotion_category promotion_category_cat_id_category_cat_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: promotion_category_cat_id_category_cat_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY promotion_category
-    ADD CONSTRAINT promotion_category_cat_id_category_cat_id_fkey FOREIGN KEY (cat_id) REFERENCES category(cat_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.promotion_category
+    ADD CONSTRAINT promotion_category_cat_id_category_cat_id_fkey FOREIGN KEY (cat_id) REFERENCES mochi.category(cat_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: promotion_category promotion_category_prm_id_promotion_prm_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: promotion_category_prm_id_promotion_prm_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY promotion_category
-    ADD CONSTRAINT promotion_category_prm_id_promotion_prm_id_fkey FOREIGN KEY (prm_id) REFERENCES promotion(prm_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.promotion_category
+    ADD CONSTRAINT promotion_category_prm_id_promotion_prm_id_fkey FOREIGN KEY (prm_id) REFERENCES mochi.promotion(prm_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: role role_party_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: role_party_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY role
-    ADD CONSTRAINT role_party_id_fkey FOREIGN KEY (pty_id) REFERENCES party(pty_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.role
+    ADD CONSTRAINT role_party_id_fkey FOREIGN KEY (pty_id) REFERENCES mochi.party(pty_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: role role_role_typ_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: role_role_typ_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY role
-    ADD CONSTRAINT role_role_typ_id_fkey FOREIGN KEY (rle_typ_id) REFERENCES role_type(rle_typ_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.role
+    ADD CONSTRAINT role_role_typ_id_fkey FOREIGN KEY (rle_typ_id) REFERENCES mochi.role_type(rle_typ_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: tag_attr_lcl tag_attr_lcl_lcl_cd_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: tag_attr_lcl_lcl_cd_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY tag_attr_lcl
-    ADD CONSTRAINT tag_attr_lcl_lcl_cd_fkey FOREIGN KEY (lcl_cd) REFERENCES locale(lcl_cd);
+ALTER TABLE ONLY mochi.tag_attr_lcl
+    ADD CONSTRAINT tag_attr_lcl_lcl_cd_fkey FOREIGN KEY (lcl_cd) REFERENCES mochi.locale(lcl_cd);
 
 
 --
--- Name: tag_attr_lcl tag_attr_lcl_tag_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: tag_attr_lcl_tag_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY tag_attr_lcl
-    ADD CONSTRAINT tag_attr_lcl_tag_id_fkey FOREIGN KEY (tag_id) REFERENCES tag(tag_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY mochi.tag_attr_lcl
+    ADD CONSTRAINT tag_attr_lcl_tag_id_fkey FOREIGN KEY (tag_id) REFERENCES mochi.tag(tag_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: mochi; Type: ACL; Schema: -; Owner: mochidb_owner
+-- Name: SCHEMA mochi; Type: ACL; Schema: -; Owner: mochidb_owner
 --
 
+REVOKE ALL ON SCHEMA mochi FROM PUBLIC;
+REVOKE ALL ON SCHEMA mochi FROM mochidb_owner;
+GRANT ALL ON SCHEMA mochi TO mochidb_owner;
 GRANT USAGE ON SCHEMA mochi TO mochi_app;
 GRANT ALL ON SCHEMA mochi TO security_owner;
 GRANT USAGE ON SCHEMA mochi TO security_app;
 
 
 --
--- Name: address; Type: ACL; Schema: mochi; Owner: postgres
+-- Name: TABLE address; Type: ACL; Schema: mochi; Owner: postgres
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE address TO mochi_app;
+REVOKE ALL ON TABLE mochi.address FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.address FROM postgres;
+GRANT ALL ON TABLE mochi.address TO postgres;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.address TO mochi_app;
 
 
 --
--- Name: address_type; Type: ACL; Schema: mochi; Owner: postgres
+-- Name: TABLE address_type; Type: ACL; Schema: mochi; Owner: postgres
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE address_type TO mochi_app;
+REVOKE ALL ON TABLE mochi.address_type FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.address_type FROM postgres;
+GRANT ALL ON TABLE mochi.address_type TO postgres;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.address_type TO mochi_app;
 
 
 --
--- Name: brand_bnd_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: SEQUENCE brand_bnd_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,USAGE ON SEQUENCE brand_bnd_id_seq TO mochi_app;
+REVOKE ALL ON SEQUENCE mochi.brand_bnd_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE mochi.brand_bnd_id_seq FROM mochidb_owner;
+GRANT ALL ON SEQUENCE mochi.brand_bnd_id_seq TO mochidb_owner;
+GRANT SELECT,USAGE ON SEQUENCE mochi.brand_bnd_id_seq TO mochi_app;
 
 
 --
--- Name: brand; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE brand; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE brand TO mochi_app;
+REVOKE ALL ON TABLE mochi.brand FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.brand FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.brand TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.brand TO mochi_app;
 
 
 --
--- Name: brand_attr_lcl; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE brand_attr_lcl; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE brand_attr_lcl TO mochi_app;
+REVOKE ALL ON TABLE mochi.brand_attr_lcl FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.brand_attr_lcl FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.brand_attr_lcl TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.brand_attr_lcl TO mochi_app;
 
 
 --
--- Name: brand_category; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE brand_category; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE brand_category TO mochi_app;
+REVOKE ALL ON TABLE mochi.brand_category FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.brand_category FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.brand_category TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.brand_category TO mochi_app;
 
 
 --
--- Name: category; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE category; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE category TO mochi_app;
+REVOKE ALL ON TABLE mochi.category FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.category FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.category TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.category TO mochi_app;
 
 
 --
--- Name: category_attr_lcl; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE category_attr_lcl; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE category_attr_lcl TO mochi_app;
+REVOKE ALL ON TABLE mochi.category_attr_lcl FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.category_attr_lcl FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.category_attr_lcl TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.category_attr_lcl TO mochi_app;
 
 
 --
--- Name: category_brand; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE category_brand; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE category_brand TO mochi_app;
+REVOKE ALL ON TABLE mochi.category_brand FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.category_brand FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.category_brand TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.category_brand TO mochi_app;
 
 
 --
--- Name: category_product; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE category_product; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE category_product TO mochi_app;
+REVOKE ALL ON TABLE mochi.category_product FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.category_product FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.category_product TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.category_product TO mochi_app;
 
 
 --
--- Name: category_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE category_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE category_type TO mochi_app;
+REVOKE ALL ON TABLE mochi.category_type FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.category_type FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.category_type TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.category_type TO mochi_app;
 
 
 --
--- Name: currency; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE currency; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE currency TO mochi_app;
+REVOKE ALL ON TABLE mochi.currency FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.currency FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.currency TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.currency TO mochi_app;
 
 
 --
--- Name: customer_cst_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: SEQUENCE customer_cst_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,USAGE ON SEQUENCE customer_cst_id_seq TO mochi_app;
+REVOKE ALL ON SEQUENCE mochi.customer_cst_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE mochi.customer_cst_id_seq FROM mochidb_owner;
+GRANT ALL ON SEQUENCE mochi.customer_cst_id_seq TO mochidb_owner;
+GRANT SELECT,USAGE ON SEQUENCE mochi.customer_cst_id_seq TO mochi_app;
 
 
 --
--- Name: customer; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE customer; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE customer TO mochi_app;
-GRANT SELECT ON TABLE customer TO security_app;
+REVOKE ALL ON TABLE mochi.customer FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.customer FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.customer TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.customer TO mochi_app;
+GRANT SELECT ON TABLE mochi.customer TO security_app;
 
 
 --
--- Name: discount; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE discount; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE discount TO mochi_app;
+REVOKE ALL ON TABLE mochi.discount FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.discount FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.discount TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.discount TO mochi_app;
 
 
 --
--- Name: discount_type; Type: ACL; Schema: mochi; Owner: postgres
+-- Name: TABLE discount_type; Type: ACL; Schema: mochi; Owner: postgres
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE discount_type TO mochi_app;
+REVOKE ALL ON TABLE mochi.discount_type FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.discount_type FROM postgres;
+GRANT ALL ON TABLE mochi.discount_type TO postgres;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.discount_type TO mochi_app;
 
 
 --
--- Name: hibernate_sequence; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: SEQUENCE hibernate_sequence; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,USAGE ON SEQUENCE hibernate_sequence TO mochi_app;
+REVOKE ALL ON SEQUENCE mochi.hibernate_sequence FROM PUBLIC;
+REVOKE ALL ON SEQUENCE mochi.hibernate_sequence FROM mochidb_owner;
+GRANT ALL ON SEQUENCE mochi.hibernate_sequence TO mochidb_owner;
+GRANT SELECT,USAGE ON SEQUENCE mochi.hibernate_sequence TO mochi_app;
 
 
 --
--- Name: hierarchy_hir_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: SEQUENCE hierarchy_hir_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,USAGE ON SEQUENCE hierarchy_hir_id_seq TO mochi_app;
+REVOKE ALL ON SEQUENCE mochi.hierarchy_hir_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE mochi.hierarchy_hir_id_seq FROM mochidb_owner;
+GRANT ALL ON SEQUENCE mochi.hierarchy_hir_id_seq TO mochidb_owner;
+GRANT SELECT,USAGE ON SEQUENCE mochi.hierarchy_hir_id_seq TO mochi_app;
 
 
 --
--- Name: hierarchy; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE hierarchy; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE hierarchy TO mochi_app;
+REVOKE ALL ON TABLE mochi.hierarchy FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.hierarchy FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.hierarchy TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.hierarchy TO mochi_app;
 
 
 --
--- Name: inventory_on_hand; Type: ACL; Schema: mochi; Owner: postgres
+-- Name: TABLE inventory_on_hand; Type: ACL; Schema: mochi; Owner: postgres
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE inventory_on_hand TO mochi_app;
+REVOKE ALL ON TABLE mochi.inventory_on_hand FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.inventory_on_hand FROM postgres;
+GRANT ALL ON TABLE mochi.inventory_on_hand TO postgres;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.inventory_on_hand TO mochi_app;
 
 
 --
--- Name: inventory_transaction; Type: ACL; Schema: mochi; Owner: postgres
+-- Name: TABLE inventory_transaction; Type: ACL; Schema: mochi; Owner: postgres
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE inventory_transaction TO mochi_app;
+REVOKE ALL ON TABLE mochi.inventory_transaction FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.inventory_transaction FROM postgres;
+GRANT ALL ON TABLE mochi.inventory_transaction TO postgres;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.inventory_transaction TO mochi_app;
 
 
 --
--- Name: layout; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE layout; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE layout TO mochi_app;
+REVOKE ALL ON TABLE mochi.layout FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.layout FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.layout TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.layout TO mochi_app;
 
 
 --
--- Name: layout_category; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE layout_category; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE layout_category TO mochi_app;
+REVOKE ALL ON TABLE mochi.layout_category FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.layout_category FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.layout_category TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.layout_category TO mochi_app;
 
 
 --
--- Name: locale; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE locale; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE locale TO mochi_app;
+REVOKE ALL ON TABLE mochi.locale FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.locale FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.locale TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.locale TO mochi_app;
 
 
 --
--- Name: location; Type: ACL; Schema: mochi; Owner: postgres
+-- Name: TABLE location; Type: ACL; Schema: mochi; Owner: postgres
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE location TO mochi_app;
+REVOKE ALL ON TABLE mochi.location FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.location FROM postgres;
+GRANT ALL ON TABLE mochi.location TO postgres;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.location TO mochi_app;
 
 
 --
--- Name: order; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE "order"; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE "order" TO mochi_app;
+REVOKE ALL ON TABLE mochi."order" FROM PUBLIC;
+REVOKE ALL ON TABLE mochi."order" FROM mochidb_owner;
+GRANT ALL ON TABLE mochi."order" TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi."order" TO mochi_app;
 
 
 --
--- Name: order_line; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE order_line; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE order_line TO mochi_app;
+REVOKE ALL ON TABLE mochi.order_line FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.order_line FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.order_line TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.order_line TO mochi_app;
 
 
 --
--- Name: organisation; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE organisation; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE organisation TO mochi_app;
-GRANT SELECT ON TABLE organisation TO security_app;
+REVOKE ALL ON TABLE mochi.organisation FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.organisation FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.organisation TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.organisation TO mochi_app;
+GRANT SELECT ON TABLE mochi.organisation TO security_app;
 
 
 --
--- Name: party; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE party; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE party TO mochi_app;
-GRANT SELECT ON TABLE party TO security_app;
+REVOKE ALL ON TABLE mochi.party FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.party FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.party TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.party TO mochi_app;
+GRANT SELECT ON TABLE mochi.party TO security_app;
 
 
 --
--- Name: party_party_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: SEQUENCE party_party_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,USAGE ON SEQUENCE party_party_id_seq TO mochi_app;
+REVOKE ALL ON SEQUENCE mochi.party_party_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE mochi.party_party_id_seq FROM mochidb_owner;
+GRANT ALL ON SEQUENCE mochi.party_party_id_seq TO mochidb_owner;
+GRANT SELECT,USAGE ON SEQUENCE mochi.party_party_id_seq TO mochi_app;
 
 
 --
--- Name: party_pty_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: SEQUENCE party_pty_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,USAGE ON SEQUENCE party_pty_id_seq TO mochi_app;
+REVOKE ALL ON SEQUENCE mochi.party_pty_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE mochi.party_pty_id_seq FROM mochidb_owner;
+GRANT ALL ON SEQUENCE mochi.party_pty_id_seq TO mochidb_owner;
+GRANT SELECT,USAGE ON SEQUENCE mochi.party_pty_id_seq TO mochi_app;
 
 
 --
--- Name: party_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE party_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE party_type TO mochi_app;
-GRANT SELECT ON TABLE party_type TO security_app;
+REVOKE ALL ON TABLE mochi.party_type FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.party_type FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.party_type TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.party_type TO mochi_app;
+GRANT SELECT ON TABLE mochi.party_type TO security_app;
 
 
 --
--- Name: party_type_pty_typ_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: SEQUENCE party_type_pty_typ_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,USAGE ON SEQUENCE party_type_pty_typ_id_seq TO mochi_app;
+REVOKE ALL ON SEQUENCE mochi.party_type_pty_typ_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE mochi.party_type_pty_typ_id_seq FROM mochidb_owner;
+GRANT ALL ON SEQUENCE mochi.party_type_pty_typ_id_seq TO mochidb_owner;
+GRANT SELECT,USAGE ON SEQUENCE mochi.party_type_pty_typ_id_seq TO mochi_app;
 
 
 --
--- Name: person; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE person; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE person TO mochi_app;
-GRANT SELECT ON TABLE person TO security_app;
+REVOKE ALL ON TABLE mochi.person FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.person FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.person TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.person TO mochi_app;
+GRANT SELECT ON TABLE mochi.person TO security_app;
 
 
 --
--- Name: person_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: SEQUENCE person_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,USAGE ON SEQUENCE person_id_seq TO mochi_app;
+REVOKE ALL ON SEQUENCE mochi.person_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE mochi.person_id_seq FROM mochidb_owner;
+GRANT ALL ON SEQUENCE mochi.person_id_seq TO mochidb_owner;
+GRANT SELECT,USAGE ON SEQUENCE mochi.person_id_seq TO mochi_app;
 
 
 --
--- Name: price_prc_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: SEQUENCE price_prc_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,USAGE ON SEQUENCE price_prc_id_seq TO mochi_app;
+REVOKE ALL ON SEQUENCE mochi.price_prc_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE mochi.price_prc_id_seq FROM mochidb_owner;
+GRANT ALL ON SEQUENCE mochi.price_prc_id_seq TO mochidb_owner;
+GRANT SELECT,USAGE ON SEQUENCE mochi.price_prc_id_seq TO mochi_app;
 
 
 --
--- Name: price; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE price; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE price TO mochi_app;
+REVOKE ALL ON TABLE mochi.price FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.price FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.price TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.price TO mochi_app;
 
 
 --
--- Name: price_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE price_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE price_type TO mochi_app;
+REVOKE ALL ON TABLE mochi.price_type FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.price_type FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.price_type TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.price_type TO mochi_app;
 
 
 --
--- Name: product; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE product; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE product TO mochi_app;
+REVOKE ALL ON TABLE mochi.product FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.product FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.product TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.product TO mochi_app;
 
 
 --
--- Name: product_attr_lcl; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE product_attr_lcl; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE product_attr_lcl TO mochi_app;
+REVOKE ALL ON TABLE mochi.product_attr_lcl FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.product_attr_lcl FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.product_attr_lcl TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.product_attr_lcl TO mochi_app;
 
 
 --
--- Name: product_category; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE product_category; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE product_category TO mochi_app;
+REVOKE ALL ON TABLE mochi.product_category FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.product_category FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.product_category TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.product_category TO mochi_app;
 
 
 --
--- Name: product_status; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE product_status; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE product_status TO mochi_app;
+REVOKE ALL ON TABLE mochi.product_status FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.product_status FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.product_status TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.product_status TO mochi_app;
 
 
 --
--- Name: product_supplier; Type: ACL; Schema: mochi; Owner: postgres
+-- Name: TABLE product_supplier; Type: ACL; Schema: mochi; Owner: postgres
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE product_supplier TO mochi_app;
+REVOKE ALL ON TABLE mochi.product_supplier FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.product_supplier FROM postgres;
+GRANT ALL ON TABLE mochi.product_supplier TO postgres;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.product_supplier TO mochi_app;
 
 
 --
--- Name: product_tag; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE product_tag; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE product_tag TO mochi_app;
+REVOKE ALL ON TABLE mochi.product_tag FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.product_tag FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.product_tag TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.product_tag TO mochi_app;
 
 
 --
--- Name: product_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE product_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE product_type TO mochi_app;
+REVOKE ALL ON TABLE mochi.product_type FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.product_type FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.product_type TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.product_type TO mochi_app;
 
 
 --
--- Name: promotion; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE promotion; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE promotion TO mochi_app;
+REVOKE ALL ON TABLE mochi.promotion FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.promotion FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.promotion TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.promotion TO mochi_app;
 
 
 --
--- Name: promotion_brand; Type: ACL; Schema: mochi; Owner: postgres
+-- Name: TABLE promotion_brand; Type: ACL; Schema: mochi; Owner: postgres
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE promotion_brand TO mochi_app;
+REVOKE ALL ON TABLE mochi.promotion_brand FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.promotion_brand FROM postgres;
+GRANT ALL ON TABLE mochi.promotion_brand TO postgres;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.promotion_brand TO mochi_app;
 
 
 --
--- Name: promotion_category; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE promotion_category; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE promotion_category TO mochi_app;
+REVOKE ALL ON TABLE mochi.promotion_category FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.promotion_category FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.promotion_category TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.promotion_category TO mochi_app;
 
 
 --
--- Name: promotion_order; Type: ACL; Schema: mochi; Owner: postgres
+-- Name: TABLE promotion_order; Type: ACL; Schema: mochi; Owner: postgres
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE promotion_order TO mochi_app;
+REVOKE ALL ON TABLE mochi.promotion_order FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.promotion_order FROM postgres;
+GRANT ALL ON TABLE mochi.promotion_order TO postgres;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.promotion_order TO mochi_app;
 
 
 --
--- Name: promotion_product; Type: ACL; Schema: mochi; Owner: postgres
+-- Name: TABLE promotion_product; Type: ACL; Schema: mochi; Owner: postgres
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE promotion_product TO mochi_app;
+REVOKE ALL ON TABLE mochi.promotion_product FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.promotion_product FROM postgres;
+GRANT ALL ON TABLE mochi.promotion_product TO postgres;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.promotion_product TO mochi_app;
 
 
 --
--- Name: promotion_type; Type: ACL; Schema: mochi; Owner: postgres
+-- Name: TABLE promotion_type; Type: ACL; Schema: mochi; Owner: postgres
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE promotion_type TO mochi_app;
+REVOKE ALL ON TABLE mochi.promotion_type FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.promotion_type FROM postgres;
+GRANT ALL ON TABLE mochi.promotion_type TO postgres;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.promotion_type TO mochi_app;
 
 
 --
--- Name: role_rle_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: SEQUENCE role_rle_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,USAGE ON SEQUENCE role_rle_id_seq TO mochi_app;
+REVOKE ALL ON SEQUENCE mochi.role_rle_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE mochi.role_rle_id_seq FROM mochidb_owner;
+GRANT ALL ON SEQUENCE mochi.role_rle_id_seq TO mochidb_owner;
+GRANT SELECT,USAGE ON SEQUENCE mochi.role_rle_id_seq TO mochi_app;
 
 
 --
--- Name: role; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE role; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role TO mochi_app;
-GRANT SELECT ON TABLE role TO security_app;
+REVOKE ALL ON TABLE mochi.role FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.role FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.role TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.role TO mochi_app;
+GRANT SELECT ON TABLE mochi.role TO security_app;
 
 
 --
--- Name: role_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE role_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role_type TO mochi_app;
-GRANT SELECT ON TABLE role_type TO security_app;
+REVOKE ALL ON TABLE mochi.role_type FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.role_type FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.role_type TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.role_type TO mochi_app;
+GRANT SELECT ON TABLE mochi.role_type TO security_app;
 
 
 --
--- Name: role_type_rle_typ_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: SEQUENCE role_type_rle_typ_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,USAGE ON SEQUENCE role_type_rle_typ_id_seq TO mochi_app;
+REVOKE ALL ON SEQUENCE mochi.role_type_rle_typ_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE mochi.role_type_rle_typ_id_seq FROM mochidb_owner;
+GRANT ALL ON SEQUENCE mochi.role_type_rle_typ_id_seq TO mochidb_owner;
+GRANT SELECT,USAGE ON SEQUENCE mochi.role_type_rle_typ_id_seq TO mochi_app;
 
 
 --
--- Name: role_type_role_typ_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: SEQUENCE role_type_role_typ_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,USAGE ON SEQUENCE role_type_role_typ_id_seq TO mochi_app;
+REVOKE ALL ON SEQUENCE mochi.role_type_role_typ_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE mochi.role_type_role_typ_id_seq FROM mochidb_owner;
+GRANT ALL ON SEQUENCE mochi.role_type_role_typ_id_seq TO mochidb_owner;
+GRANT SELECT,USAGE ON SEQUENCE mochi.role_type_role_typ_id_seq TO mochi_app;
 
 
 --
--- Name: supplier; Type: ACL; Schema: mochi; Owner: postgres
+-- Name: TABLE supplier; Type: ACL; Schema: mochi; Owner: postgres
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE supplier TO mochi_app;
+REVOKE ALL ON TABLE mochi.supplier FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.supplier FROM postgres;
+GRANT ALL ON TABLE mochi.supplier TO postgres;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.supplier TO mochi_app;
 
 
 --
--- Name: tag; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE tag; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE tag TO mochi_app;
+REVOKE ALL ON TABLE mochi.tag FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.tag FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.tag TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.tag TO mochi_app;
 
 
 --
--- Name: tag_attr_lcl; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE tag_attr_lcl; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE tag_attr_lcl TO mochi_app;
+REVOKE ALL ON TABLE mochi.tag_attr_lcl FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.tag_attr_lcl FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.tag_attr_lcl TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.tag_attr_lcl TO mochi_app;
 
 
 --
--- Name: vw_category_brand; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE vw_category_brand; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE vw_category_brand TO mochi_app;
+REVOKE ALL ON TABLE mochi.vw_category_brand FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.vw_category_brand FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.vw_category_brand TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.vw_category_brand TO mochi_app;
 
 
 --
--- Name: vw_category_product; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: TABLE vw_category_product; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE vw_category_product TO mochi_app;
+REVOKE ALL ON TABLE mochi.vw_category_product FROM PUBLIC;
+REVOKE ALL ON TABLE mochi.vw_category_product FROM mochidb_owner;
+GRANT ALL ON TABLE mochi.vw_category_product TO mochidb_owner;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.vw_category_product TO mochi_app;
 
 
 --

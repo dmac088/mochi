@@ -1,5 +1,7 @@
 package io.nzbee.test.integration.entity;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import javax.persistence.EntityManager;
 
 import org.junit.Before;
@@ -14,8 +16,12 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import io.nzbee.entity.category.Category;
 import io.nzbee.entity.product.IProductService;
+import io.nzbee.entity.product.Product;
 import io.nzbee.test.integration.beans.ProductEntityBeanFactory;
+import io.nzbee.variables.GeneralVars;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -71,10 +77,28 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	    return product;
 	}
 	
-	@Test
+	@Before
 	public void persistANewProduct() {
-		
 		this.persistNewProduct();
 	}
 	
+	@Test
+	public void whenFindById_thenReturnProductCategory() {
+		 // when
+    	Product found = productService.findById(GeneralVars.LANGUAGE_ENGLISH, 
+												  GeneralVars.CURRENCY_USD,  
+												  product.getProductId()).get();
+     
+        // then
+    	assertFound(found);
+	}
+	
+	
+	  
+    private void assertFound(final Product found) {
+    	
+    	assertThat(found.getUPC())
+        .isEqualTo("");
+	    
+    }
 }
