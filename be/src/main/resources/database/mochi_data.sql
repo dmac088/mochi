@@ -1288,7 +1288,7 @@ INSERT INTO mochi.tag_attr_lcl VALUES (4, 17, '不含麩質', NULL, 'zh-HK');
 
 
 --
--- Name: tag_attr_lcl_tag_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: postgres
+-- Name: tag_attr_lcl_tag_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
 SELECT pg_catalog.setval('mochi.tag_attr_lcl_tag_id_seq', 4, true);
