@@ -207,7 +207,7 @@ ALTER SCHEMA mochi OWNER TO mochidb_owner;
 
 CREATE FUNCTION mochi.ft_brand_categories(text, text) RETURNS TABLE(cat_id bigint, cat_cd text, cat_lvl bigint, hir_id bigint, cat_prnt_id bigint, cat_typ_id bigint, product_count bigint, child_cat_count bigint, max_price numeric)
     LANGUAGE sql
-    AS $_$
+    AS '
  SELECT p.cat_id,
     p.cat_cd,
     p.cat_lvl,
@@ -218,11 +218,11 @@ CREATE FUNCTION mochi.ft_brand_categories(text, text) RETURNS TABLE(cat_id bigin
     count(DISTINCT cc.cat_cd) AS child_cat_count,
     coalesce(
     max(CASE
-	WHEN pt.prc_typ_cd = 'MKD01'
+	WHEN pt.prc_typ_cd = ''MKD01''
 	THEN prc.prc_val
 	END),
     max(CASE
-	WHEN pt.prc_typ_cd = 'RET01'
+	WHEN pt.prc_typ_cd = ''RET01''
 	THEN prc.prc_val
 	END)) as max_price
    FROM mochi.category p
@@ -237,7 +237,7 @@ CREATE FUNCTION mochi.ft_brand_categories(text, text) RETURNS TABLE(cat_id bigin
   AND p.cat_cd = $1
   AND ccy_cd = $2
   GROUP BY p.cat_id, p.cat_cd, p.cat_lvl, p.hir_id, p.cat_typ_id, p.cat_prnt_id;
-$_$;
+';
 
 
 ALTER FUNCTION mochi.ft_brand_categories(text, text) OWNER TO mochidb_owner;
@@ -248,7 +248,7 @@ ALTER FUNCTION mochi.ft_brand_categories(text, text) OWNER TO mochidb_owner;
 
 CREATE FUNCTION mochi.ft_categories(text) RETURNS TABLE(cat_id bigint, cat_cd text, cat_prnt_id bigint, cat_typ_id bigint)
     LANGUAGE sql
-    AS $_$
+    AS '
 WITH RECURSIVE 
     -- starting node(s)
     starting (cat_id, cat_cd, cat_prnt_id, cat_typ_id) AS
@@ -274,7 +274,7 @@ SELECT 	descendants.cat_id,
 		descendants.cat_prnt_id,
 		descendants.cat_typ_id
 FROM  starting 
-		cross join descendants $_$;
+		cross join descendants ';
 
 
 ALTER FUNCTION mochi.ft_categories(text) OWNER TO mochidb_owner;
@@ -285,7 +285,7 @@ ALTER FUNCTION mochi.ft_categories(text) OWNER TO mochidb_owner;
 
 CREATE FUNCTION mochi.ft_product_categories(text, text) RETURNS TABLE(cat_id bigint, cat_cd text, cat_lvl bigint, hir_id bigint, cat_prnt_id bigint, cat_typ_id bigint, product_count bigint, child_cat_count bigint, max_price numeric)
     LANGUAGE sql
-    AS $_$
+    AS '
  SELECT p.cat_id,
     p.cat_cd,
     p.cat_lvl,
@@ -296,11 +296,11 @@ CREATE FUNCTION mochi.ft_product_categories(text, text) RETURNS TABLE(cat_id big
     count(DISTINCT cc.cat_cd) AS child_cat_count,
     coalesce(
     max(CASE
-	WHEN pt.prc_typ_cd = 'MKD01'
+	WHEN pt.prc_typ_cd = ''MKD01''
 	THEN prc.prc_val
 	END),
     max(CASE
-	WHEN pt.prc_typ_cd = 'RET01'
+	WHEN pt.prc_typ_cd = ''RET01''
 	THEN prc.prc_val
 	END)) as max_price
    FROM mochi.category p
@@ -314,7 +314,7 @@ CREATE FUNCTION mochi.ft_product_categories(text, text) RETURNS TABLE(cat_id big
   AND p.cat_cd = $1
   AND ccy_cd = $2
   GROUP BY p.cat_id, p.cat_cd, p.cat_lvl, p.hir_id, p.cat_typ_id, p.cat_prnt_id;
-$_$;
+';
 
 
 ALTER FUNCTION mochi.ft_product_categories(text, text) OWNER TO mochidb_owner;
