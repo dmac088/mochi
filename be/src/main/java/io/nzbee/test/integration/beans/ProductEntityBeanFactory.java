@@ -5,18 +5,10 @@ import java.util.Date;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
-
 import io.nzbee.entity.brand.Brand;
-import io.nzbee.entity.brand.attribute.BrandAttribute;
-import io.nzbee.entity.category.attribute.CategoryAttribute;
-import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.Product;
-import io.nzbee.entity.product.attribute.ProductAttribute;
-import io.nzbee.entity.product.currency.Currency;
-import io.nzbee.entity.product.price.ProductPrice;
 import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.entity.product.type.ProductType;
-import io.nzbee.variables.GeneralVars;
 
 @Service(value = "productEntityBeanFactory")
 @Profile(value = "dev")
