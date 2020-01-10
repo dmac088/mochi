@@ -96,7 +96,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     private void assertFound(final Product found) {
     	
     	assertThat(found.getUPC())
-        .isEqualTo("");
+        .isEqualTo("123456789");
 	    
     }
 }
