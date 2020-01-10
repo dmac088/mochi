@@ -119,7 +119,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     	assertFound(found);
     }
     
- // write test cases here
+    // write test cases here
     @Test
     public void whenFindByDesc_thenReturnProductCategory() {
     	
