@@ -207,126 +207,126 @@ ALTER SCHEMA mochi OWNER TO mochidb_owner;
 
 CREATE FUNCTION mochi.ft_brand_categories(text, text) RETURNS TABLE(cat_id bigint, cat_cd text, cat_lvl bigint, hir_id bigint, cat_prnt_id bigint, cat_typ_id bigint, product_count bigint, child_cat_count bigint, max_price numeric)
     LANGUAGE sql
-    AS '
-
-
-
- SELECT p.cat_id,
-
-
-
-    p.cat_cd,
-
-
-
-    p.cat_lvl,
-
-
-
-    p.hir_id,
-
-
-
-    p.cat_typ_id,
-
-
-
-    p.cat_prnt_id,
-
-
-
-    count(DISTINCT prd.upc_cd) AS product_count,
-
-
-
-    count(DISTINCT cc.cat_cd) AS child_cat_count,
-
-
-
-    coalesce(
-
-
-
-    max(CASE
-
-
-
-	WHEN pt.prc_typ_cd = ''MKD01''
-
-
-
-	THEN prc.prc_val
-
-
-
-	END),
-
-
-
-    max(CASE
-
-
-
-	WHEN pt.prc_typ_cd = ''RET01''
-
-
-
-	THEN prc.prc_val
-
-
-
-	END)) as max_price
-
-
-
-   FROM mochi.category p
-
-
-
-     JOIN LATERAL mochi.ft_categories(p.cat_cd::text) cc(cat_id, cat_cd, cat_prnt_id, cat_typ_id) ON 1 = 1
-
-
-
-     LEFT JOIN mochi.brand_category pc ON cc.cat_id = pc.cat_id
-
-
-
-     LEFT JOIN mochi.brand bnd ON pc.bnd_id = bnd.bnd_id
-
-
-
-     LEFT JOIN mochi.product prd ON pc.bnd_id = prd.bnd_id
-
-
-
-     LEFT JOIN mochi.price prc ON prd.prd_id = prc.prd_id AND now() between prc.prc_st_dt and prc.prc_en_dt
-
-
-
-     LEFT JOIN mochi.currency curr ON prc.ccy_id = curr.ccy_id 
-
-
-
-     LEFT JOIN mochi.price_type pt ON prc.prc_typ_id = pt.prc_typ_id 
-
-
-
-  WHERE cc.cat_typ_id = 2
-
-
-
-  AND p.cat_cd = $1
-
-
-
-  AND ccy_cd = $2
-
-
-
-  GROUP BY p.cat_id, p.cat_cd, p.cat_lvl, p.hir_id, p.cat_typ_id, p.cat_prnt_id;
-
-
-
+    AS '
+
+
+
+ SELECT p.cat_id,
+
+
+
+    p.cat_cd,
+
+
+
+    p.cat_lvl,
+
+
+
+    p.hir_id,
+
+
+
+    p.cat_typ_id,
+
+
+
+    p.cat_prnt_id,
+
+
+
+    count(DISTINCT prd.upc_cd) AS product_count,
+
+
+
+    count(DISTINCT cc.cat_cd) AS child_cat_count,
+
+
+
+    coalesce(
+
+
+
+    max(CASE
+
+
+
+	WHEN pt.prc_typ_cd = ''MKD01''
+
+
+
+	THEN prc.prc_val
+
+
+
+	END),
+
+
+
+    max(CASE
+
+
+
+	WHEN pt.prc_typ_cd = ''RET01''
+
+
+
+	THEN prc.prc_val
+
+
+
+	END)) as max_price
+
+
+
+   FROM mochi.category p
+
+
+
+     JOIN LATERAL mochi.ft_categories(p.cat_cd::text) cc(cat_id, cat_cd, cat_prnt_id, cat_typ_id) ON 1 = 1
+
+
+
+     LEFT JOIN mochi.brand_category pc ON cc.cat_id = pc.cat_id
+
+
+
+     LEFT JOIN mochi.brand bnd ON pc.bnd_id = bnd.bnd_id
+
+
+
+     LEFT JOIN mochi.product prd ON pc.bnd_id = prd.bnd_id
+
+
+
+     LEFT JOIN mochi.price prc ON prd.prd_id = prc.prd_id AND now() between prc.prc_st_dt and prc.prc_en_dt
+
+
+
+     LEFT JOIN mochi.currency curr ON prc.ccy_id = curr.ccy_id 
+
+
+
+     LEFT JOIN mochi.price_type pt ON prc.prc_typ_id = pt.prc_typ_id 
+
+
+
+  WHERE cc.cat_typ_id = 2
+
+
+
+  AND p.cat_cd = $1
+
+
+
+  AND ccy_cd = $2
+
+
+
+  GROUP BY p.cat_id, p.cat_cd, p.cat_lvl, p.hir_id, p.cat_typ_id, p.cat_prnt_id;
+
+
+
 ';
 
 
@@ -338,84 +338,84 @@ ALTER FUNCTION mochi.ft_brand_categories(text, text) OWNER TO mochidb_owner;
 
 CREATE FUNCTION mochi.ft_categories(text) RETURNS TABLE(cat_id bigint, cat_cd text, cat_prnt_id bigint, cat_typ_id bigint)
     LANGUAGE sql
-    AS '
-
-
-WITH RECURSIVE 
-
-
-    -- starting node(s)
-
-
-    starting (cat_id, cat_cd, cat_prnt_id, cat_typ_id) AS
-
-
-    (
-
-
-      SELECT t.cat_id, t.cat_cd, t.cat_prnt_id, t.cat_typ_id
-
-
-      FROM mochi.category AS t
-
-
-      WHERE t.cat_cd = $1        
-
-
-    ),
-
-
-    descendants (cat_id, cat_cd, cat_prnt_id, cat_typ_id) AS
-
-
-    (
-
-
-      SELECT t.cat_id, t.cat_cd, t.cat_prnt_id, t.cat_typ_id
-
-
-      FROM mochi.category AS t
-
-
-      WHERE t.cat_cd = $1
-
-
-      UNION ALL
-
-
-      SELECT t.cat_id, t.cat_cd, t.cat_prnt_id, t.cat_typ_id
-
-
-      FROM mochi.category AS t 
-
-
-		JOIN descendants AS d 
-
-
-		ON t.cat_prnt_id = d.cat_id
-
-
-    )
-
-
-
-
-
-SELECT 	descendants.cat_id,
-
-
-		descendants.cat_cd,
-
-
-		descendants.cat_prnt_id,
-
-
-		descendants.cat_typ_id
-
-
-FROM  starting 
-
-
+    AS '
+
+
+WITH RECURSIVE 
+
+
+    -- starting node(s)
+
+
+    starting (cat_id, cat_cd, cat_prnt_id, cat_typ_id) AS
+
+
+    (
+
+
+      SELECT t.cat_id, t.cat_cd, t.cat_prnt_id, t.cat_typ_id
+
+
+      FROM mochi.category AS t
+
+
+      WHERE t.cat_cd = $1        
+
+
+    ),
+
+
+    descendants (cat_id, cat_cd, cat_prnt_id, cat_typ_id) AS
+
+
+    (
+
+
+      SELECT t.cat_id, t.cat_cd, t.cat_prnt_id, t.cat_typ_id
+
+
+      FROM mochi.category AS t
+
+
+      WHERE t.cat_cd = $1
+
+
+      UNION ALL
+
+
+      SELECT t.cat_id, t.cat_cd, t.cat_prnt_id, t.cat_typ_id
+
+
+      FROM mochi.category AS t 
+
+
+		JOIN descendants AS d 
+
+
+		ON t.cat_prnt_id = d.cat_id
+
+
+    )
+
+
+
+
+
+SELECT 	descendants.cat_id,
+
+
+		descendants.cat_cd,
+
+
+		descendants.cat_prnt_id,
+
+
+		descendants.cat_typ_id
+
+
+FROM  starting 
+
+
 		cross join descendants ';
 
 
@@ -427,122 +427,122 @@ ALTER FUNCTION mochi.ft_categories(text) OWNER TO mochidb_owner;
 
 CREATE FUNCTION mochi.ft_product_categories(text, text) RETURNS TABLE(cat_id bigint, cat_cd text, cat_lvl bigint, hir_id bigint, cat_prnt_id bigint, cat_typ_id bigint, product_count bigint, child_cat_count bigint, max_price numeric)
     LANGUAGE sql
-    AS '
-
-
-
- SELECT p.cat_id,
-
-
-
-    p.cat_cd,
-
-
-
-    p.cat_lvl,
-
-
-
-    p.hir_id,
-
-
-
-    p.cat_typ_id,
-
-
-
-    p.cat_prnt_id,
-
-
-
-    count(DISTINCT prd.upc_cd) AS product_count,
-
-
-
-    count(DISTINCT cc.cat_cd) AS child_cat_count,
-
-
-
-    coalesce(
-
-
-
-    max(CASE
-
-
-
-	WHEN pt.prc_typ_cd = ''MKD01''
-
-
-
-	THEN prc.prc_val
-
-
-
-	END),
-
-
-
-    max(CASE
-
-
-
-	WHEN pt.prc_typ_cd = ''RET01''
-
-
-
-	THEN prc.prc_val
-
-
-
-	END)) as max_price
-
-
-
-   FROM mochi.category p
-
-
-
-     JOIN LATERAL mochi.ft_categories(p.cat_cd::text) cc(cat_id, cat_cd, cat_prnt_id, cat_typ_id) ON 1 = 1
-
-
-
-     LEFT JOIN mochi.product_category pc ON cc.cat_id = pc.cat_id
-
-
-
-     LEFT JOIN mochi.product prd ON pc.prd_id = prd.prd_id
-
-
-
-     LEFT JOIN mochi.price prc ON prd.prd_id = prc.prd_id AND now() between prc.prc_st_dt and prc.prc_en_dt
-
-
-
-     LEFT JOIN mochi.currency curr ON prc.ccy_id = curr.ccy_id 
-
-
-
-     LEFT JOIN mochi.price_type pt ON prc.prc_typ_id = pt.prc_typ_id 
-
-
-
-  WHERE cc.cat_typ_id = 1
-
-
-
-  AND p.cat_cd = $1
-
-
-
-  AND ccy_cd = $2
-
-
-
-  GROUP BY p.cat_id, p.cat_cd, p.cat_lvl, p.hir_id, p.cat_typ_id, p.cat_prnt_id;
-
-
-
+    AS '
+
+
+
+ SELECT p.cat_id,
+
+
+
+    p.cat_cd,
+
+
+
+    p.cat_lvl,
+
+
+
+    p.hir_id,
+
+
+
+    p.cat_typ_id,
+
+
+
+    p.cat_prnt_id,
+
+
+
+    count(DISTINCT prd.upc_cd) AS product_count,
+
+
+
+    count(DISTINCT cc.cat_cd) AS child_cat_count,
+
+
+
+    coalesce(
+
+
+
+    max(CASE
+
+
+
+	WHEN pt.prc_typ_cd = ''MKD01''
+
+
+
+	THEN prc.prc_val
+
+
+
+	END),
+
+
+
+    max(CASE
+
+
+
+	WHEN pt.prc_typ_cd = ''RET01''
+
+
+
+	THEN prc.prc_val
+
+
+
+	END)) as max_price
+
+
+
+   FROM mochi.category p
+
+
+
+     JOIN LATERAL mochi.ft_categories(p.cat_cd::text) cc(cat_id, cat_cd, cat_prnt_id, cat_typ_id) ON 1 = 1
+
+
+
+     LEFT JOIN mochi.product_category pc ON cc.cat_id = pc.cat_id
+
+
+
+     LEFT JOIN mochi.product prd ON pc.prd_id = prd.prd_id
+
+
+
+     LEFT JOIN mochi.price prc ON prd.prd_id = prc.prd_id AND now() between prc.prc_st_dt and prc.prc_en_dt
+
+
+
+     LEFT JOIN mochi.currency curr ON prc.ccy_id = curr.ccy_id 
+
+
+
+     LEFT JOIN mochi.price_type pt ON prc.prc_typ_id = pt.prc_typ_id 
+
+
+
+  WHERE cc.cat_typ_id = 1
+
+
+
+  AND p.cat_cd = $1
+
+
+
+  AND ccy_cd = $2
+
+
+
+  GROUP BY p.cat_id, p.cat_cd, p.cat_lvl, p.hir_id, p.cat_typ_id, p.cat_prnt_id;
+
+
+
 ';
 
 
