@@ -15,9 +15,15 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlConfig;
+import org.springframework.test.context.jdbc.SqlGroup;
+import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.ICategoryService;
+import io.nzbee.entity.product.hierarchy.Hierarchy;
+import io.nzbee.entity.product.hierarchy.IHierarchyRepository;
 import io.nzbee.test.integration.beans.CategoryEntityBeanFactory;
 import io.nzbee.variables.GeneralVars;
 
@@ -25,6 +31,16 @@ import io.nzbee.variables.GeneralVars;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles(profiles = "dev")
+@SqlGroup({
+	@Sql(scripts = "/database/mochi_schema.sql",
+			config = @SqlConfig(dataSource = "mochiDataSourceOwner", 
+			transactionManager = "mochiTransactionManagerOwner",
+			transactionMode = TransactionMode.ISOLATED)), 
+	@Sql(scripts = "/database/mochi_data.sql",
+			config = @SqlConfig(dataSource = "mochiDataSource", 
+			transactionManager = "mochiTransactionManager",
+			transactionMode = TransactionMode.ISOLATED))
+})
 public class IT_BrandCategoryEntityRepositoryIntegrationTest {
  
 	@TestConfiguration
@@ -51,6 +67,9 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
     @Autowired
     private ICategoryService categoryService;
     
+    @Autowired
+    private IHierarchyRepository hierarchyRepository;
+    
 	private io.nzbee.entity.category.Category category = null;
     
     @Before
@@ -62,8 +81,8 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
     	
 		category = categoryEntityBeanFactory.getBrandCategoryEntityBean();
 	    	
-	    //persist a new transient test hierarchy
-	    entityManager.persist(category.getHierarchy());
+		Hierarchy h = hierarchyRepository.findByHierarchyCode("BND01");
+		category.setHierarchy(h);
 	    	
 	    //persist a new transient test category
 	    entityManager.persist(category);
@@ -121,7 +140,7 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
 	    assertThat(found.getCategoryType().getCode())
 	    .isEqualTo("BND01");
 	    assertThat(found.getHierarchy().getHierarchyCode())
-	    .isEqualTo("TST01");
+	    .isEqualTo("BND01");
 	    assertThat(found.getCategoryAttribute().getCategoryDesc())
 	    .isEqualTo("test brand category");
     }
