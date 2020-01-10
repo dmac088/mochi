@@ -18,11 +18,8 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import io.nzbee.entity.category.Category;
 import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.test.integration.beans.ProductStatusEntityBeanFactory;
-import io.nzbee.variables.GeneralVars;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
