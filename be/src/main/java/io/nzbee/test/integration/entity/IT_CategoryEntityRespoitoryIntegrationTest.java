@@ -31,7 +31,10 @@ import io.nzbee.variables.GeneralVars;
 			config = @SqlConfig(dataSource = "mochiDataSourceOwner", 
 			transactionManager = "mochiTransactionManagerOwner",
 			transactionMode = TransactionMode.ISOLATED)), 
-	@Sql(scripts = "/database/mochi_data.sql")
+	@Sql(scripts = "/database/mochi_data.sql",
+			config = @SqlConfig(dataSource = "mochiDataSource", 
+			transactionManager = "mochiTransactionManager",
+			transactionMode = TransactionMode.ISOLATED))
 })
 public class IT_CategoryEntityRespoitoryIntegrationTest {
 

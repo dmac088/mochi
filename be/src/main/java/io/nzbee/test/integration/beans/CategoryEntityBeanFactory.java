@@ -22,14 +22,9 @@ public class CategoryEntityBeanFactory {
 	@Bean
 	public final Category getProductCategoryEntityBean() {
 		final Category category = new CategoryProduct();
-		
-	    final Hierarchy hierarchy = new Hierarchy();
-	    hierarchy.setHierarchyCode("TST01");
-	    hierarchy.setDesc("test product hierarchy");
 	
 		category.setCategoryCode("TST02");
 		category.setCategoryLevel(new Long(1));
-		category.setHierarchy(hierarchy);
 
 		final CategoryAttribute categoryAttribute = new CategoryAttribute();
 		categoryAttribute.setCategory(category);
