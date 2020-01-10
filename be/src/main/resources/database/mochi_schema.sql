@@ -2433,7 +2433,7 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.address_type TO mochi_app;
 REVOKE ALL ON SEQUENCE mochi.brand_bnd_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE mochi.brand_bnd_id_seq FROM mochidb_owner;
 GRANT ALL ON SEQUENCE mochi.brand_bnd_id_seq TO mochidb_owner;
-GRANT SELECT,USAGE ON SEQUENCE mochi.brand_bnd_id_seq TO mochi_app;
+GRANT ALL ON SEQUENCE mochi.brand_bnd_id_seq TO mochi_app;
 
 
 --
@@ -2453,7 +2453,7 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.brand TO mochi_app;
 REVOKE ALL ON SEQUENCE mochi.brand_attr_lcl_bnd_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE mochi.brand_attr_lcl_bnd_id_seq FROM mochidb_owner;
 GRANT ALL ON SEQUENCE mochi.brand_attr_lcl_bnd_id_seq TO mochidb_owner;
-GRANT SELECT,USAGE ON SEQUENCE mochi.brand_attr_lcl_bnd_id_seq TO mochi_app;
+GRANT ALL ON SEQUENCE mochi.brand_attr_lcl_bnd_id_seq TO mochi_app;
 
 
 --
@@ -2473,7 +2473,7 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.brand_attr_lcl TO mochi_app;
 REVOKE ALL ON SEQUENCE mochi.brand_category_bnd_cat_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE mochi.brand_category_bnd_cat_id_seq FROM mochidb_owner;
 GRANT ALL ON SEQUENCE mochi.brand_category_bnd_cat_id_seq TO mochidb_owner;
-GRANT SELECT,USAGE ON SEQUENCE mochi.brand_category_bnd_cat_id_seq TO mochi_app;
+GRANT ALL ON SEQUENCE mochi.brand_category_bnd_cat_id_seq TO mochi_app;
 
 
 --
@@ -2493,7 +2493,7 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.brand_category TO mochi_app;
 REVOKE ALL ON SEQUENCE mochi.category_cat_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE mochi.category_cat_id_seq FROM mochidb_owner;
 GRANT ALL ON SEQUENCE mochi.category_cat_id_seq TO mochidb_owner;
-GRANT SELECT,USAGE ON SEQUENCE mochi.category_cat_id_seq TO mochi_app;
+GRANT ALL ON SEQUENCE mochi.category_cat_id_seq TO mochi_app;
 
 
 --
@@ -2513,7 +2513,7 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.category TO mochi_app;
 REVOKE ALL ON SEQUENCE mochi.category_attr_lcl_cat_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE mochi.category_attr_lcl_cat_id_seq FROM mochidb_owner;
 GRANT ALL ON SEQUENCE mochi.category_attr_lcl_cat_id_seq TO mochidb_owner;
-GRANT SELECT,USAGE ON SEQUENCE mochi.category_attr_lcl_cat_id_seq TO mochi_app;
+GRANT ALL ON SEQUENCE mochi.category_attr_lcl_cat_id_seq TO mochi_app;
 
 
 --
@@ -2553,7 +2553,7 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.category_product TO mochi_app;
 REVOKE ALL ON SEQUENCE mochi.category_type_cat_typ_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE mochi.category_type_cat_typ_id_seq FROM mochidb_owner;
 GRANT ALL ON SEQUENCE mochi.category_type_cat_typ_id_seq TO mochidb_owner;
-GRANT SELECT,USAGE ON SEQUENCE mochi.category_type_cat_typ_id_seq TO mochi_app;
+GRANT ALL ON SEQUENCE mochi.category_type_cat_typ_id_seq TO mochi_app;
 
 
 --
@@ -2583,7 +2583,7 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.currency TO mochi_app;
 REVOKE ALL ON SEQUENCE mochi.customer_cst_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE mochi.customer_cst_id_seq FROM mochidb_owner;
 GRANT ALL ON SEQUENCE mochi.customer_cst_id_seq TO mochidb_owner;
-GRANT SELECT,USAGE ON SEQUENCE mochi.customer_cst_id_seq TO mochi_app;
+GRANT ALL ON SEQUENCE mochi.customer_cst_id_seq TO mochi_app;
 
 
 --
@@ -2624,7 +2624,7 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.discount_type TO mochi_app;
 REVOKE ALL ON SEQUENCE mochi.hibernate_sequence FROM PUBLIC;
 REVOKE ALL ON SEQUENCE mochi.hibernate_sequence FROM mochidb_owner;
 GRANT ALL ON SEQUENCE mochi.hibernate_sequence TO mochidb_owner;
-GRANT SELECT,USAGE ON SEQUENCE mochi.hibernate_sequence TO mochi_app;
+GRANT ALL ON SEQUENCE mochi.hibernate_sequence TO mochi_app;
 
 
 --
@@ -2634,7 +2634,7 @@ GRANT SELECT,USAGE ON SEQUENCE mochi.hibernate_sequence TO mochi_app;
 REVOKE ALL ON SEQUENCE mochi.hierarchy_hir_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE mochi.hierarchy_hir_id_seq FROM mochidb_owner;
 GRANT ALL ON SEQUENCE mochi.hierarchy_hir_id_seq TO mochidb_owner;
-GRANT SELECT,USAGE ON SEQUENCE mochi.hierarchy_hir_id_seq TO mochi_app;
+GRANT ALL ON SEQUENCE mochi.hierarchy_hir_id_seq TO mochi_app;
 
 
 --
@@ -2674,7 +2674,7 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.inventory_transaction TO mochi_
 REVOKE ALL ON SEQUENCE mochi.layout_lay_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE mochi.layout_lay_id_seq FROM mochidb_owner;
 GRANT ALL ON SEQUENCE mochi.layout_lay_id_seq TO mochidb_owner;
-GRANT SELECT,USAGE ON SEQUENCE mochi.layout_lay_id_seq TO mochi_app;
+GRANT ALL ON SEQUENCE mochi.layout_lay_id_seq TO mochi_app;
 
 
 --
@@ -2694,7 +2694,7 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.layout TO mochi_app;
 REVOKE ALL ON SEQUENCE mochi.layout_category_lay_cat_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE mochi.layout_category_lay_cat_id_seq FROM mochidb_owner;
 GRANT ALL ON SEQUENCE mochi.layout_category_lay_cat_id_seq TO mochidb_owner;
-GRANT SELECT,USAGE ON SEQUENCE mochi.layout_category_lay_cat_id_seq TO mochi_app;
+GRANT ALL ON SEQUENCE mochi.layout_category_lay_cat_id_seq TO mochi_app;
 
 
 --
@@ -2776,7 +2776,7 @@ GRANT SELECT ON TABLE mochi.party TO security_app;
 REVOKE ALL ON SEQUENCE mochi.party_party_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE mochi.party_party_id_seq FROM mochidb_owner;
 GRANT ALL ON SEQUENCE mochi.party_party_id_seq TO mochidb_owner;
-GRANT SELECT,USAGE ON SEQUENCE mochi.party_party_id_seq TO mochi_app;
+GRANT ALL ON SEQUENCE mochi.party_party_id_seq TO mochi_app;
 
 
 --
@@ -2786,7 +2786,7 @@ GRANT SELECT,USAGE ON SEQUENCE mochi.party_party_id_seq TO mochi_app;
 REVOKE ALL ON SEQUENCE mochi.party_pty_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE mochi.party_pty_id_seq FROM mochidb_owner;
 GRANT ALL ON SEQUENCE mochi.party_pty_id_seq TO mochidb_owner;
-GRANT SELECT,USAGE ON SEQUENCE mochi.party_pty_id_seq TO mochi_app;
+GRANT ALL ON SEQUENCE mochi.party_pty_id_seq TO mochi_app;
 
 
 --
@@ -2807,7 +2807,7 @@ GRANT SELECT ON TABLE mochi.party_type TO security_app;
 REVOKE ALL ON SEQUENCE mochi.party_type_pty_typ_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE mochi.party_type_pty_typ_id_seq FROM mochidb_owner;
 GRANT ALL ON SEQUENCE mochi.party_type_pty_typ_id_seq TO mochidb_owner;
-GRANT SELECT,USAGE ON SEQUENCE mochi.party_type_pty_typ_id_seq TO mochi_app;
+GRANT ALL ON SEQUENCE mochi.party_type_pty_typ_id_seq TO mochi_app;
 
 
 --
@@ -2828,7 +2828,7 @@ GRANT SELECT ON TABLE mochi.person TO security_app;
 REVOKE ALL ON SEQUENCE mochi.person_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE mochi.person_id_seq FROM mochidb_owner;
 GRANT ALL ON SEQUENCE mochi.person_id_seq TO mochidb_owner;
-GRANT SELECT,USAGE ON SEQUENCE mochi.person_id_seq TO mochi_app;
+GRANT ALL ON SEQUENCE mochi.person_id_seq TO mochi_app;
 
 
 --
@@ -2838,7 +2838,7 @@ GRANT SELECT,USAGE ON SEQUENCE mochi.person_id_seq TO mochi_app;
 REVOKE ALL ON SEQUENCE mochi.price_prc_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE mochi.price_prc_id_seq FROM mochidb_owner;
 GRANT ALL ON SEQUENCE mochi.price_prc_id_seq TO mochidb_owner;
-GRANT SELECT,USAGE ON SEQUENCE mochi.price_prc_id_seq TO mochi_app;
+GRANT ALL ON SEQUENCE mochi.price_prc_id_seq TO mochi_app;
 
 
 --
@@ -2888,7 +2888,7 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.product_attr_lcl TO mochi_app;
 REVOKE ALL ON SEQUENCE mochi.product_category_prd_cat_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE mochi.product_category_prd_cat_id_seq FROM mochidb_owner;
 GRANT ALL ON SEQUENCE mochi.product_category_prd_cat_id_seq TO mochidb_owner;
-GRANT SELECT,USAGE ON SEQUENCE mochi.product_category_prd_cat_id_seq TO mochi_app;
+GRANT ALL ON SEQUENCE mochi.product_category_prd_cat_id_seq TO mochi_app;
 
 
 --
@@ -2908,7 +2908,7 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.product_category TO mochi_app;
 REVOKE ALL ON SEQUENCE mochi.product_status_prd_sts_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE mochi.product_status_prd_sts_id_seq FROM mochidb_owner;
 GRANT ALL ON SEQUENCE mochi.product_status_prd_sts_id_seq TO mochidb_owner;
-GRANT SELECT,USAGE ON SEQUENCE mochi.product_status_prd_sts_id_seq TO mochi_app;
+GRANT ALL ON SEQUENCE mochi.product_status_prd_sts_id_seq TO mochi_app;
 
 
 --
@@ -2938,7 +2938,7 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.product_supplier TO mochi_app;
 REVOKE ALL ON SEQUENCE mochi.product_tag_prd_tag_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE mochi.product_tag_prd_tag_id_seq FROM mochidb_owner;
 GRANT ALL ON SEQUENCE mochi.product_tag_prd_tag_id_seq TO mochidb_owner;
-GRANT SELECT,USAGE ON SEQUENCE mochi.product_tag_prd_tag_id_seq TO mochi_app;
+GRANT ALL ON SEQUENCE mochi.product_tag_prd_tag_id_seq TO mochi_app;
 
 
 --
@@ -2958,7 +2958,7 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.product_tag TO mochi_app;
 REVOKE ALL ON SEQUENCE mochi.product_tag_attr_lcl_tag_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE mochi.product_tag_attr_lcl_tag_id_seq FROM mochidb_owner;
 GRANT ALL ON SEQUENCE mochi.product_tag_attr_lcl_tag_id_seq TO mochidb_owner;
-GRANT SELECT,USAGE ON SEQUENCE mochi.product_tag_attr_lcl_tag_id_seq TO mochi_app;
+GRANT ALL ON SEQUENCE mochi.product_tag_attr_lcl_tag_id_seq TO mochi_app;
 
 
 --
@@ -2968,7 +2968,7 @@ GRANT SELECT,USAGE ON SEQUENCE mochi.product_tag_attr_lcl_tag_id_seq TO mochi_ap
 REVOKE ALL ON SEQUENCE mochi.product_type_prd_typ_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE mochi.product_type_prd_typ_id_seq FROM mochidb_owner;
 GRANT ALL ON SEQUENCE mochi.product_type_prd_typ_id_seq TO mochidb_owner;
-GRANT SELECT,USAGE ON SEQUENCE mochi.product_type_prd_typ_id_seq TO mochi_app;
+GRANT ALL ON SEQUENCE mochi.product_type_prd_typ_id_seq TO mochi_app;
 
 
 --
@@ -3008,7 +3008,7 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.promotion_brand TO mochi_app;
 REVOKE ALL ON SEQUENCE mochi.promotion_category_prm_cat_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE mochi.promotion_category_prm_cat_id_seq FROM mochidb_owner;
 GRANT ALL ON SEQUENCE mochi.promotion_category_prm_cat_id_seq TO mochidb_owner;
-GRANT SELECT,USAGE ON SEQUENCE mochi.promotion_category_prm_cat_id_seq TO mochi_app;
+GRANT ALL ON SEQUENCE mochi.promotion_category_prm_cat_id_seq TO mochi_app;
 
 
 --
@@ -3058,7 +3058,7 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.promotion_type TO mochi_app;
 REVOKE ALL ON SEQUENCE mochi.role_rle_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE mochi.role_rle_id_seq FROM mochidb_owner;
 GRANT ALL ON SEQUENCE mochi.role_rle_id_seq TO mochidb_owner;
-GRANT SELECT,USAGE ON SEQUENCE mochi.role_rle_id_seq TO mochi_app;
+GRANT ALL ON SEQUENCE mochi.role_rle_id_seq TO mochi_app;
 
 
 --
@@ -3090,7 +3090,7 @@ GRANT SELECT ON TABLE mochi.role_type TO security_app;
 REVOKE ALL ON SEQUENCE mochi.role_type_rle_typ_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE mochi.role_type_rle_typ_id_seq FROM mochidb_owner;
 GRANT ALL ON SEQUENCE mochi.role_type_rle_typ_id_seq TO mochidb_owner;
-GRANT SELECT,USAGE ON SEQUENCE mochi.role_type_rle_typ_id_seq TO mochi_app;
+GRANT ALL ON SEQUENCE mochi.role_type_rle_typ_id_seq TO mochi_app;
 
 
 --
@@ -3100,7 +3100,7 @@ GRANT SELECT,USAGE ON SEQUENCE mochi.role_type_rle_typ_id_seq TO mochi_app;
 REVOKE ALL ON SEQUENCE mochi.role_type_role_typ_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE mochi.role_type_role_typ_id_seq FROM mochidb_owner;
 GRANT ALL ON SEQUENCE mochi.role_type_role_typ_id_seq TO mochidb_owner;
-GRANT SELECT,USAGE ON SEQUENCE mochi.role_type_role_typ_id_seq TO mochi_app;
+GRANT ALL ON SEQUENCE mochi.role_type_role_typ_id_seq TO mochi_app;
 
 
 --
@@ -3120,7 +3120,7 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.supplier TO mochi_app;
 REVOKE ALL ON SEQUENCE mochi.tag_tag_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE mochi.tag_tag_id_seq FROM mochidb_owner;
 GRANT ALL ON SEQUENCE mochi.tag_tag_id_seq TO mochidb_owner;
-GRANT SELECT,USAGE ON SEQUENCE mochi.tag_tag_id_seq TO mochi_app;
+GRANT ALL ON SEQUENCE mochi.tag_tag_id_seq TO mochi_app;
 
 
 --
@@ -3140,7 +3140,7 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.tag TO mochi_app;
 REVOKE ALL ON SEQUENCE mochi.tag_attr_lcl_tag_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE mochi.tag_attr_lcl_tag_id_seq FROM mochidb_owner;
 GRANT ALL ON SEQUENCE mochi.tag_attr_lcl_tag_id_seq TO mochidb_owner;
-GRANT SELECT,USAGE ON SEQUENCE mochi.tag_attr_lcl_tag_id_seq TO mochi_app;
+GRANT ALL ON SEQUENCE mochi.tag_attr_lcl_tag_id_seq TO mochi_app;
 
 
 --
