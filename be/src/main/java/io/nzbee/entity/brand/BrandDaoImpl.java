@@ -39,6 +39,7 @@ public class BrandDaoImpl  implements IBrandDao {
 	
 	@Override
 	public Optional<Brand> findById(String locale, String currency, long id) {
+		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
@@ -46,7 +47,7 @@ public class BrandDaoImpl  implements IBrandDao {
 		Root<Brand> root = cq.from(Brand.class);
 		Join<Brand, Product> brand = root.join(Brand_.products);
 		Join<Product, ProductStatus> status = brand.join(Product_.productStatus);
-		Join<Brand, BrandAttribute> attribute = root.join(Brand_.brandAttributes);
+		Join<Brand, BrandAttribute> attribute = root.join(Brand_.attributes);
 		
 		cq.multiselect(	root.get(Brand_.brandId).alias("brandId"),
 						root.get(Brand_.brandCode).alias("brandCode"),
@@ -76,7 +77,7 @@ public class BrandDaoImpl  implements IBrandDao {
 		brandEntity.setBrandAttribute(brandAttribute);
 		brandEntity.setId(Long.parseLong(tuple.get("brandId").toString()));
 		brandEntity.setCode(tuple.get("brandCode").toString());
-		
+
 		return Optional.ofNullable(brandEntity);
 	}
 	
@@ -87,7 +88,7 @@ public class BrandDaoImpl  implements IBrandDao {
 		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
 		
 		Root<Brand> root = cq.from(Brand.class);
-		Join<Brand, BrandAttribute> attribute = root.join(Brand_.brandAttributes);
+		Join<Brand, BrandAttribute> attribute = root.join(Brand_.attributes);
 
 
 		cq.multiselect(	root.get(Brand_.brandId).alias("brandId"),
@@ -131,7 +132,7 @@ public class BrandDaoImpl  implements IBrandDao {
 		Root<Brand> root = cq.from(Brand.class);
 		Join<Brand, Product> brand = root.join(Brand_.products);
 		Join<Product, ProductStatus> status = brand.join(Product_.productStatus);
-		Join<Brand, BrandAttribute> attribute = root.join(Brand_.brandAttributes);
+		Join<Brand, BrandAttribute> attribute = root.join(Brand_.attributes);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
@@ -173,7 +174,7 @@ public class BrandDaoImpl  implements IBrandDao {
 		Root<Brand> root = cq.from(Brand.class);
 		Join<Brand, Product> brand = root.join(Brand_.products);
 		Join<Product, ProductStatus> status = brand.join(Product_.productStatus);
-		Join<Brand, BrandAttribute> attribute = root.join(Brand_.brandAttributes);
+		Join<Brand, BrandAttribute> attribute = root.join(Brand_.attributes);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
@@ -218,7 +219,7 @@ public class BrandDaoImpl  implements IBrandDao {
 		Join<Brand, Product> brand = root.join(Brand_.products);
 		Join<Brand, CategoryBrand> category = root.join(Brand_.categories);
 		Join<Product, ProductStatus> status = brand.join(Product_.productStatus);
-		Join<Brand, BrandAttribute> attribute = root.join(Brand_.brandAttributes);
+		Join<Brand, BrandAttribute> attribute = root.join(Brand_.attributes);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
@@ -261,7 +262,7 @@ public class BrandDaoImpl  implements IBrandDao {
 		Root<Brand> root = cq.from(Brand.class);
 		Join<Brand, Product> brand = root.join(Brand_.products);
 		Join<Product, ProductStatus> status = brand.join(Product_.productStatus);
-		Join<Brand, BrandAttribute> attribute = root.join(Brand_.brandAttributes);
+		Join<Brand, BrandAttribute> attribute = root.join(Brand_.attributes);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));

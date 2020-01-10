@@ -1,5 +1,6 @@
 package io.nzbee.entity.brand;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -46,7 +47,7 @@ public class Brand {
 	@OneToMany(	mappedBy="brand",
 				cascade = CascadeType.ALL,
 				orphanRemoval = true)
-	private List<BrandAttribute> brandAttributes;
+	private List<BrandAttribute> attributes = new ArrayList<BrandAttribute>();
 	
 	@Transient
 	private BrandAttribute brandAttribute;
@@ -67,14 +68,6 @@ public class Brand {
 		this.brandCode = brandCode;
 	}
 
-	public List<BrandAttribute> getAttributes() {
-		return brandAttributes;
-	}
-	
-	public void setAttributes(List<BrandAttribute> brandAttributes) {
-		this.brandAttributes = brandAttributes;
-	}
-	
 	public List<Product> getProducts() {
 		return products;
 	}
@@ -89,6 +82,21 @@ public class Brand {
 
 	public void setBrandAttribute(BrandAttribute brandAttribute) {
 		this.brandAttribute = brandAttribute;
+	}
+	
+
+	public List<BrandAttribute> getAttributes() {
+		return attributes;
+	}
+	
+	public void addAttribute(BrandAttribute brandAttribute) {
+		attributes.add(brandAttribute);
+		brandAttribute.setBrand(this);		
+	}
+	
+	public void removeAttribute(BrandAttribute brandAttribute) {
+		attributes.remove(brandAttribute);
+		brandAttribute.setBrand(null);
 	}
 	
 	public void addBrandCategory(CategoryBrand categoryBrand) {
