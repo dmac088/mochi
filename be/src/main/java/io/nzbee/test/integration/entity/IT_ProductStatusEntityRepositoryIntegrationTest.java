@@ -1,7 +1,8 @@
 package io.nzbee.test.integration.entity;
 
-import javax.persistence.EntityManager;
+import static org.assertj.core.api.Assertions.assertThat;
 
+import javax.persistence.EntityManager;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,6 +19,7 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
+import io.nzbee.entity.product.status.IProductStatusRepository;
 import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.test.integration.beans.ProductStatusEntityBeanFactory;
 
@@ -36,8 +38,6 @@ import io.nzbee.test.integration.beans.ProductStatusEntityBeanFactory;
 			transactionMode = TransactionMode.ISOLATED))
 })
 public class IT_ProductStatusEntityRepositoryIntegrationTest {
-
-    private io.nzbee.entity.product.status.ProductStatus productStatus = null;
 	
 	@TestConfiguration
     static class ProductProductStatusEntityRepositoryIntegrationTest {
@@ -55,9 +55,14 @@ public class IT_ProductStatusEntityRepositoryIntegrationTest {
 	@Autowired
 	private ProductStatusEntityBeanFactory productStatusEntityBeanFactory;
 	
+    @Autowired
+    private IProductStatusRepository productStatusRepository;
+	
+    private ProductStatus productStatus = null;
+    
 	@Before
     public void setUp() { 
-    	this.persistNewProductStatus();
+    	productStatus = this.persistNewProductStatus();
     }
 	
 	public ProductStatus persistNewProductStatus() {
@@ -72,6 +77,24 @@ public class IT_ProductStatusEntityRepositoryIntegrationTest {
 	    return productStatus;
 	}
 
+	 @Test
+	    public void whenFindById_thenReturnProductStatus() {
+	    	
+	        // when
+	    	ProductStatus found = productStatusRepository.findById(productStatus.getProductStatusId()).get();
+	     
+	        // then
+	    	assertFound(found);
+	    }
 	
+	 private void assertFound(final ProductStatus found) {
+	    	
+	    	assertThat(found.getProductStatusCode())
+	        .isEqualTo("TST01");
 	
+	    	assertThat(found.getProductStatusDesc())
+	        .isEqualTo("test product status");
+	
+	 }
+	 
 }

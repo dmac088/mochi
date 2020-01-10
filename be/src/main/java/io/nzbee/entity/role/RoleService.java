@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class RoleService {
 
 	@Autowired
-	private RoleRepository RoleRepository; 
+	private IRoleRepository RoleRepository; 
 	
 	@PreAuthorize("hasAuthority('ROLE_READER')")
 	@Transactional(readOnly = true)
