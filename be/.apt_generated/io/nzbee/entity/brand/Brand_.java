@@ -13,8 +13,8 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class Brand_ {
 
 	public static volatile SingularAttribute<Brand, Long> brandId;
+	public static volatile ListAttribute<Brand, BrandAttribute> attributes;
 	public static volatile ListAttribute<Brand, CategoryBrand> categories;
-	public static volatile ListAttribute<Brand, BrandAttribute> brandAttributes;
 	public static volatile SingularAttribute<Brand, String> brandCode;
 	public static volatile ListAttribute<Brand, Product> products;
 

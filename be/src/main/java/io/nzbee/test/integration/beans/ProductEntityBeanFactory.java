@@ -7,8 +7,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.product.Product;
-import io.nzbee.entity.product.status.ProductStatus;
-import io.nzbee.entity.product.type.ProductType;
 
 @Service(value = "productEntityBeanFactory")
 @Profile(value = "dev")
@@ -21,21 +19,6 @@ public class ProductEntityBeanFactory {
 		product.setProductCreateDt(new Date());
 		product.setUPC("123456789");
 		
-		ProductType productType = new ProductType();
-		productType.setCode("TST01");
-		productType.setDesc("test product type");
-		product.setProductType(productType);
-		
-		ProductStatus productStatus = new ProductStatus();
-		productStatus.setProductStatusCode("TST01");
-		productStatus.setProductStatusDesc("test product status");
-		product.setProductStatus(productStatus);
-//		ProductPrice retailPrice = new ProductPrice();
-//		ProductPrice markdownPrice = new ProductPrice();
-		
-//		Currency currency = new Currency();
-//		currency.setCode("HKD");
-//		
 		Brand brand = new Brand();
 		brand.setCode("TST01");
 		product.setBrand(brand);

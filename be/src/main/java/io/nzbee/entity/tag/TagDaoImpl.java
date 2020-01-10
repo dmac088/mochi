@@ -128,7 +128,7 @@ public class TagDaoImpl implements ITagDao {
 		Join<Product, ProductStatus> status = product.join(Product_.productStatus);
 		
 		
-		Join<Brand, BrandAttribute> brandAttribute = brand.join(Brand_.brandAttributes);
+		Join<Brand, BrandAttribute> brandAttribute = brand.join(Brand_.attributes);
 		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(io.nzbee.entity.category.product.CategoryProduct_.attributes);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
