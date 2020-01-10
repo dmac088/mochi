@@ -106,7 +106,6 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     	assertFound(found);
     }
     
-    // write test cases here
     @Test
     public void whenFindByCode_thenReturnProductCategory() {
     	
@@ -118,8 +117,6 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
         // then
     	assertFound(found);
     }
-    
-    // write test cases here
     @Test
     public void whenFindByDesc_thenReturnProductCategory() {
     	
