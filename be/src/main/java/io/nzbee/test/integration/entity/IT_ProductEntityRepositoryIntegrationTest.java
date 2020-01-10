@@ -53,13 +53,6 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     
     private io.nzbee.entity.product.Product product = null;
     
-    
-    @Before
-    public void setUp() { 
-    	//this.persistNewProduct();
-    }
-    
-    
 	public io.nzbee.entity.product.Product persistNewProduct() {
     	
 		product = productEntityBeanFactory.getProductEntityBean();
