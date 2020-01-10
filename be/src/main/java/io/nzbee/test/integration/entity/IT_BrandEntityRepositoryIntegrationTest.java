@@ -113,8 +113,8 @@ public class IT_BrandEntityRepositoryIntegrationTest {
     	
         // when
     	Brand found = brandService.findByDesc(GeneralVars.LANGUAGE_ENGLISH, 
-				 									GeneralVars.CURRENCY_USD, 
-				 									"test brand").get();
+				 							  GeneralVars.CURRENCY_USD, 
+				 							  "test brand").get();
      
         //then
     	assertFound(found);
