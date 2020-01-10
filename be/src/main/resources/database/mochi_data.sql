@@ -15,13 +15,13 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Data for Name: address; Type: TABLE DATA; Schema: mochi; Owner: postgres
+-- Data for Name: address; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
 
 
 --
--- Data for Name: address_type; Type: TABLE DATA; Schema: mochi; Owner: postgres
+-- Data for Name: address_type; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
 
@@ -675,7 +675,7 @@ SELECT pg_catalog.setval('mochi.customer_cst_id_seq', 1000000237, true);
 
 
 --
--- Data for Name: discount_type; Type: TABLE DATA; Schema: mochi; Owner: postgres
+-- Data for Name: discount_type; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
 INSERT INTO mochi.discount_type VALUES (1, 'percentage');
@@ -697,13 +697,13 @@ SELECT pg_catalog.setval('mochi.hierarchy_hir_id_seq', 43, true);
 
 
 --
--- Data for Name: inventory_on_hand; Type: TABLE DATA; Schema: mochi; Owner: postgres
+-- Data for Name: inventory_on_hand; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
 
 
 --
--- Data for Name: inventory_transaction; Type: TABLE DATA; Schema: mochi; Owner: postgres
+-- Data for Name: inventory_transaction; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
 
@@ -746,7 +746,7 @@ SELECT pg_catalog.setval('mochi.layout_lay_id_seq', 4, true);
 
 
 --
--- Data for Name: location; Type: TABLE DATA; Schema: mochi; Owner: postgres
+-- Data for Name: location; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
 
@@ -1156,7 +1156,7 @@ SELECT pg_catalog.setval('mochi.product_status_prd_sts_id_seq', 1, false);
 
 
 --
--- Data for Name: product_supplier; Type: TABLE DATA; Schema: mochi; Owner: postgres
+-- Data for Name: product_supplier; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
 
@@ -1183,7 +1183,7 @@ INSERT INTO mochi.product_tag VALUES (34, 13, 17);
 
 
 --
--- Name: product_tag_attr_lcl_tag_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: postgres
+-- Name: product_tag_attr_lcl_tag_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
 SELECT pg_catalog.setval('mochi.product_tag_attr_lcl_tag_id_seq', 1, false);
@@ -1210,7 +1210,7 @@ SELECT pg_catalog.setval('mochi.product_type_prd_typ_id_seq', 1, false);
 
 
 --
--- Data for Name: promotion_brand; Type: TABLE DATA; Schema: mochi; Owner: postgres
+-- Data for Name: promotion_brand; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
 
@@ -1229,19 +1229,19 @@ SELECT pg_catalog.setval('mochi.promotion_category_prm_cat_id_seq', 1, false);
 
 
 --
--- Data for Name: promotion_order; Type: TABLE DATA; Schema: mochi; Owner: postgres
+-- Data for Name: promotion_order; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
 
 
 --
--- Data for Name: promotion_product; Type: TABLE DATA; Schema: mochi; Owner: postgres
+-- Data for Name: promotion_product; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
 
 
 --
--- Data for Name: promotion_type; Type: TABLE DATA; Schema: mochi; Owner: postgres
+-- Data for Name: promotion_type; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
 INSERT INTO mochi.promotion_type VALUES (1, 'product');
@@ -1272,7 +1272,7 @@ SELECT pg_catalog.setval('mochi.role_type_role_typ_id_seq', 1, false);
 
 
 --
--- Data for Name: supplier; Type: TABLE DATA; Schema: mochi; Owner: postgres
+-- Data for Name: supplier; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
 

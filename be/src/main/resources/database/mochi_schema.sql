@@ -207,36 +207,126 @@ ALTER SCHEMA mochi OWNER TO mochidb_owner;
 
 CREATE FUNCTION mochi.ft_brand_categories(text, text) RETURNS TABLE(cat_id bigint, cat_cd text, cat_lvl bigint, hir_id bigint, cat_prnt_id bigint, cat_typ_id bigint, product_count bigint, child_cat_count bigint, max_price numeric)
     LANGUAGE sql
-    AS '
- SELECT p.cat_id,
-    p.cat_cd,
-    p.cat_lvl,
-    p.hir_id,
-    p.cat_typ_id,
-    p.cat_prnt_id,
-    count(DISTINCT prd.upc_cd) AS product_count,
-    count(DISTINCT cc.cat_cd) AS child_cat_count,
-    coalesce(
-    max(CASE
-	WHEN pt.prc_typ_cd = ''MKD01''
-	THEN prc.prc_val
-	END),
-    max(CASE
-	WHEN pt.prc_typ_cd = ''RET01''
-	THEN prc.prc_val
-	END)) as max_price
-   FROM mochi.category p
-     JOIN LATERAL mochi.ft_categories(p.cat_cd::text) cc(cat_id, cat_cd, cat_prnt_id, cat_typ_id) ON 1 = 1
-     LEFT JOIN mochi.brand_category pc ON cc.cat_id = pc.cat_id
-     LEFT JOIN mochi.brand bnd ON pc.bnd_id = bnd.bnd_id
-     LEFT JOIN mochi.product prd ON pc.bnd_id = prd.bnd_id
-     LEFT JOIN mochi.price prc ON prd.prd_id = prc.prd_id AND now() between prc.prc_st_dt and prc.prc_en_dt
-     LEFT JOIN mochi.currency curr ON prc.ccy_id = curr.ccy_id 
-     LEFT JOIN mochi.price_type pt ON prc.prc_typ_id = pt.prc_typ_id 
-  WHERE cc.cat_typ_id = 2
-  AND p.cat_cd = $1
-  AND ccy_cd = $2
-  GROUP BY p.cat_id, p.cat_cd, p.cat_lvl, p.hir_id, p.cat_typ_id, p.cat_prnt_id;
+    AS '
+
+
+
+ SELECT p.cat_id,
+
+
+
+    p.cat_cd,
+
+
+
+    p.cat_lvl,
+
+
+
+    p.hir_id,
+
+
+
+    p.cat_typ_id,
+
+
+
+    p.cat_prnt_id,
+
+
+
+    count(DISTINCT prd.upc_cd) AS product_count,
+
+
+
+    count(DISTINCT cc.cat_cd) AS child_cat_count,
+
+
+
+    coalesce(
+
+
+
+    max(CASE
+
+
+
+	WHEN pt.prc_typ_cd = ''MKD01''
+
+
+
+	THEN prc.prc_val
+
+
+
+	END),
+
+
+
+    max(CASE
+
+
+
+	WHEN pt.prc_typ_cd = ''RET01''
+
+
+
+	THEN prc.prc_val
+
+
+
+	END)) as max_price
+
+
+
+   FROM mochi.category p
+
+
+
+     JOIN LATERAL mochi.ft_categories(p.cat_cd::text) cc(cat_id, cat_cd, cat_prnt_id, cat_typ_id) ON 1 = 1
+
+
+
+     LEFT JOIN mochi.brand_category pc ON cc.cat_id = pc.cat_id
+
+
+
+     LEFT JOIN mochi.brand bnd ON pc.bnd_id = bnd.bnd_id
+
+
+
+     LEFT JOIN mochi.product prd ON pc.bnd_id = prd.bnd_id
+
+
+
+     LEFT JOIN mochi.price prc ON prd.prd_id = prc.prd_id AND now() between prc.prc_st_dt and prc.prc_en_dt
+
+
+
+     LEFT JOIN mochi.currency curr ON prc.ccy_id = curr.ccy_id 
+
+
+
+     LEFT JOIN mochi.price_type pt ON prc.prc_typ_id = pt.prc_typ_id 
+
+
+
+  WHERE cc.cat_typ_id = 2
+
+
+
+  AND p.cat_cd = $1
+
+
+
+  AND ccy_cd = $2
+
+
+
+  GROUP BY p.cat_id, p.cat_cd, p.cat_lvl, p.hir_id, p.cat_typ_id, p.cat_prnt_id;
+
+
+
 ';
 
 
@@ -249,31 +339,83 @@ ALTER FUNCTION mochi.ft_brand_categories(text, text) OWNER TO mochidb_owner;
 CREATE FUNCTION mochi.ft_categories(text) RETURNS TABLE(cat_id bigint, cat_cd text, cat_prnt_id bigint, cat_typ_id bigint)
     LANGUAGE sql
     AS '
+
+
 WITH RECURSIVE 
+
+
     -- starting node(s)
+
+
     starting (cat_id, cat_cd, cat_prnt_id, cat_typ_id) AS
+
+
     (
+
+
       SELECT t.cat_id, t.cat_cd, t.cat_prnt_id, t.cat_typ_id
+
+
       FROM mochi.category AS t
+
+
       WHERE t.cat_cd = $1        
+
+
     ),
+
+
     descendants (cat_id, cat_cd, cat_prnt_id, cat_typ_id) AS
+
+
     (
+
+
       SELECT t.cat_id, t.cat_cd, t.cat_prnt_id, t.cat_typ_id
+
+
       FROM mochi.category AS t
+
+
       WHERE t.cat_cd = $1
+
+
       UNION ALL
+
+
       SELECT t.cat_id, t.cat_cd, t.cat_prnt_id, t.cat_typ_id
+
+
       FROM mochi.category AS t 
+
+
 		JOIN descendants AS d 
+
+
 		ON t.cat_prnt_id = d.cat_id
+
+
     )
 
+
+
+
+
 SELECT 	descendants.cat_id,
+
+
 		descendants.cat_cd,
+
+
 		descendants.cat_prnt_id,
+
+
 		descendants.cat_typ_id
+
+
 FROM  starting 
+
+
 		cross join descendants ';
 
 
@@ -285,35 +427,122 @@ ALTER FUNCTION mochi.ft_categories(text) OWNER TO mochidb_owner;
 
 CREATE FUNCTION mochi.ft_product_categories(text, text) RETURNS TABLE(cat_id bigint, cat_cd text, cat_lvl bigint, hir_id bigint, cat_prnt_id bigint, cat_typ_id bigint, product_count bigint, child_cat_count bigint, max_price numeric)
     LANGUAGE sql
-    AS '
- SELECT p.cat_id,
-    p.cat_cd,
-    p.cat_lvl,
-    p.hir_id,
-    p.cat_typ_id,
-    p.cat_prnt_id,
-    count(DISTINCT prd.upc_cd) AS product_count,
-    count(DISTINCT cc.cat_cd) AS child_cat_count,
-    coalesce(
-    max(CASE
-	WHEN pt.prc_typ_cd = ''MKD01''
-	THEN prc.prc_val
-	END),
-    max(CASE
-	WHEN pt.prc_typ_cd = ''RET01''
-	THEN prc.prc_val
-	END)) as max_price
-   FROM mochi.category p
-     JOIN LATERAL mochi.ft_categories(p.cat_cd::text) cc(cat_id, cat_cd, cat_prnt_id, cat_typ_id) ON 1 = 1
-     LEFT JOIN mochi.product_category pc ON cc.cat_id = pc.cat_id
-     LEFT JOIN mochi.product prd ON pc.prd_id = prd.prd_id
-     LEFT JOIN mochi.price prc ON prd.prd_id = prc.prd_id AND now() between prc.prc_st_dt and prc.prc_en_dt
-     LEFT JOIN mochi.currency curr ON prc.ccy_id = curr.ccy_id 
-     LEFT JOIN mochi.price_type pt ON prc.prc_typ_id = pt.prc_typ_id 
-  WHERE cc.cat_typ_id = 1
-  AND p.cat_cd = $1
-  AND ccy_cd = $2
-  GROUP BY p.cat_id, p.cat_cd, p.cat_lvl, p.hir_id, p.cat_typ_id, p.cat_prnt_id;
+    AS '
+
+
+
+ SELECT p.cat_id,
+
+
+
+    p.cat_cd,
+
+
+
+    p.cat_lvl,
+
+
+
+    p.hir_id,
+
+
+
+    p.cat_typ_id,
+
+
+
+    p.cat_prnt_id,
+
+
+
+    count(DISTINCT prd.upc_cd) AS product_count,
+
+
+
+    count(DISTINCT cc.cat_cd) AS child_cat_count,
+
+
+
+    coalesce(
+
+
+
+    max(CASE
+
+
+
+	WHEN pt.prc_typ_cd = ''MKD01''
+
+
+
+	THEN prc.prc_val
+
+
+
+	END),
+
+
+
+    max(CASE
+
+
+
+	WHEN pt.prc_typ_cd = ''RET01''
+
+
+
+	THEN prc.prc_val
+
+
+
+	END)) as max_price
+
+
+
+   FROM mochi.category p
+
+
+
+     JOIN LATERAL mochi.ft_categories(p.cat_cd::text) cc(cat_id, cat_cd, cat_prnt_id, cat_typ_id) ON 1 = 1
+
+
+
+     LEFT JOIN mochi.product_category pc ON cc.cat_id = pc.cat_id
+
+
+
+     LEFT JOIN mochi.product prd ON pc.prd_id = prd.prd_id
+
+
+
+     LEFT JOIN mochi.price prc ON prd.prd_id = prc.prd_id AND now() between prc.prc_st_dt and prc.prc_en_dt
+
+
+
+     LEFT JOIN mochi.currency curr ON prc.ccy_id = curr.ccy_id 
+
+
+
+     LEFT JOIN mochi.price_type pt ON prc.prc_typ_id = pt.prc_typ_id 
+
+
+
+  WHERE cc.cat_typ_id = 1
+
+
+
+  AND p.cat_cd = $1
+
+
+
+  AND ccy_cd = $2
+
+
+
+  GROUP BY p.cat_id, p.cat_cd, p.cat_lvl, p.hir_id, p.cat_typ_id, p.cat_prnt_id;
+
+
+
 ';
 
 
@@ -2218,6 +2447,16 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.brand TO mochi_app;
 
 
 --
+-- Name: SEQUENCE brand_attr_lcl_bnd_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+REVOKE ALL ON SEQUENCE mochi.brand_attr_lcl_bnd_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE mochi.brand_attr_lcl_bnd_id_seq FROM mochidb_owner;
+GRANT ALL ON SEQUENCE mochi.brand_attr_lcl_bnd_id_seq TO mochidb_owner;
+GRANT SELECT,USAGE ON SEQUENCE mochi.brand_attr_lcl_bnd_id_seq TO mochi_app;
+
+
+--
 -- Name: TABLE brand_attr_lcl; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -2225,6 +2464,16 @@ REVOKE ALL ON TABLE mochi.brand_attr_lcl FROM PUBLIC;
 REVOKE ALL ON TABLE mochi.brand_attr_lcl FROM mochidb_owner;
 GRANT ALL ON TABLE mochi.brand_attr_lcl TO mochidb_owner;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.brand_attr_lcl TO mochi_app;
+
+
+--
+-- Name: SEQUENCE brand_category_bnd_cat_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+REVOKE ALL ON SEQUENCE mochi.brand_category_bnd_cat_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE mochi.brand_category_bnd_cat_id_seq FROM mochidb_owner;
+GRANT ALL ON SEQUENCE mochi.brand_category_bnd_cat_id_seq TO mochidb_owner;
+GRANT SELECT,USAGE ON SEQUENCE mochi.brand_category_bnd_cat_id_seq TO mochi_app;
 
 
 --
@@ -2238,6 +2487,16 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.brand_category TO mochi_app;
 
 
 --
+-- Name: SEQUENCE category_cat_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+REVOKE ALL ON SEQUENCE mochi.category_cat_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE mochi.category_cat_id_seq FROM mochidb_owner;
+GRANT ALL ON SEQUENCE mochi.category_cat_id_seq TO mochidb_owner;
+GRANT SELECT,USAGE ON SEQUENCE mochi.category_cat_id_seq TO mochi_app;
+
+
+--
 -- Name: TABLE category; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -2245,6 +2504,16 @@ REVOKE ALL ON TABLE mochi.category FROM PUBLIC;
 REVOKE ALL ON TABLE mochi.category FROM mochidb_owner;
 GRANT ALL ON TABLE mochi.category TO mochidb_owner;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.category TO mochi_app;
+
+
+--
+-- Name: SEQUENCE category_attr_lcl_cat_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+REVOKE ALL ON SEQUENCE mochi.category_attr_lcl_cat_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE mochi.category_attr_lcl_cat_id_seq FROM mochidb_owner;
+GRANT ALL ON SEQUENCE mochi.category_attr_lcl_cat_id_seq TO mochidb_owner;
+GRANT SELECT,USAGE ON SEQUENCE mochi.category_attr_lcl_cat_id_seq TO mochi_app;
 
 
 --
@@ -2275,6 +2544,16 @@ REVOKE ALL ON TABLE mochi.category_product FROM PUBLIC;
 REVOKE ALL ON TABLE mochi.category_product FROM mochidb_owner;
 GRANT ALL ON TABLE mochi.category_product TO mochidb_owner;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.category_product TO mochi_app;
+
+
+--
+-- Name: SEQUENCE category_type_cat_typ_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+REVOKE ALL ON SEQUENCE mochi.category_type_cat_typ_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE mochi.category_type_cat_typ_id_seq FROM mochidb_owner;
+GRANT ALL ON SEQUENCE mochi.category_type_cat_typ_id_seq TO mochidb_owner;
+GRANT SELECT,USAGE ON SEQUENCE mochi.category_type_cat_typ_id_seq TO mochi_app;
 
 
 --
@@ -2389,6 +2668,16 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.inventory_transaction TO mochi_
 
 
 --
+-- Name: SEQUENCE layout_lay_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+REVOKE ALL ON SEQUENCE mochi.layout_lay_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE mochi.layout_lay_id_seq FROM mochidb_owner;
+GRANT ALL ON SEQUENCE mochi.layout_lay_id_seq TO mochidb_owner;
+GRANT SELECT,USAGE ON SEQUENCE mochi.layout_lay_id_seq TO mochi_app;
+
+
+--
 -- Name: TABLE layout; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -2396,6 +2685,16 @@ REVOKE ALL ON TABLE mochi.layout FROM PUBLIC;
 REVOKE ALL ON TABLE mochi.layout FROM mochidb_owner;
 GRANT ALL ON TABLE mochi.layout TO mochidb_owner;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.layout TO mochi_app;
+
+
+--
+-- Name: SEQUENCE layout_category_lay_cat_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+REVOKE ALL ON SEQUENCE mochi.layout_category_lay_cat_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE mochi.layout_category_lay_cat_id_seq FROM mochidb_owner;
+GRANT ALL ON SEQUENCE mochi.layout_category_lay_cat_id_seq TO mochidb_owner;
+GRANT SELECT,USAGE ON SEQUENCE mochi.layout_category_lay_cat_id_seq TO mochi_app;
 
 
 --
@@ -2583,6 +2882,16 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.product_attr_lcl TO mochi_app;
 
 
 --
+-- Name: SEQUENCE product_category_prd_cat_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+REVOKE ALL ON SEQUENCE mochi.product_category_prd_cat_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE mochi.product_category_prd_cat_id_seq FROM mochidb_owner;
+GRANT ALL ON SEQUENCE mochi.product_category_prd_cat_id_seq TO mochidb_owner;
+GRANT SELECT,USAGE ON SEQUENCE mochi.product_category_prd_cat_id_seq TO mochi_app;
+
+
+--
 -- Name: TABLE product_category; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -2590,6 +2899,16 @@ REVOKE ALL ON TABLE mochi.product_category FROM PUBLIC;
 REVOKE ALL ON TABLE mochi.product_category FROM mochidb_owner;
 GRANT ALL ON TABLE mochi.product_category TO mochidb_owner;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.product_category TO mochi_app;
+
+
+--
+-- Name: SEQUENCE product_status_prd_sts_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+REVOKE ALL ON SEQUENCE mochi.product_status_prd_sts_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE mochi.product_status_prd_sts_id_seq FROM mochidb_owner;
+GRANT ALL ON SEQUENCE mochi.product_status_prd_sts_id_seq TO mochidb_owner;
+GRANT SELECT,USAGE ON SEQUENCE mochi.product_status_prd_sts_id_seq TO mochi_app;
 
 
 --
@@ -2613,6 +2932,16 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.product_supplier TO mochi_app;
 
 
 --
+-- Name: SEQUENCE product_tag_prd_tag_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+REVOKE ALL ON SEQUENCE mochi.product_tag_prd_tag_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE mochi.product_tag_prd_tag_id_seq FROM mochidb_owner;
+GRANT ALL ON SEQUENCE mochi.product_tag_prd_tag_id_seq TO mochidb_owner;
+GRANT SELECT,USAGE ON SEQUENCE mochi.product_tag_prd_tag_id_seq TO mochi_app;
+
+
+--
 -- Name: TABLE product_tag; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -2620,6 +2949,26 @@ REVOKE ALL ON TABLE mochi.product_tag FROM PUBLIC;
 REVOKE ALL ON TABLE mochi.product_tag FROM mochidb_owner;
 GRANT ALL ON TABLE mochi.product_tag TO mochidb_owner;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.product_tag TO mochi_app;
+
+
+--
+-- Name: SEQUENCE product_tag_attr_lcl_tag_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+REVOKE ALL ON SEQUENCE mochi.product_tag_attr_lcl_tag_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE mochi.product_tag_attr_lcl_tag_id_seq FROM mochidb_owner;
+GRANT ALL ON SEQUENCE mochi.product_tag_attr_lcl_tag_id_seq TO mochidb_owner;
+GRANT SELECT,USAGE ON SEQUENCE mochi.product_tag_attr_lcl_tag_id_seq TO mochi_app;
+
+
+--
+-- Name: SEQUENCE product_type_prd_typ_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+REVOKE ALL ON SEQUENCE mochi.product_type_prd_typ_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE mochi.product_type_prd_typ_id_seq FROM mochidb_owner;
+GRANT ALL ON SEQUENCE mochi.product_type_prd_typ_id_seq TO mochidb_owner;
+GRANT SELECT,USAGE ON SEQUENCE mochi.product_type_prd_typ_id_seq TO mochi_app;
 
 
 --
@@ -2650,6 +2999,16 @@ REVOKE ALL ON TABLE mochi.promotion_brand FROM PUBLIC;
 REVOKE ALL ON TABLE mochi.promotion_brand FROM mochidb_owner;
 GRANT ALL ON TABLE mochi.promotion_brand TO mochidb_owner;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.promotion_brand TO mochi_app;
+
+
+--
+-- Name: SEQUENCE promotion_category_prm_cat_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+REVOKE ALL ON SEQUENCE mochi.promotion_category_prm_cat_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE mochi.promotion_category_prm_cat_id_seq FROM mochidb_owner;
+GRANT ALL ON SEQUENCE mochi.promotion_category_prm_cat_id_seq TO mochidb_owner;
+GRANT SELECT,USAGE ON SEQUENCE mochi.promotion_category_prm_cat_id_seq TO mochi_app;
 
 
 --
@@ -2755,6 +3114,16 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.supplier TO mochi_app;
 
 
 --
+-- Name: SEQUENCE tag_tag_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+REVOKE ALL ON SEQUENCE mochi.tag_tag_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE mochi.tag_tag_id_seq FROM mochidb_owner;
+GRANT ALL ON SEQUENCE mochi.tag_tag_id_seq TO mochidb_owner;
+GRANT SELECT,USAGE ON SEQUENCE mochi.tag_tag_id_seq TO mochi_app;
+
+
+--
 -- Name: TABLE tag; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -2762,6 +3131,16 @@ REVOKE ALL ON TABLE mochi.tag FROM PUBLIC;
 REVOKE ALL ON TABLE mochi.tag FROM mochidb_owner;
 GRANT ALL ON TABLE mochi.tag TO mochidb_owner;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE mochi.tag TO mochi_app;
+
+
+--
+-- Name: SEQUENCE tag_attr_lcl_tag_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+REVOKE ALL ON SEQUENCE mochi.tag_attr_lcl_tag_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE mochi.tag_attr_lcl_tag_id_seq FROM mochidb_owner;
+GRANT ALL ON SEQUENCE mochi.tag_attr_lcl_tag_id_seq TO mochidb_owner;
+GRANT SELECT,USAGE ON SEQUENCE mochi.tag_attr_lcl_tag_id_seq TO mochi_app;
 
 
 --
