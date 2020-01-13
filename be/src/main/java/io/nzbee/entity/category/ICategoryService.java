@@ -14,5 +14,5 @@ public interface ICategoryService extends ILocalizedService<Category> {
 
 	List<Category> findAll(String locale, String parentCategoryDesc, List<String> brandCodes, List<String> tagCodes);
 
-	List<Category> findAll(String locale, String currency, Class<Category> classType);
+	<T> List<Category> findAll(String locale, String currency, Class<T> classType);
 }
