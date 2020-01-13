@@ -210,10 +210,6 @@ public abstract class Category {
 	
 	public abstract void setObjectCount(int count);
 	
-	public Category() {
-		this.typeDiscriminator = this.getClass().getAnnotation(DiscriminatorValue.class).value();
-	}
-	
 	
 	@Field(analyze = Analyze.NO, store=Store.YES)
 	@Facet
@@ -374,12 +370,8 @@ public abstract class Category {
 		this.categoryLayouts = categoryLayouts;
 	}
 	
-	
 	public String getTypeDiscriminator() {
-		return typeDiscriminator;
+		return this.getClass().getAnnotation(DiscriminatorValue.class).value();
 	}
 
-	public void setTypeDiscriminator(String typeDiscriminator) {
-		this.typeDiscriminator = typeDiscriminator;
-	}
 }
