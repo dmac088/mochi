@@ -125,7 +125,8 @@ public class Product {
 	@Field(store=Store.YES)
 	private Date productCreateDt;
 
-	@ManyToMany(mappedBy = "products",
+	@ManyToMany(fetch = FetchType.LAZY,
+				mappedBy = "products",
 		    	cascade = {
 		            CascadeType.PERSIST,
 		            CascadeType.MERGE
@@ -327,7 +328,7 @@ public class Product {
 	
 	public void addProductCategory(CategoryProduct categoryProduct) {
 		this.categories.add(categoryProduct);
-		categoryProduct.addProduct(this);
+		categoryProduct.getProducts().add(this);
 	}
 	
 	public void removeProductCategory(CategoryProduct categoryProduct) {
@@ -354,5 +355,17 @@ public class Product {
 		this.prices.remove(productPrice);
 		productPrice.setProduct(null);
 	}
+	
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Product)) return false;
+        return productId != null && productId.equals(((Product) o).getProductId());
+    }
+ 
+    @Override
+    public int hashCode() {
+        return 31;
+    }
 			
 }
