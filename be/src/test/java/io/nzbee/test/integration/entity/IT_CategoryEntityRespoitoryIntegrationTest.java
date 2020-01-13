@@ -21,6 +21,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.brand.CategoryBrand;
+import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.variables.GeneralVars;
 
 @RunWith(SpringRunner.class)
@@ -65,7 +66,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 												  		GeneralVars.CURRENCY_USD);
      
         // then
-    	assertFound(found);
+    	assertAllCategoriesFound(found);
     }
     
     @Test
@@ -77,13 +78,37 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 												  		CategoryBrand.class);
      
         // then
-    	assertFound(found);
+    	assertAllBrandCategoriesFound(found);
     }
+    
+    @Test
+    public void whenFindAllProductCategories_thenReturnAllProductCategories() {
+    	
+        // when
+    	List<Category> found = categoryService.findAll( GeneralVars.LANGUAGE_ENGLISH, 
+												  		GeneralVars.CURRENCY_USD,
+												  		CategoryProduct.class);
+     
+        // then
+    	assertAllProductCategoriesFound(found);
+    }
+    
 	
-    private void assertFound(final List<Category> found) {
+    private void assertAllCategoriesFound(final List<Category> found) {
     	
     	assertThat(found).isNotNull();
-    //	assertThat(found).size().isEqualTo(43);
+    	assertThat(found).size().isEqualTo(43);
+    }
+    
+    private void assertAllBrandCategoriesFound(final List<Category> found) {
+    	
+    	assertThat(found).isNotNull();
+    	assertThat(found).size().isEqualTo(1);
+    }
+    
+    private void assertAllProductCategoriesFound(final List<Category> found) {
+    	assertThat(found).isNotNull();
+    	assertThat(found).size().isEqualTo(42);
     }
     
 }
