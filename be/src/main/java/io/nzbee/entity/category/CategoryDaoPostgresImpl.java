@@ -63,7 +63,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
 				 .setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
 				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
-				 .setParameter("typeDiscriminator", cls.getAnnotation(DiscriminatorValue.class).value());
+				 .setParameter("typeDiscriminator", Long.parseLong(cls.getAnnotation(DiscriminatorValue.class).value()));
 		
 		@SuppressWarnings("unchecked")
 		List<Object[]> results = query.getResultList();
