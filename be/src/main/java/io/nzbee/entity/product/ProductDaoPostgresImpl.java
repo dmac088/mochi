@@ -75,50 +75,21 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
 		
 		Root<Product> root = cq.from(Product.class);
-		Join<Product, ProductAttribute> productAttribute = root.join(Product_.attributes);
-		Join<Product, ProductStatus> status = root.join(Product_.productStatus);
-		Join<Product, ProductPrice> retailPrice = root.join(Product_.prices, JoinType.LEFT);
-		Join<ProductPrice, ProductPriceType> retailPriceType = retailPrice.join(ProductPrice_.type);
-		Join<ProductPrice, Currency> retailCurrency = retailPrice.join(ProductPrice_.currency);
 		
-		Join<Product, ProductPrice> markdownPrice = root.join(Product_.prices, JoinType.LEFT);
-		Join<ProductPrice, ProductPriceType> markdownPriceType = markdownPrice.join(ProductPrice_.type);
-		Join<ProductPrice, Currency> markdownCurrency = markdownPrice.join(ProductPrice_.currency);
-		
-		retailPriceType.on(cb.equal(retailPriceType.get(ProductPriceType_.code), ProductVars.PRICE_RETAIL_CODE));
-		markdownPriceType.on(cb.equal(markdownPriceType.get(ProductPriceType_.code), ProductVars.PRICE_MARKDOWN_CODE));
 		
 		cq.multiselect(	root.get(Product_.productId).alias("productId"),
-						root.get(Product_.productUPC).alias("productCode"),
-						productAttribute.get(ProductAttribute_.Id).alias("productAttributeId"),
-						productAttribute.get(ProductAttribute_.productDesc).alias("productDesc"),
-						retailPrice.get(ProductPrice_.priceValue).alias("retailPrice"),
-						markdownPrice.get(ProductPrice_.priceValue).alias("markdownPrice"));
+						root.get(Product_.productUPC).alias("productCode"));
 		
-		cq.where(cb.and(
-				 cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale),
-				 cb.equal(root.get(Product_.productUPC), code),
-				 cb.equal(status.get(ProductStatus_.code), ProductVars.ACTIVE_SKU_CODE),
-				 cb.equal(retailCurrency.get(Currency_.code), currency),
-				 cb.equal(markdownCurrency.get(Currency_.code), currency)));
+		cq.where(cb.and(cb.equal(root.get(Product_.productUPC), code)));
 		
 		TypedQuery<Tuple> query = em.createQuery(cq);
 		
 		Tuple tuple = query.getSingleResult();
 		
 		Product pe = new Product();
-		ProductAttribute pa = new ProductAttribute();
 		
-		pa.setId(Long.parseLong(tuple.get("productAttributeId").toString()));
-		pa.setProductId(Long.parseLong(tuple.get("productId").toString()));
-		pa.setProductDesc(tuple.get("productDesc").toString());
-		pa.setLclCd(locale);
-		
-		pe.setProductAttribute(pa);
 		pe.setProductId(Long.parseLong(tuple.get("productId").toString()));
 		pe.setUPC(tuple.get("productCode").toString());
-		pe.setRetailPrice(Double.parseDouble(tuple.get("retailPrice").toString()));
-		pe.setMarkdownPrice(Double.parseDouble(tuple.get("markdownPrice").toString()));
 		
 		return Optional.ofNullable(pe);
 	}
