@@ -154,7 +154,7 @@ public class Product {
 	private Double markdownPrice;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@IndexedEmbedded
+	//@IndexedEmbedded
 	@JoinColumn(name="bnd_id")
 	private Brand brand;
 	
@@ -163,7 +163,7 @@ public class Product {
 	private ProductType productType;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@IndexedEmbedded
+	//@IndexedEmbedded
 	@JoinColumn(name="prd_sts_id")
 	private ProductStatus productStatus;
 
