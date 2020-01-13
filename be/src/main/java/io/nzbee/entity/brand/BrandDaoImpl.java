@@ -173,7 +173,7 @@ public class BrandDaoImpl  implements IBrandDao {
 		Join<Brand, BrandAttribute> attribute = root.join(Brand_.attributes);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
-		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
+		conditions.add(cb.equal(status.get(ProductStatus_.code), ProductVars.ACTIVE_SKU_CODE));
 		conditions.add(cb.equal(attribute.get(BrandAttribute_.lclCd), locale));
 		conditions.add(root.in(Brand_.brandCode).in(brandCodes));
 
@@ -218,7 +218,7 @@ public class BrandDaoImpl  implements IBrandDao {
 		Join<Brand, BrandAttribute> attribute = root.join(Brand_.attributes);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
-		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
+		conditions.add(cb.equal(status.get(ProductStatus_.code), ProductVars.ACTIVE_SKU_CODE));
 		conditions.add(cb.equal(attribute.get(BrandAttribute_.lclCd), locale));
 		conditions.add(cb.equal(category.get(CategoryBrand_.categoryCode), categoryCode));
 
@@ -261,7 +261,7 @@ public class BrandDaoImpl  implements IBrandDao {
 		Join<Brand, BrandAttribute> attribute = root.join(Brand_.attributes);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
-		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
+		conditions.add(cb.equal(status.get(ProductStatus_.code), ProductVars.ACTIVE_SKU_CODE));
 		conditions.add(cb.equal(attribute.get(BrandAttribute_.lclCd), locale));
 
 		cq.multiselect(	root.get(Brand_.brandId).alias("brandId"),
@@ -312,7 +312,7 @@ public class BrandDaoImpl  implements IBrandDao {
 			Join<Product, Tag> productTag = product.join(Product_.tags);
 			conditions.add(productTag.get(Tag_.productTagCode).in(tagCodes));
 		}
-		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
+		conditions.add(cb.equal(status.get(ProductStatus_.code), ProductVars.ACTIVE_SKU_CODE));
 		
 		TypedQuery<Brand> query = em.createQuery(cq
 				.select(root)

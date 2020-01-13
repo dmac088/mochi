@@ -17,10 +17,10 @@ public class ProductType {
 	private Long Id;
 
 	@Column(name="prd_typ_cd")
-	private String productTypeCode;
+	private String code;
 	
 	@Column(name="prd_typ_desc")
-	private String productTypeDesc;
+	private String desc;
 
 	public Long getId() {
 		return Id;
@@ -31,19 +31,19 @@ public class ProductType {
 	}
 	
 	public String getCode() {
-		return productTypeCode;
+		return code;
 	}
 
 	public void setCode(String productTypeCode) {
-		this.productTypeCode = productTypeCode;
+		this.code = productTypeCode;
 	}
 
 	public String getDesc() {
-		return productTypeDesc;
+		return desc;
 	}
 
 	public void setDesc(String productTypeDesc) {
-		this.productTypeDesc = productTypeDesc;
+		this.desc = productTypeDesc;
 	}
 	
 }

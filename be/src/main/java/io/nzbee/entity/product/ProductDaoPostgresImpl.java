@@ -98,7 +98,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		cq.where(cb.and(
 				 cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale),
 				 cb.equal(root.get(Product_.productUPC), code),
-				 cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE),
+				 cb.equal(status.get(ProductStatus_.code), ProductVars.ACTIVE_SKU_CODE),
 				 cb.equal(retailCurrency.get(Currency_.code), currency),
 				 cb.equal(markdownCurrency.get(Currency_.code), currency)));
 		
@@ -153,8 +153,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		cq.where(cb.and(
 				cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale),
 				cb.equal(productAttribute.get(ProductAttribute_.productDesc), desc),
-				cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE),
-				cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE),
+				cb.equal(status.get(ProductStatus_.code), ProductVars.ACTIVE_SKU_CODE),
+				cb.equal(status.get(ProductStatus_.code), ProductVars.ACTIVE_SKU_CODE),
 				cb.equal(retailCurrency.get(Currency_.code), currency),
 				cb.equal(markdownCurrency.get(Currency_.code), currency)
 		));

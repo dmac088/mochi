@@ -20,34 +20,34 @@ public class ProductStatus {
 
 	@Column(name="prd_sts_cd")
 	@Field(store=Store.NO)
-	private String productStatusCode;
+	private String code;
 	
 	@Column(name="prd_sts_desc")
 	@Field(store=Store.NO)
-	private String productStatusDesc;
+	private String desc;
 
 	public Long getProductStatusId() {
 		return productStatusId;
 	}
 
-	public void setProductStatusId(Long productStatusId) {
+	public void setId(Long productStatusId) {
 		this.productStatusId = productStatusId;
 	}
 
-	public String getProductStatusCode() {
-		return productStatusCode;
+	public String getCode() {
+		return code;
 	}
 
-	public void setProductStatusCode(String productStatusCode) {
-		this.productStatusCode = productStatusCode;
+	public void setCode(String productStatusCode) {
+		this.code = productStatusCode;
 	}
 
-	public String getProductStatusDesc() {
-		return productStatusDesc;
+	public String getDesc() {
+		return desc;
 	}
 
-	public void setProductStatusDesc(String productStatusDesc) {
-		this.productStatusDesc = productStatusDesc;
+	public void setDesc(String productStatusDesc) {
+		this.desc = productStatusDesc;
 	}
 
 }

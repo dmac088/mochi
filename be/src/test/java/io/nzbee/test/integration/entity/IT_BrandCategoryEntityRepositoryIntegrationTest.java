@@ -133,6 +133,8 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
     
     private void assertFound(final Category found) {
     	
+    	System.out.println(found.getTypeDiscriminator());
+    	
     	assertThat(found.getCategoryCode())
         .isEqualTo("TST02");
 	    assertThat(found.getCategoryLevel())
