@@ -44,6 +44,13 @@ public class CategoryServiceImpl implements ICategoryService {
 		return categoryDAO.findAll(locale, currency, categoryCodes);
 	}
 	
+
+	@Override
+	public List<Category> findAll(String locale, String currency, Class<Category> classType) {
+		// TODO Auto-generated method stub
+		return categoryDAO.findByCodeAndType(locale, currency, classType);
+	}
+	
 	@Override
 	public List<Category> findAll(String locale, String parentCategoryDesc, List<String> brandCodes, List<String> tagCodes) {
 		// TODO Auto-generated method stub
@@ -80,5 +87,6 @@ public class CategoryServiceImpl implements ICategoryService {
 		// TODO Auto-generated method stub
 		
 	}
+
 
 }

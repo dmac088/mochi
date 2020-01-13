@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -47,25 +49,52 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 
 	
 	@Override
-	public <T> Category findByCodeAndType(String locale, String currency, Class<T> cls) {
-		// TODO Auto-generated method stub
+	public List<Category> findByCodeAndType(String locale, String currency, Class<Category> cls) {
+		Session session = em.unwrap(Session.class);
 		
-//		Session session = em.unwrap(Session.class);
-//		
-//		Query query = session.createNativeQuery(constructSQL(false, 
-//															 false,
-//															 false,
-//															 false), "CategoryMapping")
-//					.setParameter("locale", locale)
-//					.setParameter("currency", currency)
-//					.setParameter("parentCategoryCode", "-1")
-//					.setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
-//					.setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
-//					.setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE);
-//		
-//		
-//		cls.getSimpleName();
-		return null;
+		Query query = session.createNativeQuery(constructSQL(false, 
+															 false,
+															 false,
+															 false,
+															 true), "CategoryMapping")
+				 .setParameter("locale", locale)
+				 .setParameter("currency", currency)
+				 .setParameter("parentCategoryCode", "-1")
+				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
+				 .setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
+				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
+				 .setParameter("typeDiscriminator", cls.getClass().getAnnotation(DiscriminatorValue.class).value());
+		
+		@SuppressWarnings("unchecked")
+		List<Object[]> results = query.getResultList();
+		
+		return results.stream().map(c -> {
+			Category category = (Category) c[0];
+			category.setCategoryAttribute(((CategoryAttribute) c[1]));
+			category.setCategoryType((CategoryType) c[2]);
+			category.setHierarchy((Hierarchy) c[3]);
+			category.setObjectCount(((BigDecimal)c[8]).intValue());
+			category.setChildCount(((BigInteger)c[9]).longValue());
+			category.setCategoryLayouts((((String)c[10]) != null)
+										? ((String)c[10]).split(",", -1)
+										: new String[0]);
+			
+			
+			//if c[4] is null then the category does not have a parent
+			if(category instanceof CategoryProduct) {
+				((CategoryProduct) category).setHasParent(c[4] != null);
+				if(((CategoryProduct) category).hasParent()) {
+					//we have a parent
+					Category parentCategory = (Category) c[4];
+					parentCategory.setCategoryAttribute(((CategoryAttribute) c[5]));
+					parentCategory.setCategoryType((CategoryType) c[6]);
+					parentCategory.setHierarchy((Hierarchy) c[7]);
+					category.setParent(parentCategory);
+				}
+			}
+			
+			return category;
+		}).collect(Collectors.toList());
 	}
 	
 	
@@ -75,6 +104,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		Session session = em.unwrap(Session.class);
 		
 		Query query = session.createNativeQuery(constructSQL(false, 
+															 false,
 															 false,
 															 false,
 															 false), "CategoryMapping")
@@ -123,6 +153,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		Session session = em.unwrap(Session.class);
 
 		Query query = session.createNativeQuery(constructSQL(!categoryCodes.isEmpty(),
+															 false,
 															 false,
 															 false,
 															 false), "CategoryMapping")
@@ -175,7 +206,8 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		Query query = session.createNativeQuery(constructSQL(!categoryCodes.isEmpty(),
 															 false,
 															 false,
-															 true), "CategoryMapping")
+															 true,
+															 false), "CategoryMapping")
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
 				 .setParameter("parentCategoryCode", "-1")
@@ -223,6 +255,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		Query query = session.createNativeQuery(constructSQL(!categoryCodes.isEmpty(),
 															 false,
 															 true,
+															 false,
 															 false), "CategoryMapping")
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
@@ -271,6 +304,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		categoryCodes.add(code);
 		
 		Query query = session.createNativeQuery(constructSQL(!categoryCodes.isEmpty(),
+															 false,
 															 false,
 															 false,
 															 false), "CategoryMapping")
@@ -430,7 +464,8 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				boolean hasCategories,
 				boolean withChildren,
 				boolean hasCategoryDesc,
-				boolean hasCategoryId
+				boolean hasCategoryId,
+				boolean hasType
 			) {
 		String sql = "WITH RECURSIVE  " +
 				"descendants AS " +
@@ -448,7 +483,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"  ON t.cat_id = a.cat_id " +
 				
 				"  WHERE 0=0 " +
-				((hasCategoryDesc 	&& !hasCategories 	&& ! hasCategoryId)  	? " AND a.cat_desc = :categoryDesc " : "") + 
+				((hasCategoryDesc 	&& !hasCategories 	&& !hasCategoryId)  	? " AND a.cat_desc = :categoryDesc " : "") + 
 				((hasCategories 	&& !hasCategoryDesc && !hasCategoryId)  	? " AND cat_cd in :categoryCodes" : "") +
 				((hasCategoryId 	&& !hasCategories 	&& !hasCategoryDesc)  	? " AND t.cat_id = :categoryId" : "") +
 				((!hasCategories 	&& !hasCategoryDesc && !hasCategoryId) 		? " AND cat_prnt_id IS NULL " : "") +
@@ -744,6 +779,9 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				
 				"INNER JOIN mochi.category_type ct " +
 				"ON ct.cat_typ_id = s.cat_type_id  " +
+				((hasType) 
+						? "AND ct.cat_typ_id = :typeDiscriminator "  
+						: "" +
 				
 				"LEFT JOIN mochi.category pc " +
 				"ON pc.cat_id = s.prnt_id  " +
@@ -783,7 +821,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"  end" +
 				((!withChildren && hasCategories) ? 	" 	AND s.cat_cd in :categoryCodes" : "") +
 				((!withChildren && hasCategoryDesc) ? 	" 	AND a.cat_desc = :categoryDesc " : "") +
-				((!withChildren && hasCategoryId) ? 	" 	AND s.cat_id = :categoryId " : "");
+				((!withChildren && hasCategoryId) ? 	" 	AND s.cat_id = :categoryId " : ""));
 			
 		return sql;
 	}
