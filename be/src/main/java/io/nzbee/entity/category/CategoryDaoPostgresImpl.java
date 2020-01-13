@@ -49,7 +49,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 
 	
 	@Override
-	public List<Category> findByCodeAndType(String locale, String currency, Class<Category> cls) {
+	public <T> List<Category> findByCodeAndType(String locale, String currency, Class<T> cls) {
 		Session session = em.unwrap(Session.class);
 		
 		Query query = session.createNativeQuery(constructSQL(false, 
@@ -63,7 +63,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
 				 .setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
 				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
-				 .setParameter("typeDiscriminator", cls.getClass().getAnnotation(DiscriminatorValue.class).value());
+				 .setParameter("typeDiscriminator", cls.getAnnotation(DiscriminatorValue.class).value());
 		
 		@SuppressWarnings("unchecked")
 		List<Object[]> results = query.getResultList();
@@ -781,7 +781,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"ON ct.cat_typ_id = s.cat_type_id  " +
 				((hasType) 
 						? "AND ct.cat_typ_id = :typeDiscriminator "  
-						: "" +
+						: " ") +
 				
 				"LEFT JOIN mochi.category pc " +
 				"ON pc.cat_id = s.prnt_id  " +
@@ -821,7 +821,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"  end" +
 				((!withChildren && hasCategories) ? 	" 	AND s.cat_cd in :categoryCodes" : "") +
 				((!withChildren && hasCategoryDesc) ? 	" 	AND a.cat_desc = :categoryDesc " : "") +
-				((!withChildren && hasCategoryId) ? 	" 	AND s.cat_id = :categoryId " : ""));
+				((!withChildren && hasCategoryId) ? 	" 	AND s.cat_id = :categoryId " : "");
 			
 		return sql;
 	}
