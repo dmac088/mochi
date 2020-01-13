@@ -71,11 +71,23 @@ public class CategoryProduct extends Category  {
 	
 	public void addProduct(Product product) {
 		this.products.add(product);
-		product.addProductCategory(this);
+		product.getCategories().add(this);
 	}
 	
 	public void removeProduct(Product product) {
 		this.products.remove(product);
 		product.removeProductCategory(this);
 	}
+	
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CategoryProduct)) return false;
+        return categoryId != null && categoryId.equals(((Category) o).getCategoryId());
+    }
+ 
+    @Override
+    public int hashCode() {
+        return 32;
+    }
 }

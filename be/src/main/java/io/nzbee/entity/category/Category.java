@@ -147,7 +147,7 @@ public abstract class Category {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="cat_id")
-	private Long categoryId; 
+	protected Long categoryId; 
 
 	@NaturalId
 	@Column(name="cat_cd", unique = true, updatable = false)

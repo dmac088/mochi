@@ -14,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
@@ -108,12 +109,8 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 		
 		
 		//add the product to the category
-		product.addProductCategory(cp);
-				
-//		ProductAttribute productAttribute = new ProductAttribute();
-//		productAttribute.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
-//		productAttribute.setProductDesc("test product description");
-//		product.addProductAttribute(productAttribute);
+//		product.addProductCategory(cp);
+		cp.addProduct(product);
 		
 	    entityManager.persist(product);
 	    entityManager.flush();
@@ -128,9 +125,10 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	}
 	
 	@Test
+	@Rollback(false)
 	public void whenFindById_thenReturnProductCategory() {
 		 // when
-    	Product found = productService.findById(GeneralVars.LANGUAGE_ENGLISH, 
+    	Product found = productService.findById(  GeneralVars.LANGUAGE_ENGLISH, 
 												  GeneralVars.CURRENCY_USD,  
 												  product.getProductId()).get();
      
