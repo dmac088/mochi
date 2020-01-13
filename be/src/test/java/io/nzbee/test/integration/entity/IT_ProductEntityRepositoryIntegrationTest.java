@@ -26,7 +26,6 @@ import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.Product;
-import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.status.IProductStatusRepository;
 import io.nzbee.entity.product.type.IProductTypeRepository;
 import io.nzbee.test.integration.beans.ProductEntityBeanFactory;
@@ -125,7 +124,6 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	}
 	
 	@Test
-	@Rollback(false)
 	public void whenFindById_thenReturnProductCategory() {
 		 // when
     	Product found = productService.findById(  GeneralVars.LANGUAGE_ENGLISH, 
