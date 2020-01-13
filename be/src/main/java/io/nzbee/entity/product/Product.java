@@ -2,6 +2,7 @@ package io.nzbee.entity.product;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -124,9 +125,13 @@ public class Product {
 	@Field(store=Store.YES)
 	private Date productCreateDt;
 
-	@ManyToMany(mappedBy = "products")
+	@ManyToMany(mappedBy = "products",
+		    	cascade = {
+		            CascadeType.PERSIST,
+		            CascadeType.MERGE
+		        })
 	@IndexedEmbedded
-	private Set<CategoryProduct> categories;
+	private Set<CategoryProduct> categories = new HashSet<>();
 	
 	@ManyToMany(mappedBy = "products", 
 				cascade = {CascadeType.PERSIST, CascadeType.MERGE})

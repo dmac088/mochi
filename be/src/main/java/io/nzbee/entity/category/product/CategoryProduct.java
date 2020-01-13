@@ -1,7 +1,7 @@
 package io.nzbee.entity.category.product;
 
-import java.util.List;
-
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -24,13 +24,16 @@ import io.nzbee.entity.product.Product;
 public class CategoryProduct extends Category  {
 	
 	@ManyToMany(fetch = FetchType.LAZY, 
-				cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+				cascade = {
+			            CascadeType.PERSIST,
+			            CascadeType.MERGE
+			        })
     @JoinTable(name = "product_category", schema="mochi", 
     		   joinColumns 			= @JoinColumn(name = "cat_id"), 
     		   inverseJoinColumns 	= @JoinColumn(name = "prd_id"))
     @OrderBy
     @JsonIgnore
-    private List<Product> products;
+    private Set<Product> products = new HashSet<>();
 	
 	@Transient
 	private int productCount;
@@ -50,7 +53,7 @@ public class CategoryProduct extends Category  {
 		super();
 	}
 
-	public List<Product> getProducts() {
+	public Set<Product> getProducts() {
 		return products;
 	}
 

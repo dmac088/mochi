@@ -25,6 +25,7 @@ import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.status.IProductStatusRepository;
 import io.nzbee.entity.product.type.IProductTypeRepository;
 import io.nzbee.test.integration.beans.ProductEntityBeanFactory;
@@ -98,18 +99,21 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 		product.setProductType(productTypeRepository.findByCode("NML01").get());
 		
 		//we need a status
-		product.setProductStatus(productStatusRepository.findByCode("NML01").get());
+		product.setProductStatus(productStatusRepository.findByCode("ACT01").get());
 		
 		//we need a category
-		product.addProductCategory((CategoryProduct) categoryService.findByCode(GeneralVars.LANGUAGE_ENGLISH, 
-								   GeneralVars.CURRENCY_HKD,
-								   "PRM01").get());
+		CategoryProduct cp = (CategoryProduct) categoryService.findByCode(GeneralVars.LANGUAGE_ENGLISH, 
+																		GeneralVars.CURRENCY_HKD,
+																		"FRT01").get();
 		
+		
+		//add the product to the category
+		product.addProductCategory(cp);
+				
 //		ProductAttribute productAttribute = new ProductAttribute();
 //		productAttribute.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
 //		productAttribute.setProductDesc("test product description");
-//		product.getAttributes().add(productAttribute);
-//		product.addProductCategory(categoryProduct);
+//		product.addProductAttribute(productAttribute);
 		
 	    entityManager.persist(product);
 	    entityManager.flush();
