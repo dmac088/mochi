@@ -12,8 +12,8 @@ public class ProductStatusEntityBeanFactory {
 	@Bean
 	public final ProductStatus getProductStatusEntityBean() {
 		ProductStatus productStatus = new ProductStatus();
-		productStatus.setProductStatusCode("TST01");
-		productStatus.setProductStatusDesc("test product status");
+		productStatus.setCode("TST01");
+		productStatus.setDesc("test product status");
 		return productStatus;
 	}
 	

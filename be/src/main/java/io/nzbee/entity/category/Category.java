@@ -8,6 +8,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ColumnResult;
 import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -202,9 +203,17 @@ public abstract class Category {
 	@Transient
 	private Long maxMarkdownPrice;
 	
+	@Transient
+	private String typeDiscriminator;
+
 	public abstract int getObjectCount();
 	
 	public abstract void setObjectCount(int count);
+	
+	public Category() {
+		this.typeDiscriminator = this.getClass().getAnnotation(DiscriminatorValue.class).value();
+	}
+	
 	
 	@Field(analyze = Analyze.NO, store=Store.YES)
 	@Facet
@@ -366,4 +375,11 @@ public abstract class Category {
 	}
 	
 	
+	public String getTypeDiscriminator() {
+		return typeDiscriminator;
+	}
+
+	public void setTypeDiscriminator(String typeDiscriminator) {
+		this.typeDiscriminator = typeDiscriminator;
+	}
 }

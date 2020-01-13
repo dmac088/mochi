@@ -19,9 +19,9 @@ public class ProductEntityBeanFactory {
 		product.setProductCreateDt(new Date());
 		product.setUPC("123456789");
 		
-		Brand brand = new Brand();
-		brand.setCode("TST01");
-		product.setBrand(brand);
+//		Brand brand = new Brand();
+//		brand.setCode("TST01");
+//		product.setBrand(brand);
 		
 //		BrandAttribute brandAttribute = new BrandAttribute();
 //		brandAttribute.setBrandDesc("test brand description");

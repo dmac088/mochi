@@ -89,10 +89,10 @@ public class IT_ProductStatusEntityRepositoryIntegrationTest {
 	
 	 private void assertFound(final ProductStatus found) {
 	    	
-	    	assertThat(found.getProductStatusCode())
+	    	assertThat(found.getCode())
 	        .isEqualTo("TST01");
 	
-	    	assertThat(found.getProductStatusDesc())
+	    	assertThat(found.getDesc())
 	        .isEqualTo("test product status");
 	
 	 }

@@ -15,9 +15,18 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlConfig;
+import org.springframework.test.context.jdbc.SqlGroup;
+import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
+import io.nzbee.entity.brand.IBrandService;
+import io.nzbee.entity.category.ICategoryService;
+import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.status.IProductStatusRepository;
+import io.nzbee.entity.product.type.IProductTypeRepository;
 import io.nzbee.test.integration.beans.ProductEntityBeanFactory;
 import io.nzbee.variables.GeneralVars;
 
@@ -25,6 +34,16 @@ import io.nzbee.variables.GeneralVars;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles(profiles = "dev")
+@SqlGroup({
+	@Sql(scripts = "/database/mochi_schema.sql",
+			config = @SqlConfig(dataSource = "mochiDataSourceOwner", 
+			transactionManager = "mochiTransactionManagerOwner",
+			transactionMode = TransactionMode.ISOLATED)), 
+	@Sql(scripts = "/database/mochi_data.sql",
+			config = @SqlConfig(dataSource = "mochiDataSource", 
+			transactionManager = "mochiTransactionManager",
+			transactionMode = TransactionMode.ISOLATED))
+})
 public class IT_ProductEntityRepositoryIntegrationTest {
 
 	@TestConfiguration
@@ -51,15 +70,46 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     @Autowired
     private IProductService productService;
     
-    private io.nzbee.entity.product.Product product = null;
+    @Autowired
+    private IBrandService brandService;
     
-	public io.nzbee.entity.product.Product persistNewProduct() {
+    @Autowired
+    private IProductTypeRepository productTypeRepository;
+    
+    @Autowired
+    private IProductStatusRepository productStatusRepository;
+    
+    @Autowired
+    private ICategoryService categoryService;
+    
+    private Product product = null;
+    
+	public Product persistNewProduct() {
     	
 		product = productEntityBeanFactory.getProductEntityBean();
 	    
-		entityManager.persist(product.getProductType());
-		entityManager.persist(product.getBrand());
-		entityManager.persist(product.getProductStatus());
+		//we need a brand
+		product.setBrand(brandService.findByCode(GeneralVars.LANGUAGE_ENGLISH, 
+												 GeneralVars.CURRENCY_HKD, 
+												 "PLA01").get());
+		
+		
+		//we need a type
+		product.setProductType(productTypeRepository.findByCode("NML01").get());
+		
+		//we need a status
+		product.setProductStatus(productStatusRepository.findByCode("NML01").get());
+		
+		//we need a category
+		product.addProductCategory((CategoryProduct) categoryService.findByCode(GeneralVars.LANGUAGE_ENGLISH, 
+								   GeneralVars.CURRENCY_HKD,
+								   "PRM01").get());
+		
+//		ProductAttribute productAttribute = new ProductAttribute();
+//		productAttribute.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
+//		productAttribute.setProductDesc("test product description");
+//		product.getAttributes().add(productAttribute);
+//		product.addProductCategory(categoryProduct);
 		
 	    entityManager.persist(product);
 	    entityManager.flush();

@@ -45,6 +45,30 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	@Qualifier("mochiEntityManagerFactory")
 	private EntityManager em;
 
+	
+	@Override
+	public <T> Category findByCodeAndType(String locale, String currency, Class<T> cls) {
+		// TODO Auto-generated method stub
+		
+//		Session session = em.unwrap(Session.class);
+//		
+//		Query query = session.createNativeQuery(constructSQL(false, 
+//															 false,
+//															 false,
+//															 false), "CategoryMapping")
+//					.setParameter("locale", locale)
+//					.setParameter("currency", currency)
+//					.setParameter("parentCategoryCode", "-1")
+//					.setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
+//					.setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
+//					.setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE);
+//		
+//		
+//		cls.getSimpleName();
+		return null;
+	}
+	
+	
 	@Override
 	public List<Category> findAll(String locale, String currency) {
 		
