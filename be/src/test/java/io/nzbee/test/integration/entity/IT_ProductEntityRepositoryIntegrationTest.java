@@ -122,7 +122,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	}
 	
 	@Test
-	public void whenFindById_thenReturnProductCategory() {
+	public void whenFindById_thenReturnProduct() {
 		 // when
     	Product found = productService.findById(  GeneralVars.LANGUAGE_ENGLISH, 
 												  GeneralVars.CURRENCY_USD,  
@@ -133,11 +133,19 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	}
 	
 	
-	  
+	@Test
+	public void whenFindByCode_thenReturnProduct() {
+		 // when
+    	Product found = productService.findByCode(GeneralVars.LANGUAGE_ENGLISH, 
+												  GeneralVars.CURRENCY_USD,  
+												  "123456789").get();
+     
+        // then
+    	assertFound(found);
+	}
+	 
     private void assertFound(final Product found) {
-    	
     	assertThat(found.getUPC())
         .isEqualTo("123456789");
-	    
     }
 }
