@@ -188,7 +188,8 @@
 						</execution>
 					</executions>
 				</plugin>
-				<!-- <plugin>
+			<!-- 	<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-failsafe-plugin</artifactId>
 					<configuration>
 						<includes>
@@ -198,7 +199,6 @@
 					<executions>
 						<execution>
 							<goals>
-								<goal>integration-test</goal>
 								<goal>verify</goal>
 							</goals>
 						</execution>
