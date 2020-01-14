@@ -163,7 +163,7 @@ public class Product {
 	private ProductType productType;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@IndexedEmbedded
+	//@IndexedEmbedded
 	@JoinColumn(name="prd_sts_id")
 	private ProductStatus productStatus;
 
