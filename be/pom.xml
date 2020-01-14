@@ -168,8 +168,25 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<configuration>
+					<includes>
+						<include>**/IT*Test.java</include>
+					</includes>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
-		<pluginManagement>
+		<pluginManagement> 
 			<plugins>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -177,7 +194,6 @@
 					<configuration>
 						<includes>
 							<include>**/UT*Test.java</include>
-							<include>**/IT*Test.java</include>
 						</includes>
 					</configuration>
 					<executions>
@@ -188,22 +204,6 @@
 						</execution>
 					</executions>
 				</plugin>
-			<!-- 	<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-failsafe-plugin</artifactId>
-					<configuration>
-						<includes>
-							<include>**/IT*Test.java</include>
-						</includes>
-					</configuration>
-					<executions>
-						<execution>
-							<goals>
-								<goal>verify</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin> -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
