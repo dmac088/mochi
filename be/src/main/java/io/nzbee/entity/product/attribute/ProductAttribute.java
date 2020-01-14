@@ -93,7 +93,7 @@ public class ProductAttribute {
 	private String lclCd;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	//@IndexedEmbedded
+	@IndexedEmbedded
 	@JoinColumn(name="prd_id", insertable=false, updatable=false)
 	@JsonBackReference
 	private Product product;
@@ -107,7 +107,7 @@ public class ProductAttribute {
 	}
 	
 	@Transient
-	//@IndexedEmbedded
+	@IndexedEmbedded
 	public Category getPrimaryCategory() {
 		 Optional<CategoryProduct> category = 
 				 this.getProduct().getCategories().stream().filter(c -> {
@@ -121,7 +121,7 @@ public class ProductAttribute {
 	}
 	
 	@Transient
-	//@IndexedEmbedded
+	@IndexedEmbedded
 	public Category getSecondaryCategory() {
 		Optional<Collection<Optional<CategoryProduct>>> lc = 
 		Optional.ofNullable(this.getProduct().getCategories().stream().map(a -> {return Optional.ofNullable(a);}).collect(Collectors.toList()));
