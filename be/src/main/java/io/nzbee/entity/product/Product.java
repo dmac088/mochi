@@ -154,7 +154,7 @@ public class Product {
 	private Double markdownPrice;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	//@IndexedEmbedded
+	@IndexedEmbedded
 	@JoinColumn(name="bnd_id")
 	private Brand brand;
 	
@@ -163,7 +163,7 @@ public class Product {
 	private ProductType productType;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	//@IndexedEmbedded
+	@IndexedEmbedded
 	@JoinColumn(name="prd_sts_id")
 	private ProductStatus productStatus;
 
@@ -327,32 +327,32 @@ public class Product {
 	}
 	
 	public void addProductCategory(CategoryProduct categoryProduct) {
-		this.categories.add(categoryProduct);
+		this.getCategories().add(categoryProduct);
 		categoryProduct.getProducts().add(this);
 	}
 	
 	public void removeProductCategory(CategoryProduct categoryProduct) {
-		this.categories.remove(categoryProduct);
+		this.getCategories().remove(categoryProduct);
 		categoryProduct.removeProduct(this);
 	}
 	
 	public void addProductAttribute(ProductAttribute productAttribute) {
-		this.attributes.add(productAttribute);
+		this.getAttributes().add(productAttribute);
 		productAttribute.setProduct(this);
 	}
 	
 	public void removeProductAttribute(ProductAttribute productAttribute) {
-		this.attributes.remove(productAttribute);
+		this.getAttributes().remove(productAttribute);
 		productAttribute.setProduct(null);
 	}
 	
 	public void addProductPrice(ProductPrice productPrice) {
-		this.prices.add(productPrice);
+		this.getPrices().add(productPrice);
 		productPrice.setProduct(this);
 	}
 	
 	public void removeProductPrice(ProductPrice productPrice) {
-		this.prices.remove(productPrice);
+		this.getPrices().remove(productPrice);
 		productPrice.setProduct(null);
 	}
 	
