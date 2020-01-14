@@ -177,17 +177,18 @@
 					<configuration>
 						<includes>
 							<include>**/UT*Test.java</include>
+							<include>**/IT*Test.java</include>
 						</includes>
 					</configuration>
-					<dependencies>
-						<dependency>
-							<groupId>org.junit.jupiter</groupId>
-							<artifactId>junit-jupiter-engine</artifactId>
-							<version>5.1.1</version>
-						</dependency>
-					</dependencies>
+					<executions>
+						<execution>
+							<goals>
+								<goal>test</goal>
+							</goals>
+						</execution>
+					</executions>
 				</plugin>
-				<plugin>
+				<!-- <plugin>
 					<artifactId>maven-failsafe-plugin</artifactId>
 					<configuration>
 						<includes>
@@ -202,7 +203,7 @@
 							</goals>
 						</execution>
 					</executions>
-				</plugin>
+				</plugin> -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
