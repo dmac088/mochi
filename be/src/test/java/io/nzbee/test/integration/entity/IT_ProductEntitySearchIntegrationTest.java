@@ -146,7 +146,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 //	}
 	
 	@Test
-	public void whenSearch_thenReturnAllProductPages() {
+	public void whenSearchFruit_thenReturnAllFruitProducts() {
 		// when
 		Page<io.nzbee.domain.product.Product> 
 						pp = searchService.findAll("en-GB", 
@@ -160,15 +160,51 @@ public class IT_ProductEntitySearchIntegrationTest {
 		
 		
         // then
-    	assertFound(pp);
+		assertThat(pp.getTotalPages())
+        .isEqualTo(2);
+    	assertThat(pp.getTotalElements())
+        .isEqualTo(new Long(12));
 	}
 
-    private void assertFound(final Page<io.nzbee.domain.product.Product>  found) {
-    	System.out.println(found.getSize());
-    	assertThat(found.getTotalPages())
+	@Test
+	public void whenSearchVegetables_thenReturnAllVegetableProducts() {
+		// when
+		Page<io.nzbee.domain.product.Product> 
+						pp = searchService.findAll("en-GB", 
+							  "HKD", 
+							  "Ignored", 
+							  "Vegetables", 
+							  0, 
+							  10, 
+							  "", 
+							  new FacetContainer());
+		
+		
+        // then
+		assertThat(pp.getTotalPages())
         .isEqualTo(2);
-    	assertThat(found.getTotalElements())
+    	assertThat(pp.getTotalElements())
         .isEqualTo(new Long(12));
-    }
+	}
 	
+	@Test
+	public void whenSearchApple_thenReturnAppleProduct() {
+		// when
+		Page<io.nzbee.domain.product.Product> 
+						pp = searchService.findAll("en-GB", 
+							  "HKD", 
+							  "Ignored", 
+							  "Apple", 
+							  0, 
+							  10, 
+							  "", 
+							  new FacetContainer());
+		
+		
+        // then
+		assertThat(pp.getTotalPages())
+        .isEqualTo(1);
+    	assertThat(pp.getTotalElements())
+        .isEqualTo(new Long(1));
+	}
 }
