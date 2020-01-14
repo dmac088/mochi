@@ -146,7 +146,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 //	}
 	
 	@Test
-	public void whenSearch_thenReturnAllProducts() {
+	public void whenSearch_thenReturnAllProductPages() {
 		// when
 		Page<io.nzbee.domain.product.Product> 
 						pp = searchService.findAll("en-GB", 
