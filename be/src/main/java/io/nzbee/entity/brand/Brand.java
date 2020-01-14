@@ -84,28 +84,31 @@ public class Brand {
 		this.brandAttribute = brandAttribute;
 	}
 	
-
 	public List<BrandAttribute> getAttributes() {
 		return attributes;
 	}
 	
+	public List<CategoryBrand> getCategories() {
+		return categories;
+	}
+	
 	public void addAttribute(BrandAttribute brandAttribute) {
-		attributes.add(brandAttribute);
+		this.getAttributes().add(brandAttribute);
 		brandAttribute.setBrand(this);		
 	}
 	
 	public void removeAttribute(BrandAttribute brandAttribute) {
-		attributes.remove(brandAttribute);
+		this.getAttributes().remove(brandAttribute);
 		brandAttribute.setBrand(null);
 	}
 	
 	public void addBrandCategory(CategoryBrand categoryBrand) {
-		this.categories.add(categoryBrand);
+		this.getCategories().add(categoryBrand);
 		categoryBrand.addBrand(this);
 	}
-	
+
 	public void removeBrandCategory(CategoryBrand categoryBrand) {
-		this.categories.remove(categoryBrand);
+		this.getCategories().remove(categoryBrand);
 		categoryBrand.removeBrand(this);
 	}
 

@@ -79,14 +79,19 @@ public class UserRole implements Serializable {
     public Set<Authority> getAuthorities() {
 		return authorities;
 	}
+    
+
+	public Set<User> getUsers() {
+		return Users;
+	}
 	
 	public void addUser(User user) {
-		this.Users.add(user);
+		this.getUsers().add(user);
 		user.addUserRole(this);
 	}
 	
 	public void removeUser(User user) {
-		this.Users.remove(user);
+		this.getUsers().remove(user);
 		user.addUserRole(this);
 	}
 }

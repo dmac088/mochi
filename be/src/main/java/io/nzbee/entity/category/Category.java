@@ -353,12 +353,12 @@ public abstract class Category {
 	}
 	
 	public void addAttribute(CategoryAttribute categoryAttribute) {
-		attributes.add(categoryAttribute);
+		this.getAttributes().add(categoryAttribute);
 		categoryAttribute.setCategory(this);		
 	}
 	
 	public void removeAttribute(CategoryAttribute categoryAttribute) {
-		attributes.remove(categoryAttribute);
+		this.getAttributes().remove(categoryAttribute);
 		categoryAttribute.setCategory(null);
 	}
 	

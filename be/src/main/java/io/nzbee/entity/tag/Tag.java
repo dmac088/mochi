@@ -68,12 +68,12 @@ public class Tag {
 	}
 	
 	public void addTagAttribute(TagAttribute tagAttribute) {
-		this.attributes.add(tagAttribute);
+		this.getAttributes().add(tagAttribute);
 		tagAttribute.setProductTag(this);
 	}
 	
 	public void removeTagAttribute(TagAttribute tagAttribute) {
-		this.attributes.remove(tagAttribute);
+		this.getAttributes().remove(tagAttribute);
 		tagAttribute.setProductTag(null);
 	}
 }
