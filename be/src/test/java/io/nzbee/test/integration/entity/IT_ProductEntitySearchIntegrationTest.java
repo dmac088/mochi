@@ -134,6 +134,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		  = Search.getFullTextEntityManager(em);
 		try {
 			fullTextEntityManager.createIndexer().startAndWait();
+			fullTextEntityManager.close();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
