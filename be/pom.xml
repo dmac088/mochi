@@ -132,7 +132,6 @@
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
-				<targetPath>target/classes</targetPath>
 			</resource>
 		</resources>
 		<plugins>
