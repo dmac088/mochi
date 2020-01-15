@@ -129,6 +129,15 @@
 		<java.version>1.8</java.version>
 	</properties>
 	<build>
+		<resources>
+			<resource>
+				<directory>config</directory>
+				<targetPath>target/classes</targetPath>
+				<includes>
+					<include>application.properties</include>
+				</includes>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -178,7 +187,7 @@
 				</executions>
 			</plugin>
 		</plugins>
-		<pluginManagement> 
+		<pluginManagement>
 			<plugins>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
