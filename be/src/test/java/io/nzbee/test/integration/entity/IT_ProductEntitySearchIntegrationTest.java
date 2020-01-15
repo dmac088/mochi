@@ -89,8 +89,9 @@ public class IT_ProductEntitySearchIntegrationTest {
     
     @PersistenceContext(unitName = "mochiEntityManagerFactory")
 	private EntityManager em;
-    
-    @Autowired ISearchService searchService;
+
+    @Autowired 
+    private ISearchService searchService;
     
     private Product product = null;
     
@@ -134,7 +135,6 @@ public class IT_ProductEntitySearchIntegrationTest {
 		  = Search.getFullTextEntityManager(em);
 		try {
 			fullTextEntityManager.createIndexer().startAndWait();
-			fullTextEntityManager.close();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -169,6 +169,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 
 	@Test
 	public void whenSearchVegetables_thenReturnAllVegetableProducts() {
+		
 		// when
 		Page<io.nzbee.domain.product.Product> 
 						pp = searchService.findAll("en-GB", 
