@@ -3,6 +3,8 @@ package io.nzbee.test.integration.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import javax.persistence.EntityManager;
+
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,6 +111,11 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
     private void assertAllProductCategoriesFound(final List<Category> found) {
     	assertThat(found).isNotNull();
     	assertThat(found).size().isEqualTo(42);
+    }
+    
+    @After
+    public void closeConnection() {
+    	entityManager.close();
     }
     
 }

@@ -125,5 +125,9 @@ public class IT_PartyEntityRepositoryIntegrationTest {
 	    .isEqualTo("Test Family Name");
     }
 	
+    @After
+    public void closeConnection() {
+    	entityManager.close();
+    }
 	
 }

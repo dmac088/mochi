@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -209,4 +210,9 @@ public class IT_ProductEntitySearchIntegrationTest {
     	assertThat(pp.getTotalElements())
         .isEqualTo(new Long(1));
 	}
+	
+	 @After
+	 public void closeConnection() {
+	  	entityManager.close();
+	 }
 }

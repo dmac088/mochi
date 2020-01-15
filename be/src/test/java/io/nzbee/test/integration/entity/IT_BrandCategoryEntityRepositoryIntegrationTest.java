@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import javax.persistence.EntityManager;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -145,6 +146,11 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
 	    .isEqualTo("BND01");
 	    assertThat(found.getCategoryAttribute().getCategoryDesc())
 	    .isEqualTo("test brand category");
+    }
+    
+    @After
+    public void closeConnection() {
+    	entityManager.close();
     }
  
 }
