@@ -88,7 +88,6 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
 	    //persist a new transient test category
 	    entityManager.persist(category);
 	    entityManager.flush();
-	    entityManager.close();
 	    
 	    return category;
 	}
@@ -133,9 +132,6 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
     }
     
     private void assertFound(final Category found) {
-    	
-    	System.out.println(found.getTypeDiscriminator());
-    	
     	assertThat(found.getCategoryCode())
         .isEqualTo("TST02");
 	    assertThat(found.getCategoryLevel())
