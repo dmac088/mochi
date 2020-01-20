@@ -112,7 +112,6 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 		
 	    entityManager.persist(product);
 	    entityManager.flush();
-	    entityManager.close();
 	    	
 	    return product;
 	}
@@ -148,6 +147,19 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     private void assertFound(final Product found) {
     	assertThat(found.getUPC())
         .isEqualTo("123456789");
+    	assertThat(found.getCategories().stream().filter(f -> f.getCategoryCode().equals("FRT01")).findFirst().isPresent())
+    	.isTrue();
+    	assertThat(found.getProductType().getCode())
+    	.isEqualTo("NML01");
+    	assertThat(found.getProductStatus().getCode())
+    	.isEqualTo("ACT01");
+    	assertThat(found.getBrand().getCode())
+    	.isEqualTo("PLA01");
+    	assertThat(found.getProductAttribute().getBrandCode())
+    	.isEqualTo("PLA01");
+    	
+    	
+    	
     }
     
     @After
