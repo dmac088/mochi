@@ -80,7 +80,7 @@ public class IT_BrandEntityRepositoryIntegrationTest {
 	    //persist a new transient test brand
 	    entityManager.persist(brand);
 	    entityManager.flush();
-	    entityManager.close();
+	    
 	}
    
     
