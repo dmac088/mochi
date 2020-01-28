@@ -96,10 +96,10 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 		
 		
 		//we need a type
-		product.setProductType(productTypeRepository.findByCode("NML01").get());
+		product.setProductType(productTypeRepository.findByProductTypeCode("NML01").get());
 		
 		//we need a status
-		product.setProductStatus(productStatusRepository.findByCode("ACT01").get());
+		product.setProductStatus(productStatusRepository.findByProductStatusCode("ACT01").get());
 		
 		//we need a category
 		CategoryProduct cp = (CategoryProduct) categoryService.findByCode(GeneralVars.LANGUAGE_ENGLISH, 
