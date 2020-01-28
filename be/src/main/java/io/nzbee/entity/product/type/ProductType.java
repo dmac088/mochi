@@ -14,36 +14,36 @@ public class ProductType {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="prd_typ_id")
-	private Long Id;
+	private Long productTypeId;
 
 	@Column(name="prd_typ_cd")
-	private String code;
+	private String productTypeCode;
 	
 	@Column(name="prd_typ_desc")
-	private String desc;
+	private String productTypeDesc;
 
 	public Long getId() {
-		return Id;
+		return productTypeId;
 	}
 
 	public void setId(Long id) {
-		Id = id;
+		this.productTypeId = id;
 	}
 	
 	public String getCode() {
-		return code;
+		return productTypeCode;
 	}
 
 	public void setCode(String productTypeCode) {
-		this.code = productTypeCode;
+		this.productTypeCode = productTypeCode;
 	}
 
 	public String getDesc() {
-		return desc;
+		return productTypeDesc;
 	}
 
 	public void setDesc(String productTypeDesc) {
-		this.desc = productTypeDesc;
+		this.productTypeDesc = productTypeDesc;
 	}
 	
 }

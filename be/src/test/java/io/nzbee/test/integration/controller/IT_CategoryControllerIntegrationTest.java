@@ -37,7 +37,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 							     io.nzbee.WebMvcConfigDev.class,
 							     io.nzbee.security.user.UserService.class,
 							     io.nzbee.security.user.IUserRepository.class,
-							     io.nzbee.security.ResourceServerConfiguration.class
+							     io.nzbee.security.OAuth2ResourceServerConfig.class
 							     })
 
 @WebMvcTest(CategoryController.class)
