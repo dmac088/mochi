@@ -81,26 +81,24 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
-		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
+		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
 		
 		Root<Product> root = cq.from(Product.class);
 		
+		List<Predicate> conditions = new ArrayList<Predicate>();	
+		conditions.add(cb.equal(root.get(Product_.productUPC), code));
 		
-		cq.multiselect(	root.get(Product_.productId).alias("productId"),
-						root.get(Product_.productUPC).alias("productCode"));
+//		
+//		cq.multiselect(	root.get(Product_.productId).alias("productId"),
+//						root.get(Product_.productUPC).alias("productCode"));
+//		
+		TypedQuery<Product> query = em.createQuery(cq
+				.select(root)
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(false)
+		);
 		
-		cq.where(cb.and(cb.equal(root.get(Product_.productUPC), code)));
-		
-		TypedQuery<Tuple> query = em.createQuery(cq);
-		
-		Tuple tuple = query.getSingleResult();
-		
-		Product pe = new Product();
-		
-		pe.setProductId(Long.parseLong(tuple.get("productId").toString()));
-		pe.setUPC(tuple.get("productCode").toString());
-		
-		return Optional.ofNullable(pe);
+		return Optional.ofNullable(query.getSingleResult());
 	}
 	
 	@Override
