@@ -62,6 +62,7 @@ import io.nzbee.variables.ProductVars;
 	                        @FieldResult(name = "productCreateDt", 	column = "prd_crtd_dt"),
 	                        @FieldResult(name = "brand", 			column = "bnd_id"),
 	                        @FieldResult(name = "productStatus", 	column = "prd_sts_id"),
+	                        @FieldResult(name = "productType", 		column = "prd_typ_id"),
 	                        @FieldResult(name = "productAttribute", column = "prd_lcl_id"),	      
 	                        @FieldResult(name = "attributes", 		column = "prd_id"),
 	                    }),
@@ -100,6 +101,13 @@ import io.nzbee.variables.ProductVars;
 		                    @FieldResult(name = "lclCd", 			column = "lcl_cd"),
 		                    @FieldResult(name = "brand", 			column = "bnd_id")
 	                    }),
+	            @EntityResult(
+	                    entityClass = ProductType.class,
+	                    fields = {
+	                    	@FieldResult(name = "productTypeId", 	column = "prd_typ_id"),
+		                    @FieldResult(name = "productTypeCode", 	column = "prd_typ_cd"),
+		                    @FieldResult(name = "productTypeDesc", 	column = "prd_typ_desc")
+	                    })
 
 	    }),
 		@SqlResultSetMapping(

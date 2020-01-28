@@ -6,8 +6,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Store;
 
 @Entity
 @Table(name = "product_status", schema = "mochi")
@@ -19,12 +17,10 @@ public class ProductStatus {
 	private Long productStatusId;
 
 	@Column(name="prd_sts_cd")
-	@Field(store=Store.NO)
-	private String code;
+	private String productStatusCode;
 	
 	@Column(name="prd_sts_desc")
-	@Field(store=Store.NO)
-	private String desc;
+	private String productStatusDesc;
 
 	public Long getProductStatusId() {
 		return productStatusId;
@@ -35,19 +31,19 @@ public class ProductStatus {
 	}
 
 	public String getCode() {
-		return code;
+		return productStatusCode;
 	}
 
 	public void setCode(String productStatusCode) {
-		this.code = productStatusCode;
+		this.productStatusCode = productStatusCode;
 	}
 
 	public String getDesc() {
-		return desc;
+		return productStatusDesc;
 	}
 
 	public void setDesc(String productStatusDesc) {
-		this.desc = productStatusDesc;
+		this.productStatusDesc = productStatusDesc;
 	}
 
 }

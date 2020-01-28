@@ -8,9 +8,9 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(ProductStatus.class)
 public abstract class ProductStatus_ {
 
-	public static volatile SingularAttribute<ProductStatus, String> code;
 	public static volatile SingularAttribute<ProductStatus, Long> productStatusId;
-	public static volatile SingularAttribute<ProductStatus, String> desc;
+	public static volatile SingularAttribute<ProductStatus, String> productStatusDesc;
+	public static volatile SingularAttribute<ProductStatus, String> productStatusCode;
 
 }
 

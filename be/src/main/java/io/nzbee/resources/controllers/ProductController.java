@@ -2,6 +2,9 @@ package io.nzbee.resources.controllers;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -30,6 +33,8 @@ import io.nzbee.ui.component.web.facet.IFacet;
 @RequestMapping("/api")
 public class ProductController {
 
+	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
+	
     @Autowired
     private IProductService productService;
     
@@ -45,6 +50,9 @@ public class ProductController {
 															    	   @RequestParam("page") int page,
 															    	   @RequestParam("size") int size,
 															    	   @SuppressWarnings("rawtypes") PagedResourcesAssembler assembler) {
+    	
+    	LOGGER.debug("Fetching products for parameters : {}, {}, {}, {}, {}", locale, currency, categoryCode, page, size);
+    	
     	final Page<Product> pages =
     					productService.findAll(	
     									locale, 
@@ -89,6 +97,8 @@ public class ProductController {
     public ResponseEntity<Resources<ProductResource>> getProducts(	@PathVariable String locale, 
     																@PathVariable String currency, 
     																@RequestBody final List<String> productCodes) {
+    	
+    	LOGGER.debug("Fetching product for parameters : {}, {}, {}}", locale, currency, productCodes);
     	
     	final List<ProductResource> collection = 
     			productService.findAll(locale, currency, productCodes)

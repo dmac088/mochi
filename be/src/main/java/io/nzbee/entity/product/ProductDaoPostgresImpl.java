@@ -17,6 +17,8 @@ import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
@@ -37,6 +39,7 @@ import io.nzbee.entity.product.price.ProductPriceType_;
 import io.nzbee.entity.product.price.ProductPrice_;
 import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.entity.product.status.ProductStatus_;
+import io.nzbee.entity.product.type.ProductType;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.GeneralVars;
 import io.nzbee.variables.ProductVars;
@@ -44,12 +47,16 @@ import io.nzbee.variables.ProductVars;
 @Component(value = "productEntityDao")
 public class ProductDaoPostgresImpl implements IProductDao {
 
+	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
+	
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
 	private EntityManager em;
 
 	@Override
 	public Optional<Product> findById(String locale, String currency, long id) {
+		LOGGER.debug("Fetching a product for parameters : {}, {}, {}", locale, currency, id);
+		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
@@ -70,6 +77,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	
 	@Override
 	public Optional<Product> findByCode(String locale, String currency, String code) {
+		LOGGER.debug("Fetching a product for parameters : {}, {}, {}", locale, currency, code);
+		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
@@ -96,6 +105,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	
 	@Override
 	public Optional<Product> findByDesc(String locale, String currency, String desc) {
+		LOGGER.debug("Fetching a product for parameters : {}, {}, {}", locale, currency, desc);
+		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
@@ -153,6 +164,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	
 	@Override
 	public List<Product> findAll(String locale, String currency) {
+		LOGGER.debug("Fetching products for parameters : {}, {}}", locale, currency);
 		
 		List<String> categories = new ArrayList<String>();
 		categories.add(CategoryVars.PRIMARY_HIERARCHY_ROOT_CODE);
@@ -171,7 +183,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
 				 
 				 //these should contain default values for these parameters
-				 .setParameter("orderby", "1")
+				 //.setParameter("orderby", "1")
 				 .setParameter("limit", Integer.toString(GeneralVars.DEFAULT_PAGE_SIZE))
 				 .setParameter("offset", Integer.toString(GeneralVars.DEFAULT_PAGE * GeneralVars.DEFAULT_PAGE_SIZE));
 		
@@ -180,13 +192,16 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		
 		return results.stream().map(p -> {
 			Product product = (Product) p[0];
+			product.setProductStatus((ProductStatus) p[1]);
+			product.setProductType((ProductType) p[5]);
 			product.setProductAttribute((ProductAttribute) p[1]); 
+			
 			Brand brand = (Brand) p[3];
 			product.setBrand(brand);
 			brand.setBrandAttribute((BrandAttribute) p[4]);
 			
-			product.setRetailPrice(((BigDecimal) p[5]).doubleValue());
-			product.setMarkdownPrice(((BigDecimal) p[6]).doubleValue());
+			product.setRetailPrice(((BigDecimal) p[6]).doubleValue());
+			product.setMarkdownPrice(((BigDecimal) p[7]).doubleValue());
 			
 			return product;
 		}).collect(Collectors.toList());
@@ -197,6 +212,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	public List<Product> findAll(	String locale, 
 									String currency, 
 									List<String> codes) {
+		LOGGER.debug("Fetching a products for parameters : {}, {}, {}", locale, currency, codes);
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -207,7 +223,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 									String currency, 
 									Pageable pageable, 
 									String orderby) {
-		// TODO Auto-generated method stub
+		LOGGER.debug("Fetching products for parameters : {}, {}, {}, {}", locale, currency, pageable, orderby);
 		
 		//first get the result count
 		Query query = em.createNativeQuery(this.constructSQL(false, 
@@ -236,7 +252,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
 				 
 				 //these should contain default values for these parameters
-				 .setParameter("orderby", "1")
+				 //.setParameter("orderby", "1")
 				 .setParameter("limit", pageable.getPageSize())
 				 .setParameter("offset", pageable.getOffset());
 		
@@ -247,13 +263,16 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		List<Product> lp = 
 		results.stream().map(p -> {
 			Product product = (Product) p[0];
+			product.setProductStatus((ProductStatus) p[1]);
+			product.setProductType((ProductType) p[5]);
 			product.setProductAttribute((ProductAttribute) p[1]); 
+			
 			Brand brand = (Brand) p[3];
 			product.setBrand(brand);
 			brand.setBrandAttribute((BrandAttribute) p[4]);
 			
-			product.setRetailPrice(((BigDecimal) p[5]).doubleValue());
-			product.setMarkdownPrice(((BigDecimal) p[6]).doubleValue());
+			product.setRetailPrice(((BigDecimal) p[6]).doubleValue());
+			product.setMarkdownPrice(((BigDecimal) p[7]).doubleValue());
 			
 			return product;
 		}).collect(Collectors.toList());
@@ -270,7 +289,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
 									List<String> brandCodes, 
 									List<String> tagCodes, 
 									String orderby) {
-		// TODO Auto-generated method stub
+		
+		LOGGER.debug("Fetching products for parameters : {}, {}, {}, {}, {}, {}", locale, currency, pageable, categoryCode, brandCodes, tagCodes, orderby);
+		
 		//first get the result count
 		return this.findAll(locale, 
 							currency, 
@@ -335,12 +356,13 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		//filtering is hardcoded to markdown price
 		if(hasPrices) {
 			query.setParameter("priceTypeCode", ProductVars.PRICE_MARKDOWN_CODE)
-					.setParameter("priceStart", priceStart)
-					.setParameter("priceEnd", priceEnd);
+				 .setParameter("priceStart", priceStart)
+				 .setParameter("priceEnd", priceEnd);
 		}
 		
 		//these should contain default values for these parameters
-		query.setParameter("orderby", "1")
+		query
+		//.setParameter("orderby", "1")
 		.setParameter("limit", pageable.getPageSize())
 		.setParameter("offset", pageable.getOffset());
 		
@@ -355,13 +377,15 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		results.stream().map(p -> {
 			Product product = (Product) p[0];
 			product.setProductStatus((ProductStatus) p[1]);
+			product.setProductType((ProductType) p[5]);
 			product.setProductAttribute((ProductAttribute) p[2]);
+			
 			Brand brand = (Brand) p[3];
 			product.setBrand(brand);
 			brand.setBrandAttribute((BrandAttribute) p[4]);
 			
-			product.setRetailPrice(((BigDecimal) p[5]).doubleValue());
-			product.setMarkdownPrice(((BigDecimal) p[6]).doubleValue());
+			product.setRetailPrice(((BigDecimal) p[6]).doubleValue());
+			product.setMarkdownPrice(((BigDecimal) p[7]).doubleValue());
 			
 			return product;
 		}).collect(Collectors.toList());
@@ -455,6 +479,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 						"	   attr.prd_desc, " +	
 						"	   attr.prd_img_pth, " +	
 						"	   attr.lcl_cd, " +
+						"	   prdt.prd_typ_id,   " + 
 						"	   prdt.prd_typ_cd,   " + 
 						"	   prdt.prd_typ_desc,   " + 
 						"	   bnd.bnd_id,   " + 
@@ -498,7 +523,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		"	INNER JOIN mochi.brand_attr_lcl bal   " + 
 		"	ON bnd.bnd_id = bal.bnd_id   " + 
 			
-		
 		"	LEFT JOIN mochi.price rprc     " + 
 		"	ON prd.prd_id = rprc.prd_id    " + 
 			
@@ -509,7 +533,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		"	INNER JOIN mochi.price_type rpt   " + 
 		"	ON rprc.prc_typ_id 	= rpt.prc_typ_id   " + 
 		"	AND rpt.prc_typ_cd = :retailPriceCode " +
-		
 		
 		"	LEFT JOIN mochi.price mprc     " + 
 		"	ON prd.prd_id = mprc.prd_id    " + 
@@ -551,7 +574,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 				: 	"") +
 		((countOnly) 
 					? 	""
-					: 	" ORDER BY 	:orderby " + 
+					: 	//" ORDER BY 	:orderby " + 
 						" LIMIT 	:limit " +
 						" OFFSET 	:offset ");
 	}
