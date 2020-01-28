@@ -151,7 +151,7 @@ public class TagDaoImpl implements ITagDao {
 		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), locale));
 		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale));
 		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
-		conditions.add(cb.equal(status.get(ProductStatus_.code), ProductVars.ACTIVE_SKU_CODE));
+		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
 
 		TypedQuery<Tag> query = em.createQuery(cq
 				.select(root)
