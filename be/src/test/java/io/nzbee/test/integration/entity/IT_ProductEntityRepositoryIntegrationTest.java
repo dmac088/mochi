@@ -155,11 +155,6 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     	.isEqualTo("ACT01");
     	assertThat(found.getBrand().getCode())
     	.isEqualTo("PLA01");
-    	assertThat(found.getProductAttribute().getBrandCode())
-    	.isEqualTo("PLA01");
-    	
-    	
-    	
     }
     
     @After
