@@ -40,6 +40,7 @@ import io.nzbee.entity.product.price.ProductPrice_;
 import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.entity.product.status.ProductStatus_;
 import io.nzbee.entity.product.type.ProductType;
+import io.nzbee.entity.product.type.ProductType_;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.GeneralVars;
 import io.nzbee.variables.ProductVars;
@@ -112,6 +113,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		Root<Product> root = cq.from(Product.class);
 		Join<Product, ProductAttribute> productAttribute = root.join(Product_.attributes);
 		Join<Product, ProductStatus> status = root.join(Product_.productStatus);
+		Join<Product, ProductType> type = root.join(Product_.productType);
 		Join<Product, ProductPrice> retailPrice = root.join(Product_.prices, JoinType.LEFT);
 		Join<ProductPrice, ProductPriceType> retailPriceType = retailPrice.join(ProductPrice_.type);
 		Join<ProductPrice, Currency> retailCurrency = retailPrice.join(ProductPrice_.currency);
@@ -133,8 +135,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		cq.where(cb.and(
 				cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale),
 				cb.equal(productAttribute.get(ProductAttribute_.productDesc), desc),
-				cb.equal(status.get(ProductStatus_.code), ProductVars.ACTIVE_SKU_CODE),
-				cb.equal(status.get(ProductStatus_.code), ProductVars.ACTIVE_SKU_CODE),
+				cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE),
+				cb.equal(type.get(ProductType_.productTypeCode), ProductVars.PRODUCT_TYPE_RETAIL),
 				cb.equal(retailCurrency.get(Currency_.code), currency),
 				cb.equal(markdownCurrency.get(Currency_.code), currency)
 		));
