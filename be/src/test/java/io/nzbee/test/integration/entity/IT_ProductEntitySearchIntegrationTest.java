@@ -209,7 +209,7 @@ public class IT_ProductEntitySearchIntegrationTest {
         .isEqualTo(1);
     	assertThat(pp.getTotalElements())
         .isEqualTo(new Long(1));
-	}
+	} 
 	
 	 @After
 	 public void closeConnection() {
