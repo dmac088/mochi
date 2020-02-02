@@ -13,9 +13,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
-
+import org.springframework.transaction.annotation.Transactional;
 import org.hibernate.annotations.NaturalId;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.nzbee.security.authority.Authority;
 import io.nzbee.security.user.User;
@@ -28,6 +27,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "id")
+@Transactional
 public class UserRole implements Serializable {
 	
 	/**
