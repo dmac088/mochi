@@ -1,4 +1,4 @@
-//package io.nzbee.test.unit.domain;
+//package io.nzbee.test.integration.entity;
 //
 //import static org.junit.Assert.assertEquals;
 //import static org.junit.Assert.assertNotNull;
@@ -29,6 +29,7 @@
 //import org.springframework.util.LinkedMultiValueMap;
 //import org.springframework.util.MultiValueMap;
 //import org.springframework.web.client.RestTemplate;
+//import org.json.JSONException;
 //import org.json.JSONObject;
 //import io.nzbee.dto.customer.Customer;
 //import io.nzbee.dto.customer.ICustomerService;
@@ -45,7 +46,7 @@
 //@ContextConfiguration(classes = {UT_Config.class})
 //@DataJpaTest
 //@AutoConfigureTestDatabase(replace = Replace.NONE)
-//public class UT_Customer {
+//public class IT_CustomerEntityRepositoryIntegrationTest {
 //	
 //	@Autowired
 //	@Qualifier("userPasswordEncoder")
@@ -112,8 +113,16 @@
 //    	HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(getMap(), getTokenHeaders());
 //    	RestTemplate restTemplate = new RestTemplate();
 //    	ResponseEntity<String> response = restTemplate.postForEntity(TOKEN_ENDPOINT, request , String.class );
-//    	JSONObject jObj = new JSONObject(response.getBody());
-//    	return jObj.getString("access_token");
+//    	
+//		try {
+//			JSONObject jObj;
+//			jObj = new JSONObject(response.getBody());
+//			return jObj.getString("access_token");
+//		} catch (JSONException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//    	return null;
 //    }
 //    
 //    private HttpHeaders getRestHeaders() {
@@ -187,10 +196,10 @@
 //	    Customer customer = this.customerDefinition();
 //	    
 //	    HttpEntity<Customer> customerEntity = new HttpEntity<Customer>(customer, headers);
-//	    ResponseEntity<Customer> uri = restTemplate.exchange(UT_Customer.CUSTOMER_CREATE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
+//	    ResponseEntity<Customer> uri = restTemplate.exchange(IT_CustomerEntityRepositoryIntegrationTest.CUSTOMER_CREATE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
 //	    assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value());
 //	    
-//	    uri = restTemplate.exchange(UT_Customer.CUSTOMER_READ_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.GET, customerEntity, Customer.class);
+//	    uri = restTemplate.exchange(IT_CustomerEntityRepositoryIntegrationTest.CUSTOMER_READ_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.GET, customerEntity, Customer.class);
 //	    System.out.println(uri.getBody());
 //	    Customer c = customerService.findByCode(uri.getBody().getUserName()).get();
 //	    
@@ -199,21 +208,21 @@
 //	    assertEquals(CUSTOMER_FAMILY_NAME_EN, c.getFamilyName());
 //	    assertEquals(CUSTOMER_TYPE_NAME_EN, c.getPartyType());
 //	    
-//	   //this is a sequence number in the database
+//	    //this is a sequence number in the database
 //	    //assertEquals(CUSTOMER_NUMER, c.getCustomerID());
 //	    //assertEquals(passwordEncoder.encode(CUSTOMER_PASSWORD), c.getPassword());
 //	    //assertEquals(passwordEncoder.encode(CUSTOMER_PASSWORD), c.getMatchingPassword());
 //	    //assertEquals(uri.getBody(), customer);
 //	    
 //	    //delete
-//	    uri = restTemplate.exchange(UT_Customer.CUSTOMER_DELETE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
+//	    uri = restTemplate.exchange(IT_CustomerEntityRepositoryIntegrationTest.CUSTOMER_DELETE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
 //	    assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value()); 
 //	    
 //    }
 //   
 //
 //    @Test
-//    @Rollback(false)
+//    //@Rollback(false)
 //    public void updateCustomer() {
 //    	RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
 //	    List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();
@@ -225,15 +234,15 @@
 //		Customer customer = this.customerDefinition();
 //	    
 //		HttpEntity<Customer> customerEntity = new HttpEntity<Customer>(customer, headers);
-//		ResponseEntity<Customer> uri = restTemplate.exchange(UT_Customer.CUSTOMER_CREATE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
+//		ResponseEntity<Customer> uri = restTemplate.exchange(IT_CustomerEntityRepositoryIntegrationTest.CUSTOMER_CREATE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
 //		assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value());
 //    	
 //    	customer.setGivenName(CUSTOMER_UPDATE_GIVEN_NAME_EN);
 //		
-//		ResponseEntity<Customer> postUri = restTemplate.exchange(UT_Customer.CUSTOMER_UPDATE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
+//		ResponseEntity<Customer> postUri = restTemplate.exchange(IT_CustomerEntityRepositoryIntegrationTest.CUSTOMER_UPDATE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
 //		assertEquals(postUri.getStatusCodeValue(), HttpStatus.OK.value()); 
 //		
-//		Customer c = restTemplate.exchange(UT_Customer.CUSTOMER_READ_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.GET, customerEntity, Customer.class).getBody();
+//		Customer c = restTemplate.exchange(IT_CustomerEntityRepositoryIntegrationTest.CUSTOMER_READ_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.GET, customerEntity, Customer.class).getBody();
 //		assertEquals(CUSTOMER_UPDATE_GIVEN_NAME_EN, c.getGivenName());
 //		assertEquals(CUSTOMER_TYPE_NAME_EN, c.getPartyType());
 //		assertEquals(CUSTOMER_FAMILY_NAME_EN, c.getFamilyName());
@@ -242,7 +251,7 @@
 //		//assertEquals(CUSTOMER_NUMER, c.getCustomerID());
 //		
 //		//delete
-//		uri = restTemplate.exchange(UT_Customer.CUSTOMER_DELETE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
+//		uri = restTemplate.exchange(IT_CustomerEntityRepositoryIntegrationTest.CUSTOMER_DELETE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
 //		assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value()); 
 //    }
 //    
@@ -261,7 +270,7 @@
 //		HttpEntity<Customer> customerEntity = new HttpEntity<Customer>(customer, headers);
 //		
 //		//delete
-//		ResponseEntity<Customer> uri = restTemplate.exchange(UT_Customer.CUSTOMER_DELETE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
+//		ResponseEntity<Customer> uri = restTemplate.exchange(IT_CustomerEntityRepositoryIntegrationTest.CUSTOMER_DELETE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
 //		assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value()); 
 //    }
 //}

@@ -31,18 +31,35 @@ import io.nzbee.security.user.IUserRepository;
 public class DataSourceBeanSecurityDev {
 	
 	@Bean(name = "securityDataSourcePropertiesDev")
-    @ConfigurationProperties("spring.datasource.security.dev")
+    @ConfigurationProperties("spring.datasource.security.dev.application")
     public DataSourceProperties dataSourceProperties() {
         return new DataSourceProperties();
     }
 	
+	@Bean(name = "securityDataSourcePropertiesDevOwner")
+    @ConfigurationProperties("spring.datasource.security.dev.owner")
+    public DataSourceProperties dataSourcePropertiesOwner() {
+		DataSourceProperties dsp = new DataSourceProperties();
+		return dsp;
+    }
+	
 	@Bean(name = "securityDataSource")
-    @ConfigurationProperties("spring.datasource.security.dev")
+    @ConfigurationProperties("spring.datasource.security.dev.application")
     public HikariDataSource dataSource(@Qualifier("securityDataSourcePropertiesDev") DataSourceProperties properties) {
         return properties.initializeDataSourceBuilder().type(HikariDataSource.class)
         		.driverClassName("org.postgresql.Driver")
                 .build();
     }
+	
+	@Bean(name = "securityDataSourceOwner")
+    @ConfigurationProperties("spring.datasource.mochi.security.owner")
+    public HikariDataSource dataSourceOwner(@Qualifier("securityDataSourcePropertiesDevOwner") DataSourceProperties properties) {
+        return properties.initializeDataSourceBuilder()
+        		.type(HikariDataSource.class)
+        		.driverClassName("org.postgresql.Driver")
+                .build();
+    }
+	
 	
 	private Properties additionalJpaProperties(){
 		Properties properties = new Properties();
@@ -66,9 +83,32 @@ public class DataSourceBeanSecurityDev {
        em.setJpaProperties(additionalJpaProperties());
        return em;
     }
-    
+	
+	@Bean(name = "securityEntityManagerFactoryOwner") 
+    public LocalContainerEntityManagerFactoryBean entityManagerFactoryOwner(@Qualifier("securityDataSourceOwner") HikariDataSource dataSource) {
+       LocalContainerEntityManagerFactoryBean em 
+         = new LocalContainerEntityManagerFactoryBean();
+       em.setDataSource(dataSource);
+       em.setPackagesToScan(new String[] 
+    		   {"io.nzbee.*"}
+        );
+       JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+       em.setJpaVendorAdapter(vendorAdapter);
+       em.setJpaProperties(additionalJpaProperties());
+       return em;
+    }
+	
 	@Bean(name = "securityTransactionManager")
     public PlatformTransactionManager TransactionManager(@Qualifier("securityEntityManagerFactory") LocalContainerEntityManagerFactoryBean entityManagerFactory) {
+        JpaTransactionManager transactionManager
+                = new JpaTransactionManager();
+        transactionManager.setEntityManagerFactory(
+        		entityManagerFactory.getObject());
+        return transactionManager;
+    }
+	
+	@Bean(name = "securityTransactionManagerOwner")
+    public PlatformTransactionManager TransactionManagerOwner(@Qualifier("securityEntityManagerFactoryOwner") LocalContainerEntityManagerFactoryBean entityManagerFactory) {
         JpaTransactionManager transactionManager
                 = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(

@@ -19,6 +19,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlConfig;
+import org.springframework.test.context.jdbc.SqlGroup;
+import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.party.IPartyService;
 import io.nzbee.entity.party.Party;
@@ -32,6 +36,16 @@ import io.nzbee.test.integration.beans.PartyEntityBeanFactory;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles(profiles = "dev")
+@SqlGroup({
+	@Sql(scripts = "/database/security_schema.sql",
+			config = @SqlConfig(dataSource = "securityDataSourceOwner", 
+			transactionManager = "securityTransactionManagerOwner",
+			transactionMode = TransactionMode.ISOLATED)), 
+	@Sql(scripts = "/database/security_data.sql",
+			config = @SqlConfig(dataSource = "securityDataSource", 
+			transactionManager = "securityTransactionManager",
+			transactionMode = TransactionMode.ISOLATED))
+})
 public class IT_PartyEntityRepositoryIntegrationTest {
 
 	
@@ -54,7 +68,7 @@ public class IT_PartyEntityRepositoryIntegrationTest {
     private AuthenticationManager am;
 	
 	@Autowired
-	@Qualifier("mochiEntityManagerFactory")
+	@Qualifier("securityEntityManagerFactory")
 	private EntityManager entityManager;
 	
 	@Autowired

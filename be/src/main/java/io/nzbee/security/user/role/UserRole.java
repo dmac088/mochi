@@ -80,7 +80,6 @@ public class UserRole implements Serializable {
 		return authorities;
 	}
     
-
 	public Set<User> getUsers() {
 		return Users;
 	}
@@ -92,6 +91,6 @@ public class UserRole implements Serializable {
 	
 	public void removeUser(User user) {
 		this.getUsers().remove(user);
-		user.addUserRole(this);
+		user.removeUserRole(this);
 	}
 }
