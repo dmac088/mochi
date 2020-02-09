@@ -16,7 +16,6 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import com.zaxxer.hikari.HikariDataSource;
-import io.nzbee.security.user.IUserRepository;
 
 
 
@@ -24,10 +23,10 @@ import io.nzbee.security.user.IUserRepository;
 @EnableTransactionManagement
 @EnableJpaRepositories(
         entityManagerFactoryRef = "securityEntityManagerFactory", 
-        transactionManagerRef = "securityTransactionManager",
-		basePackageClasses = IUserRepository.class)
+        transactionManagerRef = "securityTransactionManager"
+)
 @Profile("dev")
-@Order(1)
+@Order(2)
 public class DataSourceBeanSecurityDev {
 	
 	@Bean(name = "securityDataSourcePropertiesDev")
@@ -52,7 +51,7 @@ public class DataSourceBeanSecurityDev {
     }
 	
 	@Bean(name = "securityDataSourceOwner")
-    @ConfigurationProperties("spring.datasource.mochi.security.dev.owner")
+    @ConfigurationProperties("spring.datasource.security.dev.owner")
     public HikariDataSource dataSourceOwner(@Qualifier("securityDataSourcePropertiesDevOwner") DataSourceProperties properties) {
         return properties.initializeDataSourceBuilder()
         		.type(HikariDataSource.class)
