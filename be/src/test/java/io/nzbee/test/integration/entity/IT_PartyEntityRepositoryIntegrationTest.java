@@ -101,7 +101,7 @@ public class IT_PartyEntityRepositoryIntegrationTest {
 	    	
 	    //persist a new transient test category
 	    entityManager.persist(customer);
-	    entityManager.flush();
+	  //  entityManager.flush();
 	    entityManager.close();
 	    	
 	    return customer;
