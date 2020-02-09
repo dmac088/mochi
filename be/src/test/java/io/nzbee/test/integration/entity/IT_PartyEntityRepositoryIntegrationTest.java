@@ -38,12 +38,12 @@ import io.nzbee.test.integration.beans.PartyEntityBeanFactory;
 @ActiveProfiles(profiles = "dev")
 @SqlGroup({
 	@Sql(scripts = "/database/security_schema.sql",
-			config = @SqlConfig(dataSource = "securityDataSourceOwner", 
-			transactionManager = "securityTransactionManagerOwner",
+			config = @SqlConfig(dataSource = "mochiDataSourceOwner", 
+			transactionManager = "mochiTransactionManagerOwner",
 			transactionMode = TransactionMode.ISOLATED)), 
 	@Sql(scripts = "/database/security_data.sql",
-			config = @SqlConfig(dataSource = "securityDataSource", 
-			transactionManager = "securityTransactionManager",
+			config = @SqlConfig(dataSource = "mochiDataSource", 
+			transactionManager = "mochiTransactionManager",
 			transactionMode = TransactionMode.ISOLATED))
 })
 public class IT_PartyEntityRepositoryIntegrationTest {
