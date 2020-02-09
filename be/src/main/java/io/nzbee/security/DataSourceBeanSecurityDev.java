@@ -52,7 +52,7 @@ public class DataSourceBeanSecurityDev {
     }
 	
 	@Bean(name = "securityDataSourceOwner")
-    @ConfigurationProperties("spring.datasource.mochi.security.owner")
+    @ConfigurationProperties("spring.datasource.mochi.security.dev.owner")
     public HikariDataSource dataSourceOwner(@Qualifier("securityDataSourcePropertiesDevOwner") DataSourceProperties properties) {
         return properties.initializeDataSourceBuilder()
         		.type(HikariDataSource.class)
