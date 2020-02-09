@@ -455,8 +455,8 @@ ALTER TABLE ONLY user_role
 -- Name: security; Type: ACL; Schema: -; Owner: security_owner
 --
 
-GRANT USAGE ON SCHEMA security TO mochi_app;
 GRANT USAGE ON SCHEMA security TO security_app;
+GRANT USAGE ON SCHEMA security TO mochi_app;
 
 
 --
@@ -471,8 +471,8 @@ GRANT SELECT ON TABLE permission TO mochi_app;
 -- Name: authority_id_seq; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT ALL ON SEQUENCE authority_id_seq TO security_app;
 GRANT ALL ON SEQUENCE authority_id_seq TO mochi_app;
+GRANT ALL ON SEQUENCE authority_id_seq TO security_app;
 
 
 --
@@ -486,8 +486,8 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE clientdetails TO security_app;
 -- Name: hibernate_sequence; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT ALL ON SEQUENCE hibernate_sequence TO security_app;
 GRANT ALL ON SEQUENCE hibernate_sequence TO mochi_app;
+GRANT ALL ON SEQUENCE hibernate_sequence TO security_app;
 
 
 --
@@ -536,8 +536,8 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_refresh_token TO security_app;
 -- Name: role_id_seq; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT ALL ON SEQUENCE role_id_seq TO security_app;
 GRANT ALL ON SEQUENCE role_id_seq TO mochi_app;
+GRANT ALL ON SEQUENCE role_id_seq TO security_app;
 
 
 --
@@ -552,8 +552,8 @@ GRANT SELECT ON TABLE role TO mochi_app;
 -- Name: role_permission_id_seq; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT ALL ON SEQUENCE role_permission_id_seq TO security_app;
 GRANT ALL ON SEQUENCE role_permission_id_seq TO mochi_app;
+GRANT ALL ON SEQUENCE role_permission_id_seq TO security_app;
 
 
 --
@@ -576,8 +576,8 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_ TO mochi_app;
 -- Name: user_role_id_seq; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT ALL ON SEQUENCE user_role_id_seq TO security_app;
 GRANT ALL ON SEQUENCE user_role_id_seq TO mochi_app;
+GRANT ALL ON SEQUENCE user_role_id_seq TO security_app;
 
 
 --
