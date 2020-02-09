@@ -38,12 +38,12 @@ import io.nzbee.test.integration.beans.PartyEntityBeanFactory;
 @ActiveProfiles(profiles = "dev")
 @SqlGroup({
 	@Sql(scripts = "/database/security_schema.sql",
-			config = @SqlConfig(dataSource = "mochiDataSourceOwner", 
-			transactionManager = "mochiTransactionManagerOwner",
+			config = @SqlConfig(dataSource = "securityDataSourceOwner", 
+			transactionManager = "securityTransactionManagerOwner",
 			transactionMode = TransactionMode.ISOLATED)), 
 	@Sql(scripts = "/database/security_data.sql",
-			config = @SqlConfig(dataSource = "mochiDataSource", 
-			transactionManager = "mochiTransactionManager",
+			config = @SqlConfig(dataSource = "securityDataSource", 
+			transactionManager = "securityTransactionManager",
 			transactionMode = TransactionMode.ISOLATED))
 })
 public class IT_PartyEntityRepositoryIntegrationTest {
@@ -101,7 +101,7 @@ public class IT_PartyEntityRepositoryIntegrationTest {
 	    	
 	    //persist a new transient test category
 	    entityManager.persist(customer);
-	  //  entityManager.flush();
+	    entityManager.flush();
 	    entityManager.close();
 	    	
 	    return customer;

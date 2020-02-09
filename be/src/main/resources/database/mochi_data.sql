@@ -688,7 +688,7 @@ INSERT INTO discount_type VALUES (2, 'value');
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 232784, true);
+SELECT pg_catalog.setval('hibernate_sequence', 232785, true);
 
 
 --
