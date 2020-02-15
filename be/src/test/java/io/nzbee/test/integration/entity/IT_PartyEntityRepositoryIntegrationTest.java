@@ -37,6 +37,14 @@ import io.nzbee.test.integration.beans.PartyEntityBeanFactory;
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles(profiles = "dev")
 @SqlGroup({
+	@Sql(scripts = "/database/mochi_schema.sql",
+			config = @SqlConfig(dataSource = "mochiDataSourceOwner", 
+			transactionManager = "mochiTransactionManagerOwner",
+			transactionMode = TransactionMode.ISOLATED)), 
+	@Sql(scripts = "/database/mochi_data.sql",
+			config = @SqlConfig(dataSource = "mochiDataSource", 
+			transactionManager = "mochiTransactionManager",
+			transactionMode = TransactionMode.ISOLATED)),
 	@Sql(scripts = "/database/security_schema.sql",
 			config = @SqlConfig(dataSource = "securityDataSourceOwner", 
 			transactionManager = "securityTransactionManagerOwner",
