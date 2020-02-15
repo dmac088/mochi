@@ -67,8 +67,9 @@ public class IT_PartyEntityRepositoryIntegrationTest {
 	@Autowired
     private AuthenticationManager am;
 	
+	//ensure the mochiEntityManagerFactory not the security EM
 	@Autowired
-	@Qualifier("securityEntityManagerFactory")
+	@Qualifier("mochiEntityManagerFactory")
 	private EntityManager entityManager;
 	
 	@Autowired
@@ -101,7 +102,7 @@ public class IT_PartyEntityRepositoryIntegrationTest {
 	    	
 	    //persist a new transient test category
 	    entityManager.persist(customer);
-	  //  entityManager.flush();
+	    entityManager.flush();
 	    entityManager.close();
 	    	
 	    return customer;
