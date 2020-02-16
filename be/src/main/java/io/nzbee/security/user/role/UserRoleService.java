@@ -14,7 +14,7 @@ public class UserRoleService implements IUserRoleService  {
 
     @Override
     @Transactional(readOnly = true)
-    public UserRole loadUserRoleByRoleName(String roleName) {
+    public UserRole findByName(String roleName) {
     	return userRoleRepository.findByName(roleName);
     }
     

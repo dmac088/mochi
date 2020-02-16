@@ -26,10 +26,5 @@ public class UserService implements UserDetailsService {
 
         throw new UsernameNotFoundException(username);
     }
-    
-    
-//	@Transactional
-//	public void addUser(User user) {
-//		userRepository.save(user);
-//	}
+  
 }
