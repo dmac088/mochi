@@ -1,12 +1,15 @@
 package io.nzbee.security.user;
 
 import io.nzbee.entity.party.Party;
+import io.nzbee.entity.product.Product;
 import io.nzbee.security.Encoders;
 import io.nzbee.security.user.role.UserRole;
 import org.hibernate.annotations.NaturalId;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
@@ -31,6 +34,7 @@ import lombok.Setter;
 @Table(name = "user_", schema="security", uniqueConstraints = { @UniqueConstraint(columnNames = { "USER_NAME" }) })
 @Getter 
 @Setter
+@Transactional
 public class User implements UserDetails, Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -64,13 +68,13 @@ public class User implements UserDetails, Serializable {
     private Party userParty;
     
     
-    @ManyToMany(fetch = FetchType.LAZY, 
+    @ManyToMany(fetch = FetchType.EAGER, 
 				cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "USER_ROLE", schema="security", 
     		   joinColumns 			= @JoinColumn(name = "pty_id"), 
     		   inverseJoinColumns 	= @JoinColumn(name = "role_id"))
     @OrderBy
-    private Set<UserRole> roles;
+    private Set<UserRole> roles = new HashSet<UserRole>();
     
 	@Override
     public boolean isAccountNonExpired() {
@@ -157,4 +161,15 @@ public class User implements UserDetails, Serializable {
 		this.roles = roles;
 	}
 	
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Product)) return false;
+        return this.username != null && username.equals(((User) o).getUsername());
+    }
+ 
+    @Override
+    public int hashCode() {
+        return 31;
+    }
 }

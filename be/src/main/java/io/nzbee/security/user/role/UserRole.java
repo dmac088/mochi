@@ -1,6 +1,7 @@
 package io.nzbee.security.user.role;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,9 +14,12 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
-import org.springframework.transaction.annotation.Transactional;
 import org.hibernate.annotations.NaturalId;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import io.nzbee.entity.product.Product;
 import io.nzbee.security.authority.Authority;
 import io.nzbee.security.user.User;
 import lombok.EqualsAndHashCode;
@@ -42,10 +46,10 @@ public class UserRole implements Serializable {
     								inverseJoinColumns 	= @JoinColumn(name = "permission_id"))
 	@OrderBy
     @JsonIgnore
-    private Set<Authority> authorities;
+    private Set<Authority> authorities = new HashSet<Authority>();
 
 	@ManyToMany(mappedBy = "roles")
-    private Set<User> Users;
+    private Set<User> Users = new HashSet<User>();
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -93,4 +97,16 @@ public class UserRole implements Serializable {
 		this.getUsers().remove(user);
 		user.removeUserRole(this);
 	}
+	
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Product)) return false;
+        return this.name != null && name.equals(((UserRole) o).getName());
+    }
+ 
+    @Override
+    public int hashCode() {
+        return 31;
+    }
 }
