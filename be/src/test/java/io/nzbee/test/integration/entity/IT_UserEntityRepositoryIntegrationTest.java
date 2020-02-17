@@ -65,6 +65,7 @@ public class IT_UserEntityRepositoryIntegrationTest {
 	private EntityManager entityManager;
 	
 	@Autowired
+	@Qualifier("userRoleService")
 	private IUserRoleService userRoleService;
 	
 	
@@ -98,20 +99,20 @@ public class IT_UserEntityRepositoryIntegrationTest {
 		person.addRole(partyRole);
 		partyRole.setRoleParty(person);
 		
-		io.nzbee.security.user.User user = new User();
+		final io.nzbee.security.user.User user = new User();
 		user.setUsername("testusername@testdomain.com");
 		user.setPassword("test1234");
 		
 		person.setPartyUser(user);
 		user.setUserParty(person);
 		
-		UserRole userRole = userRoleService.findByName("Customer");
+		final UserRole userRole = userRoleService.findByName("Customer");
 		user.addUserRole(userRole);
 		userRole.addUser(user);
 		
 	    //persist a new transient test category
 		//entityManager.persist(person);
-	    entityManager.persist(person);
+	    entityManager.persist(user);
 	    entityManager.flush();
 	    entityManager.close();
 	    	
