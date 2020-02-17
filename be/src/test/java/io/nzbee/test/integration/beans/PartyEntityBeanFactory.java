@@ -13,7 +13,7 @@ import io.nzbee.entity.role.customer.Customer;
 @Profile(value = "dev")
 public class PartyEntityBeanFactory {
 
-	@Bean
+	@Bean 
 	public final Party getCustomerEntityBean() {
 		
 		final Person person = new Person();

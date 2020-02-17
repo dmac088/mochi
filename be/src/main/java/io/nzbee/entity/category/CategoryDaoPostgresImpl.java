@@ -38,7 +38,6 @@ import io.nzbee.entity.tag.Tag;
 import io.nzbee.variables.ProductVars;
 
 @Component(value="categoryEntityPostgresDao")
-@Transactional
 public class CategoryDaoPostgresImpl implements ICategoryDao {
 
 	@Autowired

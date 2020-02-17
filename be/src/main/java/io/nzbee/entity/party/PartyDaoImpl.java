@@ -22,7 +22,6 @@ import io.nzbee.entity.role.Role_;
 
 
 @Component(value="partyDao")
-@Transactional
 public class PartyDaoImpl implements IPartyDao {
 
 	@Autowired

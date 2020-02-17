@@ -3,6 +3,7 @@ package io.nzbee.security.user.role;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,11 +16,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import org.hibernate.annotations.NaturalId;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import io.nzbee.entity.product.Product;
 import io.nzbee.security.authority.Authority;
 import io.nzbee.security.user.User;
 import lombok.EqualsAndHashCode;
@@ -31,7 +28,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "id")
-@Transactional
 public class UserRole implements Serializable {
 	
 	/**
@@ -39,7 +35,7 @@ public class UserRole implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(						//the table that manages the many to many relationship
     								name = "ROLE_PERMISSION", schema="security", 
     								joinColumns 		= @JoinColumn(name = "role_id"), 
@@ -48,8 +44,13 @@ public class UserRole implements Serializable {
     @JsonIgnore
     private Set<Authority> authorities = new HashSet<Authority>();
 
-	@ManyToMany(mappedBy = "roles")
-    private Set<User> Users = new HashSet<User>();
+	@ManyToMany(fetch = FetchType.LAZY,
+			mappedBy = "roles",
+	    	cascade = {
+	            CascadeType.PERSIST,
+	            CascadeType.MERGE
+	        })
+    private Set<User> Users = new HashSet<>();
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -90,7 +91,7 @@ public class UserRole implements Serializable {
 	
 	public void addUser(User user) {
 		this.getUsers().add(user);
-		user.addUserRole(this);
+		user.getUserRoles().add(this);
 	}
 	
 	public void removeUser(User user) {
@@ -101,12 +102,13 @@ public class UserRole implements Serializable {
 	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Product)) return false;
-        return this.name != null && name.equals(((UserRole) o).getName());
+        if (!(o instanceof UserRole)) return false;
+        return name != null && name.equals(((UserRole) o).getName());
     }
  
     @Override
     public int hashCode() {
         return 31;
     }
+			
 }

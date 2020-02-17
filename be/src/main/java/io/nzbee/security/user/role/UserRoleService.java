@@ -18,11 +18,4 @@ public class UserRoleService implements IUserRoleService  {
     	return userRoleRepository.findByName(roleName);
     }
     
-    @Override
-	@Transactional
-	public void addUser(UserRole userRole) {
-		userRoleRepository.save(userRole);
-	}
-
-    
 }
