@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OrderBy;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -31,7 +30,6 @@ public class CategoryProduct extends Category  {
     @JoinTable(name = "product_category", schema="mochi", 
     		   joinColumns 			= @JoinColumn(name = "cat_id"), 
     		   inverseJoinColumns 	= @JoinColumn(name = "prd_id"))
-    @OrderBy
     @JsonIgnore
     private Set<Product> products = new HashSet<>();
 	

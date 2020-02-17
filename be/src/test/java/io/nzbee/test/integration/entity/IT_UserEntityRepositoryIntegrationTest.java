@@ -22,6 +22,8 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
+
 import io.nzbee.entity.party.Party;
 import io.nzbee.entity.party.person.Person;
 import io.nzbee.entity.role.customer.Customer;
@@ -63,10 +65,9 @@ public class IT_UserEntityRepositoryIntegrationTest {
 	private EntityManager entityManager;
 	
 	@Autowired
-	@Qualifier("userRoleService")
 	private IUserRoleService userRoleService;
 	
-	private io.nzbee.security.user.User user = null;
+	
 	
     @Before
     public void setUp() { 
@@ -97,17 +98,20 @@ public class IT_UserEntityRepositoryIntegrationTest {
 		person.addRole(partyRole);
 		partyRole.setRoleParty(person);
 		
-		user = new User();
+		io.nzbee.security.user.User user = new User();
 		user.setUsername("testusername@testdomain.com");
 		user.setPassword("test1234");
 		
 		person.setPartyUser(user);
 		user.setUserParty(person);
 		
-		user.addUserRole(userRoleService.findByName("Customer"));
+		UserRole userRole = userRoleService.findByName("Customer");
+		user.addUserRole(userRole);
+		userRole.addUser(user);
 		
 	    //persist a new transient test category
-	    entityManager.persist(user);
+		//entityManager.persist(person);
+	    entityManager.persist(person);
 	    entityManager.flush();
 	    entityManager.close();
 	    	

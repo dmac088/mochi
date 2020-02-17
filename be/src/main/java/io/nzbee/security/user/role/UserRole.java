@@ -53,7 +53,7 @@ public class UserRole implements Serializable {
     private Set<User> Users = new HashSet<>();
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long Id;
 
@@ -96,7 +96,7 @@ public class UserRole implements Serializable {
 	
 	public void removeUser(User user) {
 		this.getUsers().remove(user);
-		user.removeUserRole(this);
+		user.getUserRoles().remove(this);
 	}
 	
 	@Override

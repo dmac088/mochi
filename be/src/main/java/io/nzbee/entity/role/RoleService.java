@@ -17,7 +17,6 @@ public class RoleService {
 	private IRoleRepository RoleRepository; 
 	
 	@PreAuthorize("hasAuthority('ROLE_READER')")
-	@Transactional(readOnly = true)
 	public List<Role> getAllRoles() {
 		List<Role> Roles = new ArrayList<>();
 		Iterator<Role> i = RoleRepository.findAll().iterator();
@@ -28,26 +27,22 @@ public class RoleService {
 	}
 
 	@PreAuthorize("hasAuthority('ROLE_READ')")
-	@Transactional(readOnly = true)
 	public Optional<Role> getRole(Long id) {
 		Optional<Role> p = RoleRepository.findById(id);
 		return p;
 	}
 	
 	@PreAuthorize("hasAuthority('ROLE_CREATE')")
-	@Transactional
 	public void addRole(Role Role) {
 		RoleRepository.save(Role);
 	}
 	
 	@PreAuthorize("hasAuthority('ROLE_UPDATE')")
-	@Transactional
 	public void updateRole(String id, Role Role) {
 		RoleRepository.save(Role);
 	}
 	
 	@PreAuthorize("hasAuthority('ROLE_DELETE')")
-	@Transactional
 	public void deleteRole(Long id) {
 		RoleRepository.deleteById(id);
 	}

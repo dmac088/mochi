@@ -15,12 +15,15 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import lombok.Getter;
@@ -64,8 +67,10 @@ public class User implements UserDetails, Serializable {
     
     
     @ManyToMany(fetch = FetchType.LAZY, 
-				cascade = {CascadeType.PERSIST, 
-						   CascadeType.MERGE})
+    		cascade = {
+    	            CascadeType.PERSIST,
+    	            CascadeType.MERGE
+    	        })
     @JoinTable(name = "USER_ROLE", schema="security", 
     		   joinColumns 			= @JoinColumn(name = "pty_id"), 
     		   inverseJoinColumns 	= @JoinColumn(name = "role_id"))
@@ -145,7 +150,7 @@ public class User implements UserDetails, Serializable {
 	
 	public void removeUserRole(UserRole ur) {
 		this.getUserRoles().remove(ur);
-		ur.removeUser(this);
+		ur.getUsers().remove(this);
 	}
 	
 	public Set<UserRole> getUserRoles() {
