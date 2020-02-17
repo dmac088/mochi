@@ -1,15 +1,12 @@
 package io.nzbee.security.user;
 
 import io.nzbee.entity.party.Party;
-import io.nzbee.entity.product.Product;
 import io.nzbee.security.Encoders;
 import io.nzbee.security.user.role.UserRole;
 import org.hibernate.annotations.NaturalId;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
@@ -24,7 +21,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import lombok.Getter;
@@ -34,7 +30,6 @@ import lombok.Setter;
 @Table(name = "user_", schema="security", uniqueConstraints = { @UniqueConstraint(columnNames = { "USER_NAME" }) })
 @Getter 
 @Setter
-@Transactional
 public class User implements UserDetails, Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -68,13 +63,13 @@ public class User implements UserDetails, Serializable {
     private Party userParty;
     
     
-    @ManyToMany(fetch = FetchType.EAGER, 
-				cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(fetch = FetchType.LAZY, 
+				cascade = {CascadeType.PERSIST, 
+						   CascadeType.MERGE})
     @JoinTable(name = "USER_ROLE", schema="security", 
     		   joinColumns 			= @JoinColumn(name = "pty_id"), 
     		   inverseJoinColumns 	= @JoinColumn(name = "role_id"))
-    @OrderBy
-    private Set<UserRole> roles = new HashSet<UserRole>();
+    private Set<UserRole> roles = new HashSet<>();
     
 	@Override
     public boolean isAccountNonExpired() {
@@ -145,7 +140,7 @@ public class User implements UserDetails, Serializable {
 	
 	public void addUserRole(UserRole ur) {
 		this.getUserRoles().add(ur);
-		ur.addUser(this);
+		ur.getUsers().add(this);
 	}
 	
 	public void removeUserRole(UserRole ur) {
@@ -161,15 +156,19 @@ public class User implements UserDetails, Serializable {
 		this.roles = roles;
 	}
 	
+	public Long getId() {
+		return Id;
+	}
+
 	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Product)) return false;
-        return this.username != null && username.equals(((User) o).getUsername());
+        if (!(o instanceof User)) return false;
+        return username != null && username.equals(((User) o).getUsername());
     }
  
     @Override
     public int hashCode() {
-        return 31;
+        return 32;
     }
 }
