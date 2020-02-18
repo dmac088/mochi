@@ -22,12 +22,11 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
-
 import io.nzbee.entity.party.Party;
 import io.nzbee.entity.party.person.Person;
 import io.nzbee.entity.role.customer.Customer;
 import io.nzbee.security.user.User;
+import io.nzbee.security.user.UserService;
 import io.nzbee.security.user.role.IUserRoleService;
 import io.nzbee.security.user.role.UserRole;
 
@@ -68,12 +67,13 @@ public class IT_UserEntityRepositoryIntegrationTest {
 	@Qualifier("userRoleService")
 	private IUserRoleService userRoleService;
 	
+	@Autowired
+	@Qualifier("userService")
+	private UserService userService;
 	
+	private io.nzbee.security.user.User user = null;
 	
-    @Before
-    public void setUp() { 
-    	this.persistNewUser();
-    }
+ 
     
     
     @After
@@ -86,7 +86,7 @@ public class IT_UserEntityRepositoryIntegrationTest {
         SecurityContextHolder.getContext().setAuthentication(am.authenticate(auth));
     }
     
-	public User persistNewUser() {
+	public void persistNewUser() {
     	
 		final Person person = new Person();
 		
@@ -99,7 +99,7 @@ public class IT_UserEntityRepositoryIntegrationTest {
 		person.addRole(partyRole);
 		partyRole.setRoleParty(person);
 		
-		final io.nzbee.security.user.User user = new User();
+		user = new User();
 		user.setUsername("testusername@testdomain.com");
 		user.setPassword("test1234");
 		
@@ -111,26 +111,25 @@ public class IT_UserEntityRepositoryIntegrationTest {
 		userRole.addUser(user);
 		
 	    //persist a new transient test category
-		//entityManager.persist(person);
 	    entityManager.persist(user);
 	    entityManager.flush();
 	    entityManager.close();
 	    	
-	    return user;
 	}
 	
 	
 	@Test
     public void whenFindById_thenReturnParty() {
 //		login("admin", "admin1234");
-//		
-//		user = (User) userService.loadUserByUsername("testusername@testdomain.com");
-//		
-//        // when
-//    	Party found = user.getUserParty();
-//     
-//        // then
-//    	assertFound(found);
+		this.persistNewUser();
+		
+		user = (User) userService.loadUserByUsername("testusername@testdomain.com");
+		
+        // when
+    	Party found = user.getUserParty();
+     
+        // then
+    	assertFound(found);
     }
 
 	
