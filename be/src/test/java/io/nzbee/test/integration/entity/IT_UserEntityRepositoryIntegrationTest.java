@@ -16,6 +16,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
@@ -84,7 +85,7 @@ public class IT_UserEntityRepositoryIntegrationTest {
         SecurityContextHolder.getContext().setAuthentication(am.authenticate(auth));
     }
     
-	public void persistNewUser() {
+	public User persistNewUser() {
     	
 		final Person person = new Person();
 		
@@ -98,20 +99,19 @@ public class IT_UserEntityRepositoryIntegrationTest {
 		partyRole.setRoleParty(person);
 		
 		user = new User();
-		user.setUsername("testusername@testdomain.com");
+		user.setUsername("testusername");
 		user.setPassword("test1234");
-		
-		person.setPartyUser(user);
 		user.setUserParty(person);
 		
 		final UserRole userRole = userRoleService.findByName("Customer");
 		user.addUserRole(userRole);
-		userRole.addUser(user);
 		
 	    //persist a new transient test category
 	    entityManager.persist(user);
 	    entityManager.flush();
 	    entityManager.close();
+	    
+	    return user;
 	    	
 	}
 	
@@ -120,12 +120,11 @@ public class IT_UserEntityRepositoryIntegrationTest {
 	@Rollback(false)
     public void whenFindById_thenReturnParty() {
 //		login("admin", "admin1234");
-		this.persistNewUser();
+		this.user = this.persistNewUser();
 		
-		user = (User) userService.loadUserByUsername("testusername@testdomain.com");
-		
+		UserDetails ud = userService.loadUserByUsername("testusername");
         // when
-    	Party found = user.getUserParty();
+    	Party found = ((User) ud).getUserParty();
      
         // then
     	assertFound(found);
