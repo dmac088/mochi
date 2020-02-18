@@ -72,9 +72,6 @@ public class IT_UserEntityRepositoryIntegrationTest {
 	private UserService userService;
 	
 	private io.nzbee.security.user.User user = null;
-	
- 
-    
     
     @After
     public void clear() {
