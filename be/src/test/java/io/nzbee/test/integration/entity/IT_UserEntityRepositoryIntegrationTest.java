@@ -17,6 +17,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
@@ -24,11 +26,15 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.transaction.BeforeTransaction;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.Transactional;
+
+import io.nzbee.entity.party.IPartyService;
 import io.nzbee.entity.party.Party;
 import io.nzbee.entity.party.person.Person;
 import io.nzbee.entity.role.customer.Customer;
 import io.nzbee.security.user.User;
-import io.nzbee.security.user.UserService;
 import io.nzbee.security.user.role.IUserRoleService;
 import io.nzbee.security.user.role.UserRole;
 
@@ -56,8 +62,9 @@ import io.nzbee.security.user.role.UserRole;
 })
 //@ContextConfiguration(classes = {UserRoleService.class}) 
 public class IT_UserEntityRepositoryIntegrationTest {
-    
+  
 	@Autowired
+    @Qualifier("authenticationManagerBean")
     private AuthenticationManager am;
 	
 	//ensure the mochiEntityManagerFactory not the security EM
@@ -70,22 +77,29 @@ public class IT_UserEntityRepositoryIntegrationTest {
 	private IUserRoleService userRoleService;
 	
 	@Autowired
-	@Qualifier("userService")
-	private UserService userService;
+	private IPartyService partyService;
+
 	
 	private io.nzbee.security.user.User user = null;
     
     @After
     public void clear() {
+    	entityManager.close();
         SecurityContextHolder.clearContext();
     }
     
-    protected void login(String name, String password) {
-        Authentication auth = new UsernamePasswordAuthenticationToken(name, password);
+    @Before
+    public void setup() {
+    	persistNewUser();
+    }
+    
+    protected void login(String usernname, String password) {
+        Authentication auth = new UsernamePasswordAuthenticationToken(usernname, password);
         SecurityContextHolder.getContext().setAuthentication(am.authenticate(auth));
     }
     
-	public User persistNewUser() {
+    
+	public void persistNewUser() {
     	
 		final Person person = new Person();
 		
@@ -102,6 +116,8 @@ public class IT_UserEntityRepositoryIntegrationTest {
 		user.setUsername("testusername");
 		user.setPassword("test1234");
 		user.setUserParty(person);
+		user.setEnabled(true);
+	
 		
 		final UserRole userRole = userRoleService.findByName("Customer");
 		user.addUserRole(userRole);
@@ -109,22 +125,16 @@ public class IT_UserEntityRepositoryIntegrationTest {
 	    //persist a new transient test category
 	    entityManager.persist(user);
 	    entityManager.flush();
-	    entityManager.close();
-	    
-	    return user;
-	    	
 	}
 	
 	
 	@Test
-	@Rollback(false)
-    public void whenFindById_thenReturnParty() {
-//		login("admin", "admin1234");
-		this.user = this.persistNewUser();
+	@Rollback(true)
+    public void whenFindByUsername_thenReturnUser() {
+		//login("testusername", "test1234");
 		
-		UserDetails ud = userService.loadUserByUsername("testusername");
         // when
-    	Party found = ((User) ud).getUserParty();
+    	Party found = partyService.findByCode("testusername").get();
      
         // then
     	assertFound(found);
@@ -149,12 +159,7 @@ public class IT_UserEntityRepositoryIntegrationTest {
 	    assertThat(((Person) found).getFamilyName())
 	    .isEqualTo("Test Family Name");
     }
-	
-    @After
-    public void closeConnection() {
-    	entityManager.close();
-    }
-	
+
 	
 	
 }

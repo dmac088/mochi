@@ -1,5 +1,6 @@
 package io.nzbee.security.authority;
 
+import org.hibernate.annotations.NaturalId;
 import org.springframework.security.core.GrantedAuthority;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,6 +29,7 @@ public class Authority implements GrantedAuthority {
     @Column(name = "ID")
     private Long id;
 
+	@NaturalId
     @Column(name = "NAME")
     private String name;
 
