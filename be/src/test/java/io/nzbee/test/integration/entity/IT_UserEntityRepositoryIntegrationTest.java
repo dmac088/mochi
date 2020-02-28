@@ -142,7 +142,7 @@ public class IT_UserEntityRepositoryIntegrationTest {
 
 	@Test
 	@WithUserDetails(value = "admin", userDetailsServiceBeanName = "userService")
-	public void test() {
+	public void whenFindByExistingUsername_thenExistingUser() {
 		UserDetails ud = userService.loadUserByUsername("admin");
 		
 		assertAdminFound(((User) ud).getUserParty());
