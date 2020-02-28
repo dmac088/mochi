@@ -17,7 +17,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
@@ -26,15 +25,12 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.transaction.BeforeTransaction;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.annotation.Transactional;
-
 import io.nzbee.entity.party.IPartyService;
 import io.nzbee.entity.party.Party;
 import io.nzbee.entity.party.person.Person;
 import io.nzbee.entity.role.customer.Customer;
 import io.nzbee.security.user.User;
+import io.nzbee.security.user.UserService;
 import io.nzbee.security.user.role.IUserRoleService;
 import io.nzbee.security.user.role.UserRole;
 
@@ -75,6 +71,10 @@ public class IT_UserEntityRepositoryIntegrationTest {
 	@Autowired
 	@Qualifier("userRoleService")
 	private IUserRoleService userRoleService;
+	
+	@Autowired
+	@Qualifier("userService")
+	private UserService userService;
 	
 	@Autowired
 	private IPartyService partyService;
@@ -140,17 +140,13 @@ public class IT_UserEntityRepositoryIntegrationTest {
     	assertFound(found);
     }
 
-	
-//	@Test
-//    public void whenFindByRoleName_thenReturnAllParties() {
-//		login("admin", "admin1234");
-//        // when
-//    	List<Party> found = partyService.findByRoleType(Customer.class);
-//     
-//        // then
-//    	found.stream().filter(f -> f.getPartyId().equals(customer.getPartyId())).forEach(p -> assertFound(p));
-//    	
-//    }
+	@Test
+	@WithUserDetails(value = "admin", userDetailsServiceBeanName = "userService")
+	public void test() {
+		UserDetails ud = userService.loadUserByUsername("admin");
+		
+		assertAdminFound(((User) ud).getUserParty());
+	}
 	
     private void assertFound(final Party found) {
     	
@@ -158,6 +154,14 @@ public class IT_UserEntityRepositoryIntegrationTest {
 	    .isEqualTo("Test Given Name");
 	    assertThat(((Person) found).getFamilyName())
 	    .isEqualTo("Test Family Name");
+    }
+    
+    private void assertAdminFound(final Party found) {
+    	
+	    assertThat(((Person) found).getGivenName())
+	    .isEqualTo("Daniel");
+	    assertThat(((Person) found).getFamilyName())
+	    .isEqualTo("Mackie");
     }
 
 	
