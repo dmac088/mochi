@@ -84,6 +84,8 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 		final Brand bDO = new Brand();
     	bDO.setBrandCode(brandDTO.getBrandCode());
     	bDO.setBrandDesc(brandDTO.getBrandDesc());
+    	bDO.setLocale(brandDTO.getLocale());
+    	bDO.setCurrency(brandDTO.getCurrency());
     	return Optional.ofNullable(bDO);
 	}
 

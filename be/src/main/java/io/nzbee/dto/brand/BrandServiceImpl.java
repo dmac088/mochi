@@ -83,6 +83,8 @@ public class BrandServiceImpl implements IBrandService {
 		io.nzbee.entity.brand.Brand b = ((io.nzbee.entity.brand.Brand) entity.get());
 		brand.setBrandCode(b.getCode());
 		brand.setBrandDesc(b.getBrandAttribute().getBrandDesc());		
+		brand.setLocale(b.getLocale());
+		brand.setCurrency(b.getCurrency());
 		return Optional.ofNullable(brand);
 	}
 
