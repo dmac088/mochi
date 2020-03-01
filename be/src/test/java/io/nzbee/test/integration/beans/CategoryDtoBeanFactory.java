@@ -25,7 +25,7 @@ public class CategoryDtoBeanFactory {
 		category.setCategoryCode("TST02");
 		category.setCategoryLevel(new Long(1));
 		category.setCategoryDesc("test product category");
-		category.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
+		category.setLocale(GeneralVars.LANGUAGE_ENGLISH);
 		
 		return category;
 	}
@@ -38,7 +38,7 @@ public class CategoryDtoBeanFactory {
 		category.setCategoryCode("TST01");
 		category.setCategoryLevel(new Long(2));
 		category.setCategoryDesc("test brand category");
-		category.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
+		category.setLocale(GeneralVars.LANGUAGE_ENGLISH);
 		
 		return category;
 	}
