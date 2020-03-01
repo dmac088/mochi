@@ -1,5 +1,4 @@
 package io.nzbee.resources.category;
-import org.springframework.hateoas.Resource;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.web.PagedResourcesAssembler;
@@ -15,7 +14,7 @@ import io.nzbee.resources.controllers.ProductController;
 @Component
 public class CategoryResourceAssembler extends ResourceAssemblerSupport<Category, CategoryResource> {
 
-	public CategoryResourceAssembler(Class<?> controllerClass, Class<Resource<Category>> resourceType) {
+	public CategoryResourceAssembler() {
 		super(CategoryController.class, CategoryResource.class);
 		// TODO Auto-generated constructor stub
 	}
