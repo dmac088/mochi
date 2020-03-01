@@ -14,6 +14,10 @@ public class Brand implements IDomainObject {
 	private String brandDesc;
 	
 	private int objectCount;
+
+	private String locale;
+	
+	private String currency;
 	
 	public String getBrandCode() {
 		return brandCode;
@@ -29,19 +33,6 @@ public class Brand implements IDomainObject {
 
 	public void setBrandDesc(String brandDesc) {
 		this.brandDesc = brandDesc;
-	}
-	
-	@Override
-	public boolean equals(Object o) {
-		 if (this == o) return true;
-	     if (o == null || getClass() != o.getClass()) return false;
-	     Brand pcDto = (Brand) o;
-	     return this.brandCode == pcDto.brandCode;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(brandCode);
 	}
 
 	@Override
@@ -68,4 +59,34 @@ public class Brand implements IDomainObject {
 		return this.brandDesc;
 	}
 
+	
+	public String getLocale() {
+		return locale;
+	}
+
+	public void setLocale(String locale) {
+		this.locale = locale;
+	}
+
+	public String getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(String currency) {
+		this.currency = currency;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		 if (this == o) return true;
+	     if (o == null || getClass() != o.getClass()) return false;
+	     Brand pcDto = (Brand) o;
+	     return this.brandCode == pcDto.brandCode;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(brandCode);
+	}
+	
 }

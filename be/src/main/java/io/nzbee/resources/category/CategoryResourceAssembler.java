@@ -30,7 +30,7 @@ public class CategoryResourceAssembler extends ResourceAssemblerSupport<Category
 		cr.add(linkTo(methodOn(CategoryController.class).getCategory(	category.getLocale(), 
 																		category.getCurrency(), 
 																		category.getCode()
-																	)).withSelfRel(),
+																)).withSelfRel(),
 				linkTo(methodOn(BrandController.class).getBrands(		category.getLocale(), 
 																		category.getCurrency(), 
 																		category.getCode()
