@@ -37,12 +37,7 @@ public class CategoryController {
     @GetMapping("/Category/{locale}/{currency}")
     public ResponseEntity<Resources<CategoryResource>> getCategories(@PathVariable String locale, @PathVariable String currency) {
     	LOGGER.debug("Fetching categories for parameters : {}, {}", locale, currency);
-
-    	final List<CategoryResource> collection = 
-        		categoryService.findAll(locale, currency).stream()
-        		.map(c -> categoryResourceAssember.toResource(c))
-        		.collect(Collectors.toList());
-        
+    	final List<CategoryResource> collection = categoryService.findAll(locale, currency).stream().map(c -> categoryResourceAssember.toResource(c)).collect(Collectors.toList());
         final Resources <CategoryResource> resources = new Resources <> (collection);
         final String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
         resources.add(new Link(uriString, "self"));
@@ -52,7 +47,6 @@ public class CategoryController {
     @GetMapping("/Category/{locale}/{currency}/code/{categoryCode}")
     public ResponseEntity<CategoryResource> getCategory(@PathVariable String locale, @PathVariable String currency, @PathVariable String categoryCode) {
     	LOGGER.debug("Fetching category for parameters : {}, {}, {}", locale, currency, categoryCode);
-    	
     	Category c = categoryService.findByCode(locale, currency, categoryCode);
     	CategoryResource cr = categoryResourceAssember.toResource(c);
     	return ResponseEntity.ok(cr);
