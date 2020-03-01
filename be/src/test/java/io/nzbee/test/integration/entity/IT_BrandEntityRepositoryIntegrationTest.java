@@ -23,6 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.brand.BrandServiceImpl;
 import io.nzbee.entity.brand.IBrandService;
+import io.nzbee.resources.brand.BrandResourceAssembler;
 import io.nzbee.test.integration.beans.BrandEntityBeanFactory;
 import io.nzbee.variables.GeneralVars;
 
@@ -53,6 +54,11 @@ public class IT_BrandEntityRepositoryIntegrationTest {
         @Bean(value = "brandEntityBeanFactory")
         public BrandEntityBeanFactory brandFactoryBean() {
             return new BrandEntityBeanFactory();
+        }
+        
+        @Bean(value = "bradResourceAssembler")
+        public BrandResourceAssembler brandResourceAssembler() {
+        	return new BrandResourceAssembler();
         }
     }
 	
