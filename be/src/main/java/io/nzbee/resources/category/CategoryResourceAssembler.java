@@ -13,36 +13,37 @@ import io.nzbee.resources.controllers.CategoryController;
 import io.nzbee.resources.controllers.ProductController;
 
 @Component
-public class CategoryResourceAssembler extends ResourceAssemblerSupport<Category, Resource<Category>> {
+public class CategoryResourceAssembler extends ResourceAssemblerSupport<Category, CategoryResource> {
+
+	public CategoryResourceAssembler(Class<?> controllerClass, Class<Resource<Category>> resourceType) {
+		super(CategoryController.class, CategoryResource.class);
+		// TODO Auto-generated constructor stub
+	}
+
 
 	@Autowired
 	private PagedResourcesAssembler<Product> parAssembler;
 	
-	public CategoryResourceAssembler(Class<?> controllerClass, Class<Resource<Category>> resourceType) {
-		super(controllerClass, resourceType);
-	}
 
 	@Override
-    public Resource<Category> toResource(Category category) {
-    	return new Resource<>(
-				    			category,
-								linkTo(methodOn(CategoryController.class).getCategory(	category.getLocale(), 
-																						category.getCurrency(), 
-																						category.getCode()
-																						)).withSelfRel(),
-								linkTo(methodOn(BrandController.class).getBrands(		category.getLocale(), 
-																						category.getCurrency(), 
-																						category.getCode()
-																						)).withRel("brands"),
-								linkTo(methodOn(ProductController.class).getProducts(	category.getLocale(), 
-																					 	category.getCurrency(), 
-																					 	category.getCode(),
-																					 	0,
-																					 	10,
-																					 	parAssembler
-																					 	)).withRel("products")
-    	);
-
+    public CategoryResource toResource(Category category) {
+		CategoryResource cr = new CategoryResource();
+		cr.add(linkTo(methodOn(CategoryController.class).getCategory(	category.getLocale(), 
+																		category.getCurrency(), 
+																		category.getCode()
+																	)).withSelfRel(),
+				linkTo(methodOn(BrandController.class).getBrands(		category.getLocale(), 
+																		category.getCurrency(), 
+																		category.getCode()
+																)).withRel("brands"),
+				linkTo(methodOn(ProductController.class).getProducts(	category.getLocale(), 
+																	 	category.getCurrency(), 
+																	 	category.getCode(),
+																	 	0,
+																	 	10,
+																	 	parAssembler
+																)).withRel("products"));
+		return cr;
     }
     
 }
