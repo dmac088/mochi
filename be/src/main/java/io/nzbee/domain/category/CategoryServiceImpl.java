@@ -123,6 +123,8 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 			}
 			categoryDO.setChildCount(category.getChildCategoryCount());
 			categoryDO.setLayoutCodes(category.getLayoutCodes());
+			categoryDO.setLocale(category.getLocale());
+			categoryDO.setCurrency(category.getCurrency());
 			
 			return Optional.ofNullable(categoryDO);
 		}

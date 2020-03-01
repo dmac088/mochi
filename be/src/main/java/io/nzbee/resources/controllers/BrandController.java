@@ -1,9 +1,7 @@
 package io.nzbee.resources.controllers;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,10 +50,16 @@ public class BrandController {
     }
     
     @GetMapping("/Brand/{locale}/{currency}")
-    public Set<Brand> getBrands(@PathVariable String locale, @PathVariable String currency) {
+    public ResponseEntity<Resources<BrandResource>> getBrands(@PathVariable String locale, @PathVariable String currency) {
     	LOGGER.debug("Fetching brands for parameters : {}, {}", locale, currency);
-    	
-    	return brandService.findAll(locale, currency);
+    	final List<BrandResource> collection = 
+    			 brandService.findAll(locale, currency).stream()
+    			 .map(b -> brandResourceAssembler.toResource(b))
+        		.collect(Collectors.toList());
+    	final Resources <BrandResource> resources = new Resources <> (collection);
+        final String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
+        resources.add(new Link(uriString, "brands"));
+        return ResponseEntity.ok(resources);
     }
 
     @GetMapping("/Brand/{locale}/{currency}/code/{brandCode}")

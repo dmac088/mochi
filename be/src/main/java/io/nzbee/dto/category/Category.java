@@ -14,7 +14,9 @@ public abstract class Category implements IDto {
 	
 	private Long categoryLevel;
 
-	private String lclCd;
+	private String locale;
+	
+	private String currency;
 
 	private Long childCategoryCount;
 
@@ -46,6 +48,7 @@ public abstract class Category implements IDto {
 					String  categoryImagePath,
 					String  categoryTypeCode,
 					String  locale,
+					String 	currency,
 					int  	objectCount,
 					Double  retailPrice,
 					Double  markdownPrice
@@ -55,7 +58,8 @@ public abstract class Category implements IDto {
 		this.categoryCode 	= categoryCode;
 		this.categoryDesc 	= categoryDesc;
 		this.categoryLevel 	= categoryLevel;
-		this.lclCd 			= locale;
+		this.locale 		= locale;
+		this.currency 		= currency;
 		this.objectCount	= objectCount;
 		this.retailPrice	= retailPrice;
 		this.markdownPrice	= markdownPrice;
@@ -85,12 +89,12 @@ public abstract class Category implements IDto {
 		this.categoryLevel = categoryLevel;
 	}
 
-	public String getLclCd() {
-		return lclCd;
+	public String getLocale() {
+		return locale;
 	}
 
-	public void setLclCd(String lclCd) {
-		this.lclCd = lclCd;
+	public void setLocale(String locale) {
+		this.locale = locale;
 	}
 
 	public Long getChildCategoryCount() {
@@ -133,6 +137,14 @@ public abstract class Category implements IDto {
 		this.layoutCodes = layoutCodes;
 	}
 	
+	public String getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(String currency) {
+		this.currency = currency;
+	}
+
 	@Override
 	public String getType() {
 		return this.getClass().getSimpleName();
@@ -159,7 +171,8 @@ public abstract class Category implements IDto {
         .append(", categoryDesc=").append(categoryDesc)
         .append(", categoryLevel=").append(categoryLevel)
         .append(", childCategoryCount=").append(childCategoryCount)
-        .append(", lclCd=").append(lclCd)
+        .append(", locale=").append(locale)
+        .append(", currency=").append(currency)
         .append("]");    	
         return builder.toString();
     }

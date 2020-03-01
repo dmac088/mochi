@@ -112,6 +112,8 @@ public class CategoryServiceImpl implements ICategoryService {
 			}
 			categoryDTO.setChildCategoryCount(category.getChildCount());					
 			categoryDTO.setLayoutCodes(category.getCategoryLayouts());
+			categoryDTO.setLocale(category.getLocale());
+			categoryDTO.setCurrency(category.getCurrency());
 			return Optional.ofNullable(categoryDTO);
 		} 
 		return Optional.empty();

@@ -205,6 +205,16 @@ public abstract class Category {
 	
 	@Transient
 	private String typeDiscriminator;
+	
+	@Transient
+	private String locale;
+	
+	@Transient
+	private String currency;
+	
+	public void setCurrency(String currency) {
+		this.currency = currency;
+	}
 
 	public abstract int getObjectCount();
 	
@@ -368,6 +378,18 @@ public abstract class Category {
 
 	public void setCategoryLayouts(String[] categoryLayouts) {
 		this.categoryLayouts = categoryLayouts;
+	}
+	
+	public String getLocale() {
+		return locale;
+	}
+
+	public void setLocale(String locale) {
+		this.locale = locale;
+	}
+
+	public String getCurrency() {
+		return currency;
 	}
 	
 	public String getTypeDiscriminator() {
