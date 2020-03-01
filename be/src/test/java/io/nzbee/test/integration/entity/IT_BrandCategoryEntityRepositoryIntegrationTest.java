@@ -25,7 +25,6 @@ import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.product.hierarchy.Hierarchy;
 import io.nzbee.entity.product.hierarchy.IHierarchyRepository;
-import io.nzbee.resources.category.CategoryResourceAssembler;
 import io.nzbee.test.integration.beans.CategoryEntityBeanFactory;
 import io.nzbee.variables.GeneralVars;
 
