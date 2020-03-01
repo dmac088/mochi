@@ -11,6 +11,10 @@ public class Brand implements IDto {
 
 	private String brandDesc;
 	
+	private String locale;
+	
+	private String currency;
+
 	private BrandCategory category;
 	
 	public String getBrandCode() {
@@ -37,6 +41,32 @@ public class Brand implements IDto {
 		this.category = category;
 	}
 	
+	public String getLocale() {
+		return locale;
+	}
+
+	public void setLocale(String locale) {
+		this.locale = locale;
+	}
+
+	public String getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(String currency) {
+		this.currency = currency;
+	}
+
+	@Override
+	public String getCode() {
+		return this.getBrandCode();
+	}
+
+	@Override
+	public String getType() {
+		return this.getClass().getSimpleName();
+	}
+	
 	@Override
 	public boolean equals(Object o) {
 		 if (this == o) return true;
@@ -48,18 +78,6 @@ public class Brand implements IDto {
 	@Override
 	public int hashCode() {
 		return Objects.hash(brandCode);
-	}
-
-	@Override
-	public String getCode() {
-		// TODO Auto-generated method stub
-		return this.getBrandCode();
-	}
-
-	@Override
-	public String getType() {
-		// TODO Auto-generated method stub
-		return this.getClass().getSimpleName();
 	}
 	
 }

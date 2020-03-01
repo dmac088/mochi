@@ -74,6 +74,8 @@ public class BrandDaoImpl  implements IBrandDao {
 		brandEntity.setBrandAttribute(brandAttribute);
 		brandEntity.setId(Long.parseLong(tuple.get("brandId").toString()));
 		brandEntity.setCode(tuple.get("brandCode").toString());
+		brandEntity.setLocale(locale);
+		brandEntity.setCurrency(currency);
 
 		return Optional.ofNullable(brandEntity);
 	}
@@ -115,6 +117,8 @@ public class BrandDaoImpl  implements IBrandDao {
 		brandEntity.setBrandAttribute(brandAttribute);
 		brandEntity.setId(Long.parseLong(tuple.get("brandId").toString()));
 		brandEntity.setCode(tuple.get("brandCode").toString());
+		brandEntity.setLocale(locale);
+		brandEntity.setCurrency(currency);
 		
 		return Optional.ofNullable(brandEntity);
 	}
@@ -156,6 +160,8 @@ public class BrandDaoImpl  implements IBrandDao {
 		brandEntity.setBrandAttribute(brandAttribute);
 		brandEntity.setId(Long.parseLong(tuple.get("brandId").toString()));
 		brandEntity.setCode(tuple.get("brandCode").toString());
+		brandEntity.setLocale(locale);
+		brandEntity.setCurrency(currency);
 		
 		return Optional.ofNullable(brandEntity);
 	}
@@ -199,6 +205,8 @@ public class BrandDaoImpl  implements IBrandDao {
 			brandEntity.setBrandAttribute(brandAttribute);
 			brandEntity.setId(Long.parseLong(t.get("brandId").toString()));
 			brandEntity.setCode(t.get("brandCode").toString());
+			brandEntity.setLocale(locale);
+			brandEntity.setCurrency(currency);
 			
 			return brandEntity;
 		}).collect(Collectors.toList());
@@ -244,6 +252,8 @@ public class BrandDaoImpl  implements IBrandDao {
 			brandEntity.setBrandAttribute(brandAttribute);
 			brandEntity.setId(Long.parseLong(t.get("brandId").toString()));
 			brandEntity.setCode(t.get("brandCode").toString());
+			brandEntity.setLocale(locale);
+			brandEntity.setCurrency(currency);
 			
 			return brandEntity;
 		}).collect(Collectors.toList());
@@ -286,6 +296,8 @@ public class BrandDaoImpl  implements IBrandDao {
 			brandEntity.setBrandAttribute(brandAttribute);
 			brandEntity.setId(Long.parseLong(t.get("brandId").toString()));
 			brandEntity.setCode(t.get("brandCode").toString());
+			brandEntity.setLocale(locale);
+			brandEntity.setCurrency(currency);
 			
 			return brandEntity;
 		}).collect(Collectors.toList());

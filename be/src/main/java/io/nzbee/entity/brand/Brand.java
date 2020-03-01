@@ -52,6 +52,16 @@ public class Brand {
 	@Transient
 	private BrandAttribute brandAttribute;
 	
+	@Transient
+	private String locale;
+	
+	@Transient
+	private String currency;
+	
+	public String getLocale() {
+		return locale;
+	}
+
 	public Long getId() {
 		return this.brandId;
 	}
@@ -111,5 +121,18 @@ public class Brand {
 		this.getCategories().remove(categoryBrand);
 		categoryBrand.removeBrand(this);
 	}
+	
+	public void setLocale(String locale) {
+		this.locale = locale;
+	}
+
+	public String getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(String currency) {
+		this.currency = currency;
+	}
+
 
 }
