@@ -1,9 +1,7 @@
 package io.nzbee.test.integration.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import javax.persistence.EntityManager;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,16 +13,20 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import io.nzbee.domain.product.Product;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.product.hierarchy.Hierarchy;
 import io.nzbee.entity.product.hierarchy.IHierarchyRepository;
+import io.nzbee.resources.category.CategoryResourceAssembler;
 import io.nzbee.test.integration.beans.CategoryEntityBeanFactory;
 import io.nzbee.variables.GeneralVars;
 
@@ -55,6 +57,16 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
         @Bean(value = "categoryEntityBeanFactory")
         public CategoryEntityBeanFactory categoryFactoryBean() {
             return new CategoryEntityBeanFactory();
+        }
+        
+        @Bean(value = "categoryResourceAssembler")
+        public CategoryResourceAssembler categoryResourceAssembler() {
+        	return new CategoryResourceAssembler();
+        }
+        
+        @Bean(value = "pagedResourceAssembler")
+        public PagedResourcesAssembler<Product> pagedResourceAssembler() {
+        	return new PagedResourcesAssembler<Product>(null, null);
         }
     }
 	
