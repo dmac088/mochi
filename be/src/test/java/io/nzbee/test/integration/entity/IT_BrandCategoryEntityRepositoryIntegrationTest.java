@@ -20,7 +20,6 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import io.nzbee.domain.product.Product;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.ICategoryService;
@@ -57,11 +56,6 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
         @Bean(value = "categoryEntityBeanFactory")
         public CategoryEntityBeanFactory categoryFactoryBean() {
             return new CategoryEntityBeanFactory();
-        }
-        
-        @Bean(value = "categoryResourceAssembler")
-        public CategoryResourceAssembler categoryResourceAssembler() {
-        	return new CategoryResourceAssembler();
         }
         
         @Bean(value = "pagedResourceAssembler")

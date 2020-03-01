@@ -2,7 +2,6 @@ package io.nzbee.test.integration.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import javax.persistence.EntityManager;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
