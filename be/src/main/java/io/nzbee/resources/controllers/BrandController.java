@@ -18,6 +18,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.brand.IBrandService;
 import io.nzbee.resources.brand.BrandResource;
+import io.nzbee.resources.brand.BrandResourceAssembler;
 
 @RestController
 @RequestMapping("/api")
@@ -27,6 +28,9 @@ public class BrandController {
 	
     @Autowired
     private IBrandService brandService;
+    
+    @Autowired
+    private BrandResourceAssembler brandResourceAssembler;
 
     public BrandController() {
         super();
@@ -38,7 +42,7 @@ public class BrandController {
     	
     	final List<BrandResource> collection = 
     			brandService.findAll(locale, currency, categoryCode).stream()
-        		.map(b -> new BrandResource(locale, currency, b))
+        		.map(b -> brandResourceAssembler.toResource(b))
         		.collect(Collectors.toList());
     	
     	final Resources <BrandResource> resources = new Resources <> (collection);
@@ -57,9 +61,8 @@ public class BrandController {
     @GetMapping("/Brand/{locale}/{currency}/code/{brandCode}")
     public ResponseEntity<BrandResource> get(@PathVariable String locale, @PathVariable String currency, @PathVariable String brandCode) {
     	LOGGER.debug("Fetching brand for parameters : {}, {}, {}", locale, currency, brandCode);
-    	
     	Brand b = brandService.findByCode(locale, currency, brandCode);
-    	BrandResource br = new BrandResource(locale, currency, b);
+    	BrandResource br = brandResourceAssembler.toResource(b);
     	return ResponseEntity.ok(br);
     }
 }
