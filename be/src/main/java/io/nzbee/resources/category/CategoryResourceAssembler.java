@@ -26,7 +26,7 @@ public class CategoryResourceAssembler extends ResourceAssemblerSupport<Category
 
 	@Override
     public CategoryResource toResource(Category category) {
-		CategoryResource cr = new CategoryResource();
+		CategoryResource cr = new CategoryResource(category);
 		cr.add(linkTo(methodOn(CategoryController.class).getCategory(	category.getLocale(), 
 																		category.getCurrency(), 
 																		category.getCode()
