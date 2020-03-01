@@ -74,7 +74,8 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 			category.setCategoryLayouts((((String)c[10]) != null)
 										? ((String)c[10]).split(",", -1)
 										: new String[0]);
-			
+			category.setLocale(locale);
+			category.setCurrency(currency);
 			
 			//if c[4] is null then the category does not have a parent
 			if(category instanceof CategoryProduct) {
@@ -124,7 +125,8 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 			category.setCategoryLayouts((((String)c[10]) != null)
 										? ((String)c[10]).split(",", -1)
 										: new String[0]);
-			
+			category.setLocale(locale);
+			category.setCurrency(currency);
 			
 			//if c[4] is null then the category does not have a parent
 			if(category instanceof CategoryProduct) {
@@ -177,6 +179,8 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 			category.setCategoryLayouts((((String)c[10]) != null)
 					? ((String)c[10]).split(",", -1)
 					: new String[0]);
+			category.setLocale(locale);
+			category.setCurrency(currency);
 			
 			//if c[4] is null then the category does not have a parent
 			if(category instanceof CategoryProduct) {
@@ -238,6 +242,8 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		category.setCategoryLayouts((((String)c[10]) != null)
 				? ((String)c[10]).split(",", -1)
 				: new String[0]);	
+		category.setLocale(locale);
+		category.setCurrency(currency);
 		
 		return Optional.ofNullable(category);
 	}
@@ -287,6 +293,8 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		category.setCategoryLayouts((((String)c[10]) != null)
 				? ((String)c[10]).split(",", -1)
 				: new String[0]);	
+		category.setLocale(locale);
+		category.setCurrency(currency);
 		
 		return Optional.ofNullable(category);
 
@@ -337,7 +345,10 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 			category.setChildCount(((BigInteger)c[9]).longValue());
 			category.setCategoryLayouts((((String)c[10]) != null)
 					? ((String)c[10]).split(",", -1)
-					: new String[0]);	
+					: new String[0]);
+			category.setLocale(locale);
+			category.setCurrency(currency);
+			
 			return Optional.ofNullable(category);
 		} 
 		catch(NoResultException nre) {
