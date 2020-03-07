@@ -1,11 +1,5 @@
 package io.nzbee.entity.product.attribute;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.Column;
@@ -19,7 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.lucene.analysis.cjk.CJKBigramFilterFactory;
@@ -41,13 +34,10 @@ import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.nzbee.entity.LanguageDiscriminator;
-import io.nzbee.entity.category.Category;
+import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
-import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.Product;
-import io.nzbee.entity.tag.Tag;
 import io.nzbee.entity.tag.attribute.TagAttribute;
-import io.nzbee.variables.CategoryVars;
 
 @Entity
 @Indexed
@@ -93,7 +83,6 @@ public class ProductAttribute {
 	private String lclCd;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@IndexedEmbedded
 	@JoinColumn(name="prd_id", insertable=false, updatable=false)
 	@JsonBackReference
 	private Product product;
@@ -107,114 +96,31 @@ public class ProductAttribute {
 	}
 	
 	@Transient
-	@IndexedEmbedded
-	public Category getPrimaryCategory() {
-		 Optional<CategoryProduct> category = 
-				 this.getProduct().getCategories().stream().filter(c -> {
-					 return c.getHierarchy().getHierarchyCode().equals(CategoryVars.PRIMARY_HIERARCHY_CODE);
-		 			}).collect(Collectors.toList()).stream().findFirst();
-		 
-		 if(category.isPresent()) { return category.get();}
-		 CategoryProduct c = new CategoryProduct();
-		 c.setCategoryCode("UNK01");
-		 return c;
+	@IndexedEmbedded(prefix="product.categories")
+	//@OneToMany(fetch = FetchType.LAZY)
+	public Set<CategoryAttribute> getCategories() {
+				return this.getProduct().getCategories().stream().flatMap(
+					c -> c.getAttributes().stream()).collect(Collectors.toSet())
+						.stream().filter(ca -> ca.getLclCd().equals(this.getLclCd())
+					).collect(Collectors.toSet());
 	}
 	
 	@Transient
-	@IndexedEmbedded
-	public Category getSecondaryCategory() {
-		Optional<Collection<Optional<CategoryProduct>>> lc = 
-		Optional.ofNullable(this.getProduct().getCategories().stream().map(a -> {return Optional.ofNullable(a);}).collect(Collectors.toList()));
-		if(lc.isPresent()) {
-			Optional<CategoryProduct> c = lc.get().stream().filter(b -> b.isPresent()).collect(Collectors.toList()).stream()
-					.map(d -> d.get()).collect(Collectors.toList())
-					.stream().filter(e -> e.getHierarchy().getHierarchyCode().equals(CategoryVars.SECONDARY_HIERARCHY_CODE)).findFirst();
-			
-			if(c.isPresent()) { return c.get();}
-		}
-		
-		lc = Optional.ofNullable(new ArrayList<Optional<CategoryProduct>>());
-		CategoryProduct c = new CategoryProduct();
-		CategoryAttribute ca = new CategoryAttribute();
-		c.setCategoryCode("UNK01");
-		ca.setLclCd(this.getLclCd());
-		ca.setCategory(c);
-		return c;
+	@IndexedEmbedded(prefix="product.tags")
+	public Set<TagAttribute> getTags() {
+		return this.getProduct().getTags().stream().flatMap(
+				t -> t.getAttributes().stream()).collect(Collectors.toSet())
+					.stream().filter(ta -> ta.getLclCd().equals(this.getLclCd())
+				).collect(Collectors.toSet());
 	}
 	
 	@Transient
-	@Field(analyze = Analyze.YES, store=Store.YES)
-	public String getTagA() {
-		Optional<Set<Tag>> lpt = Optional.ofNullable(this.getProduct().getTags());
-		if(!lpt.isPresent());
-		List<Optional<TagAttribute>> lpa = lpt.get().stream().map(t -> {
-			return t.getAttributes().stream().filter(ta -> ta.getLclCd().equals(this.getLclCd())).findFirst();
-		}).collect(Collectors.toList());
-		Iterator<TagAttribute> i = lpa.stream().filter(ta -> ta.isPresent()).map(t -> { return t.get();}).sorted(Comparator.comparing(TagAttribute::getTagDesc)).iterator();
-		if(i.hasNext()) { return i.next().getTagDesc(); }
-		return "Empty";
-	}
-	
-	@Transient
-	@Field(analyze = Analyze.YES, store=Store.YES)
-	public String getTagB() {
-		Optional<Set<Tag>> lpt = Optional.ofNullable(this.getProduct().getTags());
-		if(!lpt.isPresent());
-		List<Optional<TagAttribute>> lpa = lpt.get().stream().map(t -> {
-			return t.getAttributes().stream().filter(ta -> ta.getLclCd().equals(this.getLclCd())).findFirst();
-		}).collect(Collectors.toList());
-		Iterator<TagAttribute> i = lpa.stream().filter(ta -> ta.isPresent()).map(t -> { return t.get();}).sorted(Comparator.comparing(TagAttribute::getTagDesc)).iterator();
-		if(i.hasNext()) { i.next(); }
-		if(i.hasNext()) {  return i.next().getTagDesc(); }
-		return "Empty";
-	}
-	
-	@Transient
-	@Field(analyze = Analyze.YES, store=Store.YES)
-	public String getTagC() {
-		Optional<Set<Tag>> lpt = Optional.ofNullable(this.getProduct().getTags());
-		if(!lpt.isPresent());
-		List<Optional<TagAttribute>> lpa = lpt.get().stream().map(t -> {
-			return t.getAttributes().stream().filter(ta -> ta.getLclCd().equals(this.getLclCd())).findFirst();
-		}).collect(Collectors.toList());
-		Iterator<TagAttribute> i = lpa.stream().filter(ta -> ta.isPresent()).map(t -> { return t.get();}).sorted(Comparator.comparing(TagAttribute::getTagDesc)).iterator();
-		if(i.hasNext()) { i.next(); }
-		if(i.hasNext()) { i.next(); }
-		if(i.hasNext()) { return i.next().getTagDesc(); }
-		return "Empty";
-	}
-	
-	public String getBrandDesc() {
-		return this.getProduct().getBrand().getBrandAttribute().getBrandDesc();
-	}
-	
-	@Field(analyze = Analyze.YES, store=Store.YES)
-	public String getBrandDescForIndex() {
+	@IndexedEmbedded(prefix="product.brand")
+	public BrandAttribute getBrand() {
 		return this.getProduct().getBrand().getAttributes()
-			.stream().filter(b -> b.getLclCd().equals(this.lclCd))
-			.findFirst().get().getBrandDesc();
+				.stream().filter(ba -> ba.getLclCd().equals(this.getLclCd())).findFirst().get();
 	}
-	
-	@Transient
-	@Facet
-	@Field(analyze = Analyze.NO)
-	public String getTagAFacet() { 
-		return this.getTagA();
-	}
-	
-	@Transient
-	@Facet
-	@Field(analyze = Analyze.NO)
-	public String getTagBFacet() { 
-		return this.getTagB();
-	}
-	
-	@Transient
-	@Facet
-	@Field(analyze = Analyze.NO)
-	public String getTagCFacet() { 
-		return this.getTagC();
-	}
+
 	
 	public Long getId() {
 		return Id;
@@ -268,7 +174,7 @@ public class ProductAttribute {
     public int hashCode() {
         HashCodeBuilder hcb = new HashCodeBuilder();
         hcb.append(product.getUPC());
-        hcb.append(lclCd);
+        hcb.append(this.getLclCd());
         return hcb.toHashCode();
     }
  
@@ -283,7 +189,7 @@ public class ProductAttribute {
 	    ProductAttribute that = (ProductAttribute) obj;
 	      EqualsBuilder eb = new EqualsBuilder();
 	      eb.append(product.getUPC(), that.product.getUPC());
-	      eb.append(lclCd, that.lclCd);
+	      eb.append(this.getLclCd(), that.lclCd);
 	      return eb.isEquals();
 	}
 }

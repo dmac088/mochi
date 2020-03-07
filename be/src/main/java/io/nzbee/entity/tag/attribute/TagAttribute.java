@@ -18,6 +18,8 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.AnalyzerDiscriminator;
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.IndexedEmbedded;
+
 import io.nzbee.entity.LanguageDiscriminator;
 import io.nzbee.entity.tag.Tag;
 
@@ -45,6 +47,7 @@ public class TagAttribute {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="tag_id", insertable=false, updatable=false)
+	@IndexedEmbedded
 	private Tag tag;
 	
 	public Long getTagId() {
