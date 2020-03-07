@@ -276,28 +276,29 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		QueryBuilder queryBuilder = fullTextEntityManager.getSearchFactory().buildQueryBuilder()
 				.forEntity(io.nzbee.entity.product.attribute.ProductAttribute.class)
 				.overridesForField("productDesc", lcl)
-				.overridesForField("brandDesc", lcl)
-				.overridesForField("tagA", lcl)
-				.overridesForField("tagB", lcl)
-				.overridesForField("tagC", lcl)
+				.overridesForField("product.brand.brandDesc", lcl)
+				.overridesForField("product.categories.categoryDesc", lcl)
+//				.overridesForField("tagA", lcl)
+//				.overridesForField("tagB", lcl)
+//				.overridesForField("tagC", lcl)
 				.get();
 
 		// this is a Lucene query using the Lucene api
 		org.apache.lucene.search.Query searchQuery = queryBuilder.bool().must(queryBuilder.keyword()
 				.onFields(
-						"primaryCategory.parent.parent.parent." + "primaryCategoryDesc" + transLcl,
-						"primaryCategory.parent.parent." + "primaryCategoryDesc" + transLcl,
-						"primaryCategory.parent." + "primaryCategoryDesc" + transLcl,
-						"primaryCategory.primaryCategoryDesc" + transLcl,
-						"secondaryCategory.parent.parent.parent." + "secondaryCategoryDesc" + transLcl,
-						"secondaryCategory.parent.parent." + "secondaryCategoryDesc" + transLcl,
-						"secondaryCategory.parent." + "secondaryCategoryDesc" + transLcl,
-						"secondaryCategory." + "secondaryCategoryDesc" + transLcl, 
-						"brandDescForIndex",
-						"productDesc", 
-						"tagA",
-						"tagB", 
-						"tagC"
+//						"primaryCategory.parent.parent.parent." + "CategoryDesc" + ,
+//						"primaryCategory.parent.parent." + "primaryCategoryDesc" + transLcl,
+//						"primaryCategory.parent." + "primaryCategoryDesc" + transLcl,
+//						"primaryCategory.primaryCategoryDesc" + transLcl,
+//						"secondaryCategory.parent.parent.parent." + "secondaryCategoryDesc" + transLcl,
+//						"secondaryCategory.parent.parent." + "secondaryCategoryDesc" + transLcl,
+//						"secondaryCategory.parent." + "secondaryCategoryDesc" + transLcl,
+//						"secondaryCategory." + "secondaryCategoryDesc" + transLcl, 
+//						"brandDescForIndex",
+						"productDesc"//, 
+//						"tagA",
+//						"tagB", 
+//						"tagC"
 						)
 				.matching(searchTerm).createQuery())
 				.must(queryBuilder.keyword().onFields("lclCd").matching(lcl).createQuery()).createQuery();

@@ -3,7 +3,6 @@ package io.nzbee.entity.category;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ColumnResult;
@@ -29,7 +28,6 @@ import javax.persistence.EntityResult;
 import javax.persistence.FieldResult;
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.IndexedEmbedded;
@@ -40,7 +38,6 @@ import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.entity.layout.Layout;
 import io.nzbee.entity.product.hierarchy.Hierarchy;
-import io.nzbee.variables.GeneralVars;
 
 @Entity
 @Table(name = "category", schema = "mochi")
@@ -239,42 +236,42 @@ public abstract class Category {
 	}
 	
 	
-	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_ENGLISH))
-	public String getPrimaryCategoryDescENGB() {
-		Optional<CategoryAttribute> pca = this.getAttributes().stream().filter(ca -> {
-		 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH);
-		 		}).collect(Collectors.toList()).stream().findFirst();
-		if(!pca.isPresent()) { return "Unknown"; }
-		return pca.get().getCategoryDesc();
-	}
-	
-	
-	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_HK))
-	public String getPrimaryCategoryDescZHHK() {
-		Optional<CategoryAttribute> pca = this.getAttributes().stream().filter(ca -> {
-		 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_HK);
-		 		}).collect(Collectors.toList()).stream().findFirst();
-		if(!pca.isPresent()) { return "Unknown"; }
-		return pca.get().getCategoryDesc();
-	}
-	
-	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_ENGLISH))
-	public String getSecondaryCategoryDescENGB() {
-		Optional<CategoryAttribute> pca = this.getAttributes().stream().filter(ca -> {
-		 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH);
-		 		}).collect(Collectors.toList()).stream().findFirst();
-		if(!pca.isPresent()) { return "Unknown"; }
-		return pca.get().getCategoryDesc();
-	}
-
-	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_HK))
-	public String getSecondaryCategoryDescZHHK() {
-		Optional<CategoryAttribute> pca = this.getAttributes().stream().filter(ca -> {
-		 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_HK);
-		 		}).collect(Collectors.toList()).stream().findFirst();
-		if(!pca.isPresent()) { return "Unknown"; }
-		return pca.get().getCategoryDesc();
-	}
+//	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_ENGLISH))
+//	public String getPrimaryCategoryDescENGB() {
+//		Optional<CategoryAttribute> pca = this.getAttributes().stream().filter(ca -> {
+//		 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH);
+//		 		}).collect(Collectors.toList()).stream().findFirst();
+//		if(!pca.isPresent()) { return "Unknown"; }
+//		return pca.get().getCategoryDesc();
+//	}
+//	
+//	
+//	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_HK))
+//	public String getPrimaryCategoryDescZHHK() {
+//		Optional<CategoryAttribute> pca = this.getAttributes().stream().filter(ca -> {
+//		 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_HK);
+//		 		}).collect(Collectors.toList()).stream().findFirst();
+//		if(!pca.isPresent()) { return "Unknown"; }
+//		return pca.get().getCategoryDesc();
+//	}
+//	
+//	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_ENGLISH))
+//	public String getSecondaryCategoryDescENGB() {
+//		Optional<CategoryAttribute> pca = this.getAttributes().stream().filter(ca -> {
+//		 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_ENGLISH);
+//		 		}).collect(Collectors.toList()).stream().findFirst();
+//		if(!pca.isPresent()) { return "Unknown"; }
+//		return pca.get().getCategoryDesc();
+//	}
+//
+//	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = GeneralVars.LANGUAGE_HK))
+//	public String getSecondaryCategoryDescZHHK() {
+//		Optional<CategoryAttribute> pca = this.getAttributes().stream().filter(ca -> {
+//		 			return ca.getLclCd().equals(GeneralVars.LANGUAGE_HK);
+//		 		}).collect(Collectors.toList()).stream().findFirst();
+//		if(!pca.isPresent()) { return "Unknown"; }
+//		return pca.get().getCategoryDesc();
+//	}
 	
 	public Long getChildCount() {
 		return childCount;

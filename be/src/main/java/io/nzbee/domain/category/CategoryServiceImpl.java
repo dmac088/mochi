@@ -96,7 +96,7 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	@Override
 	public String getFacetField() {
 		// TODO Auto-generated method stub
-		return "primaryCategory.categoryToken";
+		return "product.categories.category.categoryToken";
 	}
 
 	@Override
