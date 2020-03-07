@@ -27,7 +27,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.EntityResult;
 import javax.persistence.FieldResult;
-
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Analyzer;
@@ -161,7 +160,6 @@ public abstract class Category {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="hir_id")
-	@IndexedEmbedded
 	private Hierarchy hierarchy;
 
 	@ManyToOne(fetch = FetchType.LAZY)

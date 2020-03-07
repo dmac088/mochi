@@ -14,9 +14,8 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.hibernate.search.annotations.AnalyzerDiscriminator;
+import org.hibernate.search.annotations.IndexedEmbedded;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import io.nzbee.entity.LanguageDiscriminator;
 import io.nzbee.entity.category.Category;
 
 @Entity
@@ -33,12 +32,12 @@ public class CategoryAttribute {
 	private String categoryDesc;
 
 	@Column(name="lcl_cd")	
-	@AnalyzerDiscriminator(impl = LanguageDiscriminator.class)
 	private String lclCd;
 
-	@ManyToOne(fetch = FetchType.EAGER, optional=false)
+	@ManyToOne(fetch = FetchType.LAZY, optional=false)
 	@JoinColumn(name="cat_id")
 	@JsonBackReference
+	@IndexedEmbedded
 	private Category category;
 
 	
@@ -78,7 +77,7 @@ public class CategoryAttribute {
     public int hashCode() {
         HashCodeBuilder hcb = new HashCodeBuilder();
         hcb.append(category.getCategoryCode());
-        hcb.append(lclCd);
+        hcb.append(this.getLclCd());
         return hcb.toHashCode();
     }
  
@@ -93,7 +92,7 @@ public class CategoryAttribute {
 	    CategoryAttribute that = (CategoryAttribute) obj;
 	    EqualsBuilder eb = new EqualsBuilder();
 	    eb.append(category.getCategoryCode(), that.category.getCategoryCode());
-	    eb.append(lclCd, that.lclCd);
+	    eb.append(this.getLclCd(), that.lclCd);
 	    return eb.isEquals();
 	}
 }

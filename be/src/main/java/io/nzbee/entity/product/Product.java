@@ -29,7 +29,6 @@ import org.hibernate.annotations.NaturalId;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -139,7 +138,6 @@ public class Product {
 		            CascadeType.PERSIST,
 		            CascadeType.MERGE
 		        })
-	@IndexedEmbedded
 	private Set<CategoryProduct> categories = new HashSet<>();
 	
 	@ManyToMany(mappedBy = "products", 
