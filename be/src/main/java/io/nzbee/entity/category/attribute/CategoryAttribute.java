@@ -14,6 +14,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.nzbee.entity.category.Category;
@@ -29,6 +30,7 @@ public class CategoryAttribute {
 	private Long categoryAttributeId;
 
 	@Column(name="cat_desc")
+	@Facet
 	private String categoryDesc;
 
 	@Column(name="lcl_cd")	
