@@ -15,7 +15,7 @@ public class BrandEntityBeanFactory {
 	@Bean
 	public final Brand getBrandEntityBean() {
 		final Brand brand = new Brand();
-		brand.setCode("TST02");
+		brand.setBrandCode("TST02");
 
 		final BrandAttribute brandAttribute = new BrandAttribute();
 		brandAttribute.setBrand(brand);
