@@ -107,7 +107,7 @@ public class CategoryAttribute {
 	}
 	
 	@Transient
-	@IndexedEmbedded(depth = 5)
+	@IndexedEmbedded(depth = 6)
 	public CategoryAttribute getParent() {
 		Optional<Category> parent = this.getCategory().getParent();
 		if(parent.isPresent()) {
