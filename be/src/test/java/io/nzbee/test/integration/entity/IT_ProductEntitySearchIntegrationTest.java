@@ -4,6 +4,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import org.hibernate.CacheMode;
+import org.hibernate.FlushMode;
+import org.hibernate.ScrollMode;
+import org.hibernate.ScrollableResults;
+import org.hibernate.Transaction;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.batchindexing.impl.SimpleIndexingProgressMonitor;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
 import org.junit.After;
@@ -31,6 +39,7 @@ import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.status.IProductStatusRepository;
 import io.nzbee.entity.product.type.IProductTypeRepository;
 import io.nzbee.test.integration.beans.ProductEntityBeanFactory;
@@ -129,17 +138,22 @@ public class IT_ProductEntitySearchIntegrationTest {
 	
 	@Before
 	public void buildSearchIndex() {
-		
-//		//rebuild the search index
-//		FullTextEntityManager fullTextEntityManager 
-//		  = Search.getFullTextEntityManager(em);
-//		try {
-//			fullTextEntityManager.createIndexer().startAndWait();
-//			fullTextEntityManager.flush();
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		FullTextEntityManager fullTextEntityManager 
+		  = Search.getFullTextEntityManager(em);
+		try {
+			fullTextEntityManager
+			.createIndexer( ProductAttribute.class )
+			.batchSizeToLoadObjects( 25 )
+			.cacheMode( CacheMode.NORMAL )
+			.threadsToLoadObjects( 12 )
+			.idFetchSize( 150 )
+			.transactionTimeout( 1800 )
+			.progressMonitor( new SimpleIndexingProgressMonitor() ) //a MassIndexerProgressMonitor implementation
+			.startAndWait();
+		} catch (InterruptedException e) {
+		// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	

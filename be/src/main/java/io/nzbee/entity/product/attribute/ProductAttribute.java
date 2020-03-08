@@ -83,7 +83,6 @@ public class ProductAttribute {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="prd_id", insertable=false, updatable=false)
-	@JsonBackReference
 	private Product product;
 	
 	
