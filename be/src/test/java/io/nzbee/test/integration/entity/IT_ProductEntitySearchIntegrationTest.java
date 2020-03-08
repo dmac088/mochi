@@ -131,15 +131,15 @@ public class IT_ProductEntitySearchIntegrationTest {
 	public void buildSearchIndex() {
 		
 		//rebuild the search index
-//		FullTextEntityManager fullTextEntityManager 
-//		  = Search.getFullTextEntityManager(em);
-//		try {
-//			fullTextEntityManager.createIndexer().startAndWait();
-//			fullTextEntityManager.flushToIndexes();
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		FullTextEntityManager fullTextEntityManager 
+		  = Search.getFullTextEntityManager(em);
+		try {
+			fullTextEntityManager.createIndexer().startAndWait();
+			fullTextEntityManager.flushToIndexes();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	
