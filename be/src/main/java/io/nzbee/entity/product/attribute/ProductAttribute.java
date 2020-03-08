@@ -161,6 +161,24 @@ public class ProductAttribute {
 		ProductImage = productImage;
 	}
 	
+	@Transient
+	@Field(store=Store.YES)
+	private Double getCurrentRetailPrice() {
+		return this.getProduct().getRetailPrice();
+	}
+	
+	@Transient
+	@Field(store=Store.YES)
+	private Double getCurrentMarkdownPrice() {
+		return this.getProduct().getMarkdownPrice();
+	}
+	
+	@Transient
+	@Field(store=Store.YES)
+	public String getProductUPC() {
+		return this.getProduct().getUPC();
+	}
+	
 	@Override
     public int hashCode() {
         HashCodeBuilder hcb = new HashCodeBuilder();
