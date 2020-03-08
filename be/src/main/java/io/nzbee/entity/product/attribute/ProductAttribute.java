@@ -182,7 +182,7 @@ public class ProductAttribute {
 	@Override
     public int hashCode() {
         HashCodeBuilder hcb = new HashCodeBuilder();
-        hcb.append(product.getUPC());
+        hcb.append(this.getProductUPC());
         hcb.append(this.getLclCd());
         return hcb.toHashCode();
     }
@@ -197,7 +197,7 @@ public class ProductAttribute {
 	    }
 	    ProductAttribute that = (ProductAttribute) obj;
 	      EqualsBuilder eb = new EqualsBuilder();
-	      eb.append(product.getUPC(), that.product.getUPC());
+	      eb.append(this.getProductUPC(), that.getProductUPC());
 	      eb.append(this.getLclCd(), that.lclCd);
 	      return eb.isEquals();
 	}

@@ -43,7 +43,7 @@ public class CategoryAttribute {
 
 	@Field
 	@Column(name="lcl_cd")	
-	@AnalyzerDiscriminator(impl = LanguageDiscriminator.class)
+	//@AnalyzerDiscriminator(impl = LanguageDiscriminator.class)
 	private String lclCd;
 
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -130,7 +130,7 @@ public class CategoryAttribute {
 	@Override
     public int hashCode() {
         HashCodeBuilder hcb = new HashCodeBuilder();
-        hcb.append(category.getCategoryCode());
+        hcb.append(this.getCategory().getCategoryCode());
         hcb.append(this.getLclCd());
         return hcb.toHashCode();
     }
@@ -145,8 +145,8 @@ public class CategoryAttribute {
 	    }
 	    CategoryAttribute that = (CategoryAttribute) obj;
 	    EqualsBuilder eb = new EqualsBuilder();
-	    eb.append(category.getCategoryCode(), that.category.getCategoryCode());
-	    eb.append(this.getLclCd(), that.lclCd);
+	    eb.append(this.getCategory().getCategoryCode(), that.getCategory().getCategoryCode());
+	    eb.append(this.getLclCd(), that.getLclCd());
 	    return eb.isEquals();
 	}
 }
