@@ -44,7 +44,7 @@ public class TagAttribute {
 
 	@Field
 	@Column(name="lcl_cd")	
-	@AnalyzerDiscriminator(impl = LanguageDiscriminator.class)
+	//@AnalyzerDiscriminator(impl = LanguageDiscriminator.class)
 	private String lclCd;
 
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -89,8 +89,8 @@ public class TagAttribute {
 	@Override
     public int hashCode() {
         HashCodeBuilder hcb = new HashCodeBuilder();
-        hcb.append(tag.getCode());
-        hcb.append(lclCd);
+        hcb.append(this.getTag().get().getCode());
+        hcb.append(this.getLclCd());
         return hcb.toHashCode();
     }
  
@@ -104,8 +104,8 @@ public class TagAttribute {
 	    }
 	    TagAttribute that = (TagAttribute) obj;
 	      EqualsBuilder eb = new EqualsBuilder();
-	      eb.append(tag.getCode(), that.tag.getCode());
-	      eb.append(lclCd, that.lclCd);
+	      eb.append(this.getTag().get().getCode(), that.getTag().get().getCode());
+	      eb.append(this.getLclCd(), that.getLclCd());
 	      return eb.isEquals();
 	}
 }
