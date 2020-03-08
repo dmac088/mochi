@@ -129,7 +129,7 @@ public class IT_BrandEntityRepositoryIntegrationTest {
     
     private void assertFound(final Brand found) {
     	
-    	assertThat(found.getCode())
+    	assertThat(found.getBrandCode())
         .isEqualTo("TST02");
 	    assertThat(found.getBrandAttribute().getBrandDesc())
 	    .isEqualTo("test brand");
