@@ -1,5 +1,6 @@
 package io.nzbee.entity.category.attribute;
 
+import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -49,10 +50,8 @@ public class CategoryAttribute {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="cat_id", insertable=false, updatable=false)
-	@IndexedEmbedded
 	@JsonBackReference
 	private Category category;
-
 	
 	public Long getCategoryAttributeId() {
 		return categoryAttributeId;
@@ -86,6 +85,19 @@ public class CategoryAttribute {
 		this.lclCd = lclCd;
 	}
 	
+	@Transient
+	@Field(analyze = Analyze.NO, store=Store.YES)
+	public String getCategoryCode() {
+		return this.getCategory().getCategoryCode();
+	}
+	
+	@Transient
+	@Field(analyze = Analyze.NO, store=Store.YES)
+	public Long getCategoryLevel() {
+		return this.getCategory().getCategoryLevel();
+	}
+	
+	@Transient
 	@Field(analyze = Analyze.NO, store=Store.YES)
 	@Facet
 	public String getCategoryToken() {
@@ -94,9 +106,19 @@ public class CategoryAttribute {
 		return token;
 	}
 	
+	@Transient
+	@IndexedEmbedded(depth = 5)
+	public CategoryAttribute getParent() {
+		Optional<Category> parent = this.getCategory().getParent();
+		if(parent.isPresent()) {
+			return parent.get().getAttributes().stream().filter(p -> p.getLclCd().equals(this.getLclCd())).findFirst().get();
+		}
+		return null;
+	}
+	
 	private String createCategoryToken(Category category, List<String> lc) {
 		lc.add(category.getCategoryCode());
-		Optional<Category> parent = Optional.ofNullable(category.getParent());
+		Optional<Category> parent = category.getParent();
 		if(!parent.isPresent()) {
 			StringBuilder sb = new StringBuilder();
 			Lists.reverse(lc).stream().forEach(s -> sb.append("/").append(s));
@@ -104,6 +126,8 @@ public class CategoryAttribute {
 		}
 		return this.createCategoryToken(parent.get(), lc);
 	}
+	
+	
 	
 	@Override
     public int hashCode() {

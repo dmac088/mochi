@@ -2,6 +2,8 @@ package io.nzbee.entity.category;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ColumnResult;
@@ -26,10 +28,6 @@ import javax.persistence.Transient;
 import javax.persistence.EntityResult;
 import javax.persistence.FieldResult;
 import org.hibernate.annotations.NaturalId;
-import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.IndexedEmbedded;
-import org.hibernate.search.annotations.Store;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.type.CategoryType;
@@ -144,11 +142,9 @@ public abstract class Category {
 
 	@NaturalId
 	@Column(name="cat_cd", unique = true, updatable = false)
-	@Field(analyze = Analyze.NO, store=Store.YES)
 	private String categoryCode;
 
 	@Column(name="cat_lvl")
-	@Field(analyze = Analyze.NO, store=Store.YES)
 	private Long categoryLevel;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -171,7 +167,6 @@ public abstract class Category {
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional=false)
 	@JoinColumn(name="cat_prnt_id", nullable=false)
-	@IndexedEmbedded(depth = 5)
 	private Category parent;
 	
 	@OneToMany(	mappedBy="category",
@@ -219,8 +214,8 @@ public abstract class Category {
 		this.childCount = childCount;
 	}
 	
-	public Category getParent() {
-		return parent;
+	public Optional<Category> getParent() {
+		return Optional.ofNullable(parent);
 	}
 
 	public void setParent(Category parent) {
