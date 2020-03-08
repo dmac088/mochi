@@ -161,8 +161,8 @@ public class ProductServiceImpl implements IProductService {
 			domainProduct.setProductCreateDt(productDto.getProductCreateDt());
 			domainProduct.setProductDesc(productDto.getProductDesc());
 			domainProduct.setProductImage(productDto.getProductImage());
-			domainProduct.setProductMarkdown(productDto.getProductMarkdown());
-			domainProduct.setProductRetail(productDto.getProductRetail());
+			//domainProduct.setProductMarkdown(productDto.getProductMarkdown());
+			//domainProduct.setProductRetail(productDto.getProductRetail());
 			return Optional.ofNullable(domainProduct);
 		}
 		return Optional.empty();

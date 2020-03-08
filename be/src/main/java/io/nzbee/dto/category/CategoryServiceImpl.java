@@ -106,8 +106,8 @@ public class CategoryServiceImpl implements ICategoryService {
 			categoryDTO.setCategoryLevel(category.getCategoryLevel());
 			categoryDTO.setObjectCount(category.getObjectCount());
 			if(categoryDTO.getType().equals(ProductCategory.class.getSimpleName())) {
-				if(category.getParent() != null) {
-					((ProductCategory) categoryDTO).setParentCode(category.getParent().getCategoryCode());
+				if(category.getParent().isPresent()) {
+					((ProductCategory) categoryDTO).setParentCode(category.getParent().get().getCategoryCode());
 				}
 			}
 			categoryDTO.setChildCategoryCount(category.getChildCount());					
