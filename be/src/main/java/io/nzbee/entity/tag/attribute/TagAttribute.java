@@ -44,10 +44,10 @@ public class TagAttribute {
 
 	@Field
 	@Column(name="lcl_cd")	
-	//@AnalyzerDiscriminator(impl = LanguageDiscriminator.class)
+	@AnalyzerDiscriminator(impl = LanguageDiscriminator.class)
 	private String lclCd;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="tag_id", insertable=false, updatable=false)
 	@IndexedEmbedded
 	private Tag tag;
