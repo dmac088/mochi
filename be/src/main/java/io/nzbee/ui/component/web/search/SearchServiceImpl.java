@@ -246,7 +246,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 				//we need to store this information in something like an enum
 				//parse this to a token to fetch and use the ordinal to retrieve the Lucene fieldReference
 				List<String> ls = codes.subList(0, i+1).stream().filter(o -> !(o.isEmpty())).collect(Collectors.toList());
-				String prefix = f.getFieldName().split("\\.")[0];
+				String prefix = f.getFieldName().split("\\.")[0] + "." + f.getFieldName().split("\\.")[1];
 				String suffix = f.getFieldName().split("\\.")[f.getFieldName().split("\\.").length-1];
 				int numParents = codes.size() - ls.size();
 				
@@ -284,7 +284,12 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		// this is a Lucene query using the Lucene api
 		org.apache.lucene.search.Query searchQuery = queryBuilder.bool().must(queryBuilder.keyword()
 				.onFields(
-						"productDesc"
+						"productDesc",
+						"product.brand.brandDesc",
+						"product.categories.categoryDesc",
+						"product.categories.parent.categoryDesc", 
+						"product.categories.parent.parent.categoryDesc",
+						"product.tags.tagDesc"
 						)
 				.matching(searchTerm).createQuery())
 				.must(queryBuilder.keyword().onFields("lclCd").matching(lcl).createQuery()).createQuery();
@@ -292,7 +297,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		final org.hibernate.search.jpa.FullTextQuery jpaQuery = fullTextEntityManager.createFullTextQuery(searchQuery,
 				io.nzbee.entity.product.attribute.ProductAttribute.class);
 		
-		System.out.println(jpaQuery.getResultSize());
+		System.out.println("result size = " + jpaQuery.getResultSize());
 
 		//final Set<SearchFacet> facetList = new HashSet<SearchFacet>();
 
@@ -403,8 +408,8 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 							   "product.productCreateDt",
 							   "product.brand.brandCode",
 							   "brandDescForIndex",
-							   "currentRetailPrice"		+ currency,
-							   "currentMarkdownPrice" 	+ currency);
+							   "currentRetailPrice",
+							   "currentMarkdownPrice");
 
 		// get the results using jpaQuery object
 		List<Object[]> results = jpaQuery.getResultList();
@@ -417,8 +422,8 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			p.setLclCd(lcl);
 			p.setProductUPC(r[5].toString());
 			p.setProductCreateDt((Date) r[6]);
-			p.setProductRetail(Double.parseDouble(r[9].toString()));
-			p.setProductMarkdown(Double.parseDouble(r[10].toString()));
+			//p.setProductRetail(Double.parseDouble(r[9].toString()));
+			//p.setProductMarkdown(Double.parseDouble(r[10].toString()));
 			p.setCurrency(currency);
 			return p;
 		}).collect(Collectors.toList());
