@@ -74,9 +74,6 @@ public class IT_ProductEntitySearchIntegrationTest {
 	private ProductEntityBeanFactory productEntityBeanFactory;
  
     @Autowired
-    private IProductService productService;
-    
-    @Autowired
     private IBrandService brandService;
     
     @Autowired
@@ -142,10 +139,6 @@ public class IT_ProductEntitySearchIntegrationTest {
 		}
 	}
 	
-//	
-//	private void persistANewProduct() {
-//		this.persistNewProduct();
-//	}
 	
 	@Test
 	public void whenSearchFruit_thenReturnAllFruitProducts() {
