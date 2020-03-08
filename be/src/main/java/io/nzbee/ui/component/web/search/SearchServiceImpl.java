@@ -278,27 +278,13 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 				.overridesForField("productDesc", lcl)
 				.overridesForField("product.brand.brandDesc", lcl)
 				.overridesForField("product.categories.categoryDesc", lcl)
-//				.overridesForField("tagA", lcl)
-//				.overridesForField("tagB", lcl)
-//				.overridesForField("tagC", lcl)
+				.overridesForField("product.tags.tagDesc", lcl)
 				.get();
 
 		// this is a Lucene query using the Lucene api
 		org.apache.lucene.search.Query searchQuery = queryBuilder.bool().must(queryBuilder.keyword()
 				.onFields(
-//						"primaryCategory.parent.parent.parent." + "CategoryDesc" + ,
-//						"primaryCategory.parent.parent." + "primaryCategoryDesc" + transLcl,
-//						"primaryCategory.parent." + "primaryCategoryDesc" + transLcl,
-//						"primaryCategory.primaryCategoryDesc" + transLcl,
-//						"secondaryCategory.parent.parent.parent." + "secondaryCategoryDesc" + transLcl,
-//						"secondaryCategory.parent.parent." + "secondaryCategoryDesc" + transLcl,
-//						"secondaryCategory.parent." + "secondaryCategoryDesc" + transLcl,
-//						"secondaryCategory." + "secondaryCategoryDesc" + transLcl, 
-//						"brandDescForIndex",
-						"productDesc"//, 
-//						"tagA",
-//						"tagB", 
-//						"tagC"
+						"productDesc"
 						)
 				.matching(searchTerm).createQuery())
 				.must(queryBuilder.keyword().onFields("lclCd").matching(lcl).createQuery()).createQuery();

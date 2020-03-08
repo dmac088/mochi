@@ -23,7 +23,6 @@ import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.AnalyzerDef;
 import org.hibernate.search.annotations.AnalyzerDiscriminator;
-import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
@@ -87,17 +86,9 @@ public class ProductAttribute {
 	@JsonBackReference
 	private Product product;
 	
-	@Transient
-	@Facet
-	@Field(analyze = Analyze.NO, store=Store.YES)
-	public String getBrandCode() {
-		return this.getProduct().getBrand().getCode();
-	
-	}
 	
 	@Transient
-	@IndexedEmbedded(/*prefix="product.categories."*/)
-	//@OneToMany(fetch = FetchType.LAZY)
+	@IndexedEmbedded(prefix="product.categories.", depth=1)
 	public Set<CategoryAttribute> getCategories() {
 				return this.getProduct().getCategories().stream().flatMap(
 					c -> c.getAttributes().stream()).collect(Collectors.toSet())
@@ -106,7 +97,7 @@ public class ProductAttribute {
 	}
 	
 	@Transient
-	@IndexedEmbedded(prefix="product.tags.")
+	@IndexedEmbedded(prefix="product.tags.", depth=1)
 	public Set<TagAttribute> getTags() {
 		return this.getProduct().getTags().stream().flatMap(
 				t -> t.getAttributes().stream()).collect(Collectors.toSet())
@@ -115,7 +106,7 @@ public class ProductAttribute {
 	}
 	
 	@Transient
-	@IndexedEmbedded(prefix="product.brand.")
+	@IndexedEmbedded(prefix="product.brand.", depth=1)
 	public BrandAttribute getBrand() {
 		return this.getProduct().getBrand().getAttributes()
 				.stream().filter(ba -> ba.getLclCd().equals(this.getLclCd())).findFirst().get();

@@ -12,10 +12,11 @@ import io.nzbee.domain.IDomainObject;
 //it received primitive types and responds with domain objects,
 //that are constructed from relevant entity objects
 //its simplicity helps us with unit testing
+import io.nzbee.domain.IFacetService;
 
 @Service(value = "tagDomainService")
 @CacheConfig(cacheNames="tags")
-public class TagServiceImpl implements ITagService/*, IFacetService*/ {
+public class TagServiceImpl implements ITagService, IFacetService {
 
 	@Autowired
 	io.nzbee.dto.category.ICategoryService categoryService;
@@ -93,15 +94,15 @@ public class TagServiceImpl implements ITagService/*, IFacetService*/ {
 		return Optional.empty();
 	}
 
-//	@Override
-//	public String getFacetField() {
-//		// TODO Auto-generated method stub
-//		return "tagAFacet";
-//	}
+	@Override
+	public String getFacetField() {
+		// TODO Auto-generated method stub
+		return "product.tags.tagToken";
+	}
 
-//	@Override
-//	public String getFacetCategory() {
-//		// TODO Auto-generated method stub
-//		return "TagFR";
-//	}
+	@Override
+	public String getFacetCategory() {
+		// TODO Auto-generated method stub
+		return "TagFR";
+	}
 }

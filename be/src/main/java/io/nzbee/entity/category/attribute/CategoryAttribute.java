@@ -1,5 +1,7 @@
 package io.nzbee.entity.category.attribute;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.Column;
@@ -14,9 +16,16 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.AnalyzerDiscriminator;
 import org.hibernate.search.annotations.Facet;
+import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Store;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.google.common.collect.Lists;
+
+import io.nzbee.entity.LanguageDiscriminator;
 import io.nzbee.entity.category.Category;
 
 @Entity
@@ -30,16 +39,18 @@ public class CategoryAttribute {
 	private Long categoryAttributeId;
 
 	@Column(name="cat_desc")
-	@Facet
+	@Field(analyze = Analyze.YES, store=Store.YES)
 	private String categoryDesc;
 
+	@Field
 	@Column(name="lcl_cd")	
+	@AnalyzerDiscriminator(impl = LanguageDiscriminator.class)
 	private String lclCd;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional=false)
-	@JoinColumn(name="cat_id")
-	@JsonBackReference
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="cat_id", insertable=false, updatable=false)
 	@IndexedEmbedded
+	@JsonBackReference
 	private Category category;
 
 	
@@ -51,8 +62,8 @@ public class CategoryAttribute {
 		this.categoryAttributeId = categoryAttributeId;
 	}
 
-	public Optional<Category> getCategory() {
-		return Optional.ofNullable(category);
+	public Category getCategory() {
+		return this.category;
 	}
 
 	public void setCategory(Category productCategory) {
@@ -73,6 +84,25 @@ public class CategoryAttribute {
 
 	public void setLclCd(String lclCd) {
 		this.lclCd = lclCd;
+	}
+	
+	@Field(analyze = Analyze.NO, store=Store.YES)
+	@Facet
+	public String getCategoryToken() {
+		String token = createCategoryToken(this.getCategory(), new ArrayList<String>());
+		if(token == null || token.isEmpty()) { return "Unknown"; }
+		return token;
+	}
+	
+	private String createCategoryToken(Category category, List<String> lc) {
+		lc.add(category.getCategoryCode());
+		Optional<Category> parent = Optional.ofNullable(category.getParent());
+		if(!parent.isPresent()) {
+			StringBuilder sb = new StringBuilder();
+			Lists.reverse(lc).stream().forEach(s -> sb.append("/").append(s));
+			return sb.toString();
+		}
+		return this.createCategoryToken(parent.get(), lc);
 	}
 	
 	@Override

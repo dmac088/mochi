@@ -13,9 +13,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
-
 import org.hibernate.annotations.NaturalId;
-
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.tag.attribute.TagAttribute;
 
@@ -76,4 +74,5 @@ public class Tag {
 		this.getAttributes().remove(tagAttribute);
 		tagAttribute.setProductTag(null);
 	}
+
 }
