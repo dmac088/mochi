@@ -88,7 +88,7 @@ public class ProductAttribute {
 	
 	
 	@Transient
-	@IndexedEmbedded(prefix="product.categories.", depth=1)
+	@IndexedEmbedded(prefix="product.categories.")
 	public Set<CategoryAttribute> getCategories() {
 				return this.getProduct().getCategories().stream().flatMap(
 					c -> c.getAttributes().stream()).collect(Collectors.toSet())
@@ -97,7 +97,7 @@ public class ProductAttribute {
 	}
 	
 	@Transient
-	@IndexedEmbedded(prefix="product.tags.", depth=1)
+	@IndexedEmbedded(prefix="product.tags.")
 	public Set<TagAttribute> getTags() {
 		return this.getProduct().getTags().stream().flatMap(
 				t -> t.getAttributes().stream()).collect(Collectors.toSet())
@@ -106,7 +106,7 @@ public class ProductAttribute {
 	}
 	
 	@Transient
-	@IndexedEmbedded(prefix="product.brand.", depth=1)
+	@IndexedEmbedded(prefix="product.brand.")
 	public BrandAttribute getBrand() {
 		return this.getProduct().getBrand().getAttributes()
 				.stream().filter(ba -> ba.getLclCd().equals(this.getLclCd())).findFirst().get();
