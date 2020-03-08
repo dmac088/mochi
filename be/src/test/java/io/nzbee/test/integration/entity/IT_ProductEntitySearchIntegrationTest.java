@@ -24,6 +24,8 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
+
 import io.nzbee.entity.brand.IBrandService;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.product.CategoryProduct;
@@ -129,15 +131,15 @@ public class IT_ProductEntitySearchIntegrationTest {
 	public void buildSearchIndex() {
 		
 		//rebuild the search index
-		FullTextEntityManager fullTextEntityManager 
-		  = Search.getFullTextEntityManager(em);
-		try {
-			fullTextEntityManager.createIndexer().startAndWait();
-			fullTextEntityManager.flushToIndexes();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		FullTextEntityManager fullTextEntityManager 
+//		  = Search.getFullTextEntityManager(em);
+//		try {
+//			fullTextEntityManager.createIndexer().startAndWait();
+//			fullTextEntityManager.flushToIndexes();
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 	
 	
