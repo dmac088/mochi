@@ -289,6 +289,8 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 						"product.categories.categoryDesc",
 						"product.categories.parent.categoryDesc", 
 						"product.categories.parent.parent.categoryDesc",
+						"product.categories.parent.parent.parent.categoryDesc",
+						"product.categories.parent.parent.parent.parent.categoryDesc",
 						"product.tags.tagDesc"
 						)
 				.matching(searchTerm).createQuery())
