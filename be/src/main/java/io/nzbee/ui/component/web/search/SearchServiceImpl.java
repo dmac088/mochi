@@ -422,8 +422,8 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			p.setLclCd(lcl);
 			p.setProductUPC(r[5].toString());
 			p.setProductCreateDt((Date) r[6]);
-			//p.setProductRetail(Double.parseDouble(r[9].toString()));
-			//p.setProductMarkdown(Double.parseDouble(r[10].toString()));
+			p.setProductRetail(new Double(0)/*Double.parseDouble(r[9].toString())*/);
+			p.setProductMarkdown(new Double(0)/*Double.parseDouble(r[10].toString())*/);
 			p.setCurrency(currency);
 			return p;
 		}).collect(Collectors.toList());
