@@ -13,13 +13,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import org.hibernate.annotations.NaturalId;
+import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Store;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.category.brand.CategoryBrand;
 import io.nzbee.entity.product.Product;
-
 
 @Entity
 @Table(name = "brand", schema = "mochi")
@@ -32,7 +32,7 @@ public class Brand {
 
 	@NaturalId
 	@Column(name="bnd_cd", unique = true, updatable = false)
-	@Field(store=Store.YES)
+	@Field(analyze = Analyze.NO, store=Store.YES)
 	private String brandCode;
 	
 	@ManyToMany(mappedBy = "brands")
@@ -69,12 +69,12 @@ public class Brand {
 	public void setId(Long id) {
 		this.brandId = id;
 	}
-
-	public String getCode() {
+	
+	public String getBrandCode() {
 		return brandCode;
 	}
 
-	public void setCode(String brandCode) {
+	public void setBrandCode(String brandCode) {
 		this.brandCode = brandCode;
 	}
 
@@ -133,6 +133,5 @@ public class Brand {
 	public void setCurrency(String currency) {
 		this.currency = currency;
 	}
-
 
 }

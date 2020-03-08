@@ -98,7 +98,7 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	@Override
 	public String getFacetField() {
 		// TODO Auto-generated method stub
-		return "brandCode";
+		return "product.brand.brandToken";
 	}
 
 	@Override

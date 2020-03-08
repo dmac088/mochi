@@ -13,8 +13,12 @@ import javax.persistence.Table;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.AnalyzerDiscriminator;
+import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Store;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import io.nzbee.entity.LanguageDiscriminator;
 import io.nzbee.entity.brand.Brand;
 
 @Entity
@@ -30,12 +34,14 @@ public class BrandAttribute {
 	@Field(analyze = Analyze.YES, store=Store.YES)
 	private String brandDesc;
 	
+	@Field
 	@Column(name="lcl_cd")	
+	@AnalyzerDiscriminator(impl = LanguageDiscriminator.class)
 	private String lclCd;
 	
-	@ManyToOne(fetch = FetchType.EAGER,
-			   optional=false)
-	@JoinColumn(name="bnd_id")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="bnd_id", insertable=false, updatable=false)
+	@JsonBackReference
 	private Brand brand;
 	
 	public Long getId() {
@@ -47,7 +53,7 @@ public class BrandAttribute {
 	}
 
 	public Brand getBrand() {
-		return brand;
+		return this.brand;
 	}
 
 	public void setBrand(Brand brand) {
@@ -70,10 +76,17 @@ public class BrandAttribute {
 		this.lclCd = lclCd;
 	}
 	
+	@Field(analyze = Analyze.NO, store=Store.YES)
+	@Facet
+	public String getBrandToken() {
+		return this.getBrand().getBrandCode();
+	}
+
+	
 	@Override
     public int hashCode() {
         HashCodeBuilder hcb = new HashCodeBuilder();
-        hcb.append(brand.getCode());
+        hcb.append(brand.getBrandCode());
         hcb.append(lclCd);
         return hcb.toHashCode();
     }
@@ -88,7 +101,7 @@ public class BrandAttribute {
 	    }
 	    BrandAttribute that = (BrandAttribute) obj;
 	      EqualsBuilder eb = new EqualsBuilder();
-	      eb.append(brand.getCode(), that.brand.getCode());
+	      eb.append(brand.getBrandCode(), that.brand.getBrandCode());
 	      eb.append(lclCd, that.lclCd);
 	      return eb.isEquals();
 	}

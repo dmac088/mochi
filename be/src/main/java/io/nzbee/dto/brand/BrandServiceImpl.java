@@ -81,7 +81,7 @@ public class BrandServiceImpl implements IBrandService {
 		// TODO Auto-generated method stub
 		Brand brand = new Brand();
 		io.nzbee.entity.brand.Brand b = ((io.nzbee.entity.brand.Brand) entity.get());
-		brand.setBrandCode(b.getCode());
+		brand.setBrandCode(b.getBrandCode());
 		brand.setBrandDesc(b.getBrandAttribute().getBrandDesc());		
 		brand.setLocale(b.getLocale());
 		brand.setCurrency(b.getCurrency());

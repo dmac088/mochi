@@ -17,8 +17,10 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.AnalyzerDiscriminator;
+import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Store;
 
 import io.nzbee.entity.LanguageDiscriminator;
 import io.nzbee.entity.tag.Tag;
@@ -37,11 +39,11 @@ public class TagAttribute {
 	private Long tagId;
 
 	@Column(name="tag_desc")
-	@Field(analyze = Analyze.YES)
+	@Field(analyze = Analyze.YES, store=Store.YES)
 	private String tagDesc;
 
-	@Column(name="lcl_cd")	
 	@Field
+	@Column(name="lcl_cd")	
 	@AnalyzerDiscriminator(impl = LanguageDiscriminator.class)
 	private String lclCd;
 
@@ -76,6 +78,12 @@ public class TagAttribute {
 
 	public void setLclCd(String lclCd) {
 		this.lclCd = lclCd;
+	}
+	
+	@Field(analyze = Analyze.NO, store=Store.YES)
+	@Facet
+	public String getTagToken() {
+		return this.getTag().get().getCode();
 	}
 	
 	@Override
