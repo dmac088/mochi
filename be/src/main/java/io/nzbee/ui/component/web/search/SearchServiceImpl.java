@@ -271,13 +271,13 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		
 		FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
 
-		String transLcl = lcl.substring(0, 2).toUpperCase() + lcl.substring(3, 5).toUpperCase();
-
 		QueryBuilder queryBuilder = fullTextEntityManager.getSearchFactory().buildQueryBuilder()
 				.forEntity(io.nzbee.entity.product.attribute.ProductAttribute.class)
 				.overridesForField("productDesc", lcl)
 				.overridesForField("product.brand.brandDesc", lcl)
 				.overridesForField("product.categories.categoryDesc", lcl)
+				.overridesForField("product.categories.parent.categoryDesc", lcl)
+				.overridesForField("product.categories.parent.parent.categoryDesc", lcl)
 				.overridesForField("product.tags.tagDesc", lcl)
 				.get();
 
@@ -291,6 +291,8 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 
 		final org.hibernate.search.jpa.FullTextQuery jpaQuery = fullTextEntityManager.createFullTextQuery(searchQuery,
 				io.nzbee.entity.product.attribute.ProductAttribute.class);
+		
+		System.out.println(jpaQuery.getResultSize());
 
 		//final Set<SearchFacet> facetList = new HashSet<SearchFacet>();
 
@@ -397,12 +399,12 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 							   "productDesc", 
 							   "ProductImage",
 							   "lclCd",
-							   "product.productUPC",
+							   "productUPC",
 							   "product.productCreateDt",
 							   "product.brand.brandCode",
 							   "brandDescForIndex",
-							   "product.currentRetailPrice"		+ currency,
-							   "product.currentMarkdownPrice" 	+ currency);
+							   "currentRetailPrice"		+ currency,
+							   "currentMarkdownPrice" 	+ currency);
 
 		// get the results using jpaQuery object
 		List<Object[]> results = jpaQuery.getResultList();

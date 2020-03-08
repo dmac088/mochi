@@ -4,7 +4,6 @@ import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -25,7 +24,6 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Store;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.google.common.collect.Lists;
-
 import io.nzbee.entity.LanguageDiscriminator;
 import io.nzbee.entity.category.Category;
 
@@ -107,7 +105,7 @@ public class CategoryAttribute {
 	}
 	
 	@Transient
-	@IndexedEmbedded(depth = 6)
+	@IndexedEmbedded(depth = 5)
 	public CategoryAttribute getParent() {
 		Optional<Category> parent = this.getCategory().getParent();
 		if(parent.isPresent()) {
