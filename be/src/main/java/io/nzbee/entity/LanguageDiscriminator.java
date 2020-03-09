@@ -15,13 +15,13 @@ public class LanguageDiscriminator implements Discriminator {
 
     public String getAnalyzerDefinitionName(Object value, Object entity, String field) {
 
-    	if (value == null || !(	entity instanceof Tag ||
+    	if (value == null || !(	//entity instanceof Tag ||
     							entity instanceof TagAttribute ||
-    							entity instanceof Product ||
+    							//entity instanceof Product ||
     							entity instanceof ProductAttribute ||
-    							entity instanceof Category ||
+    							//entity instanceof Category ||
     							entity instanceof CategoryAttribute ||
-    							entity instanceof Brand || 
+    							//entity instanceof Brand || 
     							entity instanceof BrandAttribute)) { 
             return null;
         }
