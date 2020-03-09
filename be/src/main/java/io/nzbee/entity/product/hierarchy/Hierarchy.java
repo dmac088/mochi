@@ -6,9 +6,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Store;
 
 @Entity
 @Table(name = "hierarchy", schema = "mochi")
@@ -20,11 +17,9 @@ public class Hierarchy {
 	private Long hierarchyId;
 
 	@Column(name="hir_cd")
-	@Field(analyze = Analyze.NO, store=Store.YES)
 	private String hierarchyCode;
 	
 	@Column(name="hir_desc")
-	@Field(analyze = Analyze.NO, store=Store.YES)
 	private String hierarchyDesc;
 
 	public Long getHierarchyId() {
