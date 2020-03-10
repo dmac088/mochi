@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -31,7 +32,6 @@ import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.nzbee.entity.LanguageDiscriminator;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
@@ -87,28 +87,27 @@ public class ProductAttribute {
 	
 	
 	@Transient
-	@IndexedEmbedded(prefix="product.categories.")
+	@IndexedEmbedded(prefix="product.categories.", includeEmbeddedObjectId=true)
 	public Set<CategoryAttribute> getCategories() {
-				return this.getProduct().getCategories().stream().flatMap(
-					c -> c.getAttributes().stream()).collect(Collectors.toSet())
-						.stream().filter(ca -> ca.getLclCd().equals(this.getLclCd())
-					).collect(Collectors.toSet());
+		return  this.getProduct().getCategories().stream().flatMap(
+					c -> c.getAttributes().stream())
+				.filter(c -> this.getLclCd().equals(c.getLclCd())).collect(Collectors.toSet());
 	}
 	
 	@Transient
-	@IndexedEmbedded(prefix="product.tags.")
+	@IndexedEmbedded(prefix="product.tags.", includeEmbeddedObjectId=true)
 	public Set<TagAttribute> getTags() {
-		return this.getProduct().getTags().stream().flatMap(
-				t -> t.getAttributes().stream()).collect(Collectors.toSet())
-					.stream().filter(ta -> ta.getLclCd().equals(this.getLclCd())
-				).collect(Collectors.toSet());
+//		return this.getProduct().getTags().stream().flatMap(
+//				t -> t.getAttributes().stream()).collect(Collectors.toSet());
+		return null;
 	}
 	
 	@Transient
 	@IndexedEmbedded(prefix="product.brand.")
 	public BrandAttribute getBrand() {
-		return this.getProduct().getBrand().getAttributes()
-				.stream().filter(ba -> ba.getLclCd().equals(this.getLclCd())).findFirst().get();
+//		return this.getProduct().getBrand().getAttributes()
+//				.stream().findFirst().get();
+		return null;
 	}
 
 	
@@ -197,7 +196,7 @@ public class ProductAttribute {
 	    ProductAttribute that = (ProductAttribute) obj;
 	      EqualsBuilder eb = new EqualsBuilder();
 	      eb.append(this.getProductUPC(), that.getProductUPC());
-	      eb.append(this.getLclCd(), that.lclCd);
+	      eb.append(this.getLclCd(), that.getLclCd());
 	      return eb.isEquals();
 	}
 }
