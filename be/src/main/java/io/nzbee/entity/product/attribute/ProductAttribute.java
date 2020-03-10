@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OrderColumn;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -21,6 +22,7 @@ import org.apache.lucene.analysis.cjk.CJKWidthFilterFactory;
 import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
 import org.apache.lucene.analysis.snowball.SnowballPorterFilterFactory;
 import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
+import org.hibernate.annotations.IndexColumn;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.AnalyzerDef;
 import org.hibernate.search.annotations.AnalyzerDiscriminator;
@@ -88,6 +90,7 @@ public class ProductAttribute {
 	
 	@Transient
 	@IndexedEmbedded(prefix="product.categories.", includeEmbeddedObjectId=true)
+	@OrderColumn(name = "cat_lcl_id")
 	public Set<CategoryAttribute> getCategories() {
 		return  this.getProduct().getCategories().stream().flatMap(
 					c -> c.getAttributes().stream())
