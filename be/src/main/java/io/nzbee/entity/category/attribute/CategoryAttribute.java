@@ -22,7 +22,6 @@ import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Store;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.google.common.collect.Lists;
 import io.nzbee.entity.LanguageDiscriminator;
 import io.nzbee.entity.category.Category;
@@ -104,7 +103,7 @@ public class CategoryAttribute {
 	}
 	
 	@Transient
-	@IndexedEmbedded(depth = 10)
+	@IndexedEmbedded(depth = 5, includeEmbeddedObjectId=true)
 	public CategoryAttribute getParent() {
 		Optional<Category> parent = this.getCategory().getParent();
 		if(parent.isPresent()) {
