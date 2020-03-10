@@ -94,16 +94,22 @@ public class CategoryAttribute {
 	}
 	
 	@Transient
-	@Field(analyze = Analyze.NO, store=Store.YES)
-	@Facet
-	public String getCategoryToken() {
+	@Field(analyze = Analyze.YES, store=Store.YES)
+	public String getCategoryTokenField() {
 		String token = createCategoryToken(this.getCategory(), new ArrayList<String>());
 		if(token == null || token.isEmpty()) { return "Unknown"; }
 		return token;
 	}
 	
 	@Transient
-	@IndexedEmbedded(depth = 5, includeEmbeddedObjectId=true)
+	@Field(analyze = Analyze.NO, store=Store.YES)
+	@Facet
+	public String getCategoryToken() {
+		return this.getCategoryTokenField();
+	}
+	
+	@Transient
+	@IndexedEmbedded(depth = 10, includeEmbeddedObjectId=true)
 	public CategoryAttribute getParent() {
 		Optional<Category> parent = this.getCategory().getParent();
 		if(parent.isPresent()) {
@@ -123,12 +129,10 @@ public class CategoryAttribute {
 		return this.createCategoryToken(parent.get(), lc);
 	}
 	
-	
-	
 	@Override
     public int hashCode() {
         HashCodeBuilder hcb = new HashCodeBuilder();
-        hcb.append(this.getCategory().getCategoryCode());
+        hcb.append(this.getCategoryToken());
         hcb.append(this.getLclCd());
         return hcb.toHashCode();
     }
@@ -143,7 +147,7 @@ public class CategoryAttribute {
 	    }
 	    CategoryAttribute that = (CategoryAttribute) obj;
 	    EqualsBuilder eb = new EqualsBuilder();
-	    eb.append(this.getCategory().getCategoryCode(), that.getCategory().getCategoryCode());
+	    eb.append(this.getCategoryToken(), that.getCategoryToken());
 	    eb.append(this.getLclCd(), that.getLclCd());
 	    return eb.isEquals();
 	}
