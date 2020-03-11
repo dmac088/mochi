@@ -28,7 +28,6 @@ import io.nzbee.entity.category.Category;
 
 @Entity
 @Table(name = "category_attr_lcl", schema = "mochi")
-@PrimaryKeyJoinColumn(name = "cat_lcl_id")
 public class CategoryAttribute {
 
 	@Id

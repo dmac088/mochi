@@ -43,7 +43,6 @@ import io.nzbee.entity.tag.attribute.TagAttribute;
 @Entity
 @Indexed
 @Table(name = "product_attr_lcl", schema = "mochi")
-@PrimaryKeyJoinColumn(name = "prd_lcl_id")
 @AnalyzerDef(name = "en-GB",
 tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
 filters = {

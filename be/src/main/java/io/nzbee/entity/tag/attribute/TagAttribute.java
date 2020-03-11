@@ -27,7 +27,6 @@ import io.nzbee.entity.tag.Tag;
 
 @Entity
 @Table(name = "tag_attr_lcl", schema = "mochi")
-@PrimaryKeyJoinColumn(name = "tag_lcl_id")
 public class TagAttribute {
 
 	@Id
