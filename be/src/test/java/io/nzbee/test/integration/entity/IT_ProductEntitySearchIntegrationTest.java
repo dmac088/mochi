@@ -94,60 +94,27 @@ public class IT_ProductEntitySearchIntegrationTest {
 
     @Autowired 
     private ISearchService searchService;
-    
-    private Product product = null;
-    
-	public Product persistNewProduct() {
-    	
-		product = productEntityBeanFactory.getProductEntityBean();
-	    
-		//we need a brand
-		product.setBrand(brandService.findByCode(GeneralVars.LANGUAGE_ENGLISH, 
-												 GeneralVars.CURRENCY_HKD, 
-												 "PLA01").get());
-		
-		
-		//we need a type
-		product.setProductType(productTypeRepository.findByProductTypeCode("NML01").get());
-		
-		//we need a status
-		product.setProductStatus(productStatusRepository.findByProductStatusCode("ACT01").get());
-		
-		//we need a category
-		CategoryProduct cp = (CategoryProduct) categoryService.findByCode(GeneralVars.LANGUAGE_ENGLISH, 
-																		GeneralVars.CURRENCY_HKD,
-																		"FRT01").get();
-		
-		
-		//add the product to the category
-		product.addProductCategory(cp);
-		
-	    entityManager.persist(product);
-	    entityManager.flush();
-	    entityManager.close();
-	    	
-	    return product;
-	}
+   
 	
-	@Before
-	public void buildSearchIndex() {
-		FullTextEntityManager fullTextEntityManager 
-		  = Search.getFullTextEntityManager(em);
-		try {
-			fullTextEntityManager
-			.createIndexer( ProductAttribute.class )
-			.batchSizeToLoadObjects( 25 )
-			.cacheMode( CacheMode.NORMAL )
-			.threadsToLoadObjects( 12 )
-			.idFetchSize( 150 )
-			.transactionTimeout( 1800 )
-			.progressMonitor( new SimpleIndexingProgressMonitor() ) //a MassIndexerProgressMonitor implementation
-			.startAndWait();	
-		} catch (InterruptedException e) {
-		// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+//	@Before
+//	public void buildSearchIndex() {
+//		FullTextEntityManager fullTextEntityManager 
+//		  = Search.getFullTextEntityManager(em);
+//		try {
+//			fullTextEntityManager
+//			.createIndexer( ProductAttribute.class )
+//			.batchSizeToLoadObjects( 25 )
+//			.cacheMode( CacheMode.NORMAL )
+//			.threadsToLoadObjects( 12 )
+//			.idFetchSize( 150 )
+//			.transactionTimeout( 1800 )
+//			.progressMonitor( new SimpleIndexingProgressMonitor() ) //a MassIndexerProgressMonitor implementation
+//			.startAndWait();	
+//		} catch (InterruptedException e) {
+//		// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
 	
 	
 	@Test
