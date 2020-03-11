@@ -66,7 +66,7 @@ public class ProductAttribute {
 	private Long Id;
 
 	@Column(name="prd_id")
-	@Field(store=Store.YES)
+	@Field(store=Store.YES, analyze=Analyze.NO)
 	private Long productId;
 
 	@Field(analyze = Analyze.YES, store=Store.YES)
@@ -75,11 +75,11 @@ public class ProductAttribute {
 	private String productDesc; 
 
 	@Column(name="prd_img_pth")
-	@Field(store=Store.YES)
+	@Field(store=Store.YES, analyze=Analyze.NO)
 	private String ProductImage;
 	
 	@Column(name="lcl_cd")
-	@Field(store=Store.YES)
+	@Field(store=Store.YES, analyze=Analyze.NO)
 	@AnalyzerDiscriminator(impl = LanguageDiscriminator.class)
 	private String lclCd;
 	
@@ -169,19 +169,19 @@ public class ProductAttribute {
 	}
 	
 	@Transient
-	@Field(store=Store.YES)
+	@Field(store=Store.YES, analyze=Analyze.NO)
 	private Double getCurrentRetailPrice() {
 		return this.getProduct().getRetailPrice();
 	}
 	
 	@Transient
-	@Field(store=Store.YES)
+	@Field(store=Store.YES, analyze=Analyze.NO)
 	private Double getCurrentMarkdownPrice() {
 		return this.getProduct().getMarkdownPrice();
 	}
 	
 	@Transient
-	@Field(store=Store.YES)
+	@Field(store=Store.YES,analyze=Analyze.NO)
 	public String getProductUPC() {
 		return this.getProduct().getUPC();
 	}
