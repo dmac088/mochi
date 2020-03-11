@@ -44,7 +44,6 @@ import io.nzbee.variables.ProductVars;
 
 @Entity
 @Table(name = "product", schema = "mochi")
-@PrimaryKeyJoinColumn(name = "prd_id")
 @SqlResultSetMappings({
 		@SqlResultSetMapping(
 	    name = "ProductMapping",

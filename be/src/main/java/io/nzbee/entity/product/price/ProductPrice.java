@@ -15,7 +15,6 @@ import io.nzbee.entity.product.currency.Currency;
 
 @Entity
 @Table(name = "price", schema = "mochi")
-@PrimaryKeyJoinColumn(name = "prc_id")
 public class ProductPrice {
 
 	@Id

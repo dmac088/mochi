@@ -23,7 +23,6 @@ import io.nzbee.entity.brand.Brand;
 
 @Entity
 @Table(name = "brand_attr_lcl", schema = "mochi")
-@PrimaryKeyJoinColumn(name = "bnd_lcl_id")
 public class BrandAttribute {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
