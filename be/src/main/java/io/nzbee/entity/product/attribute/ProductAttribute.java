@@ -71,7 +71,7 @@ public class ProductAttribute {
 
 	@Field(analyze = Analyze.YES, store=Store.YES)
 	@Column(name="prd_desc")
-	@SortableField
+	//@SortableField
 	private String productDesc; 
 
 	@Column(name="prd_img_pth")
@@ -139,6 +139,12 @@ public class ProductAttribute {
 	}
 	
 	public String getProductDesc() {
+		return productDesc;
+	}
+	
+	@Field
+	@SortableField
+	public String getProductDescSort() {
 		return productDesc;
 	}
 
