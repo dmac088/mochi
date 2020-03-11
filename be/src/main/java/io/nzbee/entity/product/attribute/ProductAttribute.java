@@ -142,7 +142,7 @@ public class ProductAttribute {
 		return productDesc;
 	}
 	
-	@Field
+	@Field(analyze=Analyze.NO)
 	@SortableField
 	public String getProductDescSort() {
 		return productDesc;
