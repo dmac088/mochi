@@ -457,15 +457,15 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 	private String getSortFieldName(String field, String currency) {
 		switch (field) {
 		case "nameAsc":
-			return "productDesc";
+			return "productDescSort";
 		case "nameDesc":
-			return "productDesc";
+			return "productDescSort";
 		case "priceDesc":
 			return "product.currentMarkdownPrice" + currency;
 		case "priceAsc":
 			return "product.currentMarkdownPrice" + currency;
 		default:
-			return "productDesc";
+			return "productDescSort";
 		}
 	}
 

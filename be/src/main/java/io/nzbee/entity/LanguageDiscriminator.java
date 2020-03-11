@@ -25,7 +25,7 @@ public class LanguageDiscriminator implements Discriminator {
     							entity instanceof BrandAttribute)) { 
             return null;
         }
-        System.out.println(entity.getClass().toGenericString() + " - " + field + " - " + value);
+        //System.out.println(entity.getClass().toGenericString() + " - " + field + " - " + value);
         return (String) value;
     }
 }
