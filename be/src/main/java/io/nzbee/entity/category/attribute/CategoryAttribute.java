@@ -94,7 +94,7 @@ public class CategoryAttribute {
 	}
 	
 	@Transient
-	@Field(analyze = Analyze.YES, store=Store.YES)
+	@Field(analyze = Analyze.NO, store=Store.YES)
 	public String getCategoryTokenField() {
 		String token = createCategoryToken(this.getCategory(), new ArrayList<String>());
 		if(token == null || token.isEmpty()) { return "Unknown"; }
