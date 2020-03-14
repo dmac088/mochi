@@ -12,7 +12,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -39,9 +38,7 @@ public class CategoryAttribute {
 	@Field(analyze = Analyze.YES, store=Store.YES)
 	private String categoryDesc;
 
-	@Field
 	@Column(name="lcl_cd")	
-	@AnalyzerDiscriminator(impl = LanguageDiscriminator.class)
 	private String lclCd;
 
 	@ManyToOne(fetch = FetchType.LAZY)

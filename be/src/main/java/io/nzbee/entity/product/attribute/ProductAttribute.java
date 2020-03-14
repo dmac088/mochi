@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -89,7 +90,6 @@ public class ProductAttribute {
 	
 	@Transient
 	@IndexedEmbedded(prefix="product.categories.", includeEmbeddedObjectId=true)
-	@OrderColumn(name = "cat_lcl_id")
 	public Set<CategoryAttribute> getCategories() {
 		return  this.getProduct().getCategories().stream().flatMap(
 					c -> c.getAttributes().stream())
