@@ -33,9 +33,7 @@ public class BrandAttribute {
 	@Field(analyze = Analyze.YES, store=Store.YES)
 	private String brandDesc;
 	
-	@Field
 	@Column(name="lcl_cd")	
-	@AnalyzerDiscriminator(impl = LanguageDiscriminator.class)
 	private String lclCd;
 	
 	@ManyToOne(fetch = FetchType.EAGER)

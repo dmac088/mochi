@@ -44,7 +44,7 @@ public class SearchIndexController {
 			fullTextEntityManager
 			.createIndexer( ProductAttribute.class )
 			.batchSizeToLoadObjects( 25 )
-			.cacheMode( CacheMode.NORMAL )
+			.cacheMode( CacheMode.IGNORE )
 			.threadsToLoadObjects( 12 )
 			.idFetchSize( 150 )
 			.transactionTimeout( 1800 )
