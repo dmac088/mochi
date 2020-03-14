@@ -99,17 +99,16 @@ public class ProductAttribute {
 	@Transient
 	@IndexedEmbedded(prefix="product.tags.", includeEmbeddedObjectId=true)
 	public Set<TagAttribute> getTags() {
-//		return this.getProduct().getTags().stream().flatMap(
-//				t -> t.getAttributes().stream()).collect(Collectors.toSet());
-		return null;
+		return this.getProduct().getTags().stream().flatMap(
+				t -> t.getAttributes().stream())
+				.filter(t -> this.getLclCd().equals(t.getLclCd())).collect(Collectors.toSet());
 	}
 	
 	@Transient
 	@IndexedEmbedded(prefix="product.brand.")
 	public BrandAttribute getBrand() {
-//		return this.getProduct().getBrand().getAttributes()
-//				.stream().findFirst().get();
-		return null;
+		return this.getProduct().getBrand().getAttributes()
+				.stream().filter(b -> this.getLclCd().equals(b.getLclCd())).findFirst().get();
 	}
 
 	
