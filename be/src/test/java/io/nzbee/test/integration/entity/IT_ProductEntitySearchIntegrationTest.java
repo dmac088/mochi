@@ -1,9 +1,6 @@
 package io.nzbee.test.integration.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.concurrent.TimeUnit;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.hibernate.CacheMode;
@@ -28,17 +25,10 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
-import io.nzbee.entity.brand.IBrandService;
-import io.nzbee.entity.category.ICategoryService;
-import io.nzbee.entity.category.product.CategoryProduct;
-import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.attribute.ProductAttribute;
-import io.nzbee.entity.product.status.IProductStatusRepository;
-import io.nzbee.entity.product.type.IProductTypeRepository;
 import io.nzbee.test.integration.beans.ProductEntityBeanFactory;
 import io.nzbee.ui.component.web.facet.FacetContainer;
 import io.nzbee.ui.component.web.search.ISearchService;
-import io.nzbee.variables.GeneralVars;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -73,21 +63,6 @@ public class IT_ProductEntitySearchIntegrationTest {
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
 	private EntityManager entityManager;
-	
-	@Autowired
-	private ProductEntityBeanFactory productEntityBeanFactory;
- 
-    @Autowired
-    private IBrandService brandService;
-    
-    @Autowired
-    private IProductTypeRepository productTypeRepository;
-    
-    @Autowired
-    private IProductStatusRepository productStatusRepository;
-    
-    @Autowired
-    private ICategoryService categoryService;
     
     @PersistenceContext(unitName = "mochiEntityManagerFactory")
 	private EntityManager em;
@@ -118,7 +93,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	
 	
 	@Test
-	public void whenSearchFruit_thenReturnAllFruitProducts() {
+	public void whenSearchFruit_thenReturnFruitProducts() {
 		// when
 		Page<io.nzbee.domain.product.Product> 
 						pp = searchService.findAll(
@@ -140,7 +115,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	}
 
 	@Test
-	public void whenSearchVegetables_thenReturnAllVegetableProducts() {
+	public void whenSearchVegetables_thenReturnVegetableProducts() {
 		
 		// when
 		Page<io.nzbee.domain.product.Product> 
@@ -182,6 +157,72 @@ public class IT_ProductEntitySearchIntegrationTest {
         .isEqualTo(1);
     	assertThat(pp.getTotalElements())
         .isEqualTo(new Long(1));
+	} 
+	
+	@Test
+	public void whenSearchCauliflower_thenReturnCauliflowerProduct() {
+		// when
+		Page<io.nzbee.domain.product.Product> 
+						pp = searchService.findAll(
+							  "en-GB", 
+							  "HKD", 
+							  "Ignored", 
+							  "Cauliflower", 
+							  0, 
+							  10, 
+							  "", 
+							  new FacetContainer());
+		
+		
+        // then
+		assertThat(pp.getTotalPages())
+        .isEqualTo(1);
+    	assertThat(pp.getTotalElements())
+        .isEqualTo(new Long(1));
+	} 
+	
+	@Test
+	public void whenSearchAll_thenReturnAllProducts() {
+		// when
+		Page<io.nzbee.domain.product.Product> 
+						pp = searchService.findAll(
+							  "en-GB", 
+							  "HKD", 
+							  "Ignored", 
+							  "All", 
+							  0, 
+							  10, 
+							  "", 
+							  new FacetContainer());
+		
+		
+        // then
+		assertThat(pp.getTotalPages())
+        .isEqualTo(3);
+    	assertThat(pp.getTotalElements())
+        .isEqualTo(new Long(29));
+	} 
+	
+	@Test
+	public void whenSearchNuts_thenReturnNuts() {
+		// when
+		Page<io.nzbee.domain.product.Product> 
+						pp = searchService.findAll(
+							  "en-GB", 
+							  "HKD", 
+							  "Ignored", 
+							  "Nuts", 
+							  0, 
+							  10, 
+							  "", 
+							  new FacetContainer());
+		
+		
+        // then
+		assertThat(pp.getTotalPages())
+        .isEqualTo(1);
+    	assertThat(pp.getTotalElements())
+        .isEqualTo(new Long(5));
 	} 
 	
 	 @After
