@@ -16,13 +16,11 @@ import javax.persistence.Table;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.AnalyzerDiscriminator;
 import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Store;
 import com.google.common.collect.Lists;
-import io.nzbee.entity.LanguageDiscriminator;
 import io.nzbee.entity.category.Category;
 
 @Entity

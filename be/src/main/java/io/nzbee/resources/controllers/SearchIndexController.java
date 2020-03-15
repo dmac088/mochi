@@ -2,19 +2,14 @@ package io.nzbee.resources.controllers;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
 import org.hibernate.CacheMode;
 import org.hibernate.search.batchindexing.impl.SimpleIndexingProgressMonitor;
 import org.hibernate.search.jpa.FullTextEntityManager;
-import org.hibernate.search.jpa.Search;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import io.nzbee.domain.services.SearchIndexService;
 import io.nzbee.entity.product.attribute.ProductAttribute;
 
 
@@ -34,9 +29,6 @@ public class SearchIndexController {
     public String createSearchIndex() {
  
     	LOGGER.debug("Creating search index");
-    	
-//    	searchIndexService.createSearchIndex();
-
     	
     	FullTextEntityManager fullTextEntityManager 
 		  = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
