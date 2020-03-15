@@ -225,6 +225,28 @@ public class IT_ProductEntitySearchIntegrationTest {
         .isEqualTo(new Long(5));
 	} 
 	
+	@Test
+	public void whenSearchOrganic_thenReturnOrganicProducts() {
+		// when
+		Page<io.nzbee.domain.product.Product> 
+						pp = searchService.findAll(
+							  "en-GB", 
+							  "HKD", 
+							  "Ignored", 
+							  "Organic", 
+							  0, 
+							  10, 
+							  "", 
+							  new FacetContainer());
+		
+		
+        // then
+		assertThat(pp.getTotalPages())
+        .isEqualTo(1);
+    	assertThat(pp.getTotalElements())
+        .isEqualTo(new Long(2));
+	} 
+	
 	 @After
 	 public void closeConnection() {
 	  	entityManager.close();

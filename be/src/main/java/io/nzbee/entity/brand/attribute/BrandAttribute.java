@@ -8,17 +8,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.AnalyzerDiscriminator;
 import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Store;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import io.nzbee.entity.LanguageDiscriminator;
 import io.nzbee.entity.brand.Brand;
 
 @Entity
