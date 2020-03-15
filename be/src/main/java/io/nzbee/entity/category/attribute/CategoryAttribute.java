@@ -41,8 +41,8 @@ public class CategoryAttribute {
 	@Column(name="lcl_cd")	
 	private String lclCd;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="cat_id", insertable=false, updatable=false)
+	@ManyToOne(fetch = FetchType.LAZY, optional=false)
+	@JoinColumn(name="cat_id")
 	private Category category;
 	
 	public Long getCategoryAttributeId() {
