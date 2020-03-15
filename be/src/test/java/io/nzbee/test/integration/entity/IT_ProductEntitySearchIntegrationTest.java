@@ -96,25 +96,25 @@ public class IT_ProductEntitySearchIntegrationTest {
     private ISearchService searchService;
    
 	
-//	@Before
-//	public void buildSearchIndex() {
-//		FullTextEntityManager fullTextEntityManager 
-//		  = Search.getFullTextEntityManager(em);
-//		try {
-//			fullTextEntityManager
-//			.createIndexer( ProductAttribute.class )
-//			.batchSizeToLoadObjects( 25 )
-//			.cacheMode( CacheMode.NORMAL )
-//			.threadsToLoadObjects( 12 )
-//			.idFetchSize( 150 )
-//			.transactionTimeout( 1800 )
-//			.progressMonitor( new SimpleIndexingProgressMonitor() ) //a MassIndexerProgressMonitor implementation
-//			.startAndWait();	
-//		} catch (InterruptedException e) {
-//		// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
+	@Before
+	public void buildSearchIndex() {
+		FullTextEntityManager fullTextEntityManager 
+		  = Search.getFullTextEntityManager(em);
+		try {
+			fullTextEntityManager
+			.createIndexer( ProductAttribute.class )
+			.batchSizeToLoadObjects( 25 )
+			.cacheMode( CacheMode.NORMAL )
+			.threadsToLoadObjects( 12 )
+			.idFetchSize( 150 )
+			.transactionTimeout( 1800 )
+			.progressMonitor( new SimpleIndexingProgressMonitor() ) //a MassIndexerProgressMonitor implementation
+			.startAndWait();	
+		} catch (InterruptedException e) {
+		// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	
 	@Test

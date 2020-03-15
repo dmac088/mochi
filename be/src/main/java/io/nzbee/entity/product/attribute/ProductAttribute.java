@@ -48,9 +48,10 @@ import io.nzbee.entity.tag.attribute.TagAttribute;
 tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
 filters = {
   @TokenFilterDef(factory = LowerCaseFilterFactory.class),
-  @TokenFilterDef(factory = SnowballPorterFilterFactory.class, params = {
-	      @Parameter(name = "language", value = "English")
-  })
+//  @TokenFilterDef(factory = SnowballPorterFilterFactory.class, 
+//  params = {
+//	      @Parameter(name = "language", value = "English")
+//  })
 })
 @AnalyzerDef(name = "zh-HK",
 tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
