@@ -247,8 +247,97 @@ public class IT_ProductEntitySearchIntegrationTest {
         .isEqualTo(new Long(2));
 	} 
 	
-	 @After
-	 public void closeConnection() {
-	  	entityManager.close();
-	 }
+	@Test
+	public void whenSearchGlutenFree_thenReturnGlutenFreeProducts() {
+		// when
+		Page<io.nzbee.domain.product.Product> 
+						pp = searchService.findAll(
+							  "en-GB", 
+							  "HKD", 
+							  "Ignored", 
+							  "Gluten Free", 
+							  0, 
+							  10, 
+							  "", 
+							  new FacetContainer());
+		
+		
+        // then
+		assertThat(pp.getTotalPages())
+        .isEqualTo(1);
+    	assertThat(pp.getTotalElements())
+        .isEqualTo(new Long(5));
+	}
+	
+	@Test
+	public void whenSearchGlorys_thenReturnGlorysProducts() {
+		// when
+		Page<io.nzbee.domain.product.Product> 
+						pp = searchService.findAll(
+							  "en-GB", 
+							  "HKD", 
+							  "Ignored", 
+							  "Glorys", 
+							  0, 
+							  10, 
+							  "", 
+							  new FacetContainer());
+		
+		
+        // then
+		assertThat(pp.getTotalPages())
+        .isEqualTo(1);
+    	assertThat(pp.getTotalElements())
+        .isEqualTo(new Long(4));
+	}
+	
+	@Test
+	public void whenSearchPlanters_thenReturnPlantersProducts() {
+		// when
+		Page<io.nzbee.domain.product.Product> 
+						pp = searchService.findAll(
+							  "en-GB", 
+							  "HKD", 
+							  "Ignored", 
+							  "Planters", 
+							  0, 
+							  10, 
+							  "", 
+							  new FacetContainer());
+		
+		
+        // then
+		assertThat(pp.getTotalPages())
+        .isEqualTo(1);
+    	assertThat(pp.getTotalElements())
+        .isEqualTo(new Long(4));
+	}
+	
+	
+	@Test
+	public void whenSearchCashews_thenReturnCashewsProducts() {
+		// when
+		Page<io.nzbee.domain.product.Product> 
+						pp = searchService.findAll(
+							  "en-GB", 
+							  "HKD", 
+							  "Ignored", 
+							  "Cashews", 
+							  0, 
+							  10, 
+							  "", 
+							  new FacetContainer());
+		
+		
+        // then
+		assertThat(pp.getTotalPages())
+        .isEqualTo(1);
+    	assertThat(pp.getTotalElements())
+        .isEqualTo(new Long(1));
+	}
+	
+	@After
+	public void closeConnection() {
+	 	entityManager.close();
+	}
 }
