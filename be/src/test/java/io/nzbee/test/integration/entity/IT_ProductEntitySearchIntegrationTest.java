@@ -292,6 +292,28 @@ public class IT_ProductEntitySearchIntegrationTest {
 	}
 	
 	@Test
+	public void whenSearchEnza_thenReturnEnzaProducts() {
+		// when
+		Page<io.nzbee.domain.product.Product> 
+						pp = searchService.findAll(
+							  "en-GB", 
+							  "HKD", 
+							  "Ignored", 
+							  "Enza", 
+							  0, 
+							  10, 
+							  "", 
+							  new FacetContainer());
+		
+		
+        // then
+		assertThat(pp.getTotalPages())
+        .isEqualTo(1);
+    	assertThat(pp.getTotalElements())
+        .isEqualTo(new Long(4));
+	}
+	
+	@Test
 	public void whenSearchPlanters_thenReturnPlantersProducts() {
 		// when
 		Page<io.nzbee.domain.product.Product> 
