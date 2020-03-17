@@ -31,6 +31,7 @@ import org.hibernate.search.annotations.TokenizerDef;
 import io.nzbee.entity.LanguageDiscriminator;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
+import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.tag.attribute.TagAttribute;
 
@@ -88,6 +89,10 @@ public class ProductAttribute {
 		return  this.getProduct().getCategories().stream().flatMap(
 					c -> c.getAttributes().stream())
 				.filter(c -> this.getLclCd().equals(c.getLclCd())).collect(Collectors.toSet());
+	}
+	
+	public void setCategories(Set<CategoryAttribute> categoryAttributes) {
+		this.getProduct().getCategories().addAll(categoryAttributes.stream().map(ca -> (CategoryProduct) ca.getCategory()).collect(Collectors.toSet()));		
 	}
 	
 	@Transient
