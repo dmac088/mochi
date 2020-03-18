@@ -1,9 +1,9 @@
 package io.nzbee.entity.category;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ColumnResult;
@@ -172,7 +172,7 @@ public abstract class Category {
 	@OneToMany(	mappedBy="category",
 				cascade = CascadeType.ALL,
 				orphanRemoval = true)
-	private List<CategoryAttribute> attributes = new ArrayList<CategoryAttribute>();
+	private Set<CategoryAttribute> attributes = new HashSet<CategoryAttribute>();
 	
 	@Transient
 	private CategoryAttribute categoryAttribute;
@@ -286,7 +286,7 @@ public abstract class Category {
 		this.maxMarkdownPrice = maxMarkdownPrice;
 	} 
 	
-	public List<CategoryAttribute> getAttributes() {
+	public Set<CategoryAttribute> getAttributes() {
 		return attributes;
 	}
 	

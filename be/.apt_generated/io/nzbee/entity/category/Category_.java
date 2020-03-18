@@ -6,6 +6,7 @@ import io.nzbee.entity.layout.Layout;
 import io.nzbee.entity.product.hierarchy.Hierarchy;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.ListAttribute;
+import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
@@ -17,7 +18,7 @@ public abstract class Category_ {
 	public static volatile SingularAttribute<Category, Category> parent;
 	public static volatile SingularAttribute<Category, Long> categoryLevel;
 	public static volatile SingularAttribute<Category, Hierarchy> hierarchy;
-	public static volatile ListAttribute<Category, CategoryAttribute> attributes;
+	public static volatile SetAttribute<Category, CategoryAttribute> attributes;
 	public static volatile SingularAttribute<Category, String> categoryCode;
 	public static volatile ListAttribute<Category, Layout> layouts;
 	public static volatile SingularAttribute<Category, Long> categoryId;
