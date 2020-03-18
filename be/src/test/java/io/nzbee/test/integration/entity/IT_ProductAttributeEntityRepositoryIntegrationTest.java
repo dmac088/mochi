@@ -90,8 +90,8 @@ public class IT_ProductAttributeEntityRepositoryIntegrationTest {
 	    
 		//we need a brand
 		pa.getProduct().setBrand(brandService.findByCode(GeneralVars.LANGUAGE_ENGLISH, 
-												 GeneralVars.CURRENCY_HKD, 
-												 "PLA01").get());
+														 GeneralVars.CURRENCY_HKD, 
+														 "PLA01").get());
 		
 		
 		//we need a type
