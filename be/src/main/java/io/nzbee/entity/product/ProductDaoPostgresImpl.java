@@ -149,7 +149,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		ProductAttribute pa = new ProductAttribute();
 		
 		pa.setId(Long.parseLong(tuple.get("productAttributeId").toString()));
-		pa.setProductId(Long.parseLong(tuple.get("productId").toString()));
+		//pa.setProductId(Long.parseLong(tuple.get("productId").toString()));
 		pa.setProductDesc(tuple.get("productDesc").toString());
 		pa.setLclCd(locale);
 		
