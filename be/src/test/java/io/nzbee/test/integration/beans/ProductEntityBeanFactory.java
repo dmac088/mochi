@@ -31,11 +31,17 @@ public class ProductEntityBeanFactory {
 		paEng.setLclCd("en-GB");
 		paEng.setProduct(p);
 		
+		ProductAttribute paCn = new ProductAttribute();
+		paCn.setProductDesc("測試產品");
+		paCn.setLclCd("zh-HK");
+		paCn.setProduct(p);
+		
 		p.setProductCreateDt(new Date());
 		p.setUPC("123456789");
 		
 		p.addProductAttribute(paEng);
-		p.getAttributes().add(paEng);
+		p.setProductAttribute(paEng);
+		p.addProductAttribute(paCn);
 		
 		return paEng;
 	}

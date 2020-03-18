@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -60,13 +61,8 @@ public class ProductAttribute {
 	@Column(name="prd_lcl_id")
 	private Long Id;
 
-	@Column(name="prd_id")
-	@Field(store=Store.YES, analyze=Analyze.NO)
-	private Long productId;
-
 	@Field(analyze = Analyze.YES, store=Store.YES)
 	@Column(name="prd_desc")
-	//@SortableField
 	private String productDesc; 
 
 	@Column(name="prd_img_pth")
@@ -79,7 +75,7 @@ public class ProductAttribute {
 	private String lclCd;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="prd_id", insertable=false, updatable=false)
+	@JoinColumn(name="prd_id")
 	private Product product;
 	
 	
@@ -117,13 +113,9 @@ public class ProductAttribute {
 	public void setId(Long id) {
 		Id = id;
 	}
-
-	public Long getProductId() {
-		return productId;
-	}
 	
-	public void setProductId(Long productId) {
-		this.productId = productId;
+	public Long getProductId() {
+		return this.getProduct().getProductId();
 	}
 	
 	public Product getProduct() {
