@@ -77,7 +77,7 @@ public class ProductAttribute {
 	@JoinColumn(name="prd_id")
 	private Product product;
 	
-	
+	@Transient
 	@IndexedEmbedded(prefix="product.categories.", includeEmbeddedObjectId=true)
 	public Set<CategoryAttribute> getCategories() {
 		return  this.getProduct().getCategories().stream().flatMap(

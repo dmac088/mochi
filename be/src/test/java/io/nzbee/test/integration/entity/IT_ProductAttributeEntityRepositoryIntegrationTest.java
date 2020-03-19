@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
@@ -101,9 +102,9 @@ public class IT_ProductAttributeEntityRepositoryIntegrationTest {
 		pa.getProduct().setProductStatus(productStatusRepository.findByProductStatusCode("ACT01").get());
 		
 		//we need a category
-		CategoryProduct cp = (CategoryProduct) categoryService.findByCode(GeneralVars.LANGUAGE_ENGLISH, 
-																		GeneralVars.CURRENCY_HKD,
-																		"FRT01").get();
+		CategoryProduct cp = (CategoryProduct) categoryService.findByCode(	GeneralVars.LANGUAGE_ENGLISH, 
+																			GeneralVars.CURRENCY_HKD,
+																			"FRT01").get();
 		
 		
 		//add the product to the category
