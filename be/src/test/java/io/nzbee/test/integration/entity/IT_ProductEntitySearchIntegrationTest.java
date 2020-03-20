@@ -248,6 +248,50 @@ public class IT_ProductEntitySearchIntegrationTest {
 	} 
 	
 	@Test
+	public void whenSearchOrganic_thenReturnOrganicProductsZHHK() {
+		// when
+		Page<io.nzbee.domain.product.Product> 
+						pp = searchService.findAll(
+							  "zh-HK", 
+							  "HKD", 
+							  "Ignored", 
+							  "有機", 
+							  0, 
+							  10, 
+							  "", 
+							  new FacetContainer());
+		
+		
+        // then
+		assertThat(pp.getTotalPages())
+        .isEqualTo(1);
+    	assertThat(pp.getTotalElements())
+        .isEqualTo(new Long(2));
+	} 
+	
+	@Test
+	public void whenSearchOrganic_thenReturnOrganicGlutenFreeZHHK() {
+		// when
+		Page<io.nzbee.domain.product.Product> 
+						pp = searchService.findAll(
+							  "zh-HK", 
+							  "HKD", 
+							  "Ignored", 
+							  "不含麩質", 
+							  0, 
+							  10, 
+							  "", 
+							  new FacetContainer());
+		
+		
+        // then
+		assertThat(pp.getTotalPages())
+        .isEqualTo(1);
+    	assertThat(pp.getTotalElements())
+        .isEqualTo(new Long(2));
+	} 
+	
+	@Test
 	public void whenSearchGlutenFree_thenReturnGlutenFreeProducts() {
 		// when
 		Page<io.nzbee.domain.product.Product> 
@@ -322,6 +366,50 @@ public class IT_ProductEntitySearchIntegrationTest {
 							  "HKD", 
 							  "Ignored", 
 							  "Planters", 
+							  0, 
+							  10, 
+							  "", 
+							  new FacetContainer());
+		
+		
+        // then
+		assertThat(pp.getTotalPages())
+        .isEqualTo(1);
+    	assertThat(pp.getTotalElements())
+        .isEqualTo(new Long(4));
+	}
+	
+	@Test
+	public void whenSearchPlanters_thenReturnDoleProducts() {
+		// when
+		Page<io.nzbee.domain.product.Product> 
+						pp = searchService.findAll(
+							  "en-GB", 
+							  "HKD", 
+							  "Ignored", 
+							  "Dole", 
+							  0, 
+							  10, 
+							  "", 
+							  new FacetContainer());
+		
+		
+        // then
+		assertThat(pp.getTotalPages())
+        .isEqualTo(1);
+    	assertThat(pp.getTotalElements())
+        .isEqualTo(new Long(3));
+	}
+	
+	@Test
+	public void whenSearchPlanters_thenReturnDriscollsProducts() {
+		// when
+		Page<io.nzbee.domain.product.Product> 
+						pp = searchService.findAll(
+							  "en-GB", 
+							  "HKD", 
+							  "Ignored", 
+							  "Driscolls", 
 							  0, 
 							  10, 
 							  "", 
