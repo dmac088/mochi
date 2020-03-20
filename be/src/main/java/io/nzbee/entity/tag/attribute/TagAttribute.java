@@ -16,7 +16,6 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Store;
 import io.nzbee.entity.tag.Tag;
 
@@ -41,7 +40,6 @@ public class TagAttribute {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="tag_id", insertable=false, updatable=false)
-	@IndexedEmbedded
 	private Tag tag;
 	
 	public Long getTagId() {
