@@ -273,12 +273,12 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 
 		QueryBuilder queryBuilder = fullTextEntityManager.getSearchFactory().buildQueryBuilder()
 				.forEntity(io.nzbee.entity.product.attribute.ProductAttribute.class)
-				.overridesForField("productDesc", lcl)
-				.overridesForField("product.brand.brandDesc", lcl)
-				.overridesForField("product.categories.categoryDesc", lcl)
-				.overridesForField("product.categories.parent.categoryDesc", lcl)
-				.overridesForField("product.categories.parent.parent.categoryDesc", lcl)
-				.overridesForField("product.tags.tagDesc", lcl)
+//				.overridesForField("productDesc", lcl)
+//				.overridesForField("product.brand.brandDesc", lcl)
+//				.overridesForField("product.categories.categoryDesc", lcl)
+//				.overridesForField("product.categories.parent.categoryDesc", lcl)
+//				.overridesForField("product.categories.parent.parent.categoryDesc", lcl)
+//				.overridesForField("product.tags.tagDesc", lcl)
 				.get();
 
 		// this is a Lucene query using the Lucene api
