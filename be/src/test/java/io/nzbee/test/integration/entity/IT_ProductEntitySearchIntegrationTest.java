@@ -113,6 +113,29 @@ public class IT_ProductEntitySearchIntegrationTest {
     	assertThat(pp.getTotalElements())
         .isEqualTo(new Long(12));
 	}
+	
+	@Test
+	public void whenSearchFruit_thenReturnFruitProductsZHHK() {
+		// when
+		Page<io.nzbee.domain.product.Product> 
+						pp = searchService.findAll(
+							  "zh-HK", 
+							  "HKD", 
+							  "Ignored", 
+							  "水果", 
+							  0, 
+							  10, 
+							  "", 
+							  new FacetContainer());
+		
+		
+        // then
+		assertThat(pp.getTotalPages())
+        .isEqualTo(2);
+    	assertThat(pp.getTotalElements())
+        .isEqualTo(new Long(12));
+	}
+	
 
 	@Test
 	public void whenSearchVegetables_thenReturnVegetableProducts() {
