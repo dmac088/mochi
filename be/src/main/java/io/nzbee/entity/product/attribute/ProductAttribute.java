@@ -16,7 +16,9 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
 import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
-import org.apache.lucene.analysis.standard.StandardFilterFactory;
+import org.apache.lucene.analysis.snowball.SnowballPorterFilterFactory;
+import org.apache.lucene.analysis.cjk.CJKBigramFilterFactory;
+import org.apache.lucene.analysis.cjk.CJKWidthFilterFactory;
 import org.apache.lucene.analysis.core.StopFilterFactory;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.AnalyzerDef;
@@ -24,6 +26,7 @@ import org.hibernate.search.annotations.AnalyzerDiscriminator;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Parameter;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 import org.hibernate.search.annotations.TokenFilterDef;
@@ -41,18 +44,19 @@ import io.nzbee.entity.tag.attribute.TagAttribute;
 @AnalyzerDef(name = "en-GB",
 tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
 filters = {
-  @TokenFilterDef(factory = LowerCaseFilterFactory.class)//,
-//  @TokenFilterDef(factory = SnowballPorterFilterFactory.class, 
-//  params = {
-//	      @Parameter(name = "language", value = "English")
-//  })
+  @TokenFilterDef(factory = LowerCaseFilterFactory.class),
+  @TokenFilterDef(factory = SnowballPorterFilterFactory.class, 
+  params = {
+	      @Parameter(name = "language", value = "English")
+  })
 })
 @AnalyzerDef(name = "zh-HK",
 tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
 filters = {
-  @TokenFilterDef(factory = StandardFilterFactory.class),
+  @TokenFilterDef(factory = CJKWidthFilterFactory.class),
+  @TokenFilterDef(factory = CJKBigramFilterFactory.class),
   @TokenFilterDef(factory = LowerCaseFilterFactory.class),
-  @TokenFilterDef(factory = StopFilterFactory.class),
+  @TokenFilterDef(factory = StopFilterFactory.class)
 }
 )
 public class ProductAttribute {
