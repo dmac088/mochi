@@ -14,10 +14,10 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.lucene.analysis.cjk.CJKBigramFilterFactory;
-import org.apache.lucene.analysis.cjk.CJKWidthFilterFactory;
 import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
 import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
+import org.apache.lucene.analysis.standard.StandardFilterFactory;
+import org.apache.lucene.analysis.core.StopFilterFactory;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.AnalyzerDef;
 import org.hibernate.search.annotations.AnalyzerDiscriminator;
@@ -41,7 +41,7 @@ import io.nzbee.entity.tag.attribute.TagAttribute;
 @AnalyzerDef(name = "en-GB",
 tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
 filters = {
-  @TokenFilterDef(factory = LowerCaseFilterFactory.class),
+  @TokenFilterDef(factory = LowerCaseFilterFactory.class)//,
 //  @TokenFilterDef(factory = SnowballPorterFilterFactory.class, 
 //  params = {
 //	      @Parameter(name = "language", value = "English")
@@ -50,9 +50,11 @@ filters = {
 @AnalyzerDef(name = "zh-HK",
 tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
 filters = {
-  @TokenFilterDef(factory = CJKWidthFilterFactory.class),
-  @TokenFilterDef(factory = CJKBigramFilterFactory.class)
-})
+  @TokenFilterDef(factory = StandardFilterFactory.class),
+  @TokenFilterDef(factory = LowerCaseFilterFactory.class),
+  @TokenFilterDef(factory = StopFilterFactory.class),
+}
+)
 public class ProductAttribute {
 
 	@Id
