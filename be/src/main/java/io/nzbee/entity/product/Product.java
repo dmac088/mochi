@@ -33,6 +33,7 @@ import org.apache.lucene.analysis.snowball.SnowballPorterFilterFactory;
 import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.AnalyzerDef;
 import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
@@ -287,6 +288,12 @@ public class Product {
 	public BrandAttribute getBrandENGB() {
 		return this.getBrand().getAttributes()
 				.stream().filter(b -> "en-GB".equals(b.getLclCd())).findFirst().get();
+	}
+	
+	@Transient
+	@Analyzer(name = )
+	public String getProductDescENGB() {
+		return this.getAttributes().stream().filter(pa -> pa.getLclCd().equals("en-GB")).findFirst().get().getProductDesc();
 	}
 
 	public ProductAttribute getProductAttribute() {
