@@ -271,14 +271,16 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		
 		FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
 
+		System.out.println(lcl);
+		
 		QueryBuilder queryBuilder = fullTextEntityManager.getSearchFactory().buildQueryBuilder()
 				.forEntity(io.nzbee.entity.product.attribute.ProductAttribute.class)
 				.overridesForField("productDesc", lcl)
-//				.overridesForField("product.brand.brandDesc", lcl)
-//				.overridesForField("product.categories.categoryDesc", lcl)
-//				.overridesForField("product.categories.parent.categoryDesc", lcl)
-//				.overridesForField("product.categories.parent.parent.categoryDesc", lcl)
-//				.overridesForField("product.tags.tagDesc", lcl)
+				.overridesForField("product.brand.brandDesc", lcl)
+				.overridesForField("product.categories.categoryDesc", lcl)
+				.overridesForField("product.categories.parent.categoryDesc", lcl)
+				.overridesForField("product.categories.parent.parent.categoryDesc", lcl)
+				.overridesForField("product.tags.tagDesc", lcl)
 				.get();
 
 		// this is a Lucene query using the Lucene api
@@ -292,7 +294,8 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 						"product.tags.tagDesc"
 						)
 				.matching(searchTerm).createQuery())
-				.must(queryBuilder.keyword().onFields("lclCd").matching(lcl).createQuery()).createQuery();
+				.must(queryBuilder.keyword().onFields("lclCd").matching(lcl)
+				.createQuery()).createQuery();
 
 		final org.hibernate.search.jpa.FullTextQuery jpaQuery = fullTextEntityManager.createFullTextQuery(searchQuery,
 				io.nzbee.entity.product.attribute.ProductAttribute.class);
