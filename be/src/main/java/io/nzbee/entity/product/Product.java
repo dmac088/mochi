@@ -24,24 +24,58 @@ import javax.persistence.SqlResultSetMapping;
 import javax.persistence.SqlResultSetMappings;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import org.apache.lucene.analysis.cjk.CJKBigramFilterFactory;
+import org.apache.lucene.analysis.cjk.CJKWidthFilterFactory;
+import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
+import org.apache.lucene.analysis.core.StopFilterFactory;
+import org.apache.lucene.analysis.snowball.SnowballPorterFilterFactory;
+import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.AnalyzerDef;
 import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Parameter;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
+import org.hibernate.search.annotations.TokenFilterDef;
+import org.hibernate.search.annotations.TokenizerDef;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
+import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.price.ProductPrice;
 import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.entity.product.type.ProductType;
 import io.nzbee.entity.tag.Tag;
+import io.nzbee.entity.tag.attribute.TagAttribute;
 import io.nzbee.variables.ProductVars;
 
 @Entity
+@Indexed
+@AnalyzerDef(name = "en-GB",
+tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
+filters = {
+  @TokenFilterDef(factory = LowerCaseFilterFactory.class),
+  @TokenFilterDef(factory = SnowballPorterFilterFactory.class, 
+  params = {
+	      @Parameter(name = "language", value = "English")
+  })
+})
+@AnalyzerDef(name = "zh-HK",
+tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
+filters = {
+  @TokenFilterDef(factory = CJKWidthFilterFactory.class),
+  @TokenFilterDef(factory = CJKBigramFilterFactory.class),
+  @TokenFilterDef(factory = LowerCaseFilterFactory.class),
+  @TokenFilterDef(factory = StopFilterFactory.class)
+})
 @Table(name = "product", schema = "mochi")
 @SqlResultSetMappings({
 		@SqlResultSetMapping(
@@ -226,6 +260,33 @@ public class Product {
 	@Transient
 	public Double getCurrentMarkdownPriceUSDFacet() {
 		return this.getCurrentMarkdownPriceHKD();
+	}
+	
+	@Transient
+	@IndexedEmbedded(prefix="product.categories.", includeEmbeddedObjectId=true)
+	public Set<CategoryAttribute> getCategorENGB() {
+		return  this.getCategories().stream().flatMap(
+					c -> c.getAttributes().stream())
+				.filter(c -> "en-GB".equals(c.getLclCd())).collect(Collectors.toSet());
+	}
+	
+	public void setCategoriesENGB(Set<CategoryAttribute> categoryAttributes) {
+		this.getCategories().addAll(categoryAttributes.stream().map(ca -> (CategoryProduct) ca.getCategory()).collect(Collectors.toSet()));		
+	}
+	
+	@Transient
+	@IndexedEmbedded(prefix="product.tags.", includeEmbeddedObjectId=true)
+	public Set<TagAttribute> getTagsENGB() {
+		return this.getTags().stream().flatMap(
+				t -> t.getAttributes().stream())
+				.filter(t -> "en-GB".equals(t.getLclCd())).collect(Collectors.toSet());
+	}
+	
+	@Transient
+	@IndexedEmbedded(prefix="product.brand.")
+	public BrandAttribute getBrandENGB() {
+		return this.getBrand().getAttributes()
+				.stream().filter(b -> "en-GB".equals(b.getLclCd())).findFirst().get();
 	}
 
 	public ProductAttribute getProductAttribute() {
