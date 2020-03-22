@@ -25,9 +25,7 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import io.nzbee.entity.product.Product;
-import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.test.integration.beans.ProductEntityBeanFactory;
 import io.nzbee.ui.component.web.facet.FacetContainer;
 import io.nzbee.ui.component.web.search.ISearchService;
