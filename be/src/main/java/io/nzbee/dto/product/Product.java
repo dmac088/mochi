@@ -2,7 +2,6 @@ package io.nzbee.dto.product;
 
 import java.util.Date;
 import java.util.Objects;
-
 import io.nzbee.dto.IDto;
 
 public class Product implements IDto {
@@ -115,12 +114,12 @@ public class Product implements IDto {
 		 if (this == o) return true;
 	     if (o == null || getClass() != o.getClass()) return false;
 	     Product pcDto = (Product) o;
-	     return this.productUPC == pcDto.productUPC;
+	     return this.getCode() == pcDto.getCode();
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(productUPC);
+		return Objects.hash(this.getCode());
 	}
 
 	@Override

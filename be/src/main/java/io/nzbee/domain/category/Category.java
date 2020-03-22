@@ -122,12 +122,12 @@ public abstract class Category implements IHierarchicalDomainObject {
 		 if (this == o) return true;
 	     if (o == null || getClass() != o.getClass()) return false;
 	     Category pcDto = (Category) o;
-	     return this.categoryCode == pcDto.categoryCode;
+	     return this.getCode() == pcDto.getCode();
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(categoryCode);
+		return Objects.hash(this.getCode());
 	}
 
 	@Override
