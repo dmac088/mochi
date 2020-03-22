@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import io.nzbee.entity.product.attribute.ProductAttribute;
+import io.nzbee.entity.product.Product;
 
 
 @RestController
@@ -34,7 +34,7 @@ public class SearchIndexController {
 		  = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
 		try {
 			fullTextEntityManager
-			.createIndexer( ProductAttribute.class )
+			.createIndexer( Product.class )
 			.batchSizeToLoadObjects( 25 )
 			.cacheMode( CacheMode.IGNORE )
 			.threadsToLoadObjects( 12 )
