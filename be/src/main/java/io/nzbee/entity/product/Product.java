@@ -52,7 +52,6 @@ import io.nzbee.entity.product.price.ProductPrice;
 import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.entity.product.type.ProductType;
 import io.nzbee.entity.tag.Tag;
-import io.nzbee.variables.ProductVars;
 
 @Entity
 @Indexed
