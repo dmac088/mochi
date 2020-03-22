@@ -184,9 +184,11 @@ public class Product {
 	@Transient
 	private ProductAttribute productAttribute;
 	
+	@Transient
 	@Field(store=Store.YES,analyze=Analyze.NO)
 	private Double retailPrice;
 	
+	@Transient
 	@Field(store=Store.YES,analyze=Analyze.NO)
 	private Double markdownPrice;
 
@@ -284,6 +286,16 @@ public class Product {
 	@SortableField
 	public String getProductDescSortZHHK() {
 		return this.getProductDescZHHK();
+	}
+	
+	@Field(analyze=Analyze.NO, store=Store.YES)
+	public String getProductImageENGB() {
+		return this.getAttributes().stream().filter(pa -> pa.getLclCd().equals("en-GB")).findFirst().get().getProductDesc();
+	}
+	
+	@Field(analyze=Analyze.NO, store=Store.YES)
+	public String getProductImageZHHK() {
+		return this.getAttributes().stream().filter(pa -> pa.getLclCd().equals("zh-HK")).findFirst().get().getProductDesc();
 	}
 
 	public ProductAttribute getProductAttribute() {
