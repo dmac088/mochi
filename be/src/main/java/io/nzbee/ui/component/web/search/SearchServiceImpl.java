@@ -271,10 +271,10 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		
 		FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
 
-		System.out.println(lcl);
+		String transLcl = lcl.substring(0, 2).toUpperCase() + lcl.substring(3, 5).toUpperCase();
 		
 		QueryBuilder queryBuilder = fullTextEntityManager.getSearchFactory().buildQueryBuilder()
-				.forEntity(io.nzbee.entity.product.attribute.ProductAttribute.class)
+				.forEntity(io.nzbee.entity.product.Product.class)
 				.overridesForField("productDesc", lcl)
 				.overridesForField("product.brand.brandDesc", lcl)
 				.overridesForField("product.categories.categoryDesc", lcl)
@@ -286,19 +286,19 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		// this is a Lucene query using the Lucene api
 		org.apache.lucene.search.Query searchQuery = queryBuilder.bool().must(queryBuilder.keyword()
 				.onFields(
-						"productDesc",
-						"product.brand.brandDesc",
-						"product.categories.categoryDesc",
-						"product.categories.parent.categoryDesc", 
-						"product.categories.parent.parent.categoryDesc",
-						"product.tags.tagDesc"
+						"productDesc" + transLcl,
+						"product.brand.brandDesc" + transLcl,
+						"product.categories.categoryDesc" + transLcl,
+						"product.categories.parent.categoryDesc" + transLcl, 
+						"product.categories.parent.parent.categoryDesc" + transLcl,
+						"product.tags.tagDesc" + transLcl
 						)
-				.matching(searchTerm).createQuery())
-				.must(queryBuilder.keyword().onFields("lclCd").matching(lcl)
+				.matching(searchTerm)//.createQuery())
+				//.must(queryBuilder.keyword().onFields("lclCd").matching(lcl)
 				.createQuery()).createQuery();
 
 		final org.hibernate.search.jpa.FullTextQuery jpaQuery = fullTextEntityManager.createFullTextQuery(searchQuery,
-				io.nzbee.entity.product.attribute.ProductAttribute.class);
+				io.nzbee.entity.product.Product.class);
 		
 		System.out.println("result size = " + jpaQuery.getResultSize());
 
@@ -399,7 +399,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		jpaQuery.setMaxResults(pageable.getPageSize());
 
 		// sort the results
-		org.apache.lucene.search.Sort sort = getSortField(sortBy, currency);
+		org.apache.lucene.search.Sort sort = getSortField(sortBy, currency, transLcl);
 		jpaQuery.setSort(sort);
 		
 		jpaQuery.setProjection("Id", 
@@ -437,38 +437,38 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 	}
 
 
-	private org.apache.lucene.search.Sort getSortField(String field, String currency) {
+	private org.apache.lucene.search.Sort getSortField(String field, String currency, String locale) {
 		switch (field) {
 		case "nameAsc":
 			return new org.apache.lucene.search.Sort(
-					new SortField(getSortFieldName(field, currency), SortField.Type.STRING, false));
+					new SortField(getSortFieldName(field, currency, locale), SortField.Type.STRING, false));
 		case "nameDesc":
 			return new org.apache.lucene.search.Sort(
-					new SortField(getSortFieldName(field, currency), SortField.Type.STRING, true));
+					new SortField(getSortFieldName(field, currency, locale), SortField.Type.STRING, true));
 		case "priceAsc":
 			return new org.apache.lucene.search.Sort(
-					new SortedNumericSortField(getSortFieldName(field, currency), SortField.Type.DOUBLE, false));
+					new SortedNumericSortField(getSortFieldName(field, currency, locale), SortField.Type.DOUBLE, false));
 		case "priceDesc":
 			return new org.apache.lucene.search.Sort(
-					new SortedNumericSortField(getSortFieldName(field, currency), SortField.Type.DOUBLE, true));
+					new SortedNumericSortField(getSortFieldName(field, currency, locale), SortField.Type.DOUBLE, true));
 		default:
 			return new org.apache.lucene.search.Sort(
-					new SortField(getSortFieldName(field, currency), SortField.Type.STRING, true));
+					new SortField(getSortFieldName(field, currency, locale), SortField.Type.STRING, true));
 		}
 	}
 
-	private String getSortFieldName(String field, String currency) {
+	private String getSortFieldName(String field, String currency, String locale) {
 		switch (field) {
 		case "nameAsc":
-			return "productDescSort";
+			return "productDescSort" + locale;
 		case "nameDesc":
-			return "productDescSort";
+			return "productDescSort" + locale;
 		case "priceDesc":
 			return "product.currentMarkdownPrice" + currency;
 		case "priceAsc":
 			return "product.currentMarkdownPrice" + currency;
 		default:
-			return "productDescSort";
+			return "productDescSort" + locale;
 		}
 	}
 

@@ -13,7 +13,15 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.hibernate.annotations.NaturalId;
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.Facet;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Store;
+
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.tag.attribute.TagAttribute;
 
@@ -44,6 +52,12 @@ public class Tag {
 	public Long getTagId() {
 		return productTagId;
 	}
+	
+	@Field(analyze = Analyze.NO, store=Store.YES)
+	@Facet
+	public String getTagToken() {
+		return getCode();
+	}
 
 	public void setTagId(Long productTagId) {
 		this.productTagId = productTagId;
@@ -63,6 +77,18 @@ public class Tag {
 
 	public List<TagAttribute> getAttributes() {
 		return attributes;
+	}
+	
+	@Transient
+	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "en-GB"))
+	public String getTagDescENGB() {
+		return this.getAttributes().stream().filter(pa -> pa.getLclCd().equals("en-GB")).findFirst().get().getTagDesc();
+	}
+	
+	@Transient
+	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "zh-HK"))
+	public String getTagDescZHHK() {
+		return this.getAttributes().stream().filter(pa -> pa.getLclCd().equals("zh-HK")).findFirst().get().getTagDesc();
 	}
 	
 	public void addTagAttribute(TagAttribute tagAttribute) {

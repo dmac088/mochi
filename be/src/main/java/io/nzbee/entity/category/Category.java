@@ -1,5 +1,6 @@
 package io.nzbee.entity.category;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +29,16 @@ import javax.persistence.Transient;
 import javax.persistence.EntityResult;
 import javax.persistence.FieldResult;
 import org.hibernate.annotations.NaturalId;
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.Facet;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Store;
+
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.google.common.collect.Lists;
+
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.entity.layout.Layout;
@@ -142,9 +152,11 @@ public abstract class Category {
 
 	@NaturalId
 	@Column(name="cat_cd", unique = true, updatable = false)
+	@Field(analyze = Analyze.NO, store=Store.YES)
 	private String categoryCode;
 
 	@Column(name="cat_lvl")
+	@Field(analyze = Analyze.NO, store=Store.YES)
 	private Long categoryLevel;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -167,6 +179,7 @@ public abstract class Category {
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional=false)
 	@JoinColumn(name="cat_prnt_id", nullable=false)
+	@IndexedEmbedded(depth = 10, includeEmbeddedObjectId=true)
 	private Category parent;
 	
 	@OneToMany(	mappedBy="category",
@@ -197,6 +210,32 @@ public abstract class Category {
 	
 	@Transient
 	private String currency;
+	
+	@Transient
+	@Field(analyze = Analyze.NO, store=Store.YES)
+	public String getCategoryTokenField() {
+		String token = createCategoryToken(this, new ArrayList<String>());
+		if(token == null || token.isEmpty()) { return "Unknown"; }
+		return token;
+	}
+	
+	@Transient
+	@Field(analyze = Analyze.NO, store=Store.YES)
+	@Facet
+	public String getCategoryToken() {
+		return this.getCategoryTokenField();
+	}
+	
+	private String createCategoryToken(Category category, List<String> lc) {
+		lc.add(category.getCategoryCode());
+		Optional<Category> parent = category.getParent();
+		if(!parent.isPresent()) {
+			StringBuilder sb = new StringBuilder();
+			Lists.reverse(lc).stream().forEach(s -> sb.append("/").append(s));
+			return sb.toString();
+		}
+		return this.createCategoryToken(parent.get(), lc);
+	}
 	
 	public void setCurrency(String currency) {
 		this.currency = currency;
@@ -236,6 +275,18 @@ public abstract class Category {
 	
 	public void setCategoryId(Long categoryId) {
 		this.categoryId = categoryId;
+	}
+	
+	@Transient
+	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "en-GB"))
+	public String getCategoryDescENGB() {
+		return this.getAttributes().stream().filter(pa -> pa.getLclCd().equals("en-GB")).findFirst().get().getCategoryDesc();
+	}
+	
+	@Transient
+	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "zh-HK"))
+	public String getCategoryDescZHHK() {
+		return this.getAttributes().stream().filter(pa -> pa.getLclCd().equals("zh-HK")).findFirst().get().getCategoryDesc();
 	}
 	
 	public Long getCategoryLevel() {

@@ -13,6 +13,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import org.hibernate.annotations.NaturalId;
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.Facet;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Store;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.category.brand.CategoryBrand;
@@ -64,6 +70,25 @@ public class Brand {
 	
 	public void setId(Long id) {
 		this.brandId = id;
+	}
+	
+	@Transient
+	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "en-GB"))
+	public String getBrandDescENGB() {
+		return this.getAttributes().stream().filter(pa -> pa.getLclCd().equals("en-GB")).findFirst().get().getBrandDesc();
+	}
+	
+	@Transient
+	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "zh-HK"))
+	public String getBrandDescZHHK() {
+		return this.getAttributes().stream().filter(pa -> pa.getLclCd().equals("zh-HK")).findFirst().get().getBrandDesc();
+	}
+	
+	
+	@Field(analyze = Analyze.NO, store=Store.YES)
+	@Facet
+	public String getBrandToken() {
+		return this.getBrandCode();
 	}
 	
 	public String getBrandCode() {
