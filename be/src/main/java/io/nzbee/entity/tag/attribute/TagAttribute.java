@@ -13,10 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.Facet;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Store;
 import io.nzbee.entity.tag.Tag;
 
 @Entity
@@ -32,7 +28,6 @@ public class TagAttribute {
 	private Long tagId;
 
 	@Column(name="tag_desc")
-	@Field(analyze = Analyze.YES, store=Store.YES)
 	private String tagDesc;
 
 	@Column(name="lcl_cd")	
@@ -68,12 +63,6 @@ public class TagAttribute {
 
 	public void setLclCd(String lclCd) {
 		this.lclCd = lclCd;
-	}
-	
-	@Field(analyze = Analyze.NO, store=Store.YES)
-	@Facet
-	public String getTagToken() {
-		return this.getTag().get().getCode();
 	}
 	
 	@Override

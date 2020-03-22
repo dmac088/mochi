@@ -24,7 +24,6 @@ import javax.persistence.SqlResultSetMapping;
 import javax.persistence.SqlResultSetMappings;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
 import org.apache.lucene.analysis.cjk.CJKBigramFilterFactory;
 import org.apache.lucene.analysis.cjk.CJKWidthFilterFactory;
 import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
@@ -44,18 +43,15 @@ import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
-
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
-import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.price.ProductPrice;
 import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.entity.product.type.ProductType;
 import io.nzbee.entity.tag.Tag;
-import io.nzbee.entity.tag.attribute.TagAttribute;
 import io.nzbee.variables.ProductVars;
 
 @Entity
@@ -158,7 +154,7 @@ public class Product {
 
 	@NaturalId
 	@Column(name="upc_cd", unique = true, updatable = false)
-	@Field(store=Store.YES)
+	@Field(store=Store.YES,analyze=Analyze.NO)
 	private String productUPC;
 	
 	@Column(name="prd_crtd_dt")
@@ -171,10 +167,12 @@ public class Product {
 		            CascadeType.PERSIST,
 		            CascadeType.MERGE
 		        })
+	@IndexedEmbedded(prefix="product.categories.", includeEmbeddedObjectId=true)
 	private Set<CategoryProduct> categories = new HashSet<>();
 	
 	@ManyToMany(mappedBy = "products", 
 				cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@IndexedEmbedded(prefix="product.tags.", includeEmbeddedObjectId=true)
 	private Set<Tag> tags;
 
 	@OneToMany(	mappedBy="product",  
@@ -186,14 +184,15 @@ public class Product {
 	@Transient
 	private ProductAttribute productAttribute;
 	
-	@Transient
+	@Field(store=Store.YES,analyze=Analyze.NO)
 	private Double retailPrice;
 	
-	@Transient
+	@Field(store=Store.YES,analyze=Analyze.NO)
 	private Double markdownPrice;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="bnd_id")
+	@IndexedEmbedded(prefix="product.brand.")
 	private Brand brand;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -264,36 +263,27 @@ public class Product {
 	}
 	
 	@Transient
-	@IndexedEmbedded(prefix="product.categories.", includeEmbeddedObjectId=true)
-	public Set<CategoryAttribute> getCategorENGB() {
-		return  this.getCategories().stream().flatMap(
-					c -> c.getAttributes().stream())
-				.filter(c -> "en-GB".equals(c.getLclCd())).collect(Collectors.toSet());
-	}
-	
-	public void setCategoriesENGB(Set<CategoryAttribute> categoryAttributes) {
-		this.getCategories().addAll(categoryAttributes.stream().map(ca -> (CategoryProduct) ca.getCategory()).collect(Collectors.toSet()));		
-	}
-	
-	@Transient
-	@IndexedEmbedded(prefix="product.tags.", includeEmbeddedObjectId=true)
-	public Set<TagAttribute> getTagsENGB() {
-		return this.getTags().stream().flatMap(
-				t -> t.getAttributes().stream())
-				.filter(t -> "en-GB".equals(t.getLclCd())).collect(Collectors.toSet());
-	}
-	
-	@Transient
-	@IndexedEmbedded(prefix="product.brand.")
-	public BrandAttribute getBrandENGB() {
-		return this.getBrand().getAttributes()
-				.stream().filter(b -> "en-GB".equals(b.getLclCd())).findFirst().get();
-	}
-	
-	@Transient
-	@Analyzer(name = )
+	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "en-GB"))
 	public String getProductDescENGB() {
 		return this.getAttributes().stream().filter(pa -> pa.getLclCd().equals("en-GB")).findFirst().get().getProductDesc();
+	}
+	
+	@Transient
+	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "zh-HK"))
+	public String getProductDescZHHK() {
+		return this.getAttributes().stream().filter(pa -> pa.getLclCd().equals("zh-HK")).findFirst().get().getProductDesc();
+	}
+	
+	@Field(analyze=Analyze.NO)
+	@SortableField
+	public String getProductDescSortENGB() {
+		return this.getProductDescENGB();
+	}
+	
+	@Field(analyze=Analyze.NO)
+	@SortableField
+	public String getProductDescSortZHHK() {
+		return this.getProductDescZHHK();
 	}
 
 	public ProductAttribute getProductAttribute() {

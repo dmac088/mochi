@@ -12,7 +12,6 @@ import javax.persistence.Table;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Store;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -69,13 +68,6 @@ public class BrandAttribute {
 	public void setLclCd(String lclCd) {
 		this.lclCd = lclCd;
 	}
-	
-	@Field(analyze = Analyze.NO, store=Store.YES)
-	@Facet
-	public String getBrandToken() {
-		return this.getBrand().getBrandCode();
-	}
-
 	
 	@Override
     public int hashCode() {

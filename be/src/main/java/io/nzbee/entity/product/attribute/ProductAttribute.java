@@ -9,15 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.AnalyzerDiscriminator;
 import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
-import io.nzbee.entity.LanguageDiscriminator;
 import io.nzbee.entity.product.Product;
 
 @Entity
@@ -29,7 +25,6 @@ public class ProductAttribute {
 	@Column(name="prd_lcl_id")
 	private Long Id;
 
-	@Field(analyze = Analyze.YES, store=Store.YES)
 	@Column(name="prd_desc")
 	private String productDesc; 
 
@@ -39,7 +34,7 @@ public class ProductAttribute {
 	
 	@Column(name="lcl_cd")
 	@Field(store=Store.YES, analyze=Analyze.NO)
-	@AnalyzerDiscriminator(impl = LanguageDiscriminator.class)
+	//@AnalyzerDiscriminator(impl = LanguageDiscriminator.class)
 	private String lclCd;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -70,12 +65,6 @@ public class ProductAttribute {
 		return productDesc;
 	}
 	
-	@Field(analyze=Analyze.NO)
-	@SortableField
-	public String getProductDescSort() {
-		return productDesc;
-	}
-
 	public void setProductDesc(String productDesc) {
 		this.productDesc = productDesc;
 	}
@@ -96,28 +85,9 @@ public class ProductAttribute {
 		ProductImage = productImage;
 	}
 	
-	@Transient
-	@Field(store=Store.YES, analyze=Analyze.NO)
-	private Double getCurrentRetailPrice() {
-		return this.getProduct().getRetailPrice();
-	}
-	
-	@Transient
-	@Field(store=Store.YES, analyze=Analyze.NO)
-	private Double getCurrentMarkdownPrice() {
-		return this.getProduct().getMarkdownPrice();
-	}
-	
-	@Transient
-	@Field(store=Store.YES,analyze=Analyze.NO)
-	public String getProductUPC() {
-		return this.getProduct().getUPC();
-	}
-	
 	@Override
     public int hashCode() {
         HashCodeBuilder hcb = new HashCodeBuilder();
-        hcb.append(this.getProductUPC());
         hcb.append(this.getLclCd());
         return hcb.toHashCode();
     }
@@ -132,7 +102,6 @@ public class ProductAttribute {
 	    }
 	    ProductAttribute that = (ProductAttribute) obj;
 	      EqualsBuilder eb = new EqualsBuilder();
-	      eb.append(this.getProductUPC(), that.getProductUPC());
 	      eb.append(this.getLclCd(), that.getLclCd());
 	      return eb.isEquals();
 	}

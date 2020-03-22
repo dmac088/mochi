@@ -18,6 +18,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(Product.class)
 public abstract class Product_ {
 
+	public static volatile SingularAttribute<Product, Double> markdownPrice;
 	public static volatile SingularAttribute<Product, Long> productId;
 	public static volatile SingularAttribute<Product, String> productUPC;
 	public static volatile SingularAttribute<Product, ProductStatus> productStatus;
@@ -25,6 +26,7 @@ public abstract class Product_ {
 	public static volatile ListAttribute<Product, ProductAttribute> attributes;
 	public static volatile SetAttribute<Product, CategoryProduct> categories;
 	public static volatile ListAttribute<Product, ProductPrice> prices;
+	public static volatile SingularAttribute<Product, Double> retailPrice;
 	public static volatile SingularAttribute<Product, Brand> brand;
 	public static volatile SingularAttribute<Product, ProductType> productType;
 	public static volatile SetAttribute<Product, Tag> tags;
