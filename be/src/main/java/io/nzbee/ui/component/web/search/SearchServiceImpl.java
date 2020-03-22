@@ -293,17 +293,12 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 						"product.categories.parent.parent.categoryDesc" + transLcl,
 						"product.tags.tagDesc" + transLcl
 						)
-				.matching(searchTerm)//.createQuery())
-				//.must(queryBuilder.keyword().onFields("lclCd").matching(lcl)
+				.matching(searchTerm)
 				.createQuery()).createQuery();
 
 		final org.hibernate.search.jpa.FullTextQuery jpaQuery = fullTextEntityManager.createFullTextQuery(searchQuery,
 				io.nzbee.entity.product.Product.class);
 		
-		System.out.println("result size = " + jpaQuery.getResultSize());
-
-		//final Set<SearchFacet> facetList = new HashSet<SearchFacet>();
-
 		// initialize the facets
 		Set<Facet> facets = new HashSet<Facet>();
 		Set<String> codes = new HashSet<String>();
