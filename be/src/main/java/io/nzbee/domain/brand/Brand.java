@@ -1,9 +1,7 @@
 package io.nzbee.domain.brand;
 
 import java.util.Objects;
-
 import com.fasterxml.jackson.annotation.JsonTypeName;
-
 import io.nzbee.domain.IDomainObject;
 
 @JsonTypeName("brand")
@@ -81,12 +79,12 @@ public class Brand implements IDomainObject {
 		 if (this == o) return true;
 	     if (o == null || getClass() != o.getClass()) return false;
 	     Brand pcDto = (Brand) o;
-	     return this.brandCode == pcDto.brandCode;
+	     return this.getCode() == pcDto.getCode();
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(brandCode);
+		return Objects.hash(this.getCode());
 	}
 	
 }

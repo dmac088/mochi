@@ -1,7 +1,7 @@
 package io.nzbee.domain.tag;
 
+import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-
 import io.nzbee.domain.IDomainObject;
 
 @JsonTypeName("tag")
@@ -40,14 +40,6 @@ public class Tag implements IDomainObject {
 	public void setTagDesc(String tagDesc) {
 		this.tagDesc = tagDesc;
 	}
-	
-//	public String getTagType() {
-//		return tagType;
-//	}
-//
-//	public void setTagType(String tagType) {
-//		this.tagType = tagType;
-//	}
 
 	public String getLocale() {
 		return locale;
@@ -55,15 +47,6 @@ public class Tag implements IDomainObject {
 
 	public void setLocale(String locale) {
 		this.locale = locale;
-	}
-	
-	@Override
-    public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("tag [Id=").append(tagId)
-        		.append(", tagDesc=").append(tagDesc)
-                .append(", locale=").append(locale);
-        return builder.toString();
 	}
 
 	@Override
@@ -90,4 +73,27 @@ public class Tag implements IDomainObject {
 		return this.getTagDesc();
 	}
 
+	
+	@Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append("tag [Id=").append(tagId)
+        		.append(", tagDesc=").append(tagDesc)
+                .append(", locale=").append(locale);
+        return builder.toString();
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		 if (this == o) return true;
+	     if (o == null || getClass() != o.getClass()) return false;
+	     Tag pcDto = (Tag) o;
+	     return this.getCode() == pcDto.getCode();
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.getCode());
+	}
+	
 }
