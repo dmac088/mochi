@@ -215,8 +215,8 @@ public class Product {
 	@Transient
 	public Double getCurrentRetailPriceHKD() {
 		 return this.prices.stream().filter(p ->
-		 	p.getCurrency().getCode().equals(ProductVars.CURRENCY_HONG_KONG)
-		 	&& p.getType().getDesc().equals(ProductVars.RETAIL_SKU_DESCRIPTION)
+		 	p.getCurrency().getCode().equals("HKD")
+		 	&& p.getType().getDesc().equals("retail")
 		 ).collect(Collectors.toList()).get(0).getPriceValue();     
 	}
 	
@@ -225,8 +225,8 @@ public class Product {
 	@Transient
 	public Double getCurrentRetailPriceUSD() {
 		 return this.prices.stream().filter(p ->
-		 	p.getCurrency().getCode().equals(ProductVars.CURRENCY_US)
-		 	&& p.getType().getDesc().equals(ProductVars.RETAIL_SKU_DESCRIPTION)
+		 	p.getCurrency().getCode().equals("USD")
+		 	&& p.getType().getDesc().equals("retail")
 		 ).collect(Collectors.toList()).get(0).getPriceValue();     
 	}
 	
@@ -235,8 +235,8 @@ public class Product {
 	@Transient
 	public Double getCurrentMarkdownPriceHKD() {
 		 return this.prices.stream().filter(p ->
-		 	p.getCurrency().getCode().equals(ProductVars.CURRENCY_HONG_KONG)
-		 	&& p.getType().getDesc().equals(ProductVars.MARKDOWN_SKU_DESCRIPTION)
+		 	p.getCurrency().getCode().equals("HKD")
+		 	&& p.getType().getDesc().equals("markdown")
 		 ).collect(Collectors.toList()).get(0).getPriceValue();     
 	}
 	
@@ -245,8 +245,8 @@ public class Product {
 	@Transient
 	public Double getCurrentMarkdownPriceUSD() {
 		 return this.prices.stream().filter(p ->
-		 	p.getCurrency().getCode().equals(ProductVars.CURRENCY_US)
-		 	&& p.getType().getDesc().equals(ProductVars.MARKDOWN_SKU_DESCRIPTION)
+		 	p.getCurrency().getCode().equals("USD")
+		 	&& p.getType().getDesc().equals("markdown")
 		 ).collect(Collectors.toList()).get(0).getPriceValue();     
 	}
 	
