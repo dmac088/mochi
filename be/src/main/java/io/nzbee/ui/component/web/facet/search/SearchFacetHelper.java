@@ -33,10 +33,7 @@ public class SearchFacetHelper {
 	
 	@SuppressWarnings("rawtypes")
 	public IService getBean(ApplicationContext appContext) {
-		
-		return this.facetingName.equals("CategoryFR" )
-				? (IService) appContext.getBean("categoryDomainService")
-				: (IService) appContext.getBean("brandDomainService");
+		return (IService) appContext.getBean(this.getFacetingName() + "DomainService");
 	}
 
 	@Override

@@ -12,8 +12,8 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(Tag.class)
 public abstract class Tag_ {
 
-	public static volatile SingularAttribute<Tag, String> productTagCode;
-	public static volatile SingularAttribute<Tag, Long> productTagId;
+	public static volatile SingularAttribute<Tag, String> tagCode;
+	public static volatile SingularAttribute<Tag, Long> tagId;
 	public static volatile ListAttribute<Tag, TagAttribute> attributes;
 	public static volatile SetAttribute<Tag, Product> products;
 

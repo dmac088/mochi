@@ -1,14 +1,6 @@
 package io.nzbee.variables;
 
 public class CategoryVars {
-
-	public static final String PRIMARY_CATEGORY_FACET_NAME = "CategoryFR";
-	
-	public static final String BRAND_FACET_NAME = "BrandFR";
-	
-	public static final String PRICE_FACET_NAME = "PriceFR";
-	
-	public static final String TAG_FACET_NAME = "TagFR";
 	
 	public static final String PRIMARY_HIERARCHY_CODE = "PRM01";
 	

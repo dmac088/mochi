@@ -3,6 +3,8 @@ package io.nzbee.domain.tag;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -22,7 +24,7 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	io.nzbee.dto.category.ICategoryService categoryService;
 	
 	@Autowired
-	io.nzbee.dto.tag.ITagService productTagService;
+	io.nzbee.dto.tag.ITagService tagService;
 	
 	@Autowired
 	io.nzbee.dto.product.IProductService productService;
@@ -32,7 +34,7 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	@Transactional
 	public Tag findById(String locale, String currency, Long Id) {
 		// TODO Auto-generated method stub
-		io.nzbee.dto.tag.Tag pt = productTagService.findById(locale, currency, Id).get();
+		io.nzbee.dto.tag.Tag pt = tagService.findById(locale, currency, Id).get();
 		return this.dtoToDO(Optional.ofNullable(pt)).get();
 	}
 
@@ -40,7 +42,7 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	@Transactional
 	public Tag findByCode(String locale, String currency, String code) {
 		// TODO Auto-generated method stub	
-		io.nzbee.dto.tag.Tag  pt = productTagService.findByCode(locale, currency, code).get();
+		io.nzbee.dto.tag.Tag  pt = tagService.findByCode(locale, currency, code).get();
 		return this.dtoToDO(Optional.ofNullable(pt)).get();
 	}
 
@@ -48,7 +50,7 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	@Transactional
 	public Tag findByDesc(String locale, String currency, String desc) {
 		// TODO Auto-generated method stub
-		io.nzbee.dto.tag.Tag  pt = productTagService.findByDesc(locale, currency, desc).get();
+		io.nzbee.dto.tag.Tag  pt = tagService.findByDesc(locale, currency, desc).get();
 		return this.dtoToDO(Optional.ofNullable(pt)).get();
 	}
 
@@ -63,7 +65,9 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	@Transactional(readOnly=true)
 	public Set<Tag> findAll(String locale, String currency, List<String> codes) {
 		// TODO Auto-generated method stub
-		return null;
+		return tagService.findAll(locale, currency, codes)
+				  .stream().map(c -> dtoToDO(Optional.ofNullable(c)).get())
+				  .collect(Collectors.toSet());
 	}
 
 	@Override
@@ -103,6 +107,6 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	@Override
 	public String getFacetCategory() {
 		// TODO Auto-generated method stub
-		return "TagFR";
+		return "tag";
 	}
 }

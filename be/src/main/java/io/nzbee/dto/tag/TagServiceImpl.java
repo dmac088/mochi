@@ -27,7 +27,7 @@ public class TagServiceImpl implements ITagService {
 	ICategoryService categoryService;
 	
 	@Autowired
-	io.nzbee.entity.tag.ITagService productTagService;
+	io.nzbee.entity.tag.ITagService tagService;
 	
 	@Autowired
 	IProductService productService;
@@ -36,20 +36,22 @@ public class TagServiceImpl implements ITagService {
 	@Override
 	public List<Tag> findAll(String locale, String currency, List<String> codes) {
 		// TODO Auto-generated method stub
-		return null;
+		return tagService.findAll(locale, currency, codes)
+				   .stream().map(c -> entityToDTO(locale, currency, Optional.ofNullable(c)).get())
+				   .collect(Collectors.toList());
 	}
 	
 	@Override
 	public List<Tag> findAll(String locale, String currency, String categoryDesc, List<Category> categories, List<Brand> brands) {
-		return productTagService.findAll(locale, 
-										null, 
-										null, 
-										ProductVars.MARKDOWN_SKU_DESCRIPTION, 
-										currency, 
-										new Date(), 
-										new Date(), 
-										categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
-										brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()))
+		return tagService.findAll(locale, 
+								  null, 
+								  null, 
+								  ProductVars.MARKDOWN_SKU_DESCRIPTION, 
+								  currency, 
+								  new Date(), 
+								  new Date(), 
+								  categories.stream().map(c -> c.getCategoryCode()).collect(Collectors.toList()), 
+								  brands.stream().map(b -> b.getBrandCode()).collect(Collectors.toList()))
 				.stream().map(pt -> {
 					return entityToDTO(locale, currency, Optional.ofNullable(pt)).get();
 				}).collect(Collectors.toList());	
@@ -57,7 +59,7 @@ public class TagServiceImpl implements ITagService {
 	
 	@Override
 	public List<Tag> findAll(String locale, String currency, String categoryDesc, Double price, List<Category> categories, List<Brand> brands) {
-		return productTagService.findAll(locale, 
+		return tagService.findAll(locale, 
 				new Double(0), 
 				price, 
 				ProductVars.MARKDOWN_SKU_DESCRIPTION, 
