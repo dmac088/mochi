@@ -433,7 +433,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		}
 		if(!tagCodes.isEmpty()) {
 			Join<Product, Tag> tags = product.join(Product_.tags);
-			conditions.add(tags.get(io.nzbee.entity.tag.Tag_.productTagCode).in(tagCodes));
+			conditions.add(tags.get(io.nzbee.entity.tag.Tag_.tagCode).in(tagCodes));
 		}
 		if(!(parentCategoryDesc == null)) {
 			conditions.add(cb.equal(parentCategoryAttribute.get(CategoryAttribute_.categoryDesc), parentCategoryDesc));

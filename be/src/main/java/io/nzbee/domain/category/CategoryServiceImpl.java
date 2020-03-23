@@ -102,7 +102,7 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	@Override
 	public String getFacetCategory() {
 		// TODO Auto-generated method stub
-		return "CategoryFR";
+		return "category";
 	}
 
 	@Override

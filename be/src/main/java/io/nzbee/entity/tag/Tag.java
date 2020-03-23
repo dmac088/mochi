@@ -31,11 +31,11 @@ public class Tag {
 	
 	@Id
 	@Column(name="tag_id")
-	private Long productTagId;
+	private Long tagId;
 	
 	@NaturalId
 	@Column(name="tag_cd", unique = true, updatable = false)
-	private String productTagCode;
+	private String tagCode;
 
 	@ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "product_tag", schema="mochi", 
@@ -50,7 +50,7 @@ public class Tag {
 	private List<TagAttribute> attributes;
 	
 	public Long getTagId() {
-		return productTagId;
+		return tagId;
 	}
 	
 	@Field(analyze = Analyze.NO, store=Store.YES)
@@ -59,16 +59,16 @@ public class Tag {
 		return getCode();
 	}
 
-	public void setTagId(Long productTagId) {
-		this.productTagId = productTagId;
+	public void setTagId(Long tagId) {
+		this.tagId = tagId;
 	}
 	
 	public String getCode() {
-		return productTagCode;
+		return tagCode;
 	}
 
-	public void setCode(String productTagCode) {
-		this.productTagCode = productTagCode;
+	public void setCode(String tagCode) {
+		this.tagCode = tagCode;
 	}
 
 	public Set<Product> getProducts() {

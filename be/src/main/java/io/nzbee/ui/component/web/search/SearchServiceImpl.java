@@ -123,7 +123,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			  lf.stream()
 			  .filter(f -> f.getFacetingName().equals(s))
 			  .forEach(f -> {
-				  //  System.out.println(f.getFacetingName());
+				    System.out.println(f.getFacetingName());
 				  	this.getDiscreteFacets(	locale,
 											currency,
 											qb, 

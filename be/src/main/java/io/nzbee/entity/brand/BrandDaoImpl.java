@@ -322,7 +322,7 @@ public class BrandDaoImpl  implements IBrandDao {
 		}
 		if(tagCodes.size() > 0) {
 			Join<Product, Tag> productTag = product.join(Product_.tags);
-			conditions.add(productTag.get(Tag_.productTagCode).in(tagCodes));
+			conditions.add(productTag.get(Tag_.tagCode).in(tagCodes));
 		}
 		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
 		

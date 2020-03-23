@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import javax.persistence.EntityManager;
+import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -56,7 +59,7 @@ public class TagDaoImpl implements ITagDao {
 		Root<Tag> root = cq.from(Tag.class);
 
 		List<Predicate> conditions = new ArrayList<Predicate>();	
-		conditions.add(cb.equal(root.get(Tag_.productTagId), id));
+		conditions.add(cb.equal(root.get(Tag_.tagId), id));
 		
 		TypedQuery<Tag> query = em.createQuery(cq
 				.select(root)
@@ -77,7 +80,7 @@ public class TagDaoImpl implements ITagDao {
 		Root<Tag> root = cq.from(Tag.class);
 
 		List<Predicate> conditions = new ArrayList<Predicate>();	
-		conditions.add(cb.equal(root.get(Tag_.productTagCode), code));
+		conditions.add(cb.equal(root.get(Tag_.tagCode), code));
 		
 		TypedQuery<Tag> query = em.createQuery(cq
 				.select(root)
@@ -189,7 +192,45 @@ public class TagDaoImpl implements ITagDao {
 	@Override
 	public List<Tag> findAll(String locale, String currency, List<String> codes) {
 		// TODO Auto-generated method stub
-		return null;
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+				
+		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
+				
+		Root<Tag> root = cq.from(Tag.class);
+		Join<Tag, Product> tag = root.join(Tag_.products);
+		Join<Product, ProductStatus> status = tag.join(Product_.productStatus);
+		Join<Tag, TagAttribute> attribute = root.join(Tag_.attributes);
+				
+		List<Predicate> conditions = new ArrayList<Predicate>();
+		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
+		conditions.add(cb.equal(attribute.get(TagAttribute_.lclCd), locale));
+		conditions.add(root.in(Tag_.tagCode).in(codes));
+
+		cq.multiselect(	root.get(Tag_.tagId).alias("tagId"),
+						root.get(Tag_.tagCode).alias("tagCode"),
+						attribute.get(TagAttribute_.Id).alias("tagAttributeId"),
+						attribute.get(TagAttribute_.tagDesc).alias("tagDesc")
+		);
+				
+		TypedQuery<Tuple> query = em.createQuery(cq);
+				
+		List<Tuple> tuples = query.getResultList();
+				
+		return tuples.stream().map(t -> {
+			Tag tagEntity = new Tag();
+			TagAttribute tagAttribute = new TagAttribute();
+					
+			tagAttribute.setId(Long.parseLong(t.get("tagAttributeId").toString()));
+			tagAttribute.setProductTag(tagEntity);
+			tagAttribute.setTagDesc(t.get("tagDesc").toString());
+			tagAttribute.setLclCd(locale);
+					
+			tagEntity.addTagAttribute(tagAttribute);
+			tagEntity.setTagId(Long.parseLong(t.get("tagId").toString()));
+			tagEntity.setCode(t.get("tagCode").toString());
+					
+			return tagEntity;
+		}).collect(Collectors.toList());
 	}
 
 }

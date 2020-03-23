@@ -41,6 +41,14 @@ public class TagAttribute {
 		return tagId;
 	}
 	
+	public Long getId() {
+		return Id;
+	}
+
+	public void setId(Long id) {
+		Id = id;
+	}
+	
 	public Optional<Tag> getTag() {
 		return Optional.ofNullable(tag);
 	}
@@ -53,7 +61,7 @@ public class TagAttribute {
 		return tagDesc;
 	}
 	
-	public void setCategoryDesc(String tagDesc) {
+	public void setTagDesc(String tagDesc) {
 		this.tagDesc = tagDesc;
 	}
 	

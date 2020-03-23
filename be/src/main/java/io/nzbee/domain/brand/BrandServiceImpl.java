@@ -63,10 +63,9 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	@Transactional(readOnly=true)
 	public Set<Brand> findAll(String locale, String currency, List<String> codes) {
 		// TODO Auto-generated method stub
-		List<io.nzbee.dto.brand.Brand> lpb = brandService.findAll(locale, currency, codes);
-    	Set<Brand> lb = lpb.stream().map(pb -> dtoToDO(Optional.ofNullable(pb)).get())
-		.collect(Collectors.toSet());
-    	return lb;
+		return brandService.findAll(locale, currency, codes)
+				  .stream().map(c -> dtoToDO(Optional.ofNullable(c)).get())
+				  .collect(Collectors.toSet());
 	}
 	
 	@Override
@@ -104,7 +103,7 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	@Override
 	public String getFacetCategory() {
 		// TODO Auto-generated method stub
-		return "BrandFR";
+		return "brand";
 	}
 
 
