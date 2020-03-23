@@ -1,5 +1,6 @@
 package io.nzbee.entity.tag;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -47,7 +48,7 @@ public class Tag {
 	@OneToMany(	mappedBy="tag", 
 				cascade = CascadeType.ALL,
 				orphanRemoval = true)
-	private List<TagAttribute> attributes;
+	private Set<TagAttribute> attributes = new HashSet<TagAttribute>();
 	
 	public Long getTagId() {
 		return tagId;
@@ -75,7 +76,7 @@ public class Tag {
 		return products;
 	}
 
-	public List<TagAttribute> getAttributes() {
+	public Set<TagAttribute> getAttributes() {
 		return attributes;
 	}
 	
