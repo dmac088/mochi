@@ -32,7 +32,7 @@ public class SearchFacet  implements org.hibernate.search.query.facet.Facet, IFa
 	@Override
 	public String getDisplayValue() {
 		// TODO Auto-generated method stub
-		return ((IDomainObject)this.getPayload()).getDesc() /*+ " (" + delegate.getCount() + ")"*/;
+		return ((IDomainObject)this.getPayload()).getDesc();
 	}
 
 	@Override
