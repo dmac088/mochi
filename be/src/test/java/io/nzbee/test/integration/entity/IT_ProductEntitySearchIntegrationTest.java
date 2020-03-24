@@ -1,6 +1,11 @@
 package io.nzbee.test.integration.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.hibernate.CacheMode;
@@ -27,7 +32,7 @@ import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.product.Product;
 import io.nzbee.test.integration.beans.ProductEntityBeanFactory;
-import io.nzbee.ui.component.web.facet.FacetContainer;
+import io.nzbee.ui.component.web.facet.IFacet;
 import io.nzbee.ui.component.web.search.ISearchService;
 
 @RunWith(SpringRunner.class)
@@ -70,6 +75,8 @@ public class IT_ProductEntitySearchIntegrationTest {
     @Autowired 
     private ISearchService searchService;
    
+	private Set<IFacet> facetPayload = new HashSet<IFacet>();
+	private Set<IFacet> returnFacets = new HashSet<IFacet>();
 	
 	@Before
 	public void buildSearchIndex() {
@@ -104,7 +111,8 @@ public class IT_ProductEntitySearchIntegrationTest {
 							  0, 
 							  10, 
 							  "", 
-							  new FacetContainer());
+							  facetPayload,
+							  returnFacets);
 		
 		
         // then
@@ -126,7 +134,8 @@ public class IT_ProductEntitySearchIntegrationTest {
 							  0, 
 							  10, 
 							  "", 
-							  new FacetContainer());
+							  facetPayload,
+							  returnFacets);
 		
 		
         // then
@@ -150,7 +159,8 @@ public class IT_ProductEntitySearchIntegrationTest {
 							  0, 
 							  10, 
 							  "", 
-							  new FacetContainer());
+							  facetPayload,
+							  returnFacets);
 		
 		
         // then
@@ -172,7 +182,8 @@ public class IT_ProductEntitySearchIntegrationTest {
 							  0, 
 							  10, 
 							  "", 
-							  new FacetContainer());
+							  facetPayload,
+							  returnFacets);
 		
 		
         // then
@@ -194,7 +205,8 @@ public class IT_ProductEntitySearchIntegrationTest {
 							  0, 
 							  10, 
 							  "", 
-							  new FacetContainer());
+							  facetPayload,
+							  returnFacets);
 		
 		
         // then
@@ -216,7 +228,8 @@ public class IT_ProductEntitySearchIntegrationTest {
 							  0, 
 							  10, 
 							  "", 
-							  new FacetContainer());
+							  facetPayload,
+							  returnFacets);
 		
 		
         // then
@@ -238,7 +251,8 @@ public class IT_ProductEntitySearchIntegrationTest {
 							  0, 
 							  10, 
 							  "", 
-							  new FacetContainer());
+							  facetPayload,
+							  returnFacets);
 		
 		
         // then
@@ -260,7 +274,8 @@ public class IT_ProductEntitySearchIntegrationTest {
 							  0, 
 							  10, 
 							  "", 
-							  new FacetContainer());
+							  facetPayload,
+							  returnFacets);
 		
 		
         // then
@@ -282,7 +297,8 @@ public class IT_ProductEntitySearchIntegrationTest {
 							  0, 
 							  10, 
 							  "", 
-							  new FacetContainer());
+							  facetPayload,
+							  returnFacets);
 		
 		
         // then
@@ -304,7 +320,8 @@ public class IT_ProductEntitySearchIntegrationTest {
 							  0, 
 							  10, 
 							  "", 
-							  new FacetContainer());
+							  facetPayload,
+							  returnFacets);
 		
 		
         // then
@@ -326,7 +343,8 @@ public class IT_ProductEntitySearchIntegrationTest {
 							  0, 
 							  10, 
 							  "", 
-							  new FacetContainer());
+							  facetPayload,
+							  returnFacets);
 		
 		
         // then
@@ -348,7 +366,8 @@ public class IT_ProductEntitySearchIntegrationTest {
 							  0, 
 							  10, 
 							  "", 
-							  new FacetContainer());
+							  facetPayload,
+							  returnFacets);
 		
 		
         // then
@@ -370,7 +389,8 @@ public class IT_ProductEntitySearchIntegrationTest {
 							  0, 
 							  10, 
 							  "", 
-							  new FacetContainer());
+							  facetPayload,
+							  returnFacets);
 		
 		
         // then
@@ -392,7 +412,8 @@ public class IT_ProductEntitySearchIntegrationTest {
 							  0, 
 							  10, 
 							  "", 
-							  new FacetContainer());
+							  facetPayload,
+							  returnFacets);
 		
 		
         // then
@@ -414,7 +435,8 @@ public class IT_ProductEntitySearchIntegrationTest {
 							  0, 
 							  10, 
 							  "", 
-							  new FacetContainer());
+							  facetPayload,
+							  returnFacets);
 		
 		
         // then
@@ -436,7 +458,8 @@ public class IT_ProductEntitySearchIntegrationTest {
 							  0, 
 							  10, 
 							  "", 
-							  new FacetContainer());
+							  facetPayload,
+							  returnFacets);
 		
 		
         // then
@@ -449,6 +472,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	
 	@Test
 	public void whenSearchCashews_thenReturnCashewsProducts() {
+		
 		// when
 		Page<io.nzbee.domain.product.Product> 
 						pp = searchService.findAll(
@@ -459,7 +483,8 @@ public class IT_ProductEntitySearchIntegrationTest {
 							  0, 
 							  10, 
 							  "", 
-							  new FacetContainer());
+							  facetPayload,
+							  returnFacets);
 		
 		
         // then
@@ -467,6 +492,82 @@ public class IT_ProductEntitySearchIntegrationTest {
         .isEqualTo(1);
     	assertThat(pp.getTotalElements())
         .isEqualTo(new Long(1));
+	}
+	
+	@Test
+	public void whenSearchForBrandGlorysFruit_thenReturnBrandGlorysFruitProducts() {
+		
+		// when
+		searchService.findAll( 	"en-GB", 
+								"HKD", 
+								"Ignored", 
+								"Fruit", 
+								0, 
+								10, 
+								"", 
+								facetPayload,
+								returnFacets);
+		
+		Set<IFacet> fp = returnFacets.stream().filter(f -> f.getPayloadType().equals("Brand")
+									   && f.getValue().equals("GLO01")).collect(Collectors.toSet());
+								
+		Page<io.nzbee.domain.product.Product> pp = 
+		searchService.findAll( 	"en-GB", 
+								"HKD", 
+								"Ignored", 
+								"Fruit", 
+								0, 
+								10, 
+								"", 
+								fp,
+								returnFacets);
+		
+		
+        // then
+		assertThat(pp.getTotalPages())
+        .isEqualTo(1);
+    	assertThat(pp.getTotalElements())
+        .isEqualTo(new Long(2));
+	}
+	
+	@Test
+	public void whenSearchForBrandGlorysAndPlantersFruit_thenReturnBrandGlorysAndPlantersFruitProducts() {
+		
+		// when
+		searchService.findAll( 	"en-GB", 
+								"HKD", 
+								"Ignored", 
+								"Fruit", 
+								0, 
+								10, 
+								"", 
+								facetPayload,
+								returnFacets);
+		
+		Set<IFacet> fp = returnFacets.stream().filter(f -> f.getPayloadType().equals("Brand")
+									   && 
+									   (f.getValue().equals("GLO01")
+									   || 
+									    f.getValue().equals("PLA01")
+									   )).collect(Collectors.toSet());
+								
+		Page<io.nzbee.domain.product.Product> pp = 
+		searchService.findAll( 	"en-GB", 
+								"HKD", 
+								"Ignored", 
+								"Fruit", 
+								0, 
+								10, 
+								"", 
+								fp,
+								returnFacets);
+		
+		
+        // then
+		assertThat(pp.getTotalPages())
+        .isEqualTo(1);
+    	assertThat(pp.getTotalElements())
+        .isEqualTo(new Long(4));
 	}
 	
 	@After

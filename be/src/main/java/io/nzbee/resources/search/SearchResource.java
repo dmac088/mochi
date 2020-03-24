@@ -61,6 +61,7 @@ public class SearchResource extends ResourceSupport {
 		this.facets = returnFacets;
     }
 
+
 	public PagedResources<ProductResource> getProducts() {
 		return products;
 	}
