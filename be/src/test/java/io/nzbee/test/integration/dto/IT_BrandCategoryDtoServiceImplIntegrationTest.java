@@ -70,9 +70,6 @@ public class IT_BrandCategoryDtoServiceImplIntegrationTest {
 	    	
 		category = categoryEntityBeanFactory.getBrandCategoryEntityBean();
 	    	
-	    //persist a new transient test hierarchy
-	    entityManager.persist(category.getHierarchy());
-	    	
 	    //persist a new transient test category
 	    entityManager.persist(category);
 	    entityManager.flush();

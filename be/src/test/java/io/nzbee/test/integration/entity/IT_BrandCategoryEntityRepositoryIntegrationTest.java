@@ -23,8 +23,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.domain.product.Product;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.ICategoryService;
-import io.nzbee.entity.product.hierarchy.Hierarchy;
-import io.nzbee.entity.product.hierarchy.IHierarchyRepository;
 import io.nzbee.test.integration.beans.CategoryEntityBeanFactory;
 import io.nzbee.variables.GeneralVars;
 
@@ -72,9 +70,7 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
  
     @Autowired
     private ICategoryService categoryService;
-    
-    @Autowired
-    private IHierarchyRepository hierarchyRepository;
+ 
     
 	private io.nzbee.entity.category.Category category = null;
     
@@ -86,9 +82,6 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
 	public io.nzbee.entity.category.Category persistNewCategory() {
     	
 		category = categoryEntityBeanFactory.getBrandCategoryEntityBean();
-	    	
-		Hierarchy h = hierarchyRepository.findByHierarchyCode("BND01");
-		category.setHierarchy(h);
 	    	
 	    //persist a new transient test category
 	    entityManager.persist(category);
@@ -142,8 +135,6 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
 	    assertThat(found.getCategoryLevel())
 	    .isEqualTo(new Long(2));
 	    assertThat(found.getCategoryType().getCode())
-	    .isEqualTo("BND01");
-	    assertThat(found.getHierarchy().getHierarchyCode())
 	    .isEqualTo("BND01");
 	    assertThat(found.getCategoryAttribute().getCategoryDesc())
 	    .isEqualTo("test brand category");

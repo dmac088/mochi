@@ -32,7 +32,6 @@ import io.nzbee.entity.category.product.CategoryProduct_;
 import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.Product_;
-import io.nzbee.entity.product.hierarchy.Hierarchy;
 import io.nzbee.entity.tag.Tag;
 import io.nzbee.variables.ProductVars;
 
@@ -68,24 +67,22 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 			Category category = (Category) c[0];
 			category.setCategoryAttribute(((CategoryAttribute) c[1]));
 			category.setCategoryType((CategoryType) c[2]);
-			category.setHierarchy((Hierarchy) c[3]);
-			category.setObjectCount(((BigDecimal)c[8]).intValue());
-			category.setChildCount(((BigInteger)c[9]).longValue());
-			category.setCategoryLayouts((((String)c[10]) != null)
-										? ((String)c[10]).split(",", -1)
+			category.setObjectCount(((BigDecimal)c[6]).intValue());
+			category.setChildCount(((BigInteger)c[7]).longValue());
+			category.setCategoryLayouts((((String)c[8]) != null)
+										? ((String)c[8]).split(",", -1)
 										: new String[0]);
 			category.setLocale(locale);
 			category.setCurrency(currency);
 			
 			//if c[4] is null then the category does not have a parent
 			if(category instanceof CategoryProduct) {
-				((CategoryProduct) category).setHasParent(c[4] != null);
+				((CategoryProduct) category).setHasParent(c[3] != null);
 				if(((CategoryProduct) category).hasParent()) {
 					//we have a parent
-					Category parentCategory = (Category) c[4];
-					parentCategory.setCategoryAttribute(((CategoryAttribute) c[5]));
-					parentCategory.setCategoryType((CategoryType) c[6]);
-					parentCategory.setHierarchy((Hierarchy) c[7]);
+					Category parentCategory = (Category) c[3];
+					parentCategory.setCategoryAttribute(((CategoryAttribute) c[4]));
+					parentCategory.setCategoryType((CategoryType) c[5]);
 					category.setParent(parentCategory);
 				}
 			}
@@ -119,24 +116,22 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 			Category category = (Category) c[0];
 			category.setCategoryAttribute(((CategoryAttribute) c[1]));
 			category.setCategoryType((CategoryType) c[2]);
-			category.setHierarchy((Hierarchy) c[3]);
-			category.setObjectCount(((BigDecimal)c[8]).intValue());
-			category.setChildCount(((BigInteger)c[9]).longValue());
-			category.setCategoryLayouts((((String)c[10]) != null)
-										? ((String)c[10]).split(",", -1)
+			category.setObjectCount(((BigDecimal)c[6]).intValue());
+			category.setChildCount(((BigInteger)c[7]).longValue());
+			category.setCategoryLayouts((((String)c[8]) != null)
+										? ((String)c[8]).split(",", -1)
 										: new String[0]);
 			category.setLocale(locale);
 			category.setCurrency(currency);
 			
 			//if c[4] is null then the category does not have a parent
 			if(category instanceof CategoryProduct) {
-				((CategoryProduct) category).setHasParent(c[4] != null);
+				((CategoryProduct) category).setHasParent(c[3] != null);
 				if(((CategoryProduct) category).hasParent()) {
 					//we have a parent
-					Category parentCategory = (Category) c[4];
-					parentCategory.setCategoryAttribute(((CategoryAttribute) c[5]));
-					parentCategory.setCategoryType((CategoryType) c[6]);
-					parentCategory.setHierarchy((Hierarchy) c[7]);
+					Category parentCategory = (Category) c[3];
+					parentCategory.setCategoryAttribute(((CategoryAttribute) c[4]));
+					parentCategory.setCategoryType((CategoryType) c[5]);
 					category.setParent(parentCategory);
 				}
 			}
@@ -173,24 +168,22 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 			Category category = (Category) c[0];
 			category.setCategoryAttribute(((CategoryAttribute) c[1]));
 			category.setCategoryType((CategoryType) c[2]);
-			category.setHierarchy((Hierarchy) c[3]);
-			category.setObjectCount(((BigDecimal)c[8]).intValue());
-			category.setChildCount(((BigInteger)c[9]).longValue());
-			category.setCategoryLayouts((((String)c[10]) != null)
-					? ((String)c[10]).split(",", -1)
-					: new String[0]);
+			category.setObjectCount(((BigDecimal)c[6]).intValue());
+			category.setChildCount(((BigInteger)c[7]).longValue());
+			category.setCategoryLayouts((((String)c[8]) != null)
+										? ((String)c[8]).split(",", -1)
+										: new String[0]);
 			category.setLocale(locale);
 			category.setCurrency(currency);
 			
 			//if c[4] is null then the category does not have a parent
 			if(category instanceof CategoryProduct) {
-				((CategoryProduct) category).setHasParent(c[4] != null);
+				((CategoryProduct) category).setHasParent(c[3] != null);
 				if(((CategoryProduct) category).hasParent()) {
 					//we have a parent
-					Category parentCategory = (Category) c[4];
-					parentCategory.setCategoryAttribute(((CategoryAttribute) c[5]));
-					parentCategory.setCategoryType((CategoryType) c[6]);
-					parentCategory.setHierarchy((Hierarchy) c[7]);
+					Category parentCategory = (Category) c[3];
+					parentCategory.setCategoryAttribute(((CategoryAttribute) c[4]));
+					parentCategory.setCategoryType((CategoryType) c[5]);
 					category.setParent(parentCategory);
 				}
 			}
@@ -225,22 +218,20 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		Category category = (Category) c[0];
 		category.setCategoryAttribute(((CategoryAttribute) c[1]));
 		category.setCategoryType((CategoryType) c[2]);
-		category.setHierarchy((Hierarchy) c[3]);
 		if(category instanceof CategoryProduct) {
-			((CategoryProduct) category).setHasParent(c[4] != null);
+			((CategoryProduct) category).setHasParent(c[3] != null);
 			if(((CategoryProduct) category).hasParent()) {
 				//we have a parent
-				Category parentCategory = (Category) c[4];
-				parentCategory.setCategoryAttribute(((CategoryAttribute) c[5]));
-				parentCategory.setCategoryType((CategoryType) c[6]);
-				parentCategory.setHierarchy((Hierarchy) c[7]);
+				Category parentCategory = (Category) c[3];
+				parentCategory.setCategoryAttribute(((CategoryAttribute) c[4]));
+				parentCategory.setCategoryType((CategoryType) c[5]);
 				category.setParent(parentCategory);
 			}
 		}
-		category.setObjectCount(((BigDecimal)c[8]).intValue());
-		category.setChildCount(((BigInteger)c[9]).longValue());
-		category.setCategoryLayouts((((String)c[10]) != null)
-				? ((String)c[10]).split(",", -1)
+		category.setObjectCount(((BigDecimal)c[6]).intValue());
+		category.setChildCount(((BigInteger)c[7]).longValue());
+		category.setCategoryLayouts((((String)c[8]) != null)
+				? ((String)c[8]).split(",", -1)
 				: new String[0]);	
 		category.setLocale(locale);
 		category.setCurrency(currency);
@@ -276,22 +267,20 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		Category category = (Category) c[0];
 		category.setCategoryAttribute(((CategoryAttribute) c[1]));
 		category.setCategoryType((CategoryType) c[2]);
-		category.setHierarchy((Hierarchy) c[3]);
 		if(category instanceof CategoryProduct) {
-			((CategoryProduct) category).setHasParent(c[4] != null);
+			((CategoryProduct) category).setHasParent(c[3] != null);
 			if(((CategoryProduct) category).hasParent()) {
 				//we have a parent
-				Category parentCategory = (Category) c[4];
-				parentCategory.setCategoryAttribute(((CategoryAttribute) c[5]));
-				parentCategory.setCategoryType((CategoryType) c[6]);
-				parentCategory.setHierarchy((Hierarchy) c[7]);
+				Category parentCategory = (Category) c[3];
+				parentCategory.setCategoryAttribute(((CategoryAttribute) c[4]));
+				parentCategory.setCategoryType((CategoryType) c[5]);
 				category.setParent(parentCategory);
 			}
 		}
-		category.setObjectCount(((BigDecimal)c[8]).intValue());
-		category.setChildCount(((BigInteger)c[9]).longValue());
-		category.setCategoryLayouts((((String)c[10]) != null)
-				? ((String)c[10]).split(",", -1)
+		category.setObjectCount(((BigDecimal)c[6]).intValue());
+		category.setChildCount(((BigInteger)c[7]).longValue());
+		category.setCategoryLayouts((((String)c[8]) != null)
+				? ((String)c[8]).split(",", -1)
 				: new String[0]);	
 		category.setLocale(locale);
 		category.setCurrency(currency);
@@ -329,22 +318,20 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 			Category category = (Category) c[0];
 			category.setCategoryAttribute(((CategoryAttribute) c[1]));
 			category.setCategoryType((CategoryType) c[2]);
-			category.setHierarchy((Hierarchy) c[3]);
 			if(category instanceof CategoryProduct) {
-				((CategoryProduct) category).setHasParent(c[4] != null);
+				((CategoryProduct) category).setHasParent(c[3] != null);
 				if(((CategoryProduct) category).hasParent()) {
 					//we have a parent
-					Category parentCategory = (Category) c[4];
-					parentCategory.setCategoryAttribute(((CategoryAttribute) c[5]));
-					parentCategory.setCategoryType((CategoryType) c[6]);
-					parentCategory.setHierarchy((Hierarchy) c[7]);
+					Category parentCategory = (Category) c[3];
+					parentCategory.setCategoryAttribute(((CategoryAttribute) c[4]));
+					parentCategory.setCategoryType((CategoryType) c[5]);
 					category.setParent(parentCategory);
 				}
 			}
-			category.setObjectCount(((BigDecimal)c[8]).intValue());
-			category.setChildCount(((BigInteger)c[9]).longValue());
-			category.setCategoryLayouts((((String)c[10]) != null)
-					? ((String)c[10]).split(",", -1)
+			category.setObjectCount(((BigDecimal)c[6]).intValue());
+			category.setChildCount(((BigInteger)c[7]).longValue());
+			category.setCategoryLayouts((((String)c[8]) != null)
+					? ((String)c[8]).split(",", -1)
 					: new String[0]);
 			category.setLocale(locale);
 			category.setCurrency(currency);
@@ -724,10 +711,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				") " +
 				"SELECT s.cat_id 				AS cat_id, " +
 				"       s.cat_cd 				AS cat_cd, " +
-				"       s.cat_lvl 				AS cat_lvl, " +
-				"       s.hir_id				AS hir_id, " +
-				"		h.hir_cd				AS hir_cd, " + 
-				"		h.hir_desc 				AS hir_desc, " +		
+				"       s.cat_lvl 				AS cat_lvl, " +	
 				"		a.cat_lcl_id 			AS cat_lcl_id, "	+	
 				"		s.cat_type_id 			AS cat_typ_id, 	" +
 				"       ct.cat_typ_cd			AS cat_typ_cd, " +
@@ -745,9 +729,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				" 		pa.cat_lcl_id 			AS cat_prnt_lcl_id, " +
 				"       pa.cat_desc 			AS cat_prnt_desc, " +
 				"       pa.lcl_cd 				AS cat_prnt_lcl_cd, " +
-				"		ph.hir_id 				AS cat_prnt_hir_id, " +
-				"		ph.hir_cd 				AS cat_prnt_hir_cd, " +
-				"		ph.hir_desc 			AS cat_prnt_hir_desc, " +
 				"		a.cat_lcl_id			AS cat_lcl_id, " +
 				"       a.cat_img_pth			AS cat_img_pth, " +
 				"       s.object_count			AS object_count, " +
@@ -775,14 +756,8 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"INNER JOIN mochi.category_attr_lcl a " +
 				"ON s.cat_id = a.cat_id " +
 				
-				"INNER JOIN mochi.hierarchy h " +
-				"ON s.hir_id = h.hir_id " +
-				
 				"LEFT JOIN mochi.category parent " +
 				"ON s.prnt_id = parent.cat_id  " +
-				
-				"LEFT JOIN mochi.hierarchy ph " +
-				"ON parent.hir_id = ph.hir_id " +
 				
 				"INNER JOIN mochi.category_type ct " +
 				"ON ct.cat_typ_id = s.cat_type_id  " +
