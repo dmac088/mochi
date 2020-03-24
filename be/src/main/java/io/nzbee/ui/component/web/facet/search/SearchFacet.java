@@ -101,12 +101,12 @@ public class SearchFacet  implements org.hibernate.search.query.facet.Facet, IFa
 		 if (this == o) return true;
 	     if (o == null || getClass() != o.getClass()) return false;
 	     SearchFacet sf = (SearchFacet) o;
-	     return this.value == sf.value;
+	     return this.getValue().equals(sf.getValue()) && this.getFacetingName().equals(sf.getFacetingName());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.value);
+		return Objects.hash(31);
 	}
 
 }
