@@ -1,7 +1,6 @@
 package io.nzbee.entity.tag;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,14 +14,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Store;
-
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.tag.attribute.TagAttribute;
 
