@@ -67,10 +67,7 @@ public class IT_ProductCategoryDtoServiceImplIntegrationTest {
 	public io.nzbee.entity.category.Category persistNewCategory() {
     	
 		category = categoryEntityBeanFactory.getProductCategoryEntityBean();
-	    	
-	    //persist a new transient test hierarchy
-	    entityManager.persist(category.getHierarchy());
-	    	
+
 	    //persist a new transient test category
 	    entityManager.persist(category);
 	    entityManager.flush();

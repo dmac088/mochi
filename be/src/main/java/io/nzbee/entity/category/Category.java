@@ -35,14 +35,11 @@ import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Store;
-
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.google.common.collect.Lists;
-
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.entity.layout.Layout;
-import io.nzbee.entity.product.hierarchy.Hierarchy;
 
 @Entity
 @Table(name = "category", schema = "mochi")
@@ -94,13 +91,6 @@ import io.nzbee.entity.product.hierarchy.Hierarchy;
 	                    @FieldResult(name = "categoryTypeCode", 			column = "cat_typ_cd"),
 	                    @FieldResult(name = "categoryTypeDesc", 			column = "cat_typ_desc")
 	                }),
-	        @EntityResult(
-	                entityClass = Hierarchy.class,
-	                fields = {
-	                    @FieldResult(name = "hierarchyId", 					column = "hir_id"),
-	                    @FieldResult(name = "hierarchyCode", 				column = "hir_cd"),
-	                    @FieldResult(name = "hierarchyDesc", 				column = "hir_desc")
-	                }),
 	            //now we initialize the parent category
 	        @EntityResult(
 	                entityClass = Category.class,
@@ -135,13 +125,6 @@ import io.nzbee.entity.product.hierarchy.Hierarchy;
 	                    @FieldResult(name = "categoryTypeCode", 			column = "cat_prnt_typ_cd"),
 	                    @FieldResult(name = "categoryTypeDesc", 			column = "cat_prnt_typ_desc")
 	                }),
-	        @EntityResult(
-	                entityClass = Hierarchy.class,
-	                fields = {
-	                    @FieldResult(name = "hierarchyId", 					column = "cat_prnt_hir_id"),
-	                    @FieldResult(name = "hierarchyCode", 				column = "cat_prnt_hir_cd"),
-	                    @FieldResult(name = "hierarchyDesc", 				column = "cat_prnt_hir_desc")
-	                }),
 	    })
 public abstract class Category {
 
@@ -158,10 +141,6 @@ public abstract class Category {
 	@Column(name="cat_lvl")
 	@Field(analyze = Analyze.NO, store=Store.YES)
 	private Long categoryLevel;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="hir_id")
-	private Hierarchy hierarchy;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="cat_typ_id",
@@ -295,14 +274,6 @@ public abstract class Category {
 
 	public void setCategoryLevel(Long categoryLevel) {
 		this.categoryLevel = categoryLevel;
-	}
-	
-    public Hierarchy getHierarchy() {
-		return hierarchy;
-	}
-
-	public void setHierarchy(Hierarchy hierarchy) {
-		this.hierarchy = hierarchy;
 	}
 	
 	public String getCategoryCode() {
