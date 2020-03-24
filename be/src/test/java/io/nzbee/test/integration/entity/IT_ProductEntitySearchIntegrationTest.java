@@ -496,6 +496,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	
 	@Test
 	public void whenSearchForBrandGlorysFruit_thenReturnBrandGlorysFruitProducts() {
+		returnFacets.clear();
 		
 		// when
 		searchService.findAll( 	"en-GB", 
@@ -510,7 +511,9 @@ public class IT_ProductEntitySearchIntegrationTest {
 		
 		Set<IFacet> fp = returnFacets.stream().filter(f -> f.getPayloadType().equals("Brand")
 									   && f.getValue().equals("GLO01")).collect(Collectors.toSet());
-								
+
+		returnFacets.clear();
+		
 		Page<io.nzbee.domain.product.Product> pp = 
 		searchService.findAll( 	"en-GB", 
 								"HKD", 
@@ -550,7 +553,9 @@ public class IT_ProductEntitySearchIntegrationTest {
 									   || 
 									    f.getValue().equals("PLA01")
 									   )).collect(Collectors.toSet());
-								
+		 
+		returnFacets.clear();
+		
 		Page<io.nzbee.domain.product.Product> pp = 
 		searchService.findAll( 	"en-GB", 
 								"HKD", 

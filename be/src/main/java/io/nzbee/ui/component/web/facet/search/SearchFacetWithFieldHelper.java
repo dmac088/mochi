@@ -35,8 +35,6 @@ public class SearchFacetWithFieldHelper {
 		return (IService) appContext.getBean(this.getFacetingName() + "DomainService");
 	}
 
-	
- 
 	@Override
 	public boolean equals(Object obj) {
 	    if (this == obj) {
