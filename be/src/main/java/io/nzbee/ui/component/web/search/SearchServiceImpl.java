@@ -381,9 +381,9 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		});
 		
 		returnFacets.stream()
-		.sorted( (a, b) -> a.getValue().compareTo(b.getValue()))
+		.sorted( (a, b) -> (a.getPayloadType() + a.getValue()).compareTo(b.getPayloadType() + b.getValue()))
 		.forEach(f -> {
-			LOGGER.debug(f.getValue() + " -> " +  f.getDisplayValue() + " -> " + f.getCount());
+			LOGGER.debug(f.getPayloadType() + " " + f.getValue() + " -> " +  f.getDisplayValue() + " -> " + f.getCount());
 		});
 
 		
