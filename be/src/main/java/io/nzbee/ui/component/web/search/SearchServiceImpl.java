@@ -36,7 +36,6 @@ import io.nzbee.domain.IService;
 import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.product.Product;
 import io.nzbee.entity.PageableUtil;
-import io.nzbee.ui.component.web.facet.FacetContainer;
 import io.nzbee.ui.component.web.facet.search.SearchFacet;
 import io.nzbee.ui.component.web.facet.search.SearchFacetHelper;
 import io.nzbee.ui.component.web.facet.search.SearchFacetWithFieldHelper;
@@ -61,32 +60,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 	@PersistenceContext(unitName = "mochiEntityManagerFactory")
 	private EntityManager em;
 
-	@Override
-	public Page<Product> findAll(		String locale, 
-										String currency, 
-										String categoryDesc, 
-										String searchTerm, 
-										int page,
-										int size,
-										String sortBy, 
-										FacetContainer selectedFacets) {
-		
-		final Set<io.nzbee.ui.component.web.facet.IFacet> returnFacets = new HashSet<io.nzbee.ui.component.web.facet.IFacet>();
-		// call the domain layer service to get a Page of Products
-		return this.findAll(
-							locale, 
-							currency, 
-							categoryDesc, 
-							searchTerm, 
-							page, 
-							size, 
-							sortBy, 
-							selectedFacets.getFacets(),
-							returnFacets);
-		
-	}
-
-	
 	private Set<Facet> processFacet( String locale, 
 											String currency,
 											QueryBuilder qb,
@@ -177,7 +150,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		return lsfh;
 	}
 	
-
 	private  Set<String> getDiscreteFacets(	   String locale, 
 											   String currency, 
 											   QueryBuilder qb, 
@@ -238,8 +210,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		//get the object array for the ids in previous step
 		return ss;
 	}
-	
-	
+
 	private void getFieldRefs(Facet f, List<String> codes, final Set<String> fieldRefs) { 
 		//we need to use a standard loop to extract a range
 		for (int i=0; i < codes.size(); i++) {
