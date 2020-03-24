@@ -1,5 +1,7 @@
 package io.nzbee.ui.component.web.facet.search;
 
+import java.util.Objects;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.context.ApplicationContext;
@@ -33,13 +35,7 @@ public class SearchFacetWithFieldHelper {
 		return (IService) appContext.getBean(this.getFacetingName() + "DomainService");
 	}
 
-	@Override
-    public int hashCode() {
-        HashCodeBuilder hcb = new HashCodeBuilder();
-        hcb.append(facetingName);
-        hcb.append(fieldName);
-        return hcb.toHashCode();
-    }
+	
  
 	@Override
 	public boolean equals(Object obj) {
@@ -51,9 +47,14 @@ public class SearchFacetWithFieldHelper {
 	    }
 	    SearchFacetWithFieldHelper that = (SearchFacetWithFieldHelper) obj;
 	      EqualsBuilder eb = new EqualsBuilder();
-	      eb.append(this.facetingName, that.facetingName);
-	      eb.append(this.fieldName, that.fieldName);
+	      eb.append(this.getFacetingName(), that.getFacetingName());
+	      eb.append(this.getFieldName(), that.getFieldName());
 	      return eb.isEquals();
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(31);
 	}
 	
 }
