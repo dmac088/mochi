@@ -272,6 +272,9 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		// initialize the facets
 		Set<Facet> facets = new HashSet<Facet>();
 		Set<String> codes = new HashSet<String>();
+		
+		facetServices.showFacetServices();
+		
 		facetServices
 			.getFacetServices()
 			.stream()
@@ -326,7 +329,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 
 			//create a new array of entity facets
 			IService service = sfh.getBean(appContext);
-					
+			
 			facets.stream()
 			      .filter(x -> {
 									return !selectedFacets.stream()
@@ -353,7 +356,15 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		returnFacets.stream()
 		.sorted( (a, b) -> (a.getPayloadType() + a.getValue()).compareTo(b.getPayloadType() + b.getValue()))
 		.forEach(f -> {
-			LOGGER.debug(f.getPayloadType() + " " + f.getValue() + " -> " +  f.getDisplayValue() + " -> " + f.getCount());
+			LOGGER.debug(f.getPayloadType() + " " + 
+						 f.getValue() + " -> " +  
+						 f.getDisplayValue() + " -> " + 
+						 f.getCount() + " - " +  
+						 f.getFacetingName()
+						 
+						 
+						 
+			);
 		});
 
 		

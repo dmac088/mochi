@@ -2,9 +2,7 @@ package io.nzbee.ui.component.web.facet.search;
 
 import java.util.HashSet;
 import java.util.Set;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.context.ApplicationContext;
 
 import io.nzbee.domain.IService;

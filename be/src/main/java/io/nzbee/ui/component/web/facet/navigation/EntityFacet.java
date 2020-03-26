@@ -61,5 +61,11 @@ public class EntityFacet implements IFacet {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public String getFacetingName() {
+		// TODO Auto-generated method stub
+		return this.getPayload().getClass().getSimpleName().toLowerCase().trim();
+	}
 	
 }

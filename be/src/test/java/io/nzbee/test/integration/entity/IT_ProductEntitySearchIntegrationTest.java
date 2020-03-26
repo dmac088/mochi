@@ -3,6 +3,7 @@ package io.nzbee.test.integration.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
@@ -24,11 +25,15 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import io.nzbee.domain.FacetServices;
+import io.nzbee.domain.IFacetService;
 import io.nzbee.entity.product.Product;
 import io.nzbee.test.integration.beans.ProductEntityBeanFactory;
 import io.nzbee.ui.component.web.facet.IFacet;
@@ -62,6 +67,7 @@ public class IT_ProductEntitySearchIntegrationTest {
         public ProductEntityBeanFactory productFactoryBean() {
             return new ProductEntityBeanFactory();
         }
+     
     }
 	
 	@Autowired
@@ -74,6 +80,9 @@ public class IT_ProductEntitySearchIntegrationTest {
 	@Autowired
     @Qualifier(value = "SearchService")
     private ISearchService searchService;
+	
+	@Autowired
+	List<IFacetService> facetServices;
    
 	private Set<IFacet> facetPayload = new HashSet<IFacet>();
 	private Set<IFacet> returnFacets = new HashSet<IFacet>();
@@ -535,7 +544,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	
 	@Test
 	public void whenSearchForBrandGlorysAndPlantersFruit_thenReturnBrandGlorysAndPlantersFruitProducts() {
-		
+
 		// when
 		Page<io.nzbee.domain.product.Product> pp = 
 		searchService.findAll( 	"en-GB", 
@@ -548,7 +557,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 								facetPayload,
 								returnFacets);
 		
-		Set<IFacet> fp = returnFacets.stream().filter(f -> f.getPayloadType().equals("Brand")
+		Set<IFacet> fp = returnFacets.stream().filter(f -> f.getFacetingName().equals("brand")
 									   && 
 									   (f.getValue().equals("GLO01")
 									   || 
