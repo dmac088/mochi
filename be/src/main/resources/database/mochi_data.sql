@@ -301,61 +301,52 @@ SELECT pg_catalog.setval('brand_bnd_id_seq', 41, true);
 
 
 --
--- Data for Name: hierarchy; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-INSERT INTO hierarchy VALUES (41, 'PRM01', 'Primary Product Category Hierarchy');
-INSERT INTO hierarchy VALUES (42, 'SEC02', 'Secondary Product Category Hierarchy');
-INSERT INTO hierarchy VALUES (43, 'BND01', 'Primary Product Brand Hierarchy');
-
-
---
 -- Data for Name: category; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-INSERT INTO category VALUES (43, 'BSP01', 39, 1, 1, 42);
-INSERT INTO category VALUES (39, 'PRM02', NULL, 0, 1, 42);
-INSERT INTO category VALUES (38, 'FET01', 39, 1, 1, 42);
-INSERT INTO category VALUES (40, 'BND01', NULL, 0, 1, 43);
-INSERT INTO category VALUES (42, 'OTH02', 40, 1, 1, 43);
-INSERT INTO category VALUES (8, 'SVG01', 4, 2, 1, 41);
-INSERT INTO category VALUES (16, 'NUT01', 2, 1, 1, 41);
-INSERT INTO category VALUES (28, 'DUM02', 2, 1, 1, 41);
-INSERT INTO category VALUES (36, 'REV01', 6, 3, 1, 41);
-INSERT INTO category VALUES (15, 'TRO01', 3, 2, 1, 41);
-INSERT INTO category VALUES (4, 'VEG01', 2, 1, 1, 41);
-INSERT INTO category VALUES (30, 'DUM04', 2, 1, 1, 41);
-INSERT INTO category VALUES (23, 'BRA01', 16, 2, 1, 41);
-INSERT INTO category VALUES (20, 'ALM01', 16, 2, 1, 41);
-INSERT INTO category VALUES (25, 'OFT01', 3, 2, 1, 41);
-INSERT INTO category VALUES (26, 'ONT01', 16, 2, 1, 41);
-INSERT INTO category VALUES (13, 'MEL01', 3, 2, 1, 41);
-INSERT INTO category VALUES (22, 'PEC01', 16, 2, 1, 41);
-INSERT INTO category VALUES (27, 'DUM01', 2, 1, 1, 41);
-INSERT INTO category VALUES (21, 'PEA01', 16, 2, 1, 41);
-INSERT INTO category VALUES (5, 'DGV01', 4, 2, 1, 41);
-INSERT INTO category VALUES (11, 'DRU01', 3, 2, 1, 41);
-INSERT INTO category VALUES (3, 'FRT01', 2, 1, 1, 41);
-INSERT INTO category VALUES (14, 'CIT01', 3, 2, 1, 41);
-INSERT INTO category VALUES (17, 'PIS01', 16, 2, 1, 41);
-INSERT INTO category VALUES (33, 'DUM07', 2, 1, 1, 41);
-INSERT INTO category VALUES (19, 'CAS01', 16, 2, 1, 41);
-INSERT INTO category VALUES (31, 'DUM05', 2, 1, 1, 41);
-INSERT INTO category VALUES (35, 'DUM09', 36, 4, 1, 41);
-INSERT INTO category VALUES (37, 'ORV01', 6, 3, 1, 41);
-INSERT INTO category VALUES (34, 'DUM08', 2, 1, 1, 41);
-INSERT INTO category VALUES (32, 'DUM06', 2, 1, 1, 41);
-INSERT INTO category VALUES (12, 'BER01', 3, 2, 1, 41);
-INSERT INTO category VALUES (10, 'POM01', 3, 2, 1, 41);
-INSERT INTO category VALUES (18, 'HAZ01', 16, 2, 1, 41);
-INSERT INTO category VALUES (9, 'OTH01', 4, 2, 1, 41);
-INSERT INTO category VALUES (24, 'MAC01', 16, 2, 1, 41);
-INSERT INTO category VALUES (6, 'ROV01', 4, 2, 1, 41);
-INSERT INTO category VALUES (29, 'DUM03', 2, 1, 1, 41);
-INSERT INTO category VALUES (2, 'PRM01', NULL, 0, 1, 41);
-INSERT INTO category VALUES (7, 'BAP01', 4, 2, 1, 41);
-INSERT INTO category VALUES (44, 'UNK01', 39, 1, 1, 42);
-INSERT INTO category VALUES (45, 'FBR01', 40, 0, 2, 43);
+INSERT INTO category VALUES (43, 'BSP01', 39, 1, 1);
+INSERT INTO category VALUES (39, 'PRM02', NULL, 0, 1);
+INSERT INTO category VALUES (38, 'FET01', 39, 1, 1);
+INSERT INTO category VALUES (40, 'BND01', NULL, 0, 1);
+INSERT INTO category VALUES (42, 'OTH02', 40, 1, 1);
+INSERT INTO category VALUES (8, 'SVG01', 4, 2, 1);
+INSERT INTO category VALUES (16, 'NUT01', 2, 1, 1);
+INSERT INTO category VALUES (28, 'DUM02', 2, 1, 1);
+INSERT INTO category VALUES (36, 'REV01', 6, 3, 1);
+INSERT INTO category VALUES (15, 'TRO01', 3, 2, 1);
+INSERT INTO category VALUES (4, 'VEG01', 2, 1, 1);
+INSERT INTO category VALUES (30, 'DUM04', 2, 1, 1);
+INSERT INTO category VALUES (23, 'BRA01', 16, 2, 1);
+INSERT INTO category VALUES (20, 'ALM01', 16, 2, 1);
+INSERT INTO category VALUES (25, 'OFT01', 3, 2, 1);
+INSERT INTO category VALUES (26, 'ONT01', 16, 2, 1);
+INSERT INTO category VALUES (13, 'MEL01', 3, 2, 1);
+INSERT INTO category VALUES (22, 'PEC01', 16, 2, 1);
+INSERT INTO category VALUES (27, 'DUM01', 2, 1, 1);
+INSERT INTO category VALUES (21, 'PEA01', 16, 2, 1);
+INSERT INTO category VALUES (5, 'DGV01', 4, 2, 1);
+INSERT INTO category VALUES (11, 'DRU01', 3, 2, 1);
+INSERT INTO category VALUES (3, 'FRT01', 2, 1, 1);
+INSERT INTO category VALUES (14, 'CIT01', 3, 2, 1);
+INSERT INTO category VALUES (17, 'PIS01', 16, 2, 1);
+INSERT INTO category VALUES (33, 'DUM07', 2, 1, 1);
+INSERT INTO category VALUES (19, 'CAS01', 16, 2, 1);
+INSERT INTO category VALUES (31, 'DUM05', 2, 1, 1);
+INSERT INTO category VALUES (35, 'DUM09', 36, 4, 1);
+INSERT INTO category VALUES (37, 'ORV01', 6, 3, 1);
+INSERT INTO category VALUES (34, 'DUM08', 2, 1, 1);
+INSERT INTO category VALUES (32, 'DUM06', 2, 1, 1);
+INSERT INTO category VALUES (12, 'BER01', 3, 2, 1);
+INSERT INTO category VALUES (10, 'POM01', 3, 2, 1);
+INSERT INTO category VALUES (18, 'HAZ01', 16, 2, 1);
+INSERT INTO category VALUES (9, 'OTH01', 4, 2, 1);
+INSERT INTO category VALUES (24, 'MAC01', 16, 2, 1);
+INSERT INTO category VALUES (6, 'ROV01', 4, 2, 1);
+INSERT INTO category VALUES (29, 'DUM03', 2, 1, 1);
+INSERT INTO category VALUES (2, 'PRM01', NULL, 0, 1);
+INSERT INTO category VALUES (7, 'BAP01', 4, 2, 1);
+INSERT INTO category VALUES (44, 'UNK01', 39, 1, 1);
+INSERT INTO category VALUES (45, 'FBR01', 40, 0, 2);
 
 
 --
@@ -667,7 +658,7 @@ INSERT INTO customer VALUES (232313, '1000000074');
 -- Name: customer_cst_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('customer_cst_id_seq', 1000000237, true);
+SELECT pg_catalog.setval('customer_cst_id_seq', 1000000238, true);
 
 
 --
@@ -688,7 +679,7 @@ INSERT INTO discount_type VALUES (2, 'value');
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 232785, true);
+SELECT pg_catalog.setval('hibernate_sequence', 232787, true);
 
 
 --

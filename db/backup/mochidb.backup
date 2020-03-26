@@ -1558,8 +1558,7 @@ CREATE TABLE category (
     cat_cd character varying(5) NOT NULL,
     cat_prnt_id bigint,
     cat_lvl bigint,
-    cat_typ_id bigint,
-    hir_id bigint
+    cat_typ_id bigint
 );
 
 
@@ -1735,19 +1734,6 @@ CREATE SEQUENCE hierarchy_hir_id_seq
 
 
 ALTER TABLE hierarchy_hir_id_seq OWNER TO mochidb_owner;
-
---
--- Name: hierarchy; Type: TABLE; Schema: mochi; Owner: mochidb_owner
---
-
-CREATE TABLE hierarchy (
-    hir_id bigint DEFAULT nextval('hierarchy_hir_id_seq'::regclass) NOT NULL,
-    hir_cd character varying(5) NOT NULL,
-    hir_desc character varying(100) NOT NULL
-);
-
-
-ALTER TABLE hierarchy OWNER TO mochidb_owner;
 
 --
 -- Name: inventory_on_hand; Type: TABLE; Schema: mochi; Owner: mochidb_owner
@@ -2429,7 +2415,6 @@ CREATE VIEW vw_category_brand AS
  SELECT p.cat_id,
     p.cat_cd,
     p.cat_lvl,
-    p.hir_id,
     p.cat_typ_id,
     p.cat_prnt_id,
     curr.ccy_cd,
@@ -2453,7 +2438,7 @@ CREATE VIEW vw_category_brand AS
      LEFT JOIN currency curr ON ((prc.ccy_id = curr.ccy_id)))
      LEFT JOIN price_type pt ON ((prc.prc_typ_id = pt.prc_typ_id)))
   WHERE (cc.cat_typ_id = 2)
-  GROUP BY p.cat_id, p.cat_cd, p.cat_lvl, p.hir_id, p.cat_typ_id, p.cat_prnt_id, curr.ccy_cd;
+  GROUP BY p.cat_id, p.cat_cd, p.cat_lvl, p.cat_typ_id, p.cat_prnt_id, curr.ccy_cd;
 
 
 ALTER TABLE vw_category_brand OWNER TO mochidb_owner;
@@ -2466,7 +2451,6 @@ CREATE VIEW vw_category_product AS
  SELECT p.cat_id,
     p.cat_cd,
     p.cat_lvl,
-    p.hir_id,
     p.cat_typ_id,
     p.cat_prnt_id,
     curr.ccy_cd,
@@ -2489,7 +2473,7 @@ CREATE VIEW vw_category_product AS
      LEFT JOIN currency curr ON ((prc.ccy_id = curr.ccy_id)))
      LEFT JOIN price_type pt ON ((prc.prc_typ_id = pt.prc_typ_id)))
   WHERE (cc.cat_typ_id = 1)
-  GROUP BY p.cat_id, p.cat_cd, p.cat_lvl, p.hir_id, p.cat_typ_id, p.cat_prnt_id, curr.ccy_cd
+  GROUP BY p.cat_id, p.cat_cd, p.cat_lvl, p.cat_typ_id, p.cat_prnt_id, curr.ccy_cd
  HAVING (count(DISTINCT prd.upc_cd) <> 0);
 
 
@@ -2889,50 +2873,50 @@ SELECT pg_catalog.setval('brand_category_bnd_cat_id_seq', 14, true);
 -- Data for Name: category; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY category (cat_id, cat_cd, cat_prnt_id, cat_lvl, cat_typ_id, hir_id) FROM stdin;
-43	BSP01	39	1	1	42
-39	PRM02	\N	0	1	42
-38	FET01	39	1	1	42
-40	BND01	\N	0	1	43
-42	OTH02	40	1	1	43
-8	SVG01	4	2	1	41
-16	NUT01	2	1	1	41
-28	DUM02	2	1	1	41
-36	REV01	6	3	1	41
-15	TRO01	3	2	1	41
-4	VEG01	2	1	1	41
-30	DUM04	2	1	1	41
-23	BRA01	16	2	1	41
-20	ALM01	16	2	1	41
-25	OFT01	3	2	1	41
-26	ONT01	16	2	1	41
-13	MEL01	3	2	1	41
-22	PEC01	16	2	1	41
-27	DUM01	2	1	1	41
-21	PEA01	16	2	1	41
-5	DGV01	4	2	1	41
-11	DRU01	3	2	1	41
-3	FRT01	2	1	1	41
-14	CIT01	3	2	1	41
-17	PIS01	16	2	1	41
-33	DUM07	2	1	1	41
-19	CAS01	16	2	1	41
-31	DUM05	2	1	1	41
-35	DUM09	36	4	1	41
-37	ORV01	6	3	1	41
-34	DUM08	2	1	1	41
-32	DUM06	2	1	1	41
-12	BER01	3	2	1	41
-10	POM01	3	2	1	41
-18	HAZ01	16	2	1	41
-9	OTH01	4	2	1	41
-24	MAC01	16	2	1	41
-6	ROV01	4	2	1	41
-29	DUM03	2	1	1	41
-2	PRM01	\N	0	1	41
-7	BAP01	4	2	1	41
-44	UNK01	39	1	1	42
-45	FBR01	40	0	2	43
+COPY category (cat_id, cat_cd, cat_prnt_id, cat_lvl, cat_typ_id) FROM stdin;
+43	BSP01	39	1	1
+39	PRM02	\N	0	1
+38	FET01	39	1	1
+40	BND01	\N	0	1
+42	OTH02	40	1	1
+8	SVG01	4	2	1
+16	NUT01	2	1	1
+28	DUM02	2	1	1
+36	REV01	6	3	1
+15	TRO01	3	2	1
+4	VEG01	2	1	1
+30	DUM04	2	1	1
+23	BRA01	16	2	1
+20	ALM01	16	2	1
+25	OFT01	3	2	1
+26	ONT01	16	2	1
+13	MEL01	3	2	1
+22	PEC01	16	2	1
+27	DUM01	2	1	1
+21	PEA01	16	2	1
+5	DGV01	4	2	1
+11	DRU01	3	2	1
+3	FRT01	2	1	1
+14	CIT01	3	2	1
+17	PIS01	16	2	1
+33	DUM07	2	1	1
+19	CAS01	16	2	1
+31	DUM05	2	1	1
+35	DUM09	36	4	1
+37	ORV01	6	3	1
+34	DUM08	2	1	1
+32	DUM06	2	1	1
+12	BER01	3	2	1
+10	POM01	3	2	1
+18	HAZ01	16	2	1
+9	OTH01	4	2	1
+24	MAC01	16	2	1
+6	ROV01	4	2	1
+29	DUM03	2	1	1
+2	PRM01	\N	0	1
+7	BAP01	4	2	1
+44	UNK01	39	1	1
+45	FBR01	40	0	2
 \.
 
 
@@ -3166,7 +3150,7 @@ COPY customer (rle_id, cst_id) FROM stdin;
 -- Name: customer_cst_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('customer_cst_id_seq', 1000000237, true);
+SELECT pg_catalog.setval('customer_cst_id_seq', 1000000238, true);
 
 
 --
@@ -3191,18 +3175,7 @@ COPY discount_type (dis_typ_id, dis_typ_desc) FROM stdin;
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 232786, true);
-
-
---
--- Data for Name: hierarchy; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-COPY hierarchy (hir_id, hir_cd, hir_desc) FROM stdin;
-41	PRM01	Primary Product Category Hierarchy
-42	SEC02	Secondary Product Category Hierarchy
-43	BND01	Primary Product Brand Hierarchy
-\.
+SELECT pg_catalog.setval('hibernate_sequence', 232787, true);
 
 
 --
@@ -4592,7 +4565,7 @@ COPY user_role (id, pty_id, role_id) FROM stdin;
 -- Name: user_role_id_seq; Type: SEQUENCE SET; Schema: security; Owner: security_owner
 --
 
-SELECT pg_catalog.setval('user_role_id_seq', 171, true);
+SELECT pg_catalog.setval('user_role_id_seq', 172, true);
 
 
 SET search_path = mochi, pg_catalog;
@@ -4699,14 +4672,6 @@ ALTER TABLE ONLY discount
 
 ALTER TABLE ONLY discount_type
     ADD CONSTRAINT discount_type_pkey PRIMARY KEY (dis_typ_id);
-
-
---
--- Name: hierarchy hierarchy_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY hierarchy
-    ADD CONSTRAINT hierarchy_pkey PRIMARY KEY (hir_id);
 
 
 --
@@ -4998,14 +4963,6 @@ ALTER TABLE ONLY category_type
 
 
 --
--- Name: hierarchy uc_hir_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY hierarchy
-    ADD CONSTRAINT uc_hir_cd UNIQUE (hir_cd);
-
-
---
 -- Name: layout uc_lay_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -5254,14 +5211,6 @@ ALTER TABLE ONLY category_attr_lcl
 
 ALTER TABLE ONLY category_brand
     ADD CONSTRAINT category_brand_cat_id_category_cat_id_fkey FOREIGN KEY (cat_id) REFERENCES category(cat_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
-
-
---
--- Name: category category_hir_id_hierarchy_hir_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY category
-    ADD CONSTRAINT category_hir_id_hierarchy_hir_id_fkey FOREIGN KEY (hir_id) REFERENCES hierarchy(hir_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
@@ -5668,13 +5617,6 @@ GRANT ALL ON SEQUENCE hibernate_sequence TO mochi_app;
 --
 
 GRANT ALL ON SEQUENCE hierarchy_hir_id_seq TO mochi_app;
-
-
---
--- Name: hierarchy; Type: ACL; Schema: mochi; Owner: mochidb_owner
---
-
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE hierarchy TO mochi_app;
 
 
 --
