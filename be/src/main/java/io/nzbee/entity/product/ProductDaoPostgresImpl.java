@@ -406,7 +406,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		"primary_descendants AS    " + 
 		"(    " + 
 		" SELECT 	t.cat_id,     " + 
-		"			t.hir_id,    " + 
 		"			t.cat_cd,    " + 
 		"			t.cat_lvl,    " + 
 		"			t.cat_prnt_id,   " + 
@@ -417,7 +416,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 
 		" UNION ALL    " + 
 		" SELECT 	t.cat_id,     " + 
-		"			t.hir_id,    " + 
 		"			t.cat_cd,     " + 
 		"			t.cat_lvl,    " + 
 		"			t.cat_prnt_id,   " + 
@@ -428,7 +426,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		"),  secondary_descendants AS    " + 
 		"(    " + 
 		" SELECT 	t.cat_id,     " + 
-		"			t.hir_id,    " + 
 		"			t.cat_cd,    " + 
 		"			t.cat_lvl,    " + 
 		"			t.cat_prnt_id,   " + 
@@ -440,7 +437,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 
 		" UNION ALL    " + 
 		" SELECT 	t.cat_id,     " + 
-		"			t.hir_id,    " + 
 		"			t.cat_cd,     " + 
 		"			t.cat_lvl,    " + 
 		"			t.cat_prnt_id,   " + 
@@ -450,7 +446,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		"  ON t.cat_prnt_id = d.cat_id    " + 
 		"), descendants AS (   " + 
 		"select cat_id, " + 
-		"	   hir_id, " + 
 		"	   cat_cd, " + 
 		"	   cat_lvl, " + 
 		"	   cat_prnt_id, " + 
@@ -458,7 +453,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		"from primary_descendants " + 
 		"INTERSECT " + 
 		"select cat_id, " + 
-		"	   hir_id, " + 
 		"	   cat_cd, " + 
 		"	   cat_lvl, " + 
 		"	   cat_prnt_id, " + 
