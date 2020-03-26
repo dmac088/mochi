@@ -31,6 +31,8 @@ public interface IFacet {
 
 	String getValue();
 	
+	String getFacetingName();
+	
 	int getCount();
 	
 }
