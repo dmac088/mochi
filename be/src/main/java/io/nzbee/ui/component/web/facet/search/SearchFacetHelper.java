@@ -38,9 +38,7 @@ public class SearchFacetHelper {
 
 	@Override
     public int hashCode() {
-        HashCodeBuilder hcb = new HashCodeBuilder();
-        hcb.append(facetingName);
-        return hcb.toHashCode();
+        return 31;
     }
  
 	@Override
@@ -53,8 +51,8 @@ public class SearchFacetHelper {
 	    }
 	    SearchFacetHelper that = (SearchFacetHelper) obj;
 	      EqualsBuilder eb = new EqualsBuilder();
-	      eb.append(this.facetingName, that.facetingName);
-	      eb.append(this.codes, that.codes);
+	      eb.append(this.getFacetingName(), that.getFacetingName());
+	      eb.append(this.getCodes(), that.getCodes());
 	      return eb.isEquals();
 	}
 	

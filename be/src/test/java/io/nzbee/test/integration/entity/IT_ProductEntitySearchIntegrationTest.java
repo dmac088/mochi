@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.hibernate.CacheMode;
@@ -72,7 +71,8 @@ public class IT_ProductEntitySearchIntegrationTest {
     @PersistenceContext(unitName = "mochiEntityManagerFactory")
 	private EntityManager em;
 
-    @Autowired 
+	@Autowired
+    @Qualifier(value = "SearchService")
     private ISearchService searchService;
    
 	private Set<IFacet> facetPayload = new HashSet<IFacet>();
@@ -537,9 +537,10 @@ public class IT_ProductEntitySearchIntegrationTest {
 	public void whenSearchForBrandGlorysAndPlantersFruit_thenReturnBrandGlorysAndPlantersFruitProducts() {
 		
 		// when
+		Page<io.nzbee.domain.product.Product> pp = 
 		searchService.findAll( 	"en-GB", 
 								"HKD", 
-								"Ignored", 
+								"all", 
 								"Fruit", 
 								0, 
 								10, 
@@ -553,10 +554,18 @@ public class IT_ProductEntitySearchIntegrationTest {
 									   || 
 									    f.getValue().equals("PLA01")
 									   )).collect(Collectors.toSet());
-		 
+		
+		// then
+		assertThat(pp.getTotalPages())
+		 .isEqualTo(2);
+		assertThat(pp.getTotalElements())
+		.isEqualTo(new Long(12));
+		assertThat(returnFacets.size())
+		.isEqualTo(9);
+		
 		returnFacets.clear();
 		
-		Page<io.nzbee.domain.product.Product> pp = 
+		pp = 
 		searchService.findAll( 	"en-GB", 
 								"HKD", 
 								"Ignored", 
@@ -573,6 +582,8 @@ public class IT_ProductEntitySearchIntegrationTest {
         .isEqualTo(1);
     	assertThat(pp.getTotalElements())
         .isEqualTo(new Long(4));
+    	assertThat(returnFacets.size())
+		.isEqualTo(5);
 	}
 	
 	@After
