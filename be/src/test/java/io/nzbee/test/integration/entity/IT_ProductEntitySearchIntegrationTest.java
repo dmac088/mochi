@@ -25,16 +25,12 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import io.nzbee.domain.FacetServices;
 import io.nzbee.domain.IFacetService;
-import io.nzbee.domain.IService;
 import io.nzbee.domain.category.CategoryServiceImpl;
 import io.nzbee.entity.product.Product;
 import io.nzbee.test.integration.beans.ProductEntityBeanFactory;
