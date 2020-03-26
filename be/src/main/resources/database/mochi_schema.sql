@@ -39,7 +39,6 @@ ALTER TABLE ONLY mochi.layout_category DROP CONSTRAINT layout_category_lay_id_la
 ALTER TABLE ONLY mochi.layout_category DROP CONSTRAINT layout_category_cat_id_category_cat_id_fkey;
 ALTER TABLE ONLY mochi.customer DROP CONSTRAINT customer_role_id_fkey;
 ALTER TABLE ONLY mochi.category_product DROP CONSTRAINT category_product_cat_id_category_cat_id_fkey;
-ALTER TABLE ONLY mochi.category DROP CONSTRAINT category_hir_id_hierarchy_hir_id_fkey;
 ALTER TABLE ONLY mochi.category_brand DROP CONSTRAINT category_brand_cat_id_category_cat_id_fkey;
 ALTER TABLE ONLY mochi.category_attr_lcl DROP CONSTRAINT category_attr_lcl_lcl_cd_fkey;
 ALTER TABLE ONLY mochi.category_attr_lcl DROP CONSTRAINT category_attr_lcl_cat_id_fkey;
@@ -60,7 +59,6 @@ ALTER TABLE ONLY mochi.product_attr_lcl DROP CONSTRAINT uc_prd_lcl_1;
 ALTER TABLE ONLY mochi.layout_category DROP CONSTRAINT uc_layout_category;
 ALTER TABLE ONLY mochi.layout DROP CONSTRAINT uc_lay_desc;
 ALTER TABLE ONLY mochi.layout DROP CONSTRAINT uc_lay_cd;
-ALTER TABLE ONLY mochi.hierarchy DROP CONSTRAINT uc_hir_cd;
 ALTER TABLE ONLY mochi.category_type DROP CONSTRAINT uc_cat_typ_cd;
 ALTER TABLE ONLY mochi.category_attr_lcl DROP CONSTRAINT uc_cat_lcl;
 ALTER TABLE ONLY mochi.category_attr_lcl DROP CONSTRAINT uc_cat_desc;
@@ -97,7 +95,6 @@ ALTER TABLE ONLY mochi.order_line DROP CONSTRAINT order_line_pkey;
 ALTER TABLE ONLY mochi.order_line DROP CONSTRAINT order_line_ord_id_key;
 ALTER TABLE ONLY mochi.layout DROP CONSTRAINT layout_pkey;
 ALTER TABLE ONLY mochi.layout_category DROP CONSTRAINT layout_category_pkey;
-ALTER TABLE ONLY mochi.hierarchy DROP CONSTRAINT hierarchy_pkey;
 ALTER TABLE ONLY mochi.discount_type DROP CONSTRAINT discount_type_pkey;
 ALTER TABLE ONLY mochi.discount DROP CONSTRAINT discount_pkey;
 ALTER TABLE ONLY mochi.customer DROP CONSTRAINT customer_pkey;
@@ -166,7 +163,6 @@ DROP TABLE mochi.layout;
 DROP SEQUENCE mochi.layout_lay_id_seq;
 DROP TABLE mochi.inventory_transaction;
 DROP TABLE mochi.inventory_on_hand;
-DROP TABLE mochi.hierarchy;
 DROP SEQUENCE mochi.hierarchy_hir_id_seq;
 DROP SEQUENCE mochi.hibernate_sequence;
 DROP TABLE mochi.discount_type;
@@ -1623,8 +1619,7 @@ CREATE TABLE category (
     cat_cd character varying(5) NOT NULL,
     cat_prnt_id bigint,
     cat_lvl bigint,
-    cat_typ_id bigint,
-    hir_id bigint
+    cat_typ_id bigint
 );
 
 
@@ -1800,19 +1795,6 @@ CREATE SEQUENCE hierarchy_hir_id_seq
 
 
 ALTER TABLE hierarchy_hir_id_seq OWNER TO mochidb_owner;
-
---
--- Name: hierarchy; Type: TABLE; Schema: mochi; Owner: mochidb_owner
---
-
-CREATE TABLE hierarchy (
-    hir_id bigint DEFAULT nextval('hierarchy_hir_id_seq'::regclass) NOT NULL,
-    hir_cd character varying(5) NOT NULL,
-    hir_desc character varying(100) NOT NULL
-);
-
-
-ALTER TABLE hierarchy OWNER TO mochidb_owner;
 
 --
 -- Name: inventory_on_hand; Type: TABLE; Schema: mochi; Owner: mochidb_owner
@@ -2494,7 +2476,6 @@ CREATE VIEW vw_category_brand AS
  SELECT p.cat_id,
     p.cat_cd,
     p.cat_lvl,
-    p.hir_id,
     p.cat_typ_id,
     p.cat_prnt_id,
     curr.ccy_cd,
@@ -2518,7 +2499,7 @@ CREATE VIEW vw_category_brand AS
      LEFT JOIN currency curr ON ((prc.ccy_id = curr.ccy_id)))
      LEFT JOIN price_type pt ON ((prc.prc_typ_id = pt.prc_typ_id)))
   WHERE (cc.cat_typ_id = 2)
-  GROUP BY p.cat_id, p.cat_cd, p.cat_lvl, p.hir_id, p.cat_typ_id, p.cat_prnt_id, curr.ccy_cd;
+  GROUP BY p.cat_id, p.cat_cd, p.cat_lvl, p.cat_typ_id, p.cat_prnt_id, curr.ccy_cd;
 
 
 ALTER TABLE vw_category_brand OWNER TO mochidb_owner;
@@ -2531,7 +2512,6 @@ CREATE VIEW vw_category_product AS
  SELECT p.cat_id,
     p.cat_cd,
     p.cat_lvl,
-    p.hir_id,
     p.cat_typ_id,
     p.cat_prnt_id,
     curr.ccy_cd,
@@ -2554,7 +2534,7 @@ CREATE VIEW vw_category_product AS
      LEFT JOIN currency curr ON ((prc.ccy_id = curr.ccy_id)))
      LEFT JOIN price_type pt ON ((prc.prc_typ_id = pt.prc_typ_id)))
   WHERE (cc.cat_typ_id = 1)
-  GROUP BY p.cat_id, p.cat_cd, p.cat_lvl, p.hir_id, p.cat_typ_id, p.cat_prnt_id, curr.ccy_cd
+  GROUP BY p.cat_id, p.cat_cd, p.cat_lvl, p.cat_typ_id, p.cat_prnt_id, curr.ccy_cd
  HAVING (count(DISTINCT prd.upc_cd) <> 0);
 
 
@@ -2683,14 +2663,6 @@ ALTER TABLE ONLY discount
 
 ALTER TABLE ONLY discount_type
     ADD CONSTRAINT discount_type_pkey PRIMARY KEY (dis_typ_id);
-
-
---
--- Name: hierarchy hierarchy_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY hierarchy
-    ADD CONSTRAINT hierarchy_pkey PRIMARY KEY (hir_id);
 
 
 --
@@ -2982,14 +2954,6 @@ ALTER TABLE ONLY category_type
 
 
 --
--- Name: hierarchy uc_hir_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY hierarchy
-    ADD CONSTRAINT uc_hir_cd UNIQUE (hir_cd);
-
-
---
 -- Name: layout uc_lay_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -3146,14 +3110,6 @@ ALTER TABLE ONLY category_attr_lcl
 
 ALTER TABLE ONLY category_brand
     ADD CONSTRAINT category_brand_cat_id_category_cat_id_fkey FOREIGN KEY (cat_id) REFERENCES category(cat_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
-
-
---
--- Name: category category_hir_id_hierarchy_hir_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY category
-    ADD CONSTRAINT category_hir_id_hierarchy_hir_id_fkey FOREIGN KEY (hir_id) REFERENCES hierarchy(hir_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
@@ -3509,13 +3465,6 @@ GRANT ALL ON SEQUENCE hibernate_sequence TO mochi_app;
 --
 
 GRANT ALL ON SEQUENCE hierarchy_hir_id_seq TO mochi_app;
-
-
---
--- Name: hierarchy; Type: ACL; Schema: mochi; Owner: mochidb_owner
---
-
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE hierarchy TO mochi_app;
 
 
 --
