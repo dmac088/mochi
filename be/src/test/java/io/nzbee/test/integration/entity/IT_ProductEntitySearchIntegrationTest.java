@@ -34,6 +34,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import io.nzbee.domain.FacetServices;
 import io.nzbee.domain.IFacetService;
+import io.nzbee.domain.IService;
+import io.nzbee.domain.category.CategoryServiceImpl;
 import io.nzbee.entity.product.Product;
 import io.nzbee.test.integration.beans.ProductEntityBeanFactory;
 import io.nzbee.ui.component.web.facet.IFacet;
@@ -53,6 +55,7 @@ import io.nzbee.ui.component.web.search.ISearchService;
 			transactionManager = "mochiTransactionManager",
 			transactionMode = TransactionMode.ISOLATED))
 })
+//@ContextConfiguration(classes = CategoryServiceImpl.class) 
 public class IT_ProductEntitySearchIntegrationTest {
 
 	@TestConfiguration
@@ -66,6 +69,11 @@ public class IT_ProductEntitySearchIntegrationTest {
         @Bean(value = "productEntityBeanFactory")
         public ProductEntityBeanFactory productFactoryBean() {
             return new ProductEntityBeanFactory();
+        }
+        
+        @Bean(value = "categoryDomainService")
+        public CategoryServiceImpl getCategoryService() {
+        	return new CategoryServiceImpl();
         }
      
     }
