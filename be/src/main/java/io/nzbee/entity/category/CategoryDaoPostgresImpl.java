@@ -465,7 +465,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"descendants AS " +
 				"( " +
 				"  SELECT 	t.cat_id,  " +
-				"			t.hir_id, " +
 				"			t.cat_cd, " +
 				"			t.cat_lvl, " +
 				"			t.cat_prnt_id,  " +
@@ -483,7 +482,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				((!hasCategories 	&& !hasCategoryDesc && !hasCategoryId) 		? " AND cat_prnt_id IS NULL " : "") +
 				"  UNION ALL " +
 				"  SELECT 	t.cat_id,  " +
-				"			t.hir_id, " +
 				"			t.cat_cd,  " +
 				"			t.cat_lvl, " +
 				"			t.cat_prnt_id,  " +
@@ -496,7 +494,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"categories AS  " +
 				"( " +
 				"  SELECT 	descendants.cat_id des_cat_id, " +
-				"			descendants.hir_id des_hir_id, " +
 				"			descendants.cat_cd des_cat_cd, " +
 				"			descendants.cat_lvl des_cat_lvl, " +
 				"			descendants.cat_prnt_id des_cat_prnt_id, " +
@@ -508,7 +505,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"( " +
 				"select " +
 				"    cc.des_cat_id 					AS cat_id, " +
-				"    cc.des_hir_id 					AS hir_id, " +
 				"    cc.des_cat_cd 					AS cat_cd, " +
 				"    cc.des_cat_lvl 				AS cat_lvl, " +
 				"    cc.des_cat_prnt_id 			AS prnt_id, " +
@@ -581,7 +577,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"WHERE cc.des_cat_type_id = 1 " +
 				"GROUP BY  " +
 				"	 cc.des_cat_id, " +
-				"    cc.des_hir_id, " +
 				"	 cc.des_cat_cd, " +
 				"	 cc.des_cat_lvl, " +
 				"	 cc.des_cat_prnt_id, " +
@@ -590,7 +585,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"UNION ALL " +
 				"SELECT  " +
 				"    cc.des_cat_id 					AS cat_id, " +
-				"    cc.des_hir_id 					AS hir_id, " +
 				"    cc.des_cat_cd 					AS cat_cd, " +
 				"    cc.des_cat_lvl 				AS cat_lvl, " +
 				"    cc.des_cat_prnt_id 			AS prnt_id, " +
@@ -675,7 +669,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"WHERE cc.des_cat_type_id = 2 " +
 				"GROUP BY  " +
 				"	cc.des_cat_id, " +
-				"   cc.des_hir_id, " +
 				"	cc.des_cat_cd, " +
 				"	cc.des_cat_lvl, " +
 				"	cc.des_cat_prnt_id, " +
@@ -685,7 +678,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"( " +
 				"SELECT 	 " +
 				"	s1.cat_id, " +
-				"	s1.hir_id, " +
 				"	s1.cat_cd, " +
 				"	s1.cat_lvl, " +
 				"	s1.prnt_id, " +
@@ -700,7 +692,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"ON s1.node <> s2.Node and left(s2.node, length(s1.node)) = s1.node " +
 				"GROUP BY " +
 				"	s1.cat_id, " +
-				"	s1.hir_id, " +
 				"	s1.cat_cd, " +
 				"	s1.cat_lvl, " +
 				"	s1.prnt_id, " +
