@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
+
+import io.nzbee.dto.IDto;
 import io.nzbee.dto.brand.Brand;
 import io.nzbee.dto.category.Category;
 import io.nzbee.entity.category.ICategoryService;
@@ -115,6 +117,12 @@ public class TagServiceImpl implements ITagService {
 	public Optional<Tag> doToDto(Optional<io.nzbee.domain.tag.Tag> dO) {
 		// TODO Auto-generated method stub
 		return Optional.empty();
+	}
+
+	@Override
+	public void save(IDto dto) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

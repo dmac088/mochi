@@ -23,5 +23,7 @@ public interface ILocalizedService<T, X, Y> {
 	Optional<T> entityToDTO(String locale, String currency, Optional<X> entity);
 
 	Optional<T> doToDto(Optional<Y> dO);
+	
+	void save(IDto dto);
 
 }
