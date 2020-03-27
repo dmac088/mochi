@@ -91,6 +91,12 @@ public class CustomerServiceImpl implements ICustomerService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public void save(IDto dto) {
+		// TODO Auto-generated method stub
+		
+	}
 	
     // API
     //This method should accept a DTO and return a DTO

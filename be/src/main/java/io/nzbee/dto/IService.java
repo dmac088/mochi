@@ -19,4 +19,6 @@ public interface IService<T, X, Y> {
 	Optional<T> entityToDTO(X entity);
 
 	Optional<T> doToDto(Y domainObject);
+	
+	void save(IDto dto);
 }

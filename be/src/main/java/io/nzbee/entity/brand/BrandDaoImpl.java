@@ -337,7 +337,7 @@ public class BrandDaoImpl  implements IBrandDao {
 	
 	@Override
 	public void save(Brand t) {
-		// TODO Auto-generated method stub
+		em.persist(t);
 		
 	}
 	

@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+
+import io.nzbee.dto.IDto;
 import io.nzbee.dto.category.Category;
 import io.nzbee.dto.tag.Tag;
 
@@ -18,6 +20,7 @@ public class BrandServiceImpl implements IBrandService {
     private io.nzbee.entity.brand.IBrandService brandService;
     
   
+	
     @Override
 	@Cacheable
 	public List<Brand> findAll(String locale, String currency) {
@@ -99,6 +102,27 @@ public class BrandServiceImpl implements IBrandService {
 		
 		return Optional.ofNullable(brandDTO);
 	}
+
+
+	@Override
+	public void save(IDto dto) {
+		// TODO Auto-generated method stub
+		io.nzbee.entity.brand.attribute.BrandAttribute ba = new io.nzbee.entity.brand.attribute.BrandAttribute();
+		ba.setBrandDesc(((Brand) dto).getBrandDesc());
+		ba.setLclCd(((Brand) dto).getLocale());
+		
+		io.nzbee.entity.brand.Brand b = new io.nzbee.entity.brand.Brand();
+		b.setBrandCode(((Brand) dto).getBrandCode());		
+		b.setLocale(((Brand) dto).getLocale());
+		b.setCurrency(((Brand) dto).getCurrency());
+		b.setBrandAttribute(ba);
+		ba.setBrand(b);
+	
+		brandService.save(b);
+		
+	}
+	
+	
 
 
 }

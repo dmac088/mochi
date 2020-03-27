@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 import io.nzbee.dto.category.Category;
+import io.nzbee.dto.IDto;
 import io.nzbee.dto.brand.Brand;
 import io.nzbee.dto.tag.Tag;
 import io.nzbee.entity.category.product.CategoryProduct;
@@ -125,6 +126,13 @@ public class CategoryServiceImpl implements ICategoryService {
 	public Optional<Category> doToDto(Optional<io.nzbee.domain.category.Category> dO) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	@Override
+	public void save(IDto dto) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

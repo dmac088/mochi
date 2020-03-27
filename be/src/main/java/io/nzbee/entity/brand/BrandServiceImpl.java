@@ -70,7 +70,7 @@ public class BrandServiceImpl implements IBrandService {
 	@Override
 	public void update(Brand t) {
 		// TODO Auto-generated method stub
-		
+		brandDao.save(t);
 	}
 
 	@Override
