@@ -658,7 +658,7 @@ INSERT INTO customer VALUES (232313, '1000000074');
 -- Name: customer_cst_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('customer_cst_id_seq', 1000000243, true);
+SELECT pg_catalog.setval('customer_cst_id_seq', 1000000244, true);
 
 
 --
@@ -744,7 +744,7 @@ INSERT INTO product VALUES (18, '17366878', '2019-02-05', 39, 3, 1);
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 232797, true);
+SELECT pg_catalog.setval('hibernate_sequence', 232799, true);
 
 
 --
