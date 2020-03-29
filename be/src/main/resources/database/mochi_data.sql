@@ -1142,6 +1142,12 @@ SELECT pg_catalog.setval('product_category_prd_cat_id_seq', 102, true);
 
 
 --
+-- Data for Name: product_jewellery; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+
+
+--
 -- Name: product_status_prd_sts_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 

@@ -463,8 +463,8 @@ GRANT USAGE ON SCHEMA security TO mochi_app;
 -- Name: permission; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE permission TO security_app;
 GRANT SELECT ON TABLE permission TO mochi_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE permission TO security_app;
 
 
 --
@@ -544,8 +544,8 @@ GRANT ALL ON SEQUENCE role_id_seq TO security_app;
 -- Name: role; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role TO security_app;
 GRANT SELECT ON TABLE role TO mochi_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role TO security_app;
 
 
 --
@@ -560,8 +560,8 @@ GRANT ALL ON SEQUENCE role_permission_id_seq TO security_app;
 -- Name: role_permission; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role_permission TO security_app;
 GRANT SELECT ON TABLE role_permission TO mochi_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role_permission TO security_app;
 
 
 --

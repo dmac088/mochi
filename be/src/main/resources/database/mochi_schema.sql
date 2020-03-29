@@ -138,6 +138,7 @@ DROP SEQUENCE mochi.product_tag_prd_tag_id_seq;
 DROP TABLE mochi.product_supplier;
 DROP TABLE mochi.product_status;
 DROP SEQUENCE mochi.product_status_prd_sts_id_seq;
+DROP TABLE mochi.product_jewellery;
 DROP TABLE mochi.product_category;
 DROP SEQUENCE mochi.product_category_prd_cat_id_seq;
 DROP TABLE mochi.product_attr_lcl;
@@ -2138,6 +2139,17 @@ CREATE TABLE product_category (
 ALTER TABLE product_category OWNER TO mochidb_owner;
 
 --
+-- Name: product_jewellery; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE product_jewellery (
+    prd_id bigint NOT NULL
+);
+
+
+ALTER TABLE product_jewellery OWNER TO mochidb_owner;
+
+--
 -- Name: product_status_prd_sts_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -3435,8 +3447,8 @@ GRANT ALL ON SEQUENCE customer_cst_id_seq TO mochi_app;
 -- Name: customer; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE customer TO security_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE customer TO mochi_app;
+GRANT SELECT ON TABLE customer TO security_app;
 
 
 --
@@ -3541,16 +3553,16 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE order_line TO mochi_app;
 -- Name: organisation; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE organisation TO security_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE organisation TO mochi_app;
+GRANT SELECT ON TABLE organisation TO security_app;
 
 
 --
 -- Name: party; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE party TO security_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE party TO mochi_app;
+GRANT SELECT ON TABLE party TO security_app;
 
 
 --
@@ -3571,8 +3583,8 @@ GRANT ALL ON SEQUENCE party_pty_id_seq TO mochi_app;
 -- Name: party_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE party_type TO security_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE party_type TO mochi_app;
+GRANT SELECT ON TABLE party_type TO security_app;
 
 
 --
@@ -3586,8 +3598,8 @@ GRANT ALL ON SEQUENCE party_type_pty_typ_id_seq TO mochi_app;
 -- Name: person; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE person TO security_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE person TO mochi_app;
+GRANT SELECT ON TABLE person TO security_app;
 
 
 --
@@ -3644,6 +3656,13 @@ GRANT ALL ON SEQUENCE product_category_prd_cat_id_seq TO mochi_app;
 --
 
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE product_category TO mochi_app;
+
+
+--
+-- Name: product_jewellery; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE product_jewellery TO mochi_app;
 
 
 --
@@ -3762,16 +3781,16 @@ GRANT ALL ON SEQUENCE role_rle_id_seq TO mochi_app;
 -- Name: role; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE role TO security_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role TO mochi_app;
+GRANT SELECT ON TABLE role TO security_app;
 
 
 --
 -- Name: role_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE role_type TO security_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role_type TO mochi_app;
+GRANT SELECT ON TABLE role_type TO security_app;
 
 
 --
