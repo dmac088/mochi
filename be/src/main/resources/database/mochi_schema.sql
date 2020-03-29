@@ -37,6 +37,7 @@ ALTER TABLE ONLY mochi.order_line DROP CONSTRAINT order_line_product_id_fkey;
 ALTER TABLE ONLY mochi.order_line DROP CONSTRAINT order_line_order_id_fkey;
 ALTER TABLE ONLY mochi.layout_category DROP CONSTRAINT layout_category_lay_id_layout_lay_id_fkey;
 ALTER TABLE ONLY mochi.layout_category DROP CONSTRAINT layout_category_cat_id_category_cat_id_fkey;
+ALTER TABLE ONLY mochi.jewellery_attr_lcl DROP CONSTRAINT jewellery_attr_lcl_lcl_cd_fkey;
 ALTER TABLE ONLY mochi.customer DROP CONSTRAINT customer_role_id_fkey;
 ALTER TABLE ONLY mochi.category_product DROP CONSTRAINT category_product_cat_id_category_cat_id_fkey;
 ALTER TABLE ONLY mochi.category_brand DROP CONSTRAINT category_brand_cat_id_category_cat_id_fkey;
@@ -93,8 +94,10 @@ ALTER TABLE ONLY mochi."order" DROP CONSTRAINT orders_pty_id_key;
 ALTER TABLE ONLY mochi."order" DROP CONSTRAINT orders_pkey;
 ALTER TABLE ONLY mochi.order_line DROP CONSTRAINT order_line_pkey;
 ALTER TABLE ONLY mochi.order_line DROP CONSTRAINT order_line_ord_id_key;
+ALTER TABLE ONLY mochi.jewellery_attr_lcl DROP CONSTRAINT metal_type_lcl_1;
 ALTER TABLE ONLY mochi.layout DROP CONSTRAINT layout_pkey;
 ALTER TABLE ONLY mochi.layout_category DROP CONSTRAINT layout_category_pkey;
+ALTER TABLE ONLY mochi.jewellery_attr_lcl DROP CONSTRAINT jewellery_attr_lcl_pkey;
 ALTER TABLE ONLY mochi.discount_type DROP CONSTRAINT discount_type_pkey;
 ALTER TABLE ONLY mochi.discount DROP CONSTRAINT discount_pkey;
 ALTER TABLE ONLY mochi.customer DROP CONSTRAINT customer_pkey;
@@ -162,6 +165,7 @@ DROP TABLE mochi.layout_category;
 DROP SEQUENCE mochi.layout_category_lay_cat_id_seq;
 DROP TABLE mochi.layout;
 DROP SEQUENCE mochi.layout_lay_id_seq;
+DROP TABLE mochi.jewellery_attr_lcl;
 DROP TABLE mochi.inventory_transaction;
 DROP TABLE mochi.inventory_on_hand;
 DROP SEQUENCE mochi.hierarchy_hir_id_seq;
@@ -1818,6 +1822,21 @@ CREATE TABLE inventory_transaction (
 ALTER TABLE inventory_transaction OWNER TO mochidb_owner;
 
 --
+-- Name: jewellery_attr_lcl; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE jewellery_attr_lcl (
+    prd_lcl_id bigint NOT NULL,
+    prd_id bigint NOT NULL,
+    primary_metal_type character varying(100),
+    primary_stone_type character varying(100),
+    lcl_cd character varying(5) NOT NULL
+);
+
+
+ALTER TABLE jewellery_attr_lcl OWNER TO mochidb_owner;
+
+--
 -- Name: layout_lay_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -2678,6 +2697,14 @@ ALTER TABLE ONLY discount_type
 
 
 --
+-- Name: jewellery_attr_lcl jewellery_attr_lcl_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY jewellery_attr_lcl
+    ADD CONSTRAINT jewellery_attr_lcl_pkey PRIMARY KEY (prd_lcl_id);
+
+
+--
 -- Name: layout_category layout_category_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -2691,6 +2718,14 @@ ALTER TABLE ONLY layout_category
 
 ALTER TABLE ONLY layout
     ADD CONSTRAINT layout_pkey PRIMARY KEY (lay_id);
+
+
+--
+-- Name: jewellery_attr_lcl metal_type_lcl_1; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY jewellery_attr_lcl
+    ADD CONSTRAINT metal_type_lcl_1 UNIQUE (primary_metal_type, lcl_cd);
 
 
 --
@@ -3141,6 +3176,14 @@ ALTER TABLE ONLY customer
 
 
 --
+-- Name: jewellery_attr_lcl jewellery_attr_lcl_lcl_cd_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY jewellery_attr_lcl
+    ADD CONSTRAINT jewellery_attr_lcl_lcl_cd_fkey FOREIGN KEY (lcl_cd) REFERENCES locale(lcl_cd);
+
+
+--
 -- Name: layout_category layout_category_cat_id_category_cat_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -3491,6 +3534,13 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE inventory_on_hand TO mochi_app;
 --
 
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE inventory_transaction TO mochi_app;
+
+
+--
+-- Name: jewellery_attr_lcl; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE jewellery_attr_lcl TO mochi_app;
 
 
 --
