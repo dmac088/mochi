@@ -658,7 +658,7 @@ INSERT INTO customer VALUES (232313, '1000000074');
 -- Name: customer_cst_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('customer_cst_id_seq', 1000000238, true);
+SELECT pg_catalog.setval('customer_cst_id_seq', 1000000239, true);
 
 
 --
@@ -679,7 +679,7 @@ INSERT INTO discount_type VALUES (2, 'value');
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 232787, true);
+SELECT pg_catalog.setval('hibernate_sequence', 232789, true);
 
 
 --
@@ -697,6 +697,12 @@ SELECT pg_catalog.setval('hierarchy_hir_id_seq', 43, true);
 
 --
 -- Data for Name: inventory_transaction; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+
+
+--
+-- Data for Name: jewellery_attr_lcl; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
 
