@@ -27,6 +27,7 @@ ALTER TABLE ONLY mochi.product_tag DROP CONSTRAINT product_tag_tag_id_tag_tag_id
 ALTER TABLE ONLY mochi.product_tag DROP CONSTRAINT product_tag_prd_id_product_prd_id_fkey;
 ALTER TABLE ONLY mochi.product DROP CONSTRAINT product_sts_id_product_status_sts_id_fkey;
 ALTER TABLE ONLY mochi.product_jewellery DROP CONSTRAINT product_jewellery_prd_id_fkey;
+ALTER TABLE ONLY mochi.product_food DROP CONSTRAINT product_food_prd_id_fkey;
 ALTER TABLE ONLY mochi.product_category DROP CONSTRAINT product_category_prd_id_product_prd_id_fkey;
 ALTER TABLE ONLY mochi.product_category DROP CONSTRAINT product_category_cat_id_category_cat_id_fkey;
 ALTER TABLE ONLY mochi.product_attr_lcl DROP CONSTRAINT product_attr_lcl_prd_id_fkey;
@@ -41,6 +42,8 @@ ALTER TABLE ONLY mochi.layout_category DROP CONSTRAINT layout_category_lay_id_la
 ALTER TABLE ONLY mochi.layout_category DROP CONSTRAINT layout_category_cat_id_category_cat_id_fkey;
 ALTER TABLE ONLY mochi.jewellery_attr_lcl DROP CONSTRAINT jewellery_attr_lcl_prd_id_fkey;
 ALTER TABLE ONLY mochi.jewellery_attr_lcl DROP CONSTRAINT jewellery_attr_lcl_lcl_cd_fkey;
+ALTER TABLE ONLY mochi.food_attr_lcl DROP CONSTRAINT food_attr_lcl_prd_id_fkey;
+ALTER TABLE ONLY mochi.food_attr_lcl DROP CONSTRAINT food_attr_lcl_lcl_cd_fkey;
 ALTER TABLE ONLY mochi.customer DROP CONSTRAINT customer_role_id_fkey;
 ALTER TABLE ONLY mochi.category_product DROP CONSTRAINT category_product_cat_id_category_cat_id_fkey;
 ALTER TABLE ONLY mochi.category_brand DROP CONSTRAINT category_brand_cat_id_category_cat_id_fkey;
@@ -53,6 +56,7 @@ ALTER TABLE ONLY mochi.brand_attr_lcl DROP CONSTRAINT brand_attr_lcl_bnd_id_fkey
 DROP INDEX mochi.role_role_typ_id_role_start_dttm_party_id_key;
 DROP INDEX mochi.fki_product_attr_lcl_prd_id_fkey;
 DROP INDEX mochi.fki_jewellery_attr_lcl_prd_id_fkey;
+DROP INDEX mochi.fki_food_attr_lcl_prd_id_fkey;
 ALTER TABLE ONLY mochi.tag_attr_lcl DROP CONSTRAINT uc_tag_lcl;
 ALTER TABLE ONLY mochi.tag_attr_lcl DROP CONSTRAINT uc_tag_desc;
 ALTER TABLE ONLY mochi.promotion_category DROP CONSTRAINT uc_promotion_category;
@@ -86,10 +90,12 @@ ALTER TABLE ONLY mochi.product_tag DROP CONSTRAINT product_tag_pkey;
 ALTER TABLE ONLY mochi.product_status DROP CONSTRAINT product_status_pkey;
 ALTER TABLE ONLY mochi.product DROP CONSTRAINT product_pkey;
 ALTER TABLE ONLY mochi.product_jewellery DROP CONSTRAINT product_jewellery_pkey;
+ALTER TABLE ONLY mochi.product_food DROP CONSTRAINT product_food_pkey;
 ALTER TABLE ONLY mochi.product_category DROP CONSTRAINT product_category_pkey;
 ALTER TABLE ONLY mochi.product_attr_lcl DROP CONSTRAINT product_attr_lcl_pkey;
 ALTER TABLE ONLY mochi.price_type DROP CONSTRAINT price_type_pkey;
 ALTER TABLE ONLY mochi.price DROP CONSTRAINT price_pkey;
+ALTER TABLE ONLY mochi.food_attr_lcl DROP CONSTRAINT prd_id_lcl_cd_2;
 ALTER TABLE ONLY mochi.jewellery_attr_lcl DROP CONSTRAINT prd_id_lcl_cd_1;
 ALTER TABLE ONLY mochi.locale DROP CONSTRAINT pk_locale;
 ALTER TABLE ONLY mochi.person DROP CONSTRAINT person_psn_id_key;
@@ -104,6 +110,7 @@ ALTER TABLE ONLY mochi.order_line DROP CONSTRAINT order_line_ord_id_key;
 ALTER TABLE ONLY mochi.layout DROP CONSTRAINT layout_pkey;
 ALTER TABLE ONLY mochi.layout_category DROP CONSTRAINT layout_category_pkey;
 ALTER TABLE ONLY mochi.jewellery_attr_lcl DROP CONSTRAINT jewellery_attr_lcl_pkey;
+ALTER TABLE ONLY mochi.food_attr_lcl DROP CONSTRAINT food_attr_lcl_pkey;
 ALTER TABLE ONLY mochi.discount_type DROP CONSTRAINT discount_type_pkey;
 ALTER TABLE ONLY mochi.discount DROP CONSTRAINT discount_pkey;
 ALTER TABLE ONLY mochi.customer DROP CONSTRAINT customer_pkey;
@@ -148,6 +155,7 @@ DROP TABLE mochi.product_supplier;
 DROP TABLE mochi.product_status;
 DROP SEQUENCE mochi.product_status_prd_sts_id_seq;
 DROP TABLE mochi.product_jewellery;
+DROP TABLE mochi.product_food;
 DROP TABLE mochi.product_category;
 DROP SEQUENCE mochi.product_category_prd_cat_id_seq;
 DROP TABLE mochi.product_attr_lcl;
@@ -176,6 +184,7 @@ DROP TABLE mochi.inventory_transaction;
 DROP TABLE mochi.inventory_on_hand;
 DROP SEQUENCE mochi.hierarchy_hir_id_seq;
 DROP SEQUENCE mochi.hibernate_sequence;
+DROP TABLE mochi.food_attr_lcl;
 DROP TABLE mochi.discount_type;
 DROP TABLE mochi.discount;
 DROP TABLE mochi.customer;
@@ -1780,6 +1789,21 @@ CREATE TABLE discount_type (
 ALTER TABLE discount_type OWNER TO mochidb_owner;
 
 --
+-- Name: food_attr_lcl; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE food_attr_lcl (
+    prd_lcl_id bigint NOT NULL,
+    prd_id bigint NOT NULL,
+    primary_metal_type character varying(100),
+    primary_stone_type character varying(100),
+    lcl_cd character varying(5) NOT NULL
+);
+
+
+ALTER TABLE food_attr_lcl OWNER TO mochidb_owner;
+
+--
 -- Name: hibernate_sequence; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -2162,6 +2186,17 @@ CREATE TABLE product_category (
 
 
 ALTER TABLE product_category OWNER TO mochidb_owner;
+
+--
+-- Name: product_food; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE product_food (
+    prd_id bigint NOT NULL
+);
+
+
+ALTER TABLE product_food OWNER TO mochidb_owner;
 
 --
 -- Name: product_jewellery; Type: TABLE; Schema: mochi; Owner: mochidb_owner
@@ -2703,6 +2738,14 @@ ALTER TABLE ONLY discount_type
 
 
 --
+-- Name: food_attr_lcl food_attr_lcl_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY food_attr_lcl
+    ADD CONSTRAINT food_attr_lcl_pkey PRIMARY KEY (prd_lcl_id);
+
+
+--
 -- Name: jewellery_attr_lcl jewellery_attr_lcl_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -2815,6 +2858,14 @@ ALTER TABLE ONLY jewellery_attr_lcl
 
 
 --
+-- Name: food_attr_lcl prd_id_lcl_cd_2; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY food_attr_lcl
+    ADD CONSTRAINT prd_id_lcl_cd_2 UNIQUE (prd_id, lcl_cd);
+
+
+--
 -- Name: price price_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -2844,6 +2895,14 @@ ALTER TABLE ONLY product_attr_lcl
 
 ALTER TABLE ONLY product_category
     ADD CONSTRAINT product_category_pkey PRIMARY KEY (prd_cat_id);
+
+
+--
+-- Name: product_food product_food_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY product_food
+    ADD CONSTRAINT product_food_pkey PRIMARY KEY (prd_id);
 
 
 --
@@ -3111,6 +3170,13 @@ ALTER TABLE ONLY tag_attr_lcl
 
 
 --
+-- Name: fki_food_attr_lcl_prd_id_fkey; Type: INDEX; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE INDEX fki_food_attr_lcl_prd_id_fkey ON food_attr_lcl USING btree (prd_id);
+
+
+--
 -- Name: fki_jewellery_attr_lcl_prd_id_fkey; Type: INDEX; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -3201,6 +3267,22 @@ ALTER TABLE ONLY category_product
 
 ALTER TABLE ONLY customer
     ADD CONSTRAINT customer_role_id_fkey FOREIGN KEY (rle_id) REFERENCES role(rle_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: food_attr_lcl food_attr_lcl_lcl_cd_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY food_attr_lcl
+    ADD CONSTRAINT food_attr_lcl_lcl_cd_fkey FOREIGN KEY (lcl_cd) REFERENCES locale(lcl_cd);
+
+
+--
+-- Name: food_attr_lcl food_attr_lcl_prd_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY food_attr_lcl
+    ADD CONSTRAINT food_attr_lcl_prd_id_fkey FOREIGN KEY (prd_id) REFERENCES product_food(prd_id);
 
 
 --
@@ -3313,6 +3395,14 @@ ALTER TABLE ONLY product_category
 
 ALTER TABLE ONLY product_category
     ADD CONSTRAINT product_category_prd_id_product_prd_id_fkey FOREIGN KEY (prd_id) REFERENCES product(prd_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: product_food product_food_prd_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY product_food
+    ADD CONSTRAINT product_food_prd_id_fkey FOREIGN KEY (prd_id) REFERENCES product(prd_id);
 
 
 --
@@ -3561,6 +3651,13 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE discount_type TO mochi_app;
 
 
 --
+-- Name: food_attr_lcl; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE food_attr_lcl TO mochi_app;
+
+
+--
 -- Name: hibernate_sequence; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -3758,6 +3855,13 @@ GRANT ALL ON SEQUENCE product_category_prd_cat_id_seq TO mochi_app;
 --
 
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE product_category TO mochi_app;
+
+
+--
+-- Name: product_food; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE product_food TO mochi_app;
 
 
 --
