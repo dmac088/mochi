@@ -658,7 +658,7 @@ INSERT INTO customer VALUES (232313, '1000000074');
 -- Name: customer_cst_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('customer_cst_id_seq', 1000000242, true);
+SELECT pg_catalog.setval('customer_cst_id_seq', 1000000243, true);
 
 
 --
@@ -673,32 +673,6 @@ SELECT pg_catalog.setval('customer_cst_id_seq', 1000000242, true);
 
 INSERT INTO discount_type VALUES (1, 'percentage');
 INSERT INTO discount_type VALUES (2, 'value');
-
-
---
--- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
---
-
-SELECT pg_catalog.setval('hibernate_sequence', 232795, true);
-
-
---
--- Name: hierarchy_hir_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
---
-
-SELECT pg_catalog.setval('hierarchy_hir_id_seq', 43, true);
-
-
---
--- Data for Name: inventory_on_hand; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-
-
---
--- Data for Name: inventory_transaction; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
 
 
 --
@@ -752,6 +726,44 @@ INSERT INTO product VALUES (27, '15946292', '2019-02-05', 39, 3, 1);
 INSERT INTO product VALUES (29, '17152401', '2019-02-05', 33, 3, 1);
 INSERT INTO product VALUES (1, '12345678', '2019-01-04', 38, 3, 1);
 INSERT INTO product VALUES (18, '17366878', '2019-02-05', 39, 3, 1);
+
+
+--
+-- Data for Name: product_food; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+
+
+--
+-- Data for Name: food_attr_lcl; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+
+
+--
+-- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
+--
+
+SELECT pg_catalog.setval('hibernate_sequence', 232797, true);
+
+
+--
+-- Name: hierarchy_hir_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
+--
+
+SELECT pg_catalog.setval('hierarchy_hir_id_seq', 43, true);
+
+
+--
+-- Data for Name: inventory_on_hand; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+
+
+--
+-- Data for Name: inventory_transaction; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
 
 
 --

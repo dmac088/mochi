@@ -1708,6 +1708,21 @@ CREATE TABLE discount_type (
 ALTER TABLE discount_type OWNER TO mochidb_owner;
 
 --
+-- Name: food_attr_lcl; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE food_attr_lcl (
+    prd_lcl_id bigint NOT NULL,
+    prd_id bigint NOT NULL,
+    primary_metal_type character varying(100),
+    primary_stone_type character varying(100),
+    lcl_cd character varying(5) NOT NULL
+);
+
+
+ALTER TABLE food_attr_lcl OWNER TO mochidb_owner;
+
+--
 -- Name: hibernate_sequence; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -2090,6 +2105,17 @@ CREATE TABLE product_category (
 
 
 ALTER TABLE product_category OWNER TO mochidb_owner;
+
+--
+-- Name: product_food; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE product_food (
+    prd_id bigint NOT NULL
+);
+
+
+ALTER TABLE product_food OWNER TO mochidb_owner;
 
 --
 -- Name: product_jewellery; Type: TABLE; Schema: mochi; Owner: mochidb_owner
@@ -3176,7 +3202,7 @@ COPY customer (rle_id, cst_id) FROM stdin;
 -- Name: customer_cst_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('customer_cst_id_seq', 1000000242, true);
+SELECT pg_catalog.setval('customer_cst_id_seq', 1000000243, true);
 
 
 --
@@ -3198,10 +3224,18 @@ COPY discount_type (dis_typ_id, dis_typ_desc) FROM stdin;
 
 
 --
+-- Data for Name: food_attr_lcl; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+COPY food_attr_lcl (prd_lcl_id, prd_id, primary_metal_type, primary_stone_type, lcl_cd) FROM stdin;
+\.
+
+
+--
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 232795, true);
+SELECT pg_catalog.setval('hibernate_sequence', 232797, true);
 
 
 --
@@ -3944,6 +3978,14 @@ SELECT pg_catalog.setval('product_category_prd_cat_id_seq', 102, true);
 
 
 --
+-- Data for Name: product_food; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+COPY product_food (prd_id) FROM stdin;
+\.
+
+
+--
 -- Data for Name: product_jewellery; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -4609,7 +4651,7 @@ COPY user_role (id, pty_id, role_id) FROM stdin;
 -- Name: user_role_id_seq; Type: SEQUENCE SET; Schema: security; Owner: security_owner
 --
 
-SELECT pg_catalog.setval('user_role_id_seq', 176, true);
+SELECT pg_catalog.setval('user_role_id_seq', 177, true);
 
 
 SET search_path = mochi, pg_catalog;
@@ -4716,6 +4758,14 @@ ALTER TABLE ONLY discount
 
 ALTER TABLE ONLY discount_type
     ADD CONSTRAINT discount_type_pkey PRIMARY KEY (dis_typ_id);
+
+
+--
+-- Name: food_attr_lcl food_attr_lcl_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY food_attr_lcl
+    ADD CONSTRAINT food_attr_lcl_pkey PRIMARY KEY (prd_lcl_id);
 
 
 --
@@ -4831,6 +4881,14 @@ ALTER TABLE ONLY jewellery_attr_lcl
 
 
 --
+-- Name: food_attr_lcl prd_id_lcl_cd_2; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY food_attr_lcl
+    ADD CONSTRAINT prd_id_lcl_cd_2 UNIQUE (prd_id, lcl_cd);
+
+
+--
 -- Name: price price_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -4860,6 +4918,14 @@ ALTER TABLE ONLY product_attr_lcl
 
 ALTER TABLE ONLY product_category
     ADD CONSTRAINT product_category_pkey PRIMARY KEY (prd_cat_id);
+
+
+--
+-- Name: product_food product_food_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY product_food
+    ADD CONSTRAINT product_food_pkey PRIMARY KEY (prd_id);
 
 
 --
@@ -5219,6 +5285,13 @@ ALTER TABLE ONLY user_
 SET search_path = mochi, pg_catalog;
 
 --
+-- Name: fki_food_attr_lcl_prd_id_fkey; Type: INDEX; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE INDEX fki_food_attr_lcl_prd_id_fkey ON food_attr_lcl USING btree (prd_id);
+
+
+--
 -- Name: fki_jewellery_attr_lcl_prd_id_fkey; Type: INDEX; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -5309,6 +5382,22 @@ ALTER TABLE ONLY category_product
 
 ALTER TABLE ONLY customer
     ADD CONSTRAINT customer_role_id_fkey FOREIGN KEY (rle_id) REFERENCES role(rle_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: food_attr_lcl food_attr_lcl_lcl_cd_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY food_attr_lcl
+    ADD CONSTRAINT food_attr_lcl_lcl_cd_fkey FOREIGN KEY (lcl_cd) REFERENCES locale(lcl_cd);
+
+
+--
+-- Name: food_attr_lcl food_attr_lcl_prd_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY food_attr_lcl
+    ADD CONSTRAINT food_attr_lcl_prd_id_fkey FOREIGN KEY (prd_id) REFERENCES product_food(prd_id);
 
 
 --
@@ -5421,6 +5510,14 @@ ALTER TABLE ONLY product_category
 
 ALTER TABLE ONLY product_category
     ADD CONSTRAINT product_category_prd_id_product_prd_id_fkey FOREIGN KEY (prd_id) REFERENCES product(prd_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: product_food product_food_prd_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY product_food
+    ADD CONSTRAINT product_food_prd_id_fkey FOREIGN KEY (prd_id) REFERENCES product(prd_id);
 
 
 --
@@ -5720,6 +5817,13 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE discount_type TO mochi_app;
 
 
 --
+-- Name: food_attr_lcl; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE food_attr_lcl TO mochi_app;
+
+
+--
 -- Name: hibernate_sequence; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -5917,6 +6021,13 @@ GRANT ALL ON SEQUENCE product_category_prd_cat_id_seq TO mochi_app;
 --
 
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE product_category TO mochi_app;
+
+
+--
+-- Name: product_food; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE product_food TO mochi_app;
 
 
 --
