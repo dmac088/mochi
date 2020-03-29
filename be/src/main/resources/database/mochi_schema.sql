@@ -55,8 +55,6 @@ ALTER TABLE ONLY mochi.brand_attr_lcl DROP CONSTRAINT brand_attr_lcl_lcl_cd_fkey
 ALTER TABLE ONLY mochi.brand_attr_lcl DROP CONSTRAINT brand_attr_lcl_bnd_id_fkey;
 DROP INDEX mochi.role_role_typ_id_role_start_dttm_party_id_key;
 DROP INDEX mochi.fki_product_attr_lcl_prd_id_fkey;
-DROP INDEX mochi.fki_jewellery_attr_lcl_prd_id_fkey;
-DROP INDEX mochi.fki_food_attr_lcl_prd_id_fkey;
 ALTER TABLE ONLY mochi.tag_attr_lcl DROP CONSTRAINT uc_tag_lcl;
 ALTER TABLE ONLY mochi.tag_attr_lcl DROP CONSTRAINT uc_tag_desc;
 ALTER TABLE ONLY mochi.promotion_category DROP CONSTRAINT uc_promotion_category;
@@ -3167,20 +3165,6 @@ ALTER TABLE ONLY tag_attr_lcl
 
 ALTER TABLE ONLY tag_attr_lcl
     ADD CONSTRAINT uc_tag_lcl UNIQUE (tag_id, lcl_cd);
-
-
---
--- Name: fki_food_attr_lcl_prd_id_fkey; Type: INDEX; Schema: mochi; Owner: mochidb_owner
---
-
-CREATE INDEX fki_food_attr_lcl_prd_id_fkey ON food_attr_lcl USING btree (prd_id);
-
-
---
--- Name: fki_jewellery_attr_lcl_prd_id_fkey; Type: INDEX; Schema: mochi; Owner: mochidb_owner
---
-
-CREATE INDEX fki_jewellery_attr_lcl_prd_id_fkey ON jewellery_attr_lcl USING btree (prd_id);
 
 
 --
