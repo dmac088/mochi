@@ -1756,6 +1756,21 @@ CREATE TABLE inventory_transaction (
 ALTER TABLE inventory_transaction OWNER TO mochidb_owner;
 
 --
+-- Name: jewellery_attr_lcl; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE jewellery_attr_lcl (
+    prd_lcl_id bigint NOT NULL,
+    prd_id bigint NOT NULL,
+    primary_metal_type character varying(100),
+    primary_stone_type character varying(100),
+    lcl_cd character varying(5) NOT NULL
+);
+
+
+ALTER TABLE jewellery_attr_lcl OWNER TO mochidb_owner;
+
+--
 -- Name: layout_lay_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -3161,7 +3176,7 @@ COPY customer (rle_id, cst_id) FROM stdin;
 -- Name: customer_cst_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('customer_cst_id_seq', 1000000238, true);
+SELECT pg_catalog.setval('customer_cst_id_seq', 1000000239, true);
 
 
 --
@@ -3186,7 +3201,7 @@ COPY discount_type (dis_typ_id, dis_typ_desc) FROM stdin;
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 232787, true);
+SELECT pg_catalog.setval('hibernate_sequence', 232789, true);
 
 
 --
@@ -3209,6 +3224,14 @@ COPY inventory_on_hand  FROM stdin;
 --
 
 COPY inventory_transaction  FROM stdin;
+\.
+
+
+--
+-- Data for Name: jewellery_attr_lcl; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+COPY jewellery_attr_lcl (prd_lcl_id, prd_id, primary_metal_type, primary_stone_type, lcl_cd) FROM stdin;
 \.
 
 
@@ -4584,7 +4607,7 @@ COPY user_role (id, pty_id, role_id) FROM stdin;
 -- Name: user_role_id_seq; Type: SEQUENCE SET; Schema: security; Owner: security_owner
 --
 
-SELECT pg_catalog.setval('user_role_id_seq', 172, true);
+SELECT pg_catalog.setval('user_role_id_seq', 173, true);
 
 
 SET search_path = mochi, pg_catalog;
@@ -4694,6 +4717,14 @@ ALTER TABLE ONLY discount_type
 
 
 --
+-- Name: jewellery_attr_lcl jewellery_attr_lcl_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY jewellery_attr_lcl
+    ADD CONSTRAINT jewellery_attr_lcl_pkey PRIMARY KEY (prd_lcl_id);
+
+
+--
 -- Name: layout_category layout_category_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -4707,6 +4738,14 @@ ALTER TABLE ONLY layout_category
 
 ALTER TABLE ONLY layout
     ADD CONSTRAINT layout_pkey PRIMARY KEY (lay_id);
+
+
+--
+-- Name: jewellery_attr_lcl metal_type_lcl_1; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY jewellery_attr_lcl
+    ADD CONSTRAINT metal_type_lcl_1 UNIQUE (primary_metal_type, lcl_cd);
 
 
 --
@@ -5249,6 +5288,14 @@ ALTER TABLE ONLY customer
 
 
 --
+-- Name: jewellery_attr_lcl jewellery_attr_lcl_lcl_cd_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY jewellery_attr_lcl
+    ADD CONSTRAINT jewellery_attr_lcl_lcl_cd_fkey FOREIGN KEY (lcl_cd) REFERENCES locale(lcl_cd);
+
+
+--
 -- Name: layout_category layout_category_cat_id_category_cat_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -5650,6 +5697,13 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE inventory_on_hand TO mochi_app;
 --
 
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE inventory_transaction TO mochi_app;
+
+
+--
+-- Name: jewellery_attr_lcl; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE jewellery_attr_lcl TO mochi_app;
 
 
 --
