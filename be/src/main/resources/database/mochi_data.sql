@@ -658,7 +658,7 @@ INSERT INTO customer VALUES (232313, '1000000074');
 -- Name: customer_cst_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('customer_cst_id_seq', 1000000241, true);
+SELECT pg_catalog.setval('customer_cst_id_seq', 1000000242, true);
 
 
 --
@@ -679,7 +679,7 @@ INSERT INTO discount_type VALUES (2, 'value');
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 232793, true);
+SELECT pg_catalog.setval('hibernate_sequence', 232795, true);
 
 
 --
@@ -714,42 +714,44 @@ INSERT INTO product_status VALUES (2, 'INA01', 'inactive');
 --
 
 INSERT INTO product_type VALUES (1, 'NML01', 'retail product');
+INSERT INTO product_type VALUES (2, 'JEW01', 'Jewellery');
+INSERT INTO product_type VALUES (3, 'FOO01', 'Food');
 
 
 --
 -- Data for Name: product; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-INSERT INTO product VALUES (5, '12383658', '2019-01-04', 34, 1, 1);
-INSERT INTO product VALUES (7, '14445678', '2019-01-04', 37, 1, 1);
-INSERT INTO product VALUES (9, '12366678', '2019-01-04', 32, 1, 1);
-INSERT INTO product VALUES (13, '76477789', '2019-01-04', 33, 1, 1);
-INSERT INTO product VALUES (21, '18170258', '2019-02-05', 38, 1, 1);
-INSERT INTO product VALUES (23, '17236024', '2019-02-05', 35, 1, 1);
-INSERT INTO product VALUES (25, '15483827', '2019-02-05', 35, 1, 1);
-INSERT INTO product VALUES (26, '13627671', '2019-02-05', 35, 1, 1);
-INSERT INTO product VALUES (28, '16153782', '2019-02-05', 34, 1, 1);
-INSERT INTO product VALUES (30, '16067775', '2019-02-05', 33, 1, 1);
-INSERT INTO product VALUES (2, '23464789', '2019-01-04', 40, 1, 1);
-INSERT INTO product VALUES (8, '25556789', '2019-01-04', 41, 1, 1);
-INSERT INTO product VALUES (17, '18911676', '2019-02-05', 37, 1, 1);
-INSERT INTO product VALUES (3, '19633678', '2019-01-04', 37, 1, 1);
-INSERT INTO product VALUES (4, '23456645', '2019-01-04', 41, 1, 1);
-INSERT INTO product VALUES (6, '23739283', '2019-01-04', 38, 1, 1);
-INSERT INTO product VALUES (12, '64377789', '2019-01-04', 34, 1, 1);
-INSERT INTO product VALUES (16, '18188784', '2019-02-05', 41, 1, 1);
-INSERT INTO product VALUES (10, '23477789', '2019-01-04', 35, 1, 1);
-INSERT INTO product VALUES (11, '3577789', '2019-01-04', 32, 1, 1);
-INSERT INTO product VALUES (14, '13159658', '2019-02-05', 32, 1, 1);
-INSERT INTO product VALUES (15, '15410595', '2019-02-05', 38, 1, 1);
-INSERT INTO product VALUES (19, '10760430', '2019-02-05', 33, 1, 1);
-INSERT INTO product VALUES (20, '10688155', '2019-02-05', 37, 1, 1);
-INSERT INTO product VALUES (22, '17235347', '2019-02-05', 39, 1, 1);
-INSERT INTO product VALUES (24, '19037164', '2019-02-05', 41, 1, 1);
-INSERT INTO product VALUES (27, '15946292', '2019-02-05', 39, 1, 1);
-INSERT INTO product VALUES (29, '17152401', '2019-02-05', 33, 1, 1);
-INSERT INTO product VALUES (1, '12345678', '2019-01-04', 38, 1, 1);
-INSERT INTO product VALUES (18, '17366878', '2019-02-05', 39, 1, 1);
+INSERT INTO product VALUES (5, '12383658', '2019-01-04', 34, 3, 1);
+INSERT INTO product VALUES (7, '14445678', '2019-01-04', 37, 3, 1);
+INSERT INTO product VALUES (9, '12366678', '2019-01-04', 32, 3, 1);
+INSERT INTO product VALUES (13, '76477789', '2019-01-04', 33, 3, 1);
+INSERT INTO product VALUES (21, '18170258', '2019-02-05', 38, 3, 1);
+INSERT INTO product VALUES (23, '17236024', '2019-02-05', 35, 3, 1);
+INSERT INTO product VALUES (25, '15483827', '2019-02-05', 35, 3, 1);
+INSERT INTO product VALUES (26, '13627671', '2019-02-05', 35, 3, 1);
+INSERT INTO product VALUES (28, '16153782', '2019-02-05', 34, 3, 1);
+INSERT INTO product VALUES (30, '16067775', '2019-02-05', 33, 3, 1);
+INSERT INTO product VALUES (2, '23464789', '2019-01-04', 40, 3, 1);
+INSERT INTO product VALUES (8, '25556789', '2019-01-04', 41, 3, 1);
+INSERT INTO product VALUES (17, '18911676', '2019-02-05', 37, 3, 1);
+INSERT INTO product VALUES (3, '19633678', '2019-01-04', 37, 3, 1);
+INSERT INTO product VALUES (4, '23456645', '2019-01-04', 41, 3, 1);
+INSERT INTO product VALUES (6, '23739283', '2019-01-04', 38, 3, 1);
+INSERT INTO product VALUES (12, '64377789', '2019-01-04', 34, 3, 1);
+INSERT INTO product VALUES (16, '18188784', '2019-02-05', 41, 3, 1);
+INSERT INTO product VALUES (10, '23477789', '2019-01-04', 35, 3, 1);
+INSERT INTO product VALUES (11, '3577789', '2019-01-04', 32, 3, 1);
+INSERT INTO product VALUES (14, '13159658', '2019-02-05', 32, 3, 1);
+INSERT INTO product VALUES (15, '15410595', '2019-02-05', 38, 3, 1);
+INSERT INTO product VALUES (19, '10760430', '2019-02-05', 33, 3, 1);
+INSERT INTO product VALUES (20, '10688155', '2019-02-05', 37, 3, 1);
+INSERT INTO product VALUES (22, '17235347', '2019-02-05', 39, 3, 1);
+INSERT INTO product VALUES (24, '19037164', '2019-02-05', 41, 3, 1);
+INSERT INTO product VALUES (27, '15946292', '2019-02-05', 39, 3, 1);
+INSERT INTO product VALUES (29, '17152401', '2019-02-05', 33, 3, 1);
+INSERT INTO product VALUES (1, '12345678', '2019-01-04', 38, 3, 1);
+INSERT INTO product VALUES (18, '17366878', '2019-02-05', 39, 3, 1);
 
 
 --
