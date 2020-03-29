@@ -3176,7 +3176,7 @@ COPY customer (rle_id, cst_id) FROM stdin;
 -- Name: customer_cst_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('customer_cst_id_seq', 1000000239, true);
+SELECT pg_catalog.setval('customer_cst_id_seq', 1000000240, true);
 
 
 --
@@ -3201,7 +3201,7 @@ COPY discount_type (dis_typ_id, dis_typ_desc) FROM stdin;
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 232789, true);
+SELECT pg_catalog.setval('hibernate_sequence', 232791, true);
 
 
 --
@@ -4607,7 +4607,7 @@ COPY user_role (id, pty_id, role_id) FROM stdin;
 -- Name: user_role_id_seq; Type: SEQUENCE SET; Schema: security; Owner: security_owner
 --
 
-SELECT pg_catalog.setval('user_role_id_seq', 173, true);
+SELECT pg_catalog.setval('user_role_id_seq', 174, true);
 
 
 SET search_path = mochi, pg_catalog;
@@ -4741,14 +4741,6 @@ ALTER TABLE ONLY layout
 
 
 --
--- Name: jewellery_attr_lcl metal_type_lcl_1; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY jewellery_attr_lcl
-    ADD CONSTRAINT metal_type_lcl_1 UNIQUE (primary_metal_type, lcl_cd);
-
-
---
 -- Name: order_line order_line_ord_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -4826,6 +4818,14 @@ ALTER TABLE ONLY person
 
 ALTER TABLE ONLY locale
     ADD CONSTRAINT pk_locale PRIMARY KEY (lcl_cd);
+
+
+--
+-- Name: jewellery_attr_lcl prd_id_lcl_cd_1; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY jewellery_attr_lcl
+    ADD CONSTRAINT prd_id_lcl_cd_1 UNIQUE (prd_id, lcl_cd);
 
 
 --
