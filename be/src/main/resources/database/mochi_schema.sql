@@ -1795,8 +1795,8 @@ ALTER TABLE discount_type OWNER TO mochidb_owner;
 CREATE TABLE food_attr_lcl (
     prd_lcl_id bigint NOT NULL,
     prd_id bigint NOT NULL,
-    primary_metal_type character varying(100),
-    primary_stone_type character varying(100),
+    food_attribute_1 character varying(100),
+    food_attribute_2 character varying(100),
     lcl_cd character varying(5) NOT NULL
 );
 
