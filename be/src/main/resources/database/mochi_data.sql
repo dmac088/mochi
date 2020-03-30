@@ -662,6 +662,20 @@ SELECT pg_catalog.setval('customer_cst_id_seq', 1000000244, true);
 
 
 --
+-- Data for Name: department; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+INSERT INTO department VALUES (2, 'JEW01', 'Jewellery');
+INSERT INTO department VALUES (3, 'FOO01', 'Food');
+
+
+--
+-- Data for Name: department_attr_lcl; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+
+
+--
 -- Data for Name: discount; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -681,15 +695,6 @@ INSERT INTO discount_type VALUES (2, 'value');
 
 INSERT INTO product_status VALUES (1, 'ACT01', 'active');
 INSERT INTO product_status VALUES (2, 'INA01', 'inactive');
-
-
---
--- Data for Name: product_type; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-INSERT INTO product_type VALUES (1, 'NML01', 'retail product');
-INSERT INTO product_type VALUES (2, 'JEW01', 'Jewellery');
-INSERT INTO product_type VALUES (3, 'FOO01', 'Food');
 
 
 --

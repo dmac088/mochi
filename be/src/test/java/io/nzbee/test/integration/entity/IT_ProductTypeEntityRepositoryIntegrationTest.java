@@ -21,8 +21,9 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
-import io.nzbee.entity.product.type.IProductTypeRepository;
-import io.nzbee.entity.product.type.ProductType;
+
+import io.nzbee.entity.product.department.IDepartmentRepository;
+import io.nzbee.entity.product.department.Department;
 import io.nzbee.test.integration.beans.ProductTypeEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
@@ -58,16 +59,16 @@ public class IT_ProductTypeEntityRepositoryIntegrationTest {
 	private ProductTypeEntityBeanFactory productTypeEntityBeanFactory;
 	
     @Autowired
-    private IProductTypeRepository productTypeRepository;
+    private IDepartmentRepository productTypeRepository;
 	
-    private ProductType productType = null;
+    private Department productType = null;
     
 	@Before
     public void setUp() { 
     	productType = this.persistNewProductType();
     }
 	
-	public ProductType persistNewProductType() {
+	public Department persistNewProductType() {
     	
 		productType = productTypeEntityBeanFactory.getProductTypeEntityBean();
 	   
@@ -83,13 +84,13 @@ public class IT_ProductTypeEntityRepositoryIntegrationTest {
 	    public void whenFindById_thenReturnProductType() {
 	    	
 	        // when
-	    	ProductType found = productTypeRepository.findById(productType.getId()).get();
+	    	Department found = productTypeRepository.findById(productType.getId()).get();
 	     
 	        // then
 	    	assertFound(found);
 	    }
 	
-	 private void assertFound(final ProductType found) {
+	 private void assertFound(final Department found) {
 	    	
 	    	assertThat(found.getCode())
 	        .isEqualTo("TST01");

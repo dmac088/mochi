@@ -1,4 +1,4 @@
-package io.nzbee.entity.product.type;
+package io.nzbee.entity.product.department;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "product_type", schema = "mochi")
-public class ProductType {
+public class Department {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

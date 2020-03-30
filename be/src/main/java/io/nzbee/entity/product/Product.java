@@ -48,9 +48,9 @@ import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.attribute.ProductAttribute;
+import io.nzbee.entity.product.department.Department;
 import io.nzbee.entity.product.price.ProductPrice;
 import io.nzbee.entity.product.status.ProductStatus;
-import io.nzbee.entity.product.type.ProductType;
 import io.nzbee.entity.tag.Tag;
 
 @Entity
@@ -129,7 +129,7 @@ filters = {
 		                    @FieldResult(name = "brand", 			column = "bnd_id")
 	                    }),
 	            @EntityResult(
-	                    entityClass = ProductType.class,
+	                    entityClass = Department.class,
 	                    fields = {
 	                    	@FieldResult(name = "productTypeId", 	column = "prd_typ_id"),
 		                    @FieldResult(name = "productTypeCode", 	column = "prd_typ_cd"),
@@ -198,7 +198,7 @@ public class Product {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="prd_typ_id")
-	private ProductType productType;
+	private Department productType;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="prd_sts_id")
@@ -341,11 +341,11 @@ public class Product {
 		this.productUPC = productUPC;
 	}
 	
-	public ProductType getProductType() {
+	public Department getProductType() {
 		return productType;
 	}
 
-	public void setProductType(ProductType productType) {
+	public void setProductType(Department productType) {
 		this.productType = productType;
 	}
 
