@@ -24,7 +24,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import io.nzbee.entity.product.department.IDepartmentRepository;
 import io.nzbee.entity.product.department.Department;
-import io.nzbee.test.integration.beans.ProductTypeEntityBeanFactory;
+import io.nzbee.test.integration.beans.DepartmentEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -46,8 +46,8 @@ public class IT_ProductTypeEntityRepositoryIntegrationTest {
     static class ProductProductTypeEntityRepositoryIntegrationTest {
           
         @Bean(value = "productTypeEntityBeanFactory")
-        public ProductTypeEntityBeanFactory productTypeFactoryBean() {
-            return new ProductTypeEntityBeanFactory();
+        public DepartmentEntityBeanFactory productTypeFactoryBean() {
+            return new DepartmentEntityBeanFactory();
         }
     }
 	
@@ -56,7 +56,7 @@ public class IT_ProductTypeEntityRepositoryIntegrationTest {
 	private EntityManager entityManager;
 	
 	@Autowired
-	private ProductTypeEntityBeanFactory productTypeEntityBeanFactory;
+	private DepartmentEntityBeanFactory productTypeEntityBeanFactory;
 	
     @Autowired
     private IDepartmentRepository productTypeRepository;
@@ -95,8 +95,8 @@ public class IT_ProductTypeEntityRepositoryIntegrationTest {
 	    	assertThat(found.getCode())
 	        .isEqualTo("TST01");
 	
-	    	assertThat(found.getDesc())
-	        .isEqualTo("test product type");
+	    	assertThat(found.getDepartmentClass())
+	        .isEqualTo("Food");
 	
 	 }
 	 

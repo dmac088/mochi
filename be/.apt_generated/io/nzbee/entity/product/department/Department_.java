@@ -8,9 +8,9 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(Department.class)
 public abstract class Department_ {
 
-	public static volatile SingularAttribute<Department, String> productTypeDesc;
-	public static volatile SingularAttribute<Department, Long> productTypeId;
-	public static volatile SingularAttribute<Department, String> productTypeCode;
+	public static volatile SingularAttribute<Department, String> departmentClass;
+	public static volatile SingularAttribute<Department, Long> departmentId;
+	public static volatile SingularAttribute<Department, String> departmentCode;
 
 }
 

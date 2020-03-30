@@ -8,13 +8,13 @@ import io.nzbee.entity.product.department.Department;
 
 @Service(value = "productTypeEntityBeanFactory")
 @Profile(value = "dev")
-public class ProductTypeEntityBeanFactory {
+public class DepartmentEntityBeanFactory {
 
 	@Bean
 	public final Department getProductTypeEntityBean() {
 		Department productType = new Department();
 		productType.setCode("TST01");
-		productType.setDesc("test product type");
+		productType.setDepartmentClass("Food");
 		return productType;
 	}
 	

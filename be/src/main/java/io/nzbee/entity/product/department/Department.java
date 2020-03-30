@@ -8,42 +8,42 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "product_type", schema = "mochi")
+@Table(name = "department", schema = "mochi")
 public class Department {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="prd_typ_id")
-	private Long productTypeId;
+	@Column(name="dept_id")
+	private Long departmentId;
 
-	@Column(name="prd_typ_cd")
-	private String productTypeCode;
+	@Column(name="dept_cd")
+	private String departmentCode;
 	
-	@Column(name="prd_typ_desc")
-	private String productTypeDesc;
+	@Column(name="dept_class")
+	private String departmentClass;
 
 	public Long getId() {
-		return productTypeId;
+		return departmentId;
 	}
 
 	public void setId(Long id) {
-		this.productTypeId = id;
+		this.departmentId = id;
 	}
 	
 	public String getCode() {
-		return productTypeCode;
+		return departmentCode;
 	}
 
 	public void setCode(String productTypeCode) {
-		this.productTypeCode = productTypeCode;
+		this.departmentCode = productTypeCode;
 	}
 
-	public String getDesc() {
-		return productTypeDesc;
+	public String getDepartmentClass() {
+		return departmentClass;
 	}
 
-	public void setDesc(String productTypeDesc) {
-		this.productTypeDesc = productTypeDesc;
+	public void setDepartmentClass(String departmentClass) {
+		this.departmentClass = departmentClass;
 	}
 	
 }
