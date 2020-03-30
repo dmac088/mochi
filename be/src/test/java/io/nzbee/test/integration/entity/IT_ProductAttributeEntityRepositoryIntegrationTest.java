@@ -95,7 +95,7 @@ public class IT_ProductAttributeEntityRepositoryIntegrationTest {
 		
 		
 		//we need a type
-		pa.getProduct().setProductType(productTypeRepository.findByProductTypeCode("NML01").get());
+		pa.getProduct().setProductType(productTypeRepository.findByDepartmentCode("FOO01").get());
 		
 		//we need a status
 		pa.getProduct().setProductStatus(productStatusRepository.findByProductStatusCode("ACT01").get());
@@ -148,7 +148,7 @@ public class IT_ProductAttributeEntityRepositoryIntegrationTest {
         .isEqualTo("123456789");
     	assertThat(found.getCategories().stream().filter(f -> f.getCategoryCode().equals("FRT01")).findFirst().isPresent())
     	.isTrue();
-    	assertThat(found.getProductType().getCode())
+    	assertThat(found.getDepartment().getCode())
     	.isEqualTo("NML01");
     	assertThat(found.getProductStatus().getCode())
     	.isEqualTo("ACT01");

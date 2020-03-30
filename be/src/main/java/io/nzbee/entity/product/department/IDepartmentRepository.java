@@ -6,6 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface IDepartmentRepository extends CrudRepository<Department, Long> {
 
-	Optional<Department> findByProductTypeCode(String code);
+	Optional<Department> findByDepartmentCode(String code);
 	
 }

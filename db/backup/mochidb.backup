@@ -1700,8 +1700,8 @@ ALTER TABLE product_type_prd_typ_id_seq OWNER TO mochidb_owner;
 
 CREATE TABLE department (
     dept_id bigint DEFAULT nextval('product_type_prd_typ_id_seq'::regclass) NOT NULL,
-    department_cd character varying(5) NOT NULL,
-    department_class character varying(20)
+    dept_cd character varying(5) NOT NULL,
+    dept_class character varying(20)
 );
 
 
@@ -3223,7 +3223,7 @@ SELECT pg_catalog.setval('customer_cst_id_seq', 1000000244, true);
 -- Data for Name: department; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY department (dept_id, department_cd, department_class) FROM stdin;
+COPY department (dept_id, dept_cd, dept_class) FROM stdin;
 2	JEW01	Jewellery
 3	FOO01	Food
 \.
@@ -5178,7 +5178,7 @@ ALTER TABLE ONLY product_status
 --
 
 ALTER TABLE ONLY department
-    ADD CONSTRAINT uc_prd_typ_cd UNIQUE (department_cd);
+    ADD CONSTRAINT uc_prd_typ_cd UNIQUE (dept_cd);
 
 
 --

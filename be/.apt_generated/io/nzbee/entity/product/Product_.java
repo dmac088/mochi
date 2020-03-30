@@ -24,9 +24,9 @@ public abstract class Product_ {
 	public static volatile SingularAttribute<Product, Date> productCreateDt;
 	public static volatile ListAttribute<Product, ProductAttribute> attributes;
 	public static volatile SetAttribute<Product, CategoryProduct> categories;
+	public static volatile SingularAttribute<Product, Department> department;
 	public static volatile ListAttribute<Product, ProductPrice> prices;
 	public static volatile SingularAttribute<Product, Brand> brand;
-	public static volatile SingularAttribute<Product, Department> productType;
 	public static volatile SetAttribute<Product, Tag> tags;
 
 }

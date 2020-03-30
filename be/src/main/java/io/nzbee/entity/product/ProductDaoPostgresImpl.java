@@ -34,13 +34,13 @@ import io.nzbee.entity.product.attribute.ProductAttribute_;
 import io.nzbee.entity.product.currency.Currency;
 import io.nzbee.entity.product.currency.Currency_;
 import io.nzbee.entity.product.department.Department;
+import io.nzbee.entity.product.department.Department_;
 import io.nzbee.entity.product.price.ProductPrice;
 import io.nzbee.entity.product.price.ProductPriceType;
 import io.nzbee.entity.product.price.ProductPriceType_;
 import io.nzbee.entity.product.price.ProductPrice_;
 import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.entity.product.status.ProductStatus_;
-import io.nzbee.entity.product.type.ProductType_;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.GeneralVars;
 import io.nzbee.variables.ProductVars;
@@ -136,7 +136,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 				cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale),
 				cb.equal(productAttribute.get(ProductAttribute_.productDesc), desc),
 				cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE),
-				cb.equal(type.get(ProductType_.productTypeCode), ProductVars.PRODUCT_TYPE_RETAIL),
+				cb.equal(type.get(Department_.departmentCode), "FOO01"),
 				cb.equal(retailCurrency.get(Currency_.code), currency),
 				cb.equal(markdownCurrency.get(Currency_.code), currency)
 		));
