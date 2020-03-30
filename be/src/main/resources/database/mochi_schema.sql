@@ -1798,7 +1798,7 @@ ALTER TABLE department OWNER TO mochidb_owner;
 CREATE TABLE department_attr_lcl (
     dept_lcl_id bigint NOT NULL,
     dept_id bigint NOT NULL,
-    department_desc character varying(100),
+    dept_desc character varying(100),
     lcl_cd character varying(5) NOT NULL
 );
 

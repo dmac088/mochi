@@ -1714,7 +1714,7 @@ ALTER TABLE department OWNER TO mochidb_owner;
 CREATE TABLE department_attr_lcl (
     dept_lcl_id bigint NOT NULL,
     dept_id bigint NOT NULL,
-    department_desc character varying(100),
+    dept_desc character varying(100),
     lcl_cd character varying(5) NOT NULL
 );
 
@@ -3216,7 +3216,7 @@ COPY customer (rle_id, cst_id) FROM stdin;
 -- Name: customer_cst_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('customer_cst_id_seq', 1000000244, true);
+SELECT pg_catalog.setval('customer_cst_id_seq', 1000000245, true);
 
 
 --
@@ -3233,7 +3233,11 @@ COPY department (dept_id, dept_cd, dept_class) FROM stdin;
 -- Data for Name: department_attr_lcl; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY department_attr_lcl (dept_lcl_id, dept_id, department_desc, lcl_cd) FROM stdin;
+COPY department_attr_lcl (dept_lcl_id, dept_id, dept_desc, lcl_cd) FROM stdin;
+1	2	Jewellery	en-GB
+2	2	首飾	zh-HK
+3	3	Food	en-GB
+4	3	餐飲	zh-HK
 \.
 
 
@@ -3267,7 +3271,7 @@ COPY food_attr_lcl (prd_lcl_id, prd_id, food_attribute_1, food_attribute_2, lcl_
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 232799, true);
+SELECT pg_catalog.setval('hibernate_sequence', 232801, true);
 
 
 --
@@ -4672,7 +4676,7 @@ COPY user_role (id, pty_id, role_id) FROM stdin;
 -- Name: user_role_id_seq; Type: SEQUENCE SET; Schema: security; Owner: security_owner
 --
 
-SELECT pg_catalog.setval('user_role_id_seq', 178, true);
+SELECT pg_catalog.setval('user_role_id_seq', 179, true);
 
 
 SET search_path = mochi, pg_catalog;
