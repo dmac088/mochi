@@ -26,8 +26,8 @@ import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.department.IDepartmentRepository;
 import io.nzbee.entity.product.status.IProductStatusRepository;
-import io.nzbee.entity.product.type.IProductTypeRepository;
 import io.nzbee.test.integration.beans.ProductEntityBeanFactory;
 import io.nzbee.variables.GeneralVars;
 
@@ -75,7 +75,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     private IBrandService brandService;
     
     @Autowired
-    private IProductTypeRepository productTypeRepository;
+    private IDepartmentRepository productTypeRepository;
     
     @Autowired
     private IProductStatusRepository productStatusRepository;

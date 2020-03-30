@@ -33,13 +33,13 @@ import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.attribute.ProductAttribute_;
 import io.nzbee.entity.product.currency.Currency;
 import io.nzbee.entity.product.currency.Currency_;
+import io.nzbee.entity.product.department.Department;
 import io.nzbee.entity.product.price.ProductPrice;
 import io.nzbee.entity.product.price.ProductPriceType;
 import io.nzbee.entity.product.price.ProductPriceType_;
 import io.nzbee.entity.product.price.ProductPrice_;
 import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.entity.product.status.ProductStatus_;
-import io.nzbee.entity.product.type.ProductType;
 import io.nzbee.entity.product.type.ProductType_;
 import io.nzbee.variables.CategoryVars;
 import io.nzbee.variables.GeneralVars;
@@ -113,7 +113,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		Root<Product> root = cq.from(Product.class);
 		Join<Product, ProductAttribute> productAttribute = root.join(Product_.attributes);
 		Join<Product, ProductStatus> status = root.join(Product_.productStatus);
-		Join<Product, ProductType> type = root.join(Product_.productType);
+		Join<Product, Department> type = root.join(Product_.productType);
 		Join<Product, ProductPrice> retailPrice = root.join(Product_.prices, JoinType.LEFT);
 		Join<ProductPrice, ProductPriceType> retailPriceType = retailPrice.join(ProductPrice_.type);
 		Join<ProductPrice, Currency> retailCurrency = retailPrice.join(ProductPrice_.currency);
@@ -193,7 +193,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		return results.stream().map(p -> {
 			Product product = (Product) p[0];
 			product.setProductStatus((ProductStatus) p[1]);
-			product.setProductType((ProductType) p[5]);
+			product.setProductType((Department) p[5]);
 			product.setProductAttribute((ProductAttribute) p[1]); 
 			
 			Brand brand = (Brand) p[3];
@@ -264,7 +264,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		results.stream().map(p -> {
 			Product product = (Product) p[0];
 			product.setProductStatus((ProductStatus) p[1]);
-			product.setProductType((ProductType) p[5]);
+			product.setProductType((Department) p[5]);
 			product.setProductAttribute((ProductAttribute) p[1]); 
 			
 			Brand brand = (Brand) p[3];
@@ -377,7 +377,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		results.stream().map(p -> {
 			Product product = (Product) p[0];
 			product.setProductStatus((ProductStatus) p[1]);
-			product.setProductType((ProductType) p[5]);
+			product.setProductType((Department) p[5]);
 			product.setProductAttribute((ProductAttribute) p[2]);
 			
 			Brand brand = (Brand) p[3];
