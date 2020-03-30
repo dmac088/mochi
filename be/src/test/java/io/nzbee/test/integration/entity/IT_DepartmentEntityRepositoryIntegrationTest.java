@@ -40,7 +40,7 @@ import io.nzbee.test.integration.beans.DepartmentEntityBeanFactory;
 			transactionManager = "mochiTransactionManager",
 			transactionMode = TransactionMode.ISOLATED))
 })
-public class IT_ProductTypeEntityRepositoryIntegrationTest {
+public class IT_DepartmentEntityRepositoryIntegrationTest {
 	
 	@TestConfiguration
     static class ProductProductTypeEntityRepositoryIntegrationTest {
