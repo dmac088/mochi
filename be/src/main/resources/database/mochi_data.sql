@@ -658,7 +658,7 @@ INSERT INTO customer VALUES (232313, '1000000074');
 -- Name: customer_cst_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('customer_cst_id_seq', 1000000244, true);
+SELECT pg_catalog.setval('customer_cst_id_seq', 1000000245, true);
 
 
 --
@@ -673,6 +673,10 @@ INSERT INTO department VALUES (3, 'FOO01', 'Food');
 -- Data for Name: department_attr_lcl; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
+INSERT INTO department_attr_lcl VALUES (1, 2, 'Jewellery', 'en-GB');
+INSERT INTO department_attr_lcl VALUES (2, 2, '首飾', 'zh-HK');
+INSERT INTO department_attr_lcl VALUES (3, 3, 'Food', 'en-GB');
+INSERT INTO department_attr_lcl VALUES (4, 3, '餐飲', 'zh-HK');
 
 
 --
@@ -749,7 +753,7 @@ INSERT INTO product VALUES (18, '17366878', '2019-02-05', 39, 3, 1);
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 232799, true);
+SELECT pg_catalog.setval('hibernate_sequence', 232801, true);
 
 
 --
