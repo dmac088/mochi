@@ -89,7 +89,7 @@ filters = {
 	                        @FieldResult(name = "productCreateDt", 	column = "prd_crtd_dt"),
 	                        @FieldResult(name = "brand", 			column = "bnd_id"),
 	                        @FieldResult(name = "productStatus", 	column = "prd_sts_id"),
-	                        @FieldResult(name = "productType", 		column = "prd_typ_id"),
+	                        @FieldResult(name = "productType", 		column = "dept_id"),
 	                        @FieldResult(name = "productAttribute", column = "prd_lcl_id"),	      
 	                        @FieldResult(name = "attributes", 		column = "prd_id"),
 	                    }),
@@ -131,7 +131,7 @@ filters = {
 	            @EntityResult(
 	                    entityClass = Department.class,
 	                    fields = {
-	                    	@FieldResult(name = "productTypeId", 	column = "prd_typ_id"),
+	                    	@FieldResult(name = "productTypeId", 	column = "dept_id"),
 		                    @FieldResult(name = "productTypeCode", 	column = "prd_typ_cd"),
 		                    @FieldResult(name = "productTypeDesc", 	column = "prd_typ_desc")
 	                    })
@@ -197,8 +197,8 @@ public class Product {
 	private Brand brand;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="prd_typ_id")
-	private Department productType;
+	@JoinColumn(name="dept_id")
+	private Department department;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="prd_sts_id")
@@ -341,12 +341,12 @@ public class Product {
 		this.productUPC = productUPC;
 	}
 	
-	public Department getProductType() {
-		return productType;
+	public Department getDepartment() {
+		return department;
 	}
 
-	public void setProductType(Department productType) {
-		this.productType = productType;
+	public void setProductType(Department department) {
+		this.department = department;
 	}
 
 	public Date getProductCreateDt() {

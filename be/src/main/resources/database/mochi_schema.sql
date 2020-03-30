@@ -1784,8 +1784,8 @@ ALTER TABLE product_type_prd_typ_id_seq OWNER TO mochidb_owner;
 
 CREATE TABLE department (
     dept_id bigint DEFAULT nextval('product_type_prd_typ_id_seq'::regclass) NOT NULL,
-    department_cd character varying(5) NOT NULL,
-    department_class character varying(20)
+    dept_cd character varying(5) NOT NULL,
+    dept_class character varying(20)
 );
 
 
@@ -3151,7 +3151,7 @@ ALTER TABLE ONLY product_status
 --
 
 ALTER TABLE ONLY department
-    ADD CONSTRAINT uc_prd_typ_cd UNIQUE (department_cd);
+    ADD CONSTRAINT uc_prd_typ_cd UNIQUE (dept_cd);
 
 
 --
