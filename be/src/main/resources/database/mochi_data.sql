@@ -658,7 +658,7 @@ INSERT INTO customer VALUES (232313, '1000000074');
 -- Name: customer_cst_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('customer_cst_id_seq', 1000000245, true);
+SELECT pg_catalog.setval('customer_cst_id_seq', 1000000246, true);
 
 
 --
@@ -741,19 +741,109 @@ INSERT INTO product VALUES (18, '17366878', '2019-02-05', 39, 3, 1);
 -- Data for Name: product_food; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
+INSERT INTO product_food VALUES (5, '2020-04-23', 'CHN');
+INSERT INTO product_food VALUES (7, '2020-04-23', 'CHN');
+INSERT INTO product_food VALUES (9, '2020-04-23', 'CHN');
+INSERT INTO product_food VALUES (13, '2020-04-23', 'CHN');
+INSERT INTO product_food VALUES (21, '2020-04-23', 'CHN');
+INSERT INTO product_food VALUES (23, '2020-04-23', 'CHN');
+INSERT INTO product_food VALUES (25, '2020-04-23', 'CHN');
+INSERT INTO product_food VALUES (26, '2020-04-23', 'CHN');
+INSERT INTO product_food VALUES (28, '2020-04-23', 'CHN');
+INSERT INTO product_food VALUES (30, '2020-04-23', 'CHN');
+INSERT INTO product_food VALUES (2, '2020-04-23', 'CHN');
+INSERT INTO product_food VALUES (8, '2020-04-23', 'CHN');
+INSERT INTO product_food VALUES (17, '2020-04-23', 'CHN');
+INSERT INTO product_food VALUES (3, '2020-04-23', 'CHN');
+INSERT INTO product_food VALUES (4, '2020-04-23', 'CHN');
+INSERT INTO product_food VALUES (6, '2020-04-23', 'CHN');
+INSERT INTO product_food VALUES (12, '2020-04-23', 'CHN');
+INSERT INTO product_food VALUES (16, '2020-04-23', 'CHN');
+INSERT INTO product_food VALUES (10, '2020-04-23', 'CHN');
+INSERT INTO product_food VALUES (11, '2020-04-23', 'CHN');
+INSERT INTO product_food VALUES (14, '2020-04-23', 'CHN');
+INSERT INTO product_food VALUES (15, '2020-04-23', 'CHN');
+INSERT INTO product_food VALUES (19, '2020-04-23', 'CHN');
+INSERT INTO product_food VALUES (20, '2020-04-23', 'CHN');
+INSERT INTO product_food VALUES (22, '2020-04-23', 'CHN');
+INSERT INTO product_food VALUES (24, '2020-04-23', 'CHN');
+INSERT INTO product_food VALUES (27, '2020-04-23', 'CHN');
+INSERT INTO product_food VALUES (29, '2020-04-23', 'CHN');
+INSERT INTO product_food VALUES (1, '2020-04-23', 'CHN');
+INSERT INTO product_food VALUES (18, '2020-04-23', 'CHN');
 
 
 --
 -- Data for Name: food_attr_lcl; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
+INSERT INTO food_attr_lcl VALUES (6, 5, 'Not Applicable', 'en-GB');
+INSERT INTO food_attr_lcl VALUES (8, 7, 'Not Applicable', 'en-GB');
+INSERT INTO food_attr_lcl VALUES (10, 9, 'Not Applicable', 'en-GB');
+INSERT INTO food_attr_lcl VALUES (14, 13, 'Not Applicable', 'en-GB');
+INSERT INTO food_attr_lcl VALUES (22, 21, 'Not Applicable', 'en-GB');
+INSERT INTO food_attr_lcl VALUES (24, 23, 'Not Applicable', 'en-GB');
+INSERT INTO food_attr_lcl VALUES (26, 25, 'Not Applicable', 'en-GB');
+INSERT INTO food_attr_lcl VALUES (27, 26, 'Not Applicable', 'en-GB');
+INSERT INTO food_attr_lcl VALUES (29, 28, 'Not Applicable', 'en-GB');
+INSERT INTO food_attr_lcl VALUES (31, 30, 'Not Applicable', 'en-GB');
+INSERT INTO food_attr_lcl VALUES (3, 2, 'Not Applicable', 'en-GB');
+INSERT INTO food_attr_lcl VALUES (9, 8, 'Not Applicable', 'en-GB');
+INSERT INTO food_attr_lcl VALUES (18, 17, 'Not Applicable', 'en-GB');
+INSERT INTO food_attr_lcl VALUES (4, 3, 'Not Applicable', 'en-GB');
+INSERT INTO food_attr_lcl VALUES (5, 4, 'Not Applicable', 'en-GB');
+INSERT INTO food_attr_lcl VALUES (7, 6, 'Not Applicable', 'en-GB');
+INSERT INTO food_attr_lcl VALUES (13, 12, 'Not Applicable', 'en-GB');
+INSERT INTO food_attr_lcl VALUES (17, 16, 'Not Applicable', 'en-GB');
+INSERT INTO food_attr_lcl VALUES (11, 10, 'Not Applicable', 'en-GB');
+INSERT INTO food_attr_lcl VALUES (12, 11, 'Not Applicable', 'en-GB');
+INSERT INTO food_attr_lcl VALUES (15, 14, 'Not Applicable', 'en-GB');
+INSERT INTO food_attr_lcl VALUES (16, 15, 'Not Applicable', 'en-GB');
+INSERT INTO food_attr_lcl VALUES (20, 19, 'Not Applicable', 'en-GB');
+INSERT INTO food_attr_lcl VALUES (21, 20, 'Not Applicable', 'en-GB');
+INSERT INTO food_attr_lcl VALUES (23, 22, 'Not Applicable', 'en-GB');
+INSERT INTO food_attr_lcl VALUES (25, 24, 'Not Applicable', 'en-GB');
+INSERT INTO food_attr_lcl VALUES (28, 27, 'Not Applicable', 'en-GB');
+INSERT INTO food_attr_lcl VALUES (30, 29, 'Not Applicable', 'en-GB');
+INSERT INTO food_attr_lcl VALUES (2, 1, 'Not Applicable', 'en-GB');
+INSERT INTO food_attr_lcl VALUES (19, 18, 'Not Applicable', 'en-GB');
+INSERT INTO food_attr_lcl VALUES (45, 5, '不適用', 'zh-HK');
+INSERT INTO food_attr_lcl VALUES (47, 7, '不適用', 'zh-HK');
+INSERT INTO food_attr_lcl VALUES (49, 9, '不適用', 'zh-HK');
+INSERT INTO food_attr_lcl VALUES (53, 13, '不適用', 'zh-HK');
+INSERT INTO food_attr_lcl VALUES (61, 21, '不適用', 'zh-HK');
+INSERT INTO food_attr_lcl VALUES (63, 23, '不適用', 'zh-HK');
+INSERT INTO food_attr_lcl VALUES (65, 25, '不適用', 'zh-HK');
+INSERT INTO food_attr_lcl VALUES (66, 26, '不適用', 'zh-HK');
+INSERT INTO food_attr_lcl VALUES (68, 28, '不適用', 'zh-HK');
+INSERT INTO food_attr_lcl VALUES (70, 30, '不適用', 'zh-HK');
+INSERT INTO food_attr_lcl VALUES (42, 2, '不適用', 'zh-HK');
+INSERT INTO food_attr_lcl VALUES (48, 8, '不適用', 'zh-HK');
+INSERT INTO food_attr_lcl VALUES (57, 17, '不適用', 'zh-HK');
+INSERT INTO food_attr_lcl VALUES (43, 3, '不適用', 'zh-HK');
+INSERT INTO food_attr_lcl VALUES (44, 4, '不適用', 'zh-HK');
+INSERT INTO food_attr_lcl VALUES (46, 6, '不適用', 'zh-HK');
+INSERT INTO food_attr_lcl VALUES (52, 12, '不適用', 'zh-HK');
+INSERT INTO food_attr_lcl VALUES (56, 16, '不適用', 'zh-HK');
+INSERT INTO food_attr_lcl VALUES (50, 10, '不適用', 'zh-HK');
+INSERT INTO food_attr_lcl VALUES (51, 11, '不適用', 'zh-HK');
+INSERT INTO food_attr_lcl VALUES (54, 14, '不適用', 'zh-HK');
+INSERT INTO food_attr_lcl VALUES (55, 15, '不適用', 'zh-HK');
+INSERT INTO food_attr_lcl VALUES (59, 19, '不適用', 'zh-HK');
+INSERT INTO food_attr_lcl VALUES (60, 20, '不適用', 'zh-HK');
+INSERT INTO food_attr_lcl VALUES (62, 22, '不適用', 'zh-HK');
+INSERT INTO food_attr_lcl VALUES (64, 24, '不適用', 'zh-HK');
+INSERT INTO food_attr_lcl VALUES (67, 27, '不適用', 'zh-HK');
+INSERT INTO food_attr_lcl VALUES (69, 29, '不適用', 'zh-HK');
+INSERT INTO food_attr_lcl VALUES (41, 1, '不適用', 'zh-HK');
+INSERT INTO food_attr_lcl VALUES (58, 18, '不適用', 'zh-HK');
 
 
 --
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 232801, true);
+SELECT pg_catalog.setval('hibernate_sequence', 232803, true);
 
 
 --

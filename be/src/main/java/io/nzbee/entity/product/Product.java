@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ColumnResult;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.EntityResult;
 import javax.persistence.FetchType;
@@ -16,6 +17,8 @@ import javax.persistence.FieldResult;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -55,6 +58,8 @@ import io.nzbee.entity.tag.Tag;
 
 @Entity
 @Indexed
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name="dept_id")
 @AnalyzerDef(name = "en-GB",
 tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
 filters = {
