@@ -96,7 +96,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 		
 		
 		//we need a type
-		product.setProductType(productTypeRepository.findByDepartmentCode("FOO01").get());
+		product.setDepartment(productTypeRepository.findByDepartmentCode("FOO01").get());
 		
 		//we need a status
 		product.setProductStatus(productStatusRepository.findByProductStatusCode("ACT01").get());

@@ -136,9 +136,9 @@ filters = {
 	            @EntityResult(
 	                    entityClass = Department.class,
 	                    fields = {
-	                    	@FieldResult(name = "productTypeId", 	column = "dept_id"),
-		                    @FieldResult(name = "productTypeCode", 	column = "prd_typ_cd"),
-		                    @FieldResult(name = "productTypeDesc", 	column = "prd_typ_desc")
+	                    	@FieldResult(name = "departmentId", 	column = "dept_id"),
+		                    @FieldResult(name = "departmentCode", 	column = "dept_cd"),
+		                    @FieldResult(name = "departmentClass", 	column = "dept_class")
 	                    })
 
 	    }),
@@ -350,7 +350,7 @@ public class Product {
 		return department;
 	}
 
-	public void setProductType(Department department) {
+	public void setDepartment(Department department) {
 		this.department = department;
 	}
 

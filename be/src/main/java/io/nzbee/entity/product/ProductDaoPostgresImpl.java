@@ -113,7 +113,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		Root<Product> root = cq.from(Product.class);
 		Join<Product, ProductAttribute> productAttribute = root.join(Product_.attributes);
 		Join<Product, ProductStatus> status = root.join(Product_.productStatus);
-		Join<Product, Department> type = root.join(Product_.productType);
+		Join<Product, Department> department = root.join(Product_.department);
 		Join<Product, ProductPrice> retailPrice = root.join(Product_.prices, JoinType.LEFT);
 		Join<ProductPrice, ProductPriceType> retailPriceType = retailPrice.join(ProductPrice_.type);
 		Join<ProductPrice, Currency> retailCurrency = retailPrice.join(ProductPrice_.currency);
@@ -136,7 +136,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 				cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale),
 				cb.equal(productAttribute.get(ProductAttribute_.productDesc), desc),
 				cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE),
-				cb.equal(type.get(Department_.departmentCode), "FOO01"),
+				cb.equal(department.get(Department_.departmentCode), "FOO01"),
 				cb.equal(retailCurrency.get(Currency_.code), currency),
 				cb.equal(markdownCurrency.get(Currency_.code), currency)
 		));
@@ -193,7 +193,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		return results.stream().map(p -> {
 			Product product = (Product) p[0];
 			product.setProductStatus((ProductStatus) p[1]);
-			product.setProductType((Department) p[5]);
+			product.setDepartment((Department) p[5]);
 			product.setProductAttribute((ProductAttribute) p[1]); 
 			
 			Brand brand = (Brand) p[3];
@@ -264,7 +264,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		results.stream().map(p -> {
 			Product product = (Product) p[0];
 			product.setProductStatus((ProductStatus) p[1]);
-			product.setProductType((Department) p[5]);
+			product.setDepartment((Department) p[5]);
 			product.setProductAttribute((ProductAttribute) p[1]); 
 			
 			Brand brand = (Brand) p[3];
@@ -325,7 +325,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
   				 											 true), "ProductMapping.count")
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
-		.setParameter("productTypeCode", ProductVars.PRODUCT_TYPE_RETAIL)
 		.setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
 		.setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
 		.setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
@@ -347,7 +346,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 					   									false), "ProductMapping")
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
-		.setParameter("productTypeCode", ProductVars.PRODUCT_TYPE_RETAIL)
 		.setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
 		.setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
 		.setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
@@ -377,7 +375,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		results.stream().map(p -> {
 			Product product = (Product) p[0];
 			product.setProductStatus((ProductStatus) p[1]);
-			product.setProductType((Department) p[5]);
+			product.setDepartment((Department) p[5]);
 			product.setProductAttribute((ProductAttribute) p[2]);
 			
 			Brand brand = (Brand) p[3];
@@ -473,9 +471,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
 						"	   attr.prd_desc, " +	
 						"	   attr.prd_img_pth, " +	
 						"	   attr.lcl_cd, " +
-						"	   prdt.prd_typ_id,   " + 
-						"	   prdt.prd_typ_cd,   " + 
-						"	   prdt.prd_typ_desc,   " + 
+						"	   dept.dept_id,   " + 
+						"	   dept.dept_cd,   " + 
+						"	   dept.dept_class,   " + 
 						"	   bnd.bnd_id,   " + 
 						"	   bnd.bnd_cd,   " + 
 						"	   bal.bnd_lcl_id,		  " + 
@@ -508,8 +506,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		"	INNER JOIN mochi.product_attr_lcl attr " +
 		"	ON prd.prd_id = attr.prd_id " + 
 		 
-		"	INNER JOIN mochi.product_type prdt   " + 
-		"	ON prd.prd_typ_id = prdt.prd_typ_id   " + 
+		"	INNER JOIN mochi.department dept   " + 
+		"	ON prd.dept_id = dept.dept_id   " + 
 			
 		"	INNER JOIN mochi.brand bnd   " + 
 		"	ON prd.bnd_id = bnd.bnd_id   " + 
@@ -550,7 +548,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 						"	ON ptags.tag_id = tag.tag_id "
 				   : 	"") +
 		
-		"WHERE prdt.prd_typ_cd = 	:productTypeCode " +
+		"WHERE 0=0 " +
 		"AND prd_sts_cd = 			:activeProductCode  " + 
 		"AND bal.lcl_cd = 			:locale " +
 		"AND attr.lcl_cd = 			:locale " +	
