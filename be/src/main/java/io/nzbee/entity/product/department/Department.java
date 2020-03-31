@@ -34,8 +34,8 @@ public class Department {
 		return departmentCode;
 	}
 
-	public void setCode(String productTypeCode) {
-		this.departmentCode = productTypeCode;
+	public void setCode(String departmentCode) {
+		this.departmentCode = departmentCode;
 	}
 
 	public String getDepartmentClass() {

@@ -15,18 +15,17 @@ public class ProductEntityBeanFactory {
 
 	@Bean
 	public final Product getProductEntityBean() {
-		
-		Product product = new Food();
+		Food product = new Food();
 		product.setProductCreateDt(new Date());
 		product.setUPC("123456789");
-		
+		product.setExpiryDate(new Date());
 		return product;
 	}
 	
 	@Bean
 	public final ProductAttribute getProductAttributeEntityBean() {
 		
-		Product p = new Product();
+		Food p = new Food();
 		ProductAttribute paEng = new ProductAttribute();
 		paEng.setProductDesc("test product");
 		paEng.setLclCd("en-GB");
@@ -38,6 +37,7 @@ public class ProductEntityBeanFactory {
 		paCn.setProduct(p);
 		
 		p.setProductCreateDt(new Date());
+		p.setExpiryDate(new Date());
 		p.setUPC("123456789");
 		
 		p.addProductAttribute(paEng);
