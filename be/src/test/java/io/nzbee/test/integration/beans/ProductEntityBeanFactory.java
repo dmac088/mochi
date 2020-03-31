@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.attribute.ProductAttribute;
+import io.nzbee.entity.product.food.Food;
 
 @Service(value = "productEntityBeanFactory")
 @Profile(value = "dev")
@@ -15,7 +16,7 @@ public class ProductEntityBeanFactory {
 	@Bean
 	public final Product getProductEntityBean() {
 		
-		Product product = new Product();
+		Product product = new Food();
 		product.setProductCreateDt(new Date());
 		product.setUPC("123456789");
 		
