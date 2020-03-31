@@ -57,6 +57,7 @@ import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.entity.tag.Tag;
 
 @Entity
+@Table(name = "product", schema = "mochi")
 @Indexed
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name="dept_id")
@@ -77,7 +78,6 @@ filters = {
   @TokenFilterDef(factory = LowerCaseFilterFactory.class),
   @TokenFilterDef(factory = StopFilterFactory.class)
 })
-@Table(name = "product", schema = "mochi")
 @SqlResultSetMappings({
 		@SqlResultSetMapping(
 	    name = "ProductMapping",
@@ -94,7 +94,7 @@ filters = {
 	                        @FieldResult(name = "productCreateDt", 	column = "prd_crtd_dt"),
 	                        @FieldResult(name = "brand", 			column = "bnd_id"),
 	                        @FieldResult(name = "productStatus", 	column = "prd_sts_id"),
-	                        @FieldResult(name = "productType", 		column = "dept_id"),
+	                        @FieldResult(name = "department", 		column = "dept_id"),
 	                        @FieldResult(name = "productAttribute", column = "prd_lcl_id"),	      
 	                        @FieldResult(name = "attributes", 		column = "prd_id"),
 	                    }),
@@ -149,7 +149,7 @@ filters = {
 			    })
 })
 
-public class Product { 
+public abstract class Product { 
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

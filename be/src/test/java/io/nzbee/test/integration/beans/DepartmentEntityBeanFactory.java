@@ -12,10 +12,10 @@ public class DepartmentEntityBeanFactory {
 
 	@Bean
 	public final Department getProductTypeEntityBean() {
-		Department productType = new Department();
-		productType.setCode("TST01");
-		productType.setDepartmentClass("Food");
-		return productType;
+		Department dept = new Department();
+		dept.setCode("TST01");
+		dept.setDepartmentClass("Food");
+		return dept;
 	}
 	
 }

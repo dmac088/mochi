@@ -35,6 +35,7 @@ import io.nzbee.entity.product.currency.Currency;
 import io.nzbee.entity.product.currency.Currency_;
 import io.nzbee.entity.product.department.Department;
 import io.nzbee.entity.product.department.Department_;
+import io.nzbee.entity.product.food.Food;
 import io.nzbee.entity.product.price.ProductPrice;
 import io.nzbee.entity.product.price.ProductPriceType;
 import io.nzbee.entity.product.price.ProductPriceType_;
@@ -145,7 +146,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		
 		Tuple tuple = query.getSingleResult();
 		
-		Product pe = new Product();
+		Product pe = new Food();
 		ProductAttribute pa = new ProductAttribute();
 		
 		pa.setId(Long.parseLong(tuple.get("productAttributeId").toString()));
@@ -191,6 +192,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		List<Object[]> results = query.getResultList();
 		
 		return results.stream().map(p -> {
+			
 			Product product = (Product) p[0];
 			product.setProductStatus((ProductStatus) p[1]);
 			product.setDepartment((Department) p[5]);
