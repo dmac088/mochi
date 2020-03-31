@@ -1839,8 +1839,7 @@ ALTER TABLE discount_type OWNER TO mochidb_owner;
 CREATE TABLE food_attr_lcl (
     prd_lcl_id bigint NOT NULL,
     prd_id bigint NOT NULL,
-    food_attribute_1 character varying(100),
-    food_attribute_2 character varying(100),
+    ingredients text,
     lcl_cd character varying(5) NOT NULL
 );
 
@@ -2236,7 +2235,9 @@ ALTER TABLE product_category OWNER TO mochidb_owner;
 --
 
 CREATE TABLE product_food (
-    prd_id bigint NOT NULL
+    prd_id bigint NOT NULL,
+    exp_dt date,
+    ctry_of_orig character varying(3)
 );
 
 
