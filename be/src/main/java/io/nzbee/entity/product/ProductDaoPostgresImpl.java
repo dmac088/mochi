@@ -15,7 +15,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Order;
-import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,13 +60,17 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		
 		final List<String> productCodes = new ArrayList<String>();
 		
-		Query query = em.createNativeQuery(this.constructSQL(false, 
-				 false,
-				 false,
-				 false,
-				 false), "ProductMapping")
+		Query query = em.createNativeQuery(this.constructSQL(false,
+															 false,
+															 true,
+															 false,
+															 false,
+															 false,
+															 false,
+															 false), "ProductMapping")
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
+		.setParameter("categoryCode", CategoryVars.PRIMARY_HIERARCHY_ROOT_CODE)
 		.setParameter("categoryId", id)
 		.setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
 		.setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
@@ -102,16 +105,20 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	public Optional<Product> findByCode(String locale, String currency, String code) {
 		LOGGER.debug("Fetching a product for parameters : {}, {}, {}", locale, currency, code);
 		
-final List<String> productCodes = new ArrayList<String>();
+		final List<String> productCodes = new ArrayList<String>();
+		productCodes.add(code);
 		
-		Query query = em.createNativeQuery(this.constructSQL(false, 
-				 false,
-				 false,
-				 false,
-				 false), "ProductMapping")
+		Query query = em.createNativeQuery(this.constructSQL(true,
+															 false,
+															 false,
+															 false, 
+															 false,
+															 false,
+															 false,
+															 false), "ProductMapping")
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
-		.setParameter("productCode", code)
+		.setParameter("categoryCode", CategoryVars.PRIMARY_HIERARCHY_ROOT_CODE)
 		.setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
 		.setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
 		.setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
@@ -209,7 +216,10 @@ final List<String> productCodes = new ArrayList<String>();
 		categories.add(CategoryVars.PRIMARY_HIERARCHY_ROOT_CODE);
 		
 		
-		Query query = em.createNativeQuery(this.constructSQL(false, 
+		Query query = em.createNativeQuery(this.constructSQL(false,
+															 false,
+															 false,
+															 false, 
 															 false,
 															 false,
 															 false,
@@ -266,7 +276,10 @@ final List<String> productCodes = new ArrayList<String>();
 		LOGGER.debug("Fetching products for parameters : {}, {}, {}, {}", locale, currency, pageable, orderby);
 		
 		//first get the result count
-		Query query = em.createNativeQuery(this.constructSQL(false, 
+		Query query = em.createNativeQuery(this.constructSQL(false,
+															 false,
+															 false,
+															 false, 
 															 false, 
 															 false,
 															 false,
@@ -280,7 +293,11 @@ final List<String> productCodes = new ArrayList<String>();
 		Object result = query.getSingleResult();
 		long total = ((BigInteger) result).longValue();
 		
-		query = em.createNativeQuery(this.constructSQL(false,
+		query = em.createNativeQuery(this.constructSQL(
+													  false,
+													  false,
+													  false,
+				   									  false,
 													  false, 
 													  false,
 													  false,
@@ -358,7 +375,10 @@ final List<String> productCodes = new ArrayList<String>();
 								 String orderby) {
 		
 		// TODO Auto-generated method stub
-		Query query = em.createNativeQuery(this.constructSQL(categoryCodes.size()>=1, 
+		Query query = em.createNativeQuery(this.constructSQL(false,
+	 														 false,
+															 false,
+															 categoryCodes.size()>=1, 
 															 brandCodes.size()>=1,
   				 											 tagCodes.size()>=1,
   				 											 (!(priceStart.equals(new Double(-1)) && (priceEnd.equals(new Double(-1))))),
@@ -379,7 +399,10 @@ final List<String> productCodes = new ArrayList<String>();
 		
 		boolean hasPrices = (!(priceStart.equals(new Double(-1)) && (priceEnd.equals(new Double(-1)))));
 		
-		query = em.createNativeQuery(this.constructSQL(	categoryCodes.size()>=1, 
+		query = em.createNativeQuery(this.constructSQL(	false,
+														false,
+														false,
+														categoryCodes.size()>=1, 
 														brandCodes.size()>=1,
 					   									tagCodes.size()>=1,
 					   									hasPrices,
@@ -431,7 +454,9 @@ final List<String> productCodes = new ArrayList<String>();
 		return new PageImpl<Product>(lp, pageable, total);
 	}
 	
-	private String constructSQL(
+	private String constructSQL(boolean hasProductCodes,
+								boolean hasProductDesc,
+								boolean hasProductId,
 								boolean hasCategories,
 								boolean hasBrands,
 								boolean hasTags,
@@ -604,6 +629,10 @@ final List<String> productCodes = new ArrayList<String>();
 					"	   		else 0  " + 
 					"	   		end between :priceStart AND :priceEnd " 
 				: 	"") +
+		 
+			((hasProductCodes) 	? 	" 	AND prd.upc_cd 		in :productCodes" 	: "") +
+			((hasProductDesc) 	? 	" 	AND attr.prd_desc 	= :productDesc " 	: "") +
+			((hasProductId) 	? 	" 	AND prd.prd_id 		= :productId " 		: "") +
 		((countOnly) 
 					? 	""
 					: 	//" ORDER BY 	:orderby " + 
