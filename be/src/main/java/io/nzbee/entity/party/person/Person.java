@@ -16,9 +16,6 @@ import io.nzbee.entity.party.Party;
 @DiscriminatorValue("1")
 public class Person extends Party  implements Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 2300017359584028443L;
 
 	@Column(name="psn_gvn_nm")
