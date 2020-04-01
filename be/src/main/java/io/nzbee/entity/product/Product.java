@@ -10,6 +10,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ColumnResult;
 import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EntityResult;
 import javax.persistence.FetchType;
@@ -88,6 +89,7 @@ filters = {
 	    entities = {
 	            @EntityResult(
 	                    entityClass = Product.class,
+	                    		discriminatorColumn="dept_id",
 	                    fields = {
 	                        @FieldResult(name = "productId", 		column = "prd_id"),
 	                        @FieldResult(name = "productUPC", 		column = "upc_cd"),
@@ -202,7 +204,10 @@ public abstract class Product {
 	private Brand brand;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="dept_id")
+	@JoinColumn(name="dept_id",
+				nullable = false,  
+				updatable = false, 
+				insertable = false)
 	private Department department;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -443,5 +448,9 @@ public abstract class Product {
     public int hashCode() {
         return 31;
     }
+    
+    public String getTypeDiscriminator() {
+		return this.getClass().getAnnotation(DiscriminatorValue.class).value();
+	}
 			
 }

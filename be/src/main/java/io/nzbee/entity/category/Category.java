@@ -182,9 +182,6 @@ public abstract class Category {
 	private Long maxMarkdownPrice;
 	
 	@Transient
-	private String typeDiscriminator;
-	
-	@Transient
 	private String locale;
 	
 	@Transient
