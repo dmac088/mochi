@@ -13,6 +13,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Store;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -81,6 +82,12 @@ public class Department {
 	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "zh-HK"))
 	public String getDepartmentDescZHHK() {
 		return this.getAttributes().stream().filter(pa -> pa.getLclCd().equals("zh-HK")).findFirst().get().getDepartmentDesc();
+	}
+	
+	@Transient
+	@Facet
+	public String getDepartmentToken() {
+		return this.getCode();
 	}
 	
 }
