@@ -2,6 +2,8 @@ package io.nzbee.entity.brand;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,6 +25,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.category.brand.CategoryBrand;
 import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.attribute.ProductAttribute;
 
 @Entity
 @Table(name = "brand", schema = "mochi")
@@ -75,13 +78,21 @@ public class Brand {
 	@Transient
 	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "en-GB"))
 	public String getBrandDescENGB() {
-		return this.getAttributes().stream().filter(pa -> pa.getLclCd().equals("en-GB")).findFirst().get().getBrandDesc();
+		Optional<BrandAttribute> pa = this.getAttributes().stream().filter(a -> a.getLclCd().equals("en-GB")).findFirst();
+		if(pa.isPresent()) {
+			return pa.get().getBrandDesc();
+		}
+		return "Not Applicable"; 
 	}
 	
 	@Transient
 	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "zh-HK"))
 	public String getBrandDescZHHK() {
-		return this.getAttributes().stream().filter(pa -> pa.getLclCd().equals("zh-HK")).findFirst().get().getBrandDesc();
+		Optional<BrandAttribute> pa = this.getAttributes().stream().filter(a -> a.getLclCd().equals("zh-HK")).findFirst();
+		if(pa.isPresent()) {
+			return pa.get().getBrandDesc();
+		}
+		return "Not Applicable"; 
 	}
 	
 	

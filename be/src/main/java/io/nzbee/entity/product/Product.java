@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ColumnResult;
@@ -218,46 +218,70 @@ public abstract class Product {
 	@OneToMany(	mappedBy="product",
 				cascade = CascadeType.ALL,
 				orphanRemoval = true)
-	List<ProductPrice> prices;
+	List<ProductPrice> prices = new ArrayList<ProductPrice>();
 
 	@Field(store=Store.YES)
 	@SortableField
 	@Transient
 	public Double getCurrentRetailPriceHKD() {
-		 return this.prices.stream().filter(p ->
-		 	p.getCurrency().getCode().equals("HKD")
-		 	&& p.getType().getDesc().equals("retail")
-		 ).collect(Collectors.toList()).get(0).getPriceValue();     
+		 Optional<ProductPrice> priceVal = 
+				 this.prices.stream().filter(p ->
+										 	p.getCurrency().getCode().equals("HKD")
+										 	&& p.getType().getDesc().equals("retail")
+						 			).findFirst();
+				 
+		if (priceVal.isPresent()) {
+			return priceVal.get().getPriceValue();     
+		}
+		return new Double(0);
 	}
 	
 	@Field(store=Store.YES)
 	@SortableField
 	@Transient
 	public Double getCurrentRetailPriceUSD() {
-		 return this.prices.stream().filter(p ->
-		 	p.getCurrency().getCode().equals("USD")
-		 	&& p.getType().getDesc().equals("retail")
-		 ).collect(Collectors.toList()).get(0).getPriceValue();     
+		Optional<ProductPrice> priceVal = 
+				 this.prices.stream().filter(p ->
+										 	p.getCurrency().getCode().equals("USD")
+										 	&& p.getType().getDesc().equals("retail")
+						 			).findFirst();
+				 
+		if (priceVal.isPresent()) {
+			return priceVal.get().getPriceValue();     
+		}
+		return new Double(0);     
 	}
 	
 	@Field(store=Store.YES)
 	@SortableField
 	@Transient
 	public Double getCurrentMarkdownPriceHKD() {
-		 return this.prices.stream().filter(p ->
-		 	p.getCurrency().getCode().equals("HKD")
-		 	&& p.getType().getDesc().equals("markdown")
-		 ).collect(Collectors.toList()).get(0).getPriceValue();     
+		Optional<ProductPrice> priceVal = 
+				 this.prices.stream().filter(p ->
+										 	p.getCurrency().getCode().equals("HKD")
+										 	&& p.getType().getDesc().equals("markdown")
+						 			).findFirst();
+				 
+		if (priceVal.isPresent()) {
+			return priceVal.get().getPriceValue();     
+		}
+		return new Double(0);    
 	}
 	
 	@Field(store=Store.YES)
 	@SortableField
 	@Transient
 	public Double getCurrentMarkdownPriceUSD() {
-		 return this.prices.stream().filter(p ->
-		 	p.getCurrency().getCode().equals("USD")
-		 	&& p.getType().getDesc().equals("markdown")
-		 ).collect(Collectors.toList()).get(0).getPriceValue();     
+		Optional<ProductPrice> priceVal = 
+				 this.prices.stream().filter(p ->
+										 	p.getCurrency().getCode().equals("USD")
+										 	&& p.getType().getDesc().equals("markdown")
+						 			).findFirst();
+				 
+		if (priceVal.isPresent()) {
+			return priceVal.get().getPriceValue();     
+		}
+		return new Double(0);       
 	}
 	
 	@Facet
@@ -277,13 +301,21 @@ public abstract class Product {
 	@Transient
 	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "en-GB"))
 	public String getProductDescENGB() {
-		return this.getAttributes().stream().filter(pa -> pa.getLclCd().equals("en-GB")).findFirst().get().getProductDesc();
+		Optional<ProductAttribute> pa = this.getAttributes().stream().filter(a -> a.getLclCd().equals("en-GB")).findFirst();
+		if(pa.isPresent()) {
+			return pa.get().getProductDesc();
+		}
+		return "Not Applicable"; 
 	}
 	
 	@Transient
 	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "zh-HK"))
 	public String getProductDescZHHK() {
-		return this.getAttributes().stream().filter(pa -> pa.getLclCd().equals("zh-HK")).findFirst().get().getProductDesc();
+		Optional<ProductAttribute> pa = this.getAttributes().stream().filter(a -> a.getLclCd().equals("zh-HK")).findFirst();
+		if(pa.isPresent()) {
+			return pa.get().getProductDesc();
+		}
+		return "Not Applicable"; 
 	}
 	
 	@Field(analyze=Analyze.NO)
@@ -300,12 +332,20 @@ public abstract class Product {
 	
 	@Field(analyze=Analyze.NO, store=Store.YES)
 	public String getProductImageENGB() {
-		return this.getAttributes().stream().filter(pa -> pa.getLclCd().equals("en-GB")).findFirst().get().getProductDesc();
+		Optional<ProductAttribute> pa = this.getAttributes().stream().filter(a -> a.getLclCd().equals("en-GB")).findFirst();
+		if(pa.isPresent()) {
+			return pa.get().getProductImage();
+		}
+		return "unknown.jpg"; 
 	}
 	
 	@Field(analyze=Analyze.NO, store=Store.YES)
 	public String getProductImageZHHK() {
-		return this.getAttributes().stream().filter(pa -> pa.getLclCd().equals("zh-HK")).findFirst().get().getProductDesc();
+		Optional<ProductAttribute> pa = this.getAttributes().stream().filter(a -> a.getLclCd().equals("zh-HK")).findFirst();
+		if(pa.isPresent()) {
+			return pa.get().getProductImage();
+		}
+		return "unknown.jpg"; 
 	}
 
 	public ProductAttribute getProductAttribute() {
