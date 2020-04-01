@@ -12,4 +12,11 @@ import io.nzbee.entity.product.Product;
 @DiscriminatorValue("2")
 public class Jewellery extends Product  {
 
+	public Jewellery() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	
+	
 }
