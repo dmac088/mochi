@@ -1,4 +1,4 @@
-package io.nzbee.entity.product.attribute;
+package io.nzbee.entity.product.department.attribute;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,29 +11,29 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.department.Department;
 
 @Entity
-@Table(name = "product_attr_lcl", schema = "mochi")
-public class ProductAttribute {
+@Table(name = "department_attr_lcl", schema = "mochi")
+public class DepartmentAttribute {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="prd_lcl_id")
+	@Column(name="dept_lcl_id")
 	private Long Id;
 
-	@Column(name="prd_desc")
-	private String productDesc; 
-
-	@Column(name="prd_img_pth")
-	private String ProductImage;
+	@Column(name="dept_id")
+	private Long departmentId;
+	
+	@Column(name="dept_desc")
+	private String departmentDesc;
 	
 	@Column(name="lcl_cd")
 	private String lclCd;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="prd_id")
-	private Product product;
+	@JoinColumn(name="dept_id")
+	private Department department;
 	
 	public Long getId() {
 		return Id;
@@ -41,26 +41,6 @@ public class ProductAttribute {
 
 	public void setId(Long id) {
 		Id = id;
-	}
-	
-	public Long getProductId() {
-		return this.getProduct().getProductId();
-	}
-	
-	public Product getProduct() {
-		return product;
-	}
-
-	public void setProduct(Product product) {
-		this.product = product;
-	}
-	
-	public String getProductDesc() {
-		return productDesc;
-	}
-	
-	public void setProductDesc(String productDesc) {
-		this.productDesc = productDesc;
 	}
 
 	public String getLclCd() {
@@ -71,13 +51,30 @@ public class ProductAttribute {
 		this.lclCd = lclCd;
 	}
 
-	public String getProductImage() {
-		return ProductImage;
+	public Long getDepartmentId() {
+		return departmentId;
 	}
 
-	public void setProductImage(String productImage) {
-		ProductImage = productImage;
+	public void setDepartmentId(Long departmentId) {
+		this.departmentId = departmentId;
 	}
+
+	public String getDepartmentDesc() {
+		return departmentDesc;
+	}
+
+	public void setDepartmentDesc(String departmentDesc) {
+		this.departmentDesc = departmentDesc;
+	}
+
+	public Department getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
+
 	
 	@Override
     public int hashCode() {
@@ -91,12 +88,13 @@ public class ProductAttribute {
 	    if (this == obj) {
 	        return true;
         }
-	    if (!(obj instanceof ProductAttribute)) {
+	    if (!(obj instanceof DepartmentAttribute)) {
 	            return false;
 	    }
-	    ProductAttribute that = (ProductAttribute) obj;
+	    DepartmentAttribute that = (DepartmentAttribute) obj;
 	      EqualsBuilder eb = new EqualsBuilder();
 	      eb.append(this.getLclCd(), that.getLclCd());
 	      return eb.isEquals();
 	}
+	
 }
