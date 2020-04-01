@@ -88,8 +88,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		product.setBrand(brand);
 		brand.setBrandAttribute((BrandAttribute) p[4]);
 		
-		product.setRetailPrice(((BigDecimal) p[6]).doubleValue());
-		product.setMarkdownPrice(((BigDecimal) p[7]).doubleValue());
+		//product.setRetailPrice(((BigDecimal) p[6]).doubleValue());
+		//product.setMarkdownPrice(((BigDecimal) p[7]).doubleValue());
 		
 		return Optional.ofNullable(product);
 	}
@@ -132,8 +132,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		product.setBrand(brand);
 		brand.setBrandAttribute((BrandAttribute) p[4]);
 		
-		product.setRetailPrice(((BigDecimal) p[6]).doubleValue());
-		product.setMarkdownPrice(((BigDecimal) p[7]).doubleValue());
+		//product.setRetailPrice(((BigDecimal) p[6]).doubleValue());
+		//product.setMarkdownPrice(((BigDecimal) p[7]).doubleValue());
 		
 		return Optional.ofNullable(product);
 	}
@@ -192,8 +192,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		pe.setProductAttribute(pa);
 		pe.setProductId(Long.parseLong(tuple.get("productId").toString()));
 		pe.setUPC(tuple.get("productCode").toString());
-		pe.setRetailPrice(Double.parseDouble(tuple.get("retailPrice").toString()));
-		pe.setMarkdownPrice(Double.parseDouble(tuple.get("markdownPrice").toString()));
+		//pe.setRetailPrice(Double.parseDouble(tuple.get("retailPrice").toString()));
+		//pe.setMarkdownPrice(Double.parseDouble(tuple.get("markdownPrice").toString()));
 		
 		return Optional.ofNullable(pe);
 	}
@@ -241,8 +241,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 			product.setBrand(brand);
 			brand.setBrandAttribute((BrandAttribute) p[4]);
 			
-			product.setRetailPrice(((BigDecimal) p[6]).doubleValue());
-			product.setMarkdownPrice(((BigDecimal) p[7]).doubleValue());
+			//product.setRetailPrice(((BigDecimal) p[6]).doubleValue());
+			//product.setMarkdownPrice(((BigDecimal) p[7]).doubleValue());
 			
 			return product;
 		}).collect(Collectors.toList());
@@ -321,8 +321,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 			product.setBrand(brand);
 			brand.setBrandAttribute((BrandAttribute) p[4]);
 			
-			product.setRetailPrice(((BigDecimal) p[6]).doubleValue());
-			product.setMarkdownPrice(((BigDecimal) p[7]).doubleValue());
+			//product.setRetailPrice(((BigDecimal) p[6]).doubleValue());
+			//product.setMarkdownPrice(((BigDecimal) p[7]).doubleValue());
 			
 			return product;
 		}).collect(Collectors.toList());
@@ -440,8 +440,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 			product.setBrand(brand);
 			brand.setBrandAttribute((BrandAttribute) p[4]);
 			
-			product.setRetailPrice(((BigDecimal) p[6]).doubleValue());
-			product.setMarkdownPrice(((BigDecimal) p[7]).doubleValue());
+		//	product.setRetailPrice(((BigDecimal) p[6]).doubleValue());
+		//	product.setMarkdownPrice(((BigDecimal) p[7]).doubleValue());
 			
 			return product;
 		}).collect(Collectors.toList());
@@ -581,11 +581,11 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		"	LEFT JOIN mochi.price rprc     " + 
 		"	ON prd.prd_id = rprc.prd_id    " + 
 			
-		"	INNER JOIN mochi.currency rcurr     " + 
+		"	LEFT JOIN mochi.currency rcurr     " + 
 		"	ON rprc.ccy_id 		= rcurr.ccy_id   " + 
 		"	AND rcurr.ccy_cd 	= :currency " + 
 		
-		"	INNER JOIN mochi.price_type rpt   " + 
+		"	LEFT JOIN mochi.price_type rpt   " + 
 		"	ON rprc.prc_typ_id 	= rpt.prc_typ_id   " + 
 		"	AND rpt.prc_typ_cd = :retailPriceCode " +
 		
@@ -598,11 +598,11 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		"	LEFT JOIN mochi.product_jewellery jew " + 
 		"	ON prd.prd_id = jew.prd_id    " +
 			
-		"	INNER JOIN mochi.currency mcurr     " + 
+		"	LEFT JOIN mochi.currency mcurr     " + 
 		"	ON mprc.ccy_id 		= mcurr.ccy_id   " + 
 		"	AND mcurr.ccy_cd 	= :currency " + 
 		
-		"	INNER JOIN mochi.price_type mpt   " + 
+		"	LEFT JOIN mochi.price_type mpt   " + 
 		"	ON mprc.prc_typ_id 	= mpt.prc_typ_id   " + 
 		"	AND mpt.prc_typ_cd = :markdownPriceCode " +
 			 

@@ -20,6 +20,19 @@ public class ProductEntityBeanFactory {
 		product.setUPC("123456789");
 		product.setExpiryDate(new Date());
 		product.setCountryOfOrigin("NZL");
+		
+		ProductAttribute paEng = new ProductAttribute();
+		paEng.setProductDesc("test product");
+		paEng.setLclCd("en-GB");
+		paEng.setProduct(product);
+		product.addProductAttribute(paEng);
+		
+		ProductAttribute paCn = new ProductAttribute();
+		paCn.setProductDesc("測試產品");
+		paCn.setLclCd("zh-HK");
+		paCn.setProduct(product);
+		product.addProductAttribute(paCn);
+		
 		return product;
 	}
 	
