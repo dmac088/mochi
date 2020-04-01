@@ -124,7 +124,7 @@ public class IT_ProductAttributeEntityRepositoryIntegrationTest {
 	public void whenFindById_thenReturnProduct() {
 		 // when
     	Product found = productService.findById(  GeneralVars.LANGUAGE_ENGLISH, 
-												  GeneralVars.CURRENCY_USD,  
+												  GeneralVars.CURRENCY_HKD,  
 												  pa.getProductId()).get();
      
         // then
@@ -136,7 +136,7 @@ public class IT_ProductAttributeEntityRepositoryIntegrationTest {
 	public void whenFindByCode_thenReturnProduct() {
 		 // when
     	Product found = productService.findByCode(GeneralVars.LANGUAGE_ENGLISH, 
-												  GeneralVars.CURRENCY_USD,  
+												  GeneralVars.CURRENCY_HKD,  
 												  "123456789").get();
      
         // then
