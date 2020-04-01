@@ -843,7 +843,7 @@ INSERT INTO food_attr_lcl VALUES (58, 18, '不適用', 'zh-HK');
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 232803, true);
+SELECT pg_catalog.setval('hibernate_sequence', 232804, true);
 
 
 --
@@ -1263,7 +1263,7 @@ INSERT INTO product_category VALUES (90, 5, 43);
 -- Name: product_category_prd_cat_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('product_category_prd_cat_id_seq', 102, true);
+SELECT pg_catalog.setval('product_category_prd_cat_id_seq', 103, true);
 
 
 --
