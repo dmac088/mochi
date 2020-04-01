@@ -46,7 +46,7 @@ import io.nzbee.variables.GeneralVars;
 			transactionMode = TransactionMode.ISOLATED))
 })
 public class IT_ProductEntityRepositoryIntegrationTest {
-
+//a
 	@TestConfiguration
     static class ProductEntityRepositoryIntegrationTest {
         
