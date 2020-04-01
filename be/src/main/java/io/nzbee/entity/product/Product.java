@@ -97,6 +97,8 @@ filters = {
 	                        @FieldResult(name = "department", 		column = "dept_id"),
 	                        @FieldResult(name = "productAttribute", column = "prd_lcl_id"),	      
 	                        @FieldResult(name = "attributes", 		column = "prd_id"),
+	                        @FieldResult(name = "countryOfOrigin",  column = "ctry_of_orig"),
+	                        @FieldResult(name = "expiryDate",  		column = "exp_dt")
 	                    }),
 	            @EntityResult(
 		                entityClass = ProductStatus.class,
