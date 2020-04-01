@@ -32,7 +32,7 @@ public class DepartmentAttribute {
 	private String lclCd;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="dept_id")
+	@JoinColumn(name="dept_id", insertable=false, updatable=false)
 	private Department department;
 	
 	public Long getId() {
