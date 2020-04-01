@@ -67,6 +67,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 false,
 															 false,
+															 false,
 															 false), "ProductMapping")
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
@@ -74,11 +75,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		.setParameter("categoryId", id)
 		.setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
 		.setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
-		.setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
-		//these should contain default values for these parameters
-		//.setParameter("orderby", "1")
-		.setParameter("limit", Integer.toString(GeneralVars.DEFAULT_PAGE_SIZE))
-		.setParameter("offset", Integer.toString(GeneralVars.DEFAULT_PAGE * GeneralVars.DEFAULT_PAGE_SIZE));
+		.setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE);
 		
 		if(!productCodes.isEmpty()) {
 			query.setParameter("productCodes", productCodes);
@@ -115,17 +112,14 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 false,
 															 false,
+															 false,
 															 false), "ProductMapping")
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
 		.setParameter("categoryCode", CategoryVars.PRIMARY_HIERARCHY_ROOT_CODE)
 		.setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
 		.setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
-		.setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
-		//these should contain default values for these parameters
-		//.setParameter("orderby", "1")
-		.setParameter("limit", Integer.toString(GeneralVars.DEFAULT_PAGE_SIZE))
-		.setParameter("offset", Integer.toString(GeneralVars.DEFAULT_PAGE * GeneralVars.DEFAULT_PAGE_SIZE));
+		.setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE);
 		
 		if(!productCodes.isEmpty()) {
 			query.setParameter("productCodes", productCodes);
@@ -223,7 +217,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 false,
 															 false,
-															 false), "ProductMapping")
+															 false,
+															 true), "ProductMapping")
 				 .setParameter("categoryCodes", categories)
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
@@ -283,7 +278,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false, 
 															 false,
 															 false,
-															 true), "ProductMapping.count")
+															 true,
+															 false), "ProductMapping.count")
 				 .setParameter("locale", 			locale)
 				 .setParameter("currency", 			currency)
 				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
@@ -301,7 +297,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 													  false, 
 													  false,
 													  false,
-													  false), "ProductMapping")
+													  false,
+													  true), "ProductMapping")
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
 				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
@@ -382,7 +379,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 brandCodes.size()>=1,
   				 											 tagCodes.size()>=1,
   				 											 (!(priceStart.equals(new Double(-1)) && (priceEnd.equals(new Double(-1))))),
-  				 											 true), "ProductMapping.count")
+  				 											 true,
+  				 											 false), "ProductMapping.count")
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
 		.setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
@@ -406,7 +404,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 														brandCodes.size()>=1,
 					   									tagCodes.size()>=1,
 					   									hasPrices,
-					   									false), "ProductMapping")
+					   									false,
+					   									true), "ProductMapping")
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
 		.setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
@@ -461,7 +460,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 								boolean hasBrands,
 								boolean hasTags,
 								boolean hasPrices,
-								boolean countOnly) {
+								boolean countOnly,
+								boolean offset) {
 		
 		//now we can implement conditional joins
 		//based on the parameters passed
@@ -633,11 +633,12 @@ public class ProductDaoPostgresImpl implements IProductDao {
 			((hasProductCodes) 	? 	" 	AND prd.upc_cd 		in :productCodes" 	: "") +
 			((hasProductDesc) 	? 	" 	AND attr.prd_desc 	= :productDesc " 	: "") +
 			((hasProductId) 	? 	" 	AND prd.prd_id 		= :productId " 		: "") +
-		((countOnly) 
+			((countOnly || !offset) 
 					? 	""
 					: 	//" ORDER BY 	:orderby " + 
 						" LIMIT 	:limit " +
-						" OFFSET 	:offset ");
+						" OFFSET 	:offset "
+			);
 	}
 
 	@Override
