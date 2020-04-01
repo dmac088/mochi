@@ -19,6 +19,7 @@ public class ProductEntityBeanFactory {
 		product.setProductCreateDt(new Date());
 		product.setUPC("123456789");
 		product.setExpiryDate(new Date());
+		product.setCountryOfOrigin("NZL");
 		return product;
 	}
 	
