@@ -58,8 +58,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	public Optional<Product> findById(String locale, String currency, long id) {
 		LOGGER.debug("Fetching a product for parameters : {}, {}, {}", locale, currency, id);
 		
-		final List<String> productCodes = new ArrayList<String>();
-		
 		Query query = em.createNativeQuery(this.constructSQL(false,
 															 false,
 															 true,
@@ -72,15 +70,13 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
 		.setParameter("categoryCode", CategoryVars.PRIMARY_HIERARCHY_ROOT_CODE)
-		.setParameter("categoryId", id)
+		.setParameter("productId", id)
 		.setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
 		.setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
 		.setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE);
 		
-		if(!productCodes.isEmpty()) {
-			query.setParameter("productCodes", productCodes);
-		}
-
+		System.out.println(query.toString());
+		
 		Object[] p = (Object[])query.getSingleResult();
 		
 		Product product = (Product) p[0];
