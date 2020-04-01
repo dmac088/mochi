@@ -59,7 +59,6 @@ import io.nzbee.entity.tag.Tag;
 
 @Entity
 @Table(name = "product", schema = "mochi")
-@Indexed
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name="dept_id")
 @AnalyzerDef(name = "en-GB",
