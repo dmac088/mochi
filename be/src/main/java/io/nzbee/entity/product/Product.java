@@ -208,6 +208,7 @@ public abstract class Product {
 				nullable = false,  
 				updatable = false, 
 				insertable = false)
+	@IndexedEmbedded(prefix="product.department.")
 	private Department department;
 
 	@ManyToOne(fetch = FetchType.LAZY)

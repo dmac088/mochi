@@ -1,6 +1,8 @@
 package io.nzbee.entity.product.department;
 
+import io.nzbee.entity.product.department.attribute.DepartmentAttribute;
 import javax.annotation.Generated;
+import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
@@ -11,6 +13,7 @@ public abstract class Department_ {
 	public static volatile SingularAttribute<Department, String> departmentClass;
 	public static volatile SingularAttribute<Department, Long> departmentId;
 	public static volatile SingularAttribute<Department, String> departmentCode;
+	public static volatile ListAttribute<Department, DepartmentAttribute> attributes;
 
 }
 
