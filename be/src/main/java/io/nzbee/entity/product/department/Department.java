@@ -73,13 +73,13 @@ public class Department {
 	
 	@Transient
 	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "en-GB"))
-	public String getProductDescENGB() {
+	public String getDepartmentDescENGB() {
 		return this.getAttributes().stream().filter(pa -> pa.getLclCd().equals("en-GB")).findFirst().get().getDepartmentDesc();
 	}
 	
 	@Transient
 	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "zh-HK"))
-	public String getProductDescZHHK() {
+	public String getDepartmentDescZHHK() {
 		return this.getAttributes().stream().filter(pa -> pa.getLclCd().equals("zh-HK")).findFirst().get().getDepartmentDesc();
 	}
 	
