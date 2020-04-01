@@ -59,48 +59,86 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	public Optional<Product> findById(String locale, String currency, long id) {
 		LOGGER.debug("Fetching a product for parameters : {}, {}, {}", locale, currency, id);
 		
-		CriteriaBuilder cb = em.getCriteriaBuilder();
+		final List<String> productCodes = new ArrayList<String>();
 		
-		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
+		Query query = em.createNativeQuery(this.constructSQL(false, 
+				 false,
+				 false,
+				 false,
+				 false), "ProductMapping")
+		.setParameter("locale", locale)
+		.setParameter("currency", currency)
+		.setParameter("categoryId", id)
+		.setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
+		.setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
+		.setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
+		//these should contain default values for these parameters
+		//.setParameter("orderby", "1")
+		.setParameter("limit", Integer.toString(GeneralVars.DEFAULT_PAGE_SIZE))
+		.setParameter("offset", Integer.toString(GeneralVars.DEFAULT_PAGE * GeneralVars.DEFAULT_PAGE_SIZE));
 		
-		Root<Product> root = cq.from(Product.class);
+		if(!productCodes.isEmpty()) {
+			query.setParameter("productCodes", productCodes);
+		}
 
-		List<Predicate> conditions = new ArrayList<Predicate>();	
-		conditions.add(cb.equal(root.get(Product_.productId), id));
+		Object[] p = (Object[])query.getSingleResult();
 		
-		TypedQuery<Product> query = em.createQuery(cq
-				.select(root)
-				.where(conditions.toArray(new Predicate[] {}))
-				.distinct(false)
-		);
+		Product product = (Product) p[0];
+		product.setProductStatus((ProductStatus) p[1]);
+		product.setDepartment((Department) p[5]);
+		product.setProductAttribute((ProductAttribute) p[1]); 
 		
-		return Optional.ofNullable(query.getSingleResult());
+		Brand brand = (Brand) p[3];
+		product.setBrand(brand);
+		brand.setBrandAttribute((BrandAttribute) p[4]);
+		
+		product.setRetailPrice(((BigDecimal) p[6]).doubleValue());
+		product.setMarkdownPrice(((BigDecimal) p[7]).doubleValue());
+		
+		return Optional.ofNullable(product);
 	}
 	
 	@Override
 	public Optional<Product> findByCode(String locale, String currency, String code) {
 		LOGGER.debug("Fetching a product for parameters : {}, {}, {}", locale, currency, code);
 		
-		CriteriaBuilder cb = em.getCriteriaBuilder();
+final List<String> productCodes = new ArrayList<String>();
 		
-		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
+		Query query = em.createNativeQuery(this.constructSQL(false, 
+				 false,
+				 false,
+				 false,
+				 false), "ProductMapping")
+		.setParameter("locale", locale)
+		.setParameter("currency", currency)
+		.setParameter("productCode", code)
+		.setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
+		.setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
+		.setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
+		//these should contain default values for these parameters
+		//.setParameter("orderby", "1")
+		.setParameter("limit", Integer.toString(GeneralVars.DEFAULT_PAGE_SIZE))
+		.setParameter("offset", Integer.toString(GeneralVars.DEFAULT_PAGE * GeneralVars.DEFAULT_PAGE_SIZE));
 		
-		Root<Product> root = cq.from(Product.class);
+		if(!productCodes.isEmpty()) {
+			query.setParameter("productCodes", productCodes);
+		}
+
+		Object[] p = (Object[])query.getSingleResult();
 		
-		List<Predicate> conditions = new ArrayList<Predicate>();	
-		conditions.add(cb.equal(root.get(Product_.productUPC), code));
+		Product product = (Product) p[0];
+		product.setProductStatus((ProductStatus) p[1]);
+		product.setDepartment((Department) p[5]);
+		product.setProductAttribute((ProductAttribute) p[1]); 
 		
-//		
-//		cq.multiselect(	root.get(Product_.productId).alias("productId"),
-//						root.get(Product_.productUPC).alias("productCode"));
-//		
-		TypedQuery<Product> query = em.createQuery(cq
-				.select(root)
-				.where(conditions.toArray(new Predicate[] {}))
-				.distinct(false)
-		);
+		Brand brand = (Brand) p[3];
+		product.setBrand(brand);
+		brand.setBrandAttribute((BrandAttribute) p[4]);
 		
-		return Optional.ofNullable(query.getSingleResult());
+		product.setRetailPrice(((BigDecimal) p[6]).doubleValue());
+		product.setMarkdownPrice(((BigDecimal) p[7]).doubleValue());
+		
+		return Optional.ofNullable(product);
 	}
 	
 	@Override
