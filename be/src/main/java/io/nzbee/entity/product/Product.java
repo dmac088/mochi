@@ -151,12 +151,12 @@ filters = {
 			    })
 })
 
-public abstract class Product { 
+public class Product { 
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="prd_id")
-	private Long productId;
+	protected Long productId;
 
 	@NaturalId
 	@Column(name="upc_cd", unique = true, updatable = false)
