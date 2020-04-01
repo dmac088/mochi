@@ -40,7 +40,6 @@ import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.AnalyzerDef;
 import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Parameter;
 import org.hibernate.search.annotations.SortableField;
