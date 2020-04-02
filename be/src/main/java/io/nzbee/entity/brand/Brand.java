@@ -3,7 +3,6 @@ package io.nzbee.entity.brand;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,12 +19,10 @@ import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Store;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.category.brand.CategoryBrand;
 import io.nzbee.entity.product.Product;
-import io.nzbee.entity.product.attribute.ProductAttribute;
 
 @Entity
 @Table(name = "brand", schema = "mochi")
