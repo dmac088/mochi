@@ -15,7 +15,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
@@ -163,10 +162,8 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     	}
     	assertThat(found.getCurrentRetailPriceUSD())
     	.isEqualTo(new Double(7.8));
-//    	assertThat(found.getCurrentRetailPriceUSD())
-//    	.isEqualTo(new Double(7.8));
-//    	assertThat(found.getCurrentRetailPriceHKD())
-//    	.isEqualTo(new Double(78));
+    	assertThat(found.getCurrentRetailPriceHKD())
+    	.isEqualTo(new Double(78));
     }
     
     @After
