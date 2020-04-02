@@ -57,6 +57,8 @@ public class ProductEntityBeanFactory {
 		priceHKD.setPriceValue(new Double(78));
 		priceUSD.setCurrency(currUSD);
 		priceUSD.setPriceValue(new Double(7.8));
+		product.getPrices().add(priceHKD);
+		product.getPrices().add(priceUSD);
 		priceHKD.setProduct(product);
 		priceUSD.setProduct(product);
 		

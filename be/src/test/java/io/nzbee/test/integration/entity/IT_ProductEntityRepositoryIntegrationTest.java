@@ -15,6 +15,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
@@ -123,6 +124,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	}
 	
 	@Test
+	@Rollback(false)
 	public void whenFindById_thenReturnProduct() {
 		 // when
     	Product found = productService.findById(  GeneralVars.LANGUAGE_ENGLISH, 

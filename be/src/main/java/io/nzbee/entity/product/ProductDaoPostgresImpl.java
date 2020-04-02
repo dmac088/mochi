@@ -581,7 +581,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		"	LEFT JOIN mochi.price rprc     " + 
 		"	ON prd.prd_id = rprc.prd_id    " + 
 			
-		"	LEFT JOIN mochi.currency rcurr     " + 
+		"	INNER JOIN mochi.currency rcurr     " + 
 		"	ON rprc.ccy_id 		= rcurr.ccy_id   " + 
 		"	AND rcurr.ccy_cd 	= :currency " + 
 		
@@ -598,7 +598,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		"	LEFT JOIN mochi.product_jewellery jew " + 
 		"	ON prd.prd_id = jew.prd_id    " +
 			
-		"	LEFT JOIN mochi.currency mcurr     " + 
+		"	INNER JOIN mochi.currency mcurr     " + 
 		"	ON mprc.ccy_id 		= mcurr.ccy_id   " + 
 		"	AND mcurr.ccy_cd 	= :currency " + 
 		
