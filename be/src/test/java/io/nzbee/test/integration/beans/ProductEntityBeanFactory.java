@@ -9,16 +9,21 @@ import org.springframework.stereotype.Service;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.currency.Currency;
-import io.nzbee.entity.product.currency.ICurrencyRepository;
+import io.nzbee.entity.product.currency.ICurrencyService;
 import io.nzbee.entity.product.food.Food;
+import io.nzbee.entity.product.price.IProductPriceTypeService;
 import io.nzbee.entity.product.price.ProductPrice;
+import io.nzbee.entity.product.price.ProductPriceType;
 
 @Service(value = "productEntityBeanFactory")
 @Profile(value = "dev")
 public class ProductEntityBeanFactory {
 
 	@Autowired
-	ICurrencyRepository currencyRepository;
+	private ICurrencyService currencyService;
+	
+	@Autowired 
+	private IProductPriceTypeService productPriceTypeService; 
 	
 	@Bean
 	public final Product getProductEntityBean() {
@@ -41,16 +46,19 @@ public class ProductEntityBeanFactory {
 		paCn.setProduct(product);
 		product.addProductAttribute(paCn);
 
-		Currency currHKD = currencyRepository.findByCode("HKD").get();
-		Currency currUSD = currencyRepository.findByCode("USD").get();
+		ProductPriceType ppt = productPriceTypeService.findByCode("RET01").get();
+		Currency currHKD = currencyService.findByCode("HKD").get();
+		Currency currUSD = currencyService.findByCode("USD").get();
 		ProductPrice priceHKD = new ProductPrice();
 		ProductPrice priceUSD = new ProductPrice();
+		priceHKD.setType(ppt);
+		priceUSD.setType(ppt);
 		priceHKD.setCurrency(currHKD);
 		priceHKD.setPriceValue(new Double(78));
 		priceUSD.setCurrency(currUSD);
 		priceUSD.setPriceValue(new Double(7.8));
-		product.getPrices().add(priceHKD);
-		product.getPrices().add(priceUSD);
+		priceHKD.setProduct(product);
+		priceUSD.setProduct(product);
 		
 		return product;
 	}

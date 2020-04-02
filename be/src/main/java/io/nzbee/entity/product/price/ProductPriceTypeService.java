@@ -5,18 +5,25 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 @Service
-public class ProductPriceTypeService {
+public class ProductPriceTypeService implements IProductPriceTypeService {
 
 	@Autowired
 	private ProductPriceTypeRepository productPriceTypeRepository; 
 	
-	public List<ProductPriceType> getProductPriceTypes() {
+	@Override
+	public List<ProductPriceType> findAll() {
 		return productPriceTypeRepository.findAll();
 	}
 
-	public Optional<ProductPriceType> getProductPriceType(Long Id) {
+	@Override
+	public Optional<ProductPriceType> findById(Long Id) {
 		return productPriceTypeRepository.findById(Id);
 	}
+	
+	@Override
+	public Optional<ProductPriceType> findByCode(String code) {
+		return productPriceTypeRepository.findByCode(code);
+	}
+
 }

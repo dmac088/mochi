@@ -440,8 +440,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 			product.setBrand(brand);
 			brand.setBrandAttribute((BrandAttribute) p[4]);
 			
-		//	product.setRetailPrice(((BigDecimal) p[6]).doubleValue());
-		//	product.setMarkdownPrice(((BigDecimal) p[7]).doubleValue());
+			product.setRetailPrice(((BigDecimal) p[6]).doubleValue());
+			product.setMarkdownPrice(((BigDecimal) p[7]).doubleValue());
 			
 			return product;
 		}).collect(Collectors.toList());
