@@ -339,6 +339,7 @@ public class BrandDaoImpl  implements IBrandDao {
 	@Override
 	public void save(Brand t) {
 		em.persist(t);
+		em.flush();
 	}
 	
 	@Override
