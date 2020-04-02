@@ -41,19 +41,16 @@ public class BrandServiceImpl implements IBrandService {
 	@Override
 	@Cacheable
 	public Optional<Brand> findById(String locale, String currency, long Id) {
-    	io.nzbee.entity.brand.Brand pb = brandService.findById(locale, currency, Id).get();
-     	return	this.entityToDTO(locale, currency, Optional.ofNullable(pb));
+     	return this.entityToDTO(locale, currency, brandService.findById(locale, currency, Id));
 	}
 	
 	@Override
 	public Optional<Brand> findByCode(String locale, String currency, String code) {
-		// TODO Auto-generated method stub
 		return this.entityToDTO(locale, currency, brandService.findByCode(locale, currency, code));
 	}
 
 	@Override
 	public Optional<Brand> findByDesc(String locale, String currency, String desc) {
-		// TODO Auto-generated method stub
 		return this.entityToDTO(locale, currency, brandService.findByDesc(locale, currency, desc));
 	}
 	
