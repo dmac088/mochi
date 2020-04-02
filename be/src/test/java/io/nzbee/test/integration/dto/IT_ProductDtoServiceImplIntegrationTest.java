@@ -41,12 +41,7 @@ public class IT_ProductDtoServiceImplIntegrationTest {
         public io.nzbee.entity.product.IProductService productEntityService() {
         	return new io.nzbee.entity.product.ProductServiceImpl();
         }
-//        
-//        @Bean(value = "productEntityPostgresDao")
-//        public IProductDao productDao() {
-//            return new ProductDaoPostgresImpl();
-//        }
-//        
+        
         @Bean(value = "productEntityBeanFactory")
         public ProductEntityBeanFactory productFactoryBean() {
             return new ProductEntityBeanFactory();
@@ -86,7 +81,7 @@ public class IT_ProductDtoServiceImplIntegrationTest {
     
     @Test
     public void whenValidCode_thenProductShouldBeFound() {
-        String code = "TST02";
+        String code = "123456789";
         Optional<Product> found = productService.findByCode("en-GB", "HKD", code);
       
         assertFound(found.get());
@@ -96,10 +91,10 @@ public class IT_ProductDtoServiceImplIntegrationTest {
     private void assertFound(final Product found) {
 
     	assertThat(found.getProductUPC())
-        .isEqualTo("TST02");
+        .isEqualTo("123456789");
     
 	    assertThat(found.getProductDesc())
-	    .isEqualTo("test product category");
+	    .isEqualTo("test product");
     }
     
 	
