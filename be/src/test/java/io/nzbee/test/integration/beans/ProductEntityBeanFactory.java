@@ -68,24 +68,40 @@ public class ProductEntityBeanFactory {
 	@Bean
 	public final ProductAttribute getProductAttributeEntityBean() {
 		
-		Food p = new Food();
+		Food product = new Food();
 		ProductAttribute paEng = new ProductAttribute();
 		paEng.setProductDesc("test product");
 		paEng.setLclCd("en-GB");
-		paEng.setProduct(p);
+		paEng.setProduct(product);
 		
 		ProductAttribute paCn = new ProductAttribute();
 		paCn.setProductDesc("測試產品");
 		paCn.setLclCd("zh-HK");
-		paCn.setProduct(p);
+		paCn.setProduct(product);
 		
-		p.setProductCreateDt(new Date());
-		p.setExpiryDate(new Date());
-		p.setUPC("123456789");
+		product.setProductCreateDt(new Date());
+		product.setExpiryDate(new Date());
+		product.setUPC("123456789");
 		
-		p.addProductAttribute(paEng);
-		p.setProductAttribute(paEng);
-		p.addProductAttribute(paCn);
+		product.addProductAttribute(paEng);
+		product.setProductAttribute(paEng);
+		product.addProductAttribute(paCn);
+		
+		ProductPriceType ppt = productPriceTypeService.findByCode("RET01").get();
+		Currency currHKD = currencyService.findByCode("HKD").get();
+		Currency currUSD = currencyService.findByCode("USD").get();
+		ProductPrice priceHKD = new ProductPrice();
+		ProductPrice priceUSD = new ProductPrice();
+		priceHKD.setType(ppt);
+		priceUSD.setType(ppt);
+		priceHKD.setCurrency(currHKD);
+		priceHKD.setPriceValue(new Double(78));
+		priceUSD.setCurrency(currUSD);
+		priceUSD.setPriceValue(new Double(7.8));
+		product.getPrices().add(priceHKD);
+		product.getPrices().add(priceUSD);
+		priceHKD.setProduct(product);
+		priceUSD.setProduct(product);
 		
 		return paEng;
 	}

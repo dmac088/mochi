@@ -124,7 +124,6 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	}
 	
 	@Test
-	@Rollback(false)
 	public void whenFindById_thenReturnProduct() {
 		 // when
     	Product found = productService.findById(  GeneralVars.LANGUAGE_ENGLISH, 
