@@ -78,9 +78,7 @@ public class IT_ProductCategoryDtoServiceImplIntegrationTest {
 	
     @Before
     public void setUp() {
-    	
     	this.persistNewCategory();
-    	
     }
    
     

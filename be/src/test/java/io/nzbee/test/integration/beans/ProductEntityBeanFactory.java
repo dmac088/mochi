@@ -1,31 +1,46 @@
 package io.nzbee.test.integration.beans;
 
 import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
+import io.nzbee.entity.brand.IBrandService;
+import io.nzbee.entity.category.ICategoryService;
+import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.currency.Currency;
 import io.nzbee.entity.product.currency.ICurrencyService;
+import io.nzbee.entity.product.department.IDepartmentRepository;
 import io.nzbee.entity.product.food.Food;
 import io.nzbee.entity.product.price.IProductPriceTypeService;
 import io.nzbee.entity.product.price.ProductPrice;
 import io.nzbee.entity.product.price.ProductPriceType;
+import io.nzbee.entity.product.status.IProductStatusRepository;
+import io.nzbee.variables.GeneralVars;
 
 @Service(value = "productEntityBeanFactory")
 @Profile(value = "dev")
 public class ProductEntityBeanFactory {
-
+	
 	@Autowired
 	private ICurrencyService currencyService;
 	
 	@Autowired 
 	private IProductPriceTypeService productPriceTypeService; 
 	
-	@Bean
+	@Autowired
+	private IBrandService brandService;
+	    
+	@Autowired
+	private IDepartmentRepository productTypeRepository;
+	    
+	@Autowired
+	private IProductStatusRepository productStatusRepository;
+	    
+	@Autowired
+	private ICategoryService categoryService;
+	
 	public final Product getProductEntityBean() {
 	
 		Food product = new Food();
@@ -62,10 +77,30 @@ public class ProductEntityBeanFactory {
 		priceHKD.setProduct(product);
 		priceUSD.setProduct(product);
 		
+		//we need a brand
+		product.setBrand(brandService.findByCode(GeneralVars.LANGUAGE_ENGLISH, 
+												 GeneralVars.CURRENCY_HKD, 
+												 "PLA01").get());
+				
+				
+		//we need a type
+		product.setDepartment(productTypeRepository.findByDepartmentCode("FOO01").get());
+				
+		//we need a status
+		product.setProductStatus(productStatusRepository.findByProductStatusCode("ACT01").get());
+				
+		//we need a category
+		CategoryProduct cp = (CategoryProduct) categoryService.findByCode(GeneralVars.LANGUAGE_ENGLISH, 
+																		GeneralVars.CURRENCY_HKD,
+																		"FRT01").get();
+				
+				
+		//add the product to the category
+		product.addProductCategory(cp);
+		
 		return product;
 	}
 	
-	@Bean
 	public final ProductAttribute getProductAttributeEntityBean() {
 		
 		Food product = new Food();
