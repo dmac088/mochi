@@ -19,14 +19,8 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
-import io.nzbee.entity.brand.IBrandService;
-import io.nzbee.entity.category.ICategoryService;
-import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.Product;
-import io.nzbee.entity.product.attribute.ProductAttribute;
-import io.nzbee.entity.product.department.IDepartmentRepository;
-import io.nzbee.entity.product.status.IProductStatusRepository;
 import io.nzbee.test.integration.beans.ProductEntityBeanFactory;
 import io.nzbee.variables.GeneralVars;
 
@@ -70,49 +64,16 @@ public class IT_ProductAttributeEntityRepositoryIntegrationTest {
     @Autowired
     private IProductService productService;
     
-    @Autowired
-    private IBrandService brandService;
+    private Product p = null;
     
-    @Autowired
-    private IDepartmentRepository productTypeRepository;
-    
-    @Autowired
-    private IProductStatusRepository productStatusRepository;
-    
-    @Autowired
-    private ICategoryService categoryService;
-    
-    private ProductAttribute pa = null;
-    
-	public ProductAttribute persistNewProduct() {
+	public Product persistNewProduct() {
     	
-		pa = productEntityBeanFactory.getProductAttributeEntityBean();
+		p = productEntityBeanFactory.getProductEntityBean();
 	    
-		//we need a brand
-		pa.getProduct().setBrand(brandService.findByCode(GeneralVars.LANGUAGE_ENGLISH, 
-														 GeneralVars.CURRENCY_HKD, 
-														 "PLA01").get());
-		
-		
-		//we need a type
-		pa.getProduct().setDepartment(productTypeRepository.findByDepartmentCode("FOO01").get());
-		
-		//we need a status
-		pa.getProduct().setProductStatus(productStatusRepository.findByProductStatusCode("ACT01").get());
-		
-		//we need a category
-		CategoryProduct cp = (CategoryProduct) categoryService.findByCode(	GeneralVars.LANGUAGE_ENGLISH, 
-																			GeneralVars.CURRENCY_HKD,
-																			"FRT01").get();
-		
-		
-		//add the product to the category
-		pa.getProduct().addProductCategory(cp);
-		
-	    entityManager.persist(pa.getProduct());
+	    entityManager.persist(p);
 	    entityManager.flush();
 	    	
-	    return pa;
+	    return p;
 	}
 	
 	@Before
@@ -125,7 +86,7 @@ public class IT_ProductAttributeEntityRepositoryIntegrationTest {
 		 // when
     	Product found = productService.findById(  GeneralVars.LANGUAGE_ENGLISH, 
 												  GeneralVars.CURRENCY_HKD,  
-												  pa.getProductId()).get();
+												  p.getProductId()).get();
      
         // then
     	assertFound(found);
