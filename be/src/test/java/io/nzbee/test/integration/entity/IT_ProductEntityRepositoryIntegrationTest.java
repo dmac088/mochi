@@ -160,6 +160,12 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     		assertThat(((Food) found).getCountryOfOrigin())
     		.isEqualTo("NZL");
     	}
+    	assertThat(found.getCurrentRetailPriceUSD())
+    	.isEqualTo(new Double(7.8));
+//    	assertThat(found.getCurrentRetailPriceUSD())
+//    	.isEqualTo(new Double(7.8));
+//    	assertThat(found.getCurrentRetailPriceHKD())
+//    	.isEqualTo(new Double(78));
     }
     
     @After
