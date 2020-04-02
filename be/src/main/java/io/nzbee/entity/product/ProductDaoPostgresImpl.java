@@ -88,8 +88,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		product.setBrand(brand);
 		brand.setBrandAttribute((BrandAttribute) p[4]);
 		
-		//product.setRetailPrice(((BigDecimal) p[6]).doubleValue());
-		//product.setMarkdownPrice(((BigDecimal) p[7]).doubleValue());
+		product.setRetailPrice(((BigDecimal) p[6]).doubleValue());
+		product.setMarkdownPrice(((BigDecimal) p[7]).doubleValue());
 		
 		return Optional.ofNullable(product);
 	}
@@ -132,8 +132,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		product.setBrand(brand);
 		brand.setBrandAttribute((BrandAttribute) p[4]);
 		
-		//product.setRetailPrice(((BigDecimal) p[6]).doubleValue());
-		//product.setMarkdownPrice(((BigDecimal) p[7]).doubleValue());
+		product.setRetailPrice(((BigDecimal) p[6]).doubleValue());
+		product.setMarkdownPrice(((BigDecimal) p[7]).doubleValue());
 		
 		return Optional.ofNullable(product);
 	}
@@ -192,8 +192,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		pe.setProductAttribute(pa);
 		pe.setProductId(Long.parseLong(tuple.get("productId").toString()));
 		pe.setUPC(tuple.get("productCode").toString());
-		//pe.setRetailPrice(Double.parseDouble(tuple.get("retailPrice").toString()));
-		//pe.setMarkdownPrice(Double.parseDouble(tuple.get("markdownPrice").toString()));
+		pe.setRetailPrice(Double.parseDouble(tuple.get("retailPrice").toString()));
+		pe.setMarkdownPrice(Double.parseDouble(tuple.get("markdownPrice").toString()));
 		
 		return Optional.ofNullable(pe);
 	}
@@ -241,8 +241,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 			product.setBrand(brand);
 			brand.setBrandAttribute((BrandAttribute) p[4]);
 			
-			//product.setRetailPrice(((BigDecimal) p[6]).doubleValue());
-			//product.setMarkdownPrice(((BigDecimal) p[7]).doubleValue());
+			product.setRetailPrice(((BigDecimal) p[6]).doubleValue());
+			product.setMarkdownPrice(((BigDecimal) p[7]).doubleValue());
 			
 			return product;
 		}).collect(Collectors.toList());
@@ -321,8 +321,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 			product.setBrand(brand);
 			brand.setBrandAttribute((BrandAttribute) p[4]);
 			
-			//product.setRetailPrice(((BigDecimal) p[6]).doubleValue());
-			//product.setMarkdownPrice(((BigDecimal) p[7]).doubleValue());
+			product.setRetailPrice(((BigDecimal) p[6]).doubleValue());
+			product.setMarkdownPrice(((BigDecimal) p[7]).doubleValue());
 			
 			return product;
 		}).collect(Collectors.toList());
@@ -542,8 +542,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 						"	   ps.prd_sts_id,   " + 
 						"	   ps.prd_sts_cd,   " + 
 						"	   ps.prd_sts_desc,  " + 
-						"	   rprc.prc_val as retail_price,  " + 
-						"	   mprc.prc_val as markdown_price,  " + 
+						"	   coalesce(rprc.prc_val,0) as retail_price,  " + 
+						"	   coalesce(mprc.prc_val,0) as markdown_price,  " + 
 						"	   food.exp_dt, " +
 						"	   food.ctry_of_orig ") + 
 		
