@@ -106,9 +106,9 @@ public class IT_BrandEntityRepositoryIntegrationTest {
     public void whenFindByCode_thenReturnBrand() {
     	
         // when
-    	Brand found = brandService.findByCode(GeneralVars.LANGUAGE_ENGLISH, 
-				 									GeneralVars.CURRENCY_USD, 
-				 									"TST02").get();
+    	Brand found = brandService.findByCode("en-GB", 
+											  "USD",  
+											  "TST02").get();
      
         // then
     	assertFound(found);

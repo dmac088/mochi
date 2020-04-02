@@ -44,9 +44,7 @@ public class IT_BrandDtoServiceImplIntegrationTest {
 	
     @Before
     public void setUp() { 
-    	
     	this.persistNewBrand();
-    	
     }
     
 	public void persistNewBrand() {
@@ -58,12 +56,12 @@ public class IT_BrandDtoServiceImplIntegrationTest {
 	}
 	
     @Test
-    public void whenFindById_thenReturnBrand() {
+    public void whenFindByCode_thenReturnBrand() {
     	
         // when
     	Brand found = brandService.findByCode("en-GB", 
-											  "HKD",  
-											  brand.getBrandCode()).get();
+											  "USD",  
+											  "TST02").get();
      
         // then
     	assertFound(found);
@@ -71,7 +69,6 @@ public class IT_BrandDtoServiceImplIntegrationTest {
     }
 
 	private void assertFound(Brand found) {
-		
 		assertThat(found.getBrandCode())
     	.isEqualTo("TST02");
 	}
