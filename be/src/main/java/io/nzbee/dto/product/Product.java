@@ -12,6 +12,18 @@ public class Product implements IDto {
 
 	private String productDesc;
 	
+	private String departmentCode;
+	
+	private String departmentDesc;
+	
+	private String BrandCode;
+
+	private String brandDesc;
+
+	private String productStatusCode;
+	
+	private String productStatusDesc;
+
 	private Double productRetail;
 	
 	private Double productMarkdown;
@@ -25,7 +37,19 @@ public class Product implements IDto {
 	public Product() {
 	
 	}
-	
+
+	@Override
+	public String getCode() {
+		// TODO Auto-generated method stub
+		return this.getProductUPC();
+	}
+
+	@Override
+	public String getType() {
+		// TODO Auto-generated method stub
+		return this.getClass().getSimpleName();
+	}
+
 	public Product(String productUPC,
 				   Date productCreateDt,
 				   String productDesc,
@@ -69,8 +93,60 @@ public class Product implements IDto {
 		this.productDesc = productDesc;
 	}
 
+	public String getProductStatusCode() {
+		return productStatusCode;
+	}
+
+	public void setProductStatusCode(String productStatusCode) {
+		this.productStatusCode = productStatusCode;
+	}
+
+	public String getProductStatusDesc() {
+		return productStatusDesc;
+	}
+
+	public void setProductStatusDesc(String productStatusDesc) {
+		this.productStatusDesc = productStatusDesc;
+	}
+	
+	public String getDepartmentCode() {
+		return departmentCode;
+	}
+
+	public void setDepartmentCode(String departmentCode) {
+		this.departmentCode = departmentCode;
+	}
+	
+	public String getDepartmentDesc() {
+		return departmentDesc;
+	}
+	
+	public String getBrandCode() {
+		return BrandCode;
+	}
+
+	public void setBrandCode(String brandCode) {
+		BrandCode = brandCode;
+	}
+	
+	public String getBrandDesc() {
+		return brandDesc;
+	}
+
+	public void setBrandDesc(String brandDesc) {
+		this.brandDesc = brandDesc;
+	}
+
+	public void setDepartmentDesc(String departmentDesc) {
+		this.departmentDesc = departmentDesc;
+	}
+
 	public double getProductRetail() {
 		return productRetail;
+	}
+
+	public void setProductRetail(Double productRetail) {
+		this.productRetail = productRetail;
 	}
 
 	public void setProductRetail(double productRetail) {
@@ -79,6 +155,10 @@ public class Product implements IDto {
 
 	public double getProductMarkdown() {
 		return productMarkdown;
+	}
+
+	public void setProductMarkdown(Double productMarkdown) {
+		this.productMarkdown = productMarkdown;
 	}
 
 	public void setProductMarkdown(double productMarkdown) {
@@ -134,18 +214,6 @@ public class Product implements IDto {
                 .append(", lclCd=").append(lclCd);
         return builder.toString();
     }
-
-	@Override
-	public String getCode() {
-		// TODO Auto-generated method stub
-		return this.getProductUPC();
-	}
-
-	@Override
-	public String getType() {
-		// TODO Auto-generated method stub
-		return this.getClass().getSimpleName();
-	}
 
 
 }
