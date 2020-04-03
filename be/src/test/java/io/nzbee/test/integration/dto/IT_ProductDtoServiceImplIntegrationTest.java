@@ -87,9 +87,6 @@ public class IT_ProductDtoServiceImplIntegrationTest {
         assertFound(found.get());
     }
     
-	
-  
-    
     private void assertFound(final Product found) {
     	assertThat(found.getCode())
         .isEqualTo("123456789");
