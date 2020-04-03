@@ -145,20 +145,12 @@ public class Product implements IDto {
 		return productRetail;
 	}
 
-	public void setProductRetail(Double productRetail) {
-		this.productRetail = productRetail;
-	}
-
 	public void setProductRetail(double productRetail) {
 		this.productRetail = productRetail;
 	}
 
 	public double getProductMarkdown() {
 		return productMarkdown;
-	}
-
-	public void setProductMarkdown(Double productMarkdown) {
-		this.productMarkdown = productMarkdown;
 	}
 
 	public void setProductMarkdown(double productMarkdown) {
