@@ -220,6 +220,10 @@ public abstract class Product {
 				orphanRemoval = true)
 	List<ProductPrice> prices = new ArrayList<ProductPrice>();
 
+	public Product() {
+		
+	}
+	
 	@Field(store=Store.YES)
 	@SortableField
 	@Transient

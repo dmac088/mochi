@@ -1,11 +1,14 @@
 package io.nzbee.test.integration.beans;
 
+import org.springframework.stereotype.Service;
+
 import io.nzbee.dto.product.Product;
 
+@Service
 public class ProductDtoBeanFactory {
 	
 	
-	private Product getProductDtoBean() {
+	public Product getProductDtoBean() {
 		Product pDto = new Product();
 		
 		//Set the brand
@@ -26,10 +29,8 @@ public class ProductDtoBeanFactory {
 		pDto.setProductImage("test_image.jpg");
 		pDto.setProductMarkdown(new Double(78));
 		pDto.setProductRetail(new Double(71));
-		
-		
-		
-		return null;
+
+		return pDto;
 	}
 		
 	

@@ -21,7 +21,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.dto.product.IProductService;
 import io.nzbee.dto.product.Product;
 import io.nzbee.dto.product.ProductServiceImpl;
-import io.nzbee.test.integration.beans.ProductEntityBeanFactory;
+import io.nzbee.test.integration.beans.ProductDtoBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -41,11 +41,7 @@ public class IT_ProductDtoServiceImplIntegrationTest {
         public io.nzbee.entity.product.IProductService productEntityService() {
         	return new io.nzbee.entity.product.ProductServiceImpl();
         }
-        
-        @Bean(value = "productEntityBeanFactory")
-        public ProductEntityBeanFactory productFactoryBean() {
-            return new ProductEntityBeanFactory();
-        }
+       
     }
 	
 	@Autowired
@@ -56,19 +52,17 @@ public class IT_ProductDtoServiceImplIntegrationTest {
     private IProductService productService;
 	
 	@Autowired
-	private ProductEntityBeanFactory productEntityBeanFactory;
+	private ProductDtoBeanFactory productDtoBeanFactory;
 	
-	private io.nzbee.entity.product.Product product = null;
+	private Product product = null;
 	
 	
-	public io.nzbee.entity.product.Product persistNewProduct() {
+	public Product persistNewProduct() {
     	
-		product = productEntityBeanFactory.getProductEntityBean();
+		product = productDtoBeanFactory.getProductDtoBean();
 
 	    //persist a new transient test category
-	    entityManager.persist(product);
-	    entityManager.flush();
-	    entityManager.close();
+	    productService.save(product);
 	    	
 	    return product;
 	}
@@ -81,7 +75,7 @@ public class IT_ProductDtoServiceImplIntegrationTest {
     
     @Test
     public void whenValidCode_thenProductShouldBeFound() {
-        String code = "123456789";
+        String code = "3254354673";
         Optional<Product> found = productService.findByCode("en-GB", "HKD", code);
       
         assertFound(found.get());
