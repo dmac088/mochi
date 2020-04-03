@@ -21,6 +21,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.dto.product.IProductService;
 import io.nzbee.dto.product.Product;
 import io.nzbee.dto.product.ProductServiceImpl;
+import io.nzbee.entity.product.food.Food;
 import io.nzbee.test.integration.beans.ProductEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
@@ -88,13 +89,19 @@ public class IT_ProductDtoServiceImplIntegrationTest {
     }
     
 	
-    private void assertFound(final Product found) {
-
-    	assertThat(found.getProductUPC())
-        .isEqualTo("123456789");
+  
     
-	    assertThat(found.getProductDesc())
-	    .isEqualTo("test product");
+    private void assertFound(final Product found) {
+    	assertThat(found.getCode())
+        .isEqualTo("123456789");
+    	assertThat(found.getDepartmentCode())
+    	.isEqualTo("FOO01");
+    	assertThat(found.getProductStatusCode())
+    	.isEqualTo("ACT01");
+    	assertThat(found)
+    	.isEqualTo("PLA01");
+    	assertThat(found.getProductRetail())
+    	.isEqualTo(new Double(78));
     }
     
 	
