@@ -21,7 +21,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.dto.product.IProductService;
 import io.nzbee.dto.product.Product;
 import io.nzbee.dto.product.ProductServiceImpl;
-import io.nzbee.entity.product.food.Food;
 import io.nzbee.test.integration.beans.ProductEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
