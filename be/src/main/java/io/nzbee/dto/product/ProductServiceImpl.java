@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Sort;
 import io.nzbee.dto.product.Product;
+import io.nzbee.entity.brand.Brand;
 import io.nzbee.dto.IDto;
 import io.nzbee.variables.ProductVars;
 
@@ -23,7 +24,12 @@ public class ProductServiceImpl implements IProductService {
 	@Autowired 
 	@Qualifier("productEntityService")
 	private io.nzbee.entity.product.IProductService productService;
-    
+
+	@Autowired 
+
+	private io.nzbee.entity.brand.IBrandService brandService;
+	
+	
 
 	@Override
 	public Optional<Product> findById(String locale, String currency, long Id) {
@@ -162,7 +168,16 @@ public class ProductServiceImpl implements IProductService {
 
 	@Override
 	public void save(IDto dto) {
-		// TODO Auto-generated method stub
+		
+		Product productDto = ((Product) dto);
+		
+		io.nzbee.entity.product.Product productEntity = 
+				((Product) dto).getType().equals("Food") 
+				? new io.nzbee.entity.product.food.Food() 
+				: new io.nzbee.entity.product.jewellery.Jewellery();
+		
+		Optional<Brand> brand = brandService.findByCode(productDto.getBrandCode(), productDto.getCurrency(), productDto.getLclCd());
+		if (brand.isPresent()) { productEntity.setBrand(brand.get()); }  
 		
 	}
 
