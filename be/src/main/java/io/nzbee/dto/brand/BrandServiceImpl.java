@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import io.nzbee.dto.IDto;
 import io.nzbee.dto.category.Category;
 import io.nzbee.dto.tag.Tag;
+import io.nzbee.entity.brand.attribute.BrandAttribute;
 
 @Service(value="brandDtoService")
 @CacheConfig(cacheNames="brands")
@@ -104,7 +105,7 @@ public class BrandServiceImpl implements IBrandService {
 	@Override
 	public void save(IDto dto) {
 		// TODO Auto-generated method stub
-		io.nzbee.entity.brand.attribute.BrandAttribute ba = new io.nzbee.entity.brand.attribute.BrandAttribute();
+		BrandAttribute ba = new BrandAttribute();
 		ba.setBrandDesc(((Brand) dto).getBrandDesc());
 		ba.setLclCd(((Brand) dto).getLocale());
 		
@@ -113,6 +114,7 @@ public class BrandServiceImpl implements IBrandService {
 		b.setLocale(((Brand) dto).getLocale());
 		b.setCurrency(((Brand) dto).getCurrency());
 		b.setBrandAttribute(ba);
+		b.getAttributes().add(ba);
 		ba.setBrand(b);
 	
 		brandService.save(b);

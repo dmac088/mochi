@@ -89,8 +89,6 @@ public class BrandDaoImpl  implements IBrandDao {
 		Root<Brand> root = cq.from(Brand.class);
 		Join<Brand, BrandAttribute> attribute = root.join(Brand_.attributes);
 
-		System.out.println(code);
-
 		cq.multiselect(	root.get(Brand_.brandId).alias("brandId"),
 						root.get(Brand_.brandCode).alias("brandCode"),
 						attribute.get(BrandAttribute_.Id).alias("brandAttributeId"),
