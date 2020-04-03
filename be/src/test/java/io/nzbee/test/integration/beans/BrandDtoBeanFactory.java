@@ -12,7 +12,7 @@ public class BrandDtoBeanFactory {
 		
 		final Brand brand = new Brand();
 		brand.setBrandCode("TST02");
-		brand.setBrandDesc("test brand");
+		brand.setBrandDesc("test brand dto");
 		brand.setLocale("en-GB");
 		brand.setCurrency("USD");
 		

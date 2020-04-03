@@ -17,7 +17,7 @@ import io.nzbee.variables.GeneralVars;
 @Profile(value = "dev")
 public class CategoryDtoBeanFactory {
 
-	@Bean
+	
 	public final Category getProductCategoryDtoBean() {
 		
 		ProductCategory category = new ProductCategory();
@@ -30,7 +30,6 @@ public class CategoryDtoBeanFactory {
 		return category;
 	}
 	
-	@Bean
 	public final Category getBrandCategoryDtoBean() {
 		
 		ProductCategory category = new ProductCategory();
