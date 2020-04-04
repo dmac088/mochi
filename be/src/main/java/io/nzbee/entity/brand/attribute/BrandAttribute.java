@@ -14,12 +14,12 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Store;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.nzbee.entity.brand.Brand;
 
 @Entity
 @Table(name = "brand_attr_lcl", schema = "mochi")
 public class BrandAttribute {
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="bnd_lcl_id")
@@ -34,7 +34,6 @@ public class BrandAttribute {
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional=false)
 	@JoinColumn(name="bnd_id")
-	@JsonBackReference
 	private Brand brand;
 	
 	public Long getId() {

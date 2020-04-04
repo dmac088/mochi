@@ -21,9 +21,6 @@ public class DepartmentAttribute {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="dept_lcl_id")
 	private Long Id;
-
-	@Column(name="dept_id")
-	private Long departmentId;
 	
 	@Column(name="dept_desc")
 	private String departmentDesc;
@@ -31,8 +28,8 @@ public class DepartmentAttribute {
 	@Column(name="lcl_cd")
 	private String lclCd;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="dept_id", insertable=false, updatable=false)
+	@ManyToOne(fetch = FetchType.LAZY, optional=false)
+	@JoinColumn(name="dept_id")
 	private Department department;
 	
 	public Long getId() {

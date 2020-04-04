@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import org.hibernate.annotations.NaturalId;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Facet;
@@ -28,7 +30,8 @@ public class Department {
 	@Column(name="dept_id")
 	private Long departmentId;
 
-	@Column(name="dept_cd")
+	@NaturalId
+	@Column(name="dept_cd", unique = true, updatable = false)
 	private String departmentCode;
 	
 	@Column(name="dept_class")
@@ -39,6 +42,12 @@ public class Department {
 			orphanRemoval = true)
 	@JsonManagedReference
 	private List<DepartmentAttribute> attributes = new ArrayList<DepartmentAttribute>();
+
+	@Transient
+	private String locale;
+	
+	@Transient
+	private String currency;
 
 	public Long getId() {
 		return departmentId;
@@ -54,6 +63,22 @@ public class Department {
 
 	public void setCode(String departmentCode) {
 		this.departmentCode = departmentCode;
+	}
+	
+	public String getLocale() {
+		return locale;
+	}
+
+	public void setLocale(String locale) {
+		this.locale = locale;
+	}
+
+	public String getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(String currency) {
+		this.currency = currency;
 	}
 
 	public String getDepartmentClass() {
