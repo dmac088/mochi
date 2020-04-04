@@ -23,6 +23,7 @@ import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import io.nzbee.entity.product.department.IDepartmentRepository;
+import io.nzbee.entity.product.department.IDepartmentService;
 import io.nzbee.entity.product.department.Department;
 import io.nzbee.test.integration.beans.DepartmentEntityBeanFactory;
 
@@ -59,7 +60,7 @@ public class IT_DepartmentEntityRepositoryIntegrationTest {
 	private DepartmentEntityBeanFactory departmentEntityBeanFactory;
 	
     @Autowired
-    private IDepartmentRepository departmentRepository;
+    private IDepartmentService departmentService;
 	
     private Department productType = null;
     
@@ -84,7 +85,7 @@ public class IT_DepartmentEntityRepositoryIntegrationTest {
 	 public void whenFindById_thenReturnDepartment() {
 	    	
 	        // when
-	    	Department found = departmentRepository.findById(productType.getId()).get();
+	    	Department found = departmentService.findById(productType.getId()).get();
 	     
 	        // then
 	    	assertFound(found);
@@ -94,7 +95,7 @@ public class IT_DepartmentEntityRepositoryIntegrationTest {
 	 public void whenFindByCode_thenReturnDepartment() {
 	    	
 	        // when
-	    	Department found = departmentRepository.findByDepartmentCode(productType.getCode()).get();
+	    	Department found = departmentService.findByCode(productType.getCode()).get();
 	     
 	        // then
 	    	assertFound(found);
