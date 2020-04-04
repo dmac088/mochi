@@ -81,6 +81,14 @@ public class IT_ProductDtoServiceImplIntegrationTest {
         assertFound(found.get());
     }
     
+    @Test
+    public void whenValidDesc_thenProductShouldBeFound() {
+        String desc = "test product";
+        Optional<Product> found = productService.findByCode("en-GB", "HKD", desc);
+      
+        assertFound(found.get());
+    }
+    
     private void assertFound(final Product found) {
     	assertThat(found.getCode())
         .isEqualTo("123456789");
