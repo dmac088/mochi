@@ -56,10 +56,10 @@ public class IT_DepartmentEntityRepositoryIntegrationTest {
 	private EntityManager entityManager;
 	
 	@Autowired
-	private DepartmentEntityBeanFactory productTypeEntityBeanFactory;
+	private DepartmentEntityBeanFactory departmentEntityBeanFactory;
 	
     @Autowired
-    private IDepartmentRepository productTypeRepository;
+    private IDepartmentRepository departmentRepository;
 	
     private Department productType = null;
     
@@ -70,7 +70,7 @@ public class IT_DepartmentEntityRepositoryIntegrationTest {
 	
 	public Department persistNewProductType() {
     	
-		productType = productTypeEntityBeanFactory.getProductTypeEntityBean();
+		productType = departmentEntityBeanFactory.getDepartmentEntityBean();
 	   
 	    //persist a new transient test category
 	    entityManager.persist(productType);
@@ -81,14 +81,25 @@ public class IT_DepartmentEntityRepositoryIntegrationTest {
 	}
 
 	 @Test
-	    public void whenFindById_thenReturnProductType() {
+	 public void whenFindById_thenReturnDepartment() {
 	    	
 	        // when
-	    	Department found = productTypeRepository.findById(productType.getId()).get();
+	    	Department found = departmentRepository.findById(productType.getId()).get();
 	     
 	        // then
 	    	assertFound(found);
-	    }
+	 }
+	 
+	 @Test
+	 public void whenFindByCode_thenReturnDepartment() {
+	    	
+	        // when
+	    	Department found = departmentRepository.findByDepartmentCode(productType.getCode()).get();
+	     
+	        // then
+	    	assertFound(found);
+	 }
+	 
 	
 	 private void assertFound(final Department found) {
 	    	
