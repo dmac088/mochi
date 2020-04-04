@@ -80,14 +80,24 @@ public class IT_ProductStatusEntityRepositoryIntegrationTest {
 	}
 
 	 @Test
-	    public void whenFindById_thenReturnProductStatus() {
+	 public void whenFindById_thenReturnProductStatus() {
 	    	
 	        // when
 	    	ProductStatus found = productStatusRepository.findById(productStatus.getProductStatusId()).get();
 	     
 	        // then
 	    	assertFound(found);
-	    }
+	 }
+	 
+	 @Test
+	 public void whenFindByCode_thenReturnProductStatus() {
+	    	
+	        // when
+	    	ProductStatus found = productStatusRepository.findByProductStatusCode(productStatus.getCode()).get();
+	     
+	        // then
+	    	assertFound(found);
+	 }
 	
 	 private void assertFound(final ProductStatus found) {
 	    	
