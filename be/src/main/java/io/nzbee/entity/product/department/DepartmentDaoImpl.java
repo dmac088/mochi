@@ -1,34 +1,19 @@
 package io.nzbee.entity.product.department;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
-import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import io.nzbee.entity.brand.Brand_;
-import io.nzbee.entity.brand.attribute.BrandAttribute;
-import io.nzbee.entity.brand.attribute.BrandAttribute_;
-import io.nzbee.entity.category.Category_;
-import io.nzbee.entity.category.brand.CategoryBrand;
-import io.nzbee.entity.category.brand.CategoryBrand_;
-import io.nzbee.entity.category.product.CategoryProduct;
-import io.nzbee.entity.product.Product;
-import io.nzbee.entity.product.Product_;
-import io.nzbee.entity.product.status.ProductStatus;
-import io.nzbee.entity.product.status.ProductStatus_;
-import io.nzbee.entity.tag.Tag_;
-import io.nzbee.entity.tag.Tag;
-import io.nzbee.variables.ProductVars;
+import io.nzbee.entity.product.department.attribute.DepartmentAttribute;
+import io.nzbee.entity.product.department.attribute.DepartmentAttribute_;
 
 @Component
 public class DepartmentDaoImpl  implements IDepartmentDao { 
@@ -56,18 +41,18 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 		
 		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
 		
-		Root<Brand> root = cq.from(Brand.class);
-		Join<Brand, BrandAttribute> attribute = root.join(Brand_.attributes);
+		Root<Department> root = cq.from(Department.class);
+		Join<Department, DepartmentAttribute> attribute = root.join(Department_.attributes);
 		
-		cq.multiselect(	root.get(Brand_.brandId).alias("brandId"),
-						root.get(Brand_.brandCode).alias("brandCode"),
-						attribute.get(BrandAttribute_.Id).alias("brandAttributeId"),
-						attribute.get(BrandAttribute_.brandDesc).alias("brandDesc")
+		cq.multiselect(	root.get(Department_.departmentId).alias("departmentId"),
+						root.get(Department_.departmentCode).alias("departmentCode"),
+						attribute.get(DepartmentAttribute_.Id).alias("departmentAttributeId"),
+						attribute.get(DepartmentAttribute_.departmentDesc).alias("departmentDesc")
 		);
 		
 		cq.where(cb.and(
-				cb.equal(root.get(Brand_.brandId), id),
-				cb.equal(attribute.get(BrandAttribute_.lclCd), locale)
+				cb.equal(root.get(Department_.departmentId), id),
+				cb.equal(attribute.get(DepartmentAttribute_.lclCd), locale)
 				)
 		);
 		
@@ -75,21 +60,21 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 		
 		Tuple tuple = query.getSingleResult();
 		
-		Brand brandEntity = new Brand();
-		BrandAttribute brandAttribute = new BrandAttribute();
+		Department departmentEntity = new Department();
+		DepartmentAttribute departmentAttribute = new DepartmentAttribute();
 		
-		brandAttribute.setId(Long.parseLong(tuple.get("brandAttributeId").toString()));
-		brandAttribute.setBrand(brandEntity);
-		brandAttribute.setBrandDesc(tuple.get("brandDesc").toString());
-		brandAttribute.setLclCd(locale);
+		departmentAttribute.setId(Long.parseLong(tuple.get("departmentAttributeId").toString()));
+		departmentAttribute.setDepartment(departmentEntity);
+		departmentAttribute.setDesc(tuple.get("departmentDesc").toString());
+		departmentAttribute.setLclCd(locale);
 		
-		brandEntity.setBrandAttribute(brandAttribute);
-		brandEntity.setId(Long.parseLong(tuple.get("brandId").toString()));
-		brandEntity.setBrandCode(tuple.get("brandCode").toString());
-		brandEntity.setLocale(locale);
-		brandEntity.setCurrency(currency);
+		departmentEntity.getAttributes().add(departmentAttribute);
+		departmentEntity.setId(Long.parseLong(tuple.get("departmentId").toString()));
+		departmentEntity.setCode(tuple.get("departmentCode").toString());
+		departmentEntity.setLocale(locale);
+		departmentEntity.setCurrency(currency);
 
-		return Optional.ofNullable(brandEntity);
+		return Optional.ofNullable(departmentEntity);
 	}
 	
 	@Override
@@ -98,18 +83,18 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 		
 		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
 		
-		Root<Brand> root = cq.from(Brand.class);
-		Join<Brand, BrandAttribute> attribute = root.join(Brand_.attributes);
-
-		cq.multiselect(	root.get(Brand_.brandId).alias("brandId"),
-						root.get(Brand_.brandCode).alias("brandCode"),
-						attribute.get(BrandAttribute_.Id).alias("brandAttributeId"),
-						attribute.get(BrandAttribute_.brandDesc).alias("brandDesc")
+		Root<Department> root = cq.from(Department.class);
+		Join<Department, DepartmentAttribute> attribute = root.join(Department_.attributes);
+		
+		cq.multiselect(	root.get(Department_.departmentId).alias("departmentId"),
+						root.get(Department_.departmentCode).alias("departmentCode"),
+						attribute.get(DepartmentAttribute_.Id).alias("departmentAttributeId"),
+						attribute.get(DepartmentAttribute_.departmentDesc).alias("departmentDesc")
 		);
 		
 		cq.where(cb.and(
-				cb.equal(root.get(Brand_.brandCode), code),
-				cb.equal(attribute.get(BrandAttribute_.lclCd), locale)
+				cb.equal(root.get(Department_.departmentCode), code),
+				cb.equal(attribute.get(DepartmentAttribute_.lclCd), locale)
 				)
 		);
 		
@@ -117,42 +102,42 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 		
 		Tuple tuple = query.getSingleResult();
 		
-		Brand brandEntity = new Brand();
-		BrandAttribute brandAttribute = new BrandAttribute();
+		Department departmentEntity = new Department();
+		DepartmentAttribute departmentAttribute = new DepartmentAttribute();
 		
-		brandAttribute.setId(Long.parseLong(tuple.get("brandAttributeId").toString()));
-		brandAttribute.setBrand(brandEntity);
-		brandAttribute.setBrandDesc(tuple.get("brandDesc").toString());
-		brandAttribute.setLclCd(locale);
+		departmentAttribute.setId(Long.parseLong(tuple.get("departmentAttributeId").toString()));
+		departmentAttribute.setDepartment(departmentEntity);
+		departmentAttribute.setDesc(tuple.get("departmentDesc").toString());
+		departmentAttribute.setLclCd(locale);
 		
-		brandEntity.setBrandAttribute(brandAttribute);
-		brandEntity.setId(Long.parseLong(tuple.get("brandId").toString()));
-		brandEntity.setBrandCode(tuple.get("brandCode").toString());
-		brandEntity.setLocale(locale);
-		brandEntity.setCurrency(currency);
-		
-		return Optional.ofNullable(brandEntity);
+		departmentEntity.getAttributes().add(departmentAttribute);
+		departmentEntity.setId(Long.parseLong(tuple.get("departmentId").toString()));
+		departmentEntity.setCode(tuple.get("departmentCode").toString());
+		departmentEntity.setLocale(locale);
+		departmentEntity.setCurrency(currency);
+
+		return Optional.ofNullable(departmentEntity);
 	}
 
 	
 	@Override
 	public Optional<Department> findByDesc(String locale, String currency, String desc) {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
+CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
 		
-		Root<Brand> root = cq.from(Brand.class);
-		Join<Brand, BrandAttribute> attribute = root.join(Brand_.attributes);
+		Root<Department> root = cq.from(Department.class);
+		Join<Department, DepartmentAttribute> attribute = root.join(Department_.attributes);
 		
-		cq.multiselect(	root.get(Brand_.brandId).alias("brandId"),
-						root.get(Brand_.brandCode).alias("brandCode"),
-						attribute.get(BrandAttribute_.Id).alias("brandAttributeId"),
-						attribute.get(BrandAttribute_.brandDesc).alias("brandDesc")
+		cq.multiselect(	root.get(Department_.departmentId).alias("departmentId"),
+						root.get(Department_.departmentCode).alias("departmentCode"),
+						attribute.get(DepartmentAttribute_.Id).alias("departmentAttributeId"),
+						attribute.get(DepartmentAttribute_.departmentDesc).alias("departmentDesc")
 		);
 		
 		cq.where(cb.and(
-				cb.equal(attribute.get(BrandAttribute_.brandDesc), desc),
-				cb.equal(attribute.get(BrandAttribute_.lclCd), locale)
+				cb.equal(attribute.get(DepartmentAttribute_.departmentDesc), desc),
+				cb.equal(attribute.get(DepartmentAttribute_.lclCd), locale)
 				)
 		);
 		
@@ -160,21 +145,21 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 		
 		Tuple tuple = query.getSingleResult();
 		
-		Brand brandEntity = new Brand();
-		BrandAttribute brandAttribute = new BrandAttribute();
+		Department departmentEntity = new Department();
+		DepartmentAttribute departmentAttribute = new DepartmentAttribute();
 		
-		brandAttribute.setId(Long.parseLong(tuple.get("brandAttributeId").toString()));
-		brandAttribute.setBrand(brandEntity);
-		brandAttribute.setBrandDesc(tuple.get("brandDesc").toString());
-		brandAttribute.setLclCd(locale);
+		departmentAttribute.setId(Long.parseLong(tuple.get("departmentAttributeId").toString()));
+		departmentAttribute.setDepartment(departmentEntity);
+		departmentAttribute.setDesc(tuple.get("departmentDesc").toString());
+		departmentAttribute.setLclCd(locale);
 		
-		brandEntity.setBrandAttribute(brandAttribute);
-		brandEntity.setId(Long.parseLong(tuple.get("brandId").toString()));
-		brandEntity.setBrandCode(tuple.get("brandCode").toString());
-		brandEntity.setLocale(locale);
-		brandEntity.setCurrency(currency);
-		
-		return Optional.ofNullable(brandEntity);
+		departmentEntity.getAttributes().add(departmentAttribute);
+		departmentEntity.setId(Long.parseLong(tuple.get("departmentId").toString()));
+		departmentEntity.setCode(tuple.get("departmentCode").toString());
+		departmentEntity.setLocale(locale);
+		departmentEntity.setCurrency(currency);
+
+		return Optional.ofNullable(departmentEntity);
 	}
 	
 

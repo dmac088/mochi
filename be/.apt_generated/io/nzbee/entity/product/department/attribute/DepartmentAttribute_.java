@@ -10,7 +10,6 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class DepartmentAttribute_ {
 
 	public static volatile SingularAttribute<DepartmentAttribute, String> lclCd;
-	public static volatile SingularAttribute<DepartmentAttribute, Long> departmentId;
 	public static volatile SingularAttribute<DepartmentAttribute, Long> Id;
 	public static volatile SingularAttribute<DepartmentAttribute, String> departmentDesc;
 	public static volatile SingularAttribute<DepartmentAttribute, Department> department;

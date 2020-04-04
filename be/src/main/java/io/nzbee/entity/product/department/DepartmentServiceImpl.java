@@ -2,10 +2,10 @@ package io.nzbee.entity.product.department;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-
+@Service
 public class DepartmentServiceImpl implements IDepartmentService{
 
 	@Autowired
@@ -38,7 +38,7 @@ public class DepartmentServiceImpl implements IDepartmentService{
 	@Override
 	public Optional<Department> findByDesc(String locale, String currency, String desc) {
 		// TODO Auto-generated method stub
-		return null;
+		return departmentDao.findByDesc(locale, currency, desc);
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class DepartmentServiceImpl implements IDepartmentService{
 	@Override
 	public void delete(Department t) {
 		// TODO Auto-generated method stub
-		
+		departmentDao.save(t);
 	}
 
 }

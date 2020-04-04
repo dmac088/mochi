@@ -21,8 +21,6 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import io.nzbee.entity.product.department.IDepartmentRepository;
 import io.nzbee.entity.product.department.IDepartmentService;
 import io.nzbee.entity.product.department.Department;
 import io.nzbee.test.integration.beans.DepartmentEntityBeanFactory;
@@ -62,53 +60,68 @@ public class IT_DepartmentEntityRepositoryIntegrationTest {
     @Autowired
     private IDepartmentService departmentService;
 	
-    private Department productType = null;
+    private Department department = null;
     
 	@Before
     public void setUp() { 
-    	productType = this.persistNewProductType();
+		department = this.persistNewProductType();
     }
 	
 	public Department persistNewProductType() {
     	
-		productType = departmentEntityBeanFactory.getDepartmentEntityBean();
+		department = departmentEntityBeanFactory.getDepartmentEntityBean();
 	   
 	    //persist a new transient test category
-	    entityManager.persist(productType);
+	    entityManager.persist(department);
 	    entityManager.flush();
 	    entityManager.close();
 	    	
-	    return productType;
+	    return department;
 	}
 
 	 @Test
 	 public void whenFindById_thenReturnDepartment() {
 	    	
 	        // when
-	    	Department found = departmentService.findById(productType.getId()).get();
+	    	Department found = departmentService.findById("en-GB",
+	    												  "USD",
+	    												  department.getId()).get();
+	     
+	        // then
+	    	assertFound(found);
+	 }
+	 
+	 @Test 
+	 public void whenFindByCode_thenReturnDepartment() {
+	    	
+	        // when
+	    	Department found = departmentService.findByCode("en-GB",
+															"USD",
+															"TST01").get();
 	     
 	        // then
 	    	assertFound(found);
 	 }
 	 
 	 @Test
-	 public void whenFindByCode_thenReturnDepartment() {
+	 public void whenFindByDesc_thenReturnDepartment() {
 	    	
 	        // when
-	    	Department found = departmentService.findByCode(productType.getCode()).get();
+	    	Department found = departmentService.findByDesc("en-GB",
+															"USD",
+															"test department").get();
 	     
 	        // then
 	    	assertFound(found);
 	 }
-	 
 	
 	 private void assertFound(final Department found) {
 	    	
 	    	assertThat(found.getCode())
 	        .isEqualTo("TST01");
 	
-	    	assertThat(found.getDepartmentClass())
-	        .isEqualTo("Food");
+	    	assertThat(found.getDepartmentDescENGB())
+	        .isEqualTo("test department");
 	
 	 }
 	 
