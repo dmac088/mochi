@@ -11,7 +11,7 @@ import io.nzbee.entity.product.department.Department;
 public class DepartmentEntityBeanFactory {
 
 	@Bean
-	public final Department getProductTypeEntityBean() {
+	public final Department getDepartmentEntityBean() {
 		Department dept = new Department();
 		dept.setCode("TST01");
 		dept.setDepartmentClass("Food");
