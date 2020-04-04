@@ -27,7 +27,7 @@ public class DepartmentAttribute {
 	
 	@Column(name="dept_desc")
 	private String departmentDesc;
-	
+
 	@Column(name="lcl_cd")
 	private String lclCd;
 	
@@ -51,19 +51,11 @@ public class DepartmentAttribute {
 		this.lclCd = lclCd;
 	}
 
-	public Long getDepartmentId() {
-		return departmentId;
-	}
-
-	public void setDepartmentId(Long departmentId) {
-		this.departmentId = departmentId;
-	}
-
-	public String getDepartmentDesc() {
+	public String getDesc() {
 		return departmentDesc;
 	}
 
-	public void setDepartmentDesc(String departmentDesc) {
+	public void setDesc(String departmentDesc) {
 		this.departmentDesc = departmentDesc;
 	}
 
