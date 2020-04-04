@@ -62,8 +62,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		.setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
 		.setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE);
 		
-		System.out.println(query.toString());
-		
 		Object[] p = (Object[])query.getSingleResult();
 		
 		Product product = (Product) p[0];
