@@ -11,7 +11,7 @@ import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.currency.Currency;
 import io.nzbee.entity.product.currency.ICurrencyService;
-import io.nzbee.entity.product.department.IDepartmentRepository;
+import io.nzbee.entity.product.department.IDepartmentService;
 import io.nzbee.entity.product.food.Food;
 import io.nzbee.entity.product.price.IProductPriceTypeService;
 import io.nzbee.entity.product.price.ProductPrice;
@@ -33,7 +33,7 @@ public class ProductEntityBeanFactory {
 	private IBrandService brandService;
 	    
 	@Autowired
-	private IDepartmentRepository productTypeRepository;
+	private IDepartmentService departmentService;
 	    
 	@Autowired
 	private IProductStatusRepository productStatusRepository;
@@ -84,7 +84,9 @@ public class ProductEntityBeanFactory {
 				
 				
 		//we need a type
-		product.setDepartment(productTypeRepository.findByDepartmentCode("FOO01").get());
+		product.setDepartment(departmentService.findByCode(	GeneralVars.LANGUAGE_ENGLISH, 
+				 											GeneralVars.CURRENCY_HKD,
+				 											"FOO01").get());
 				
 		//we need a status
 		product.setProductStatus(productStatusRepository.findByProductStatusCode("ACT01").get());
