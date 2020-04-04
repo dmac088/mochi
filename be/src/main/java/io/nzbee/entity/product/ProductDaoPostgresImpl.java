@@ -142,8 +142,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	public Optional<Product> findByDesc(String locale, String currency, String desc) {
 		LOGGER.debug("Fetching a product for parameters : {}, {}, {}", locale, currency, desc);
 		
-		Query query = em.createNativeQuery(this.constructSQL(true,
-															 false,
+		Query query = em.createNativeQuery(this.constructSQL(false,
+															 true,
 															 false,
 															 false, 
 															 false,
