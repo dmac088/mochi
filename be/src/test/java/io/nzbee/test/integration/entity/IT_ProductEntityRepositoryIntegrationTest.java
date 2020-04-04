@@ -104,6 +104,17 @@ public class IT_ProductEntityRepositoryIntegrationTest {
         // then
     	assertFound(found);
 	}
+	
+	@Test
+	public void whenFindByDesc_thenReturnProduct() {
+		 // when
+    	Product found = productService.findByDesc(GeneralVars.LANGUAGE_ENGLISH, 
+												  GeneralVars.CURRENCY_USD,  
+												  "test product").get();
+     
+        // then
+    	assertFound(found);
+	}
 	 
     private void assertFound(final Product found) {
     	assertThat(found.getUPC())

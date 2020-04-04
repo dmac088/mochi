@@ -142,60 +142,39 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	public Optional<Product> findByDesc(String locale, String currency, String desc) {
 		LOGGER.debug("Fetching a product for parameters : {}, {}, {}", locale, currency, desc);
 		
-		CriteriaBuilder cb = em.getCriteriaBuilder();
+		Query query = em.createNativeQuery(this.constructSQL(true,
+															 false,
+															 false,
+															 false, 
+															 false,
+															 false,
+															 false,
+															 false,
+															 false), "ProductMapping")
+		.setParameter("locale", locale)
+		.setParameter("currency", currency)
+		.setParameter("categoryCode", CategoryVars.PRIMARY_HIERARCHY_ROOT_CODE)
+		.setParameter("productDesc", desc)
+		.setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
+		.setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
+		.setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE);
 		
-		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
+
+		Object[] p = (Object[])query.getSingleResult();
 		
-		Root<Product> root = cq.from(Product.class);
-		Join<Product, ProductAttribute> productAttribute = root.join(Product_.attributes);
-		Join<Product, ProductStatus> status = root.join(Product_.productStatus);
-		Join<Product, Department> department = root.join(Product_.department);
-		Join<Product, ProductPrice> retailPrice = root.join(Product_.prices, JoinType.LEFT);
-		Join<ProductPrice, ProductPriceType> retailPriceType = retailPrice.join(ProductPrice_.type);
-		Join<ProductPrice, Currency> retailCurrency = retailPrice.join(ProductPrice_.currency);
+		Product product = (Product) p[0];
+		product.setProductStatus((ProductStatus) p[1]);
+		product.setDepartment((Department) p[5]);
+		product.setProductAttribute((ProductAttribute) p[2]); 
 		
-		Join<Product, ProductPrice> markdownPrice = root.join(Product_.prices, JoinType.LEFT);
-		Join<ProductPrice, ProductPriceType> markdownPriceType = markdownPrice.join(ProductPrice_.type);
-		Join<ProductPrice, Currency> markdownCurrency = markdownPrice.join(ProductPrice_.currency);
+		Brand brand = (Brand) p[3];
+		product.setBrand(brand);
+		brand.setBrandAttribute((BrandAttribute) p[4]);
 		
-		retailPriceType.on(cb.equal(retailPriceType.get(ProductPriceType_.code), ProductVars.PRICE_RETAIL_CODE));
-		markdownPriceType.on(cb.equal(markdownPriceType.get(ProductPriceType_.code), ProductVars.PRICE_MARKDOWN_CODE));
+		product.setRetailPrice(((BigDecimal) p[6]).doubleValue());
+		product.setMarkdownPrice(((BigDecimal) p[7]).doubleValue());
 		
-		cq.multiselect(	root.get(Product_.productId).alias("productId"),
-				root.get(Product_.productUPC).alias("productCode"),
-				productAttribute.get(ProductAttribute_.Id).alias("productAttributeId"),
-				productAttribute.get(ProductAttribute_.productDesc).alias("productDesc"),
-				retailPrice.get(ProductPrice_.priceValue).alias("retailPrice"),
-				markdownPrice.get(ProductPrice_.priceValue).alias("markdownPrice"));
-		
-		cq.where(cb.and(
-				cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale),
-				cb.equal(productAttribute.get(ProductAttribute_.productDesc), desc),
-				cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE),
-				cb.equal(department.get(Department_.departmentCode), "FOO01"),
-				cb.equal(retailCurrency.get(Currency_.code), currency),
-				cb.equal(markdownCurrency.get(Currency_.code), currency)
-		));
-		
-		TypedQuery<Tuple> query = em.createQuery(cq);
-		
-		Tuple tuple = query.getSingleResult();
-		
-		Product pe = new Food();
-		ProductAttribute pa = new ProductAttribute();
-		
-		pa.setId(Long.parseLong(tuple.get("productAttributeId").toString()));
-		//pa.setProductId(Long.parseLong(tuple.get("productId").toString()));
-		pa.setProductDesc(tuple.get("productDesc").toString());
-		pa.setLclCd(locale);
-		
-		pe.setProductAttribute(pa);
-		pe.setProductId(Long.parseLong(tuple.get("productId").toString()));
-		pe.setUPC(tuple.get("productCode").toString());
-		pe.setRetailPrice(Double.parseDouble(tuple.get("retailPrice").toString()));
-		pe.setMarkdownPrice(Double.parseDouble(tuple.get("markdownPrice").toString()));
-		
-		return Optional.ofNullable(pe);
+		return Optional.ofNullable(product);
 	}
 	
 	@Override
