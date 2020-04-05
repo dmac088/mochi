@@ -1,14 +1,14 @@
-package io.nzbee.entity.order;
+package io.nzbee.entity.order.line.retail;
 
 import io.nzbee.entity.product.Product;
 
 //@Entity
-public class RetailOrderLine {
+public class OrderLineRetail {
 
 	private Product product;
 	private int quantity;
 	
-	public RetailOrderLine() {
+	public OrderLineRetail() {
 		super();
 	}
 	
