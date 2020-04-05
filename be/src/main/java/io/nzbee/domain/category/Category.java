@@ -48,73 +48,37 @@ public abstract class Category implements IHierarchicalDomainObject {
 	protected String getCategoryCode() {
 		return this.categoryCode;
 	}
-
-	protected void setCategoryCode(String categoryCode) {
-		this.categoryCode = categoryCode;
-	}
 	
 	protected String getCategoryDesc() {
 		return this.categoryDesc;
-	}
-
-	protected void setCategoryDesc(String categoryDesc) {
-		this.categoryDesc = categoryDesc;
 	}
 
 	protected Long getCategoryLevel() {
 		return this.categoryLevel;
 	}
 
-	protected void setCategoryLevel(Long categoryLevel) {
-		this.categoryLevel = categoryLevel;
-	}
-
 	public Long getChildCount() {
 		return childCategoryCount;
-	}
-
-	public void setChildCount(Long childCategoryCount) {
-		this.childCategoryCount = childCategoryCount;
 	}
 	
 	public String getCategoryType() {
 		return categoryType;
 	}
 	
-	public void setCategoryType(String categoryType) {
-		this.categoryType = categoryType;
-	}
-	
 	public int getCount() {
 		return objectCount;
-	}
-
-	public void setCount(int objectCount) {
-		this.objectCount = objectCount;
 	}
 	
 	public String[] getLayoutCodes() {
 		return layoutCodes;
-	}
-
-	public void setLayoutCodes(String[] layoutCodes) {
-		this.layoutCodes = layoutCodes;
 	}
 	
 	public String getLocale() {
 		return locale;
 	}
 
-	public void setLocale(String locale) {
-		this.locale = locale;
-	}
-
 	public String getCurrency() {
 		return currency;
-	}
-
-	public void setCurrency(String currency) {
-		this.currency = currency;
 	}
 
 	@Override

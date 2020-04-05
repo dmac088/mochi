@@ -21,16 +21,8 @@ public class Brand implements IDomainObject {
 		return brandCode;
 	}
 
-	public void setBrandCode(String brandCode) {
-		this.brandCode = brandCode;
-	}
-
 	public String getBrandDesc() {
 		return brandDesc;
-	}
-
-	public void setBrandDesc(String brandDesc) {
-		this.brandDesc = brandDesc;
 	}
 
 	@Override
@@ -62,18 +54,10 @@ public class Brand implements IDomainObject {
 		return locale;
 	}
 
-	public void setLocale(String locale) {
-		this.locale = locale;
-	}
-
 	public String getCurrency() {
 		return currency;
 	}
 
-	public void setCurrency(String currency) {
-		this.currency = currency;
-	}
-	
 	@Override
 	public boolean equals(Object o) {
 		 if (this == o) return true;

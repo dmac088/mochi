@@ -10,15 +10,14 @@ import io.nzbee.domain.product.Product;
 @JsonTypeName("productcategory")
 public class ProductCategory extends Category {
 
-
-	public ProductCategory() {
-		super();
-	}
-
 	@JsonIgnore
 	private List<Product> products;
 	
 	private String parentCode;
+	
+	public ProductCategory() {
+		super();
+	}
 	
 	public List<Product> getProducts() {
 		return products;
@@ -54,10 +53,6 @@ public class ProductCategory extends Category {
 
 	public String getParentCode() {
 		return parentCode;
-	}
-
-	public void setParentCode(String parentCode) {
-		this.parentCode = parentCode;
 	}
 	
 }
