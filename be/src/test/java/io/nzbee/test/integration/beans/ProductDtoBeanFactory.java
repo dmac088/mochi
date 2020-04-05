@@ -19,7 +19,7 @@ public class ProductDtoBeanFactory {
 		pDto.setDepartmentCode("FOO01");
 		pDto.setDepartmentDesc("Food");
 
-		pDto.setLclCd("en-GB");
+		pDto.setLocale("en-GB");
 		pDto.setCurrency("HKD");
 
 		pDto.setProductStatusCode("ACT01");

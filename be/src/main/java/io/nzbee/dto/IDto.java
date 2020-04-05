@@ -2,7 +2,8 @@ package io.nzbee.dto;
 
 public interface IDto {
 
-	public String getCode();
+	String getCode();
 
-	public String getType();
+	String getType();
+
 }

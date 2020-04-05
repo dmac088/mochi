@@ -399,7 +399,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			io.nzbee.dto.product.Product p = new io.nzbee.dto.product.Product();
 			p.setProductDesc(r[2].toString());
 			p.setProductImage(r[3].toString());
-			p.setLclCd(lcl);
+			p.setLocale(lcl);
 			p.setProductUPC(r[5].toString());
 			p.setProductCreateDt((Date) r[6]);
 			p.setProductRetail(Double.parseDouble(r[9].toString()));

@@ -1,8 +1,8 @@
 package io.nzbee.dto.tag;
 
-import io.nzbee.dto.IDto;
+import io.nzbee.dto.ILocalizedDto;
 
-public class Tag implements IDto {
+public class Tag implements ILocalizedDto {
 
 	private Long tagId;
 	
@@ -11,6 +11,8 @@ public class Tag implements IDto {
 	private String tagDesc;
 	
 	private String locale;
+	
+	private String currency;
 
 	public Long getTagId() {
 		return tagId;
@@ -63,6 +65,12 @@ public class Tag implements IDto {
 	public String getType() {
 		// TODO Auto-generated method stub
 		return this.getClass().getSimpleName();
+	}
+
+	@Override
+	public String getCurrency() {
+		// TODO Auto-generated method stub
+		return currency;
 	}
 
 }

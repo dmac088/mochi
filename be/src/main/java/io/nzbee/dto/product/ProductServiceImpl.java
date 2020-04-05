@@ -140,7 +140,7 @@ public class ProductServiceImpl implements IProductService {
 			pDo.setProductRetail(product.getRetailPrice());
 			pDo.setProductMarkdown(product.getMarkdownPrice());
 			pDo.setProductImage(product.getProductAttribute().getProductImage());
-			pDo.setLclCd(locale);
+			pDo.setLocale(locale);
 			pDo.setCurrency(currency);
 			pDo.setDisplayCategories(product.getDisplayCategories());
 			return Optional.ofNullable(pDo);
@@ -157,7 +157,7 @@ public class ProductServiceImpl implements IProductService {
 			io.nzbee.dto.product.Product dtoProduct = new io.nzbee.dto.product.Product();
 			dtoProduct.setProductUPC(productDO.getProductUPC());
 			dtoProduct.setCurrency(productDO.getCurrency());
-			dtoProduct.setLclCd(productDO.getLclCd());
+			dtoProduct.setLocale(productDO.getLclCd());
 			dtoProduct.setProductCreateDt(productDO.getProductCreateDt());
 			dtoProduct.setProductDesc(productDO.getProductDesc());
 			dtoProduct.setProductImage(productDO.getProductImage());
@@ -177,8 +177,9 @@ public class ProductServiceImpl implements IProductService {
 				? new io.nzbee.entity.product.food.Food() 
 				: new io.nzbee.entity.product.jewellery.Jewellery();
 		
-		Optional<Brand> brand = brandService.findByCode(productDto.getBrandCode(), productDto.getCurrency(), productDto.getLclCd());
+		Optional<Brand> brand = brandService.findByCode(productDto.getBrandCode(), productDto.getCurrency(), productDto.getLocale());
 		if (brand.isPresent()) { productEntity.setBrand(brand.get()); }  
+		
 		
 		
 		

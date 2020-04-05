@@ -2,9 +2,9 @@ package io.nzbee.dto.product;
 
 import java.util.Date;
 import java.util.Objects;
-import io.nzbee.dto.IDto;
+import io.nzbee.dto.ILocalizedDto;
 
-public class Product implements IDto {
+public class Product implements ILocalizedDto {
 
 	private String productUPC;
 	
@@ -32,7 +32,7 @@ public class Product implements IDto {
 	
 	private String displayCategories;
 
-	private String lclCd;
+	private String locale;
 	
 	private String currency;
 	
@@ -58,7 +58,7 @@ public class Product implements IDto {
 				   Double productRetail,
 				   Double productMarkdown,
 				   String productImage,
-				   String lclCd,
+				   String locale,
 				   String currency) {
 		
 		this.productUPC = productUPC;
@@ -67,7 +67,7 @@ public class Product implements IDto {
 		this.productRetail = productRetail;
 		this.productMarkdown = productMarkdown;
 		this.productImage = productImage;
-		this.lclCd = lclCd;
+		this.locale = locale;
 		this.currency = currency;
 	}
 	
@@ -176,15 +176,16 @@ public class Product implements IDto {
 		this.displayCategories = displayCategories;
 	}
 
-
-	public String getLclCd() {
-		return lclCd;
+	@Override
+	public String getLocale() {
+		return locale;
 	}
 
-	public void setLclCd(String lclCd) {
-		this.lclCd = lclCd;
+	public void setLocale(String locale) {
+		this.locale = locale;
 	}
 	
+	@Override
 	public String getCurrency() {
 		return currency;
 	}
@@ -192,6 +193,8 @@ public class Product implements IDto {
 	public void setCurrency(String currency) {
 		this.currency = currency;
 	}
+
+
 
 	@Override
 	public boolean equals(Object o) {
@@ -215,9 +218,8 @@ public class Product implements IDto {
         		.append(", productRetail=").append(productRetail)
         		.append(", productMarkdown=").append(productMarkdown)
                 .append(", ProductImage=").append(productImage)
-                .append(", lclCd=").append(lclCd);
+                .append(", locale=").append(locale);
         return builder.toString();
     }
-
 
 }

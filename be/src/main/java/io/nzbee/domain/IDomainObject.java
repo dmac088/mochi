@@ -21,12 +21,16 @@ import io.nzbee.domain.tag.Tag;
 			    @JsonSubTypes.Type(value = Product.class, 			name = "product")})
 public interface IDomainObject {
 
-	public String getCode();
+	String getCode();
 	
-	public String getDesc();
+	String getDesc();
 	
-	public int getCount();
+	String getLocale();
 	
-	public boolean isHierarchical();
+	String getCurrency();
+	
+	int getCount();
+	
+	boolean isHierarchical();
 
 }

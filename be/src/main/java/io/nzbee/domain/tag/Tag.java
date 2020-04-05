@@ -16,6 +16,8 @@ public class Tag implements IDomainObject {
 	private int objectCount;
 	
 	private String locale;
+	
+	private String currency;
 
 	public Long getTagId() {
 		return tagId;
@@ -73,7 +75,16 @@ public class Tag implements IDomainObject {
 		return this.getTagDesc();
 	}
 
+	@Override
+	public String getCurrency() {
+		// TODO Auto-generated method stub
+		return currency;
+	}
 	
+	public void setCurrency(String currency) {
+		this.currency = currency;
+	}
+
 	@Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
