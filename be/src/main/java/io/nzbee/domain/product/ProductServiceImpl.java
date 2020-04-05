@@ -157,7 +157,7 @@ public class ProductServiceImpl implements IProductService {
 			Product domainProduct = new Product();
 			domainProduct.setProductUPC(productDto.getProductUPC());
 			domainProduct.setCurrency(productDto.getCurrency());
-			domainProduct.setLclCd(productDto.getLclCd());
+			domainProduct.setLclCd(productDto.getLocale());
 			domainProduct.setProductCreateDt(productDto.getProductCreateDt());
 			domainProduct.setProductDesc(productDto.getProductDesc());
 			domainProduct.setProductImage(productDto.getProductImage());
