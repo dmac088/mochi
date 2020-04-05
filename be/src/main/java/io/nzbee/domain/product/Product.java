@@ -20,6 +20,8 @@ public class Product {
 	
 	private String productImage;
 	
+	private String displayCategories;
+
 	private String lclCd;
 	
 	private String currency;
@@ -93,6 +95,14 @@ public class Product {
 
 	public void setProductImage(String productImage) {
 		this.productImage = productImage;
+	}
+	
+	public String getDisplayCategories() {
+		return displayCategories;
+	}
+
+	public void setDisplayCategories(String displayCategories) {
+		this.displayCategories = displayCategories;
 	}
 
 	public String getLclCd() {

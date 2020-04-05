@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ColumnResult;
@@ -49,6 +51,7 @@ import org.hibernate.search.annotations.TokenizerDef;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
+import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.department.Department;
@@ -89,16 +92,17 @@ filters = {
 	                    entityClass = Product.class,
 	                    		discriminatorColumn="dept_id",
 	                    fields = {
-	                        @FieldResult(name = "productId", 		column = "prd_id"),
-	                        @FieldResult(name = "productUPC", 		column = "upc_cd"),
-	                        @FieldResult(name = "productCreateDt", 	column = "prd_crtd_dt"),
-	                        @FieldResult(name = "brand", 			column = "bnd_id"),
-	                        @FieldResult(name = "productStatus", 	column = "prd_sts_id"),
-	                        @FieldResult(name = "department", 		column = "dept_id"),
-	                        @FieldResult(name = "productAttribute", column = "prd_lcl_id"),	      
-	                        @FieldResult(name = "attributes", 		column = "prd_id"),
-	                        @FieldResult(name = "countryOfOrigin",  column = "ctry_of_orig"),
-	                        @FieldResult(name = "expiryDate",  		column = "exp_dt")
+	                        @FieldResult(name = "productId", 			column = "prd_id"),
+	                        @FieldResult(name = "productUPC", 			column = "upc_cd"),
+	                        @FieldResult(name = "productCreateDt", 		column = "prd_crtd_dt"),
+	                        @FieldResult(name = "brand", 				column = "bnd_id"),
+	                        @FieldResult(name = "productStatus", 		column = "prd_sts_id"),
+	                        @FieldResult(name = "department", 			column = "dept_id"),
+	                        @FieldResult(name = "productAttribute", 	column = "prd_lcl_id"),	      
+	                        @FieldResult(name = "attributes", 			column = "prd_id"),
+	                        @FieldResult(name = "countryOfOrigin",  	column = "ctry_of_orig"),
+	                        @FieldResult(name = "displayCategories",  	column = "display_categories"),
+	                        @FieldResult(name = "expiryDate",  			column = "exp_dt")
 	                    }),
 	            @EntityResult(
 		                entityClass = ProductStatus.class,
@@ -187,6 +191,10 @@ public abstract class Product {
 	@JsonManagedReference
 	private List<ProductAttribute> attributes = new ArrayList<ProductAttribute>();
 	
+	@Transient
+	@Field(store=Store.YES,analyze=Analyze.NO)
+	private String displayCategories;
+
 	@Transient
 	private ProductAttribute productAttribute;
 	
@@ -351,6 +359,31 @@ public abstract class Product {
 		}
 		return "unknown.jpg"; 
 	}
+	
+	@Field(analyze=Analyze.NO, store=Store.YES)
+	public String getDisplayCategoriesENGB() {
+		Set<String> sca = 
+				this.getCategories().stream()
+				.flatMap(c -> c.getAttributes().stream())
+				.filter(a -> a.getLclCd().equals("en-GB"))
+				.map(ca -> ca.getCategoryDesc())
+				.collect(Collectors.toSet());
+				
+		return String.join(",", sca);
+	}
+	
+	@Field(analyze=Analyze.NO, store=Store.YES)
+	public String getDisplayCategoriesZHHK() {
+		Set<String> sca = 
+				this.getCategories().stream()
+				.flatMap(c -> c.getAttributes().stream())
+				.filter(a -> a.getLclCd().equals("zh-HK"))
+				.map(ca -> ca.getCategoryDesc())
+				.collect(Collectors.toSet());
+				
+		return String.join(",", sca);
+	}
+
 
 	public ProductAttribute getProductAttribute() {
 		return productAttribute;
@@ -452,6 +485,14 @@ public abstract class Product {
 		this.markdownPrice = markdownPrice;
 	}
 	
+	public String getDisplayCategories() {
+		return displayCategories;
+	}
+
+	public void setDisplayCategories(String displayCategories) {
+		this.displayCategories = displayCategories;
+	}
+
 	public void addProductCategory(CategoryProduct categoryProduct) {
 		this.getCategories().add(categoryProduct);
 		categoryProduct.getProducts().add(this);

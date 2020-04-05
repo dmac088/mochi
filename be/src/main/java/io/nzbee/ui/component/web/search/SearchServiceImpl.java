@@ -388,7 +388,8 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 							   "product.brand.brandCode",
 							   "brandDescForIndex",
 							   "currentRetailPrice" + currency,
-							   "currentMarkdownPrice" + currency);
+							   "currentMarkdownPrice" + currency,
+							   "displayCategories" + transLcl);
 
 		// get the results using jpaQuery object
 		List<Object[]> results = jpaQuery.getResultList();
@@ -404,6 +405,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			p.setProductRetail(Double.parseDouble(r[9].toString()));
 			p.setProductMarkdown(Double.parseDouble(r[10].toString()));
 			p.setCurrency(currency);
+			p.setDisplayCategories(r[11].toString());
 			return p;
 		}).collect(Collectors.toList());
 		

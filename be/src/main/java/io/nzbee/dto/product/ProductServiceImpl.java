@@ -142,6 +142,7 @@ public class ProductServiceImpl implements IProductService {
 			pDo.setProductImage(product.getProductAttribute().getProductImage());
 			pDo.setLclCd(locale);
 			pDo.setCurrency(currency);
+			pDo.setDisplayCategories(product.getDisplayCategories());
 			return Optional.ofNullable(pDo);
 		}
 		return Optional.empty();
@@ -178,6 +179,8 @@ public class ProductServiceImpl implements IProductService {
 		
 		Optional<Brand> brand = brandService.findByCode(productDto.getBrandCode(), productDto.getCurrency(), productDto.getLclCd());
 		if (brand.isPresent()) { productEntity.setBrand(brand.get()); }  
+		
+		
 		
 	}
 
