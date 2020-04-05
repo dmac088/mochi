@@ -23,34 +23,18 @@ public class Tag implements IDomainObject {
 		return tagId;
 	}
 
-	public void setTagId(Long tagId) {
-		this.tagId = tagId;
-	}
-	
 	public String getTagCode() {
 		return tagCode;
-	}
-
-	public void setTagCode(String tagCode) {
-		this.tagCode = tagCode;
 	}
 
 	public String getTagDesc() {
 		return tagDesc;
 	}
 
-	public void setTagDesc(String tagDesc) {
-		this.tagDesc = tagDesc;
-	}
-
 	public String getLocale() {
 		return locale;
 	}
-
-	public void setLocale(String locale) {
-		this.locale = locale;
-	}
-
+	
 	@Override
 	public String getCode() {
 		// TODO Auto-generated method stub
@@ -81,10 +65,6 @@ public class Tag implements IDomainObject {
 		return currency;
 	}
 	
-	public void setCurrency(String currency) {
-		this.currency = currency;
-	}
-
 	@Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
