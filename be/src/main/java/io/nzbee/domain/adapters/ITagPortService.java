@@ -1,4 +1,4 @@
-package io.nzbee.entity.ports;
+package io.nzbee.domain.adapters;
 
 import io.nzbee.domain.tag.Tag;
 

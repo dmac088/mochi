@@ -11,11 +11,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import io.nzbee.domain.adapters.IBrandPortService;
+import io.nzbee.domain.adapters.ICategoryPortService;
+import io.nzbee.domain.adapters.IProductPortService;
+import io.nzbee.domain.adapters.ITagPortService;
 import io.nzbee.ui.component.web.facet.IFacet;
-import io.nzbee.entity.ports.IBrandPortService;
-import io.nzbee.entity.ports.ICategoryPortService;
-import io.nzbee.entity.ports.IProductPortService;
-import io.nzbee.entity.ports.ITagPortService;
 
 @Service(value = "productDomainService")
 public class ProductServiceImpl implements IProductService {

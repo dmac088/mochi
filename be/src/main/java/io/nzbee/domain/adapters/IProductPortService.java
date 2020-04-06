@@ -1,4 +1,4 @@
-package io.nzbee.entity.ports;
+package io.nzbee.domain.adapters;
 
 import java.util.List;
 import java.util.Set;
