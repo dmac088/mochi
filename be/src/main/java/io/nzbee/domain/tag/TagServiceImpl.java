@@ -5,10 +5,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
-//The Domain object service should be simple and dumb
-//it received primitive types and responds with domain objects,
-//that are constructed from relevant entity objects
-//its simplicity helps us with unit testing
 import io.nzbee.domain.IFacetService;
 
 @Service(value = "tagDomainService")
