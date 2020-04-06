@@ -1,6 +1,5 @@
 package io.nzbee.domain;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public interface IService<T> {
@@ -15,7 +14,7 @@ public interface IService<T> {
 	
 	String tokenToCode(String token);
 
-	Set<IDomainObject> findAll(String lcl, String currency, HashSet<String> hashSet);
+	Set<T> findAll(String lcl, String currency, Set<String> codes);
 
 	
 }

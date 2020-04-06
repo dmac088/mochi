@@ -79,6 +79,12 @@ public class CustomerServiceImpl implements ICustomerService {
 		return null;
 	}
 
+	@Override
+	public Set<Customer> findAll(String lcl, String currency, Set<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 	
 
