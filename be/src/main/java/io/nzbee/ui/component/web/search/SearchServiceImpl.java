@@ -328,7 +328,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			Set<IDomainObject> lc = sfh.getBean(appContext).findAll(
 										lcl, 
 										currency, 
-										new ArrayList<String>(sfh.getCodes()));
+										new HashSet<String>(sfh.getCodes()));
 
 			
 			
