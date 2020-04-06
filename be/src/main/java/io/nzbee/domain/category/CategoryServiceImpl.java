@@ -1,6 +1,5 @@
 package io.nzbee.domain.category;
 
-import java.util.List;
 import java.util.Set;
 import  org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,14 +49,6 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
      	return categoryService.findAllForLevel(locale, currency, level);
   	}	
     
-
-    @Override
-	public Set<Category> findAll(String locale, String currency, List<String> codes) {
-		// TODO Auto-generated method stub
-		return categoryService.findAll(locale, currency, codes);
-	}
- 
-   
 	@Override
 	public String tokenToCode(String token) {
 		// TODO Auto-generated method stub

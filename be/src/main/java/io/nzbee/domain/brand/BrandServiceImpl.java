@@ -1,6 +1,5 @@
 package io.nzbee.domain.brand;
 
-import java.util.List;
 import java.util.Set;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,13 +40,6 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
     @Transactional(readOnly=true)
 	public Set<Brand> findAll(String locale, String currency, String category) {
     	return brandService.findAll(locale, currency, category);
-	}
-	
-	@Override
-	@Transactional(readOnly=true)
-	public Set<Brand> findAll(String locale, String currency, List<String> codes) {
-		// TODO Auto-generated method stub
-		return brandService.findAll(locale, currency, codes);
 	}
 
 	@Override
