@@ -3,8 +3,6 @@ package io.nzbee.entity.product;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
-import io.nzbee.dto.IDto;
 import io.nzbee.entity.ILocalizedService;
 
 public interface IProductService extends ILocalizedService<Product> {
@@ -14,7 +12,9 @@ public interface IProductService extends ILocalizedService<Product> {
 									String priceType, 
 									Pageable pageable, 
 									String categoryDesc,
-									List<IDto> ldto);
+									List<String> categoryCodes,
+									List<String> brandCodes,
+									List<String> tagCodes);
 
 	public Page<Product> findAll(	String locale, 
 									String currency, 
@@ -23,6 +23,8 @@ public interface IProductService extends ILocalizedService<Product> {
 									String priceType,
 									Pageable pageable, 
 									String categoryDesc, 
-									List<IDto> ldto);
+									List<String> categoryCodes,
+									List<String> brandCodes,
+									List<String> tagCodes);
 
 }

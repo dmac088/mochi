@@ -1,15 +1,10 @@
 package io.nzbee.domain;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
+public interface IService<T> {
 
-public interface IService<T, X> {
-
-	//for a DTO we need the locale
-	T findById(String locale, String currency, Long Id);
-	
 	//for a DTO we need the locale
 	T findByCode(String locale, String currency, String code);
 	
@@ -20,11 +15,7 @@ public interface IService<T, X> {
 	
 	Set<T> findAll(String locale, String currency, List<String> codes);
 	
-	Set<T> findAll(String locale, String currency, String categoryDesc, List<IDomainObject> lDo);
-	
 	String tokenToCode(String token);
-
-	Optional<T> dtoToDO(Optional<X> category);
 
 	
 }

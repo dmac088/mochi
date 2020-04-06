@@ -1,51 +1,50 @@
-package io.nzbee.dto.customer;
+package io.nzbee.domain.customer;
+
+
 import java.util.List;
 import java.util.Optional;
-
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import io.nzbee.dto.IDto;
-import io.nzbee.entity.party.IPartyService;
-import io.nzbee.entity.party.Party;
 
 @Service
 public class CustomerServiceImpl implements ICustomerService {
 
 	@Autowired
-	IPartyService customerService;
-	
-	@Override
-	public Optional<Customer> findById(long Id) {
-		// TODO Auto-generated method stub
-		return this.entityToDTO(customerService.findById(Id).get());
-	}
+	io.nzbee.entity.ports.ICustomerPortService customerService;
 	
 	@Override
 	public Optional<Customer> findByCode(String userName) {
 		// TODO Auto-generated method stub
-		return this.entityToDTO(customerService.findByCode(userName).get());
+		return customerService.findByCode(userName);  
 	}
 
 	@Override
-	public Optional<Customer> findByDesc(String desc) {
+	public Customer findByCode(String locale, String currency, String code) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Customer> findAll(List<IDto> dtos) {
+	public Customer findByDesc(String locale, String currency, String desc) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<Customer> entityToDTO(Party entity) {
+	public Set<Customer> findAll(String locale, String currency) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<Customer> doToDto(io.nzbee.domain.customer.Customer domainObject) {
+	public Set<Customer> findAll(String locale, String currency, List<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String tokenToCode(String token) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -75,12 +74,6 @@ public class CustomerServiceImpl implements ICustomerService {
 	}
 
 	@Override
-	public Customer convertToCustomerDO(Party party) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void updateCustomer(Customer customer) {
 		// TODO Auto-generated method stub
 		
@@ -92,19 +85,7 @@ public class CustomerServiceImpl implements ICustomerService {
 		return null;
 	}
 
-	@Override
-	public void save(IDto dto) {
-		// TODO Auto-generated method stub
-		
-	}
 	
-    // API
-    //This method should accept a DTO and return a DTO
-    //The DTO is coarse grained and contains a flat structure of properties
-    //if we did not use a DTO we would have JSON nesting as per the domain model structure, which is hard to manage in our client views
-    //The DTO is simple and dumb, it is the service layer that manages the translation between DTO and domain objects
-    
 	
-
 
 }

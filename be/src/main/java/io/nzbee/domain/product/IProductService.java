@@ -7,8 +7,7 @@ import org.springframework.data.domain.Pageable;
 import io.nzbee.domain.IService;
 import io.nzbee.ui.component.web.facet.IFacet;
 
-public interface IProductService extends IService<io.nzbee.domain.product.Product,
-												  io.nzbee.dto.product.Product> {
+public interface IProductService extends IService<Product> {
 
 	Set<Product> findAll(String locale, String currency, List<String> productCodes);
 
