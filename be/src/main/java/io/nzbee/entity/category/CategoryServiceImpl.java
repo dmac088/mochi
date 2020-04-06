@@ -2,6 +2,7 @@ package io.nzbee.entity.category;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -39,7 +40,7 @@ public class CategoryServiceImpl implements ICategoryService {
 	}
 	
 	@Override
-	public List<Category> findAll(String locale, String currency, List<String> categoryCodes) {
+	public List<Category> findAll(String locale, String currency, Set<String> categoryCodes) {
 		// TODO Auto-generated method stub
 		return categoryDAO.findAll(locale, currency, categoryCodes);
 	}
@@ -87,7 +88,5 @@ public class CategoryServiceImpl implements ICategoryService {
 		// TODO Auto-generated method stub
 		
 	}
-
-
 
 }
