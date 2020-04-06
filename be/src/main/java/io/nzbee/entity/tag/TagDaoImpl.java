@@ -164,30 +164,6 @@ public class TagDaoImpl implements ITagDao {
 		
 		return query.getResultList();
     }
-	
-	@Override
-	public void save(Tag t) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void update(Tag t, String[] params) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void delete(Tag t) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public List<Tag> findAll(String locale, String currency) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public List<Tag> findAll(String locale, String currency, Set<String> codes) {
@@ -232,5 +208,31 @@ public class TagDaoImpl implements ITagDao {
 			return tagEntity;
 		}).collect(Collectors.toList());
 	}
+	
+	@Override
+	public void save(Tag t) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void update(Tag t, String[] params) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete(Tag t) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<Tag> findAll(String locale, String currency) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 
 }
