@@ -31,7 +31,9 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.domain.IFacetService;
+import io.nzbee.domain.brand.BrandServiceImpl;
 import io.nzbee.domain.category.CategoryServiceImpl;
+import io.nzbee.domain.tag.TagServiceImpl;
 import io.nzbee.entity.product.Product;
 import io.nzbee.test.integration.beans.ProductEntityBeanFactory;
 import io.nzbee.ui.component.web.facet.IFacet;
@@ -70,6 +72,16 @@ public class IT_ProductEntitySearchIntegrationTest {
         @Bean(value = "categoryDomainService")
         public CategoryServiceImpl getCategoryService() {
         	return new CategoryServiceImpl();
+        }
+        
+        @Bean(value = "brandDomainService")
+        public BrandServiceImpl getBrandService() {
+        	return new BrandServiceImpl();
+        }
+        
+        @Bean(value = "tagDomainService")
+        public TagServiceImpl getTagService() {
+        	return new TagServiceImpl();
         }
      
     }
