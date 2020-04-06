@@ -1,12 +1,10 @@
-package io.nzbee.dto.customer;
+package io.nzbee.domain.customer;
 import java.util.List;
 import java.util.Optional;
 
-import io.nzbee.dto.IService;
+import io.nzbee.domain.IService;
 
-public interface ICustomerService extends IService<Customer,
-												  io.nzbee.entity.party.Party,
-												  io.nzbee.domain.customer.Customer> {
+public interface ICustomerService extends IService<Customer> {
 
 	 boolean customerExist(final String username);
 
@@ -17,8 +15,6 @@ public interface ICustomerService extends IService<Customer,
 	 List<Customer> getCustomers();
 	 
 	 void deleteCustomer(final Customer customer);
-	 
-	 Customer convertToCustomerDO(final io.nzbee.entity.party.Party party);
 	 
 	 void updateCustomer(Customer customer);
 

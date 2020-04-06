@@ -5,8 +5,7 @@ import java.util.Set;
 import io.nzbee.domain.IService;
 
 
-public interface ICategoryService extends IService<io.nzbee.domain.category.Category,
-												   io.nzbee.dto.category.Category> {
+public interface ICategoryService extends IService<Category> {
 
 	Set<Category> findAll(String locale, String currency);
 

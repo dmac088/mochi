@@ -2,18 +2,11 @@ package io.nzbee.entity.product;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import io.nzbee.dto.IDto;
-import io.nzbee.dto.brand.Brand;
-import io.nzbee.dto.category.Category;
-import io.nzbee.dto.tag.Tag;
 import io.nzbee.entity.category.ICategoryService;
 
 
@@ -66,21 +59,23 @@ public class ProductServiceImpl implements IProductService {
 									String priceType, 
 									Pageable pageable,
 									String categoryDesc,
-									List<IDto> ldto) {
+									List<String> categoryCodes,
+									List<String> brandCodes,
+									List<String> tagCodes) {
 		
 		return productDAO.findAll(locale,
 						 		  currency,
 						 		  pageable,
 						 		  categoryDesc,
-						 		  this.getCodes(ldto, Category.class),
-						 		  this.getCodes(ldto, Brand.class), 
-						 		  this.getCodes(ldto, Tag.class),
+						 		  categoryCodes,
+						 		  brandCodes, 
+						 		  tagCodes,
 						 		  "1");
 	}
 	
-	private <T> List<String> getCodes(List<IDto> l, Class<T> classType) {
+	/*private <T> List<String> getCodes(List<IDto> l, Class<T> classType) {
 		return l.stream().filter(dto -> dto.getType().equals(classType.getSimpleName())).map(c -> c.getCode()).collect(Collectors.toList());
-	}
+	}*/
 	
 	@Override
 	public Page<Product> findAll(	
@@ -89,15 +84,17 @@ public class ProductServiceImpl implements IProductService {
 									String priceType, 
 									Pageable pageable,
 									String categoryDesc,
-									List<IDto> ldto) {
+									List<String> categoryCodes,
+									List<String> brandCodes,
+									List<String> tagCodes) {
 		
 			return productDAO.findAll(locale,
 							 		  currency,
 							 		  pageable,
 							 		  categoryDesc,
-							 		  this.getCodes(ldto, Category.class),
-							 		  this.getCodes(ldto, Brand.class), 
-							 		  this.getCodes(ldto, Tag.class),
+							 		  categoryCodes,
+							 		  brandCodes, 
+							 		  tagCodes,
 							 		  "1");
 	}
 
