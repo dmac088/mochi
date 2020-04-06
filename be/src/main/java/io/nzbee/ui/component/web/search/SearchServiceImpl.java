@@ -1,7 +1,6 @@
 package io.nzbee.ui.component.web.search;
 
 import java.util.Date;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -401,24 +400,19 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		
 		// convert the results of jpaQuery to product Data Transfer Objects			
 		List<Product> lp = results.stream().map(r -> {
-			Product p = new Product(
-			
-					
-			);
-			p.setProductDesc(r[2].toString());
-			p.setProductImage(r[3].toString());
-			p.setLocale(lcl);
-			p.setProductUPC(r[5].toString());
-			p.setProductCreateDt((Date) r[6]);
-			p.setProductRetail(Double.parseDouble(r[9].toString()));
-			p.setProductMarkdown(Double.parseDouble(r[10].toString()));
-			p.setCurrency(currency);
-			p.setDisplayCategories(r[11].toString());
-			return p;
+			return new Product(
+					   r[5].toString(),
+					   (Date) r[6],
+					   r[2].toString(),
+					   Double.parseDouble(r[9].toString()),
+					   Double.parseDouble(r[10].toString()),
+					   r[3].toString(),
+					   r[11].toString(),
+					   lcl,
+					   currency);
 		}).collect(Collectors.toList());
 		
-		return new PageImpl<Product>(lp.stream().map(p->productService.dtoToDO(Optional.ofNullable(p)).get())
-				.collect(Collectors.toList()), pageable, jpaQuery.getResultSize());
+		return new PageImpl<Product>(lp, pageable, jpaQuery.getResultSize());
 		
 	}
 
