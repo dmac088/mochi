@@ -29,7 +29,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @AutoConfigureMockMvc(/*addFilters = false*/)
 @ContextConfiguration(classes = {CategoryController.class, 
 							     CategoryServiceImpl.class,
-							     io.nzbee.dto.category.CategoryServiceImpl.class,
+							     io.nzbee.domain.category.CategoryServiceImpl.class,
 							     io.nzbee.entity.category.CategoryServiceImpl.class,
 							     io.nzbee.entity.category.CategoryDaoPostgresImpl.class,
 							     io.nzbee.entity.DataSourceBeanMochiDev.class,

@@ -17,13 +17,13 @@ import io.nzbee.domain.IFacetService;
 public class TagServiceImpl implements ITagService, IFacetService {
 
 	@Autowired
-	io.nzbee.entity.ports.ICategoryPortService categoryService;
+	io.nzbee.domain.adapters.ICategoryPortService categoryService;
 	
 	@Autowired
-	io.nzbee.entity.ports.ITagPortService tagService;
+	io.nzbee.domain.adapters.ITagPortService tagService;
 	
 	@Autowired
-	io.nzbee.entity.ports.IProductPortService productService;
+	io.nzbee.domain.adapters.IProductPortService productService;
 	
 	@Override
 	@Transactional

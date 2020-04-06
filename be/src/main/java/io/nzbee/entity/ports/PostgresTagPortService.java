@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import io.nzbee.domain.adapters.ITagPortService;
 import io.nzbee.domain.tag.Tag;
 
 public class PostgresTagPortService  implements ITagPortService {

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import io.nzbee.domain.adapters.IBrandPortService;
 import io.nzbee.domain.brand.Brand;
 
 public class PostgresCustomerPortService implements IBrandPortService {

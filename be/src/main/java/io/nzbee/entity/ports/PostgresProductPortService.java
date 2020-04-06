@@ -7,6 +7,7 @@ import java.util.Set;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import io.nzbee.domain.adapters.IProductPortService;
 import io.nzbee.domain.product.Product;
 
 public class PostgresProductPortService implements IProductPortService {
