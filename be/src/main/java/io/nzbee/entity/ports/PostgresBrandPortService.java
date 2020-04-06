@@ -16,7 +16,7 @@ public class PostgresBrandPortService implements IBrandPortService {
 	}
 
 	@Override
-	public void save(Brand tag) {
+	public void save(Brand domainObject) {
 		// TODO Auto-generated method stub
 		
 	}
