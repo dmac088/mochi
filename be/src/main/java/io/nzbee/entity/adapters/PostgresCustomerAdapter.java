@@ -3,9 +3,12 @@ package io.nzbee.entity.adapters;
 import java.util.Optional;
 import java.util.Set;
 
+import org.springframework.stereotype.Component;
+
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.ports.ICustomerPortService;
 
+@Component
 public class PostgresCustomerAdapter implements ICustomerPortService {
 
 	@Override

@@ -31,25 +31,10 @@ public class UT_ProductCategoryTest {
 			return new CategoryServiceImpl();
 		}
 
-		@Bean(value = "categoryDtoService")
-		public io.nzbee.dto.category.ICategoryService categoryDtoService() {
-			return new io.nzbee.dto.category.CategoryServiceImpl();
-		}
-
-		@Bean(value = "categoryDtoBeanFactory")
-		public CategoryDtoBeanFactory categoryFactoryBean() {
-			return new CategoryDtoBeanFactory();
-		}
 	}
 
 	@Autowired
 	private ICategoryService categoryDomainService;
-
-	@Autowired
-	private CategoryDtoBeanFactory categoryDtoBeanFactory;
-
-	@MockBean
-	private io.nzbee.dto.category.ICategoryService categoryDtoService;
 
 	@Before
 	public void setUp() {

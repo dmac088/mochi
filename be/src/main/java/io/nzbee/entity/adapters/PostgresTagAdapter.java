@@ -3,9 +3,12 @@ package io.nzbee.entity.adapters;
 import java.util.Optional;
 import java.util.Set;
 
+import org.springframework.stereotype.Component;
+
 import io.nzbee.domain.ports.ITagPortService;
 import io.nzbee.domain.tag.Tag;
 
+@Component
 public class PostgresTagAdapter  implements ITagPortService {
 
 	@Override
