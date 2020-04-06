@@ -1,4 +1,4 @@
-package io.nzbee.entity.ports;
+package io.nzbee.entity.adapters;
 
 import java.util.List;
 import java.util.Optional;
@@ -7,10 +7,10 @@ import java.util.Set;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import io.nzbee.domain.adapters.IProductPortService;
+import io.nzbee.domain.ports.IProductPortService;
 import io.nzbee.domain.product.Product;
 
-public class PostgresProductPortService implements IProductPortService {
+public class PostgresProductAdapter implements IProductPortService {
 
 	@Override
 	public Optional<Product> findByCode(String code) {

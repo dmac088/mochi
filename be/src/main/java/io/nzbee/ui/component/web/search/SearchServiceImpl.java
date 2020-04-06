@@ -400,8 +400,11 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		List<Object[]> results = jpaQuery.getResultList();
 		
 		// convert the results of jpaQuery to product Data Transfer Objects			
-		List<io.nzbee.dto.product.Product> lp = results.stream().map(r -> {
-			io.nzbee.dto.product.Product p = new io.nzbee.domain.product.Product();
+		List<Product> lp = results.stream().map(r -> {
+			Product p = new Product(
+			
+					
+			);
 			p.setProductDesc(r[2].toString());
 			p.setProductImage(r[3].toString());
 			p.setLocale(lcl);

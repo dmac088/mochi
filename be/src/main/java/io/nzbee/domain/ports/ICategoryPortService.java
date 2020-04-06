@@ -1,4 +1,4 @@
-package io.nzbee.domain.adapters;
+package io.nzbee.domain.ports;
 
 import java.util.Set;
 import io.nzbee.domain.category.Category;
