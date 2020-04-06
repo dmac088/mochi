@@ -25,19 +25,15 @@ public class ProductServiceImpl implements IProductService {
 	//this way we ensure proper separation of concerns
     
     @Autowired 
-    @Qualifier(value="productService")
     private IProductPortService productService;
     
     @Autowired 
-    @Qualifier(value="categoryService")
     private ICategoryPortService categoryService;
     
     @Autowired 
-    @Qualifier(value="brandService")
     private IBrandPortService brandService;
     
     @Autowired 
-    @Qualifier(value="tagService")
     private ITagPortService tagService;
     
 

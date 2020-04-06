@@ -14,7 +14,6 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
     
    
     @Autowired
-    @Qualifier("categoryDtoService")
     private io.nzbee.domain.ports.ICategoryPortService categoryService;
     
      

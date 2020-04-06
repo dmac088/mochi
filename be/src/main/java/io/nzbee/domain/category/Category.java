@@ -1,6 +1,5 @@
 package io.nzbee.domain.category;
 
-import java.util.List;
 import java.util.Objects;
 import io.nzbee.domain.IHierarchicalDomainObject;
  
@@ -23,10 +22,6 @@ public abstract class Category implements IHierarchicalDomainObject {
 	private String locale;
 	
 	private String currency;
-
-	public Category() {
-		super();
-	}
 	
 	public Category(
 					String categoryCode, 
@@ -35,8 +30,7 @@ public abstract class Category implements IHierarchicalDomainObject {
 					String categoryType,
 					String lclCd, 
 					String parentCode,
-					int objectCount,
-					List<String> layoutCodes) {
+					int objectCount) {
 		super();
 		this.categoryCode 	= categoryCode;
 		this.categoryDesc 	= categoryDesc;

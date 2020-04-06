@@ -4,11 +4,13 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.ports.IBrandPortService;
 import io.nzbee.entity.brand.IBrandService;
 
+@Component
 public class PostgresBrandAdapter implements IBrandPortService {
 
 	

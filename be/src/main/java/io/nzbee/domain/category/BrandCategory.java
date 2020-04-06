@@ -8,8 +8,22 @@ import io.nzbee.domain.brand.Brand;
 @JsonTypeName("brandcategory")
 public class BrandCategory extends Category {
 
-	public BrandCategory() {
-		super();
+	public BrandCategory(	String categoryCode,
+							String categoryDesc,
+							boolean isHierarchical,
+							Long level,
+							String categoryType,
+							int objectCount,
+							String parentCode,
+							String locale, 
+							String currency) {
+		super(categoryCode, 
+			  categoryDesc, 
+			  level, 
+			  categoryType,
+			  locale, 
+			  parentCode,
+			  objectCount);
 	}
 
 	@JsonIgnore

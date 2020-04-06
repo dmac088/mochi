@@ -20,7 +20,9 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
+import io.nzbee.domain.ports.ICategoryPortService;
 import io.nzbee.domain.product.Product;
+import io.nzbee.entity.adapters.PostgresCategoryAdapter;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.test.integration.beans.CategoryEntityBeanFactory;
@@ -46,8 +48,13 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
     static class BrandCategoryEntityRepositoryIntegrationTest {
         
         @Bean(value = "categoryEntityService")
-        public io.nzbee.entity.category.ICategoryService categoryService() {
+        public ICategoryService categoryService() {
             return new io.nzbee.entity.category.CategoryServiceImpl();
+        }
+        
+        @Bean(value="categoryDomainService")
+        public ICategoryPortService categoryDomainService() {
+        	return new PostgresCategoryAdapter();
         }
         
         @Bean(value = "categoryEntityBeanFactory")

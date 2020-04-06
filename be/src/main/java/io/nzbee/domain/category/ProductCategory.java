@@ -15,18 +15,29 @@ public class ProductCategory extends Category {
 	
 	private String parentCode;
 	
-	public ProductCategory() {
-		super();
+	public ProductCategory(
+			String categoryCode,
+			String categoryDesc,
+			boolean isHierarchical,
+			Long level,
+			String categoryType,
+			int objectCount,
+			String parentCode,
+			String locale, 
+			String currency) {
+		
+		super(categoryCode, 
+			  categoryDesc, 
+			  level, 
+			  categoryType,
+			  locale, 
+			  parentCode,
+			  objectCount);
 	}
 	
 	public List<Product> getProducts() {
 		return products;
 	}
-
-	public void setProducts(List<Product> products) {
-		this.products = products;
-	}
-
 	@Override
 	public String getCode() {
 		// TODO Auto-generated method stub
