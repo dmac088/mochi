@@ -2,6 +2,7 @@ package io.nzbee.entity;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 
 public interface ILocalizedDao<T> {
@@ -14,7 +15,7 @@ public interface ILocalizedDao<T> {
     
     List<T> findAll(String locale, String currency);
     
-    List<T> findAll(String locale, String currency, List<String> codes);
+    List<T> findAll(String locale, String currency, Set<String> codes);
      
     void save(T t);
      

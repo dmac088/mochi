@@ -43,5 +43,11 @@ public class PostgresCustomerPortService implements ICustomerPortService {
 		return null;
 	}
 
+	@Override
+	public Set<Customer> findAll(String locale, String currency, Set<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 }

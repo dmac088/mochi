@@ -59,7 +59,7 @@ public class PostgresBrandPortService implements IBrandPortService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 	private Brand entityToDo(io.nzbee.entity.brand.Brand e) {
 		return new Brand(
 				 e.getBrandCode(),
@@ -68,6 +68,12 @@ public class PostgresBrandPortService implements IBrandPortService {
 				 e.getLocale(), 
 				 e.getCurrency()
 				);
+	}
+
+	@Override
+	public Set<Brand> findAll(String locale, String currency, Set<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

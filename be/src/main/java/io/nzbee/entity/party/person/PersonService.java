@@ -61,5 +61,12 @@ public class PersonService implements IPersonService {
 	public void delete(Person p) {
 		personRepository.delete(p);
 	}
+
+
+	@Override
+	public List<Person> findAll(String locale, String currency, List<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }
