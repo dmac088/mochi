@@ -63,4 +63,10 @@ public class TagServiceImpl implements ITagService, IFacetService {
 		// TODO Auto-generated method stub
 		return "tag";
 	}
+
+	@Override
+	public Set<Tag> findAll(String lcl, String currency, Set<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

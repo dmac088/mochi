@@ -131,4 +131,10 @@ public class ProductServiceImpl implements IProductService {
 		return token;
 	}
 
+	@Override
+	public Set<Product> findAll(String lcl, String currency, Set<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

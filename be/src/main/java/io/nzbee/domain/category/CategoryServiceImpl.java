@@ -67,4 +67,10 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 		return "category";
 	}
 
+	@Override
+	public Set<Category> findAll(String lcl, String currency, Set<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
