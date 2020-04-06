@@ -3,7 +3,6 @@ package io.nzbee.domain.category;
 import java.util.Set;
 import  org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.IFacetService;
@@ -67,9 +66,9 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	}
 
 	@Override
-	public Set<Category> findAll(String lcl, String currency, Set<String> codes) {
+	public Set<Category> findAll(String locale, String currency, Set<String> codes) {
 		// TODO Auto-generated method stub
-		return null;
+		return categoryService.findAll(locale, currency, codes);
 	}
 
 }
