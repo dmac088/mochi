@@ -17,6 +17,18 @@ public class Brand implements IDomainObject {
 	
 	private String currency;
 	
+	public Brand(String brandCode,
+				 String brandDesc,
+				 int objectCount,
+				 String locale, 
+				 String currency) {
+		this.brandCode = brandCode;
+		this.brandDesc = brandDesc;
+		this.objectCount = objectCount;
+		this.locale = locale;
+		this.currency = currency;
+	}
+	
 	public String getBrandCode() {
 		return brandCode;
 	}
@@ -49,11 +61,12 @@ public class Brand implements IDomainObject {
 		return this.brandDesc;
 	}
 
-	
+	@Override
 	public String getLocale() {
 		return locale;
 	}
-
+	
+	@Override
 	public String getCurrency() {
 		return currency;
 	}

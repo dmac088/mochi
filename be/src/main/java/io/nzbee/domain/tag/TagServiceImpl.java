@@ -1,6 +1,5 @@
 package io.nzbee.domain.tag;
 
-import java.util.List;
 import java.util.Set;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,13 +44,6 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	public Set<Tag> findAll(String locale, String currency) {
 		// TODO Auto-generated method stub
 		return null;
-	}
-	
-	@Override
-	@Transactional(readOnly=true)
-	public Set<Tag> findAll(String locale, String currency, List<String> codes) {
-		// TODO Auto-generated method stub
-		return tagService.findAll(locale, currency, codes);
 	}
 	
 	@Override

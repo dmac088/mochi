@@ -38,12 +38,6 @@ public class CustomerServiceImpl implements ICustomerService {
 	}
 
 	@Override
-	public Set<Customer> findAll(String locale, String currency, List<String> codes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public String tokenToCode(String token) {
 		// TODO Auto-generated method stub
 		return null;

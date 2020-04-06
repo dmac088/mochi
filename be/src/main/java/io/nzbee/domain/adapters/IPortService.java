@@ -1,9 +1,7 @@
 package io.nzbee.domain.adapters;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-
 
 public interface IPortService<X> {
 
@@ -16,9 +14,9 @@ public interface IPortService<X> {
 	X findByCode(String locale, String currency, String code);
 
 	X findByDesc(String locale, String currency, String desc);
-
-	Set<X> findAll(String locale, String currency, List<String> codes);
     
     void save(X domainObject);
+    
+    
 	
 }
