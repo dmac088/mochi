@@ -2,6 +2,8 @@ package io.nzbee.entity.brand;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,14 +44,14 @@ public class BrandServiceImpl implements IBrandService {
 
 	@Override
 	@Transactional(readOnly=true)
-	public List<Brand> findAll(String locale, String currency, List<String> categoryCodes, List<String> tagCodes) {
+	public List<Brand> findAll(String locale, String currency, Set<String> categoryCodes, Set<String> tagCodes) {
 		// TODO Auto-generated method stub
 		return brandDao.findAll(locale, currency, categoryCodes, tagCodes);
 	}
 	
 	@Override
 	@Transactional(readOnly=true)
-	public List<Brand> findAll(String locale, String currency, List<String> codes) {
+	public List<Brand> findAll(String locale, String currency, Set<String> codes) {
 		// TODO Auto-generated method stub
 		return brandDao.findAll(locale, currency, codes);
 	}
@@ -78,5 +80,6 @@ public class BrandServiceImpl implements IBrandService {
 		// TODO Auto-generated method stub
 		
 	}
+
 	
 }

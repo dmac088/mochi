@@ -66,6 +66,12 @@ public class PartyServiceImpl implements IPartyService {
 		partyRepository.delete(t);
 	}
 
+	@Override
+	public List<Party> findAll(String locale, String currency, List<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 	

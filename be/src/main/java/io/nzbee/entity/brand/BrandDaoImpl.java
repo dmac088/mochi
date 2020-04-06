@@ -3,6 +3,7 @@ package io.nzbee.entity.brand;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.Tuple;
@@ -166,7 +167,7 @@ public class BrandDaoImpl  implements IBrandDao {
 	}
 	
 	@Override
-	public List<Brand> findAll(String locale, String currency, List<String> brandCodes) {
+	public List<Brand> findAll(String locale, String currency, Set<String> brandCodes) {
 		// TODO Auto-generated method stub
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
@@ -304,7 +305,7 @@ public class BrandDaoImpl  implements IBrandDao {
 	}
 	
 	@Override
-	public List<Brand> findAll(String locale, String currency, List<String> categoryCodes, List<String> tagCodes) {
+	public List<Brand> findAll(String locale, String currency, Set<String> categoryCodes, Set<String> tagCodes) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Brand> cq = cb.createQuery(Brand.class);
@@ -351,5 +352,6 @@ public class BrandDaoImpl  implements IBrandDao {
 		// TODO Auto-generated method stub
 		
 	}
+	
 
 }

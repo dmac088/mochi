@@ -11,12 +11,12 @@ public interface IPortService<X> {
     
     Set<X> findAll(String locale, String currency);
     
+    Set<X> findAll(String locale, String currency, Set<String> codes);
+    
 	X findByCode(String locale, String currency, String code);
 
 	X findByDesc(String locale, String currency, String desc);
-    
+	
     void save(X domainObject);
-    
-    
 	
 }

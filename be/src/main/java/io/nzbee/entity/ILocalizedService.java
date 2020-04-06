@@ -2,13 +2,16 @@ package io.nzbee.entity;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
+import io.nzbee.entity.brand.Brand;
 
 public interface ILocalizedService<T> {
 
 	
-	public List<T> findAll(String locale, String currency);
+	public List<Brand> findAll(String locale, String currency);
 	
-	public List<T> findAll(String locale, String currency, List<String> codes);
+	public List<Brand> findAll(String locale, String currency, Set<String> codes);
 	
 	public Optional<T> findById(String locale, String currency, long id);
 	

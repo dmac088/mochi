@@ -37,4 +37,10 @@ public class PostgresTagPortService  implements ITagPortService {
 		return null;
 	}
 
+	@Override
+	public Set<Tag> findAll(String locale, String currency, Set<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

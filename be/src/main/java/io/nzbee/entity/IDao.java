@@ -2,6 +2,7 @@ package io.nzbee.entity;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 
 public interface IDao<T> {
@@ -12,7 +13,7 @@ public interface IDao<T> {
     
     List<T> findAll();
     
-    List<T> findAll(List<String> codes);
+    List<T> findAll(Set<String> codes);
      
     void save(T t);
      

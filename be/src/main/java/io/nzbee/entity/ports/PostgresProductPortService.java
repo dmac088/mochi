@@ -62,5 +62,11 @@ public class PostgresProductPortService implements IProductPortService {
 		return null;
 	}
 
+	@Override
+	public Set<Product> findAll(String locale, String currency, Set<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 }
