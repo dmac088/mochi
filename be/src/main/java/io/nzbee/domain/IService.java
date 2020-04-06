@@ -1,5 +1,6 @@
 package io.nzbee.domain;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public interface IService<T> {
@@ -13,6 +14,8 @@ public interface IService<T> {
 	Set<T> findAll(String locale, String currency);
 	
 	String tokenToCode(String token);
+
+	Set<IDomainObject> findAll(String lcl, String currency, HashSet<String> hashSet);
 
 	
 }
