@@ -19,16 +19,6 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import io.nzbee.domain.IFacetService;
-import io.nzbee.domain.category.CategoryServiceImpl;
-import io.nzbee.domain.ports.IBrandPortService;
-import io.nzbee.domain.ports.ICategoryPortService;
-import io.nzbee.domain.ports.ITagPortService;
-import io.nzbee.domain.tag.TagServiceImpl;
-import io.nzbee.entity.adapters.PostgresBrandAdapter;
-import io.nzbee.entity.adapters.PostgresCategoryAdapter;
-import io.nzbee.entity.adapters.PostgresTagAdapter;
 import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.brand.BrandServiceImpl;
 import io.nzbee.entity.brand.IBrandService;
