@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class CustomerServiceImpl implements ICustomerService {
 
 	@Autowired
-	io.nzbee.domain.adapters.ICustomerPortService customerService;
+	io.nzbee.domain.ports.ICustomerPortService customerService;
 	
 	@Override
 	public Optional<Customer> findByCode(String userName) {

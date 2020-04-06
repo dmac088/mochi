@@ -13,7 +13,7 @@ import io.nzbee.domain.IFacetService;
 public class BrandServiceImpl implements IBrandService, IFacetService {
     
 	@Autowired
-    private io.nzbee.domain.adapters.IBrandPortService brandService;
+    private io.nzbee.domain.ports.IBrandPortService brandService;
 	
 	@Override
 	@Transactional

@@ -1,11 +1,12 @@
-package io.nzbee.entity.ports;
+package io.nzbee.entity.adapters;
 
 import java.util.Optional;
 import java.util.Set;
-import io.nzbee.domain.adapters.ICustomerPortService;
-import io.nzbee.domain.customer.Customer;
 
-public class PostgresCustomerPortService implements ICustomerPortService {
+import io.nzbee.domain.customer.Customer;
+import io.nzbee.domain.ports.ICustomerPortService;
+
+public class PostgresCustomerAdapter implements ICustomerPortService {
 
 	@Override
 	public Optional<Customer> findByCode(String code) {

@@ -12,10 +12,10 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import io.nzbee.domain.adapters.IBrandPortService;
-import io.nzbee.domain.adapters.ICategoryPortService;
-import io.nzbee.domain.adapters.IProductPortService;
-import io.nzbee.domain.adapters.ITagPortService;
+import io.nzbee.domain.ports.IBrandPortService;
+import io.nzbee.domain.ports.ICategoryPortService;
+import io.nzbee.domain.ports.IProductPortService;
+import io.nzbee.domain.ports.ITagPortService;
 import io.nzbee.ui.component.web.facet.IFacet;
 
 @Service(value = "productDomainService")

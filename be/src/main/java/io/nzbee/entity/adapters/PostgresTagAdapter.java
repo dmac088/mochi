@@ -1,11 +1,12 @@
-package io.nzbee.entity.ports;
+package io.nzbee.entity.adapters;
 
 import java.util.Optional;
 import java.util.Set;
-import io.nzbee.domain.adapters.ITagPortService;
+
+import io.nzbee.domain.ports.ITagPortService;
 import io.nzbee.domain.tag.Tag;
 
-public class PostgresTagPortService  implements ITagPortService {
+public class PostgresTagAdapter  implements ITagPortService {
 
 	@Override
 	public Optional<Tag> findByCode(String code) {
