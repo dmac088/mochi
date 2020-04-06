@@ -61,9 +61,9 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	}
 
 	@Override
-	public Set<Brand> findAll(String lcl, String currency, Set<String> codes) {
+	public Set<Brand> findAll(String locale, String currency, Set<String> codes) {
 		// TODO Auto-generated method stub
-		return null;
+		return brandService.findAll(locale, currency, codes);
 	}
 	
 }

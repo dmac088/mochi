@@ -24,7 +24,8 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	@Override
 	public Set<Category> findAll(String locale, String currency, Set<String> codes) {
 		// TODO Auto-generated method stub
-		return null;
+		return categoryService.findAll(locale, currency, codes)
+				.stream().map(c -> this.entityToDo(c)).collect(Collectors.toSet());
 	}
 	
 	@Override
@@ -63,7 +64,7 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	public Set<Category> findAll(String locale, String currency) {
 		// TODO Auto-generated method stub
 		return categoryService.findAll(locale, currency)
-				.stream().map(b -> this.entityToDo(b)).collect(Collectors.toSet());
+				.stream().map(c -> this.entityToDo(c)).collect(Collectors.toSet());
 	}
 
 	@Override

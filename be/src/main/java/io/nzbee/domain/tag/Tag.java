@@ -7,8 +7,6 @@ import io.nzbee.domain.IDomainObject;
 @JsonTypeName("tag")
 public class Tag implements IDomainObject {
 
-	private Long tagId;
-	
 	private String tagCode;
 
 	private String tagDesc;
@@ -19,9 +17,12 @@ public class Tag implements IDomainObject {
 	
 	private String currency;
 
-	public Long getTagId() {
-		return tagId;
-	}
+	public Tag(	String tagCode,
+				String tagDesc,
+				String locale,
+				String currency) {
+		
+	};
 
 	public String getTagCode() {
 		return tagCode;
@@ -68,7 +69,7 @@ public class Tag implements IDomainObject {
 	@Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("tag [Id=").append(tagId)
+        builder.append("tag [code=").append(tagCode)
         		.append(", tagDesc=").append(tagDesc)
                 .append(", locale=").append(locale);
         return builder.toString();

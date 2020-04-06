@@ -324,12 +324,10 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		
 		//select the domain object from DB for each of the aggregated facet helpers
 		aggLsfh.stream().forEach(sfh -> {
-			Set<IDomainObject> lc = sfh.getBean(appContext).findAll(
-										lcl, 
-										currency, 
-										new HashSet<String>(sfh.getCodes()));
-
 			
+			Set<IDomainObject> lc = sfh.getBean(appContext).findAll(lcl, currency, sfh.getCodes());
+
+			System.out.println(lc.size());
 			
 			//create a new array of entity facets
 			IService service = sfh.getBean(appContext);
