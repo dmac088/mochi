@@ -1,6 +1,8 @@
 package io.nzbee.entity.party;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -67,13 +69,9 @@ public class PartyServiceImpl implements IPartyService {
 	}
 
 	@Override
-	public List<Party> findAll(String locale, String currency, List<String> codes) {
+	public List<Party> findAll(String locale, String currency, Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-
-
-	
 
 }

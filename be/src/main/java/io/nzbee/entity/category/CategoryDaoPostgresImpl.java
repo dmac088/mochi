@@ -6,6 +6,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.EntityManager;
@@ -139,9 +140,9 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 			return category;
 		}).collect(Collectors.toList());
 	}
-	
+
 	@Override
-	public List<Category> findAll(String locale, String currency, List<String> categoryCodes) {
+	public List<Category> findAll(String locale, String currency, Set<String> categoryCodes) {
 		
 		Session session = em.unwrap(Session.class);
 
@@ -798,5 +799,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 			
 		return sql;
 	}
+
 	
 }

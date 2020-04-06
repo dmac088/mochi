@@ -1,6 +1,5 @@
 package io.nzbee.entity.ports;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -48,7 +47,7 @@ public class PostgresBrandPortService implements IBrandPortService {
 	}
 
 	@Override
-	public Set<Brand> findAll(String locale, String currency, List<String> categoryCodes, List<String> tagCodes) {
+	public Set<Brand> findAll(String locale, String currency, Set<String> categoryCodes, Set<String> tagCodes) {
 		// TODO Auto-generated method stub
 		return brandService.findAll(locale, currency, categoryCodes, tagCodes)
 				.stream().map(b -> this.entityToDo(b)).collect(Collectors.toSet());

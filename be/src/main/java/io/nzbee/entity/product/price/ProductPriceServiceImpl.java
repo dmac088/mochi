@@ -2,6 +2,8 @@ package io.nzbee.entity.product.price;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +27,7 @@ public class ProductPriceServiceImpl implements IProductPriceService {
 	
 
 	@Override
-	public List<ProductPrice> findAll(String locale, String currency, List<String> codes) {
+	public List<ProductPrice> findAll(String locale, String currency, Set<String> codes) {
 		// TODO Auto-generated method stub
 		return productPriceRepository.findAll();
 	}

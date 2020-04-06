@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.Tuple;
@@ -189,7 +190,7 @@ public class TagDaoImpl implements ITagDao {
 	}
 
 	@Override
-	public List<Tag> findAll(String locale, String currency, List<String> codes) {
+	public List<Tag> findAll(String locale, String currency, Set<String> codes) {
 		// TODO Auto-generated method stub
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 				

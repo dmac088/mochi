@@ -2,6 +2,8 @@ package io.nzbee.entity.product.department;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
@@ -29,7 +31,7 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 	}
 
 	@Override
-	public List<Department> findAll(String locale, String currency, List<String> codes) {
+	public List<Department> findAll(String locale, String currency, Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

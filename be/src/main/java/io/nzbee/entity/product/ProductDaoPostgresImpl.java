@@ -5,6 +5,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -216,7 +217,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	@Override
 	public List<Product> findAll(	String locale, 
 									String currency, 
-									List<String> codes) {
+									Set<String> codes) {
 		LOGGER.debug("Fetching a products for parameters : {}, {}, {}", locale, currency, codes);
 		// TODO Auto-generated method stub
 		return null;
