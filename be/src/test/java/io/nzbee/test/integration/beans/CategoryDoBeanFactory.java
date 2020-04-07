@@ -10,7 +10,7 @@ import io.nzbee.domain.category.Category;
 import io.nzbee.domain.category.ProductCategory;
 
 
-@Service(value = "categoryDtoBeanFactory")
+@Service
 @Profile(value = "dev")
 public class CategoryDoBeanFactory {
 
@@ -32,19 +32,16 @@ public class CategoryDoBeanFactory {
 	}
 	
 	public final Category getBrandCategoryDoBean() {
+		return new BrandCategory( 	"TST02",
+									"test brand category",
+									false,
+									new Long(0),
+									"3",
+									0,
+									"VEG01",
+									"en-GB", 
+									"HKD");
 		
-		BrandCategory category = new BrandCategory( "TST02",
-													"test brand category",
-													false,
-													new Long(0),
-													"3",
-													0,
-													"VEG01",
-													"en-GB", 
-													"HKD");
-		
-		
-		return category;
 	}
 	
 	
