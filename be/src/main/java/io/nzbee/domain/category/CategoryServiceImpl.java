@@ -12,11 +12,9 @@ import io.nzbee.domain.IFacetService;
 @CacheConfig(cacheNames="categories")
 public class CategoryServiceImpl implements ICategoryService, IFacetService {
     
-   
     @Autowired
     private io.nzbee.domain.ports.ICategoryPortService categoryService;
     
-     
     @Override
     @Transactional(readOnly=true)
 	public Set<Category> findAll(String locale, String currency) {
