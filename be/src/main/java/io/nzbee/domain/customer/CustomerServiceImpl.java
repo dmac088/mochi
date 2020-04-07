@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CustomerServiceImpl implements ICustomerService {
@@ -14,24 +15,28 @@ public class CustomerServiceImpl implements ICustomerService {
 	io.nzbee.domain.ports.ICustomerPortService customerService;
 	
 	@Override
+	@Transactional(readOnly=true)
 	public Optional<Customer> findByCode(String userName) {
 		// TODO Auto-generated method stub
 		return customerService.findByCode(userName);  
 	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public Customer findByCode(String locale, String currency, String code) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public Customer findByDesc(String locale, String currency, String desc) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public Set<Customer> findAll(String locale, String currency) {
 		// TODO Auto-generated method stub
 		return null;
