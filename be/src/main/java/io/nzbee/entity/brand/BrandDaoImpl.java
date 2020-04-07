@@ -181,7 +181,9 @@ public class BrandDaoImpl  implements IBrandDao {
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
 		conditions.add(cb.equal(attribute.get(BrandAttribute_.lclCd), locale));
-		conditions.add(root.in(Brand_.brandCode).in(brandCodes));
+		if(!brandCodes.isEmpty()) {
+			conditions.add(root.in(Brand_.brandCode).in(brandCodes));
+		}
 
 		cq.multiselect(	root.get(Brand_.brandId).alias("brandId"),
 						root.get(Brand_.brandCode).alias("brandCode"),

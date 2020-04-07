@@ -21,7 +21,10 @@ public class Tag implements IDomainObject {
 				String tagDesc,
 				String locale,
 				String currency) {
-		
+		this.tagCode = tagCode;
+		this.tagDesc = tagDesc;
+		this.locale = locale;
+		this.currency = currency;
 	};
 
 	public String getTagCode() {

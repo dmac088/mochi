@@ -72,7 +72,7 @@ public class PostgresBrandAdapter implements IBrandPortService {
 	private Brand entityToDo(io.nzbee.entity.brand.Brand e) {
 		return new Brand(
 				 e.getBrandCode(),
-				 e.getAttributes().stream().filter(a -> a.getLclCd().equals(e.getLocale())).findFirst().get().getBrandDesc(),
+				 e.getBrandAttribute().getBrandDesc(),
 				 0,
 				 e.getLocale(), 
 				 e.getCurrency()

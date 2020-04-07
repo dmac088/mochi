@@ -180,7 +180,9 @@ public class TagDaoImpl implements ITagDao {
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
 		conditions.add(cb.equal(attribute.get(TagAttribute_.lclCd), locale));
-		conditions.add(root.in(Tag_.tagCode).in(codes));
+		if(!codes.isEmpty()) {
+			conditions.add(root.in(Tag_.tagCode).in(codes));
+		}
 
 		cq.multiselect(	root.get(Tag_.tagId).alias("tagId"),
 						root.get(Tag_.tagCode).alias("tagCode"),
