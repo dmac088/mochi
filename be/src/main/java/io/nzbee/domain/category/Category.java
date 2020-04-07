@@ -39,15 +39,15 @@ public abstract class Category implements IHierarchicalDomainObject {
 		this.objectCount	= objectCount;
 	}
 
-	protected String getCategoryCode() {
+	public String getCategoryCode() {
 		return this.categoryCode;
 	}
 	
-	protected String getCategoryDesc() {
+	public String getCategoryDesc() {
 		return this.categoryDesc;
 	}
 
-	protected Long getCategoryLevel() {
+	public Long getCategoryLevel() {
 		return this.categoryLevel;
 	}
 
