@@ -84,7 +84,9 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 					e.getCategoryLevel(),
 					e.getCategoryType().getDesc(),
 					e.getObjectCount(),
-					e.getParent().get().getCategoryCode(),
+					e.getParent().isPresent()
+					? e.getParent().get().getCategoryCode()
+					: null,
 					e.getLocale(), 
 					e.getCurrency()
 			);
@@ -96,7 +98,9 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 				e.getCategoryLevel(),
 				e.getCategoryType().getDesc(),
 				e.getObjectCount(),
-				e.getParent().get().getCategoryCode(),
+				e.getParent().isPresent()
+				? e.getParent().get().getCategoryCode()
+				: null,
 				e.getLocale(), 
 				e.getCurrency()
 		);
