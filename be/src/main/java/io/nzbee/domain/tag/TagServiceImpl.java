@@ -24,7 +24,6 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	@Transactional
 	public Tag findByCode(String locale, String currency, String code) {
 		return tagService.findByCode(locale, currency, code);
-		
 	}
 
 	@Override
