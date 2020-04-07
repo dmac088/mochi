@@ -1,6 +1,7 @@
 package io.nzbee.resources.controllers;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -96,7 +97,7 @@ public class ProductController {
     @PostMapping("/Product/{locale}/{currency}")
     public ResponseEntity<Resources<ProductResource>> getProducts(	@PathVariable String locale, 
     																@PathVariable String currency, 
-    																@RequestBody final List<String> productCodes) {
+    																@RequestBody final Set<String> productCodes) {
     	
     	LOGGER.debug("Fetching product for parameters : {}, {}, {}}", locale, currency, productCodes);
     	
