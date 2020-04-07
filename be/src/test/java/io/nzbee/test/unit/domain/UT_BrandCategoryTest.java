@@ -9,6 +9,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -25,15 +26,20 @@ public class UT_BrandCategoryTest {
 	@TestConfiguration
 	static class BrandCategoryDomainServiceImplUnitTest {
 		// the beans that we need to run this integration test
-		@Bean(value = "categoryDomainService")
+		@Bean
 		public ICategoryService categoryDomainService() {
 			return new CategoryServiceImpl();
 		}
+		
+		@Bean
+		public CategoryDoBeanFactory categoryDoBeanFactory() {
+			return new CategoryDoBeanFactory();
+		}
+		
 	}
 
-	@Autowired
+	@MockBean
 	private ICategoryService categoryDoService;
-
 
 	@Autowired
 	private CategoryDoBeanFactory categoryDoBeanFactory;
@@ -55,11 +61,11 @@ public class UT_BrandCategoryTest {
 
 	@Test
 	public void whenValidCode_thenBrandCategoryShouldBeFound() {
-		String code = "TST01";
+		String code = "TST02";
 
-		io.nzbee.domain.category.Category found = categoryDoService.findByCode(GeneralVars.LANGUAGE_ENGLISH,
-																				   GeneralVars.CURRENCY_HKD, 
-																				   code);
+		Category found = categoryDoService.findByCode(GeneralVars.LANGUAGE_ENGLISH,
+													  GeneralVars.CURRENCY_HKD, 
+													  code);
 
 		assertFound(found);
 	}
@@ -78,10 +84,10 @@ public class UT_BrandCategoryTest {
     private void assertFound(final io.nzbee.domain.category.Category found) {
 
     	assertThat(found.getCode())
-        .isEqualTo("TST01");
+        .isEqualTo("TST02");
     	
 	    assertThat(found.getLevel())
-	    .isEqualTo(new Long(2));
+	    .isEqualTo(new Long(0));
 	    
 	    assertThat(found.getDesc())
 	    .isEqualTo("test brand category");

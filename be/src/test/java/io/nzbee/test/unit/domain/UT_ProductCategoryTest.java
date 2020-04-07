@@ -9,6 +9,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -25,14 +26,20 @@ public class UT_ProductCategoryTest {
 	@TestConfiguration
 	static class ProductCategoryDomainServiceImplUnitTest {
 		// the beans that we need to run this integration test
-		@Bean(value = "categoryDomainService")
+		@Bean
 		public ICategoryService categoryDomainService() {
 			return new CategoryServiceImpl();
 		}
+		
+		@Bean
+		public CategoryDoBeanFactory categoryDoBeanFactory() {
+			return new CategoryDoBeanFactory();
+		}
+		
 
 	}
 
-	@Autowired
+	@MockBean
 	private ICategoryService categoryDoService;
 
 	@Autowired
@@ -55,7 +62,7 @@ public class UT_ProductCategoryTest {
 
 	@Test
 	public void whenValidCode_thenProductCategoryShouldBeFound() {
-		String code = "TST02";
+		String code = "TST01";
 		String desc = "test product category";
 
 		io.nzbee.domain.category.Category found = categoryDoService.findByCode(	GeneralVars.LANGUAGE_ENGLISH,
@@ -68,7 +75,7 @@ public class UT_ProductCategoryTest {
 	
 	@Test
 	public void whenValidDesc_thenProductCategoryShouldBeFound() {
-		String code = "TST02";
+		String code = "TST01";
 		String desc = "test product category";
 
 		io.nzbee.domain.category.Category found = categoryDoService.findByDesc(	GeneralVars.LANGUAGE_ENGLISH,
