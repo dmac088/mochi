@@ -2,7 +2,6 @@ package io.nzbee.test.unit.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,13 +9,13 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+import io.nzbee.domain.category.Category;
 import io.nzbee.domain.category.CategoryServiceImpl;
 import io.nzbee.domain.category.ICategoryService;
-import io.nzbee.test.integration.beans.CategoryDtoBeanFactory;
+import io.nzbee.test.integration.beans.CategoryDoBeanFactory;
 import io.nzbee.variables.GeneralVars;
 
 @RunWith(SpringRunner.class)
@@ -34,21 +33,24 @@ public class UT_ProductCategoryTest {
 	}
 
 	@Autowired
-	private ICategoryService categoryDomainService;
+	private ICategoryService categoryDoService;
 
+	@Autowired
+	private CategoryDoBeanFactory categoryDoBeanFactory;
+	
 	@Before
 	public void setUp() {
 		// we setup a mock so that when
 		MockitoAnnotations.initMocks(this);
 
-		io.nzbee.dto.category.Category category = categoryDtoBeanFactory.getProductCategoryDtoBean();
+		Category category = categoryDoBeanFactory.getProductCategoryDoBean();
 
 		// need to fill more of the properties here
-		Mockito.when(categoryDtoService.findByCode(GeneralVars.LANGUAGE_ENGLISH, GeneralVars.CURRENCY_HKD,
-				category.getCategoryCode())).thenReturn(Optional.ofNullable(category));
+		Mockito.when(categoryDoService.findByCode(GeneralVars.LANGUAGE_ENGLISH, GeneralVars.CURRENCY_HKD,
+				category.getCategoryCode())).thenReturn(category);
 		
-		Mockito.when(categoryDtoService.findByDesc(GeneralVars.LANGUAGE_ENGLISH, GeneralVars.CURRENCY_HKD,
-				category.getCategoryDesc())).thenReturn(Optional.ofNullable(category));
+		Mockito.when(categoryDoService.findByDesc(GeneralVars.LANGUAGE_ENGLISH, GeneralVars.CURRENCY_HKD,
+				category.getCategoryDesc())).thenReturn(category);
 	}
 
 	@Test
@@ -56,7 +58,7 @@ public class UT_ProductCategoryTest {
 		String code = "TST02";
 		String desc = "test product category";
 
-		io.nzbee.domain.category.Category found = categoryDomainService.findByCode(	GeneralVars.LANGUAGE_ENGLISH,
+		io.nzbee.domain.category.Category found = categoryDoService.findByCode(	GeneralVars.LANGUAGE_ENGLISH,
 																					GeneralVars.CURRENCY_HKD, 
 																					code);
 
@@ -69,9 +71,9 @@ public class UT_ProductCategoryTest {
 		String code = "TST02";
 		String desc = "test product category";
 
-		io.nzbee.domain.category.Category found = categoryDomainService.findByDesc(	GeneralVars.LANGUAGE_ENGLISH,
-																					GeneralVars.CURRENCY_HKD, 
-																					desc);
+		io.nzbee.domain.category.Category found = categoryDoService.findByDesc(	GeneralVars.LANGUAGE_ENGLISH,
+																				GeneralVars.CURRENCY_HKD, 
+																				desc);
 
 		assertThat(found.getCode()).isEqualTo(code);
 		assertThat(found.getDesc()).isEqualTo(desc);
