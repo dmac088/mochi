@@ -5,17 +5,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import io.nzbee.domain.ports.IBrandPortService;
-import io.nzbee.domain.ports.ICategoryPortService;
 import io.nzbee.domain.ports.IProductPortService;
-import io.nzbee.domain.ports.ITagPortService;
 import io.nzbee.ui.component.web.facet.IFacet;
 
 @Service(value = "productDomainService")
@@ -26,15 +21,6 @@ public class ProductServiceImpl implements IProductService {
     
     @Autowired 
     private IProductPortService productService;
-    
-    @Autowired 
-    private ICategoryPortService categoryService;
-    
-    @Autowired 
-    private IBrandPortService brandService;
-    
-    @Autowired 
-    private ITagPortService tagService;
     
 
 	@Override
