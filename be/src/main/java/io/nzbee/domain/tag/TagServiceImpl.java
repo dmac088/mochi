@@ -1,39 +1,30 @@
 package io.nzbee.domain.tag;
 
 import java.util.Set;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.IFacetService;
+import io.nzbee.domain.ports.ITagPortService;
 
 @Service(value = "tagDomainService")
 @CacheConfig(cacheNames="tags")
 public class TagServiceImpl implements ITagService, IFacetService {
 
 	@Autowired
-	io.nzbee.domain.ports.ICategoryPortService categoryService;
-	
-	@Autowired
-	io.nzbee.domain.ports.ITagPortService tagService;
-	
-	@Autowired
-	io.nzbee.domain.ports.IProductPortService productService;
+	private ITagPortService tagService;
 	
 	@Override
-	@Transactional
 	public Tag findByCode(String locale, String currency, String code) {
 		return tagService.findByCode(locale, currency, code);
 	}
 
 	@Override
-	@Transactional
 	public Tag findByDesc(String locale, String currency, String desc) {
 		return tagService.findByDesc(locale, currency, desc);
 	}
 
 	@Override
-	@Transactional(readOnly=true)
 	public Set<Tag> findAll(String locale, String currency) {
 		return tagService.findAll(locale, currency);
 	}

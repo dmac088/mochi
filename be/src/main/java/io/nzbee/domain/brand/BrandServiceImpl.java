@@ -16,26 +16,22 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
     private io.nzbee.domain.ports.IBrandPortService brandService;
 	
 	@Override
-	@Transactional
 	public Brand findByCode(String locale, String currency, String code) {
 		return brandService.findByCode(locale, currency, code);
 	}
 
 	@Override
-	@Transactional
 	public Brand findByDesc(String locale, String currency, String desc) {
 		return brandService.findByDesc(locale, currency, desc);
 	}
   
     @Override
 	@Cacheable
-	@Transactional(readOnly=true)
 	public Set<Brand> findAll(String locale, String currency) {
     	return brandService.findAll(locale, currency);
 	}	
     
     @Override
-    @Transactional(readOnly=true)
 	public Set<Brand> findAll(String locale, String currency, String category) {
     	return brandService.findAll(locale, currency, category);
 	}
