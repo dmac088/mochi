@@ -18,14 +18,12 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	@Override
 	@Transactional
 	public Brand findByCode(String locale, String currency, String code) {
-		// TODO Auto-generated method stub
 		return brandService.findByCode(locale, currency, code);
 	}
 
 	@Override
 	@Transactional
 	public Brand findByDesc(String locale, String currency, String desc) {
-		// TODO Auto-generated method stub
 		return brandService.findByDesc(locale, currency, desc);
 	}
   
@@ -44,25 +42,21 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 
 	@Override
 	public String tokenToCode(String token) {
-		// TODO Auto-generated method stub
 		return token;
 	}
 
 	@Override
 	public String getFacetField() {
-		// TODO Auto-generated method stub
 		return "product.brand.brandToken";
 	}
 
 	@Override
 	public String getFacetCategory() {
-		// TODO Auto-generated method stub
 		return "brand";
 	}
 
 	@Override
 	public Set<Brand> findAll(String locale, String currency, Set<String> codes) {
-		// TODO Auto-generated method stub
 		return brandService.findAll(locale, currency, codes);
 	}
 	

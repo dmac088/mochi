@@ -23,7 +23,6 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	@Override
 	@Transactional
 	public Tag findByCode(String locale, String currency, String code) {
-		// TODO Auto-generated method stub	
 		return tagService.findByCode(locale, currency, code);
 		
 	}
@@ -31,38 +30,32 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	@Override
 	@Transactional
 	public Tag findByDesc(String locale, String currency, String desc) {
-		// TODO Auto-generated method stub
 		return tagService.findByDesc(locale, currency, desc);
 	}
 
 	@Override
 	@Transactional(readOnly=true)
 	public Set<Tag> findAll(String locale, String currency) {
-		// TODO Auto-generated method stub
-		return null;
+		return tagService.findAll(locale, currency);
 	}
 	
 	@Override
 	public String tokenToCode(String token) {
-		// TODO Auto-generated method stub
 		return token;
 	}
 
 	@Override
 	public String getFacetField() {
-		// TODO Auto-generated method stub
 		return "product.tags.tagToken";
 	}
 
 	@Override
 	public String getFacetCategory() {
-		// TODO Auto-generated method stub
 		return "tag";
 	}
 
 	@Override
 	public Set<Tag> findAll(String locale, String currency, Set<String> codes) {
-		// TODO Auto-generated method stub
 		return tagService.findAll(locale, currency, codes);
 	}
 }
