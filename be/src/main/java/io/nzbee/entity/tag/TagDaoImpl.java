@@ -206,7 +206,9 @@ public class TagDaoImpl implements ITagDao {
 			tagEntity.addTagAttribute(tagAttribute);
 			tagEntity.setTagId(Long.parseLong(t.get("tagId").toString()));
 			tagEntity.setCode(t.get("tagCode").toString());
-					
+			
+			tagEntity.setLocale(locale);
+			tagEntity.setCurrency(currency);
 			return tagEntity;
 		}).collect(Collectors.toList());
 	}

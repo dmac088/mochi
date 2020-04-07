@@ -55,7 +55,7 @@ public class PostgresTagAdapter  implements ITagPortService {
 	private Tag entityToDo(io.nzbee.entity.tag.Tag e) {
 		return new Tag(
 				e.getCode(),
-				e.getAttributes().stream().filter(t -> t.getLclCd().equals("en-GB")).findFirst().get().getTagDesc(),
+				e.getAttributes().stream().filter(t -> t.getLclCd().equals(e.getLocale())).findFirst().get().getTagDesc(),
 				"en-GB",
 				"HKD"
 				);

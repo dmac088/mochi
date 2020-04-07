@@ -47,6 +47,12 @@ public class Tag {
 				orphanRemoval = true)
 	private Set<TagAttribute> attributes = new HashSet<TagAttribute>();
 	
+	@Transient
+	private String locale;
+	
+	@Transient
+	private String currency;
+	
 	public Long getTagId() {
 		return tagId;
 	}
@@ -75,6 +81,22 @@ public class Tag {
 
 	public Set<TagAttribute> getAttributes() {
 		return attributes;
+	}
+	
+	public void setLocale(String locale) {
+		this.locale = locale;
+	}
+
+	public void setCurrency(String currency) {
+		this.currency = currency;
+	}
+
+	public String getLocale() {
+		return locale;
+	}
+	
+	public String getCurrency() {
+		return currency;
 	}
 	
 	@Transient
