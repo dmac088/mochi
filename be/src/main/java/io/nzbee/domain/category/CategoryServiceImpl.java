@@ -29,7 +29,6 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	
 	@Override
 	public Category findByDesc(String locale, String currency, String desc) {
-		// TODO Auto-generated method stub
 		return categoryService.findByDesc(locale, currency, desc);
 	}
     
@@ -49,25 +48,21 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
     
 	@Override
 	public String tokenToCode(String token) {
-		// TODO Auto-generated method stub
 		return token.substring(token.lastIndexOf('/')+1,token.length());
 	}
 
 	@Override
 	public String getFacetField() {
-		// TODO Auto-generated method stub
 		return "product.categories.categoryToken";
 	}
 
 	@Override
 	public String getFacetCategory() {
-		// TODO Auto-generated method stub
 		return "category";
 	}
 
 	@Override
 	public Set<Category> findAll(String locale, String currency, Set<String> codes) {
-		// TODO Auto-generated method stub
 		return categoryService.findAll(locale, currency, codes);
 	}
 

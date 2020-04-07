@@ -15,9 +15,6 @@ import io.nzbee.ui.component.web.facet.IFacet;
 
 @Service(value = "productDomainService")
 public class ProductServiceImpl implements IProductService {
-	//In service classes, we should only call methods of entity service classes
-	//the repositories themselves should not be referenced outside the entity service class
-	//this way we ensure proper separation of concerns
     
     @Autowired 
     private IProductPortService productService;
@@ -42,7 +39,6 @@ public class ProductServiceImpl implements IProductService {
     
 	@Override
 	public Set<Product> findAll(String locale, String currency, List<String> productCodes) {
-		// TODO Auto-generated method stub
 		return productService.findAll(locale, currency, productCodes);	
 	}
 
@@ -53,7 +49,7 @@ public class ProductServiceImpl implements IProductService {
 									String categoryDesc,
 									Set<IFacet> facets, 
 									String sortBy) {
-		// TODO Auto-generated method stub
+
 		Page<Product> pp =
 			productService.findAll(locale, 
 									  currency, 
@@ -76,7 +72,7 @@ public class ProductServiceImpl implements IProductService {
 									String categoryDesc,
 									Set<IFacet> facets, 
 									String sortBy) {
-		// TODO Auto-generated method stub
+
     	Page<Product> pp =
 		   productService.findAll(	 locale, 
 										 currency, 
@@ -109,13 +105,11 @@ public class ProductServiceImpl implements IProductService {
 
 	@Override
 	public String tokenToCode(String token) {
-		// TODO Auto-generated method stub
 		return token;
 	}
 
 	@Override
 	public Set<Product> findAll(String lcl, String currency, Set<String> codes) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
