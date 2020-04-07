@@ -1,7 +1,6 @@
 package io.nzbee.domain.category;
 
 import java.util.Set;
-import  org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
@@ -17,7 +16,6 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
     
      
     @Override
-	@Transactional(readOnly = true)
 	public Set<Category> findAll(String locale, String currency) {
     	return categoryService.findAll(locale, currency);
 	}
@@ -33,14 +31,12 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	}
     
     @Override
- 	@Transactional
  	//@Cacheable
  	public Set<Category> findByParent(String locale, String currency, String parentCategoryCode) {
     	return categoryService.findByParent(parentCategoryCode, currency, locale);
  	}
     
     @Override
-  	@Transactional
   	//@Cacheable
   	public Set<Category> findAllForLevel(String locale, String currency, Long level) {
      	return categoryService.findAllForLevel(locale, currency, level);
