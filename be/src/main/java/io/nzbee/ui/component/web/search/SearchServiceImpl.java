@@ -21,7 +21,6 @@ import org.hibernate.search.query.facet.FacetingRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.domain.Page;
@@ -32,7 +31,6 @@ import org.springframework.stereotype.Service;
 import io.nzbee.domain.FacetServices;
 import io.nzbee.domain.IDomainObject;
 import io.nzbee.domain.IService;
-import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.product.Product;
 import io.nzbee.entity.PageableUtil;
 import io.nzbee.ui.component.web.facet.search.SearchFacet;
@@ -45,10 +43,6 @@ import io.nzbee.ui.component.web.generic.UIService;
 public class SearchServiceImpl extends UIService implements ISearchService {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
-	
-	@Autowired
-	@Qualifier("productDomainService")
-	private IProductService productService;
 	
 	@Autowired
 	private ApplicationContext appContext;
