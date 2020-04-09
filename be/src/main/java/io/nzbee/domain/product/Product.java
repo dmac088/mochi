@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+
+import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.category.ProductCategory;
 
 @JsonTypeName("productcategory")
@@ -29,6 +31,8 @@ public class Product {
 	private String currency;
 	
 	private List<ProductCategory> categories;
+	
+	private List<Brand> brands;
 	
 	public Product() {
 	
@@ -62,6 +66,19 @@ public class Product {
 	
 	public void removeCategory(ProductCategory productCategory) {
 		this.getCategories().remove(productCategory);
+	}
+	
+	public void addBrand(Brand brand) {
+		this.getBrands().add(brand);
+	}
+	
+
+	public void removeBrand(Brand brand) {
+		this.getBrands().remove(brand);
+	}
+	
+	public List<Brand> getBrands() {
+		return brands;
 	}
 	
 	public String getProductUPC() {
