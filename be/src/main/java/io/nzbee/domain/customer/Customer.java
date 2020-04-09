@@ -6,20 +6,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import io.nzbee.domain.IDomainObject;
 
-
-//this is the grand daddy DTO
-/*---------------------------testing DTO JSON---------------------------
-{
-	"userName":"dmac654331",
-	"password":"magic7653",
-	"enabled":true,
-	"givenName":"Ronald",
-	"familyName":"McDonald"
-}
-*/
-
-//@JsonTypeName(value = "customer")
-//@JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.NAME)
 public class Customer implements IDomainObject {
     @NotNull
     @Size(min = 1, message = "{Size.userDto.firstName}")

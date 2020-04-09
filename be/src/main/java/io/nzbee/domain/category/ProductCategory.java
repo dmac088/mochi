@@ -9,11 +9,6 @@ import io.nzbee.domain.product.Product;
 
 @JsonTypeName("productcategory")
 public class ProductCategory extends Category {
-
-	@JsonIgnore
-	private List<Product> products;
-	
-	private String parentCode;
 	
 	public ProductCategory(
 			String categoryCode,
@@ -35,9 +30,15 @@ public class ProductCategory extends Category {
 			  objectCount);
 	}
 	
+	@JsonIgnore
+	private List<Product> products;
+	
+	private String parentCode;
+	
 	public List<Product> getProducts() {
 		return products;
 	}
+	
 	@Override
 	public String getCode() {
 		// TODO Auto-generated method stub
