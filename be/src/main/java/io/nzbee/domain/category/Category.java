@@ -22,9 +22,8 @@ public abstract class Category implements IHierarchicalDomainObject {
 	private String locale;
 	
 	private String currency;
-	
-	public Category(
-					String categoryCode, 
+
+	public Category(String categoryCode, 
 					String categoryDesc, 
 					Long categoryLevel, 
 					String categoryType,

@@ -1,9 +1,11 @@
 package io.nzbee.domain.product;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
-
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import io.nzbee.domain.category.ProductCategory;
 
 @JsonTypeName("productcategory")
 public class Product {
@@ -25,6 +27,8 @@ public class Product {
 	private String lclCd;
 	
 	private String currency;
+	
+	private List<ProductCategory> categories;
 	
 	public Product() {
 	
@@ -49,6 +53,15 @@ public class Product {
 		this.displayCategories = displayCategories;
 		this.lclCd = lclCd;
 		this.currency = currency;
+		this.categories = new ArrayList<ProductCategory>();
+	}
+	
+	public void addCategory(ProductCategory productCategory) {
+		this.getCategories().add(productCategory);
+	}
+	
+	public void removeCategory(ProductCategory productCategory) {
+		this.getCategories().remove(productCategory);
 	}
 	
 	public String getProductUPC() {
@@ -85,6 +98,10 @@ public class Product {
 	
 	public String getCurrency() {
 		return currency;
+	}
+
+	public List<ProductCategory> getCategories() {
+		return categories;
 	}
 
 	@Override

@@ -33,10 +33,6 @@ public class BrandCategory extends Category {
 		return brands;
 	}
 
-	public void setBrands(List<Brand> brands) {
-		this.brands = brands;
-	}
-
 	@Override
 	public String getCode() {
 		// TODO Auto-generated method stub
