@@ -1,5 +1,6 @@
 package io.nzbee.domain.category;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -10,16 +11,15 @@ import io.nzbee.domain.product.Product;
 @JsonTypeName("productcategory")
 public class ProductCategory extends Category {
 	
-	public ProductCategory(
-			String categoryCode,
-			String categoryDesc,
-			boolean isHierarchical,
-			Long level,
-			String categoryType,
-			int objectCount,
-			String parentCode,
-			String locale, 
-			String currency) {
+	public ProductCategory(	String categoryCode,
+							String categoryDesc,
+							boolean isHierarchical,
+							Long level,
+							String categoryType,
+							int objectCount,
+							String parentCode,
+							String locale, 
+							String currency) {
 		
 		super(categoryCode, 
 			  categoryDesc, 
@@ -28,12 +28,22 @@ public class ProductCategory extends Category {
 			  locale, 
 			  parentCode,
 			  objectCount);
+		
+		this.products = new ArrayList<Product>();
 	}
 	
 	@JsonIgnore
 	private List<Product> products;
 	
 	private String parentCode;
+	
+	public void addProduct(Product product) {
+		this.getProducts().add(product);
+	}
+	
+	public void removeProduct(Product product) {
+		this.getProducts().remove(product);
+	}
 	
 	public List<Product> getProducts() {
 		return products;

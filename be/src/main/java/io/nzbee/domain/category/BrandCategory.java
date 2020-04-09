@@ -32,6 +32,14 @@ public class BrandCategory extends Category {
 	public List<Brand> getBrands() {
 		return brands;
 	}
+	
+	public void addBrand(Brand brand) {
+		this.getBrands().add(brand);
+	}
+	
+	public void removeBrand(Brand brand) {
+		this.getBrands().remove(brand);
+	}
 
 	@Override
 	public String getCode() {
