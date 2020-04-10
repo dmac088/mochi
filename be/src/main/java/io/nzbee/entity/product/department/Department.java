@@ -61,17 +61,24 @@ public class Department {
 		this.departmentId = id;
 	}
 	
-	public String getCode() {
+	public String getDepartmentCode() {
 		return departmentCode;
 	}
 
-	public void setCode(String departmentCode) {
+	public void setDepartmentCode(String departmentCode) {
 		this.departmentCode = departmentCode;
 	}
 	
-	@Field(store=Store.YES,analyze=Analyze.NO)
-	public String getDesc() {
-		return this.getAttribute().getDesc();
+	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "en-GB"))
+	public String getDepartmentDescENGB() {
+		return this.getAttributes().stream()
+				.filter(a -> a.getLclCd().equals("en-GB")).findFirst().get().getDesc();
+	}
+	
+	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "zh-HK"))
+	public String getDepartmentDescZHHK() {
+		return this.getAttributes().stream()
+				.filter(a -> a.getLclCd().equals("zh-HK")).findFirst().get().getDesc();
 	}
 
 	public String getLocale() {
@@ -111,21 +118,9 @@ public class Department {
 	}
 	
 	@Transient
-	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "en-GB"))
-	public String getDepartmentDescENGB() {
-		return this.getAttributes().stream().filter(pa -> pa.getLclCd().equals("en-GB")).findFirst().get().getDesc();
-	}
-	
-	@Transient
-	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "zh-HK"))
-	public String getDepartmentDescZHHK() {
-		return this.getAttributes().stream().filter(pa -> pa.getLclCd().equals("zh-HK")).findFirst().get().getDesc();
-	}
-	
-	@Transient
 	@Facet
 	public String getDepartmentToken() {
-		return this.getCode();
+		return this.getDepartmentCode();
 	}
 	
 }
