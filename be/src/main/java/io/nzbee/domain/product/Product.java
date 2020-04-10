@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import io.nzbee.domain.brand.Brand;
@@ -30,6 +32,7 @@ public class Product {
 	
 	private String currency;
 	
+	@JsonIgnore
 	private List<ProductCategory> categories;
 	
 	private List<Brand> brands;

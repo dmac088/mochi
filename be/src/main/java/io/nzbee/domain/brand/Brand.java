@@ -3,6 +3,8 @@ package io.nzbee.domain.brand;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import io.nzbee.domain.IDomainObject;
 import io.nzbee.domain.product.Product;
@@ -20,6 +22,7 @@ public class Brand implements IDomainObject {
 	
 	private String currency;
 	
+	@JsonIgnore
 	private List<Product> products;
 
 	public Brand(String brandCode,
@@ -27,12 +30,12 @@ public class Brand implements IDomainObject {
 				 int objectCount,
 				 String locale, 
 				 String currency) {
-		this.brandCode = brandCode;
-		this.brandDesc = brandDesc;
-		this.objectCount = objectCount;
-		this.locale = locale;
-		this.currency = currency;
-		this.products = new ArrayList<Product>();
+				this.brandCode = brandCode;
+				this.brandDesc = brandDesc;
+				this.objectCount = objectCount;
+				this.locale = locale;
+				this.currency = currency;
+				this.products = new ArrayList<Product>();
 	}
 	
 	public List<Product> getProducts() {
