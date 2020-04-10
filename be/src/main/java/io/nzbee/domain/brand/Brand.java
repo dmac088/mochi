@@ -7,6 +7,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import io.nzbee.domain.IDomainObject;
+import io.nzbee.domain.category.BrandCategory;
 import io.nzbee.domain.product.Product;
 
 @JsonTypeName("brand")
@@ -24,18 +25,22 @@ public class Brand implements IDomainObject {
 	
 	@JsonIgnore
 	private List<Product> products;
+	
+	@JsonIgnore
+	private List<BrandCategory> categories;
 
 	public Brand(String brandCode,
 				 String brandDesc,
 				 int objectCount,
 				 String locale, 
 				 String currency) {
-				this.brandCode = brandCode;
-				this.brandDesc = brandDesc;
-				this.objectCount = objectCount;
-				this.locale = locale;
-				this.currency = currency;
-				this.products = new ArrayList<Product>();
+				 this.brandCode = brandCode;
+				 this.brandDesc = brandDesc;
+				 this.objectCount = objectCount;
+				 this.locale = locale;
+				 this.currency = currency;
+			 	 this.products = new ArrayList<Product>();
+			 	 this.categories = new ArrayList<BrandCategory>();
 	}
 	
 	public List<Product> getProducts() {

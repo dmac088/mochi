@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.category.ProductCategory;
+import io.nzbee.domain.tag.Tag;
 
 @JsonTypeName("productcategory")
 public class Product {
@@ -35,7 +36,11 @@ public class Product {
 	@JsonIgnore
 	private List<ProductCategory> categories;
 	
+	@JsonIgnore
 	private List<Brand> brands;
+	
+	@JsonIgnore
+	private List<Tag> tags;
 	
 	public Product() {
 	
@@ -61,6 +66,8 @@ public class Product {
 					this.lclCd = lclCd;
 					this.currency = currency;
 					this.categories = new ArrayList<ProductCategory>();
+					this.brands = new ArrayList<Brand>();
+					this.tags = new ArrayList<Tag>();
 	}
 	
 	public void addCategory(ProductCategory productCategory) {
