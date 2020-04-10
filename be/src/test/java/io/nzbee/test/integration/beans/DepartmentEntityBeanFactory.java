@@ -19,7 +19,7 @@ public class DepartmentEntityBeanFactory {
 		da.setDesc("test department");
 		da.setLclCd("en-GB");
 	
-		dept.setCode("TST01");
+		dept.setDepartmentCode("TST01");
 		dept.setDepartmentClass("Food");
 		dept.getAttributes().add(da);
 		da.setDepartment(dept);
