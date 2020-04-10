@@ -382,13 +382,16 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 							   "brandDescForIndex",
 							   "currentRetailPrice" + currency,
 							   "currentMarkdownPrice" + currency,
-							   "displayCategories" + transLcl);
+							   "displayCategories" + transLcl,
+							   "product.department.departmentCode",
+							   "product.department.departmentDesc" + transLcl);
 
 		// get the results using jpaQuery object
 		List<Object[]> results = jpaQuery.getResultList();
 		
 		// convert the results of jpaQuery to product Data Transfer Objects			
 		List<Product> lp = results.stream().map(r -> {
+			
 			return new Product(
 					   r[5].toString(),
 					   (Date) r[6],
