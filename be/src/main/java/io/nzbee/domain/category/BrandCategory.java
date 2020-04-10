@@ -1,5 +1,6 @@
 package io.nzbee.domain.category;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
@@ -24,6 +25,7 @@ public class BrandCategory extends Category {
 			  locale, 
 			  parentCode,
 			  objectCount);
+		this.brands = new ArrayList<Brand>();
 	}
 
 	@JsonIgnore

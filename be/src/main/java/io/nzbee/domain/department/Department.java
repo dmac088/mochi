@@ -3,6 +3,8 @@ package io.nzbee.domain.department;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.nzbee.domain.IDomainObject;
 import io.nzbee.domain.product.Product;
  
@@ -16,17 +18,18 @@ public class Department implements IDomainObject {
 	
 	private String currency;
 	
+	@JsonIgnore
 	private List<Product> products;
 	
 	public Department(	String departmentCode,
 						String departmentDesc,
 						String locale, 
 						String currency) {
-		this.departmentCode = departmentCode;
-		this.departmentDesc = departmentDesc;
-		this.locale = locale;
-		this.currency = currency;
-		this.products = new ArrayList<Product>();
+						this.departmentCode = departmentCode;
+						this.departmentDesc = departmentDesc;
+						this.locale = locale;
+						this.currency = currency;
+						this.products = new ArrayList<Product>();
 	}
 	
 	@Override
