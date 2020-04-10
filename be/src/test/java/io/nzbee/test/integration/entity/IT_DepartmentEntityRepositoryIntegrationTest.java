@@ -117,7 +117,7 @@ public class IT_DepartmentEntityRepositoryIntegrationTest {
 	
 	 private void assertFound(final Department found) {
 	    	
-	    	assertThat(found.getCode())
+	    	assertThat(found.getDepartmentCode())
 	        .isEqualTo("TST01");
 	
 	    	assertThat(found.getDepartmentDescENGB())
