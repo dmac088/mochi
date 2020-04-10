@@ -10,7 +10,7 @@ public class ProductDoBeanFactory {
 	
 	
 	public Product getProductDoBean() {
-		return new Product("3254354673",
+		return new Product(		   "3254354673",
 								   new Date(),
 								   "Test Product Description",
 								   new Double(78),

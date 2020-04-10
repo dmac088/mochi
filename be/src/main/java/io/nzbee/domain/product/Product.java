@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.tag.Tag;
+import io.nzbee.entity.product.department.Department;
 
 @JsonTypeName("productcategory")
 public class Product {
@@ -36,8 +37,9 @@ public class Product {
 	@JsonIgnore
 	private List<ProductCategory> categories;
 	
-	@JsonIgnore
-	private List<Brand> brands;
+	private Department department;
+	
+	private Brand brand;
 	
 	@JsonIgnore
 	private List<Tag> tags;
@@ -54,7 +56,9 @@ public class Product {
 				   	String productImage,
 				   	String displayCategories,
 				   	String lclCd,
-				   	String currency) {
+				   	String currency,
+				   	Brand brand,
+				   	Department department) {
 		
 					this.productUPC = productUPC;
 					this.productCreateDt = productCreateDt;
@@ -66,7 +70,8 @@ public class Product {
 					this.lclCd = lclCd;
 					this.currency = currency;
 					this.categories = new ArrayList<ProductCategory>();
-					this.brands = new ArrayList<Brand>();
+					this.brand = brand;
+					this.department = department;
 					this.tags = new ArrayList<Tag>();
 	}
 	
@@ -78,17 +83,12 @@ public class Product {
 		this.getCategories().remove(productCategory);
 	}
 	
-	public void addBrand(Brand brand) {
-		this.getBrands().add(brand);
+	public Department getDepartment() {
+		return department;
 	}
-	
 
-	public void removeBrand(Brand brand) {
-		this.getBrands().remove(brand);
-	}
-	
-	public List<Brand> getBrands() {
-		return brands;
+	public Brand getBrand() {
+		return brand;
 	}
 	
 	public String getProductUPC() {

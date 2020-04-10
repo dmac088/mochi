@@ -32,6 +32,7 @@ public class Department {
 
 	@NaturalId
 	@Column(name="dept_cd", unique = true, updatable = false)
+	@Field(store=Store.YES,analyze=Analyze.NO)
 	private String departmentCode;
 	
 	@Column(name="dept_class")
@@ -43,6 +44,9 @@ public class Department {
 	@JsonManagedReference
 	private List<DepartmentAttribute> attributes = new ArrayList<DepartmentAttribute>();
 
+	@Transient
+	private DepartmentAttribute attribute;
+	
 	@Transient
 	private String locale;
 	
@@ -65,6 +69,11 @@ public class Department {
 		this.departmentCode = departmentCode;
 	}
 	
+	@Field(store=Store.YES,analyze=Analyze.NO)
+	public String getDesc() {
+		return this.getAttribute().getDesc();
+	}
+
 	public String getLocale() {
 		return locale;
 	}
@@ -95,6 +104,10 @@ public class Department {
 
 	public void setAttributes(List<DepartmentAttribute> attributes) {
 		this.attributes = attributes;
+	}
+	
+	public DepartmentAttribute getAttribute() {
+		return attribute;
 	}
 	
 	@Transient
