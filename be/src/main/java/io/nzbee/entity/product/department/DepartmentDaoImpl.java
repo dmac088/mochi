@@ -72,7 +72,7 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 		
 		departmentEntity.getAttributes().add(departmentAttribute);
 		departmentEntity.setId(Long.parseLong(tuple.get("departmentId").toString()));
-		departmentEntity.setCode(tuple.get("departmentCode").toString());
+		departmentEntity.setDepartmentCode(tuple.get("departmentCode").toString());
 		departmentEntity.setLocale(locale);
 		departmentEntity.setCurrency(currency);
 
@@ -114,7 +114,7 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 		
 		departmentEntity.getAttributes().add(departmentAttribute);
 		departmentEntity.setId(Long.parseLong(tuple.get("departmentId").toString()));
-		departmentEntity.setCode(tuple.get("departmentCode").toString());
+		departmentEntity.setDepartmentCode(tuple.get("departmentCode").toString());
 		departmentEntity.setLocale(locale);
 		departmentEntity.setCurrency(currency);
 
@@ -157,7 +157,7 @@ CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		departmentEntity.getAttributes().add(departmentAttribute);
 		departmentEntity.setId(Long.parseLong(tuple.get("departmentId").toString()));
-		departmentEntity.setCode(tuple.get("departmentCode").toString());
+		departmentEntity.setDepartmentCode(tuple.get("departmentCode").toString());
 		departmentEntity.setLocale(locale);
 		departmentEntity.setCurrency(currency);
 
