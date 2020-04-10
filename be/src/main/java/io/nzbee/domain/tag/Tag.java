@@ -1,8 +1,11 @@
 package io.nzbee.domain.tag;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import io.nzbee.domain.IDomainObject;
+import io.nzbee.domain.product.Product;
 
 @JsonTypeName("tag")
 public class Tag implements IDomainObject {
@@ -16,6 +19,8 @@ public class Tag implements IDomainObject {
 	private String locale;
 	
 	private String currency;
+	
+	private List<Product> products;
 
 	public Tag(	String tagCode,
 				String tagDesc,
@@ -25,7 +30,8 @@ public class Tag implements IDomainObject {
 		this.tagDesc = tagDesc;
 		this.locale = locale;
 		this.currency = currency;
-	};
+		this.products = new ArrayList<Product>();
+	}
 
 	public String getTagCode() {
 		return tagCode;
@@ -41,32 +47,31 @@ public class Tag implements IDomainObject {
 	
 	@Override
 	public String getCode() {
-		// TODO Auto-generated method stub
 		return this.tagCode;
 	}
 
 	@Override
 	public boolean isHierarchical() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
 		return objectCount;
 	}
 
 	@Override
 	public String getDesc() {
-		// TODO Auto-generated method stub
 		return this.getTagDesc();
 	}
 
 	@Override
 	public String getCurrency() {
-		// TODO Auto-generated method stub
 		return currency;
+	}
+	
+	public List<Product> getProducts() {
+		return products;
 	}
 	
 	@Override

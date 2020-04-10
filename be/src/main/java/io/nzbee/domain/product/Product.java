@@ -41,26 +41,26 @@ public class Product {
 	
 	}
 	
-	public Product(String productUPC,
-				   Date productCreateDt,
-				   String productDesc,
-				   Double productRetail,
-				   Double productMarkdown,
-				   String productImage,
-				   String displayCategories,
-				   String lclCd,
-				   String currency) {
+	public Product(	String productUPC,
+				   	Date productCreateDt,
+				   	String productDesc,
+				   	Double productRetail,
+				   	Double productMarkdown,
+				   	String productImage,
+				   	String displayCategories,
+				   	String lclCd,
+				   	String currency) {
 		
-		this.productUPC = productUPC;
-		this.productCreateDt = productCreateDt;
-		this.productDesc = productDesc;
-		this.productRetail = productRetail;
-		this.productMarkdown = productMarkdown;
-		this.productImage = productImage;
-		this.displayCategories = displayCategories;
-		this.lclCd = lclCd;
-		this.currency = currency;
-		this.categories = new ArrayList<ProductCategory>();
+					this.productUPC = productUPC;
+					this.productCreateDt = productCreateDt;
+					this.productDesc = productDesc;
+					this.productRetail = productRetail;
+					this.productMarkdown = productMarkdown;
+					this.productImage = productImage;
+					this.displayCategories = displayCategories;
+					this.lclCd = lclCd;
+					this.currency = currency;
+					this.categories = new ArrayList<ProductCategory>();
 	}
 	
 	public void addCategory(ProductCategory productCategory) {
