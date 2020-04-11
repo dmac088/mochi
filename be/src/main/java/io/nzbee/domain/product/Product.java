@@ -10,8 +10,8 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.category.ProductCategory;
+import io.nzbee.domain.department.Department;
 import io.nzbee.domain.tag.Tag;
-import io.nzbee.entity.product.department.Department;
 
 @JsonTypeName("productcategory")
 public class Product {
