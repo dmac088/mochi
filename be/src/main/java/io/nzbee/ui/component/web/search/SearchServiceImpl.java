@@ -1,6 +1,7 @@
 package io.nzbee.ui.component.web.search;
 
 import java.util.Date;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -390,29 +391,38 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		List<Object[]> results = jpaQuery.getResultList();
 		
 		// convert the results of jpaQuery to product Data Transfer Objects			
-		List<Product> lp = results.stream().map(r -> {
+		List<Product> lp = new ArrayList<Product>();
+		results.stream().forEach(r -> {
+		
+			for(int i=0;i<r.length;i++) {
+				if(r[i] != null) {
+					System.out.println(i + " - " + r[i].toString());
+				}
+			}
 			
 			//new Food
 			//new Jewellery
 				//new Department
 				//new Brand
 			
-			return new Product(
-					   r[5].toString(),
-					   (Date) r[6],
-					   r[2].toString(),
-					   Double.parseDouble(r[9].toString()),
-					   Double.parseDouble(r[10].toString()),
-					   r[3].toString(),
-					   r[11].toString(),
-					   lcl,
-					   currency);
-		}).collect(Collectors.toList());
+//			r[13].equals("Food")
+//			? 
+//			return new Product(
+//					   r[5].toString(),
+//					   (Date) r[6],
+//					   r[2].toString(),
+//					   Double.parseDouble(r[9].toString()),
+//					   Double.parseDouble(r[10].toString()),
+//					   r[3].toString(),
+//					   r[11].toString(),
+//					   lcl,
+//					   currency);
+		});//.collect(Collectors.toList());
 		
 		return new PageImpl<Product>(lp, pageable, jpaQuery.getResultSize());
 		
 	}
-
+ 
 
 	private org.apache.lucene.search.Sort getSortField(String field, String currency, String locale) {
 		switch (field) {
