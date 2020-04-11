@@ -4,7 +4,6 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-
 import org.hibernate.search.annotations.Indexed;
 
 import io.nzbee.entity.product.Product;
@@ -16,11 +15,6 @@ import io.nzbee.entity.product.Product;
 @DiscriminatorValue("2")
 public class Jewellery extends Product  {
 
-	public Jewellery() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
 
-	
 	
 }

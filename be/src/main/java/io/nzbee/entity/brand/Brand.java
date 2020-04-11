@@ -35,6 +35,7 @@ public class Brand {
 
 	@NaturalId
 	@Column(name="bnd_cd", unique = true, updatable = false)
+	@Field(analyze = Analyze.NO, store=Store.YES)
 	private String brandCode;
 	
 	@ManyToMany(mappedBy = "brands")

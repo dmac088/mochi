@@ -32,6 +32,10 @@ import org.springframework.stereotype.Service;
 import io.nzbee.domain.FacetServices;
 import io.nzbee.domain.IDomainObject;
 import io.nzbee.domain.IService;
+import io.nzbee.domain.brand.Brand;
+import io.nzbee.domain.department.Department;
+import io.nzbee.domain.product.Food;
+import io.nzbee.domain.product.Jewellery;
 import io.nzbee.domain.product.Product;
 import io.nzbee.entity.PageableUtil;
 import io.nzbee.ui.component.web.facet.search.SearchFacet;
@@ -380,45 +384,53 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 							   "productUPC",
 							   "productCreateDt",
 							   "product.brand.brandCode",
+							   "product.brand.brandDesc" + transLcl,
 							   "brandDescForIndex",
 							   "currentRetailPrice" + currency,
 							   "currentMarkdownPrice" + currency,
 							   "displayCategories" + transLcl,
 							   "product.department.departmentCode",
-							   "product.department.departmentDesc" + transLcl);
+							   "product.department.departmentDesc" + transLcl,
+							   "countryOfOrigin");
+		
 
 		// get the results using jpaQuery object
 		List<Object[]> results = jpaQuery.getResultList();
 		
 		// convert the results of jpaQuery to product Data Transfer Objects			
-		List<Product> lp = new ArrayList<Product>();
-		results.stream().forEach(r -> {
-		
-			for(int i=0;i<r.length;i++) {
-				if(r[i] != null) {
-					System.out.println(i + " - " + r[i].toString());
-				}
-			}
+		List<Product> lp = 
+			results.stream().map(r ->  (r[13].toString().equals("FOO01")
+										? new Food(
+												r[5].toString(),
+												(Date) r[6],
+												r[2].toString(),
+												Double.parseDouble(r[10].toString()),
+												Double.parseDouble(r[11].toString()),
+												r[3].toString(),
+												r[14].toString(),
+											   	new Date(),
+											   	"",
+											   	lcl,
+											   	currency,
+											   	new Brand(r[7].toString(), r[8].toString(), 0, lcl, currency),
+											   	new Department(r[13].toString(), r[14].toString(), lcl, currency)
+												)
+										: new Jewellery(
+												r[5].toString(),
+												(Date) r[6],
+												r[2].toString(),
+												Double.parseDouble(r[10].toString()),
+												Double.parseDouble(r[11].toString()),
+												r[3].toString(),
+											   	"",
+											   	lcl,
+											   	currency,
+											   	new Brand(r[7].toString(), r[8].toString(), 0, lcl, currency),
+											   	new Department(r[13].toString(), r[14].toString(), lcl, currency)
+												))
+				).collect(Collectors.toList());
+	
 			
-			//new Food
-			//new Jewellery
-				//new Department
-				//new Brand
-			
-//			r[13].equals("Food")
-//			? 
-//			return new Product(
-//					   r[5].toString(),
-//					   (Date) r[6],
-//					   r[2].toString(),
-//					   Double.parseDouble(r[9].toString()),
-//					   Double.parseDouble(r[10].toString()),
-//					   r[3].toString(),
-//					   r[11].toString(),
-//					   lcl,
-//					   currency);
-		});//.collect(Collectors.toList());
-		
 		return new PageImpl<Product>(lp, pageable, jpaQuery.getResultSize());
 		
 	}
