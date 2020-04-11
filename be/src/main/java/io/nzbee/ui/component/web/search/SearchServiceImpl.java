@@ -415,7 +415,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 												Double.parseDouble(r[10].toString()),
 												Double.parseDouble(r[11].toString()),
 												r[3].toString(),
-												r[14].toString(),
+												r[15].toString(),
 											   	new Date(),
 											   	"",
 											   	lcl,
