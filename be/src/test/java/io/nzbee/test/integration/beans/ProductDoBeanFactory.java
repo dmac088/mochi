@@ -24,13 +24,13 @@ public class ProductDoBeanFactory {
 								   "test, test",
 								   "en-GB",
 								   "HKD",
-								   new Brand("",
-											 "",
+								   new Brand("ENZ01",
+											 "Enza",
 											 20,
 											 "en-GB",
 											 "HKD"),
-								   new Department("",
-												  "",
+								   new Department("FOO01",
+												  "Food",
 												  "en-GB",
 												  "HKD"));
 	}
