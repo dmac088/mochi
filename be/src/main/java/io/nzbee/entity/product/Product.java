@@ -175,7 +175,8 @@ public abstract class Product {
 		            CascadeType.PERSIST,
 		            CascadeType.MERGE
 		        })
-	@IndexedEmbedded(prefix="product.categories.", includeEmbeddedObjectId=true)
+	@IndexedEmbedded(	prefix="product.categories.", 
+						includeEmbeddedObjectId=true)
 	private Set<CategoryProduct> categories = new HashSet<>();
 	
 	@ManyToMany(mappedBy = "products", 
