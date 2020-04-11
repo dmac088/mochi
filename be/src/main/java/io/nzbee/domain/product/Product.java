@@ -37,8 +37,10 @@ public class Product {
 	@JsonIgnore
 	private List<ProductCategory> categories;
 	
+	@JsonIgnore
 	private Department department;
 	
+	@JsonIgnore
 	private Brand brand;
 	
 	@JsonIgnore
