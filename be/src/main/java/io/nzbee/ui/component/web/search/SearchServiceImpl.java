@@ -399,7 +399,15 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 		
 		// convert the results of jpaQuery to product Data Transfer Objects			
 		List<Product> lp = 
-			results.stream().map(r ->  (r[13].toString().equals("FOO01")
+			results.stream().map(r ->  {
+										for(int i=0;i<r.length;i++) {
+											if(r[i] != null) {
+												System.out.println(i + " - " + r[i].toString());
+											}
+										}
+			
+				
+										return (r[13].toString().equals("FOO01")
 										? new Food(
 												r[5].toString(),
 												(Date) r[6],
@@ -426,9 +434,8 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 											   	lcl,
 											   	currency,
 											   	new Brand(r[7].toString(), r[8].toString(), 0, lcl, currency),
-											   	new Department(r[13].toString(), r[14].toString(), lcl, currency)
-												))
-				).collect(Collectors.toList());
+											   	new Department(r[13].toString(), r[14].toString(), lcl, currency)));
+				}).collect(Collectors.toList());
 	
 			
 		return new PageImpl<Product>(lp, pageable, jpaQuery.getResultSize());
