@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import io.nzbee.entity.category.Category;
 import io.nzbee.entity.product.Product;
 
 
@@ -35,6 +37,23 @@ public class SearchIndexController {
 		try {
 			fullTextEntityManager
 			.createIndexer( Product.class )
+			.batchSizeToLoadObjects( 25 )
+			.cacheMode( CacheMode.IGNORE )
+			.threadsToLoadObjects( 12 )
+			.idFetchSize( 150 )
+			.transactionTimeout( 1800 )
+			.progressMonitor( new SimpleIndexingProgressMonitor() ) //a MassIndexerProgressMonitor implementation
+			.startAndWait();	
+		} catch (InterruptedException e) {
+		// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		fullTextEntityManager 
+		  = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
+		try {
+			fullTextEntityManager
+			.createIndexer( Category.class )
 			.batchSizeToLoadObjects( 25 )
 			.cacheMode( CacheMode.IGNORE )
 			.threadsToLoadObjects( 12 )
