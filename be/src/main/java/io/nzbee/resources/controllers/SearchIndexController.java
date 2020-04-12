@@ -48,23 +48,7 @@ public class SearchIndexController {
 		// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		fullTextEntityManager 
-		  = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
-		try {
-			fullTextEntityManager
-			.createIndexer( Category.class )
-			.batchSizeToLoadObjects( 25 )
-			.cacheMode( CacheMode.IGNORE )
-			.threadsToLoadObjects( 12 )
-			.idFetchSize( 150 )
-			.transactionTimeout( 1800 )
-			.progressMonitor( new SimpleIndexingProgressMonitor() ) //a MassIndexerProgressMonitor implementation
-			.startAndWait();	
-		} catch (InterruptedException e) {
-		// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
     	return "Search Index Created!";
     } 
 }

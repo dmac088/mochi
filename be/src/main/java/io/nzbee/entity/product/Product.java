@@ -47,7 +47,8 @@ import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.category.product.CategoryProduct;
@@ -152,7 +153,6 @@ filters = {
 			    	@ColumnResult(name = "product_count")
 			    })
 })
-
 public abstract class Product { 
 	
 	@Id
@@ -177,7 +177,7 @@ public abstract class Product {
 		        })
 	@IndexedEmbedded(	prefix="product.categories.", 
 						includeEmbeddedObjectId=true)
-	private Set<CategoryProduct> categories = new HashSet<>();
+	private Set<CategoryProduct> categories = new HashSet<CategoryProduct>();
 	
 	@ManyToMany(mappedBy = "products", 
 				cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -187,7 +187,6 @@ public abstract class Product {
 	@OneToMany(	mappedBy="product",  
 				cascade = CascadeType.ALL,
 				orphanRemoval = true)
-	@JsonManagedReference
 	private List<ProductAttribute> attributes = new ArrayList<ProductAttribute>();
 	
 	@Transient
@@ -382,7 +381,21 @@ public abstract class Product {
 				
 		return String.join(",", sca);
 	}
+	
+	@Field(analyze=Analyze.NO, store=Store.YES)
+	public String getCategoriesJSON() throws JsonProcessingException {
+		ObjectMapper objectMapper = new ObjectMapper();
+		return objectMapper.writeValueAsString(this.getCategories());
 
+	}
+
+	public String getProductUPC() {
+		return productUPC;
+	}
+
+	public void setProductUPC(String productUPC) {
+		this.productUPC = productUPC;
+	}
 
 	public ProductAttribute getProductAttribute() {
 		return productAttribute;
@@ -406,6 +419,10 @@ public abstract class Product {
 	
 	public Set<Tag> getTags() {
 		return tags;
+	}
+	
+	public void setTags(Set<Tag> tags) {
+		this.tags = tags;
 	}
 	
 	public List<ProductAttribute> getAttributes() {
