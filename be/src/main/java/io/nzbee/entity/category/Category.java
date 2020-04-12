@@ -35,6 +35,8 @@ import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Store;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.google.common.collect.Lists;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
@@ -142,6 +144,7 @@ public abstract class Category {
 	@Field(analyze = Analyze.NO, store=Store.YES)
 	private Long categoryLevel;
 
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="cat_typ_id",
 				nullable = false,  
@@ -161,6 +164,7 @@ public abstract class Category {
 	@IndexedEmbedded(depth = 10, includeEmbeddedObjectId=true)
 	private Category parent;
 	
+	@JsonIgnore
 	@OneToMany(	mappedBy="category",
 				cascade = CascadeType.ALL,
 				orphanRemoval = true)
@@ -309,6 +313,18 @@ public abstract class Category {
 		return attributes;
 	}
 	
+	public void setAttributes(Set<CategoryAttribute> attributes) {
+		this.attributes = attributes;
+	}
+	
+	public List<Layout> getLayouts() {
+		return layouts;
+	}
+
+	public void setLayouts(List<Layout> layouts) {
+		this.layouts = layouts;
+	}
+
 	public void addAttribute(CategoryAttribute categoryAttribute) {
 		this.getAttributes().add(categoryAttribute);
 		categoryAttribute.setCategory(this);		
