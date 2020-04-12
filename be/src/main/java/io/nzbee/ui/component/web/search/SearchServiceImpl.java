@@ -390,15 +390,13 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 							   "displayCategories" + transLcl,
 							   "product.department.departmentCode",
 							   "product.department.departmentDesc" + transLcl,
-							   "countryOfOrigin", 
-							   "product.categories.categoryCode",
-							   "product.categories.categoryCode1");
+							   "countryOfOrigin");
 		
 
 		// get the results using jpaQuery object
 		List<Object[]> results = jpaQuery.getResultList();
 		
-		// convert the results of jpaQuery to product Data Transfer Objects			
+		// convert the results of jpaQuery to product sub-type Domain Objects			
 		List<Product> lp = 
 			results.stream().map(r ->  {
 										for(int i=0;i<r.length;i++) {

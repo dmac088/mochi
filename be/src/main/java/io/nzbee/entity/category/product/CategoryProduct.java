@@ -13,15 +13,12 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Store;
 import javax.persistence.JoinColumn;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.product.Product;
 
-@Indexed
 @Entity
 @Table(name = "category_product", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "cat_id")
@@ -37,7 +34,6 @@ public class CategoryProduct extends Category  {
     		   joinColumns 			= @JoinColumn(name = "cat_id"), 
     		   inverseJoinColumns 	= @JoinColumn(name = "prd_id"))
     @JsonIgnore
-    @IndexedEmbedded(includePaths = "productUPC")
     private Set<Product> products = new HashSet<>();
 	
 	@Transient
