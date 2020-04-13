@@ -23,6 +23,7 @@ import org.hibernate.search.query.facet.FacetingRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.domain.Page;
@@ -30,20 +31,20 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import io.nzbee.domain.FacetServices;
 import io.nzbee.domain.IDomainObject;
 import io.nzbee.domain.IService;
 import io.nzbee.domain.brand.Brand;
+import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.department.Department;
 import io.nzbee.domain.product.Food;
 import io.nzbee.domain.product.Jewellery;
 import io.nzbee.domain.product.Product;
+import io.nzbee.entity.IMapper;
 import io.nzbee.entity.PageableUtil;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.ui.component.web.facet.search.SearchFacet;
@@ -65,6 +66,10 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 
 	@PersistenceContext(unitName = "mochiEntityManagerFactory")
 	private EntityManager em;
+	
+	@Autowired
+	@Qualifier(value = "categoryMapper")
+	private IMapper<io.nzbee.domain.category.Category, io.nzbee.entity.category.Category> categoryMapper;
 
 	private Set<Facet> processFacet( String locale, 
 											String currency,
@@ -415,10 +420,10 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 											}
 										}
 			
-										List<CategoryProduct> lpc = new ArrayList<CategoryProduct>();
+										List<CategoryProduct> lcp = new ArrayList<CategoryProduct>();
 										ObjectMapper objectMapper = new ObjectMapper();
 										try {
-											lpc.addAll(objectMapper.readValue(r[16].toString(), new TypeReference<List<CategoryProduct>>(){}));
+											lcp.addAll(objectMapper.readValue(r[16].toString(), new TypeReference<List<CategoryProduct>>(){}));
 										} catch (JsonParseException e) {
 											// TODO Auto-generated catch block
 											e.printStackTrace();
@@ -429,6 +434,8 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 											// TODO Auto-generated catch block
 											e.printStackTrace();
 										}
+										
+										List<ProductCategory> lpc = lcp.stream().map(cp -> (ProductCategory) categoryMapper.entityToDo(cp, lcl, currency)).collect(Collectors.toList());
 				
 										System.out.println(lpc.size());
 										
