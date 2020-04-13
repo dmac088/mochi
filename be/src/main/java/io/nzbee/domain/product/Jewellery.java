@@ -1,8 +1,10 @@
 package io.nzbee.domain.product;
 
 import java.util.Date;
+import java.util.List;
 
 import io.nzbee.domain.brand.Brand;
+import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.department.Department;
 
 public class Jewellery extends Product {
@@ -17,7 +19,8 @@ public class Jewellery extends Product {
 				   	 String lclCd,
 				   	 String currency,
 				   	 Brand brand,
-				   	 Department department) {
+				   	 Department department,
+				   	 List<ProductCategory> categories) {
 	
 	super(productUPC,
 		  productCreateDt,
@@ -29,7 +32,8 @@ public class Jewellery extends Product {
 		  lclCd,
 		  currency,
 		  brand,
-		  department);
+		  department,
+		  categories);
 	}
 
 }

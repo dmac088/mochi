@@ -453,7 +453,8 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 											   	lcl,
 											   	currency,
 											   	new Brand(r[7].toString(), r[8].toString(), 0, lcl, currency),
-											   	new Department(r[13].toString(), r[14].toString(), lcl, currency)
+											   	new Department(r[13].toString(), r[14].toString(), lcl, currency),
+											   	lpc
 												)
 										: new Jewellery(
 												r[5].toString(),
@@ -466,7 +467,8 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 											   	lcl,
 											   	currency,
 											   	new Brand(r[7].toString(), r[8].toString(), 0, lcl, currency),
-											   	new Department(r[13].toString(), r[14].toString(), lcl, currency)));
+											   	new Department(r[13].toString(), r[14].toString(), lcl, currency),
+												lpc));
 				}).collect(Collectors.toList());
 	
 			
