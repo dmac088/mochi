@@ -510,8 +510,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 						"	   coalesce(rprc.prc_val,0) as retail_price,  " + 
 						"	   coalesce(mprc.prc_val,0) as markdown_price,  " + 
 						"	   food.exp_dt, " +
-						"	   food.ctry_of_orig, " + 
-						"	   STRING_AGG(coalesce(ca.cat_desc, ''), ',') as display_categories ") + 
+						"	   food.ctry_of_orig " + 
 		
 		"	FROM descendants cc    " + 
 		"	INNER JOIN mochi.product_category pc    " + 
@@ -607,41 +606,12 @@ public class ProductDaoPostgresImpl implements IProductDao {
 			((hasProductCodes) 	? 	" 	AND prd.upc_cd 		in :productCodes" 	: "") +
 			((hasProductDesc) 	? 	" 	AND attr.prd_desc 	= :productDesc " 	: "") +
 			((hasProductId) 	? 	" 	AND prd.prd_id 		= :productId " 		: "") +
-			
-			((countOnly)
-			? ""
-			: 		"	GROUP BY   cc.cat_id, " + 
-					"	   cc.cat_cd, " +	
-					"	   cc.cat_lvl, " +
-					"	   cc.cat_prnt_id, " +	
-					"	   prd.prd_id,   " + 
-					"	   prd.upc_cd,   " + 
-					"	   prd.prd_crtd_dt,   " +
-					"	   attr.prd_lcl_id, " +
-					"	   attr.prd_desc, " +	
-					"	   attr.prd_img_pth, " +	
-					"	   attr.lcl_cd, " +
-					"	   dept.dept_id,   " + 
-					"	   dept.dept_cd,   " + 
-					"	   dept.dept_class,   " + 
-					"	   bnd.bnd_id,   " + 
-					"	   bnd.bnd_cd,   " + 
-					"	   bal.bnd_lcl_id,		  " + 
-					"	   bal.bnd_desc,   " + 
-					"	   ps.prd_sts_id,   " + 
-					"	   ps.prd_sts_cd,   " + 
-					"	   ps.prd_sts_desc,  " + 
-					"	   rprc.prc_val,  " + 
-					"	   mprc.prc_val,  " + 
-					"	   food.exp_dt, " +
-					"	   food.ctry_of_orig ") +
-			
-			
+		
 			((countOnly || !offset) 
 					? 	""
 					: 	//" ORDER BY 	:orderby " + 
 						" LIMIT 	:limit " +
-						" OFFSET 	:offset "
+						" OFFSET 	:offset ")
 			);
 	}
 
