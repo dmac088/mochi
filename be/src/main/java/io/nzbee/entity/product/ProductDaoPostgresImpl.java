@@ -515,22 +515,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		"	FROM descendants cc    " + 
 		"	INNER JOIN mochi.product_category pc    " + 
 		"	ON cc.cat_id = pc.cat_id    " + 
-		
-		"	INNER JOIN mochi.category_attr_lcl ca    " + 
-		"	ON cc.cat_id = ca.cat_id    " + 
-		"	AND ca.lcl_cd = :locale " +		
-
-		"	INNER JOIN mochi.category p1	  " + 
-		"	ON cc.cat_prnt_id = p1.cat_id   " + 
-		 
-		"	LEFT JOIN mochi.category p2	  " + 
-		"	ON p1.cat_prnt_id = p2.cat_id  " + 
-		 
-		"	LEFT JOIN mochi.category p3	  " + 
-		"	ON p2.cat_prnt_id = p3.cat_id  " + 
-		 
-		"	LEFT JOIN mochi.category p4	  " + 
-		"	ON p3.cat_prnt_id = p4.cat_id  " + 
 	
 		"	INNER JOIN mochi.product prd    " + 
 		"	ON pc.prd_id = prd.prd_id   " + 
@@ -578,12 +562,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		"	INNER JOIN mochi.product_status ps    " + 
 		"	ON prd.prd_sts_id = ps.prd_sts_id   " + 
 		
-		((hasTags) ? 
-						"	INNER JOIN mochi.product_tag ptags	 " +
-						"	ON prd.prd_id = ptags.prd_id " +
-		
-						"	INNER JOIN mochi.tag tag	 " +
-						"	ON ptags.tag_id = tag.tag_id "
+		((hasTags) ? 	""
 				   : 	"") +
 		
 		"WHERE 0=0 " +
