@@ -143,7 +143,6 @@ public abstract class Category {
 	@Field(analyze = Analyze.NO, store=Store.YES)
 	private Long categoryLevel;
 
-	//@JsonIgnore
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="cat_typ_id",
 				nullable = false,  
