@@ -36,9 +36,12 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Store;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.google.common.collect.Lists;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
+import io.nzbee.entity.category.brand.CategoryBrand;
+import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.entity.layout.Layout;
 
@@ -47,10 +50,11 @@ import io.nzbee.entity.layout.Layout;
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name="cat_typ_id")
 @JsonTypeInfo(
-	    use = JsonTypeInfo.Id.MINIMAL_CLASS,
+	    use = JsonTypeInfo.Id.NAME,
 	    include = JsonTypeInfo.As.PROPERTY,
-	    property = "@class")
-
+	    property="type")
+@JsonSubTypes( {@JsonSubTypes.Type(value = CategoryProduct.class, 	name = "categoryproduct"),
+			    @JsonSubTypes.Type(value = CategoryBrand.class, 	name = "categorybrand")})
 @SqlResultSetMapping(
     name = "CategoryMapping",
     columns = {

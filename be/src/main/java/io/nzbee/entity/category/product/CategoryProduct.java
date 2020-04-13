@@ -16,6 +16,8 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Store;
 import javax.persistence.JoinColumn;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.product.Product;
 
@@ -23,6 +25,7 @@ import io.nzbee.entity.product.Product;
 @Table(name = "category_product", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "cat_id")
 @DiscriminatorValue("1")
+@JsonTypeName("categoryproduct")
 public class CategoryProduct extends Category  {
 	
 	@ManyToMany(fetch = FetchType.LAZY, 

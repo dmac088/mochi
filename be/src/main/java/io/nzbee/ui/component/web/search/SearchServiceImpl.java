@@ -1,6 +1,8 @@
 package io.nzbee.ui.component.web.search;
 
 import java.util.Date;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -28,6 +30,12 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import io.nzbee.domain.FacetServices;
 import io.nzbee.domain.IDomainObject;
 import io.nzbee.domain.IService;
@@ -37,6 +45,7 @@ import io.nzbee.domain.product.Food;
 import io.nzbee.domain.product.Jewellery;
 import io.nzbee.domain.product.Product;
 import io.nzbee.entity.PageableUtil;
+import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.ui.component.web.facet.search.SearchFacet;
 import io.nzbee.ui.component.web.facet.search.SearchFacetHelper;
 import io.nzbee.ui.component.web.facet.search.SearchFacetWithFieldHelper;
@@ -390,7 +399,8 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 							   "displayCategories" + transLcl,
 							   "product.department.departmentCode",
 							   "product.department.departmentDesc" + transLcl,
-							   "countryOfOrigin");
+							   "countryOfOrigin",
+							   "categoriesJSON");
 		
 
 		// get the results using jpaQuery object
@@ -405,7 +415,23 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 											}
 										}
 			
+										List<CategoryProduct> lpc = new ArrayList<CategoryProduct>();
+										ObjectMapper objectMapper = new ObjectMapper();
+										try {
+											lpc.addAll(objectMapper.readValue(r[16].toString(), new TypeReference<List<CategoryProduct>>(){}));
+										} catch (JsonParseException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										} catch (JsonMappingException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										} catch (IOException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
 				
+										System.out.println(lpc.size());
+										
 										return (r[13].toString().equals("FOO01")
 										? new Food(
 												r[5].toString(),

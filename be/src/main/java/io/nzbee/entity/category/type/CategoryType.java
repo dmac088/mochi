@@ -29,6 +29,10 @@ public class CategoryType {
 		return Id;
 	}
 
+	public void setId(Long id) {
+		Id = id;
+	}
+
 	public String getCategoryTypeCode() {
 		return categoryTypeCode;
 	}
