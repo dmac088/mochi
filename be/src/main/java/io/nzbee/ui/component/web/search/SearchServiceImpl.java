@@ -437,8 +437,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 										
 										List<ProductCategory> lpc = lcp.stream().map(cp -> (ProductCategory) categoryMapper.entityToDo(cp, lcl, currency)).collect(Collectors.toList());
 				
-										System.out.println(lpc.size());
-										
 										return (r[13].toString().equals("FOO01")
 										? new Food(
 												r[5].toString(),
