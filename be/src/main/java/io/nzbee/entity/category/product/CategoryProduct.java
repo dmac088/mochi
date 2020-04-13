@@ -102,7 +102,8 @@ public class CategoryProduct extends Category  {
 
 	@Override
 	public String getType() {
+		return "categoryproduct";
 		// TODO Auto-generated method stub
-		return this.getClass().getSimpleName().toLowerCase();
+		//return this.getClass().getSimpleName().toLowerCase();
 	}
 }
