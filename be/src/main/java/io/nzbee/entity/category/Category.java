@@ -161,6 +161,7 @@ public abstract class Category {
 	@OrderBy
 	private List<Layout> layouts;
 	
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY, optional=false)
 	@JoinColumn(name="cat_prnt_id", nullable=false)
 	@IndexedEmbedded(depth = 10, includeEmbeddedObjectId=true)
@@ -202,6 +203,7 @@ public abstract class Category {
 	public abstract String getType();
 	
 	@Transient
+	@JsonIgnore
 	@Field(analyze = Analyze.NO, store=Store.YES)
 	public String getCategoryTokenField() {
 		String token = createCategoryToken(this, new ArrayList<String>());
@@ -211,6 +213,7 @@ public abstract class Category {
 	
 	@Transient
 	@Field(analyze = Analyze.NO, store=Store.YES)
+	@JsonIgnore
 	@Facet
 	public String getCategoryToken() {
 		return this.getCategoryTokenField();
@@ -268,12 +271,14 @@ public abstract class Category {
 	}
 	
 	@Transient
+	@JsonIgnore
 	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "en-GB"))
 	public String getCategoryDescENGB() {
 		return this.getAttributes().stream().filter(pa -> pa.getLclCd().equals("en-GB")).findFirst().get().getCategoryDesc();
 	}
 	
 	@Transient
+	@JsonIgnore
 	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "zh-HK"))
 	public String getCategoryDescZHHK() {
 		return this.getAttributes().stream().filter(pa -> pa.getLclCd().equals("zh-HK")).findFirst().get().getCategoryDesc();
@@ -365,6 +370,7 @@ public abstract class Category {
 		return currency;
 	}
 	
+	@JsonIgnore
 	public String getTypeDiscriminator() {
 		return this.getClass().getAnnotation(DiscriminatorValue.class).value();
 	}
