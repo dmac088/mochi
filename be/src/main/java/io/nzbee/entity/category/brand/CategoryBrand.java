@@ -62,5 +62,11 @@ public class CategoryBrand extends Category {
 		this.brands.remove(brand);
 		brand.removeBrandCategory(this);
 	}
+
+	@Override
+	public String getType() {
+		// TODO Auto-generated method stub
+		return this.getClass().getSimpleName().toLowerCase();
+	}
 	
 }

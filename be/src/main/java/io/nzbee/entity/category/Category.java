@@ -199,6 +199,8 @@ public abstract class Category {
 	@JsonIgnore
 	private String currency;
 	
+	public abstract String getType();
+	
 	@Transient
 	@Field(analyze = Analyze.NO, store=Store.YES)
 	public String getCategoryTokenField() {

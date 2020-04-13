@@ -99,4 +99,10 @@ public class CategoryProduct extends Category  {
     public int hashCode() {
         return 32;
     }
+
+	@Override
+	public String getType() {
+		// TODO Auto-generated method stub
+		return this.getClass().getSimpleName().toLowerCase();
+	}
 }
