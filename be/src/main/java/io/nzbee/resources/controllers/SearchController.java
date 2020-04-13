@@ -47,7 +47,7 @@ public class SearchController {
 											    	@RequestParam("size") int 	 size, 
 						    						@PathVariable String 	  	 sortBy, 
 						    						@RequestBody  Set<IFacet> 	 selectedFacets,
-						    						@SuppressWarnings("rawtypes") PagedResourcesAssembler assembler) {
+						    						PagedResourcesAssembler<ProductResource> assembler) {
 
 		LOGGER.debug("Searching for products with patameters: {}, {}, {}", locale, currency, term);
 		
