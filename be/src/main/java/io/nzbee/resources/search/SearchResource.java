@@ -1,6 +1,7 @@
 package io.nzbee.resources.search;
 
 import org.springframework.hateoas.PagedResources;
+import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.ResourceAssembler;
 import org.springframework.hateoas.ResourceSupport;
 import io.nzbee.domain.product.Product;
@@ -18,11 +19,10 @@ import org.springframework.data.web.PagedResourcesAssembler;
 @Getter
 public class SearchResource extends ResourceSupport {
 	
-    private PagedResources<ProductResource> products;
+    private PagedResources<Resource<ProductResource>> products;
     
     private Set<IFacet> facets;
     
-	@SuppressWarnings("unchecked")
 	public SearchResource(String locale, 
 						  String currency, 
 						  String category,
@@ -31,7 +31,7 @@ public class SearchResource extends ResourceSupport {
 						  int size,
 						  String sortBy,
 						  Set<IFacet> searchFacets,
-  						  PagedResourcesAssembler assembler,
+  						  PagedResourcesAssembler<ProductResource> assembler,
   						  ResourceAssembler<Product, ProductResource> prodAssembler,
   						  ISearchService iss) {
 
@@ -62,7 +62,7 @@ public class SearchResource extends ResourceSupport {
     }
 
 
-	public PagedResources<ProductResource> getProducts() {
+	public PagedResources<Resource<ProductResource>> getProducts() {
 		return products;
 	}
 

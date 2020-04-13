@@ -46,6 +46,8 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	
 	@Override
 	public <T> List<Category> findByCodeAndType(String locale, String currency, Class<T> cls) {
+		
+		
 		Session session = em.unwrap(Session.class);
 		
 		Query query = session.createNativeQuery(constructSQL(false, 
