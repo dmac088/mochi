@@ -4,14 +4,12 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-
-import io.nzbee.domain.category.BrandCategory;
 import io.nzbee.domain.category.Category;
-import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.ports.ICategoryPortService;
+import io.nzbee.entity.IMapper;
 import io.nzbee.entity.category.ICategoryService;
-import io.nzbee.entity.category.product.CategoryProduct;
 
 @Component
 public class PostgresCategoryAdapter implements ICategoryPortService {
@@ -20,12 +18,15 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	@Autowired 
 	private ICategoryService categoryService;
 	
+	@Autowired
+	@Qualifier(value = "categoryMapper")
+	private IMapper<io.nzbee.domain.category.Category, io.nzbee.entity.category.Category> categoryMapper;
 
 	@Override
 	public Set<Category> findAll(String locale, String currency, Set<String> codes) {
 		// TODO Auto-generated method stub
 		return categoryService.findAll(locale, currency, codes)
-				.stream().map(c -> this.entityToDo(c)).collect(Collectors.toSet());
+				.stream().map(c -> categoryMapper.entityToDo(c)).collect(Collectors.toSet());
 	}
 	
 	@Override
@@ -64,48 +65,14 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	public Set<Category> findAll(String locale, String currency) {
 		// TODO Auto-generated method stub
 		return categoryService.findAll(locale, currency)
-				.stream().map(c -> this.entityToDo(c)).collect(Collectors.toSet());
+				.stream().map(c -> categoryMapper.entityToDo(c)).collect(Collectors.toSet());
 	}
 
 	@Override
 	public Category findByCode(String locale, String currency, String code) {
 		// TODO Auto-generated method stub
-		return entityToDo(categoryService.findByCode(locale, currency, code).get());
+		return categoryMapper.entityToDo(categoryService.findByCode(locale, currency, code).get());
 				
-	}
-
-	
-	private Category entityToDo(io.nzbee.entity.category.Category e) {
-		if(e instanceof CategoryProduct) {
-			return new ProductCategory(
-					e.getCategoryCode(),
-					e.getAttributes().stream().filter(c -> c.getLclCd().equals(e.getLocale())).findFirst().get().getCategoryDesc(),
-					true,
-					e.getCategoryLevel(),
-					e.getCategoryType().getCategoryTypeDesc(),
-					e.getObjectCount(),
-					e.getParent().isPresent()
-					? e.getParent().get().getCategoryCode()
-					: null,
-					e.getLocale(), 
-					e.getCurrency()
-			);
-		}
-		return new BrandCategory(
-				e.getCategoryCode(),
-				e.getAttributes().stream().filter(c -> c.getLclCd().equals(e.getLocale())).findFirst().get().getCategoryDesc(),
-				true,
-				e.getCategoryLevel(),
-				e.getCategoryType().getCategoryTypeDesc(),
-				e.getObjectCount(),
-				e.getParent().isPresent()
-				? e.getParent().get().getCategoryCode()
-				: null,
-				e.getLocale(), 
-				e.getCurrency()
-		);
-	}
-
-	
+	}	
 
 }

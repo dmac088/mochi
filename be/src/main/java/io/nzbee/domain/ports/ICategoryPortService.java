@@ -9,6 +9,4 @@ public interface ICategoryPortService  extends IPortService<Category> {
 
 	Set<Category> findByParent(String parentCategoryCode, String currency, String locale);
 
-	
-
 }
