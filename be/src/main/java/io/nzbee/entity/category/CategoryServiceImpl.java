@@ -17,56 +17,47 @@ public class CategoryServiceImpl implements ICategoryService {
 	
 	@Override
 	public Optional<Category> findById(String locale, String currency, long id) {
-		// TODO Auto-generated method stub
 		return categoryDAO.findById(locale, currency, id);
 	}
 
 	@Override
 	public Optional<Category> findByCode(String locale, String currency, String code) {
-		// TODO Auto-generated method stub
 		return categoryDAO.findByCode(locale, currency, code);
 	}
 	
 	@Override
 	public Optional<Category> findByDesc(String locale, String currency, String categoryDesc) {
-		// TODO Auto-generated method stub
 		return categoryDAO.findByDesc(locale, currency, categoryDesc);
 	}
 	
 	@Override
 	public List<Category> findAll(String locale, String currency) {
-		// TODO Auto-generated method stub
 		return categoryDAO.findAll(locale, currency);
 	}
 	
 	@Override
 	public List<Category> findAll(String locale, String currency, Set<String> categoryCodes) {
-		// TODO Auto-generated method stub
 		return categoryDAO.findAll(locale, currency, categoryCodes);
 	}
 	
 
 	@Override
 	public <T> List<Category> findAll(String locale, String currency, Class<T> classType) {
-		// TODO Auto-generated method stub
 		return categoryDAO.findByCodeAndType(locale, currency, classType);
 	}
 	
 	@Override
 	public List<Category> findAll(String locale, String parentCategoryDesc, List<String> brandCodes, List<String> tagCodes) {
-		// TODO Auto-generated method stub
 		return categoryDAO.findChildrenByCriteria(locale, parentCategoryDesc, brandCodes, tagCodes);
 	}
 
 	@Override
 	public List<Category> findByParent(String locale, String parentCategoryCode) {
-		// TODO Auto-generated method stub
 		return categoryDAO.findByParent(locale, parentCategoryCode);
 	}
 
 	@Override
 	public List<Category> findAllForLevel(String locale, String currency, Long level) {
-		// TODO Auto-generated method stub
 		return categoryDAO.findByLevel(locale, level);
 	}
 	
