@@ -415,7 +415,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			results.stream().map(r ->  {
 										for(int i=0;i<r.length;i++) {
 											if(r[i] != null) {
-												System.out.println(i + " - " + r[i].toString());
+												LOGGER.debug(i + " - " + r[i].toString());
 											}
 										}
 			
