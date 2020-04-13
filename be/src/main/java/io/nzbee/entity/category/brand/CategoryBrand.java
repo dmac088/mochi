@@ -13,6 +13,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.JoinColumn;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.category.Category;
 
@@ -20,6 +22,7 @@ import io.nzbee.entity.category.Category;
 @Table(name = "category_brand", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "cat_id")
 @DiscriminatorValue("2")
+@JsonTypeName("categorybrand")
 public class CategoryBrand extends Category {
 
 	@ManyToMany(fetch = FetchType.LAZY, 
