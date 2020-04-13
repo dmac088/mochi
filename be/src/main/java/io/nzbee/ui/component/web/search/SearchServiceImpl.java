@@ -445,7 +445,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 												Double.parseDouble(r[10].toString()),
 												Double.parseDouble(r[11].toString()),
 												r[3].toString(),
-											   	"",
 											   	lcl,
 											   	currency,
 											   	new Brand(r[7].toString(), r[8].toString(), 0, lcl, currency),
