@@ -2,7 +2,6 @@ package io.nzbee.ui.component.web.search;
 
 import java.util.Date;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -420,23 +419,8 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 											}
 										}
 			
-										List<CategoryProduct> lcp = new ArrayList<CategoryProduct>();
-										ObjectMapper objectMapper = new ObjectMapper();
-										try {
-											lcp.addAll(objectMapper.readValue(r[16].toString(), new TypeReference<List<CategoryProduct>>(){}));
-										} catch (JsonParseException e) {
-											// TODO Auto-generated catch block
-											e.printStackTrace();
-										} catch (JsonMappingException e) {
-											// TODO Auto-generated catch block
-											e.printStackTrace();
-										} catch (IOException e) {
-											// TODO Auto-generated catch block
-											e.printStackTrace();
-										}
-										
-										List<ProductCategory> lpc = lcp.stream().map(cp -> (ProductCategory) categoryMapper.entityToDo(cp, lcl, currency)).collect(Collectors.toList());
-				
+										List<ProductCategory> lpc = serializeProducts(r[16].toString(), lcl, currency);
+								
 										return (r[13].toString().equals("FOO01")
 										? new Food(
 												r[5].toString(),
@@ -472,6 +456,24 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			
 		return new PageImpl<Product>(lp, pageable, jpaQuery.getResultSize());
 		
+	}
+	
+	private List<ProductCategory> serializeProducts(String payload, String locale, String currency) {
+		ObjectMapper objectMapper = new ObjectMapper();
+		List<CategoryProduct> lcp = null;
+		try {
+			lcp = objectMapper.readValue(payload, new TypeReference<List<CategoryProduct>>(){});
+		} catch (JsonParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return lcp.stream().map(cp -> (ProductCategory) categoryMapper.entityToDo(cp, locale, currency)).collect(Collectors.toList());
 	}
  
 
