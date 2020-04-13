@@ -36,7 +36,6 @@ public class Food extends Product {
 			  productRetail,
 			  productMarkdown,
 			  productImage,
-			  displayCategories,
 			  lclCd,
 			  currency,
 			  brand,

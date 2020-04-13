@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
@@ -56,7 +57,6 @@ public class Product {
 				   	Double productRetail,
 				   	Double productMarkdown,
 				   	String productImage,
-				   	String displayCategories,
 				   	String lclCd,
 				   	String currency,
 				   	Brand brand,
@@ -69,13 +69,13 @@ public class Product {
 					this.productRetail = productRetail;
 					this.productMarkdown = productMarkdown;
 					this.productImage = productImage;
-					this.displayCategories = displayCategories;
 					this.lclCd = lclCd;
 					this.currency = currency;
 					this.categories = categories;
 					this.brand = brand;
 					this.department = department;
 					this.tags = new ArrayList<Tag>();
+					this.displayCategories = String.join(",", categories.stream().map(c -> c.getCategoryDesc()).collect(Collectors.toSet()));
 	}
 	
 	public void addCategory(ProductCategory productCategory) {
