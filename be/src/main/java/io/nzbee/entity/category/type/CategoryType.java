@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.NaturalId;
+
 @Entity
 @Table(name = "category_type", schema = "mochi")
 public class CategoryType {
@@ -16,6 +18,7 @@ public class CategoryType {
 	@Column(name="cat_typ_id")
 	private Long Id;
 
+	@NaturalId
 	@Column(name="cat_typ_cd")
 	private String categoryTypeCode;
 	
@@ -26,23 +29,19 @@ public class CategoryType {
 		return Id;
 	}
 
-	public void setId(Long id) {
-		Id = id;
-	}
-	
-	public String getCode() {
+	public String getCategoryTypeCode() {
 		return categoryTypeCode;
 	}
 
-	public void setCode(String categoryTypeCode) {
+	public void setCategoryTypeCode(String categoryTypeCode) {
 		this.categoryTypeCode = categoryTypeCode;
 	}
 
-	public String getDesc() {
+	public String getCategoryTypeDesc() {
 		return categoryTypeDesc;
 	}
 
-	public void setDesc(String categoryTypeDesc) {
+	public void setCategoryTypeDesc(String categoryTypeDesc) {
 		this.categoryTypeDesc = categoryTypeDesc;
 	}
 	
