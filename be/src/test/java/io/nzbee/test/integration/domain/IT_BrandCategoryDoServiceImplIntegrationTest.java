@@ -100,13 +100,13 @@ public class IT_BrandCategoryDoServiceImplIntegrationTest {
     
     private void assertFound(final Category found) {
 
-    	assertThat(found.getCode())
+    	assertThat(found.getCategoryCode())
         .isEqualTo("TST02");
     	
-	    assertThat(found.getLevel())
+	    assertThat(found.getCategoryLevel())
 	    .isEqualTo(new Long(2));
 	    
-	    assertThat(found.getDesc())
+	    assertThat(found.getCategoryDesc())
 	    .isEqualTo("test brand category");
     }
     
