@@ -130,7 +130,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
         .isEqualTo("TST02");
 	    assertThat(found.getCategoryLevel())
 	    .isEqualTo(new Long(1));
-	    assertThat(found.getCategoryType().getCode())
+	    assertThat(found.getCategoryType().getCategoryTypeCode())
 	    .isEqualTo("PRD01");
 	    assertThat(found.getCategoryAttribute().getCategoryDesc())
 	    .isEqualTo("test product category");

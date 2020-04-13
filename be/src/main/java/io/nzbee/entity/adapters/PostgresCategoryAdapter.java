@@ -82,7 +82,7 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 					e.getAttributes().stream().filter(c -> c.getLclCd().equals(e.getLocale())).findFirst().get().getCategoryDesc(),
 					true,
 					e.getCategoryLevel(),
-					e.getCategoryType().getDesc(),
+					e.getCategoryType().getCategoryTypeDesc(),
 					e.getObjectCount(),
 					e.getParent().isPresent()
 					? e.getParent().get().getCategoryCode()
@@ -96,7 +96,7 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 				e.getAttributes().stream().filter(c -> c.getLclCd().equals(e.getLocale())).findFirst().get().getCategoryDesc(),
 				true,
 				e.getCategoryLevel(),
-				e.getCategoryType().getDesc(),
+				e.getCategoryType().getCategoryTypeDesc(),
 				e.getObjectCount(),
 				e.getParent().isPresent()
 				? e.getParent().get().getCategoryCode()

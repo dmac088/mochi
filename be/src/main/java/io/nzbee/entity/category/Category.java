@@ -35,7 +35,6 @@ import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Store;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.google.common.collect.Lists;
@@ -144,8 +143,8 @@ public abstract class Category {
 	@Field(analyze = Analyze.NO, store=Store.YES)
 	private Long categoryLevel;
 
-	@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY)
+	//@JsonIgnore
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="cat_typ_id",
 				nullable = false,  
 				updatable = false, 
@@ -164,31 +163,37 @@ public abstract class Category {
 	@IndexedEmbedded(depth = 10, includeEmbeddedObjectId=true)
 	private Category parent;
 	
-	@JsonIgnore
 	@OneToMany(	mappedBy="category",
 				cascade = CascadeType.ALL,
 				orphanRemoval = true)
 	private Set<CategoryAttribute> attributes = new HashSet<CategoryAttribute>();
 	
 	@Transient
+	@JsonIgnore
 	private CategoryAttribute categoryAttribute;
 	
 	@Transient
+	@JsonIgnore
 	private String[] categoryLayouts;
 
 	@Transient
+	@JsonIgnore
 	private Long childCount;
 	
 	@Transient
+	@JsonIgnore
 	private Long maxRetailPrice;
 	
 	@Transient
+	@JsonIgnore
 	private Long maxMarkdownPrice;
 	
 	@Transient
+	@JsonIgnore
 	private String locale;
 	
 	@Transient
+	@JsonIgnore
 	private String currency;
 	
 	@Transient

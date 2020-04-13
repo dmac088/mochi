@@ -40,14 +40,6 @@ public class CategoryAttribute {
 		return categoryAttributeId;
 	}
 
-	public void setCategoryAttributeId(Long categoryAttributeId) {
-		this.categoryAttributeId = categoryAttributeId;
-	}
-
-	public Category getCategory() {
-		return this.category;
-	}
-
 	public void setCategory(Category productCategory) {
 		this.category = productCategory;
 	}
