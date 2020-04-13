@@ -55,8 +55,8 @@ public class CategoryMapper implements IMapper<Category, io.nzbee.entity.categor
 					e.getParent().isPresent()
 					? e.getParent().get().getCategoryCode()
 					: null,
-					e.getLocale(), 
-					e.getCurrency()
+					locale, 
+					currency
 			);
 		}
 		return new BrandCategory(
@@ -69,8 +69,8 @@ public class CategoryMapper implements IMapper<Category, io.nzbee.entity.categor
 				e.getParent().isPresent()
 				? e.getParent().get().getCategoryCode()
 				: null,
-				e.getLocale(), 
-				e.getCurrency()
+				locale, 
+				currency
 		);
 	}
 	
