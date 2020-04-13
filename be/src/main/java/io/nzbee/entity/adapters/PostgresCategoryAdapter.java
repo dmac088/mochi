@@ -36,12 +36,6 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	}
 
 	@Override
-	public Category findByDesc(String locale, String currency, String desc) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Set<Category> findAllForLevel(String locale, String currency, Long level) {
 		// TODO Auto-generated method stub
 		return null;
@@ -54,25 +48,24 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	}
 
 	@Override
-	public void save(Category domainObject) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	
-
-	@Override
 	public Set<Category> findAll(String locale, String currency) {
-		// TODO Auto-generated method stub
 		return categoryService.findAll(locale, currency)
 				.stream().map(c -> categoryMapper.entityToDo(c, locale, currency)).collect(Collectors.toSet());
 	}
 
 	@Override
 	public Category findByCode(String locale, String currency, String code) {
-		// TODO Auto-generated method stub
 		return categoryMapper.entityToDo(categoryService.findByCode(locale, currency, code).get());
-				
 	}	
+	
+	@Override
+	public Category findByDesc(String locale, String currency, String desc) {
+		return categoryMapper.entityToDo(categoryService.findByDesc(locale, currency, desc).get());
+	}
+
+	@Override
+	public void save(Category domainObject) {
+		// TODO Auto-generated method stub
+	}
 
 }
