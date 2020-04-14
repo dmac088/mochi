@@ -1,5 +1,8 @@
 package io.nzbee.entity.product.department;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class DepartmentMapper implements IDepartmentMapper {
 
 	@Override
