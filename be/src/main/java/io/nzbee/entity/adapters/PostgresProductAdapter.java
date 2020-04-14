@@ -10,10 +10,16 @@ import org.springframework.stereotype.Component;
 
 import io.nzbee.domain.ports.IProductPortService;
 import io.nzbee.domain.product.Product;
+import io.nzbee.entity.IMapper;
+import io.nzbee.entity.product.IProductService;
 
 @Component
 public class PostgresProductAdapter implements IProductPortService {
 
+	private IProductService productService;
+	
+	private IMapper<Product, io.nzbee.entity.product.Product> productMapper;
+	
 	@Override
 	public Optional<Product> findByCode(String code) {
 		// TODO Auto-generated method stub
@@ -29,7 +35,7 @@ public class PostgresProductAdapter implements IProductPortService {
 	@Override
 	public Product findByCode(String locale, String currency, String code) {
 		// TODO Auto-generated method stub
-		return null;
+		return productMapper.entityToDo(productService.findByCode(locale, currency, code).get());
 	}
 
 	@Override
