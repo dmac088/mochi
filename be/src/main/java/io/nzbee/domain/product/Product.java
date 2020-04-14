@@ -4,13 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-
 import io.nzbee.domain.brand.Brand;
-import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.department.Department;
 import io.nzbee.domain.tag.Tag;
 
@@ -36,9 +32,6 @@ public class Product {
 	private String currency;
 	
 	@JsonIgnore
-	private List<ProductCategory> categories;
-	
-	@JsonIgnore
 	private Department department;
 	
 	@JsonIgnore
@@ -60,8 +53,7 @@ public class Product {
 				   	String lclCd,
 				   	String currency,
 				   	Brand brand,
-				   	Department department,
-				   	List<ProductCategory> categories) {
+				   	Department department) {
 		
 					this.productUPC = productUPC;
 					this.productCreateDt = productCreateDt;
@@ -71,19 +63,9 @@ public class Product {
 					this.productImage = productImage;
 					this.lclCd = lclCd;
 					this.currency = currency;
-					this.categories = categories;
 					this.brand = brand;
 					this.department = department;
 					this.tags = new ArrayList<Tag>();
-					this.displayCategories = String.join(",", categories.stream().map(c -> c.getCategoryDesc()).collect(Collectors.toSet()));
-	}
-	
-	public void addCategory(ProductCategory productCategory) {
-		this.getCategories().add(productCategory);
-	}
-	
-	public void removeCategory(ProductCategory productCategory) {
-		this.getCategories().remove(productCategory);
 	}
 	
 	public Department getDepartment() {
@@ -128,10 +110,6 @@ public class Product {
 	
 	public String getCurrency() {
 		return currency;
-	}
-
-	public List<ProductCategory> getCategories() {
-		return categories;
 	}
 
 	@Override
