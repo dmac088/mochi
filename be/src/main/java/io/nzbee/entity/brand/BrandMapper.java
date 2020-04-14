@@ -1,5 +1,8 @@
 package io.nzbee.entity.brand;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class BrandMapper implements IBrandMapper {
 
 

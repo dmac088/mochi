@@ -1,7 +1,6 @@
 package io.nzbee.ui.component.web.search;
 
 import java.util.Date;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -29,22 +28,15 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.nzbee.domain.FacetServices;
 import io.nzbee.domain.IDomainObject;
 import io.nzbee.domain.IService;
 import io.nzbee.domain.brand.Brand;
-import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.department.Department;
 import io.nzbee.domain.product.Food;
 import io.nzbee.domain.product.Jewellery;
 import io.nzbee.domain.product.Product;
 import io.nzbee.entity.PageableUtil;
-import io.nzbee.entity.category.ICategoryMapper;
-import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.ui.component.web.facet.search.SearchFacet;
 import io.nzbee.ui.component.web.facet.search.SearchFacetHelper;
 import io.nzbee.ui.component.web.facet.search.SearchFacetWithFieldHelper;
@@ -64,9 +56,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 
 	@PersistenceContext(unitName = "mochiEntityManagerFactory")
 	private EntityManager em;
-	
-	@Autowired
-	private ICategoryMapper categoryMapper;
 
 	private Set<Facet> processFacet( String locale, 
 											String currency,
@@ -417,8 +406,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 											}
 										}
 			
-										List<ProductCategory> lpc = serializeProducts(r[16].toString(), lcl, currency);
-								
 										return (r[13].toString().equals("FOO01")
 										? new Food(
 												r[5].toString(),
@@ -432,8 +419,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 											   	lcl,
 											   	currency,
 											   	new Brand(r[7].toString(), r[8].toString(), 0, lcl, currency),
-											   	new Department(r[13].toString(), r[14].toString(), lcl, currency),
-											   	lpc
+											   	new Department(r[13].toString(), r[14].toString(), lcl, currency)
 												)
 										: new Jewellery(
 												r[5].toString(),
@@ -445,33 +431,14 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 											   	lcl,
 											   	currency,
 											   	new Brand(r[7].toString(), r[8].toString(), 0, lcl, currency),
-											   	new Department(r[13].toString(), r[14].toString(), lcl, currency),
-												lpc));
+											   	new Department(r[13].toString(), r[14].toString(), lcl, currency)));
 				}).collect(Collectors.toList());
 	
 			
 		return new PageImpl<Product>(lp, pageable, jpaQuery.getResultSize());
 		
 	}
-	
-	private List<ProductCategory> serializeProducts(String payload, String locale, String currency) {
-		ObjectMapper objectMapper = new ObjectMapper();
-		List<CategoryProduct> lcp = null;
-		try {
-			lcp = objectMapper.readValue(payload, new TypeReference<List<CategoryProduct>>(){});
-		} catch (JsonParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return lcp.stream().map(cp -> (ProductCategory) categoryMapper.entityToDo(cp, locale, currency)).collect(Collectors.toList());
-	}
- 
+
 
 	private org.apache.lucene.search.Sort getSortField(String field, String currency, String locale) {
 		switch (field) {
