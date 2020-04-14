@@ -22,7 +22,6 @@ import org.hibernate.search.query.facet.FacetingRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.domain.Page;
@@ -43,8 +42,8 @@ import io.nzbee.domain.department.Department;
 import io.nzbee.domain.product.Food;
 import io.nzbee.domain.product.Jewellery;
 import io.nzbee.domain.product.Product;
-import io.nzbee.entity.IMapper;
 import io.nzbee.entity.PageableUtil;
+import io.nzbee.entity.category.ICategoryMapper;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.ui.component.web.facet.search.SearchFacet;
 import io.nzbee.ui.component.web.facet.search.SearchFacetHelper;
@@ -67,8 +66,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 	private EntityManager em;
 	
 	@Autowired
-	@Qualifier(value = "categoryMapper")
-	private IMapper<io.nzbee.domain.category.Category, io.nzbee.entity.category.Category> categoryMapper;
+	private ICategoryMapper categoryMapper;
 
 	private Set<Facet> processFacet( String locale, 
 											String currency,
@@ -431,7 +429,6 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 												r[3].toString(),
 												r[15].toString(),
 											   	new Date(),
-											   	"",
 											   	lcl,
 											   	currency,
 											   	new Brand(r[7].toString(), r[8].toString(), 0, lcl, currency),

@@ -1,39 +1,37 @@
 package io.nzbee.entity.product;
-import io.nzbee.domain.category.Category;
 
+import java.util.List;
 import org.springframework.stereotype.Component;
-
-import io.nzbee.domain.category.BrandCategory;
+import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.category.ProductCategory;
-import io.nzbee.entity.IMapper;
-import io.nzbee.entity.category.product.CategoryProduct;
+import io.nzbee.domain.department.Department;
 import io.nzbee.entity.product.food.Food;
-import io.nzbee.entity.product.jewellery.Jewellery;
 
 @Component(value="productMapper")
-public class ProductMapper implements IMapper<io.nzbee.domain.product.Product, Product> {
+public class ProductMapper implements IProductMapper {
 
-	public io.nzbee.domain.product.Product entityToDo(Product e) {
-		if(e instanceof Food) {
-			return new io.nzbee.domain.product.Food(
-					
-			);
-		}
-		return new io.nzbee.domain.product.Jewellery(
-			
-		);
-	}
-	
 	@Override
-	public io.nzbee.domain.product.Product entityToDo(Product e, String locale, String currency) {
+	public io.nzbee.domain.product.Product entityToDo(Product e, Brand brand, Department deprartment, List<ProductCategory> categories) {
+		
 		if(e instanceof Food) {
 			return new io.nzbee.domain.product.Food(
-					
-			);
+					e.getProductUPC(),
+				   	e.getProductCreateDt(),
+				   	e.getProductAttribute().getProductDesc(),
+				   	e.getRetailPrice(),
+				   	e.getMarkdownPrice(),
+				   	e.getImagePath(),
+				   	((Food) e).getCountryOfOrigin(),
+				   	((Food) e).getExpiryDate(),
+				   	e.getLocale(),
+				   	e.getCurrency(),
+				   	brand,
+				   	deprartment,
+				   	categories);
 		}
-		return new io.nzbee.domain.product.Jewellery(
-
-		);
+		return null;
 	}
-	
+
+
+
 }

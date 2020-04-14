@@ -497,6 +497,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 						"	   attr.prd_desc, " +	
 						"	   attr.prd_img_pth, " +	
 						"	   attr.lcl_cd, " +
+						"	   rcurr.ccy_cd, " +
 						"	   dept.dept_id,   " + 
 						"	   dept.dept_cd,   " + 
 						"	   dept.dept_class,   " + 

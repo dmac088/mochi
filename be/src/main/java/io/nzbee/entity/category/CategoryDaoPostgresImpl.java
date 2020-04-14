@@ -22,18 +22,12 @@ import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import io.nzbee.entity.brand.Brand;
-import io.nzbee.entity.brand.Brand_;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.Category_;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.attribute.CategoryAttribute_;
 import io.nzbee.entity.category.product.CategoryProduct;
-import io.nzbee.entity.category.product.CategoryProduct_;
 import io.nzbee.entity.category.type.CategoryType;
-import io.nzbee.entity.product.Product;
-import io.nzbee.entity.product.Product_;
-import io.nzbee.entity.tag.Tag;
 import io.nzbee.variables.ProductVars;
 
 @Component(value="categoryEntityPostgresDao")
@@ -403,40 +397,11 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		return query.getResultList();
 	}
 	
+	
+	
 	@Override
-	public List<Category> findChildrenByCriteria(String locale, String parentCategoryDesc, List<String> brandCodes, List<String> tagCodes) {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		
-		CriteriaQuery<CategoryProduct> cq = cb.createQuery(CategoryProduct.class);
-		
-		Root<CategoryProduct> root = cq.from(CategoryProduct.class);
-		
-		Join<CategoryProduct, CategoryAttribute> categoryAttribute = root.join(Category_.attributes);
-		Join<CategoryProduct, Product> product = root.join(CategoryProduct_.products);
-		Join<Product, Brand> brand = product.join(Product_.brand);
-		Join<CategoryProduct, Category> parent = root.join(Category_.parent);
-		Join<Category, CategoryAttribute> parentCategoryAttribute = parent.join(Category_.attributes);
-		
-		List<Predicate> conditions = new ArrayList<Predicate>();
-		if(!brandCodes.isEmpty()) {
-			conditions.add(brand.get(Brand_.brandCode).in(brandCodes));
-		}
-		if(!tagCodes.isEmpty()) {
-			Join<Product, Tag> tags = product.join(Product_.tags);
-			conditions.add(tags.get(io.nzbee.entity.tag.Tag_.tagCode).in(tagCodes));
-		}
-		if(!(parentCategoryDesc == null)) {
-			conditions.add(cb.equal(parentCategoryAttribute.get(CategoryAttribute_.categoryDesc), parentCategoryDesc));
-		}
-		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
-		
-		TypedQuery<CategoryProduct> query = em.createQuery(cq
-				.select(root)
-				.where(conditions.toArray(new Predicate[] {}))
-				.distinct(true)
-		);
-		
-		return query.getResultList().stream().map(c -> (Category) c).collect(Collectors.toList());
+	public List<Category> findByProductCode(String locale, String currency, String productCode) {
+		return null;
 	}
 
 	@Override
@@ -801,6 +766,5 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 			
 		return sql;
 	}
-
 	
 }
