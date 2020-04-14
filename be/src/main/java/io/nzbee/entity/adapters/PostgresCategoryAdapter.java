@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import io.nzbee.domain.category.Category;
 import io.nzbee.domain.ports.ICategoryPortService;
-import io.nzbee.entity.IMapper;
+import io.nzbee.entity.category.ICategoryMapper;
 import io.nzbee.entity.category.ICategoryService;
 
 @Component
@@ -20,13 +20,13 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	
 	@Autowired
 	@Qualifier(value = "categoryMapper")
-	private IMapper<io.nzbee.domain.category.Category, io.nzbee.entity.category.Category> categoryMapper;
+	private ICategoryMapper categoryMapper;
 
 	@Override
 	public Set<Category> findAll(String locale, String currency, Set<String> codes) {
 		// TODO Auto-generated method stub
 		return categoryService.findAll(locale, currency, codes)
-				.stream().map(c -> categoryMapper.entityToDo(c, locale, currency)).collect(Collectors.toSet());
+				.stream().map(c -> (Category) categoryMapper.entityToDo(c, locale, currency)).collect(Collectors.toSet());
 	}
 	
 	@Override
@@ -55,12 +55,12 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 
 	@Override
 	public Category findByCode(String locale, String currency, String code) {
-		return categoryMapper.entityToDo(categoryService.findByCode(locale, currency, code).get());
+		return categoryMapper.entityToDo(categoryService.findByCode(locale, currency, code).get(), locale, currency);
 	}	
 	
 	@Override
 	public Category findByDesc(String locale, String currency, String desc) {
-		return categoryMapper.entityToDo(categoryService.findByDesc(locale, currency, desc).get());
+		return categoryMapper.entityToDo(categoryService.findByDesc(locale, currency, desc).get(), locale, currency);
 	}
 
 	@Override

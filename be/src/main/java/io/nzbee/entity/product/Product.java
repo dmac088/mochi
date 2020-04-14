@@ -101,7 +101,10 @@ filters = {
 	                        @FieldResult(name = "attributes", 			column = "prd_id"),
 	                        @FieldResult(name = "countryOfOrigin",  	column = "ctry_of_orig"),
 	                        @FieldResult(name = "displayCategories",  	column = "display_categories"),
-	                        @FieldResult(name = "expiryDate",  			column = "exp_dt")
+	                        @FieldResult(name = "expiryDate",  			column = "exp_dt"),
+	                        @FieldResult(name = "imagePath",  			column = "prd_img_pth"),
+	                        @FieldResult(name = "locale",  				column = "lcl_cd"),
+	                        @FieldResult(name = "currency",  			column = "ccy_cd")
 	                    }),
 	            @EntityResult(
 		                entityClass = ProductStatus.class,
@@ -203,6 +206,15 @@ public abstract class Product {
 	@Transient
 	@Field(store=Store.YES,analyze=Analyze.NO)
 	private Double markdownPrice;
+	
+	@Transient
+	private String imagePath;
+	
+	@Transient 
+	private String locale;
+	
+	@Transient
+	private String currency;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="bnd_id")
@@ -537,6 +549,30 @@ public abstract class Product {
 	public void removeProductPrice(ProductPrice productPrice) {
 		this.getPrices().remove(productPrice);
 		productPrice.setProduct(null);
+	}
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+	
+	public String getLocale() {
+		return locale;
+	}
+
+	public void setLocale(String locale) {
+		this.locale = locale;
+	}
+
+	public String getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(String currency) {
+		this.currency = currency;
 	}
 	
 	@Override

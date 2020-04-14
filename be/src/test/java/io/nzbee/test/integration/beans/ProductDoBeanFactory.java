@@ -27,7 +27,6 @@ public class ProductDoBeanFactory {
 								   "test_image.jpg",
 								   "NZL",
 								   new Date(),
-								   "test, test",
 								   "en-GB",
 								   "HKD",
 								   new Brand("ENZ01",

@@ -45,11 +45,6 @@ public class CategoryServiceImpl implements ICategoryService {
 	public <T> List<Category> findAll(String locale, String currency, Class<T> classType) {
 		return categoryDAO.findByCodeAndType(locale, currency, classType);
 	}
-	
-	@Override
-	public List<Category> findAll(String locale, String parentCategoryDesc, List<String> brandCodes, List<String> tagCodes) {
-		return categoryDAO.findChildrenByCriteria(locale, parentCategoryDesc, brandCodes, tagCodes);
-	}
 
 	@Override
 	public List<Category> findByParent(String locale, String parentCategoryCode) {

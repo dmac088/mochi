@@ -5,11 +5,10 @@ import org.springframework.stereotype.Component;
 
 import io.nzbee.domain.category.BrandCategory;
 import io.nzbee.domain.category.ProductCategory;
-import io.nzbee.entity.IMapper;
 import io.nzbee.entity.category.product.CategoryProduct;
 
 @Component(value="categoryMapper")
-public class CategoryMapper implements IMapper<Category, io.nzbee.entity.category.Category> {
+public class CategoryMapper implements ICategoryMapper {
 
 	public Category entityToDo(io.nzbee.entity.category.Category e) {
 		if(e instanceof CategoryProduct) {
