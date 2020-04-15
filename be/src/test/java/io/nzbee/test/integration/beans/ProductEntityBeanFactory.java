@@ -48,6 +48,7 @@ public class ProductEntityBeanFactory {
 		product.setUPC("123456789");
 		product.setExpiryDate(new Date());
 		product.setCountryOfOrigin("NZL");
+		product.setImagePath("testpath/");
 		
 		ProductAttribute paEng = new ProductAttribute();
 		paEng.setProductDesc("test product");

@@ -567,34 +567,38 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		 
 		"	INNER JOIN mochi.brand_attr_lcl bal   " + 
 		"	ON bnd.bnd_id = bal.bnd_id   " + 
-			
-		"	LEFT JOIN mochi.price rprc     " + 
-		"	ON prd.prd_id = rprc.prd_id    " + 
-			
-		"	INNER JOIN mochi.currency rcurr     " + 
-		"	ON rprc.ccy_id 		= rcurr.ccy_id   " + 
-		"	AND rcurr.ccy_cd 	= :currency " + 
 		
-		"	INNER JOIN mochi.price_type rpt   " + 
-		"	ON rprc.prc_typ_id 	= rpt.prc_typ_id   " + 
-		"	AND rpt.prc_typ_cd = :retailPriceCode " +
+		"	LEFT JOIN  ( " + 
+		"	SELECT prd_id, " +  
+		"		   prc_val  " +  
+		"	FROM mochi.price rprc " +  
+		"	INNER JOIN mochi.currency rcurr " +  
+		"	ON         rprc.ccy_id = rcurr.ccy_id " +  
+		"	AND        rcurr.ccy_cd = :currency " + 
+		"	INNER JOIN mochi.price_type rpt " + 
+		"	ON         rprc.prc_typ_id = rpt.prc_typ_id " +  
+		"	AND        rpt.prc_typ_cd = :retailPriceCode " +  
+		"	) rprc " + 
+		"	ON prd.prd_id = rprc.prd_id " +  
 		
-		"	LEFT JOIN mochi.price mprc     " + 
-		"	ON prd.prd_id = mprc.prd_id    " +
+		"	LEFT JOIN  ( " +
+		"	SELECT prd_id, " +  
+		"		   prc_val " + 
+		"		FROM mochi.price mprc " + 
+		"		INNER JOIN mochi.currency mcurr " + 
+	    "		ON         mprc.ccy_id = mcurr.ccy_id  " + 
+		"		AND        mcurr.ccy_cd = :currency  " +
+		"		INNER JOIN mochi.price_type mpt " +
+		"		ON         mprc.prc_typ_id = mpt.prc_typ_id " + 
+		"		AND        mpt.prc_typ_cd = :markdownPriceCode " + 
+		"		) mprc  " +
+		"		ON prd.prd_id = mprc.prd_id  " + 
 		
 		"	LEFT JOIN mochi.product_food food " + 
 		"	ON prd.prd_id = food.prd_id    " + 
 		
 		"	LEFT JOIN mochi.product_jewellery jew " + 
 		"	ON prd.prd_id = jew.prd_id    " +
-			
-		"	INNER JOIN mochi.currency mcurr     " + 
-		"	ON mprc.ccy_id 		= mcurr.ccy_id   " + 
-		"	AND mcurr.ccy_cd 	= :currency " + 
-		
-		"	INNER JOIN mochi.price_type mpt   " + 
-		"	ON mprc.prc_typ_id 	= mpt.prc_typ_id   " + 
-		"	AND mpt.prc_typ_cd = :markdownPriceCode " +
 			 
 		"	INNER JOIN mochi.product_status ps    " + 
 		"	ON prd.prd_sts_id = ps.prd_sts_id   " + 

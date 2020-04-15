@@ -84,7 +84,7 @@ filters = {
 	    		@ColumnResult(name = "retail_price"),
 	    		@ColumnResult(name = "markdown_price"),
 	    		@ColumnResult(name = "display_categories"),
-	    		@ColumnResult(name = "prd_img_pth")
+	    		@ColumnResult(name = "prd_img_pth"),
 	    },		
 	    entities = {
 	            @EntityResult(

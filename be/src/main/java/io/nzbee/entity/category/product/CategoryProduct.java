@@ -58,10 +58,6 @@ public class CategoryProduct extends Category  {
 		this.hasParent = hasParent;
 	}
 
-	public CategoryProduct() {
-		super();
-	}
-
 	public Set<Product> getProducts() {
 		return products;
 	}

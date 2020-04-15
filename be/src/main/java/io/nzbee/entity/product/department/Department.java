@@ -69,12 +69,14 @@ public class Department {
 		this.departmentCode = departmentCode;
 	}
 	
+	@Transient
 	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "en-GB"))
 	public String getDepartmentDescENGB() {
 		return this.getAttributes().stream()
 				.filter(a -> a.getLclCd().equals("en-GB")).findFirst().get().getDesc();
 	}
 	
+	@Transient
 	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "zh-HK"))
 	public String getDepartmentDescZHHK() {
 		return this.getAttributes().stream()
