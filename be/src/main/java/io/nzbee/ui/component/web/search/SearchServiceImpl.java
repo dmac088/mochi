@@ -32,6 +32,7 @@ import io.nzbee.domain.FacetServices;
 import io.nzbee.domain.IDomainObject;
 import io.nzbee.domain.IService;
 import io.nzbee.domain.brand.Brand;
+import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.department.Department;
 import io.nzbee.domain.product.Food;
 import io.nzbee.domain.product.Jewellery;
@@ -420,7 +421,8 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 											   	lcl,
 											   	currency,
 											   	new Brand(r[7].toString(), r[8].toString(), 0, lcl, currency),
-											   	new Department(r[13].toString(), r[14].toString(), lcl, currency)
+											   	new Department(r[13].toString(), r[14].toString(), lcl, currency),
+											   	new ProductCategory("TST01", "test category", true, new Long(1), "CT", 0, "PNT01", lcl, currency)
 												)
 										: new Jewellery(
 												r[5].toString(),
@@ -433,7 +435,9 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 											   	lcl,
 											   	currency,
 											   	new Brand(r[7].toString(), r[8].toString(), 0, lcl, currency),
-											   	new Department(r[13].toString(), r[14].toString(), lcl, currency)));
+											   	new Department(r[13].toString(), r[14].toString(), lcl, currency),
+											   	new ProductCategory("TST01", "test category", true, new Long(1), "CT", 0, "PNT01", lcl, currency)
+											   	));
 				}).collect(Collectors.toList());
 	
 			

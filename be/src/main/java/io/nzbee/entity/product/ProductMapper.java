@@ -2,6 +2,7 @@ package io.nzbee.entity.product;
 
 import org.springframework.stereotype.Component;
 import io.nzbee.domain.brand.Brand;
+import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.department.Department;
 import io.nzbee.entity.product.food.Food;
 
@@ -9,7 +10,7 @@ import io.nzbee.entity.product.food.Food;
 public class ProductMapper implements IProductMapper {
 
 	@Override
-	public io.nzbee.domain.product.Product entityToDo(Product e, Brand brand, Department deprartment) {
+	public io.nzbee.domain.product.Product entityToDo(Product e, Brand brand, Department deprartment, ProductCategory category) {
 		
 		if(e instanceof Food) {
 			return new io.nzbee.domain.product.Food(
@@ -25,7 +26,8 @@ public class ProductMapper implements IProductMapper {
 				   	e.getLocale(),
 				   	e.getCurrency(),
 				   	brand,
-				   	deprartment);
+				   	deprartment,
+				   	category);
 		}
 		return null;
 	}
