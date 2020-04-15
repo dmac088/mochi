@@ -23,6 +23,7 @@ public class BrandCategory extends Category {
 			  level, 
 			  categoryType,
 			  locale, 
+			  currency,
 			  parentCode,
 			  objectCount);
 		this.brands = new ArrayList<Brand>();

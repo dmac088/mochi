@@ -26,6 +26,7 @@ public class ProductCategory extends Category {
 			  level, 
 			  categoryType,
 			  locale, 
+			  currency,
 			  parentCode,
 			  objectCount);
 		
