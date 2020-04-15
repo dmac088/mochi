@@ -60,7 +60,7 @@ public class CategoryMapper implements ICategoryMapper {
 		}
 		return new BrandCategory(
 				e.getCategoryCode(),
-				e.getCategoryAttribute().getCategoryDesc(),
+				e.getAttributes().stream().findFirst().get().getCategoryDesc(),
 				true,
 				e.getCategoryLevel(),
 				e.getCategoryType().getCategoryTypeDesc(),
