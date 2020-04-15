@@ -36,6 +36,7 @@ public abstract class Category implements IHierarchicalDomainObject {
 		this.categoryLevel 	= categoryLevel;
 		this.categoryType 	= categoryType;
 		this.objectCount	= objectCount;
+		this.locale 		= lclCd;
 	}
 
 	public String getCategoryCode() {
