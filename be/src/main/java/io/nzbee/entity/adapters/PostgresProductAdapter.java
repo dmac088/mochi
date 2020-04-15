@@ -77,14 +77,14 @@ public class PostgresProductAdapter implements IProductPortService {
 	@Override
 	public Page<Product> findAll(String locale, String currency, Double price, Pageable pageable, String categoryDesc,
 			List<Product> collect, String sortBy) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public Page<Product> findAll(String locale, String currency, Pageable pageable, String categoryDesc,
 			List<Product> collect, String sortBy) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
