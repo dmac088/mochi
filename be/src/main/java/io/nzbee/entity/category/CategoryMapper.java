@@ -46,7 +46,7 @@ public class CategoryMapper implements ICategoryMapper {
 		if(e instanceof CategoryProduct) {
 			return new ProductCategory(
 					e.getCategoryCode(),
-					e.getCategoryAttribute().getCategoryDesc(),
+					e.getAttributes().stream().findFirst().get().getCategoryDesc(),
 					true,
 					e.getCategoryLevel(),
 					e.getCategoryType().getCategoryTypeDesc(),
