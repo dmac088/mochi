@@ -110,7 +110,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		Object[] p = (Object[])query.getSingleResult();
 		
 		Product product = (Product) p[0];
-		System.out.println(((Product) p[0]).getDisplayCategories());
 		product.setProductStatus((ProductStatus) p[1]);
 		product.setDepartment((Department) p[5]);
 		product.setProductAttribute((ProductAttribute) p[2]); 
