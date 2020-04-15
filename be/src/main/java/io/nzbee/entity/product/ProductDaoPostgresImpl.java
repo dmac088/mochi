@@ -77,6 +77,11 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		product.setRetailPrice(((BigDecimal) p[6]).doubleValue());
 		product.setMarkdownPrice(((BigDecimal) p[7]).doubleValue());
 		
+		product.setLocale(locale);
+		product.setCurrency(currency);
+		product.setDisplayCategories(p[8].toString());
+		product.setImagePath(p[9].toString());
+		
 		return Optional.ofNullable(product);
 	}
 	
@@ -123,6 +128,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		
 		product.setLocale(locale);
 		product.setCurrency(currency);
+		product.setDisplayCategories(p[8].toString());
+		product.setImagePath(p[9].toString());
 		
 		return Optional.ofNullable(product);
 	}
@@ -165,6 +172,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		
 		product.setLocale(locale);
 		product.setCurrency(currency);
+		product.setDisplayCategories(p[8].toString());
+		product.setImagePath(p[9].toString());
 		
 		return Optional.ofNullable(product);
 	}
@@ -217,6 +226,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 			
 			product.setLocale(locale);
 			product.setCurrency(currency);
+			product.setDisplayCategories(p[8].toString());
+			product.setImagePath(p[9].toString());
 			
 			return product;
 		}).collect(Collectors.toList());
@@ -300,6 +311,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 			
 			product.setLocale(locale);
 			product.setCurrency(currency);
+			product.setDisplayCategories(p[8].toString());
+			product.setImagePath(p[9].toString());
 			
 			return product;
 		}).collect(Collectors.toList());
@@ -422,6 +435,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 			
 			product.setLocale(locale);
 			product.setCurrency(currency);
+			product.setDisplayCategories(p[8].toString());
+			product.setImagePath(p[9].toString());
 			
 			return product;
 		}).collect(Collectors.toList());

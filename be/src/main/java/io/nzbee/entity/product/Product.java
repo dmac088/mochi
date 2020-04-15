@@ -82,7 +82,9 @@ filters = {
 	    name = "ProductMapping",
 	    columns = {
 	    		@ColumnResult(name = "retail_price"),
-	    		@ColumnResult(name = "markdown_price")
+	    		@ColumnResult(name = "markdown_price"),
+	    		@ColumnResult(name = "display_categories"),
+	    		@ColumnResult(name = "prd_img_pth")
 	    },		
 	    entities = {
 	            @EntityResult(
@@ -98,9 +100,7 @@ filters = {
 	                        @FieldResult(name = "productAttribute", 	column = "prd_lcl_id"),	      
 	                        @FieldResult(name = "attributes", 			column = "prd_id"),
 	                        @FieldResult(name = "countryOfOrigin",  	column = "ctry_of_orig"),
-	                        @FieldResult(name = "displayCategories",  	column = "display_categories"),
 	                        @FieldResult(name = "expiryDate",  			column = "exp_dt"),
-	                        @FieldResult(name = "imagePath",  			column = "prd_img_pth"),
 	                        @FieldResult(name = "locale",  				column = "lcl_cd"),
 	                        @FieldResult(name = "currency",  			column = "ccy_cd")
 	                    }),
@@ -190,7 +190,7 @@ public abstract class Product {
 				orphanRemoval = true)
 	private List<ProductAttribute> attributes = new ArrayList<ProductAttribute>();
 	
-	
+	@Transient
 	@Field(store=Store.YES,analyze=Analyze.NO)
 	private String displayCategories;
 
@@ -205,6 +205,7 @@ public abstract class Product {
 	@Field(store=Store.YES,analyze=Analyze.NO)
 	private Double markdownPrice;
 	
+	@Transient
 	private String imagePath;
 	
 	@Transient 
