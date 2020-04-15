@@ -52,6 +52,7 @@ import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.product.CategoryProduct;
+import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.department.Department;
 import io.nzbee.entity.product.price.ProductPrice;
@@ -167,6 +168,13 @@ filters = {
 	                        @FieldResult(name = "categoryDesc", 				column = "cat_desc"),
 	                        @FieldResult(name = "category", 					column = "cat_id")
 	                    }),
+	            @EntityResult(
+		                entityClass = CategoryType.class,
+		                fields = {
+		                    @FieldResult(name = "Id", 							column = "cat_typ_id"),
+		                    @FieldResult(name = "categoryTypeCode", 			column = "cat_typ_cd"),
+		                    @FieldResult(name = "categoryTypeDesc", 			column = "cat_typ_desc")
+		                }),
 
 	    }),
 		@SqlResultSetMapping(

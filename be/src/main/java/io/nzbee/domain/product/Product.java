@@ -32,7 +32,7 @@ public class Product {
 	
 	private String currency;
 	
-	@JsonIgnore
+	//@JsonIgnore
 	private List<ProductCategory> categories;
 	
 	@JsonIgnore
