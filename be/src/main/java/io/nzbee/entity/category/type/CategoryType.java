@@ -16,7 +16,7 @@ public class CategoryType {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="cat_typ_id")
-	private Long Id;
+	private Long categoryTypeId;
 
 	@NaturalId
 	@Column(name="cat_typ_cd")
@@ -25,12 +25,12 @@ public class CategoryType {
 	@Column(name="cat_typ_desc")
 	private String categoryTypeDesc;
 
-	public Long getId() {
-		return Id;
+	public Long getCategoryTypeId() {
+		return  categoryTypeId;
 	}
 
-	public void setId(Long id) {
-		Id = id;
+	public void setCategoryTypeId(Long id) {
+		 categoryTypeId = id;
 	}
 
 	public String getCategoryTypeCode() {

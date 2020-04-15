@@ -150,7 +150,7 @@ filters = {
 		                    @FieldResult(name = "departmentClass", 	column = "dept_class")
 	                    }),
 	            @EntityResult(
-	            		entityClass = Category.class,
+	            		entityClass = CategoryProduct.class,
 		                fields = {
 		                    @FieldResult(name = "categoryId", 					column = "cat_id"),
 		                    @FieldResult(name = "categoryCode", 				column = "cat_cd"),
@@ -169,13 +169,12 @@ filters = {
 	                        @FieldResult(name = "category", 					column = "cat_id")
 	                    }),
 	            @EntityResult(
-		                entityClass = CategoryType.class,
+	                    entityClass = CategoryType.class,
 		                fields = {
-		                    @FieldResult(name = "Id", 							column = "cat_typ_id"),
+		                    @FieldResult(name = "categoryTypeId",				column = "cat_typ_id"),
 		                    @FieldResult(name = "categoryTypeCode", 			column = "cat_typ_cd"),
 		                    @FieldResult(name = "categoryTypeDesc", 			column = "cat_typ_desc")
-		                }),
-
+		                })
 	    }),
 		@SqlResultSetMapping(
 			    name = "ProductMapping.count",
