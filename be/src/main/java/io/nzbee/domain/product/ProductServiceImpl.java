@@ -54,11 +54,11 @@ public class ProductServiceImpl implements IProductService {
 
 		Page<Product> pp =
 			productService.findAll(locale, 
-									  currency, 
-									  pageable, 
-									  categoryDesc, 
-									  facets.stream().map(f -> (Product)f.getPayload()).collect(Collectors.toList()), 
-									  sortBy);
+								   currency, 
+								   pageable, 
+								   categoryDesc, 
+								   facets.stream().map(f -> (Product)f.getPayload()).collect(Collectors.toList()), 
+								   sortBy);
 				
 		    return new PageImpl<Product>(
 			pp.stream().collect(Collectors.toList()),

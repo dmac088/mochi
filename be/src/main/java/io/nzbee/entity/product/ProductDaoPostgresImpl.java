@@ -121,6 +121,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		product.setRetailPrice(((BigDecimal) p[6]).doubleValue());
 		product.setMarkdownPrice(((BigDecimal) p[7]).doubleValue());
 		
+		product.setLocale(locale);
+		product.setCurrency(currency);
+		
 		return Optional.ofNullable(product);
 	}
 	
@@ -159,6 +162,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		
 		product.setRetailPrice(((BigDecimal) p[6]).doubleValue());
 		product.setMarkdownPrice(((BigDecimal) p[7]).doubleValue());
+		
+		product.setLocale(locale);
+		product.setCurrency(currency);
 		
 		return Optional.ofNullable(product);
 	}
@@ -208,6 +214,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
 			
 			product.setRetailPrice(((BigDecimal) p[6]).doubleValue());
 			product.setMarkdownPrice(((BigDecimal) p[7]).doubleValue());
+			
+			product.setLocale(locale);
+			product.setCurrency(currency);
 			
 			return product;
 		}).collect(Collectors.toList());
@@ -288,6 +297,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
 			
 			product.setRetailPrice(((BigDecimal) p[6]).doubleValue());
 			product.setMarkdownPrice(((BigDecimal) p[7]).doubleValue());
+			
+			product.setLocale(locale);
+			product.setCurrency(currency);
 			
 			return product;
 		}).collect(Collectors.toList());
@@ -407,6 +419,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
 			
 			product.setRetailPrice(((BigDecimal) p[6]).doubleValue());
 			product.setMarkdownPrice(((BigDecimal) p[7]).doubleValue());
+			
+			product.setLocale(locale);
+			product.setCurrency(currency);
 			
 			return product;
 		}).collect(Collectors.toList());
@@ -543,7 +558,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		"	ON rprc.ccy_id 		= rcurr.ccy_id   " + 
 		"	AND rcurr.ccy_cd 	= :currency " + 
 		
-		"	LEFT JOIN mochi.price_type rpt   " + 
+		"	INNER JOIN mochi.price_type rpt   " + 
 		"	ON rprc.prc_typ_id 	= rpt.prc_typ_id   " + 
 		"	AND rpt.prc_typ_cd = :retailPriceCode " +
 		
@@ -560,7 +575,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		"	ON mprc.ccy_id 		= mcurr.ccy_id   " + 
 		"	AND mcurr.ccy_cd 	= :currency " + 
 		
-		"	LEFT JOIN mochi.price_type mpt   " + 
+		"	INNER JOIN mochi.price_type mpt   " + 
 		"	ON mprc.prc_typ_id 	= mpt.prc_typ_id   " + 
 		"	AND mpt.prc_typ_cd = :markdownPriceCode " +
 			 
@@ -602,9 +617,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
 					"	   cc.cat_cd, " +	
 					"	   cc.cat_lvl, " +
 					"	   cc.cat_prnt_id, " +	
-					"	   prd.prd_id,   " + 
-					"	   prd.upc_cd,   " + 
-					"	   prd.prd_crtd_dt,   " +
+					"	   prd.prd_id,  " + 
+					"	   prd.upc_cd,  " + 
+					"	   prd.prd_crtd_dt,  " +
 					"	   attr.prd_lcl_id, " +
 					"	   attr.prd_desc, " +	
 					"	   attr.prd_img_pth, " +	
