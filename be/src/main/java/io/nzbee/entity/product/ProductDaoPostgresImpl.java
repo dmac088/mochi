@@ -374,17 +374,17 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		category.addAttribute(categoryAttribute);
 		
 		CategoryType categoryType = (CategoryType) p[8];
+		category.setCategoryType(categoryType);
 		
 		product.setRetailPrice(((BigDecimal) p[9]).doubleValue());
 		product.setMarkdownPrice(((BigDecimal) p[10]).doubleValue());
 		
 		product.setLocale(locale);
 		product.setCurrency(currency);
-		product.setDisplayCategories(p[10].toString());
-		product.setImagePath(p[11].toString());
+		product.setDisplayCategories(p[11].toString());
+		product.setImagePath(p[12].toString());
 		product.getCategories().add(category);
 		category.addProduct(product);
-		category.setCategoryType(categoryType);
 		
 		return product;
 	}
@@ -469,9 +469,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
 						"	   ca.cat_id, " +
 						"	   ca.cat_desc, " +
 						"	   ca.cat_img_pth, " +
-						"	   ct.cat_typ_id, " + 
-						"	   ct.cat_typ_cd, " +
-						"	   ct.cat_typ_desc, " +
+						"	   ct.cat_typ_id 		AS cat_typ_id, 	" +
+						"      ct.cat_typ_cd		AS cat_typ_cd, " +
+						"      ct.cat_typ_desc 		AS cat_typ_desc, " +
 						"	   prd.prd_id,   " + 
 						"	   prd.upc_cd,   " + 
 						"	   prd.prd_crtd_dt,   " +
@@ -597,6 +597,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
 					"	   ca.cat_id, " +
 					"	   ca.cat_desc, " +
 					"	   ca.cat_img_pth, " +
+					"	   ct.cat_typ_id, " + 
+					"	   ct.cat_typ_cd, " +
+					"	   ct.cat_typ_desc, " +
 					"	   prd.prd_id,  " + 
 					"	   prd.upc_cd,  " + 
 					"	   prd.prd_crtd_dt,  " +

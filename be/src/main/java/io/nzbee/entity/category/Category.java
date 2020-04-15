@@ -92,7 +92,7 @@ import io.nzbee.entity.layout.Layout;
 	        @EntityResult(
 	                entityClass = CategoryType.class,
 	                fields = {
-	                    @FieldResult(name = "Id", 							column = "cat_typ_id"),
+	                    @FieldResult(name = "categoryTypeId",			column = "cat_typ_id"),
 	                    @FieldResult(name = "categoryTypeCode", 			column = "cat_typ_cd"),
 	                    @FieldResult(name = "categoryTypeDesc", 			column = "cat_typ_desc")
 	                }),
@@ -126,7 +126,7 @@ import io.nzbee.entity.layout.Layout;
 	        @EntityResult(
                     entityClass = CategoryType.class,
 	                fields = {
-	                    @FieldResult(name = "Id", 							column = "cat_prnt_typ_id"),
+	                    @FieldResult(name = "categoryTypeId", 				column = "cat_prnt_typ_id"),
 	                    @FieldResult(name = "categoryTypeCode", 			column = "cat_prnt_typ_cd"),
 	                    @FieldResult(name = "categoryTypeDesc", 			column = "cat_prnt_typ_desc")
 	                }),

@@ -9,6 +9,6 @@ public interface ICategoryTypeRepository extends CrudRepository<CategoryType, Lo
 	
 	List<CategoryType> findAll(); 
 	 
-	Optional<CategoryType> findById(Long id);
+	Optional<CategoryType> findByCategoryTypeId(Long id);
 }
 
