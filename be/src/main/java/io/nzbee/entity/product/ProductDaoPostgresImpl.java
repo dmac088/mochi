@@ -110,6 +110,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		Object[] p = (Object[])query.getSingleResult();
 		
 		Product product = (Product) p[0];
+		System.out.println(((Product) p[0]).getDisplayCategories());
 		product.setProductStatus((ProductStatus) p[1]);
 		product.setDepartment((Department) p[5]);
 		product.setProductAttribute((ProductAttribute) p[2]); 
@@ -526,7 +527,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
 						"	   coalesce(mprc.prc_val,0) as markdown_price,  " + 
 						"	   food.exp_dt, " +
 						"	   food.ctry_of_orig, " + 
-						"	   STRING_AGG(coalesce(ca.cat_desc, ''), ',') as display_categories ") + 
+						"	   STRING_AGG(coalesce(ca.cat_desc, ''), ',') as display_categories, " +
+						"      :currency as ccy_cd, " +
+						"	   :locale as lcl_cd ") + 
 		
 		"	FROM descendants cc    " + 
 		"	INNER JOIN mochi.product_category pc    " + 
