@@ -50,6 +50,7 @@ public class Product {
 				   	Double productRetail,
 				   	Double productMarkdown,
 				   	String productImage,
+				   	String displayCategories,
 				   	String lclCd,
 				   	String currency,
 				   	Brand brand,
@@ -61,6 +62,7 @@ public class Product {
 					this.productRetail = productRetail;
 					this.productMarkdown = productMarkdown;
 					this.productImage = productImage;
+					this.displayCategories = displayCategories;
 					this.lclCd = lclCd;
 					this.currency = currency;
 					this.brand = brand;
