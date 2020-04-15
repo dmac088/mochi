@@ -14,7 +14,7 @@ public class CategoryMapper implements ICategoryMapper {
 		if(e instanceof CategoryProduct) {
 			return new ProductCategory(
 					e.getCategoryCode(),
-					e.getAttributes().stream().filter(c -> c.getLclCd().equals(e.getLocale())).findFirst().get().getCategoryDesc(),
+					e.getCategoryAttribute().getCategoryDesc(),
 					true,
 					e.getCategoryLevel(),
 					e.getCategoryType().getCategoryTypeDesc(),
@@ -28,7 +28,7 @@ public class CategoryMapper implements ICategoryMapper {
 		}
 		return new BrandCategory(
 				e.getCategoryCode(),
-				e.getAttributes().stream().filter(c -> c.getLclCd().equals(e.getLocale())).findFirst().get().getCategoryDesc(),
+				e.getCategoryAttribute().getCategoryDesc(),
 				true,
 				e.getCategoryLevel(),
 				e.getCategoryType().getCategoryTypeDesc(),
@@ -46,7 +46,7 @@ public class CategoryMapper implements ICategoryMapper {
 		if(e instanceof CategoryProduct) {
 			return new ProductCategory(
 					e.getCategoryCode(),
-					e.getAttributes().stream().filter(c -> c.getLclCd().equals(locale)).findFirst().get().getCategoryDesc(),
+					e.getCategoryAttribute().getCategoryDesc(),
 					true,
 					e.getCategoryLevel(),
 					e.getCategoryType().getCategoryTypeDesc(),
@@ -60,7 +60,7 @@ public class CategoryMapper implements ICategoryMapper {
 		}
 		return new BrandCategory(
 				e.getCategoryCode(),
-				e.getAttributes().stream().filter(c -> c.getLclCd().equals(locale)).findFirst().get().getCategoryDesc(),
+				e.getCategoryAttribute().getCategoryDesc(),
 				true,
 				e.getCategoryLevel(),
 				e.getCategoryType().getCategoryTypeDesc(),
