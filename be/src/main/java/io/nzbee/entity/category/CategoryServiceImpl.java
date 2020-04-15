@@ -40,7 +40,6 @@ public class CategoryServiceImpl implements ICategoryService {
 		return categoryDAO.findAll(locale, currency, categoryCodes);
 	}
 	
-
 	@Override
 	public <T> List<Category> findAll(String locale, String currency, Class<T> classType) {
 		return categoryDAO.findByCodeAndType(locale, currency, classType);

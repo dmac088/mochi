@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import io.nzbee.domain.category.Category;
+import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.ports.ICategoryPortService;
 import io.nzbee.entity.category.ICategoryMapper;
 import io.nzbee.entity.category.ICategoryService;
+import io.nzbee.entity.category.product.ICategoryProductService;
 
 @Component
 public class PostgresCategoryAdapter implements ICategoryPortService {
@@ -17,6 +19,9 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	
 	@Autowired 
 	private ICategoryService categoryService;
+	
+	@Autowired 
+	private ICategoryProductService categoryProductService;
 	
 	@Autowired
 	@Qualifier(value = "categoryMapper")
@@ -26,6 +31,12 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	public Set<Category> findAll(String locale, String currency, Set<String> codes) {
 		return categoryService.findAll(locale, currency, codes)
 				.stream().map(c -> (Category) categoryMapper.entityToDo(c, locale, currency)).collect(Collectors.toSet());
+	}
+	
+	@Override
+	public Set<ProductCategory> findAllByProductCode(String locale, String currency, String productCode) {
+		return categoryProductService.findAllByProductCode(locale, currency, productCode)
+				.stream().map(c -> (ProductCategory) categoryMapper.entityToDo(c, locale, currency)).collect(Collectors.toSet());
 	}
 	
 	@Override
@@ -66,5 +77,6 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	public void save(Category domainObject) {
 		// TODO Auto-generated method stub
 	}
+
 
 }

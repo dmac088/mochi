@@ -35,16 +35,20 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
     
     @Override
     @Transactional(readOnly=true)
- 	//@Cacheable
  	public Set<Category> findByParent(String locale, String currency, String parentCategoryCode) {
     	return categoryService.findByParent(parentCategoryCode, currency, locale);
  	}
     
     @Override
     @Transactional(readOnly=true)
-  	//@Cacheable
   	public Set<Category> findAllForLevel(String locale, String currency, Long level) {
      	return categoryService.findAllForLevel(locale, currency, level);
+  	}	
+    
+    @Override
+    @Transactional(readOnly=true)
+  	public Set<ProductCategory> findAllByProductCode(String locale, String currency, String code) {
+     	return categoryService.findAllByProductCode(locale, currency, code);
   	}	
     
     @Override

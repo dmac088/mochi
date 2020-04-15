@@ -37,7 +37,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	@Qualifier("mochiEntityManagerFactory")
 	private EntityManager em;
 
-	
 	@Override
 	public <T> List<Category> findByCodeAndType(String locale, String currency, Class<T> cls) {
 		
