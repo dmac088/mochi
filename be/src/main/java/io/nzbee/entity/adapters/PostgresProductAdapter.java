@@ -8,10 +8,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import io.nzbee.domain.brand.Brand;
+import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.department.Department;
 import io.nzbee.domain.ports.IProductPortService;
 import io.nzbee.domain.product.Product;
 import io.nzbee.entity.brand.IBrandMapper;
+import io.nzbee.entity.category.ICategoryMapper;
 import io.nzbee.entity.product.IProductMapper;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.department.IDepartmentMapper;
@@ -31,6 +33,9 @@ public class PostgresProductAdapter implements IProductPortService {
 	@Autowired 
 	private IDepartmentMapper departmentMapper;
 	
+	@Autowired 
+	private ICategoryMapper categoryMapper;
+	
 	@Override
 	public Optional<Product> findByCode(String code) {
 		// TODO Auto-generated method stub
@@ -49,11 +54,13 @@ public class PostgresProductAdapter implements IProductPortService {
 		io.nzbee.entity.product.Product pe = productService.findByCode(locale, currency, code).get();
 		io.nzbee.entity.brand.Brand be = pe.getBrand();
 		io.nzbee.entity.product.department.Department de = pe.getDepartment();
+		io.nzbee.entity.category.Category c = pe.getCategories().stream().findFirst().get();
 		
 		Brand bdo = brandMapper.entityToDo(be, locale, currency);
 		Department ddo = departmentMapper.entityToDo(de, locale, currency);
+		ProductCategory cdo = (ProductCategory) categoryMapper.entityToDo(c, locale, currency);
 		
-		return productMapper.entityToDo(pe, bdo, ddo);
+		return productMapper.entityToDo(pe, bdo, ddo, cdo);
 	}
 
 	@Override

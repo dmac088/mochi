@@ -49,6 +49,8 @@ import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
 import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
+import io.nzbee.entity.category.Category;
+import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.department.Department;
@@ -145,7 +147,26 @@ filters = {
 	                    	@FieldResult(name = "departmentId", 	column = "dept_id"),
 		                    @FieldResult(name = "departmentCode", 	column = "dept_cd"),
 		                    @FieldResult(name = "departmentClass", 	column = "dept_class")
-	                    })
+	                    }),
+	            @EntityResult(
+	            		entityClass = Category.class,
+		                fields = {
+		                    @FieldResult(name = "categoryId", 					column = "cat_id"),
+		                    @FieldResult(name = "categoryCode", 				column = "cat_cd"),
+		                    @FieldResult(name = "categoryLevel", 				column = "cat_lvl"),	
+		                    @FieldResult(name = "categoryType", 				column = "cat_typ_id"),
+		                    @FieldResult(name = "parent", 						column = "cat_prnt_id"),
+		                    @FieldResult(name = "categoryAttribute", 			column = "cat_lcl_id"),
+		                }),
+	            @EntityResult(
+	                    entityClass = CategoryAttribute.class,
+	                    fields = {
+	                        @FieldResult(name = "categoryAttributeId", 			column = "cat_lcl_id"),
+	                        @FieldResult(name = "categoryId", 					column = "cat_id"),
+	                        @FieldResult(name = "lclCd", 						column = "lcl_cd"),
+	                        @FieldResult(name = "categoryDesc", 				column = "cat_desc"),
+	                        @FieldResult(name = "category", 					column = "cat_id")
+	                    }),
 
 	    }),
 		@SqlResultSetMapping(

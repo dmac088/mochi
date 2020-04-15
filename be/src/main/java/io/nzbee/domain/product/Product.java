@@ -54,7 +54,8 @@ public class Product {
 				   	String lclCd,
 				   	String currency,
 				   	Brand brand,
-				   	Department department) {
+				   	Department department,
+				   	ProductCategory category) {
 		
 					this.productUPC = productUPC;
 					this.productCreateDt = productCreateDt;
@@ -69,6 +70,7 @@ public class Product {
 					this.department = department;
 					this.tags = new ArrayList<Tag>();
 					this.categories = new ArrayList<ProductCategory>();
+					this.categories.add(category);
 	}
 	
 	public Department getDepartment() {
