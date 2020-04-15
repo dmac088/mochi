@@ -592,12 +592,12 @@ public class ProductDaoPostgresImpl implements IProductDao {
 					"	   		end between :priceStart AND :priceEnd " 
 				: 	"") +
 		 
-			((hasProductCodes) 	? 	" 	AND prd.upc_cd 		in :productCodes" 	: "") +
-			((hasProductDesc) 	? 	" 	AND attr.prd_desc 	= :productDesc " 	: "") +
-			((hasProductId) 	? 	" 	AND prd.prd_id 		= :productId " 		: "") +
+		((hasProductCodes) 	? 	" 	AND prd.upc_cd 		in :productCodes" 	: "") +
+		((hasProductDesc) 	? 	" 	AND attr.prd_desc 	= :productDesc " 	: "") +
+		((hasProductId) 	? 	" 	AND prd.prd_id 		= :productId " 		: "") +
 			
-			((countOnly)
-			? ""
+		((countOnly)
+			? 		""
 			: 		"	GROUP BY   cc.cat_id, " + 
 					"	   cc.cat_cd, " +	
 					"	   cc.cat_lvl, " +
