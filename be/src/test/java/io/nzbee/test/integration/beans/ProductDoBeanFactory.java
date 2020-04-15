@@ -3,6 +3,7 @@ package io.nzbee.test.integration.beans;
 import java.util.Date;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.brand.Brand;
+import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.department.Department;
 import io.nzbee.domain.product.Food;
 import io.nzbee.domain.product.Product;
@@ -31,7 +32,8 @@ public class ProductDoBeanFactory {
 								   new Department("FOO01",
 												  "Food",
 												  "en-GB",
-												  "HKD"));
+												  "HKD"),
+								   new ProductCategory("TST01", "test category", true, new Long(1), "CT", 0, "PNT01", "en-GB", "HKD"));
 	}
 		
 	
