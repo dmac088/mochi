@@ -25,6 +25,7 @@ import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.product.CategoryProduct;
+import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.attribute.ProductAttribute_;
 import io.nzbee.entity.product.department.Department;
@@ -372,8 +373,10 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		categoryAttribute.setCategory(category);
 		category.addAttribute(categoryAttribute);
 		
-		product.setRetailPrice(((BigDecimal) p[8]).doubleValue());
-		product.setMarkdownPrice(((BigDecimal) p[9]).doubleValue());
+		CategoryType categoryType = (CategoryType) p[8];
+		
+		product.setRetailPrice(((BigDecimal) p[9]).doubleValue());
+		product.setMarkdownPrice(((BigDecimal) p[10]).doubleValue());
 		
 		product.setLocale(locale);
 		product.setCurrency(currency);
@@ -381,6 +384,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		product.setImagePath(p[11].toString());
 		product.getCategories().add(category);
 		category.addProduct(product);
+		category.setCategoryType(categoryType);
 		
 		return product;
 	}
@@ -465,6 +469,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
 						"	   ca.cat_id, " +
 						"	   ca.cat_desc, " +
 						"	   ca.cat_img_pth, " +
+						"	   ct.cat_typ_id, " + 
+						"	   ct.cat_typ_cd, " +
+						"	   ct.cat_typ_desc, " +
 						"	   prd.prd_id,   " + 
 						"	   prd.upc_cd,   " + 
 						"	   prd.prd_crtd_dt,   " +
@@ -493,6 +500,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		"	FROM descendants cc    " + 
 		"	INNER JOIN mochi.product_category pc    " + 
 		"	ON cc.cat_id = pc.cat_id    " + 
+		
+		"	INNER JOIN mochi.category_type ct  " + 
+		"	ON cc.cat_typ_id = ct.cat_typ_id " + 
 		
 		"	INNER JOIN mochi.category_attr_lcl ca    " + 
 		"	ON cc.cat_id = ca.cat_id    " + 
