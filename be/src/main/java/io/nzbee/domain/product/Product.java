@@ -7,6 +7,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import io.nzbee.domain.brand.Brand;
+import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.department.Department;
 import io.nzbee.domain.tag.Tag;
 
@@ -32,6 +33,9 @@ public class Product {
 	private String currency;
 	
 	@JsonIgnore
+	private List<ProductCategory> categories;
+	
+	@JsonIgnore
 	private Department department;
 	
 	@JsonIgnore
@@ -39,10 +43,6 @@ public class Product {
 	
 	@JsonIgnore
 	private List<Tag> tags;
-	
-	public Product() {
-	
-	}
 	
 	public Product(	String productUPC,
 				   	Date productCreateDt,
@@ -68,6 +68,7 @@ public class Product {
 					this.brand = brand;
 					this.department = department;
 					this.tags = new ArrayList<Tag>();
+					this.categories = new ArrayList<ProductCategory>();
 	}
 	
 	public Department getDepartment() {
