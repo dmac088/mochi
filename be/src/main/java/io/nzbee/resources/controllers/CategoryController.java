@@ -42,6 +42,16 @@ public class CategoryController {
         final String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
         resources.add(new Link(uriString, "self"));
         return ResponseEntity.ok(resources);
+    }
+    
+    @GetMapping("/Category/{locale}/{currency}/product/{productCode}")
+    public ResponseEntity<Resources<CategoryResource>> getCategories(@PathVariable String locale, @PathVariable String currency, @PathVariable String productCode) {
+    	LOGGER.debug("Fetching categories for parameters : {}, {}, {}", locale, currency, productCode);
+    	final List<CategoryResource> collection = categoryService.findAllByProductCode(locale, currency, productCode).stream().map(c -> categoryResourceAssember.toResource(c)).collect(Collectors.toList());
+        final Resources <CategoryResource> resources = new Resources <> (collection);
+        final String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
+        resources.add(new Link(uriString, "categories"));
+        return ResponseEntity.ok(resources);
     } 
     
     @GetMapping("/Category/{locale}/{currency}/code/{categoryCode}")
