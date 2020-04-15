@@ -190,7 +190,7 @@ public abstract class Product {
 				orphanRemoval = true)
 	private List<ProductAttribute> attributes = new ArrayList<ProductAttribute>();
 	
-	@Transient
+	
 	@Field(store=Store.YES,analyze=Analyze.NO)
 	private String displayCategories;
 
@@ -205,7 +205,6 @@ public abstract class Product {
 	@Field(store=Store.YES,analyze=Analyze.NO)
 	private Double markdownPrice;
 	
-	@Transient
 	private String imagePath;
 	
 	@Transient 
