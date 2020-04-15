@@ -82,7 +82,7 @@ public class CategoryProductDao implements ICategoryProductDao {
 			cp.setCategoryCode(t.get("categoryCode").toString());
 			cp.setLocale(locale);
 			cp.setCurrency(currency);
-			cp.setCategoryAttribute(ca);
+			cp.getAttributes().add(ca);
 			cp.setCategoryType(ct);
 			
 			return cp; 
