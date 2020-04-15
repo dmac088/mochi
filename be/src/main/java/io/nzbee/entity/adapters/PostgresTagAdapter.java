@@ -59,6 +59,7 @@ public class PostgresTagAdapter  implements ITagPortService {
 				"en-GB",
 				"HKD"
 				);
+		
 	}
 
 
