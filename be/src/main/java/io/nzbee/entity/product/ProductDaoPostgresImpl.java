@@ -362,7 +362,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		Product product = (Product) p[0];
 		product.setProductStatus((ProductStatus) p[1]);
 		product.setDepartment((Department) p[5]);
-		product.setProductAttribute((ProductAttribute) p[2]);
+		product.getAttributes().add((ProductAttribute) p[2]);
 		
 		Brand brand = (Brand) p[3];
 		product.setBrand(brand);

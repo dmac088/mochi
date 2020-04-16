@@ -132,7 +132,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
 	    .isEqualTo(new Long(1));
 	    assertThat(found.getCategoryType().getCategoryTypeCode())
 	    .isEqualTo("PRD01");
-	    assertThat(found.getCategoryAttribute().getCategoryDesc())
+	    assertThat(found.getAttributes().stream().filter(a -> a.getLclCd().equals("en-GB")).findFirst().get().getCategoryDesc())
 	    .isEqualTo("test product category");
     }
  

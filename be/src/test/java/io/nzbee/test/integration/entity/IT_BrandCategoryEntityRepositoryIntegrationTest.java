@@ -136,7 +136,7 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
 	    .isEqualTo(new Long(2));
 	    assertThat(found.getCategoryType().getCategoryTypeCode())
 	    .isEqualTo("BND01");
-	    assertThat(found.getCategoryAttribute().getCategoryDesc())
+	    assertThat(found.getAttributes().stream().filter(a -> a.getLclCd().equals("en-GB")).findFirst().get().getCategoryDesc())
 	    .isEqualTo("test brand category");
     }
     
