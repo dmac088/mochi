@@ -110,7 +110,7 @@ public class UT_ProductCategoryTest {
 //	    assertThat(found.getCategoryType().getCode())
 //	    .isEqualTo("TST01");
 	    
-	    assertThat(found.getCategoryAttribute().getCategoryDesc())
+	    assertThat(found.getAttributes().stream().filter(a -> a.getLclCd().equals("en-GB")).findFirst().get().getCategoryDesc())
 	    .isEqualTo("test product category");
     }
     
