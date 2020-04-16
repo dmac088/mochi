@@ -174,10 +174,6 @@ public abstract class Category {
 	
 	@Transient
 	@JsonIgnore
-	private CategoryAttribute categoryAttribute;
-	
-	@Transient
-	@JsonIgnore
 	private String[] categoryLayouts;
 
 	@Transient
@@ -252,14 +248,6 @@ public abstract class Category {
 
 	public void setParent(Category parent) {
 		this.parent = parent;
-	}
-
-	public CategoryAttribute getCategoryAttribute() {
-		return categoryAttribute;
-	}
-
-	public void setCategoryAttribute(CategoryAttribute categoryAttribute) {
-		this.categoryAttribute = categoryAttribute;
 	}
 
 	public Long getCategoryId() {

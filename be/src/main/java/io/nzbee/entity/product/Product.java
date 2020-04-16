@@ -49,7 +49,6 @@ import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
 import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
-import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.category.type.CategoryType;
@@ -221,9 +220,6 @@ public abstract class Product {
 	@Transient
 	@Field(store=Store.YES,analyze=Analyze.NO)
 	private String displayCategories;
-
-	@Transient
-	private ProductAttribute productAttribute;
 	
 	@Transient
 	@Field(store=Store.YES,analyze=Analyze.NO)
@@ -426,14 +422,6 @@ public abstract class Product {
 
 	public void setProductUPC(String productUPC) {
 		this.productUPC = productUPC;
-	}
-
-	public ProductAttribute getProductAttribute() {
-		return productAttribute;
-	} 
-
-	public void setProductAttribute(ProductAttribute productAttribute) {
-		this.productAttribute = productAttribute;
 	}
 	
 	public Long getProductId() {

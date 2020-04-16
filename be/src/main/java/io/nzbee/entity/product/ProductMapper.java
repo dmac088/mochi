@@ -16,7 +16,7 @@ public class ProductMapper implements IProductMapper {
 			return new io.nzbee.domain.product.Food(
 					e.getProductUPC(),
 				   	e.getProductCreateDt(),
-				   	e.getProductAttribute().getProductDesc(),
+				   	e.getAttributes().stream().filter(a -> a.getLclCd().equals(e.getLocale())).findFirst().get().getProductDesc(),
 				   	e.getRetailPrice(),
 				   	e.getMarkdownPrice(),
 				   	e.getImagePath(),

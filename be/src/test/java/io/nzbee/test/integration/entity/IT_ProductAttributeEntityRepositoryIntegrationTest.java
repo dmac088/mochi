@@ -115,8 +115,6 @@ public class IT_ProductAttributeEntityRepositoryIntegrationTest {
     	.isEqualTo("ACT01");
     	assertThat(found.getBrand().getBrandCode())
     	.isEqualTo("PLA01");
-    	assertThat(found.getProductAttribute().getProductDesc())
-    	.isEqualTo("test product");
     	assertThat(found.getAttributes().stream().filter(pa -> pa.getLclCd().equals("en-GB")).findFirst().get().getProductDesc())
     	.isEqualTo("test product");
     	assertThat(found.getAttributes().stream().filter(pa -> pa.getLclCd().equals("zh-HK")).findFirst().get().getProductDesc())
