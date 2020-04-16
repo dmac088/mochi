@@ -147,7 +147,7 @@ public abstract class Category {
 	@Field(analyze = Analyze.NO, store=Store.YES)
 	private Long categoryLevel;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="cat_typ_id",
 				nullable = false,  
 				updatable = false, 
