@@ -1,6 +1,7 @@
 package io.nzbee.ui.component.web.search;
 
 import java.util.Date;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -28,6 +29,12 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import io.nzbee.domain.FacetServices;
 import io.nzbee.domain.IDomainObject;
 import io.nzbee.domain.IService;
@@ -38,6 +45,8 @@ import io.nzbee.domain.product.Food;
 import io.nzbee.domain.product.Jewellery;
 import io.nzbee.domain.product.Product;
 import io.nzbee.entity.PageableUtil;
+import io.nzbee.entity.category.ICategoryMapper;
+import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.ui.component.web.facet.search.SearchFacet;
 import io.nzbee.ui.component.web.facet.search.SearchFacetHelper;
 import io.nzbee.ui.component.web.facet.search.SearchFacetWithFieldHelper;
@@ -54,6 +63,9 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 	
 	@Autowired
 	private FacetServices facetServices;
+	
+	@Autowired 
+	private ICategoryMapper categoryMapper;
 
 	@PersistenceContext(unitName = "mochiEntityManagerFactory")
 	private EntityManager em;
@@ -392,7 +404,8 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 							   "product.department.departmentCode",
 							   "product.department.departmentDesc" + transLcl,
 							   "countryOfOrigin",
-							   "product.categories.categoryDesc" + transLcl);
+							   "product.categories.categoryDesc" + transLcl,
+							   "categoriesJSON");
 		
 
 		// get the results using jpaQuery object
@@ -406,7 +419,9 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 												LOGGER.debug(i + " - " + r[i].toString());
 											}
 										}
-			
+										
+										ProductCategory pc = serializeCategory(r[17].toString(), lcl, currency);
+										
 										return (r[13].toString().equals("FOO01")
 										? new Food(
 												r[5].toString(),
@@ -422,7 +437,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 											   	currency,
 											   	new Brand(r[7].toString(), r[8].toString(), 0, lcl, currency),
 											   	new Department(r[13].toString(), r[14].toString(), lcl, currency),
-											   	new ProductCategory("TST01", "test category", true, new Long(1), "CT", 0, "PNT01", lcl, currency)
+											   	pc
 												)
 										: new Jewellery(
 												r[5].toString(),
@@ -436,13 +451,32 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 											   	currency,
 											   	new Brand(r[7].toString(), r[8].toString(), 0, lcl, currency),
 											   	new Department(r[13].toString(), r[14].toString(), lcl, currency),
-											   	new ProductCategory("TST01", "test category", true, new Long(1), "CT", 0, "PNT01", lcl, currency)
+											   	pc
 											   	));
 				}).collect(Collectors.toList());
 	
 			
 		return new PageImpl<Product>(lp, pageable, jpaQuery.getResultSize());
 		
+	}
+	
+	private ProductCategory serializeCategory(String payload, String locale, String currency) {
+		ObjectMapper objectMapper = new ObjectMapper();
+		CategoryProduct cp = null;
+		try {
+			cp = objectMapper.readValue(payload, new TypeReference<CategoryProduct>(){});
+		} catch (JsonParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		cp.setCategoryAttribute(cp.getAttributes().stream().filter(c -> c.getLclCd().equals(locale)).findFirst().get());
+		return (ProductCategory) categoryMapper.entityToDo(cp, locale, currency);
 	}
 
 

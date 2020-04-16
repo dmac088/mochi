@@ -147,7 +147,7 @@ public abstract class Category {
 	@Field(analyze = Analyze.NO, store=Store.YES)
 	private Long categoryLevel;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="cat_typ_id",
 				nullable = false,  
 				updatable = false, 
@@ -200,6 +200,8 @@ public abstract class Category {
 	private String currency;
 	
 	public abstract String getType();
+	
+	public abstract void setType(String type);
 	
 	@Transient
 	@JsonIgnore

@@ -25,7 +25,7 @@ import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.Product_;
 
 @Service
-public class CategoryProductDao implements ICategoryProductDao {
+public class CategoryProductDaoImpl implements ICategoryProductDao {
 
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")

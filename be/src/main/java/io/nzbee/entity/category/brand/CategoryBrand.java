@@ -64,9 +64,16 @@ public class CategoryBrand extends Category {
 	}
 
 	@Override
+	@JsonIgnore
 	public String getType() {
 		// TODO Auto-generated method stub
 		return this.getClass().getSimpleName().toLowerCase();
+	}
+
+	@Override
+	public void setType(String type) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

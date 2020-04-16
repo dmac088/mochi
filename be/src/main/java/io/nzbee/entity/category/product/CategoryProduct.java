@@ -97,9 +97,15 @@ public class CategoryProduct extends Category  {
     }
 
 	@Override
+	@JsonIgnore
 	public String getType() {
-		return "categoryproduct";
+		return this.getClass().getSimpleName().toLowerCase();
 		// TODO Auto-generated method stub
-		//return this.getClass().getSimpleName().toLowerCase();
+	}
+
+	@Override
+	public void setType(String type) {
+		// TODO Auto-generated method stub
+		
 	}
 }
