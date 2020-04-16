@@ -47,6 +47,8 @@ import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
@@ -284,6 +286,12 @@ public abstract class Product {
 
 	public void setPrimaryCategory(CategoryProduct primaryCategory) {
 		this.primaryCategory = primaryCategory;
+	}
+	
+	@Field(analyze=Analyze.NO, store=Store.YES)
+	public String getCategoriesJSON() throws JsonProcessingException {
+		ObjectMapper objectMapper = new ObjectMapper();
+		return objectMapper.writeValueAsString(this.getCategories().stream().filter(c -> c.getCategoryType().getCategoryTypeCode().equals("PRD01")).findFirst().get());
 	}
 	
 	@Field(store=Store.YES)
