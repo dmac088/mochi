@@ -54,13 +54,14 @@ public class PostgresProductAdapter implements IProductPortService {
 		io.nzbee.entity.product.Product pe = productService.findByCode(locale, currency, code).get();
 		io.nzbee.entity.brand.Brand be = pe.getBrand();
 		io.nzbee.entity.product.department.Department de = pe.getDepartment();
-		io.nzbee.entity.category.Category c = pe.getCategories().stream().findFirst().get();
+		io.nzbee.entity.category.Category c = pe.getPrimaryCategory();
 		
 		Brand bdo = brandMapper.entityToDo(be, locale, currency);
 		Department ddo = departmentMapper.entityToDo(de, locale, currency);
 		ProductCategory cdo = (ProductCategory) categoryMapper.entityToDo(c, locale, currency);
 		
 		return productMapper.entityToDo(pe, bdo, ddo, cdo);
+
 	}
 
 	@Override

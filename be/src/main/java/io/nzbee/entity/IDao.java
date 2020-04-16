@@ -20,6 +20,7 @@ public interface IDao<T> {
      
     void delete(T t);
 
+    T objectToEntity(Object[] o);
 	
     
 }

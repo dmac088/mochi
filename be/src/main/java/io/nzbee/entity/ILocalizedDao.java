@@ -17,6 +17,8 @@ public interface ILocalizedDao<T> {
     
     List<T> findAll(String locale, String currency, Set<String> codes);
      
+    T objectToEntity(Object[] o, String locale, String currency);
+    
     void save(T t);
      
     void update(T t, String[] params);

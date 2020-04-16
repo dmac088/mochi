@@ -95,4 +95,10 @@ public class PartyDaoImpl implements IPartyDao {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public Party objectToEntity(Object[] o) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
