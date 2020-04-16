@@ -68,7 +68,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		
 		Object[] p = (Object[])query.getSingleResult();
 		
-		Product product = this.objectToProduct(p, locale, currency);
+		Product product = this.objectToEntity(p, locale, currency);
 		
 		return Optional.ofNullable(product);
 	}
@@ -102,7 +102,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 
 		Object[] p = (Object[])query.getSingleResult();
 		
-		Product product = this.objectToProduct(p, locale, currency);
+		Product product = this.objectToEntity(p, locale, currency);
 		
 		return Optional.ofNullable(product);
 	}
@@ -131,7 +131,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 
 		Object[] p = (Object[])query.getSingleResult();
 		
-		Product product = this.objectToProduct(p, locale, currency);
+		Product product = this.objectToEntity(p, locale, currency);
 		
 		return Optional.ofNullable(product);
 	}
@@ -168,12 +168,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		@SuppressWarnings("unchecked")
 		List<Object[]> results = query.getResultList();
 		
-		return results.stream().map(p -> {
-			
-			Product product = this.objectToProduct(p, locale, currency);
-			
-			return product;
-		}).collect(Collectors.toList());
+		return results.stream().map(p -> this.objectToEntity(p, locale, currency)).collect(Collectors.toList());
 	}
 	
 
@@ -241,7 +236,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		List<Product> lp = 
 		results.stream().map(p -> {
 			
-			Product product = this.objectToProduct(p, locale, currency);
+			Product product = this.objectToEntity(p, locale, currency);
 			
 			return product;
 		}).collect(Collectors.toList());
@@ -349,42 +344,46 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		List<Object[]> results = query.getResultList();
 		
 		List<Product> lp = 
-		results.stream().map(p -> {
-			Product product = this.objectToProduct(p, locale, currency);
-			
-			return product;
-		}).collect(Collectors.toList());
+		results.stream().map(p -> this.objectToEntity(p, locale, currency)).collect(Collectors.toList());
 		
 		return new PageImpl<Product>(lp, pageable, total);
 	}
 	
-	private Product objectToProduct(Object[] p, String locale, String currency) {
-		Product product = (Product) p[0];
-		product.setProductStatus((ProductStatus) p[1]);
-		product.setDepartment((Department) p[5]);
-		product.getAttributes().add((ProductAttribute) p[2]);
+	@Override
+	public Product objectToEntity(Object[] o, String locale, String currency) {
 		
-		Brand brand = (Brand) p[3];
+		Product product = (Product) o[0];
+		
+		product.setProductStatus((ProductStatus) o[1]);
+		product.setDepartment((Department) o[5]);
+		
+		
+		product.setProductAttribute((ProductAttribute) o[2]);
+		
+		Brand brand = (Brand) o[3];
 		product.setBrand(brand);
-		brand.setBrandAttribute((BrandAttribute) p[4]);
+		brand.setBrandAttribute((BrandAttribute) o[4]);
 		
-		CategoryProduct category = (CategoryProduct) p[6];
-		CategoryAttribute categoryAttribute = (CategoryAttribute) p[7];
+		CategoryProduct category = (CategoryProduct) o[6];
+		CategoryAttribute categoryAttribute = (CategoryAttribute) o[7];
 		categoryAttribute.setCategory(category);
-		category.addAttribute(categoryAttribute);
+		category.setCategoryAttribute(categoryAttribute);
 		
-		CategoryType categoryType = (CategoryType) p[8];
+		product.setPrimaryCategory(category);
+
+		CategoryType categoryType = (CategoryType) o[8];
 		category.setCategoryType(categoryType);
 		
-		product.setRetailPrice(((BigDecimal) p[9]).doubleValue());
-		product.setMarkdownPrice(((BigDecimal) p[10]).doubleValue());
+		CategoryProduct parent = (CategoryProduct) o[9];
+		category.setParent(parent);
+		
+		product.setRetailPrice(((BigDecimal) o[10]).doubleValue());
+		product.setMarkdownPrice(((BigDecimal) o[11]).doubleValue());
 		
 		product.setLocale(locale);
 		product.setCurrency(currency);
-		product.setDisplayCategories(p[11].toString());
-		product.setImagePath(p[12].toString());
-		product.getCategories().add(category);
-		category.addProduct(product);
+		product.setDisplayCategories(o[12].toString());
+		product.setImagePath(o[13].toString());
 		
 		return product;
 	}
@@ -471,7 +470,10 @@ public class ProductDaoPostgresImpl implements IProductDao {
 						"	   ca.cat_img_pth, " +
 						"	   ct.cat_typ_id 		AS cat_typ_id, 	" +
 						"      ct.cat_typ_cd		AS cat_typ_cd, " +
-						"      ct.cat_typ_desc 		AS cat_typ_desc, " +
+						"      ct.cat_typ_desc 		AS cat_typ_desc, " + 
+						"	   parent.cat_cd 		AS cat_prnt_cd, " + 
+						"	   parent.cat_lvl 		AS cat_prnt_lvl, " + 
+						"	   parent.cat_prnt_id	AS cat_prnt_prnt_id, " + 
 						"	   prd.prd_id,   " + 
 						"	   prd.upc_cd,   " + 
 						"	   prd.prd_crtd_dt,   " +
@@ -500,6 +502,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		"	FROM descendants cc    " + 
 		"	INNER JOIN mochi.product_category pc    " + 
 		"	ON cc.cat_id = pc.cat_id    " + 
+		
+		"	LEFT JOIN mochi.category parent " +
+		"	ON cc.cat_prnt_id = parent.cat_id  " +
 		
 		"	INNER JOIN mochi.category_type ct  " + 
 		"	ON cc.cat_typ_id = ct.cat_typ_id " + 
@@ -600,6 +605,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
 					"	   ct.cat_typ_id, " + 
 					"	   ct.cat_typ_cd, " +
 					"	   ct.cat_typ_desc, " +
+					"	   parent.cat_cd, " + 
+					"	   parent.cat_lvl, " + 
+					"	   parent.cat_prnt_id, " + 
 					"	   prd.prd_id,  " + 
 					"	   prd.upc_cd,  " + 
 					"	   prd.prd_crtd_dt,  " +

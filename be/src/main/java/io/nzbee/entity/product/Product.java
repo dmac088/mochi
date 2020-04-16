@@ -87,6 +87,7 @@ filters = {
 	    		@ColumnResult(name = "markdown_price"),
 	    		@ColumnResult(name = "display_categories"),
 	    		@ColumnResult(name = "prd_img_pth"),
+	    		@ColumnResult(name = "cat_prnt_cd"),
 	    },		
 	    entities = {
 	            @EntityResult(
@@ -98,9 +99,8 @@ filters = {
 	                        @FieldResult(name = "productCreateDt", 		column = "prd_crtd_dt"),
 	                        @FieldResult(name = "brand", 				column = "bnd_id"),
 	                        @FieldResult(name = "productStatus", 		column = "prd_sts_id"),
-	                        @FieldResult(name = "department", 			column = "dept_id"),
-	                        @FieldResult(name = "productAttribute", 	column = "prd_lcl_id"),	      
-	                        @FieldResult(name = "attributes", 			column = "prd_id"),
+	                        @FieldResult(name = "primaryCategory",		column = "cat_id"),
+	                        @FieldResult(name = "department", 			column = "dept_id"),	      
 	                        @FieldResult(name = "countryOfOrigin",  	column = "ctry_of_orig"),
 	                        @FieldResult(name = "expiryDate",  			column = "exp_dt"),
 	                        @FieldResult(name = "locale",  				column = "lcl_cd"),
@@ -155,8 +155,7 @@ filters = {
 		                    @FieldResult(name = "categoryCode", 				column = "cat_cd"),
 		                    @FieldResult(name = "categoryLevel", 				column = "cat_lvl"),	
 		                    @FieldResult(name = "categoryType", 				column = "cat_typ_id"),
-		                    @FieldResult(name = "parent", 						column = "cat_prnt_id"),
-		                    @FieldResult(name = "categoryAttribute", 			column = "cat_lcl_id"),
+		                    @FieldResult(name = "parent", 						column = "cat_prnt_id")
 		                }),
 	            @EntityResult(
 	                    entityClass = CategoryAttribute.class,
@@ -173,7 +172,16 @@ filters = {
 		                    @FieldResult(name = "categoryTypeId",				column = "cat_typ_id"),
 		                    @FieldResult(name = "categoryTypeCode", 			column = "cat_typ_cd"),
 		                    @FieldResult(name = "categoryTypeDesc", 			column = "cat_typ_desc")
-		                })
+		                }),
+	            @EntityResult(
+	            		entityClass = CategoryProduct.class,
+		                fields = {
+		                    @FieldResult(name = "categoryId", 					column = "cat_prnt_id"),
+		                    @FieldResult(name = "categoryCode", 				column = "cat_prnt_cd"),
+		                    @FieldResult(name = "categoryLevel", 				column = "cat_prnt_lvl"),
+		                    @FieldResult(name = "categoryType", 				column = "cat_typ_id"),
+		                    @FieldResult(name = "parent", 						column = "cat_prnt_prnt_id")
+		                }),
 	    }),
 		@SqlResultSetMapping(
 			    name = "ProductMapping.count",
@@ -218,6 +226,9 @@ public abstract class Product {
 	private List<ProductAttribute> attributes = new ArrayList<ProductAttribute>();
 	
 	@Transient
+	private ProductAttribute productAttribute;
+
+	@Transient
 	@Field(store=Store.YES,analyze=Analyze.NO)
 	private String displayCategories;
 	
@@ -259,9 +270,20 @@ public abstract class Product {
 				cascade = CascadeType.ALL,
 				orphanRemoval = true)
 	List<ProductPrice> prices = new ArrayList<ProductPrice>();
+	
+	@Transient
+	private CategoryProduct primaryCategory; 
 
 	public Product() {
 		
+	}
+
+	public CategoryProduct getPrimaryCategory() {
+		return primaryCategory;
+	}
+
+	public void setPrimaryCategory(CategoryProduct primaryCategory) {
+		this.primaryCategory = primaryCategory;
 	}
 	
 	@Field(store=Store.YES)
@@ -444,12 +466,16 @@ public abstract class Product {
 		this.tags = tags;
 	}
 	
-	public List<ProductAttribute> getAttributes() {
+	private List<ProductAttribute> getAttributes() {
 		return attributes;
 	}
+	
+	public ProductAttribute getProductAttribute() {
+		return productAttribute;
+	}
 
-	public void setAttributes(List<ProductAttribute> productAttributes) {
-		this.attributes = productAttributes;
+	public void setProductAttribute(ProductAttribute productAttribute) {
+		this.productAttribute = productAttribute;
 	}
 
 	public void setProductId(Long productId) {
@@ -580,6 +606,16 @@ public abstract class Product {
 
 	public void setCurrency(String currency) {
 		this.currency = currency;
+	}
+	
+	public void addCategory(CategoryProduct category) {
+		this.getCategories().add(category);
+		category.getProducts().add(this);
+	}
+	
+	public void removeCategory(CategoryProduct category) {
+		this.getCategories().remove(category);
+		category.removeProduct(this);
 	}
 	
 	@Override

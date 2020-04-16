@@ -79,5 +79,11 @@ public class ProductAttributeServiceImpl implements IProductAttributeService {
 	public Optional<ProductAttribute> getProductAttributeHK(Long id) {
 		return productAttributeRepository.findByLclCdAndProductProductId(GeneralVars.LANGUAGE_HK, id);
 	}
+
+	@Override
+	public ProductAttribute objectToEntity(Object[] o, String locale, String currency) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

@@ -61,7 +61,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		
 		return results.stream().map(c -> {
 			Category category = (Category) c[0];
-			category.getAttributes().add(((CategoryAttribute) c[1]));
+			category.setCategoryAttribute(((CategoryAttribute) c[1]));
 			category.setCategoryType((CategoryType) c[2]);
 			category.setObjectCount(((BigDecimal)c[6]).intValue());
 			category.setChildCount(((BigInteger)c[7]).longValue());
@@ -77,7 +77,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				if(((CategoryProduct) category).hasParent()) {
 					//we have a parent
 					Category parentCategory = (Category) c[3];
-					parentCategory.getAttributes().add(((CategoryAttribute) c[4]));
+					parentCategory.setCategoryAttribute(((CategoryAttribute) c[4]));
 					parentCategory.setCategoryType((CategoryType) c[5]);
 					category.setParent(parentCategory);
 				}
@@ -110,7 +110,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		
 		return results.stream().map(c -> {
 			Category category = (Category) c[0];
-			category.getAttributes().add(((CategoryAttribute) c[1]));
+			category.setCategoryAttribute(((CategoryAttribute) c[1]));
 			category.setCategoryType((CategoryType) c[2]);
 			category.setObjectCount(((BigDecimal)c[6]).intValue());
 			category.setChildCount(((BigInteger)c[7]).longValue());
@@ -126,7 +126,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				if(((CategoryProduct) category).hasParent()) {
 					//we have a parent
 					Category parentCategory = (Category) c[3];
-					parentCategory.getAttributes().add(((CategoryAttribute) c[4]));
+					parentCategory.setCategoryAttribute(((CategoryAttribute) c[4]));
 					parentCategory.setCategoryType((CategoryType) c[5]);
 					category.setParent(parentCategory);
 				}
@@ -160,31 +160,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		@SuppressWarnings("unchecked")
 		List<Object[]> results = query.getResultList();
 		
-		return results.stream().map(c -> {
-			Category category = (Category) c[0];
-			category.getAttributes().add(((CategoryAttribute) c[1]));
-			category.setCategoryType((CategoryType) c[2]);
-			category.setObjectCount(((BigDecimal)c[6]).intValue());
-			category.setChildCount(((BigInteger)c[7]).longValue());
-			category.setCategoryLayouts((((String)c[8]) != null)
-										? ((String)c[8]).split(",", -1)
-										: new String[0]);
-			category.setLocale(locale);
-			category.setCurrency(currency);
-			
-			//if c[4] is null then the category does not have a parent
-			if(category instanceof CategoryProduct) {
-				((CategoryProduct) category).setHasParent(c[3] != null);
-				if(((CategoryProduct) category).hasParent()) {
-					//we have a parent
-					Category parentCategory = (Category) c[3];
-					parentCategory.getAttributes().add(((CategoryAttribute) c[4]));
-					parentCategory.setCategoryType((CategoryType) c[5]);
-					category.setParent(parentCategory);
-				}
-			}
-			return category;
-		}).collect(Collectors.toList());
+		return results.stream().map(c -> this.objectToEntity(c, locale, currency)).collect(Collectors.toList());
 	}
 	
 	@Override
@@ -211,26 +187,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 
 		Object[] c = (Object[])query.getSingleResult();
 		
-		Category category = (Category) c[0];
-		category.getAttributes().add(((CategoryAttribute) c[1]));
-		category.setCategoryType((CategoryType) c[2]);
-		if(category instanceof CategoryProduct) {
-			((CategoryProduct) category).setHasParent(c[3] != null);
-			if(((CategoryProduct) category).hasParent()) {
-				//we have a parent
-				Category parentCategory = (Category) c[3];
-				parentCategory.getAttributes().add(((CategoryAttribute) c[4]));
-				parentCategory.setCategoryType((CategoryType) c[5]);
-				category.setParent(parentCategory);
-			}
-		}
-		category.setObjectCount(((BigDecimal)c[6]).intValue());
-		category.setChildCount(((BigInteger)c[7]).longValue());
-		category.setCategoryLayouts((((String)c[8]) != null)
-				? ((String)c[8]).split(",", -1)
-				: new String[0]);	
-		category.setLocale(locale);
-		category.setCurrency(currency);
+		Category category = this.objectToEntity(c, locale, currency);
 		
 		return Optional.ofNullable(category);
 	}
@@ -260,26 +217,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 
 		Object[] c = (Object[])query.getSingleResult();
 		
-		Category category = (Category) c[0];
-		category.getAttributes().add(((CategoryAttribute) c[1]));
-		category.setCategoryType((CategoryType) c[2]);
-		if(category instanceof CategoryProduct) {
-			((CategoryProduct) category).setHasParent(c[3] != null);
-			if(((CategoryProduct) category).hasParent()) {
-				//we have a parent
-				Category parentCategory = (Category) c[3];
-				parentCategory.getAttributes().add(((CategoryAttribute) c[4]));
-				parentCategory.setCategoryType((CategoryType) c[5]);
-				category.setParent(parentCategory);
-			}
-		}
-		category.setObjectCount(((BigDecimal)c[6]).intValue());
-		category.setChildCount(((BigInteger)c[7]).longValue());
-		category.setCategoryLayouts((((String)c[8]) != null)
-				? ((String)c[8]).split(",", -1)
-				: new String[0]);	
-		category.setLocale(locale);
-		category.setCurrency(currency);
+		Category category = this.objectToEntity(c, locale, currency);
 		
 		return Optional.ofNullable(category);
 
@@ -311,26 +249,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		try {
 			Object[] c = (Object[])query.getSingleResult();
 			
-			Category category = (Category) c[0];
-			category.getAttributes().add(((CategoryAttribute) c[1]));
-			category.setCategoryType((CategoryType) c[2]);
-			if(category instanceof CategoryProduct) {
-				((CategoryProduct) category).setHasParent(c[3] != null);
-				if(((CategoryProduct) category).hasParent()) {
-					//we have a parent
-					Category parentCategory = (Category) c[3];
-					parentCategory.getAttributes().add(((CategoryAttribute) c[4]));
-					parentCategory.setCategoryType((CategoryType) c[5]);
-					category.setParent(parentCategory);
-				}
-			}
-			category.setObjectCount(((BigDecimal)c[6]).intValue());
-			category.setChildCount(((BigInteger)c[7]).longValue());
-			category.setCategoryLayouts((((String)c[8]) != null)
-					? ((String)c[8]).split(",", -1)
-					: new String[0]);
-			category.setLocale(locale);
-			category.setCurrency(currency);
+			Category category = this.objectToEntity(c, locale, currency);
 			
 			return Optional.ofNullable(category);
 		} 
@@ -402,7 +321,33 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	public List<Category> findByProductCode(String locale, String currency, String productCode) {
 		return null;
 	}
-
+	
+	@Override
+	public Category objectToEntity(Object[] o, String locale, String currency) {
+		Category category = (Category) o[0];
+		category.setCategoryAttribute(((CategoryAttribute) o[1]));
+		category.setCategoryType((CategoryType) o[2]);
+		if(category instanceof CategoryProduct) {
+			((CategoryProduct) category).setHasParent(o[3] != null);
+			if(((CategoryProduct) category).hasParent()) {
+				//we have a parent
+				Category parentCategory = (Category) o[3];
+				parentCategory.setCategoryAttribute(((CategoryAttribute) o[4]));
+				parentCategory.setCategoryType((CategoryType) o[5]);
+				category.setParent(parentCategory);
+			}
+		}
+		category.setObjectCount(((BigDecimal)o[6]).intValue());
+		category.setChildCount(((BigInteger)o[7]).longValue());
+		category.setCategoryLayouts((((String)o[8]) != null)
+				? ((String)o[8]).split(",", -1)
+				: new String[0]);
+		category.setLocale(locale);
+		category.setCurrency(currency);
+		
+		return category;
+	}
+	
 	@Override
 	public void save(Category t) {
 		// TODO Auto-generated method stub
@@ -419,7 +364,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	public void delete(Category t) {
 		// TODO Auto-generated method stub
 	}	
-	
 	
 	private String constructSQL(
 				boolean hasCategories,
@@ -444,7 +388,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				
 				"  WHERE 0=0 " +
 				((hasCategoryDesc 	&& !hasCategories 	&& !hasCategoryId)  	? " AND a.cat_desc = :categoryDesc " : "") + 
-				((hasCategories 	&& !hasCategoryDesc && !hasCategoryId)  	? " AND cat_cd in :categoryCodes" : "") +
+				((hasCategories 	&& !hasCategoryDesc && !hasCategoryId)  	? " AND t.cat_cd in :categoryCodes" : "") +
 				((hasCategoryId 	&& !hasCategories 	&& !hasCategoryDesc)  	? " AND t.cat_id = :categoryId" : "") +
 				((!hasCategories 	&& !hasCategoryDesc && !hasCategoryId) 		? " AND cat_prnt_id IS NULL " : "") +
 				"  UNION ALL " +

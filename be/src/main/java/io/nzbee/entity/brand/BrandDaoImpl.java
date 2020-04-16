@@ -354,6 +354,12 @@ public class BrandDaoImpl  implements IBrandDao {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public Brand objectToEntity(Object[] o, String locale, String currency) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 
 }

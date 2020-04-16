@@ -237,6 +237,12 @@ public class TagDaoImpl implements ITagDao {
 		return null;
 	}
 
+	@Override
+	public Tag objectToEntity(Object[] o, String locale, String currency) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 }

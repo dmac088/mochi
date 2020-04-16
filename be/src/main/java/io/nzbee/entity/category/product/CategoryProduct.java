@@ -75,12 +75,12 @@ public class CategoryProduct extends Category  {
 	}
 	
 	public void addProduct(Product product) {
-		this.products.add(product);
+		this.getProducts().add(product);
 		product.getCategories().add(this);
 	}
 	
 	public void removeProduct(Product product) {
-		this.products.remove(product);
+		this.getProducts().remove(product);
 		product.removeProductCategory(this);
 	}
 	

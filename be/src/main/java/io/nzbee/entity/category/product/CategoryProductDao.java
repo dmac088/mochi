@@ -82,7 +82,7 @@ public class CategoryProductDao implements ICategoryProductDao {
 			cp.setCategoryCode(t.get("categoryCode").toString());
 			cp.setLocale(locale);
 			cp.setCurrency(currency);
-			cp.getAttributes().add(ca);
+			cp.setCategoryAttribute(ca);
 			cp.setCategoryType(ct);
 			
 			return cp; 
@@ -135,6 +135,12 @@ public class CategoryProductDao implements ICategoryProductDao {
 	public void delete(CategoryProduct t) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public CategoryProduct objectToEntity(Object[] o, String locale, String currency) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

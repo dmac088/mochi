@@ -172,6 +172,9 @@ public abstract class Category {
 				orphanRemoval = true)
 	private Set<CategoryAttribute> attributes = new HashSet<CategoryAttribute>();
 	
+	@Transient 
+	private CategoryAttribute categoryAttribute;
+	
 	@Transient
 	@JsonIgnore
 	private String[] categoryLayouts;
@@ -316,8 +319,12 @@ public abstract class Category {
 		return attributes;
 	}
 	
-	public void setAttributes(Set<CategoryAttribute> attributes) {
-		this.attributes = attributes;
+	public CategoryAttribute getCategoryAttribute() {
+		return categoryAttribute;
+	}
+
+	public void setCategoryAttribute(CategoryAttribute categoryAttribute) {
+		this.categoryAttribute = categoryAttribute;
 	}
 	
 	public List<Layout> getLayouts() {
