@@ -11,18 +11,46 @@ import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.department.Department;
 import io.nzbee.domain.ports.IProductPortService;
+import io.nzbee.domain.product.Food;
 import io.nzbee.domain.product.Product;
 import io.nzbee.entity.brand.IBrandMapper;
+import io.nzbee.entity.brand.IBrandService;
 import io.nzbee.entity.category.ICategoryMapper;
+import io.nzbee.entity.category.ICategoryService;
+import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.IProductMapper;
 import io.nzbee.entity.product.IProductService;
+import io.nzbee.entity.product.currency.Currency;
+import io.nzbee.entity.product.currency.ICurrencyService;
 import io.nzbee.entity.product.department.IDepartmentMapper;
+import io.nzbee.entity.product.department.IDepartmentService;
+import io.nzbee.entity.product.price.IProductPriceService;
+import io.nzbee.entity.product.price.IProductPriceTypeService;
+import io.nzbee.entity.product.status.IProductStatusRepository;
 
 @Component
 public class PostgresProductAdapter implements IProductPortService {
 	
 	@Autowired
 	private IProductService productService;
+	
+	@Autowired
+	private IDepartmentService departmentService;
+	
+	@Autowired
+	private ICategoryService categoryService;
+	
+	@Autowired
+	private IBrandService brandService;
+	
+	@Autowired
+	private ICurrencyService currencyService;
+	
+	@Autowired
+	private IProductPriceTypeService productPriceTypeService;
+	
+	@Autowired
+	private IProductStatusRepository productStatusService;
 	
 	@Autowired 
 	private IProductMapper productMapper;
@@ -43,8 +71,67 @@ public class PostgresProductAdapter implements IProductPortService {
 	}
 
 	@Override
-	public void save(Product tag) {
-		// TODO Auto-generated method stub
+	public void save(Product domainObject) {
+		if(domainObject instanceof Food) {
+			io.nzbee.entity.product.food.Food product = new io.nzbee.entity.product.food.Food();
+			Food food = (Food) domainObject;
+
+			//find the department
+			io.nzbee.entity.product.department.Department d =
+					departmentService.findByCode(domainObject.getLclCd(), 
+												 domainObject.getCurrency(),
+												 domainObject.getDepartment().getCode()).get();	
+			
+			//find the primary category
+			io.nzbee.entity.category.product.CategoryProduct c =
+					(CategoryProduct) categoryService.findByCode(	 
+										 domainObject.getLclCd(), 
+										 domainObject.getCurrency(),
+										 domainObject.getPrimaryCategory().getCategoryCode()).get();	
+			
+			
+			//find the brand 
+			io.nzbee.entity.brand.Brand b = 
+					brandService.findByCode( domainObject.getLclCd(), 
+										 	 domainObject.getCurrency(),
+										 	 domainObject.getBrand().getBrandCode()).get();
+			
+			
+			Currency curr = currencyService.findByCode(food.getCurrency()).get();
+					
+			io.nzbee.entity.product.price.ProductPriceType ptr = productPriceTypeService.findByCode("RET01").get();
+			io.nzbee.entity.product.price.ProductPriceType ptm = productPriceTypeService.findByCode("MKD01").get();
+			
+			io.nzbee.entity.product.status.ProductStatus ps = productStatusService.findByProductStatusCode("ACT01").get();
+			
+			io.nzbee.entity.product.price.ProductPrice prcr = new io.nzbee.entity.product.price.ProductPrice();
+			prcr.setType(ptr);
+			prcr.setCurrency(curr);
+			prcr.setPriceValue(food.getProductRetail());
+			
+			io.nzbee.entity.product.price.ProductPrice prcm = new io.nzbee.entity.product.price.ProductPrice();
+			prcm.setType(ptm);
+			prcm.setCurrency(curr);
+			prcm.setPriceValue(food.getProductMarkdown());
+					
+			product.setProductUPC(food.getProductUPC());
+			product.setProductCreateDt(food.getProductCreateDt());
+			product.setCountryOfOrigin(food.getCountryOfOrigin());
+			product.setExpiryDate(food.getExpiryDate());
+			product.setLocale(food.getLclCd());
+			product.setCurrency(food.getCurrency());
+			product.setDepartment(d);
+			product.addCategory(c);
+			product.setBrand(b);
+			product.addProductPrice(prcr);
+			product.addProductPrice(prcm);
+			product.setProductStatus(ps);
+			
+			productService.save(product);
+			
+		}
+		
+		
 		
 	}
 

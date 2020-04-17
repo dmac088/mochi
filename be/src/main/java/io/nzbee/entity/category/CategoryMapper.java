@@ -17,7 +17,6 @@ public class CategoryMapper implements ICategoryMapper {
 					e.getCategoryAttribute().getCategoryDesc(),
 					true,
 					e.getCategoryLevel(),
-					e.getCategoryType().getCategoryTypeDesc(),
 					e.getObjectCount(),
 					e.getParent().isPresent()
 					? e.getParent().get().getCategoryCode()
@@ -31,7 +30,6 @@ public class CategoryMapper implements ICategoryMapper {
 				e.getCategoryAttribute().getCategoryDesc(),
 				true,
 				e.getCategoryLevel(),
-				e.getCategoryType().getCategoryTypeDesc(),
 				e.getObjectCount(),
 				e.getParent().isPresent()
 				? e.getParent().get().getCategoryCode()
@@ -49,7 +47,6 @@ public class CategoryMapper implements ICategoryMapper {
 					e.getCategoryAttribute().getCategoryDesc(),
 					true,
 					e.getCategoryLevel(),
-					e.getCategoryType().getCategoryTypeDesc(),
 					e.getObjectCount(),
 					e.getParent().isPresent()
 					? e.getParent().get().getCategoryCode()
@@ -63,7 +60,6 @@ public class CategoryMapper implements ICategoryMapper {
 				e.getCategoryAttribute().getCategoryDesc(),
 				true,
 				e.getCategoryLevel(),
-				e.getCategoryType().getCategoryTypeDesc(),
 				e.getObjectCount(),
 				e.getParent().isPresent()
 				? e.getParent().get().getCategoryCode()

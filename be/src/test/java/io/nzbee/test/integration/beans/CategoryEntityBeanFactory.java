@@ -36,7 +36,7 @@ public class CategoryEntityBeanFactory {
 	@Bean
 	public final Category getBrandCategoryEntityBean() {
 		final Category category = new CategoryBrand();
-	
+		
 		category.setCategoryCode("TST02");
 		category.setCategoryLevel(new Long(2));
 

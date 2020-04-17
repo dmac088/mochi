@@ -1,6 +1,8 @@
 package io.nzbee.test.integration.beans;
 
 import java.util.Date;
+
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.category.ProductCategory;
@@ -9,9 +11,10 @@ import io.nzbee.domain.product.Food;
 import io.nzbee.domain.product.Product;
 
 @Service
+@Profile(value = "dev")
 public class ProductDoBeanFactory {
 	
-	public Product getProductDoBean() {
+	public final Product getProductDoBean() {
 		
 		return new Food(		   "3254354673",
 								   new Date(),
@@ -33,9 +36,6 @@ public class ProductDoBeanFactory {
 												  "Food",
 												  "en-GB",
 												  "HKD"),
-								   new ProductCategory("TST01", "test category", true, new Long(1), "CT", 0, "PNT01", "en-GB", "HKD"));
+								   new ProductCategory("FRT01", "test category", true, new Long(1), 0, "PNT01", "en-GB", "HKD"));
 	}
-		
-	
-	
 }
