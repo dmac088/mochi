@@ -16,7 +16,7 @@ public class ProductPriceType {
 	private Long Id;
 	
 	@NaturalId
-	@Column(name="prc_typ_cd", unique = true, updatable = false)
+	@Column(name="prc_typ_cd")
 	private String code;
 	
 	@Column(name="prc_typ_desc")
