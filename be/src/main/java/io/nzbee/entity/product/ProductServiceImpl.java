@@ -93,7 +93,7 @@ public class ProductServiceImpl implements IProductService {
 
 	@Override
 	public void save(Product t) {
-		// TODO Auto-generated method stub
+		productDAO.save(t);
 		
 	}
 

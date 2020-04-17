@@ -641,8 +641,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 
 	@Override
 	public void save(Product t) {
-		// TODO Auto-generated method stub
-		
+		em.persist(t);
+		em.flush();
 	}
 
 	@Override
