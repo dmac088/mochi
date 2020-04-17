@@ -102,7 +102,7 @@ public class IT_ProductDoServiceImplIntegrationTest {
     	.isEqualTo("NZL");
     	
     	assertThat(((Food) found).getDisplayCategories())
-    	.isEqualTo("test1, test2");
+    	.isEqualTo("Fruit");
 	    
 	    assertThat(found.getProductDesc())
 	    .isEqualTo("Test Product Description");

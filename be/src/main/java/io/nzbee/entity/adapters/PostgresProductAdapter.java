@@ -96,6 +96,11 @@ public class PostgresProductAdapter implements IProductPortService {
 										 	 domainObject.getBrand().getBrandCode()).get();
 			
 			
+			io.nzbee.entity.product.attribute.ProductAttribute pa = new io.nzbee.entity.product.attribute.ProductAttribute();
+			pa.setProductDesc(domainObject.getProductDesc());
+			pa.setProductImage(domainObject.getProductImage());
+			pa.setLclCd(domainObject.getLclCd());
+			
 			Currency curr = currencyService.findByCode(food.getCurrency()).get();
 					
 			io.nzbee.entity.product.price.ProductPriceType ptr = productPriceTypeService.findByCode("RET01").get();
@@ -125,6 +130,7 @@ public class PostgresProductAdapter implements IProductPortService {
 			product.addProductPrice(prcr);
 			product.addProductPrice(prcm);
 			product.setProductStatus(ps);
+			product.addProductAttribute(pa);
 			
 			productService.save(product);
 			
@@ -152,8 +158,16 @@ public class PostgresProductAdapter implements IProductPortService {
 
 	@Override
 	public Product findByDesc(String locale, String currency, String desc) {
-		// TODO Auto-generated method stub
-		return null;
+		io.nzbee.entity.product.Product pe = productService.findByDesc(locale, currency, desc).get();
+		io.nzbee.entity.brand.Brand be = pe.getBrand();
+		io.nzbee.entity.product.department.Department de = pe.getDepartment();
+		io.nzbee.entity.category.Category c = pe.getPrimaryCategory();
+		
+		Brand bdo = brandMapper.entityToDo(be, locale, currency);
+		Department ddo = departmentMapper.entityToDo(de, locale, currency);
+		ProductCategory cdo = (ProductCategory) categoryMapper.entityToDo(c, locale, currency);
+		
+		return productMapper.entityToDo(pe, bdo, ddo, cdo);
 	}
 
 	@Override
