@@ -58,4 +58,10 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	public String getFacetCategory() {
 		return "brand";
 	}
+
+	@Override
+	public void save(Brand object) {
+		// TODO Auto-generated method stub
+		
+	}
 }

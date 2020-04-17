@@ -72,6 +72,12 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 		return "category";
 	}
 
+	@Override
+	public void save(Category object) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 
 }

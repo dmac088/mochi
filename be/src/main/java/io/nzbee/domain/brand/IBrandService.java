@@ -6,4 +6,5 @@ import io.nzbee.domain.IService;
 public interface IBrandService extends IService<Brand> {
 	
 	Set<Brand> findAll(String locale, String currency, String category);
+	
 }

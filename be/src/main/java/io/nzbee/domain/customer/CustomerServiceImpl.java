@@ -90,6 +90,12 @@ public class CustomerServiceImpl implements ICustomerService {
 		return null;
 	}
 
+	@Override
+	public void save(Customer object) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 	
 
