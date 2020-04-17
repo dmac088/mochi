@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.NaturalId;
+
 @Entity
 @Table(name = "price_type", schema = "mochi")
 public class ProductPriceType {
@@ -13,7 +15,8 @@ public class ProductPriceType {
 	@Column(name="prc_typ_id")
 	private Long Id;
 	
-	@Column(name="prc_typ_cd")
+	@NaturalId
+	@Column(name="prc_typ_cd", unique = true, updatable = false)
 	private String code;
 	
 	@Column(name="prc_typ_desc")

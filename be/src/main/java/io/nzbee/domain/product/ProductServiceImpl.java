@@ -114,8 +114,7 @@ public class ProductServiceImpl implements IProductService {
 
 	@Override
 	public void save(Product object) {
-		// TODO Auto-generated method stub
-		
+		productService.save(object);
 	}
 
 	

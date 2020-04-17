@@ -26,7 +26,6 @@ public abstract class Category implements IHierarchicalDomainObject {
 	public Category(String categoryCode, 
 					String categoryDesc, 
 					Long categoryLevel, 
-					String categoryType,
 					String lclCd, 
 					String currency,
 					String parentCode,
@@ -35,7 +34,6 @@ public abstract class Category implements IHierarchicalDomainObject {
 		this.categoryCode 	= categoryCode;
 		this.categoryDesc 	= categoryDesc;
 		this.categoryLevel 	= categoryLevel;
-		this.categoryType 	= categoryType;
 		this.objectCount	= objectCount;
 		this.locale 		= lclCd;
 		this.currency		= currency;

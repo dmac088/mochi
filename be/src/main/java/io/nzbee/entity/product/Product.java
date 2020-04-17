@@ -277,7 +277,6 @@ public abstract class Product {
 	private CategoryProduct primaryCategory; 
 
 	public Product() {
-		
 	}
 
 	public CategoryProduct getPrimaryCategory() {

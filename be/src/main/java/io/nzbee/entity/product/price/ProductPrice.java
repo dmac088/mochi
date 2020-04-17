@@ -25,7 +25,9 @@ public class ProductPrice {
 	private Double priceValue;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="prc_typ_id", nullable=false, updatable = false, insertable = true)
+	@JoinColumn(name="prc_typ_id",  nullable = false,  
+									updatable = false, 
+									insertable = false)
 	private ProductPriceType type;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
