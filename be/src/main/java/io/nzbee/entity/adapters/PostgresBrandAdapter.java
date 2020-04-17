@@ -31,35 +31,31 @@ public class PostgresBrandAdapter implements IBrandPortService {
 
 	@Override
 	public Set<Brand> findAll(String locale, String currency) {
-		// TODO Auto-generated method stub
 		return brandService.findAll(locale, currency)
 				.stream().map(b -> this.entityToDo(b)).collect(Collectors.toSet());
 	}
 
 	@Override
 	public Brand findByCode(String locale, String currency, String code) {
-		// TODO Auto-generated method stub
 		return entityToDo(brandService.findByCode(locale, currency, code).get());
 				
 	}
 
 	@Override
 	public Brand findByDesc(String locale, String currency, String desc) {
-		// TODO Auto-generated method stub
 		return entityToDo(brandService.findByDesc(locale, currency, desc).get());
 	}
 
 	@Override
 	public Set<Brand> findAll(String locale, String currency, Set<String> categoryCodes, Set<String> tagCodes) {
-		// TODO Auto-generated method stub
 		return brandService.findAll(locale, currency, categoryCodes, tagCodes)
 				.stream().map(b -> this.entityToDo(b)).collect(Collectors.toSet());
 	}
 
 	@Override
 	public Set<Brand> findAll(String locale, String currency, String category) {
-		// TODO Auto-generated method stub
-		return null;
+		return brandService.findAll(locale, currency, category)
+				.stream().map(b -> this.entityToDo(b)).collect(Collectors.toSet());
 	}
 	
 	@Override
