@@ -24,12 +24,6 @@ public class PostgresBrandAdapter implements IBrandPortService {
 	}
 
 	@Override
-	public void save(Brand domainObject) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public Set<Brand> findAll(String locale, String currency) {
 		return brandService.findAll(locale, currency)
 				.stream().map(b -> this.entityToDo(b)).collect(Collectors.toSet());
@@ -63,6 +57,23 @@ public class PostgresBrandAdapter implements IBrandPortService {
 		// TODO Auto-generated method stub
 		return brandService.findAll(locale, currency, codes)
 				.stream().map(b -> this.entityToDo(b)).collect(Collectors.toSet());
+	}
+	
+	@Override
+	public void save(Brand domainObject) {
+		io.nzbee.entity.brand.Brand brand = new io.nzbee.entity.brand.Brand();
+		io.nzbee.entity.brand.attribute.BrandAttribute brandAttribute = new io.nzbee.entity.brand.attribute.BrandAttribute();
+	
+		brand.setBrandCode(domainObject.getBrandCode());
+		brand.setLocale(domainObject.getLocale());
+		brand.setCurrency(domainObject.getCurrency());
+		
+		brandAttribute.setBrandDesc(domainObject.getBrandDesc());
+		brandAttribute.setLclCd(domainObject.getLocale());
+		brand.addAttribute(brandAttribute);
+		brandAttribute.setBrand(brand);
+		
+		brandService.save(brand);		
 	}
 	
 	private Brand entityToDo(io.nzbee.entity.brand.Brand e) {

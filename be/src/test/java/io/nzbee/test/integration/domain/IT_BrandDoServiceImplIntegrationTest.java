@@ -19,7 +19,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.brand.BrandServiceImpl;
 import io.nzbee.domain.brand.IBrandService;
-import io.nzbee.test.integration.beans.BrandEntityBeanFactory;
+import io.nzbee.test.integration.beans.BrandDoBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -35,14 +35,9 @@ public class IT_BrandDoServiceImplIntegrationTest {
             return new BrandServiceImpl();
         }
         
-        @Bean(value = "brandEntityService")
-        public io.nzbee.entity.brand.IBrandService brandEntityService() {
-        	return new io.nzbee.entity.brand.BrandServiceImpl();
-        }
-      
-        @Bean(value = "brandEntityBeanFactory")
-        public BrandEntityBeanFactory brandFactoryBean() {
-            return new BrandEntityBeanFactory();
+        @Bean(value = "brandDoBeanFactory")
+        public BrandDoBeanFactory brandFactoryBean() {
+            return new BrandDoBeanFactory();
         }
     }
 	
@@ -54,18 +49,15 @@ public class IT_BrandDoServiceImplIntegrationTest {
     private IBrandService brandService;
 	
 	@Autowired
-	private BrandEntityBeanFactory brandEntityBeanFactory;
+	private BrandDoBeanFactory brandDoBeanFactory;
 	
-	private io.nzbee.entity.brand.Brand brand = null;
+	private Brand brand = null;
 	
 	
-	public io.nzbee.entity.brand.Brand persistNewBrand() {
-		brand = brandEntityBeanFactory.getBrandEntityBean();
+	public Brand persistNewBrand() {
+		brand = brandDoBeanFactory.getBrandDoBean();
    	
-	    //persist a new transient test category
-	    entityManager.persist(brand);
-	    entityManager.flush();
-	    entityManager.close();
+	    brandService.save(brand);
 	    	
 	    return brand;
 	}
@@ -77,7 +69,7 @@ public class IT_BrandDoServiceImplIntegrationTest {
  
     @Test
     public void whenValidCode_thenBrandShouldBeFound() {
-        String code = "TST02";
+        String code = "TST03";
         
         Brand found = brandService.findByCode("en-GB", "HKD", code);
       
@@ -96,7 +88,7 @@ public class IT_BrandDoServiceImplIntegrationTest {
     private void assertFound(final Brand found) {
 
     	assertThat(found.getBrandCode())
-        .isEqualTo("TST02");
+        .isEqualTo("TST03");
 	    
 	    assertThat(found.getBrandDesc())
 	    .isEqualTo("test brand");
