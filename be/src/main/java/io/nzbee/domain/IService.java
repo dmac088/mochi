@@ -15,6 +15,6 @@ public interface IService<T> {
 	String tokenToCode(String token);
 
 	Set<T> findAll(String lcl, String currency, Set<String> codes);
-
 	
+	void save(T object);
 }

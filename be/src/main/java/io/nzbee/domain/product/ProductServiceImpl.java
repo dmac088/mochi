@@ -112,6 +112,12 @@ public class ProductServiceImpl implements IProductService {
 		return token;
 	}
 
+	@Override
+	public void save(Product object) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 
 }

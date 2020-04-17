@@ -17,55 +17,47 @@ public class BrandServiceImpl implements IBrandService {
 	@Override
 	@Transactional
 	public Optional<Brand> findById(String locale, String currency, long Id) {
-		// TODO Auto-generated method stub
 		return brandDao.findById(locale, currency, Id);
 	}
 
 	@Override
 	@Transactional
 	public Optional<Brand> findByCode(String locale, String currency, String brandCode) {
-		// TODO Auto-generated method stub
 		return brandDao.findByCode(locale, currency, brandCode);
 	}
 	
 	@Override
 	@Transactional
 	public Optional<Brand> findByDesc(String locale, String currency, String brandDesc) {
-		// TODO Auto-generated method stub
 		return brandDao.findByDesc(locale, currency, brandDesc);
 	}
 	
 	@Override
 	@Transactional(readOnly=true)
 	public List<Brand> findAll(String locale, String currency) {
-		// TODO Auto-generated method stub
 		return brandDao.findAll(locale, currency);
 	}
 
 	@Override
 	@Transactional(readOnly=true)
 	public List<Brand> findAll(String locale, String currency, Set<String> categoryCodes, Set<String> tagCodes) {
-		// TODO Auto-generated method stub
 		return brandDao.findAll(locale, currency, categoryCodes, tagCodes);
 	}
 	
 	@Override
 	@Transactional(readOnly=true)
 	public List<Brand> findAll(String locale, String currency, Set<String> codes) {
-		// TODO Auto-generated method stub
 		return brandDao.findAll(locale, currency, codes);
 	}
 	
 	@Override
 	@Transactional(readOnly=true)
 	public List<Brand> findAll(String locale, String currency, String categoryCode) {
-		// TODO Auto-generated method stub
 		return brandDao.findAllByCategory(locale, currency, categoryCode);
 	}
 
 	@Override
 	public void save(Brand t) {
-		// TODO Auto-generated method stub
 		brandDao.save(t);
 	}
 

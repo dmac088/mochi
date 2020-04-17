@@ -48,4 +48,10 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	public Set<Tag> findAll(String locale, String currency, Set<String> codes) {
 		return tagService.findAll(locale, currency, codes);
 	}
+
+	@Override
+	public void save(Tag object) {
+		// TODO Auto-generated method stub
+		
+	}
 }

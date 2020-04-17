@@ -49,7 +49,6 @@ public class IT_BrandCategoryDoServiceImplIntegrationTest {
         public CategoryEntityBeanFactory categoryFactoryBean() {
             return new CategoryEntityBeanFactory();
         }
-
     }
 	
 	@Autowired
@@ -82,7 +81,6 @@ public class IT_BrandCategoryDoServiceImplIntegrationTest {
     	this.persistNewCategory();
     }
  
-    
     @Test
     public void whenValidCode_thenBrandCategoryShouldBeFound() {
         String code = "TST02";
