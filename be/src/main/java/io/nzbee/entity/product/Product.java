@@ -274,10 +274,7 @@ public abstract class Product {
 	List<ProductPrice> prices = new ArrayList<ProductPrice>();
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="prm_cat_id",
-			nullable = false,  
-			updatable = false, 
-			insertable = false)
+	@JoinColumn(name="prm_cat_id")
 	private CategoryProduct primaryCategory; 
 
 	public Product() {
