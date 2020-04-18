@@ -273,6 +273,7 @@ public abstract class Product {
 				orphanRemoval = true)
 	List<ProductPrice> prices = new ArrayList<ProductPrice>();
 	
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="prm_cat_id",
 			nullable = false,  
 			updatable = false, 
