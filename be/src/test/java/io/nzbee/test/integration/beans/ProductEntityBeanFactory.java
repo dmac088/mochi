@@ -101,6 +101,7 @@ public class ProductEntityBeanFactory {
 				
 		//add the product to the category
 		product.addProductCategory(cp);
+		product.setPrimaryCategory(cp);
 		
 		return product;
 	}

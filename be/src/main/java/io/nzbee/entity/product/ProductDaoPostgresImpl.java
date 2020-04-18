@@ -460,10 +460,10 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		"select 	    " + 
 		((countOnly) 
 					? 	"	   count(distinct prd.prd_id) as product_count  "
-					: 	"	   cc.cat_id, " + 
-						"	   cc.cat_cd, " +	
-						"	   cc.cat_lvl, " +
-						"	   cc.cat_prnt_id, " +	
+					: 	"	   cp.cat_id, " + 
+						"	   cp.cat_cd, " +	
+						"	   cp.cat_lvl, " +
+						"	   cp.cat_prnt_id, " +	
 						"	   ca.cat_lcl_id, " +
 						"	   ca.cat_id, " +
 						"	   ca.cat_desc, " +
@@ -518,11 +518,11 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		"	AND ct.cat_typ_cd = 'PRD01' " +
 
 		"	INNER JOIN mochi.category_attr_lcl ca    " + 
-		"	ON cc.cat_id = ca.cat_id    " + 
+		"	ON cp.cat_id = ca.cat_id    " + 
 		"	AND ca.lcl_cd = :locale " +		
 		
 		"	LEFT JOIN mochi.category parent " +
-		"	ON cc.cat_prnt_id = parent.cat_id  " +
+		"	ON cp.cat_prnt_id = parent.cat_id  " +
 		
 		"	INNER JOIN mochi.department dept   " + 
 		"	ON prd.dept_id = dept.dept_id   " + 
@@ -599,10 +599,11 @@ public class ProductDaoPostgresImpl implements IProductDao {
 			
 		((countOnly)
 			? 		""
-			: 		"	GROUP BY   cc.cat_id, " + 
-					"	   cc.cat_cd, " +	
-					"	   cc.cat_lvl, " +
-					"	   cc.cat_prnt_id, " +	
+			: 		"	GROUP BY   " +
+					"	   cp.cat_id, " + 
+					"	   cp.cat_cd, " +	
+					"	   cp.cat_lvl, " +
+					"	   cp.cat_prnt_id, " +		
 					"	   ca.cat_lcl_id, " +
 					"	   ca.cat_id, " +
 					"	   ca.cat_desc, " +
