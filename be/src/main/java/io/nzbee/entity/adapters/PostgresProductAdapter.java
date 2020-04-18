@@ -84,8 +84,8 @@ public class PostgresProductAdapter implements IProductPortService {
 												 domainObject.getDepartment().getCode()).get();	
 			
 			//get all the categories	
-			Set<io.nzbee.entity.category.product.CategoryProduct> lcp
-					=  categoryService.findAll(	domainObject.getLclCd(), 
+			Set<io.nzbee.entity.category.product.CategoryProduct> lcp =  
+					categoryService.findAll(	domainObject.getLclCd(), 
 										 		domainObject.getCurrency(), 
 										 		domainObject.getCategories().stream().map(cc -> cc.getCategoryCode()).collect(Collectors.toSet())
 										 	 ).stream().map(cd -> (CategoryProduct) cd).collect(Collectors.toSet());
@@ -138,8 +138,6 @@ public class PostgresProductAdapter implements IProductPortService {
 			productService.save(product);
 			
 		}
-		
-		
 		
 	}
 
