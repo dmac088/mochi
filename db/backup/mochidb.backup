@@ -2098,7 +2098,8 @@ CREATE TABLE product (
     prd_crtd_dt date NOT NULL,
     bnd_id bigint NOT NULL,
     dept_id bigint NOT NULL,
-    prd_sts_id bigint NOT NULL
+    prd_sts_id bigint NOT NULL,
+    prm_cat_id bigint
 );
 
 
@@ -2473,78 +2474,6 @@ CREATE TABLE tag_attr_lcl (
 
 
 ALTER TABLE tag_attr_lcl OWNER TO mochidb_owner;
-
---
--- Name: vw_category_brand; Type: VIEW; Schema: mochi; Owner: mochidb_owner
---
-
-CREATE VIEW vw_category_brand AS
- SELECT p.cat_id,
-    p.cat_cd,
-    p.cat_lvl,
-    p.cat_typ_id,
-    p.cat_prnt_id,
-    curr.ccy_cd,
-    count(DISTINCT prd.upc_cd) AS product_count,
-    count(DISTINCT cc.cat_cd) AS child_cat_count,
-    COALESCE(max(
-        CASE
-            WHEN ((pt.prc_typ_cd)::text = 'MKD01'::text) THEN prc.prc_val
-            ELSE NULL::numeric
-        END), max(
-        CASE
-            WHEN ((pt.prc_typ_cd)::text = 'RET01'::text) THEN prc.prc_val
-            ELSE NULL::numeric
-        END)) AS max_price
-   FROM (((((((category p
-     JOIN LATERAL ft_categories((p.cat_cd)::text) cc(cat_id, cat_cd, cat_prnt_id, cat_typ_id) ON ((1 = 1)))
-     LEFT JOIN brand_category pc ON ((cc.cat_id = pc.cat_id)))
-     LEFT JOIN brand bnd ON ((pc.bnd_id = bnd.bnd_id)))
-     LEFT JOIN product prd ON ((pc.bnd_id = prd.bnd_id)))
-     LEFT JOIN price prc ON ((prd.prd_id = prc.prd_id)))
-     LEFT JOIN currency curr ON ((prc.ccy_id = curr.ccy_id)))
-     LEFT JOIN price_type pt ON ((prc.prc_typ_id = pt.prc_typ_id)))
-  WHERE (cc.cat_typ_id = 2)
-  GROUP BY p.cat_id, p.cat_cd, p.cat_lvl, p.cat_typ_id, p.cat_prnt_id, curr.ccy_cd;
-
-
-ALTER TABLE vw_category_brand OWNER TO mochidb_owner;
-
---
--- Name: vw_category_product; Type: VIEW; Schema: mochi; Owner: mochidb_owner
---
-
-CREATE VIEW vw_category_product AS
- SELECT p.cat_id,
-    p.cat_cd,
-    p.cat_lvl,
-    p.cat_typ_id,
-    p.cat_prnt_id,
-    curr.ccy_cd,
-    count(DISTINCT prd.upc_cd) AS product_count,
-    count(DISTINCT cc.cat_cd) AS child_cat_count,
-    COALESCE(max(
-        CASE
-            WHEN ((pt.prc_typ_cd)::text = 'MKD01'::text) THEN prc.prc_val
-            ELSE NULL::numeric
-        END), max(
-        CASE
-            WHEN ((pt.prc_typ_cd)::text = 'RET01'::text) THEN prc.prc_val
-            ELSE NULL::numeric
-        END)) AS max_price
-   FROM ((((((category p
-     JOIN LATERAL ft_categories((p.cat_cd)::text) cc(cat_id, cat_cd, cat_prnt_id, cat_typ_id) ON ((1 = 1)))
-     LEFT JOIN product_category pc ON ((cc.cat_id = pc.cat_id)))
-     LEFT JOIN product prd ON ((pc.prd_id = prd.prd_id)))
-     LEFT JOIN price prc ON ((prd.prd_id = prc.prd_id)))
-     LEFT JOIN currency curr ON ((prc.ccy_id = curr.ccy_id)))
-     LEFT JOIN price_type pt ON ((prc.prc_typ_id = pt.prc_typ_id)))
-  WHERE (cc.cat_typ_id = 1)
-  GROUP BY p.cat_id, p.cat_cd, p.cat_lvl, p.cat_typ_id, p.cat_prnt_id, curr.ccy_cd
- HAVING (count(DISTINCT prd.upc_cd) <> 0);
-
-
-ALTER TABLE vw_category_product OWNER TO mochidb_owner;
 
 SET search_path = security, pg_catalog;
 
@@ -3332,7 +3261,7 @@ COPY food_attr_lcl (prd_lcl_id, prd_id, ingredients, lcl_cd) FROM stdin;
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 232804, true);
+SELECT pg_catalog.setval('hibernate_sequence', 232893, true);
 
 
 --
@@ -3906,37 +3835,37 @@ COPY price_type (prc_typ_id, prc_typ_desc, prc_typ_cd) FROM stdin;
 -- Data for Name: product; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY product (prd_id, upc_cd, prd_crtd_dt, bnd_id, dept_id, prd_sts_id) FROM stdin;
-5	12383658	2019-01-04	34	3	1
-7	14445678	2019-01-04	37	3	1
-9	12366678	2019-01-04	32	3	1
-13	76477789	2019-01-04	33	3	1
-21	18170258	2019-02-05	38	3	1
-23	17236024	2019-02-05	35	3	1
-25	15483827	2019-02-05	35	3	1
-26	13627671	2019-02-05	35	3	1
-28	16153782	2019-02-05	34	3	1
-30	16067775	2019-02-05	33	3	1
-2	23464789	2019-01-04	40	3	1
-8	25556789	2019-01-04	41	3	1
-17	18911676	2019-02-05	37	3	1
-3	19633678	2019-01-04	37	3	1
-4	23456645	2019-01-04	41	3	1
-6	23739283	2019-01-04	38	3	1
-12	64377789	2019-01-04	34	3	1
-16	18188784	2019-02-05	41	3	1
-10	23477789	2019-01-04	35	3	1
-11	3577789	2019-01-04	32	3	1
-14	13159658	2019-02-05	32	3	1
-15	15410595	2019-02-05	38	3	1
-19	10760430	2019-02-05	33	3	1
-20	10688155	2019-02-05	37	3	1
-22	17235347	2019-02-05	39	3	1
-24	19037164	2019-02-05	41	3	1
-27	15946292	2019-02-05	39	3	1
-29	17152401	2019-02-05	33	3	1
-1	12345678	2019-01-04	38	3	1
-18	17366878	2019-02-05	39	3	1
+COPY product (prd_id, upc_cd, prd_crtd_dt, bnd_id, dept_id, prd_sts_id, prm_cat_id) FROM stdin;
+5	12383658	2019-01-04	34	3	1	5
+7	14445678	2019-01-04	37	3	1	8
+9	12366678	2019-01-04	32	3	1	7
+13	76477789	2019-01-04	33	3	1	8
+21	18170258	2019-02-05	38	3	1	10
+23	17236024	2019-02-05	35	3	1	12
+25	15483827	2019-02-05	35	3	1	13
+26	13627671	2019-02-05	35	3	1	20
+28	16153782	2019-02-05	34	3	1	26
+30	16067775	2019-02-05	33	3	1	26
+2	23464789	2019-01-04	40	3	1	14
+8	25556789	2019-01-04	41	3	1	14
+17	18911676	2019-02-05	37	3	1	10
+3	19633678	2019-01-04	37	3	1	5
+4	23456645	2019-01-04	41	3	1	8
+6	23739283	2019-01-04	38	3	1	6
+12	64377789	2019-01-04	34	3	1	9
+16	18188784	2019-02-05	41	3	1	9
+10	23477789	2019-01-04	35	3	1	9
+11	3577789	2019-01-04	32	3	1	\N
+14	13159658	2019-02-05	32	3	1	8
+15	15410595	2019-02-05	38	3	1	9
+19	10760430	2019-02-05	33	3	1	14
+20	10688155	2019-02-05	37	3	1	13
+22	17235347	2019-02-05	39	3	1	10
+24	19037164	2019-02-05	41	3	1	12
+27	15946292	2019-02-05	39	3	1	17
+29	17152401	2019-02-05	33	3	1	19
+1	12345678	2019-01-04	38	3	1	15
+18	17366878	2019-02-05	39	3	1	15
 \.
 
 
@@ -4071,7 +4000,7 @@ COPY product_category (prd_cat_id, prd_id, cat_id) FROM stdin;
 -- Name: product_category_prd_cat_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('product_category_prd_cat_id_seq', 103, true);
+SELECT pg_catalog.setval('product_category_prd_cat_id_seq', 114, true);
 
 
 --
@@ -4767,7 +4696,7 @@ COPY user_role (id, pty_id, role_id) FROM stdin;
 -- Name: user_role_id_seq; Type: SEQUENCE SET; Schema: security; Owner: security_owner
 --
 
-SELECT pg_catalog.setval('user_role_id_seq', 180, true);
+SELECT pg_catalog.setval('user_role_id_seq', 181, true);
 
 
 SET search_path = mochi, pg_catalog;
@@ -6353,20 +6282,6 @@ GRANT ALL ON SEQUENCE tag_attr_lcl_tag_id_seq TO mochi_app;
 --
 
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE tag_attr_lcl TO mochi_app;
-
-
---
--- Name: vw_category_brand; Type: ACL; Schema: mochi; Owner: mochidb_owner
---
-
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE vw_category_brand TO mochi_app;
-
-
---
--- Name: vw_category_product; Type: ACL; Schema: mochi; Owner: mochidb_owner
---
-
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE vw_category_product TO mochi_app;
 
 
 SET search_path = security, pg_catalog;
