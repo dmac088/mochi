@@ -59,6 +59,7 @@ import io.nzbee.entity.product.department.Department;
 import io.nzbee.entity.product.price.ProductPrice;
 import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.entity.tag.Tag;
+import net.bytebuddy.asm.Advice.This;
 
 @Entity
 @Table(name = "product", schema = "mochi")
@@ -273,7 +274,10 @@ public abstract class Product {
 				orphanRemoval = true)
 	List<ProductPrice> prices = new ArrayList<ProductPrice>();
 	
-	@Transient
+	@JoinColumn(name="prm_cat_id",
+			nullable = false,  
+			updatable = false, 
+			insertable = false)
 	private CategoryProduct primaryCategory; 
 
 	public Product() {
@@ -285,12 +289,13 @@ public abstract class Product {
 
 	public void setPrimaryCategory(CategoryProduct primaryCategory) {
 		this.primaryCategory = primaryCategory;
+		this.categories.add(primaryCategory);
 	}
 	
 	@Field(analyze=Analyze.NO, store=Store.YES)
 	public String getCategoriesJSON() throws JsonProcessingException {
 		ObjectMapper objectMapper = new ObjectMapper();
-		return objectMapper.writeValueAsString(this.getCategories().stream().filter(c -> c.getCategoryType().getCategoryTypeCode().equals("PRD01")).findFirst().get());
+		return objectMapper.writeValueAsString(this.getPrimaryCategory());
 	}
 	
 	@Field(store=Store.YES)
