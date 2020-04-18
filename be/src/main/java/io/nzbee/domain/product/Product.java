@@ -34,8 +34,6 @@ public class Product {
 	
 	@JsonIgnore
 	private List<ProductCategory> categories;
-	
-	private ProductCategory primaryCategory;
 
 	@JsonIgnore
 	private Department department;
@@ -72,13 +70,7 @@ public class Product {
 					this.department = department;
 					this.tags = new ArrayList<Tag>();
 					this.categories = new ArrayList<ProductCategory>();
-					this.primaryCategory = category;
 					this.categories.add(category);
-	}
-	
-
-	public ProductCategory getPrimaryCategory() {
-		return primaryCategory;
 	}
 	
 	public List<ProductCategory> getCategories() {
