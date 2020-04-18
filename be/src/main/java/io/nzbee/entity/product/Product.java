@@ -101,12 +101,12 @@ filters = {
 	                        @FieldResult(name = "productCreateDt", 		column = "prd_crtd_dt"),
 	                        @FieldResult(name = "brand", 				column = "bnd_id"),
 	                        @FieldResult(name = "productStatus", 		column = "prd_sts_id"),
-	                        @FieldResult(name = "primaryCategory",		column = "cat_id"),
 	                        @FieldResult(name = "department", 			column = "dept_id"),	      
 	                        @FieldResult(name = "countryOfOrigin",  	column = "ctry_of_orig"),
 	                        @FieldResult(name = "expiryDate",  			column = "exp_dt"),
 	                        @FieldResult(name = "locale",  				column = "lcl_cd"),
-	                        @FieldResult(name = "currency",  			column = "ccy_cd")
+	                        @FieldResult(name = "currency",  			column = "ccy_cd"),
+	                        @FieldResult(name = "primaryCategory", 		column = "prm_cat_id")
 	                    }),
 	            @EntityResult(
 		                entityClass = ProductStatus.class,

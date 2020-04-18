@@ -500,25 +500,30 @@ public class ProductDaoPostgresImpl implements IProductDao {
 						"	   :locale as lcl_cd ") + 
 		
 		"	FROM descendants cc    " + 
+		
 		"	INNER JOIN mochi.product_category pc    " + 
 		"	ON cc.cat_id = pc.cat_id    " + 
 		
-		"	LEFT JOIN mochi.category parent " +
-		"	ON cc.cat_prnt_id = parent.cat_id  " +
-		
-		"	INNER JOIN mochi.category_type ct  " + 
-		"	ON cc.cat_typ_id = ct.cat_typ_id " + 
-		
-		"	INNER JOIN mochi.category_attr_lcl ca    " + 
-		"	ON cc.cat_id = ca.cat_id    " + 
-		"	AND ca.lcl_cd = :locale " +		
-
 		"	INNER JOIN mochi.product prd    " + 
 		"	ON pc.prd_id = prd.prd_id   " + 
 		
 		"	INNER JOIN mochi.product_attr_lcl attr " +
 		"	ON prd.prd_id = attr.prd_id " + 
-		 
+
+		"	INNER JOIN mochi.category cp " + 
+		"	ON prd.prm_cat_id = cp.cat_id " +
+
+		"	INNER JOIN mochi.category_type ct  " + 
+		"	ON cc.cat_typ_id = ct.cat_typ_id " + 	
+		"	AND ct.cat_typ_cd = 'PRD01' " +
+
+		"	INNER JOIN mochi.category_attr_lcl ca    " + 
+		"	ON cc.cat_id = ca.cat_id    " + 
+		"	AND ca.lcl_cd = :locale " +		
+		
+		"	LEFT JOIN mochi.category parent " +
+		"	ON cc.cat_prnt_id = parent.cat_id  " +
+		
 		"	INNER JOIN mochi.department dept   " + 
 		"	ON prd.dept_id = dept.dept_id   " + 
 			
