@@ -28,6 +28,8 @@ public class Product {
 	
 	private String displayCategories;
 
+	private ProductCategory primaryCategory;
+	
 	private String lclCd;
 	
 	private String currency;
@@ -70,6 +72,7 @@ public class Product {
 					this.department = department;
 					this.tags = new ArrayList<Tag>();
 					this.categories = new ArrayList<ProductCategory>();
+					this.primaryCategory = category;
 					this.categories.add(category);
 	}
 	
@@ -111,6 +114,10 @@ public class Product {
 
 	public String getDisplayCategories() {
 		return displayCategories;
+	}
+	
+	public ProductCategory getPrimaryCategory() {
+		return primaryCategory;
 	}
 
 	public String getLclCd() {
