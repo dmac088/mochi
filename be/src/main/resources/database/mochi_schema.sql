@@ -26,6 +26,7 @@ ALTER TABLE ONLY mochi.product DROP CONSTRAINT product_typ_id_product_type_typ_i
 ALTER TABLE ONLY mochi.product_tag DROP CONSTRAINT product_tag_tag_id_tag_tag_id_fkey;
 ALTER TABLE ONLY mochi.product_tag DROP CONSTRAINT product_tag_prd_id_product_prd_id_fkey;
 ALTER TABLE ONLY mochi.product DROP CONSTRAINT product_sts_id_product_status_sts_id_fkey;
+ALTER TABLE ONLY mochi.product DROP CONSTRAINT product_prm_cat_id_category_cat_id;
 ALTER TABLE ONLY mochi.product_jewellery DROP CONSTRAINT product_jewellery_prd_id_fkey;
 ALTER TABLE ONLY mochi.product_food DROP CONSTRAINT product_food_prd_id_fkey;
 ALTER TABLE ONLY mochi.product_category DROP CONSTRAINT product_category_prd_id_product_prd_id_fkey;
@@ -57,6 +58,7 @@ ALTER TABLE ONLY mochi.brand_attr_lcl DROP CONSTRAINT brand_attr_lcl_lcl_cd_fkey
 ALTER TABLE ONLY mochi.brand_attr_lcl DROP CONSTRAINT brand_attr_lcl_bnd_id_fkey;
 DROP INDEX mochi.role_role_typ_id_role_start_dttm_party_id_key;
 DROP INDEX mochi.fki_product_attr_lcl_prd_id_fkey;
+DROP INDEX mochi.fki_category_cat_id_product_prm_cat_id;
 ALTER TABLE ONLY mochi.tag_attr_lcl DROP CONSTRAINT uc_tag_lcl;
 ALTER TABLE ONLY mochi.tag_attr_lcl DROP CONSTRAINT uc_tag_desc;
 ALTER TABLE ONLY mochi.promotion_category DROP CONSTRAINT uc_promotion_category;
@@ -2181,7 +2183,7 @@ CREATE TABLE product (
     bnd_id bigint NOT NULL,
     dept_id bigint NOT NULL,
     prd_sts_id bigint NOT NULL,
-    prm_cat_id bigint
+    prm_cat_id bigint NOT NULL
 );
 
 
@@ -3131,6 +3133,13 @@ ALTER TABLE ONLY tag_attr_lcl
 
 
 --
+-- Name: fki_category_cat_id_product_prm_cat_id; Type: INDEX; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE INDEX fki_category_cat_id_product_prm_cat_id ON product USING btree (prm_cat_id);
+
+
+--
 -- Name: fki_product_attr_lcl_prd_id_fkey; Type: INDEX; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -3374,6 +3383,14 @@ ALTER TABLE ONLY product_food
 
 ALTER TABLE ONLY product_jewellery
     ADD CONSTRAINT product_jewellery_prd_id_fkey FOREIGN KEY (prd_id) REFERENCES product(prd_id);
+
+
+--
+-- Name: product product_prm_cat_id_category_cat_id; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY product
+    ADD CONSTRAINT product_prm_cat_id_category_cat_id FOREIGN KEY (prm_cat_id) REFERENCES category(cat_id);
 
 
 --
