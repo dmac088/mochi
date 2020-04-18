@@ -2099,7 +2099,7 @@ CREATE TABLE product (
     bnd_id bigint NOT NULL,
     dept_id bigint NOT NULL,
     prd_sts_id bigint NOT NULL,
-    prm_cat_id bigint
+    prm_cat_id bigint NOT NULL
 );
 
 
@@ -3836,6 +3836,7 @@ COPY price_type (prc_typ_id, prc_typ_desc, prc_typ_cd) FROM stdin;
 --
 
 COPY product (prd_id, upc_cd, prd_crtd_dt, bnd_id, dept_id, prd_sts_id, prm_cat_id) FROM stdin;
+11	3577789	2019-01-04	32	3	1	9
 5	12383658	2019-01-04	34	3	1	5
 7	14445678	2019-01-04	37	3	1	8
 9	12366678	2019-01-04	32	3	1	7
@@ -3855,7 +3856,6 @@ COPY product (prd_id, upc_cd, prd_crtd_dt, bnd_id, dept_id, prd_sts_id, prm_cat_
 12	64377789	2019-01-04	34	3	1	9
 16	18188784	2019-02-05	41	3	1	9
 10	23477789	2019-01-04	35	3	1	9
-11	3577789	2019-01-04	32	3	1	\N
 14	13159658	2019-02-05	32	3	1	8
 15	15410595	2019-02-05	38	3	1	9
 19	10760430	2019-02-05	33	3	1	14
@@ -5346,6 +5346,13 @@ ALTER TABLE ONLY user_
 SET search_path = mochi, pg_catalog;
 
 --
+-- Name: fki_category_cat_id_product_prm_cat_id; Type: INDEX; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE INDEX fki_category_cat_id_product_prm_cat_id ON product USING btree (prm_cat_id);
+
+
+--
 -- Name: fki_product_attr_lcl_prd_id_fkey; Type: INDEX; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -5589,6 +5596,14 @@ ALTER TABLE ONLY product_food
 
 ALTER TABLE ONLY product_jewellery
     ADD CONSTRAINT product_jewellery_prd_id_fkey FOREIGN KEY (prd_id) REFERENCES product(prd_id);
+
+
+--
+-- Name: product product_prm_cat_id_category_cat_id; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY product
+    ADD CONSTRAINT product_prm_cat_id_category_cat_id FOREIGN KEY (prm_cat_id) REFERENCES category(cat_id);
 
 
 --

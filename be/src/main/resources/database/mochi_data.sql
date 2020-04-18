@@ -705,6 +705,7 @@ INSERT INTO product_status VALUES (2, 'INA01', 'inactive');
 -- Data for Name: product; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
+INSERT INTO product VALUES (11, '3577789', '2019-01-04', 32, 3, 1, 9);
 INSERT INTO product VALUES (5, '12383658', '2019-01-04', 34, 3, 1, 5);
 INSERT INTO product VALUES (7, '14445678', '2019-01-04', 37, 3, 1, 8);
 INSERT INTO product VALUES (9, '12366678', '2019-01-04', 32, 3, 1, 7);
@@ -724,7 +725,6 @@ INSERT INTO product VALUES (6, '23739283', '2019-01-04', 38, 3, 1, 6);
 INSERT INTO product VALUES (12, '64377789', '2019-01-04', 34, 3, 1, 9);
 INSERT INTO product VALUES (16, '18188784', '2019-02-05', 41, 3, 1, 9);
 INSERT INTO product VALUES (10, '23477789', '2019-01-04', 35, 3, 1, 9);
-INSERT INTO product VALUES (11, '3577789', '2019-01-04', 32, 3, 1, NULL);
 INSERT INTO product VALUES (14, '13159658', '2019-02-05', 32, 3, 1, 8);
 INSERT INTO product VALUES (15, '15410595', '2019-02-05', 38, 3, 1, 9);
 INSERT INTO product VALUES (19, '10760430', '2019-02-05', 33, 3, 1, 14);
