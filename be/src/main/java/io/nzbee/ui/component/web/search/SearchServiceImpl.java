@@ -405,7 +405,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 							   "product.department.departmentDesc" + transLcl,
 							   "countryOfOrigin",
 							   "product.categories.categoryDesc" + transLcl,
-							   "categoriesJSON");
+							   "categoryJSON");
 		
 
 		// get the results using jpaQuery object

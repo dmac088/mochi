@@ -59,7 +59,6 @@ import io.nzbee.entity.product.department.Department;
 import io.nzbee.entity.product.price.ProductPrice;
 import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.entity.tag.Tag;
-import net.bytebuddy.asm.Advice.This;
 
 @Entity
 @Table(name = "product", schema = "mochi")
@@ -293,7 +292,7 @@ public abstract class Product {
 	}
 	
 	@Field(analyze=Analyze.NO, store=Store.YES)
-	public String getCategoriesJSON() throws JsonProcessingException {
+	public String getCategoryJSON() throws JsonProcessingException {
 		ObjectMapper objectMapper = new ObjectMapper();
 		return objectMapper.writeValueAsString(this.getPrimaryCategory());
 	}
