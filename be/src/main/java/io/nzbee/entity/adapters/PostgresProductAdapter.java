@@ -128,6 +128,7 @@ public class PostgresProductAdapter implements IProductPortService {
 			product.setDepartment(d);
 			lcp.stream().forEach(c -> {
 				product.addCategory(c);
+				product.setPrimaryCategory(c);
 			});
 			product.setBrand(b);
 			product.addProductPrice(prcr);
