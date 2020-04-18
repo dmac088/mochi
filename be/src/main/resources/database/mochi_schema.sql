@@ -129,8 +129,6 @@ ALTER TABLE ONLY mochi.brand_attr_lcl DROP CONSTRAINT brand_attr_lcl_pkey;
 ALTER TABLE mochi.role_type ALTER COLUMN rle_typ_id DROP DEFAULT;
 ALTER TABLE mochi.party_type ALTER COLUMN pty_typ_id DROP DEFAULT;
 ALTER TABLE mochi.party ALTER COLUMN pty_id DROP DEFAULT;
-DROP VIEW mochi.vw_category_product;
-DROP VIEW mochi.vw_category_brand;
 DROP TABLE mochi.tag_attr_lcl;
 DROP SEQUENCE mochi.tag_attr_lcl_tag_id_seq;
 DROP TABLE mochi.tag;
@@ -2182,7 +2180,8 @@ CREATE TABLE product (
     prd_crtd_dt date NOT NULL,
     bnd_id bigint NOT NULL,
     dept_id bigint NOT NULL,
-    prd_sts_id bigint NOT NULL
+    prd_sts_id bigint NOT NULL,
+    prm_cat_id bigint
 );
 
 
@@ -2557,78 +2556,6 @@ CREATE TABLE tag_attr_lcl (
 
 
 ALTER TABLE tag_attr_lcl OWNER TO mochidb_owner;
-
---
--- Name: vw_category_brand; Type: VIEW; Schema: mochi; Owner: mochidb_owner
---
-
-CREATE VIEW vw_category_brand AS
- SELECT p.cat_id,
-    p.cat_cd,
-    p.cat_lvl,
-    p.cat_typ_id,
-    p.cat_prnt_id,
-    curr.ccy_cd,
-    count(DISTINCT prd.upc_cd) AS product_count,
-    count(DISTINCT cc.cat_cd) AS child_cat_count,
-    COALESCE(max(
-        CASE
-            WHEN ((pt.prc_typ_cd)::text = 'MKD01'::text) THEN prc.prc_val
-            ELSE NULL::numeric
-        END), max(
-        CASE
-            WHEN ((pt.prc_typ_cd)::text = 'RET01'::text) THEN prc.prc_val
-            ELSE NULL::numeric
-        END)) AS max_price
-   FROM (((((((category p
-     JOIN LATERAL ft_categories((p.cat_cd)::text) cc(cat_id, cat_cd, cat_prnt_id, cat_typ_id) ON ((1 = 1)))
-     LEFT JOIN brand_category pc ON ((cc.cat_id = pc.cat_id)))
-     LEFT JOIN brand bnd ON ((pc.bnd_id = bnd.bnd_id)))
-     LEFT JOIN product prd ON ((pc.bnd_id = prd.bnd_id)))
-     LEFT JOIN price prc ON ((prd.prd_id = prc.prd_id)))
-     LEFT JOIN currency curr ON ((prc.ccy_id = curr.ccy_id)))
-     LEFT JOIN price_type pt ON ((prc.prc_typ_id = pt.prc_typ_id)))
-  WHERE (cc.cat_typ_id = 2)
-  GROUP BY p.cat_id, p.cat_cd, p.cat_lvl, p.cat_typ_id, p.cat_prnt_id, curr.ccy_cd;
-
-
-ALTER TABLE vw_category_brand OWNER TO mochidb_owner;
-
---
--- Name: vw_category_product; Type: VIEW; Schema: mochi; Owner: mochidb_owner
---
-
-CREATE VIEW vw_category_product AS
- SELECT p.cat_id,
-    p.cat_cd,
-    p.cat_lvl,
-    p.cat_typ_id,
-    p.cat_prnt_id,
-    curr.ccy_cd,
-    count(DISTINCT prd.upc_cd) AS product_count,
-    count(DISTINCT cc.cat_cd) AS child_cat_count,
-    COALESCE(max(
-        CASE
-            WHEN ((pt.prc_typ_cd)::text = 'MKD01'::text) THEN prc.prc_val
-            ELSE NULL::numeric
-        END), max(
-        CASE
-            WHEN ((pt.prc_typ_cd)::text = 'RET01'::text) THEN prc.prc_val
-            ELSE NULL::numeric
-        END)) AS max_price
-   FROM ((((((category p
-     JOIN LATERAL ft_categories((p.cat_cd)::text) cc(cat_id, cat_cd, cat_prnt_id, cat_typ_id) ON ((1 = 1)))
-     LEFT JOIN product_category pc ON ((cc.cat_id = pc.cat_id)))
-     LEFT JOIN product prd ON ((pc.prd_id = prd.prd_id)))
-     LEFT JOIN price prc ON ((prd.prd_id = prc.prd_id)))
-     LEFT JOIN currency curr ON ((prc.ccy_id = curr.ccy_id)))
-     LEFT JOIN price_type pt ON ((prc.prc_typ_id = pt.prc_typ_id)))
-  WHERE (cc.cat_typ_id = 1)
-  GROUP BY p.cat_id, p.cat_cd, p.cat_lvl, p.cat_typ_id, p.cat_prnt_id, curr.ccy_cd
- HAVING (count(DISTINCT prd.upc_cd) <> 0);
-
-
-ALTER TABLE vw_category_product OWNER TO mochidb_owner;
 
 --
 -- Name: party pty_id; Type: DEFAULT; Schema: mochi; Owner: mochidb_owner
@@ -4089,20 +4016,6 @@ GRANT ALL ON SEQUENCE tag_attr_lcl_tag_id_seq TO mochi_app;
 --
 
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE tag_attr_lcl TO mochi_app;
-
-
---
--- Name: vw_category_brand; Type: ACL; Schema: mochi; Owner: mochidb_owner
---
-
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE vw_category_brand TO mochi_app;
-
-
---
--- Name: vw_category_product; Type: ACL; Schema: mochi; Owner: mochidb_owner
---
-
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE vw_category_product TO mochi_app;
 
 
 --
