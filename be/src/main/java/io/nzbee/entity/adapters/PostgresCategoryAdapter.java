@@ -80,8 +80,6 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	@Override
 	public void save(Category domainObject) {
 		if (domainObject instanceof ProductCategory) {
-			ProductCategory pc = (ProductCategory) domainObject;
-			
 			categoryProductService.findByCode(	domainObject.getLocale(),
 												domainObject.getCurrency(),
 												domainObject.getCategoryCode());
