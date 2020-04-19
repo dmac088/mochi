@@ -1,23 +1,17 @@
 package io.nzbee.test.integration.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-import javax.persistence.EntityManager;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.domain.brand.Brand;
-import io.nzbee.domain.brand.BrandServiceImpl;
 import io.nzbee.domain.brand.IBrandService;
 import io.nzbee.test.integration.beans.BrandDoBeanFactory;
 
@@ -30,20 +24,8 @@ public class IT_BrandDoServiceImplIntegrationTest {
 	@TestConfiguration
     static class BrandServiceImplIntegrationTestConfiguration {
 		//the beans that we need to run this integration test
-        @Bean(value = "brandDomainService")
-        public IBrandService brandService() {
-            return new BrandServiceImpl();
-        }
-        
-        @Bean(value = "brandDoBeanFactory")
-        public BrandDoBeanFactory brandFactoryBean() {
-            return new BrandDoBeanFactory();
-        }
+       
     }
-	
-	@Autowired
-	@Qualifier("mochiEntityManagerFactory")
-	private EntityManager entityManager;
 	
 	@Autowired
     private IBrandService brandService;

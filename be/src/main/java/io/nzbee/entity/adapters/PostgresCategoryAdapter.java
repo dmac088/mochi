@@ -6,12 +6,15 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+
+import io.nzbee.domain.category.BrandCategory;
 import io.nzbee.domain.category.Category;
 import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.ports.ICategoryPortService;
 import io.nzbee.entity.category.ICategoryMapper;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
+import io.nzbee.entity.category.brand.CategoryBrand;
 import io.nzbee.entity.category.brand.ICategoryBrandService;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.category.product.ICategoryProductService;
@@ -101,6 +104,26 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 			cp.addAttribute(ca);
 			
 			categoryProductService.save(cp);
+		}
+		
+		if(domainObject instanceof BrandCategory) {
+			BrandCategory bc = (BrandCategory) domainObject;
+			
+			CategoryBrand cb = new CategoryBrand();
+			cb.setCategoryCode(bc.getCategoryCode());
+			cb.setLocale(bc.getLocale());
+			cb.setCurrency(bc.getCurrency());
+			cb.setCategoryLevel(bc.getLevel());
+			cb.setObjectCount(bc.getCount());
+			
+			CategoryAttribute ca = new CategoryAttribute();
+			ca.setCategoryDesc(bc.getCategoryDesc());
+			ca.setLclCd(bc.getLocale());
+			
+			ca.setCategory(cb);
+			cb.addAttribute(ca);
+			
+			categoryBrandService.save(cb);
 		}
 	
 	}

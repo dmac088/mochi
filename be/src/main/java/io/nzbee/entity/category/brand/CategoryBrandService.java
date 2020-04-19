@@ -50,7 +50,7 @@ public class CategoryBrandService implements ICategoryBrandService {
 
 	@Override
 	public void save(CategoryBrand t) {
-		// TODO Auto-generated method stub
+		brandCategoryDao.save(t);
 		
 	}
 

@@ -1,12 +1,10 @@
 package io.nzbee.test.integration.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import javax.persistence.EntityManager;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -29,10 +27,6 @@ public class IT_BrandCategoryDoServiceImplIntegrationTest {
 		//the beans that we need to run this integration test
  
     }
-	
-	@Autowired
-	@Qualifier("mochiEntityManagerFactory")
-	private EntityManager entityManager;
 	
 	@Autowired
     private ICategoryService categoryService;
@@ -77,7 +71,7 @@ public class IT_BrandCategoryDoServiceImplIntegrationTest {
         .isEqualTo("TST02");
     	
 	    assertThat(found.getCategoryLevel())
-	    .isEqualTo(new Long(2));
+	    .isEqualTo(new Long(0));
 	    
 	    assertThat(found.getCategoryDesc())
 	    .isEqualTo("test brand category");

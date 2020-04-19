@@ -3,11 +3,9 @@ package io.nzbee.test.integration.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Set;
-import javax.persistence.EntityManager;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -22,10 +20,6 @@ import io.nzbee.variables.GeneralVars;
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles(profiles = "dev")
 public class IT_CategoryDoServiceImplIntegrationTest {
-
-	@Autowired
-	@Qualifier("mochiEntityManagerFactory")
-	private EntityManager entityManager;
 
 	@Autowired
 	private ICategoryService categoryService;
