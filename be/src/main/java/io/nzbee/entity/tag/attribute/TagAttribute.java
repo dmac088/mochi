@@ -1,7 +1,5 @@
 package io.nzbee.entity.tag.attribute;
 
-import java.util.Optional;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import io.nzbee.entity.tag.Tag;
 
 @Entity
@@ -33,7 +32,7 @@ public class TagAttribute {
 	@Column(name="lcl_cd")	
 	private String lclCd;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, optional=false)
 	@JoinColumn(name="tag_id", insertable=false, updatable=false)
 	private Tag tag;
 	
@@ -49,8 +48,8 @@ public class TagAttribute {
 		Id = id;
 	}
 	
-	public Optional<Tag> getTag() {
-		return Optional.ofNullable(tag);
+	public Tag getTag() {
+		return tag;
 	}
 
 	public void setProductTag(Tag productTag) {
@@ -75,8 +74,8 @@ public class TagAttribute {
 	
 	@Override
     public int hashCode() {
-        HashCodeBuilder hcb = new HashCodeBuilder();
-        hcb.append(this.getTag().get().getCode());
+		HashCodeBuilder hcb = new HashCodeBuilder();
+        //hcb.append(this.getTag().getCode());
         hcb.append(this.getLclCd());
         return hcb.toHashCode();
     }
@@ -91,7 +90,7 @@ public class TagAttribute {
 	    }
 	    TagAttribute that = (TagAttribute) obj;
 	      EqualsBuilder eb = new EqualsBuilder();
-	      eb.append(this.getTag().get().getCode(), that.getTag().get().getCode());
+	      eb.append(this.getTag().getCode(), that.getTag().getCode());
 	      eb.append(this.getLclCd(), that.getLclCd());
 	      return eb.isEquals();
 	}

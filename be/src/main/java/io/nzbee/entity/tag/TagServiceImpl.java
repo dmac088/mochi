@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service(value = "productTagService")
-public class TagImpl implements ITagService {
+public class TagServiceImpl implements ITagService {
 
 	@Autowired
 	private ITagDao productTagDAO;
@@ -61,7 +61,7 @@ public class TagImpl implements ITagService {
 
 	@Override
 	public void save(Tag t) {
-		// TODO Auto-generated method stub
+		productTagDAO.save(t);
 		
 	}
 

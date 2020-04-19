@@ -23,14 +23,24 @@ public class PostgresTagAdapter  implements ITagPortService {
 
 	@Override
 	public void save(Tag tag) {
-		// TODO Auto-generated method stub
 		
+		io.nzbee.entity.tag.Tag t = new io.nzbee.entity.tag.Tag();
+		t.setCode(tag.getTagCode());
+		t.setLocale(tag.getLocale());
+		t.setCurrency(tag.getCurrency());
+		
+		io.nzbee.entity.tag.attribute.TagAttribute ta = new io.nzbee.entity.tag.attribute.TagAttribute();
+		ta.setTagDesc(tag.getTagDesc());
+		ta.setLclCd(tag.getLocale());
+		t.addTagAttribute(ta);
+		ta.setProductTag(t);
+		
+		tagService.save(t);
 	}
 
 	@Override
 	public Tag findByCode(String locale, String currency, String code) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.entityToDo(tagService.findByCode(locale, currency, code).get());
 	}
 
 	@Override
@@ -47,7 +57,6 @@ public class PostgresTagAdapter  implements ITagPortService {
 
 	@Override
 	public Set<Tag> findAll(String locale, String currency, Set<String> codes) {
-		// TODO Auto-generated method stub
 		return tagService.findAll(locale, currency, codes)
 				.stream().map(t -> this.entityToDo(t)).collect(Collectors.toSet());
 	}
