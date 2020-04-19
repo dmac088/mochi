@@ -30,7 +30,7 @@ public class CategoryDoBeanFactory {
 		return category;
 	}
 	
-	public final Category getBrandCategoryDoBean() {
+	public final BrandCategory getBrandCategoryDoBean() {
 		return new BrandCategory( 	"TST02",
 									"test brand category",
 									false,
