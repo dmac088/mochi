@@ -84,6 +84,9 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 												domainObject.getCurrency(),
 												domainObject.getCategoryCode());
 		}
+		categoryBrandService.findByCode(	domainObject.getLocale(),
+											domainObject.getCurrency(),
+											domainObject.getCategoryCode());
 	}
 
 
