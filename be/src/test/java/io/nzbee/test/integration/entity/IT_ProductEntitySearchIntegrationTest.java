@@ -52,7 +52,6 @@ import io.nzbee.ui.component.web.search.ISearchService;
 			transactionManager = "mochiTransactionManager",
 			transactionMode = TransactionMode.ISOLATED))
 })
-//@ContextConfiguration(classes = CategoryServiceImpl.class) 
 public class IT_ProductEntitySearchIntegrationTest {
 
 	@TestConfiguration
