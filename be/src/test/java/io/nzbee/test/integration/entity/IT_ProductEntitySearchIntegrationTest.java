@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import org.hibernate.CacheMode;
 import org.hibernate.search.batchindexing.impl.SimpleIndexingProgressMonitor;
 import org.hibernate.search.jpa.FullTextEntityManager;
@@ -90,9 +89,6 @@ public class IT_ProductEntitySearchIntegrationTest {
 	@Qualifier("mochiEntityManagerFactory")
 	private EntityManager entityManager;
     
-    @PersistenceContext(unitName = "mochiEntityManagerFactory")
-	private EntityManager em;
-
 	@Autowired
     @Qualifier(value = "SearchService")
     private ISearchService searchService;
@@ -106,7 +102,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	@Before
 	public void buildSearchIndex() {
 		FullTextEntityManager fullTextEntityManager 
-		  = Search.getFullTextEntityManager(em);
+		  = Search.getFullTextEntityManager(entityManager);
 		try {
 			fullTextEntityManager
 			.createIndexer( Product.class )
