@@ -14,8 +14,9 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.domain.category.ICategoryService;
+import io.nzbee.domain.category.BrandCategory;
 import io.nzbee.domain.category.Category;
-import io.nzbee.test.integration.beans.CategoryEntityBeanFactory;
+import io.nzbee.test.integration.beans.CategoryDoBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -37,19 +38,16 @@ public class IT_BrandCategoryDoServiceImplIntegrationTest {
     private ICategoryService categoryService;
 	
 	@Autowired
-	private CategoryEntityBeanFactory categoryEntityBeanFactory;
+	private CategoryDoBeanFactory categoryDoBeanFactory;
 	
-	private io.nzbee.entity.category.Category category = null;
+	private BrandCategory category = null;
 	
 
-	public io.nzbee.entity.category.Category persistNewCategory() {
+	public BrandCategory persistNewCategory() {
 	    	
-		category = categoryEntityBeanFactory.getBrandCategoryEntityBean();
-   	
-	    //persist a new transient test category
-	    entityManager.persist(category);
-	    entityManager.flush();
-	    entityManager.close();
+		category = categoryDoBeanFactory.getBrandCategoryDoBean();
+	    
+	    categoryService.save(category);
 	    	
 	    return category;
 	}
@@ -61,8 +59,7 @@ public class IT_BrandCategoryDoServiceImplIntegrationTest {
  
     @Test
     public void whenValidCode_thenBrandCategoryShouldBeFound() {
-        String code = "TST02";
-        Category found = categoryService.findByCode("en-GB", "HKD", code);
+        Category found = categoryService.findByCode("en-GB", "HKD", "TST02");
       
         assertFound(found);
     }

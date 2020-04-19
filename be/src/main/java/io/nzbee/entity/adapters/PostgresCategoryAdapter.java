@@ -11,6 +11,7 @@ import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.ports.ICategoryPortService;
 import io.nzbee.entity.category.ICategoryMapper;
 import io.nzbee.entity.category.ICategoryService;
+import io.nzbee.entity.category.brand.ICategoryBrandService;
 import io.nzbee.entity.category.product.ICategoryProductService;
 
 @Component
@@ -22,6 +23,9 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	
 	@Autowired 
 	private ICategoryProductService categoryProductService;
+	
+	@Autowired 
+	private ICategoryBrandService categoryBrandService;
 	
 	@Autowired
 	@Qualifier(value = "categoryMapper")
