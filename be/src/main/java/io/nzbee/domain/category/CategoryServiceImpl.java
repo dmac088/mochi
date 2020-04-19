@@ -2,18 +2,17 @@ package io.nzbee.domain.category;
 
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import io.nzbee.domain.IFacetService;
+import io.nzbee.domain.ports.ICategoryPortService;
 
 @Service(value = "categoryDomainService")
-@CacheConfig(cacheNames="categories")
 public class CategoryServiceImpl implements ICategoryService, IFacetService {
     
     @Autowired
-    private io.nzbee.domain.ports.ICategoryPortService categoryService;
+    private ICategoryPortService categoryService;
     
     @Override
     @Transactional(readOnly=true)

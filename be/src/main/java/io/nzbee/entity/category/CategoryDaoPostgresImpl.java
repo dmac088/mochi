@@ -250,7 +250,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 			Object[] c = (Object[])query.getSingleResult();
 			
 			Category category = this.objectToEntity(c, locale, currency);
-			
 			return Optional.ofNullable(category);
 		} 
 		catch(NoResultException nre) {
