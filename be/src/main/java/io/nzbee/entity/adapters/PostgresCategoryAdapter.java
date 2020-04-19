@@ -11,7 +11,9 @@ import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.ports.ICategoryPortService;
 import io.nzbee.entity.category.ICategoryMapper;
 import io.nzbee.entity.category.ICategoryService;
+import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.brand.ICategoryBrandService;
+import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.category.product.ICategoryProductService;
 
 @Component
@@ -69,7 +71,8 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 
 	@Override
 	public Category findByCode(String locale, String currency, String code) {
-		return categoryMapper.entityToDo(categoryService.findByCode(locale, currency, code).get(), locale, currency);
+		io.nzbee.entity.category.Category cp = categoryService.findByCode(locale, currency, code).get();
+		return categoryMapper.entityToDo(cp, locale, currency);
 	}	
 	
 	@Override
@@ -79,14 +82,27 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 
 	@Override
 	public void save(Category domainObject) {
+		
 		if (domainObject instanceof ProductCategory) {
-			categoryProductService.findByCode(	domainObject.getLocale(),
-												domainObject.getCurrency(),
-												domainObject.getCategoryCode());
+			ProductCategory pc = (ProductCategory) domainObject;
+			
+			CategoryProduct cp = new CategoryProduct();
+			cp.setCategoryCode(pc.getCategoryCode());
+			cp.setLocale(pc.getLocale());
+			cp.setCurrency(pc.getCurrency());
+			cp.setCategoryLevel(pc.getCategoryLevel());
+			cp.setObjectCount(pc.getCount());
+			
+			CategoryAttribute ca = new CategoryAttribute();
+			ca.setCategoryDesc(pc.getCategoryDesc());
+			ca.setLclCd(pc.getLocale());
+			
+			ca.setCategory(cp);
+			cp.addAttribute(ca);
+			
+			categoryProductService.save(cp);
 		}
-		categoryBrandService.findByCode(	domainObject.getLocale(),
-											domainObject.getCurrency(),
-											domainObject.getCategoryCode());
+	
 	}
 
 

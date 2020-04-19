@@ -121,8 +121,8 @@ public class CategoryProductDaoImpl implements ICategoryProductDao {
 
 	@Override
 	public void save(CategoryProduct t) {
-		// TODO Auto-generated method stub
-		
+		em.persist(t);
+		em.flush();
 	}
 
 	@Override

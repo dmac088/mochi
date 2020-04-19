@@ -3,7 +3,6 @@ package io.nzbee.entity.category.product;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,8 +49,7 @@ public class CategoryProductService implements ICategoryProductService {
 
 	@Override
 	public void save(CategoryProduct t) {
-		// TODO Auto-generated method stub
-		
+		productCategoryDao.save(t);
 	}
 
 	@Override

@@ -15,7 +15,7 @@ import io.nzbee.domain.category.ProductCategory;
 public class CategoryDoBeanFactory {
 
 	
-	public final Category getProductCategoryDoBean() {
+	public final ProductCategory getProductCategoryDoBean() {
 		
 		ProductCategory category = 
 				new ProductCategory("TST01",
