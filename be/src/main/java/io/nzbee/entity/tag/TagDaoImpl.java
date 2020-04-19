@@ -215,8 +215,8 @@ public class TagDaoImpl implements ITagDao {
 	
 	@Override
 	public void save(Tag t) {
-		// TODO Auto-generated method stub
-		
+		em.persist(t);
+		em.flush();
 	}
 
 	@Override

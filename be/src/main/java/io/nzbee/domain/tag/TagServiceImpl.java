@@ -51,7 +51,7 @@ public class TagServiceImpl implements ITagService, IFacetService {
 
 	@Override
 	public void save(Tag object) {
-		// TODO Auto-generated method stub
+		tagService.save(object);
 		
 	}
 }
