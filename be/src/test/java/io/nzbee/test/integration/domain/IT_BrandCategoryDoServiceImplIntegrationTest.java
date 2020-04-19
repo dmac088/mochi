@@ -11,14 +11,10 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.domain.category.ICategoryService;
 import io.nzbee.domain.category.Category;
-import io.nzbee.domain.category.CategoryServiceImpl;
-import io.nzbee.entity.category.CategoryDaoPostgresImpl;
-import io.nzbee.entity.category.ICategoryDao;
 import io.nzbee.test.integration.beans.CategoryEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
@@ -30,25 +26,7 @@ public class IT_BrandCategoryDoServiceImplIntegrationTest {
 	@TestConfiguration
     static class BrandCategoryEntityServiceImplIntegrationTestConfiguration {
 		//the beans that we need to run this integration test
-        @Bean(value = "categoryDomainService")
-        public ICategoryService categoryService() {
-            return new CategoryServiceImpl();
-        }
-        
-        @Bean(value = "categoryEntityService")
-        public io.nzbee.entity.category.ICategoryService categoryEntityService() {
-        	return new io.nzbee.entity.category.CategoryServiceImpl();
-        }
-        
-        @Bean(value = "categoryEntityPostgresDao")
-        public ICategoryDao categoryDao() {
-            return new CategoryDaoPostgresImpl();
-        }
-        
-        @Bean(value = "categoryEntityBeanFactory")
-        public CategoryEntityBeanFactory categoryFactoryBean() {
-            return new CategoryEntityBeanFactory();
-        }
+ 
     }
 	
 	@Autowired
