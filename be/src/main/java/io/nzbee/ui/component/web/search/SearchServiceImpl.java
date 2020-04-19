@@ -475,7 +475,9 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		cp.setCategoryAttribute(cp.getAttributes().stream().filter(c -> c.getLclCd().equals(locale)).findFirst().get());
 		return (ProductCategory) categoryMapper.entityToDo(cp, locale, currency);
+
 	}
 
 
