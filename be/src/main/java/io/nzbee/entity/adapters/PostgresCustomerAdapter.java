@@ -7,10 +7,14 @@ import org.springframework.stereotype.Component;
 
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.ports.ICustomerPortService;
+import io.nzbee.entity.party.person.IPersonService;
+import io.nzbee.entity.party.person.Person;
 
 @Component
 public class PostgresCustomerAdapter implements ICustomerPortService {
 
+	IPersonService customerService;
+	
 	@Override
 	public Optional<Customer> findByCode(String code) {
 		// TODO Auto-generated method stub
@@ -37,7 +41,11 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 
 	@Override
 	public void save(Customer domainObject) {
-		// TODO Auto-generated method stub
+		User u = new User();
+		Person p = new Person();
+		p.setGivenName("a");
+		p.setFamilyName("b");
+		
 		
 	}
 
