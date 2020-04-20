@@ -2,14 +2,12 @@ package io.nzbee.entity.adapters;
 
 import java.util.Optional;
 import java.util.Set;
-
 import org.springframework.stereotype.Component;
-
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.ports.ICustomerPortService;
+import io.nzbee.entity.party.person.IPersonMapper;
 import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.Person;
-import io.nzbee.entity.role.customer.ICustomerService;
 import io.nzbee.security.user.User;
 
 @Component
@@ -17,13 +15,28 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 
 	IPersonService personService;
 	
+	IPersonMapper personMapper;
+	
 	@Override
 	public Optional<Customer> findByCode(String code) {
-		personService.findByUsernameAndRole("test", "Customer");
+		return Optional.ofNullable(personMapper.entityToDo(personService.findByUsernameAndRole("test", "Customer").get()));
 	}
 
 	@Override
 	public Set<Customer> findAll(String locale, String currency) {
+		return null;
+	}
+	
+
+	@Override
+	public Set<Customer> findAll(String locale, String currency, String category) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<Customer> findAll(String locale, String currency, Set<String> codes) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -61,18 +74,4 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 		 
 		personService.save(p);
 	}
-
-	@Override
-	public Set<Customer> findAll(String locale, String currency, String category) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Set<Customer> findAll(String locale, String currency, Set<String> codes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	
 }

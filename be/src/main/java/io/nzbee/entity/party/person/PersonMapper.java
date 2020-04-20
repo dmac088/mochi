@@ -7,8 +7,10 @@ import org.springframework.stereotype.Component;
 @Component(value="personMapper")
 public class PersonMapper implements IPersonMapper {
 
-	public Customer entityToDo(io.nzbee.entity.category.Category e) {
-			return null;
+	@Override
+	public Customer entityToDo(Person e) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
