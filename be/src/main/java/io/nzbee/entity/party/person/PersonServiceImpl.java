@@ -50,7 +50,7 @@ public class PersonServiceImpl implements IPersonService {
 	@Transactional
 	@PreAuthorize("hasAuthority('PERSON_CREATE')")
 	public void save(Person person) {
-		personRepository.save(person);
+		personDao.save(person);
 	}
 	
 	@Override

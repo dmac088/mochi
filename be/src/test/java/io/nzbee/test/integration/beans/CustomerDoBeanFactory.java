@@ -12,9 +12,9 @@ public class CustomerDoBeanFactory {
 		
 		Customer c = 
 				new Customer(
-				"daniel",
-				"mackie",
-				"dmac088",
+				"test given name",
+				"test family name",
+				"tst088",
 				"123456789"
 				);
 		c.setPassword("1234", "1234");

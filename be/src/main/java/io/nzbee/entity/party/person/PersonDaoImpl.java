@@ -105,8 +105,8 @@ public class PersonDaoImpl implements IPersonDao {
 
 	@Override
 	public void save(Person t) {
-		// TODO Auto-generated method stub
-		
+		em.persist(t);
+		em.flush();
 	}
 
 	@Override
