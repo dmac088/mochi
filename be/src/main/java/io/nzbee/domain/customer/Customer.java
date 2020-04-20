@@ -1,25 +1,26 @@
 package io.nzbee.domain.customer;
 
 import java.util.Objects;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+//import javax.validation.constraints.NotNull;
+//import javax.validation.constraints.Size;
 
 public class Customer {
     
-	@NotNull
+
+	//@NotNull
     private String customerId;
 	
-	@NotNull
-    @Size(min = 1, message = "{Size.userDto.firstName}")
+	//@NotNull
+    //@Size(min = 1, message = "{Size.userDto.firstName}")
     private String givenName;
 
-	@NotNull
-    @Size(min = 1, message = "{Size.userDto.lastName}")
+	//@NotNull
+    //@Size(min = 1, message = "{Size.userDto.lastName}")
     private String familyName;
 
 	//@ValidEmail
-    @NotNull
-    @Size(min = 1, message = "{Size.userDto.email}")
+    //@NotNull
+    //@Size(min = 1, message = "{Size.userDto.email}")
     private String userName;
     
     //@ValidPassword
@@ -69,6 +70,10 @@ public class Customer {
 		if(password.equals(matchingPassword)) {
 			this.password = password;
 		}
+	}
+	
+	public String getPassword() {
+		return password;
 	}
  	
 	@Override
