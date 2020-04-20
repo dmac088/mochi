@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class PersonService implements IPersonService {
+public class PersonServiceImpl implements IPersonService {
 
 	@Autowired
 	private PersonRepository personRepository; 
@@ -67,6 +67,13 @@ public class PersonService implements IPersonService {
 
 	@Override
 	public List<Person> findAll(String locale, String currency, Set<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Optional<Person> findByUsernameAndRole(String userName, String roleName) {
 		// TODO Auto-generated method stub
 		return null;
 	}
