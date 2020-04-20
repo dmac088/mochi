@@ -29,15 +29,13 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import io.nzbee.domain.FacetServices;
 import io.nzbee.domain.IDomainObject;
-import io.nzbee.domain.IService;
+import io.nzbee.domain.IProductDimensionService;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.department.Department;
@@ -339,7 +337,7 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 			Set<IDomainObject> lc = sfh.getBean(appContext).findAll(lcl, currency, sfh.getCodes());
 
 			//create a new array of entity facets
-			IService service = sfh.getBean(appContext);
+			IProductDimensionService service = sfh.getBean(appContext);
 			
 			facets.stream()
 			      .filter(x -> {

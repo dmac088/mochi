@@ -4,8 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.springframework.context.ApplicationContext;
-
-import io.nzbee.domain.IService;
+import io.nzbee.domain.IProductDimensionService;
 
 public class SearchFacetHelper {
 
@@ -30,8 +29,8 @@ public class SearchFacetHelper {
 	}
 	
 	@SuppressWarnings("rawtypes")
-	public IService getBean(ApplicationContext appContext) {
-		return (IService) appContext.getBean(this.getFacetingName() + "DomainService");
+	public IProductDimensionService getBean(ApplicationContext appContext) {
+		return (IProductDimensionService) appContext.getBean(this.getFacetingName() + "DomainService");
 	}
 
 	@Override
