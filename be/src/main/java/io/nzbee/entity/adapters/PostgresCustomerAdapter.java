@@ -19,7 +19,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	
 	@Override
 	public Optional<Customer> findByCode(String code) {
-		personService.find
+		personService.findByUsernameAndRole("test", "Customer");
 	}
 
 	@Override
