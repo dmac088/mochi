@@ -67,6 +67,7 @@ ALTER TABLE ONLY mochi.product_category DROP CONSTRAINT uc_product_category;
 ALTER TABLE ONLY mochi.promotion DROP CONSTRAINT uc_prm_cd;
 ALTER TABLE ONLY mochi.department DROP CONSTRAINT uc_prd_typ_cd;
 ALTER TABLE ONLY mochi.product_status DROP CONSTRAINT uc_prd_sts_cd;
+ALTER TABLE ONLY mochi.product_rating DROP CONSTRAINT uc_prd_rat;
 ALTER TABLE ONLY mochi.product_attr_lcl DROP CONSTRAINT uc_prd_lcl_1;
 ALTER TABLE ONLY mochi.layout_category DROP CONSTRAINT uc_layout_category;
 ALTER TABLE ONLY mochi.layout DROP CONSTRAINT uc_lay_desc;
@@ -84,6 +85,7 @@ ALTER TABLE ONLY mochi.role_type DROP CONSTRAINT role_type_rle_typ_desc_key;
 ALTER TABLE ONLY mochi.role_type DROP CONSTRAINT role_type_pkey;
 ALTER TABLE ONLY mochi.role DROP CONSTRAINT role_pty_id_key;
 ALTER TABLE ONLY mochi.role DROP CONSTRAINT role_pkey;
+ALTER TABLE ONLY mochi.rating DROP CONSTRAINT rating_pkey;
 ALTER TABLE ONLY mochi.promotion_type DROP CONSTRAINT promotion_type_pkey;
 ALTER TABLE ONLY mochi.promotion DROP CONSTRAINT promotion_pkey;
 ALTER TABLE ONLY mochi.promotion_category DROP CONSTRAINT promotion_category_pkey;
@@ -141,6 +143,7 @@ DROP SEQUENCE mochi.role_type_rle_typ_id_seq;
 DROP TABLE mochi.role_type;
 DROP TABLE mochi.role;
 DROP SEQUENCE mochi.role_rle_id_seq;
+DROP TABLE mochi.rating;
 DROP TABLE mochi.promotion_type;
 DROP TABLE mochi.promotion_product;
 DROP TABLE mochi.promotion_order;
@@ -154,6 +157,7 @@ DROP SEQUENCE mochi.product_tag_prd_tag_id_seq;
 DROP TABLE mochi.product_supplier;
 DROP TABLE mochi.product_status;
 DROP SEQUENCE mochi.product_status_prd_sts_id_seq;
+DROP TABLE mochi.product_rating;
 DROP TABLE mochi.product_jewellery;
 DROP TABLE mochi.product_food;
 DROP TABLE mochi.product_category;
@@ -2256,6 +2260,21 @@ CREATE TABLE product_jewellery (
 ALTER TABLE product_jewellery OWNER TO mochidb_owner;
 
 --
+-- Name: product_rating; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE product_rating (
+    prd_rat_id bigint NOT NULL,
+    prd_id bigint NOT NULL,
+    rat_id bigint NOT NULL,
+    pty_id bigint NOT NULL,
+    prd_rat_dt timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE product_rating OWNER TO mochidb_owner;
+
+--
 -- Name: product_status_prd_sts_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -2418,6 +2437,19 @@ CREATE TABLE promotion_type (
 
 
 ALTER TABLE promotion_type OWNER TO mochidb_owner;
+
+--
+-- Name: rating; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE rating (
+    rat_id bigint NOT NULL,
+    rat_desc character varying(50),
+    rat_val smallint
+);
+
+
+ALTER TABLE rating OWNER TO mochidb_owner;
 
 --
 -- Name: role_rle_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
@@ -2933,6 +2965,14 @@ ALTER TABLE ONLY promotion_type
 
 
 --
+-- Name: rating rating_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY rating
+    ADD CONSTRAINT rating_pkey PRIMARY KEY (rat_id);
+
+
+--
 -- Name: role role_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -3066,6 +3106,14 @@ ALTER TABLE ONLY layout_category
 
 ALTER TABLE ONLY product_attr_lcl
     ADD CONSTRAINT uc_prd_lcl_1 UNIQUE (prd_id, lcl_cd);
+
+
+--
+-- Name: product_rating uc_prd_rat; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY product_rating
+    ADD CONSTRAINT uc_prd_rat UNIQUE (prd_id, rat_id, pty_id);
 
 
 --
@@ -3478,8 +3526,8 @@ ALTER TABLE ONLY tag_attr_lcl
 --
 
 GRANT ALL ON SCHEMA mochi TO security_owner;
-GRANT USAGE ON SCHEMA mochi TO security_app;
 GRANT USAGE ON SCHEMA mochi TO mochi_app;
+GRANT USAGE ON SCHEMA mochi TO security_app;
 
 
 --

@@ -2172,6 +2172,21 @@ CREATE TABLE product_jewellery (
 ALTER TABLE product_jewellery OWNER TO mochidb_owner;
 
 --
+-- Name: product_rating; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE product_rating (
+    prd_rat_id bigint NOT NULL,
+    prd_id bigint NOT NULL,
+    rat_id bigint NOT NULL,
+    pty_id bigint NOT NULL,
+    prd_rat_dt timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE product_rating OWNER TO mochidb_owner;
+
+--
 -- Name: product_status_prd_sts_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -2334,6 +2349,19 @@ CREATE TABLE promotion_type (
 
 
 ALTER TABLE promotion_type OWNER TO mochidb_owner;
+
+--
+-- Name: rating; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE rating (
+    rat_id bigint NOT NULL,
+    rat_desc character varying(50),
+    rat_val smallint
+);
+
+
+ALTER TABLE rating OWNER TO mochidb_owner;
 
 --
 -- Name: role_rle_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
@@ -3146,7 +3174,7 @@ COPY customer (rle_id, cst_id) FROM stdin;
 -- Name: customer_cst_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('customer_cst_id_seq', 1000000246, true);
+SELECT pg_catalog.setval('customer_cst_id_seq', 1000000247, true);
 
 
 --
@@ -3261,7 +3289,7 @@ COPY food_attr_lcl (prd_lcl_id, prd_id, ingredients, lcl_cd) FROM stdin;
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 232893, true);
+SELECT pg_catalog.setval('hibernate_sequence', 232895, true);
 
 
 --
@@ -4050,6 +4078,14 @@ COPY product_jewellery (prd_id) FROM stdin;
 
 
 --
+-- Data for Name: product_rating; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+COPY product_rating (prd_rat_id, prd_id, rat_id, pty_id, prd_rat_dt) FROM stdin;
+\.
+
+
+--
 -- Data for Name: product_status; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -4166,6 +4202,14 @@ COPY promotion_type (prm_typ_id, prm_typ_desc) FROM stdin;
 2	order
 3	category
 4	brand
+\.
+
+
+--
+-- Data for Name: rating; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+COPY rating (rat_id, rat_desc, rat_val) FROM stdin;
 \.
 
 
@@ -4696,7 +4740,7 @@ COPY user_role (id, pty_id, role_id) FROM stdin;
 -- Name: user_role_id_seq; Type: SEQUENCE SET; Schema: security; Owner: security_owner
 --
 
-SELECT pg_catalog.setval('user_role_id_seq', 181, true);
+SELECT pg_catalog.setval('user_role_id_seq', 182, true);
 
 
 SET search_path = mochi, pg_catalog;
@@ -5054,6 +5098,14 @@ ALTER TABLE ONLY promotion_type
 
 
 --
+-- Name: rating rating_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY rating
+    ADD CONSTRAINT rating_pkey PRIMARY KEY (rat_id);
+
+
+--
 -- Name: role role_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -5187,6 +5239,14 @@ ALTER TABLE ONLY layout_category
 
 ALTER TABLE ONLY product_attr_lcl
     ADD CONSTRAINT uc_prd_lcl_1 UNIQUE (prd_id, lcl_cd);
+
+
+--
+-- Name: product_rating uc_prd_rat; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY product_rating
+    ADD CONSTRAINT uc_prd_rat UNIQUE (prd_id, rat_id, pty_id);
 
 
 --
@@ -5725,8 +5785,8 @@ ALTER TABLE ONLY user_role
 --
 
 GRANT ALL ON SCHEMA mochi TO security_owner;
-GRANT USAGE ON SCHEMA mochi TO security_app;
 GRANT USAGE ON SCHEMA mochi TO mochi_app;
+GRANT USAGE ON SCHEMA mochi TO security_app;
 
 
 --
@@ -6410,8 +6470,8 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role_permission TO security_app;
 -- Name: user_; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_ TO security_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_ TO mochi_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_ TO security_app;
 
 
 --
@@ -6426,8 +6486,8 @@ GRANT ALL ON SEQUENCE user_role_id_seq TO security_app;
 -- Name: user_role; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_role TO security_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_role TO mochi_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_role TO security_app;
 
 
 --

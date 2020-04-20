@@ -56,11 +56,20 @@ public class IT_TagDoServiceImplIntegrationTest {
         assertFound(found);
     }
     
+	@Test
+    public void whenValidDesc_thenTagShouldBeFound() {
+        Tag found = tagService.findByDesc("en-GB", "HKD", "test tag");
+      
+        assertFound(found);
+    }
 	
-	  private void assertFound(final Tag found) {
+	private void assertFound(final Tag found) {
 
-		  assertThat(found.getCode())
-	        .isEqualTo("TST01");
+		assertThat(found.getCode())
+	       .isEqualTo("TST01");
+		
+		assertThat(found.getDesc())
+	       .isEqualTo("test tag");
 	    	
-	  }
+	}
 }

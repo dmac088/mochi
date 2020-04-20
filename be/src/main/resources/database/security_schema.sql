@@ -568,8 +568,8 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role_permission TO security_app;
 -- Name: user_; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_ TO security_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_ TO mochi_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_ TO security_app;
 
 
 --
@@ -584,8 +584,8 @@ GRANT ALL ON SEQUENCE user_role_id_seq TO security_app;
 -- Name: user_role; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_role TO security_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_role TO mochi_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_role TO security_app;
 
 
 --
