@@ -104,7 +104,7 @@ public class IT_PartyEntityRepositoryIntegrationTest {
         SecurityContextHolder.getContext().setAuthentication(am.authenticate(auth));
     }
     
-	public Party persistNewCustomer() {
+	private Party persistNewCustomer() {
     	
 		customer = partyEntityBeanFactory.getCustomerEntityBean();
 	    	
