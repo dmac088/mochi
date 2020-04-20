@@ -9,6 +9,7 @@ import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.ports.ICustomerPortService;
 import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.Person;
+import io.nzbee.entity.role.customer.ICustomerService;
 import io.nzbee.security.user.User;
 
 @Component
@@ -18,13 +19,11 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	
 	@Override
 	public Optional<Customer> findByCode(String code) {
-		// TODO Auto-generated method stub
-		return null;
+		//return customerSer
 	}
 
 	@Override
 	public Set<Customer> findAll(String locale, String currency) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -42,6 +41,8 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 
 	@Override
 	public void save(Customer domainObject) {
+		//in our domain world a customer is a person
+		
 		User u = new User();
 		u.setUsername(domainObject.getUserName());
 		u.setPassword(domainObject.getPassword());

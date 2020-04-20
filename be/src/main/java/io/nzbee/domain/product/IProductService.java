@@ -3,10 +3,10 @@ package io.nzbee.domain.product;
 import java.util.Set;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import io.nzbee.domain.IService;
+import io.nzbee.domain.IDimensionService;
 import io.nzbee.ui.component.web.facet.IFacet;
 
-public interface IProductService extends IService<Product> {
+public interface IProductService extends IDimensionService<Product> {
 
 
 	Page<Product> findAll(	String locale, 

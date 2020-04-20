@@ -63,4 +63,10 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	public void save(Brand object) {
 		brandService.save(object);
 	}
+
+	@Override
+	public void delete(Brand object) {
+		// TODO Auto-generated method stub
+		
+	}
 }

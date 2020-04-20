@@ -116,6 +116,12 @@ public class ProductServiceImpl implements IProductService {
 		productService.save(object);
 	}
 
+	@Override
+	public void delete(Product object) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 
 }

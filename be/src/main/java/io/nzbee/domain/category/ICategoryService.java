@@ -2,10 +2,10 @@ package io.nzbee.domain.category;
 
 
 import java.util.Set;
-import io.nzbee.domain.IService;
+import io.nzbee.domain.IDimensionService;
 
 
-public interface ICategoryService extends IService<Category> {
+public interface ICategoryService extends IDimensionService<Category> {
 
 	Set<Category> findAll(String locale, String currency);
 
