@@ -93,10 +93,10 @@ public class IT_PartyEntityRepositoryIntegrationTest {
     	this.persistNewCustomer();
     }
     
-    
     @After
     public void clear() {
         SecurityContextHolder.clearContext();
+    	entityManager.close();
     }
     
     protected void login(String name, String password) {
@@ -148,9 +148,6 @@ public class IT_PartyEntityRepositoryIntegrationTest {
 	    .isEqualTo("Test Family Name");
     }
 	
-    @After
-    public void closeConnection() {
-    	entityManager.close();
-    }
+    
 	
 }
