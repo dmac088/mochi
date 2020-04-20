@@ -13,10 +13,13 @@ import javax.persistence.criteria.Root;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import io.nzbee.entity.party.Party_;
 import io.nzbee.entity.role.Role;
 import io.nzbee.entity.role.RoleType;
 import io.nzbee.entity.role.RoleType_;
 import io.nzbee.entity.role.Role_;
+import io.nzbee.security.user.User;
+import io.nzbee.security.user.User_;
 
 
 @Component(value="personDao")
@@ -31,7 +34,6 @@ public class PersonDaoImpl implements IPersonDao {
 		
 		System.out.println("the class type is = " + roleClassType);
 		
-		// TODO Auto-generated method stub
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Person> cq = cb.createQuery(Person.class);
@@ -52,6 +54,29 @@ public class PersonDaoImpl implements IPersonDao {
 		);
 		
 		return query.getResultList();
+	}
+
+	@Override
+	public Optional<Person> findAllByUsernameAndRole(String userName, String roleClassType) {
+
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<Person> cq = cb.createQuery(Person.class);
+		
+		Root<Person> root = cq.from(Person.class);
+		
+		Join<Person, Role> partyRole = root.join(Person_.partyRoles);
+		Join<Person, User> partyUser = root.join(Party_.partyUser);
+		Join<Role, RoleType> roleType = partyRole.join(Role_.roleType);
+
+		cq.where(cb.and(
+			cb.equal(roleType.get(RoleType_.roleTypeDesc), roleClassType),
+			cb.equal(partyUser.get(User_.username), userName))
+		);
+		
+		TypedQuery<Person> query = em.createQuery(cq);
+		
+		return Optional.ofNullable(query.getSingleResult());
 	}
 	
 	@Override

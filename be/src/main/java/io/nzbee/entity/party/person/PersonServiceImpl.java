@@ -17,6 +17,9 @@ public class PersonServiceImpl implements IPersonService {
 	@Autowired
 	private PersonRepository personRepository; 
 	
+	@Autowired
+	private IPersonDao personDao;
+	
 	@Override
 	@PreAuthorize("hasAuthority('PERSON_READER')")
 	@Transactional(readOnly = true)
@@ -75,9 +78,7 @@ public class PersonServiceImpl implements IPersonService {
 	@Override
 	@PreAuthorize("hasAuthority('PERSON_READ')")
 	public Optional<Person> findByUsernameAndRole(String userName, Class<?> roleType) {
-		// TODO Auto-generated method stub
-//		return personRepository.find;
-		return null;
+		return personDao.findAllByUsernameAndRole(userName, roleType.getSimpleName());
 	}
 	
 }

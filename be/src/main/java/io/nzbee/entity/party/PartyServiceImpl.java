@@ -44,7 +44,7 @@ public class PartyServiceImpl implements IPartyService {
 	//@PreAuthorize("hasAuthority('PARTY_READ')")
 	public Optional<Party> findByCode(String code) {
 		// TODO Auto-generated method stub
-		return partyRepository.findByPartyUserUsername(code);
+		return null;
 	}
 
 	@Override
