@@ -6,6 +6,6 @@ import io.nzbee.entity.IService;
 
 public interface IPersonService extends IService<Person> {
 
-	Optional<Person> findByUsernameAndRole(String userName, String roleName);
+	Optional<Person> findByUsernameAndRole(String userName, Class<?> roleType);
 	
 }

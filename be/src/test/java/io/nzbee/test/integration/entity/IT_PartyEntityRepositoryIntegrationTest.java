@@ -60,15 +60,6 @@ public class IT_PartyEntityRepositoryIntegrationTest {
 	@TestConfiguration
     static class PartyServiceImplIntegrationTestConfiguration {
 		//the beans that we need to run this integration test
-        @Bean(value = "partyService")
-        public IPartyService partyService() {
-            return new PartyServiceImpl();
-        }
-        
-        @Bean(value = "partyEntityBeanFactory")
-        public PartyEntityBeanFactory partyFactoryBean() {
-            return new PartyEntityBeanFactory();
-        }
 
     }
     

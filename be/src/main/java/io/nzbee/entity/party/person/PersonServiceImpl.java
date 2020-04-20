@@ -73,8 +73,10 @@ public class PersonServiceImpl implements IPersonService {
 
 
 	@Override
-	public Optional<Person> findByUsernameAndRole(String userName, String roleName) {
+	@PreAuthorize("hasAuthority('PERSON_READ')")
+	public Optional<Person> findByUsernameAndRole(String userName, Class<?> roleType) {
 		// TODO Auto-generated method stub
+//		return personRepository.find;
 		return null;
 	}
 	
