@@ -1,5 +1,7 @@
 package io.nzbee.entity.adapters;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Component;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.ports.ICustomerPortService;
@@ -14,6 +16,12 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	IPersonService personService;
 	
 	IPersonMapper personMapper;
+	
+	@Override
+	public Optional<Customer> findByUsername(String userName) {
+		return Optional.ofNullable(personMapper.entityToDo(personService.findByUsernameAndRole(userName, "Customer").get()));
+	}
+	
 
 	@Override
 	public void save(Customer domainObject) {
@@ -37,5 +45,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 		 
 		personService.save(p);
 	}
+
+	
 
 }

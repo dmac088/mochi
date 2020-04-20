@@ -9,8 +9,13 @@ public class PersonMapper implements IPersonMapper {
 
 	@Override
 	public Customer entityToDo(Person e) {
-		// TODO Auto-generated method stub
-		return null;
+		return new Customer(
+				e.getGivenName(),
+				e.getFamilyName(),
+				e.getPartyUser().getUsername(),
+				((io.nzbee.entity.role.customer.Customer) 
+					e.getPartyRoles().stream().filter(r -> r.getRoleType().getRoleTypeDesc().equals("Customer")).findFirst().get()).getCustomerNumber()
+				);		
 	}
 
 }
