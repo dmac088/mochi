@@ -4,7 +4,7 @@ import java.util.Set;
 import io.nzbee.domain.category.Category;
 import io.nzbee.domain.category.ProductCategory;
 
-public interface ICategoryPortService  extends IPortService<Category> {
+public interface ICategoryPortService  extends IProductDimensionService<Category> {
 
 	Set<Category> findAllForLevel(String locale, String currency, Long level);
 

@@ -4,7 +4,7 @@ import java.util.Set;
 
 import io.nzbee.domain.brand.Brand;
 
-public interface IBrandPortService  extends IPortService<Brand> {
+public interface IBrandPortService  extends IProductDimensionService<Brand> {
 
 	Set<Brand> findAll(String locale, String currency, String category);
 

@@ -2,7 +2,7 @@ package io.nzbee.domain;
 
 import java.util.Set;
 
-public interface IDimensionService<T> extends IService<T> {
+public interface IProductDimensionService<T> extends IService<T> {
 
 	T findByCode(String locale, String currency, String code);
 	

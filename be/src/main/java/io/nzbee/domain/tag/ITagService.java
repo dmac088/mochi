@@ -1,8 +1,8 @@
 package io.nzbee.domain.tag;
 
-import io.nzbee.domain.IDimensionService;
+import io.nzbee.domain.IProductDimensionService;
 
-public interface ITagService extends IDimensionService<Tag> {
+public interface ITagService extends IProductDimensionService<Tag> {
 
 
 
