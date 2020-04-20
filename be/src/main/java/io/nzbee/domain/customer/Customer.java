@@ -56,14 +56,6 @@ public class Customer {
 	public String getUserName() {
         return userName;
     }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getMatchingPassword() {
-        return matchingPassword;
-    }
     
     public boolean isEnabled() {
 		return enabled;
