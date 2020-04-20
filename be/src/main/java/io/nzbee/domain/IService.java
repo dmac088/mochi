@@ -1,20 +1,8 @@
 package io.nzbee.domain;
 
-import java.util.Set;
-
 public interface IService<T> {
 
-	//for a DTO we need the locale
-	T findByCode(String locale, String currency, String code);
+	void save(T object); 
 	
-	//for a DTO we need the locale
-	T findByDesc(String locale, String currency, String desc);
-	
-	Set<T> findAll(String locale, String currency);
-	
-	String tokenToCode(String token);
-
-	Set<T> findAll(String lcl, String currency, Set<String> codes);
-	
-	void save(T object);
+	void delete(T object); 
 }

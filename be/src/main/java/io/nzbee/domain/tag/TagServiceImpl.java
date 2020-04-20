@@ -54,4 +54,10 @@ public class TagServiceImpl implements ITagService, IFacetService {
 		tagService.save(object);
 		
 	}
+
+	@Override
+	public void delete(Tag object) {
+		// TODO Auto-generated method stub
+		
+	}
 }
