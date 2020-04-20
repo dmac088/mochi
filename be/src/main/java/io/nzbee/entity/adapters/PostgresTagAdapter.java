@@ -47,7 +47,7 @@ public class PostgresTagAdapter  implements ITagPortService {
 	@Override
 	public Tag findByDesc(String locale, String currency, String desc) {
 		// TODO Auto-generated method stub
-		return null;
+		return this.entityToDo(tagService.findByDesc(locale, currency, desc).get());
 	}
 
 	@Override

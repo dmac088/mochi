@@ -658,7 +658,7 @@ INSERT INTO customer VALUES (232313, '1000000074');
 -- Name: customer_cst_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('customer_cst_id_seq', 1000000246, true);
+SELECT pg_catalog.setval('customer_cst_id_seq', 1000000247, true);
 
 
 --
@@ -843,7 +843,7 @@ INSERT INTO food_attr_lcl VALUES (58, 18, '不適用', 'zh-HK');
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 232893, true);
+SELECT pg_catalog.setval('hibernate_sequence', 232895, true);
 
 
 --
@@ -1267,6 +1267,12 @@ SELECT pg_catalog.setval('product_category_prd_cat_id_seq', 114, true);
 
 
 --
+-- Data for Name: product_rating; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+
+
+--
 -- Name: product_status_prd_sts_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -1366,6 +1372,12 @@ INSERT INTO promotion_type VALUES (1, 'product');
 INSERT INTO promotion_type VALUES (2, 'order');
 INSERT INTO promotion_type VALUES (3, 'category');
 INSERT INTO promotion_type VALUES (4, 'brand');
+
+
+--
+-- Data for Name: rating; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
 
 
 --
