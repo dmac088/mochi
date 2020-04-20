@@ -22,9 +22,6 @@ public class TagAttribute {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="tag_lcl_id")
 	private Long Id;
-	
-	@Column(name="tag_id")
-	private Long tagId;
 
 	@Column(name="tag_desc")
 	private String tagDesc;
@@ -33,11 +30,11 @@ public class TagAttribute {
 	private String lclCd;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional=false)
-	@JoinColumn(name="tag_id", insertable=false, updatable=false)
+	@JoinColumn(name="tag_id")
 	private Tag tag;
 	
 	public Long getTagId() {
-		return tagId;
+		return Id;
 	}
 	
 	public Long getId() {
@@ -52,8 +49,8 @@ public class TagAttribute {
 		return tag;
 	}
 
-	public void setProductTag(Tag productTag) {
-		this.tag = productTag;
+	public void setTag(Tag tag) {
+		this.tag = tag;
 	}
 
 	public String getTagDesc() {

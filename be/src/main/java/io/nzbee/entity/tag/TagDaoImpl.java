@@ -199,7 +199,7 @@ public class TagDaoImpl implements ITagDao {
 			TagAttribute tagAttribute = new TagAttribute();
 					
 			tagAttribute.setId(Long.parseLong(t.get("tagAttributeId").toString()));
-			tagAttribute.setProductTag(tagEntity);
+			tagAttribute.setTag(tagEntity);
 			tagAttribute.setTagDesc(t.get("tagDesc").toString());
 			tagAttribute.setLclCd(locale);
 					

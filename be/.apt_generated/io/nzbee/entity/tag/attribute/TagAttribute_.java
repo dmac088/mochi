@@ -9,7 +9,6 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(TagAttribute.class)
 public abstract class TagAttribute_ {
 
-	public static volatile SingularAttribute<TagAttribute, Long> tagId;
 	public static volatile SingularAttribute<TagAttribute, String> lclCd;
 	public static volatile SingularAttribute<TagAttribute, Long> Id;
 	public static volatile SingularAttribute<TagAttribute, Tag> tag;

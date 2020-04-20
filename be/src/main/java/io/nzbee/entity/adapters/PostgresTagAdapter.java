@@ -33,7 +33,7 @@ public class PostgresTagAdapter  implements ITagPortService {
 		ta.setTagDesc(tag.getTagDesc());
 		ta.setLclCd(tag.getLocale());
 		t.addTagAttribute(ta);
-		ta.setProductTag(t);
+		ta.setTag(t);
 		t.addTagAttribute(ta);
 		
 		tagService.save(t);

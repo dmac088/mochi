@@ -86,6 +86,10 @@ public class Tag {
 		return attributes;
 	}
 	
+	public void setAttributes(Set<TagAttribute> attributes) {
+		this.attributes = attributes;
+	}
+	
 	public void setLocale(String locale) {
 		this.locale = locale;
 	}
@@ -116,12 +120,12 @@ public class Tag {
 	
 	public void addTagAttribute(TagAttribute tagAttribute) {
 		this.getAttributes().add(tagAttribute);
-		tagAttribute.setProductTag(this);
+		tagAttribute.setTag(this);
 	}
 	
 	public void removeTagAttribute(TagAttribute tagAttribute) {
 		this.getAttributes().remove(tagAttribute);
-		tagAttribute.setProductTag(null);
+		tagAttribute.setTag(null);
 	}
 
 }
