@@ -4,6 +4,10 @@ import java.util.Objects;
 //import javax.validation.constraints.NotNull;
 //import javax.validation.constraints.Size;
 
+
+//we don't bother about dealing with party, even though our data model and persistence layer cater
+//for bother Persons and organizations in the "Role" of customers, we're only interested in running a 
+//B2C business, therefore all customers will be Persons (for now)
 public class Customer {
     
 
@@ -39,7 +43,7 @@ public class Customer {
     	this.customerId = customerId;
     	this.givenName = givenName;
     	this.familyName = familyName;
-    	this.partyType = "Customer";
+    	this.partyType = "Person";
     }
     
     public String getCustomerID() {
