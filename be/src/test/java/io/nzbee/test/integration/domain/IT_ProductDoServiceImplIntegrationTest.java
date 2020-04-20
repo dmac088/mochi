@@ -37,7 +37,7 @@ public class IT_ProductDoServiceImplIntegrationTest {
 	private Product product = null;
 	
 	
-	public Product persistNewProduct() {
+	private Product persistNewProduct() {
 		product = productDoBeanFactory.getProductDoBean();
    	
 		productService.save(product);
