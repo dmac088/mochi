@@ -6,7 +6,7 @@ import java.util.Objects;
 
 
 //we don't bother about dealing with party, even though our data model and persistence layer cater
-//for bother Persons and organizations in the "Role" of customers, we're only interested in running a 
+//for both persons and organizations in the "Role" of customers, we're only interested in running a 
 //B2C business, therefore all customers will be Persons (for now)
 public class Customer {
     
