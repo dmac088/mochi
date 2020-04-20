@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 
 import io.nzbee.domain.product.Product;
 
-public interface IProductPortService extends IPortService<Product> {
+public interface IProductPortService extends IProductDimensionService<Product> {
 
 	Product findByCode(String locale, String currency, String code);
 
