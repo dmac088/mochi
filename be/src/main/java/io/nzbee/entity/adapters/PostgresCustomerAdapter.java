@@ -57,7 +57,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 		p.setPartyUser(u);
 		p.addRole(c);
 		c.setRoleParty(p);
-		
+		 
 		personService.save(p);
 	}
 
