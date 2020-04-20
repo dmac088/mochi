@@ -27,8 +27,7 @@ public class CustomerServiceImpl implements ICustomerService {
 
 	@Override
 	public void save(Customer object) {
-		// TODO Auto-generated method stub
-		
+		customerService.save(object);
 	}
 
 	@Override
