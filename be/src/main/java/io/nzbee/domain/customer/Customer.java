@@ -34,8 +34,7 @@ public class Customer {
     
     private boolean enabled;
     
-    public Customer(
-    				String givenName,
+    public Customer(String givenName,
     				String familyName,
     				String userName,
     				String customerId) {
