@@ -2,6 +2,7 @@ package io.nzbee.entity.adapters;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.ports.ICustomerPortService;
@@ -13,8 +14,10 @@ import io.nzbee.security.user.User;
 @Component
 public class PostgresCustomerAdapter implements ICustomerPortService {
 
+	@Autowired
 	IPersonService personService;
 	
+	@Autowired
 	IPersonMapper personMapper;
 	
 	@Override
@@ -41,6 +44,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 		p.setPartyUser(u);
 		p.addRole(c);
 		c.setRoleParty(p);
+		u.setUserParty(p);
 		 
 		personService.save(p);
 	}

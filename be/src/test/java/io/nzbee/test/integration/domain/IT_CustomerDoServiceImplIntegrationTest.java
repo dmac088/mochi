@@ -2,6 +2,7 @@ package io.nzbee.test.integration.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,7 +54,7 @@ public class IT_CustomerDoServiceImplIntegrationTest {
 	    return customer;
 	}
 	
-	protected void login(String name, String password) {
+	private void login(String name, String password) {
 		Authentication auth = new UsernamePasswordAuthenticationToken(name, password);
 	    SecurityContextHolder.getContext().setAuthentication(am.authenticate(auth));
 	}
@@ -62,6 +63,11 @@ public class IT_CustomerDoServiceImplIntegrationTest {
 	public void setUp() { 
 		this.persistNewCustomer();
 	}
+	
+	@After
+    public void clear() {
+        SecurityContextHolder.clearContext();
+    }
 	
 	@Test
 	public void whenFindCustomerByUsername_thenReturnCustomer() {

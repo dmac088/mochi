@@ -10,12 +10,16 @@ public class CustomerDoBeanFactory {
 
 	public final Customer getCustomerDoBean() {
 		
-		return new Customer(
+		Customer c = 
+				new Customer(
 				"daniel",
 				"mackie",
 				"dmac088",
 				"123456789"
 				);
+		c.setPassword("1234", "1234");
+		
+		return c;
 	}
 	
 }
