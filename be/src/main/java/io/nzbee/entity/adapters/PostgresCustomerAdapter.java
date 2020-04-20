@@ -9,11 +9,12 @@ import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.ports.ICustomerPortService;
 import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.Person;
+import io.nzbee.security.user.User;
 
 @Component
 public class PostgresCustomerAdapter implements ICustomerPortService {
 
-	IPersonService customerService;
+	IPersonService personService;
 	
 	@Override
 	public Optional<Customer> findByCode(String code) {
@@ -42,11 +43,22 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	@Override
 	public void save(Customer domainObject) {
 		User u = new User();
+		u.setUsername(domainObject.getUserName());
+		u.setPassword(domainObject.getPassword());
+		u.setEnabled(true);
+		
+		io.nzbee.entity.role.customer.Customer c = new io.nzbee.entity.role.customer.Customer();
+		c.setCustomerNumber(domainObject.getCustomerID());
+	
 		Person p = new Person();
-		p.setGivenName("a");
-		p.setFamilyName("b");
+		p.setGivenName(domainObject.getGivenName());
+		p.setFamilyName(domainObject.getFamilyName());
 		
+		p.setPartyUser(u);
+		p.addRole(c);
+		c.setRoleParty(p);
 		
+		personService.save(p);
 	}
 
 	@Override
