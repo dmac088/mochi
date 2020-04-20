@@ -38,8 +38,7 @@ public class CustomerServiceImpl implements ICustomerService {
 
 	@Override
 	public Optional<Customer> findByUsername(String userName) {
-		// TODO Auto-generated method stub
-		return null;
+		return customerService.findByUsername(userName);
 	}
 
 }

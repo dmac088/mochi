@@ -33,7 +33,6 @@ public class IT_CustomerDoServiceImplIntegrationTest {
 		
     }
 
-
 	@Autowired
     private AuthenticationManager am;
 	
@@ -46,7 +45,8 @@ public class IT_CustomerDoServiceImplIntegrationTest {
 	Customer customer = null; 
 
 	public Customer persistNewCustomer() {
-    	
+		login("admin", "admin1234");
+		
 		customer = customerDoBeanFactory.getCustomerDoBean();
 	    	
 		customerService.save(customer);

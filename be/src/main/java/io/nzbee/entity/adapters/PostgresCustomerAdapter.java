@@ -1,5 +1,6 @@
 package io.nzbee.entity.adapters;
 
+import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,16 +37,17 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 		
 		io.nzbee.entity.role.customer.Customer c = new io.nzbee.entity.role.customer.Customer();
 		c.setCustomerNumber(domainObject.getCustomerID());
+		c.setRoleStart(new Date());
 	
 		Person p = new Person();
 		p.setGivenName(domainObject.getGivenName());
 		p.setFamilyName(domainObject.getFamilyName());
 		
 		p.setPartyUser(u);
+		u.setUserParty(p);
 		p.addRole(c);
 		c.setRoleParty(p);
-		u.setUserParty(p);
-		 
+		
 		personService.save(p);
 	}
 
