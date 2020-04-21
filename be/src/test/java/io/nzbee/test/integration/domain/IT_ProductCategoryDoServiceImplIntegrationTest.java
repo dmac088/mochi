@@ -89,7 +89,7 @@ public class IT_ProductCategoryDoServiceImplIntegrationTest {
     
     private void assertNotFound(final Optional<Category> object) {
 
-    	assertTrue(object.isPresent());
+    	assertTrue(!object.isPresent());
     	
     }
     
