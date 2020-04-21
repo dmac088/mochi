@@ -15,10 +15,11 @@ public class CustomerDoBeanFactory {
 				"test given name",
 				"test family name",
 				"tst088",
-				"123456789"
+				"123456789",
+				true
 				);
 		c.setPassword("1234", "1234");
-		
+	
 		return c;
 	}
 	

@@ -14,7 +14,8 @@ public class PersonMapper implements IPersonMapper {
 				e.getFamilyName(),
 				e.getPartyUser().getUsername(),
 				((io.nzbee.entity.role.customer.Customer) 
-					e.getPartyRoles().stream().filter(r -> r.getRoleType().getRoleTypeDesc().equals("Customer")).findFirst().get()).getCustomerNumber()
+					e.getPartyRoles().stream().filter(r -> r.getRoleType().getRoleTypeDesc().equals("Customer")).findFirst().get()).getCustomerNumber(),
+				e.getPartyUser().isEnabled()
 				);		
 	}
 

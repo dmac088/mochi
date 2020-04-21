@@ -24,6 +24,9 @@ public class Person extends Party  implements Serializable {
 	@Column(name="psn_fml_nm")
 	private String FamilyName;
 	
+	@Column(name="enb")
+	private boolean enabled;
+
 	public String getGivenName() {
 		return givenName; 
 	}	
@@ -39,6 +42,13 @@ public class Person extends Party  implements Serializable {
 	public void setFamilyName(String familyName) {
 		FamilyName = familyName;
 	}
+	
+	public boolean isEnabled() {
+		return enabled;
+	}
 
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
 	
 }
