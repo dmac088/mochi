@@ -25,8 +25,8 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
-import io.nzbee.entity.party.IPartyService;
 import io.nzbee.entity.party.Party;
+import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.Person;
 import io.nzbee.entity.role.customer.Customer;
 import io.nzbee.security.user.User;
@@ -77,7 +77,7 @@ public class IT_UserEntityRepositoryIntegrationTest {
 	private UserService userService;
 	
 	@Autowired
-	private IPartyService partyService;
+	private IPersonService personService;
 
 	
 	private io.nzbee.security.user.User user = null;
@@ -131,10 +131,10 @@ public class IT_UserEntityRepositoryIntegrationTest {
 	@Test
 	@Rollback(true)
     public void whenFindByUsername_thenReturnUser() {
-		//login("testusername", "test1234");
+		login("admin", "admin1234");
 		
         // when
-    	Party found = partyService.findByCode("testusername").get();
+    	Person found = personService.findByUsernameAndRole("testusername", Customer.class).get();
      
         // then
     	assertFound(found);

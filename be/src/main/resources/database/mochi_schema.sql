@@ -3550,8 +3550,8 @@ ALTER TABLE ONLY tag_attr_lcl
 --
 
 GRANT ALL ON SCHEMA mochi TO security_owner;
-GRANT USAGE ON SCHEMA mochi TO mochi_app;
 GRANT USAGE ON SCHEMA mochi TO security_app;
+GRANT USAGE ON SCHEMA mochi TO mochi_app;
 
 
 --
@@ -4047,6 +4047,13 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE promotion_product TO mochi_app;
 --
 
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE promotion_type TO mochi_app;
+
+
+--
+-- Name: rating; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE rating TO mochi_app;
 
 
 --
