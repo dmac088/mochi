@@ -65,7 +65,7 @@ public class BrandController {
     @GetMapping("/Brand/{locale}/{currency}/code/{brandCode}")
     public ResponseEntity<BrandResource> get(@PathVariable String locale, @PathVariable String currency, @PathVariable String brandCode) {
     	LOGGER.debug("Fetching brand for parameters : {}, {}, {}", locale, currency, brandCode);
-    	Brand b = brandService.findByCode(locale, currency, brandCode);
+    	Brand b = brandService.findByCode(locale, currency, brandCode).get();
     	BrandResource br = brandResourceAssembler.toResource(b);
     	return ResponseEntity.ok(br);
     }

@@ -148,33 +148,33 @@ public class PostgresProductAdapter implements IProductPortService {
 	}
 
 	@Override
-	public Product findByCode(String locale, String currency, String code) {
+	public Optional<Product> findByCode(String locale, String currency, String code) {
 		
 		io.nzbee.entity.product.Product pe = productService.findByCode(locale, currency, code).get();
 		io.nzbee.entity.brand.Brand be = pe.getBrand();
 		io.nzbee.entity.product.department.Department de = pe.getDepartment();
 		io.nzbee.entity.category.Category c = pe.getPrimaryCategory();
 		
-		Brand bdo = brandMapper.entityToDo(be, locale, currency);
-		Department ddo = departmentMapper.entityToDo(de, locale, currency);
-		ProductCategory cdo = (ProductCategory) categoryMapper.entityToDo(c, locale, currency);
+		Optional<Brand> bdo = brandMapper.entityToDo(Optional.ofNullable(be), locale, currency);
+		Optional<Department> ddo = departmentMapper.entityToDo(Optional.ofNullable(de), locale, currency);
+		Optional<ProductCategory> cdo = Optional.ofNullable((ProductCategory) categoryMapper.entityToDo(Optional.ofNullable(c), locale, currency).get());
 		
-		return productMapper.entityToDo(pe, bdo, ddo, cdo);
+		return productMapper.entityToDo(Optional.ofNullable(pe), bdo, ddo, cdo);
 
 	}
 
 	@Override
-	public Product findByDesc(String locale, String currency, String desc) {
+	public Optional<Product> findByDesc(String locale, String currency, String desc) {
 		io.nzbee.entity.product.Product pe = productService.findByDesc(locale, currency, desc).get();
 		io.nzbee.entity.brand.Brand be = pe.getBrand();
 		io.nzbee.entity.product.department.Department de = pe.getDepartment();
 		io.nzbee.entity.category.Category c = pe.getPrimaryCategory();
 		
-		Brand bdo = brandMapper.entityToDo(be, locale, currency);
-		Department ddo = departmentMapper.entityToDo(de, locale, currency);
-		ProductCategory cdo = (ProductCategory) categoryMapper.entityToDo(c, locale, currency);
+		Optional<Brand> bdo = brandMapper.entityToDo(Optional.ofNullable(be), locale, currency);
+		Optional<Department> ddo = departmentMapper.entityToDo(Optional.ofNullable(de), locale, currency);
+		Optional<ProductCategory> cdo = Optional.ofNullable((ProductCategory) categoryMapper.entityToDo(Optional.ofNullable(c), locale, currency).get());
 		
-		return productMapper.entityToDo(pe, bdo, ddo, cdo);
+		return productMapper.entityToDo(Optional.ofNullable(pe), bdo, ddo, cdo);
 	}
 
 	@Override

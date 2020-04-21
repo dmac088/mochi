@@ -52,14 +52,14 @@ public class IT_ProductCategoryDoServiceImplIntegrationTest {
     
     @Test
     public void whenValidCode_thenProductCategoryShouldBeFound() {
-        Category found = categoryService.findByCode("en-GB", "HKD", "TST01");
+        Category found = categoryService.findByCode("en-GB", "HKD", "TST01").get();
       
         assertFound(found);
      }
     
     @Test
     public void whenValidDesc_thenProductCategoryShouldBeFound() {
-        Category found = categoryService.findByDesc("en-GB", "HKD", "test product category");
+        Category found = categoryService.findByDesc("en-GB", "HKD", "test product category").get();
       
         assertFound(found);
      }

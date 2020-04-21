@@ -1,5 +1,6 @@
 package io.nzbee.domain.category;
 
+import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,13 +23,13 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 
 	@Override
 	@Transactional(readOnly=true)
-	public Category findByCode(String locale, String currency, String code) {
+	public Optional<Category> findByCode(String locale, String currency, String code) {
 		return categoryService.findByCode(locale, currency, code);
 	}
 	
 	@Override
 	@Transactional(readOnly=true)
-	public Category findByDesc(String locale, String currency, String desc) {
+	public Optional<Category> findByDesc(String locale, String currency, String desc) {
 		return categoryService.findByDesc(locale, currency, desc);
 	}
     

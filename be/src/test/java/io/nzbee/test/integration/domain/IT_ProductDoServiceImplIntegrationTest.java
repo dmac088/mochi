@@ -52,14 +52,14 @@ public class IT_ProductDoServiceImplIntegrationTest {
 	
 	@Test
     public void whenValidCode_thenProductShouldBeFound() {
-        Product found = productService.findByCode("en-GB", "HKD", "3254354673");
+        Product found = productService.findByCode("en-GB", "HKD", "3254354673").get();
       
         assertFound(found);
     }
     
     @Test
     public void whenValidDesc_thenProductShouldBeFound() {
-    	Product found = productService.findByDesc("en-GB", "HKD", "Test Product Description");
+    	Product found = productService.findByDesc("en-GB", "HKD", "Test Product Description").get();
       
         assertFound(found);
     }

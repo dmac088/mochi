@@ -53,7 +53,7 @@ public class IT_BrandDoServiceImplIntegrationTest {
     public void whenValidCode_thenBrandShouldBeFound() {
         String code = "TST03";
         
-        Brand found = brandService.findByCode("en-GB", "HKD", code);
+        Brand found = brandService.findByCode("en-GB", "HKD", code).get();
       
         assertFound(found);
     }
@@ -62,7 +62,7 @@ public class IT_BrandDoServiceImplIntegrationTest {
     public void whenValidDesc_thenBrandShouldBeFound() {
     	String desc = "test brand";
     	
-    	Brand found = brandService.findByDesc("en-GB", "HKD", desc);
+    	Brand found = brandService.findByDesc("en-GB", "HKD", desc).get();
       
         assertFound(found);
     }
