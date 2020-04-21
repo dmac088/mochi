@@ -42,6 +42,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 		Person p = new Person();
 		p.setGivenName(domainObject.getGivenName());
 		p.setFamilyName(domainObject.getFamilyName());
+		p.setEnabled(domainObject.isEnabled());
 		
 		p.setPartyUser(u);
 		u.setUserParty(p);

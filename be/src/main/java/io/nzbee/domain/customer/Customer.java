@@ -37,12 +37,14 @@ public class Customer {
     public Customer(String givenName,
     				String familyName,
     				String userName,
-    				String customerId) {
+    				String customerId,
+    				boolean isEnabled) {
     	
     	this.customerId = customerId;
     	this.givenName = givenName;
     	this.familyName = familyName;
     	this.partyType = "Person";
+    	this.enabled = isEnabled;
     }
     
     public String getCustomerID() {
