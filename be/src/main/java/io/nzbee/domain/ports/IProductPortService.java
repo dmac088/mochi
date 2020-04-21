@@ -10,10 +10,6 @@ import io.nzbee.domain.product.Product;
 
 public interface IProductPortService extends IProductDimensionService<Product> {
 
-	Product findByCode(String locale, String currency, String code);
-
-	Product findByDesc(String locale, String currency, String desc);
-
 	Set<Product> findAll(String locale, String currency);
 
 	Set<Product> findAll(String locale, String currency, List<String> productCodes);

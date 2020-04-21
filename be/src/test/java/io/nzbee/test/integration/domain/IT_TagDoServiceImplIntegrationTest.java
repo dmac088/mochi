@@ -51,14 +51,14 @@ public class IT_TagDoServiceImplIntegrationTest {
 	
 	@Test
     public void whenValidCode_thenTagShouldBeFound() {
-        Tag found = tagService.findByCode("en-GB", "HKD", "TST01");
+        Tag found = tagService.findByCode("en-GB", "HKD", "TST01").get();
       
         assertFound(found);
     }
     
 	@Test
     public void whenValidDesc_thenTagShouldBeFound() {
-        Tag found = tagService.findByDesc("en-GB", "HKD", "test tag");
+        Tag found = tagService.findByDesc("en-GB", "HKD", "test tag").get();
       
         assertFound(found);
     }

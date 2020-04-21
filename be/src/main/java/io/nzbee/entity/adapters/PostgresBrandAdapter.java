@@ -25,36 +25,36 @@ public class PostgresBrandAdapter implements IBrandPortService {
 	@Override
 	public Set<Brand> findAll(String locale, String currency) {
 		return brandService.findAll(locale, currency)
-				.stream().map(b -> this.entityToDo(b)).collect(Collectors.toSet());
+				.stream().map(b -> this.entityToDo(Optional.ofNullable(b)).get()).collect(Collectors.toSet());
 	}
 
 	@Override
-	public Brand findByCode(String locale, String currency, String code) {
-		return entityToDo(brandService.findByCode(locale, currency, code).get());
+	public Optional<Brand> findByCode(String locale, String currency, String code) {
+		return entityToDo(Optional.ofNullable(brandService.findByCode(locale, currency, code)).get());
 				
 	}
 
 	@Override
-	public Brand findByDesc(String locale, String currency, String desc) {
-		return entityToDo(brandService.findByDesc(locale, currency, desc).get());
+	public Optional<Brand> findByDesc(String locale, String currency, String desc) {
+		return entityToDo(brandService.findByDesc(locale, currency, desc));
 	}
 
 	@Override
 	public Set<Brand> findAll(String locale, String currency, Set<String> categoryCodes, Set<String> tagCodes) {
 		return brandService.findAll(locale, currency, categoryCodes, tagCodes)
-				.stream().map(b -> this.entityToDo(b)).collect(Collectors.toSet());
+				.stream().map(b -> this.entityToDo(Optional.ofNullable(b)).get()).collect(Collectors.toSet());
 	}
 
 	@Override
 	public Set<Brand> findAll(String locale, String currency, String category) {
 		return brandService.findAll(locale, currency, category)
-				.stream().map(b -> this.entityToDo(b)).collect(Collectors.toSet());
+				.stream().map(b -> this.entityToDo(Optional.ofNullable(b)).get()).collect(Collectors.toSet());
 	}
 	
 	@Override
 	public Set<Brand> findAll(String locale, String currency, Set<String> codes) {
 		return brandService.findAll(locale, currency, codes)
-				.stream().map(b -> this.entityToDo(b)).collect(Collectors.toSet());
+				.stream().map(b -> (Brand) this.entityToDo(Optional.ofNullable(b)).get()).collect(Collectors.toSet());
 	}
 	
 	@Override
@@ -74,14 +74,18 @@ public class PostgresBrandAdapter implements IBrandPortService {
 		brandService.save(brand);		
 	}
 	
-	private Brand entityToDo(io.nzbee.entity.brand.Brand e) {
-		return new Brand(
-				 e.getBrandCode(),
-				 e.getBrandAttribute().getBrandDesc(),
-				 0,
-				 e.getLocale(), 
-				 e.getCurrency()
-				);
+	private Optional<Brand> entityToDo(Optional<io.nzbee.entity.brand.Brand> e) {
+	
+		return	Optional.ofNullable(
+				e.isPresent()
+				?	new Brand(
+					 e.get().getBrandCode(),
+					 e.get().getBrandAttribute().getBrandDesc(),
+					 0,
+					 e.get().getLocale(), 
+					 e.get().getCurrency()
+					)
+				: null);
 	}
 
 	

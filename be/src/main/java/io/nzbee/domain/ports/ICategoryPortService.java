@@ -12,4 +12,6 @@ public interface ICategoryPortService  extends IProductDimensionService<Category
 
 	Set<ProductCategory> findAllByProductCode(String locale, String currency, String productCode);
 
+	void save(Category domainObject);
+
 }

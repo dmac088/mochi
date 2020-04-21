@@ -39,13 +39,13 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	@Override
 	public Set<Category> findAll(String locale, String currency, Set<String> codes) {
 		return categoryService.findAll(locale, currency, codes)
-				.stream().map(c -> (Category) categoryMapper.entityToDo(c, locale, currency)).collect(Collectors.toSet());
+				.stream().map(c -> (Category) categoryMapper.entityToDo(Optional.ofNullable(c), locale, currency).get()).collect(Collectors.toSet());
 	}
 	
 	@Override
 	public Set<ProductCategory> findAllByProductCode(String locale, String currency, String productCode) {
 		return categoryProductService.findAllByProductCode(locale, currency, productCode)
-				.stream().map(c -> (ProductCategory) categoryMapper.entityToDo(c, locale, currency)).collect(Collectors.toSet());
+				.stream().map(c -> (ProductCategory) categoryMapper.entityToDo(Optional.ofNullable(c), locale, currency).get()).collect(Collectors.toSet());
 	}
 	
 	@Override
@@ -69,18 +69,18 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	@Override
 	public Set<Category> findAll(String locale, String currency) {
 		return categoryService.findAll(locale, currency)
-				.stream().map(c -> categoryMapper.entityToDo(c, locale, currency)).collect(Collectors.toSet());
+				.stream().map(c -> categoryMapper.entityToDo(Optional.ofNullable(c), locale, currency).get()).collect(Collectors.toSet());
 	}
 
 	@Override
-	public Category findByCode(String locale, String currency, String code) {
+	public Optional<Category> findByCode(String locale, String currency, String code) {
 		io.nzbee.entity.category.Category cp = categoryService.findByCode(locale, currency, code).get();
-		return categoryMapper.entityToDo(cp, locale, currency);
+		return categoryMapper.entityToDo(Optional.ofNullable(cp), locale, currency);
 	}	
 	
 	@Override
-	public Category findByDesc(String locale, String currency, String desc) {
-		return categoryMapper.entityToDo(categoryService.findByDesc(locale, currency, desc).get(), locale, currency);
+	public Optional<Category> findByDesc(String locale, String currency, String desc) {
+		return categoryMapper.entityToDo(categoryService.findByDesc(locale, currency, desc), locale, currency);
 	}
 
 	@Override
@@ -127,6 +127,5 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 		}
 	
 	}
-
 
 }

@@ -1,5 +1,7 @@
 package io.nzbee.entity.product;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Component;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.category.ProductCategory;
@@ -10,29 +12,40 @@ import io.nzbee.entity.product.food.Food;
 public class ProductMapper implements IProductMapper {
 
 	@Override
-	public io.nzbee.domain.product.Product entityToDo(Product e, Brand brand, Department deprartment, ProductCategory category) {
+	public Optional<io.nzbee.domain.product.Product> entityToDo(
+													Optional<Product> e, 
+													Optional<Brand> brand, 
+													Optional<Department> department, 
+													Optional<ProductCategory> category) {
 		
-		if(e instanceof Food) {
-			return new io.nzbee.domain.product.Food(
-					e.getProductUPC(),
-				   	e.getProductCreateDt(),
-				   	e.getProductAttribute().getProductDesc(),
-				   	e.getRetailPrice(),
-				   	e.getMarkdownPrice(),
-				   	e.getImagePath(),
-				   	e.getDisplayCategories(),
-				   	((Food) e).getCountryOfOrigin(),
-				   	((Food) e).getExpiryDate(),
-				   	e.getLocale(),
-				   	e.getCurrency(),
-				   	brand,
-				   	deprartment,
-				   	category
+		if(!e.isPresent() ||
+		   !brand.isPresent() ||
+		   !department.isPresent() ||
+		   !category.isPresent()) {	
+			return Optional.ofNullable(null);
+		}
+		
+		Product pe = e.get();
+		io.nzbee.domain.product.Product pO = null;
+		
+		if(pe instanceof Food) {
+			pO = new io.nzbee.domain.product.Food(
+					pe.getProductUPC(),
+				   	pe.getProductCreateDt(),
+				   	pe.getProductAttribute().getProductDesc(),
+				   	pe.getRetailPrice(),
+				   	pe.getMarkdownPrice(),
+				   	pe.getImagePath(),
+				   	pe.getDisplayCategories(),
+				   	((Food) pe).getCountryOfOrigin(),
+				   	((Food) pe).getExpiryDate(),
+				   	pe.getLocale(),
+				   	pe.getCurrency(),
+				   	brand.get(),
+				   	department.get(),
+				   	category.get()
 				   	);
 		}
-		return null;
+		return Optional.ofNullable(pO);
 	}
-
-
-
 }

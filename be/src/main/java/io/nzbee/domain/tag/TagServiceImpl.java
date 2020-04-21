@@ -1,5 +1,6 @@
 package io.nzbee.domain.tag;
 
+import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -15,12 +16,12 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	private ITagPortService tagService;
 	
 	@Override
-	public Tag findByCode(String locale, String currency, String code) {
+	public Optional<Tag> findByCode(String locale, String currency, String code) {
 		return tagService.findByCode(locale, currency, code);
 	}
 
 	@Override
-	public Tag findByDesc(String locale, String currency, String desc) {
+	public Optional<Tag> findByDesc(String locale, String currency, String desc) {
 		return tagService.findByDesc(locale, currency, desc);
 	}
 

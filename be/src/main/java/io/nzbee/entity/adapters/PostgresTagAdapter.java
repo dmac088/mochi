@@ -40,14 +40,14 @@ public class PostgresTagAdapter  implements ITagPortService {
 	}
 
 	@Override
-	public Tag findByCode(String locale, String currency, String code) {
-		return this.entityToDo(tagService.findByCode(locale, currency, code).get());
+	public Optional<Tag> findByCode(String locale, String currency, String code) {
+		return this.entityToDo(tagService.findByCode(locale, currency, code));
 	}
 
 	@Override
-	public Tag findByDesc(String locale, String currency, String desc) {
+	public Optional<Tag> findByDesc(String locale, String currency, String desc) {
 		// TODO Auto-generated method stub
-		return this.entityToDo(tagService.findByDesc(locale, currency, desc).get());
+		return this.entityToDo(tagService.findByDesc(locale, currency, desc));
 	}
 
 	@Override
@@ -59,17 +59,20 @@ public class PostgresTagAdapter  implements ITagPortService {
 	@Override
 	public Set<Tag> findAll(String locale, String currency, Set<String> codes) {
 		return tagService.findAll(locale, currency, codes)
-				.stream().map(t -> this.entityToDo(t)).collect(Collectors.toSet());
+				.stream().map(t -> this.entityToDo(Optional.ofNullable(t)).get()).collect(Collectors.toSet());
 	}
 	
-	private Tag entityToDo(io.nzbee.entity.tag.Tag e) {
-		return new Tag(
-				e.getCode(),
-				e.getAttributes().stream().filter(t -> t.getLclCd().equals(e.getLocale())).findFirst().get().getTagDesc(),
+	private Optional<Tag> entityToDo(Optional<io.nzbee.entity.tag.Tag> e) {
+		if(!e.isPresent()) { return null; }
+		io.nzbee.entity.tag.Tag te = e.get();
+		Tag tO = null;
+		tO = new Tag(
+				te.getCode(),
+				te.getAttributes().stream().filter(t -> t.getLclCd().equals(te.getLocale())).findFirst().get().getTagDesc(),
 				"en-GB",
 				"HKD"
 				);
-		
+		return Optional.ofNullable(tO);
 	}
 
 
