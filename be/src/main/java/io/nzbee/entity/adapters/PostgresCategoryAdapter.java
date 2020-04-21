@@ -74,8 +74,8 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 
 	@Override
 	public Optional<Category> findByCode(String locale, String currency, String code) {
-		io.nzbee.entity.category.Category cp = categoryService.findByCode(locale, currency, code).get();
-		return categoryMapper.entityToDo(Optional.ofNullable(cp), locale, currency);
+		Optional<io.nzbee.entity.category.Category> cp = categoryService.findByCode(locale, currency, code);
+		return categoryMapper.entityToDo(cp, locale, currency);
 	}	
 	
 	@Override
