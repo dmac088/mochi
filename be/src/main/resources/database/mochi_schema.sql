@@ -2112,9 +2112,9 @@ ALTER SEQUENCE party_type_pty_typ_id_seq OWNED BY party_type.pty_typ_id;
 
 CREATE TABLE person (
     psn_id bigint NOT NULL,
-    psn_gvn_nm character varying,
-    psn_fml_nm character varying,
-    enb boolean
+    psn_gvn_nm character varying NOT NULL,
+    psn_fml_nm character varying NOT NULL,
+    enb boolean NOT NULL
 );
 
 
