@@ -92,6 +92,7 @@ ALTER TABLE ONLY mochi.promotion_category DROP CONSTRAINT promotion_category_pke
 ALTER TABLE ONLY mochi.department DROP CONSTRAINT product_type_pkey;
 ALTER TABLE ONLY mochi.product_tag DROP CONSTRAINT product_tag_pkey;
 ALTER TABLE ONLY mochi.product_status DROP CONSTRAINT product_status_pkey;
+ALTER TABLE ONLY mochi.product_rating DROP CONSTRAINT product_rating_pkey;
 ALTER TABLE ONLY mochi.product DROP CONSTRAINT product_pkey;
 ALTER TABLE ONLY mochi.product_jewellery DROP CONSTRAINT product_jewellery_pkey;
 ALTER TABLE ONLY mochi.product_food DROP CONSTRAINT product_food_pkey;
@@ -158,6 +159,7 @@ DROP TABLE mochi.product_supplier;
 DROP TABLE mochi.product_status;
 DROP SEQUENCE mochi.product_status_prd_sts_id_seq;
 DROP TABLE mochi.product_rating;
+DROP SEQUENCE mochi.product_rating_prd_rat_id_seq;
 DROP TABLE mochi.product_jewellery;
 DROP TABLE mochi.product_food;
 DROP TABLE mochi.product_category;
@@ -2260,11 +2262,25 @@ CREATE TABLE product_jewellery (
 ALTER TABLE product_jewellery OWNER TO mochidb_owner;
 
 --
+-- Name: product_rating_prd_rat_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE SEQUENCE product_rating_prd_rat_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE product_rating_prd_rat_id_seq OWNER TO mochidb_owner;
+
+--
 -- Name: product_rating; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
 CREATE TABLE product_rating (
-    prd_rat_id bigint NOT NULL,
+    prd_rat_id bigint DEFAULT nextval('product_rating_prd_rat_id_seq'::regclass) NOT NULL,
     prd_id bigint NOT NULL,
     rat_id bigint NOT NULL,
     pty_id bigint NOT NULL,
@@ -2914,6 +2930,14 @@ ALTER TABLE ONLY product_jewellery
 
 ALTER TABLE ONLY product
     ADD CONSTRAINT product_pkey PRIMARY KEY (prd_id);
+
+
+--
+-- Name: product_rating product_rating_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY product_rating
+    ADD CONSTRAINT product_rating_pkey PRIMARY KEY (prd_rat_id);
 
 
 --
@@ -3918,6 +3942,13 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE product_food TO mochi_app;
 --
 
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE product_jewellery TO mochi_app;
+
+
+--
+-- Name: product_rating_prd_rat_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT ALL ON SEQUENCE product_rating_prd_rat_id_seq TO mochi_app;
 
 
 --
