@@ -2024,9 +2024,9 @@ ALTER SEQUENCE party_type_pty_typ_id_seq OWNED BY party_type.pty_typ_id;
 
 CREATE TABLE person (
     psn_id bigint NOT NULL,
-    psn_gvn_nm character varying,
-    psn_fml_nm character varying,
-    enb boolean
+    psn_gvn_nm character varying NOT NULL,
+    psn_fml_nm character varying NOT NULL,
+    enb boolean NOT NULL
 );
 
 
@@ -3682,28 +3682,28 @@ SELECT pg_catalog.setval('party_type_pty_typ_id_seq', 1, false);
 
 COPY person (psn_id, psn_gvn_nm, psn_fml_nm, enb) FROM stdin;
 1	Daniel	Mackie	t
-232216			\N
-232220			\N
-232230	Will	Parkhouse	\N
-232232	Will	Parkhouse	\N
-232234	zoro	zoro	\N
-232236	j	j	\N
-232238	x	x	\N
-232240	z	z	\N
-232242	h	h	\N
-232244	i	i	\N
-232246	f	f	\N
-232248	Alexia	V	\N
-232250	marley	macculloch	\N
-232252	Layla	MacCulloch	\N
-232254	bill	bill	\N
-232256	dan	dan	\N
-232258	dan	dan	\N
-232260	nod	nod	\N
-232262	Daniel	Mackie	\N
-232304	Daniel	Mackie	\N
-232310	Daniel	Mackie	\N
-232312	Daniel	Mackie	\N
+232230	Will	Parkhouse	t
+232232	Will	Parkhouse	t
+232234	zoro	zoro	t
+232236	j	j	t
+232238	x	x	t
+232240	z	z	t
+232242	h	h	t
+232244	i	i	t
+232246	f	f	t
+232248	Alexia	V	t
+232250	marley	macculloch	t
+232252	Layla	MacCulloch	t
+232254	bill	bill	t
+232256	dan	dan	t
+232258	dan	dan	t
+232260	nod	nod	t
+232262	Daniel	Mackie	t
+232304	Daniel	Mackie	t
+232310	Daniel	Mackie	t
+232312	Daniel	Mackie	t
+232216	billy	wong	t
+232220	purple	wong	t
 \.
 
 

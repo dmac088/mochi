@@ -964,28 +964,28 @@ SELECT pg_catalog.setval('party_type_pty_typ_id_seq', 1, false);
 --
 
 INSERT INTO person VALUES (1, 'Daniel', 'Mackie', true);
-INSERT INTO person VALUES (232216, '', '', NULL);
-INSERT INTO person VALUES (232220, '', '', NULL);
-INSERT INTO person VALUES (232230, 'Will', 'Parkhouse', NULL);
-INSERT INTO person VALUES (232232, 'Will', 'Parkhouse', NULL);
-INSERT INTO person VALUES (232234, 'zoro', 'zoro', NULL);
-INSERT INTO person VALUES (232236, 'j', 'j', NULL);
-INSERT INTO person VALUES (232238, 'x', 'x', NULL);
-INSERT INTO person VALUES (232240, 'z', 'z', NULL);
-INSERT INTO person VALUES (232242, 'h', 'h', NULL);
-INSERT INTO person VALUES (232244, 'i', 'i', NULL);
-INSERT INTO person VALUES (232246, 'f', 'f', NULL);
-INSERT INTO person VALUES (232248, 'Alexia', 'V', NULL);
-INSERT INTO person VALUES (232250, 'marley', 'macculloch', NULL);
-INSERT INTO person VALUES (232252, 'Layla', 'MacCulloch', NULL);
-INSERT INTO person VALUES (232254, 'bill', 'bill', NULL);
-INSERT INTO person VALUES (232256, 'dan', 'dan', NULL);
-INSERT INTO person VALUES (232258, 'dan', 'dan', NULL);
-INSERT INTO person VALUES (232260, 'nod', 'nod', NULL);
-INSERT INTO person VALUES (232262, 'Daniel', 'Mackie', NULL);
-INSERT INTO person VALUES (232304, 'Daniel', 'Mackie', NULL);
-INSERT INTO person VALUES (232310, 'Daniel', 'Mackie', NULL);
-INSERT INTO person VALUES (232312, 'Daniel', 'Mackie', NULL);
+INSERT INTO person VALUES (232230, 'Will', 'Parkhouse', true);
+INSERT INTO person VALUES (232232, 'Will', 'Parkhouse', true);
+INSERT INTO person VALUES (232234, 'zoro', 'zoro', true);
+INSERT INTO person VALUES (232236, 'j', 'j', true);
+INSERT INTO person VALUES (232238, 'x', 'x', true);
+INSERT INTO person VALUES (232240, 'z', 'z', true);
+INSERT INTO person VALUES (232242, 'h', 'h', true);
+INSERT INTO person VALUES (232244, 'i', 'i', true);
+INSERT INTO person VALUES (232246, 'f', 'f', true);
+INSERT INTO person VALUES (232248, 'Alexia', 'V', true);
+INSERT INTO person VALUES (232250, 'marley', 'macculloch', true);
+INSERT INTO person VALUES (232252, 'Layla', 'MacCulloch', true);
+INSERT INTO person VALUES (232254, 'bill', 'bill', true);
+INSERT INTO person VALUES (232256, 'dan', 'dan', true);
+INSERT INTO person VALUES (232258, 'dan', 'dan', true);
+INSERT INTO person VALUES (232260, 'nod', 'nod', true);
+INSERT INTO person VALUES (232262, 'Daniel', 'Mackie', true);
+INSERT INTO person VALUES (232304, 'Daniel', 'Mackie', true);
+INSERT INTO person VALUES (232310, 'Daniel', 'Mackie', true);
+INSERT INTO person VALUES (232312, 'Daniel', 'Mackie', true);
+INSERT INTO person VALUES (232216, 'billy', 'wong', true);
+INSERT INTO person VALUES (232220, 'purple', 'wong', true);
 
 
 --
