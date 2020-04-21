@@ -2833,16 +2833,6 @@ COPY address_type  FROM stdin;
 --
 
 COPY brand (bnd_id, bnd_cd) FROM stdin;
-32	DLE01
-33	ENZ01
-34	DIV01
-35	DRI01
-36	WON01
-37	PLA01
-38	GLO01
-39	ADO01
-40	GOL01
-41	SHI01
 \.
 
 
@@ -2851,26 +2841,6 @@ COPY brand (bnd_id, bnd_cd) FROM stdin;
 --
 
 COPY brand_attr_lcl (bnd_lcl_id, bnd_id, bnd_desc, bnd_img_pth, lcl_cd) FROM stdin;
-59	32	Dole	\N	en-GB
-60	32	Dole	\N	zh-HK
-61	33	Enza	\N	en-GB
-62	33	Enza	\N	zh-HK
-63	34	Diva	\N	en-GB
-64	34	Diva	\N	zh-HK
-65	35	Driscolls	\N	en-GB
-66	35	Driscolls	\N	zh-HK
-67	36	Wonderful	\N	en-GB
-68	36	Wonderful	\N	zh-HK
-69	37	Planters	\N	en-GB
-70	37	Planters	\N	zh-HK
-71	38	Glorys	\N	en-GB
-72	38	Glorys	\N	zh-HK
-73	39	Adora	\N	en-GB
-74	39	Adora	\N	zh-HK
-75	40	Gold	\N	en-GB
-76	40	Gold	\N	zh-HK
-77	41	Shine	\N	en-GB
-78	41	Shine	\N	zh-HK
 \.
 
 
@@ -2893,10 +2863,6 @@ SELECT pg_catalog.setval('brand_bnd_id_seq', 41, true);
 --
 
 COPY brand_category (bnd_cat_id, bnd_id, cat_id) FROM stdin;
-11	32	45
-12	33	45
-13	34	45
-14	35	45
 \.
 
 
@@ -2912,49 +2878,6 @@ SELECT pg_catalog.setval('brand_category_bnd_cat_id_seq', 14, true);
 --
 
 COPY category (cat_id, cat_cd, cat_prnt_id, cat_lvl, cat_typ_id) FROM stdin;
-43	BSP01	39	1	1
-39	PRM02	\N	0	1
-38	FET01	39	1	1
-40	BND01	\N	0	1
-42	OTH02	40	1	1
-8	SVG01	4	2	1
-16	NUT01	2	1	1
-28	DUM02	2	1	1
-36	REV01	6	3	1
-15	TRO01	3	2	1
-4	VEG01	2	1	1
-30	DUM04	2	1	1
-23	BRA01	16	2	1
-20	ALM01	16	2	1
-25	OFT01	3	2	1
-26	ONT01	16	2	1
-13	MEL01	3	2	1
-22	PEC01	16	2	1
-27	DUM01	2	1	1
-21	PEA01	16	2	1
-5	DGV01	4	2	1
-11	DRU01	3	2	1
-3	FRT01	2	1	1
-14	CIT01	3	2	1
-17	PIS01	16	2	1
-33	DUM07	2	1	1
-19	CAS01	16	2	1
-31	DUM05	2	1	1
-35	DUM09	36	4	1
-37	ORV01	6	3	1
-34	DUM08	2	1	1
-32	DUM06	2	1	1
-12	BER01	3	2	1
-10	POM01	3	2	1
-18	HAZ01	16	2	1
-9	OTH01	4	2	1
-24	MAC01	16	2	1
-6	ROV01	4	2	1
-29	DUM03	2	1	1
-2	PRM01	\N	0	1
-7	BAP01	4	2	1
-44	UNK01	39	1	1
-45	FBR01	40	0	2
 \.
 
 
@@ -2963,92 +2886,6 @@ COPY category (cat_id, cat_cd, cat_prnt_id, cat_lvl, cat_typ_id) FROM stdin;
 --
 
 COPY category_attr_lcl (cat_lcl_id, cat_id, cat_desc, cat_img_pth, lcl_cd) FROM stdin;
-14	3	水果		zh-HK
-17	5	深綠色蔬菜	\N	zh-HK
-19	6	紅色和橙色蔬菜	\N	zh-HK
-21	7	豆類和豌豆	\N	zh-HK
-23	8	澱粉蔬菜	\N	zh-HK
-25	9	其他蔬菜	\N	zh-HK
-27	10	梨果	\N	zh-HK
-29	11	核果	\N	zh-HK
-31	12	漿果	\N	zh-HK
-33	13	瓜	\N	zh-HK
-35	14	柑橘	\N	zh-HK
-37	15	熱帶	\N	zh-HK
-39	16	堅果	\N	zh-HK
-41	17	開心果	\N	zh-HK
-43	18	榛子	\N	zh-HK
-45	19	腰果	\N	zh-HK
-47	20	杏仁	\N	zh-HK
-49	21	花生	\N	zh-HK
-51	22	胡桃	\N	zh-HK
-53	23	巴西	\N	zh-HK
-55	24	澳洲	\N	zh-HK
-57	25	其他水果	\N	zh-HK
-59	26	其他堅果	\N	zh-HK
-61	27	假 1	\N	zh-HK
-63	28	假 2	\N	zh-HK
-65	29	假 3	\N	zh-HK
-67	30	假 4	\N	zh-HK
-69	31	假 5	\N	zh-HK
-71	32	假 6	\N	zh-HK
-73	33	假 7	\N	zh-HK
-75	34	假 8	\N	zh-HK
-77	35	假 9	\N	zh-HK
-79	36	紅色蔬菜	\N	zh-HK
-81	37	橙色蔬菜	\N	zh-HK
-10	2	ALL		en-GB
-11	3	Fruit		en-GB
-20	7	Beans and Peas	\N	en-GB
-26	10	Pomes	\N	en-GB
-28	11	Drupes	\N	en-GB
-30	12	Berries	\N	en-GB
-32	13	Melons	\N	en-GB
-34	14	Citrus	\N	en-GB
-36	15	Tropical	\N	en-GB
-38	16	Nuts	\N	en-GB
-15	4	蔬菜	VEG01.jpg	zh-HK
-12	4	Vegetables	VEG01.jpg	en-GB
-40	17	Pistachios	\N	en-GB
-42	18	Hazelnuts	\N	en-GB
-44	19	Cashews	\N	en-GB
-46	20	Almonds	\N	en-GB
-48	21	Peanuts	\N	en-GB
-50	22	Pecans	\N	en-GB
-52	23	Brazil	\N	en-GB
-54	24	Macadamia	\N	en-GB
-56	25	Other Fruit	\N	en-GB
-58	26	Other Nuts	\N	en-GB
-60	27	DUMMY 1	\N	en-GB
-62	28	DUMMY 2	\N	en-GB
-64	29	DUMMY 3	\N	en-GB
-66	30	DUMMY 4	\N	en-GB
-68	31	DUMMY 5	\N	en-GB
-70	32	DUMMY 6	\N	en-GB
-72	33	DUMMY 7	\N	en-GB
-74	34	DUMMY 8	\N	en-GB
-76	35	DUMMY 9	\N	en-GB
-82	38	Featured	\N	en-GB
-83	38	精選	\N	zh-HK
-84	39	MISC	\N	en-GB
-85	39	雜	\N	zh-HK
-86	40	All Brands	\N	en-GB
-87	40	所有品牌	\N	zh-HK
-90	42	Other Brands	\N	en-GB
-99	42	其他品牌	\N	zh-HK
-100	43	Best Sellers	\N	en-GB
-101	43	最暢銷	\N	zh-HK
-16	5	Dark Green	\N	en-GB
-18	6	Red and Orange	\N	en-GB
-22	8	Starchy	\N	en-GB
-24	9	Other	\N	en-GB
-78	36	Red	\N	en-GB
-80	37	Orange	\N	en-GB
-102	44	Unknown	\N	en-GB
-103	44	未知	\N	zh-HK
-13	2	ALL		zh-HK
-104	45	Featured Brands	\N	en-GB
-105	45	推薦品牌	\N	zh-HK
 \.
 
 
@@ -3064,7 +2901,6 @@ SELECT pg_catalog.setval('category_attr_lcl_cat_id_seq', 21, true);
 --
 
 COPY category_brand (cat_id) FROM stdin;
-45
 \.
 
 
@@ -3080,48 +2916,6 @@ SELECT pg_catalog.setval('category_cat_id_seq', 7, true);
 --
 
 COPY category_product (cat_id) FROM stdin;
-43
-39
-38
-40
-42
-8
-16
-28
-36
-15
-4
-30
-23
-20
-25
-26
-13
-22
-27
-21
-5
-11
-3
-14
-17
-33
-19
-31
-35
-37
-34
-32
-12
-10
-18
-9
-24
-6
-29
-2
-7
-44
 \.
 
 
@@ -3130,9 +2924,6 @@ COPY category_product (cat_id) FROM stdin;
 --
 
 COPY category_type (cat_typ_id, cat_typ_cd, cat_typ_desc) FROM stdin;
-1	PRD01	product
-2	BND01	brand
-3	PRM01	promotion
 \.
 
 
@@ -3148,8 +2939,6 @@ SELECT pg_catalog.setval('category_type_cat_typ_id_seq', 2, true);
 --
 
 COPY currency (ccy_id, ccy_cd) FROM stdin;
-1	HKD
-2	USD
 \.
 
 
@@ -3158,29 +2947,6 @@ COPY currency (ccy_id, ccy_cd) FROM stdin;
 --
 
 COPY customer (rle_id, cst_id) FROM stdin;
-1	1000000011
-232217	1000000026
-232221	1000000028
-232231	1000000033
-232233	1000000034
-232235	1000000035
-232237	1000000036
-232239	1000000037
-232241	1000000038
-232243	1000000039
-232245	1000000040
-232247	1000000041
-232249	1000000042
-232251	1000000043
-232253	1000000044
-232255	1000000045
-232257	1000000046
-232259	1000000047
-232261	1000000048
-232263	1000000049
-232305	1000000070
-232311	1000000073
-232313	1000000074
 \.
 
 
@@ -3196,8 +2962,6 @@ SELECT pg_catalog.setval('customer_cst_id_seq', 1000000258, true);
 --
 
 COPY department (dept_id, dept_cd, dept_class) FROM stdin;
-2	JEW01	Jewellery
-3	FOO01	Food
 \.
 
 
@@ -3206,10 +2970,6 @@ COPY department (dept_id, dept_cd, dept_class) FROM stdin;
 --
 
 COPY department_attr_lcl (dept_lcl_id, dept_id, dept_desc, lcl_cd) FROM stdin;
-1	2	Jewellery	en-GB
-2	2	首飾	zh-HK
-3	3	Food	en-GB
-4	3	餐飲	zh-HK
 \.
 
 
@@ -3226,8 +2986,6 @@ COPY discount (dis_id, dis_cd, prm_id, dis_typ_id, dis_val) FROM stdin;
 --
 
 COPY discount_type (dis_typ_id, dis_typ_desc) FROM stdin;
-1	percentage
-2	value
 \.
 
 
@@ -3236,66 +2994,6 @@ COPY discount_type (dis_typ_id, dis_typ_desc) FROM stdin;
 --
 
 COPY food_attr_lcl (prd_lcl_id, prd_id, ingredients, lcl_cd) FROM stdin;
-6	5	Not Applicable	en-GB
-8	7	Not Applicable	en-GB
-10	9	Not Applicable	en-GB
-14	13	Not Applicable	en-GB
-22	21	Not Applicable	en-GB
-24	23	Not Applicable	en-GB
-26	25	Not Applicable	en-GB
-27	26	Not Applicable	en-GB
-29	28	Not Applicable	en-GB
-31	30	Not Applicable	en-GB
-3	2	Not Applicable	en-GB
-9	8	Not Applicable	en-GB
-18	17	Not Applicable	en-GB
-4	3	Not Applicable	en-GB
-5	4	Not Applicable	en-GB
-7	6	Not Applicable	en-GB
-13	12	Not Applicable	en-GB
-17	16	Not Applicable	en-GB
-11	10	Not Applicable	en-GB
-12	11	Not Applicable	en-GB
-15	14	Not Applicable	en-GB
-16	15	Not Applicable	en-GB
-20	19	Not Applicable	en-GB
-21	20	Not Applicable	en-GB
-23	22	Not Applicable	en-GB
-25	24	Not Applicable	en-GB
-28	27	Not Applicable	en-GB
-30	29	Not Applicable	en-GB
-2	1	Not Applicable	en-GB
-19	18	Not Applicable	en-GB
-45	5	不適用	zh-HK
-47	7	不適用	zh-HK
-49	9	不適用	zh-HK
-53	13	不適用	zh-HK
-61	21	不適用	zh-HK
-63	23	不適用	zh-HK
-65	25	不適用	zh-HK
-66	26	不適用	zh-HK
-68	28	不適用	zh-HK
-70	30	不適用	zh-HK
-42	2	不適用	zh-HK
-48	8	不適用	zh-HK
-57	17	不適用	zh-HK
-43	3	不適用	zh-HK
-44	4	不適用	zh-HK
-46	6	不適用	zh-HK
-52	12	不適用	zh-HK
-56	16	不適用	zh-HK
-50	10	不適用	zh-HK
-51	11	不適用	zh-HK
-54	14	不適用	zh-HK
-55	15	不適用	zh-HK
-59	19	不適用	zh-HK
-60	20	不適用	zh-HK
-62	22	不適用	zh-HK
-64	24	不適用	zh-HK
-67	27	不適用	zh-HK
-69	29	不適用	zh-HK
-41	1	不適用	zh-HK
-58	18	不適用	zh-HK
 \.
 
 
@@ -3342,11 +3040,6 @@ COPY jewellery_attr_lcl (prd_lcl_id, prd_id, primary_metal_type, primary_stone_t
 --
 
 COPY layout (lay_id, lay_cd, lay_desc) FROM stdin;
-1	LNDMM01	landing main menu 01
-2	LNDHC01	landing highlighted categories 01
-3	LNDPC01	landing preview categories 01
-4	LNDBS01	landing best selling products 01
-5	LNDHM01	landing header menu brands
 \.
 
 
@@ -3355,12 +3048,6 @@ COPY layout (lay_id, lay_cd, lay_desc) FROM stdin;
 --
 
 COPY layout_category (lay_cat_id, lay_id, cat_id) FROM stdin;
-17	1	2
-18	2	38
-19	3	3
-20	3	4
-21	4	43
-22	5	45
 \.
 
 
@@ -3383,216 +3070,6 @@ SELECT pg_catalog.setval('layout_lay_id_seq', 4, true);
 --
 
 COPY locale (lcl_cd) FROM stdin;
-af-ZA
-am-ET
-ar-AE
-ar-BH
-ar-DZ
-ar-EG
-ar-IQ
-ar-JO
-ar-KW
-ar-LB
-ar-LY
-ar-MA
-arn-CL
-ar-OM
-ar-QA
-ar-SA
-ar-SY
-ar-TN
-ar-YE
-as-IN
-az-Cyrl-AZ
-az-Latn-AZ
-ba-RU
-be-BY
-bg-BG
-bn-BD
-bn-IN
-bo-CN
-br-FR
-bs-Cyrl-BA
-bs-Latn-BA
-ca-ES
-co-FR
-cs-CZ
-cy-GB
-da-DK
-de-AT
-de-CH
-de-DE
-de-LI
-de-LU
-dsb-DE
-dv-MV
-el-GR
-en-029
-en-AU
-en-BZ
-en-CA
-en-GB
-en-IE
-en-IN
-en-JM
-en-MY
-en-NZ
-en-PH
-en-SG
-en-TT
-en-US
-en-ZA
-en-ZW
-es-AR
-es-BO
-es-CL
-es-CO
-es-CR
-es-DO
-es-EC
-es-ES
-es-GT
-es-HN
-es-MX
-es-NI
-es-PA
-es-PE
-es-PR
-es-PY
-es-SV
-es-US
-es-UY
-es-VE
-et-EE
-eu-ES
-fa-IR
-fi-FI
-fil-PH
-fo-FO
-fr-BE
-fr-CA
-fr-CH
-fr-FR
-fr-LU
-fr-MC
-fy-NL
-ga-IE
-gd-GB
-gl-ES
-gsw-FR
-gu-IN
-ha-Latn-NG
-he-IL
-hi-IN
-hr-BA
-hr-HR
-hsb-DE
-hu-HU
-hy-AM
-id-ID
-ig-NG
-ii-CN
-is-IS
-it-CH
-it-IT
-iu-Cans-CA
-iu-Latn-CA
-ja-JP
-ka-GE
-kk-KZ
-kl-GL
-km-KH
-kn-IN
-kok-IN
-ko-KR
-ky-KG
-lb-LU
-lo-LA
-lt-LT
-lv-LV
-mi-NZ
-mk-MK
-ml-IN
-mn-MN
-mn-Mong-CN
-moh-CA
-mr-IN
-ms-BN
-ms-MY
-mt-MT
-nb-NO
-ne-NP
-nl-BE
-nl-NL
-nn-NO
-nso-ZA
-oc-FR
-or-IN
-pa-IN
-pl-PL
-prs-AF
-ps-AF
-pt-BR
-pt-PT
-qut-GT
-quz-BO
-quz-EC
-quz-PE
-rm-CH
-ro-RO
-ru-RU
-rw-RW
-sah-RU
-sa-IN
-se-FI
-se-NO
-se-SE
-si-LK
-sk-SK
-sl-SI
-sma-NO
-sma-SE
-smj-NO
-smj-SE
-smn-FI
-sms-FI
-sq-AL
-sr-Cyrl-BA
-sr-Cyrl-CS
-sr-Cyrl-ME
-sr-Cyrl-RS
-sr-Latn-BA
-sr-Latn-CS
-sr-Latn-ME
-sr-Latn-RS
-sv-FI
-sv-SE
-sw-KE
-syr-SY
-ta-IN
-te-IN
-tg-Cyrl-TJ
-th-TH
-tk-TM
-tn-ZA
-tr-TR
-tt-RU
-tzm-Latn-DZ
-ug-CN
-uk-UA
-ur-PK
-uz-Cyrl-UZ
-uz-Latn-UZ
-vi-VN
-wo-SN
-xh-ZA
-yo-NG
-zh-CN
-zh-HK
-zh-MO
-zh-SG
-zh-TW
-zu-ZA
 \.
 
 
@@ -3633,29 +3110,6 @@ COPY organisation (org_id, org_nme, org_reg_no) FROM stdin;
 --
 
 COPY party (pty_id, pty_typ_id) FROM stdin;
-1	1
-232216	1
-232220	1
-232230	1
-232232	1
-232234	1
-232236	1
-232238	1
-232240	1
-232242	1
-232244	1
-232246	1
-232248	1
-232250	1
-232252	1
-232254	1
-232256	1
-232258	1
-232260	1
-232262	1
-232304	1
-232310	1
-232312	1
 \.
 
 
@@ -3678,8 +3132,6 @@ SELECT pg_catalog.setval('party_pty_id_seq', 1, false);
 --
 
 COPY party_type (pty_typ_id, pty_typ_desc) FROM stdin;
-1	Person
-2	Organisation
 \.
 
 
@@ -3695,29 +3147,6 @@ SELECT pg_catalog.setval('party_type_pty_typ_id_seq', 1, false);
 --
 
 COPY person (psn_id, psn_gvn_nm, psn_fml_nm, enb) FROM stdin;
-1	Daniel	Mackie	t
-232230	Will	Parkhouse	t
-232232	Will	Parkhouse	t
-232234	zoro	zoro	t
-232236	j	j	t
-232238	x	x	t
-232240	z	z	t
-232242	h	h	t
-232244	i	i	t
-232246	f	f	t
-232248	Alexia	V	t
-232250	marley	macculloch	t
-232252	Layla	MacCulloch	t
-232254	bill	bill	t
-232256	dan	dan	t
-232258	dan	dan	t
-232260	nod	nod	t
-232262	Daniel	Mackie	t
-232304	Daniel	Mackie	t
-232310	Daniel	Mackie	t
-232312	Daniel	Mackie	t
-232216	billy	wong	t
-232220	purple	wong	t
 \.
 
 
@@ -3733,126 +3162,6 @@ SELECT pg_catalog.setval('person_id_seq', 6, false);
 --
 
 COPY price (prc_id, prc_typ_id, prd_id, prc_val, ccy_id) FROM stdin;
-1	1	1	75	1
-2	1	2	75	1
-3	1	3	120	1
-4	1	4	60	1
-5	1	5	48	1
-6	1	6	32	1
-7	1	7	56	1
-8	1	8	16	1
-9	1	9	82	1
-10	1	10	35	1
-11	1	11	60	1
-12	1	12	60	1
-13	1	13	22	1
-14	1	14	48	1
-15	1	15	75	1
-16	1	16	16	1
-17	1	17	72	1
-18	1	18	45	1
-19	1	19	60	1
-20	1	20	36	1
-21	1	21	69	1
-22	1	22	95	1
-23	1	23	160	1
-24	1	24	180	1
-25	1	25	28	1
-26	1	26	200	1
-27	1	27	190	1
-28	1	28	950	1
-29	1	29	650	1
-30	1	30	170	1
-31	1	1	9.6	2
-32	1	2	9.6	2
-33	1	3	15.4	2
-34	1	4	7.7	2
-35	1	5	6.2	2
-36	1	6	4.1	2
-37	1	7	7.2	2
-38	1	8	2.1	2
-39	1	9	10.5	2
-40	1	10	4.5	2
-41	1	11	7.7	2
-42	1	12	7.7	2
-43	1	13	2.8	2
-44	1	14	6.2	2
-45	1	15	9.6	2
-46	1	16	2.1	2
-47	1	17	9.2	2
-48	1	18	5.8	2
-49	1	19	7.7	2
-50	1	20	4.6	2
-51	1	21	8.8	2
-52	1	22	12.2	2
-53	1	23	20.5	2
-54	1	24	23.1	2
-55	1	25	3.6	2
-56	1	26	25.6	2
-57	1	27	24.4	2
-58	1	28	121.8	2
-59	1	29	83.3	2
-60	1	30	21.8	2
-61	2	1	8.64	2
-62	2	2	8.64	2
-63	2	3	13.86	2
-64	2	4	6.93	2
-65	2	5	5.58	2
-66	2	6	3.69	2
-67	2	7	6.48	2
-68	2	8	1.89	2
-69	2	9	9.45	2
-70	2	10	4.05	2
-71	2	11	6.93	2
-72	2	12	6.93	2
-73	2	13	2.52	2
-74	2	14	5.58	2
-75	2	15	8.64	2
-76	2	16	1.89	2
-77	2	17	8.28	2
-78	2	18	5.22	2
-79	2	19	6.93	2
-80	2	20	4.14	2
-81	2	21	7.92	2
-82	2	22	10.98	2
-83	2	23	18.45	2
-84	2	24	20.79	2
-85	2	25	3.24	2
-86	2	26	23.04	2
-87	2	27	21.96	2
-88	2	28	109.62	2
-89	2	29	74.97	2
-90	2	30	19.62	2
-91	2	1	67.50	1
-92	2	2	67.50	1
-93	2	3	108.00	1
-94	2	4	54.00	1
-95	2	5	43.20	1
-96	2	6	28.80	1
-97	2	7	50.40	1
-98	2	8	14.40	1
-99	2	9	73.80	1
-100	2	10	31.50	1
-101	2	11	54.00	1
-102	2	12	54.00	1
-103	2	13	19.80	1
-104	2	14	43.20	1
-105	2	15	67.50	1
-106	2	16	14.40	1
-107	2	17	64.80	1
-108	2	18	40.50	1
-109	2	19	54.00	1
-110	2	20	32.40	1
-111	2	21	62.10	1
-112	2	22	85.50	1
-113	2	23	144.00	1
-114	2	24	162.00	1
-115	2	25	25.20	1
-116	2	26	180.00	1
-117	2	27	171.00	1
-118	2	28	855.00	1
-119	2	29	585.00	1
-120	2	30	153.00	1
 \.
 
 
@@ -3868,8 +3177,6 @@ SELECT pg_catalog.setval('price_prc_id_seq', 120, true);
 --
 
 COPY price_type (prc_typ_id, prc_typ_desc, prc_typ_cd) FROM stdin;
-1	retail	RET01
-2	markdown	MKD01
 \.
 
 
@@ -3878,36 +3185,6 @@ COPY price_type (prc_typ_id, prc_typ_desc, prc_typ_cd) FROM stdin;
 --
 
 COPY product (prd_id, upc_cd, prd_crtd_dt, bnd_id, dept_id, prd_sts_id, prm_cat_id) FROM stdin;
-11	3577789	2019-01-04	32	3	1	9
-5	12383658	2019-01-04	34	3	1	5
-7	14445678	2019-01-04	37	3	1	8
-9	12366678	2019-01-04	32	3	1	7
-13	76477789	2019-01-04	33	3	1	8
-21	18170258	2019-02-05	38	3	1	10
-23	17236024	2019-02-05	35	3	1	12
-25	15483827	2019-02-05	35	3	1	13
-26	13627671	2019-02-05	35	3	1	20
-28	16153782	2019-02-05	34	3	1	26
-30	16067775	2019-02-05	33	3	1	26
-2	23464789	2019-01-04	40	3	1	14
-8	25556789	2019-01-04	41	3	1	14
-17	18911676	2019-02-05	37	3	1	10
-3	19633678	2019-01-04	37	3	1	5
-4	23456645	2019-01-04	41	3	1	8
-6	23739283	2019-01-04	38	3	1	6
-12	64377789	2019-01-04	34	3	1	9
-16	18188784	2019-02-05	41	3	1	9
-10	23477789	2019-01-04	35	3	1	9
-14	13159658	2019-02-05	32	3	1	8
-15	15410595	2019-02-05	38	3	1	9
-19	10760430	2019-02-05	33	3	1	14
-20	10688155	2019-02-05	37	3	1	13
-22	17235347	2019-02-05	39	3	1	10
-24	19037164	2019-02-05	41	3	1	12
-27	15946292	2019-02-05	39	3	1	17
-29	17152401	2019-02-05	33	3	1	19
-1	12345678	2019-01-04	38	3	1	15
-18	17366878	2019-02-05	39	3	1	15
 \.
 
 
@@ -3916,66 +3193,6 @@ COPY product (prd_id, upc_cd, prd_crtd_dt, bnd_id, dept_id, prd_sts_id, prm_cat_
 --
 
 COPY product_attr_lcl (prd_lcl_id, prd_id, prd_desc, prd_img_pth, lcl_cd) FROM stdin;
-2	1	芒果	mango.jpg	zh-HK
-4	2	橙子	orange.jpg	zh-HK
-6	3	西兰花	broccoli.jpg	zh-HK
-8	4	菜花	cauliflower.jpg	zh-HK
-10	5	黄瓜	cucumber.jpg	zh-HK
-12	6	红菜头	beetroot.jpg	zh-HK
-14	7	胡萝卜	carrots.jpg	zh-HK
-16	8	番茄	tomato.jpg	zh-HK
-18	9	豆子	beans.jpg	zh-HK
-20	10	茄子	brinjal.jpg	zh-HK
-22	11	辣椒	capsicum.jpg	zh-HK
-24	12	蘑菇	button-mushroom.jpg	zh-HK
-26	13	土豆	potato.jpg	zh-HK
-28	14	南瓜	pumpkin.jpg	zh-HK
-30	15	玉米	corn.jpg	zh-HK
-32	16	洋蔥	onion.jpg	zh-HK
-34	17	蘋果	apple.jpg	zh-HK
-36	18	香蕉	banana.jpg	zh-HK
-38	19	葡萄	grapes.jpg	zh-HK
-40	20	麝香甜瓜	musk-melon.jpg	zh-HK
-42	21	梨	pears.jpg	zh-HK
-44	22	石榴	pomegranate.jpg	zh-HK
-46	23	覆盆子	raspberry.jpg	zh-HK
-48	24	草莓	strawberry.jpg	zh-HK
-50	25	西瓜	water-melon.jpg	zh-HK
-52	26	杏仁	almonds.jpg	zh-HK
-54	27	開心果	pistachio.jpg	zh-HK
-56	28	堅果混合物	nuts-mixture.jpg	zh-HK
-58	29	腰果	cashews.jpg	zh-HK
-60	30	核桃	walnuts.jpg	zh-HK
-1	1	mango	mango.jpg	en-GB
-3	2	orange	orange.jpg	en-GB
-5	3	brocolli	broccoli.jpg	en-GB
-7	4	cauliflower	cauliflower.jpg	en-GB
-9	5	cucumber	cucumber.jpg	en-GB
-11	6	beetroot	beetroot.jpg	en-GB
-13	7	carrot	carrots.jpg	en-GB
-15	8	tomato	tomato.jpg	en-GB
-17	9	beans	beans.jpg	en-GB
-19	10	brinjal	brinjal.jpg	en-GB
-21	11	capsicum	capsicum.jpg	en-GB
-23	12	mushroom	button-mushroom.jpg	en-GB
-25	13	potato	potato.jpg	en-GB
-27	14	Pumpkin	pumpkin.jpg	en-GB
-29	15	Corn	corn.jpg	en-GB
-31	16	Onion	onion.jpg	en-GB
-33	17	Apple	apple.jpg	en-GB
-35	18	Banana	banana.jpg	en-GB
-37	19	Grapes	grapes.jpg	en-GB
-39	20	Musk Melon	musk-melon.jpg	en-GB
-41	21	Pears	pears.jpg	en-GB
-43	22	Pomegranate	pomegranate.jpg	en-GB
-47	24	Strawberry	strawberry.jpg	en-GB
-49	25	Water Melon	water-melon.jpg	en-GB
-51	26	Almonds	almonds.jpg	en-GB
-53	27	Pistachio	pistachio.jpg	en-GB
-55	28	Nuts Mixture	nuts-mixture.jpg	en-GB
-57	29	Cashews	cashews.jpg	en-GB
-59	30	Walnuts	walnuts.jpg	en-GB
-45	23	RaspberryDan	raspberry.jpg	en-GB
 \.
 
 
@@ -3984,57 +3201,6 @@ COPY product_attr_lcl (prd_lcl_id, prd_id, prd_desc, prd_img_pth, lcl_cd) FROM s
 --
 
 COPY product_category (prd_cat_id, prd_id, cat_id) FROM stdin;
-39	1	15
-40	2	14
-41	3	5
-42	4	8
-43	5	5
-44	6	6
-45	7	8
-46	8	14
-47	9	7
-48	10	9
-50	12	9
-51	13	8
-52	14	8
-53	15	9
-54	16	9
-55	17	10
-56	18	15
-57	19	14
-58	20	13
-59	21	10
-60	22	10
-61	23	12
-62	24	12
-63	25	13
-64	26	20
-65	27	17
-66	28	26
-67	29	19
-68	30	26
-69	1	38
-70	10	38
-71	11	38
-72	14	38
-73	15	38
-74	18	38
-75	19	38
-76	20	38
-77	22	38
-78	24	38
-79	27	38
-80	29	38
-81	2	43
-82	14	43
-83	18	43
-84	22	43
-85	12	43
-86	16	43
-87	26	43
-88	6	43
-89	20	43
-90	5	43
 \.
 
 
@@ -4050,36 +3216,6 @@ SELECT pg_catalog.setval('product_category_prd_cat_id_seq', 114, true);
 --
 
 COPY product_food (prd_id, exp_dt, ctry_of_orig) FROM stdin;
-5	2020-04-23	CHN
-7	2020-04-23	CHN
-9	2020-04-23	CHN
-13	2020-04-23	CHN
-21	2020-04-23	CHN
-23	2020-04-23	CHN
-25	2020-04-23	CHN
-26	2020-04-23	CHN
-28	2020-04-23	CHN
-30	2020-04-23	CHN
-2	2020-04-23	CHN
-8	2020-04-23	CHN
-17	2020-04-23	CHN
-3	2020-04-23	CHN
-4	2020-04-23	CHN
-6	2020-04-23	CHN
-12	2020-04-23	CHN
-16	2020-04-23	CHN
-10	2020-04-23	CHN
-11	2020-04-23	CHN
-14	2020-04-23	CHN
-15	2020-04-23	CHN
-19	2020-04-23	CHN
-20	2020-04-23	CHN
-22	2020-04-23	CHN
-24	2020-04-23	CHN
-27	2020-04-23	CHN
-29	2020-04-23	CHN
-1	2020-04-23	CHN
-18	2020-04-23	CHN
 \.
 
 
@@ -4096,126 +3232,6 @@ COPY product_jewellery (prd_id) FROM stdin;
 --
 
 COPY product_rating (prd_rat_id, prd_id, rat_id, pty_id, prd_rat_dt) FROM stdin;
-1	11	6	1	2020-04-21 12:24:49.524028+08
-2	5	1	1	2020-04-21 12:24:49.524028+08
-3	7	5	1	2020-04-21 12:24:49.524028+08
-4	9	5	1	2020-04-21 12:24:49.524028+08
-5	13	2	1	2020-04-21 12:24:49.524028+08
-6	21	2	1	2020-04-21 12:24:49.524028+08
-7	23	4	1	2020-04-21 12:24:49.524028+08
-8	25	3	1	2020-04-21 12:24:49.524028+08
-9	26	5	1	2020-04-21 12:24:49.524028+08
-10	28	3	1	2020-04-21 12:24:49.524028+08
-11	30	3	1	2020-04-21 12:24:49.524028+08
-12	2	5	1	2020-04-21 12:24:49.524028+08
-13	8	4	1	2020-04-21 12:24:49.524028+08
-14	17	2	1	2020-04-21 12:24:49.524028+08
-15	3	3	1	2020-04-21 12:24:49.524028+08
-16	4	2	1	2020-04-21 12:24:49.524028+08
-17	6	5	1	2020-04-21 12:24:49.524028+08
-18	12	5	1	2020-04-21 12:24:49.524028+08
-19	16	5	1	2020-04-21 12:24:49.524028+08
-20	10	4	1	2020-04-21 12:24:49.524028+08
-21	14	5	1	2020-04-21 12:24:49.524028+08
-22	15	2	1	2020-04-21 12:24:49.524028+08
-23	19	3	1	2020-04-21 12:24:49.524028+08
-24	20	4	1	2020-04-21 12:24:49.524028+08
-25	22	2	1	2020-04-21 12:24:49.524028+08
-26	24	4	1	2020-04-21 12:24:49.524028+08
-27	27	4	1	2020-04-21 12:24:49.524028+08
-28	29	3	1	2020-04-21 12:24:49.524028+08
-29	1	5	1	2020-04-21 12:24:49.524028+08
-30	18	4	1	2020-04-21 12:24:49.524028+08
-31	11	1	232230	2020-04-21 12:25:18.024842+08
-32	5	5	232230	2020-04-21 12:25:18.024842+08
-33	7	4	232230	2020-04-21 12:25:18.024842+08
-34	9	5	232230	2020-04-21 12:25:18.024842+08
-35	13	4	232230	2020-04-21 12:25:18.024842+08
-36	21	6	232230	2020-04-21 12:25:18.024842+08
-37	23	2	232230	2020-04-21 12:25:18.024842+08
-38	25	2	232230	2020-04-21 12:25:18.024842+08
-39	26	2	232230	2020-04-21 12:25:18.024842+08
-40	28	6	232230	2020-04-21 12:25:18.024842+08
-41	30	4	232230	2020-04-21 12:25:18.024842+08
-42	2	4	232230	2020-04-21 12:25:18.024842+08
-43	8	5	232230	2020-04-21 12:25:18.024842+08
-44	17	3	232230	2020-04-21 12:25:18.024842+08
-45	3	5	232230	2020-04-21 12:25:18.024842+08
-46	4	2	232230	2020-04-21 12:25:18.024842+08
-47	6	4	232230	2020-04-21 12:25:18.024842+08
-48	12	4	232230	2020-04-21 12:25:18.024842+08
-49	16	6	232230	2020-04-21 12:25:18.024842+08
-50	10	3	232230	2020-04-21 12:25:18.024842+08
-51	14	2	232230	2020-04-21 12:25:18.024842+08
-52	15	5	232230	2020-04-21 12:25:18.024842+08
-53	19	5	232230	2020-04-21 12:25:18.024842+08
-54	20	4	232230	2020-04-21 12:25:18.024842+08
-55	22	3	232230	2020-04-21 12:25:18.024842+08
-56	24	6	232230	2020-04-21 12:25:18.024842+08
-57	27	2	232230	2020-04-21 12:25:18.024842+08
-58	29	6	232230	2020-04-21 12:25:18.024842+08
-59	1	2	232230	2020-04-21 12:25:18.024842+08
-60	18	1	232230	2020-04-21 12:25:18.024842+08
-61	11	4	232250	2020-04-21 12:25:36.451586+08
-62	5	2	232250	2020-04-21 12:25:36.451586+08
-63	7	5	232250	2020-04-21 12:25:36.451586+08
-64	9	2	232250	2020-04-21 12:25:36.451586+08
-65	13	2	232250	2020-04-21 12:25:36.451586+08
-66	21	3	232250	2020-04-21 12:25:36.451586+08
-67	23	2	232250	2020-04-21 12:25:36.451586+08
-68	25	3	232250	2020-04-21 12:25:36.451586+08
-69	26	4	232250	2020-04-21 12:25:36.451586+08
-70	28	3	232250	2020-04-21 12:25:36.451586+08
-71	30	2	232250	2020-04-21 12:25:36.451586+08
-72	2	2	232250	2020-04-21 12:25:36.451586+08
-73	8	1	232250	2020-04-21 12:25:36.451586+08
-74	17	1	232250	2020-04-21 12:25:36.451586+08
-75	3	4	232250	2020-04-21 12:25:36.451586+08
-76	4	6	232250	2020-04-21 12:25:36.451586+08
-77	6	2	232250	2020-04-21 12:25:36.451586+08
-78	12	2	232250	2020-04-21 12:25:36.451586+08
-79	16	4	232250	2020-04-21 12:25:36.451586+08
-80	10	2	232250	2020-04-21 12:25:36.451586+08
-81	14	4	232250	2020-04-21 12:25:36.451586+08
-82	15	5	232250	2020-04-21 12:25:36.451586+08
-83	19	5	232250	2020-04-21 12:25:36.451586+08
-84	20	3	232250	2020-04-21 12:25:36.451586+08
-85	22	3	232250	2020-04-21 12:25:36.451586+08
-86	24	2	232250	2020-04-21 12:25:36.451586+08
-87	27	2	232250	2020-04-21 12:25:36.451586+08
-88	29	4	232250	2020-04-21 12:25:36.451586+08
-89	1	2	232250	2020-04-21 12:25:36.451586+08
-90	18	3	232250	2020-04-21 12:25:36.451586+08
-91	11	4	232254	2020-04-21 12:26:01.053376+08
-92	5	5	232254	2020-04-21 12:26:01.053376+08
-93	7	5	232254	2020-04-21 12:26:01.053376+08
-94	9	3	232254	2020-04-21 12:26:01.053376+08
-95	13	2	232254	2020-04-21 12:26:01.053376+08
-96	21	6	232254	2020-04-21 12:26:01.053376+08
-97	23	5	232254	2020-04-21 12:26:01.053376+08
-98	25	2	232254	2020-04-21 12:26:01.053376+08
-99	26	3	232254	2020-04-21 12:26:01.053376+08
-100	28	3	232254	2020-04-21 12:26:01.053376+08
-101	30	5	232254	2020-04-21 12:26:01.053376+08
-102	2	4	232254	2020-04-21 12:26:01.053376+08
-103	8	5	232254	2020-04-21 12:26:01.053376+08
-104	17	5	232254	2020-04-21 12:26:01.053376+08
-105	3	4	232254	2020-04-21 12:26:01.053376+08
-106	4	3	232254	2020-04-21 12:26:01.053376+08
-107	6	5	232254	2020-04-21 12:26:01.053376+08
-108	12	6	232254	2020-04-21 12:26:01.053376+08
-109	16	3	232254	2020-04-21 12:26:01.053376+08
-110	10	2	232254	2020-04-21 12:26:01.053376+08
-111	14	1	232254	2020-04-21 12:26:01.053376+08
-112	15	1	232254	2020-04-21 12:26:01.053376+08
-113	19	1	232254	2020-04-21 12:26:01.053376+08
-114	20	6	232254	2020-04-21 12:26:01.053376+08
-115	22	3	232254	2020-04-21 12:26:01.053376+08
-116	24	3	232254	2020-04-21 12:26:01.053376+08
-117	27	2	232254	2020-04-21 12:26:01.053376+08
-118	29	4	232254	2020-04-21 12:26:01.053376+08
-119	1	1	232254	2020-04-21 12:26:01.053376+08
-120	18	3	232254	2020-04-21 12:26:01.053376+08
 \.
 
 
@@ -4223,7 +3239,7 @@ COPY product_rating (prd_rat_id, prd_id, rat_id, pty_id, prd_rat_dt) FROM stdin;
 -- Name: product_rating_prd_rat_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('product_rating_prd_rat_id_seq', 120, true);
+SELECT pg_catalog.setval('product_rating_prd_rat_id_seq', 1, false);
 
 
 --
@@ -4231,8 +3247,6 @@ SELECT pg_catalog.setval('product_rating_prd_rat_id_seq', 120, true);
 --
 
 COPY product_status (prd_sts_id, prd_sts_cd, prd_sts_desc) FROM stdin;
-1	ACT01	active
-2	INA01	inactive
 \.
 
 
@@ -4256,13 +3270,6 @@ COPY product_supplier  FROM stdin;
 --
 
 COPY product_tag (prd_tag_id, prd_id, tag_id) FROM stdin;
-25	10	17
-26	11	15
-27	22	17
-30	7	17
-31	2	15
-32	5	17
-34	13	17
 \.
 
 
@@ -4277,7 +3284,7 @@ SELECT pg_catalog.setval('product_tag_attr_lcl_tag_id_seq', 1, false);
 -- Name: product_tag_prd_tag_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('product_tag_prd_tag_id_seq', 34, true);
+SELECT pg_catalog.setval('product_tag_prd_tag_id_seq', 25, false);
 
 
 --
@@ -4339,10 +3346,6 @@ COPY promotion_product  FROM stdin;
 --
 
 COPY promotion_type (prm_typ_id, prm_typ_desc) FROM stdin;
-1	product
-2	order
-3	category
-4	brand
 \.
 
 
@@ -4351,11 +3354,6 @@ COPY promotion_type (prm_typ_id, prm_typ_desc) FROM stdin;
 --
 
 COPY rating (rat_id, rat_desc, rat_val) FROM stdin;
-1	One Star	1
-2	Two Star	2
-3	Three Star	3
-4	Four Star	4
-5	Five Star	5
 \.
 
 
@@ -4364,29 +3362,6 @@ COPY rating (rat_id, rat_desc, rat_val) FROM stdin;
 --
 
 COPY role (rle_id, rle_typ_id, rle_start_dttm, pty_id) FROM stdin;
-1	1	2018-11-15	1
-232217	1	2018-11-15	232216
-232221	1	2018-11-15	232220
-232231	1	2018-11-15	232230
-232233	1	2018-11-15	232232
-232235	1	2018-12-01	232234
-232237	1	2018-12-01	232236
-232239	1	2018-12-01	232238
-232241	1	2018-12-01	232240
-232243	1	2018-12-01	232242
-232245	1	2018-12-01	232244
-232247	1	2018-12-01	232246
-232249	1	2018-12-12	232248
-232251	1	2018-12-24	232250
-232253	1	2018-12-24	232252
-232255	1	2019-04-06	232254
-232257	1	2019-04-06	232256
-232259	1	2019-04-06	232258
-232261	1	2019-04-15	232260
-232263	1	2019-07-10	232262
-232305	1	2019-07-11	232304
-232311	1	2019-07-11	232310
-232313	1	2019-07-11	232312
 \.
 
 
@@ -4402,8 +3377,6 @@ SELECT pg_catalog.setval('role_rle_id_seq', 1, false);
 --
 
 COPY role_type (rle_typ_id, rle_typ_desc) FROM stdin;
-1	Customer
-2	Supplier
 \.
 
 
@@ -4434,8 +3407,6 @@ COPY supplier  FROM stdin;
 --
 
 COPY tag (tag_id, tag_cd) FROM stdin;
-15	ORG01
-17	GFR01
 \.
 
 
@@ -4444,10 +3415,6 @@ COPY tag (tag_id, tag_cd) FROM stdin;
 --
 
 COPY tag_attr_lcl (tag_lcl_id, tag_id, tag_desc, tag_img_pth, lcl_cd) FROM stdin;
-1	15	Organic	\N	en-GB
-3	17	Gluten Free	\N	en-GB
-2	15	有機	\N	zh-HK
-4	17	不含麩質	\N	zh-HK
 \.
 
 
@@ -4455,14 +3422,14 @@ COPY tag_attr_lcl (tag_lcl_id, tag_id, tag_desc, tag_img_pth, lcl_cd) FROM stdin
 -- Name: tag_attr_lcl_tag_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('tag_attr_lcl_tag_id_seq', 4, true);
+SELECT pg_catalog.setval('tag_attr_lcl_tag_id_seq', 1, false);
 
 
 --
 -- Name: tag_tag_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('tag_tag_id_seq', 18, true);
+SELECT pg_catalog.setval('tag_tag_id_seq', 15, false);
 
 
 SET search_path = security, pg_catalog;
@@ -6355,6 +5322,13 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE product_jewellery TO mochi_app;
 --
 
 GRANT ALL ON SEQUENCE product_rating_prd_rat_id_seq TO mochi_app;
+
+
+--
+-- Name: product_rating; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE product_rating TO mochi_app;
 
 
 --

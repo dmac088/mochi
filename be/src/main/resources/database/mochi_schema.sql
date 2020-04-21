@@ -3952,6 +3952,13 @@ GRANT ALL ON SEQUENCE product_rating_prd_rat_id_seq TO mochi_app;
 
 
 --
+-- Name: product_rating; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE product_rating TO mochi_app;
+
+
+--
 -- Name: product_status_prd_sts_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
