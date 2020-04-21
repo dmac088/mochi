@@ -2024,9 +2024,9 @@ ALTER SEQUENCE party_type_pty_typ_id_seq OWNED BY party_type.pty_typ_id;
 
 CREATE TABLE person (
     psn_id bigint NOT NULL,
-    psn_gvn_nm character varying NOT NULL,
-    psn_fml_nm character varying NOT NULL,
-    enb boolean NOT NULL
+    psn_gvn_nm character varying,
+    psn_fml_nm character varying,
+    enb boolean
 );
 
 
@@ -2172,25 +2172,11 @@ CREATE TABLE product_jewellery (
 ALTER TABLE product_jewellery OWNER TO mochidb_owner;
 
 --
--- Name: product_rating_prd_rat_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
---
-
-CREATE SEQUENCE product_rating_prd_rat_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE product_rating_prd_rat_id_seq OWNER TO mochidb_owner;
-
---
 -- Name: product_rating; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
 CREATE TABLE product_rating (
-    prd_rat_id bigint DEFAULT nextval('product_rating_prd_rat_id_seq'::regclass) NOT NULL,
+    prd_rat_id bigint NOT NULL,
     prd_id bigint NOT NULL,
     rat_id bigint NOT NULL,
     pty_id bigint NOT NULL,
@@ -3696,28 +3682,28 @@ SELECT pg_catalog.setval('party_type_pty_typ_id_seq', 1, false);
 
 COPY person (psn_id, psn_gvn_nm, psn_fml_nm, enb) FROM stdin;
 1	Daniel	Mackie	t
-232230	Will	Parkhouse	t
-232232	Will	Parkhouse	t
-232234	zoro	zoro	t
-232236	j	j	t
-232238	x	x	t
-232240	z	z	t
-232242	h	h	t
-232244	i	i	t
-232246	f	f	t
-232248	Alexia	V	t
-232250	marley	macculloch	t
-232252	Layla	MacCulloch	t
-232254	bill	bill	t
-232256	dan	dan	t
-232258	dan	dan	t
-232260	nod	nod	t
-232262	Daniel	Mackie	t
-232304	Daniel	Mackie	t
-232310	Daniel	Mackie	t
-232312	Daniel	Mackie	t
-232216	billy	wong	t
-232220	purple	wong	t
+232216			\N
+232220			\N
+232230	Will	Parkhouse	\N
+232232	Will	Parkhouse	\N
+232234	zoro	zoro	\N
+232236	j	j	\N
+232238	x	x	\N
+232240	z	z	\N
+232242	h	h	\N
+232244	i	i	\N
+232246	f	f	\N
+232248	Alexia	V	\N
+232250	marley	macculloch	\N
+232252	Layla	MacCulloch	\N
+232254	bill	bill	\N
+232256	dan	dan	\N
+232258	dan	dan	\N
+232260	nod	nod	\N
+232262	Daniel	Mackie	\N
+232304	Daniel	Mackie	\N
+232310	Daniel	Mackie	\N
+232312	Daniel	Mackie	\N
 \.
 
 
@@ -4096,134 +4082,7 @@ COPY product_jewellery (prd_id) FROM stdin;
 --
 
 COPY product_rating (prd_rat_id, prd_id, rat_id, pty_id, prd_rat_dt) FROM stdin;
-1	11	6	1	2020-04-21 12:24:49.524028+08
-2	5	1	1	2020-04-21 12:24:49.524028+08
-3	7	5	1	2020-04-21 12:24:49.524028+08
-4	9	5	1	2020-04-21 12:24:49.524028+08
-5	13	2	1	2020-04-21 12:24:49.524028+08
-6	21	2	1	2020-04-21 12:24:49.524028+08
-7	23	4	1	2020-04-21 12:24:49.524028+08
-8	25	3	1	2020-04-21 12:24:49.524028+08
-9	26	5	1	2020-04-21 12:24:49.524028+08
-10	28	3	1	2020-04-21 12:24:49.524028+08
-11	30	3	1	2020-04-21 12:24:49.524028+08
-12	2	5	1	2020-04-21 12:24:49.524028+08
-13	8	4	1	2020-04-21 12:24:49.524028+08
-14	17	2	1	2020-04-21 12:24:49.524028+08
-15	3	3	1	2020-04-21 12:24:49.524028+08
-16	4	2	1	2020-04-21 12:24:49.524028+08
-17	6	5	1	2020-04-21 12:24:49.524028+08
-18	12	5	1	2020-04-21 12:24:49.524028+08
-19	16	5	1	2020-04-21 12:24:49.524028+08
-20	10	4	1	2020-04-21 12:24:49.524028+08
-21	14	5	1	2020-04-21 12:24:49.524028+08
-22	15	2	1	2020-04-21 12:24:49.524028+08
-23	19	3	1	2020-04-21 12:24:49.524028+08
-24	20	4	1	2020-04-21 12:24:49.524028+08
-25	22	2	1	2020-04-21 12:24:49.524028+08
-26	24	4	1	2020-04-21 12:24:49.524028+08
-27	27	4	1	2020-04-21 12:24:49.524028+08
-28	29	3	1	2020-04-21 12:24:49.524028+08
-29	1	5	1	2020-04-21 12:24:49.524028+08
-30	18	4	1	2020-04-21 12:24:49.524028+08
-31	11	1	232230	2020-04-21 12:25:18.024842+08
-32	5	5	232230	2020-04-21 12:25:18.024842+08
-33	7	4	232230	2020-04-21 12:25:18.024842+08
-34	9	5	232230	2020-04-21 12:25:18.024842+08
-35	13	4	232230	2020-04-21 12:25:18.024842+08
-36	21	6	232230	2020-04-21 12:25:18.024842+08
-37	23	2	232230	2020-04-21 12:25:18.024842+08
-38	25	2	232230	2020-04-21 12:25:18.024842+08
-39	26	2	232230	2020-04-21 12:25:18.024842+08
-40	28	6	232230	2020-04-21 12:25:18.024842+08
-41	30	4	232230	2020-04-21 12:25:18.024842+08
-42	2	4	232230	2020-04-21 12:25:18.024842+08
-43	8	5	232230	2020-04-21 12:25:18.024842+08
-44	17	3	232230	2020-04-21 12:25:18.024842+08
-45	3	5	232230	2020-04-21 12:25:18.024842+08
-46	4	2	232230	2020-04-21 12:25:18.024842+08
-47	6	4	232230	2020-04-21 12:25:18.024842+08
-48	12	4	232230	2020-04-21 12:25:18.024842+08
-49	16	6	232230	2020-04-21 12:25:18.024842+08
-50	10	3	232230	2020-04-21 12:25:18.024842+08
-51	14	2	232230	2020-04-21 12:25:18.024842+08
-52	15	5	232230	2020-04-21 12:25:18.024842+08
-53	19	5	232230	2020-04-21 12:25:18.024842+08
-54	20	4	232230	2020-04-21 12:25:18.024842+08
-55	22	3	232230	2020-04-21 12:25:18.024842+08
-56	24	6	232230	2020-04-21 12:25:18.024842+08
-57	27	2	232230	2020-04-21 12:25:18.024842+08
-58	29	6	232230	2020-04-21 12:25:18.024842+08
-59	1	2	232230	2020-04-21 12:25:18.024842+08
-60	18	1	232230	2020-04-21 12:25:18.024842+08
-61	11	4	232250	2020-04-21 12:25:36.451586+08
-62	5	2	232250	2020-04-21 12:25:36.451586+08
-63	7	5	232250	2020-04-21 12:25:36.451586+08
-64	9	2	232250	2020-04-21 12:25:36.451586+08
-65	13	2	232250	2020-04-21 12:25:36.451586+08
-66	21	3	232250	2020-04-21 12:25:36.451586+08
-67	23	2	232250	2020-04-21 12:25:36.451586+08
-68	25	3	232250	2020-04-21 12:25:36.451586+08
-69	26	4	232250	2020-04-21 12:25:36.451586+08
-70	28	3	232250	2020-04-21 12:25:36.451586+08
-71	30	2	232250	2020-04-21 12:25:36.451586+08
-72	2	2	232250	2020-04-21 12:25:36.451586+08
-73	8	1	232250	2020-04-21 12:25:36.451586+08
-74	17	1	232250	2020-04-21 12:25:36.451586+08
-75	3	4	232250	2020-04-21 12:25:36.451586+08
-76	4	6	232250	2020-04-21 12:25:36.451586+08
-77	6	2	232250	2020-04-21 12:25:36.451586+08
-78	12	2	232250	2020-04-21 12:25:36.451586+08
-79	16	4	232250	2020-04-21 12:25:36.451586+08
-80	10	2	232250	2020-04-21 12:25:36.451586+08
-81	14	4	232250	2020-04-21 12:25:36.451586+08
-82	15	5	232250	2020-04-21 12:25:36.451586+08
-83	19	5	232250	2020-04-21 12:25:36.451586+08
-84	20	3	232250	2020-04-21 12:25:36.451586+08
-85	22	3	232250	2020-04-21 12:25:36.451586+08
-86	24	2	232250	2020-04-21 12:25:36.451586+08
-87	27	2	232250	2020-04-21 12:25:36.451586+08
-88	29	4	232250	2020-04-21 12:25:36.451586+08
-89	1	2	232250	2020-04-21 12:25:36.451586+08
-90	18	3	232250	2020-04-21 12:25:36.451586+08
-91	11	4	232254	2020-04-21 12:26:01.053376+08
-92	5	5	232254	2020-04-21 12:26:01.053376+08
-93	7	5	232254	2020-04-21 12:26:01.053376+08
-94	9	3	232254	2020-04-21 12:26:01.053376+08
-95	13	2	232254	2020-04-21 12:26:01.053376+08
-96	21	6	232254	2020-04-21 12:26:01.053376+08
-97	23	5	232254	2020-04-21 12:26:01.053376+08
-98	25	2	232254	2020-04-21 12:26:01.053376+08
-99	26	3	232254	2020-04-21 12:26:01.053376+08
-100	28	3	232254	2020-04-21 12:26:01.053376+08
-101	30	5	232254	2020-04-21 12:26:01.053376+08
-102	2	4	232254	2020-04-21 12:26:01.053376+08
-103	8	5	232254	2020-04-21 12:26:01.053376+08
-104	17	5	232254	2020-04-21 12:26:01.053376+08
-105	3	4	232254	2020-04-21 12:26:01.053376+08
-106	4	3	232254	2020-04-21 12:26:01.053376+08
-107	6	5	232254	2020-04-21 12:26:01.053376+08
-108	12	6	232254	2020-04-21 12:26:01.053376+08
-109	16	3	232254	2020-04-21 12:26:01.053376+08
-110	10	2	232254	2020-04-21 12:26:01.053376+08
-111	14	1	232254	2020-04-21 12:26:01.053376+08
-112	15	1	232254	2020-04-21 12:26:01.053376+08
-113	19	1	232254	2020-04-21 12:26:01.053376+08
-114	20	6	232254	2020-04-21 12:26:01.053376+08
-115	22	3	232254	2020-04-21 12:26:01.053376+08
-116	24	3	232254	2020-04-21 12:26:01.053376+08
-117	27	2	232254	2020-04-21 12:26:01.053376+08
-118	29	4	232254	2020-04-21 12:26:01.053376+08
-119	1	1	232254	2020-04-21 12:26:01.053376+08
-120	18	3	232254	2020-04-21 12:26:01.053376+08
 \.
-
-
---
--- Name: product_rating_prd_rat_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
---
-
-SELECT pg_catalog.setval('product_rating_prd_rat_id_seq', 120, true);
 
 
 --
@@ -5196,14 +5055,6 @@ ALTER TABLE ONLY product
 
 
 --
--- Name: product_rating product_rating_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY product_rating
-    ADD CONSTRAINT product_rating_pkey PRIMARY KEY (prd_rat_id);
-
-
---
 -- Name: product_status product_status_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -5939,8 +5790,8 @@ ALTER TABLE ONLY user_role
 --
 
 GRANT ALL ON SCHEMA mochi TO security_owner;
-GRANT USAGE ON SCHEMA mochi TO security_app;
 GRANT USAGE ON SCHEMA mochi TO mochi_app;
+GRANT USAGE ON SCHEMA mochi TO security_app;
 
 
 --
@@ -5954,8 +5805,8 @@ GRANT ALL ON SCHEMA public TO postgres;
 -- Name: security; Type: ACL; Schema: -; Owner: security_owner
 --
 
-GRANT USAGE ON SCHEMA security TO mochi_app;
 GRANT USAGE ON SCHEMA security TO security_app;
+GRANT USAGE ON SCHEMA security TO mochi_app;
 
 
 SET search_path = mochi, pg_catalog;
@@ -6090,8 +5941,8 @@ GRANT ALL ON SEQUENCE customer_cst_id_seq TO mochi_app;
 -- Name: customer; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE customer TO security_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE customer TO mochi_app;
+GRANT SELECT ON TABLE customer TO security_app;
 
 
 --
@@ -6231,16 +6082,16 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE order_line TO mochi_app;
 -- Name: organisation; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE organisation TO security_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE organisation TO mochi_app;
+GRANT SELECT ON TABLE organisation TO security_app;
 
 
 --
 -- Name: party; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE party TO security_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE party TO mochi_app;
+GRANT SELECT ON TABLE party TO security_app;
 
 
 --
@@ -6261,8 +6112,8 @@ GRANT ALL ON SEQUENCE party_pty_id_seq TO mochi_app;
 -- Name: party_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE party_type TO security_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE party_type TO mochi_app;
+GRANT SELECT ON TABLE party_type TO security_app;
 
 
 --
@@ -6276,8 +6127,8 @@ GRANT ALL ON SEQUENCE party_type_pty_typ_id_seq TO mochi_app;
 -- Name: person; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE person TO security_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE person TO mochi_app;
+GRANT SELECT ON TABLE person TO security_app;
 
 
 --
@@ -6348,20 +6199,6 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE product_food TO mochi_app;
 --
 
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE product_jewellery TO mochi_app;
-
-
---
--- Name: product_rating_prd_rat_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
---
-
-GRANT ALL ON SEQUENCE product_rating_prd_rat_id_seq TO mochi_app;
-
-
---
--- Name: product_rating; Type: ACL; Schema: mochi; Owner: mochidb_owner
---
-
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE product_rating TO mochi_app;
 
 
 --
@@ -6456,13 +6293,6 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE promotion_type TO mochi_app;
 
 
 --
--- Name: rating; Type: ACL; Schema: mochi; Owner: mochidb_owner
---
-
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE rating TO mochi_app;
-
-
---
 -- Name: role_rle_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -6473,16 +6303,16 @@ GRANT ALL ON SEQUENCE role_rle_id_seq TO mochi_app;
 -- Name: role; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE role TO security_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role TO mochi_app;
+GRANT SELECT ON TABLE role TO security_app;
 
 
 --
 -- Name: role_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE role_type TO security_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role_type TO mochi_app;
+GRANT SELECT ON TABLE role_type TO security_app;
 
 
 --
@@ -6540,16 +6370,16 @@ SET search_path = security, pg_catalog;
 -- Name: permission; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE permission TO security_app;
 GRANT SELECT ON TABLE permission TO mochi_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE permission TO security_app;
 
 
 --
 -- Name: authority_id_seq; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT ALL ON SEQUENCE authority_id_seq TO security_app;
 GRANT ALL ON SEQUENCE authority_id_seq TO mochi_app;
+GRANT ALL ON SEQUENCE authority_id_seq TO security_app;
 
 
 --
@@ -6563,8 +6393,8 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE clientdetails TO security_app;
 -- Name: hibernate_sequence; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT ALL ON SEQUENCE hibernate_sequence TO security_app;
 GRANT ALL ON SEQUENCE hibernate_sequence TO mochi_app;
+GRANT ALL ON SEQUENCE hibernate_sequence TO security_app;
 
 
 --
@@ -6613,56 +6443,56 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_refresh_token TO security_app;
 -- Name: role_id_seq; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT ALL ON SEQUENCE role_id_seq TO security_app;
 GRANT ALL ON SEQUENCE role_id_seq TO mochi_app;
+GRANT ALL ON SEQUENCE role_id_seq TO security_app;
 
 
 --
 -- Name: role; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role TO security_app;
 GRANT SELECT ON TABLE role TO mochi_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role TO security_app;
 
 
 --
 -- Name: role_permission_id_seq; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT ALL ON SEQUENCE role_permission_id_seq TO security_app;
 GRANT ALL ON SEQUENCE role_permission_id_seq TO mochi_app;
+GRANT ALL ON SEQUENCE role_permission_id_seq TO security_app;
 
 
 --
 -- Name: role_permission; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role_permission TO security_app;
 GRANT SELECT ON TABLE role_permission TO mochi_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role_permission TO security_app;
 
 
 --
 -- Name: user_; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_ TO security_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_ TO mochi_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_ TO security_app;
 
 
 --
 -- Name: user_role_id_seq; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT ALL ON SEQUENCE user_role_id_seq TO security_app;
 GRANT ALL ON SEQUENCE user_role_id_seq TO mochi_app;
+GRANT ALL ON SEQUENCE user_role_id_seq TO security_app;
 
 
 --
 -- Name: user_role; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_role TO security_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_role TO mochi_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_role TO security_app;
 
 
 --
