@@ -28,6 +28,7 @@ public class Product {
 	
 	private String displayCategories;
 
+	@JsonIgnore
 	private ProductCategory primaryCategory;
 	
 	private String lclCd;
