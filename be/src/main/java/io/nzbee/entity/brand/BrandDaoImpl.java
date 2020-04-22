@@ -14,6 +14,10 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+
+import org.mockito.internal.util.StringUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -34,6 +38,8 @@ import io.nzbee.variables.ProductVars;
 
 @Component
 public class BrandDaoImpl  implements IBrandDao { 
+	
+	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
@@ -41,6 +47,7 @@ public class BrandDaoImpl  implements IBrandDao {
 	
 	@Override
 	public Optional<Brand> findById(String locale, String currency, long id) {
+		LOGGER.debug("call BrandDaoImpl.findById parameters : {}, {}, {}", locale, currency, id);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
@@ -76,6 +83,8 @@ public class BrandDaoImpl  implements IBrandDao {
 	
 	@Override
 	public Optional<Brand> findByCode(String locale, String currency, String code) {
+		LOGGER.debug("call BrandDaoImpl.findByCode parameters : {}, {}, {}", locale, currency, code);
+		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
@@ -111,6 +120,8 @@ public class BrandDaoImpl  implements IBrandDao {
 	
 	@Override
 	public Optional<Brand> findByDesc(String locale, String currency, String desc) {
+		LOGGER.debug("call BrandDaoImpl.findByDesc parameters : {}, {}, {}", locale, currency, desc);
+		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
@@ -145,7 +156,8 @@ public class BrandDaoImpl  implements IBrandDao {
 	
 	@Override
 	public List<Brand> findAll(String locale, String currency, Set<String> brandCodes) {
-		// TODO Auto-generated method stub
+		LOGGER.debug("call BrandDaoImpl.findAll parameters : {}, {}, {}", locale, currency, StringUtil.join(brandCodes, ','));
+		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
@@ -177,7 +189,8 @@ public class BrandDaoImpl  implements IBrandDao {
 	
 	@Override
 	public List<Brand> findAllByCategory(String locale, String currency, String categoryCode) {
-		// TODO Auto-generated method stub
+		LOGGER.debug("call BrandDaoImpl.findAllByCategory parameters : {}, {}, {}", locale, currency, categoryCode);
+		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
@@ -208,6 +221,8 @@ public class BrandDaoImpl  implements IBrandDao {
 	
 	@Override
 	public List<Brand> findAll(String locale, String currency) {
+		LOGGER.debug("call BrandDaoImpl.findAll parameters : {}, {}, {}", locale, currency);
+		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
@@ -237,6 +252,8 @@ public class BrandDaoImpl  implements IBrandDao {
 	
 	@Override
 	public List<Brand> findAll(String locale, String currency, Set<String> categoryCodes, Set<String> tagCodes) {
+		LOGGER.debug("call BrandDaoImpl.findAll parameters : {}, {}, {}, {}", locale, currency, StringUtil.join(categoryCodes, ','), StringUtil.join(tagCodes, ','));
+		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Brand> cq = cb.createQuery(Brand.class);

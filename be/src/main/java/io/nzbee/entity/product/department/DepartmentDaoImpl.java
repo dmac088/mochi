@@ -12,6 +12,9 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Root;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -20,6 +23,8 @@ import io.nzbee.entity.product.department.attribute.DepartmentAttribute_;
 
 @Component
 public class DepartmentDaoImpl  implements IDepartmentDao { 
+	
+	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
@@ -39,6 +44,8 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 	
 	@Override
 	public Optional<Department> findById(String locale, String currency, long id) {
+		
+		LOGGER.debug("call DepartmentDaoImpl.findById parameters : {}, {}, {}", locale, currency, id);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
@@ -74,6 +81,9 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 	
 	@Override
 	public Optional<Department> findByCode(String locale, String currency, String code) {
+		
+		LOGGER.debug("call DepartmentDaoImpl.findByCode parameters : {}, {}, {}", locale, currency, code);
+		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
@@ -109,7 +119,9 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 	
 	@Override
 	public Optional<Department> findByDesc(String locale, String currency, String desc) {
-CriteriaBuilder cb = em.getCriteriaBuilder();
+		LOGGER.debug("call DepartmentDaoImpl.findByDesc parameters : {}, {}, {}", locale, currency, desc);
+		
+		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
 		

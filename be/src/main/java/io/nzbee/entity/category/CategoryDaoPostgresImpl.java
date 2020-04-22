@@ -20,6 +20,9 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.hibernate.Session;
+import org.mockito.internal.util.StringUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -33,6 +36,8 @@ import io.nzbee.variables.ProductVars;
 
 @Component(value="categoryEntityPostgresDao")
 public class CategoryDaoPostgresImpl implements ICategoryDao {
+	
+	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
@@ -40,6 +45,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 
 	@Override
 	public <T> List<Category> findByCodeAndType(String locale, String currency, Class<T> cls) {
+		LOGGER.debug("call CategoryDaoPostgresImpl.findByCodeAndType parameters : {}, {}, {}", locale, currency, cls.getSimpleName());
 		
 		Session session = em.unwrap(Session.class);
 		
@@ -67,6 +73,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	
 	@Override
 	public List<Category> findAll(String locale, String currency) {
+		LOGGER.debug("call CategoryDaoPostgresImpl.findAll parameters : {}, {}", locale, currency);
 		
 		Session session = em.unwrap(Session.class);
 		
@@ -90,6 +97,8 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 
 	@Override
 	public List<Category> findAll(String locale, String currency, Set<String> categoryCodes) {
+		
+		LOGGER.debug("call CategoryDaoPostgresImpl.findAll parameters : {}, {}, {}", locale, currency, StringUtil.join(categoryCodes, ','));
 		
 		Session session = em.unwrap(Session.class);
 
@@ -117,7 +126,10 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	
 	@Override
 	public Optional<Category> findById(String locale, String currency, long id) {
+		LOGGER.debug("call CategoryDaoPostgresImpl.findById parameters : {}, {}, {}", locale, currency, id);
+		
 		Session session = em.unwrap(Session.class);
+		
 		final List<String> categoryCodes = new ArrayList<String>();
 		
 		Query query = session.createNativeQuery(constructSQL(!categoryCodes.isEmpty(),
@@ -151,7 +163,10 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	@Override
 	public Optional<Category> findByDesc(String locale, String currency, String desc) {
 		
+		LOGGER.debug("call CategoryDaoPostgresImpl.findByDesc parameters : {}, {}, {}", locale, currency, desc);
+		
 		Session session = em.unwrap(Session.class);
+		
 		final List<String> categoryCodes = new ArrayList<String>();
 		
 		Query query = session.createNativeQuery(constructSQL(!categoryCodes.isEmpty(),
@@ -186,8 +201,12 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	@Override
 	public Optional<Category> findByCode(String locale, String currency, String code) {
 		
+		LOGGER.debug("call CategoryDaoPostgresImpl.findByCode parameters : {}, {}, {}", locale, currency, code);
+		
 		Session session = em.unwrap(Session.class);
+		
 		final List<String> categoryCodes = new ArrayList<String>();
+		
 		categoryCodes.add(code);
 		
 		Query query = session.createNativeQuery(constructSQL(!categoryCodes.isEmpty(),
@@ -220,6 +239,8 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 
 	@Override
 	public List<Category> findByParent(String parentCategoryCode, String locale) {
+		LOGGER.debug("call CategoryDaoPostgresImpl.findByParent parameters : {}, {}", parentCategoryCode, locale);
+		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
@@ -249,6 +270,8 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	
 	@Override
 	public List<Category> findByLevel(String locale, Long level) {
+		LOGGER.debug("call CategoryDaoPostgresImpl.findByLevel parameters : {}, {}", locale, level);
+		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
