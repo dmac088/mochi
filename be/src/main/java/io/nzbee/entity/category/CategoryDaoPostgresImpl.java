@@ -137,13 +137,15 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 			query.setParameter("categoryCodes", categoryCodes);
 		}
 
-		
-		
-		Object[] c = (Object[])query.getSingleResult();
-		
-		Category category = this.objectToEntity(c, locale, currency);
-		
-		return Optional.ofNullable(category);
+		try {
+			Object[] c = (Object[])query.getSingleResult();
+			
+			Category category = this.objectToEntity(c, locale, currency);
+			return Optional.ofNullable(category);
+		} 
+		catch(NoResultException nre) {
+			return Optional.empty();
+		}
 	}
 	
 	@Override
@@ -169,11 +171,15 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 			query.setParameter("categoryCodes", categoryCodes);
 		}
 
-		Object[] c = (Object[])query.getSingleResult();
-		
-		Category category = this.objectToEntity(c, locale, currency);
-		
-		return Optional.ofNullable(category);
+		try {
+			Object[] c = (Object[])query.getSingleResult();
+			
+			Category category = this.objectToEntity(c, locale, currency);
+			return Optional.ofNullable(category);
+		} 
+		catch(NoResultException nre) {
+			return Optional.empty();
+		}
 
 	}
 
@@ -212,7 +218,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	}
 	
 
-	
 	@Override
 	public List<Category> findByParent(String parentCategoryCode, String locale) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
