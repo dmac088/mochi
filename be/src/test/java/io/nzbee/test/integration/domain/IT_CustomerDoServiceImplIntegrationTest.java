@@ -1,11 +1,13 @@
 package io.nzbee.test.integration.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
@@ -74,24 +76,26 @@ public class IT_CustomerDoServiceImplIntegrationTest {
 		login("admin", "admin1234");
 		
 		// when
-		Customer found = customerService.findByUsername("dmac088").get();
+		Optional<Customer> found = customerService.findByUsername("tst088");
 
 		// then
 		assertFound(found);
 	}
 
-	private void assertFound(final Customer found) {
+	private void assertFound(final Optional<Customer> found) {
 
-		assertThat(found).isNotNull();
+		assertTrue(found.isPresent());
 		
-		assertThat(found.getGivenName())
-	    .isEqualTo("Daniel");
+		assertThat(found.get()).isNotNull();
 		
-		assertThat(found.getFamilyName())
-	    .isEqualTo("Mackie");
+		assertThat(found.get().getGivenName())
+	    .isEqualTo("test given name");
 		
-		assertThat(found.getCustomerID())
-	    .isEqualTo("1000000070");
+		assertThat(found.get().getFamilyName())
+	    .isEqualTo("test family name");
+		
+		assertThat(found.get().getCustomerID())
+	    .isEqualTo("123456789");
 		
 //		assertThat(found.getUserName())
 //	    .isEqualTo("dmac088");

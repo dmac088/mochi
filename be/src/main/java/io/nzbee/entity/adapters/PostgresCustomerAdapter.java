@@ -23,7 +23,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	
 	@Override
 	public Optional<Customer> findByUsername(String userName) {
-		return Optional.ofNullable(personMapper.entityToDo(personService.findByUsernameAndRole(userName, Customer.class).get()));
+		return personMapper.entityToDo(personService.findByUsernameAndRole(userName, io.nzbee.entity.role.customer.Customer.class));
 	}
 
 	@Override
