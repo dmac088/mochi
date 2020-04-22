@@ -113,6 +113,13 @@ public class IT_PartyEntityRepositoryIntegrationTest {
 	    .isEqualTo("Test Given Name");
 	    assertThat(((Person) found).getFamilyName())
 	    .isEqualTo("Test Family Name");
+	    assertThat(((Person) found).getPartyUser().getUsername())
+	    .isEqualTo("mackdad");
+	    assertThat(((Person) found).getPartyUser().getUserRoles().stream().findFirst().get().getName())
+	    .isEqualTo("Customer");
+	    assertThat(((Customer)(((Person) found).getPartyRoles().stream().findFirst().get())).getCustomerNumber())
+	    .isEqualTo("9832145731");
+	    
     }
 	
     
