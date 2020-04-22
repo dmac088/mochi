@@ -60,9 +60,6 @@ public class IT_PartyEntityRepositoryIntegrationTest {
 		//the beans that we need to run this integration test
 
 	}
-    
-	@Autowired
-    private AuthenticationManager am;
 	
 	//ensure the mochiEntityManagerFactory not the security EM
 	@Autowired
@@ -86,11 +83,6 @@ public class IT_PartyEntityRepositoryIntegrationTest {
    	    entityManager.flush();
    	    entityManager.close();
    
-    }
-    
-    protected void login(String name, String password) {
-        Authentication auth = new UsernamePasswordAuthenticationToken(name, password);
-        SecurityContextHolder.getContext().setAuthentication(am.authenticate(auth));
     }
 	
     //as long as the admin account can fetch the new user, we know that it was persisted properly by hibernate
