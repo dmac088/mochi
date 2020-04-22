@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -76,7 +77,13 @@ public class PersonDaoImpl implements IPersonDao {
 		
 		TypedQuery<Person> query = em.createQuery(cq);
 		
-		return Optional.ofNullable(query.getSingleResult());
+		try {
+			Person p = query.getSingleResult();
+			return Optional.ofNullable(p);
+		} 
+		catch(NoResultException nre) {
+			return Optional.empty();
+		}
 	}
 	
 	@Override

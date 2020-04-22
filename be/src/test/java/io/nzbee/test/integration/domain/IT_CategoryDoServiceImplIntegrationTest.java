@@ -38,7 +38,9 @@ public class IT_CategoryDoServiceImplIntegrationTest {
 	private void assertFound(final Set<Category> found) {
 
 		assertThat(found).isNotNull();
+		
 		assertThat(found).size().isEqualTo(43);
+		
 	}
 
 }
