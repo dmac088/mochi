@@ -143,4 +143,10 @@ public class CategoryProductDaoImpl implements ICategoryProductDao {
 		return null;
 	}
 
+	@Override
+	public CategoryProduct objectToEntity(Tuple t, String locale, String currency) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

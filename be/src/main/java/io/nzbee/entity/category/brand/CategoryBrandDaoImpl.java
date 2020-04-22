@@ -143,4 +143,10 @@ public class CategoryBrandDaoImpl implements ICategoryBrandDao {
 		return null;
 	}
 
+	@Override
+	public CategoryBrand objectToEntity(Tuple t, String locale, String currency) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
