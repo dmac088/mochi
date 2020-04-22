@@ -2,8 +2,8 @@ package io.nzbee.test.integration.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +23,6 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.transaction.AfterTransaction;
-import org.springframework.test.context.transaction.BeforeTransaction;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionTemplate;
 import io.nzbee.entity.party.Party;
 import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.Person;
@@ -64,11 +59,7 @@ public class IT_PartyEntityRepositoryIntegrationTest {
     static class PartyServiceImplIntegrationTestConfiguration {
 		//the beans that we need to run this integration test
 
-    }
-	
-	@Autowired
-	@Qualifier(value="mochiTransactionManager")
-	private PlatformTransactionManager txManager;
+	}
     
 	@Autowired
     private AuthenticationManager am;
@@ -84,46 +75,29 @@ public class IT_PartyEntityRepositoryIntegrationTest {
 	@Autowired
 	private PartyEntityBeanFactory partyEntityBeanFactory;
 	
-	private io.nzbee.entity.party.Party customer = null;
-	
-	@BeforeTransaction
+
+	@Before
     public void setUp() { 
-    	new TransactionTemplate(txManager).execute(status -> {
 
-    		customer = partyEntityBeanFactory.getCustomerEntityBean();
+		io.nzbee.entity.party.Party customer = partyEntityBeanFactory.getCustomerEntityBean();
 	    	
-    	    //persist a new transient test category
-    	    entityManager.persist(customer);
-    	    entityManager.flush();
-    	    entityManager.close();
-
-            return null;
-        });
+   	    //persist a new transient test category
+   	    entityManager.persist(customer);
+   	    entityManager.flush();
+   	    entityManager.close();
+   
     }
-	
-	@AfterTransaction
-	public void cleanUp() {
-	    new TransactionTemplate(txManager).execute(status -> {
-	        // Check if the entity is managed by EntityManager.
-	        // If not, make it managed with merge() and remove it.
-	    	entityManager.remove(entityManager.contains(customer) ? customer : entityManager.merge(customer));
-	        return null;
-	    });
-	}
     
     protected void login(String name, String password) {
         Authentication auth = new UsernamePasswordAuthenticationToken(name, password);
         SecurityContextHolder.getContext().setAuthentication(am.authenticate(auth));
     }
-    
 	
+    //as long as the admin account can fetch the new user, we know that it was persisted properly by hibernate
 	@Test
-	@Transactional
-	@WithUserDetails(value = "mackdad")
+	@WithUserDetails(value = "admin")
     public void whenFindByUsernameAndRole_thenReturnParty() {
-		 
-		//login("mackdad", "mackdad1234");
-	    
+		
 		// when
 	    Party found = personService.findByUsernameAndRole("mackdad", Customer.class).get();
      
