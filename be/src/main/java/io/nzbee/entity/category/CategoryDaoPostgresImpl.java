@@ -56,35 +56,12 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
 				 .setParameter("typeDiscriminator", Long.parseLong(cls.getAnnotation(DiscriminatorValue.class).value()));
 		
+		
+		
 		@SuppressWarnings("unchecked")
 		List<Object[]> results = query.getResultList();
 		
-		return results.stream().map(c -> {
-			Category category = (Category) c[0];
-			category.setCategoryAttribute(((CategoryAttribute) c[1]));
-			category.setCategoryType((CategoryType) c[2]);
-			category.setObjectCount(((BigDecimal)c[6]).intValue());
-			category.setChildCount(((BigInteger)c[7]).longValue());
-			category.setCategoryLayouts((((String)c[8]) != null)
-										? ((String)c[8]).split(",", -1)
-										: new String[0]);
-			category.setLocale(locale);
-			category.setCurrency(currency);
-			
-			//if c[4] is null then the category does not have a parent
-			if(category instanceof CategoryProduct) {
-				((CategoryProduct) category).setHasParent(c[3] != null);
-				if(((CategoryProduct) category).hasParent()) {
-					//we have a parent
-					Category parentCategory = (Category) c[3];
-					parentCategory.setCategoryAttribute(((CategoryAttribute) c[4]));
-					parentCategory.setCategoryType((CategoryType) c[5]);
-					category.setParent(parentCategory);
-				}
-			}
-			
-			return category;
-		}).collect(Collectors.toList());
+		return results.stream().map(c -> this.objectToEntity(c, locale, currency)).collect(Collectors.toList());
 	}
 	
 	
@@ -108,32 +85,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		@SuppressWarnings("unchecked")
 		List<Object[]> results = query.getResultList();
 		
-		return results.stream().map(c -> {
-			Category category = (Category) c[0];
-			category.setCategoryAttribute(((CategoryAttribute) c[1]));
-			category.setCategoryType((CategoryType) c[2]);
-			category.setObjectCount(((BigDecimal)c[6]).intValue());
-			category.setChildCount(((BigInteger)c[7]).longValue());
-			category.setCategoryLayouts((((String)c[8]) != null)
-										? ((String)c[8]).split(",", -1)
-										: new String[0]);
-			category.setLocale(locale);
-			category.setCurrency(currency);
-			
-			//if c[4] is null then the category does not have a parent
-			if(category instanceof CategoryProduct) {
-				((CategoryProduct) category).setHasParent(c[3] != null);
-				if(((CategoryProduct) category).hasParent()) {
-					//we have a parent
-					Category parentCategory = (Category) c[3];
-					parentCategory.setCategoryAttribute(((CategoryAttribute) c[4]));
-					parentCategory.setCategoryType((CategoryType) c[5]);
-					category.setParent(parentCategory);
-				}
-			}
-			
-			return category;
-		}).collect(Collectors.toList());
+		return results.stream().map(c -> this.objectToEntity(c, locale, currency)).collect(Collectors.toList());
 	}
 
 	@Override
