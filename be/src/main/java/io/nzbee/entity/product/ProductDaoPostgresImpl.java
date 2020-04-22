@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.Tuple;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -67,11 +68,15 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		.setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
 		.setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE);
 		
-		Object[] p = (Object[])query.getSingleResult();
-		
-		Product product = this.objectToEntity(p, locale, currency);
-		
-		return Optional.ofNullable(product);
+		try {
+			Object[] p = (Object[])query.getSingleResult();
+			
+			Product product = this.objectToEntity(p, locale, currency);
+			return Optional.ofNullable(product);
+		} 
+		catch(NoResultException nre) {
+			return Optional.empty();
+		}
 	}
 	
 	@Override
@@ -101,11 +106,15 @@ public class ProductDaoPostgresImpl implements IProductDao {
 			query.setParameter("productCodes", productCodes);
 		}
 
-		Object[] p = (Object[])query.getSingleResult();
-		
-		Product product = this.objectToEntity(p, locale, currency);
-		
-		return Optional.ofNullable(product);
+		try {
+			Object[] p = (Object[])query.getSingleResult();
+			
+			Product product = this.objectToEntity(p, locale, currency);
+			return Optional.ofNullable(product);
+		} 
+		catch(NoResultException nre) {
+			return Optional.empty();
+		}
 	}
 	
 	@Override
@@ -130,11 +139,15 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		.setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE);
 		
 
-		Object[] p = (Object[])query.getSingleResult();
-		
-		Product product = this.objectToEntity(p, locale, currency);
-		
-		return Optional.ofNullable(product);
+		try {
+			Object[] p = (Object[])query.getSingleResult();
+			
+			Product product = this.objectToEntity(p, locale, currency);
+			return Optional.ofNullable(product);
+		} 
+		catch(NoResultException nre) {
+			return Optional.empty();
+		}
 	}
 	
 	@Override
@@ -235,12 +248,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		List<Object[]> results = query.getResultList();
 		
 		List<Product> lp = 
-		results.stream().map(p -> {
-			
-			Product product = this.objectToEntity(p, locale, currency);
-			
-			return product;
-		}).collect(Collectors.toList());
+				results.stream().map(p -> this.objectToEntity(p, locale, currency)).collect(Collectors.toList());
 		
 		return new PageImpl<Product>(lp, pageable, total);
 	}

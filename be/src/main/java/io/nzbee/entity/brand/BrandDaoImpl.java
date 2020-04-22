@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -62,9 +63,15 @@ public class BrandDaoImpl  implements IBrandDao {
 		
 		TypedQuery<Tuple> query = em.createQuery(cq);
 		
-		Tuple tuple = query.getSingleResult();
-		
-		return Optional.ofNullable(this.objectToEntity(tuple, locale, currency));
+		try {
+			Tuple tuple = query.getSingleResult();
+			
+			Brand brand = this.objectToEntity(tuple, locale, currency);
+			return Optional.ofNullable(brand);
+		} 
+		catch(NoResultException nre) {
+			return Optional.empty();
+		}
 	}
 	
 	@Override
@@ -90,9 +97,15 @@ public class BrandDaoImpl  implements IBrandDao {
 		
 		TypedQuery<Tuple> query = em.createQuery(cq);
 		
-		Tuple tuple = query.getSingleResult();
-		
-		return Optional.ofNullable(this.objectToEntity(tuple, locale, currency));
+		try {
+			Tuple tuple = query.getSingleResult();
+			
+			Brand brand = this.objectToEntity(tuple, locale, currency);
+			return Optional.ofNullable(brand);
+		} 
+		catch(NoResultException nre) {
+			return Optional.empty();
+		}
 	}
 
 	
@@ -119,9 +132,15 @@ public class BrandDaoImpl  implements IBrandDao {
 		
 		TypedQuery<Tuple> query = em.createQuery(cq);
 		
-		Tuple tuple = query.getSingleResult();
-		
-		return Optional.ofNullable(this.objectToEntity(tuple, locale, currency));
+		try {
+			Tuple tuple = query.getSingleResult();
+			
+			Brand brand = this.objectToEntity(tuple, locale, currency);
+			return Optional.ofNullable(brand);
+		} 
+		catch(NoResultException nre) {
+			return Optional.empty();
+		}
 	}
 	
 	@Override

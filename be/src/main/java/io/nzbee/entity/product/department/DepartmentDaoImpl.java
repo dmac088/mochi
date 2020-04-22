@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -60,23 +61,15 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 		
 		TypedQuery<Tuple> query = em.createQuery(cq);
 		
-		Tuple tuple = query.getSingleResult();
-		
-		Department departmentEntity = new Department();
-		DepartmentAttribute departmentAttribute = new DepartmentAttribute();
-		
-		departmentAttribute.setId(Long.parseLong(tuple.get("departmentAttributeId").toString()));
-		departmentAttribute.setDepartment(departmentEntity);
-		departmentAttribute.setDesc(tuple.get("departmentDesc").toString());
-		departmentAttribute.setLclCd(locale);
-		
-		departmentEntity.getAttributes().add(departmentAttribute);
-		departmentEntity.setId(Long.parseLong(tuple.get("departmentId").toString()));
-		departmentEntity.setDepartmentCode(tuple.get("departmentCode").toString());
-		departmentEntity.setLocale(locale);
-		departmentEntity.setCurrency(currency);
-
-		return Optional.ofNullable(departmentEntity);
+		try {
+			Tuple tuple = query.getSingleResult();
+			
+			Department department = this.objectToEntity(tuple, locale, currency);
+			return Optional.ofNullable(department);
+		} 
+		catch(NoResultException nre) {
+			return Optional.empty();
+		}
 	}
 	
 	@Override
@@ -102,23 +95,15 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 		
 		TypedQuery<Tuple> query = em.createQuery(cq);
 		
-		Tuple tuple = query.getSingleResult();
-		
-		Department departmentEntity = new Department();
-		DepartmentAttribute departmentAttribute = new DepartmentAttribute();
-		
-		departmentAttribute.setId(Long.parseLong(tuple.get("departmentAttributeId").toString()));
-		departmentAttribute.setDepartment(departmentEntity);
-		departmentAttribute.setDesc(tuple.get("departmentDesc").toString());
-		departmentAttribute.setLclCd(locale);
-		
-		departmentEntity.getAttributes().add(departmentAttribute);
-		departmentEntity.setId(Long.parseLong(tuple.get("departmentId").toString()));
-		departmentEntity.setDepartmentCode(tuple.get("departmentCode").toString());
-		departmentEntity.setLocale(locale);
-		departmentEntity.setCurrency(currency);
-
-		return Optional.ofNullable(departmentEntity);
+		try {
+			Tuple tuple = query.getSingleResult();
+			
+			Department department = this.objectToEntity(tuple, locale, currency);
+			return Optional.ofNullable(department);
+		} 
+		catch(NoResultException nre) {
+			return Optional.empty();
+		}
 	}
 
 	
@@ -145,23 +130,15 @@ CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		TypedQuery<Tuple> query = em.createQuery(cq);
 		
-		Tuple tuple = query.getSingleResult();
-		
-		Department departmentEntity = new Department();
-		DepartmentAttribute departmentAttribute = new DepartmentAttribute();
-		
-		departmentAttribute.setId(Long.parseLong(tuple.get("departmentAttributeId").toString()));
-		departmentAttribute.setDepartment(departmentEntity);
-		departmentAttribute.setDesc(tuple.get("departmentDesc").toString());
-		departmentAttribute.setLclCd(locale);
-		
-		departmentEntity.getAttributes().add(departmentAttribute);
-		departmentEntity.setId(Long.parseLong(tuple.get("departmentId").toString()));
-		departmentEntity.setDepartmentCode(tuple.get("departmentCode").toString());
-		departmentEntity.setLocale(locale);
-		departmentEntity.setCurrency(currency);
-
-		return Optional.ofNullable(departmentEntity);
+		try {
+			Tuple tuple = query.getSingleResult();
+			
+			Department department = this.objectToEntity(tuple, locale, currency);
+			return Optional.ofNullable(department);
+		} 
+		catch(NoResultException nre) {
+			return Optional.empty();
+		}
 	}
 	
 
@@ -192,8 +169,20 @@ CriteriaBuilder cb = em.getCriteriaBuilder();
 
 	@Override
 	public Department objectToEntity(Tuple t, String locale, String currency) {
-		// TODO Auto-generated method stub
-		return null;
+		Department departmentEntity = new Department();
+		DepartmentAttribute departmentAttribute = new DepartmentAttribute();
+		
+		departmentAttribute.setId(Long.parseLong(t.get("departmentAttributeId").toString()));
+		departmentAttribute.setDepartment(departmentEntity);
+		departmentAttribute.setDesc(t.get("departmentDesc").toString());
+		departmentAttribute.setLclCd(locale);
+		
+		departmentEntity.getAttributes().add(departmentAttribute);
+		departmentEntity.setId(Long.parseLong(t.get("departmentId").toString()));
+		departmentEntity.setDepartmentCode(t.get("departmentCode").toString());
+		departmentEntity.setLocale(locale);
+		departmentEntity.setCurrency(currency);
+		return departmentEntity;
 	}
 
 }
