@@ -1,6 +1,10 @@
 package io.nzbee.test.integration.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import org.junit.After;
 import org.junit.Before;
@@ -19,6 +23,8 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
+import io.nzbee.entity.category.product.CategoryProduct;
+import io.nzbee.entity.category.product.ICategoryProductService;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.food.Food;
@@ -64,6 +70,9 @@ public class IT_ProductEntityRepositoryIntegrationTest {
  
     @Autowired
     private IProductService productService;
+
+    @Autowired
+    private ICategoryProductService productCategoryService;
     
     private Product product = null;
     
@@ -115,6 +124,18 @@ public class IT_ProductEntityRepositoryIntegrationTest {
         // then
     	assertFound(found);
 	}
+	
+	@Test
+    public void whenFindByProductCode_thenReturnProductCategories() {
+    	
+        // when
+    	List<CategoryProduct> found = productCategoryService.findAllByProductCode(GeneralVars.LANGUAGE_ENGLISH, 
+				 													 GeneralVars.CURRENCY_USD, 
+				 													"123456789");
+     
+        //then
+    	assertTrue(found.size() == 1);
+    }
 	 
     private void assertFound(final Product found) {
     	assertThat(found.getUPC())
