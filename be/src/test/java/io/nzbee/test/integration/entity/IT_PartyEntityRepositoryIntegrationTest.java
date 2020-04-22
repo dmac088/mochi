@@ -1,10 +1,9 @@
 package io.nzbee.test.integration.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import java.util.List;
+
+import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +16,20 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
-import io.nzbee.entity.party.IPartyService;
+import org.springframework.test.context.transaction.AfterTransaction;
+import org.springframework.test.context.transaction.BeforeTransaction;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
 import io.nzbee.entity.party.Party;
+import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.Person;
 import io.nzbee.entity.role.customer.Customer;
 import io.nzbee.test.integration.beans.PartyEntityBeanFactory;
@@ -60,6 +65,10 @@ public class IT_PartyEntityRepositoryIntegrationTest {
 		//the beans that we need to run this integration test
 
     }
+	
+	@Autowired
+	@Qualifier(value="mochiTransactionManager")
+	private PlatformTransactionManager txManager;
     
 	@Autowired
     private AuthenticationManager am;
@@ -70,64 +79,59 @@ public class IT_PartyEntityRepositoryIntegrationTest {
 	private EntityManager entityManager;
 	
 	@Autowired
-    private IPartyService partyService;
+    private IPersonService personService;
 	
 	@Autowired
 	private PartyEntityBeanFactory partyEntityBeanFactory;
 	
 	private io.nzbee.entity.party.Party customer = null;
 	
-    @Before
+	@BeforeTransaction
     public void setUp() { 
-    	this.persistNewCustomer();
+    	new TransactionTemplate(txManager).execute(status -> {
+
+    		customer = partyEntityBeanFactory.getCustomerEntityBean();
+	    	
+    	    //persist a new transient test category
+    	    entityManager.persist(customer);
+    	    entityManager.flush();
+    	    entityManager.close();
+
+            return null;
+        });
     }
-    
-    @After
-    public void clear() {
-        SecurityContextHolder.clearContext();
-    	entityManager.close();
-    }
+	
+	@AfterTransaction
+	public void cleanUp() {
+	    new TransactionTemplate(txManager).execute(status -> {
+	        // Check if the entity is managed by EntityManager.
+	        // If not, make it managed with merge() and remove it.
+	    	entityManager.remove(entityManager.contains(customer) ? customer : entityManager.merge(customer));
+	        return null;
+	    });
+	}
     
     protected void login(String name, String password) {
         Authentication auth = new UsernamePasswordAuthenticationToken(name, password);
         SecurityContextHolder.getContext().setAuthentication(am.authenticate(auth));
     }
     
-	private Party persistNewCustomer() {
-    	
-		customer = partyEntityBeanFactory.getCustomerEntityBean();
-	    	
-	    //persist a new transient test category
-	    entityManager.persist(customer);
-	    entityManager.flush();
-	    entityManager.close();
-	    	
-	    return customer;
-	}
-	
 	
 	@Test
-    public void whenFindById_thenReturnParty() {
-		login("admin", "admin1234");
-		
-        // when
-    	Party found = partyService.findById(customer.getPartyId()).get();
+	@Transactional
+	@WithUserDetails(value = "mackdad")
+    public void whenFindByUsernameAndRole_thenReturnParty() {
+		 
+		//login("mackdad", "mackdad1234");
+	    
+		// when
+	    Party found = personService.findByUsernameAndRole("mackdad", Customer.class).get();
      
-        // then
-    	assertFound(found);
+	    // then
+	    assertFound(found);
+	    	
     }
 
-	
-	@Test
-    public void whenFindByRoleName_thenReturnAllParties() {
-		login("admin", "admin1234");
-        // when
-    	List<Party> found = partyService.findByRoleType(Customer.class);
-     
-        // then
-    	found.stream().filter(f -> f.getPartyId().equals(customer.getPartyId())).forEach(p -> assertFound(p));
-    	
-    }
 	
     private void assertFound(final Party found) {
     	
