@@ -44,6 +44,7 @@ public class PartyEntityBeanFactory {
 		partyRole.setRoleParty(person);
 		
 		user.setUserParty(person);
+		person.addUser(user);
 		
 		return person;
 	}
