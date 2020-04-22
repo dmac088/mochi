@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import javax.persistence.Tuple;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -82,6 +84,12 @@ public class ProductAttributeServiceImpl implements IProductAttributeService {
 
 	@Override
 	public ProductAttribute objectToEntity(Object[] o, String locale, String currency) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ProductAttribute objectToEntity(Tuple t, String locale, String currency) {
 		// TODO Auto-generated method stub
 		return null;
 	}

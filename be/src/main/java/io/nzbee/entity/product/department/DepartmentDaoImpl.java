@@ -190,4 +190,10 @@ CriteriaBuilder cb = em.getCriteriaBuilder();
 		return null;
 	}
 
+	@Override
+	public Department objectToEntity(Tuple t, String locale, String currency) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

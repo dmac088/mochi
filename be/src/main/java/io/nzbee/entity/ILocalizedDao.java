@@ -3,6 +3,7 @@ package io.nzbee.entity;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import javax.persistence.Tuple;
 
 
 public interface ILocalizedDao<T> {
@@ -24,6 +25,8 @@ public interface ILocalizedDao<T> {
     void update(T t, String[] params);
      
     void delete(T t);
+
+	T objectToEntity(Tuple t, String locale, String currency);
 
 	
     

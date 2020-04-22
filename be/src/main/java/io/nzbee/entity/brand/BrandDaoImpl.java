@@ -64,21 +64,7 @@ public class BrandDaoImpl  implements IBrandDao {
 		
 		Tuple tuple = query.getSingleResult();
 		
-		Brand brandEntity = new Brand();
-		BrandAttribute brandAttribute = new BrandAttribute();
-		
-		brandAttribute.setId(Long.parseLong(tuple.get("brandAttributeId").toString()));
-		brandAttribute.setBrand(brandEntity);
-		brandAttribute.setBrandDesc(tuple.get("brandDesc").toString());
-		brandAttribute.setLclCd(locale);
-		
-		brandEntity.setBrandAttribute(brandAttribute);
-		brandEntity.setId(Long.parseLong(tuple.get("brandId").toString()));
-		brandEntity.setBrandCode(tuple.get("brandCode").toString());
-		brandEntity.setLocale(locale);
-		brandEntity.setCurrency(currency);
-
-		return Optional.ofNullable(brandEntity);
+		return Optional.ofNullable(this.objectToEntity(tuple, locale, currency));
 	}
 	
 	@Override
@@ -106,21 +92,7 @@ public class BrandDaoImpl  implements IBrandDao {
 		
 		Tuple tuple = query.getSingleResult();
 		
-		Brand brandEntity = new Brand();
-		BrandAttribute brandAttribute = new BrandAttribute();
-		
-		brandAttribute.setId(Long.parseLong(tuple.get("brandAttributeId").toString()));
-		brandAttribute.setBrand(brandEntity);
-		brandAttribute.setBrandDesc(tuple.get("brandDesc").toString());
-		brandAttribute.setLclCd(locale);
-		
-		brandEntity.setBrandAttribute(brandAttribute);
-		brandEntity.setId(Long.parseLong(tuple.get("brandId").toString()));
-		brandEntity.setBrandCode(tuple.get("brandCode").toString());
-		brandEntity.setLocale(locale);
-		brandEntity.setCurrency(currency);
-		
-		return Optional.ofNullable(brandEntity);
+		return Optional.ofNullable(this.objectToEntity(tuple, locale, currency));
 	}
 
 	
@@ -149,21 +121,7 @@ public class BrandDaoImpl  implements IBrandDao {
 		
 		Tuple tuple = query.getSingleResult();
 		
-		Brand brandEntity = new Brand();
-		BrandAttribute brandAttribute = new BrandAttribute();
-		
-		brandAttribute.setId(Long.parseLong(tuple.get("brandAttributeId").toString()));
-		brandAttribute.setBrand(brandEntity);
-		brandAttribute.setBrandDesc(tuple.get("brandDesc").toString());
-		brandAttribute.setLclCd(locale);
-		
-		brandEntity.setBrandAttribute(brandAttribute);
-		brandEntity.setId(Long.parseLong(tuple.get("brandId").toString()));
-		brandEntity.setBrandCode(tuple.get("brandCode").toString());
-		brandEntity.setLocale(locale);
-		brandEntity.setCurrency(currency);
-		
-		return Optional.ofNullable(brandEntity);
+		return Optional.ofNullable(this.objectToEntity(tuple, locale, currency));
 	}
 	
 	@Override
@@ -195,23 +153,7 @@ public class BrandDaoImpl  implements IBrandDao {
 		
 		List<Tuple> tuples = query.getResultList();
 		
-		return tuples.stream().map(t -> {
-			Brand brandEntity = new Brand();
-			BrandAttribute brandAttribute = new BrandAttribute();
-			
-			brandAttribute.setId(Long.parseLong(t.get("brandAttributeId").toString()));
-			brandAttribute.setBrand(brandEntity);
-			brandAttribute.setBrandDesc(t.get("brandDesc").toString());
-			brandAttribute.setLclCd(locale);
-			
-			brandEntity.setBrandAttribute(brandAttribute);
-			brandEntity.setId(Long.parseLong(t.get("brandId").toString()));
-			brandEntity.setBrandCode(t.get("brandCode").toString());
-			brandEntity.setLocale(locale);
-			brandEntity.setCurrency(currency);
-			
-			return brandEntity;
-		}).collect(Collectors.toList());
+		return tuples.stream().map(t -> this.objectToEntity(t, locale, currency)).collect(Collectors.toList());
 	}
 	
 	@Override
@@ -242,23 +184,7 @@ public class BrandDaoImpl  implements IBrandDao {
 		
 		List<Tuple> tuples = query.getResultList();
 		
-		return tuples.stream().map(t -> {
-			Brand brandEntity = new Brand();
-			BrandAttribute brandAttribute = new BrandAttribute();
-			
-			brandAttribute.setId(Long.parseLong(t.get("brandAttributeId").toString()));
-			brandAttribute.setBrand(brandEntity);
-			brandAttribute.setBrandDesc(t.get("brandDesc").toString());
-			brandAttribute.setLclCd(locale);
-			
-			brandEntity.setBrandAttribute(brandAttribute);
-			brandEntity.setId(Long.parseLong(t.get("brandId").toString()));
-			brandEntity.setBrandCode(t.get("brandCode").toString());
-			brandEntity.setLocale(locale);
-			brandEntity.setCurrency(currency);
-			
-			return brandEntity;
-		}).collect(Collectors.toList());
+		return tuples.stream().map(t -> this.objectToEntity(t, locale, currency)).collect(Collectors.toList());
 	}
 	
 	@Override
@@ -286,23 +212,7 @@ public class BrandDaoImpl  implements IBrandDao {
 		
 		List<Tuple> tuples = query.getResultList();
 		
-		return tuples.stream().map(t -> {
-			Brand brandEntity = new Brand();
-			BrandAttribute brandAttribute = new BrandAttribute();
-			
-			brandAttribute.setId(Long.parseLong(t.get("brandAttributeId").toString()));
-			brandAttribute.setBrand(brandEntity);
-			brandAttribute.setBrandDesc(t.get("brandDesc").toString());
-			brandAttribute.setLclCd(locale);
-			
-			brandEntity.setBrandAttribute(brandAttribute);
-			brandEntity.setId(Long.parseLong(t.get("brandId").toString()));
-			brandEntity.setBrandCode(t.get("brandCode").toString());
-			brandEntity.setLocale(locale);
-			brandEntity.setCurrency(currency);
-			
-			return brandEntity;
-		}).collect(Collectors.toList());
+		return tuples.stream().map(t -> this.objectToEntity(t, locale, currency)).collect(Collectors.toList());
 		
 	}
 	
@@ -338,6 +248,25 @@ public class BrandDaoImpl  implements IBrandDao {
 	}
 	
 	@Override
+	public Brand objectToEntity(Tuple t, String locale, String currency) {
+		Brand brandEntity = new Brand();
+		BrandAttribute brandAttribute = new BrandAttribute();
+		
+		brandAttribute.setId(Long.parseLong(t.get("brandAttributeId").toString()));
+		brandAttribute.setBrand(brandEntity);
+		brandAttribute.setBrandDesc(t.get("brandDesc").toString());
+		brandAttribute.setLclCd(locale);
+		
+		brandEntity.setBrandAttribute(brandAttribute);
+		brandEntity.setId(Long.parseLong(t.get("brandId").toString()));
+		brandEntity.setBrandCode(t.get("brandCode").toString());
+		brandEntity.setLocale(locale);
+		brandEntity.setCurrency(currency);
+		
+		return brandEntity;
+	}
+	
+	@Override
 	public void save(Brand t) {
 		em.persist(t);
 		em.flush();
@@ -360,6 +289,5 @@ public class BrandDaoImpl  implements IBrandDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
 
 }
