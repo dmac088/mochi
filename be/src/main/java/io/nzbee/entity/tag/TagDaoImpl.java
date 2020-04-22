@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -88,7 +89,13 @@ public class TagDaoImpl implements ITagDao {
 				.distinct(false)
 		);
 		
-		return Optional.ofNullable(query.getSingleResult());
+		try {
+			Tag tag = query.getSingleResult();
+			return Optional.ofNullable(tag);
+		} 
+		catch(NoResultException nre) {
+			return Optional.empty();
+		}
 	}
 
 	
@@ -112,7 +119,13 @@ public class TagDaoImpl implements ITagDao {
 				.distinct(false)
 		);
 		
-		return Optional.ofNullable(query.getSingleResult());
+		try {
+			Tag tag = query.getSingleResult();
+			return Optional.ofNullable(tag);
+		} 
+		catch(NoResultException nre) {
+			return Optional.empty();
+		}
 	}
 
 	@Override
@@ -167,7 +180,6 @@ public class TagDaoImpl implements ITagDao {
 
 	@Override
 	public List<Tag> findAll(String locale, String currency, Set<String> codes) {
-		// TODO Auto-generated method stub
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 				
 		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
@@ -194,23 +206,7 @@ public class TagDaoImpl implements ITagDao {
 				
 		List<Tuple> tuples = query.getResultList();
 				
-		return tuples.stream().map(t -> {
-			Tag tagEntity = new Tag();
-			TagAttribute tagAttribute = new TagAttribute();
-					
-			tagAttribute.setId(Long.parseLong(t.get("tagAttributeId").toString()));
-			tagAttribute.setTag(tagEntity);
-			tagAttribute.setTagDesc(t.get("tagDesc").toString());
-			tagAttribute.setLclCd(locale);
-					
-			tagEntity.addTagAttribute(tagAttribute);
-			tagEntity.setTagId(Long.parseLong(t.get("tagId").toString()));
-			tagEntity.setCode(t.get("tagCode").toString());
-			
-			tagEntity.setLocale(locale);
-			tagEntity.setCurrency(currency);
-			return tagEntity;
-		}).collect(Collectors.toList());
+		return tuples.stream().map(t -> this.objectToEntity(t, locale, currency)).collect(Collectors.toList());
 	}
 	
 	@Override
@@ -245,8 +241,21 @@ public class TagDaoImpl implements ITagDao {
 
 	@Override
 	public Tag objectToEntity(Tuple t, String locale, String currency) {
-		// TODO Auto-generated method stub
-		return null;
+		Tag tagEntity = new Tag();
+		TagAttribute tagAttribute = new TagAttribute();
+				
+		tagAttribute.setId(Long.parseLong(t.get("tagAttributeId").toString()));
+		tagAttribute.setTag(tagEntity);
+		tagAttribute.setTagDesc(t.get("tagDesc").toString());
+		tagAttribute.setLclCd(locale);
+				
+		tagEntity.addTagAttribute(tagAttribute);
+		tagEntity.setTagId(Long.parseLong(t.get("tagId").toString()));
+		tagEntity.setCode(t.get("tagCode").toString());
+		
+		tagEntity.setLocale(locale);
+		tagEntity.setCurrency(currency);
+		return tagEntity;
 	}
 
 
