@@ -14,6 +14,8 @@ import javax.persistence.Tuple;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Order;
+
+import org.apache.tomcat.util.buf.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +51,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 
 	@Override
 	public Optional<Product> findById(String locale, String currency, long id) {
-		LOGGER.debug("Fetching a product for parameters : {}, {}, {}", locale, currency, id);
+		LOGGER.debug("call ProductDaoPostgresImpl.findById parameters : {}, {}, {}", locale, currency, id);
 		
 		Query query = em.createNativeQuery(this.constructSQL(false,
 															 false,
@@ -81,7 +83,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	
 	@Override
 	public Optional<Product> findByCode(String locale, String currency, String code) {
-		LOGGER.debug("Fetching a product for parameters : {}, {}, {}", locale, currency, code);
+		LOGGER.debug("call ProductDaoPostgresImpl.findByCode with parameters : {}, {}, {}", locale, currency, code);
 		
 		final List<String> productCodes = new ArrayList<String>();
 		productCodes.add(code);
@@ -119,7 +121,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	
 	@Override
 	public Optional<Product> findByDesc(String locale, String currency, String desc) {
-		LOGGER.debug("Fetching a product for parameters : {}, {}, {}", locale, currency, desc);
+		LOGGER.debug("call ProductDaoPostgresImpl.findByDesc with parameters : {}, {}, {}", locale, currency, desc);
 		
 		Query query = em.createNativeQuery(this.constructSQL(false,
 															 true,
@@ -152,7 +154,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	
 	@Override
 	public List<Product> findAll(String locale, String currency) {
-		LOGGER.debug("Fetching products for parameters : {}, {}}", locale, currency);
+		LOGGER.debug("call ProductDaoPostgresImpl.findAll with parameters : {}, {}", locale, currency);
 		
 		List<String> categories = new ArrayList<String>();
 		categories.add(CategoryVars.PRIMARY_HIERARCHY_ROOT_CODE);
@@ -190,7 +192,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	public List<Product> findAll(	String locale, 
 									String currency, 
 									Set<String> codes) {
-		LOGGER.debug("Fetching a products for parameters : {}, {}, {}", locale, currency, codes);
+		LOGGER.debug("call ProductDaoPostgresImpl.findAll with parameters : {}, {}, {}", locale, currency, StringUtils.join(codes, ','));
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -201,7 +203,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 									String currency, 
 									Pageable pageable, 
 									String orderby) {
-		LOGGER.debug("Fetching products for parameters : {}, {}, {}, {}", locale, currency, pageable, orderby);
+		LOGGER.debug("call ProductDaoPostgresImpl.findAll with parameters : {}, {}, {}, {}", locale, currency, pageable, orderby);
 		
 		//first get the result count
 		Query query = em.createNativeQuery(this.constructSQL(false,
@@ -263,7 +265,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 									List<String> tagCodes, 
 									String orderby) {
 		
-		LOGGER.debug("Fetching products for parameters : {}, {}, {}, {}, {}, {}", locale, currency, pageable, categoryCode, brandCodes, tagCodes, orderby);
+		LOGGER.debug("call ProductDaoPostgresImpl.findAll with  parameters : {}, {}, {}, {}, {}, {}", locale, currency, pageable, categoryCode, brandCodes, tagCodes, orderby);
 		
 		//first get the result count
 		return this.findAll(locale, 

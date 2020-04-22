@@ -10,6 +10,9 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -21,6 +24,8 @@ import io.nzbee.entity.role.Role_;
 
 @Component(value="partyDao")
 public class PartyDaoImpl implements IPartyDao {
+	
+	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
@@ -29,9 +34,8 @@ public class PartyDaoImpl implements IPartyDao {
 	@Override
 	public List<Party> findAllByRoleName(String roleClassType) {
 		
-		System.out.println("the class type is = " + roleClassType);
+		LOGGER.debug("call PartyDaoImpl.findAllByRoleName parameters : {}", roleClassType);
 		
-		// TODO Auto-generated method stub
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Party> cq = cb.createQuery(Party.class);

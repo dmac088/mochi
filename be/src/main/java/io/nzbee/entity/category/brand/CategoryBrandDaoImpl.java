@@ -13,6 +13,9 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -27,12 +30,16 @@ import io.nzbee.entity.category.type.CategoryType_;
 @Service
 public class CategoryBrandDaoImpl implements ICategoryBrandDao {
 
+	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
+	
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
 	private EntityManager em;
 	
 	@Override
 	public List<CategoryBrand> findAllByBrandCode(String locale, String currency, String brandCode) {
+		LOGGER.debug("call CategoryBrandDaoImpl.findAllByBrandCode parameters : {}, {}, {}", locale, currency, brandCode);
+		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
