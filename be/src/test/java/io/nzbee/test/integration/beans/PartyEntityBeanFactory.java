@@ -36,9 +36,9 @@ public class PartyEntityBeanFactory {
 		person.setFamilyName("Test Family Name");
 		person.setGivenName("Test Given Name");
 
-		
 		final Customer partyRole = new Customer();
 		partyRole.setRoleStart(new Date());
+		partyRole.setCustomerNumber("9832145731");
 		
 		person.addRole(partyRole);
 		partyRole.setRoleParty(person);
