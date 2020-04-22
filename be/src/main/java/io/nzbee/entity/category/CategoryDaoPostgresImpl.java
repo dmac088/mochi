@@ -12,6 +12,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -137,6 +138,8 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 			query.setParameter("categoryCodes", categoryCodes);
 		}
 
+		
+		
 		Object[] c = (Object[])query.getSingleResult();
 		
 		Category category = this.objectToEntity(c, locale, currency);
@@ -659,6 +662,13 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				((!withChildren && hasCategoryId) ? 	" 	AND s.cat_id = :categoryId " : "");
 			
 		return sql;
+	}
+
+
+	@Override
+	public Category objectToEntity(Tuple t, String locale, String currency) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

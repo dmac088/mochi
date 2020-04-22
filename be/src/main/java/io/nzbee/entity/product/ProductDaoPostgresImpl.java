@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.Tuple;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Order;
@@ -677,6 +678,12 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		}
 		
 		return cb.asc(cb.lower(attributeJoin.get(ProductAttribute_.productDesc.getName())));
+	}
+
+	@Override
+	public Product objectToEntity(Tuple t, String locale, String currency) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 
