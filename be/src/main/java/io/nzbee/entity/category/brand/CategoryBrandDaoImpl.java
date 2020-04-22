@@ -67,26 +67,7 @@ public class CategoryBrandDaoImpl implements ICategoryBrandDao {
 		TypedQuery<Tuple> query = em.createQuery(cq);
 		List<Tuple> tuples = query.getResultList();
 		
-		return tuples.stream().map(t -> {
-
-			CategoryAttribute ca = new CategoryAttribute();
-			ca.setCategoryDesc(t.get("categoryDesc").toString());
-			ca.setLclCd(locale);
-			
-			CategoryType ct = new CategoryType();
-			ct.setCategoryTypeCode(t.get("categoryTypeCode").toString());
-			ct.setCategoryTypeDesc(t.get("categoryTypeDesc").toString());
-			
-			CategoryBrand cp = new CategoryBrand();
-			cp.setCategoryId(Long.parseLong(t.get("categoryId").toString()));
-			cp.setCategoryCode(t.get("categoryCode").toString());
-			cp.setLocale(locale);
-			cp.setCurrency(currency);
-			cp.setCategoryAttribute(ca);
-			cp.setCategoryType(ct);
-			
-			return cp; 
-		}).collect(Collectors.toList());
+		return tuples.stream().map(t -> this.objectToEntity(t, locale, currency)).collect(Collectors.toList());
 	}
 	
 	@Override
@@ -145,8 +126,23 @@ public class CategoryBrandDaoImpl implements ICategoryBrandDao {
 
 	@Override
 	public CategoryBrand objectToEntity(Tuple t, String locale, String currency) {
-		// TODO Auto-generated method stub
-		return null;
+		CategoryAttribute ca = new CategoryAttribute();
+		ca.setCategoryDesc(t.get("categoryDesc").toString());
+		ca.setLclCd(locale);
+		
+		CategoryType ct = new CategoryType();
+		ct.setCategoryTypeCode(t.get("categoryTypeCode").toString());
+		ct.setCategoryTypeDesc(t.get("categoryTypeDesc").toString());
+		
+		CategoryBrand cp = new CategoryBrand();
+		cp.setCategoryId(Long.parseLong(t.get("categoryId").toString()));
+		cp.setCategoryCode(t.get("categoryCode").toString());
+		cp.setLocale(locale);
+		cp.setCurrency(currency);
+		cp.setCategoryAttribute(ca);
+		cp.setCategoryType(ct);
+		
+		return cp; 
 	}
 
 }
