@@ -1,9 +1,7 @@
 package io.nzbee.test.integration.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import javax.persistence.EntityManager;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -65,6 +63,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
  
     @Autowired
     private ICategoryService categoryService;
+   
     
     private io.nzbee.entity.category.Category category = null;
     
@@ -110,6 +109,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
         // then
     	assertFound(found);
     }
+    
     @Test
     public void whenFindByDesc_thenReturnProductCategory() {
     	
@@ -122,9 +122,8 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     	assertFound(found);
     }
     
+  
     private void assertFound(final Category found) {
-    	
-    	System.out.println(found.getTypeDiscriminator());
     	
     	assertThat(found.getCategoryCode())
         .isEqualTo("TST02");
