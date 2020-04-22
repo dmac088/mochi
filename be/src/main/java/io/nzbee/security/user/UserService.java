@@ -12,8 +12,7 @@ public class UserService implements UserDetailsService {
     @Autowired
     private IUserRepository userRepository;
 
-    //@Override 
-    //@Transactional(readOnly = true)
+    @Override 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.loadUserByUsername(username);
 

@@ -2,30 +2,48 @@ package io.nzbee.test.integration.beans;
 
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import io.nzbee.entity.party.Party;
 import io.nzbee.entity.party.person.Person;
 import io.nzbee.entity.role.customer.Customer;
+import io.nzbee.security.user.User;
+import io.nzbee.security.user.role.IUserRoleService;
+import io.nzbee.security.user.role.UserRole;
 
 @Service(value = "partyEntityBeanFactory")
 @Profile(value = "dev")
 public class PartyEntityBeanFactory {
 
+	@Autowired
+	private IUserRoleService roleService;
+	
 	@Bean 
 	public final Party getCustomerEntityBean() {
+
+		UserRole ur = roleService.findByName("Customer");
+	
+		final User user = new User();
+		user.setEnabled(true);
+		user.setUsername("mackdad");
+		user.setPassword("mackdad1234");
+		user.getUserRoles().add(ur);
 		
 		final Person person = new Person();
 		
 		person.setFamilyName("Test Family Name");
 		person.setGivenName("Test Given Name");
 
+		
 		final Customer partyRole = new Customer();
 		partyRole.setRoleStart(new Date());
 		
 		person.addRole(partyRole);
 		partyRole.setRoleParty(person);
+		
+		user.setUserParty(person);
 		
 		return person;
 	}

@@ -66,7 +66,7 @@ public class User implements UserDetails, Serializable {
     @JoinTable(name = "USER_ROLE", schema="security", 
     		   joinColumns 			= @JoinColumn(name = "pty_id"), 
     		   inverseJoinColumns 	= @JoinColumn(name = "role_id"))
-    private Set<UserRole> roles = new HashSet<>();
+    private Set<UserRole> roles = new HashSet<UserRole>();
     
 	@Override
     public boolean isAccountNonExpired() {
