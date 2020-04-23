@@ -10,16 +10,20 @@ import io.nzbee.domain.ports.ICustomerPortService;
 import io.nzbee.entity.party.person.IPersonMapper;
 import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.Person;
+import io.nzbee.entity.role.IRoleTypeRepository;
 import io.nzbee.security.user.User;
 
 @Component
 public class PostgresCustomerAdapter implements ICustomerPortService {
 
 	@Autowired
-	IPersonService personService;
+	private IPersonService personService;
 	
 	@Autowired
-	IPersonMapper personMapper;
+	private IPersonMapper personMapper;
+	
+	@Autowired
+	private IRoleTypeRepository roleTypeRepository;
 	
 	@Override
 	public Optional<Customer> findByUsername(String userName) {
@@ -38,7 +42,11 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 		io.nzbee.entity.role.customer.Customer c = new io.nzbee.entity.role.customer.Customer();
 		c.setCustomerNumber(domainObject.getCustomerID());
 		c.setRoleStart(new Date());
-	
+		
+		
+		io.nzbee.entity.role.RoleType roleType = roleTypeRepository.findByRoleTypeDesc(io.nzbee.entity.role.customer.Customer.class.getSimpleName()).get();
+		c.setRoleType(roleType);
+		
 		Person p = new Person();
 		p.setGivenName(domainObject.getGivenName());
 		p.setFamilyName(domainObject.getFamilyName());

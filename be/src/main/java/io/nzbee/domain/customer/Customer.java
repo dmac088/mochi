@@ -40,6 +40,7 @@ public class Customer {
     				String customerId,
     				boolean isEnabled) {
     	
+    	this.userName = userName;
     	this.customerId = customerId;
     	this.givenName = givenName;
     	this.familyName = familyName;

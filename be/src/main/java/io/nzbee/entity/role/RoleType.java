@@ -12,7 +12,7 @@ public class RoleType {
 
 	@Id
 	@Column(name="rle_typ_id")
-	private Long RoleTypeId;
+	private Long roleTypeId;
 	
 	@Column(name="rle_typ_desc")
 	private String roleTypeDesc;
@@ -22,16 +22,16 @@ public class RoleType {
 	}
 
 	public RoleType(long roleTypeId) {
-		this.RoleTypeId = roleTypeId;
+		this.roleTypeId = roleTypeId;
 		// TODO Auto-generated constructor stub
 	}
 
-	public Long getRoleTypeId() {
-		return this.RoleTypeId;
+	public Long getId() {
+		return this.roleTypeId;
 	}
 
-	public void setRoleTypeId(Long roleTypeId) {
-		this.RoleTypeId = roleTypeId;
+	public void setId(Long roleTypeId) {
+		this.roleTypeId = roleTypeId;
 	}
 
 	public String getRoleTypeDesc() {

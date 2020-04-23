@@ -8,7 +8,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(RoleType.class)
 public abstract class RoleType_ {
 
-	public static volatile SingularAttribute<RoleType, Long> RoleTypeId;
+	public static volatile SingularAttribute<RoleType, Long> roleTypeId;
 	public static volatile SingularAttribute<RoleType, String> roleTypeDesc;
 
 }
