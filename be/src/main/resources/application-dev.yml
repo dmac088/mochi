@@ -1,0 +1,15 @@
+spring:
+  devtools:
+    restart:
+      enabled: false
+      exclude: data/downloads/**,target/**
+      
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-request-size: 215MB
+      max-file-size: 200MB
+  
+      
+ 
