@@ -160,11 +160,11 @@ public class PostgresProductAdapter implements IProductPortService {
 		Optional<ProductCategory> cdo = Optional.ofNullable((ProductCategory) categoryMapper.entityToDo(Optional.ofNullable(c), locale, currency).get());
 		
 		return productMapper.entityToDo(Optional.ofNullable(pe), bdo, ddo, cdo);
-
 	}
 
 	@Override
 	public Optional<Product> findByDesc(String locale, String currency, String desc) {
+		
 		io.nzbee.entity.product.Product pe = productService.findByDesc(locale, currency, desc).get();
 		io.nzbee.entity.brand.Brand be = pe.getBrand();
 		io.nzbee.entity.product.department.Department de = pe.getDepartment();

@@ -61,6 +61,10 @@ public class Department {
 		this.departmentId = id;
 	}
 	
+	public void setAttribute(DepartmentAttribute attribute) {
+		this.attribute = attribute;
+	}
+
 	public String getDepartmentCode() {
 		return departmentCode;
 	}

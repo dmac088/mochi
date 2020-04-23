@@ -56,6 +56,7 @@ import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.department.Department;
+import io.nzbee.entity.product.department.attribute.DepartmentAttribute;
 import io.nzbee.entity.product.price.ProductPrice;
 import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.entity.tag.Tag;
@@ -149,6 +150,14 @@ filters = {
 	                    	@FieldResult(name = "departmentId", 	column = "dept_id"),
 		                    @FieldResult(name = "departmentCode", 	column = "dept_cd"),
 		                    @FieldResult(name = "departmentClass", 	column = "dept_class")
+	                    }),
+	            @EntityResult(
+	                    entityClass = DepartmentAttribute.class,
+	                    fields = {
+	                    	@FieldResult(name = "Id", 				column = "dept_lcl_id"),
+		                    @FieldResult(name = "departmentDesc", 	column = "dept_desc"),
+		                    @FieldResult(name = "lclCd", 			column = "lcl_cd"),
+		                    @FieldResult(name = "department", 		column = "dept_id")
 	                    }),
 	            @EntityResult(
 	            		entityClass = CategoryProduct.class,
