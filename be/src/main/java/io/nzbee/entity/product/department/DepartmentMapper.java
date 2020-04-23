@@ -14,7 +14,7 @@ public class DepartmentMapper implements IDepartmentMapper {
 		io.nzbee.domain.department.Department dO = 
 				new io.nzbee.domain.department.Department(
 						de.getDepartmentCode(),
-						de.getAttribute(),
+						de.getAttribute().getDesc(),
 						locale, 
 						currency
 				);
