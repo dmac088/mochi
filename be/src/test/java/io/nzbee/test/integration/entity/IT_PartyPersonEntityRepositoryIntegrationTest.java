@@ -47,7 +47,7 @@ import io.nzbee.test.integration.beans.PartyEntityBeanFactory;
 			transactionManager = "securityTransactionManager",
 			transactionMode = TransactionMode.ISOLATED))
 })
-public class IT_PartyEntityRepositoryIntegrationTest {
+public class IT_PartyPersonEntityRepositoryIntegrationTest {
 
 	
 	@TestConfiguration
