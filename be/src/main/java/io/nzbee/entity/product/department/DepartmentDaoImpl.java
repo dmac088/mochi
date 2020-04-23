@@ -189,6 +189,7 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 		departmentAttribute.setDesc(t.get("departmentDesc").toString());
 		departmentAttribute.setLclCd(locale);
 		
+		departmentEntity.setAttribute(departmentAttribute);
 		departmentEntity.getAttributes().add(departmentAttribute);
 		departmentEntity.setId(Long.parseLong(t.get("departmentId").toString()));
 		departmentEntity.setDepartmentCode(t.get("departmentCode").toString());
