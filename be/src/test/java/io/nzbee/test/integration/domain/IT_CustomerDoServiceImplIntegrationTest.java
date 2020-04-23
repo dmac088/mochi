@@ -12,10 +12,9 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.test.context.support.WithUserDetails;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.domain.customer.Customer;
@@ -35,34 +34,17 @@ public class IT_CustomerDoServiceImplIntegrationTest {
     }
 
 	@Autowired
-    private AuthenticationManager am;
-	
-	@Autowired
 	private ICustomerService customerService;
 
 	@Autowired
 	private CustomerDoBeanFactory customerDoBeanFactory;
-	
-	Customer customer = null; 
 
-	public Customer persistNewCustomer() {
-		login("admin", "admin1234");
-		
-		customer = customerDoBeanFactory.getCustomerDoBean();
+	@Before
+	@WithUserDetails(value = "admin")
+	public void setUp() { 
+		Customer customer = customerDoBeanFactory.getCustomerDoBean();
 	    	
 		customerService.save(customer);
-	    	
-	    return customer;
-	}
-	
-	private void login(String name, String password) {
-		Authentication auth = new UsernamePasswordAuthenticationToken(name, password);
-	    SecurityContextHolder.getContext().setAuthentication(am.authenticate(auth));
-	}
-	
-	@Before
-	public void setUp() { 
-		this.persistNewCustomer();
 	}
 	
 	@After
@@ -71,8 +53,8 @@ public class IT_CustomerDoServiceImplIntegrationTest {
     }
 	
 	@Test
+	@WithUserDetails(value = "admin")
 	public void whenFindCustomerByUsername_thenReturnCustomer() {
-		login("admin", "admin1234");
 		
 		// when
 		Optional<Customer> found = customerService.findByUsername("tst088");
