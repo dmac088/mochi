@@ -1,0 +1,92 @@
+spring:
+  devtools:
+    restart:
+      enabled: false
+      exclude: data/downloads/**,target/**
+      
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-request-size: 215MB
+      max-file-size: 200MB
+      
+  profiles:
+    active: dev
+  
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        driver_class: org.postgresql.Driver    
+    
+  datasource:
+    mochi:
+      application: 
+        max-lifetime: 45000
+        maximum-pool-size: 20  
+        connection-timeout: 30000
+        minimum-idle: 0
+        url: jdbc:postgresql://localhost:5432/mochidb?currentSchema=mochi
+        username: mochi_app
+        password: password 
+        driver-class-name: org.postgresql.Driver
+      
+      owner:
+        max-lifetime: 45000
+        maximum-pool-size: 20  
+        connection-timeout: 30000
+        minimum-idle: 0
+        url: jdbc:postgresql://localhost:5432/mochidb?currentSchema=mochi
+        username: mochidb_owner
+        password: password 
+        driver-class-name: org.postgresql.Driver
+        
+    security: 
+     application:
+       max-lifetime: 45000
+       maximum-pool-size: 20  
+       connection-timeout: 30000
+       minimum-idle: 0
+       url: jdbc:postgresql://localhost:5432/mochidb?currentSchema=security
+       username: security_app
+       password: password 
+       driver-class-name: org.postgresql.Driver
+     
+     owner: 
+       max-lifetime: 45000
+       maximum-pool-size: 20  
+       connection-timeout: 30000
+       minimum-idle: 0
+       url: jdbc:postgresql://localhost:5432/mochidb?currentSchema=security
+       username: security_owner
+       password: password 
+       driver-class-name: org.postgresql.Driver  
+   
+logging:
+  level: 
+    org:
+      springframework:
+        web: ERROR
+      hibernate: WARN
+        
+    io:
+      nzbee: DEBUG
+      
+      
+file:
+  upload-dir: data/uploads/
+  download-dir: data/downloads/
+  product-master-file: product_master.csv
+
+server:
+  port: 8090
+  host: http://localhost
+  ssl:
+    key-store-type: PKCS12
+    key-store: classpath:mochi.p12
+    key-store-password: password
+    key-alias: mochi
+
+      
+ 
