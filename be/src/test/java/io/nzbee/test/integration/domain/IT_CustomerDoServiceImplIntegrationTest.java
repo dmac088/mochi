@@ -77,11 +77,9 @@ public class IT_CustomerDoServiceImplIntegrationTest {
 		assertThat(found.get().getCustomerID())
 	    .isEqualTo("123456789");
 		
-//		assertThat(found.getUserName())
-//	    .isEqualTo("dmac088");
+		assertThat(found.get().getUserName())
+	    .isEqualTo("tst088");
 		
-//		assertThat(found.getPassword())
-//	    .isEqualTo("admin1234");
 	}
 	
 }
