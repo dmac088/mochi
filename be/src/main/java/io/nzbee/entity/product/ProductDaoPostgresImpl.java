@@ -33,6 +33,7 @@ import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.attribute.ProductAttribute_;
 import io.nzbee.entity.product.department.Department;
+import io.nzbee.entity.product.department.attribute.DepartmentAttribute;
 import io.nzbee.entity.product.price.ProductPrice;
 import io.nzbee.entity.product.price.ProductPrice_;
 import io.nzbee.entity.product.status.ProductStatus;
@@ -364,37 +365,38 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	public Product objectToEntity(Object[] o, String locale, String currency) {
 		
 		Product product = (Product) o[0];
+		Department department = (Department) o[5];
+		DepartmentAttribute departmentAttribute = (DepartmentAttribute) o[6];
+		department.setAttribute(departmentAttribute);
 		
 		product.setProductStatus((ProductStatus) o[1]);
-		product.setDepartment((Department) o[5]);
-		
-		
+		product.setDepartment(department);
 		product.setProductAttribute((ProductAttribute) o[2]);
 		
 		Brand brand = (Brand) o[3];
 		product.setBrand(brand);
 		brand.setBrandAttribute((BrandAttribute) o[4]);
 		
-		CategoryProduct category = (CategoryProduct) o[6];
-		CategoryAttribute categoryAttribute = (CategoryAttribute) o[7];
+		CategoryProduct category = (CategoryProduct) o[7];
+		CategoryAttribute categoryAttribute = (CategoryAttribute) o[8];
 		categoryAttribute.setCategory(category);
 		category.setCategoryAttribute(categoryAttribute);
 		
 		product.setPrimaryCategory(category);
 
-		CategoryType categoryType = (CategoryType) o[8];
+		CategoryType categoryType = (CategoryType) o[9];
 		category.setCategoryType(categoryType);
 		
-		CategoryProduct parent = (CategoryProduct) o[9];
+		CategoryProduct parent = (CategoryProduct) o[10];
 		category.setParent(parent);
 		
-		product.setRetailPrice(((BigDecimal) o[10]).doubleValue());
-		product.setMarkdownPrice(((BigDecimal) o[11]).doubleValue());
+		product.setRetailPrice(((BigDecimal) o[11]).doubleValue());
+		product.setMarkdownPrice(((BigDecimal) o[12]).doubleValue());
 		
 		product.setLocale(locale);
 		product.setCurrency(currency);
-		product.setDisplayCategories(o[12].toString());
-		product.setImagePath(o[13].toString());
+		product.setDisplayCategories(o[13].toString());
+		product.setImagePath(o[14].toString());
 		
 		return product;
 	}
@@ -495,7 +497,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
 						"	   attr.lcl_cd, " +
 						"	   dept.dept_id,   " + 
 						"	   dept.dept_cd,   " + 
-						"	   dept.dept_class,   " + 
+						"	   dept.dept_class,   " +
+						"	   dattr.dept_lcl_id, " +	
+						"	   dattr.dept_desc,   " +
 						"	   bnd.bnd_id,   " + 
 						"	   bnd.bnd_cd,   " + 
 						"	   bal.bnd_lcl_id,		  " + 
@@ -538,6 +542,10 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		
 		"	INNER JOIN mochi.department dept   " + 
 		"	ON prd.dept_id = dept.dept_id   " + 
+		
+		"	INNER JOIN mochi.department_attr_lcl dattr   " + 
+		"	ON dept.dept_id = dattr.dept_id   " + 
+		"	AND dattr.lcl_cd = :locale " +
 			
 		"	INNER JOIN mochi.brand bnd   " + 
 		"	ON prd.bnd_id = bnd.bnd_id   " + 
@@ -636,6 +644,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 					"	   dept.dept_id,   " + 
 					"	   dept.dept_cd,   " + 
 					"	   dept.dept_class,   " + 
+					"	   dattr.dept_lcl_id, " +	
+					"	   dattr.dept_desc,   " +
 					"	   bnd.bnd_id,   " + 
 					"	   bnd.bnd_cd,   " + 
 					"	   bal.bnd_lcl_id,		  " + 
