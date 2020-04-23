@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -21,6 +22,13 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import io.nzbee.domain.category.CategoryServiceImpl;
+import io.nzbee.entity.adapters.PostgresCategoryAdapter;
+import io.nzbee.entity.category.CategoryMapper;
+import io.nzbee.entity.category.brand.CategoryBrandDaoImpl;
+import io.nzbee.entity.category.brand.CategoryBrandService;
+import io.nzbee.entity.category.product.CategoryProductDaoImpl;
+import io.nzbee.entity.category.product.CategoryProductService;
+import io.nzbee.resources.category.CategoryResourceAssembler;
 import io.nzbee.resources.controllers.CategoryController;
 import io.nzbee.security.WebSecurityConfig;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -29,6 +37,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 @AutoConfigureMockMvc(/*addFilters = false*/)
 @ContextConfiguration(classes = {CategoryController.class, 
 							     CategoryServiceImpl.class,
+							     PostgresCategoryAdapter.class,
+							     CategoryProductService.class,
+							     CategoryProductDaoImpl.class,
+							     CategoryBrandService.class,
+							     CategoryBrandDaoImpl.class,
+							     CategoryMapper.class,
+							     CategoryResourceAssembler.class,
+							     PagedResourcesAssembler.class,
 							     io.nzbee.domain.category.CategoryServiceImpl.class,
 							     io.nzbee.entity.category.CategoryServiceImpl.class,
 							     io.nzbee.entity.category.CategoryDaoPostgresImpl.class,
