@@ -91,6 +91,7 @@ public class IT_CategoryControllerIntegrationTest {
         
         String response = result.getResponse().getContentAsString();
         
+        System.out.println(response);
         
         assertNotNull(response);
        // assertEquals(dow, resultDOW);
@@ -111,6 +112,7 @@ public class IT_CategoryControllerIntegrationTest {
         
         String response = result.getResponse().getContentAsString();
         
+        System.out.println(response);
         
         assertNotNull(response);
        // assertEquals(dow, resultDOW);
