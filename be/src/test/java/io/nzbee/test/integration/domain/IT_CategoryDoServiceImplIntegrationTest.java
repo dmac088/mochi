@@ -12,8 +12,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.domain.category.ICategoryService;
+import io.nzbee.Globals;
 import io.nzbee.domain.category.Category;
-import io.nzbee.variables.GeneralVars;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -22,14 +22,17 @@ import io.nzbee.variables.GeneralVars;
 public class IT_CategoryDoServiceImplIntegrationTest {
 
 	@Autowired
+	private Globals globalVars;
+	
+	@Autowired
 	private ICategoryService categoryService;
 
 	@Test
 	public void whenFindAll_thenReturnAllCategories() {
 
 		// when
-		Set<Category> found = categoryService.findAll(	GeneralVars.LANGUAGE_ENGLISH, 
-														GeneralVars.CURRENCY_USD);
+		Set<Category> found = categoryService.findAll(	globalVars.getLocaleENGB(), 
+				 										globalVars.getCurrencyUSD());
 
 		// then
 		assertFound(found);
