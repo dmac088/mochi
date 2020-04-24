@@ -69,8 +69,6 @@ public class IT_CategoryControllerIntegrationTest {
     
     @Before
     public void setUp() throws Exception {
-    	
-    	
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(webApplicationContext)
                 .apply(springSecurity())
