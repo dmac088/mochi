@@ -1,19 +1,13 @@
-package io.nzbee.entity;
-
-
+package io.nzbee.security;
 
 import java.util.Properties;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
-import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -24,63 +18,73 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import com.zaxxer.hikari.HikariDataSource;
 
 
+
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-        entityManagerFactoryRef = "mochiEntityManagerFactory", 
-        transactionManagerRef 	= "mochiTransactionManager"
-        )
+        entityManagerFactoryRef = "securityEntityManagerFactory", 
+        transactionManagerRef = "securityTransactionManager"
+)
 @Profile("dev")
-@Order(1)
-public class DataSourceBeanMochiDev {
+@Order(2)
+public class DataSourceBeanSecurity {
 	
-	@Autowired
-	Environment env;
-	
-	@Primary
-	@Bean(name = "mochiDataSourcePropertiesDev")
-    @ConfigurationProperties("spring.datasource.mochi.dev.application")
+	@Bean(name = "securityDataSourceProperties")
+    @ConfigurationProperties("spring.datasource.security.application")
     public DataSourceProperties dataSourceProperties() {
-		DataSourceProperties dsp = new DataSourceProperties();
-		return dsp;
+        return new DataSourceProperties();
     }
 	
-	@Bean(name = "mochiDataSourcePropertiesDevOwner")
-    @ConfigurationProperties("spring.datasource.mochi.dev.owner")
+	@Bean(name = "securityDataSourcePropertiesOwner")
+    @ConfigurationProperties("spring.datasource.security.owner")
     public DataSourceProperties dataSourcePropertiesOwner() {
 		DataSourceProperties dsp = new DataSourceProperties();
 		return dsp;
     }
 	
-	@Primary
-	@Bean(name = "mochiDataSource")
-    @ConfigurationProperties("spring.datasource.mochi.dev.application")
-    public HikariDataSource dataSource(@Qualifier("mochiDataSourcePropertiesDev") DataSourceProperties properties) {
+	@Bean(name = "securityDataSource")
+    @ConfigurationProperties("spring.datasource.security.application")
+    public HikariDataSource dataSource(@Qualifier("securityDataSourceProperties") DataSourceProperties properties) {
+        return properties.initializeDataSourceBuilder().type(HikariDataSource.class)
+        		.driverClassName("org.postgresql.Driver")
+                .build();
+    }
+	
+	@Bean(name = "securityDataSourceOwner")
+    @ConfigurationProperties("spring.datasource.security.owner")
+    public HikariDataSource dataSourceOwner(@Qualifier("securityDataSourcePropertiesOwner") DataSourceProperties properties) {
         return properties.initializeDataSourceBuilder()
         		.type(HikariDataSource.class)
         		.driverClassName("org.postgresql.Driver")
                 .build();
     }
 	
-	@Bean(name = "mochiDataSourceOwner")
-    @ConfigurationProperties("spring.datasource.mochi.dev.owner")
-    public HikariDataSource dataSourceOwner(@Qualifier("mochiDataSourcePropertiesDevOwner") DataSourceProperties properties) {
-        return properties.initializeDataSourceBuilder()
-        		.type(HikariDataSource.class)
-        		.driverClassName("org.postgresql.Driver")
-                .build();
-    }
 	
 	private Properties additionalJpaProperties(){
 		Properties properties = new Properties();
+		//properties.setProperty("hibernate.hbm2ddl.auto", "update");
 		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
 		properties.setProperty("hibernate.show_sql", "true");
-		return properties;
-	}
+		
+		return properties; 
+	} 
      
-	@Primary
-	@Bean(name = "mochiEntityManagerFactory") 
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(@Qualifier("mochiDataSource") HikariDataSource dataSource) {
+	@Bean(name = "securityEntityManagerFactory") 
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(@Qualifier("securityDataSource") HikariDataSource dataSource) {
+		LocalContainerEntityManagerFactoryBean em 
+         = new LocalContainerEntityManagerFactoryBean();
+       em.setDataSource(dataSource);
+       em.setPackagesToScan(new String[] {
+    		   								"io.nzbee.*"
+    		   							 });
+       JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+       em.setJpaVendorAdapter(vendorAdapter);
+       em.setJpaProperties(additionalJpaProperties());
+       return em;
+    }
+	
+	@Bean(name = "securityEntityManagerFactoryOwner") 
+    public LocalContainerEntityManagerFactoryBean entityManagerFactoryOwner(@Qualifier("securityDataSourceOwner") HikariDataSource dataSource) {
        LocalContainerEntityManagerFactoryBean em 
          = new LocalContainerEntityManagerFactoryBean();
        em.setDataSource(dataSource);
@@ -93,23 +97,8 @@ public class DataSourceBeanMochiDev {
        return em;
     }
 	
-	@Bean(name = "mochiEntityManagerFactoryOwner") 
-    public LocalContainerEntityManagerFactoryBean entityManagerFactoryOwner(@Qualifier("mochiDataSourceOwner") HikariDataSource dataSource) {
-       LocalContainerEntityManagerFactoryBean em 
-         = new LocalContainerEntityManagerFactoryBean();
-       em.setDataSource(dataSource);
-       em.setPackagesToScan(new String[] 
-    		   {"io.nzbee.*"}
-        );
-       JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-       em.setJpaVendorAdapter(vendorAdapter);
-       em.setJpaProperties(additionalJpaProperties());
-       return em;
-    }
-    
-	@Primary
-	@Bean(name = "mochiTransactionManager")
-    public PlatformTransactionManager TransactionManager(@Qualifier("mochiEntityManagerFactory") LocalContainerEntityManagerFactoryBean entityManagerFactory) {
+	@Bean(name = "securityTransactionManager")
+    public PlatformTransactionManager TransactionManager(@Qualifier("securityEntityManagerFactory") LocalContainerEntityManagerFactoryBean entityManagerFactory) {
         JpaTransactionManager transactionManager
                 = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(
@@ -117,8 +106,8 @@ public class DataSourceBeanMochiDev {
         return transactionManager;
     }
 	
-	@Bean(name = "mochiTransactionManagerOwner")
-    public PlatformTransactionManager TransactionManagerOwner(@Qualifier("mochiEntityManagerFactoryOwner") LocalContainerEntityManagerFactoryBean entityManagerFactory) {
+	@Bean(name = "securityTransactionManagerOwner")
+    public PlatformTransactionManager TransactionManagerOwner(@Qualifier("securityEntityManagerFactoryOwner") LocalContainerEntityManagerFactoryBean entityManagerFactory) {
         JpaTransactionManager transactionManager
                 = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(
