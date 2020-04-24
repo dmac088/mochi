@@ -1,16 +1,15 @@
 package io.nzbee.entity;
 
-
-
 import java.util.Properties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
+import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -27,21 +26,40 @@ import com.zaxxer.hikari.HikariDataSource;
         entityManagerFactoryRef = "mochiEntityManagerFactory", 
         transactionManagerRef 	= "mochiTransactionManager"
         )
-@Profile("test")
-@Order(2)
-public class DataSourceBeanMochiTest {
+@Order(1)
+public class DataSourceBeanMochi {
+	
+	@Autowired
+	Environment env;
 	
 	@Primary
-	@Bean(name = "mochiDataSourcePropertiesTest")
-    @ConfigurationProperties("spring.datasource.mochi.test")
+	@Bean(name = "mochiDataSourceProperties")
+    @ConfigurationProperties("spring.datasource.mochi.application")
     public DataSourceProperties dataSourceProperties() {
-        return new DataSourceProperties();
+		DataSourceProperties dsp = new DataSourceProperties();
+		return dsp;
+    }
+	
+	@Bean(name = "mochiDataSourcePropertiesOwner")
+    @ConfigurationProperties("spring.datasource.mochi.owner")
+    public DataSourceProperties dataSourcePropertiesOwner() {
+		DataSourceProperties dsp = new DataSourceProperties();
+		return dsp;
     }
 	
 	@Primary
 	@Bean(name = "mochiDataSource")
-    @ConfigurationProperties("spring.datasource.mochi.test")
-    public HikariDataSource dataSource(@Qualifier("mochiDataSourcePropertiesTest") DataSourceProperties properties) {
+    @ConfigurationProperties("spring.datasource.mochi.application")
+    public HikariDataSource dataSource(@Qualifier("mochiDataSourceProperties") DataSourceProperties properties) {
+        return properties.initializeDataSourceBuilder()
+        		.type(HikariDataSource.class)
+        		.driverClassName("org.postgresql.Driver")
+                .build();
+    }
+	
+	@Bean(name = "mochiDataSourceOwner")
+    @ConfigurationProperties("spring.datasource.mochi.owner")
+    public HikariDataSource dataSourceOwner(@Qualifier("mochiDataSourcePropertiesOwner") DataSourceProperties properties) {
         return properties.initializeDataSourceBuilder()
         		.type(HikariDataSource.class)
         		.driverClassName("org.postgresql.Driver")
@@ -69,10 +87,33 @@ public class DataSourceBeanMochiTest {
        em.setJpaProperties(additionalJpaProperties());
        return em;
     }
+	
+	@Bean(name = "mochiEntityManagerFactoryOwner") 
+    public LocalContainerEntityManagerFactoryBean entityManagerFactoryOwner(@Qualifier("mochiDataSourceOwner") HikariDataSource dataSource) {
+       LocalContainerEntityManagerFactoryBean em 
+         = new LocalContainerEntityManagerFactoryBean();
+       em.setDataSource(dataSource);
+       em.setPackagesToScan(new String[] 
+    		   {"io.nzbee.*"}
+        );
+       JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+       em.setJpaVendorAdapter(vendorAdapter);
+       em.setJpaProperties(additionalJpaProperties());
+       return em;
+    }
     
 	@Primary
 	@Bean(name = "mochiTransactionManager")
     public PlatformTransactionManager TransactionManager(@Qualifier("mochiEntityManagerFactory") LocalContainerEntityManagerFactoryBean entityManagerFactory) {
+        JpaTransactionManager transactionManager
+                = new JpaTransactionManager();
+        transactionManager.setEntityManagerFactory(
+        		entityManagerFactory.getObject());
+        return transactionManager;
+    }
+	
+	@Bean(name = "mochiTransactionManagerOwner")
+    public PlatformTransactionManager TransactionManagerOwner(@Qualifier("mochiEntityManagerFactoryOwner") LocalContainerEntityManagerFactoryBean entityManagerFactory) {
         JpaTransactionManager transactionManager
                 = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(
