@@ -20,7 +20,7 @@ import io.nzbee.entity.product.status.IProductStatusRepository;
 import io.nzbee.variables.GeneralVars;
 
 @Service(value = "productEntityBeanFactory")
-@Profile(value = "dev")
+@Profile(value = "tst")
 public class ProductEntityBeanFactory {
 	
 	@Autowired

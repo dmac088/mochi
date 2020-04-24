@@ -9,7 +9,7 @@ import io.nzbee.variables.GeneralVars;
 
 
 @Service(value = "brandEntityBeanFactory")
-@Profile(value = "dev")
+@Profile(value = "tst")
 public class BrandEntityBeanFactory {
 	
 	@Bean

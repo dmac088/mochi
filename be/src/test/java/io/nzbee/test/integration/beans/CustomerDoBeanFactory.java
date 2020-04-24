@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import io.nzbee.domain.customer.Customer;
 
 @Service
-@Profile(value = "dev")
+@Profile(value = "tst")
 public class CustomerDoBeanFactory {
 
 	public final Customer getCustomerDoBean() {

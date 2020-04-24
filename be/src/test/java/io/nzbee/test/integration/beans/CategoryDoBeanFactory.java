@@ -11,7 +11,7 @@ import io.nzbee.domain.category.ProductCategory;
 
 
 @Service
-@Profile(value = "dev")
+@Profile(value = "tst")
 public class CategoryDoBeanFactory {
 
 	

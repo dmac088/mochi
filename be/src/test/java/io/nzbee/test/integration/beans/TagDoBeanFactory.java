@@ -6,7 +6,7 @@ import io.nzbee.domain.tag.Tag;
 
 
 @Service
-@Profile(value = "dev")
+@Profile(value = "tst")
 public class TagDoBeanFactory {
 
 	public final Tag getTagDoBean() {
