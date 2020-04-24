@@ -3,13 +3,9 @@ package io.nzbee.entity.product.attribute;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-
 import javax.persistence.Tuple;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import io.nzbee.variables.GeneralVars;
 
 @Service
 public class ProductAttributeServiceImpl implements IProductAttributeService {

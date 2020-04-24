@@ -26,13 +26,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import io.nzbee.Globals;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.Category_;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.attribute.CategoryAttribute_;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.category.type.CategoryType;
-import io.nzbee.variables.ProductVars;
 
 @Component(value="categoryEntityPostgresDao")
 public class CategoryDaoPostgresImpl implements ICategoryDao {
@@ -42,6 +42,9 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
 	private EntityManager em;
+	
+	@Autowired
+	private Globals globalVars;
 
 	@Override
 	public <T> List<Category> findByCodeAndType(String locale, String currency, Class<T> cls) {
@@ -57,9 +60,9 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
 				 .setParameter("parentCategoryCode", "-1")
-				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
-				 .setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
-				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE)
+				 .setParameter("activeProductCode", globalVars.getActiveSKUCode())
+				 .setParameter("retailPriceCode", globalVars.getRetailPriceCode())
+				 .setParameter("markdownPriceCode", globalVars.getMarkdownPriceCode())
 				 .setParameter("typeDiscriminator", Long.parseLong(cls.getAnnotation(DiscriminatorValue.class).value()));
 		
 		
@@ -85,9 +88,9 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
 				 .setParameter("parentCategoryCode", "-1")
-				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
-				 .setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
-				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE);
+				 .setParameter("activeProductCode", globalVars.getActiveSKUCode())
+				 .setParameter("retailPriceCode", globalVars.getRetailPriceCode())
+				 .setParameter("markdownPriceCode", globalVars.getMarkdownPriceCode());
 		
 		@SuppressWarnings("unchecked")
 		List<Object[]> results = query.getResultList();
@@ -110,9 +113,9 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
 				 .setParameter("parentCategoryCode", "-1")
-				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
-				 .setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
-				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE);
+				 .setParameter("activeProductCode", globalVars.getActiveSKUCode())
+				 .setParameter("retailPriceCode", globalVars.getRetailPriceCode())
+				 .setParameter("markdownPriceCode", globalVars.getMarkdownPriceCode());
 		
 		if(!categoryCodes.isEmpty()) {
 			query.setParameter("categoryCodes", categoryCodes);
@@ -141,9 +144,9 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				 .setParameter("currency", currency)
 				 .setParameter("parentCategoryCode", "-1")
 				 .setParameter("categoryId", id)
-				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
-				 .setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
-				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE);
+				 .setParameter("activeProductCode", globalVars.getActiveSKUCode())
+				 .setParameter("retailPriceCode", globalVars.getRetailPriceCode())
+				 .setParameter("markdownPriceCode", globalVars.getMarkdownPriceCode());
 		
 		if(!categoryCodes.isEmpty()) {
 			query.setParameter("categoryCodes", categoryCodes);
@@ -178,9 +181,9 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				 .setParameter("currency", currency)
 				 .setParameter("parentCategoryCode", "-1")
 				 .setParameter("categoryDesc", desc)
-				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
-				 .setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
-				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE);
+				 .setParameter("activeProductCode", globalVars.getActiveSKUCode())
+				 .setParameter("retailPriceCode", globalVars.getRetailPriceCode())
+				 .setParameter("markdownPriceCode", globalVars.getMarkdownPriceCode());
 		
 		if(!categoryCodes.isEmpty()) {
 			query.setParameter("categoryCodes", categoryCodes);
@@ -217,9 +220,9 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
 				 .setParameter("parentCategoryCode", "-1")
-				 .setParameter("activeProductCode", ProductVars.ACTIVE_SKU_CODE)
-				 .setParameter("retailPriceCode", ProductVars.PRICE_RETAIL_CODE)
-				 .setParameter("markdownPriceCode", ProductVars.PRICE_MARKDOWN_CODE);
+				 .setParameter("activeProductCode", globalVars.getActiveSKUCode())
+				 .setParameter("retailPriceCode", globalVars.getRetailPriceCode())
+				 .setParameter("markdownPriceCode", globalVars.getMarkdownPriceCode());
 		
 		if(!categoryCodes.isEmpty()) {
 			query.setParameter("categoryCodes", categoryCodes);
