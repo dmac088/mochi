@@ -14,7 +14,7 @@ import io.nzbee.variables.GeneralVars;
 
 
 @Service(value = "categoryEntityBeanFactory")
-@Profile(value = "dev")
+@Profile(value = "tst")
 public class CategoryEntityBeanFactory {
 
 	@Bean

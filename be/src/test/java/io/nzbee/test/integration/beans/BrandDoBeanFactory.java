@@ -7,7 +7,7 @@ import io.nzbee.domain.brand.Brand;
 
 
 @Service
-@Profile(value = "dev")
+@Profile(value = "tst")
 public class BrandDoBeanFactory {
 
 	public final Brand getBrandDoBean() {

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import io.nzbee.entity.product.status.ProductStatus;
 
 @Service(value = "productStatusEntityBeanFactory")
-@Profile(value = "dev")
+@Profile(value = "tst")
 public class ProductStatusEntityBeanFactory {
 
 	@Bean

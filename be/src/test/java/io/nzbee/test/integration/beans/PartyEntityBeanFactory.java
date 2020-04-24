@@ -14,7 +14,7 @@ import io.nzbee.security.user.role.IUserRoleService;
 import io.nzbee.security.user.role.UserRole;
 
 @Service(value = "partyEntityBeanFactory")
-@Profile(value = "dev")
+@Profile(value = "tst")
 public class PartyEntityBeanFactory {
 
 	@Autowired

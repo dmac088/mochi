@@ -8,7 +8,7 @@ import io.nzbee.entity.product.department.Department;
 import io.nzbee.entity.product.department.attribute.DepartmentAttribute;
 
 @Service(value = "productTypeEntityBeanFactory")
-@Profile(value = "dev")
+@Profile(value = "tst")
 public class DepartmentEntityBeanFactory {
 
 	@Bean

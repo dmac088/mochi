@@ -11,7 +11,7 @@ import io.nzbee.domain.product.Food;
 import io.nzbee.domain.product.Product;
 
 @Service
-@Profile(value = "dev")
+@Profile(value = "tst")
 public class ProductDoBeanFactory {
 	
 	public final Product getProductDoBean() {

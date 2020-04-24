@@ -38,7 +38,6 @@ file:
 
 server:
   port: 8090
-  host: http://localhost
   ssl:
     key-store-type: PKCS12
     key-store: classpath:mochi.p12
