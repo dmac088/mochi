@@ -41,7 +41,6 @@ import io.nzbee.entity.product.status.ProductStatus_;
 import io.nzbee.entity.tag.Tag_;
 import io.nzbee.entity.tag.attribute.TagAttribute;
 import io.nzbee.entity.tag.attribute.TagAttribute_;
-import io.nzbee.variables.ProductVars;
 
 @Component 
 public class TagDaoImpl implements ITagDao {

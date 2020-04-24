@@ -14,13 +14,14 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-
 import org.mockito.internal.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+
+import io.nzbee.Globals;
 import io.nzbee.entity.brand.Brand_;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.brand.attribute.BrandAttribute_;
@@ -34,7 +35,6 @@ import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.entity.product.status.ProductStatus_;
 import io.nzbee.entity.tag.Tag_;
 import io.nzbee.entity.tag.Tag;
-import io.nzbee.variables.ProductVars;
 
 @Component
 public class BrandDaoImpl  implements IBrandDao { 
@@ -44,6 +44,9 @@ public class BrandDaoImpl  implements IBrandDao {
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
 	private EntityManager em;
+	
+	@Autowired
+	private Globals globalVars;
 	
 	@Override
 	public Optional<Brand> findById(String locale, String currency, long id) {
@@ -168,7 +171,7 @@ public class BrandDaoImpl  implements IBrandDao {
 		Join<Brand, BrandAttribute> attribute = root.join(Brand_.attributes);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
-		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
+		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), globalVars.getActiveSKUCode()));
 		conditions.add(cb.equal(attribute.get(BrandAttribute_.lclCd), locale));
 		if(!brandCodes.isEmpty()) {
 			conditions.add(root.in(Brand_.brandCode).in(brandCodes));
@@ -202,7 +205,7 @@ public class BrandDaoImpl  implements IBrandDao {
 		Join<Brand, BrandAttribute> attribute = root.join(Brand_.attributes);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
-		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
+		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), globalVars.getActiveSKUCode()));
 		conditions.add(cb.equal(attribute.get(BrandAttribute_.lclCd), locale));
 		conditions.add(cb.equal(category.get(CategoryBrand_.categoryCode), categoryCode));
 
@@ -233,7 +236,7 @@ public class BrandDaoImpl  implements IBrandDao {
 		Join<Brand, BrandAttribute> attribute = root.join(Brand_.attributes);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
-		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
+		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), globalVars.getActiveSKUCode()));
 		conditions.add(cb.equal(attribute.get(BrandAttribute_.lclCd), locale));
 
 		cq.multiselect(	root.get(Brand_.brandId).alias("brandId"),
@@ -272,7 +275,7 @@ public class BrandDaoImpl  implements IBrandDao {
 			Join<Product, Tag> productTag = product.join(Product_.tags);
 			conditions.add(productTag.get(Tag_.tagCode).in(tagCodes));
 		}
-		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
+		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), globalVars.getActiveSKUCode()));
 		
 		TypedQuery<Brand> query = em.createQuery(cq
 				.select(root)
