@@ -3,19 +3,23 @@ package io.nzbee.test.integration.beans;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
+import io.nzbee.Globals;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.brand.CategoryBrand;
 import io.nzbee.entity.category.product.CategoryProduct;
-import io.nzbee.variables.GeneralVars;
 
 
 @Service(value = "categoryEntityBeanFactory")
 @Profile(value = "tst")
 public class CategoryEntityBeanFactory {
+	
+	@Autowired
+	private Globals globalVars;
 
 	@Bean
 	public final Category getProductCategoryEntityBean() {
@@ -27,7 +31,7 @@ public class CategoryEntityBeanFactory {
 		final CategoryAttribute categoryAttribute = new CategoryAttribute();
 		categoryAttribute.setCategory(category);
 		categoryAttribute.setCategoryDesc("test product category");
-		categoryAttribute.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
+		categoryAttribute.setLclCd(globalVars.getLocaleENGB());
 		category.addAttribute(categoryAttribute);
 		
 		return category;
@@ -43,7 +47,7 @@ public class CategoryEntityBeanFactory {
 		final CategoryAttribute categoryAttribute = new CategoryAttribute();
 		categoryAttribute.setCategory(category);
 		categoryAttribute.setCategoryDesc("test brand category");
-		categoryAttribute.setLclCd(GeneralVars.LANGUAGE_ENGLISH);
+		categoryAttribute.setLclCd(globalVars.getLocaleENGB());
 		category.addAttribute(categoryAttribute);
 		
 		return category;

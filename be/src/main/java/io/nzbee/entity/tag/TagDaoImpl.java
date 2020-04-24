@@ -18,6 +18,7 @@ import javax.persistence.criteria.Root;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import io.nzbee.Globals;
 import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.brand.Brand_;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
@@ -48,6 +49,9 @@ public class TagDaoImpl implements ITagDao {
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
 	private EntityManager em;
+	
+	@Autowired
+	private Globals globalVars;
 	
 	@Override
 	public Optional<Tag> findById(String locale, String currency, long id) {
@@ -166,7 +170,7 @@ public class TagDaoImpl implements ITagDao {
 		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), locale));
 		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale));
 		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
-		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
+		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), globalVars.getActiveSKUCode()));
 
 		TypedQuery<Tag> query = em.createQuery(cq
 				.select(root)
@@ -189,7 +193,7 @@ public class TagDaoImpl implements ITagDao {
 		Join<Tag, TagAttribute> attribute = root.join(Tag_.attributes);
 				
 		List<Predicate> conditions = new ArrayList<Predicate>();
-		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), ProductVars.ACTIVE_SKU_CODE));
+		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), globalVars.getActiveSKUCode()));
 		conditions.add(cb.equal(attribute.get(TagAttribute_.lclCd), locale));
 		if(!codes.isEmpty()) {
 			conditions.add(root.in(Tag_.tagCode).in(codes));

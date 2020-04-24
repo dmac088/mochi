@@ -4,6 +4,7 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
+import io.nzbee.Globals;
 import io.nzbee.entity.brand.IBrandService;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.product.CategoryProduct;
@@ -17,11 +18,13 @@ import io.nzbee.entity.product.price.IProductPriceTypeService;
 import io.nzbee.entity.product.price.ProductPrice;
 import io.nzbee.entity.product.price.ProductPriceType;
 import io.nzbee.entity.product.status.IProductStatusRepository;
-import io.nzbee.variables.GeneralVars;
 
 @Service(value = "productEntityBeanFactory")
 @Profile(value = "tst")
 public class ProductEntityBeanFactory {
+	
+	@Autowired
+	private Globals globalVars;
 	
 	@Autowired
 	private ICurrencyService currencyService;
@@ -80,23 +83,23 @@ public class ProductEntityBeanFactory {
 		priceUSD.setProduct(product);
 		
 		//we need a brand
-		product.setBrand(brandService.findByCode(GeneralVars.LANGUAGE_ENGLISH, 
-												 GeneralVars.CURRENCY_HKD, 
+		product.setBrand(brandService.findByCode(globalVars.getLocaleENGB(), 
+												 globalVars.getCurrencyHKD(), 
 												 "PLA01").get());
 				
 				
 		//we need a type
-		product.setDepartment(departmentService.findByCode(	GeneralVars.LANGUAGE_ENGLISH, 
-				 											GeneralVars.CURRENCY_HKD,
+		product.setDepartment(departmentService.findByCode(	globalVars.getLocaleENGB(), 
+				 globalVars.getCurrencyHKD(),
 				 											"FOO01").get());
 				
 		//we need a status
 		product.setProductStatus(productStatusRepository.findByProductStatusCode("ACT01").get());
 				
 		//we need a category
-		CategoryProduct cp = (CategoryProduct) categoryService.findByCode(GeneralVars.LANGUAGE_ENGLISH, 
-																		GeneralVars.CURRENCY_HKD,
-																		"FRT01").get();
+		CategoryProduct cp = (CategoryProduct) categoryService.findByCode(globalVars.getLocaleENGB(), 
+				 														  globalVars.getCurrencyHKD(),
+																		  "FRT01").get();
 				
 				
 		//add the product to the category

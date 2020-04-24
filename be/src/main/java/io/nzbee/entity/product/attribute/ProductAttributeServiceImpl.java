@@ -7,21 +7,24 @@ import javax.persistence.Tuple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import io.nzbee.Globals;
+
 @Service
 public class ProductAttributeServiceImpl implements IProductAttributeService {
 
 	@Autowired
 	private ProductAttributeRepository productAttributeRepository; 
 	
+	@Autowired
+	private Globals globalVars;
+	
 	@Override
 	public Optional<ProductAttribute> findById(String locale, String currency, long id) {
-		// TODO Auto-generated method stub
 		return productAttributeRepository.findById(id);
 	}
 	
 	@Override
 	public List<ProductAttribute> findAll(String locale, String currency) {
-		// TODO Auto-generated method stub
 		return null;//productAttributeRepository.findAll();
 	}
 	
@@ -47,35 +50,32 @@ public class ProductAttributeServiceImpl implements IProductAttributeService {
 
 	@Override
 	public void save(ProductAttribute t) {
-		// TODO Auto-generated method stub
 		productAttributeRepository.save(t);
 	}
 
 	@Override
 	public void update(ProductAttribute t, String[] params) {
-		// TODO Auto-generated method stub
 		productAttributeRepository.save(t);
 	}
 
 	@Override
 	public void delete(ProductAttribute t) {
-		// TODO Auto-generated method stub
 		productAttributeRepository.delete(t);		
 	}
 
 	@Override
 	public Optional<ProductAttribute> getProductAttribute(Long id, String locale) {
-		return productAttributeRepository.findByLclCdAndProductProductId(GeneralVars.LANGUAGE_ENGLISH, id);
+		return productAttributeRepository.findByLclCdAndProductProductId(locale, id);
 	}
 	
 	@Override
 	public Optional<ProductAttribute> getProductAttributeEN(Long id) {
-		return productAttributeRepository.findByLclCdAndProductProductId(GeneralVars.LANGUAGE_ENGLISH, id);
+		return productAttributeRepository.findByLclCdAndProductProductId(globalVars.getLocaleENGB(), id);
 	}
 	
 	@Override
 	public Optional<ProductAttribute> getProductAttributeHK(Long id) {
-		return productAttributeRepository.findByLclCdAndProductProductId(GeneralVars.LANGUAGE_HK, id);
+		return productAttributeRepository.findByLclCdAndProductProductId(globalVars.getLocaleZHHK(), id);
 	}
 
 	@Override

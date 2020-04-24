@@ -24,7 +24,6 @@ import io.nzbee.domain.product.Product;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.test.integration.beans.CategoryEntityBeanFactory;
-import io.nzbee.variables.GeneralVars;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -95,8 +94,8 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
     public void whenFindById_thenReturnBrandCategory() {
     	
         // when
-    	Category found = categoryService.findById(GeneralVars.LANGUAGE_ENGLISH, 
-												  GeneralVars.CURRENCY_USD,  
+    	Category found = categoryService.findById(globalVars.getLocaleENGB(), 
+												  globalVars.getCurrencyUSD(),  
 												  category.getCategoryId()).get();
      
         // then
@@ -108,8 +107,8 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
     public void whenFindByCode_thenReturnBrandCategory() {
     	
         // when
-    	Category found = categoryService.findByCode(GeneralVars.LANGUAGE_ENGLISH, 
-				 									GeneralVars.CURRENCY_USD, 
+    	Category found = categoryService.findByCode(globalVars.getLocaleENGB(), 
+				 									globalVars.getCurrencyUSD(), 
 				 									"TST02").get();
      
         // then
@@ -121,8 +120,8 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
     public void whenFindByDesc_thenReturnBrandCategory() {
     	
         // when
-    	Category found = categoryService.findByDesc(GeneralVars.LANGUAGE_ENGLISH, 
-				 									GeneralVars.CURRENCY_USD, 
+    	Category found = categoryService.findByDesc(globalVars.getLocaleENGB(), 
+													globalVars.getCurrencyUSD(), 
 				 									"test brand category").get();
      
         //then
