@@ -28,7 +28,7 @@ import io.nzbee.test.integration.beans.ProductStatusEntityBeanFactory;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-@ActiveProfiles(profiles = "dev")
+@ActiveProfiles(profiles = "tst")
 @SqlGroup({
 	@Sql(scripts = "/database/mochi_schema.sql",
 			config = @SqlConfig(dataSource = "mochiDataSourceOwner", 
