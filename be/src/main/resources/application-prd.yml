@@ -2,42 +2,42 @@ spring:
   datasource:
     mochi:
       application: 
-        max-lifetime: 45000
-        maximum-pool-size: 20 
-        connection-timeout: 30000
-        minimum-idle: 0
-        url: jdbc:postgresql://localhost:5432/mochidb?currentSchema=mochi
-        username: mochi_app
-        password: password 
-        driver-class-name: org.postgresql.Driver
+        max-lifetime: ${SPRING_DATASOURCE_MAX_LIFETIME}
+        maximum-pool-size: ${SPRING_DATASOURCE_MAX_POOL_SIZE} 
+        connection-timeout: ${SPRING_DATASOURCE_CONNECTION_TIMEOUT}
+        minimum-idle: ${SPRING_DATASOURCE_MINIMUM_IDLE}
+        url: ${SPRING_MOCHI_DATASOURCE_URL}
+        username: ${SPRING_MOCHI_APP_DATASOURCE_USERNAME}
+        password: ${SPRING_MOCHI_APP_DATASOURCE_PASSWORD} 
+        driver-class-name: ${SPRING_DATASOURCE_DRIVER_CLASS}
      
       owner:
-        max-lifetime: 45000
-        maximum-pool-size: 20 
-        connection-timeout: 30000
-        minimum-idle: 0
-        url: jdbc:postgresql://localhost:5432/mochidb?currentSchema=mochi
-        username: mochidb_owner
-        password: password 
-        driver-class-name: org.postgresql.Driver
+        max-lifetime: ${SPRING_DATASOURCE_MAX_LIFETIME}
+        maximum-pool-size: ${SPRING_DATASOURCE_MAX_POOL_SIZE} 
+        connection-timeout: ${SPRING_DATASOURCE_CONNECTION_TIMEOUT}
+        minimum-idle: ${SPRING_DATASOURCE_MINIMUM_IDLE}
+        url: ${SPRING_MOCHI_DATASOURCE_URL}
+        username: ${SPRING_MOCHI_OWN_DATASOURCE_USERNAME}
+        password: ${SPRING_MOCHI_OWN_DATASOURCE_PASSWORD}
+        driver-class-name: ${SPRING_DATASOURCE_DRIVER_CLASS}
       
     security: 
       application:
-        max-lifetime: 45000
-        maximum-pool-size: 20 
-        connection-timeout: 30000
-        minimum-idle: 0
-        url: jdbc:postgresql://localhost:5432/mochidb?currentSchema=security
-        username: security_app
-        password: password 
-        driver-class-name: org.postgresql.Driver
+        max-lifetime: ${SPRING_DATASOURCE_MAX_LIFETIME}
+        maximum-pool-size: ${SPRING_DATASOURCE_MAX_POOL_SIZE} 
+        connection-timeout: ${SPRING_DATASOURCE_CONNECTION_TIMEOUT}
+        minimum-idle: ${SPRING_DATASOURCE_MINIMUM_IDLE}
+        url: ${SPRING_SECURITY_DATASOURCE_URL}
+        username: ${SPRING_SECURITY_APP_DATASOURCE_USERNAME}
+        password: ${SPRING_SECURITY_APP_DATASOURCE_PASSWORD} 
+        driver-class-name: ${SPRING_DATASOURCE_DRIVER_CLASS}
      
       owner: 
-        max-lifetime: 45000
-        maximum-pool-size: 20 
-        connection-timeout: 30000
-        minimum-idle: 0
-        url: jdbc:postgresql://localhost:5432/mochidb?currentSchema=security
-        username: security_owner
-        password: password 
-        driver-class-name: org.postgresql.Driver 
+        max-lifetime: ${SPRING_DATASOURCE_MAX_LIFETIME}
+        maximum-pool-size: ${SPRING_DATASOURCE_MAX_POOL_SIZE} 
+        connection-timeout: ${SPRING_DATASOURCE_CONNECTION_TIMEOUT}
+        minimum-idle: ${SPRING_DATASOURCE_MINIMUM_IDLE}
+        url: ${SPRING_SECURITY_DATASOURCE_URL}
+        username: ${SPRING_SECURITY_OWN_DATASOURCE_USERNAME}
+        password: ${SPRING_SECURITY_OWN_DATASOURCE_PASSWORD}
+        driver-class-name: ${SPRING_DATASOURCE_DRIVER_CLASS} 
