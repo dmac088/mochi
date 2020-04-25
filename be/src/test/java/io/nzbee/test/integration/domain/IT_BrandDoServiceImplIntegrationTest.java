@@ -13,6 +13,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import io.nzbee.Globals;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.brand.IBrandService;
 import io.nzbee.test.integration.beans.BrandDoBeanFactory;
@@ -28,6 +30,9 @@ public class IT_BrandDoServiceImplIntegrationTest {
 		//the beans that we need to run this integration test
        
     }
+	
+	@Autowired
+	private Globals globalVars;
 	
 	@Autowired
     private IBrandService brandService;
@@ -53,14 +58,14 @@ public class IT_BrandDoServiceImplIntegrationTest {
  
     @Test
     public void whenValidCode_thenBrandShouldBeFound() {
-        Optional<Brand> found = brandService.findByCode("en-GB", "HKD", "TST03");
+        Optional<Brand> found = brandService.findByCode(globalVars.getLocaleENGB(), globalVars.getCurrencyHKD(), "TST03");
       
         assertFound(found);
     }
     
     @Test
     public void whenValidDesc_thenBrandShouldBeFound() {
-    	Optional<Brand> found = brandService.findByDesc("en-GB", "HKD", "test brand");
+    	Optional<Brand> found = brandService.findByDesc(globalVars.getLocaleENGB(), globalVars.getCurrencyHKD(), "test brand");
       
         assertFound(found);
     }

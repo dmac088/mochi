@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.domain.category.ICategoryService;
+import io.nzbee.Globals;
 import io.nzbee.domain.category.BrandCategory;
 import io.nzbee.domain.category.Category;
 import io.nzbee.test.integration.beans.CategoryDoBeanFactory;
@@ -27,6 +28,9 @@ public class IT_BrandCategoryDoServiceImplIntegrationTest {
 		//the beans that we need to run this integration test
  
     }
+	
+	@Autowired
+	private Globals globalVars;
 	
 	@Autowired
     private ICategoryService categoryService;
@@ -53,14 +57,14 @@ public class IT_BrandCategoryDoServiceImplIntegrationTest {
  
     @Test
     public void whenValidCode_thenBrandCategoryShouldBeFound() {
-        Category found = categoryService.findByCode("en-GB", "HKD", "TST02").get();
+        Category found = categoryService.findByCode(globalVars.getLocaleENGB(), globalVars.getCurrencyHKD(), "TST02").get();
       
         assertFound(found);
     }
     
     @Test
     public void whenValidDesc_thenBrandCategoryShouldBeFound() {
-        Category found = categoryService.findByDesc("en-GB", "HKD", "test brand category").get();
+        Category found = categoryService.findByDesc(globalVars.getLocaleENGB(), globalVars.getCurrencyHKD(), "test brand category").get();
       
         assertFound(found);
      }

@@ -17,6 +17,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.domain.category.ICategoryService;
 import io.nzbee.domain.category.ProductCategory;
+import io.nzbee.Globals;
 import io.nzbee.domain.category.Category;
 import io.nzbee.test.integration.beans.CategoryDoBeanFactory;
 
@@ -31,6 +32,9 @@ public class IT_ProductCategoryDoServiceImplIntegrationTest {
 		
     }
 
+	@Autowired
+	private Globals globalVars;
+	
 	@Autowired
     private ICategoryService categoryService;
 	
@@ -56,21 +60,21 @@ public class IT_ProductCategoryDoServiceImplIntegrationTest {
     
     @Test
     public void whenValidCode_thenProductCategoryShouldBeFound() {
-        Category found = categoryService.findByCode("en-GB", "HKD", "TST01").get();
+        Category found = categoryService.findByCode(globalVars.getLocaleENGB(), globalVars.getCurrencyHKD(), "TST01").get();
       
         assertFound(found);
     }
     
     @Test
     public void whenInvalidCode_thenProductCategoryShouldNotBeFound() {
-        Optional<Category> cat = categoryService.findByCode("en-GB", "HKD", "ZZZZZ");
+        Optional<Category> cat = categoryService.findByCode(globalVars.getLocaleENGB(), globalVars.getCurrencyHKD(), "ZZZZZ");
       
         assertNotFound(cat);
     }
     
     @Test
     public void whenValidDesc_thenProductCategoryShouldBeFound() {
-        Category found = categoryService.findByDesc("en-GB", "HKD", "test product category").get();
+        Category found = categoryService.findByDesc(globalVars.getLocaleENGB(), globalVars.getCurrencyHKD(), "test product category").get();
       
         assertFound(found);
      }
