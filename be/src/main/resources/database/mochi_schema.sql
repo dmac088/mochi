@@ -97,6 +97,7 @@ ALTER TABLE ONLY mochi.product DROP CONSTRAINT product_pkey;
 ALTER TABLE ONLY mochi.product_jewellery DROP CONSTRAINT product_jewellery_pkey;
 ALTER TABLE ONLY mochi.product_food DROP CONSTRAINT product_food_pkey;
 ALTER TABLE ONLY mochi.product_category DROP CONSTRAINT product_category_pkey;
+ALTER TABLE ONLY mochi.product_bundle DROP CONSTRAINT product_bundle_pkey;
 ALTER TABLE ONLY mochi.product_attr_lcl DROP CONSTRAINT product_attr_lcl_pkey;
 ALTER TABLE ONLY mochi.price_type DROP CONSTRAINT price_type_pkey;
 ALTER TABLE ONLY mochi.price DROP CONSTRAINT price_pkey;
@@ -164,6 +165,7 @@ DROP TABLE mochi.product_jewellery;
 DROP TABLE mochi.product_food;
 DROP TABLE mochi.product_category;
 DROP SEQUENCE mochi.product_category_prd_cat_id_seq;
+DROP TABLE mochi.product_bundle;
 DROP TABLE mochi.product_attr_lcl;
 DROP TABLE mochi.product;
 DROP TABLE mochi.price_type;
@@ -1962,8 +1964,9 @@ ALTER TABLE layout_category_lay_cat_id_seq OWNER TO mochidb_owner;
 
 CREATE TABLE layout_category (
     lay_cat_id bigint DEFAULT nextval('layout_category_lay_cat_id_seq'::regclass) NOT NULL,
-    lay_id bigint,
-    cat_id bigint
+    lay_id bigint NOT NULL,
+    cat_id bigint NOT NULL,
+    ord_num bigint NOT NULL
 );
 
 
@@ -2209,6 +2212,19 @@ CREATE TABLE product_attr_lcl (
 
 
 ALTER TABLE product_attr_lcl OWNER TO mochidb_owner;
+
+--
+-- Name: product_bundle; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE product_bundle (
+    prd_bdl_id bigint NOT NULL,
+    bdl_id bigint NOT NULL,
+    prd_id bigint NOT NULL
+);
+
+
+ALTER TABLE product_bundle OWNER TO mochidb_owner;
 
 --
 -- Name: product_category_prd_cat_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
@@ -2898,6 +2914,14 @@ ALTER TABLE ONLY price_type
 
 ALTER TABLE ONLY product_attr_lcl
     ADD CONSTRAINT product_attr_lcl_pkey PRIMARY KEY (prd_lcl_id);
+
+
+--
+-- Name: product_bundle product_bundle_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY product_bundle
+    ADD CONSTRAINT product_bundle_pkey PRIMARY KEY (prd_bdl_id, bdl_id, prd_id);
 
 
 --
