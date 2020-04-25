@@ -658,7 +658,7 @@ INSERT INTO customer VALUES (232313, '1000000074');
 -- Name: customer_cst_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('customer_cst_id_seq', 1000000258, true);
+SELECT pg_catalog.setval('customer_cst_id_seq', 1000000259, true);
 
 
 --
@@ -843,7 +843,7 @@ INSERT INTO food_attr_lcl VALUES (58, 18, '不適用', 'zh-HK');
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 232923, true);
+SELECT pg_catalog.setval('hibernate_sequence', 232952, true);
 
 
 --
@@ -892,12 +892,12 @@ INSERT INTO layout VALUES (5, 'LNDHM01', 'landing header menu brands');
 -- Data for Name: layout_category; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-INSERT INTO layout_category VALUES (17, 1, 2);
-INSERT INTO layout_category VALUES (18, 2, 38);
-INSERT INTO layout_category VALUES (19, 3, 3);
-INSERT INTO layout_category VALUES (20, 3, 4);
-INSERT INTO layout_category VALUES (21, 4, 43);
-INSERT INTO layout_category VALUES (22, 5, 45);
+INSERT INTO layout_category VALUES (17, 1, 2, 1);
+INSERT INTO layout_category VALUES (18, 2, 38, 1);
+INSERT INTO layout_category VALUES (19, 3, 3, 1);
+INSERT INTO layout_category VALUES (20, 3, 4, 1);
+INSERT INTO layout_category VALUES (21, 4, 43, 1);
+INSERT INTO layout_category VALUES (22, 5, 45, 1);
 
 
 --
@@ -1203,6 +1203,12 @@ INSERT INTO product_attr_lcl VALUES (45, 23, 'RaspberryDan', 'raspberry.jpg', 'e
 
 
 --
+-- Data for Name: product_bundle; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+
+
+--
 -- Data for Name: product_category; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -1263,7 +1269,7 @@ INSERT INTO product_category VALUES (90, 5, 43);
 -- Name: product_category_prd_cat_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('product_category_prd_cat_id_seq', 114, true);
+SELECT pg_catalog.setval('product_category_prd_cat_id_seq', 116, true);
 
 
 --

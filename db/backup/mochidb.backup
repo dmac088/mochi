@@ -1872,8 +1872,9 @@ ALTER TABLE layout_category_lay_cat_id_seq OWNER TO mochidb_owner;
 
 CREATE TABLE layout_category (
     lay_cat_id bigint DEFAULT nextval('layout_category_lay_cat_id_seq'::regclass) NOT NULL,
-    lay_id bigint,
-    cat_id bigint
+    lay_id bigint NOT NULL,
+    cat_id bigint NOT NULL,
+    ord_num bigint NOT NULL
 );
 
 
@@ -2119,6 +2120,19 @@ CREATE TABLE product_attr_lcl (
 
 
 ALTER TABLE product_attr_lcl OWNER TO mochidb_owner;
+
+--
+-- Name: product_bundle; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE product_bundle (
+    prd_bdl_id bigint NOT NULL,
+    bdl_id bigint NOT NULL,
+    prd_id bigint NOT NULL
+);
+
+
+ALTER TABLE product_bundle OWNER TO mochidb_owner;
 
 --
 -- Name: product_category_prd_cat_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
@@ -3188,7 +3202,7 @@ COPY customer (rle_id, cst_id) FROM stdin;
 -- Name: customer_cst_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('customer_cst_id_seq', 1000000258, true);
+SELECT pg_catalog.setval('customer_cst_id_seq', 1000000259, true);
 
 
 --
@@ -3303,7 +3317,7 @@ COPY food_attr_lcl (prd_lcl_id, prd_id, ingredients, lcl_cd) FROM stdin;
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 232923, true);
+SELECT pg_catalog.setval('hibernate_sequence', 232952, true);
 
 
 --
@@ -3354,13 +3368,13 @@ COPY layout (lay_id, lay_cd, lay_desc) FROM stdin;
 -- Data for Name: layout_category; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY layout_category (lay_cat_id, lay_id, cat_id) FROM stdin;
-17	1	2
-18	2	38
-19	3	3
-20	3	4
-21	4	43
-22	5	45
+COPY layout_category (lay_cat_id, lay_id, cat_id, ord_num) FROM stdin;
+17	1	2	1
+18	2	38	1
+19	3	3	1
+20	3	4	1
+21	4	43	1
+22	5	45	1
 \.
 
 
@@ -3980,6 +3994,14 @@ COPY product_attr_lcl (prd_lcl_id, prd_id, prd_desc, prd_img_pth, lcl_cd) FROM s
 
 
 --
+-- Data for Name: product_bundle; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+COPY product_bundle (prd_bdl_id, bdl_id, prd_id) FROM stdin;
+\.
+
+
+--
 -- Data for Name: product_category; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -4042,7 +4064,7 @@ COPY product_category (prd_cat_id, prd_id, cat_id) FROM stdin;
 -- Name: product_category_prd_cat_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('product_category_prd_cat_id_seq', 114, true);
+SELECT pg_catalog.setval('product_category_prd_cat_id_seq', 116, true);
 
 
 --
@@ -4886,7 +4908,7 @@ COPY user_role (id, pty_id, role_id) FROM stdin;
 -- Name: user_role_id_seq; Type: SEQUENCE SET; Schema: security; Owner: security_owner
 --
 
-SELECT pg_catalog.setval('user_role_id_seq', 182, true);
+SELECT pg_catalog.setval('user_role_id_seq', 183, true);
 
 
 SET search_path = mochi, pg_catalog;
@@ -5161,6 +5183,14 @@ ALTER TABLE ONLY price_type
 
 ALTER TABLE ONLY product_attr_lcl
     ADD CONSTRAINT product_attr_lcl_pkey PRIMARY KEY (prd_lcl_id);
+
+
+--
+-- Name: product_bundle product_bundle_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY product_bundle
+    ADD CONSTRAINT product_bundle_pkey PRIMARY KEY (prd_bdl_id, bdl_id, prd_id);
 
 
 --
