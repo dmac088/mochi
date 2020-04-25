@@ -1,5 +1,5 @@
-package io.nzbee.test.unit.domain;
-
-public class UT_Product {
-
-}
+//package io.nzbee.test.unit.domain;
+//
+//public class UT_Product {
+//
+//}
