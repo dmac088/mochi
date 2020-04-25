@@ -20,7 +20,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-
 import io.nzbee.Globals;
 import io.nzbee.entity.brand.Brand_;
 import io.nzbee.entity.brand.attribute.BrandAttribute;

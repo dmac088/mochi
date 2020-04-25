@@ -4,7 +4,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -55,10 +54,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 							     io.nzbee.security.user.IUserRepository.class,
 							     io.nzbee.security.OAuth2ResourceServerConfig.class
 							     })
-
 @WebMvcTest(CategoryController.class)
 @Import(WebSecurityConfig.class)
-@ActiveProfiles(profiles = "dev")
+@ActiveProfiles(profiles = "tst")
 public class IT_CategoryControllerIntegrationTest {
 
     @Autowired

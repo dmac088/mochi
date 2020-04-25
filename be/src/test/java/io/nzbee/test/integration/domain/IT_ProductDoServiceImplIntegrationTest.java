@@ -11,6 +11,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import io.nzbee.Globals;
 import io.nzbee.domain.product.Food;
 import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.product.Product;
@@ -27,6 +29,9 @@ public class IT_ProductDoServiceImplIntegrationTest {
 		//the beans that we need to run this integration test
 		
     }
+	
+	@Autowired
+	private Globals globalVars;
 	
 	@Autowired
     private IProductService productService;
@@ -52,14 +57,14 @@ public class IT_ProductDoServiceImplIntegrationTest {
 	
 	@Test
     public void whenValidCode_thenProductShouldBeFound() {
-        Product found = productService.findByCode("en-GB", "HKD", "3254354673").get();
+        Product found = productService.findByCode(globalVars.getLocaleENGB(), globalVars.getCurrencyHKD(), "3254354673").get();
       
         assertFound(found);
     }
     
     @Test
     public void whenValidDesc_thenProductShouldBeFound() {
-    	Product found = productService.findByDesc("en-GB", "HKD", "Test Product Description").get();
+    	Product found = productService.findByDesc(globalVars.getLocaleENGB(), globalVars.getCurrencyHKD(), "Test Product Description").get();
       
         assertFound(found);
     }

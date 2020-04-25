@@ -12,6 +12,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import io.nzbee.Globals;
 import io.nzbee.domain.tag.ITagService;
 import io.nzbee.domain.tag.Tag;
 import io.nzbee.test.integration.beans.TagDoBeanFactory;
@@ -27,6 +29,9 @@ public class IT_TagDoServiceImplIntegrationTest {
 		//the beans that we need to run this integration test
 		
     }
+	
+	@Autowired
+	private Globals globalVars;
 	
 	@Autowired
     private ITagService tagService;
@@ -51,14 +56,14 @@ public class IT_TagDoServiceImplIntegrationTest {
 	
 	@Test
     public void whenValidCode_thenTagShouldBeFound() {
-        Tag found = tagService.findByCode("en-GB", "HKD", "TST01").get();
+        Tag found = tagService.findByCode(globalVars.getLocaleENGB(), globalVars.getCurrencyHKD(), "TST01").get();
       
         assertFound(found);
     }
     
 	@Test
     public void whenValidDesc_thenTagShouldBeFound() {
-        Tag found = tagService.findByDesc("en-GB", "HKD", "test tag").get();
+        Tag found = tagService.findByDesc(globalVars.getLocaleENGB(), globalVars.getCurrencyHKD(), "test tag").get();
       
         assertFound(found);
     }
