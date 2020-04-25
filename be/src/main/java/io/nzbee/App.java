@@ -14,7 +14,8 @@ import io.nzbee.util.FileStorageProperties;
 @SpringBootApplication
 @EnableCaching
 @EnableConfigurationProperties({
-    FileStorageProperties.class
+    FileStorageProperties.class,
+    Globals.class
 })
 @ComponentScan({"io.nzbee.*"})
 public class App {
