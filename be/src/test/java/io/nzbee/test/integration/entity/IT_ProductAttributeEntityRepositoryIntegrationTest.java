@@ -19,10 +19,11 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import io.nzbee.Globals;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.Product;
 import io.nzbee.test.integration.beans.ProductEntityBeanFactory;
-import io.nzbee.variables.GeneralVars;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -59,6 +60,9 @@ public class IT_ProductAttributeEntityRepositoryIntegrationTest {
 	private EntityManager entityManager;
 	
 	@Autowired
+	private Globals globalVars;
+	
+	@Autowired
 	private ProductEntityBeanFactory productEntityBeanFactory;
  
     @Autowired
@@ -84,8 +88,8 @@ public class IT_ProductAttributeEntityRepositoryIntegrationTest {
 	@Test
 	public void whenFindById_thenReturnProduct() {
 		 // when
-    	Product found = productService.findById(  GeneralVars.LANGUAGE_ENGLISH, 
-												  GeneralVars.CURRENCY_HKD,  
+    	Product found = productService.findById(  globalVars.getLocaleENGB(), 
+												  globalVars.getCurrencyHKD(),  
 												  p.getProductId()).get();
      
         // then
@@ -96,8 +100,8 @@ public class IT_ProductAttributeEntityRepositoryIntegrationTest {
 	@Test
 	public void whenFindByCode_thenReturnProduct() {
 		 // when
-    	Product found = productService.findByCode(GeneralVars.LANGUAGE_ENGLISH, 
-												  GeneralVars.CURRENCY_HKD,  
+    	Product found = productService.findByCode(globalVars.getLocaleENGB(), 
+				  								  globalVars.getCurrencyHKD(),  
 												  "123456789").get();
      
         // then

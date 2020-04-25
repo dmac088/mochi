@@ -23,13 +23,14 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import io.nzbee.Globals;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.category.product.ICategoryProductService;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.food.Food;
 import io.nzbee.test.integration.beans.ProductEntityBeanFactory;
-import io.nzbee.variables.GeneralVars;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -66,6 +67,9 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	private EntityManager entityManager;
 	
 	@Autowired
+	private Globals globalVars;
+	
+	@Autowired
 	private ProductEntityBeanFactory productEntityBeanFactory;
  
     @Autowired
@@ -94,8 +98,8 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	@Test
 	public void whenFindById_thenReturnProduct() {
 		 // when
-    	Product found = productService.findById(  GeneralVars.LANGUAGE_ENGLISH, 
-												  GeneralVars.CURRENCY_USD,  
+    	Product found = productService.findById(  globalVars.getLocaleENGB(), 
+				  								  globalVars.getCurrencyUSD(),  
 												  product.getProductId()).get();
      
         // then
@@ -106,8 +110,8 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	@Test
 	public void whenFindByCode_thenReturnProduct() {
 		 // when
-    	Product found = productService.findByCode(GeneralVars.LANGUAGE_ENGLISH, 
-												  GeneralVars.CURRENCY_USD,  
+    	Product found = productService.findByCode(globalVars.getLocaleENGB(), 
+				  								  globalVars.getCurrencyUSD(),  
 												  "123456789").get();
      
         // then
@@ -117,8 +121,8 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	@Test
 	public void whenFindByDesc_thenReturnProduct() {
 		 // when
-    	Product found = productService.findByDesc(GeneralVars.LANGUAGE_ENGLISH, 
-												  GeneralVars.CURRENCY_USD,  
+    	Product found = productService.findByDesc(globalVars.getLocaleENGB(), 
+				  								  globalVars.getCurrencyUSD(),  
 												  "test product").get();
      
         // then
@@ -129,9 +133,9 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     public void whenFindByProductCode_thenReturnProductCategories() {
     	
         // when
-    	List<CategoryProduct> found = productCategoryService.findAllByProductCode(GeneralVars.LANGUAGE_ENGLISH, 
-				 													 GeneralVars.CURRENCY_USD, 
-				 													"123456789");
+    	List<CategoryProduct> found = productCategoryService.findAllByProductCode(globalVars.getLocaleENGB(), 
+				  																  globalVars.getCurrencyUSD(), 
+				 																  "123456789");
      
         //then
     	assertTrue(found.size() == 1);

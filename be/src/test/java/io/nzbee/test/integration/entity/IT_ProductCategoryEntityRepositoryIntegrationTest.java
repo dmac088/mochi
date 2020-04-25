@@ -19,10 +19,10 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
+import io.nzbee.Globals;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.test.integration.beans.CategoryEntityBeanFactory;
-import io.nzbee.variables.GeneralVars;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -59,6 +59,9 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
 	private EntityManager entityManager;
 	
 	@Autowired
+	private Globals globalVars;
+	
+	@Autowired
 	private CategoryEntityBeanFactory categoryEntityBeanFactory;
  
     @Autowired
@@ -90,8 +93,8 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     public void whenFindById_thenReturnProductCategory() {
     	
         // when
-    	Category found = categoryService.findById(GeneralVars.LANGUAGE_ENGLISH, 
-												  GeneralVars.CURRENCY_USD,  
+    	Category found = categoryService.findById(globalVars.getLocaleENGB(), 
+												  globalVars.getCurrencyUSD(),  
 												  category.getCategoryId()).get();
      
         // then
@@ -102,8 +105,8 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     public void whenFindByCode_thenReturnProductCategory() {
     	
         // when
-    	Category found = categoryService.findByCode(GeneralVars.LANGUAGE_ENGLISH, 
-				 									GeneralVars.CURRENCY_USD, 
+    	Category found = categoryService.findByCode(globalVars.getLocaleENGB(), 
+				  									globalVars.getCurrencyUSD(), 
 				 									"TST02").get();
      
         // then
@@ -114,8 +117,8 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     public void whenFindByDesc_thenReturnProductCategory() {
     	
         // when
-    	Category found = categoryService.findByDesc(GeneralVars.LANGUAGE_ENGLISH, 
-				 									GeneralVars.CURRENCY_USD, 
+    	Category found = categoryService.findByDesc(globalVars.getLocaleENGB(), 
+				  									globalVars.getCurrencyUSD(), 
 				 									"test product category").get();
      
         //then

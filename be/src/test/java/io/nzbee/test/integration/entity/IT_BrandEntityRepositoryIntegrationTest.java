@@ -19,12 +19,12 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
+import io.nzbee.Globals;
 import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.brand.BrandServiceImpl;
 import io.nzbee.entity.brand.IBrandService;
 import io.nzbee.resources.brand.BrandResourceAssembler;
 import io.nzbee.test.integration.beans.BrandEntityBeanFactory;
-import io.nzbee.variables.GeneralVars;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -67,6 +67,9 @@ public class IT_BrandEntityRepositoryIntegrationTest {
 	private EntityManager entityManager;
 	
 	@Autowired
+	private Globals globalVars;
+	
+	@Autowired
 	private BrandEntityBeanFactory brandEntityBeanFactory;
  
     @Autowired
@@ -94,9 +97,9 @@ public class IT_BrandEntityRepositoryIntegrationTest {
     public void whenFindById_thenReturnBrand() {
     	
         // when
-    	Brand found = brandService.findById(GeneralVars.LANGUAGE_ENGLISH, 
-												  GeneralVars.CURRENCY_USD,  
-												  brand.getId()).get();
+    	Brand found = brandService.findById(globalVars.getLocaleENGB(), 
+				  							globalVars.getCurrencyUSD(),  
+				  							brand.getId()).get();
      
         // then
     	assertFound(found);
@@ -120,8 +123,8 @@ public class IT_BrandEntityRepositoryIntegrationTest {
     public void whenFindByDesc_thenReturnBrand() {
     	
         // when
-    	Brand found = brandService.findByDesc(GeneralVars.LANGUAGE_ENGLISH, 
-				 							  GeneralVars.CURRENCY_USD, 
+    	Brand found = brandService.findByDesc(globalVars.getLocaleENGB(), 
+				 							  globalVars.getCurrencyUSD(), 
 				 							  "test brand").get();
      
         //then
