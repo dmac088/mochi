@@ -20,6 +20,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import io.nzbee.Globals;
 import io.nzbee.domain.category.CategoryServiceImpl;
 import io.nzbee.entity.adapters.PostgresCategoryAdapter;
 import io.nzbee.entity.category.CategoryMapper;
@@ -44,6 +46,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 							     CategoryMapper.class,
 							     CategoryResourceAssembler.class,
 							     PagedResourcesAssembler.class,
+							     Globals.class,
 							     io.nzbee.domain.category.CategoryServiceImpl.class,
 							     io.nzbee.entity.category.CategoryServiceImpl.class,
 							     io.nzbee.entity.category.CategoryDaoPostgresImpl.class,
@@ -59,6 +62,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 @ActiveProfiles(profiles = "tst")
 public class IT_CategoryControllerIntegrationTest {
 
+	@Autowired
+	private Globals globalVars;
+	
     @Autowired
     private MockMvc mockMvc;
 
