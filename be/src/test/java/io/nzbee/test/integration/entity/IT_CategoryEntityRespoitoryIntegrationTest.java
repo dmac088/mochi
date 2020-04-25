@@ -20,11 +20,11 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
+import io.nzbee.Globals;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.brand.CategoryBrand;
 import io.nzbee.entity.category.product.CategoryProduct;
-import io.nzbee.variables.GeneralVars;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -56,7 +56,9 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	@Qualifier("mochiEntityManagerFactory")
 	private EntityManager entityManager;
 	
- 
+	@Autowired
+	private Globals globalVars;
+
     @Autowired
     private ICategoryService categoryService;
     
@@ -64,8 +66,8 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
     public void whenFindAll_thenReturnAllCategories() {
     	
         // when
-    	List<Category> found = categoryService.findAll( GeneralVars.LANGUAGE_ENGLISH, 
-												  		GeneralVars.CURRENCY_USD);
+    	List<Category> found = categoryService.findAll( globalVars.getLocaleENGB(), 
+												  		globalVars.getCurrencyUSD());
      
         // then
     	assertAllCategoriesFound(found);
@@ -75,8 +77,8 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
     public void whenFindAllBrandCategories_thenReturnAllBrandCategories() {
     	
         // when
-    	List<Category> found = categoryService.findAll( GeneralVars.LANGUAGE_ENGLISH, 
-												  		GeneralVars.CURRENCY_USD,
+    	List<Category> found = categoryService.findAll( globalVars.getLocaleENGB(), 
+		  											    globalVars.getCurrencyUSD(),
 												  		CategoryBrand.class);
      
         // then
@@ -87,8 +89,8 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
     public void whenFindAllProductCategories_thenReturnAllProductCategories() {
     	
         // when
-    	List<Category> found = categoryService.findAll( GeneralVars.LANGUAGE_ENGLISH, 
-												  		GeneralVars.CURRENCY_USD,
+    	List<Category> found = categoryService.findAll( globalVars.getLocaleENGB(), 
+		  												globalVars.getCurrencyUSD(),
 												  		CategoryProduct.class);
      
         // then
