@@ -10,10 +10,9 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-@EnableConfigurationProperties(Globals.class)
 @EnableWebMvc
 @Order(1)
-public class WebMvcConfigDev implements WebMvcConfigurer {
+public class WebMvcConfig implements WebMvcConfigurer {
 
     private static final String[] CLASSPATH_RESOURCE_LOCATIONS = { "classpath:/public/" };
 
@@ -37,4 +36,5 @@ public class WebMvcConfigDev implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedMethods("HEAD", "GET", "PUT", "POST", "DELETE", "PATCH");
     }  
+    
 }

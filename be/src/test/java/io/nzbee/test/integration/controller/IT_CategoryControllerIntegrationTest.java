@@ -50,7 +50,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 							     io.nzbee.entity.category.CategoryDaoPostgresImpl.class,
 							     io.nzbee.entity.DataSourceBeanMochi.class,
 							     io.nzbee.security.DataSourceBeanSecurity.class,
-							     io.nzbee.WebMvcConfigDev.class,
+							     io.nzbee.WebMvcConfig.class,
 							     io.nzbee.security.user.UserService.class,
 							     io.nzbee.security.user.IUserRepository.class,
 							     io.nzbee.security.OAuth2ResourceServerConfig.class
