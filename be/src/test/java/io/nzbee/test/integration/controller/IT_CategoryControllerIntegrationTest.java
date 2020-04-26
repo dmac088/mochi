@@ -95,14 +95,13 @@ public class IT_CategoryControllerIntegrationTest {
     @Test
     public void testFindOne() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/Category/en-GB/HKD/code/FRT01")
-                //.with(user(TEST_USER_ID))
                 .with(csrf())
-                //.content(birthday)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.ALL))
         		.andDo(print()).andExpect(status().isOk())
         		.andExpect(content().contentType("application/hal+json;charset=UTF-8"))
-        		.andExpect(jsonPath("$.data.categoryCode").value("FRT01"));
+        		.andExpect(jsonPath("$.data.categoryCode").value("FRT01"))
+        		.andExpect(jsonPath("$.data.categoryDesc").value("Fruit"));;
     }
     
 
