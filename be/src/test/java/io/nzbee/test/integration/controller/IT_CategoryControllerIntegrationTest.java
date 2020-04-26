@@ -65,6 +65,9 @@ public class IT_CategoryControllerIntegrationTest {
 	
     @Autowired
     private MockMvc mockMvc;
+    
+    @Autowired
+	private Globals globalVars;
 
     @Autowired
     private WebApplicationContext webApplicationContext;
@@ -94,14 +97,16 @@ public class IT_CategoryControllerIntegrationTest {
     
     @Test
     public void testFindOne() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/Category/en-GB/HKD/code/FRT01")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/Category/" + globalVars.getLocaleENGB() + "/" + globalVars.getCurrencyHKD() + "/code/FRT01")
                 .with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.ALL))
         		.andDo(print()).andExpect(status().isOk())
         		.andExpect(content().contentType("application/hal+json;charset=UTF-8"))
         		.andExpect(jsonPath("$.data.categoryCode").value("FRT01"))
-        		.andExpect(jsonPath("$.data.categoryDesc").value("Fruit"));;
+        		.andExpect(jsonPath("$.data.categoryDesc").value("Fruit"))
+        		.andExpect(jsonPath("$.data.locale").value(globalVars.getLocaleENGB()))
+        		.andExpect(jsonPath("$.data.currency").value(globalVars.getCurrencyHKD()));
     }
     
 
