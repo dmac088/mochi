@@ -1,8 +1,11 @@
 package io.nzbee.test.integration.controller;
 
-import static org.junit.Assert.assertNotNull;
+import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,11 +19,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-
 import io.nzbee.Globals;
 import io.nzbee.domain.category.CategoryServiceImpl;
 import io.nzbee.entity.adapters.PostgresCategoryAdapter;
@@ -61,9 +62,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 @Import(WebSecurityConfig.class)
 @ActiveProfiles(profiles = "tst")
 public class IT_CategoryControllerIntegrationTest {
-
-	@Autowired
-	private Globals globalVars;
 	
     @Autowired
     private MockMvc mockMvc;
@@ -81,43 +79,30 @@ public class IT_CategoryControllerIntegrationTest {
     
     @Test
     public void testFindAll() throws Exception {
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/Category/en-GB/HKD")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/Category/en-GB/HKD")
                 //.with(user(TEST_USER_ID))
                 .with(csrf())
                 //.content(birthday)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.ALL))
-                .andExpect(status().isOk())
-                .andReturn();
+        		.andDo(print()).andExpect(status().isOk())
+        		.andExpect(content().contentType("application/hal+json;charset=UTF-8"))
+        		.andExpect(jsonPath("$._embedded.categoryResources.length()", is(43)));
         
-        
-        String response = result.getResponse().getContentAsString();
-        
-        System.out.println(response);
-        
-        assertNotNull(response);
-       // assertEquals(dow, resultDOW);
     }
     
     
     @Test
     public void testFindOne() throws Exception {
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/Category/en-GB/HKD/code/FRT01")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/Category/en-GB/HKD/code/FRT01")
                 //.with(user(TEST_USER_ID))
                 .with(csrf())
                 //.content(birthday)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.ALL))
-                .andExpect(status().isOk())
-                .andReturn();
-        
-        
-        String response = result.getResponse().getContentAsString();
-        
-        System.out.println(response);
-        
-        assertNotNull(response);
-       // assertEquals(dow, resultDOW);
+        		.andDo(print()).andExpect(status().isOk())
+        		.andExpect(content().contentType("application/hal+json;charset=UTF-8"))
+        		.andExpect(jsonPath("$.data.categoryCode").value("FRT01"));
     }
     
 
