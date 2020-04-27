@@ -3,18 +3,18 @@ package io.nzbee.dto.facet;
 import java.util.Objects;
 import org.apache.lucene.search.Query;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import io.nzbee.domain.IDomainObject;
+import io.nzbee.domain.ISearchDimension;
 
 @JsonTypeName("SearchFacet")
 public class SearchFacet  implements org.hibernate.search.query.facet.Facet, IFacet {
 	
 	private final org.hibernate.search.query.facet.Facet delegate;
 	
-	private IDomainObject entity;
+	private ISearchDimension entity;
 	
 	private String value;
 	 
-	public SearchFacet(org.hibernate.search.query.facet.Facet f, IDomainObject entity) {
+	public SearchFacet(org.hibernate.search.query.facet.Facet f, ISearchDimension entity) {
 	  this.delegate = f;
 	  this.entity = entity;
 	  if(!(f==null)) {
@@ -25,27 +25,27 @@ public class SearchFacet  implements org.hibernate.search.query.facet.Facet, IFa
 	@Override
 	public String getId() {
 		// TODO Auto-generated method stub
-		return ((IDomainObject)this.getPayload()).getCode();
+		return ((ISearchDimension)this.getPayload()).getCode();
 	}
 
 	@Override
 	public String getDisplayValue() {
 		// TODO Auto-generated method stub
-		return ((IDomainObject)this.getPayload()).getDesc();
+		return ((ISearchDimension)this.getPayload()).getDesc();
 	}
 
 	@Override
 	public boolean isHierarchical() {
 		// TODO Auto-generated method stub
-		return ((IDomainObject)this.getPayload()).isHierarchical();
+		return ((ISearchDimension)this.getPayload()).isHierarchical();
 	}
 
 	@Override
-	public IDomainObject getPayload() {
+	public ISearchDimension getPayload() {
 	   return this.entity;
 	} 
 	
-	public void setPayload(IDomainObject domainObject) {
+	public void setPayload(ISearchDimension domainObject) {
 		this.entity = domainObject;
 	}
 	

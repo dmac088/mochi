@@ -6,12 +6,12 @@ import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import io.nzbee.domain.IDomainObject;
+import io.nzbee.domain.ISearchDimension;
 import io.nzbee.domain.category.BrandCategory;
 import io.nzbee.domain.product.Product;
 
 @JsonTypeName("brand")
-public class Brand implements IDomainObject {
+public class Brand implements ISearchDimension {
 
 	private String brandCode;
 

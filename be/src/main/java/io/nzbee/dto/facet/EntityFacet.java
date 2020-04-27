@@ -2,14 +2,14 @@ package io.nzbee.dto.facet;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
-import io.nzbee.domain.IDomainObject;
+import io.nzbee.domain.ISearchDimension;
 
 @JsonTypeName("EntityFacet")
 public class EntityFacet implements IFacet {
 
-	private final IDomainObject payload;
+	private final ISearchDimension payload;
 
-	public EntityFacet(IDomainObject entity) {
+	public EntityFacet(ISearchDimension entity) {
 		this.payload = entity;
 	}
 	
@@ -32,7 +32,7 @@ public class EntityFacet implements IFacet {
 	}
 
 	@Override
-	public IDomainObject getPayload() {
+	public ISearchDimension getPayload() {
 		return this.payload;
 	}
 
