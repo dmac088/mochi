@@ -13,6 +13,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import io.nzbee.Globals;
+import io.nzbee.domain.ports.IProductPortService;
 import io.nzbee.domain.product.Food;
 import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.product.Product;
@@ -34,7 +35,7 @@ public class IT_ProductDoServiceImplIntegrationTest {
 	private Globals globalVars;
 	
 	@Autowired
-    private IProductService productService;
+    private IProductPortService productService;
 	
 	@Autowired
 	private ProductDoBeanFactory productDoBeanFactory;

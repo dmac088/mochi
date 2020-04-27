@@ -60,6 +60,12 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 		personService.save(p);
 	}
 
+	@Override
+	public void registerNewCustomer(Customer customer) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 
 }

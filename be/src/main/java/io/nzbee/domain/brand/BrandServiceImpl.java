@@ -5,10 +5,8 @@ import java.util.Set;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.stereotype.Service;
 import io.nzbee.domain.IFacetService;
 
-@Service(value = "brandDomainService")
 @CacheConfig(cacheNames="brands")
 public class BrandServiceImpl implements IBrandService, IFacetService {
     

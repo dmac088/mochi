@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import io.nzbee.domain.customer.Customer;
-import io.nzbee.domain.customer.ICustomerService;
+import io.nzbee.domain.ports.ICustomerPortService;
 import io.nzbee.domain.services.GenericResponse;
 import io.nzbee.exceptions.CustomerAlreadyExistException;
 
@@ -19,7 +19,7 @@ public class CustomerController {
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private ICustomerService customerService;
+    private ICustomerPortService customerService;
 
     public CustomerController() {
         super();
