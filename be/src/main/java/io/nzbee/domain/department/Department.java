@@ -2,12 +2,10 @@ package io.nzbee.domain.department;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import io.nzbee.domain.ISearchDimension;
 import io.nzbee.domain.product.Product;
- 
+
 public class Department implements ISearchDimension {
 
 	private String departmentCode;
