@@ -19,6 +19,7 @@ public class BrandCategory extends Category {
 							String currency) {
 		super(categoryCode, 
 			  categoryDesc, 
+			  "brandcategory",
 			  level, 
 			  locale, 
 			  currency,
@@ -44,25 +45,21 @@ public class BrandCategory extends Category {
 
 	@Override
 	public String getCode() {
-		// TODO Auto-generated method stub
 		return super.getCategoryCode();
 	}
 
 	@Override
 	public boolean isHierarchical() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public Long getLevel() {
-		// TODO Auto-generated method stub
 		return super.getCategoryLevel();
 	}
 
 	@Override
 	public String getDesc() {
-		// TODO Auto-generated method stub
 		return super.getCategoryDesc();
 	}
 	

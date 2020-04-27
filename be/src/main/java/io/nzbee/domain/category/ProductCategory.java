@@ -21,13 +21,14 @@ public class ProductCategory extends Category {
 							String currency) {
 		
 		super(categoryCode, 
-			  categoryDesc, 
+			  categoryDesc,
+			  "productcategory",
 			  level, 
 			  locale, 
 			  currency,
 			  parentCode,
-			  objectCount);
-		
+			  objectCount
+			  );
 		this.products = new ArrayList<Product>();
 	}
 	
@@ -50,25 +51,21 @@ public class ProductCategory extends Category {
 	
 	@Override
 	public String getCode() {
-		// TODO Auto-generated method stub
 		return super.getCategoryCode();
 	}
 	
 	@Override
 	public String getDesc() {
-		// TODO Auto-generated method stub
 		return super.getCategoryDesc();
 	}
 	
 	@Override
 	public boolean isHierarchical() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public Long getLevel() {
-		// TODO Auto-generated method stub
 		return super.getCategoryLevel();
 	}
 
