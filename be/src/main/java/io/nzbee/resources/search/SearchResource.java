@@ -8,7 +8,6 @@ import io.nzbee.domain.product.Product;
 import io.nzbee.resources.product.ProductResource;
 import io.nzbee.search.ISearchService;
 import io.nzbee.search.dto.facet.IFacet;
-import lombok.Getter;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -16,7 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.web.PagedResourcesAssembler;
 
-@Getter
+
 public class SearchResource extends ResourceSupport {
 	
     private PagedResources<Resource<ProductResource>> products;

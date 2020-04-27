@@ -2,6 +2,8 @@ package io.nzbee.search.dto.facet;
 
 import java.util.Objects;
 import org.apache.lucene.search.Query;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import io.nzbee.domain.ISearchDimension;
 
@@ -67,6 +69,7 @@ public class SearchFacet  implements org.hibernate.search.query.facet.Facet, IFa
 	}
 	
 	@Override
+	@JsonIgnore
 	public Query getFacetQuery() {
 		return delegate.getFacetQuery();
 	}
@@ -79,10 +82,6 @@ public class SearchFacet  implements org.hibernate.search.query.facet.Facet, IFa
 	@Override
 	public String getPayloadType() {
 		return this.getPayload().getClass().getSimpleName();
-	}
-
-	public void setValue(String value) {
-		this.value = value;
 	}
 	
 	@Override
