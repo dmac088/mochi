@@ -34,14 +34,14 @@ public class CategoryResourceAssembler extends ResourceAssemblerSupport<Category
 				linkTo(methodOn(BrandController.class).getBrands(		category.getLocale(), 
 																		category.getCurrency(), 
 																		category.getCode()
-																)).withRel("brands")//,
-//				linkTo(methodOn(ProductController.class).getProducts(	category.getLocale(), 
-//																	 	category.getCurrency(), 
-//																	 	category.getCode(),
-//																	 	0,
-//																	 	10,
-//																	 	parAssembler
-//																)).withRel("products")
+																)).withRel("brands"),
+				linkTo(methodOn(ProductController.class).getProducts(	category.getLocale(), 
+																	 	category.getCurrency(), 
+																	 	category.getCode(),
+																	 	0,
+																	 	10,
+																	 	parAssembler
+																)).withRel("products")
 				);
 		return cr;
     }
