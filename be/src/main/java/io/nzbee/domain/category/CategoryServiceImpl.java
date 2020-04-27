@@ -3,12 +3,11 @@ package io.nzbee.domain.category;
 import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import io.nzbee.domain.IFacetService;
 import io.nzbee.domain.ports.ICategoryPortService;
 
-@Service(value="categoryDomainService")
+
 public class CategoryServiceImpl implements ICategoryService, IFacetService {
     
     @Autowired
