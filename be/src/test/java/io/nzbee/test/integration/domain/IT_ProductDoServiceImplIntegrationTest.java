@@ -11,11 +11,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import io.nzbee.Globals;
 import io.nzbee.domain.ports.IProductPortService;
 import io.nzbee.domain.product.Food;
-import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.product.Product;
 import io.nzbee.test.integration.beans.ProductDoBeanFactory;
 
