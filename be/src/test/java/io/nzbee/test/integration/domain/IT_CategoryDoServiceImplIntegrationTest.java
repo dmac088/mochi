@@ -11,7 +11,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-import io.nzbee.domain.category.ICategoryService;
+import io.nzbee.domain.ports.ICategoryPortService;
 import io.nzbee.Globals;
 import io.nzbee.domain.category.Category;
 
@@ -25,7 +25,7 @@ public class IT_CategoryDoServiceImplIntegrationTest {
 	private Globals globalVars;
 	
 	@Autowired
-	private ICategoryService categoryService;
+	private ICategoryPortService categoryService;
 
 	@Test
 	public void whenFindAll_thenReturnAllCategories() {

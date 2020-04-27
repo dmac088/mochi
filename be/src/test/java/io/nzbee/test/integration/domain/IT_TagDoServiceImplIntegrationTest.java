@@ -12,9 +12,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import io.nzbee.Globals;
-import io.nzbee.domain.tag.ITagService;
+import io.nzbee.domain.ports.ITagPortService;
 import io.nzbee.domain.tag.Tag;
 import io.nzbee.test.integration.beans.TagDoBeanFactory;
 
@@ -34,7 +33,7 @@ public class IT_TagDoServiceImplIntegrationTest {
 	private Globals globalVars;
 	
 	@Autowired
-    private ITagService tagService;
+    private ITagPortService tagService;
 	
 	@Autowired
 	private TagDoBeanFactory tagDoBeanFactory;
