@@ -5,6 +5,7 @@ import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.ResourceAssembler;
 import org.springframework.hateoas.ResourceSupport;
 
+import io.nzbee.domain.ports.IProductPortService;
 import io.nzbee.domain.product.Product;
 import io.nzbee.dto.facet.IFacet;
 import io.nzbee.resources.product.ProductResource;
@@ -61,6 +62,9 @@ public class SearchResource extends ResourceSupport {
     	
 		this.facets = returnFacets;
     }
+
+
+	
 
 
 	public PagedResources<Resource<ProductResource>> getProducts() {
