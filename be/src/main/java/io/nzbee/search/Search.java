@@ -1,9 +1,10 @@
-package io.nzbee.ui.component.web.search;
+package io.nzbee.search;
 
 import java.util.Set;
 import org.springframework.hateoas.PagedResources;
+
+import io.nzbee.dto.facet.IFacet;
 import io.nzbee.resources.product.ProductResource;
-import io.nzbee.ui.component.web.facet.IFacet;
 
 public class Search {
 	

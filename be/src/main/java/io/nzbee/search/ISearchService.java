@@ -1,9 +1,9 @@
-package io.nzbee.ui.component.web.search;
+package io.nzbee.search;
 
 import java.util.Set;
 import org.springframework.data.domain.Page;
 import io.nzbee.domain.product.Product;
-import io.nzbee.ui.component.web.facet.IFacet;
+import io.nzbee.dto.facet.IFacet;
 
 public interface ISearchService {
 	

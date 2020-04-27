@@ -4,10 +4,11 @@ import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.ResourceAssembler;
 import org.springframework.hateoas.ResourceSupport;
+
 import io.nzbee.domain.product.Product;
+import io.nzbee.dto.facet.IFacet;
 import io.nzbee.resources.product.ProductResource;
-import io.nzbee.ui.component.web.facet.IFacet;
-import io.nzbee.ui.component.web.search.ISearchService;
+import io.nzbee.search.ISearchService;
 import lombok.Getter;
 import java.util.HashSet;
 import java.util.Set;

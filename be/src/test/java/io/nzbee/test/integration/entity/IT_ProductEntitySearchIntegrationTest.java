@@ -29,14 +29,15 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
+
 import io.nzbee.domain.IFacetService;
 import io.nzbee.domain.brand.BrandServiceImpl;
 import io.nzbee.domain.category.CategoryServiceImpl;
 import io.nzbee.domain.tag.TagServiceImpl;
+import io.nzbee.dto.facet.IFacet;
 import io.nzbee.entity.product.Product;
+import io.nzbee.search.ISearchService;
 import io.nzbee.test.integration.beans.ProductEntityBeanFactory;
-import io.nzbee.ui.component.web.facet.IFacet;
-import io.nzbee.ui.component.web.search.ISearchService;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import io.nzbee.domain.ports.IProductPortService;
-import io.nzbee.ui.component.web.facet.IFacet;
+import io.nzbee.dto.facet.IFacet;
 
 @Service(value = "productDomainService")
 public class ProductServiceImpl implements IProductService {

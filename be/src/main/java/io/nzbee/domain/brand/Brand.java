@@ -57,25 +57,21 @@ public class Brand implements IDomainObject {
 
 	@Override
 	public String getCode() {
-		// TODO Auto-generated method stub
 		return this.brandCode;
 	}
 
 	@Override
 	public boolean isHierarchical() {
-		// TODO Auto-generated method stub
 		return false; 
 	}
 
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
 		return objectCount;
 	}
 
 	@Override
 	public String getDesc() {
-		// TODO Auto-generated method stub
 		return this.brandDesc;
 	}
 
