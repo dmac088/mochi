@@ -22,13 +22,14 @@ public class ProductCategory extends Category {
 		
 		super(categoryCode, 
 			  categoryDesc,
-			  "productcategory",
 			  level, 
 			  locale, 
 			  currency,
 			  parentCode,
 			  objectCount
 			  );
+		
+		this.categoryType = this.getClass().getSimpleName().toString().toLowerCase();
 		this.products = new ArrayList<Product>();
 	}
 	
