@@ -119,7 +119,6 @@ public class ProductServiceImpl implements IProductService {
 	@Override
 	public void delete(Product object) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	
