@@ -42,12 +42,12 @@ import io.nzbee.domain.department.Department;
 import io.nzbee.domain.product.Food;
 import io.nzbee.domain.product.Jewellery;
 import io.nzbee.domain.product.Product;
-import io.nzbee.dto.facet.SearchFacet;
-import io.nzbee.dto.facet.SearchFacetHelper;
-import io.nzbee.dto.facet.SearchFacetWithFieldHelper;
 import io.nzbee.entity.PageableUtil;
 import io.nzbee.entity.category.ICategoryMapper;
 import io.nzbee.entity.category.product.CategoryProduct;
+import io.nzbee.search.dto.facet.SearchFacet;
+import io.nzbee.search.dto.facet.SearchFacetHelper;
+import io.nzbee.search.dto.facet.SearchFacetWithFieldHelper;
 
 @Service(value = "SearchService")
 @CacheConfig(cacheNames = "products")
@@ -243,8 +243,8 @@ public class SearchServiceImpl implements ISearchService {
 						  int page, 
 						  int size,
 						  String sortBy, 
-						  Set<io.nzbee.dto.facet.IFacet> facetPayload,
-						  Set<io.nzbee.dto.facet.IFacet> returnFacets) {
+						  Set<io.nzbee.search.dto.facet.IFacet> facetPayload,
+						  Set<io.nzbee.search.dto.facet.IFacet> returnFacets) {
 		
 		FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
 

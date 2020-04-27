@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import io.nzbee.domain.product.Product;
-import io.nzbee.dto.facet.IFacet;
 import io.nzbee.resources.product.ProductResource;
 import io.nzbee.resources.search.SearchResource;
 import io.nzbee.search.ISearchService;
+import io.nzbee.search.dto.facet.IFacet;
 
 @RestController
 @RequestMapping(value = "/api", produces = "application/hal+json")

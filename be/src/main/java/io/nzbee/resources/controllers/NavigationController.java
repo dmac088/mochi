@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import io.nzbee.domain.ports.IProductPortService;
 import io.nzbee.domain.product.Product;
-import io.nzbee.dto.facet.FacetContainer;
 import io.nzbee.resources.product.ProductResource;
+import io.nzbee.search.dto.facet.FacetContainer;
 
 @RestController
 @RequestMapping("/api")

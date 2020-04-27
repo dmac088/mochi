@@ -1,4 +1,4 @@
-package io.nzbee.dto.facet;
+package io.nzbee.search.dto.facet;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 

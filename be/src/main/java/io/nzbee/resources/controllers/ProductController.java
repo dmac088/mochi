@@ -25,8 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import io.nzbee.domain.ports.IProductPortService;
 import io.nzbee.domain.product.Product;
-import io.nzbee.dto.facet.IFacet;
 import io.nzbee.resources.product.ProductResource;
+import io.nzbee.search.dto.facet.IFacet;
 
 @RestController
 @RequestMapping("/api")

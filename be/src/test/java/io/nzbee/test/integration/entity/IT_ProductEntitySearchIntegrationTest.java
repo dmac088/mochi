@@ -34,9 +34,9 @@ import io.nzbee.domain.IFacetService;
 import io.nzbee.domain.brand.BrandServiceImpl;
 import io.nzbee.domain.category.CategoryServiceImpl;
 import io.nzbee.domain.tag.TagServiceImpl;
-import io.nzbee.dto.facet.IFacet;
 import io.nzbee.entity.product.Product;
 import io.nzbee.search.ISearchService;
+import io.nzbee.search.dto.facet.IFacet;
 import io.nzbee.test.integration.beans.ProductEntityBeanFactory;
 
 @RunWith(SpringRunner.class)

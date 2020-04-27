@@ -4,7 +4,7 @@ import java.util.Set;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import io.nzbee.domain.IProductDimensionService;
-import io.nzbee.dto.facet.IFacet;
+import io.nzbee.search.dto.facet.IFacet;
 
 public interface IProductService extends IProductDimensionService<Product> {
 
