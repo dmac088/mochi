@@ -3,7 +3,7 @@ package io.nzbee.search;
 import java.util.Set;
 import org.springframework.data.domain.Page;
 import io.nzbee.domain.product.Product;
-import io.nzbee.dto.facet.IFacet;
+import io.nzbee.search.dto.facet.IFacet;
 
 public interface ISearchService {
 	

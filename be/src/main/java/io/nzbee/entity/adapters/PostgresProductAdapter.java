@@ -18,7 +18,6 @@ import io.nzbee.domain.department.Department;
 import io.nzbee.domain.ports.IProductPortService;
 import io.nzbee.domain.product.Food;
 import io.nzbee.domain.product.Product;
-import io.nzbee.dto.facet.IFacet;
 import io.nzbee.entity.brand.IBrandMapper;
 import io.nzbee.entity.brand.IBrandService;
 import io.nzbee.entity.category.ICategoryMapper;
@@ -32,6 +31,7 @@ import io.nzbee.entity.product.department.IDepartmentMapper;
 import io.nzbee.entity.product.department.IDepartmentService;
 import io.nzbee.entity.product.price.IProductPriceTypeService;
 import io.nzbee.entity.product.status.IProductStatusRepository;
+import io.nzbee.search.dto.facet.IFacet;
 
 @Component
 public class PostgresProductAdapter implements IProductPortService {
