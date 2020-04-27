@@ -16,7 +16,6 @@ public class CategoryResourceAssembler extends ResourceAssemblerSupport<Category
 
 	public CategoryResourceAssembler() {
 		super(CategoryController.class, CategoryResource.class);
-		// TODO Auto-generated constructor stub
 	}
 
 
@@ -31,11 +30,13 @@ public class CategoryResourceAssembler extends ResourceAssemblerSupport<Category
 																		category.getCurrency(), 
 																		category.getCode()
 																)).withSelfRel(),
-				linkTo(methodOn(BrandController.class).getBrands(		category.getLocale(), 
+				
+				category.getCategoryType().equals("brandcategory")
+				? linkTo(methodOn(BrandController.class).getBrands(		category.getLocale(), 
 																		category.getCurrency(), 
 																		category.getCode()
-																)).withRel("brands"),
-				linkTo(methodOn(ProductController.class).getProducts(	category.getLocale(), 
+																)).withRel("brands")
+				: linkTo(methodOn(ProductController.class).getProducts(	category.getLocale(), 
 																	 	category.getCurrency(), 
 																	 	category.getCode(),
 																	 	0,
