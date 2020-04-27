@@ -16,23 +16,23 @@ import io.nzbee.domain.ISearchDimension;
 			    @JsonSubTypes.Type(value = EntityFacet.class, name = "EntityFacet")})
 public interface IFacet {
 
-	String getId();
+	public String getId();
 	
-	String getDisplayValue();
+	public String getDisplayValue();
 	
-	boolean isHierarchical();
+	public boolean isHierarchical();
 
 	@JsonIgnore
-	ISearchDimension getPayload();
+	public ISearchDimension getPayload();
 	
-	String getType();
+	public String getType();
 	
-	String getPayloadType();
+	public String getPayloadType();
 
-	String getValue();
+	public String getValue();
 	
-	String getFacetingName();
+	public String getFacetingName();
 	
-	int getCount();
+	public int getCount();
 	
 }

@@ -133,6 +133,10 @@ import io.nzbee.entity.layout.Layout;
 	    })
 public abstract class Category {
 
+	public void setAttributes(Set<CategoryAttribute> attributes) {
+		this.attributes = attributes;
+	}
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="cat_id")
