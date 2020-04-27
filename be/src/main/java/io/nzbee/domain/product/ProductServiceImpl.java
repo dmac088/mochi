@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import io.nzbee.domain.ports.IProductPortService;
 import io.nzbee.dto.facet.IFacet;
 
+@Service(value="productDomainService")
 public class ProductServiceImpl implements IProductService {
     
     @Autowired 
