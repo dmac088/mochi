@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import io.nzbee.domain.product.Product;
+import io.nzbee.dto.facet.IFacet;
 
 public interface IProductPortService extends IProductDimensionService<Product> {
 
@@ -19,5 +20,11 @@ public interface IProductPortService extends IProductDimensionService<Product> {
 
 	Page<Product> findAll(String locale, String currency, Pageable pageable, String categoryDesc, List<Product> collect,
 			String sortBy);
+
+	Page<Product> findAll(String locale, String currency, Double price, int page, int size, String categoryDesc,
+			Set<IFacet> selectedFacets, String sortBy);
+
+	Page<Product> findAll(String locale, String currency, String categoryDesc, int page, int size,
+			Set<IFacet> selectedFacets, String sortBy);
 
 }

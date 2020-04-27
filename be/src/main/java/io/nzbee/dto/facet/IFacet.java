@@ -1,4 +1,4 @@
-package io.nzbee.ui.component.web.facet;
+package io.nzbee.dto.facet;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -6,8 +6,6 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import io.nzbee.domain.IDomainObject;
-import io.nzbee.ui.component.web.facet.navigation.EntityFacet;
-import io.nzbee.ui.component.web.facet.search.SearchFacet;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonTypeInfo(

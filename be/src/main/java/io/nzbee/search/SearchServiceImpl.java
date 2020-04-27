@@ -1,4 +1,4 @@
-package io.nzbee.ui.component.web.search;
+package io.nzbee.search;
 
 import java.util.Date;
 import java.io.IOException;
@@ -42,17 +42,16 @@ import io.nzbee.domain.department.Department;
 import io.nzbee.domain.product.Food;
 import io.nzbee.domain.product.Jewellery;
 import io.nzbee.domain.product.Product;
+import io.nzbee.dto.facet.SearchFacet;
+import io.nzbee.dto.facet.SearchFacetHelper;
+import io.nzbee.dto.facet.SearchFacetWithFieldHelper;
 import io.nzbee.entity.PageableUtil;
 import io.nzbee.entity.category.ICategoryMapper;
 import io.nzbee.entity.category.product.CategoryProduct;
-import io.nzbee.ui.component.web.facet.search.SearchFacet;
-import io.nzbee.ui.component.web.facet.search.SearchFacetHelper;
-import io.nzbee.ui.component.web.facet.search.SearchFacetWithFieldHelper;
-import io.nzbee.ui.component.web.generic.UIService;
 
 @Service(value = "SearchService")
 @CacheConfig(cacheNames = "products")
-public class SearchServiceImpl extends UIService implements ISearchService {
+public class SearchServiceImpl implements ISearchService {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	
@@ -244,8 +243,8 @@ public class SearchServiceImpl extends UIService implements ISearchService {
 						  int page, 
 						  int size,
 						  String sortBy, 
-						  Set<io.nzbee.ui.component.web.facet.IFacet> facetPayload,
-						  Set<io.nzbee.ui.component.web.facet.IFacet> returnFacets) {
+						  Set<io.nzbee.dto.facet.IFacet> facetPayload,
+						  Set<io.nzbee.dto.facet.IFacet> returnFacets) {
 		
 		FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
 

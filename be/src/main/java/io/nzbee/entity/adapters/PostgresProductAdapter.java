@@ -1,5 +1,6 @@
 package io.nzbee.entity.adapters;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -7,6 +8,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import io.nzbee.domain.brand.Brand;
@@ -15,6 +18,7 @@ import io.nzbee.domain.department.Department;
 import io.nzbee.domain.ports.IProductPortService;
 import io.nzbee.domain.product.Food;
 import io.nzbee.domain.product.Product;
+import io.nzbee.dto.facet.IFacet;
 import io.nzbee.entity.brand.IBrandMapper;
 import io.nzbee.entity.brand.IBrandService;
 import io.nzbee.entity.category.ICategoryMapper;
@@ -208,6 +212,90 @@ public class PostgresProductAdapter implements IProductPortService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	//returns a user interface object, rule broken, need to change to return a domain object 
+		@Override
+		public Page<Product> findAll(	 String locale, 
+								 String currency, 
+								 Double price,
+								 int page, 
+								 int size, 
+								 String categoryDesc,
+								 Set<IFacet> selectedFacets,
+								 String sortBy) {
+			
+			@SuppressWarnings("unused")
+			Set<IFacet> returnFacets = new HashSet<IFacet>();
+			
+			Page<io.nzbee.entity.product.Product> pp = productService.findAll(
+					   locale, 
+					   currency,
+					   new Double(0),
+					   price,
+					   "RET01",
+					   PageRequest.of(page, size), 
+					   categoryDesc, 
+					   selectedFacets.stream().filter(c -> c.getType().equals("category")).map(c -> c.getPayload().getCode()).collect(Collectors.toList()),
+					   selectedFacets.stream().filter(c -> c.getType().equals("brand")).map(c -> c.getPayload().getCode()).collect(Collectors.toList()),
+					   selectedFacets.stream().filter(c -> c.getType().equals("tag")).map(c -> c.getPayload().getCode()).collect(Collectors.toList()));
+
+			return new PageImpl<Product>(
+			//receive a list of entities and map to domain objects
+			pp.stream().map(pe -> {
+			io.nzbee.entity.brand.Brand be = pe.getBrand();
+			io.nzbee.entity.product.department.Department de = pe.getDepartment();
+			io.nzbee.entity.category.Category c = pe.getPrimaryCategory();
+			
+			Optional<Brand> bdo = brandMapper.entityToDo(Optional.ofNullable(be), locale, currency);
+			Optional<Department> ddo = departmentMapper.entityToDo(Optional.ofNullable(de), locale, currency);
+			Optional<ProductCategory> cdo = Optional.ofNullable((ProductCategory) categoryMapper.entityToDo(Optional.ofNullable(c), locale, currency).get());
+			return productMapper.entityToDo(Optional.ofNullable(pe), bdo, ddo, cdo).get();
+			})
+			.collect(Collectors.toList()),
+			PageRequest.of(page, size),
+			pp.getTotalElements());
+
+		}
+		
+		@Override
+		public Page<Product> findAll(String locale, 
+									 String currency, 
+									 String categoryDesc,
+									 int page, 
+									 int size,
+									 Set<IFacet> selectedFacets,
+									 String sortBy) {
+			
+			selectedFacets.stream().forEach(c -> {
+					System.out.println(c.getType());
+			});
+			
+			Page<io.nzbee.entity.product.Product> pp = productService.findAll(
+											   locale, 
+											   currency,
+											   "MKD01",
+											   PageRequest.of(page, size), 
+											   categoryDesc, 
+											   selectedFacets.stream().filter(c -> c.getType().equals("category")).map(c -> c.getPayload().getCode()).collect(Collectors.toList()),
+											   selectedFacets.stream().filter(c -> c.getType().equals("brand")).map(c -> c.getPayload().getCode()).collect(Collectors.toList()),
+											   selectedFacets.stream().filter(c -> c.getType().equals("tag")).map(c -> c.getPayload().getCode()).collect(Collectors.toList()));
+						
+			 return new PageImpl<Product>(
+				    //receive a list of entities and map to domain objects
+					pp.stream().map(pe -> {
+						io.nzbee.entity.brand.Brand be = pe.getBrand();
+						io.nzbee.entity.product.department.Department de = pe.getDepartment();
+						io.nzbee.entity.category.Category c = pe.getPrimaryCategory();
+						
+						Optional<Brand> bdo = brandMapper.entityToDo(Optional.ofNullable(be), locale, currency);
+						Optional<Department> ddo = departmentMapper.entityToDo(Optional.ofNullable(de), locale, currency);
+						Optional<ProductCategory> cdo = Optional.ofNullable((ProductCategory) categoryMapper.entityToDo(Optional.ofNullable(c), locale, currency).get());
+						return productMapper.entityToDo(Optional.ofNullable(pe), bdo, ddo, cdo).get();
+					})
+					.collect(Collectors.toList()),
+					PageRequest.of(page, size),
+					pp.getTotalElements());
+		}
 
 	
 }

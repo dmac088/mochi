@@ -1,4 +1,4 @@
-package io.nzbee.ui.component.web.facet.search;
+package io.nzbee.dto.facet;
 
 import java.util.HashSet;
 import java.util.Set;

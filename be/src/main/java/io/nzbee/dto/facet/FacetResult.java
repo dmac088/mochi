@@ -1,4 +1,4 @@
-package io.nzbee.ui.component.web.facet;
+package io.nzbee.dto.facet;
 
 public class FacetResult {
 

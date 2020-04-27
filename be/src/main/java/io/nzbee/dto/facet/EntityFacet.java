@@ -1,9 +1,8 @@
-package io.nzbee.ui.component.web.facet.navigation;
+package io.nzbee.dto.facet;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import io.nzbee.domain.IDomainObject;
-import io.nzbee.ui.component.web.facet.IFacet;
 
 @JsonTypeName("EntityFacet")
 public class EntityFacet implements IFacet {
@@ -34,37 +33,31 @@ public class EntityFacet implements IFacet {
 
 	@Override
 	public IDomainObject getPayload() {
-		// TODO Auto-generated method stub
 		return this.payload;
 	}
 
 	@Override
 	public String getType() {
-		// TODO Auto-generated method stub
 		return this.getClass().getSimpleName();
 	}
 	
 	@Override
 	public String getPayloadType() {
-		// TODO Auto-generated method stub
 		return this.getPayload().getClass().getSimpleName();
 	}
 
 	@Override
 	public String getValue() {
-		// TODO Auto-generated method stub
 		return "Empty";
 	}
 
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public String getFacetingName() {
-		// TODO Auto-generated method stub
 		return this.getPayload().getClass().getSimpleName().toLowerCase().trim();
 	}
 	

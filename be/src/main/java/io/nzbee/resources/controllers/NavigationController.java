@@ -16,17 +16,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import io.nzbee.domain.ports.IProductPortService;
 import io.nzbee.domain.product.Product;
+import io.nzbee.dto.facet.FacetContainer;
 import io.nzbee.resources.product.ProductResource;
-import io.nzbee.ui.component.web.facet.FacetContainer;
-import io.nzbee.ui.component.web.navigation.INavigationService;
 
 @RestController
 @RequestMapping("/api")
 public class NavigationController {
 
 	@Autowired 
-	private INavigationService navigationService;
+	private IProductPortService navigationService;
 	
 	@SuppressWarnings("unchecked")
 	@PostMapping(value = "/Product/{locale}/{currency}/category/{category}/maxPrice/{price}/sortBy/{sortBy}",
