@@ -21,6 +21,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 import io.nzbee.Globals;
 import io.nzbee.domain.category.CategoryServiceImpl;
@@ -81,6 +82,7 @@ public class IT_CategoryControllerIntegrationTest {
     }
     
     @Test
+    @Transactional
     public void testFindAll() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/Category/en-GB/HKD")
                 //.with(user(TEST_USER_ID))
@@ -96,6 +98,7 @@ public class IT_CategoryControllerIntegrationTest {
     
     
     @Test
+    @Transactional
     public void testFindOne() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/Category/" + globalVars.getLocaleENGB() + "/" + globalVars.getCurrencyHKD() + "/code/FRT01")
                 .with(csrf())
