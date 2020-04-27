@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
-import io.nzbee.domain.IDomainObject;
+import io.nzbee.domain.ISearchDimension;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonTypeInfo(
@@ -23,7 +23,7 @@ public interface IFacet {
 	boolean isHierarchical();
 
 	@JsonIgnore
-	IDomainObject getPayload();
+	ISearchDimension getPayload();
 	
 	String getType();
 	

@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import io.nzbee.domain.IDomainObject;
+import io.nzbee.domain.ISearchDimension;
 import io.nzbee.domain.product.Product;
 
 @JsonTypeName("tag")
-public class Tag implements IDomainObject {
+public class Tag implements ISearchDimension {
 
 	private String tagCode;
 

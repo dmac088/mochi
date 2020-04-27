@@ -5,10 +5,10 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import io.nzbee.domain.IDomainObject;
+import io.nzbee.domain.ISearchDimension;
 import io.nzbee.domain.product.Product;
  
-public class Department implements IDomainObject {
+public class Department implements ISearchDimension {
 
 	private String departmentCode;
 	

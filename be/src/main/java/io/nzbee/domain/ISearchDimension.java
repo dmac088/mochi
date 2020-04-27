@@ -19,7 +19,7 @@ import io.nzbee.domain.tag.Tag;
 			    @JsonSubTypes.Type(value = BrandCategory.class, 	name = "brandcategory"),
 			    @JsonSubTypes.Type(value = Tag.class, 				name = "tag"),
 			    @JsonSubTypes.Type(value = Product.class, 			name = "product")})
-public interface IDomainObject {
+public interface ISearchDimension {
 
 	String getCode();
 	
