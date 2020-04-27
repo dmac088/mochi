@@ -1,13 +1,9 @@
 package io.nzbee.domain.ports;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-
 import io.nzbee.domain.product.Product;
 import io.nzbee.dto.facet.IFacet;
 
