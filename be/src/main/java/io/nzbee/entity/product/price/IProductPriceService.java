@@ -5,7 +5,7 @@ import io.nzbee.entity.ILocalizedService;
 
 public interface IProductPriceService extends ILocalizedService<ProductPrice> {
 	
-	Optional<ProductPrice> get(Long productId, 
+	Optional<ProductPrice> findOne( Long productId, 
 									String priceTypeCode,
 									String currencyCode);
 	

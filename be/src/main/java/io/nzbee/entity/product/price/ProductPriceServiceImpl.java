@@ -63,7 +63,7 @@ public class ProductPriceServiceImpl implements IProductPriceService {
 	}
 
 	@Override
-	public Optional<ProductPrice> get(Long productId, String priceTypeCode, String currencyCode) {
+	public Optional<ProductPrice> findOne(Long productId, String priceTypeCode, String currencyCode) {
 		// TODO Auto-generated method stub
 		return null;
 	}

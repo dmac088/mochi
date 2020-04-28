@@ -15,7 +15,7 @@ import io.nzbee.domain.tag.TagServiceImpl;
 
 @Configuration
 public class BeanConfiguration {
- 
+	
     @Bean(value="brandDomainService")
     public IBrandService brandService() {
         return new BrandServiceImpl();
@@ -40,4 +40,5 @@ public class BeanConfiguration {
     public IProductService productDomainService() {
         return new ProductServiceImpl();
     }
+    
 }
