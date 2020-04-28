@@ -22,13 +22,13 @@ import org.hibernate.search.query.facet.FacetingRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -50,8 +50,7 @@ import io.nzbee.search.dto.facet.SearchFacet;
 import io.nzbee.search.dto.facet.SearchFacetHelper;
 import io.nzbee.search.dto.facet.SearchFacetWithFieldHelper;
 
-@Service(value = "SearchService")
-@CacheConfig(cacheNames = "products")
+@Service
 public class SearchServiceImpl implements ISearchService {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());

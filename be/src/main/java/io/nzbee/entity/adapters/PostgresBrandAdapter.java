@@ -6,12 +6,13 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import io.nzbee.domain.IFacetService;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.ports.IBrandPortService;
 import io.nzbee.entity.brand.IBrandService;
 
 @Component
-public class PostgresBrandAdapter implements IBrandPortService {
+public class PostgresBrandAdapter implements IBrandPortService, IFacetService {
 
 	
 	@Autowired 
@@ -88,6 +89,13 @@ public class PostgresBrandAdapter implements IBrandPortService {
 				: null);
 	}
 
-	
+	@Override
+	public String getFacetField() {
+		return "product.brand.brandToken";
+	}
 
+	@Override
+	public String getFacetCategory() {
+		return "brand";
+	}
 }

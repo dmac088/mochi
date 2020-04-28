@@ -79,8 +79,6 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	public void delete(Category object) {
 		// TODO Auto-generated method stub
 		
-	}
-
-	
+	}	
 
 }
