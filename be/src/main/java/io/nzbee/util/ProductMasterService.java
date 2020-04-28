@@ -33,10 +33,7 @@ public class ProductMasterService {
 	@Autowired
 	@Qualifier("productEntityService")
 	private IProductService productEntityService;
-	
-	@Autowired
-	@Qualifier("productDomainService")
-	private io.nzbee.domain.product.IProductService productDomainService;
+
 	
 	@Autowired
 	@Qualifier("brandEntityService")
