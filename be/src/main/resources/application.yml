@@ -58,4 +58,4 @@ app:
     primaryRootCategoryCode: PRM01
     defaultPage: 0
     defaultPageSize: 10
-   
+    productTypeCodeFood: FOO01

@@ -15,8 +15,10 @@ public class Globals {
 	private String unknownProductImage;
 	private String activeSKUCode;
 	private String primaryRootCategoryCode;
+	private String productTypeCodeFood;
 	private int	   defaultPage;
 	private int	   defaultPageSize;
+	
 	
 	public String getLocaleENGB() {
 		return localeENGB;
@@ -89,6 +91,12 @@ public class Globals {
 	}
 	public void setDefaultPageSize(int defaultPageSize) {
 		this.defaultPageSize = defaultPageSize;
+	}
+	public String getProductTypeCodeFood() {
+		return productTypeCodeFood;
+	}
+	public void setProductTypeCodeFood(String productTypeCodeFood) {
+		this.productTypeCodeFood = productTypeCodeFood;
 	}
 	
 }

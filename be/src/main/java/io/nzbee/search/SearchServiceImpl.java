@@ -33,6 +33,8 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import io.nzbee.Globals;
 import io.nzbee.domain.FacetServices;
 import io.nzbee.domain.ISearchDimension;
 import io.nzbee.domain.IProductDimensionService;
@@ -54,6 +56,9 @@ import io.nzbee.search.dto.facet.SearchFacetWithFieldHelper;
 public class SearchServiceImpl implements ISearchService {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
+	
+	@Autowired
+	private Globals globalVars;
 	
 	@Autowired
 	private ApplicationContext appContext;
@@ -419,7 +424,7 @@ public class SearchServiceImpl implements ISearchService {
 										
 										ProductCategory pc = serializeCategory(r[17].toString(), lcl, currency);
 										
-										return (r[13].toString().equals("FOO01")
+										return (r[13].toString().equals(globalVars.getProductTypeCodeFood())
 										? new Food(
 												r[5].toString(),
 												(Date) r[6],
@@ -463,18 +468,14 @@ public class SearchServiceImpl implements ISearchService {
 		try {
 			cp = objectMapper.readValue(payload, new TypeReference<CategoryProduct>(){});
 		} catch (JsonParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		cp.setCategoryAttribute(cp.getAttributes().stream().filter(c -> c.getLclCd().equals(locale)).findFirst().get());
 		return (ProductCategory) categoryMapper.entityToDo(Optional.ofNullable(cp), locale, currency).get();
-
 	}
 
 
@@ -512,7 +513,4 @@ public class SearchServiceImpl implements ISearchService {
 			return "productDescSort" + locale;
 		}
 	}
-
-
-
 }
