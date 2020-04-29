@@ -30,7 +30,7 @@ public class SearchFacetWithFieldHelper {
 	
 	@SuppressWarnings("rawtypes")
 	public IService getBean(ApplicationContext appContext) {
-		return (IService) appContext.getBean(this.getFacetingName() + "DomainService");
+		return (IService) appContext.getBean(this.getFacetingName() + "EntityService");
 	}
 
 	@Override

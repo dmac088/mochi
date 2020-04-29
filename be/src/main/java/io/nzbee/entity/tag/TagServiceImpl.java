@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import io.nzbee.search.IFacetService;
 
-@Service(value = "productTagService")
+@Service(value = "tagEntityService")
 public class TagServiceImpl implements ITagService, IFacetService {
 
 	@Autowired
