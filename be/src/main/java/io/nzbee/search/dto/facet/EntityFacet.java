@@ -2,7 +2,7 @@ package io.nzbee.search.dto.facet;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
-import io.nzbee.domain.ISearchDimension;
+import io.nzbee.search.ISearchDimension;
 
 @JsonTypeName("EntityFacet")
 public class EntityFacet implements IFacet {

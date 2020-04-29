@@ -1,4 +1,4 @@
-package io.nzbee.domain;
+package io.nzbee.search;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;

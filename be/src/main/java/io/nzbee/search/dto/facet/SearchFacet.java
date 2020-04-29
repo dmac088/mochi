@@ -5,7 +5,8 @@ import org.apache.lucene.search.Query;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import io.nzbee.domain.ISearchDimension;
+
+import io.nzbee.search.ISearchDimension;
 
 @JsonTypeName("SearchFacet")
 public class SearchFacet  implements org.hibernate.search.query.facet.Facet, IFacet {

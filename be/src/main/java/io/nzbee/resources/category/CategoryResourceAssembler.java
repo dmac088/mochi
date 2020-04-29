@@ -28,17 +28,17 @@ public class CategoryResourceAssembler extends ResourceAssemblerSupport<Category
 		CategoryResource cr = new CategoryResource(category);
 		cr.add(linkTo(methodOn(CategoryController.class).getCategory(	category.getLocale(), 
 																		category.getCurrency(), 
-																		category.getCode()
+																		category.getCategoryCode()
 																)).withSelfRel(),
 				
 				category.getCategoryType().equals("brandcategory")
 				? linkTo(methodOn(BrandController.class).getBrands(		category.getLocale(), 
 																		category.getCurrency(), 
-																		category.getCode()
+																		category.getCategoryCode()
 																)).withRel("brands")
 				: linkTo(methodOn(ProductController.class).getProducts(	category.getLocale(), 
 																	 	category.getCurrency(), 
-																	 	category.getCode(),
+																	 	category.getCategoryCode(),
 																	 	0,
 																	 	10,
 																	 	parAssembler

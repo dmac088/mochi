@@ -66,7 +66,6 @@ public class CategoryBrand extends Category {
 	@Override
 	@JsonIgnore
 	public String getType() {
-		// TODO Auto-generated method stub
 		return this.getClass().getSimpleName().toLowerCase();
 	}
 
@@ -74,6 +73,26 @@ public class CategoryBrand extends Category {
 	public void setType(String type) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public String getCode() {
+		return this.getCategoryCode();
+	}
+
+	@Override
+	public String getDesc() {
+		return this.getCategoryAttribute().getCategoryDesc();
+	}
+
+	@Override
+	public int getCount() {
+		return this.getObjectCount();
+	}
+
+	@Override
+	public boolean isHierarchical() {
+		return false;
 	}
 	
 }

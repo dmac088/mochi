@@ -4,17 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import io.nzbee.domain.ISearchDimension;
+import io.nzbee.domain.ILocalizedDomainObject;
 import io.nzbee.domain.product.Product;
 
 @JsonTypeName("tag")
-public class Tag implements ISearchDimension {
+public class Tag implements ILocalizedDomainObject {
 
 	private String tagCode;
 
 	private String tagDesc;
-	
-	private int objectCount;
 	
 	private String locale;
 	
@@ -44,26 +42,6 @@ public class Tag implements ISearchDimension {
 	public String getLocale() {
 		return locale;
 	}
-	
-	@Override
-	public String getCode() {
-		return this.tagCode;
-	}
-
-	@Override
-	public boolean isHierarchical() {
-		return false;
-	}
-
-	@Override
-	public int getCount() {
-		return objectCount;
-	}
-
-	@Override
-	public String getDesc() {
-		return this.getTagDesc();
-	}
 
 	@Override
 	public String getCurrency() {
@@ -88,12 +66,12 @@ public class Tag implements ISearchDimension {
 		 if (this == o) return true;
 	     if (o == null || getClass() != o.getClass()) return false;
 	     Tag pcDto = (Tag) o;
-	     return this.getCode() == pcDto.getCode();
+	     return this.getTagCode() == pcDto.getTagCode();
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.getCode());
+		return Objects.hash(this.getTagCode());
 	}
 	
 }

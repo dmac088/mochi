@@ -6,10 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import io.nzbee.domain.IFacetService;
-
 @Service(value="brandDomainService")
-public class BrandServiceImpl implements IBrandService, IFacetService {
+public class BrandServiceImpl implements IBrandService {
     
 	@Autowired
     private io.nzbee.domain.ports.IBrandPortService brandService;
@@ -45,11 +43,6 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	}
 
 	@Override
-	public String tokenToCode(String token) {
-		return token;
-	}
-
-	@Override
 	public void save(Brand object) {
 		brandService.save(object);
 	}
@@ -58,15 +51,5 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	public void delete(Brand object) {
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public String getFacetField() {
-		return "product.brand.brandToken";
-	}
-
-	@Override
-	public String getFacetCategory() {
-		return "brand";
 	}
 }

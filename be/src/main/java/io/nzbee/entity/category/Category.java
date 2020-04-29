@@ -39,11 +39,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.google.common.collect.Lists;
+
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.brand.CategoryBrand;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.entity.layout.Layout;
+import io.nzbee.search.ISearchDimension;
 
 @Entity
 @Table(name = "category", schema = "mochi")
@@ -131,7 +133,7 @@ import io.nzbee.entity.layout.Layout;
 	                    @FieldResult(name = "categoryTypeDesc", 			column = "cat_prnt_typ_desc")
 	                }),
 	    })
-public abstract class Category {
+public abstract class Category implements ISearchDimension {
 
 	public void setAttributes(Set<CategoryAttribute> attributes) {
 		this.attributes = attributes;

@@ -22,12 +22,14 @@ import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Store;
+
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.tag.attribute.TagAttribute;
+import io.nzbee.search.ISearchDimension;
 
 @Entity
 @Table(name = "tag", schema = "mochi")
-public class Tag {
+public class Tag implements ISearchDimension {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -56,6 +58,9 @@ public class Tag {
 	@Transient
 	private String currency;
 	
+	@Transient 
+	private TagAttribute attribute;
+
 	public Long getTagId() {
 		return tagId;
 	}
@@ -76,6 +81,14 @@ public class Tag {
 
 	public void setCode(String tagCode) {
 		this.tagCode = tagCode;
+	}
+	
+	public TagAttribute getAttribute() {
+		return attribute;
+	}
+
+	public void setAttribute(TagAttribute attribute) {
+		this.attribute = attribute;
 	}
 
 	public Set<Product> getProducts() {
@@ -126,6 +139,23 @@ public class Tag {
 	public void removeTagAttribute(TagAttribute tagAttribute) {
 		this.getAttributes().remove(tagAttribute);
 		tagAttribute.setTag(null);
+	}
+
+	@Override
+	public String getDesc() {
+		return this.getAttribute().getTagDesc();
+	}
+
+	@Override
+	public int getCount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean isHierarchical() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

@@ -1,4 +1,4 @@
-package io.nzbee.entity.category;
+	package io.nzbee.entity.category;
 
 import java.util.List;
 import java.util.Optional;
@@ -7,9 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import io.nzbee.entity.category.Category;
+import io.nzbee.search.IFacetService;
 
 @Service(value = "categoryEntityService")
-public class CategoryServiceImpl implements ICategoryService {
+public class CategoryServiceImpl implements ICategoryService, IFacetService {
 
 	@Autowired
 	@Qualifier(value = "categoryEntityPostgresDao")
@@ -74,4 +75,18 @@ public class CategoryServiceImpl implements ICategoryService {
 		
 	}
 
+	@Override
+	public String getFacetField() {
+		return "product.categories.categoryToken";
+	}
+
+	@Override
+	public String getFacetCategory() {
+		return "category";
+	}
+
+	@Override
+	public String tokenToCode(String token) {
+		return token.substring(token.lastIndexOf('/')+1,token.length());
+	}
 }

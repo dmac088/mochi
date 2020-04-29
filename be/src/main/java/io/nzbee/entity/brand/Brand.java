@@ -20,13 +20,15 @@ import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Store;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.category.brand.CategoryBrand;
 import io.nzbee.entity.product.Product;
+import io.nzbee.search.ISearchDimension;
 
 @Entity
 @Table(name = "brand", schema = "mochi")
-public class Brand {
+public class Brand implements ISearchDimension {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -162,6 +164,26 @@ public class Brand {
 
 	public void setCurrency(String currency) {
 		this.currency = currency;
+	}
+
+	@Override
+	public String getCode() {
+		return this.getBrandCode();
+	}
+
+	@Override
+	public String getDesc() {
+		return this.getBrandAttribute().getBrandDesc();
+	}
+
+	@Override
+	public int getCount() {
+		return 0;
+	}
+
+	@Override
+	public boolean isHierarchical() {
+		return false;
 	}
 
 }

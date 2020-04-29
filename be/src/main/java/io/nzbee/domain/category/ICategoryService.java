@@ -1,11 +1,9 @@
 package io.nzbee.domain.category;
 
-
 import java.util.Set;
-import io.nzbee.domain.IProductDimensionService;
+import io.nzbee.domain.ILocalizedService;
 
-
-public interface ICategoryService extends IProductDimensionService<Category> {
+public interface ICategoryService extends ILocalizedService<Category> {
 
 	Set<Category> findAll(String locale, String currency);
 

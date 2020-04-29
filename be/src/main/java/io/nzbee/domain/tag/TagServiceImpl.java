@@ -4,12 +4,11 @@ import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import io.nzbee.domain.IFacetService;
+import io.nzbee.domain.ILocalizedService;
 import io.nzbee.domain.ports.ITagPortService;
 
 @Service(value="tagDomainService")
-public class TagServiceImpl implements ITagService, IFacetService {
+public class TagServiceImpl implements ILocalizedService<Tag> {
 
 	@Autowired
 	private ITagPortService tagService;
@@ -27,21 +26,6 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	@Override
 	public Set<Tag> findAll(String locale, String currency) {
 		return tagService.findAll(locale, currency);
-	}
-	
-	@Override
-	public String tokenToCode(String token) {
-		return token;
-	}
-
-	@Override
-	public String getFacetField() {
-		return "product.tags.tagToken";
-	}
-
-	@Override
-	public String getFacetCategory() {
-		return "tag";
 	}
 
 	@Override

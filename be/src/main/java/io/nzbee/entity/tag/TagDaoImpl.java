@@ -55,7 +55,6 @@ public class TagDaoImpl implements ITagDao {
 	
 	@Override
 	public Optional<Tag> findById(String locale, String currency, long id) {
-		// TODO Auto-generated method stub
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Tag> cq = cb.createQuery(Tag.class);
@@ -76,7 +75,6 @@ public class TagDaoImpl implements ITagDao {
 	
 	@Override
 	public Optional<Tag> findByCode(String locale, String currency, String code) {
-		// TODO Auto-generated method stub
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Tag> cq = cb.createQuery(Tag.class);
@@ -253,6 +251,7 @@ public class TagDaoImpl implements ITagDao {
 		tagAttribute.setLclCd(locale);
 				
 		tagEntity.addTagAttribute(tagAttribute);
+		tagEntity.setAttribute(tagAttribute);
 		tagEntity.setTagId(Long.parseLong(t.get("tagId").toString()));
 		tagEntity.setCode(t.get("tagCode").toString());
 		

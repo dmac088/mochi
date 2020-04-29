@@ -100,12 +100,31 @@ public class CategoryProduct extends Category  {
 	@JsonIgnore
 	public String getType() {
 		return this.getClass().getSimpleName().toLowerCase();
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void setType(String type) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public String getCode() {
+		return this.getCategoryCode();
+	}
+
+	@Override
+	public String getDesc() {
+		return this.getCategoryAttribute().getCategoryDesc();
+	}
+
+	@Override
+	public int getCount() {
+		return this.getObjectCount();
+	}
+
+	@Override
+	public boolean isHierarchical() {
+		return true;
 	}
 }

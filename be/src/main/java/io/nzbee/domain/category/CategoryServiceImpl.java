@@ -5,11 +5,10 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import io.nzbee.domain.IFacetService;
 import io.nzbee.domain.ports.ICategoryPortService;
 
 @Service(value="categoryDomainService")
-public class CategoryServiceImpl implements ICategoryService, IFacetService {
+public class CategoryServiceImpl implements ICategoryService {
     
     @Autowired
     private ICategoryPortService categoryService;
@@ -54,21 +53,6 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	@Transactional(readOnly=true)
 	public Set<Category> findAll(String locale, String currency, Set<String> codes) {
 		return categoryService.findAll(locale, currency, codes);
-	}
-    
-	@Override
-	public String tokenToCode(String token) {
-		return token.substring(token.lastIndexOf('/')+1,token.length());
-	}
-
-	@Override
-	public String getFacetField() {
-		return "product.categories.categoryToken";
-	}
-
-	@Override
-	public String getFacetCategory() {
-		return "category";
 	}
 
 	@Override
