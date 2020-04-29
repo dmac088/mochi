@@ -55,7 +55,8 @@ public class CategoryProductDaoImpl implements ICategoryProductDao {
 						attribute.get(CategoryAttribute_.categoryAttributeId).alias("categoryAttributeId"),
 						attribute.get(CategoryAttribute_.categoryDesc).alias("categoryDesc"),
 						type.get(CategoryType_.categoryTypeCode).alias("categoryTypeCode"),
-						type.get(CategoryType_.categoryTypeDesc).alias("categoryTypeDesc")
+						type.get(CategoryType_.categoryTypeDesc).alias("categoryTypeDesc"),
+						root.get(Category_.categoryLevel).alias("categoryLevel")
 		);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
@@ -144,10 +145,12 @@ public class CategoryProductDaoImpl implements ICategoryProductDao {
 		CategoryProduct cp = new CategoryProduct();
 		cp.setCategoryId(Long.parseLong(t.get("categoryId").toString()));
 		cp.setCategoryCode(t.get("categoryCode").toString());
+		cp.setCategoryLevel(Long.parseLong(t.get("categoryLevel").toString()));
 		cp.setLocale(locale);
 		cp.setCurrency(currency);
 		cp.setCategoryAttribute(ca);
 		cp.setCategoryType(ct);
+		
 		return cp;
 	}
 

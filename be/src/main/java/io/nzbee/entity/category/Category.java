@@ -159,7 +159,7 @@ public abstract class Category implements ISearchDimension {
 				updatable = false, 
 				insertable = false)
 	private CategoryType categoryType;
-	
+	 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "layout_category", schema="mochi", 
 	    		   joinColumns 			= @JoinColumn(name = "cat_id"), 
