@@ -266,10 +266,6 @@ public class PostgresProductAdapter implements IProductPortService {
 									 Set<IFacet> selectedFacets,
 									 String sortBy) {
 			
-			selectedFacets.stream().forEach(c -> {
-					System.out.println(c.getType());
-			});
-			
 			Page<io.nzbee.entity.product.Product> pp = productService.findAll(
 											   locale, 
 											   currency,
