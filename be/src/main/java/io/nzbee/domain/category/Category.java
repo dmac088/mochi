@@ -1,9 +1,9 @@
 package io.nzbee.domain.category;
 
 import java.util.Objects;
-import io.nzbee.domain.IHierarchicalDomainObject;
+import io.nzbee.domain.ILocalizedDomainObject;
  
-public abstract class Category implements IHierarchicalDomainObject {
+public abstract class Category implements ILocalizedDomainObject {
 
 	private String categoryCode;
 	
@@ -80,12 +80,12 @@ public abstract class Category implements IHierarchicalDomainObject {
 		 if (this == o) return true;
 	     if (o == null || getClass() != o.getClass()) return false;
 	     Category pcDto = (Category) o;
-	     return this.getCode() == pcDto.getCode();
+	     return this.getCategoryCode() == pcDto.getCategoryCode();
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.getCode());
+		return Objects.hash(this.getCategoryCode());
 	}
 
 	@Override

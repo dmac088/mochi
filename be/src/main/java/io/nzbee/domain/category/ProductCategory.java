@@ -49,26 +49,6 @@ public class ProductCategory extends Category {
 	public List<Product> getProducts() {
 		return products;
 	}
-	
-	@Override
-	public String getCode() {
-		return super.getCategoryCode();
-	}
-	
-	@Override
-	public String getDesc() {
-		return super.getCategoryDesc();
-	}
-	
-	@Override
-	public boolean isHierarchical() {
-		return true;
-	}
-
-	@Override
-	public Long getLevel() {
-		return super.getCategoryLevel();
-	}
 
 	public String getParentCode() {
 		return parentCode;

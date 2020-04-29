@@ -85,7 +85,7 @@ public class PostgresProductAdapter implements IProductPortService {
 			io.nzbee.entity.product.department.Department d =
 					departmentService.findByCode(domainObject.getLclCd(), 
 												 domainObject.getCurrency(),
-												 domainObject.getDepartment().getCode()).get();	
+												 domainObject.getDepartment().getDepartmentCode()).get();	
 			
 			//get all the categories	
 			Set<io.nzbee.entity.category.product.CategoryProduct> lcp =  

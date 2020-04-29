@@ -5,19 +5,17 @@ import java.util.List;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import io.nzbee.domain.ISearchDimension;
+import io.nzbee.domain.ILocalizedDomainObject;
 import io.nzbee.domain.category.BrandCategory;
 import io.nzbee.domain.product.Product;
 
 @JsonTypeName("brand")
-public class Brand implements ISearchDimension {
+public class Brand implements ILocalizedDomainObject {
 
 	private String brandCode;
 
 	private String brandDesc;
 	
-	private int objectCount;
-
 	private String locale;
 	
 	private String currency;
@@ -35,11 +33,10 @@ public class Brand implements ISearchDimension {
 				 String currency) {
 				 this.brandCode = brandCode;
 				 this.brandDesc = brandDesc;
-				 this.objectCount = objectCount;
-				 this.locale = locale;
-				 this.currency = currency;
 			 	 this.products = new ArrayList<Product>();
 			 	 this.categories = new ArrayList<BrandCategory>();
+			 	 this.locale = locale;
+			 	 this.currency = currency;
 	}
 	
 	public List<Product> getProducts() {
@@ -53,48 +50,30 @@ public class Brand implements ISearchDimension {
 	public String getBrandDesc() {
 		return brandDesc;
 	}
-
-	@Override
-	public String getCode() {
-		return this.brandCode;
-	}
-
-	@Override
-	public boolean isHierarchical() {
-		return false; 
-	}
-
-	@Override
-	public int getCount() {
-		return objectCount;
-	}
-
-	@Override
-	public String getDesc() {
-		return this.brandDesc;
-	}
-
-	@Override
-	public String getLocale() {
-		return locale;
-	}
 	
 	@Override
-	public String getCurrency() {
-		return currency;
+	public String getLocale() {
+		return this.locale;
 	}
 
+	@Override
+	public String getCurrency() {
+		return this.currency;
+	}
+	
 	@Override
 	public boolean equals(Object o) {
 		 if (this == o) return true;
 	     if (o == null || getClass() != o.getClass()) return false;
 	     Brand pcDto = (Brand) o;
-	     return this.getCode() == pcDto.getCode();
+	     return this.getBrandCode() == pcDto.getBrandCode();
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.getCode());
+		return Objects.hash(this.getBrandCode());
 	}
+
+
 	
 }

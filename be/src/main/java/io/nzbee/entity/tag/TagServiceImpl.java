@@ -8,8 +8,10 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import io.nzbee.search.IFacetService;
+
 @Service(value = "productTagService")
-public class TagServiceImpl implements ITagService {
+public class TagServiceImpl implements ITagService, IFacetService {
 
 	@Autowired
 	private ITagDao productTagDAO;
@@ -31,19 +33,16 @@ public class TagServiceImpl implements ITagService {
 
 	@Override
 	public List<Tag> findAll(String locale, String currency) {
-		// TODO Auto-generated method stub
 		return productTagDAO.findAll(locale, currency);
 	}
 	
 	@Override
 	public List<Tag> findAll(String locale, String currency, Set<String> codes) {
-		// TODO Auto-generated method stub
 		return productTagDAO.findAll(locale, currency, codes);
 	}
 
 	@Override
 	public Optional<Tag> findById(String locale, String currency, long id) {
-		// TODO Auto-generated method stub
 		return productTagDAO.findById(locale, currency, id);
 	}
 
@@ -58,11 +57,25 @@ public class TagServiceImpl implements ITagService {
 		// TODO Auto-generated method stub
 		return productTagDAO.findByDesc(locale, currency, desc);
 	}
+	
+	@Override
+	public String tokenToCode(String token) {
+		return token;
+	}
+
+	@Override
+	public String getFacetField() {
+		return "product.tags.tagToken";
+	}
+
+	@Override
+	public String getFacetCategory() {
+		return "tag";
+	}
 
 	@Override
 	public void save(Tag t) {
 		productTagDAO.save(t);
-		
 	}
 
 	@Override

@@ -33,9 +33,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.nzbee.Globals;
-import io.nzbee.domain.IFacetServices;
-import io.nzbee.domain.ISearchDimension;
-import io.nzbee.domain.IProductDimensionService;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.department.Department;
@@ -63,7 +60,7 @@ public class SearchServiceImpl implements ISearchService {
 	@Autowired
 	private IFacetServices facetServices;
 	
-	@Autowired 
+	@Autowired
 	private ICategoryMapper categoryMapper;
 
 	@PersistenceContext(unitName = "mochiEntityManagerFactory")
@@ -335,10 +332,10 @@ public class SearchServiceImpl implements ISearchService {
 		//select the domain object from DB for each of the aggregated facet helpers
 		aggLsfh.stream().forEach(sfh -> {
 			
-			Set<ISearchDimension> lc = sfh.getBean(appContext).findAll(lcl, currency, sfh.getCodes());
+			List<ISearchDimension> lc = sfh.getBean(appContext).findAll(lcl, currency, sfh.getCodes());
 
 			//create a new array of entity facets
-			IProductDimensionService service = sfh.getBean(appContext);
+			ISearchDimensionService service = sfh.getBean(appContext);
 			
 			facets.stream()
 			      .filter(x -> {

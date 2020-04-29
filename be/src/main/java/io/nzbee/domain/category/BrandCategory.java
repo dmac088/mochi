@@ -42,25 +42,5 @@ public class BrandCategory extends Category {
 	public void removeBrand(Brand brand) {
 		this.getBrands().remove(brand);
 	}
-
-	@Override
-	public String getCode() {
-		return super.getCategoryCode();
-	}
-
-	@Override
-	public boolean isHierarchical() {
-		return false;
-	}
-
-	@Override
-	public Long getLevel() {
-		return super.getCategoryLevel();
-	}
-
-	@Override
-	public String getDesc() {
-		return super.getCategoryDesc();
-	}
 	
 }

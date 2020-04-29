@@ -3,8 +3,9 @@ package io.nzbee.entity.category;
 import java.util.List;
 import io.nzbee.entity.ILocalizedService;
 import io.nzbee.entity.category.Category;
+import io.nzbee.search.ISearchDimensionService;
 
-public interface ICategoryService extends ILocalizedService<Category> {
+public interface ICategoryService extends ILocalizedService<Category>, ISearchDimensionService<Category> {
 
 	List<Category> findByParent(String locale, String parentCategoryCode);
 

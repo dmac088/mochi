@@ -113,7 +113,7 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 			cb.setCategoryCode(bc.getCategoryCode());
 			cb.setLocale(bc.getLocale());
 			cb.setCurrency(bc.getCurrency());
-			cb.setCategoryLevel(bc.getLevel());
+			cb.setCategoryLevel(bc.getCategoryLevel());
 			cb.setObjectCount(bc.getCount());
 			
 			CategoryAttribute ca = new CategoryAttribute();

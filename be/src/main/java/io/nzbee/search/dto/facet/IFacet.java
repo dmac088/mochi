@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
-import io.nzbee.domain.ISearchDimension;
+import io.nzbee.search.ISearchDimension;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonTypeInfo(

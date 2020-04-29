@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import io.nzbee.search.IFacetService;
+
 @Service(value="brandEntityService")
-public class BrandServiceImpl implements IBrandService {
+public class BrandServiceImpl implements IBrandService, IFacetService {
 
 	@Autowired
 	private IBrandDao brandDao; 
@@ -73,5 +75,18 @@ public class BrandServiceImpl implements IBrandService {
 		
 	}
 
-	
+	@Override
+	public String getFacetField() {
+		return "product.brand.brandToken";
+	}
+
+	@Override
+	public String getFacetCategory() {
+		return "brand";
+	}
+
+	@Override
+	public String tokenToCode(String token) {
+		return token;
+	}
 }

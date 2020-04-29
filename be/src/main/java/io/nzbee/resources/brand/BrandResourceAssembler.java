@@ -20,7 +20,7 @@ public class BrandResourceAssembler extends ResourceAssemblerSupport<Brand, Bran
 		BrandResource br = new BrandResource(brand);
 		br.add(linkTo(methodOn(BrandController.class).get(	brand.getLocale(),
 															brand.getCurrency(),
-															brand.getCode())).withSelfRel());
+															brand.getBrandCode())).withSelfRel());
 		return br;
 	}
 
