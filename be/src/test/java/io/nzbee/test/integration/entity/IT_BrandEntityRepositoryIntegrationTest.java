@@ -44,21 +44,7 @@ public class IT_BrandEntityRepositoryIntegrationTest {
  
 	@TestConfiguration
     static class BrandEntityRepositoryIntegrationTest {
-        
-        @Bean(value = "brandEntityBeanFactory")
-        public BrandEntityBeanFactory brandFactoryBean() {
-            return new BrandEntityBeanFactory();
-        }
-        
-        @Bean(value = "bradResourceAssembler")
-        public BrandResourceAssembler brandResourceAssembler() {
-        	return new BrandResourceAssembler();
-        }
-        
-        @Bean(value = "brandEntityService")
-        public IBrandService brandEntityService() {
-            return new BrandServiceImpl();
-        }
+   
    
     }
 	
