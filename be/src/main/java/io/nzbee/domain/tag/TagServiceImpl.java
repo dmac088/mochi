@@ -3,10 +3,12 @@ package io.nzbee.domain.tag;
 import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import io.nzbee.domain.IFacetService;
 import io.nzbee.domain.ports.ITagPortService;
 
+@Service(value="tagDomainService")
 public class TagServiceImpl implements ITagService, IFacetService {
 
 	@Autowired
