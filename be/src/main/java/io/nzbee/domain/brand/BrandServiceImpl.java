@@ -4,9 +4,7 @@ import java.util.Optional;
 import java.util.Set;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-@Service(value="brandDomainService")
 public class BrandServiceImpl implements IBrandService {
     
 	@Autowired
