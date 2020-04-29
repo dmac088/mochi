@@ -28,13 +28,12 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.nzbee.Globals;
-import io.nzbee.domain.FacetServices;
+import io.nzbee.domain.IFacetServices;
 import io.nzbee.domain.ISearchDimension;
 import io.nzbee.domain.IProductDimensionService;
 import io.nzbee.domain.brand.Brand;
@@ -62,7 +61,7 @@ public class SearchServiceImpl implements ISearchService {
 	private ApplicationContext appContext;
 	
 	@Autowired
-	private FacetServices facetServices;
+	private IFacetServices facetServices;
 	
 	@Autowired 
 	private ICategoryMapper categoryMapper;
