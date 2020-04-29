@@ -90,7 +90,6 @@ public class IT_ProductEntitySearchIntegrationTest {
 	private EntityManager entityManager;
     
 	@Autowired
-    @Qualifier(value = "SearchService")
     private ISearchService searchService;
 	
 	@Autowired

@@ -64,13 +64,11 @@ public class CategoryProduct extends Category  {
 
 	@Override
 	public int getObjectCount() {
-		// TODO Auto-generated method stub
 		return productCount;
 	}
 
 	@Override
 	public void setObjectCount(int count) {
-		// TODO Auto-generated method stub
 		productCount = count;
 	}
 	
