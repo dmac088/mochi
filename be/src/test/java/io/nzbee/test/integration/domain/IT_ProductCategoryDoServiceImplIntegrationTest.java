@@ -81,13 +81,13 @@ public class IT_ProductCategoryDoServiceImplIntegrationTest {
     
     private void assertFound(final Category found) {
 
-    	assertThat(found.getCode())
+    	assertThat(found.getCategoryCode())
         .isEqualTo("TST01");
     	
-	    assertThat(found.getLevel())
+	    assertThat(found.getCategoryLevel())
 	    .isEqualTo(new Long(2));
 	    
-	    assertThat(found.getDesc())
+	    assertThat(found.getCategoryDesc())
 	    .isEqualTo("test product category");
     }
     

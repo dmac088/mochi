@@ -69,10 +69,10 @@ public class IT_TagDoServiceImplIntegrationTest {
 	
 	private void assertFound(final Tag found) {
 
-		assertThat(found.getCode())
+		assertThat(found.getTagCode())
 	       .isEqualTo("TST01");
 		
-		assertThat(found.getDesc())
+		assertThat(found.getTagDesc())
 	       .isEqualTo("test tag");
 	    	
 	}

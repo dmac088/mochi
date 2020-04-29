@@ -107,11 +107,6 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public String tokenToCode(String token) {
-		return token;
-	}
-
-	@Override
 	public void save(Product object) {
 		productService.save(object);
 	}
