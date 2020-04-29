@@ -4,10 +4,12 @@ package io.nzbee.domain.customer;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import io.nzbee.domain.ports.ICustomerPortService;
+
 public class CustomerServiceImpl implements ICustomerService {
 
 	@Autowired
-	io.nzbee.domain.ports.ICustomerPortService customerService;
+	ICustomerPortService customerService;
 
 	@Override
 	public boolean customerExist(String username) {
