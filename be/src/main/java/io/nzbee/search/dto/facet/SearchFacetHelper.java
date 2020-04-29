@@ -31,7 +31,7 @@ public class SearchFacetHelper {
 	
 	@SuppressWarnings("rawtypes")
 	public ISearchDimensionService getBean(ApplicationContext appContext) {
-		return (ISearchDimensionService) appContext.getBean(this.getFacetingName() + "DomainService");
+		return (ISearchDimensionService) appContext.getBean(this.getFacetingName() + "EntityService");
 	}
 
 	@Override
