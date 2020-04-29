@@ -112,6 +112,7 @@ public class CategoryProduct extends Category  {
 	}
 
 	@Override
+	@JsonIgnore
 	public String getDesc() {
 		return this.getCategoryAttribute().getCategoryDesc();
 	}
