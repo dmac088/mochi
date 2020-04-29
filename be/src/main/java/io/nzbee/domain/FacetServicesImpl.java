@@ -2,14 +2,16 @@ package io.nzbee.domain;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class FacetServices {
+public class FacetServicesImpl implements IFacetServices {
 	
+	@Autowired
 	private List<IFacetService> facetServices;
 
-	public FacetServices(List<IFacetService> facets) {
+	public void FacetServices(List<IFacetService> facets) {
 		this.facetServices = facets;
 	}
 
