@@ -9,6 +9,8 @@ import io.nzbee.domain.category.CategoryServiceImpl;
 import io.nzbee.domain.category.ICategoryService;
 import io.nzbee.domain.customer.CustomerServiceImpl;
 import io.nzbee.domain.customer.ICustomerService;
+import io.nzbee.domain.department.DepartmentServiceImpl;
+import io.nzbee.domain.department.IDepartmentService;
 import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.product.ProductServiceImpl;
 import io.nzbee.domain.tag.ITagService;
@@ -41,5 +43,10 @@ public class BeanConfiguration {
     @Bean(value="customerDomainService")
     public ICustomerService customerService() {
         return new CustomerServiceImpl();
+    }
+    
+    @Bean(value="departmentDomainService")
+    public IDepartmentService departmentService() {
+        return new DepartmentServiceImpl();
     }
 }
