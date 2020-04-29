@@ -12,7 +12,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
@@ -21,9 +20,7 @@ import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Globals;
 import io.nzbee.entity.brand.Brand;
-import io.nzbee.entity.brand.BrandServiceImpl;
 import io.nzbee.entity.brand.IBrandService;
-import io.nzbee.resources.brand.BrandResourceAssembler;
 import io.nzbee.test.integration.beans.BrandEntityBeanFactory;
 
 @RunWith(SpringRunner.class)

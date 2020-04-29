@@ -3,11 +3,7 @@ package io.nzbee.domain;
 import java.util.Optional;
 import java.util.Set;
 
-public interface ILocalizedService<T> {
-
-	void save(T object); 
-	
-	void delete(T object);
+public interface ILocalizedService<T> extends IService<T> {
 
 	Optional<T> findByCode(String locale, String currency, String code);
 
