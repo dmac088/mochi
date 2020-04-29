@@ -34,7 +34,6 @@ public class TagServiceImpl implements ITagService {
 	@Override
 	public void save(Tag object) {
 		tagService.save(object);
-		
 	}
 
 	@Override
