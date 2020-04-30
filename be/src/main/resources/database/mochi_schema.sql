@@ -26,6 +26,7 @@ ALTER TABLE ONLY mochi.product DROP CONSTRAINT product_typ_id_product_type_typ_i
 ALTER TABLE ONLY mochi.product_tag DROP CONSTRAINT product_tag_tag_id_tag_tag_id_fkey;
 ALTER TABLE ONLY mochi.product_tag DROP CONSTRAINT product_tag_prd_id_product_prd_id_fkey;
 ALTER TABLE ONLY mochi.product DROP CONSTRAINT product_sts_id_product_status_sts_id_fkey;
+ALTER TABLE ONLY mochi.product_shipping DROP CONSTRAINT product_shipping_prd_id_fkey;
 ALTER TABLE ONLY mochi.product DROP CONSTRAINT product_prm_cat_id_category_cat_id;
 ALTER TABLE ONLY mochi.product_jewellery DROP CONSTRAINT product_jewellery_prd_id_fkey;
 ALTER TABLE ONLY mochi.product_food DROP CONSTRAINT product_food_prd_id_fkey;
@@ -92,6 +93,7 @@ ALTER TABLE ONLY mochi.promotion_category DROP CONSTRAINT promotion_category_pke
 ALTER TABLE ONLY mochi.department DROP CONSTRAINT product_type_pkey;
 ALTER TABLE ONLY mochi.product_tag DROP CONSTRAINT product_tag_pkey;
 ALTER TABLE ONLY mochi.product_status DROP CONSTRAINT product_status_pkey;
+ALTER TABLE ONLY mochi.product_shipping DROP CONSTRAINT product_shipping_pkey;
 ALTER TABLE ONLY mochi.product_rating DROP CONSTRAINT product_rating_pkey;
 ALTER TABLE ONLY mochi.product DROP CONSTRAINT product_pkey;
 ALTER TABLE ONLY mochi.product_jewellery DROP CONSTRAINT product_jewellery_pkey;
@@ -159,6 +161,7 @@ DROP SEQUENCE mochi.product_tag_prd_tag_id_seq;
 DROP TABLE mochi.product_supplier;
 DROP TABLE mochi.product_status;
 DROP SEQUENCE mochi.product_status_prd_sts_id_seq;
+DROP TABLE mochi.product_shipping;
 DROP TABLE mochi.product_rating;
 DROP SEQUENCE mochi.product_rating_prd_rat_id_seq;
 DROP TABLE mochi.product_jewellery;
@@ -2307,6 +2310,19 @@ CREATE TABLE product_rating (
 ALTER TABLE product_rating OWNER TO mochidb_owner;
 
 --
+-- Name: product_shipping; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE product_shipping (
+    prd_id bigint NOT NULL,
+    exp_dt date,
+    ctry_of_orig character varying(3)
+);
+
+
+ALTER TABLE product_shipping OWNER TO mochidb_owner;
+
+--
 -- Name: product_status_prd_sts_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -2965,6 +2981,14 @@ ALTER TABLE ONLY product_rating
 
 
 --
+-- Name: product_shipping product_shipping_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY product_shipping
+    ADD CONSTRAINT product_shipping_pkey PRIMARY KEY (prd_id);
+
+
+--
 -- Name: product_status product_status_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -3490,6 +3514,14 @@ ALTER TABLE ONLY product
 
 
 --
+-- Name: product_shipping product_shipping_prd_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY product_shipping
+    ADD CONSTRAINT product_shipping_prd_id_fkey FOREIGN KEY (prd_id) REFERENCES product(prd_id);
+
+
+--
 -- Name: product product_sts_id_product_status_sts_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -3980,6 +4012,13 @@ GRANT ALL ON SEQUENCE product_rating_prd_rat_id_seq TO mochi_app;
 --
 
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE product_rating TO mochi_app;
+
+
+--
+-- Name: product_shipping; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE product_shipping TO mochi_app;
 
 
 --

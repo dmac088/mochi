@@ -843,7 +843,7 @@ INSERT INTO food_attr_lcl VALUES (58, 18, '不適用', 'zh-HK');
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 232952, true);
+SELECT pg_catalog.setval('hibernate_sequence', 232953, true);
 
 
 --
@@ -1403,6 +1403,12 @@ INSERT INTO product_rating VALUES (120, 18, 3, 232254, '2020-04-21 12:26:01.0533
 --
 
 SELECT pg_catalog.setval('product_rating_prd_rat_id_seq', 120, true);
+
+
+--
+-- Data for Name: product_shipping; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
 
 
 --

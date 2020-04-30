@@ -2215,6 +2215,19 @@ CREATE TABLE product_rating (
 ALTER TABLE product_rating OWNER TO mochidb_owner;
 
 --
+-- Name: product_shipping; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE product_shipping (
+    prd_id bigint NOT NULL,
+    exp_dt date,
+    ctry_of_orig character varying(3)
+);
+
+
+ALTER TABLE product_shipping OWNER TO mochidb_owner;
+
+--
 -- Name: product_status_prd_sts_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -3317,7 +3330,7 @@ COPY food_attr_lcl (prd_lcl_id, prd_id, ingredients, lcl_cd) FROM stdin;
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 232952, true);
+SELECT pg_catalog.setval('hibernate_sequence', 232953, true);
 
 
 --
@@ -4249,6 +4262,14 @@ SELECT pg_catalog.setval('product_rating_prd_rat_id_seq', 120, true);
 
 
 --
+-- Data for Name: product_shipping; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+COPY product_shipping (prd_id, exp_dt, ctry_of_orig) FROM stdin;
+\.
+
+
+--
 -- Data for Name: product_status; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -4908,7 +4929,7 @@ COPY user_role (id, pty_id, role_id) FROM stdin;
 -- Name: user_role_id_seq; Type: SEQUENCE SET; Schema: security; Owner: security_owner
 --
 
-SELECT pg_catalog.setval('user_role_id_seq', 183, true);
+SELECT pg_catalog.setval('user_role_id_seq', 184, true);
 
 
 SET search_path = mochi, pg_catalog;
@@ -5231,6 +5252,14 @@ ALTER TABLE ONLY product
 
 ALTER TABLE ONLY product_rating
     ADD CONSTRAINT product_rating_pkey PRIMARY KEY (prd_rat_id);
+
+
+--
+-- Name: product_shipping product_shipping_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY product_shipping
+    ADD CONSTRAINT product_shipping_pkey PRIMARY KEY (prd_id);
 
 
 --
@@ -5851,6 +5880,14 @@ ALTER TABLE ONLY product
 
 
 --
+-- Name: product_shipping product_shipping_prd_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY product_shipping
+    ADD CONSTRAINT product_shipping_prd_id_fkey FOREIGN KEY (prd_id) REFERENCES product(prd_id);
+
+
+--
 -- Name: product product_sts_id_product_status_sts_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -6392,6 +6429,13 @@ GRANT ALL ON SEQUENCE product_rating_prd_rat_id_seq TO mochi_app;
 --
 
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE product_rating TO mochi_app;
+
+
+--
+-- Name: product_shipping; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE product_shipping TO mochi_app;
 
 
 --
