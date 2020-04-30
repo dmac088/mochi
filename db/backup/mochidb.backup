@@ -1536,6 +1536,18 @@ CREATE TABLE brand_category (
 ALTER TABLE brand_category OWNER TO mochidb_owner;
 
 --
+-- Name: brand_promotion; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE brand_promotion (
+    bnd_id bigint NOT NULL,
+    prm_id bigint NOT NULL
+);
+
+
+ALTER TABLE brand_promotion OWNER TO mochidb_owner;
+
+--
 -- Name: category_cat_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -1614,6 +1626,18 @@ CREATE TABLE category_product (
 
 
 ALTER TABLE category_product OWNER TO mochidb_owner;
+
+--
+-- Name: category_promotion; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE category_promotion (
+    cat_id bigint NOT NULL,
+    prm_id bigint NOT NULL
+);
+
+
+ALTER TABLE category_promotion OWNER TO mochidb_owner;
 
 --
 -- Name: category_type_cat_typ_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
@@ -1920,7 +1944,10 @@ ALTER TABLE "order" OWNER TO mochidb_owner;
 CREATE TABLE order_line (
     ord_id bigint NOT NULL,
     prd_id bigint NOT NULL,
-    ord_lne_no bigint NOT NULL
+    ord_lne_no bigint NOT NULL,
+    qty smallint NOT NULL,
+    prm_id bigint NOT NULL,
+    amt money NOT NULL
 );
 
 
@@ -2186,6 +2213,18 @@ CREATE TABLE product_jewellery (
 ALTER TABLE product_jewellery OWNER TO mochidb_owner;
 
 --
+-- Name: product_promotion; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE product_promotion (
+    prd_id bigint NOT NULL,
+    prm_id bigint NOT NULL
+);
+
+
+ALTER TABLE product_promotion OWNER TO mochidb_owner;
+
+--
 -- Name: product_rating_prd_rat_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -2219,9 +2258,7 @@ ALTER TABLE product_rating OWNER TO mochidb_owner;
 --
 
 CREATE TABLE product_shipping (
-    prd_id bigint NOT NULL,
-    exp_dt date,
-    ctry_of_orig character varying(3)
+    prd_id bigint NOT NULL
 );
 
 
@@ -2327,10 +2364,22 @@ ALTER TABLE promotion OWNER TO mochidb_owner;
 --
 
 CREATE TABLE promotion_brand (
+    prm_id bigint NOT NULL
 );
 
 
 ALTER TABLE promotion_brand OWNER TO mochidb_owner;
+
+--
+-- Name: promotion_category; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE promotion_category (
+    prm_id bigint NOT NULL
+);
+
+
+ALTER TABLE promotion_category OWNER TO mochidb_owner;
 
 --
 -- Name: promotion_category_prm_cat_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
@@ -2347,23 +2396,11 @@ CREATE SEQUENCE promotion_category_prm_cat_id_seq
 ALTER TABLE promotion_category_prm_cat_id_seq OWNER TO mochidb_owner;
 
 --
--- Name: promotion_category; Type: TABLE; Schema: mochi; Owner: mochidb_owner
---
-
-CREATE TABLE promotion_category (
-    prm_cat_id bigint DEFAULT nextval('promotion_category_prm_cat_id_seq'::regclass) NOT NULL,
-    prm_id bigint,
-    cat_id bigint
-);
-
-
-ALTER TABLE promotion_category OWNER TO mochidb_owner;
-
---
 -- Name: promotion_order; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
 CREATE TABLE promotion_order (
+    prm_id bigint NOT NULL
 );
 
 
@@ -2374,6 +2411,7 @@ ALTER TABLE promotion_order OWNER TO mochidb_owner;
 --
 
 CREATE TABLE promotion_product (
+    prm_id bigint NOT NULL
 );
 
 
@@ -2935,6 +2973,14 @@ SELECT pg_catalog.setval('brand_category_bnd_cat_id_seq', 14, true);
 
 
 --
+-- Data for Name: brand_promotion; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+COPY brand_promotion (bnd_id, prm_id) FROM stdin;
+\.
+
+
+--
 -- Data for Name: category; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -3153,6 +3199,14 @@ COPY category_product (cat_id) FROM stdin;
 
 
 --
+-- Data for Name: category_promotion; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+COPY category_promotion (cat_id, prm_id) FROM stdin;
+\.
+
+
+--
 -- Data for Name: category_type; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -3225,6 +3279,7 @@ SELECT pg_catalog.setval('customer_cst_id_seq', 1000000259, true);
 COPY department (dept_id, dept_cd, dept_class) FROM stdin;
 2	JEW01	Jewellery
 3	FOO01	Food
+1	SHP01	Shipping
 \.
 
 
@@ -3330,7 +3385,7 @@ COPY food_attr_lcl (prd_lcl_id, prd_id, ingredients, lcl_cd) FROM stdin;
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 232953, true);
+SELECT pg_catalog.setval('hibernate_sequence', 232954, true);
 
 
 --
@@ -3643,7 +3698,7 @@ COPY "order" (ord_id, pty_id) FROM stdin;
 -- Data for Name: order_line; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY order_line (ord_id, prd_id, ord_lne_no) FROM stdin;
+COPY order_line (ord_id, prd_id, ord_lne_no, qty, prm_id, amt) FROM stdin;
 \.
 
 
@@ -4127,6 +4182,14 @@ COPY product_jewellery (prd_id) FROM stdin;
 
 
 --
+-- Data for Name: product_promotion; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+COPY product_promotion (prd_id, prm_id) FROM stdin;
+\.
+
+
+--
 -- Data for Name: product_rating; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -4265,7 +4328,7 @@ SELECT pg_catalog.setval('product_rating_prd_rat_id_seq', 120, true);
 -- Data for Name: product_shipping; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY product_shipping (prd_id, exp_dt, ctry_of_orig) FROM stdin;
+COPY product_shipping (prd_id) FROM stdin;
 \.
 
 
@@ -4327,7 +4390,7 @@ SELECT pg_catalog.setval('product_tag_prd_tag_id_seq', 34, true);
 -- Name: product_type_prd_typ_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('product_type_prd_typ_id_seq', 1, false);
+SELECT pg_catalog.setval('product_type_prd_typ_id_seq', 1, true);
 
 
 --
@@ -4342,7 +4405,7 @@ COPY promotion (prm_id, prm_cd, prm_sht_desc, prm_lng_desc, prm_st_dt, prm_en_dt
 -- Data for Name: promotion_brand; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY promotion_brand  FROM stdin;
+COPY promotion_brand (prm_id) FROM stdin;
 \.
 
 
@@ -4350,7 +4413,7 @@ COPY promotion_brand  FROM stdin;
 -- Data for Name: promotion_category; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY promotion_category (prm_cat_id, prm_id, cat_id) FROM stdin;
+COPY promotion_category (prm_id) FROM stdin;
 \.
 
 
@@ -4365,7 +4428,7 @@ SELECT pg_catalog.setval('promotion_category_prm_cat_id_seq', 1, false);
 -- Data for Name: promotion_order; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY promotion_order  FROM stdin;
+COPY promotion_order (prm_id) FROM stdin;
 \.
 
 
@@ -4373,7 +4436,7 @@ COPY promotion_order  FROM stdin;
 -- Data for Name: promotion_product; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY promotion_product  FROM stdin;
+COPY promotion_product (prm_id) FROM stdin;
 \.
 
 
@@ -4929,7 +4992,7 @@ COPY user_role (id, pty_id, role_id) FROM stdin;
 -- Name: user_role_id_seq; Type: SEQUENCE SET; Schema: security; Owner: security_owner
 --
 
-SELECT pg_catalog.setval('user_role_id_seq', 184, true);
+SELECT pg_catalog.setval('user_role_id_seq', 185, true);
 
 
 SET search_path = mochi, pg_catalog;
@@ -4956,6 +5019,14 @@ ALTER TABLE ONLY brand_category
 
 ALTER TABLE ONLY brand
     ADD CONSTRAINT brand_pkey PRIMARY KEY (bnd_id);
+
+
+--
+-- Name: brand_promotion brand_promotion_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY brand_promotion
+    ADD CONSTRAINT brand_promotion_pkey PRIMARY KEY (bnd_id, prm_id);
 
 
 --
@@ -4988,6 +5059,14 @@ ALTER TABLE ONLY category
 
 ALTER TABLE ONLY category_product
     ADD CONSTRAINT category_product_pkey PRIMARY KEY (cat_id);
+
+
+--
+-- Name: category_promotion category_promotion_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY category_promotion
+    ADD CONSTRAINT category_promotion_pkey PRIMARY KEY (cat_id, prm_id);
 
 
 --
@@ -5247,6 +5326,14 @@ ALTER TABLE ONLY product
 
 
 --
+-- Name: product_promotion product_promotion_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY product_promotion
+    ADD CONSTRAINT product_promotion_pkey PRIMARY KEY (prd_id, prm_id);
+
+
+--
 -- Name: product_rating product_rating_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -5287,11 +5374,27 @@ ALTER TABLE ONLY department
 
 
 --
+-- Name: promotion_brand promotion_brand_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY promotion_brand
+    ADD CONSTRAINT promotion_brand_pkey PRIMARY KEY (prm_id);
+
+
+--
 -- Name: promotion_category promotion_category_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
 ALTER TABLE ONLY promotion_category
-    ADD CONSTRAINT promotion_category_pkey PRIMARY KEY (prm_cat_id);
+    ADD CONSTRAINT promotion_category_pkey PRIMARY KEY (prm_id);
+
+
+--
+-- Name: promotion_order promotion_order_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY promotion_order
+    ADD CONSTRAINT promotion_order_pkey PRIMARY KEY (prm_id);
 
 
 --
@@ -5300,6 +5403,14 @@ ALTER TABLE ONLY promotion_category
 
 ALTER TABLE ONLY promotion
     ADD CONSTRAINT promotion_pkey PRIMARY KEY (prm_id);
+
+
+--
+-- Name: promotion_product promotion_product_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY promotion_product
+    ADD CONSTRAINT promotion_product_pkey PRIMARY KEY (prm_id);
 
 
 --
@@ -5500,14 +5611,6 @@ ALTER TABLE ONLY product_category
 
 ALTER TABLE ONLY product_tag
     ADD CONSTRAINT uc_product_tag UNIQUE (prd_id, tag_id);
-
-
---
--- Name: promotion_category uc_promotion_category; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY promotion_category
-    ADD CONSTRAINT uc_promotion_category UNIQUE (prm_id, cat_id);
 
 
 --
@@ -5920,11 +6023,11 @@ ALTER TABLE ONLY product
 
 
 --
--- Name: promotion_category promotion_category_cat_id_category_cat_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: promotion_brand promotion_brand_prm_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY promotion_category
-    ADD CONSTRAINT promotion_category_cat_id_category_cat_id_fkey FOREIGN KEY (cat_id) REFERENCES category(cat_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY promotion_brand
+    ADD CONSTRAINT promotion_brand_prm_id_fkey FOREIGN KEY (prm_id) REFERENCES promotion(prm_id);
 
 
 --
@@ -5933,6 +6036,22 @@ ALTER TABLE ONLY promotion_category
 
 ALTER TABLE ONLY promotion_category
     ADD CONSTRAINT promotion_category_prm_id_promotion_prm_id_fkey FOREIGN KEY (prm_id) REFERENCES promotion(prm_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: promotion_order promotion_order_prm_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY promotion_order
+    ADD CONSTRAINT promotion_order_prm_id_fkey FOREIGN KEY (prm_id) REFERENCES promotion(prm_id);
+
+
+--
+-- Name: promotion_product promotion_product_prm_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY promotion_product
+    ADD CONSTRAINT promotion_product_prm_id_fkey FOREIGN KEY (prm_id) REFERENCES promotion(prm_id);
 
 
 --
@@ -6495,17 +6614,17 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE promotion_brand TO mochi_app;
 
 
 --
--- Name: promotion_category_prm_cat_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
---
-
-GRANT ALL ON SEQUENCE promotion_category_prm_cat_id_seq TO mochi_app;
-
-
---
 -- Name: promotion_category; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE promotion_category TO mochi_app;
+
+
+--
+-- Name: promotion_category_prm_cat_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT ALL ON SEQUENCE promotion_category_prm_cat_id_seq TO mochi_app;
 
 
 --
