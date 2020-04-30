@@ -367,6 +367,12 @@ SELECT pg_catalog.setval('brand_category_bnd_cat_id_seq', 14, true);
 
 
 --
+-- Data for Name: brand_promotion; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+
+
+--
 -- Data for Name: category_attr_lcl; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -528,6 +534,12 @@ INSERT INTO category_product VALUES (44);
 
 
 --
+-- Data for Name: category_promotion; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+
+
+--
 -- Data for Name: category_type; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -667,6 +679,7 @@ SELECT pg_catalog.setval('customer_cst_id_seq', 1000000259, true);
 
 INSERT INTO department VALUES (2, 'JEW01', 'Jewellery');
 INSERT INTO department VALUES (3, 'FOO01', 'Food');
+INSERT INTO department VALUES (1, 'SHP01', 'Shipping');
 
 
 --
@@ -843,7 +856,7 @@ INSERT INTO food_attr_lcl VALUES (58, 18, '不適用', 'zh-HK');
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 232953, true);
+SELECT pg_catalog.setval('hibernate_sequence', 232954, true);
 
 
 --
@@ -1273,6 +1286,12 @@ SELECT pg_catalog.setval('product_category_prd_cat_id_seq', 116, true);
 
 
 --
+-- Data for Name: product_promotion; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+
+
+--
 -- Data for Name: product_rating; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -1463,7 +1482,7 @@ SELECT pg_catalog.setval('product_tag_prd_tag_id_seq', 34, true);
 -- Name: product_type_prd_typ_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('product_type_prd_typ_id_seq', 1, false);
+SELECT pg_catalog.setval('product_type_prd_typ_id_seq', 1, true);
 
 
 --
