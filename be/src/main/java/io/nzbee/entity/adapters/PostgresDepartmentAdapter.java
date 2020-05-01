@@ -4,11 +4,14 @@ import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+
 import io.nzbee.domain.department.Department;
 import io.nzbee.domain.ports.IDepartmentPortService;
 import io.nzbee.entity.product.department.IDepartmentMapper;
 import io.nzbee.entity.product.department.IDepartmentService;
 
+@Component
 public class PostgresDepartmentAdapter implements IDepartmentPortService {
 
 	@Autowired 
