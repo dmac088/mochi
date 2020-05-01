@@ -22,7 +22,6 @@ import io.nzbee.entity.category.product.ICategoryProductService;
 @Component
 public class PostgresCategoryAdapter implements ICategoryPortService {
 
-	
 	@Autowired 
 	private ICategoryService categoryService;
 	
@@ -46,6 +45,12 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	public Set<ProductCategory> findAllByProductCode(String locale, String currency, String productCode) {
 		return categoryProductService.findAllByProductCode(locale, currency, productCode)
 				.stream().map(c -> (ProductCategory) categoryMapper.entityToDo(Optional.ofNullable(c), locale, currency).get()).collect(Collectors.toSet());
+	}
+	
+	@Override
+	public Optional<ProductCategory> findPrimaryByProductCode(String locale, String currency, String productCode) {
+		return Optional.ofNullable((ProductCategory) categoryMapper.entityToDo(categoryProductService.findPrimaryByProductCode(locale, currency, productCode), locale, currency).get());
+				
 	}
 	
 	@Override

@@ -5,11 +5,16 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
+
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +29,12 @@ import io.nzbee.Globals;
 import io.nzbee.domain.product.Product;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.brand.BrandServiceImpl;
+import io.nzbee.domain.category.Category;
+import io.nzbee.domain.category.ProductCategory;
+import io.nzbee.domain.department.Department;
+import io.nzbee.domain.ports.IBrandPortService;
+import io.nzbee.domain.ports.ICategoryPortService;
+import io.nzbee.domain.ports.IProductPortService;
 import io.nzbee.domain.product.IProductService;
 
 @Service
@@ -34,14 +45,13 @@ public class ProductMasterService {
 	private Globals globalVars;
 	
 	@Autowired
-	@Qualifier("productDomainService")
-	private IProductService productDomainService;
+	private IProductPortService productDomainService;
 
+	@Autowired
+	private IBrandPortService brandDomainService; 
 	
 	@Autowired
-	@Qualifier("brandDomainService")
-	private BrandServiceImpl brandDomainService; 
-	
+	private ICategoryPortService categoryDomainService; 
 	
     @Autowired
     private FileStorageServiceUpload fileStorageServiceUpload;
@@ -50,19 +60,19 @@ public class ProductMasterService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ProductMasterService.class);
 
-//	public <ProductMasterSchema> List<ProductMasterSchema> loadObjectList(Class<ProductMasterSchema> type/*, String fileName*/) {
-//	    try {
-//	        CsvSchema bootstrapSchema = CsvSchema.emptySchema().withHeader();
-//	        CsvMapper mapper = new CsvMapper();
-//	        File file = new ClassPathResource("data/member_master_data.dat").getFile();
-//	        MappingIterator<ProductMasterSchema> readValues = 
-//	          mapper.reader(type).with(bootstrapSchema).readValues(file);
-//	        return readValues.readAll();
-//	    } catch (Exception e) {
-//	        //logger.error("Error occurred while loading object list from file " + fileName, e);
-//	        return Collections.emptyList();
-//	    }
-//	}
+	public <ProductMasterSchema> List<ProductMasterSchema> loadObjectList(Class<ProductMasterSchema> type/*, String fileName*/) {
+	    try {
+	        CsvSchema bootstrapSchema = CsvSchema.emptySchema().withHeader();
+	        CsvMapper mapper = new CsvMapper();
+	        File file = new ClassPathResource("data/member_master_data.dat").getFile();
+	        MappingIterator<ProductMasterSchema> readValues = 
+	          mapper.reader(type).with(bootstrapSchema).readValues(file);
+	        return readValues.readAll();
+	    } catch (Exception e) {
+	        //logger.error("Error occurred while loading object list from file " + fileName, e);
+	        return Collections.emptyList();
+	    }
+	}
 	
 	public void writeProductMaster(String fileName) {
 		try {
@@ -83,26 +93,36 @@ public class ProductMasterService {
 	
 	public void persistProductMaster(ProductMasterSchema p) {
 		
-//		io.nzbee.dto.product.Product pDo = 
-//				productDomainService.convertToProductDO(
-//					p.get_PRODUCT_CREATED_DATE(), 
-//					p.get_PRODUCT_UPC_CODE(), 
-//					p.get_PRODUCT_DESCRIPTION_EN(), 
-//					p.get_PRODUCT_RETAIL_PRICE_USD(), 
-//					p.get_PRODUCT_MARKDOWN_PRICE_USD(), 
-//					p.get_PRODUCT_IMAGE_EN(), 
-//					GeneralVars.LANGUAGE_ENGLISH, 
-//					GeneralVars.CURRENCY_USD, 
-//					"/TBC");
-//			
-//		io.nzbee.dto.brand.Brand bDo =
-//				brandDomainService.convertToBrandDO(
-//					p.get_BRAND_CODE(), 
-//					p.get_BRAND_DESCRIPTION_EN());
-//				
-//		pDo.setBrand(Optional.ofNullable(bDo));
-//		
-//		productDomainService.save(pDo);
+		Optional<Brand> bDo =
+				brandDomainService.findByProductCode(globalVars.getLocaleENGB(), 
+													 globalVars.getCurrencyHKD(), 
+													 p.get_PRODUCT_UPC_CODE());
+
+		
+		Optional<ProductCategory> cDo = 
+				categoryDomainService.findPrimaryByProductCode( globalVars.getLocaleENGB(), 
+													 			globalVars.getCurrencyHKD(), 
+													 			p.get_PRODUCT_UPC_CODE());
+		
+		
+		Product pDo = new Product(
+								p.get_PRODUCT_UPC_CODE(),
+							   	p.get_PRODUCT_CREATED_DATE(),
+							   	p.get_PRODUCT_DESCRIPTION_EN(),
+							   	p.get_PRODUCT_RETAIL_PRICE_HKD(),
+							   	p.get_PRODUCT_MARKDOWN_PRICE_HKD(),
+							   	p.get_PRODUCT_IMAGE_EN(),
+							   	"",
+							   	globalVars.getLocaleENGB(),
+							   	globalVars.getCurrencyHKD(),
+							   	bDo.get(),
+							   	Department department,
+							   	cDo
+								 );
+		
+		
+				
+		productDomainService.save(pDo);
 
 	}
 	

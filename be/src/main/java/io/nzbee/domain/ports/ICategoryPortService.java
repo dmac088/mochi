@@ -1,5 +1,6 @@
 package io.nzbee.domain.ports;
 
+import java.util.Optional;
 import java.util.Set;
 import io.nzbee.domain.category.Category;
 import io.nzbee.domain.category.ProductCategory;
@@ -13,5 +14,7 @@ public interface ICategoryPortService  extends IProductDimensionService<Category
 	Set<ProductCategory> findAllByProductCode(String locale, String currency, String productCode);
 
 	void save(Category domainObject);
+
+	Optional<ProductCategory> findPrimaryByProductCode(String locale, String currency, String productCode);
 
 }
