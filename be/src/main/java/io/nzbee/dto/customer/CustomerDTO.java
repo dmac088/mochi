@@ -12,6 +12,8 @@ public class CustomerDTO {
     
     private String password;
     
+    private String confirmPassword;
+    
 	private String partyType;
     
     private boolean enabled;
@@ -67,6 +69,16 @@ public class CustomerDTO {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
 	}
 
 
