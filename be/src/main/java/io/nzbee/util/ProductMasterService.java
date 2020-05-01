@@ -3,11 +3,14 @@ package io.nzbee.util;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -34,6 +37,7 @@ import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.department.Department;
 import io.nzbee.domain.ports.IBrandPortService;
 import io.nzbee.domain.ports.ICategoryPortService;
+import io.nzbee.domain.ports.IDepartmentPortService;
 import io.nzbee.domain.ports.IProductPortService;
 import io.nzbee.domain.product.IProductService;
 
@@ -52,6 +56,9 @@ public class ProductMasterService {
 	
 	@Autowired
 	private ICategoryPortService categoryDomainService; 
+	
+	@Autowired
+	private IDepartmentPortService departmentDomainService; 
 	
     @Autowired
     private FileStorageServiceUpload fileStorageServiceUpload;
@@ -104,10 +111,23 @@ public class ProductMasterService {
 													 			globalVars.getCurrencyHKD(), 
 													 			p.get_PRODUCT_UPC_CODE());
 		
+		Optional<Department> dDo = 
+				departmentDomainService.findByProductCode(globalVars.getLocaleENGB(), 
+													 	  globalVars.getCurrencyHKD(), 
+													 	  p.get_PRODUCT_UPC_CODE());
 		
+		DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
+		Date date = null;
+		try {
+			date = format.parse(p.get_PRODUCT_CREATED_DATE());
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+				
 		Product pDo = new Product(
 								p.get_PRODUCT_UPC_CODE(),
-							   	p.get_PRODUCT_CREATED_DATE(),
+								date,
 							   	p.get_PRODUCT_DESCRIPTION_EN(),
 							   	p.get_PRODUCT_RETAIL_PRICE_HKD(),
 							   	p.get_PRODUCT_MARKDOWN_PRICE_HKD(),
@@ -116,12 +136,9 @@ public class ProductMasterService {
 							   	globalVars.getLocaleENGB(),
 							   	globalVars.getCurrencyHKD(),
 							   	bDo.get(),
-							   	Department department,
-							   	cDo
-								 );
+							   	dDo.get(),
+							   	cDo.get());
 		
-		
-				
 		productDomainService.save(pDo);
 
 	}

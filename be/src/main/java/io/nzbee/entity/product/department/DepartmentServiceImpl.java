@@ -27,21 +27,24 @@ public class DepartmentServiceImpl implements IDepartmentService{
 
 	@Override
 	public Optional<Department> findById(String locale, String currency, long id) {
-		// TODO Auto-generated method stub
 		return departmentDao.findById(locale, currency, id) ;
 	}
 
 	@Override
 	public Optional<Department> findByCode(String locale, String currency, String code) {
-		// TODO Auto-generated method stub
 		return departmentDao.findByCode(locale, currency, code);
 	}
 
 	@Override
 	public Optional<Department> findByDesc(String locale, String currency, String desc) {
-		// TODO Auto-generated method stub
 		return departmentDao.findByDesc(locale, currency, desc);
 	}
+	
+	@Override
+	public Optional<Department> findByProductCode(String locale, String currency, String productCode) {
+		return departmentDao.findByProductCode(locale, currency, productCode);
+	}
+
 
 	@Override
 	public void save(Department t) {

@@ -3,7 +3,6 @@ package io.nzbee.entity.product.department;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Tuple;
@@ -12,12 +11,13 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Root;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.Product_;
 import io.nzbee.entity.product.department.attribute.DepartmentAttribute;
 import io.nzbee.entity.product.department.attribute.DepartmentAttribute_;
 
@@ -153,7 +153,43 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 		}
 	}
 	
-
+	@Override
+	public Optional<Department> findByProductCode(String locale, String currency, String productCode) {
+		
+		LOGGER.debug("call DepartmentDaoImpl.findByProductCode parameters : {}, {}, {}", locale, currency, productCode);
+		
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
+		
+		Root<Product> root = cq.from(Product.class);
+		Join<Product, Department> dept = root.join(Product_.department);
+		Join<Department, DepartmentAttribute> attribute = dept.join(Department_.attributes);
+		
+		cq.multiselect(	dept.get(Department_.departmentId).alias("departmentId"),
+						dept.get(Department_.departmentCode).alias("departmentCode"),
+						attribute.get(DepartmentAttribute_.Id).alias("departmentAttributeId"),
+						attribute.get(DepartmentAttribute_.departmentDesc).alias("departmentDesc")
+		);
+		
+		cq.where(cb.and(
+				cb.equal(root.get(Product_.productUPC), productCode),
+				cb.equal(attribute.get(DepartmentAttribute_.lclCd), locale)
+				)
+		);
+		
+		TypedQuery<Tuple> query = em.createQuery(cq);
+		
+		try {
+			Tuple tuple = query.getSingleResult();
+			
+			Department department = this.objectToEntity(tuple, locale, currency);
+			return Optional.ofNullable(department);
+		} 
+		catch(NoResultException nre) {
+			return Optional.empty();
+		}
+	}
 	
 	@Override
 	public void save(Department t) {

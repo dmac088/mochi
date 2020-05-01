@@ -49,8 +49,7 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	
 	@Override
 	public Optional<ProductCategory> findPrimaryByProductCode(String locale, String currency, String productCode) {
-		return Optional.ofNullable((ProductCategory) categoryMapper.entityToDo(categoryProductService.findPrimaryByProductCode(locale, currency, productCode), locale, currency).get());
-				
+		return Optional.ofNullable((ProductCategory) categoryMapper.entityToDo(categoryProductService.findPrimaryByProductCode(locale, currency, productCode), locale, currency).get());		
 	}
 	
 	@Override
