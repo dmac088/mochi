@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.ports.ICustomerPortService;
 import io.nzbee.domain.services.GenericResponse;
+import io.nzbee.dto.customer.CustomerDTO;
 import io.nzbee.exceptions.CustomerAlreadyExistException;
 
 
@@ -27,7 +28,7 @@ public class CustomerController {
 
     //Registration
     @PostMapping("/Customer/Signup")
-    public GenericResponse registerNewCustomer(@RequestBody final Customer customer) {
+    public GenericResponse registerNewCustomer(@RequestBody final CustomerDTO customer) {
         LOGGER.debug("Creating a new customer with information: {}", customer);
         
         try {

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.ports.ICustomerPortService;
+import io.nzbee.dto.customer.CustomerDTO;
 import io.nzbee.entity.party.person.IPersonMapper;
 import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.Person;
@@ -61,9 +62,14 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	}
 
 	@Override
-	public void registerNewCustomer(Customer customer) {
-		// TODO Auto-generated method stub
-		
+	public void registerNewCustomer(CustomerDTO customer) {
+		Customer c = new Customer(	customer.getGivenName(),
+									customer.getFamilyName(),
+									customer.getUserName(),
+									customer.getCustomerId(),
+									customer.isEnabled());
+		c.setPassword(customer.getPassword(), customer.getConfirmPassword());
+		this.save(c);
 	}
 
 	
