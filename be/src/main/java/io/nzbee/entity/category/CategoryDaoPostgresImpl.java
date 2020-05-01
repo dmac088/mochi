@@ -299,8 +299,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		return query.getResultList();
 	}
 	
-	
-	
 	@Override
 	public List<Category> findByProductCode(String locale, String currency, String productCode) {
 		return null;

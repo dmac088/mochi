@@ -9,9 +9,9 @@ import io.nzbee.entity.category.product.CategoryProduct;
 @Component(value="categoryMapper")
 public class CategoryMapper implements ICategoryMapper {
 
-	public Optional<io.nzbee.domain.category.Category> entityToDo(Optional<io.nzbee.entity.category.Category> e) {
+	public Optional<io.nzbee.domain.category.Category> entityToDo(Optional<?> e) {
 		if(!e.isPresent()) { return Optional.ofNullable(null); }
-		Category ce = e.get();
+		Category ce = (Category) e.get();
 		io.nzbee.domain.category.Category co = null;
 		if(ce instanceof CategoryProduct) {
 			co = new ProductCategory(
@@ -45,9 +45,9 @@ public class CategoryMapper implements ICategoryMapper {
 	}
 	
 	@Override
-	public Optional<io.nzbee.domain.category.Category> entityToDo(Optional<io.nzbee.entity.category.Category> e, String locale, String currency) {
+	public Optional<io.nzbee.domain.category.Category> entityToDo(Optional<?> e, String locale, String currency) {
 		if(!e.isPresent()) { return Optional.ofNullable(null); }
-		Category ce = e.get();
+		Category ce = (Category) e.get();
 		io.nzbee.domain.category.Category co = null;
 		if(ce instanceof CategoryProduct) {
 			co = new ProductCategory(

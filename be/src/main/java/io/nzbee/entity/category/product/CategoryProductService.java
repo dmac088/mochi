@@ -16,6 +16,11 @@ public class CategoryProductService implements ICategoryProductService {
 	public List<CategoryProduct> findAllByProductCode(String locale, String currency, String productCode) {
 		return productCategoryDao.findAllByProductCode(locale, currency, productCode);
 	}
+	
+	@Override
+	public Optional<CategoryProduct> findPrimaryByProductCode(String locale, String currency, String productCode) {
+		return productCategoryDao.findPrimaryByProductCode(locale, currency, productCode);
+	}
 
 	@Override
 	public List<CategoryProduct> findAll(String locale, String currency) {
