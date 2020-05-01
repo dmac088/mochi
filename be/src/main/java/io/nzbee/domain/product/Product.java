@@ -76,7 +76,7 @@ public class Product {
 					this.primaryCategory = category;
 					this.categories.add(category);
 	}
-	
+
 	public List<ProductCategory> getCategories() {
 		return categories;
 	}

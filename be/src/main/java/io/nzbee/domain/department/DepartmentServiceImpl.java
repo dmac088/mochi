@@ -22,6 +22,11 @@ public class DepartmentServiceImpl implements IDepartmentService {
 	}
 
 	@Override
+	public Optional<Department> findByProductCode(String locale, String currency, String departmentCode) {
+		return departmentService.findByProductCode(locale, currency, departmentCode);
+	}
+	
+	@Override
 	public Set<Department> findAll(String locale, String currency) {
 		return departmentService.findAll(locale, currency);
 	}
@@ -41,4 +46,6 @@ public class DepartmentServiceImpl implements IDepartmentService {
 		// TODO Auto-generated method stub
 		
 	}
+
+
 }
