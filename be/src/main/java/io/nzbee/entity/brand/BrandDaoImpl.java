@@ -221,6 +221,44 @@ public class BrandDaoImpl  implements IBrandDao {
 		return tuples.stream().map(t -> this.objectToEntity(t, locale, currency)).collect(Collectors.toList());
 	}
 	
+
+	@Override
+	public Optional<Brand> findByProductCode(String locale, String currency, String productCode) {
+		LOGGER.debug("call BrandDaoImpl.findByProductCode parameters : {}, {}, {}", locale, currency, productCode);
+		
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
+		
+		Root<Brand> root = cq.from(Brand.class);
+		Join<Brand, BrandAttribute> attribute = root.join(Brand_.attributes);
+		Join<Brand, Product> product = root.join(Brand_.products);
+
+		cq.multiselect(	root.get(Brand_.brandId).alias("brandId"),
+						root.get(Brand_.brandCode).alias("brandCode"),
+						attribute.get(BrandAttribute_.Id).alias("brandAttributeId"),
+						attribute.get(BrandAttribute_.brandDesc).alias("brandDesc")
+		);
+		
+		cq.where(cb.and(
+				cb.equal(product.get(Product_.productUPC), productCode),
+				cb.equal(attribute.get(BrandAttribute_.lclCd), locale)
+				)
+		);
+		
+		TypedQuery<Tuple> query = em.createQuery(cq);
+		
+		try {
+			Tuple tuple = query.getSingleResult();
+			
+			Brand brand = this.objectToEntity(tuple, locale, currency);
+			return Optional.ofNullable(brand);
+		} 
+		catch(NoResultException nre) {
+			return Optional.empty();
+		}
+	}
+	
 	@Override
 	public List<Brand> findAll(String locale, String currency) {
 		LOGGER.debug("call BrandDaoImpl.findAll parameters : {}, {}, {}", locale, currency);
@@ -327,5 +365,6 @@ public class BrandDaoImpl  implements IBrandDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 }

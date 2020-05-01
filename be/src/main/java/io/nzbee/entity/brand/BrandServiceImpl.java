@@ -57,6 +57,11 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	public List<Brand> findAll(String locale, String currency, String categoryCode) {
 		return brandDao.findAllByCategory(locale, currency, categoryCode);
 	}
+	
+	@Override
+	public Brand findByProductCode(String locale, String currency, String productCode) {
+		return null;
+	}
 
 	@Override
 	public void save(Brand t) {
@@ -89,4 +94,6 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	public String tokenToCode(String token) {
 		return token;
 	}
+
+
 }

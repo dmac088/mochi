@@ -12,5 +12,7 @@ public interface IBrandService extends ILocalizedService<Brand>, ISearchDimensio
 	List<Brand> findAll(String locale, String currency, Set<String> categoryCodes, Set<String> tagCodes);
 
 	List<Brand> findAll(String locale, String currency, String categoryCode);
+	
+	Brand findByProductCode(String locale, String currency, String productCode);
 
 }

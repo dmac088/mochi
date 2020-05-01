@@ -32,7 +32,11 @@ public class PostgresBrandAdapter implements IBrandPortService, IFacetService {
 	@Override
 	public Optional<Brand> findByCode(String locale, String currency, String code) {
 		return entityToDo(Optional.ofNullable(brandService.findByCode(locale, currency, code)).get());
-				
+	}
+	
+	@Override
+	public Optional<Brand> findByProductCode(String locale, String currency, String productCode) {
+		return entityToDo(Optional.ofNullable(brandService.findByCode(locale, currency, productCode)).get());
 	}
 
 	@Override
@@ -98,4 +102,6 @@ public class PostgresBrandAdapter implements IBrandPortService, IFacetService {
 	public String getFacetCategory() {
 		return "brand";
 	}
+
+
 }
