@@ -1,8 +1,8 @@
 package io.nzbee.security.user.role;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -20,7 +20,11 @@ import io.nzbee.security.user.User;
 @Table(name = "ROLE", schema="security")
 public class UserRole implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 134341541588659866L;
 
 	@ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(						//the table that manages the many to many relationship
@@ -28,11 +32,11 @@ public class UserRole implements Serializable {
     								joinColumns 		= @JoinColumn(name = "role_id"), 
     								inverseJoinColumns 	= @JoinColumn(name = "permission_id"))
     @JsonIgnore
-    private Set<Authority> authorities = new HashSet<Authority>();
+    private List<Authority> authorities = new ArrayList<Authority>();
 
 	@ManyToMany(fetch = FetchType.LAZY,
 				mappedBy = "roles")
-    private Set<User> Users = new HashSet<User>();
+    private List<User> Users = new ArrayList<User>();
 
 	@Id
     @Column(name = "id")
@@ -54,11 +58,11 @@ public class UserRole implements Serializable {
 		this.name = name;
 	}
 	
-    public Set<Authority> getAuthorities() {
+    public List<Authority> getAuthorities() {
 		return authorities;
 	}
     
-	public Set<User> getUsers() {
+	public List<User> getUsers() {
 		return Users;
 	}
 	

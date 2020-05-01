@@ -8,8 +8,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,7 +29,7 @@ import javax.persistence.UniqueConstraint;
 @Table(name = "user_", schema="security", uniqueConstraints = { @UniqueConstraint(columnNames = { "USER_NAME" }) })
 public class User implements UserDetails, Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 5603353640112109631L;
 
 	@Id
     @Column(name = "pty_id")
@@ -62,7 +64,7 @@ public class User implements UserDetails, Serializable {
     @JoinTable(name = "USER_ROLE", schema="security", 
     		   joinColumns 			= @JoinColumn(name = "pty_id"), 
     		   inverseJoinColumns 	= @JoinColumn(name = "role_id"))
-    private Set<UserRole> roles = new HashSet<UserRole>();
+    private List<UserRole> roles = new ArrayList<UserRole>();
     
 	@Override
     public boolean isAccountNonExpired() {
@@ -85,7 +87,7 @@ public class User implements UserDetails, Serializable {
 		//create a new array and return it
 		Set<GrantedAuthority> colNewAuth = new HashSet<GrantedAuthority>();
 		
-		 for(UserRole ur : roles) {
+		 for(UserRole ur : this.getUserRoles()) {
 	            colNewAuth.addAll(ur.getAuthorities());
 	     }
 		return colNewAuth;
@@ -138,11 +140,11 @@ public class User implements UserDetails, Serializable {
 		ur.getUsers().remove(this);
 	}
 	
-	public Set<UserRole> getUserRoles() {
+	public List<UserRole> getUserRoles() {
 		return roles;
 	}
 
-	public void setUserRoles(Set<UserRole> roles) {
+	public void setUserRoles(List<UserRole> roles) {
 		this.roles = roles;
 	}
 	
