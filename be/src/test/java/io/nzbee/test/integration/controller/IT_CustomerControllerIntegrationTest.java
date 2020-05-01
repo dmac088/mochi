@@ -42,7 +42,6 @@ import io.nzbee.test.UT_Config;
 								 Globals.class})
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-
 public class IT_CustomerControllerIntegrationTest {
 	
 	@Autowired
