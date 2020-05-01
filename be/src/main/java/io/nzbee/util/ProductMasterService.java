@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
@@ -109,23 +110,46 @@ public class ProductMasterService {
 		List<ProductMasterSchema> lpms = new ArrayList<ProductMasterSchema>();
 	    try {
 	    
-	    	Set<Product> products = productDomainService.findAll(globalVars.getLocaleENGB(),
-	    														  globalVars.getCurrencyHKD());
+	    	Set<Product> productsListA = productDomainService.findAll(	globalVars.getLocaleENGB(),
+	    														  		globalVars.getCurrencyHKD());
 	    	
-	    	lpms.addAll(products.stream().map(p -> {
+	    	Set<Product> productsListB = productDomainService.findAll(	globalVars.getLocaleZHHK(),
+					  													globalVars.getCurrencyUSD());
+	    	
+	    	Map<String, Product> map = productsListB.stream().collect(Collectors.toMap(p -> ((Product) p).getProductUPC(), p -> ((Product) p)));
+	    	
+	    	lpms.addAll(productsListA.stream().map(p -> {
 		    	ProductMasterSchema pms = new ProductMasterSchema();
+		    	
+		    	Product productB = map.get(p.getProductUPC());
+		    	
 		    	pms.set_PRODUCT_UPC_CODE(p.getProductUPC());
 		    	pms.set_PRODUCT_CREATED_DATE(format.format(p.getProductCreateDt()));
+		    	
 		    	pms.set_PRODUCT_DESCRIPTION_EN(p.getProductDesc());
+		    	pms.set_PRODUCT_DESCRIPTION_HK(productB.getProductDesc());
+		    	
 		    	pms.set_PRODUCT_RETAIL_PRICE_HKD(p.getProductRetail());
 		    	pms.set_PRODUCT_MARKDOWN_PRICE_HKD(p.getProductMarkdown());
 		    	
-		    	Brand brand = brandDomainService.findByProductCode(  globalVars.getLocaleENGB(),
+		    	pms.set_PRODUCT_RETAIL_PRICE_USD(productB.getProductRetail());
+		    	pms.set_PRODUCT_MARKDOWN_PRICE_USD(productB.getProductMarkdown());
+		    	
+		    	
+		    	Brand brandA = brandDomainService.findByProductCode( globalVars.getLocaleENGB(),
 																	 globalVars.getCurrencyHKD(), 
 																	 p.getProductUPC()).get();
 		    	
-		    	pms.set_BRAND_CODE(brand.getBrandCode());
-		    	pms.set_BRAND_DESCRIPTION_EN(brand.getBrandDesc());
+		    	pms.set_BRAND_CODE(brandA.getBrandCode());
+		    	pms.set_BRAND_DESCRIPTION_EN(brandA.getBrandDesc());
+		    	
+		    	Brand brandB = brandDomainService.findByProductCode( globalVars.getLocaleENGB(),
+																	 globalVars.getCurrencyHKD(), 
+																	 productB.getProductUPC()).get();
+		    	
+		    	pms.set_BRAND_CODE(brandB.getBrandCode());
+		    	pms.set_BRAND_DESCRIPTION_EN(brandB.getBrandDesc());
+		    	
 		    	
 		    	pms.set_PRIMARY_CATEGORY_PATH("\\TBC");
 		    	pms.set_PRODUCT_IMAGE_EN(p.getProductImage());
