@@ -20,12 +20,9 @@ import io.nzbee.security.user.User;
 @Table(name = "ROLE", schema="security")
 public class UserRole implements Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(						//the table that manages the many to many relationship
     								name = "ROLE_PERMISSION", schema="security", 
     								joinColumns 		= @JoinColumn(name = "role_id"), 
@@ -35,7 +32,7 @@ public class UserRole implements Serializable {
 
 	@ManyToMany(fetch = FetchType.LAZY,
 				mappedBy = "roles")
-    private Set<User> Users = new HashSet<>();
+    private Set<User> Users = new HashSet<User>();
 
 	@Id
     @Column(name = "id")

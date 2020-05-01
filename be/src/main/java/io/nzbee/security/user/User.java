@@ -22,13 +22,9 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Table(name = "user_", schema="security", uniqueConstraints = { @UniqueConstraint(columnNames = { "USER_NAME" }) })
-@Getter 
-@Setter
 public class User implements UserDetails, Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -110,7 +106,6 @@ public class User implements UserDetails, Serializable {
 	}
 
 	public void setPassword(String password) {
-		// TODO Auto-generated method stub
 		BCryptPasswordEncoder pe = new BCryptPasswordEncoder(Encoders.userRounds);
 		this.password = pe.encode(password);
 	}
@@ -120,13 +115,11 @@ public class User implements UserDetails, Serializable {
 	}
 
 	public void setUsername(String username) {
-		// TODO Auto-generated method stub
 		this.username = username;
 	}
 	
 	@Override
 	public String getUsername() {
-		// TODO Auto-generated method stub
 		return this.username;
 	}
 
