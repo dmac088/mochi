@@ -16,13 +16,11 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
-
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -31,15 +29,12 @@ import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.Globals;
 import io.nzbee.domain.product.Product;
 import io.nzbee.domain.brand.Brand;
-import io.nzbee.domain.brand.BrandServiceImpl;
-import io.nzbee.domain.category.Category;
 import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.department.Department;
 import io.nzbee.domain.ports.IBrandPortService;
 import io.nzbee.domain.ports.ICategoryPortService;
 import io.nzbee.domain.ports.IDepartmentPortService;
 import io.nzbee.domain.ports.IProductPortService;
-import io.nzbee.domain.product.IProductService;
 
 @Service
 @Transactional
