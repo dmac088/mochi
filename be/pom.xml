@@ -124,6 +124,16 @@
 			<artifactId>drools-decisiontables</artifactId>
 			<version>7.36.1.Final</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>4.1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>4.1.2</version>
+		</dependency>
 		<!-- <dependency> -->
 		<!-- <groupId>com.opencsv</groupId> -->
 		<!-- <artifactId>opencsv</artifactId> -->
