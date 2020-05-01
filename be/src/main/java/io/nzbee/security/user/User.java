@@ -29,7 +29,7 @@ import javax.persistence.UniqueConstraint;
 @Table(name = "user_", schema="security", uniqueConstraints = { @UniqueConstraint(columnNames = { "USER_NAME" }) })
 public class User implements UserDetails, Serializable {
 	
-	private static final long serialVersionUID = 5603353640112109631L;
+	private static final long serialVersionUID = 1L;
 
 	@Id
     @Column(name = "pty_id")
