@@ -60,7 +60,6 @@ public class DepartmentServiceImpl implements IDepartmentService{
 
 	@Override
 	public void delete(Department t) {
-		// TODO Auto-generated method stub
 		departmentDao.save(t);
 	}
 
