@@ -104,8 +104,8 @@ public class ProductMasterService {
 		
 		Optional<Category> cDo = 
 							categoryDomainService.findByCode(   globalVars.getLocaleENGB(), 
-																				  globalVars.getCurrencyHKD(), 
-																				  p.get_PRIMARY_CATEGORY_CODE());
+																globalVars.getCurrencyHKD(), 
+																p.get_PRIMARY_CATEGORY_CODE());
 		
 		Optional<Department> dDo = 
 				departmentDomainService.findByCode(globalVars.getLocaleENGB(), 
@@ -189,11 +189,15 @@ public class ProductMasterService {
 						{ pms.setPRIMARY_CATEGORY_DESC_EN(c.get().getCategoryDesc()); 
 						  pms.set_PRODUCT_IMAGE_EN(p.getProductImage());}
 		    	
+		    	Optional<Department> d = departmentDomainService.findByProductCode(globalVars.getLocaleENGB(),
+															 					 globalVars.getCurrencyHKD(), 
+															 					 p.getProductUPC()); 
 		    	
+		    	pms.set_DEPARTMENT_CODE(d.get().getDepartmentCode());
 		    	
+		    	if (p.getLclCd().equals(globalVars.getLocaleENGB())) 
+				{ pms.set_DEPARTMENT_DESC_EN(d.get().getDepartmentDesc()); } 
 		    	
-		    	
-		    
 	    	return pms;
 	    	}).collect(Collectors.toList()));
 	    	
