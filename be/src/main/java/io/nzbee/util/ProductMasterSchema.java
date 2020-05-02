@@ -36,6 +36,8 @@ public class ProductMasterSchema {
 	private String PRIMARY_CATEGORY_DESC_HK;
 	
 	private String DEPARTMENT_CODE;
+	
+	private String DEPARTMENT_DESC_EN;
 
 	public String get_DEPARTMENT_CODE() {
 		return DEPARTMENT_CODE;
@@ -165,14 +167,22 @@ public class ProductMasterSchema {
 		PRIMARY_CATEGORY_DESC_EN = pRIMARY_CATEGORY_DESC_EN;
 	}
 
-	public String getPRIMARY_CATEGORY_DESC_HK() {
+	public String get_PRIMARY_CATEGORY_DESC_HK() {
 		return PRIMARY_CATEGORY_DESC_HK;
 	}
 
-	public void setPRIMARY_CATEGORY_DESC_HK(String pRIMARY_CATEGORY_DESC_HK) {
+	public void set_PRIMARY_CATEGORY_DESC_HK(String pRIMARY_CATEGORY_DESC_HK) {
 		PRIMARY_CATEGORY_DESC_HK = pRIMARY_CATEGORY_DESC_HK;
 	}
 	
+	public String get_DEPARTMENT_DESC_EN() {
+		return DEPARTMENT_DESC_EN;
+	}
+
+	public void set_DEPARTMENT_DESC_EN(String dEPARTMENT_DESC_EN) {
+		DEPARTMENT_DESC_EN = dEPARTMENT_DESC_EN;
+	}
+
 	@Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
@@ -194,6 +204,5 @@ public class ProductMasterSchema {
         return builder.toString();
         
     }
-
 	
 }
