@@ -29,7 +29,21 @@ public class ProductMasterSchema {
 	
 	private String PRODUCT_IMAGE_HK;
 	
-	private String PRIMARY_CATEGORY_PATH; 
+	private String PRIMARY_CATEGORY_CODE;
+	
+	private String PRIMARY_CATEGORY_DESC_EN;
+	
+	private String PRIMARY_CATEGORY_DESC_HK;
+	
+	private String DEPARTMENT_CODE;
+
+	public String get_DEPARTMENT_CODE() {
+		return DEPARTMENT_CODE;
+	}
+
+	public void set_DEPARTMENT_CODE(String dEPARTMENT_CODE) {
+		DEPARTMENT_CODE = dEPARTMENT_CODE;
+	}
 
 	public String get_PRODUCT_UPC_CODE() {
 		return PRODUCT_UPC_CODE;
@@ -111,12 +125,12 @@ public class ProductMasterSchema {
 		this.PRODUCT_MARKDOWN_PRICE_HKD = PRODUCT_MARKDOWN_PRICE_HKD;
 	}
 
-	public String get_PRIMARY_CATEGORY_PATH() {
-		return PRIMARY_CATEGORY_PATH;
+	public String get_PRIMARY_CATEGORY_CODE() {
+		return PRIMARY_CATEGORY_CODE;
 	}
 
-	public void set_PRIMARY_CATEGORY_PATH(String PRIMARY_CATEGORY_PATH) {
-		this.PRIMARY_CATEGORY_PATH = PRIMARY_CATEGORY_PATH;
+	public void set_PRIMARY_CATEGORY_CODE(String PRIMARY_CATEGORY_CODE) {
+		this.PRIMARY_CATEGORY_CODE = PRIMARY_CATEGORY_CODE;
 	}
 
 	public String get_PRODUCT_IMAGE_EN() {
@@ -143,6 +157,22 @@ public class ProductMasterSchema {
 		this.BRAND_CODE = BRAND_CODE;
 	}
 	
+	public String getPRIMARY_CATEGORY_DESC_EN() {
+		return PRIMARY_CATEGORY_DESC_EN;
+	}
+
+	public void setPRIMARY_CATEGORY_DESC_EN(String pRIMARY_CATEGORY_DESC_EN) {
+		PRIMARY_CATEGORY_DESC_EN = pRIMARY_CATEGORY_DESC_EN;
+	}
+
+	public String getPRIMARY_CATEGORY_DESC_HK() {
+		return PRIMARY_CATEGORY_DESC_HK;
+	}
+
+	public void setPRIMARY_CATEGORY_DESC_HK(String pRIMARY_CATEGORY_DESC_HK) {
+		PRIMARY_CATEGORY_DESC_HK = pRIMARY_CATEGORY_DESC_HK;
+	}
+	
 	@Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
@@ -159,7 +189,7 @@ public class ProductMasterSchema {
         	   .append(", PRODUCT_MARKDOWN_PRICE_HKD=").append(PRODUCT_MARKDOWN_PRICE_HKD)
         	   .append(", PRODUCT_IMAGE_EN=").append(PRODUCT_IMAGE_EN)
         	   .append(", PRODUCT_IMAGE_HK=").append(PRODUCT_IMAGE_HK)
-        	   .append(", PRIMARY_CATEGORY_PATH=").append(PRIMARY_CATEGORY_PATH)
+        	   .append(", PRIMARY_CATEGORY_CODE=").append(PRIMARY_CATEGORY_CODE)
                .append("]");
         return builder.toString();
         

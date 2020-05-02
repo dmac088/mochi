@@ -29,6 +29,7 @@ import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.Globals;
 import io.nzbee.domain.product.Product;
 import io.nzbee.domain.brand.Brand;
+import io.nzbee.domain.category.Category;
 import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.department.Department;
 import io.nzbee.domain.ports.IBrandPortService;
@@ -96,20 +97,20 @@ public class ProductMasterService {
 	public void persistProductMaster(ProductMasterSchema p) {
 		
 		Optional<Brand> bDo =
-				brandDomainService.findByProductCode(globalVars.getLocaleENGB(), 
-													 globalVars.getCurrencyHKD(), 
-													 p.get_PRODUCT_UPC_CODE());
+				brandDomainService.findByCode(globalVars.getLocaleENGB(), 
+											  globalVars.getCurrencyHKD(), 
+											  p.get_BRAND_CODE());
 
 		
-		Optional<ProductCategory> cDo = 
-				categoryDomainService.findPrimaryByProductCode( globalVars.getLocaleENGB(), 
-													 			globalVars.getCurrencyHKD(), 
-													 			p.get_PRODUCT_UPC_CODE());
+		Optional<Category> cDo = 
+							categoryDomainService.findByCode(   globalVars.getLocaleENGB(), 
+																				  globalVars.getCurrencyHKD(), 
+																				  p.get_PRIMARY_CATEGORY_CODE());
 		
 		Optional<Department> dDo = 
-				departmentDomainService.findByProductCode(globalVars.getLocaleENGB(), 
+				departmentDomainService.findByCode(globalVars.getLocaleENGB(), 
 													 	  globalVars.getCurrencyHKD(), 
-													 	  p.get_PRODUCT_UPC_CODE());
+													 	  p.get_DEPARTMENT_CODE());
 		
 		DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
 		Date date = null;
@@ -132,7 +133,7 @@ public class ProductMasterService {
 							   	globalVars.getCurrencyHKD(),
 							   	bDo.get(),
 							   	dDo.get(),
-							   	cDo.get());
+							   	(ProductCategory) cDo.get());
 		
 		productDomainService.save(pDo);
 
@@ -142,50 +143,57 @@ public class ProductMasterService {
 		List<ProductMasterSchema> lpms = new ArrayList<ProductMasterSchema>();
 	    try {
 	    
-	    	Set<Product> productsListA = productDomainService.findAll(	globalVars.getLocaleENGB(),
+	    	Set<Product> productsList = productDomainService.findAll(	globalVars.getLocaleENGB(),
 	    														  		globalVars.getCurrencyHKD());
+	    	//create a map of products (full list)
+	    	Map<String, ProductMasterSchema> map = productsList.stream().collect(Collectors.toMap(p -> ((Product) p).getProductUPC(), p -> new ProductMasterSchema()));
 	    	
-	    	Set<Product> productsListB = productDomainService.findAll(	globalVars.getLocaleZHHK(),
-					  													globalVars.getCurrencyUSD());
+	    	productsList.addAll(productDomainService.findAll(	globalVars.getLocaleZHHK(),
+																globalVars.getCurrencyUSD()));
 	    	
-	    	Map<String, Product> map = productsListB.stream().collect(Collectors.toMap(p -> ((Product) p).getProductUPC(), p -> ((Product) p)));
-	    	
-	    	lpms.addAll(productsListA.stream().map(pA -> {
-		    	ProductMasterSchema pms = new ProductMasterSchema();
+	    	lpms.addAll(productsList.stream().map(p -> {
+		    	ProductMasterSchema pms = map.get(p.getProductUPC());
 		    	
-		    	Product pB = map.get(pA.getProductUPC());
+		    	pms.set_PRODUCT_UPC_CODE(p.getProductUPC());
+		    	pms.set_PRODUCT_CREATED_DATE(format.format(p.getProductCreateDt()));
 		    	
-		    	pms.set_PRODUCT_UPC_CODE(pA.getProductUPC());
-		    	pms.set_PRODUCT_CREATED_DATE(format.format(pA.getProductCreateDt()));
+		        if (p.getLclCd().equals(globalVars.getLocaleENGB())) 
+		        		{ pms.set_PRODUCT_DESCRIPTION_EN(p.getProductDesc()); }
+		        if (p.getLclCd().equals(globalVars.getLocaleZHHK())) 
+        				{ pms.set_PRODUCT_DESCRIPTION_HK(p.getProductDesc()); }		
+		        
+		        if (p.getCurrency().equals(globalVars.getCurrencyHKD())) 
+						{ pms.set_PRODUCT_RETAIL_PRICE_HKD(p.getProductRetail()); 
+						  pms.set_PRODUCT_MARKDOWN_PRICE_HKD(p.getProductMarkdown());}	
+		        		
+		        if (p.getCurrency().equals(globalVars.getCurrencyUSD())) 
+						{ pms.set_PRODUCT_RETAIL_PRICE_USD(p.getProductRetail()); 
+						  pms.set_PRODUCT_MARKDOWN_PRICE_USD(p.getProductMarkdown());}
 		    	
-		    	pms.set_PRODUCT_DESCRIPTION_EN(pA.getProductDesc());
-		    	pms.set_PRODUCT_DESCRIPTION_HK(pB.getProductDesc());
-		    	
-		    	pms.set_PRODUCT_RETAIL_PRICE_HKD(pA.getProductRetail());
-		    	pms.set_PRODUCT_MARKDOWN_PRICE_HKD(pA.getProductMarkdown());
-		    	
-		    	pms.set_PRODUCT_RETAIL_PRICE_USD(pB.getProductRetail());
-		    	pms.set_PRODUCT_MARKDOWN_PRICE_USD(pB.getProductMarkdown());
-		    	
-		    	
-		    	Brand brandA = brandDomainService.findByProductCode( globalVars.getLocaleENGB(),
+		    	Optional<Brand> brand = brandDomainService.findByProductCode( globalVars.getLocaleENGB(),
 																	 globalVars.getCurrencyHKD(), 
-																	 pA.getProductUPC()).get();
+																	 p.getProductUPC());
 		    	
-		    	pms.set_BRAND_CODE(brandA.getBrandCode());
-		    	pms.set_BRAND_DESCRIPTION_EN(brandA.getBrandDesc());
+		    	pms.set_BRAND_CODE(brand.get().getBrandCode());
 		    	
-		    	Brand brandB = brandDomainService.findByProductCode( globalVars.getLocaleENGB(),
-																	 globalVars.getCurrencyHKD(), 
-																	 pB.getProductUPC()).get();
+		    	if (p.getLclCd().equals(globalVars.getLocaleENGB())) 
+        				{ pms.set_BRAND_DESCRIPTION_EN(brand.get().getBrandDesc()); }
 		    	
-		    	pms.set_BRAND_CODE(brandB.getBrandCode());
-		    	pms.set_BRAND_DESCRIPTION_EN(brandB.getBrandDesc());
+		    	Optional<ProductCategory> c = categoryDomainService.findPrimaryByProductCode(globalVars.getLocaleENGB(),
+																		 					 globalVars.getCurrencyHKD(), 
+																		 					 p.getProductUPC()); 
+		    	
+		    	pms.set_PRIMARY_CATEGORY_CODE(c.get().getCategoryCode());
+		    	
+		    	if (p.getLclCd().equals(globalVars.getLocaleENGB())) 
+						{ pms.setPRIMARY_CATEGORY_DESC_EN(c.get().getCategoryDesc()); 
+						  pms.set_PRODUCT_IMAGE_EN(p.getProductImage());}
 		    	
 		    	
-		    	pms.set_PRIMARY_CATEGORY_PATH("\\TBC");
-		    	pms.set_PRODUCT_IMAGE_EN(pA.getProductImage());
-	    		
+		    	
+		    	
+		    	
+		    
 	    	return pms;
 	    	}).collect(Collectors.toList()));
 	    	

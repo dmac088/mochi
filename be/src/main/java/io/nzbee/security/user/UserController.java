@@ -17,9 +17,9 @@ public class UserController {
 	@Autowired
 	private UserDetailsService userService;	
 	
-	@GetMapping("/User/{username}")
-	public UserDetails getUser(@PathVariable String username) {
-		return userService.loadUserByUsername(username);
-	}
+//	@GetMapping("/User/{username}")
+//	public UserDetails getUser(@PathVariable String username) {
+//		return userService.loadUserByUsername(username);
+//	}
 	
 }
