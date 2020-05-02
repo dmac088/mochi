@@ -19,7 +19,7 @@ public class CustomerDoBeanFactory {
 				true
 				);
 		c.setPassword("1234", "1234");
-	
+			
 		return c;
 	}
 	

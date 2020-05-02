@@ -5,11 +5,12 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import io.nzbee.domain.ports.ICustomerPortService;
+import io.nzbee.dto.customer.CustomerDTO;
 
 public class CustomerServiceImpl implements ICustomerService {
 
 	@Autowired
-	ICustomerPortService customerService;
+	private ICustomerPortService customerService;
 
 	@Override
 	public boolean customerExist(String username) {
@@ -17,9 +18,8 @@ public class CustomerServiceImpl implements ICustomerService {
 	}
 
 	@Override
-	public void registerNewCustomer(Customer customer) {
-		// TODO Auto-generated method stub
-		
+	public void registerNewCustomer(CustomerDTO customer) {		
+		customerService.registerNewCustomer(customer);
 	}
 
 	@Override
@@ -37,5 +37,7 @@ public class CustomerServiceImpl implements ICustomerService {
 	public Optional<Customer> findByUsername(String userName) {
 		return customerService.findByUsername(userName);
 	}
+
+	
 
 }
