@@ -20,11 +20,7 @@ import io.nzbee.security.user.User;
 @Table(name = "ROLE", schema="security")
 public class UserRole implements Serializable {
 	
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 134341541588659866L;
+	private static final long serialVersionUID = 1L;
 
 	@ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(						//the table that manages the many to many relationship

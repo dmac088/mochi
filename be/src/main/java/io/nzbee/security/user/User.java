@@ -28,7 +28,7 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(name = "user_", schema="security", uniqueConstraints = { @UniqueConstraint(columnNames = { "USER_NAME" }) })
 public class User implements UserDetails, Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
