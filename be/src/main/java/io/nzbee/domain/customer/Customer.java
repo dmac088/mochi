@@ -76,7 +76,6 @@ public class Customer {
 		if(password.equals(matchingPassword)) {
 			this.password = password;
 		}
-		System.out.print("passwords do not match!");
 	}
 	
 	public String getPassword() {
