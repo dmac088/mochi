@@ -36,6 +36,7 @@ import org.springframework.web.client.RestTemplate;
 import org.json.JSONException;
 import org.json.JSONObject;
 import io.nzbee.Globals;
+import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.ports.ICustomerPortService;
 import io.nzbee.dto.customer.CustomerDTO;
 import io.nzbee.test.LoggingRequestInterceptor;
@@ -149,6 +150,11 @@ public class IT_CustomerControllerIntegrationTest {
         assertNotNull(template);
     }
     
+    @Test
+    public void verifyAccessToken() {
+        assertNotNull(getToken());
+    }
+    
     private CustomerDTO customerDefinition() {
     	CustomerDTO c =  new CustomerDTO();
     	c.setGivenName(CUSTOMER_GIVEN_NAME_EN);
@@ -192,7 +198,7 @@ public class IT_CustomerControllerIntegrationTest {
 	    //assertEquals(uri.getBody(), customer);
 	    
 	    //delete
-//	    uri = restTemplate.exchange(CUSTOMER_DELETE_ENDPOINT, HttpMethod.POST, customer, CustomerDTO.class);
+//	    ResponseEntity<CustomerDTO> uri = restTemplate.exchange(CUSTOMER_DELETE_ENDPOINT, HttpMethod.POST, customerDTO, CustomerDTO.class);
 //	    assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value()); 
 	    
     }
