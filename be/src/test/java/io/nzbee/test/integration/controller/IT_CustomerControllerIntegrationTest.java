@@ -19,7 +19,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.BufferingClientHttpRequestFactory;
+import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
@@ -33,6 +35,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.apache.http.impl.client.HttpClients;
 import org.json.JSONException;
 import org.json.JSONObject;
 import io.nzbee.Globals;
@@ -108,6 +111,7 @@ public class IT_CustomerControllerIntegrationTest {
     	headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
     	headers.add("authorization", OAUTH_AUTHORIZATION);
     	headers.add("cache-control", OAUTH_CACHE_CONTROL);
+    	headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
     	return headers;
     }
     
@@ -122,7 +126,11 @@ public class IT_CustomerControllerIntegrationTest {
     
     private String getToken() {
     	HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(getMap(), getTokenHeaders());
-    	RestTemplate restTemplate = new RestTemplate();
+   
+    	ClientHttpRequestFactory requestFactory = new     
+    		      HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
+    	
+    	RestTemplate restTemplate = new RestTemplate(requestFactory);
     	ResponseEntity<String> response = restTemplate.postForEntity(TOKEN_ENDPOINT, request , String.class );
     	JSONObject jObj = null;
     	
@@ -130,7 +138,7 @@ public class IT_CustomerControllerIntegrationTest {
 			jObj = new JSONObject(response.getBody());
 			return jObj.getString("access_token");
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
+			System.out.println("access_token not found");
 			e.printStackTrace();
 		}
 		return null;
@@ -168,11 +176,12 @@ public class IT_CustomerControllerIntegrationTest {
     
     @Test
 	public void createCustomer() {
-    	
-	    RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
-	    List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();
-	    interceptors.add(new LoggingRequestInterceptor());
-	    restTemplate.setInterceptors(interceptors);
+    	ClientHttpRequestFactory requestFactory = new     
+  		      HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
+	    RestTemplate restTemplate = new RestTemplate(requestFactory);
+//	    List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();
+//	    interceptors.add(new LoggingRequestInterceptor());
+//	    restTemplate.setInterceptors(interceptors);
 	    HttpHeaders headers = this.getRestHeaders();
 	
 	    //convert to a Customer DTO object 
