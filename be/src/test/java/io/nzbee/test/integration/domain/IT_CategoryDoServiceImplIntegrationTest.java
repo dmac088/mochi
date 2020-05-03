@@ -10,6 +10,10 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlConfig;
+import org.springframework.test.context.jdbc.SqlGroup;
+import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.domain.ports.ICategoryPortService;
 import io.nzbee.Globals;
@@ -19,6 +23,16 @@ import io.nzbee.domain.category.Category;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles(profiles = "tst")
+@SqlGroup({
+	@Sql(scripts = "/database/mochi_schema.sql",
+			config = @SqlConfig(dataSource = "mochiDataSourceOwner", 
+			transactionManager = "mochiTransactionManagerOwner",
+			transactionMode = TransactionMode.ISOLATED)), 
+	@Sql(scripts = "/database/mochi_data.sql",
+			config = @SqlConfig(dataSource = "mochiDataSource", 
+			transactionManager = "mochiTransactionManager",
+			transactionMode = TransactionMode.ISOLATED))
+})
 public class IT_CategoryDoServiceImplIntegrationTest {
 
 	@Autowired
