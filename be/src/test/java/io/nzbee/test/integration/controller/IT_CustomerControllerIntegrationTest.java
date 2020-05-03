@@ -21,25 +21,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.BufferingClientHttpRequestFactory;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.jdbc.SqlGroup;
-import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-import org.apache.http.impl.client.HttpClients;
 import org.json.JSONException;
 import org.json.JSONObject;
 import io.nzbee.Globals;
-import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.ports.ICustomerPortService;
 import io.nzbee.dto.customer.CustomerDTO;
 import io.nzbee.test.LoggingRequestInterceptor;
@@ -53,16 +45,6 @@ import io.nzbee.test.UT_Config;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles(profiles = "tst")
-@SqlGroup({
-	@Sql(scripts = "/database/mochi_schema.sql",
-			config = @SqlConfig(dataSource = "mochiDataSourceOwner", 
-			transactionManager = "mochiTransactionManagerOwner",
-			transactionMode = TransactionMode.ISOLATED)), 
-	@Sql(scripts = "/database/mochi_data.sql",
-			config = @SqlConfig(dataSource = "mochiDataSource", 
-			transactionManager = "mochiTransactionManager",
-			transactionMode = TransactionMode.ISOLATED))
-})
 public class IT_CustomerControllerIntegrationTest {
 	
 	@Autowired
@@ -127,8 +109,7 @@ public class IT_CustomerControllerIntegrationTest {
     private String getToken() {
     	HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(getMap(), getTokenHeaders());
    
-    	ClientHttpRequestFactory requestFactory = new     
-    		      HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
+    	ClientHttpRequestFactory requestFactory = new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory());
     	
     	RestTemplate restTemplate = new RestTemplate(requestFactory);
     	ResponseEntity<String> response = restTemplate.postForEntity(TOKEN_ENDPOINT, request , String.class );
@@ -157,11 +138,7 @@ public class IT_CustomerControllerIntegrationTest {
         assertNotNull(passwordEncoder);
         assertNotNull(template);
     }
-    
-    @Test
-    public void verifyAccessToken() {
-        assertNotNull(getToken());
-    }
+  
     
     private CustomerDTO customerDefinition() {
     	CustomerDTO c =  new CustomerDTO();
@@ -176,12 +153,10 @@ public class IT_CustomerControllerIntegrationTest {
     
     @Test
 	public void createCustomer() {
-    	ClientHttpRequestFactory requestFactory = new     
-  		      HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
-	    RestTemplate restTemplate = new RestTemplate(requestFactory);
-//	    List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();
-//	    interceptors.add(new LoggingRequestInterceptor());
-//	    restTemplate.setInterceptors(interceptors);
+	    RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
+	    List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();
+	    interceptors.add(new LoggingRequestInterceptor());
+	    restTemplate.setInterceptors(interceptors);
 	    HttpHeaders headers = this.getRestHeaders();
 	
 	    //convert to a Customer DTO object 
