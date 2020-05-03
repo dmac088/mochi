@@ -21,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.BufferingClientHttpRequestFactory;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
@@ -28,6 +29,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,9 +41,6 @@ import io.nzbee.test.UT_Config;
 
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {UT_Config.class,
-		 Globals.class})
-
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles(profiles = "tst")
@@ -84,7 +83,7 @@ public class IT_CustomerControllerIntegrationTest {
     private Date   CUSTOMER_START_DATE 				= new Date();
     private String CUSTOMER_NUMER 					= "0123498765";
     
-    private String CUSTOMER_USERNAME 				= "dmac1112";
+    private String CUSTOMER_USERNAME 				= "dmac1113";
     private String CUSTOMER_PASSWORD 				= "password";
     private String USER_ROLE						= "Customer";
 
@@ -109,19 +108,25 @@ public class IT_CustomerControllerIntegrationTest {
     private String getToken() {
     	HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(getMap(), getTokenHeaders());
    
-    	ClientHttpRequestFactory requestFactory = new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory());
+    	ClientHttpRequestFactory requestFactory = new BufferingClientHttpRequestFactory(new HttpComponentsClientHttpRequestFactory());
     	
     	RestTemplate restTemplate = new RestTemplate(requestFactory);
-    	ResponseEntity<String> response = restTemplate.postForEntity(TOKEN_ENDPOINT, request , String.class );
-    	JSONObject jObj = null;
-    	
-		try {
-			jObj = new JSONObject(response.getBody());
+    	List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();
+	    interceptors.add(new LoggingRequestInterceptor());
+	    restTemplate.setInterceptors(interceptors);
+	   
+	    
+	    try {
+	    	ResponseEntity<String> response = restTemplate.postForEntity(TOKEN_ENDPOINT, request , String.class );
+	    	assertEquals(response.getStatusCodeValue(), HttpStatus.OK.value());
+	    	JSONObject jObj = new JSONObject(response.getBody());
 			return jObj.getString("access_token");
-		} catch (JSONException e) {
-			System.out.println("access_token not found");
+	    } catch (HttpServerErrorException e ) {
+	    	System.out.println(e.getResponseBodyAsString());
+	    } catch (JSONException e) {
 			e.printStackTrace();
 		}
+	    
 		return null;
     }
     
@@ -130,6 +135,7 @@ public class IT_CustomerControllerIntegrationTest {
 	    headers.add("Content-Type", MediaType.APPLICATION_JSON_VALUE);
 	    headers.add("authorization", "Bearer " + getToken());
 	    headers.add("cache-control", "no-cache");
+	    headers.add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
     	return headers;
     }
     
@@ -153,7 +159,7 @@ public class IT_CustomerControllerIntegrationTest {
     
     @Test
 	public void createCustomer() {
-	    RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
+	    RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new HttpComponentsClientHttpRequestFactory()));
 	    List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();
 	    interceptors.add(new LoggingRequestInterceptor());
 	    restTemplate.setInterceptors(interceptors);
@@ -163,8 +169,12 @@ public class IT_CustomerControllerIntegrationTest {
 	    CustomerDTO customer = this.customerDefinition();
 	    
 	    HttpEntity<CustomerDTO> customerDTO = new HttpEntity<CustomerDTO>(customer, headers);
-	    ResponseEntity<CustomerDTO> uriDTO = restTemplate.exchange(CUSTOMER_CREATE_ENDPOINT, HttpMethod.POST, customerDTO, CustomerDTO.class);
-	    assertEquals(uriDTO.getStatusCodeValue(), HttpStatus.OK.value());
+	    try {
+	    	ResponseEntity<CustomerDTO> uriDTO = restTemplate.exchange(CUSTOMER_CREATE_ENDPOINT, HttpMethod.POST, customerDTO, CustomerDTO.class);
+	    	assertEquals(uriDTO.getStatusCodeValue(), HttpStatus.OK.value());
+	    } catch (HttpServerErrorException e ) {
+	    	System.out.println(e.getResponseBodyAsString());
+	    }
 	    
 //	    System.out.println(CUSTOMER_READ_ENDPOINT + CUSTOMER_USERNAME);
 //	    ResponseEntity<Customer> uri = restTemplate.exchange(CUSTOMER_READ_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.GET, customerDTO, Customer.class);

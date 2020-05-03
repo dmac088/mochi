@@ -2,11 +2,7 @@ package io.nzbee.exceptions;
 
 public class CategoryException extends RuntimeException {
 
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -1224349429646369198L;
 
 	public CategoryException(String message) {
 		super(message);

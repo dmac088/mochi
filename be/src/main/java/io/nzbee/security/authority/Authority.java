@@ -19,9 +19,6 @@ import lombok.Setter;
 @EqualsAndHashCode(of = "id")
 public class Authority implements GrantedAuthority {
 
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id
