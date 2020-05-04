@@ -46,7 +46,7 @@ public class CustomerController {
         return new GenericResponse("success");
     }
     
-    @GetMapping("/User/{username}")
+    @GetMapping("/Customer/UserName/{username}")
 	public Optional<Customer> getCustomer(@PathVariable String username) {
     	return customerService.findByUsername(username);
 	}
