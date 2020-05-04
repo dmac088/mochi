@@ -145,6 +145,9 @@ public class ProductMasterService {
 	    
 	    	Set<Product> productsList = productDomainService.findAll(	globalVars.getLocaleENGB(),
 	    														  		globalVars.getCurrencyHKD());
+	    	
+	    	System.out.println(productsList.size());
+	    	
 	    	//create a map of products (full list)
 	    	Map<String, ProductMasterSchema> map = productsList.stream().collect(Collectors.toMap(p -> ((Product) p).getProductUPC(), p -> new ProductMasterSchema()));
 	    	
