@@ -65,12 +65,12 @@ public class IT_ProductCategoryDoServiceImplIntegrationTest {
         assertFound(found);
     }
     
-    @Test
-    public void whenInvalidCode_thenProductCategoryShouldNotBeFound() {
-        Optional<Category> cat = Optional.ofNullable(categoryService.findByCode(globalVars.getLocaleENGB(), globalVars.getCurrencyHKD(), "ZZZZZ"));
-      
-        assertNotFound(cat);
-    }
+//    @Test
+//    public void whenInvalidCode_thenProductCategoryShouldNotBeFound() {
+//        Optional<Category> cat = Optional.ofNullable(categoryService.findByCode(globalVars.getLocaleENGB(), globalVars.getCurrencyHKD(), "ZZZZZ"));
+//      
+//        assertNotFound(cat);
+//    }
     
     @Test
     public void whenValidDesc_thenProductCategoryShouldBeFound() {
