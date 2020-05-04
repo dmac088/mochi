@@ -48,16 +48,6 @@ import io.nzbee.test.UT_Config;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles(profiles = "tst")
-@SqlGroup({
-	@Sql(scripts = "/database/mochi_schema.sql",
-			config = @SqlConfig(dataSource = "mochiDataSourceOwner", 
-			transactionManager = "mochiTransactionManagerOwner",
-			transactionMode = TransactionMode.ISOLATED)), 
-	@Sql(scripts = "/database/mochi_data.sql",
-			config = @SqlConfig(dataSource = "mochiDataSource", 
-			transactionManager = "mochiTransactionManager",
-			transactionMode = TransactionMode.ISOLATED))
-})
 public class IT_CustomerControllerIntegrationTest {
 	
 	@Autowired
@@ -179,7 +169,7 @@ public class IT_CustomerControllerIntegrationTest {
 	    List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();
 	    interceptors.add(new LoggingRequestInterceptor());
 	    restTemplate.setInterceptors(interceptors);
-	    HttpHeaders headers = this.getRestHeaders();
+	    HttpHeaders headers = this.getRestHeaders(false);
 	
 	    //convert to a Customer DTO object 
 	    CustomerDTO customer = this.customerDefinition();
