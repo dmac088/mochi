@@ -183,8 +183,18 @@ public class PostgresProductAdapter implements IProductPortService {
 
 	@Override
 	public Set<Product> findAll(String locale, String currency) {
-		// TODO Auto-generated method stub
-		return null;
+		List<io.nzbee.entity.product.Product> lp = productService.findAll(locale, currency);
+		return lp.stream().map(pe ->  {
+			io.nzbee.entity.brand.Brand be = pe.getBrand();
+			io.nzbee.entity.product.department.Department de = pe.getDepartment();
+			io.nzbee.entity.category.Category c = pe.getPrimaryCategory();
+			
+			Optional<Brand> bdo = brandMapper.entityToDo(Optional.ofNullable(be), locale, currency);
+			Optional<Department> ddo = departmentMapper.entityToDo(Optional.ofNullable(de), locale, currency);
+			Optional<ProductCategory> cdo = Optional.ofNullable((ProductCategory) categoryMapper.entityToDo(Optional.ofNullable(c), locale, currency).get());
+			return productMapper.entityToDo(Optional.ofNullable(pe), bdo, ddo, cdo).get();	
+		}).collect(Collectors.toSet());
+		
 	}
 
 	@Override
