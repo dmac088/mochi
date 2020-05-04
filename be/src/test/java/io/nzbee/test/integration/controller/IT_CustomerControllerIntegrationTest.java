@@ -26,6 +26,10 @@ import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlConfig;
+import org.springframework.test.context.jdbc.SqlGroup;
+import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -44,6 +48,16 @@ import io.nzbee.test.UT_Config;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles(profiles = "tst")
+@SqlGroup({
+	@Sql(scripts = "/database/mochi_schema.sql",
+			config = @SqlConfig(dataSource = "mochiDataSourceOwner", 
+			transactionManager = "mochiTransactionManagerOwner",
+			transactionMode = TransactionMode.ISOLATED)), 
+	@Sql(scripts = "/database/mochi_data.sql",
+			config = @SqlConfig(dataSource = "mochiDataSource", 
+			transactionManager = "mochiTransactionManager",
+			transactionMode = TransactionMode.ISOLATED))
+})
 public class IT_CustomerControllerIntegrationTest {
 	
 	@Autowired
@@ -130,10 +144,12 @@ public class IT_CustomerControllerIntegrationTest {
 		return null;
     }
     
-    private HttpHeaders getRestHeaders() {
+    private HttpHeaders getRestHeaders(boolean withAuth) {
 	    HttpHeaders headers = new HttpHeaders();
 	    headers.add("Content-Type", MediaType.APPLICATION_JSON_VALUE);
-	    headers.add("authorization", "Bearer " + getToken());
+	    if(withAuth) {
+	    	headers.add("authorization", "Bearer " + getToken());
+	    }
 	    headers.add("cache-control", "no-cache");
 	    headers.add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
     	return headers;
