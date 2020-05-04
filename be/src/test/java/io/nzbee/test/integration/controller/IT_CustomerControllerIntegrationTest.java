@@ -119,8 +119,7 @@ public class IT_CustomerControllerIntegrationTest {
     	List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();
 	    interceptors.add(new LoggingRequestInterceptor());
 	    restTemplate.setInterceptors(interceptors);
-	   
-	    
+	 
 	    try {
 	    	ResponseEntity<String> response = restTemplate.postForEntity(TOKEN_ENDPOINT, request , String.class );
 	    	assertEquals(response.getStatusCodeValue(), HttpStatus.OK.value());
@@ -184,7 +183,7 @@ public class IT_CustomerControllerIntegrationTest {
 	    }
 	    
 	    headers = this.getRestHeaders(true);
-	    ResponseEntity<CustomerDTO> uriDo = restTemplate.exchange(CUSTOMER_READ_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.GET, customerDTO, CustomerDTO.class);
+	    ResponseEntity<CustomerDTO> uriDo = restTemplate.exchange(CUSTOMER_READ_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.GET, null, CustomerDTO.class);
 	    CustomerDTO c = uriDo.getBody();
 	    
 	    assertEquals(uriDo.getStatusCodeValue(), HttpStatus.OK.value());
