@@ -2,10 +2,8 @@ package io.nzbee.entity.adapters;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -70,7 +68,7 @@ public class PostgresProductAdapter implements IProductPortService {
 	private ICategoryMapper categoryMapper;
 	
 	@Override
-	public Optional<Product> findByCode(String code) {
+	public Product findByCode(String code) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -152,48 +150,21 @@ public class PostgresProductAdapter implements IProductPortService {
 	}
 
 	@Override
-	public Optional<Product> findByCode(String locale, String currency, String code) {
-		
+	public Product findByCode(String locale, String currency, String code) {
 		io.nzbee.entity.product.Product pe = productService.findByCode(locale, currency, code).get();
-		io.nzbee.entity.brand.Brand be = pe.getBrand();
-		io.nzbee.entity.product.department.Department de = pe.getDepartment();
-		io.nzbee.entity.category.Category c = pe.getPrimaryCategory();
-		
-		Optional<Brand> bdo = brandMapper.entityToDo(Optional.ofNullable(be), locale, currency);
-		Optional<Department> ddo = departmentMapper.entityToDo(Optional.ofNullable(de), locale, currency);
-		Optional<ProductCategory> cdo = Optional.ofNullable((ProductCategory) categoryMapper.entityToDo(Optional.ofNullable(c), locale, currency).get());
-		
-		return productMapper.entityToDo(Optional.ofNullable(pe), bdo, ddo, cdo);
+		return mapHelper(pe);
 	}
 
 	@Override
-	public Optional<Product> findByDesc(String locale, String currency, String desc) {
-		
+	public Product findByDesc(String locale, String currency, String desc) {
 		io.nzbee.entity.product.Product pe = productService.findByDesc(locale, currency, desc).get();
-		io.nzbee.entity.brand.Brand be = pe.getBrand();
-		io.nzbee.entity.product.department.Department de = pe.getDepartment();
-		io.nzbee.entity.category.Category c = pe.getPrimaryCategory();
-		
-		Optional<Brand> bdo = brandMapper.entityToDo(Optional.ofNullable(be), locale, currency);
-		Optional<Department> ddo = departmentMapper.entityToDo(Optional.ofNullable(de), locale, currency);
-		Optional<ProductCategory> cdo = Optional.ofNullable((ProductCategory) categoryMapper.entityToDo(Optional.ofNullable(c), locale, currency).get());
-		
-		return productMapper.entityToDo(Optional.ofNullable(pe), bdo, ddo, cdo);
+		return mapHelper(pe);
 	}
 
 	@Override
 	public Set<Product> findAll(String locale, String currency) {
 		List<io.nzbee.entity.product.Product> lp = productService.findAll(locale, currency);
-		return lp.stream().map(pe ->  {
-			io.nzbee.entity.brand.Brand be = pe.getBrand();
-			io.nzbee.entity.product.department.Department de = pe.getDepartment();
-			io.nzbee.entity.category.Category c = pe.getPrimaryCategory();
-			
-			Optional<Brand> bdo = brandMapper.entityToDo(Optional.ofNullable(be), locale, currency);
-			Optional<Department> ddo = departmentMapper.entityToDo(Optional.ofNullable(de), locale, currency);
-			Optional<ProductCategory> cdo = Optional.ofNullable((ProductCategory) categoryMapper.entityToDo(Optional.ofNullable(c), locale, currency).get());
-			return productMapper.entityToDo(Optional.ofNullable(pe), bdo, ddo, cdo).get();	
-		}).collect(Collectors.toSet());
+		return lp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toSet());
 		
 	}
 
@@ -251,16 +222,7 @@ public class PostgresProductAdapter implements IProductPortService {
 
 			return new PageImpl<Product>(
 			//receive a list of entities and map to domain objects
-			pp.stream().map(pe -> {
-			io.nzbee.entity.brand.Brand be = pe.getBrand();
-			io.nzbee.entity.product.department.Department de = pe.getDepartment();
-			io.nzbee.entity.category.Category c = pe.getPrimaryCategory();
-			
-			Optional<Brand> bdo = brandMapper.entityToDo(Optional.ofNullable(be), locale, currency);
-			Optional<Department> ddo = departmentMapper.entityToDo(Optional.ofNullable(de), locale, currency);
-			Optional<ProductCategory> cdo = Optional.ofNullable((ProductCategory) categoryMapper.entityToDo(Optional.ofNullable(c), locale, currency).get());
-			return productMapper.entityToDo(Optional.ofNullable(pe), bdo, ddo, cdo).get();
-			})
+			pp.stream().map(pe -> mapHelper(pe))
 			.collect(Collectors.toList()),
 			PageRequest.of(page, size),
 			pp.getTotalElements());
@@ -288,20 +250,22 @@ public class PostgresProductAdapter implements IProductPortService {
 						
 			 return new PageImpl<Product>(
 				    //receive a list of entities and map to domain objects
-					pp.stream().map(pe -> {
-						io.nzbee.entity.brand.Brand be = pe.getBrand();
-						io.nzbee.entity.product.department.Department de = pe.getDepartment();
-						io.nzbee.entity.category.Category c = pe.getPrimaryCategory();
-						
-						Optional<Brand> bdo = brandMapper.entityToDo(Optional.ofNullable(be), locale, currency);
-						Optional<Department> ddo = departmentMapper.entityToDo(Optional.ofNullable(de), locale, currency);
-						Optional<ProductCategory> cdo = Optional.ofNullable((ProductCategory) categoryMapper.entityToDo(Optional.ofNullable(c), locale, currency).get());
-						return productMapper.entityToDo(Optional.ofNullable(pe), bdo, ddo, cdo).get();
-					})
+					pp.stream().map(pe -> mapHelper(pe))
 					.collect(Collectors.toList()),
 					PageRequest.of(page, size),
 					pp.getTotalElements());
 		}
 
+		
+		private Product mapHelper(io.nzbee.entity.product.Product pe) {
+			io.nzbee.entity.brand.Brand be = pe.getBrand();
+			io.nzbee.entity.product.department.Department de = pe.getDepartment();
+			io.nzbee.entity.category.Category c = pe.getPrimaryCategory();
+		
+			Brand bdo = brandMapper.entityToDo(be, pe.getLocale(), pe.getCurrency());
+			Department ddo = departmentMapper.entityToDo(de, pe.getLocale(), pe.getCurrency());
+			ProductCategory cdo = (ProductCategory) categoryMapper.entityToDo(c, pe.getLocale(), pe.getCurrency());
+			return productMapper.entityToDo(pe, bdo, ddo, cdo);	
+		}
 	
 }

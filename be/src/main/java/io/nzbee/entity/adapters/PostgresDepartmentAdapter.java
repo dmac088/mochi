@@ -1,11 +1,9 @@
 package io.nzbee.entity.adapters;
 
-import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-
 import io.nzbee.domain.department.Department;
 import io.nzbee.domain.ports.IDepartmentPortService;
 import io.nzbee.entity.product.department.IDepartmentMapper;
@@ -22,12 +20,12 @@ public class PostgresDepartmentAdapter implements IDepartmentPortService {
 	private IDepartmentMapper departmentMapper;
 	
 	@Override
-	public Optional<Department> findByProductCode(String locale, String currency, String productCode) {
-		return Optional.ofNullable((Department) departmentMapper.entityToDo(departmentService.findByProductCode(locale, currency, productCode), locale, currency).get());		
+	public Department findByProductCode(String locale, String currency, String productCode) {
+		return (Department) departmentMapper.entityToDo(departmentService.findByProductCode(locale, currency, productCode).get(), locale, currency);		
 	}
 
 	@Override
-	public Optional<Department> findByCode(String code) {
+	public Department findByCode(String code) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -45,13 +43,13 @@ public class PostgresDepartmentAdapter implements IDepartmentPortService {
 	}
 
 	@Override
-	public Optional<Department> findByCode(String locale, String currency, String code) {
+	public Department findByCode(String locale, String currency, String code) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<Department> findByDesc(String locale, String currency, String desc) {
+	public Department findByDesc(String locale, String currency, String desc) {
 		// TODO Auto-generated method stub
 		return null;
 	}

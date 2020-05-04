@@ -1,8 +1,6 @@
 package io.nzbee.test.integration.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertTrue;
-import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -57,26 +55,24 @@ public class IT_BrandDoServiceImplIntegrationTest {
  
     @Test
     public void whenValidCode_thenBrandShouldBeFound() {
-        Optional<Brand> found = brandService.findByCode(globalVars.getLocaleENGB(), globalVars.getCurrencyHKD(), "TST03");
+        Brand found = brandService.findByCode(globalVars.getLocaleENGB(), globalVars.getCurrencyHKD(), "TST03");
       
         assertFound(found);
     }
     
     @Test
     public void whenValidDesc_thenBrandShouldBeFound() {
-    	Optional<Brand> found = brandService.findByDesc(globalVars.getLocaleENGB(), globalVars.getCurrencyHKD(), "test brand");
+    	Brand found = brandService.findByDesc(globalVars.getLocaleENGB(), globalVars.getCurrencyHKD(), "test brand");
       
         assertFound(found);
     }
     
-    private void assertFound(final Optional<Brand> found) {
+    private void assertFound(final Brand found) {
     	
-    	assertTrue(found.isPresent());
-    	
-    	assertThat(found.get().getBrandCode())
+    	assertThat(found.getBrandCode())
         .isEqualTo("TST03");
 	    
-	    assertThat(found.get().getBrandDesc())
+	    assertThat(found.getBrandDesc())
 	    .isEqualTo("test brand");
     }
 }

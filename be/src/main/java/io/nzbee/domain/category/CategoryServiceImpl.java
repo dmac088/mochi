@@ -1,6 +1,5 @@
 package io.nzbee.domain.category;
 
-import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,13 +18,13 @@ public class CategoryServiceImpl implements ICategoryService {
 
 	@Override
 	@Transactional(readOnly=true)
-	public Optional<Category> findByCode(String locale, String currency, String code) {
+	public Category findByCode(String locale, String currency, String code) {
 		return categoryService.findByCode(locale, currency, code);
 	}
 	
 	@Override
 	@Transactional(readOnly=true)
-	public Optional<Category> findByDesc(String locale, String currency, String desc) {
+	public Category findByDesc(String locale, String currency, String desc) {
 		return categoryService.findByDesc(locale, currency, desc);
 	}
     

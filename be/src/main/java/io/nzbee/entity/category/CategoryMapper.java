@@ -1,7 +1,6 @@
 package io.nzbee.entity.category;
 import io.nzbee.domain.category.BrandCategory;
 import io.nzbee.domain.category.ProductCategory;
-import java.util.Optional;
 import org.springframework.stereotype.Component;
 import io.nzbee.entity.category.brand.CategoryBrand;
 import io.nzbee.entity.category.product.CategoryProduct;
@@ -9,74 +8,73 @@ import io.nzbee.entity.category.product.CategoryProduct;
 @Component(value="categoryMapper")
 public class CategoryMapper implements ICategoryMapper {
 
-	public Optional<io.nzbee.domain.category.Category> entityToDo(Optional<?> e) {
-		if(!e.isPresent()) { return Optional.ofNullable(null); }
-		Category ce = (Category) e.get();
-		io.nzbee.domain.category.Category co = null;
-		if(ce instanceof CategoryProduct) {
-			co = new ProductCategory(
-				ce.getCategoryCode(),
-				ce.getCategoryAttribute().getCategoryDesc(),
+	public io.nzbee.domain.category.Category entityToDo(Category e) {
+	
+		if(e instanceof CategoryProduct) {
+			io.nzbee.domain.category.Category co = new ProductCategory(
+				e.getCategoryCode(),
+				e.getCategoryAttribute().getCategoryDesc(),
 				true,
-				ce.getCategoryLevel(),
-				ce.getObjectCount(),
-				ce.getParent().isPresent()
-				? ce.getParent().get().getCategoryCode()
+				e.getCategoryLevel(),
+				e.getObjectCount(),
+				e.getParent().isPresent()
+				? e.getParent().get().getCategoryCode()
 				: null,
-				ce.getLocale(), 
-				ce.getCurrency()
+				e.getLocale(), 
+				e.getCurrency()
 			 );
+			return co;
 		}
-		if(ce instanceof CategoryBrand) {
-			co = new BrandCategory(
-				ce.getCategoryCode(),
-				ce.getCategoryAttribute().getCategoryDesc(),
+		if(e instanceof CategoryBrand) {
+			io.nzbee.domain.category.Category co = new BrandCategory(
+				e.getCategoryCode(),
+				e.getCategoryAttribute().getCategoryDesc(),
 				true,
-				ce.getCategoryLevel(),
-				ce.getObjectCount(),
-				ce.getParent().isPresent()
-				? ce.getParent().get().getCategoryCode()
+				e.getCategoryLevel(),
+				e.getObjectCount(),
+				e.getParent().isPresent()
+				? e.getParent().get().getCategoryCode()
 				: null,
-				ce.getLocale(), 
-				ce.getCurrency()
+				e.getLocale(), 
+				e.getCurrency()
 				);
+			return co;
 		}
-		return Optional.ofNullable(co);
+		return null;
 	}
 	
 	@Override
-	public Optional<io.nzbee.domain.category.Category> entityToDo(Optional<?> e, String locale, String currency) {
-		if(!e.isPresent()) { return Optional.ofNullable(null); }
-		Category ce = (Category) e.get();
-		io.nzbee.domain.category.Category co = null;
-		if(ce instanceof CategoryProduct) {
-			co = new ProductCategory(
-				ce.getCategoryCode(),
-				ce.getCategoryAttribute().getCategoryDesc(),
+	public io.nzbee.domain.category.Category entityToDo(Category e, String locale, String currency) {
+		if(e instanceof CategoryProduct) {
+			io.nzbee.domain.category.Category co = new ProductCategory(
+				e.getCategoryCode(),
+				e.getCategoryAttribute().getCategoryDesc(),
 				true,
-				ce.getCategoryLevel(),
-				ce.getObjectCount(),
-				ce.getParent().isPresent()
-				? ce.getParent().get().getCategoryCode()
+				e.getCategoryLevel(),
+				e.getObjectCount(),
+				e.getParent().isPresent()
+				? e.getParent().get().getCategoryCode()
 				: null,
 				locale, 
 				currency
 			);
+			return co;
 		}
-		if(ce instanceof CategoryBrand) {
-			co = new BrandCategory(
-				ce.getCategoryCode(),
-				ce.getCategoryAttribute().getCategoryDesc(),
+		if(e instanceof CategoryBrand) {
+			io.nzbee.domain.category.Category co = new BrandCategory(
+				e.getCategoryCode(),
+				e.getCategoryAttribute().getCategoryDesc(),
 				true,
-				ce.getCategoryLevel(),
-				ce.getObjectCount(),
-				ce.getParent().isPresent()
-				? ce.getParent().get().getCategoryCode()
+				e.getCategoryLevel(),
+				e.getObjectCount(),
+				e.getParent().isPresent()
+				? e.getParent().get().getCategoryCode()
 				: null,
 				locale, 
 				currency
 			);
+			return co;
 		}
-		return Optional.ofNullable(co);
+		return null;
 	}
 }

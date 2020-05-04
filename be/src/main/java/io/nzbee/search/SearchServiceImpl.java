@@ -469,7 +469,7 @@ public class SearchServiceImpl implements ISearchService {
 			e.printStackTrace();
 		}
 		cp.setCategoryAttribute(cp.getAttributes().stream().filter(c -> c.getLclCd().equals(locale)).findFirst().get());
-		return (ProductCategory) categoryMapper.entityToDo(Optional.ofNullable(cp), locale, currency).get();
+		return (ProductCategory) categoryMapper.entityToDo(cp, locale, currency);
 	}
 
 

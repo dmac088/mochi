@@ -1,15 +1,16 @@
 package io.nzbee.domain;
 
-import java.util.Optional;
 import java.util.Set;
 
 public interface ILocalizedService<T> extends IService<T> {
 
-	Optional<T> findByCode(String locale, String currency, String code);
-
-	Optional<T> findByDesc(String locale, String currency, String desc);
+	T findByCode(String locale, String currency, String code);	
+	
+	T findByDesc(String locale, String currency, String desc); 
 
 	Set<T> findAll(String locale, String currency);
 
-	Set<T> findAll(String locale, String currency, Set<String> codes); 
+	Set<T> findAll(String locale, String currency, Set<String> codes);
+
+	
 }

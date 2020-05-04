@@ -38,22 +38,22 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	@Override
 	public Set<Category> findAll(String locale, String currency, Set<String> codes) {
 		return categoryService.findAll(locale, currency, codes)
-				.stream().map(c -> (Category) categoryMapper.entityToDo(Optional.ofNullable(c), locale, currency).get()).collect(Collectors.toSet());
+				.stream().map(c -> (Category) categoryMapper.entityToDo(c, locale, currency)).collect(Collectors.toSet());
 	}
 	
 	@Override
 	public Set<ProductCategory> findAllByProductCode(String locale, String currency, String productCode) {
 		return categoryProductService.findAllByProductCode(locale, currency, productCode)
-				.stream().map(c -> (ProductCategory) categoryMapper.entityToDo(Optional.ofNullable(c), locale, currency).get()).collect(Collectors.toSet());
+				.stream().map(c -> (ProductCategory) categoryMapper.entityToDo(c, locale, currency)).collect(Collectors.toSet());
 	}
 	
 	@Override
-	public Optional<ProductCategory> findPrimaryByProductCode(String locale, String currency, String productCode) {
-		return Optional.ofNullable((ProductCategory) categoryMapper.entityToDo(categoryProductService.findPrimaryByProductCode(locale, currency, productCode), locale, currency).get());		
+	public ProductCategory findPrimaryByProductCode(String locale, String currency, String productCode) {
+		return (ProductCategory) categoryMapper.entityToDo(categoryProductService.findPrimaryByProductCode(locale, currency, productCode).get(), locale, currency);		
 	}
 	
 	@Override
-	public Optional<Category> findByCode(String code) {
+	public Category findByCode(String code) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -73,18 +73,18 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	@Override
 	public Set<Category> findAll(String locale, String currency) {
 		return categoryService.findAll(locale, currency)
-				.stream().map(c -> categoryMapper.entityToDo(Optional.ofNullable(c), locale, currency).get()).collect(Collectors.toSet());
+				.stream().map(c -> categoryMapper.entityToDo(c, locale, currency)).collect(Collectors.toSet());
 	}
 
 	@Override
-	public Optional<Category> findByCode(String locale, String currency, String code) {
+	public Category findByCode(String locale, String currency, String code) {
 		Optional<io.nzbee.entity.category.Category> cp = categoryService.findByCode(locale, currency, code);
-		return categoryMapper.entityToDo(cp, locale, currency);
+		return categoryMapper.entityToDo(cp.get(), locale, currency);
 	}	
 	
 	@Override
-	public Optional<Category> findByDesc(String locale, String currency, String desc) {
-		return categoryMapper.entityToDo(categoryService.findByDesc(locale, currency, desc), locale, currency);
+	public Category findByDesc(String locale, String currency, String desc) {
+		return categoryMapper.entityToDo(categoryService.findByDesc(locale, currency, desc).get(), locale, currency);
 	}
 
 	@Override

@@ -89,7 +89,7 @@ public class ProductController {
     public ResponseEntity<ProductResource> get(	@PathVariable String locale, 
     											@PathVariable String currency, 
     											@PathVariable String code) {
-    	ProductResource pr = prodAssembler.toResource(productService.findByCode(locale, currency, code).get());
+    	ProductResource pr = prodAssembler.toResource(productService.findByCode(locale, currency, code));
     	return new ResponseEntity< >(pr, HttpStatus.OK);
     }
     
