@@ -38,8 +38,5 @@ public interface IProductDao extends ILocalizedDao<Product> {
 							List<String> tagCodes,
 							String orderby);
 
-	Map<String, Product> findAllKV(
-								String locale, 
-								String currency);
 	
 }
