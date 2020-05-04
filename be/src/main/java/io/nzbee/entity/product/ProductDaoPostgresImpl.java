@@ -171,17 +171,17 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 false,
 															 true), "ProductMapping")
-				 .setParameter("categoryCodes", categories)
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
+				 .setParameter("categoryCode", globalVars.getPrimaryRootCategoryCode())
 				 .setParameter("activeProductCode", globalVars.getActiveSKUCode())
-					.setParameter("retailPriceCode", globalVars.getRetailPriceCode())
-					.setParameter("markdownPriceCode", globalVars.getMarkdownPriceCode())
+				 .setParameter("retailPriceCode", globalVars.getRetailPriceCode())
+				 .setParameter("markdownPriceCode", globalVars.getMarkdownPriceCode())
 				 
 				 //these should contain default values for these parameters
 				 //.setParameter("orderby", "1")
-				 .setParameter("limit", Integer.toString(globalVars.getDefaultPageSize()))
-				 .setParameter("offset", Integer.toString(globalVars.getDefaultPage() * globalVars.getDefaultPageSize()));
+				 .setParameter("limit", globalVars.getDefaultPageSize())
+				 .setParameter("offset", globalVars.getDefaultPage() * globalVars.getDefaultPageSize());
 		
 		@SuppressWarnings("unchecked")
 		List<Object[]> results = query.getResultList();
@@ -216,8 +216,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 				 
 				 //these should contain default values for these parameters
 				 //.setParameter("orderby", "1")
-				 .setParameter("limit", Integer.toString(globalVars.getDefaultPageSize()))
-				 .setParameter("offset", Integer.toString(globalVars.getDefaultPage() * globalVars.getDefaultPageSize()));
+				.setParameter("limit", globalVars.getDefaultPageSize())
+				 .setParameter("offset", globalVars.getDefaultPage() * globalVars.getDefaultPageSize());
 		
 		@SuppressWarnings("unchecked")
 		List<Object[]> results = query.getResultList();
