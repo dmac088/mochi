@@ -1,6 +1,5 @@
 package io.nzbee.domain.department;
 
-import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import io.nzbee.domain.ports.IDepartmentPortService;
@@ -12,17 +11,17 @@ public class DepartmentServiceImpl implements IDepartmentService {
 	private IDepartmentPortService departmentService;
 	
 	@Override
-	public Optional<Department> findByCode(String locale, String currency, String code) {
+	public Department findByCode(String locale, String currency, String code) {
 		return departmentService.findByCode(locale, currency, code);
 	}
 
 	@Override
-	public Optional<Department> findByDesc(String locale, String currency, String desc) {
+	public Department findByDesc(String locale, String currency, String desc) {
 		return departmentService.findByDesc(locale, currency, desc);
 	}
 
 	@Override
-	public Optional<Department> findByProductCode(String locale, String currency, String departmentCode) {
+	public Department findByProductCode(String locale, String currency, String departmentCode) {
 		return departmentService.findByProductCode(locale, currency, departmentCode);
 	}
 	

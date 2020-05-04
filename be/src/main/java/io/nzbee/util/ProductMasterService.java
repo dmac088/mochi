@@ -12,7 +12,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
@@ -96,18 +95,18 @@ public class ProductMasterService {
 	
 	public void persistProductMaster(ProductMasterSchema p) {
 		
-		Optional<Brand> bDo =
+		Brand bDo =
 				brandDomainService.findByCode(globalVars.getLocaleENGB(), 
 											  globalVars.getCurrencyHKD(), 
 											  p.get_BRAND_CODE());
 
 		
-		Optional<Category> cDo = 
+		Category cDo = 
 							categoryDomainService.findByCode(   globalVars.getLocaleENGB(), 
 																globalVars.getCurrencyHKD(), 
 																p.get_PRIMARY_CATEGORY_CODE());
 		
-		Optional<Department> dDo = 
+		Department dDo = 
 				departmentDomainService.findByCode(globalVars.getLocaleENGB(), 
 													 	  globalVars.getCurrencyHKD(), 
 													 	  p.get_DEPARTMENT_CODE());
@@ -131,9 +130,9 @@ public class ProductMasterService {
 							   	"",
 							   	globalVars.getLocaleENGB(),
 							   	globalVars.getCurrencyHKD(),
-							   	bDo.get(),
-							   	dDo.get(),
-							   	(ProductCategory) cDo.get());
+							   	bDo,
+							   	dDo,
+							   	(ProductCategory) cDo);
 		
 		productDomainService.save(pDo);
 
@@ -173,33 +172,33 @@ public class ProductMasterService {
 						{ pms.set_PRODUCT_RETAIL_PRICE_USD(p.getProductRetail()); 
 						  pms.set_PRODUCT_MARKDOWN_PRICE_USD(p.getProductMarkdown());}
 		    	
-		    	Optional<Brand> brand = brandDomainService.findByProductCode( globalVars.getLocaleENGB(),
+		    	Brand brand = brandDomainService.findByProductCode( globalVars.getLocaleENGB(),
 																	 globalVars.getCurrencyHKD(), 
 																	 p.getProductUPC());
 		    	
-		    	pms.set_BRAND_CODE(brand.get().getBrandCode());
+		    	pms.set_BRAND_CODE(brand.getBrandCode());
 		    	
 		    	if (p.getLclCd().equals(globalVars.getLocaleENGB())) 
-        				{ pms.set_BRAND_DESCRIPTION_EN(brand.get().getBrandDesc()); }
+        				{ pms.set_BRAND_DESCRIPTION_EN(brand.getBrandDesc()); }
 		    	
-		    	Optional<ProductCategory> c = categoryDomainService.findPrimaryByProductCode(globalVars.getLocaleENGB(),
+		    	ProductCategory c = categoryDomainService.findPrimaryByProductCode(globalVars.getLocaleENGB(),
 																		 					 globalVars.getCurrencyHKD(), 
 																		 					 p.getProductUPC()); 
 		    	
-		    	pms.set_PRIMARY_CATEGORY_CODE(c.get().getCategoryCode());
+		    	pms.set_PRIMARY_CATEGORY_CODE(c.getCategoryCode());
 		    	
 		    	if (p.getLclCd().equals(globalVars.getLocaleENGB())) 
-						{ pms.setPRIMARY_CATEGORY_DESC_EN(c.get().getCategoryDesc()); 
+						{ pms.setPRIMARY_CATEGORY_DESC_EN(c.getCategoryDesc()); 
 						  pms.set_PRODUCT_IMAGE_EN(p.getProductImage());}
 		    	
-		    	Optional<Department> d = departmentDomainService.findByProductCode(globalVars.getLocaleENGB(),
+		    	Department d = departmentDomainService.findByProductCode(globalVars.getLocaleENGB(),
 															 					 globalVars.getCurrencyHKD(), 
 															 					 p.getProductUPC()); 
 		    	
-		    	pms.set_DEPARTMENT_CODE(d.get().getDepartmentCode());
+		    	pms.set_DEPARTMENT_CODE(d.getDepartmentCode());
 		    	
 		    	if (p.getLclCd().equals(globalVars.getLocaleENGB())) 
-				{ pms.set_DEPARTMENT_DESC_EN(d.get().getDepartmentDesc()); } 
+				{ pms.set_DEPARTMENT_DESC_EN(d.getDepartmentDesc()); } 
 		    	
 	    	return pms;
 	    	}).collect(Collectors.toList()));

@@ -1,6 +1,5 @@
 package io.nzbee.entity.adapters;
 
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,7 @@ public class PostgresTagAdapter  implements ITagPortService {
 	private ITagService tagService;
 	
 	@Override
-	public Optional<Tag> findByCode(String code) {
+	public Tag findByCode(String code) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -40,14 +39,14 @@ public class PostgresTagAdapter  implements ITagPortService {
 	}
 
 	@Override
-	public Optional<Tag> findByCode(String locale, String currency, String code) {
-		return this.entityToDo(tagService.findByCode(locale, currency, code));
+	public Tag findByCode(String locale, String currency, String code) {
+		return this.entityToDo(tagService.findByCode(locale, currency, code).get());
 	}
 
 	@Override
-	public Optional<Tag> findByDesc(String locale, String currency, String desc) {
+	public Tag findByDesc(String locale, String currency, String desc) {
 		// TODO Auto-generated method stub
-		return this.entityToDo(tagService.findByDesc(locale, currency, desc));
+		return this.entityToDo(tagService.findByDesc(locale, currency, desc).get());
 	}
 
 	@Override
@@ -59,12 +58,10 @@ public class PostgresTagAdapter  implements ITagPortService {
 	@Override
 	public Set<Tag> findAll(String locale, String currency, Set<String> codes) {
 		return tagService.findAll(locale, currency, codes)
-				.stream().map(t -> this.entityToDo(Optional.ofNullable(t)).get()).collect(Collectors.toSet());
+				.stream().map(t -> this.entityToDo(t)).collect(Collectors.toSet());
 	}
 	
-	private Optional<Tag> entityToDo(Optional<io.nzbee.entity.tag.Tag> e) {
-		if(!e.isPresent()) { return null; }
-		io.nzbee.entity.tag.Tag te = e.get();
+	private Tag entityToDo(io.nzbee.entity.tag.Tag te) {
 		Tag tO = null;
 		tO = new Tag(
 				te.getCode(),
@@ -72,7 +69,7 @@ public class PostgresTagAdapter  implements ITagPortService {
 				"en-GB",
 				"HKD"
 				);
-		return Optional.ofNullable(tO);
+		return tO;
 	}
 
 

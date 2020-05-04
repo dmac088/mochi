@@ -1,6 +1,5 @@
 package io.nzbee.domain.brand;
 
-import java.util.Optional;
 import java.util.Set;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +11,13 @@ public class BrandServiceImpl implements IBrandService {
 	
 	@Override
 	@Transactional(readOnly=true)
-	public Optional<Brand> findByCode(String locale, String currency, String code) {
+	public Brand findByCode(String locale, String currency, String code) {
 		return brandService.findByCode(locale, currency, code);
 	}
 
 	@Override
 	@Transactional(readOnly=true)
-	public Optional<Brand> findByDesc(String locale, String currency, String desc) {
+	public Brand findByDesc(String locale, String currency, String desc) {
 		return brandService.findByDesc(locale, currency, desc);
 	}
   
@@ -41,7 +40,7 @@ public class BrandServiceImpl implements IBrandService {
 	}
     
 	@Override
-	public Optional<Brand> findByProductCode(String locale, String currency, String productCode) {
+	public Brand findByProductCode(String locale, String currency, String productCode) {
 		return brandService.findByProductCode(locale, currency, productCode);
 	}
 
