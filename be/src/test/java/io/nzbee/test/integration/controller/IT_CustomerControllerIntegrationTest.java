@@ -184,9 +184,8 @@ public class IT_CustomerControllerIntegrationTest {
 	    }
 	    
 	    headers = this.getRestHeaders(true);
-	    HttpEntity<?> customerDo = new HttpEntity<>(headers);
-	    ResponseEntity<Customer> uriDo = restTemplate.exchange(CUSTOMER_READ_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.GET, customerDo, Customer.class);
-	    Customer c = uriDo.getBody();
+	    ResponseEntity<CustomerDTO> uriDo = restTemplate.exchange(CUSTOMER_READ_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.GET, customerDTO, CustomerDTO.class);
+	    CustomerDTO c = uriDo.getBody();
 	    
 	    assertEquals(uriDo.getStatusCodeValue(), HttpStatus.OK.value());
 	    assertEquals(CUSTOMER_GIVEN_NAME_EN, c.getGivenName());
