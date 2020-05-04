@@ -38,6 +38,7 @@ import org.springframework.web.client.RestTemplate;
 import org.json.JSONException;
 import org.json.JSONObject;
 import io.nzbee.Globals;
+import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.ports.ICustomerPortService;
 import io.nzbee.dto.customer.CustomerDTO;
 import io.nzbee.test.LoggingRequestInterceptor;
@@ -182,14 +183,15 @@ public class IT_CustomerControllerIntegrationTest {
 	    	System.out.println(e.getResponseBodyAsString());
 	    }
 	    
-//	    System.out.println(CUSTOMER_READ_ENDPOINT + CUSTOMER_USERNAME);
-//	    ResponseEntity<Customer> uri = restTemplate.exchange(CUSTOMER_READ_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.GET, customerDTO, Customer.class);
-//	    Customer c = customerService.findByUsername(uri.getBody().getUserName()).get();
-//	    
-//	    assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value());
-//	    assertEquals(CUSTOMER_GIVEN_NAME_EN, c.getGivenName());
-//	    assertEquals(CUSTOMER_FAMILY_NAME_EN, c.getFamilyName());
-//	    assertEquals(CUSTOMER_TYPE_NAME_EN, c.getPartyType());
+	    headers = this.getRestHeaders(true);
+	    HttpEntity<?> customerDo = new HttpEntity<>(headers);
+	    ResponseEntity<Customer> uriDo = restTemplate.exchange(CUSTOMER_READ_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.GET, customerDo, Customer.class);
+	    Customer c = uriDo.getBody();
+	    
+	    assertEquals(uriDo.getStatusCodeValue(), HttpStatus.OK.value());
+	    assertEquals(CUSTOMER_GIVEN_NAME_EN, c.getGivenName());
+	    assertEquals(CUSTOMER_FAMILY_NAME_EN, c.getFamilyName());
+	    assertEquals(CUSTOMER_TYPE_NAME_EN, c.getPartyType());
 	    
 	    //this is a sequence number in the database
 	    //assertEquals(CUSTOMER_NUMER, c.getCustomerID());
