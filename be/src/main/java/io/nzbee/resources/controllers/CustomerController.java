@@ -50,5 +50,15 @@ public class CustomerController {
 	public Optional<Customer> getCustomer(@PathVariable String username) {
     	return customerService.findByUsername(username);
 	}
+    
+    
+    
+    @PostMapping("/Customer/Delete/{username}")
+    public GenericResponse deleteCustomer(@PathVariable String username) {
+    	customerService.deleteCustomer(username);
+    	return new GenericResponse("success");
+	}
 	
+    
+    
 }

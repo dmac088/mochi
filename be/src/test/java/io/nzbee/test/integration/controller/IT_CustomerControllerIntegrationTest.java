@@ -75,8 +75,8 @@ public class IT_CustomerControllerIntegrationTest {
     //Customer end points
     private String CUSTOMER_CREATE_ENDPOINT 		= "https://localhost:8090/api/Customer/Signup";
     private String CUSTOMER_READ_ENDPOINT 			= "https://localhost:8090/api/Customer/UserName/";
-    private String CUSTOMER_UPDATE_ENDPOINT 		= "https://localhost:8090/api/Customer/Update";
-    private String CUSTOMER_DELETE_ENDPOINT			= "https://localhost:8090/api/Customer/Delete";
+    private String CUSTOMER_UPDATE_ENDPOINT 		= "https://localhost:8090/api/Customer/Update/";
+    private String CUSTOMER_DELETE_ENDPOINT			= "https://localhost:8090/api/Customer/Delete/";
     
     //Customer properties
     private String CUSTOMER_GIVEN_NAME_EN 			= "Daniel";
@@ -192,15 +192,12 @@ public class IT_CustomerControllerIntegrationTest {
 	    assertEquals(CUSTOMER_FAMILY_NAME_EN, c.getFamilyName());
 	    assertEquals(CUSTOMER_TYPE_NAME_EN, c.getPartyType());
 	    
-	    //this is a sequence number in the database
-	    //assertEquals(CUSTOMER_NUMER, c.getCustomerID());
-	    //assertEquals(passwordEncoder.encode(CUSTOMER_PASSWORD), c.getPassword());
-	    //assertEquals(passwordEncoder.encode(CUSTOMER_PASSWORD), c.getMatchingPassword());
-	    //assertEquals(uri.getBody(), customer);
-	    
 	    //delete
-//	    ResponseEntity<CustomerDTO> uri = restTemplate.exchange(CUSTOMER_DELETE_ENDPOINT, HttpMethod.POST, customerDTO, CustomerDTO.class);
-//	    assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value()); 
+	    headers = this.getRestHeaders(true);
+	    request = new HttpEntity(headers);
+	    customerDTO = new HttpEntity<CustomerDTO>(customer, headers);
+	    ResponseEntity<CustomerDTO> uri = restTemplate.exchange(CUSTOMER_DELETE_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.POST, customerDTO, CustomerDTO.class);
+	    assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value()); 
 	    
     }
    
