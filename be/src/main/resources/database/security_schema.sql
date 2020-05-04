@@ -456,7 +456,7 @@ ALTER TABLE ONLY user_role
 --
 
 GRANT USAGE ON SCHEMA security TO security_app;
-GRANT USAGE ON SCHEMA security TO mochi_app;
+GRANT ALL ON SCHEMA security TO mochi_app;
 
 
 --
