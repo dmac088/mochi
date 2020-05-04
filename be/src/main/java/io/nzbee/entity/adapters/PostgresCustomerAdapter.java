@@ -72,6 +72,11 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 		this.save(c);
 	}
 
+	@Override
+	public void deleteCustomer(String userName) {
+		Person t = personService.findByUsernameAndRole(userName, io.nzbee.entity.role.customer.Customer.class).get();
+		personService.delete(t);
+	}
 	
 
 }

@@ -10,5 +10,7 @@ public interface ICustomerPortService extends IPortService<Customer> {
 	public Optional<Customer> findByUsername(String userName);
 	
 	void registerNewCustomer(CustomerDTO customer);
+
+	void deleteCustomer(String username);
 	
 }
