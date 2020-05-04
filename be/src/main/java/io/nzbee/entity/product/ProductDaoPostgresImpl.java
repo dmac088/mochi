@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -170,59 +169,23 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 false,
 															 false,
-															 true), "ProductMapping")
+															 false), "ProductMapping")
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
 				 .setParameter("categoryCode", globalVars.getPrimaryRootCategoryCode())
 				 .setParameter("activeProductCode", globalVars.getActiveSKUCode())
 				 .setParameter("retailPriceCode", globalVars.getRetailPriceCode())
-				 .setParameter("markdownPriceCode", globalVars.getMarkdownPriceCode())
+				 .setParameter("markdownPriceCode", globalVars.getMarkdownPriceCode());
 				 
 				 //these should contain default values for these parameters
 				 //.setParameter("orderby", "1")
-				 .setParameter("limit", globalVars.getDefaultPageSize())
-				 .setParameter("offset", globalVars.getDefaultPage() * globalVars.getDefaultPageSize());
+//				 .setParameter("limit", globalVars.getDefaultPageSize())
+//				 .setParameter("offset", globalVars.getDefaultPage() * globalVars.getDefaultPageSize());
 		
 		@SuppressWarnings("unchecked")
 		List<Object[]> results = query.getResultList();
 		
 		return results.stream().map(p -> this.objectToEntity(p, locale, currency)).collect(Collectors.toList());
-	}
-	
-
-	@Override
-	public Map<String, Product> findAllKV(String locale, String currency) {
-		LOGGER.debug("call ProductDaoPostgresImpl.findAllKV with parameters : {}, {}", locale, currency);
-		
-		List<String> categories = new ArrayList<String>();
-		categories.add(globalVars.getPrimaryRootCategoryCode());
-		
-		
-		Query query = em.createNativeQuery(this.constructSQL(false,
-															 false,
-															 false,
-															 false, 
-															 false,
-															 false,
-															 false,
-															 false,
-															 true), "ProductMapping")
-				 .setParameter("categoryCodes", categories)
-				 .setParameter("locale", locale)
-				 .setParameter("currency", currency)
-				 .setParameter("activeProductCode", globalVars.getActiveSKUCode())
-				 .setParameter("retailPriceCode", globalVars.getRetailPriceCode())
-				.setParameter("markdownPriceCode", globalVars.getMarkdownPriceCode())
-				 
-				 //these should contain default values for these parameters
-				 //.setParameter("orderby", "1")
-				.setParameter("limit", globalVars.getDefaultPageSize())
-				 .setParameter("offset", globalVars.getDefaultPage() * globalVars.getDefaultPageSize());
-		
-		@SuppressWarnings("unchecked")
-		List<Object[]> results = query.getResultList();
-		
-		return results.stream().map(p -> this.objectToEntity(p, locale, currency)).collect(Collectors.toMap(x -> ((Product) x).getProductUPC(), x -> (Product) x));
 	}
 
 	@Override
