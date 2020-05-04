@@ -34,7 +34,7 @@ public class PostgresBrandAdapter implements IBrandPortService, IFacetService {
 	
 	@Override
 	public Brand findByProductCode(String locale, String currency, String productCode) {
-		return entityToDo(brandService.findByCode(locale, currency, productCode).get());
+		return entityToDo(brandService.findByProductCode(locale, currency, productCode).get());
 	}
 
 	@Override
