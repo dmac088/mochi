@@ -59,8 +59,8 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	}
 	
 	@Override
-	public Brand findByProductCode(String locale, String currency, String productCode) {
-		return null;
+	public Optional<Brand> findByProductCode(String locale, String currency, String productCode) {
+		return brandDao.findByProductCode(locale, currency, productCode);
 	}
 
 	@Override
