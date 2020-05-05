@@ -151,10 +151,6 @@ public class ProductMasterService {
 	    	productsList.addAll(productDomainService.findAll(	globalVars.getLocaleZHHK(),
 																globalVars.getCurrencyUSD()));
 	    	
-	    	
-	    	
-	    	System.out.println(productsList.size());
-	    	
 	    	lpms.addAll(productsList.stream().map(p -> {
 		    	ProductMasterSchema pms = map.get(p.getProductUPC());
 		    	
