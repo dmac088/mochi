@@ -38,6 +38,8 @@ public class ProductMasterSchema {
 	private String DEPARTMENT_CODE;
 	
 	private String DEPARTMENT_DESC_EN;
+	
+	private String DEPARTMENT_DESC_HK;
 
 	public String get_DEPARTMENT_CODE() {
 		return DEPARTMENT_CODE;
@@ -159,11 +161,11 @@ public class ProductMasterSchema {
 		this.BRAND_CODE = BRAND_CODE;
 	}
 	
-	public String getPRIMARY_CATEGORY_DESC_EN() {
+	public String get_PRIMARY_CATEGORY_DESC_EN() {
 		return PRIMARY_CATEGORY_DESC_EN;
 	}
 
-	public void setPRIMARY_CATEGORY_DESC_EN(String pRIMARY_CATEGORY_DESC_EN) {
+	public void set_PRIMARY_CATEGORY_DESC_EN(String pRIMARY_CATEGORY_DESC_EN) {
 		PRIMARY_CATEGORY_DESC_EN = pRIMARY_CATEGORY_DESC_EN;
 	}
 
@@ -182,6 +184,15 @@ public class ProductMasterSchema {
 	public void set_DEPARTMENT_DESC_EN(String dEPARTMENT_DESC_EN) {
 		DEPARTMENT_DESC_EN = dEPARTMENT_DESC_EN;
 	}
+	
+	public String get_DEPARTMENT_DESC_HK() {
+		return DEPARTMENT_DESC_HK;
+	}
+
+	public void set_DEPARTMENT_DESC_HK(String dEPARTMENT_DESC_HK) {
+		DEPARTMENT_DESC_HK = dEPARTMENT_DESC_HK;
+	}
+
 
 	@Override
     public String toString() {

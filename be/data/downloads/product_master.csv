@@ -1,30 +1,59 @@
-_BRAND_CODE,_BRAND_DESCRIPTION_EN,_BRAND_DESCRIPTION_HK,_DEPARTMENT_CODE,_DEPARTMENT_DESC_EN,_PRIMARY_CATEGORY_CODE,"_PRIMARY_CATEGORY_DESC_HK",_PRODUCT_CREATED_DATE,_PRODUCT_DESCRIPTION_EN,_PRODUCT_DESCRIPTION_HK,_PRODUCT_IMAGE_EN,_PRODUCT_IMAGE_HK,"_PRODUCT_MARKDOWN_PRICE_HKD","_PRODUCT_MARKDOWN_PRICE_USD","_PRODUCT_RETAIL_PRICE_HKD","_PRODUCT_RETAIL_PRICE_USD",_PRODUCT_UPC_CODE,primary_CATEGORY_DESC_EN
-PLA01,Planters,,FOO01,Food,MEL01,,2019-02-05,"Musk Melon",,musk-melon.jpg,,32.4,0.0,36.0,0.0,10688155,Melons
-DRI01,Driscolls,,FOO01,Food,ALM01,,2019-02-05,Almonds,,almonds.jpg,,180.0,0.0,200.0,0.0,13627671,Almonds
-GOL01,Gold,,FOO01,Food,CIT01,,2019-01-04,orange,,orange.jpg,,67.5,0.0,75.0,0.0,23464789,Citrus
-DRI01,Driscolls,,FOO01,Food,BER01,,2019-02-05,RaspberryDan,,raspberry.jpg,,144.0,0.0,160.0,0.0,17236024,Berries
-DIV01,Diva,,FOO01,Food,OTH01,,2019-01-04,mushroom,,button-mushroom.jpg,,54.0,0.0,60.0,0.0,64377789,Other
-PLA01,Planters,,FOO01,Food,SVG01,,2019-01-04,carrot,,carrots.jpg,,50.4,0.0,56.0,0.0,14445678,Starchy
-GLO01,Glorys,,FOO01,Food,ROV01,,2019-01-04,beetroot,,beetroot.jpg,,28.8,0.0,32.0,0.0,23739283,"Red and Orange"
-DIV01,Diva,,FOO01,Food,ONT01,,2019-02-05,"Nuts Mixture",,nuts-mixture.jpg,,855.0,0.0,950.0,0.0,16153782,"Other Nuts"
-ADO01,Adora,,FOO01,Food,PIS01,,2019-02-05,Pistachio,,pistachio.jpg,,171.0,0.0,190.0,0.0,15946292,Pistachios
-SHI01,Shine,,FOO01,Food,BER01,,2019-02-05,Strawberry,,strawberry.jpg,,162.0,0.0,180.0,0.0,19037164,Berries
-ENZ01,Enza,,FOO01,Food,CIT01,,2019-02-05,Grapes,,grapes.jpg,,54.0,0.0,60.0,0.0,10760430,Citrus
-DRI01,Driscolls,,FOO01,Food,MEL01,,2019-02-05,"Water Melon",,water-melon.jpg,,25.2,0.0,28.0,0.0,15483827,Melons
-ENZ01,Enza,,FOO01,Food,CAS01,,2019-02-05,Cashews,,cashews.jpg,,585.0,0.0,650.0,0.0,17152401,Cashews
-SHI01,Shine,,FOO01,Food,CIT01,,2019-01-04,tomato,,tomato.jpg,,14.4,0.0,16.0,0.0,25556789,Citrus
-GLO01,Glorys,,FOO01,Food,POM01,,2019-02-05,Pears,,pears.jpg,,62.1,0.0,69.0,0.0,18170258,Pomes
-PLA01,Planters,,FOO01,Food,DGV01,,2019-01-04,brocolli,,broccoli.jpg,,108.0,0.0,120.0,0.0,19633678,"Dark Green"
-ADO01,Adora,,FOO01,Food,TRO01,,2019-02-05,Banana,,banana.jpg,,40.5,0.0,45.0,0.0,17366878,Tropical
-PLA01,Planters,,FOO01,Food,POM01,,2019-02-05,Apple,,apple.jpg,,64.8,0.0,72.0,0.0,18911676,Pomes
-GLO01,Glorys,,FOO01,Food,OTH01,,2019-02-05,Corn,,corn.jpg,,67.5,0.0,75.0,0.0,15410595,Other
-SHI01,Shine,,FOO01,Food,OTH01,,2019-02-05,Onion,,onion.jpg,,14.4,0.0,16.0,0.0,18188784,Other
-ENZ01,Enza,,FOO01,Food,SVG01,,2019-01-04,potato,,potato.jpg,,19.8,0.0,22.0,0.0,76477789,Starchy
-ADO01,Adora,,FOO01,Food,POM01,,2019-02-05,Pomegranate,,pomegranate.jpg,,85.5,0.0,95.0,0.0,17235347,Pomes
-GLO01,Glorys,,FOO01,Food,TRO01,,2019-01-04,mango,,mango.jpg,,67.5,0.0,75.0,0.0,12345678,Tropical
-ENZ01,Enza,,FOO01,Food,ONT01,,2019-02-05,Walnuts,,walnuts.jpg,,153.0,0.0,170.0,0.0,16067775,"Other Nuts"
-DIV01,Diva,,FOO01,Food,DGV01,,2019-01-04,cucumber,,cucumber.jpg,,43.2,0.0,48.0,0.0,12383658,"Dark Green"
-DLE01,Dole,,FOO01,Food,BAP01,,2019-01-04,beans,,beans.jpg,,73.8,0.0,82.0,0.0,12366678,"Beans and Peas"
-DRI01,Driscolls,,FOO01,Food,OTH01,,2019-01-04,brinjal,,brinjal.jpg,,31.5,0.0,35.0,0.0,23477789,Other
-SHI01,Shine,,FOO01,Food,SVG01,,2019-01-04,cauliflower,,cauliflower.jpg,,54.0,0.0,60.0,0.0,23456645,Starchy
-DLE01,Dole,,FOO01,Food,SVG01,,2019-02-05,Pumpkin,,pumpkin.jpg,,43.2,0.0,48.0,0.0,13159658,Starchy
+_BRAND_CODE,_BRAND_DESCRIPTION_EN,_BRAND_DESCRIPTION_HK,_DEPARTMENT_CODE,_DEPARTMENT_DESC_EN,_DEPARTMENT_DESC_HK,_PRIMARY_CATEGORY_CODE,"_PRIMARY_CATEGORY_DESC_EN","_PRIMARY_CATEGORY_DESC_HK",_PRODUCT_CREATED_DATE,_PRODUCT_DESCRIPTION_EN,_PRODUCT_DESCRIPTION_HK,_PRODUCT_IMAGE_EN,_PRODUCT_IMAGE_HK,"_PRODUCT_MARKDOWN_PRICE_HKD","_PRODUCT_MARKDOWN_PRICE_USD","_PRODUCT_RETAIL_PRICE_HKD","_PRODUCT_RETAIL_PRICE_USD",_PRODUCT_UPC_CODE
+PLA01,Planters,Planters,FOO01,Food,餐飲,MEL01,Melons,瓜,2019-02-05,"Musk Melon",麝香甜瓜,musk-melon.jpg,musk-melon.jpg,32.4,4.14,36.0,4.6,10688155
+DRI01,Driscolls,Driscolls,FOO01,Food,餐飲,ALM01,Almonds,杏仁,2019-02-05,Almonds,杏仁,almonds.jpg,almonds.jpg,180.0,23.04,200.0,25.6,13627671
+GOL01,Gold,Gold,FOO01,Food,餐飲,CIT01,Citrus,柑橘,2019-01-04,orange,橙子,orange.jpg,orange.jpg,67.5,8.64,75.0,9.6,23464789
+DRI01,Driscolls,Driscolls,FOO01,Food,餐飲,BER01,Berries,漿果,2019-02-05,RaspberryDan,覆盆子,raspberry.jpg,raspberry.jpg,144.0,18.45,160.0,20.5,17236024
+DIV01,Diva,Diva,FOO01,Food,餐飲,OTH01,Other,其他蔬菜,2019-01-04,mushroom,蘑菇,button-mushroom.jpg,button-mushroom.jpg,54.0,6.93,60.0,7.7,64377789
+PLA01,Planters,Planters,FOO01,Food,餐飲,SVG01,Starchy,澱粉蔬菜,2019-01-04,carrot,胡萝卜,carrots.jpg,carrots.jpg,50.4,6.48,56.0,7.2,14445678
+GLO01,Glorys,Glorys,FOO01,Food,餐飲,ROV01,"Red and Orange",紅色和橙色蔬菜,2019-01-04,beetroot,红菜头,beetroot.jpg,beetroot.jpg,28.8,3.69,32.0,4.1,23739283
+DIV01,Diva,Diva,FOO01,Food,餐飲,ONT01,"Other Nuts",其他堅果,2019-02-05,"Nuts Mixture",堅果混合物,nuts-mixture.jpg,nuts-mixture.jpg,855.0,109.62,950.0,121.8,16153782
+ADO01,Adora,Adora,FOO01,Food,餐飲,PIS01,Pistachios,開心果,2019-02-05,Pistachio,開心果,pistachio.jpg,pistachio.jpg,171.0,21.96,190.0,24.4,15946292
+SHI01,Shine,Shine,FOO01,Food,餐飲,BER01,Berries,漿果,2019-02-05,Strawberry,草莓,strawberry.jpg,strawberry.jpg,162.0,20.79,180.0,23.1,19037164
+ENZ01,Enza,Enza,FOO01,Food,餐飲,CIT01,Citrus,柑橘,2019-02-05,Grapes,葡萄,grapes.jpg,grapes.jpg,54.0,6.93,60.0,7.7,10760430
+DRI01,Driscolls,Driscolls,FOO01,Food,餐飲,MEL01,Melons,瓜,2019-02-05,"Water Melon",西瓜,water-melon.jpg,water-melon.jpg,25.2,3.24,28.0,3.6,15483827
+ENZ01,Enza,Enza,FOO01,Food,餐飲,CAS01,Cashews,腰果,2019-02-05,Cashews,腰果,cashews.jpg,cashews.jpg,585.0,74.97,650.0,83.3,17152401
+SHI01,Shine,Shine,FOO01,Food,餐飲,CIT01,Citrus,柑橘,2019-01-04,tomato,番茄,tomato.jpg,tomato.jpg,14.4,1.89,16.0,2.1,25556789
+GLO01,Glorys,Glorys,FOO01,Food,餐飲,POM01,Pomes,梨果,2019-02-05,Pears,梨,pears.jpg,pears.jpg,62.1,7.92,69.0,8.8,18170258
+PLA01,Planters,Planters,FOO01,Food,餐飲,DGV01,"Dark Green",深綠色蔬菜,2019-01-04,brocolli,西兰花,broccoli.jpg,broccoli.jpg,108.0,13.86,120.0,15.4,19633678
+ADO01,Adora,Adora,FOO01,Food,餐飲,TRO01,Tropical,熱帶,2019-02-05,Banana,香蕉,banana.jpg,banana.jpg,40.5,5.22,45.0,5.8,17366878
+PLA01,Planters,Planters,FOO01,Food,餐飲,POM01,Pomes,梨果,2019-02-05,Apple,蘋果,apple.jpg,apple.jpg,64.8,8.28,72.0,9.2,18911676
+GLO01,Glorys,Glorys,FOO01,Food,餐飲,OTH01,Other,其他蔬菜,2019-02-05,Corn,玉米,corn.jpg,corn.jpg,67.5,8.64,75.0,9.6,15410595
+SHI01,Shine,Shine,FOO01,Food,餐飲,OTH01,Other,其他蔬菜,2019-02-05,Onion,洋蔥,onion.jpg,onion.jpg,14.4,1.89,16.0,2.1,18188784
+ENZ01,Enza,Enza,FOO01,Food,餐飲,SVG01,Starchy,澱粉蔬菜,2019-01-04,potato,土豆,potato.jpg,potato.jpg,19.8,2.52,22.0,2.8,76477789
+ADO01,Adora,Adora,FOO01,Food,餐飲,POM01,Pomes,梨果,2019-02-05,Pomegranate,石榴,pomegranate.jpg,pomegranate.jpg,85.5,10.98,95.0,12.2,17235347
+GLO01,Glorys,Glorys,FOO01,Food,餐飲,TRO01,Tropical,熱帶,2019-01-04,mango,芒果,mango.jpg,mango.jpg,67.5,8.64,75.0,9.6,12345678
+ENZ01,Enza,Enza,FOO01,Food,餐飲,ONT01,"Other Nuts",其他堅果,2019-02-05,Walnuts,核桃,walnuts.jpg,walnuts.jpg,153.0,19.62,170.0,21.8,16067775
+DIV01,Diva,Diva,FOO01,Food,餐飲,DGV01,"Dark Green",深綠色蔬菜,2019-01-04,cucumber,黄瓜,cucumber.jpg,cucumber.jpg,43.2,5.58,48.0,6.2,12383658
+DLE01,Dole,Dole,FOO01,Food,餐飲,BAP01,"Beans and Peas",豆類和豌豆,2019-01-04,beans,豆子,beans.jpg,beans.jpg,73.8,9.45,82.0,10.5,12366678
+DRI01,Driscolls,Driscolls,FOO01,Food,餐飲,OTH01,Other,其他蔬菜,2019-01-04,brinjal,茄子,brinjal.jpg,brinjal.jpg,31.5,4.05,35.0,4.5,23477789
+SHI01,Shine,Shine,FOO01,Food,餐飲,SVG01,Starchy,澱粉蔬菜,2019-01-04,cauliflower,菜花,cauliflower.jpg,cauliflower.jpg,54.0,6.93,60.0,7.7,23456645
+DLE01,Dole,Dole,FOO01,Food,餐飲,SVG01,Starchy,澱粉蔬菜,2019-02-05,Pumpkin,南瓜,pumpkin.jpg,pumpkin.jpg,43.2,5.58,48.0,6.2,13159658
+PLA01,Planters,Planters,FOO01,Food,餐飲,MEL01,Melons,瓜,2019-02-05,"Musk Melon",麝香甜瓜,musk-melon.jpg,musk-melon.jpg,32.4,4.14,36.0,4.6,10688155
+DRI01,Driscolls,Driscolls,FOO01,Food,餐飲,ALM01,Almonds,杏仁,2019-02-05,Almonds,杏仁,almonds.jpg,almonds.jpg,180.0,23.04,200.0,25.6,13627671
+GOL01,Gold,Gold,FOO01,Food,餐飲,CIT01,Citrus,柑橘,2019-01-04,orange,橙子,orange.jpg,orange.jpg,67.5,8.64,75.0,9.6,23464789
+DRI01,Driscolls,Driscolls,FOO01,Food,餐飲,BER01,Berries,漿果,2019-02-05,RaspberryDan,覆盆子,raspberry.jpg,raspberry.jpg,144.0,18.45,160.0,20.5,17236024
+DIV01,Diva,Diva,FOO01,Food,餐飲,OTH01,Other,其他蔬菜,2019-01-04,mushroom,蘑菇,button-mushroom.jpg,button-mushroom.jpg,54.0,6.93,60.0,7.7,64377789
+PLA01,Planters,Planters,FOO01,Food,餐飲,SVG01,Starchy,澱粉蔬菜,2019-01-04,carrot,胡萝卜,carrots.jpg,carrots.jpg,50.4,6.48,56.0,7.2,14445678
+GLO01,Glorys,Glorys,FOO01,Food,餐飲,ROV01,"Red and Orange",紅色和橙色蔬菜,2019-01-04,beetroot,红菜头,beetroot.jpg,beetroot.jpg,28.8,3.69,32.0,4.1,23739283
+DIV01,Diva,Diva,FOO01,Food,餐飲,ONT01,"Other Nuts",其他堅果,2019-02-05,"Nuts Mixture",堅果混合物,nuts-mixture.jpg,nuts-mixture.jpg,855.0,109.62,950.0,121.8,16153782
+ADO01,Adora,Adora,FOO01,Food,餐飲,PIS01,Pistachios,開心果,2019-02-05,Pistachio,開心果,pistachio.jpg,pistachio.jpg,171.0,21.96,190.0,24.4,15946292
+SHI01,Shine,Shine,FOO01,Food,餐飲,BER01,Berries,漿果,2019-02-05,Strawberry,草莓,strawberry.jpg,strawberry.jpg,162.0,20.79,180.0,23.1,19037164
+ENZ01,Enza,Enza,FOO01,Food,餐飲,CIT01,Citrus,柑橘,2019-02-05,Grapes,葡萄,grapes.jpg,grapes.jpg,54.0,6.93,60.0,7.7,10760430
+DRI01,Driscolls,Driscolls,FOO01,Food,餐飲,MEL01,Melons,瓜,2019-02-05,"Water Melon",西瓜,water-melon.jpg,water-melon.jpg,25.2,3.24,28.0,3.6,15483827
+ENZ01,Enza,Enza,FOO01,Food,餐飲,CAS01,Cashews,腰果,2019-02-05,Cashews,腰果,cashews.jpg,cashews.jpg,585.0,74.97,650.0,83.3,17152401
+SHI01,Shine,Shine,FOO01,Food,餐飲,CIT01,Citrus,柑橘,2019-01-04,tomato,番茄,tomato.jpg,tomato.jpg,14.4,1.89,16.0,2.1,25556789
+GLO01,Glorys,Glorys,FOO01,Food,餐飲,POM01,Pomes,梨果,2019-02-05,Pears,梨,pears.jpg,pears.jpg,62.1,7.92,69.0,8.8,18170258
+PLA01,Planters,Planters,FOO01,Food,餐飲,DGV01,"Dark Green",深綠色蔬菜,2019-01-04,brocolli,西兰花,broccoli.jpg,broccoli.jpg,108.0,13.86,120.0,15.4,19633678
+ADO01,Adora,Adora,FOO01,Food,餐飲,TRO01,Tropical,熱帶,2019-02-05,Banana,香蕉,banana.jpg,banana.jpg,40.5,5.22,45.0,5.8,17366878
+PLA01,Planters,Planters,FOO01,Food,餐飲,POM01,Pomes,梨果,2019-02-05,Apple,蘋果,apple.jpg,apple.jpg,64.8,8.28,72.0,9.2,18911676
+GLO01,Glorys,Glorys,FOO01,Food,餐飲,OTH01,Other,其他蔬菜,2019-02-05,Corn,玉米,corn.jpg,corn.jpg,67.5,8.64,75.0,9.6,15410595
+SHI01,Shine,Shine,FOO01,Food,餐飲,OTH01,Other,其他蔬菜,2019-02-05,Onion,洋蔥,onion.jpg,onion.jpg,14.4,1.89,16.0,2.1,18188784
+ENZ01,Enza,Enza,FOO01,Food,餐飲,SVG01,Starchy,澱粉蔬菜,2019-01-04,potato,土豆,potato.jpg,potato.jpg,19.8,2.52,22.0,2.8,76477789
+ADO01,Adora,Adora,FOO01,Food,餐飲,POM01,Pomes,梨果,2019-02-05,Pomegranate,石榴,pomegranate.jpg,pomegranate.jpg,85.5,10.98,95.0,12.2,17235347
+GLO01,Glorys,Glorys,FOO01,Food,餐飲,TRO01,Tropical,熱帶,2019-01-04,mango,芒果,mango.jpg,mango.jpg,67.5,8.64,75.0,9.6,12345678
+ENZ01,Enza,Enza,FOO01,Food,餐飲,ONT01,"Other Nuts",其他堅果,2019-02-05,Walnuts,核桃,walnuts.jpg,walnuts.jpg,153.0,19.62,170.0,21.8,16067775
+DIV01,Diva,Diva,FOO01,Food,餐飲,DGV01,"Dark Green",深綠色蔬菜,2019-01-04,cucumber,黄瓜,cucumber.jpg,cucumber.jpg,43.2,5.58,48.0,6.2,12383658
+DLE01,Dole,Dole,FOO01,Food,餐飲,BAP01,"Beans and Peas",豆類和豌豆,2019-01-04,beans,豆子,beans.jpg,beans.jpg,73.8,9.45,82.0,10.5,12366678
+DRI01,Driscolls,Driscolls,FOO01,Food,餐飲,OTH01,Other,其他蔬菜,2019-01-04,brinjal,茄子,brinjal.jpg,brinjal.jpg,31.5,4.05,35.0,4.5,23477789
+SHI01,Shine,Shine,FOO01,Food,餐飲,SVG01,Starchy,澱粉蔬菜,2019-01-04,cauliflower,菜花,cauliflower.jpg,cauliflower.jpg,54.0,6.93,60.0,7.7,23456645
+DLE01,Dole,Dole,FOO01,Food,餐飲,SVG01,Starchy,澱粉蔬菜,2019-02-05,Pumpkin,南瓜,pumpkin.jpg,pumpkin.jpg,43.2,5.58,48.0,6.2,13159658
