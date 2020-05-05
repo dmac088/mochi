@@ -101,14 +101,14 @@ public class ProductMasterService {
 
 		
 		Category cDo = 
-							categoryDomainService.findByCode(   globalVars.getLocaleENGB(), 
-																globalVars.getCurrencyHKD(), 
-																p.get_PRIMARY_CATEGORY_CODE());
+				categoryDomainService.findByCode(   globalVars.getLocaleENGB(), 
+													globalVars.getCurrencyHKD(), 
+													p.get_PRIMARY_CATEGORY_CODE());
 		
 		Department dDo = 
 				departmentDomainService.findByCode(globalVars.getLocaleENGB(), 
-													 	  globalVars.getCurrencyHKD(), 
-													 	  p.get_DEPARTMENT_CODE());
+												   globalVars.getCurrencyHKD(), 
+												   p.get_DEPARTMENT_CODE());
 		
 		DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
 		Date date = null;
