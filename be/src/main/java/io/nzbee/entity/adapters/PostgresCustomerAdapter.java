@@ -12,7 +12,7 @@ import io.nzbee.entity.party.person.IPersonMapper;
 import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.Person;
 import io.nzbee.entity.role.IRoleTypeRepository;
-import io.nzbee.exceptions.CustomerException;
+import io.nzbee.exceptions.customer.CustomerException;
 import io.nzbee.security.user.User;
 
 @Component
