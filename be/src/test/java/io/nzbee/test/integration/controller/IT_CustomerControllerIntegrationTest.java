@@ -210,6 +210,7 @@ public class IT_CustomerControllerIntegrationTest {
 	    
 	    //update the customer
 	    customer.setGivenName(CUSTOMER_UPDATE_GIVEN_NAME_EN);
+	    headers = this.getRestHeaders(true);
 	    
 	    try {
 	    	ResponseEntity<CustomerDTO> uriDTO = restTemplate.exchange(CUSTOMER_UPDATE_ENDPOINT, HttpMethod.POST, customerDTO, CustomerDTO.class);
