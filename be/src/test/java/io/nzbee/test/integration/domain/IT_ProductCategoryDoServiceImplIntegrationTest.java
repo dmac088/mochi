@@ -1,10 +1,6 @@
 package io.nzbee.test.integration.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertTrue;
-
-import java.util.Optional;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -91,10 +87,10 @@ public class IT_ProductCategoryDoServiceImplIntegrationTest {
 	    .isEqualTo("test product category");
     }
     
-    private void assertNotFound(final Optional<Category> object) {
-
-    	assertTrue(!object.isPresent());
-    	
-    }
+//    private void assertNotFound(final Optional<Category> object) {
+//
+//    	assertTrue(!object.isPresent());
+//    	
+//    }
     
 }

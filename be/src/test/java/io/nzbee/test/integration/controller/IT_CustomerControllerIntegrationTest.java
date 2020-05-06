@@ -3,7 +3,6 @@ package io.nzbee.test.integration.controller;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -72,7 +71,7 @@ public class IT_CustomerControllerIntegrationTest {
     private String CUSTOMER_TYPE_NAME_EN 			= "Person";
     
     //private static String CUSTOMER_NAME_CN 				= "丹尼爾麥基";
-    private Date   CUSTOMER_START_DATE 				= new Date();
+    //private Date   CUSTOMER_START_DATE 				= new Date();
     private String CUSTOMER_NUMER 					= "0123498765";
     
     private String CUSTOMER_USERNAME 				= "dmac1113";
@@ -259,7 +258,6 @@ public class IT_CustomerControllerIntegrationTest {
 	    
 	    //delete
 	    headers = this.getRestHeaders(true);
-	    HttpEntity<CustomerDTO> request = new HttpEntity<CustomerDTO>(headers);
 	    customerDTO = new HttpEntity<CustomerDTO>(customer, headers);
 	    ResponseEntity<CustomerDTO> uri = restTemplate.exchange(CUSTOMER_DELETE_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.POST, customerDTO, CustomerDTO.class);
 	    assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value()); 
