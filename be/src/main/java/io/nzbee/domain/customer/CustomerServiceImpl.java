@@ -1,9 +1,6 @@
 package io.nzbee.domain.customer;
 
-
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import io.nzbee.domain.ports.ICustomerPortService;
 import io.nzbee.dto.customer.CustomerDTO;
 
@@ -34,7 +31,7 @@ public class CustomerServiceImpl implements ICustomerService {
 	}
 
 	@Override
-	public Optional<Customer> findByUsername(String userName) {
+	public Customer findByUsername(String userName) {
 		return customerService.findByUsername(userName);
 	}
 
