@@ -267,5 +267,11 @@ public class PostgresProductAdapter implements IProductPortService {
 			ProductCategory cdo = (ProductCategory) categoryMapper.entityToDo(c, pe.getLocale(), pe.getCurrency());
 			return productMapper.entityToDo(pe, bdo, ddo, cdo);	
 		}
+
+		@Override
+		public void update(Product domainObject) {
+			// TODO Auto-generated method stub
+			
+		}
 	
 }

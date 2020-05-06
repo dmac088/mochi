@@ -98,5 +98,11 @@ public class PostgresBrandAdapter implements IBrandPortService, IFacetService {
 		return "brand";
 	}
 
+	@Override
+	public void update(Brand domainObject) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

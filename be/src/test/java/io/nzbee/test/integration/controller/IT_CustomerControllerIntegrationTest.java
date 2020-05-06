@@ -187,40 +187,55 @@ public class IT_CustomerControllerIntegrationTest {
 	    
     }
    
-    /*
+    
     @Test
     public void updateCustomer() {
-    	RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
+    	RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new HttpComponentsClientHttpRequestFactory()));
 	    List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();
-		interceptors.add(new LoggingRequestInterceptor());
-		restTemplate.setInterceptors(interceptors);
-	    HttpHeaders headers = this.getRestHeaders();
+	    interceptors.add(new LoggingRequestInterceptor());
+	    restTemplate.setInterceptors(interceptors);
+	    HttpHeaders headers = this.getRestHeaders(false);
 	
-	    //convert to a Customer domain object 
-		Customer customer = this.customerDefinition();
+	    //convert to a Customer DTO object 
+	    CustomerDTO customer = this.customerDefinition();
 	    
-		HttpEntity<Customer> customerEntity = new HttpEntity<Customer>(customer, headers);
-		ResponseEntity<Customer> uri = restTemplate.exchange(CUSTOMER_CREATE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
-		assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value());
-    	
-    	customer.setGivenName(CUSTOMER_UPDATE_GIVEN_NAME_EN);
-		
-		ResponseEntity<Customer> postUri = restTemplate.exchange(CUSTOMER_UPDATE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
-		assertEquals(postUri.getStatusCodeValue(), HttpStatus.OK.value()); 
-		
-		Customer c = restTemplate.exchange(CUSTOMER_READ_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.GET, customerEntity, Customer.class).getBody();
-		assertEquals(CUSTOMER_UPDATE_GIVEN_NAME_EN, c.getGivenName());
-		assertEquals(CUSTOMER_TYPE_NAME_EN, c.getPartyType());
-		assertEquals(CUSTOMER_FAMILY_NAME_EN, c.getFamilyName());
-		
-		//this is a sequence number in the database
-		//assertEquals(CUSTOMER_NUMER, c.getCustomerID());
-		
-		//delete
-		uri = restTemplate.exchange(CUSTOMER_DELETE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
-		assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value()); 
+	    //create the customers
+	    HttpEntity<CustomerDTO> customerDTO = new HttpEntity<CustomerDTO>(customer, headers);
+	    try {
+	    	ResponseEntity<CustomerDTO> uriDTO = restTemplate.exchange(CUSTOMER_CREATE_ENDPOINT, HttpMethod.POST, customerDTO, CustomerDTO.class);
+	    	assertEquals(uriDTO.getStatusCodeValue(), HttpStatus.OK.value());
+	    } catch (HttpServerErrorException e ) {
+	    	System.out.println(e.getResponseBodyAsString());
+	    }
+	    
+	    //update the customer
+	    customer.setGivenName(CUSTOMER_UPDATE_GIVEN_NAME_EN);
+	    
+	    try {
+	    	ResponseEntity<CustomerDTO> uriDTO = restTemplate.exchange(CUSTOMER_UPDATE_ENDPOINT, HttpMethod.POST, customerDTO, CustomerDTO.class);
+	    	assertEquals(uriDTO.getStatusCodeValue(), HttpStatus.OK.value());
+	    } catch (HttpServerErrorException e ) {
+	    	System.out.println(e.getResponseBodyAsString());
+	    }
+	    
+	    headers = this.getRestHeaders(true);
+	    HttpEntity<CustomerDTO> request = new HttpEntity<CustomerDTO>(headers);
+	    ResponseEntity<CustomerDTO> uriDo = restTemplate.exchange(CUSTOMER_READ_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.GET, request, CustomerDTO.class);
+	    CustomerDTO c = uriDo.getBody();
+	    
+	    assertEquals(uriDo.getStatusCodeValue(), HttpStatus.OK.value());
+	    assertEquals(CUSTOMER_UPDATE_GIVEN_NAME_EN, c.getGivenName());
+	    assertEquals(CUSTOMER_FAMILY_NAME_EN, c.getFamilyName());
+	    assertEquals(CUSTOMER_TYPE_NAME_EN, c.getPartyType());
+	    
+	    //delete
+	    headers = this.getRestHeaders(true);
+	    request = new HttpEntity<CustomerDTO>(headers);
+	    customerDTO = new HttpEntity<CustomerDTO>(customer, headers);
+	    ResponseEntity<CustomerDTO> uri = restTemplate.exchange(CUSTOMER_DELETE_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.POST, customerDTO, CustomerDTO.class);
+	    assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value()); 
     }
-    */
+    
     
 //    @Test
 //    public void deleteCustomer() {
