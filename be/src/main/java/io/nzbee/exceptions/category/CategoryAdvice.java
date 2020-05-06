@@ -1,4 +1,4 @@
-package io.nzbee.exceptions.Category;
+package io.nzbee.exceptions.category;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

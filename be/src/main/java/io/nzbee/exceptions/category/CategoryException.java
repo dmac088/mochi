@@ -1,4 +1,4 @@
-package io.nzbee.exceptions.Category;
+package io.nzbee.exceptions.category;
 
 public class CategoryException extends RuntimeException {
 
