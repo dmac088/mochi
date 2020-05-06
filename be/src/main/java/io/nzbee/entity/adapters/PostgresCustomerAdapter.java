@@ -12,6 +12,7 @@ import io.nzbee.entity.party.person.IPersonMapper;
 import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.Person;
 import io.nzbee.entity.role.IRoleTypeRepository;
+import io.nzbee.exceptions.CustomerException;
 import io.nzbee.security.user.User;
 
 @Component
@@ -99,7 +100,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 
 	@Override
 	public void deleteCustomer(String userName) {
-		Person t = personService.findByUsernameAndRole(userName, io.nzbee.entity.role.customer.Customer.class).get();
+		Person t = personService.findByUsernameAndRole(userName, io.nzbee.entity.role.customer.Customer.class).orElseThrow(() -> new CustomerException("Customer not found!"));
 		personService.delete(t);
 	}
 	
