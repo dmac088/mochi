@@ -15,7 +15,7 @@ import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.ports.ICustomerPortService;
 import io.nzbee.domain.services.GenericResponse;
 import io.nzbee.dto.customer.CustomerDTO;
-import io.nzbee.exceptions.CustomerAlreadyExistException;
+import io.nzbee.exceptions.customer.CustomerAlreadyExistException;
 
 
 @RestController

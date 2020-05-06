@@ -1,4 +1,4 @@
-package io.nzbee.exceptions;
+package io.nzbee.exceptions.customer;
 
 
 public final class CustomerAlreadyExistException extends RuntimeException {
