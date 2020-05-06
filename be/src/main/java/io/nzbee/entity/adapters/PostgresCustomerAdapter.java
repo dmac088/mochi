@@ -71,6 +71,19 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 		c.setPassword(customer.getPassword(), customer.getConfirmPassword());
 		this.save(c);
 	}
+	
+	@Override
+	public void updateCustomer(CustomerDTO dto) {
+		Customer customerDo = new Customer(	dto.getGivenName(),
+						    				dto.getFamilyName(),
+						    				dto.getUserName(),
+						    				dto.getCustomerId(),
+						    				dto.isEnabled());
+		
+		customerDo.setPassword(dto.getPassword(), dto.getConfirmPassword());
+		
+		this.save(customerDo);
+	}
 
 	@Override
 	public void deleteCustomer(String userName) {

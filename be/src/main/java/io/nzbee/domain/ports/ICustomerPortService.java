@@ -12,5 +12,7 @@ public interface ICustomerPortService extends IPortService<Customer> {
 	void registerNewCustomer(CustomerDTO customer);
 
 	void deleteCustomer(String username);
+
+	void updateCustomer(CustomerDTO dto);
 	
 }
