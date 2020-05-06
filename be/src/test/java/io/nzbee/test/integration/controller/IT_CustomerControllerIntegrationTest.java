@@ -22,14 +22,8 @@ import org.springframework.http.client.BufferingClientHttpRequestFactory;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
-import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.jdbc.SqlGroup;
-import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -37,12 +31,8 @@ import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.json.JSONException;
 import org.json.JSONObject;
-import io.nzbee.Globals;
-import io.nzbee.domain.customer.Customer;
-import io.nzbee.domain.ports.ICustomerPortService;
 import io.nzbee.dto.customer.CustomerDTO;
 import io.nzbee.test.LoggingRequestInterceptor;
-import io.nzbee.test.UT_Config;
 
 
 @RunWith(SpringRunner.class)
@@ -54,9 +44,6 @@ public class IT_CustomerControllerIntegrationTest {
 	@Autowired
 	@Qualifier("userPasswordEncoder")
 	private PasswordEncoder passwordEncoder;
-	
-	@Autowired
-	private ICustomerPortService customerService;
 	
     @Autowired
     @Qualifier("unitTestTemplate")
@@ -90,7 +77,6 @@ public class IT_CustomerControllerIntegrationTest {
     
     private String CUSTOMER_USERNAME 				= "dmac1113";
     private String CUSTOMER_PASSWORD 				= "password";
-    private String USER_ROLE						= "Customer";
 
     private HttpHeaders getTokenHeaders() {
     	HttpHeaders headers = new HttpHeaders();
@@ -183,7 +169,7 @@ public class IT_CustomerControllerIntegrationTest {
 	    }
 	    
 	    headers = this.getRestHeaders(true);
-	    HttpEntity request = new HttpEntity(headers);
+	    HttpEntity<CustomerDTO> request = new HttpEntity<CustomerDTO>(headers);
 	    ResponseEntity<CustomerDTO> uriDo = restTemplate.exchange(CUSTOMER_READ_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.GET, request, CustomerDTO.class);
 	    CustomerDTO c = uriDo.getBody();
 	    
@@ -194,7 +180,7 @@ public class IT_CustomerControllerIntegrationTest {
 	    
 	    //delete
 	    headers = this.getRestHeaders(true);
-	    request = new HttpEntity(headers);
+	    request = new HttpEntity<CustomerDTO>(headers);
 	    customerDTO = new HttpEntity<CustomerDTO>(customer, headers);
 	    ResponseEntity<CustomerDTO> uri = restTemplate.exchange(CUSTOMER_DELETE_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.POST, customerDTO, CustomerDTO.class);
 	    assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value()); 
