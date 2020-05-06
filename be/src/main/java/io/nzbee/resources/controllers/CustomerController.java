@@ -1,7 +1,5 @@
 package io.nzbee.resources.controllers;
 
-import java.util.Optional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +28,6 @@ public class CustomerController {
         super();
     }
 
-    //Registration
     @PostMapping("/Customer/Signup")
     public GenericResponse registerNewCustomer(@RequestBody final CustomerDTO customer) {
         LOGGER.debug("Creating a new customer with information: {}", customer);
@@ -47,7 +44,7 @@ public class CustomerController {
     }
     
     @GetMapping("/Customer/UserName/{username}")
-	public Optional<Customer> getCustomer(@PathVariable String username) {
+	public Customer getCustomer(@PathVariable String username) {
     	return customerService.findByUsername(username);
 	}
     
@@ -62,7 +59,4 @@ public class CustomerController {
     	customerService.deleteCustomer(username);
     	return new GenericResponse("success");
 	}
-	
-    
-    
 }

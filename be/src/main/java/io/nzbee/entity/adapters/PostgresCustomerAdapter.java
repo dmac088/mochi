@@ -1,8 +1,6 @@
 package io.nzbee.entity.adapters;
 
 import java.util.Date;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import io.nzbee.domain.customer.Customer;
@@ -28,8 +26,10 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	private IRoleTypeRepository roleTypeRepository;
 	
 	@Override
-	public Optional<Customer> findByUsername(String userName) {
-		return personMapper.entityToDo(personService.findByUsernameAndRole(userName, io.nzbee.entity.role.customer.Customer.class));
+	public Customer findByUsername(String userName) {
+		Person p = personService.findByUsernameAndRole(userName, io.nzbee.entity.role.customer.Customer.class)
+				.orElseThrow(() -> new CustomerException("Customer with username " + userName + " not found!"));
+		return personMapper.entityToDo(p);
 	}
 
 	@Override
@@ -100,7 +100,8 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 
 	@Override
 	public void deleteCustomer(String userName) {
-		Person t = personService.findByUsernameAndRole(userName, io.nzbee.entity.role.customer.Customer.class).orElseThrow(() -> new CustomerException("Customer not found!"));
+		Person t = personService.findByUsernameAndRole(userName, io.nzbee.entity.role.customer.Customer.class)
+				.orElseThrow(() -> new CustomerException("Customer with username " + userName + " not found!"));
 		personService.delete(t);
 	}
 	
