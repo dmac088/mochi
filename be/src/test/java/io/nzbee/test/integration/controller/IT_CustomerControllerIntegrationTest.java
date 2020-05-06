@@ -238,21 +238,30 @@ public class IT_CustomerControllerIntegrationTest {
     }
     
     
-//    @Test
-//    public void deleteCustomer() {
-//    	RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
-//	    List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();
-//		interceptors.add(new LoggingRequestInterceptor());
-//		restTemplate.setInterceptors(interceptors);
-//	    HttpHeaders headers = this.getRestHeaders();
-//	
-//	    //convert to a Customer domain object 
-//		Customer customer = this.customerDefinition();
-//	    
-//		HttpEntity<Customer> customerEntity = new HttpEntity<Customer>(customer, headers);
-//		
-//		//delete
-//		ResponseEntity<Customer> uri = restTemplate.exchange(CUSTOMER_DELETE_ENDPOINT, HttpMethod.POST, customerEntity, Customer.class);
-//		assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value()); 
-//    }
+    @Test
+    public void deleteCustomer() {
+    	RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new HttpComponentsClientHttpRequestFactory()));
+	    List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();
+	    interceptors.add(new LoggingRequestInterceptor());
+	    restTemplate.setInterceptors(interceptors);
+	    HttpHeaders headers = this.getRestHeaders(false);
+	
+	    //convert to a Customer DTO object 
+	    CustomerDTO customer = this.customerDefinition();
+	    
+	    HttpEntity<CustomerDTO> customerDTO = new HttpEntity<CustomerDTO>(customer, headers);
+	    try {
+	    	ResponseEntity<CustomerDTO> uriDTO = restTemplate.exchange(CUSTOMER_CREATE_ENDPOINT, HttpMethod.POST, customerDTO, CustomerDTO.class);
+	    	assertEquals(uriDTO.getStatusCodeValue(), HttpStatus.OK.value());
+	    } catch (HttpServerErrorException e ) {
+	    	System.out.println(e.getResponseBodyAsString());
+	    }
+	    
+	    //delete
+	    headers = this.getRestHeaders(true);
+	    HttpEntity<CustomerDTO> request = new HttpEntity<CustomerDTO>(headers);
+	    customerDTO = new HttpEntity<CustomerDTO>(customer, headers);
+	    ResponseEntity<CustomerDTO> uri = restTemplate.exchange(CUSTOMER_DELETE_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.POST, customerDTO, CustomerDTO.class);
+	    assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value()); 
+    }
 }
