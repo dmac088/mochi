@@ -12,7 +12,6 @@ import io.nzbee.entity.party.person.IPersonMapper;
 import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.Person;
 import io.nzbee.entity.role.IRoleTypeRepository;
-import io.nzbee.entity.role.customer.ICustomerService;
 import io.nzbee.security.user.User;
 
 @Component
@@ -26,9 +25,6 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	
 	@Autowired
 	private IRoleTypeRepository roleTypeRepository;
-	
-	@Autowired
-	private ICustomerService customerService;
 	
 	@Override
 	public Optional<Customer> findByUsername(String userName) {
