@@ -12,6 +12,7 @@ import io.nzbee.entity.party.person.IPersonMapper;
 import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.Person;
 import io.nzbee.entity.role.IRoleTypeRepository;
+import io.nzbee.entity.role.customer.ICustomerService;
 import io.nzbee.security.user.User;
 
 @Component
@@ -26,11 +27,25 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	@Autowired
 	private IRoleTypeRepository roleTypeRepository;
 	
+	@Autowired
+	private ICustomerService customerService;
+	
 	@Override
 	public Optional<Customer> findByUsername(String userName) {
 		return personMapper.entityToDo(personService.findByUsernameAndRole(userName, io.nzbee.entity.role.customer.Customer.class));
 	}
 
+	@Override
+	public void registerNewCustomer(CustomerDTO customer) {
+		Customer c = new Customer(	customer.getGivenName(),
+									customer.getFamilyName(),
+									customer.getUserName(),
+									customer.getCustomerId(),
+									customer.isEnabled());
+		c.setPassword(customer.getPassword(), customer.getConfirmPassword());
+		this.save(c);
+	}
+	
 	@Override
 	public void save(Customer domainObject) {
 		//in our domain world a customer is a person
@@ -60,17 +75,6 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 		
 		personService.save(p);
 	}
-
-	@Override
-	public void registerNewCustomer(CustomerDTO customer) {
-		Customer c = new Customer(	customer.getGivenName(),
-									customer.getFamilyName(),
-									customer.getUserName(),
-									customer.getCustomerId(),
-									customer.isEnabled());
-		c.setPassword(customer.getPassword(), customer.getConfirmPassword());
-		this.save(c);
-	}
 	
 	@Override
 	public void updateCustomer(CustomerDTO dto) {
@@ -82,8 +86,20 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 		
 		customerDo.setPassword(dto.getPassword(), dto.getConfirmPassword());
 		
-		this.save(customerDo);
+		this.update(customerDo);
 	}
+	
+	@Override
+	public void update(Customer domainObject) {
+		//in our domain world a customer is a person
+		Person p = personService.findByUsernameAndRole(domainObject.getUserName(), io.nzbee.entity.role.customer.Customer.class).get();
+		
+		p.setGivenName(domainObject.getGivenName());
+		p.setFamilyName(domainObject.getFamilyName());
+		
+		personService.save(p);
+	}
+	
 
 	@Override
 	public void deleteCustomer(String userName) {
