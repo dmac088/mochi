@@ -51,7 +51,11 @@ public class CustomerController {
     	return customerService.findByUsername(username);
 	}
     
-    
+    @PostMapping("/Customer/Update")
+    public GenericResponse updateCustomer(@RequestBody final CustomerDTO customer) {
+    	customerService.updateCustomer(customer);
+    	return new GenericResponse("success");
+	}
     
     @PostMapping("/Customer/Delete/{username}")
     public GenericResponse deleteCustomer(@PathVariable String username) {

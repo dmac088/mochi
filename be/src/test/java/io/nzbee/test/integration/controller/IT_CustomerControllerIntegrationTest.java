@@ -62,7 +62,7 @@ public class IT_CustomerControllerIntegrationTest {
     //Customer end points
     private String CUSTOMER_CREATE_ENDPOINT 		= "https://localhost:8090/api/Customer/Signup";
     private String CUSTOMER_READ_ENDPOINT 			= "https://localhost:8090/api/Customer/UserName/";
-    private String CUSTOMER_UPDATE_ENDPOINT 		= "https://localhost:8090/api/Customer/Update/";
+    private String CUSTOMER_UPDATE_ENDPOINT 		= "https://localhost:8090/api/Customer/Update";
     private String CUSTOMER_DELETE_ENDPOINT			= "https://localhost:8090/api/Customer/Delete/";
     
     //Customer properties
