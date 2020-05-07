@@ -16,7 +16,9 @@ import io.nzbee.entity.category.brand.CategoryBrand;
 import io.nzbee.entity.category.brand.ICategoryBrandService;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.category.product.ICategoryProductService;
-import io.nzbee.exceptions.category.CategoryException;
+import io.nzbee.exceptions.category.CategoryNotFoundException;
+
+
 @Component
 public class PostgresCategoryAdapter implements ICategoryPortService {
 
@@ -42,14 +44,14 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	@Override
 	public Category findByCode(String locale, String currency, String code) {
 		io.nzbee.entity.category.Category cp = categoryService.findByCode(locale, currency, code)
-				.orElseThrow(() -> new CategoryException("Primary category for code " + code + " not found!"));
+				.orElseThrow(() -> new CategoryNotFoundException("Primary category for code " + code + " not found!"));
 		return categoryMapper.entityToDo(cp, locale, currency);
 	}	
 	
 	@Override
 	public Category findByDesc(String locale, String currency, String desc) {
 		io.nzbee.entity.category.Category cp = categoryService.findByDesc(locale, currency, desc)
-				.orElseThrow(() -> new CategoryException("Primary category for desc " + desc + " not found!"));
+				.orElseThrow(() -> new CategoryNotFoundException("Primary category for desc " + desc + " not found!"));
 		return categoryMapper.entityToDo(cp, locale, currency);
 	}
 	
@@ -62,7 +64,7 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	@Override
 	public ProductCategory findPrimaryByProductCode(String locale, String currency, String productCode) {
 		CategoryProduct cp = categoryProductService.findPrimaryByProductCode(locale, currency, productCode)
-				.orElseThrow(() -> new CategoryException("Primary category for product code " + productCode + " not found!"));
+				.orElseThrow(() -> new CategoryNotFoundException("Primary category for product code " + productCode + " not found!"));
 		return (ProductCategory) categoryMapper.entityToDo(cp, locale, currency);		
 	}
 	
