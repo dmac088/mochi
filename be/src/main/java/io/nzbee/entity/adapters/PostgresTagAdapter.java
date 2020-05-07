@@ -45,8 +45,9 @@ public class PostgresTagAdapter  implements ITagPortService {
 
 	@Override
 	public Tag findByDesc(String locale, String currency, String desc) {
-		// TODO Auto-generated method stub
-		return this.entityToDo(tagService.findByDesc(locale, currency, desc).get());
+		io.nzbee.entity.tag.Tag t = tagService.findByDesc(locale, currency, desc)
+				.orElseThrow(() -> new TagNotFoundException(""));
+		return this.entityToDo(t);
 	}
 
 	@Override
