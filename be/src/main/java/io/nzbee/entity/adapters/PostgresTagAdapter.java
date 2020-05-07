@@ -7,18 +7,13 @@ import org.springframework.stereotype.Component;
 import io.nzbee.domain.ports.ITagPortService;
 import io.nzbee.domain.tag.Tag;
 import io.nzbee.entity.tag.ITagService;
+import io.nzbee.exceptions.tag.TagNotFoundException;
 
 @Component
 public class PostgresTagAdapter  implements ITagPortService {
 
 	@Autowired 
 	private ITagService tagService;
-	
-	@Override
-	public Tag findByCode(String code) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public void save(Tag tag) {
@@ -40,13 +35,15 @@ public class PostgresTagAdapter  implements ITagPortService {
 
 	@Override
 	public Tag findByCode(String locale, String currency, String code) {
-		return this.entityToDo(tagService.findByCode(locale, currency, code).get());
+		io.nzbee.entity.tag.Tag t = tagService.findByCode(locale, currency, code)
+				.orElseThrow(() -> new TagNotFoundException("Tag with code " + code + " not found!"));
+		return this.entityToDo(t);
 	}
 
 	@Override
 	public Tag findByDesc(String locale, String currency, String desc) {
 		io.nzbee.entity.tag.Tag t = tagService.findByDesc(locale, currency, desc)
-				.orElseThrow(() -> new TagNotFoundException(""));
+				.orElseThrow(() -> new TagNotFoundException("Tag with desc " + desc + " not found!"));
 		return this.entityToDo(t);
 	}
 

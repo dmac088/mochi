@@ -14,6 +14,5 @@ public class TagAdvice {
 	public final ResponseEntity<TagNotFoundResponse> TagNotFoundResponseResponseEntity(TagException ex) {
 		TagNotFoundResponse response = new TagNotFoundResponse(ex.getMessage());
 		return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-	}
-	
+	}	
 }

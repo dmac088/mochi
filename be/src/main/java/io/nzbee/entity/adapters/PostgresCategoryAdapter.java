@@ -67,12 +67,6 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 				.orElseThrow(() -> new CategoryNotFoundException("Primary category for product code " + productCode + " not found!"));
 		return (ProductCategory) categoryMapper.entityToDo(cp, locale, currency);		
 	}
-	
-	@Override
-	public Category findByCode(String code) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public Set<Category> findAllForLevel(String locale, String currency, Long level) {

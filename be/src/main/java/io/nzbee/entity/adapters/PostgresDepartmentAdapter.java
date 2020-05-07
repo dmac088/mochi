@@ -25,12 +25,6 @@ public class PostgresDepartmentAdapter implements IDepartmentPortService {
 	}
 
 	@Override
-	public Department findByCode(String code) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Set<Department> findAll(String locale, String currency) {
 		// TODO Auto-generated method stub
 		return null;
