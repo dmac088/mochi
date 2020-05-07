@@ -15,11 +15,6 @@ public class PostgresBrandAdapter implements IBrandPortService, IFacetService {
 
 	@Autowired 
 	private IBrandService brandService;
-	
-	@Override
-	public Brand findByCode(String code) {
-		return null;
-	}
 
 	@Override
 	public Set<Brand> findAll(String locale, String currency) {

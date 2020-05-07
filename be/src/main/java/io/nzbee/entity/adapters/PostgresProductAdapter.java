@@ -66,12 +66,6 @@ public class PostgresProductAdapter implements IProductPortService {
 	
 	@Autowired 
 	private ICategoryMapper categoryMapper;
-	
-	@Override
-	public Product findByCode(String code) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public void save(Product domainObject) {
