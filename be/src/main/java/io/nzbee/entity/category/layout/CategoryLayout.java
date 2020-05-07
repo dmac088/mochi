@@ -30,5 +30,4 @@ public class CategoryLayout {
 	public void setOrder(Long order) {
 		this.order = order;
 	}
-	
 }
