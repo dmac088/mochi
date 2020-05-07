@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class CustomerAdvice {
 
 	@ResponseBody
-	@ExceptionHandler(CustomerException.class)
+	@ExceptionHandler(CustomerAlreadyExistException.class)
 	public final ResponseEntity<CustomerNotFoundResponse> CustomerNotFoundResponseResponseEntity(CustomerException ex) {
 		CustomerNotFoundResponse response = new CustomerNotFoundResponse(ex.getMessage());
 		return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
