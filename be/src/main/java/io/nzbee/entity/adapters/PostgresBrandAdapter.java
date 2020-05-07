@@ -7,12 +7,12 @@ import org.springframework.stereotype.Component;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.ports.IBrandPortService;
 import io.nzbee.entity.brand.IBrandService;
+import io.nzbee.exceptions.brand.BrandNotFoundException;
 import io.nzbee.search.IFacetService;
 
 @Component
 public class PostgresBrandAdapter implements IBrandPortService, IFacetService {
 
-	
 	@Autowired 
 	private IBrandService brandService;
 	
@@ -29,17 +29,23 @@ public class PostgresBrandAdapter implements IBrandPortService, IFacetService {
 
 	@Override
 	public Brand findByCode(String locale, String currency, String code) {
-		return entityToDo(brandService.findByCode(locale, currency, code).get());
+		io.nzbee.entity.brand.Brand b = brandService.findByCode(locale, currency, code)
+				.orElseThrow(() -> new BrandNotFoundException("Brand not found for code " + code));
+		return entityToDo(b);
 	}
 	
 	@Override
 	public Brand findByProductCode(String locale, String currency, String productCode) {
-		return entityToDo(brandService.findByProductCode(locale, currency, productCode).get());
+		io.nzbee.entity.brand.Brand b = brandService.findByProductCode(locale, currency, productCode)
+				.orElseThrow(() -> new BrandNotFoundException("Brand not found for product code " + productCode));
+		return entityToDo(b);
 	}
 
 	@Override
 	public Brand findByDesc(String locale, String currency, String desc) {
-		return entityToDo(brandService.findByDesc(locale, currency, desc).get());
+		io.nzbee.entity.brand.Brand b = brandService.findByDesc(locale, currency, desc)
+				.orElseThrow(() -> new BrandNotFoundException("Brand not found for product desc " + desc));
+		return entityToDo(b);
 	}
 
 	@Override
@@ -78,7 +84,6 @@ public class PostgresBrandAdapter implements IBrandPortService, IFacetService {
 	}
 	
 	private Brand entityToDo(io.nzbee.entity.brand.Brand e) {
-	
 		return	new Brand(
 					 e.getBrandCode(),
 					 e.getBrandAttribute().getBrandDesc(),
