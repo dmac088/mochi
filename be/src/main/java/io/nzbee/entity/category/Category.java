@@ -61,8 +61,7 @@ import io.nzbee.search.ISearchDimension;
     name = "CategoryMapping",
     columns = {
     		@ColumnResult(name = "object_count"),
-    		@ColumnResult(name = "child_cat_count"),
-    		@ColumnResult(name = "category_layouts")
+    		@ColumnResult(name = "child_cat_count")
     },
     entities = {
             @EntityResult(
