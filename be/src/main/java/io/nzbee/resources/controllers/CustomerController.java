@@ -13,7 +13,6 @@ import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.ports.ICustomerPortService;
 import io.nzbee.domain.services.GenericResponse;
 import io.nzbee.dto.customer.CustomerDTO;
-import io.nzbee.exceptions.customer.CustomerAlreadyExistException;
 
 
 @RestController
@@ -31,15 +30,7 @@ public class CustomerController {
     @PostMapping("/Customer/Signup")
     public GenericResponse registerNewCustomer(@RequestBody final CustomerDTO customer) {
         LOGGER.debug("Creating a new customer with information: {}", customer);
-        
-        try {
-			customerService.registerNewCustomer(customer);
-		} catch (CustomerAlreadyExistException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-      
-         //eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), getAppUrl(request)));
+        customerService.registerNewCustomer(customer);
         return new GenericResponse("success");
     }
     
