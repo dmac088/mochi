@@ -1,8 +1,6 @@
 package io.nzbee.entity.adapters;
 
 import java.util.Date;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import io.nzbee.domain.customer.Customer;
@@ -38,8 +36,8 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 
 	@Override
 	public void registerNewCustomer(CustomerDTO customer) {
-		Optional<Person> p = personService.findByUsernameAndRole(customer.getUserName(), io.nzbee.entity.role.customer.Customer.class);
-		if(p.isPresent()) {
+		boolean exists = personService.userExists(customer.getUserName(), io.nzbee.entity.role.customer.Customer.class);
+		if(exists) {
 			throw new CustomerAlreadyExistException("Customer with username " + customer.getUserName() + " already exists!");
 		}
 		

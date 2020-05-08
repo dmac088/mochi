@@ -63,7 +63,7 @@ public class PersonDaoImpl implements IPersonDao {
 	}
 
 	@Override
-	public Optional<Person> findAllByUsernameAndRole(String userName, String roleClassType) {
+	public Optional<Person> findByUsernameAndRole(String userName, String roleClassType) {
 
 		LOGGER.debug("call PersonDaoImpl.findAllByUsernameAndRole parameters : {}, {}", userName, roleClassType);
 		

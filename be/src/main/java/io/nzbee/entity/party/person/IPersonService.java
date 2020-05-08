@@ -7,5 +7,7 @@ import io.nzbee.entity.IService;
 public interface IPersonService extends IService<Person> {
 
 	Optional<Person> findByUsernameAndRole(String userName, Class<?> roleType);
+
+	boolean userExists(String userName, Class<?> roleType);
 	
 }
