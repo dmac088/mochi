@@ -10,12 +10,19 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
-public class CustomerDomainExceptionHandler extends ResponseEntityExceptionHandler{
+public class CustomerExceptionHandler extends ResponseEntityExceptionHandler{
 
 	@ResponseBody
 	@ExceptionHandler(CustomerNotFoundException.class)
 	public final ResponseEntity<Object> CustomerNotFoundResponseResponseEntity(CustomerException ex, WebRequest request) {
 		return handleExceptionInternal(ex, ex.getMessage(), 
 		          new HttpHeaders(), HttpStatus.NOT_FOUND, request);
-	}	
+	}
+	
+	@ResponseBody
+	@ExceptionHandler(CustomerAlreadyExistException.class)
+	public final ResponseEntity<Object> CustomerAlreadyExistResponseResponseEntity(CustomerAlreadyExistException ex, WebRequest request) {
+		return handleExceptionInternal(ex, ex.getMessage(), 
+		          new HttpHeaders(), HttpStatus.CONFLICT, request);
+	}
 }
