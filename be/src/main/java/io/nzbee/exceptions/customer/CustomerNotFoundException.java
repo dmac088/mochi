@@ -5,10 +5,6 @@ public final class CustomerNotFoundException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
-    public CustomerNotFoundException() {
-        super();
-    }
-
     public CustomerNotFoundException(final String message, final Throwable cause) {
         super(message, cause);
     }
