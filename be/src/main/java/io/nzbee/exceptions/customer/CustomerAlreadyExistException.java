@@ -5,6 +5,10 @@ public final class CustomerAlreadyExistException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
+    public CustomerAlreadyExistException() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
     public CustomerAlreadyExistException(final String message, final Throwable cause) {
         super(message, cause);
