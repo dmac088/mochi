@@ -8,7 +8,7 @@ import io.nzbee.entity.IDao;
 public interface IPersonDao extends IDao<Person> {
 	
 	List<Person> findAllByRoleName(String roleClassType);
-	
-	Optional<Person> findAllByUsernameAndRole(String userName, String roleClassType);
+
+	Optional<Person> findByUsernameAndRole(String userName, String roleClassType);
 
 }

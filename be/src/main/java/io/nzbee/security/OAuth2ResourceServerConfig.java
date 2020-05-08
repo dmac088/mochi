@@ -20,7 +20,6 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
         resources.resourceId(RESOURCE_ID);
     }
     
-    
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http	
