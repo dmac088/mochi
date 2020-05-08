@@ -276,8 +276,7 @@ public class IT_CustomerControllerIntegrationTest {
 	    HttpEntity<CustomerDTO> request = new HttpEntity<CustomerDTO>(headers);
 	    ResponseEntity<CustomerDTO> uriDo = restTemplate.exchange(CUSTOMER_READ_ENDPOINT + "asdf", HttpMethod.GET, request, CustomerDTO.class);
 	    //assertEquals(uriDo.getStatusCodeValue(), HttpStatus.NOT_FOUND.value());
-	    System.out.println(uriDo.getStatusCodeValue());
-	    assertEquals(uriDo.getStatusCodeValue(), HttpStatus.INTERNAL_SERVER_ERROR.value());
+	    assertEquals(uriDo.getStatusCodeValue(), HttpStatus.NOT_FOUND.value());
 	    
     }
     
