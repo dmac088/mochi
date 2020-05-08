@@ -300,8 +300,22 @@ public class IT_CustomerControllerIntegrationTest {
 	    try {
 	    	restTemplate.exchange(CUSTOMER_CREATE_ENDPOINT, HttpMethod.POST, customerDTO, CustomerDTO.class);
 	    } catch (final HttpClientErrorException e ) {
-	    	System.out.println(HttpStatus.CONFLICT.value());
 	    	assertEquals(HttpStatus.CONFLICT.value(), e.getStatusCode().value());
+	    }
+    }
+    
+    @Test
+    public void whenUserUnauthoried_401Response() {
+    	RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new HttpComponentsClientHttpRequestFactory()));
+	    List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();
+	    interceptors.add(new LoggingRequestInterceptor());
+	    restTemplate.setInterceptors(interceptors);
+	    HttpHeaders headers = this.getRestHeaders(false);
+	    HttpEntity<CustomerDTO> request = new HttpEntity<CustomerDTO>(headers);
+	    try {
+	    	restTemplate.exchange(CUSTOMER_READ_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.GET, request, CustomerDTO.class);
+	    } catch (final HttpClientErrorException e ) {
+	    	assertEquals(HttpStatus.UNAUTHORIZED.value(), e.getStatusCode().value());
 	    }
     }
 }
