@@ -26,6 +26,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.json.JSONException;
@@ -274,10 +275,11 @@ public class IT_CustomerControllerIntegrationTest {
 	    
 	    headers = this.getRestHeaders(true);
 	    HttpEntity<CustomerDTO> request = new HttpEntity<CustomerDTO>(headers);
-	    ResponseEntity<CustomerDTO> uriDo = restTemplate.exchange(CUSTOMER_READ_ENDPOINT + "asdf", HttpMethod.GET, request, CustomerDTO.class);
-	    //assertEquals(uriDo.getStatusCodeValue(), HttpStatus.NOT_FOUND.value());
-	    assertEquals(uriDo.getStatusCodeValue(), HttpStatus.NOT_FOUND.value());
-	    
+	    try {
+	    	restTemplate.exchange(CUSTOMER_READ_ENDPOINT + "asdf", HttpMethod.GET, request, CustomerDTO.class);
+	    } catch (final HttpClientErrorException e) {
+	    	assertEquals(e.getStatusCode().value(), HttpStatus.NOT_FOUND.value());
+	    }
     }
     
 }
