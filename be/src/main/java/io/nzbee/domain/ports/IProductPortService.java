@@ -25,5 +25,8 @@ public interface IProductPortService extends IProductDimensionService<Product> {
 	Page<Product> findAll(String locale, String currency, String categoryDesc, int page, int size,
 			Set<IFacet> selectedFacets, String sortBy);
 
+	Page<Product> search(String locale, String currency, Pageable pageable, String category, String searchTerm,
+			Set<IFacet> facetPayload, Set<IFacet> returnFacets);
+
 	
 }

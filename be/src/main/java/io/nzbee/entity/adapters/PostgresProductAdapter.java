@@ -29,6 +29,7 @@ import io.nzbee.entity.product.department.IDepartmentMapper;
 import io.nzbee.entity.product.department.IDepartmentService;
 import io.nzbee.entity.product.price.IProductPriceTypeService;
 import io.nzbee.entity.product.status.IProductStatusRepository;
+import io.nzbee.search.ISearchService;
 import io.nzbee.search.dto.facet.IFacet;
 
 @Component
@@ -36,6 +37,9 @@ public class PostgresProductAdapter implements IProductPortService {
 	
 	@Autowired
 	private IProductService productService;
+	
+	@Autowired
+	private ISearchService searchService;
 	
 	@Autowired
 	private IDepartmentService departmentService;
@@ -180,6 +184,26 @@ public class PostgresProductAdapter implements IProductPortService {
 			List<Product> collect, String sortBy) {
 		
 		return null;
+	}
+	
+	@Override
+	public Page<Product> search(String locale, 
+								String currency, 
+								Pageable pageable,
+								String category,
+								String searchTerm,
+								Set<IFacet> facetPayload,
+								Set<IFacet> returnFacets) {
+		
+		return searchService.findAll(locale, 
+							  		 currency, 
+							  		 category, 
+							  		 searchTerm, 
+							  		 pageable.getPageNumber(), 
+							  		 pageable.getPageSize(), 
+							  		 "", 
+							  		 facetPayload, 
+							  		 returnFacets);
 	}
 
 	@Override
