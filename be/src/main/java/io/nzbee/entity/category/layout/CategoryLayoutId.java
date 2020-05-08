@@ -3,11 +3,18 @@ package io.nzbee.entity.category.layout;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class CategoryLayoutId implements Serializable {
  
     private static final long serialVersionUID = 1L;
  
+    @Column(name = "cat_id")
     private Long categoryId;
+    
+    @Column(name = "lay_id")
     private Long layoutId;
  
     public CategoryLayoutId() {

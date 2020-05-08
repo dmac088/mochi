@@ -155,8 +155,9 @@ public abstract class Category implements ISearchDimension {
 				insertable = false)
 	private CategoryType categoryType;
 	 
+	@JsonIgnore
 	@OneToMany(mappedBy = "category")
-    private Set<CategoryLayout> layouts = new HashSet<>();
+    private Set<CategoryLayout> layoutCategories = new HashSet<>();
 
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY, optional=false)
@@ -337,13 +338,17 @@ public abstract class Category implements ISearchDimension {
 	}
 	
 	public Set<CategoryLayout> getLayouts() {
-		return layouts;
+		return layoutCategories;
 	}
 
-	public void setLayouts(Set<CategoryLayout> layouts) {
-		this.layouts = layouts;
+	public Set<CategoryLayout> getLayoutCategories() {
+		return layoutCategories;
 	}
 	
+	public void setLayoutCategories(Set<CategoryLayout> layoutCategories) {
+		this.layoutCategories = layoutCategories;
+	}
+
 	public String getLocale() {
 		return locale;
 	}
