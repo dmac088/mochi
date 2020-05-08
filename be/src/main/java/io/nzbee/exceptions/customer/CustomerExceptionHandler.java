@@ -14,14 +14,14 @@ public class CustomerExceptionHandler extends ResponseEntityExceptionHandler{
 
 	@ResponseBody
 	@ExceptionHandler(CustomerNotFoundException.class)
-	public final ResponseEntity<Object> CustomerNotFoundResponseResponseEntity(CustomerException ex, WebRequest request) {
+	public final ResponseEntity<Object> CustomerNotFoundResponseEntity(CustomerException ex, WebRequest request) {
 		return handleExceptionInternal(ex, ex.getMessage(), 
 		          new HttpHeaders(), HttpStatus.NOT_FOUND, request);
 	}
 	
 	@ResponseBody
 	@ExceptionHandler(CustomerAlreadyExistException.class)
-	public final ResponseEntity<Object> CustomerAlreadyExistResponseResponseEntity(CustomerAlreadyExistException ex, WebRequest request) {
+	public final ResponseEntity<Object> CustomerAlreadyExistResponseEntity(CustomerAlreadyExistException ex, WebRequest request) {
 		return handleExceptionInternal(ex, ex.getMessage(), 
 		          new HttpHeaders(), HttpStatus.CONFLICT, request);
 	}
