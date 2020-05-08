@@ -183,7 +183,7 @@ public class IT_CustomerControllerIntegrationTest {
 	    request = new HttpEntity<CustomerDTO>(headers);
 	    customerDTO = new HttpEntity<CustomerDTO>(customer, headers);
 	    ResponseEntity<CustomerDTO> uri = restTemplate.exchange(CUSTOMER_DELETE_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.POST, customerDTO, CustomerDTO.class);
-	    assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value()); 
+	    assertEquals(HttpStatus.OK.value(), uri.getStatusCodeValue()); 
 	    
     }
    
@@ -203,7 +203,7 @@ public class IT_CustomerControllerIntegrationTest {
 	    HttpEntity<CustomerDTO> customerDTO = new HttpEntity<CustomerDTO>(customer, headers);
 	    try {
 	    	ResponseEntity<CustomerDTO> uriDTO = restTemplate.exchange(CUSTOMER_CREATE_ENDPOINT, HttpMethod.POST, customerDTO, CustomerDTO.class);
-	    	assertEquals(uriDTO.getStatusCodeValue(), HttpStatus.OK.value());
+	    	assertEquals(HttpStatus.OK.value(), uriDTO.getStatusCodeValue());
 	    } catch (HttpServerErrorException e ) {
 	    	System.out.println(e.getResponseBodyAsString());
 	    }
@@ -214,7 +214,7 @@ public class IT_CustomerControllerIntegrationTest {
 	    customerDTO = new HttpEntity<CustomerDTO>(customer, headers);
 	    try {
 	    	ResponseEntity<CustomerDTO> uriDTO = restTemplate.exchange(CUSTOMER_UPDATE_ENDPOINT, HttpMethod.POST, customerDTO, CustomerDTO.class);
-	    	assertEquals(uriDTO.getStatusCodeValue(), HttpStatus.OK.value());
+	    	assertEquals(HttpStatus.OK.value(), uriDTO.getStatusCodeValue());
 	    } catch (HttpServerErrorException e ) {
 	    	System.out.println(e.getResponseBodyAsString());
 	    }
@@ -234,7 +234,7 @@ public class IT_CustomerControllerIntegrationTest {
 	    request = new HttpEntity<CustomerDTO>(headers);
 	    customerDTO = new HttpEntity<CustomerDTO>(customer, headers);
 	    ResponseEntity<CustomerDTO> uri = restTemplate.exchange(CUSTOMER_DELETE_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.POST, customerDTO, CustomerDTO.class);
-	    assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value()); 
+	    assertEquals(HttpStatus.OK.value(), uri.getStatusCodeValue()); 
     }
     
     
@@ -244,7 +244,7 @@ public class IT_CustomerControllerIntegrationTest {
 	    List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();
 	    interceptors.add(new LoggingRequestInterceptor());
 	    restTemplate.setInterceptors(interceptors);
-	    HttpHeaders headers = this.getRestHeaders(false);
+	    HttpHeaders headers = this.getRestHeaders(true);
 	
 	    //convert to a Customer DTO object 
 	    CustomerDTO customer = this.customerDefinition();
@@ -252,7 +252,7 @@ public class IT_CustomerControllerIntegrationTest {
 	    HttpEntity<CustomerDTO> customerDTO = new HttpEntity<CustomerDTO>(customer, headers);
 	    try {
 	    	ResponseEntity<CustomerDTO> uriDTO = restTemplate.exchange(CUSTOMER_CREATE_ENDPOINT, HttpMethod.POST, customerDTO, CustomerDTO.class);
-	    	assertEquals(uriDTO.getStatusCodeValue(), HttpStatus.OK.value());
+	    	assertEquals(HttpStatus.OK.value(), uriDTO.getStatusCodeValue());
 	    } catch (HttpServerErrorException e ) {
 	    	System.out.println(e.getResponseBodyAsString());
 	    }
@@ -261,7 +261,7 @@ public class IT_CustomerControllerIntegrationTest {
 	    headers = this.getRestHeaders(true);
 	    customerDTO = new HttpEntity<CustomerDTO>(customer, headers);
 	    ResponseEntity<CustomerDTO> uri = restTemplate.exchange(CUSTOMER_DELETE_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.POST, customerDTO, CustomerDTO.class);
-	    assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value()); 
+	    assertEquals(HttpStatus.OK.value(), uri.getStatusCodeValue()); 
     }
     
     
@@ -271,14 +271,14 @@ public class IT_CustomerControllerIntegrationTest {
 	    List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();
 	    interceptors.add(new LoggingRequestInterceptor());
 	    restTemplate.setInterceptors(interceptors);
-	    HttpHeaders headers = this.getRestHeaders(false);
+	    HttpHeaders headers = this.getRestHeaders(true);
 	    
 	    headers = this.getRestHeaders(true);
 	    HttpEntity<CustomerDTO> request = new HttpEntity<CustomerDTO>(headers);
 	    try {
 	    	restTemplate.exchange(CUSTOMER_READ_ENDPOINT + "asdf", HttpMethod.GET, request, CustomerDTO.class);
 	    } catch (final HttpClientErrorException e) {
-	    	assertEquals(e.getStatusCode().value(), HttpStatus.NOT_FOUND.value());
+	    	assertEquals(HttpStatus.NOT_FOUND.value(), e.getStatusCode().value());
 	    }
     }
     
@@ -300,7 +300,8 @@ public class IT_CustomerControllerIntegrationTest {
 	    try {
 	    	restTemplate.exchange(CUSTOMER_CREATE_ENDPOINT, HttpMethod.POST, customerDTO, CustomerDTO.class);
 	    } catch (final HttpClientErrorException e ) {
-	    	assertEquals(e.getStatusCode().value(), HttpStatus.CONFLICT.value());
+	    	System.out.println(HttpStatus.CONFLICT.value());
+	    	assertEquals(HttpStatus.CONFLICT.value(), e.getStatusCode().value());
 	    }
     }
 }
