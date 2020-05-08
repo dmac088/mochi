@@ -305,7 +305,7 @@ public class IT_CustomerControllerIntegrationTest {
     }
     
     @Test
-    public void whenUserUnauthoried_401Response() {
+    public void whenUserUnauthoriedForGetCustomer_401Response() {
     	RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new HttpComponentsClientHttpRequestFactory()));
 	    List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();
 	    interceptors.add(new LoggingRequestInterceptor());
