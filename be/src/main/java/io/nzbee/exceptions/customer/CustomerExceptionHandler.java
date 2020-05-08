@@ -21,7 +21,7 @@ public class CustomerExceptionHandler extends ResponseEntityExceptionHandler{
 	
 	@ResponseBody
 	@ExceptionHandler(CustomerAlreadyExistException.class)
-	public final ResponseEntity<Object> CustomerAlreadyExistResponseEntity(CustomerAlreadyExistException ex, WebRequest request) {
+	public final ResponseEntity<Object> CustomerAlreadyExistResponseEntity(CustomerException ex, WebRequest request) {
 		return handleExceptionInternal(ex, ex.getMessage(), 
 		          new HttpHeaders(), HttpStatus.CONFLICT, request);
 	}

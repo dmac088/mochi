@@ -12,7 +12,9 @@ import io.nzbee.entity.party.person.IPersonMapper;
 import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.Person;
 import io.nzbee.entity.role.IRoleTypeRepository;
+import io.nzbee.exceptions.customer.CustomerAlreadyExistException;
 import io.nzbee.exceptions.customer.CustomerException;
+import io.nzbee.exceptions.customer.CustomerNotFoundException;
 import io.nzbee.security.user.User;
 
 @Component
@@ -30,7 +32,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	@Override
 	public Customer findByUsername(String userName) {
 		Person p = personService.findByUsernameAndRole(userName, io.nzbee.entity.role.customer.Customer.class)
-				.orElseThrow(() -> new CustomerException("Customer with username " + userName + " not found!"));
+				.orElseThrow(() -> new CustomerNotFoundException("Customer with username " + userName + " not found!"));
 		return personMapper.entityToDo(p);
 	}
 
@@ -38,7 +40,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	public void registerNewCustomer(CustomerDTO customer) {
 		Optional<Person> p = personService.findByUsernameAndRole(customer.getUserName(), io.nzbee.entity.role.customer.Customer.class);
 		if(p.isPresent()) {
-			throw new CustomerException("Customer with username " + customer.getUserName() + " already exists!");
+			throw new CustomerAlreadyExistException("Customer with username " + customer.getUserName() + " already exists!");
 		}
 		
 		Customer c = new Customer(	customer.getGivenName(),
