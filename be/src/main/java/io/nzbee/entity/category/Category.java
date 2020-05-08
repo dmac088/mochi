@@ -18,11 +18,8 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
 import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -39,12 +36,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.google.common.collect.Lists;
-
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.brand.CategoryBrand;
+import io.nzbee.entity.category.layout.CategoryLayout;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.category.type.CategoryType;
-import io.nzbee.entity.layout.Layout;
 import io.nzbee.search.ISearchDimension;
 
 @Entity
@@ -159,13 +155,9 @@ public abstract class Category implements ISearchDimension {
 				insertable = false)
 	private CategoryType categoryType;
 	 
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "layout_category", schema="mochi", 
-	    		   joinColumns 			= @JoinColumn(name = "cat_id"), 
-	    		   inverseJoinColumns 	= @JoinColumn(name = "lay_id"))
-	@OrderBy
-	private List<Layout> layouts;
-	
+	@OneToMany(mappedBy = "category")
+    private Set<CategoryLayout> layouts = new HashSet<>();
+
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY, optional=false)
 	@JoinColumn(name="cat_prnt_id", nullable=false)
@@ -333,14 +325,6 @@ public abstract class Category implements ISearchDimension {
 	public void setCategoryAttribute(CategoryAttribute categoryAttribute) {
 		this.categoryAttribute = categoryAttribute;
 	}
-	
-	public List<Layout> getLayouts() {
-		return layouts;
-	}
-
-	public void setLayouts(List<Layout> layouts) {
-		this.layouts = layouts;
-	}
 
 	public void addAttribute(CategoryAttribute categoryAttribute) {
 		this.getAttributes().add(categoryAttribute);
@@ -352,12 +336,12 @@ public abstract class Category implements ISearchDimension {
 		categoryAttribute.setCategory(null);
 	}
 	
-	public String[] getCategoryLayouts() {
-		return categoryLayouts;
+	public Set<CategoryLayout> getLayouts() {
+		return layouts;
 	}
 
-	public void setCategoryLayouts(String[] categoryLayouts) {
-		this.categoryLayouts = categoryLayouts;
+	public void setLayouts(Set<CategoryLayout> layouts) {
+		this.layouts = layouts;
 	}
 	
 	public String getLocale() {

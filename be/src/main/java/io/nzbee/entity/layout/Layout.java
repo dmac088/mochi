@@ -1,18 +1,16 @@
 package io.nzbee.entity.layout;
 
+import java.util.HashSet;
 import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.hibernate.annotations.NaturalId;
-import io.nzbee.entity.category.Category;
+import io.nzbee.entity.category.layout.CategoryLayout;
 
 @Entity
 @Table(name = "layout", schema = "mochi")
@@ -30,11 +28,17 @@ public class Layout {
 	@Column(name="lay_desc")
 	private String desc;
 	
-	@ManyToMany(mappedBy = "layouts", 
-				fetch = FetchType.LAZY, 
-				cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	private Set<Category> categories;
+	@OneToMany(mappedBy = "layout")
+    private Set<CategoryLayout> categories = new HashSet<>();
 	
+	public Set<CategoryLayout> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(Set<CategoryLayout> categories) {
+		this.categories = categories;
+	}
+
 	public String getCode() {
 		return code;
 	}

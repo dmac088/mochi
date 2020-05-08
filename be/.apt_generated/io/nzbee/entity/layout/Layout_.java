@@ -1,6 +1,6 @@
 package io.nzbee.entity.layout;
 
-import io.nzbee.entity.category.Category;
+import io.nzbee.entity.category.layout.CategoryLayout;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
@@ -11,7 +11,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class Layout_ {
 
 	public static volatile SingularAttribute<Layout, String> code;
-	public static volatile SetAttribute<Layout, Category> categories;
+	public static volatile SetAttribute<Layout, CategoryLayout> categories;
 	public static volatile SingularAttribute<Layout, Long> layoutId;
 	public static volatile SingularAttribute<Layout, String> desc;
 
