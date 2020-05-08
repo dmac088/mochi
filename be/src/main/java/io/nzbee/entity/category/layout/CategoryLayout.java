@@ -3,6 +3,7 @@ package io.nzbee.entity.category.layout;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
@@ -18,10 +19,12 @@ public class CategoryLayout {
  
     @ManyToOne
     @MapsId("categoryId")
+    @JoinColumn(name = "cat_id")
     private Category category;
  
     @ManyToOne
     @MapsId("layoutId")
+    @JoinColumn(name = "lay_id")
     private Layout layout;
 
     @Column(name="ord_num")

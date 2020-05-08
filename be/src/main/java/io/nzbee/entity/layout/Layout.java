@@ -29,14 +29,14 @@ public class Layout {
 	private String desc;
 	
 	@OneToMany(mappedBy = "layout")
-    private Set<CategoryLayout> categories = new HashSet<>();
+    private Set<CategoryLayout> categoryLayouts = new HashSet<>();
 	
-	public Set<CategoryLayout> getCategories() {
-		return categories;
+	public Set<CategoryLayout> getCategoryLayouts() {
+		return categoryLayouts;
 	}
 
-	public void setCategories(Set<CategoryLayout> categories) {
-		this.categories = categories;
+	public void setCategoryLayouts(Set<CategoryLayout> categoryLayouts) {
+		this.categoryLayouts = categoryLayouts;
 	}
 
 	public String getCode() {

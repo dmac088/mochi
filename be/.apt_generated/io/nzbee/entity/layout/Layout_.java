@@ -10,8 +10,8 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(Layout.class)
 public abstract class Layout_ {
 
+	public static volatile SetAttribute<Layout, CategoryLayout> categoryLayouts;
 	public static volatile SingularAttribute<Layout, String> code;
-	public static volatile SetAttribute<Layout, CategoryLayout> categories;
 	public static volatile SingularAttribute<Layout, Long> layoutId;
 	public static volatile SingularAttribute<Layout, String> desc;
 

@@ -17,7 +17,7 @@ public abstract class Category_ {
 	public static volatile SingularAttribute<Category, Long> categoryLevel;
 	public static volatile SetAttribute<Category, CategoryAttribute> attributes;
 	public static volatile SingularAttribute<Category, String> categoryCode;
-	public static volatile SetAttribute<Category, CategoryLayout> layouts;
+	public static volatile SetAttribute<Category, CategoryLayout> layoutCategories;
 	public static volatile SingularAttribute<Category, Long> categoryId;
 
 }
