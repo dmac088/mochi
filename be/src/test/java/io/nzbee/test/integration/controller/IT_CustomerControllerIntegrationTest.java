@@ -282,4 +282,25 @@ public class IT_CustomerControllerIntegrationTest {
 	    }
     }
     
+    @Test
+	public void whenCustomerAlreadyExists_409Reponse() {
+    	RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new HttpComponentsClientHttpRequestFactory()));
+	    List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();
+	    interceptors.add(new LoggingRequestInterceptor());
+	    restTemplate.setInterceptors(interceptors);
+	    HttpHeaders headers = this.getRestHeaders(false);
+	
+	    //convert to a Customer DTO object 
+	    CustomerDTO customer = this.customerDefinition();
+	    //set to a username of a customer we know already exists
+	    customer.setUserName("dmac088");
+	    
+	    //create the customers
+	    HttpEntity<CustomerDTO> customerDTO = new HttpEntity<CustomerDTO>(customer, headers);
+	    try {
+	    	restTemplate.exchange(CUSTOMER_CREATE_ENDPOINT, HttpMethod.POST, customerDTO, CustomerDTO.class);
+	    } catch (final HttpClientErrorException e ) {
+	    	assertEquals(e.getStatusCode().value(), HttpStatus.CONFLICT.value());
+	    }
+    }
 }
