@@ -8,7 +8,6 @@ import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.ports.IBrandPortService;
 import io.nzbee.entity.brand.IBrandService;
 import io.nzbee.exceptions.brand.BrandNotFoundException;
-import io.nzbee.search.IFacetService;
 
 @Component
 public class PostgresBrandAdapter implements IBrandPortService {
@@ -87,17 +86,7 @@ public class PostgresBrandAdapter implements IBrandPortService {
 					 e.getCurrency()
 					);
 	}
-
-	@Override
-	public String getFacetField() {
-		return "product.brand.brandToken";
-	}
-
-	@Override
-	public String getFacetCategory() {
-		return "brand";
-	}
-
+	
 	@Override
 	public void update(Brand domainObject) {
 		// TODO Auto-generated method stub
