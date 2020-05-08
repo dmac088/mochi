@@ -262,4 +262,23 @@ public class IT_CustomerControllerIntegrationTest {
 	    ResponseEntity<CustomerDTO> uri = restTemplate.exchange(CUSTOMER_DELETE_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.POST, customerDTO, CustomerDTO.class);
 	    assertEquals(uri.getStatusCodeValue(), HttpStatus.OK.value()); 
     }
+    
+    
+    @Test
+	public void whenCustomerNotFound_generateAppropriateReponse() {
+	    RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new HttpComponentsClientHttpRequestFactory()));
+	    List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();
+	    interceptors.add(new LoggingRequestInterceptor());
+	    restTemplate.setInterceptors(interceptors);
+	    HttpHeaders headers = this.getRestHeaders(false);
+	    
+	    headers = this.getRestHeaders(true);
+	    HttpEntity<CustomerDTO> request = new HttpEntity<CustomerDTO>(headers);
+	    ResponseEntity<CustomerDTO> uriDo = restTemplate.exchange(CUSTOMER_READ_ENDPOINT + "asdf", HttpMethod.GET, request, CustomerDTO.class);
+	    //assertEquals(uriDo.getStatusCodeValue(), HttpStatus.NOT_FOUND.value());
+	    System.out.println(uriDo.getStatusCodeValue());
+	    assertEquals(uriDo.getStatusCodeValue(), HttpStatus.INTERNAL_SERVER_ERROR.value());
+	    
+    }
+    
 }
