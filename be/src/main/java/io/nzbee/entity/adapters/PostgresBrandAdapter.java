@@ -11,7 +11,7 @@ import io.nzbee.exceptions.brand.BrandNotFoundException;
 import io.nzbee.search.IFacetService;
 
 @Component
-public class PostgresBrandAdapter implements IBrandPortService, IFacetService {
+public class PostgresBrandAdapter implements IBrandPortService {
 
 	@Autowired 
 	private IBrandService brandService;

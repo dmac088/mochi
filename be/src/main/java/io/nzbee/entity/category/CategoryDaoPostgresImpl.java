@@ -321,9 +321,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		}
 		category.setObjectCount(((BigDecimal)o[6]).intValue());
 		category.setChildCount(((BigInteger)o[7]).longValue());
-		category.setCategoryLayouts((((String)o[8]) != null)
-				? ((String)o[8]).split(",", -1)
-				: new String[0]);
 		category.setLocale(locale);
 		category.setCurrency(currency);
 		
