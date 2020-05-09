@@ -36,6 +36,7 @@ import io.nzbee.entity.product.department.attribute.DepartmentAttribute;
 import io.nzbee.entity.product.food.Food;
 import io.nzbee.entity.product.jewellery.Jewellery;
 import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.PageableUtil;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.search.dto.facet.SearchFacet;
@@ -415,6 +416,11 @@ public class SearchServiceImpl implements ISearchService {
 											((Food) p).setExpiryDate(new Date());
 										}
 										
+										ProductAttribute pa = new ProductAttribute();
+										pa.setProductDesc(r[2].toString());
+										pa.setProductImage(r[3].toString());
+										pa.setLclCd(lcl);
+										
 										p.setUPC(r[5].toString());
 										p.setProductCreateDt((Date) r[6]);
 										p.setRetailPrice(Double.parseDouble(r[10].toString()));
@@ -423,6 +429,7 @@ public class SearchServiceImpl implements ISearchService {
 										p.setDisplayCategories(r[12].toString());
 										p.setLocale(lcl);
 										p.setCurrency(currency);
+										p.setProductAttribute(pa);
 										
 										CategoryProduct cp = new CategoryProduct();
 										CategoryAttribute ca = new CategoryAttribute();
