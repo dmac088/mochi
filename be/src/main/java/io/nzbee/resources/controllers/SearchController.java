@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import io.nzbee.domain.ports.IProductPortService;
 import io.nzbee.domain.product.Product;
 import io.nzbee.resources.product.ProductResource;
 import io.nzbee.resources.search.SearchResource;
-import io.nzbee.search.ISearchService;
 import io.nzbee.search.dto.facet.IFacet;
 
 @RestController
@@ -28,7 +28,7 @@ public class SearchController {
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	
 	@Autowired
-    private ISearchService searchService;
+    private IProductPortService productService;
 	
 	@Autowired
     private ResourceAssembler<Product, ProductResource> prodAssembler;
@@ -58,7 +58,7 @@ public class SearchController {
 													 selectedFacets,
 													 assembler,
 													 prodAssembler,
-													 searchService);
+													 productService);
     	
     	return new ResponseEntity< >(sr, HttpStatus.OK);
     }

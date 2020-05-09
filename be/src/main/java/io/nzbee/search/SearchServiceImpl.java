@@ -1,7 +1,6 @@
 package io.nzbee.search;
 
 import java.util.Date;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -28,20 +27,17 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.nzbee.Globals;
-import io.nzbee.domain.brand.Brand;
-import io.nzbee.domain.category.ProductCategory;
-import io.nzbee.domain.department.Department;
-import io.nzbee.domain.product.Food;
-import io.nzbee.domain.product.Jewellery;
-import io.nzbee.domain.product.Product;
-import io.nzbee.entity.PageableUtil;
-import io.nzbee.entity.category.ICategoryMapper;
+import io.nzbee.entity.brand.Brand;
+import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.category.product.CategoryProduct;
+import io.nzbee.entity.product.department.Department;
+import io.nzbee.entity.product.department.attribute.DepartmentAttribute;
+import io.nzbee.entity.product.food.Food;
+import io.nzbee.entity.product.jewellery.Jewellery;
+import io.nzbee.entity.product.Product;
+import io.nzbee.entity.PageableUtil;
+import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.search.dto.facet.SearchFacet;
 import io.nzbee.search.dto.facet.SearchFacetHelper;
 import io.nzbee.search.dto.facet.SearchFacetWithFieldHelper;
@@ -60,9 +56,6 @@ public class SearchServiceImpl implements ISearchService {
 	@Autowired
 	private IFacetServices facetServices;
 	
-	@Autowired
-	private ICategoryMapper categoryMapper;
-
 	@PersistenceContext(unitName = "mochiEntityManagerFactory")
 	private EntityManager em;
 
@@ -367,9 +360,6 @@ public class SearchServiceImpl implements ISearchService {
 						 f.getDisplayValue() + " -> " + 
 						 f.getCount() + " - " +  
 						 f.getFacetingName()
-						 
-						 
-						 
 			);
 		});
 
@@ -400,8 +390,8 @@ public class SearchServiceImpl implements ISearchService {
 							   "product.department.departmentCode",
 							   "product.department.departmentDesc" + transLcl,
 							   "countryOfOrigin",
-							   "product.categories.categoryDesc" + transLcl,
-							   "categoryJSON");
+							   "product.primarycategory.categoryCode",
+							   "product.primarycategory.categoryDesc" + transLcl);
 		
 
 		// get the results using jpaQuery object
@@ -416,62 +406,59 @@ public class SearchServiceImpl implements ISearchService {
 											}
 										}
 										
-										ProductCategory pc = serializeCategory(r[17].toString(), lcl, currency);
+										Product p = (r[13].toString().equals(globalVars.getProductTypeCodeFood())
+												? new Food()
+												: new Jewellery());
 										
-										return (r[13].toString().equals(globalVars.getProductTypeCodeFood())
-										? new Food(
-												r[5].toString(),
-												(Date) r[6],
-												r[2].toString(),
-												Double.parseDouble(r[10].toString()),
-												Double.parseDouble(r[11].toString()),
-												r[3].toString(),
-												r[12].toString(),
-												r[15].toString(),
-											   	new Date(),
-											   	lcl,
-											   	currency,
-											   	new Brand(r[7].toString(), r[8].toString(), 0, lcl, currency),
-											   	new Department(r[13].toString(), r[14].toString(), lcl, currency),
-											   	pc
-												)
-										: new Jewellery(
-												r[5].toString(),
-												(Date) r[6],
-												r[2].toString(),
-												Double.parseDouble(r[10].toString()),
-												Double.parseDouble(r[11].toString()),
-												r[3].toString(),
-												r[12].toString(),
-											   	lcl,
-											   	currency,
-											   	new Brand(r[7].toString(), r[8].toString(), 0, lcl, currency),
-											   	new Department(r[13].toString(), r[14].toString(), lcl, currency),
-											   	pc
-											   	));
+										if((r[13].toString().equals(globalVars.getProductTypeCodeFood()))) {
+											((Food) p).setCountryOfOrigin(r[15].toString());
+											((Food) p).setExpiryDate(new Date());
+										}
+										
+										p.setUPC(r[5].toString());
+										p.setProductCreateDt((Date) r[6]);
+										p.setRetailPrice(Double.parseDouble(r[10].toString()));
+										p.setMarkdownPrice(Double.parseDouble(r[11].toString()));
+										p.setImagePath(r[3].toString());
+										p.setDisplayCategories(r[12].toString());
+										p.setLocale(lcl);
+										p.setCurrency(currency);
+										
+										CategoryProduct cp = new CategoryProduct();
+										CategoryAttribute ca = new CategoryAttribute();
+										cp.setCategoryCode(r[15].toString());
+										ca.setCategoryDesc(r[16].toString());
+										ca.setLclCd(lcl);
+										cp.setCategoryAttribute(ca);
+										p.setPrimaryCategory(cp);
+										
+										BrandAttribute ba = new BrandAttribute();
+										ba.setBrandDesc(r[8].toString());
+										ba.setLclCd(lcl);
+										
+										Brand b = new Brand();
+										b.setBrandCode(r[7].toString());
+										b.setCurrency(currency);
+										b.setLocale(lcl);
+										b.setBrandAttribute(ba);
+										p.setBrand(b);
+										
+										DepartmentAttribute da = new DepartmentAttribute();
+										da.setLclCd(lcl);
+										da.setDesc(r[14].toString());
+										Department d = new Department();
+										d.setDepartmentCode(r[13].toString());
+										d.setAttribute(da);
+										p.setDepartment(d);
+										
+										return p;
+										
 				}).collect(Collectors.toList());
 	
 			
 		return new PageImpl<Product>(lp, pageable, jpaQuery.getResultSize());
 		
 	}
-	
-	private ProductCategory serializeCategory(String payload, String locale, String currency) {
-		ObjectMapper objectMapper = new ObjectMapper();
-		CategoryProduct cp = null;
-		try {
-			cp = objectMapper.readValue(payload, new TypeReference<CategoryProduct>(){});
-		} catch (JsonParseException e) {
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		cp.setCategoryAttribute(cp.getAttributes().stream().filter(c -> c.getLclCd().equals(locale)).findFirst().get());
-		return (ProductCategory) categoryMapper.entityToDo(cp, locale, currency);
-	}
-
 
 	private org.apache.lucene.search.Sort getSortField(String field, String currency, String locale) {
 		switch (field) {

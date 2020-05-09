@@ -4,15 +4,16 @@ import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.ResourceAssembler;
 import org.springframework.hateoas.ResourceSupport;
+import io.nzbee.domain.ports.IProductPortService;
 import io.nzbee.domain.product.Product;
 import io.nzbee.resources.product.ProductResource;
-import io.nzbee.search.ISearchService;
 import io.nzbee.search.dto.facet.IFacet;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PagedResourcesAssembler;
 
 
@@ -32,19 +33,17 @@ public class SearchResource extends ResourceSupport {
 						  Set<IFacet> searchFacets,
   						  PagedResourcesAssembler<ProductResource> assembler,
   						  ResourceAssembler<Product, ProductResource> prodAssembler,
-  						  ISearchService iss) {
+  						  IProductPortService ipps) {
 
 		
 		final Set<IFacet> returnFacets = new HashSet<IFacet>();
 		
     	//get the resulting pages of product
-    	final Page<Product> pages = iss.findAll(	locale, 
+    	final Page<Product> pages = ipps.search(	locale, 
     												currency, 
+    												PageRequest.of(page, size),
     												category, 
     												term, 
-    												page,
-    												size, 
-    												sortBy, 
     												searchFacets,
     												returnFacets);
     	
