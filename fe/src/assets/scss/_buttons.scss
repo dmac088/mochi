@@ -1,0 +1,296 @@
+/*=============================================
+=            Button style            =
+=============================================*/
+
+
+
+/*----------  floating cart   ----------*/
+
+
+
+.floating-cart-btn {
+    a {
+        background: #fff;
+        border: 2px solid #e0e0e0;
+        color: #323232;
+        display: inline-block;
+        font-size: 14px;
+        font-weight: 500;
+        height: 47px;
+        line-height: 43px;
+        margin: 0 4px;
+        min-width: 130px;
+        padding: 0 15px;
+        text-align: center;
+        text-transform: none;
+        -webkit-border-radius: 0;
+        -moz-border-radius: 0;
+        border-radius: 0;
+
+        &:hover {
+            background: #80bb01;
+            border-color: #80bb01;
+            color: #fff;
+        }
+    }
+}
+
+
+
+/*----------  Hero section  ----------*/
+
+a.slider-btn {
+    font-size: 20px;
+    font-weight: 500;
+    color: #fff;
+    background-color: $theme-color;
+    padding: 20px 50px;
+    border-radius: 50px;
+
+    &:hover {
+        background-color: $dark-hover-color;
+    }
+
+    @media #{$laptop-device}{
+        font-size: 15px;
+        padding: 15px 40px;
+    }
+
+    @media #{$desktop-device}{
+        font-size: 15px;
+        padding: 15px 40px;
+    }
+
+    @media #{$tablet-device}{
+        font-size: 15px;
+        padding: 15px 40px;
+    }
+    @media #{$large-mobile}{
+        font-size: 12px;
+        padding: 10px 30px;
+    }
+    @media #{$small-mobile}{
+        font-size: 15px;
+        padding: 10px 30px;
+    }
+    @media #{$extra-small-mobile}{
+        font-size: 15px;
+        padding: 10px 30px;
+    }
+}
+
+a.slider-two-btn{
+    font-size: 15px;
+    font-weight: 500;
+    color: #fff;
+    background-color: $theme-color;
+    padding: 10px 40px;
+    border-radius: 50px;
+    text-transform: uppercase;
+
+    &:hover {
+        background-color: $dark-hover-color;
+    }
+
+    @media #{$laptop-device}{
+        font-size: 15px;
+        padding: 10px 40px;
+    }
+
+    @media #{$desktop-device}{
+        font-size: 15px;
+        padding: 10px 40px;
+    }
+
+    @media #{$tablet-device}{
+        font-size: 15px;
+        padding: 10px 40px;
+    }
+    @media #{$large-mobile}{
+        font-size: 15px;
+        padding: 10px 30px;
+    }
+    @media #{$small-mobile}{
+        font-size: 15px;
+        padding: 10px 30px;
+    }
+    @media #{$extra-small-mobile}{
+        font-size: 15px;
+        padding: 10px 30px;
+    }
+}
+
+
+
+/*----------  blog slider readmore  ----------*/
+
+a.readmore-btn {
+    color: #999;
+    display: inline-block;
+    font-weight: 500;
+    text-transform: capitalize;
+
+    i.fa {
+        margin-left: 10px;
+    }
+
+    &:hover {
+        color: $theme-color;
+    }
+}
+
+
+
+/*----------  Modal add to cart button  ----------*/
+
+.add-to-cart-btn {
+    a {
+        background: #fff;
+        border: 2px solid #e0e0e0;
+        border-radius: 5px;
+        display: inline-block;
+        font-size: 14px;
+        font-weight: 500;
+        height: 45px;
+        line-height: 43px;
+        min-width: 130px;
+        padding: 0 15px;
+        text-align: center;
+        text-transform: none;
+
+        i.fa {
+            padding-right: 5px;
+        }
+
+        &:hover {
+            background: #80bb01;
+            border-color: #80bb01;
+            color: #fff;
+        }
+    }
+}
+
+
+/*----------  single sale add to cart button  ----------*/
+
+a.single-sale-add-to-cart-btn {
+    background: #80bb01;
+    border: none;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+    height: 50px;
+    line-height: 50px;
+    margin: 0;
+    max-width: 100%;
+    padding: 0 35px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    width: auto;
+    border-radius: 50px;
+
+    @media #{$extra-small-mobile}{
+        font-size: 14px;
+        padding: 0 25px;
+    }
+
+    &:hover {
+        background: $dark-hover-color;
+        border-color: $dark-hover-color;
+        color: #fff;
+    }
+}
+
+
+/*----------  contact form button   ----------*/
+
+
+
+.contact-form-btn{
+    background: #fff;
+    border: 2px solid #e0e0e0;
+    color: #323232;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 500;
+    height: 47px;
+    line-height: 43px;
+    margin: 0 4px;
+    min-width: 130px;
+    padding: 0 15px;
+    text-align: center;
+    text-transform: uppercase;
+    border-radius: 5px;
+
+    &:hover {
+        background: #80bb01;
+        border-color: #80bb01;
+        color: #fff;
+    }
+}
+
+/*----------  blog readmore button   ----------*/
+
+
+
+.blog-readmore-btn{
+    background: #fff;
+    border: 2px solid #e0e0e0;
+    color: #323232;
+    display: inline-block;
+    font-size: 15px;
+    font-weight: 500;
+    height: 47px;
+    line-height: 43px;
+    margin: 0 4px;
+    min-width: 130px;
+    padding: 0 15px;
+    text-align: center;
+    text-transform: uppercase;
+    border-radius: 5px;
+
+    &:hover {
+        background: #80bb01;
+        border-color: #80bb01;
+        color: #fff;
+    }
+}
+
+
+
+/*----------  post comment button  ----------*/
+
+.post-comment-btn{
+    background: #fff;
+    border: 2px solid #e0e0e0;
+    box-shadow: none;
+    color: #323232;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 1em;
+    font-weight: 500;
+    height: 50px;
+    letter-spacing: 0;
+    line-height: 46px;
+    outline: none;
+    overflow: hidden;
+    padding: 0 30px;
+    text-shadow: none;
+    text-transform: uppercase;
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease;
+    vertical-align: middle;
+    white-space: nowrap;
+    border-radius: 4px;
+
+    &:hover{
+        background-color: $theme-color;
+        border-color: $theme-color;
+        color: #ffffff;
+    }
+}
+
+
+
+
+/*=====  End of Button style  ======*/
