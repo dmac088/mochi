@@ -1,0 +1,548 @@
+
+/*=============================================
+=            04. Hero section            =
+=============================================*/
+
+.slider-bg-1{
+    background-image: url('../images/sliders/home1-slider1.jpg');
+}
+
+.slider-bg-2{
+    background-image: url('../images/sliders/home1-slider2.jpg');
+}
+
+.slider-bg-3{
+    background-image: url('../images/sliders/home2-slider1.jpg');
+}
+
+.slider-bg-4{
+    background-image: url('../images/sliders/home2-slider2.jpg');
+}
+
+.slider-bg-5{
+    background-image: url('../images/sliders/home3-slider1.jpg');
+}
+
+.slider-bg-6{
+    background-image: url('../images/sliders/home3-slider2.jpg');
+}
+
+/*----------  04.1 Hero One ----------*/ 
+
+.hero-slider-one{
+
+    .hero-slider-item{
+        padding-top: 245px; 
+        padding-bottom: 265px;
+    
+        @media #{$laptop-device}{
+            padding-top: 80px;
+            padding-bottom: 100px;
+        }
+    
+        @media #{$desktop-device}{
+            padding-top: 80px;
+            padding-bottom: 100px;
+        }
+    
+        @media #{$tablet-device}{
+            padding-top: 60px;
+            padding-bottom: 70px;
+        }
+        @media #{$large-mobile}{
+            padding-top: 60px;
+            padding-bottom: 70px;
+        }
+        @media #{$small-mobile}{
+            padding-top: 35px;
+            padding-bottom: 40px; 
+        }
+        @media #{$extra-small-mobile}{
+            padding-top: 35px;
+            padding-bottom: 40px;
+        }
+    }
+    
+    
+    
+    .slider-content{
+        & > * {
+            animation-duration: 1s;
+            animation-fill-mode: both;
+            animation-name: fadeOutUp;
+        }
+    
+        h1{
+            color: #ffffff;
+            font-size: 123px;
+            line-height: 130px;
+            font-weight: 300;
+            margin-bottom: 15px; 
+    
+            @media #{$laptop-device}{
+                font-size: 90px;
+                line-height: 100px;
+            }
+    
+            @media #{$desktop-device}{
+                font-size: 90px;
+                line-height: 100px;
+            }
+    
+            @media #{$tablet-device}{
+                font-size: 70px;
+                line-height: 80px;
+            }
+            @media #{$large-mobile}{
+                font-size: 50px;
+                line-height: 60px;
+            }
+            @media #{$small-mobile}{
+                font-size: 35px;
+                line-height: 40px;
+            }
+            @media #{$extra-small-mobile}{
+                font-size: 30px;
+                line-height: 35px;
+            }
+        }
+    
+        p{
+            font-size: 47px;
+            color: #ffffff;
+            line-height: 50px;
+            margin-bottom: 90px;
+            font-style: italic; 
+    
+            @media #{$laptop-device}{
+                font-size: 35px;
+                margin-bottom: 50px;
+            }
+    
+            @media #{$desktop-device}{
+                font-size: 35px;
+                margin-bottom: 50px;
+            }
+    
+            @media #{$tablet-device}{
+                font-size: 30px;
+                margin-bottom: 50px;
+            }
+            @media #{$large-mobile}{
+                font-size: 20px;
+                margin-bottom: 30px;
+            }
+            @media #{$small-mobile}{
+                font-size: 20px;
+                margin-bottom: 20px;
+            }
+            @media #{$extra-small-mobile}{
+                font-size: 15px;
+                margin-bottom: 15px;
+            }
+            
+        }
+    }
+    
+    .slick-active {
+     
+        /*-- Hero Content --*/
+        & .slider-content {
+            
+            // All Element Selector
+            & > * {
+                animation-name: zoomIn;
+               
+                // Child Selector
+                &:nth-child(1) {
+                    animation-duration: 1.5s;
+                    animation-delay: 0.5s;
+                }
+                &:nth-child(2) {
+                    animation-duration: 1.5s;
+                    animation-delay: 1.5s;
+                }
+                &:nth-child(3) {
+                    animation-duration: 1s;
+                    animation-delay: 3s;
+                }
+            }
+        }
+        
+    }
+}
+
+
+/*----------  04.2 Hero Two  ----------*/
+
+.hero-slider-two{
+    box-shadow: 0px 5px 4px 0px rgba(0, 0, 0, 0.1);
+    .hero-slider-item{
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: 30% 100%; 
+
+        @media #{$large-mobile}{
+            background-position: 10% 100%; 
+        }
+        @media #{$extra-small-mobile}{
+            background-position: 15% 100%;  
+        }
+        
+        height: 510px;
+
+        @media #{$desktop-device}{
+            height: 500px;
+        }
+        
+
+        @media #{$extra-small-mobile}{
+            height: 450px;
+        }
+        
+        .slider-content{
+
+            padding-top: 80px;
+
+            @media #{$extra-small-mobile}{
+                padding-top: 40px;
+            }
+            padding-left: 40px;
+                & > * {
+                    animation-duration: 1s;
+                    animation-fill-mode: both;
+                    animation-name: fadeOutUp;
+                }
+            
+            
+            h1{
+                font-size: 45px;
+                font-weight: 700;
+                color: #222222;
+                margin-bottom: 20px;
+
+                @media #{$large-mobile}{
+                    font-size: 40px;
+                }
+
+                @media #{$extra-small-mobile}{
+                    font-size: 30px;
+                    margin-bottom: 10px;
+                }
+
+                span{
+                    display: block;
+                }
+
+                &.change-text{
+                    font-size: 35px;
+                    font-weight: 500;
+                    font-style: italic;
+                    color: #777777;
+
+                    @media #{$large-mobile}{
+                        font-size: 25px;
+                    }
+
+                    span{
+                        color: #dc461f;
+                        display: inline-block;
+                    }
+                }
+            }
+
+            p{
+                margin-bottom: 10px; 
+                img{
+                    display: inline-block;
+                    margin-right: 10px; 
+                }
+
+                span{
+                    text-transform: uppercase;
+                    color: $theme-color;
+                    font-style: italic;
+                    font-weight: 500;
+                }
+
+
+            }
+
+            
+        }
+
+        &.slick-active { 
+     
+            /*-- Hero Content --*/
+            & .slider-content {
+                
+                // All Element Selector
+                & > * {
+                    
+                   
+                    // Child Selector
+                    &:nth-child(1) {
+                        animation-name: fadeInLeft;
+                        animation-duration: 1.5s;
+                        animation-delay: 0.5s;
+                    }
+                    &:nth-child(2) {
+                        animation-name: fadeInLeft;
+                        animation-duration: 1.5s;
+                        animation-delay: 1.5s;
+                    }
+                    &:nth-child(3) {
+                        animation-name: fadeIn;
+                        animation-duration: 1s;
+                        animation-delay: 3s;
+                    }
+                    &:nth-child(4) {
+                        animation-name: fadeIn;
+                        animation-duration: 1s;
+                        animation-delay: 4s;
+                    }
+                    &:nth-child(5) {
+                        animation-name: fadeIn;
+                        animation-duration: 1s;
+                        animation-delay: 5s;
+                    }
+                    &:nth-child(6) {
+                        animation-name: zoomIn;
+                        animation-duration: 1s;
+                        animation-delay: 6s; 
+                    }
+                }
+            }
+            
+        }
+    }
+
+
+
+    ul.slick-dots{
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        margin-left: -15px;
+        li{
+            display: inline-block;
+            button{
+                position: relative;
+                background: none;
+                border: none;
+                padding: 0;
+                margin-right: 20px; 
+                font-size: 2px;
+                &:before{
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 15px;
+                    height: 15px;
+                    background-color: #f1f1f1;
+                    content: "";
+                    border-radius: 50%;
+                }
+
+            }
+            &.slick-active{
+                button{
+                    &:before{
+                        background-color: #bdbdbd;
+                    }
+                }
+                
+            }
+        }
+    }
+}
+
+/*----------  04.2 Hero Three  ----------*/
+
+.hero-slider-three{
+    box-shadow: 0px 5px 4px 0px rgba(0, 0, 0, 0.1);
+    .hero-slider-item{
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: 10% 100%;  
+
+        @media #{$large-mobile}{
+            background-position: 10% 100%; 
+        }
+        @media #{$extra-small-mobile}{
+            background-position: 15% 100%;  
+        }
+        
+        height: 510px;
+
+        @media #{$desktop-device}{
+            height: 500px;
+        }
+        
+
+        @media #{$extra-small-mobile}{
+            height: 450px;
+        }
+        
+        .slider-content{
+
+            padding-top: 40px;
+
+            @media #{$extra-small-mobile}{
+                padding-top: 40px;
+            }
+            padding-left: 40px;
+                & > * {
+                    animation-duration: 1s;
+                    animation-fill-mode: both;
+                    animation-name: fadeOutUp;
+                }
+            
+            
+            h1{
+                font-size: 45px;
+                font-weight: 700;
+                color: #222222;
+                margin-bottom: 15px;
+
+                @media #{$large-mobile}{
+                    font-size: 40px;
+                }
+
+                @media #{$extra-small-mobile}{
+                    font-size: 30px;
+                    margin-bottom: 10px;
+                }
+
+                span{
+                    display: block;
+                }
+
+                &.change-text{
+                    font-size: 35px;
+                    font-weight: 500;
+                    font-style: italic;
+                    color: #777777;
+
+                    @media #{$large-mobile}{
+                        font-size: 25px;
+                    }
+
+                    span{
+                        color: #dc461f;
+                        display: inline-block;
+                    }
+                }
+            }
+
+            p{
+                margin-bottom: 5px;  
+                img{
+                    display: inline-block;
+                    margin-right: 10px; 
+                }
+
+                span{
+                    text-transform: uppercase;
+                    color: $theme-color;
+                    font-style: italic;
+                    font-weight: 500;
+                }
+
+
+            }
+
+            
+        }
+
+        &.slick-active { 
+     
+            /*-- Hero Content --*/
+            & .slider-content {
+                
+                // All Element Selector
+                & > * {
+                    
+                   
+                    // Child Selector
+                    &:nth-child(1) {
+                        animation-name: fadeInLeft;
+                        animation-duration: 1.5s;
+                        animation-delay: 0.5s;
+                    }
+                    &:nth-child(2) {
+                        animation-name: fadeInLeft;
+                        animation-duration: 1.5s;
+                        animation-delay: 1.5s;
+                    }
+                    &:nth-child(3) {
+                        animation-name: fadeIn;
+                        animation-duration: 1s;
+                        animation-delay: 3s;
+                    }
+                    &:nth-child(4) {
+                        animation-name: fadeIn;
+                        animation-duration: 1s;
+                        animation-delay: 4s;
+                    }
+                    &:nth-child(5) {
+                        animation-name: fadeIn;
+                        animation-duration: 1s;
+                        animation-delay: 5s;
+                    }
+                    &:nth-child(6) {
+                        animation-name: zoomIn;
+                        animation-duration: 1s;
+                        animation-delay: 6s; 
+                    }
+                }
+            }
+            
+        }
+    }
+
+
+
+    ul.slick-dots{
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        margin-left: -15px;
+        li{
+            display: inline-block;
+            button{
+                position: relative;
+                background: none;
+                border: none;
+                padding: 0;
+                margin-right: 20px; 
+                font-size: 2px;
+                &:before{
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 15px;
+                    height: 15px;
+                    background-color: #f1f1f1;
+                    content: "";
+                    border-radius: 50%;
+                }
+
+            }
+            &.slick-active{
+                button{
+                    &:before{
+                        background-color: #bdbdbd;
+                    }
+                }
+                
+            }
+        }
+    }
+}
+
+
+
+
+/*=====  End of 04. Hero section   ======*/
+
