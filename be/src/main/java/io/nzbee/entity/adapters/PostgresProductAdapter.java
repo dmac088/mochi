@@ -203,7 +203,14 @@ public class PostgresProductAdapter implements IProductPortService {
 							  		 pageable.getPageSize(), 
 							  		 "", 
 							  		 facetPayload, 
-							  		 returnFacets);
+							  		 returnFacets)
+				.map(p -> {
+					Brand b = brandMapper.entityToDo(p.getBrand(), locale, currency);
+					Department d = departmentMapper.entityToDo(p.getDepartment(), locale, currency);
+					ProductCategory pc =  (ProductCategory) categoryMapper.entityToDo(p.getPrimaryCategory());
+					Product pDo = productMapper.entityToDo(p, b, d, pc);
+					return pDo;
+				});
 	}
 
 	@Override
