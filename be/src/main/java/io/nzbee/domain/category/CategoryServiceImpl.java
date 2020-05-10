@@ -51,6 +51,16 @@ public class CategoryServiceImpl implements ICategoryService {
 	public Set<Category> findAll(String locale, String currency, Set<String> codes) {
 		return categoryService.findAll(locale, currency, codes);
 	}
+    
+    @Override
+	public Set<ProductCategory> findAllProductCategories(String locale, String currency) {
+		return categoryService.findAllProductCategories(locale, currency);
+	}
+
+	@Override
+	public Set<BrandCategory> findAllBrandCategories(String locale, String currency) {
+		return categoryService.findAllBrandCategories(locale, currency);
+	}	
 
 	@Override
 	public void save(Category object) {
@@ -61,6 +71,8 @@ public class CategoryServiceImpl implements ICategoryService {
 	public void delete(Category object) {
 		// TODO Auto-generated method stub
 		
-	}	
+	}
+
+	
 
 }
