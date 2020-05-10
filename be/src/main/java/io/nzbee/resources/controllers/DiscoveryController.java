@@ -13,7 +13,8 @@ public class DiscoveryController {
 
 	@GetMapping("/Discovery/{locale}/{currency}")
 	public ResponseEntity<DiscoveryResource> getCategory(@PathVariable String locale, @PathVariable String currency) {
-		return null;
+		DiscoveryResource dr = new DiscoveryResource(locale, currency);
+		return ResponseEntity.ok(dr);
 	}
 	
 }

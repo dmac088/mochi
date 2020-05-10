@@ -13,5 +13,7 @@ public interface ICategoryService extends ILocalizedService<Category> {
 
 	Set<ProductCategory> findAllByProductCode(String locale, String currency, String code);
 
+	Set<ProductCategory> findAllProductCategories(String locale, String currency);
 	
+	Set<BrandCategory> findAllBrandCategories(String locale, String currency);
 }

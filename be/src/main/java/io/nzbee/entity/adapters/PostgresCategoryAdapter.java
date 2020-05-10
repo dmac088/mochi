@@ -87,6 +87,18 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	}
 	
 	@Override
+	public Set<ProductCategory> findAllProductCategories(String locale, String currency) {
+		return categoryService.findAll(locale, currency, CategoryProduct.class)
+				.stream().map(c -> (ProductCategory) categoryMapper.entityToDo(c, locale, currency)).collect(Collectors.toSet());
+	}
+	
+	@Override
+	public Set<BrandCategory> findAllBrandCategories(String locale, String currency) {
+		return categoryService.findAll(locale, currency, CategoryBrand.class)
+				.stream().map(c -> (BrandCategory) categoryMapper.entityToDo(c, locale, currency)).collect(Collectors.toSet());
+	}
+	
+	@Override
 	public void save(Category domainObject) {
 		
 		if (domainObject instanceof ProductCategory) {

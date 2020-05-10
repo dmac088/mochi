@@ -24,8 +24,11 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
     public void configure(HttpSecurity http) throws Exception {
         http	
         		.anonymous().and().authorizeRequests()
+        		.antMatchers(HttpMethod.GET,"/api/Discovery/**").permitAll()
         		.antMatchers(HttpMethod.POST,"/api/Customer/Signup").permitAll()
         		.antMatchers(HttpMethod.GET,"/api/Product/**").permitAll()
+        		.antMatchers(HttpMethod.GET,"/api/ProductCategory/**").permitAll()
+        		.antMatchers(HttpMethod.GET,"/api/BrandCategory/**").permitAll() 
         		.antMatchers(HttpMethod.POST,"/api/Product/**").permitAll()
         		.antMatchers(HttpMethod.GET,"/api/ProductAttribute/**").permitAll()
         		.antMatchers(HttpMethod.GET,"/api/Brand/**").permitAll()
