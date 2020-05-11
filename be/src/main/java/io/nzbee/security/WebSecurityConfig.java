@@ -18,6 +18,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import io.nzbee.Globals;
+
 import java.util.Arrays;
 
 import javax.sql.DataSource;
@@ -37,6 +39,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	 
 	@Autowired
 	private PasswordEncoder userPasswordEncoder;
+	
+	@Autowired
+	private Globals globalVars;
 	
 	@Override
     @Bean(value="authenticationManagerBean")
@@ -66,8 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:8090", 
-        											  "https://localhost:8090"));
+        configuration.setAllowedOrigins(Arrays.asList(globalVars.getBaseURL()));
         configuration.setAllowedMethods(Arrays.asList("GET","POST"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/api/**", configuration);
