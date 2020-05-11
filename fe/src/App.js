@@ -32,8 +32,8 @@ class App extends Component {
               }
               <Switch>
                 <Route exact path="/" component={Landing} />
-                <Route 
-                  exact path="/dashboard" 
+                <Route
+                  exact path="/dashboard"
                   render={() => <Dashboard {...discovery} />}
                 />
                 <Route exact path="/addCapability" component={AddCapability} />
@@ -47,7 +47,7 @@ class App extends Component {
             </div>
           </div>
         </Router>
-        </Provider>
+      </Provider>
     );
   }
 }
