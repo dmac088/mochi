@@ -32,7 +32,7 @@ class App extends Component {
                 <Route exact path="/" component={Landing} />
                 <Route
                   exact path="/dashboard"
-                  render={() => <Dashboard />}
+                  component={Dashboard}
                 />
                 <Route exact path="/addCapability" component={AddCapability} />
                 <Route
