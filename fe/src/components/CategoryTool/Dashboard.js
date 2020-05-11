@@ -4,13 +4,11 @@ import Category from "./Category";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getAllCategories } from "../../actions/CategoryActions";
-import { getTokens } from "../../actions/SessionActions";
 
 class Dashboard extends Component {
 
   componentDidMount() {
     this.props.getAllCategories();
-    this.props.getTokens();
   }
 
   render() {
@@ -39,5 +37,5 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps,
-                      {getAllCategories, getTokens})
+                      {getAllCategories})
                       (Dashboard);
