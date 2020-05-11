@@ -20,6 +20,9 @@ export class Category extends Component {
             Category description: { category.data.categoryDesc }
           </li>
           <li className="list-group-item bg-light  text-primary">
+            Category level: { category.data.categoryLevel }
+          </li>
+          <li className="list-group-item bg-light  text-primary">
             Product count: { category.data.count }
           </li>
         </ul>
