@@ -19,7 +19,7 @@ class Dashboard extends Component {
         <AddButton />
         {
           categories.map(category => (
-            <Category key={category.categoryCode} category={category}/>
+            <Category key={category.data.categoryCode} category={category}/>
           ))
         }
       </React.Fragment>

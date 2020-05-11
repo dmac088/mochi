@@ -14,7 +14,7 @@ export class Category extends Component {
 
         <ul className="list-group">
           <li className="list-group-item bg-light text-primary">
-            Category categoryCode: { category.data.categoryCode }
+            Category code: { category.data.categoryCode }
           </li>
           <li className="list-group-item bg-light  text-primary">
             Category description: { category.data.categoryDesc }
