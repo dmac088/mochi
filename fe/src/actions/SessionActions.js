@@ -1,6 +1,6 @@
 import axios from "axios";
 import * as discoveryService from '../services/Discovery';
-import { GET_SESSION } from "./ActionTypes";
+import { GET_SESSION, SET_USERNAME, SET_PASSWORD } from "./ActionTypes";
 
 export const getTokens = () => dispatch => {
   discoveryService.discoverAll()
@@ -17,6 +17,16 @@ export const getTokens = () => dispatch => {
     });
 }
 
-export const setCredentials = (username, password) => {
-  
+export const setUsername = (event) => dispatch => {
+  dispatch({
+    type: SET_USERNAME,
+    username: event.currentTarget.value,
+  });
+}
+
+export const setPassword = (event) => dispatch => {
+  dispatch({
+    type: SET_PASSWORD,
+    password: event.currentTarget.value,
+  });
 }

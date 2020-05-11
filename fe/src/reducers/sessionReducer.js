@@ -1,4 +1,6 @@
-import { GET_SESSION } from "../actions/ActionTypes";
+import { GET_SESSION, 
+         SET_USERNAME,
+         SET_PASSWORD } from "../actions/ActionTypes";
 
 const initialState = {
     username: null,
@@ -22,13 +24,18 @@ const initialState = {
           tokens: action.payload,
         }; 
       
-      case SET_CREDENTIALS:
+      case SET_USERNAME:
         return {
           ...state,
           username: action.username,
+        };
+      
+        case SET_PASSWORD:
+          return {
+          ...state,
           password: action.password,
         };
-        
+      
       default:
         return state;
     }
