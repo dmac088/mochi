@@ -4,16 +4,18 @@ import Category from "./Category";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getAllCategories } from "../../actions/CategoryActions";
+import { getTokens } from "../../actions/SessionActions";
 
 class Dashboard extends Component {
 
   componentDidMount() {
     this.props.getAllCategories();
+    this.props.getTokens();
   }
 
   render() {
-    
     const {categories} = this.props;
+    console.log(this.props);
     return (
       <React.Fragment>
         <AddButton />
@@ -34,8 +36,9 @@ Dashboard.propTypes = {
 
 const mapStateToProps = state => ({
   categories: state.category.categories,
+  session: state.session,
 })
 
 export default connect(mapStateToProps,
-                      {getAllCategories})
+                      {getAllCategories, getTokens})
                       (Dashboard);
