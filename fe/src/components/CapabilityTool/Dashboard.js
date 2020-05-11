@@ -4,11 +4,13 @@ import Category from "./Category";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getAllCategories } from "../../actions/CategoryActions";
+import { getDiscovery } from "../../actions/DiscoveryActions";
 
 class Dashboard extends Component {
 
   componentDidMount() {
     this.props.getAllCategories();
+    this.props.getDiscovery();
   }
 
   render() {
@@ -32,9 +34,10 @@ Dashboard.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  categories: state.category.categories
+  categories: state.category.categories,
+  discovery: state.discovery.links,
 })
 
 export default connect(mapStateToProps,
-                      {getAllCategories})
+                      {getAllCategories, getDiscovery})
                       (Dashboard);
