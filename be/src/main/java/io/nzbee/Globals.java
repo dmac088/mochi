@@ -5,6 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties("app.globals")
 public class Globals {
 
+	private String baseURL;
 	private String localeENGB;
 	private String localeZHHK;
 	private String currencyHKD;
@@ -19,6 +20,13 @@ public class Globals {
 	private int	   defaultPage;
 	private int	   defaultPageSize;
 	
+	public String getBaseURL() {
+		return baseURL;
+	}
+	
+	public void setBaseURL(String baseURL) {
+		this.baseURL = baseURL;
+	}	
 	
 	public String getLocaleENGB() {
 		return localeENGB;
