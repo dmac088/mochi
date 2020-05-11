@@ -7,13 +7,19 @@ import NotFound from "./components/Layout/NotFound";
 import Dashboard from "./components/CapabilityTool/Dashboard";
 import AddCapability from "./components/CapabilityTool/AddCapability";
 import UpdateCapability from "./components/CapabilityTool/UpdateCapability";
-import { Provider } from "react-redux";
-import store from "./store";
+import { connect } from "react-redux";
+import { getDiscovery } from "./actions/DiscoveryActions";
 
 class App extends Component {
+
+  componentDidMount() {
+    this.props.getDiscovery();
+  }
+
   render() {
+    const discovery = { ...this.props }
+
     return (
-      <Provider store={store}>
         <Router>
           <div className="App">
             <Header />
@@ -26,7 +32,10 @@ class App extends Component {
               }
               <Switch>
                 <Route exact path="/" component={Landing} />
-                <Route exact path="/dashboard" component={Dashboard} />
+                <Route 
+                  exact path="/dashboard" 
+                  render={() => <Dashboard {...discovery} />}
+                />
                 <Route exact path="/addCapability" component={AddCapability} />
                 <Route
                   exact
@@ -38,9 +47,14 @@ class App extends Component {
             </div>
           </div>
         </Router>
-      </Provider>
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  discovery: state.discovery.links,
+})
+
+export default connect(mapStateToProps,
+                      {getDiscovery})
+                      (App);
