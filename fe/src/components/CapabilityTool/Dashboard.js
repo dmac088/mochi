@@ -29,7 +29,6 @@ class Dashboard extends Component {
 
 Dashboard.propTypes = {
   getAllCategories: PropTypes.func.isRequired,
-  discovery: PropTypes.object.isRequired,
   categories: PropTypes.array.isRequired
 }
 
