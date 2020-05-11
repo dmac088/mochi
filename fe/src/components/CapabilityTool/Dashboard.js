@@ -4,16 +4,15 @@ import Category from "./Category";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getAllCategories } from "../../actions/CategoryActions";
-import { getDiscovery } from "../../actions/DiscoveryActions";
 
 class Dashboard extends Component {
 
   componentDidMount() {
     this.props.getAllCategories();
-    this.props.getDiscovery();
   }
 
   render() {
+    
     const {categories} = this.props;
     return (
       <React.Fragment>
@@ -30,14 +29,14 @@ class Dashboard extends Component {
 
 Dashboard.propTypes = {
   getAllCategories: PropTypes.func.isRequired,
+  discovery: PropTypes.object.isRequired,
   categories: PropTypes.array.isRequired
 }
 
 const mapStateToProps = state => ({
   categories: state.category.categories,
-  discovery: state.discovery.links,
 })
 
 export default connect(mapStateToProps,
-                      {getAllCategories, getDiscovery})
+                      {getAllCategories})
                       (Dashboard);
