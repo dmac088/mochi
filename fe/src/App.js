@@ -16,8 +16,6 @@ class App extends Component {
   }
 
   render() {
-    const discovery = { ...this.props }
-
     return (
       <Provider store={store}>
         <Router>
@@ -34,7 +32,7 @@ class App extends Component {
                 <Route exact path="/" component={Landing} />
                 <Route
                   exact path="/dashboard"
-                  render={() => <Dashboard {...discovery} />}
+                  render={() => <Dashboard />}
                 />
                 <Route exact path="/addCapability" component={AddCapability} />
                 <Route

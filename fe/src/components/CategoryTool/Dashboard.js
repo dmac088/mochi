@@ -15,7 +15,6 @@ class Dashboard extends Component {
 
   render() {
     const {categories} = this.props;
-    console.log(this.props);
     return (
       <React.Fragment>
         <AddButton />
