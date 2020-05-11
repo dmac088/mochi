@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-import capabilityReducer from "./capabilityReducer";
 import categoryReducer from "./categoryReducer";
+import discoveryReducer from "./discoveryReducer";
 
 export default combineReducers({
-  capability: capabilityReducer,
   category: categoryReducer,
+  discovery: discoveryReducer,
 });

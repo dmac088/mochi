@@ -1,6 +1,5 @@
 import * as actionTypes from './ActionTypes';
 
-
 export const update = session => ({
 	type: actionTypes.GET_SESSION,
 	session,

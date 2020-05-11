@@ -11,5 +11,4 @@ export const getAllCategories = () => async dispatch => {
       type: GET_CATEGORIES,
       payload: res.data._embedded.categoryResources,
     });
-
 }
