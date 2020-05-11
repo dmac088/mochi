@@ -1,6 +1,8 @@
 import { GET_SESSION } from "../actions/ActionTypes";
 
 const initialState = {
+    username: null,
+    password: null,
     tokens: {
       access_token: null,
       accessTokenExpiryDate: null,
@@ -17,9 +19,16 @@ const initialState = {
       case GET_SESSION:
         return {
           ...state,
-          session: action.payload,
+          tokens: action.payload,
         }; 
-  
+      
+      case SET_CREDENTIALS:
+        return {
+          ...state,
+          username: action.username,
+          password: action.password,
+        };
+        
       default:
         return state;
     }

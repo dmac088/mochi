@@ -16,3 +16,7 @@ export const getTokens = () => dispatch => {
         });
     });
 }
+
+export const setCredentials = (username, password) => {
+  
+}
