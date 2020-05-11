@@ -5,7 +5,7 @@ import { GET_SESSION } from "./ActionTypes";
 export const getTokens = () => dispatch => {
   discoveryService.discoverAll()
     .then((response) => {
-      axios.get(response.data._links.accessTokens.href)
+      axios.post(response.data._links.accessTokens.href)
         .then((payload) => {
           return payload;
         }).then((tokens) => {

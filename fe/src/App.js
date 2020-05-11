@@ -4,9 +4,9 @@ import Header from "./components/Layout/Header";
 import Landing from "./components/Layout/Landing";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NotFound from "./components/Layout/NotFound";
-import Dashboard from "./components/CapabilityTool/Dashboard";
-import AddCapability from "./components/CapabilityTool/AddCapability";
-import UpdateCapability from "./components/CapabilityTool/UpdateCapability";
+import Dashboard from "./components/CategoryTool/Dashboard";
+import AddCapability from "./components/CategoryTool/AddCapability";
+import UpdateCapability from "./components/CategoryTool/UpdateCapability";
 import { Provider } from "react-redux";
 import store from "./store";
 
