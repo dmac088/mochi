@@ -3,9 +3,7 @@ import * as discoveryService from '../services/Discovery';
 import * as apiConfig from '../services/api'
 import { GET_SESSION } from "./ActionTypes";
 
-export const authenticate = (username, password) => dispatch => {
-  console.log(username);
-  console.log(password);  
+export const authenticate = (username, password) => dispatch => {  
   discoveryService.discoverAll()
     .then((response) => {
 
