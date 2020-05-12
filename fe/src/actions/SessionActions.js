@@ -2,6 +2,7 @@ import axios from "axios";
 import * as discoveryService from '../services/Discovery';
 import * as apiConfig from '../services/api'
 import { GET_SESSION } from "./ActionTypes";
+import { GET_ERROR } from "./ActionTypes";
 
 export const authenticate = (username, password) => dispatch => {  
   discoveryService.discoverAll()
@@ -14,7 +15,7 @@ export const authenticate = (username, password) => dispatch => {
 
       form.append('username', username);
       form.append('password', password);
-      
+
       axios.post(
         response.data._links.accessTokens.href,
         form,
@@ -27,7 +28,15 @@ export const authenticate = (username, password) => dispatch => {
             payload: tokens,
           });
         }).catch((error)=> {
-          console.log(error); 
+          if (error.response.status === 400) {
+            dispatch({
+              type: GET_ERROR,
+              payload: { 
+                        code: error.response.status,
+                        message: 'Please enter a username and password!' 
+                       },
+            });
+          }
       });
     });
 }
