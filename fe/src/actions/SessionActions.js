@@ -6,14 +6,17 @@ import { GET_SESSION, SET_USERNAME, SET_PASSWORD } from "./ActionTypes";
 export const authenticate = () => dispatch => {
   discoveryService.discoverAll()
     .then((response) => {
-      console.log(response.data._links.accessTokens.href);
-      axios({
-              method: 'post',
-              url: response.data._links.accessTokens.href,
-             // data: apiConfig.formData,
-             // headers: apiConfig.headers
-            })
-        .then((payload) => {
+
+      const form = new FormData();
+      Object.keys(apiConfig.formData).forEach((key) => {
+        form.append(key, apiConfig.formData[key])
+      });
+      
+      axios.post(
+        response.data._links.accessTokens.href,
+        form,
+        apiConfig.config,
+        ).then((payload) => {
           return payload;
         }).then((tokens) => {
           dispatch({
