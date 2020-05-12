@@ -28,6 +28,7 @@ export class Landing extends Component {
 
   render() {
     const { authenticate } = this.props;
+    const { username, password } = this.state;
     return (
       <div className="landing">
         <div className="light-overlay landing-inner text-dark">
@@ -37,8 +38,8 @@ export class Landing extends Component {
                 <h1 className="display-3 mb-4">Introduction To HATEOAS</h1>
                 <form onSubmit={(e) => {
                                         e.preventDefault();
-                                        authenticate(this.state.username,
-                                        this.state.password)}}>
+                                        authenticate(username,
+                                                     password)}}>
                   <input
                     className="form-control mr-sm-2"
                     type="input"
@@ -54,18 +55,21 @@ export class Landing extends Component {
                     onChange={this.setPassword}
                     placeholder="Password"
                     aria-label="Password" />
-                  <hr />
                   <button
                     className="btn btn-outline-success mr-sm-2 my-2 my-sm-0"
                     type="submit">
-                    Go
+                    Login
                   </button>
+                  <hr />
+                  
                 </form>
                 <br />
                 <br />
                 <Link className="btn btn-lg btn-primary mr-2" to="/dashboard">
                   Load Dashboard
                 </Link>
+                <br />
+                {this.props.session.tokens.access_token}
               </div>
             </div>
           </div>

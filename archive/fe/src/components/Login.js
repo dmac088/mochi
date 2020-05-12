@@ -49,7 +49,7 @@ class Login extends Component {
            onClick={this.loginClick}
            className="btn btn-outline-success mr-sm-2 my-2 my-sm-0"
            type="submit">
-          Go
+          Login
       </button>
      }
      return button;
