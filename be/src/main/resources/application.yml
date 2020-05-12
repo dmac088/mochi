@@ -46,7 +46,7 @@ server:
 
 app:
   globals:
-    baseURL: https://localhost:8080
+    baseURL: https://localhost:8090
     localeENGB: en-GB
     localeZHHK: zh-HK
     currencyHKD: HKD

@@ -6,9 +6,9 @@ export const headers = {
 	// 'CacheControl': 'no-cache',
 };
 
-export const bodyParameters = {
-	username: "admin",
-	password: "admin1234",
-	client_id: "spring-security-oauth2-read-write-client",
-	grant_type: "password"
+export const formData = {
+	username: 'admin',
+	password: 'admin1234',
+	client_id: 'spring-security-oauth2-read-write-client',
+	grant_type: 'password'
  };
