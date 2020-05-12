@@ -1,8 +1,12 @@
 import { GET_ERROR } from "../actions/ActionTypes";
 
 const initialState = {
+  details: {
+    type: null,
     code: null,
+    description: null,
     message: null,
+  }
 };
 
 export default function(state = initialState, action) {
@@ -10,8 +14,7 @@ export default function(state = initialState, action) {
     case GET_ERROR:
       return {
         ...state,
-        message: action.payload.message,
-        code: action.payload.code,
+        details: action.payload,
       };
 
     default:

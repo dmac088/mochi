@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { authenticate } from "../../actions/SessionActions";
+import { authenticate, logout } from "../../actions/SessionActions";
 
 export class Landing extends Component {
 
@@ -27,7 +27,7 @@ export class Landing extends Component {
   }
 
   render() {
-    const { authenticate } = this.props;
+    const { authenticate, logout } = this.props;
     const { username, password } = this.state;
     return (
       <div className="landing">
@@ -37,9 +37,10 @@ export class Landing extends Component {
               <div className="col-md-12 text-center">
                 <h1 className="display-3 mb-4">Introduction To HATEOAS</h1>
                 <form onSubmit={(e) => {
-                                        e.preventDefault();
-                                        authenticate(username,
-                                                     password)}}>
+                  e.preventDefault();
+                  authenticate(username,
+                    password)
+                }}>
                   <input
                     className="form-control mr-sm-2"
                     type="input"
@@ -60,9 +61,14 @@ export class Landing extends Component {
                     type="submit">
                     Login
                   </button>
-                  <hr />
-                  
                 </form>
+                <hr />
+                <button
+                  onClick={logout}
+                  className="btn btn-outline-success mr-sm-2 my-2 my-sm-0"
+                  type="submit">
+                  Logout
+                </button>
                 <br />
                 <br />
                 <Link className="btn btn-lg btn-primary mr-2" to="/dashboard">
@@ -84,6 +90,6 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps,
-  { authenticate })
+  { authenticate, logout })
   (Landing);
 
