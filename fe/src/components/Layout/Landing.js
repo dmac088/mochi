@@ -9,20 +9,20 @@ export class Landing extends Component {
   constructor(props) {
     super(props);
     this.state = {
-                    username: null,
-                    password: null,
-                 };
-  }  
+      username: null,
+      password: null,
+    };
+  }
 
   setUsername = (event) => {
     this.setState({
-      username:  event.currentTarget.value,
+      username: event.currentTarget.value,
     });
   }
-  
+
   setPassword = (event) => {
     this.setState({
-      password:  event.currentTarget.value,
+      password: event.currentTarget.value,
     });
   }
 
@@ -35,11 +35,15 @@ export class Landing extends Component {
             <div className="row">
               <div className="col-md-12 text-center">
                 <h1 className="display-3 mb-4">Introduction To HATEOAS</h1>
+                <form onSubmit={(e) => {
+                                        e.preventDefault();
+                                        authenticate(this.state.username,
+                                        this.state.password)}}>
                   <input
                     className="form-control mr-sm-2"
                     type="input"
                     onChange={this.setUsername}
-                    id="customer.userName"  
+                    id="customer.userName"
                     placeholder="User Name"
                     aria-label="userName" />
                   <br />
@@ -53,13 +57,12 @@ export class Landing extends Component {
                   <hr />
                   <button
                     className="btn btn-outline-success mr-sm-2 my-2 my-sm-0"
-                    onClick={() => authenticate(this.state.username,
-                                                this.state.password)}
                     type="submit">
                     Go
                   </button>
-                <br/>
-                <br/> 
+                </form>
+                <br />
+                <br />
                 <Link className="btn btn-lg btn-primary mr-2" to="/dashboard">
                   Load Dashboard
                 </Link>
@@ -77,6 +80,6 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps,
-                      {authenticate})
-                      (Landing);
+  { authenticate })
+  (Landing);
 
