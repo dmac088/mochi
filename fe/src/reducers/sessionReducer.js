@@ -1,4 +1,4 @@
-import { GET_SESSION } from "../actions/ActionTypes";
+import { GET_SESSION, RESET_SESSION } from "../actions/ActionTypes";
 
 const initialState = {  
     tokens: {
@@ -19,7 +19,10 @@ const initialState = {
           ...state,
           tokens: action.payload,
         }; 
-         
+      case RESET_SESSION:
+        return {
+          tokens: initialState.tokens,
+        }
       default:
         return state;
     }
