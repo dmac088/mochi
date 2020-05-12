@@ -5,8 +5,6 @@ export const config = {
 };
 
 export const formData = {
-	username: 'admin',
-	password: 'admin1234',
 	client_id: 'spring-security-oauth2-read-write-client',
 	grant_type: 'password'
  };
