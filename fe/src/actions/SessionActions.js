@@ -2,7 +2,6 @@ import axios from "axios";
 import * as discoveryService from '../services/Discovery';
 import * as apiConfig from '../services/api'
 import { GET_SESSION, RESET_SESSION } from "./ActionTypes";
-import { GET_ERROR } from "./ActionTypes";
 
 export const authenticate = (username, password) => dispatch => {  
   discoveryService.discoverAll()
@@ -28,20 +27,7 @@ export const authenticate = (username, password) => dispatch => {
             payload: tokens,
           });
         }).catch((error)=> {
-          console.log();
-          console.log();
-          if (error.response.status === 400) {
-            dispatch({
-              type: GET_ERROR,
-              payload: { 
-                        type: 'LOGIN_ERROR',
-                        code: error.response.status,
-                        error: error.response.data.error,
-                        description: error.response.data.error_description,
-                        message: 'Enter a valid username and password!',
-                       },
-            });
-          }
+            console.log(error.response);
       });
     });
 }
