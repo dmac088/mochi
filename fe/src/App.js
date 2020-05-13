@@ -23,10 +23,7 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <header>
-
-
             {/*<!--=======  header top  =======-->*/}
-
             <div className="header-top pt-10 pb-10 pt-lg-10 pb-lg-10 pt-md-10 pb-md-10">
               <div className="container">
                 <div className="row">
@@ -63,11 +60,9 @@ class App extends Component {
                 </div>
               </div>
             </div>
-
             {/*<!--=======  End of header top  =======-->*/}
 
             {/*<!--=======  header bottom  =======-->*/}
-
             <div className="header-bottom header-bottom-one header-sticky">
               <div className="container">
                 <div className="row">
