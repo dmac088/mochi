@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "./App.css";
 import "./assets/scss/main.scss";
+import "./assets/css/font-awesome.min.css";
+import "./assets/css/elegent.min.css";
 import Header from "./components/Layout/Header";
 import Landing from "./components/Layout/Landing";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
