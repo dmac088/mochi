@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {useSelector, useDispatch} from 'react-redux'
 import { authenticate, logout } from "../../actions/SessionActions";
@@ -12,18 +12,13 @@ function Landing() {
     password: null,
   });
 
+  const dispatch = useDispatch();
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(username);
-    console.log(password);
     dispatch(authenticate(username, password));
   }
-
-  const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(authenticate(username, password))
-  // }, [])
-
+  
   const tokens = useSelector(state => state.session.tokens);
 
   return (
@@ -33,7 +28,7 @@ function Landing() {
           <div className="row">
             <div className="col-md-12 text-center">
               <h1 className="display-3 mb-4">Introduction To HATEOAS</h1>
-              <form onSubmit={(e) => handleSubmit(e, dispatch)  }>
+              <form onSubmit={(e) => handleSubmit(e)  }>
                 <input
                   className="form-control mr-sm-2"
                   type="input"
