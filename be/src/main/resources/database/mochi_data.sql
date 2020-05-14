@@ -486,6 +486,12 @@ SELECT pg_catalog.setval('category_cat_id_seq', 7, true);
 
 
 --
+-- Data for Name: category_layout; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+
+
+--
 -- Data for Name: category_product; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 

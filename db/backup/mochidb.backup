@@ -1617,6 +1617,17 @@ CREATE TABLE category_brand (
 ALTER TABLE category_brand OWNER TO mochidb_owner;
 
 --
+-- Name: category_layout; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE category_layout (
+    cat_id bigint DEFAULT nextval('category_cat_id_seq'::regclass) NOT NULL
+);
+
+
+ALTER TABLE category_layout OWNER TO mochidb_owner;
+
+--
 -- Name: category_product; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -3119,6 +3130,14 @@ COPY category_brand (cat_id) FROM stdin;
 --
 
 SELECT pg_catalog.setval('category_cat_id_seq', 7, true);
+
+
+--
+-- Data for Name: category_layout; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+COPY category_layout (cat_id) FROM stdin;
+\.
 
 
 --
@@ -4992,6 +5011,14 @@ ALTER TABLE ONLY category_brand
 
 
 --
+-- Name: category_layout category_layout_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY category_layout
+    ADD CONSTRAINT category_layout_pkey PRIMARY KEY (cat_id);
+
+
+--
 -- Name: category category_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -5705,6 +5732,14 @@ ALTER TABLE ONLY category_brand
 
 
 --
+-- Name: category_layout category_layout_cat_id_category_cat_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY category_layout
+    ADD CONSTRAINT category_layout_cat_id_category_cat_id_fkey FOREIGN KEY (cat_id) REFERENCES category(cat_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
 -- Name: category_product category_product_cat_id_category_cat_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -6125,6 +6160,13 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE category_attr_lcl TO mochi_app;
 --
 
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE category_brand TO mochi_app;
+
+
+--
+-- Name: category_layout; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE category_layout TO mochi_app;
 
 
 --
