@@ -3,6 +3,8 @@ package io.nzbee.entity;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.Tuple;
+
 
 public interface IDao<T> {
     
@@ -22,5 +24,6 @@ public interface IDao<T> {
 
     T objectToEntity(Object[] o);
 	
-    
+    T objectToEntity(Tuple t);
+	
 }

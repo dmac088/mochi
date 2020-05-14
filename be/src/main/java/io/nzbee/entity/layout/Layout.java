@@ -20,7 +20,7 @@ public class Layout {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="lay_id")
 	private Long layoutId;
-	
+
 	@NaturalId
 	@Column(name="lay_cd", unique = true, updatable = false)
 	private String code;
@@ -30,21 +30,21 @@ public class Layout {
 	
 	@OneToMany(mappedBy = "layout")
     private Set<CategoryLayout> categoryLayouts = new HashSet<>();
+
+	public Long getLayoutId() {
+		return layoutId;
+	}
+
+	public void setLayoutId(Long layoutId) {
+		this.layoutId = layoutId;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
 	
-	public Set<CategoryLayout> getCategoryLayouts() {
-		return categoryLayouts;
-	}
-
-	public void setCategoryLayouts(Set<CategoryLayout> categoryLayouts) {
-		this.categoryLayouts = categoryLayouts;
-	}
-
 	public String getCode() {
 		return code;
-	}
-
-	public void setLayoutCode(String layoutCode) {
-		this.code = layoutCode;
 	}
 
 	public String getDesc() {
@@ -55,4 +55,12 @@ public class Layout {
 		this.desc = layoutDesc;
 	}
 	
+	public Set<CategoryLayout> getCategoryLayouts() {
+		return categoryLayouts;
+	}
+
+	public void setCategoryLayouts(Set<CategoryLayout> categoryLayouts) {
+		this.categoryLayouts = categoryLayouts;
+	}
+
 }
