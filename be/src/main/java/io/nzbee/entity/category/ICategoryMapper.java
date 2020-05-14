@@ -7,5 +7,5 @@ public interface ICategoryMapper extends IMapper<Category, io.nzbee.entity.categ
 
 	Category entityToDo(io.nzbee.entity.category.Category e);
 
-	Category entityToDo(io.nzbee.entity.category.Category e, String locale, String currency);
+	//Category entityToDo(io.nzbee.entity.category.Category e, String locale, String currency);
 }
