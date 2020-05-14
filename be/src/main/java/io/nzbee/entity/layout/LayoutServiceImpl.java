@@ -6,6 +6,8 @@ import java.util.Set;
 
 public class LayoutServiceImpl implements ILayoutService {
 
+	
+	
 	@Override
 	public List<Layout> findAll() {
 		// TODO Auto-generated method stub
@@ -26,9 +28,9 @@ public class LayoutServiceImpl implements ILayoutService {
 
 	@Override
 	public Optional<Layout> findByCode(String code) {
-		// TODO Auto-generated method stub
 		return null;
 	}
+	
 
 	@Override
 	public void save(Layout t) {
