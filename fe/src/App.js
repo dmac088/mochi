@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import "./App.css";
 import "./assets/scss/main.scss";
 import "./assets/css/font-awesome.min.css";
@@ -13,12 +13,8 @@ import UpdateCapability from "./components/CategoryTool/UpdateCapability";
 import { Provider } from "react-redux";
 import store from "./store";
 
-class App extends Component {
+function App() {
 
-  componentDidMount() {
-  }
-
-  render() {
     return (
       <Provider store={store}>
         <Router>
@@ -50,7 +46,6 @@ class App extends Component {
         </Router>
       </Provider>
     );
-  }
 }
 
 export default (App);
