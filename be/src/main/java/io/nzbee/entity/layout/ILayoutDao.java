@@ -1,5 +1,7 @@
 package io.nzbee.entity.layout;
 
-public interface ILayoutDao {
+import io.nzbee.entity.IDao;
+
+public interface ILayoutDao extends IDao<Layout> {
 
 }
