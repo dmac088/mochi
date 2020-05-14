@@ -26,7 +26,7 @@ import org.springframework.web.context.WebApplicationContext;
 import io.nzbee.Globals;
 import io.nzbee.domain.category.CategoryServiceImpl;
 import io.nzbee.entity.adapters.PostgresCategoryAdapter;
-import io.nzbee.entity.category.CategoryMapper;
+import io.nzbee.entity.category.CategoryMapperImpl;
 import io.nzbee.entity.category.brand.CategoryBrandDaoImpl;
 import io.nzbee.entity.category.brand.CategoryBrandService;
 import io.nzbee.entity.category.product.CategoryProductDaoImpl;
@@ -45,7 +45,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 							     CategoryProductDaoImpl.class,
 							     CategoryBrandService.class,
 							     CategoryBrandDaoImpl.class,
-							     CategoryMapper.class,
+							     CategoryMapperImpl.class,
 							     CategoryResourceAssembler.class,
 							     PagedResourcesAssembler.class,
 							     Globals.class,
