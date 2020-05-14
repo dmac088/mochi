@@ -1850,33 +1850,6 @@ CREATE TABLE jewellery_attr_lcl (
 ALTER TABLE jewellery_attr_lcl OWNER TO mochidb_owner;
 
 --
--- Name: layout_lay_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
---
-
-CREATE SEQUENCE layout_lay_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE layout_lay_id_seq OWNER TO mochidb_owner;
-
---
--- Name: layout; Type: TABLE; Schema: mochi; Owner: mochidb_owner
---
-
-CREATE TABLE layout (
-    lay_id bigint DEFAULT nextval('layout_lay_id_seq'::regclass) NOT NULL,
-    lay_cd character varying(10) NOT NULL,
-    lay_desc character varying(100) NOT NULL
-);
-
-
-ALTER TABLE layout OWNER TO mochidb_owner;
-
---
 -- Name: layout_category_lay_cat_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -1891,18 +1864,18 @@ CREATE SEQUENCE layout_category_lay_cat_id_seq
 ALTER TABLE layout_category_lay_cat_id_seq OWNER TO mochidb_owner;
 
 --
--- Name: layout_category; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+-- Name: layout_lay_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE layout_category (
-    lay_cat_id bigint DEFAULT nextval('layout_category_lay_cat_id_seq'::regclass) NOT NULL,
-    lay_id bigint NOT NULL,
-    cat_id bigint NOT NULL,
-    ord_num bigint NOT NULL
-);
+CREATE SEQUENCE layout_lay_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
 
 
-ALTER TABLE layout_category OWNER TO mochidb_owner;
+ALTER TABLE layout_lay_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: locale; Type: TABLE; Schema: mochi; Owner: mochidb_owner
@@ -3269,7 +3242,7 @@ COPY customer (rle_id, cst_id) FROM stdin;
 -- Name: customer_cst_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('customer_cst_id_seq', 1000000259, true);
+SELECT pg_catalog.setval('customer_cst_id_seq', 1000000260, true);
 
 
 --
@@ -3385,7 +3358,7 @@ COPY food_attr_lcl (prd_lcl_id, prd_id, ingredients, lcl_cd) FROM stdin;
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 232954, true);
+SELECT pg_catalog.setval('hibernate_sequence', 232972, true);
 
 
 --
@@ -3416,33 +3389,6 @@ COPY inventory_transaction  FROM stdin;
 --
 
 COPY jewellery_attr_lcl (prd_lcl_id, prd_id, primary_metal_type, primary_stone_type, lcl_cd) FROM stdin;
-\.
-
-
---
--- Data for Name: layout; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-COPY layout (lay_id, lay_cd, lay_desc) FROM stdin;
-1	LNDMM01	landing main menu 01
-2	LNDHC01	landing highlighted categories 01
-3	LNDPC01	landing preview categories 01
-4	LNDBS01	landing best selling products 01
-5	LNDHM01	landing header menu brands
-\.
-
-
---
--- Data for Name: layout_category; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-COPY layout_category (lay_cat_id, lay_id, cat_id, ord_num) FROM stdin;
-17	1	2	1
-18	2	38	1
-19	3	3	1
-20	3	4	1
-21	4	43	1
-22	5	45	1
 \.
 
 
@@ -4132,7 +4078,7 @@ COPY product_category (prd_cat_id, prd_id, cat_id) FROM stdin;
 -- Name: product_category_prd_cat_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('product_category_prd_cat_id_seq', 116, true);
+SELECT pg_catalog.setval('product_category_prd_cat_id_seq', 118, true);
 
 
 --
@@ -4992,7 +4938,7 @@ COPY user_role (id, pty_id, role_id) FROM stdin;
 -- Name: user_role_id_seq; Type: SEQUENCE SET; Schema: security; Owner: security_owner
 --
 
-SELECT pg_catalog.setval('user_role_id_seq', 185, true);
+SELECT pg_catalog.setval('user_role_id_seq', 186, true);
 
 
 SET search_path = mochi, pg_catalog;
@@ -5139,22 +5085,6 @@ ALTER TABLE ONLY food_attr_lcl
 
 ALTER TABLE ONLY jewellery_attr_lcl
     ADD CONSTRAINT jewellery_attr_lcl_pkey PRIMARY KEY (prd_lcl_id);
-
-
---
--- Name: layout_category layout_category_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY layout_category
-    ADD CONSTRAINT layout_category_pkey PRIMARY KEY (lay_cat_id);
-
-
---
--- Name: layout layout_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY layout
-    ADD CONSTRAINT layout_pkey PRIMARY KEY (lay_id);
 
 
 --
@@ -5534,30 +5464,6 @@ ALTER TABLE ONLY category_type
 
 
 --
--- Name: layout uc_lay_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY layout
-    ADD CONSTRAINT uc_lay_cd UNIQUE (lay_cd);
-
-
---
--- Name: layout uc_lay_desc; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY layout
-    ADD CONSTRAINT uc_lay_desc UNIQUE (lay_desc);
-
-
---
--- Name: layout_category uc_layout_category; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY layout_category
-    ADD CONSTRAINT uc_layout_category UNIQUE (lay_id, cat_id);
-
-
---
 -- Name: product_attr_lcl uc_prd_lcl_1; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -5863,22 +5769,6 @@ ALTER TABLE ONLY jewellery_attr_lcl
 
 
 --
--- Name: layout_category layout_category_cat_id_category_cat_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY layout_category
-    ADD CONSTRAINT layout_category_cat_id_category_cat_id_fkey FOREIGN KEY (cat_id) REFERENCES category(cat_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
-
-
---
--- Name: layout_category layout_category_lay_id_layout_lay_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY layout_category
-    ADD CONSTRAINT layout_category_lay_id_layout_lay_id_fkey FOREIGN KEY (lay_id) REFERENCES layout(lay_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
-
-
---
 -- Name: order_line order_line_order_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -6125,8 +6015,8 @@ ALTER TABLE ONLY user_role
 --
 
 GRANT ALL ON SCHEMA mochi TO security_owner;
-GRANT USAGE ON SCHEMA mochi TO mochi_app;
 GRANT USAGE ON SCHEMA mochi TO security_app;
+GRANT USAGE ON SCHEMA mochi TO mochi_app;
 
 
 --
@@ -6358,20 +6248,6 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE jewellery_attr_lcl TO mochi_app;
 
 
 --
--- Name: layout_lay_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
---
-
-GRANT ALL ON SEQUENCE layout_lay_id_seq TO mochi_app;
-
-
---
--- Name: layout; Type: ACL; Schema: mochi; Owner: mochidb_owner
---
-
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE layout TO mochi_app;
-
-
---
 -- Name: layout_category_lay_cat_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -6379,10 +6255,10 @@ GRANT ALL ON SEQUENCE layout_category_lay_cat_id_seq TO mochi_app;
 
 
 --
--- Name: layout_category; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: layout_lay_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE layout_category TO mochi_app;
+GRANT ALL ON SEQUENCE layout_lay_id_seq TO mochi_app;
 
 
 --
@@ -6733,8 +6609,8 @@ SET search_path = security, pg_catalog;
 -- Name: permission; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE permission TO mochi_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE permission TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE permission TO mochi_app;
 
 
 --
@@ -6764,48 +6640,48 @@ GRANT ALL ON SEQUENCE hibernate_sequence TO security_app;
 -- Name: oauth_access_token; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_access_token TO mochi_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_access_token TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_access_token TO mochi_app;
 
 
 --
 -- Name: oauth_approvals; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_approvals TO mochi_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_approvals TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_approvals TO mochi_app;
 
 
 --
 -- Name: oauth_client_details; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_client_details TO mochi_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_client_details TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_client_details TO mochi_app;
 
 
 --
 -- Name: oauth_client_token; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_client_token TO mochi_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_client_token TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_client_token TO mochi_app;
 
 
 --
 -- Name: oauth_code; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_code TO mochi_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_code TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_code TO mochi_app;
 
 
 --
 -- Name: oauth_refresh_token; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_refresh_token TO mochi_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_refresh_token TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_refresh_token TO mochi_app;
 
 
 --
@@ -6820,8 +6696,8 @@ GRANT ALL ON SEQUENCE role_id_seq TO security_app;
 -- Name: role; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role TO mochi_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role TO mochi_app;
 
 
 --
@@ -6836,16 +6712,16 @@ GRANT ALL ON SEQUENCE role_permission_id_seq TO security_app;
 -- Name: role_permission; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role_permission TO mochi_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role_permission TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role_permission TO mochi_app;
 
 
 --
 -- Name: user_; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_ TO mochi_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_ TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_ TO mochi_app;
 
 
 --
@@ -6860,8 +6736,8 @@ GRANT ALL ON SEQUENCE user_role_id_seq TO security_app;
 -- Name: user_role; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_role TO mochi_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_role TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_role TO mochi_app;
 
 
 --

@@ -670,7 +670,7 @@ INSERT INTO customer VALUES (232313, '1000000074');
 -- Name: customer_cst_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('customer_cst_id_seq', 1000000259, true);
+SELECT pg_catalog.setval('customer_cst_id_seq', 1000000260, true);
 
 
 --
@@ -856,7 +856,7 @@ INSERT INTO food_attr_lcl VALUES (58, 18, '不適用', 'zh-HK');
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 232954, true);
+SELECT pg_catalog.setval('hibernate_sequence', 232972, true);
 
 
 --
@@ -888,29 +888,6 @@ SELECT pg_catalog.setval('hierarchy_hir_id_seq', 43, true);
 -- Data for Name: jewellery_attr_lcl; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-
-
---
--- Data for Name: layout; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-INSERT INTO layout VALUES (1, 'LNDMM01', 'landing main menu 01');
-INSERT INTO layout VALUES (2, 'LNDHC01', 'landing highlighted categories 01');
-INSERT INTO layout VALUES (3, 'LNDPC01', 'landing preview categories 01');
-INSERT INTO layout VALUES (4, 'LNDBS01', 'landing best selling products 01');
-INSERT INTO layout VALUES (5, 'LNDHM01', 'landing header menu brands');
-
-
---
--- Data for Name: layout_category; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-INSERT INTO layout_category VALUES (17, 1, 2, 1);
-INSERT INTO layout_category VALUES (18, 2, 38, 1);
-INSERT INTO layout_category VALUES (19, 3, 3, 1);
-INSERT INTO layout_category VALUES (20, 3, 4, 1);
-INSERT INTO layout_category VALUES (21, 4, 43, 1);
-INSERT INTO layout_category VALUES (22, 5, 45, 1);
 
 
 --
@@ -1282,7 +1259,7 @@ INSERT INTO product_category VALUES (90, 5, 43);
 -- Name: product_category_prd_cat_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('product_category_prd_cat_id_seq', 116, true);
+SELECT pg_catalog.setval('product_category_prd_cat_id_seq', 118, true);
 
 
 --
