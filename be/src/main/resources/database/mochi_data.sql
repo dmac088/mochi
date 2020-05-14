@@ -856,7 +856,7 @@ INSERT INTO food_attr_lcl VALUES (58, 18, '不適用', 'zh-HK');
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 232972, true);
+SELECT pg_catalog.setval('hibernate_sequence', 232973, true);
 
 
 --
