@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
+import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -102,6 +103,12 @@ public class PartyDaoImpl implements IPartyDao {
 
 	@Override
 	public Party objectToEntity(Object[] o) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Party objectToEntity(Tuple t) {
 		// TODO Auto-generated method stub
 		return null;
 	}

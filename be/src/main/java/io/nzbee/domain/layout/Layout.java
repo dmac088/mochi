@@ -11,7 +11,7 @@ package io.nzbee.domain.layout;
  * objects to the DB in that order, it's up-to the adapter to remove the existing mappings in the 
  * DB and persist new ones
  */
-public class Layout {
+public abstract class Layout {
 	
 	private String layoutCode;
 	
