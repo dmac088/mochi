@@ -17,7 +17,6 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
-import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.hibernate.Session;
@@ -33,14 +32,9 @@ import io.nzbee.entity.category.Category_;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.attribute.CategoryAttribute_;
 import io.nzbee.entity.category.brand.CategoryBrand;
-import io.nzbee.entity.category.layout.CategoryLayout;
-import io.nzbee.entity.category.layout.CategoryLayout_;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.category.product.CategoryProduct_;
 import io.nzbee.entity.category.type.CategoryType;
-import io.nzbee.entity.category.type.CategoryType_;
-import io.nzbee.entity.layout.Layout;
-import io.nzbee.entity.layout.Layout_;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.Product_;
 
@@ -335,42 +329,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		
 		return query.getResultList();
 	}
-	
-	@Override
-	public List<Category> findAllByLayoutCode(String locale, String currency, String layoutCode) {
-		LOGGER.debug("call CategoryDaoPostgresImpl.findAllByLayoutCode parameters : {}, {}, {}", locale, currency, layoutCode);
-		
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		
-		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
-		
-		Root<CategoryLayout> root = cq.from(CategoryLayout.class);
-		Join<CategoryLayout, Category> category = root.join(CategoryLayout_.category);
-		Join<CategoryLayout, Layout> layout = root.join(CategoryLayout_.layout);
-		Join<Category, CategoryAttribute> attribute = category.join(Category_.attributes);
-		Join<Category, CategoryType> categoryType = category.join(Category_.categoryType);
-		
-		List<Predicate> conditions = new ArrayList<Predicate>();
-		conditions.add(cb.equal(layout.get(Layout_.code), layoutCode));
-		conditions.add(cb.equal(attribute.get(CategoryAttribute_.lclCd), locale));
-		
-		cq.multiselect(	
-				category.get(Category_.categoryCode).alias("catgoryCode"),
-				attribute.get(CategoryAttribute_.categoryDesc).alias("categoryDesc"),
-				categoryType.get(CategoryType_.categoryTypeCode).alias("categoryType")
-		);
-	
-		List<Order> orderList = new ArrayList<>();
-		orderList.add(cb.asc(root.get(CategoryLayout_.order)));
-		cq.orderBy(orderList);
-		
-		TypedQuery<Tuple> query = em.createQuery(cq);
-		
-		List<Tuple> tuples = query.getResultList();
-		
-		return tuples.stream().map(t -> this.objectToEntity(t, locale, currency)).collect(Collectors.toList());
-	}
-	
 
 	@Override
 	public Category objectToEntity(Tuple t, String locale, String currency) {

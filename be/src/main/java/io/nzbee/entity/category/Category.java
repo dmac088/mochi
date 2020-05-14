@@ -38,7 +38,6 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.google.common.collect.Lists;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.brand.CategoryBrand;
-import io.nzbee.entity.category.layout.CategoryLayout;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.search.ISearchDimension;
@@ -154,10 +153,6 @@ public abstract class Category implements ISearchDimension {
 				updatable = false, 
 				insertable = false)
 	private CategoryType categoryType;
-	 
-	@JsonIgnore
-	@OneToMany(mappedBy = "category")
-    private Set<CategoryLayout> layoutCategories = new HashSet<>();
 
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY, optional=false)
@@ -335,18 +330,6 @@ public abstract class Category implements ISearchDimension {
 	public void removeAttribute(CategoryAttribute categoryAttribute) {
 		this.getAttributes().remove(categoryAttribute);
 		categoryAttribute.setCategory(null);
-	}
-	
-	public Set<CategoryLayout> getLayouts() {
-		return layoutCategories;
-	}
-
-	public Set<CategoryLayout> getLayoutCategories() {
-		return layoutCategories;
-	}
-	
-	public void setLayoutCategories(Set<CategoryLayout> layoutCategories) {
-		this.layoutCategories = layoutCategories;
 	}
 
 	public String getLocale() {
