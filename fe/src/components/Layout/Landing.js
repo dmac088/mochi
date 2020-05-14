@@ -14,7 +14,7 @@ function Landing() {
 
   const dispatch = useDispatch();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e) => { 
     e.preventDefault();
     dispatch(authenticate(username, password));
   }
