@@ -2,7 +2,6 @@ package io.nzbee.domain.layout.category;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import io.nzbee.domain.category.Category;
 import io.nzbee.domain.layout.Layout;
 
@@ -16,4 +15,8 @@ public class LayoutCategory extends Layout {
 		categories.add(category);
 	}
 
+	public void addCategory(Category category) {
+		this.categories.add(category);
+	}
 }
+

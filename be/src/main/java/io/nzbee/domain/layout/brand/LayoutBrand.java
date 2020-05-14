@@ -15,4 +15,7 @@ public class LayoutBrand extends Layout {
 		brands.add(brand);
 	}
 	
+	public void addBrand(Brand brand) {
+		this.brands.add(brand);
+	}
 }
