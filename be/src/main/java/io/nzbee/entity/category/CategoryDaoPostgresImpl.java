@@ -661,8 +661,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"       ps.object_count			AS cat_prnt_object_count, " +
 				"       ps.max_retail_price		AS cat_prnt_max_retail_price, " +
 				"       ps.max_markdown_price 	AS cat_prnt_max_markdown_price, " +
-				"		coalesce(cs.child_cat_count,0)		AS child_cat_count, " +
-				"		layouts.category_layouts AS category_layouts " +
+				"		coalesce(cs.child_cat_count,0)		AS child_cat_count " +
 
 				"FROM summaries_ptb s " +
 
@@ -698,22 +697,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"LEFT JOIN mochi.category_attr_lcl pa " +
 				"ON pc.cat_id = pa.cat_id " +
 				"AND pa.lcl_cd = :locale " +
-				
-				"LEFT JOIN (" +
-				"SELECT cat.cat_id, " +
-				" cat.cat_cd, " +
-				" string_agg(coalesce(lay_cd, ''), ',') as category_layouts " +
-				"FROM mochi.layout l " +
-				"	INNER JOIN mochi.layout_category lc " +
-				"	ON l.lay_id = lc.lay_id " +
-
-				"	INNER JOIN mochi.category cat " +
-				"	ON lc.cat_id = cat.cat_id " +
-				"GROUP BY cat.cat_id, " + 
-				"	cat.cat_cd" +
-				") layouts " +
-				"ON s.cat_id = layouts.cat_id " + 
-				
+								
 				"WHERE a.lcl_cd = :locale " +
 				"AND case " +
 				"	 when :parentCategoryCode = '-1' " +
