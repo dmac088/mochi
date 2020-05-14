@@ -31,8 +31,14 @@ import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.Category_;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.attribute.CategoryAttribute_;
+import io.nzbee.entity.category.layout.CategoryLayout;
 import io.nzbee.entity.category.product.CategoryProduct;
+import io.nzbee.entity.category.product.CategoryProduct_;
 import io.nzbee.entity.category.type.CategoryType;
+import io.nzbee.entity.layout.Layout;
+import io.nzbee.entity.layout.Layout_;
+import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.Product_;
 
 @Component(value="categoryEntityPostgresDao")
 public class CategoryDaoPostgresImpl implements ICategoryDao {
@@ -301,13 +307,52 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	
 	@Override
 	public List<Category> findAllByProductCode(String locale, String currency, String productCode) {
-		return null;
+		LOGGER.debug("call CategoryDaoPostgresImpl.findAllByProductCode parameters : {}, {}, {}", locale, currency, productCode);
+		
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
+		
+		Root<CategoryProduct> root = cq.from(CategoryProduct.class);
+		Join<CategoryProduct, CategoryAttribute> categoryAttribute = root.join(CategoryProduct_.attributes);
+		Join<CategoryProduct, Product> product = root.join(CategoryProduct_.products);
+		
+		List<Predicate> conditions = new ArrayList<Predicate>();
+		conditions.add(cb.equal(product.get(Product_.productUPC), productCode));
+		
+	
+		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
+		
+		TypedQuery<Category> query = em.createQuery(cq
+				.select(root)
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(true)
+		);
+		
+		return query.getResultList();
 	}
 	
 	@Override
 	public List<Category> findAllByLayoutCode(String locale, String currency, String layoutCode) {
-		// TODO Auto-generated method stub
-		return null;
+		LOGGER.debug("call CategoryDaoPostgresImpl.findAllByLayoutCode parameters : {}, {}, {}", locale, currency, layoutCode);
+		
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
+		
+		Root<Category> root = cq.from(Category.class);
+		Join<Category, Layout> layout = root.join(Category_.layouts);
+		
+		List<Predicate> conditions = new ArrayList<Predicate>();
+		conditions.add(cb.equal(layout.get(Layout_.code), layoutCode));
+		
+		TypedQuery<Category> query = em.createQuery(cq
+				.select(root)
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(true)
+		);
+		
+		return query.getResultList();
 	}
 	
 	@Override
