@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -137,6 +138,12 @@ public class PersonDaoImpl implements IPersonDao {
 
 	@Override
 	public Person objectToEntity(Object[] o) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Person objectToEntity(Tuple t) {
 		// TODO Auto-generated method stub
 		return null;
 	}
