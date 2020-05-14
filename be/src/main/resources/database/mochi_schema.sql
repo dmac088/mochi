@@ -42,8 +42,6 @@ ALTER TABLE ONLY mochi.organisation DROP CONSTRAINT organisation_org_id_fkey;
 ALTER TABLE ONLY mochi."order" DROP CONSTRAINT orders_party_id_fkey;
 ALTER TABLE ONLY mochi.order_line DROP CONSTRAINT order_line_product_id_fkey;
 ALTER TABLE ONLY mochi.order_line DROP CONSTRAINT order_line_order_id_fkey;
-ALTER TABLE ONLY mochi.layout_category DROP CONSTRAINT layout_category_lay_id_layout_lay_id_fkey;
-ALTER TABLE ONLY mochi.layout_category DROP CONSTRAINT layout_category_cat_id_category_cat_id_fkey;
 ALTER TABLE ONLY mochi.jewellery_attr_lcl DROP CONSTRAINT jewellery_attr_lcl_prd_id_fkey;
 ALTER TABLE ONLY mochi.jewellery_attr_lcl DROP CONSTRAINT jewellery_attr_lcl_lcl_cd_fkey;
 ALTER TABLE ONLY mochi.food_attr_lcl DROP CONSTRAINT food_attr_lcl_prd_id_fkey;
@@ -71,9 +69,6 @@ ALTER TABLE ONLY mochi.department DROP CONSTRAINT uc_prd_typ_cd;
 ALTER TABLE ONLY mochi.product_status DROP CONSTRAINT uc_prd_sts_cd;
 ALTER TABLE ONLY mochi.product_rating DROP CONSTRAINT uc_prd_rat;
 ALTER TABLE ONLY mochi.product_attr_lcl DROP CONSTRAINT uc_prd_lcl_1;
-ALTER TABLE ONLY mochi.layout_category DROP CONSTRAINT uc_layout_category;
-ALTER TABLE ONLY mochi.layout DROP CONSTRAINT uc_lay_desc;
-ALTER TABLE ONLY mochi.layout DROP CONSTRAINT uc_lay_cd;
 ALTER TABLE ONLY mochi.category_type DROP CONSTRAINT uc_cat_typ_cd;
 ALTER TABLE ONLY mochi.category_attr_lcl DROP CONSTRAINT uc_cat_lcl;
 ALTER TABLE ONLY mochi.category_attr_lcl DROP CONSTRAINT uc_cat_desc;
@@ -121,8 +116,6 @@ ALTER TABLE ONLY mochi."order" DROP CONSTRAINT orders_pty_id_key;
 ALTER TABLE ONLY mochi."order" DROP CONSTRAINT orders_pkey;
 ALTER TABLE ONLY mochi.order_line DROP CONSTRAINT order_line_pkey;
 ALTER TABLE ONLY mochi.order_line DROP CONSTRAINT order_line_ord_id_key;
-ALTER TABLE ONLY mochi.layout DROP CONSTRAINT layout_pkey;
-ALTER TABLE ONLY mochi.layout_category DROP CONSTRAINT layout_category_pkey;
 ALTER TABLE ONLY mochi.jewellery_attr_lcl DROP CONSTRAINT jewellery_attr_lcl_pkey;
 ALTER TABLE ONLY mochi.food_attr_lcl DROP CONSTRAINT food_attr_lcl_pkey;
 ALTER TABLE ONLY mochi.discount_type DROP CONSTRAINT discount_type_pkey;
@@ -194,10 +187,8 @@ DROP TABLE mochi.order_line;
 DROP TABLE mochi."order";
 DROP TABLE mochi.location;
 DROP TABLE mochi.locale;
-DROP TABLE mochi.layout_category;
-DROP SEQUENCE mochi.layout_category_lay_cat_id_seq;
-DROP TABLE mochi.layout;
 DROP SEQUENCE mochi.layout_lay_id_seq;
+DROP SEQUENCE mochi.layout_category_lay_cat_id_seq;
 DROP TABLE mochi.jewellery_attr_lcl;
 DROP TABLE mochi.inventory_transaction;
 DROP TABLE mochi.inventory_on_hand;
@@ -1955,33 +1946,6 @@ CREATE TABLE jewellery_attr_lcl (
 ALTER TABLE jewellery_attr_lcl OWNER TO mochidb_owner;
 
 --
--- Name: layout_lay_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
---
-
-CREATE SEQUENCE layout_lay_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE layout_lay_id_seq OWNER TO mochidb_owner;
-
---
--- Name: layout; Type: TABLE; Schema: mochi; Owner: mochidb_owner
---
-
-CREATE TABLE layout (
-    lay_id bigint DEFAULT nextval('layout_lay_id_seq'::regclass) NOT NULL,
-    lay_cd character varying(10) NOT NULL,
-    lay_desc character varying(100) NOT NULL
-);
-
-
-ALTER TABLE layout OWNER TO mochidb_owner;
-
---
 -- Name: layout_category_lay_cat_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -1996,18 +1960,18 @@ CREATE SEQUENCE layout_category_lay_cat_id_seq
 ALTER TABLE layout_category_lay_cat_id_seq OWNER TO mochidb_owner;
 
 --
--- Name: layout_category; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+-- Name: layout_lay_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE layout_category (
-    lay_cat_id bigint DEFAULT nextval('layout_category_lay_cat_id_seq'::regclass) NOT NULL,
-    lay_id bigint NOT NULL,
-    cat_id bigint NOT NULL,
-    ord_num bigint NOT NULL
-);
+CREATE SEQUENCE layout_lay_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
 
 
-ALTER TABLE layout_category OWNER TO mochidb_owner;
+ALTER TABLE layout_lay_id_seq OWNER TO mochidb_owner;
 
 --
 -- Name: locale; Type: TABLE; Schema: mochi; Owner: mochidb_owner
@@ -2853,22 +2817,6 @@ ALTER TABLE ONLY jewellery_attr_lcl
 
 
 --
--- Name: layout_category layout_category_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY layout_category
-    ADD CONSTRAINT layout_category_pkey PRIMARY KEY (lay_cat_id);
-
-
---
--- Name: layout layout_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY layout
-    ADD CONSTRAINT layout_pkey PRIMARY KEY (lay_id);
-
-
---
 -- Name: order_line order_line_ord_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -3245,30 +3193,6 @@ ALTER TABLE ONLY category_type
 
 
 --
--- Name: layout uc_lay_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY layout
-    ADD CONSTRAINT uc_lay_cd UNIQUE (lay_cd);
-
-
---
--- Name: layout uc_lay_desc; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY layout
-    ADD CONSTRAINT uc_lay_desc UNIQUE (lay_desc);
-
-
---
--- Name: layout_category uc_layout_category; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY layout_category
-    ADD CONSTRAINT uc_layout_category UNIQUE (lay_id, cat_id);
-
-
---
 -- Name: product_attr_lcl uc_prd_lcl_1; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -3479,22 +3403,6 @@ ALTER TABLE ONLY jewellery_attr_lcl
 
 ALTER TABLE ONLY jewellery_attr_lcl
     ADD CONSTRAINT jewellery_attr_lcl_prd_id_fkey FOREIGN KEY (prd_id) REFERENCES product_jewellery(prd_id);
-
-
---
--- Name: layout_category layout_category_cat_id_category_cat_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY layout_category
-    ADD CONSTRAINT layout_category_cat_id_category_cat_id_fkey FOREIGN KEY (cat_id) REFERENCES category(cat_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
-
-
---
--- Name: layout_category layout_category_lay_id_layout_lay_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY layout_category
-    ADD CONSTRAINT layout_category_lay_id_layout_lay_id_fkey FOREIGN KEY (lay_id) REFERENCES layout(lay_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
@@ -3844,8 +3752,8 @@ GRANT ALL ON SEQUENCE customer_cst_id_seq TO mochi_app;
 -- Name: customer; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE customer TO security_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE customer TO mochi_app;
+GRANT SELECT ON TABLE customer TO security_app;
 
 
 --
@@ -3926,20 +3834,6 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE jewellery_attr_lcl TO mochi_app;
 
 
 --
--- Name: layout_lay_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
---
-
-GRANT ALL ON SEQUENCE layout_lay_id_seq TO mochi_app;
-
-
---
--- Name: layout; Type: ACL; Schema: mochi; Owner: mochidb_owner
---
-
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE layout TO mochi_app;
-
-
---
 -- Name: layout_category_lay_cat_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -3947,10 +3841,10 @@ GRANT ALL ON SEQUENCE layout_category_lay_cat_id_seq TO mochi_app;
 
 
 --
--- Name: layout_category; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: layout_lay_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE layout_category TO mochi_app;
+GRANT ALL ON SEQUENCE layout_lay_id_seq TO mochi_app;
 
 
 --
@@ -3985,16 +3879,16 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE order_line TO mochi_app;
 -- Name: organisation; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE organisation TO security_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE organisation TO mochi_app;
+GRANT SELECT ON TABLE organisation TO security_app;
 
 
 --
 -- Name: party; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE party TO security_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE party TO mochi_app;
+GRANT SELECT ON TABLE party TO security_app;
 
 
 --
@@ -4015,8 +3909,8 @@ GRANT ALL ON SEQUENCE party_pty_id_seq TO mochi_app;
 -- Name: party_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE party_type TO security_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE party_type TO mochi_app;
+GRANT SELECT ON TABLE party_type TO security_app;
 
 
 --
@@ -4030,8 +3924,8 @@ GRANT ALL ON SEQUENCE party_type_pty_typ_id_seq TO mochi_app;
 -- Name: person; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE person TO security_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE person TO mochi_app;
+GRANT SELECT ON TABLE person TO security_app;
 
 
 --
@@ -4234,16 +4128,16 @@ GRANT ALL ON SEQUENCE role_rle_id_seq TO mochi_app;
 -- Name: role; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE role TO security_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role TO mochi_app;
+GRANT SELECT ON TABLE role TO security_app;
 
 
 --
 -- Name: role_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE role_type TO security_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role_type TO mochi_app;
+GRANT SELECT ON TABLE role_type TO security_app;
 
 
 --
