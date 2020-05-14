@@ -300,7 +300,13 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	}
 	
 	@Override
-	public List<Category> findByProductCode(String locale, String currency, String productCode) {
+	public List<Category> findAllByProductCode(String locale, String currency, String productCode) {
+		return null;
+	}
+	
+	@Override
+	public List<Category> findAllByLayoutCode(String locale, String currency, String layoutCode) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 	
@@ -695,5 +701,5 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 }
