@@ -38,34 +38,34 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	@Override
 	public Set<Category> findAll(String locale, String currency, Set<String> codes) {
 		return categoryService.findAll(locale, currency, codes)
-				.stream().map(c -> (Category) categoryMapper.entityToDo(c, locale, currency)).collect(Collectors.toSet());
+				.stream().map(c -> (Category) categoryMapper.entityToDo(c)).collect(Collectors.toSet());
 	}
 	
 	@Override
 	public Category findByCode(String locale, String currency, String code) {
 		io.nzbee.entity.category.Category cp = categoryService.findByCode(locale, currency, code)
 				.orElseThrow(() -> new CategoryNotFoundException("Primary category for code " + code + " not found!"));
-		return categoryMapper.entityToDo(cp, locale, currency);
+		return categoryMapper.entityToDo(cp);
 	}	
 	
 	@Override
 	public Category findByDesc(String locale, String currency, String desc) {
 		io.nzbee.entity.category.Category cp = categoryService.findByDesc(locale, currency, desc)
 				.orElseThrow(() -> new CategoryNotFoundException("Primary category for desc " + desc + " not found!"));
-		return categoryMapper.entityToDo(cp, locale, currency);
+		return categoryMapper.entityToDo(cp);
 	}
 	
 	@Override
 	public Set<ProductCategory> findAllByProductCode(String locale, String currency, String productCode) {
 		return categoryProductService.findAllByProductCode(locale, currency, productCode)
-				.stream().map(c -> (ProductCategory) categoryMapper.entityToDo(c, locale, currency)).collect(Collectors.toSet());
+				.stream().map(c -> (ProductCategory) categoryMapper.entityToDo(c)).collect(Collectors.toSet());
 	}
 	
 	@Override
 	public ProductCategory findPrimaryByProductCode(String locale, String currency, String productCode) {
 		CategoryProduct cp = categoryProductService.findPrimaryByProductCode(locale, currency, productCode)
 				.orElseThrow(() -> new CategoryNotFoundException("Primary category for product code " + productCode + " not found!"));
-		return (ProductCategory) categoryMapper.entityToDo(cp, locale, currency);		
+		return (ProductCategory) categoryMapper.entityToDo(cp);		
 	}
 
 	@Override
@@ -83,19 +83,19 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	@Override
 	public Set<Category> findAll(String locale, String currency) {
 		return categoryService.findAll(locale, currency)
-				.stream().map(c -> categoryMapper.entityToDo(c, locale, currency)).collect(Collectors.toSet());
+				.stream().map(c -> categoryMapper.entityToDo(c)).collect(Collectors.toSet());
 	}
 	
 	@Override
 	public Set<ProductCategory> findAllProductCategories(String locale, String currency) {
 		return categoryService.findAll(locale, currency, CategoryProduct.class)
-				.stream().map(c -> (ProductCategory) categoryMapper.entityToDo(c, locale, currency)).collect(Collectors.toSet());
+				.stream().map(c -> (ProductCategory) categoryMapper.entityToDo(c)).collect(Collectors.toSet());
 	}
 	
 	@Override
 	public Set<BrandCategory> findAllBrandCategories(String locale, String currency) {
 		return categoryService.findAll(locale, currency, CategoryBrand.class)
-				.stream().map(c -> (BrandCategory) categoryMapper.entityToDo(c, locale, currency)).collect(Collectors.toSet());
+				.stream().map(c -> (BrandCategory) categoryMapper.entityToDo(c)).collect(Collectors.toSet());
 	}
 	
 	@Override

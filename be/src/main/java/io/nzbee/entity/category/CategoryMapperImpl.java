@@ -1,81 +1,30 @@
 package io.nzbee.entity.category;
-import io.nzbee.domain.category.BrandCategory;
-import io.nzbee.domain.category.ProductCategory;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import io.nzbee.entity.category.brand.CategoryBrand;
+import io.nzbee.entity.category.brand.ICategoryBrandMapper;
 import io.nzbee.entity.category.product.CategoryProduct;
+import io.nzbee.entity.category.product.ICategoryProductMapper;
 
 @Component(value="categoryMapper")
 public class CategoryMapperImpl implements ICategoryMapper {
 	
+	@Autowired
+	private ICategoryProductMapper categoryProductMapper;
+	
+	@Autowired
+	private ICategoryBrandMapper categoryBrandMapper;
 
 	public io.nzbee.domain.category.Category entityToDo(Category e) {
 	
 		if(e instanceof CategoryProduct) {
-			io.nzbee.domain.category.Category co = new ProductCategory(
-				e.getCategoryCode(),
-				e.getCategoryAttribute().getCategoryDesc(),
-				true,
-				e.getCategoryLevel(),
-				e.getObjectCount(),
-				e.getParent().isPresent()
-				? e.getParent().get().getCategoryCode()
-				: null,
-				e.getLocale(), 
-				e.getCurrency()
-			 );
-			return co;
+			return categoryProductMapper.entityToDo((CategoryProduct) e);
 		}
 		if(e instanceof CategoryBrand) {
-			io.nzbee.domain.category.Category co = new BrandCategory(
-				e.getCategoryCode(),
-				e.getCategoryAttribute().getCategoryDesc(),
-				true,
-				e.getCategoryLevel(),
-				e.getObjectCount(),
-				e.getParent().isPresent()
-				? e.getParent().get().getCategoryCode()
-				: null,
-				e.getLocale(), 
-				e.getCurrency()
-				);
-			return co;
+			return categoryBrandMapper.entityToDo((CategoryBrand) e);
 		}
 		return null;
 	}
 	
-	@Override
-	public io.nzbee.domain.category.Category entityToDo(Category e, String locale, String currency) {
-		if(e instanceof CategoryProduct) {
-			io.nzbee.domain.category.Category co = new ProductCategory(
-				e.getCategoryCode(),
-				e.getCategoryAttribute().getCategoryDesc(),
-				true,
-				e.getCategoryLevel(),
-				e.getObjectCount(),
-				e.getParent().isPresent()
-				? e.getParent().get().getCategoryCode()
-				: null,
-				locale, 
-				currency
-			);
-			return co;
-		}
-		if(e instanceof CategoryBrand) {
-			io.nzbee.domain.category.Category co = new BrandCategory(
-				e.getCategoryCode(),
-				e.getCategoryAttribute().getCategoryDesc(),
-				true,
-				e.getCategoryLevel(),
-				e.getObjectCount(),
-				e.getParent().isPresent()
-				? e.getParent().get().getCategoryCode()
-				: null,
-				locale, 
-				currency
-			);
-			return co;
-		}
-		return null;
-	}
 }

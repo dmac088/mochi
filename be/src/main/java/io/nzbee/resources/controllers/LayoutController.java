@@ -31,21 +31,22 @@ public class LayoutController {
 
 	@Autowired
 	private Globals globalVars;
-	
-    @Autowired
-    private ILayoutPortService layoutService;
+//	
+//    @Autowired
+//    private ILayoutPortService layoutService;
     
     @Autowired
     private CategoryResourceAssembler categoryResourceAssember;
 	
 	@GetMapping("/Layout/{code}")
     public ResponseEntity<Resources<LayoutResource>> getCategories(@PathVariable String code) {
-    	LOGGER.debug("Fetching layouts for parameters : {}, {}", locale, currency);
-    	final List<CategoryResource> collection = categoryService.findAll(locale, currency).stream().map(c -> categoryResourceAssember.toResource(c)).collect(Collectors.toList());
-        final Resources <CategoryResource> resources = new Resources <> (collection);
-        final String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
-        resources.add(new Link(uriString, "self"));
-        return ResponseEntity.ok(resources);
+//    	LOGGER.debug("Fetching layouts for parameters : {}, {}", locale, currency);
+//    	final List<CategoryResource> collection = categoryService.findAll(locale, currency).stream().map(c -> categoryResourceAssember.toResource(c)).collect(Collectors.toList());
+//        final Resources <CategoryResource> resources = new Resources <> (collection);
+//        final String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
+//        resources.add(new Link(uriString, "self"));
+//        return ResponseEntity.ok(resources);
+		return null;
     }
 	
 }

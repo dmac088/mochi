@@ -289,7 +289,7 @@ public class PostgresProductAdapter implements IProductPortService {
 		
 			Brand bdo = brandMapper.entityToDo(be, pe.getLocale(), pe.getCurrency());
 			Department ddo = departmentMapper.entityToDo(de, pe.getLocale(), pe.getCurrency());
-			ProductCategory cdo = (ProductCategory) categoryMapper.entityToDo(c, pe.getLocale(), pe.getCurrency());
+			ProductCategory cdo = (ProductCategory) categoryMapper.entityToDo(c);
 			return productMapper.entityToDo(pe, bdo, ddo, cdo);	
 		}
 

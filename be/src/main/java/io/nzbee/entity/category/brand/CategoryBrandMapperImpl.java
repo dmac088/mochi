@@ -1,17 +1,25 @@
 package io.nzbee.entity.category.brand;
 
+import org.springframework.stereotype.Component;
+import io.nzbee.domain.category.BrandCategory;
+
+@Component
 public class CategoryBrandMapperImpl implements ICategoryBrandMapper {
 
 	@Override
-	public CategoryBrand entityToDo(CategoryBrand e) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public CategoryBrand entityToDo(CategoryBrand e, String locale, String currency) {
-		// TODO Auto-generated method stub
-		return null;
+	public BrandCategory entityToDo(CategoryBrand e) {
+		return new BrandCategory(
+				e.getCategoryCode(),
+				e.getCategoryAttribute().getCategoryDesc(),
+				true,
+				e.getCategoryLevel(),
+				e.getObjectCount(),
+				e.getParent().isPresent()
+				? e.getParent().get().getCategoryCode()
+				: null,
+				e.getLocale(), 
+				e.getCurrency()
+				);
 	}
 
 }
