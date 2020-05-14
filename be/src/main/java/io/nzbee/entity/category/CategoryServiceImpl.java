@@ -57,11 +57,6 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	}
 	
 	@Override
-	public List<Category> findAllForLayoutCode(String locale, String currency, String layoutCode) {
-		return categoryDAO.findAllByLayoutCode(locale, currency, layoutCode);
-	}
-
-	@Override
 	public void save(Category t) {
 		// TODO Auto-generated method stub
 		
