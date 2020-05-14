@@ -1,7 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 
-class Header extends Component {
-  render() {
+function Header() {
     return (
       <header>
             {/*<!--=======  header top  =======-->*/}
@@ -234,7 +233,7 @@ class Header extends Component {
             {/*<!--=======  End of header bottom  =======-->*/}
           </header>
     );
-  }
 }
+
 
 export default Header;
