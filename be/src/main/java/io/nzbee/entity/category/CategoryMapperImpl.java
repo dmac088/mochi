@@ -7,6 +7,7 @@ import io.nzbee.entity.category.product.CategoryProduct;
 
 @Component(value="categoryMapper")
 public class CategoryMapperImpl implements ICategoryMapper {
+	
 
 	public io.nzbee.domain.category.Category entityToDo(Category e) {
 	
