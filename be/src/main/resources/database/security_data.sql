@@ -411,7 +411,7 @@ INSERT INTO user_role VALUES (45, 232312, 2);
 -- Name: user_role_id_seq; Type: SEQUENCE SET; Schema: security; Owner: security_owner
 --
 
-SELECT pg_catalog.setval('user_role_id_seq', 186, true);
+SELECT pg_catalog.setval('user_role_id_seq', 187, true);
 
 
 --
