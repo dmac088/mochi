@@ -26,24 +26,33 @@ public class CategoryResourceAssembler extends ResourceAssemblerSupport<Category
 	@Override
     public CategoryResource toResource(Category category) {
 		CategoryResource cr = new CategoryResource(category);
-		cr.add(linkTo(methodOn(CategoryController.class).getCategory(	category.getLocale(), 
+		
+		cr.add(linkTo(methodOn(CategoryController.class).getCategory(		
+																		category.getLocale(), 
 																		category.getCurrency(), 
 																		category.getCategoryCode()
-																)).withSelfRel(),
-				
-				category.getCategoryType().equals("brandcategory")
-				? linkTo(methodOn(BrandController.class).getBrands(		category.getLocale(), 
+																)).withSelfRel()
+		);
+		
+		if(category.getCategoryType().equals("brandcategory")) { 
+			cr.add(linkTo(methodOn(BrandController.class).getBrands(		
+																		category.getLocale(),
 																		category.getCurrency(), 
 																		category.getCategoryCode()
-																)).withRel("brands")
-				: linkTo(methodOn(ProductController.class).getProducts(	category.getLocale(), 
+																)).withRel("brands"));
+		}
+		
+		if(category.getCategoryType().equals("productcategory")) {
+			cr.add(linkTo(methodOn(ProductController.class).getProducts(	
+																		category.getLocale(), 
 																	 	category.getCurrency(), 
 																	 	category.getCategoryCode(),
 																	 	0,
 																	 	10,
 																	 	parAssembler
-																)).withRel("products")
-				);
+																)).withRel("products"));
+		}
+			
 		return cr;
     }
     
