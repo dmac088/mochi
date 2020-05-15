@@ -594,8 +594,8 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"			ON prd.prd_sts_id = ps.prd_sts_id " +
 
 				"			WHERE curr.ccy_cd = 	:currency " +
-				"			AND prc_typ_cd = 	:markdownPriceCode " +
-				"			AND prd_sts_cd = 	:activeProductCode " +
+				"			AND prc_typ_cd = 		:markdownPriceCode " +
+				"			AND prd_sts_cd = 		:activeProductCode " +
 				"		 )  markdown_price		  " +
 				"		 ON pc.bnd_id = markdown_price.bnd_id " +
 

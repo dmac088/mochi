@@ -1670,7 +1670,7 @@ CREATE TABLE category (
     cat_prnt_id bigint,
     cat_lvl bigint,
     cat_typ_id bigint,
-    ord_num bigint
+    cat_ord_num bigint
 );
 
 
