@@ -3,7 +3,6 @@ package io.nzbee.entity.adapters;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import io.nzbee.domain.category.BrandCategory;
 import io.nzbee.domain.category.Category;
@@ -32,7 +31,6 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	private ICategoryBrandService categoryBrandService;
 	
 	@Autowired
-	@Qualifier(value = "categoryMapper")
 	private ICategoryMapper categoryMapper;
 
 	@Override
@@ -109,6 +107,7 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 			cp.setLocale(pc.getLocale());
 			cp.setCurrency(pc.getCurrency());
 			cp.setCategoryLevel(pc.getCategoryLevel());
+			cp.setOrderNumber(pc.getCategoryOrder());
 			cp.setObjectCount(pc.getCount());
 			
 			CategoryAttribute ca = new CategoryAttribute();
@@ -129,6 +128,7 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 			cb.setLocale(bc.getLocale());
 			cb.setCurrency(bc.getCurrency());
 			cb.setCategoryLevel(bc.getCategoryLevel());
+			cb.setOrderNumber(bc.getCategoryOrder());
 			cb.setObjectCount(bc.getCount());
 			
 			CategoryAttribute ca = new CategoryAttribute();
