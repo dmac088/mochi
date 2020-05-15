@@ -64,7 +64,7 @@ public class CategoryController {
         return ResponseEntity.ok(resources);
     }
     
-    @GetMapping("/BrandCategory/{locale}/{currency}")
+    @GetMapping("/LayoutCategory/{locale}/{currency}")
     public ResponseEntity<Resources<CategoryResource>> getLayoutCategories(@PathVariable String locale, @PathVariable String currency) {
     	LOGGER.debug("Fetching categories for parameters : {}, {}", locale, currency);
     	final List<CategoryResource> collection = categoryService.findAllLayoutCategories(locale, currency).stream().map(c -> categoryResourceAssember.toResource(c)).collect(Collectors.toList());
