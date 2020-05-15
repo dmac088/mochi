@@ -1,7 +1,10 @@
 package io.nzbee.entity.category.layout;
 
+import org.springframework.stereotype.Component;
+
 import io.nzbee.domain.category.LayoutCategory;
 
+@Component
 public class CategoryLayoutMapperImpl implements ICategoryLayoutMapper {
 
 	@Override
