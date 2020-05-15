@@ -3108,6 +3108,8 @@ COPY category_attr_lcl (cat_lcl_id, cat_id, cat_desc, cat_img_pth, lcl_cd) FROM 
 13	2	ALL		zh-HK
 104	45	Featured Brands	\N	en-GB
 105	45	推薦品牌	\N	zh-HK
+106	46	test english	test_image.jpg	en-GB
+107	46	test chinese	test_image.jpg	zh-HK
 \.
 
 
@@ -3115,7 +3117,7 @@ COPY category_attr_lcl (cat_lcl_id, cat_id, cat_desc, cat_img_pth, lcl_cd) FROM 
 -- Name: category_attr_lcl_cat_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('category_attr_lcl_cat_id_seq', 21, true);
+SELECT pg_catalog.setval('category_attr_lcl_cat_id_seq', 22, true);
 
 
 --

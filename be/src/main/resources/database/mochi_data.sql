@@ -473,13 +473,15 @@ INSERT INTO category_attr_lcl VALUES (103, 44, '未知', NULL, 'zh-HK');
 INSERT INTO category_attr_lcl VALUES (13, 2, 'ALL', '', 'zh-HK');
 INSERT INTO category_attr_lcl VALUES (104, 45, 'Featured Brands', NULL, 'en-GB');
 INSERT INTO category_attr_lcl VALUES (105, 45, '推薦品牌', NULL, 'zh-HK');
+INSERT INTO category_attr_lcl VALUES (106, 46, 'test english', 'test_image.jpg', 'en-GB');
+INSERT INTO category_attr_lcl VALUES (107, 46, 'test chinese', 'test_image.jpg', 'zh-HK');
 
 
 --
 -- Name: category_attr_lcl_cat_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('category_attr_lcl_cat_id_seq', 21, true);
+SELECT pg_catalog.setval('category_attr_lcl_cat_id_seq', 22, true);
 
 
 --
