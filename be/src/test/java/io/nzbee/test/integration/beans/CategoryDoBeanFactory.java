@@ -22,7 +22,6 @@ public class CategoryDoBeanFactory {
 									"test product category",
 									true,
 									new Long(2),
-									new Long(0),
 									0,
 									"FRT01",
 									"en-GB", 
@@ -31,14 +30,13 @@ public class CategoryDoBeanFactory {
 		return category;
 	}
 	
+	
 	public final BrandCategory getBrandCategoryDoBean() {
 		return new BrandCategory( 	"TST02",
 									"test brand category",
 									false,
 									new Long(0),
-									new Long(0),
 									0,
-									"VEG01",
 									"en-GB", 
 									"HKD");
 		

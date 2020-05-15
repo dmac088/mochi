@@ -43,13 +43,11 @@ public class CategoryBrand extends Category {
 
 	@Override
 	public int getObjectCount() {
-		// TODO Auto-generated method stub
 		return brandCount;
 	}
 
 	@Override
 	public void setObjectCount(int count) {
-		// TODO Auto-generated method stub
 		this.brandCount = count;
 	}
 	
@@ -71,7 +69,6 @@ public class CategoryBrand extends Category {
 
 	@Override
 	public void setType(String type) {
-		// TODO Auto-generated method stub
 		
 	}
 

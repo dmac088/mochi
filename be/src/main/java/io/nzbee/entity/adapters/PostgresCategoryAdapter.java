@@ -107,7 +107,6 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 			cp.setLocale(pc.getLocale());
 			cp.setCurrency(pc.getCurrency());
 			cp.setCategoryLevel(pc.getCategoryLevel());
-			cp.setOrderNumber(pc.getCategoryOrder());
 			cp.setObjectCount(pc.getCount());
 			
 			CategoryAttribute ca = new CategoryAttribute();
@@ -128,7 +127,6 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 			cb.setLocale(bc.getLocale());
 			cb.setCurrency(bc.getCurrency());
 			cb.setCategoryLevel(bc.getCategoryLevel());
-			cb.setOrderNumber(bc.getCategoryOrder());
 			cb.setObjectCount(bc.getCount());
 			
 			CategoryAttribute ca = new CategoryAttribute();
