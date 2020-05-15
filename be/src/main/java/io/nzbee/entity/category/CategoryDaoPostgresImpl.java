@@ -405,9 +405,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"			cast('/' || cast(t.cat_id as text) || '/' as text) node " +
 				"  FROM mochi.category AS t " +
 				
-				"  INNER JOIN mochi.category_attr_lcl a " +
-				"  ON t.cat_id = a.cat_id " +
-				
 				"  WHERE 0=0 " +
 				((hasCategoryDesc 	&& !hasCategories 	&& !hasCategoryId)  	? " AND a.cat_desc = :categoryDesc " : "") + 
 				((hasCategories 	&& !hasCategoryDesc && !hasCategoryId)  	? " AND t.cat_cd in :categoryCodes" : "") +
@@ -507,7 +504,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"		 )  markdown_price		  " +
 				"		 ON pc.prd_id = markdown_price.prd_id " +
 				"	 " +
-				"WHERE cc.des_cat_type_id = 1 " +
 				"GROUP BY  " +
 				"	 cc.des_cat_id, " +
 				"	 cc.des_cat_cd, " +
@@ -681,8 +677,9 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				") cs " +
 				"ON s.cat_id = cs.cat_id " +
 				
-				"INNER JOIN mochi.category_attr_lcl a " +
+				"LEFT JOIN mochi.category_attr_lcl a " +
 				"ON s.cat_id = a.cat_id " +
+				"AND a.lcl_cd = :locale " +
 				
 				"LEFT JOIN mochi.category parent " +
 				"ON s.prnt_id = parent.cat_id  " +
@@ -706,8 +703,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"ON pc.cat_id = pa.cat_id " +
 				"AND pa.lcl_cd = :locale " +
 								
-				"WHERE a.lcl_cd = :locale " +
-				"AND case " +
+				"WHERE case " +
 				"	 when :parentCategoryCode = '-1' " +
 				"  then '0' " +
 				"  else parent.cat_cd" +
