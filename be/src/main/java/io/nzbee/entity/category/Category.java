@@ -172,10 +172,6 @@ public abstract class Category implements ISearchDimension {
 
 	@Transient 
 	private CategoryAttribute categoryAttribute;
-	
-	@Transient
-	@JsonIgnore
-	private String[] categoryLayouts;
 
 	@Transient
 	@JsonIgnore
@@ -197,6 +193,11 @@ public abstract class Category implements ISearchDimension {
 	@JsonIgnore
 	private String currency;
 
+	public abstract String getType();
+	
+	public abstract void setType(String type);
+
+
 	public Long getOrderNumber() {
 		return orderNumber;
 	}
@@ -205,9 +206,6 @@ public abstract class Category implements ISearchDimension {
 		this.orderNumber = orderNumber;
 	}
 	
-	public abstract String getType();
-	
-	public abstract void setType(String type);
 	
 	@Transient
 	@JsonIgnore

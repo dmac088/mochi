@@ -19,8 +19,6 @@ public abstract class Category implements ILocalizedDomainObject {
 
 	private int objectCount;
 	
-	private String[] layoutCodes;
-	
 	private String locale;
 	
 	private String currency;
@@ -72,10 +70,6 @@ public abstract class Category implements ILocalizedDomainObject {
 		return objectCount;
 	}
 	
-	public String[] getLayoutCodes() {
-		return layoutCodes;
-	}
-	
 	public String getLocale() {
 		return locale;
 	}
@@ -106,7 +100,6 @@ public abstract class Category implements ILocalizedDomainObject {
         .append(", categoryLevel=").append(categoryLevel)
         .append(", categoryType=").append(categoryType)
         .append(", childCategoryCount=").append(childCategoryCount)
-        .append(", layoutCodes=").append(String.join(",", layoutCodes))
         .append("]");    	
         return builder.toString();
     }
