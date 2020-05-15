@@ -307,7 +307,7 @@ SELECT pg_catalog.setval('brand_bnd_id_seq', 41, true);
 INSERT INTO category_type VALUES (1, 'PRD01', 'product');
 INSERT INTO category_type VALUES (2, 'BND01', 'brand');
 INSERT INTO category_type VALUES (3, 'PRM01', 'promotion');
-INSERT INTO category_type VALUES (4, 'LAY01', 'layiout');
+INSERT INTO category_type VALUES (4, 'LAY01', 'layout');
 
 
 --
