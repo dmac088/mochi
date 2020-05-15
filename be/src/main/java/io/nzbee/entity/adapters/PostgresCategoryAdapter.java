@@ -14,6 +14,7 @@ import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.brand.CategoryBrand;
 import io.nzbee.entity.category.brand.ICategoryBrandMapper;
 import io.nzbee.entity.category.brand.ICategoryBrandService;
+import io.nzbee.entity.category.layout.CategoryLayout;
 import io.nzbee.entity.category.layout.ICategoryLayoutMapper;
 import io.nzbee.entity.category.layout.ICategoryLayoutService;
 import io.nzbee.entity.category.product.CategoryProduct;
