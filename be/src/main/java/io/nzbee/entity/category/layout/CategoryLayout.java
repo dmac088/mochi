@@ -77,7 +77,6 @@ public class CategoryLayout  extends Category {
 	@Override
 	public void setObjectCount(int count) {
 		this.layoutCount = count;
-		
 	}
 	
 	
