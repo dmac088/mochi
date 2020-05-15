@@ -5,7 +5,4 @@ import io.nzbee.domain.category.Category;
 
 public interface ICategoryMapper extends IMapper<Category, io.nzbee.entity.category.Category> {
 
-	Category entityToDo(io.nzbee.entity.category.Category e);
-
-	//Category entityToDo(io.nzbee.entity.category.Category e, String locale, String currency);
 }

@@ -19,4 +19,16 @@ public class BrandMapper implements IBrandMapper {
 		return bo;
 	}
 
+	@Override
+	public Brand entityToDo(Brand e) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Brand doToEntity(Brand d) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
