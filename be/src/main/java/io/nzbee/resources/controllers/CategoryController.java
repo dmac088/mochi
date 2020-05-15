@@ -36,7 +36,7 @@ public class CategoryController {
 	
     @GetMapping("/Category/{locale}/{currency}")
     public ResponseEntity<Resources<CategoryResource>> getCategories(@PathVariable String locale, @PathVariable String currency) {
-    	LOGGER.debug("Fetching categories for parameters : {}, {}", locale, currency);
+    	LOGGER.debug("Fetching all categories for parameters : {}, {}", locale, currency);
     	final List<CategoryResource> collection = categoryService.findAll(locale, currency).stream().map(c -> categoryResourceAssember.toResource(c)).collect(Collectors.toList());
         final Resources <CategoryResource> resources = new Resources <> (collection);
         final String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
@@ -46,7 +46,7 @@ public class CategoryController {
     
     @GetMapping("/ProductCategory/{locale}/{currency}")
     public ResponseEntity<Resources<CategoryResource>> getProductCategories(@PathVariable String locale, @PathVariable String currency) {
-    	LOGGER.debug("Fetching categories for parameters : {}, {}", locale, currency);
+    	LOGGER.debug("Fetching product categories for parameters : {}, {}", locale, currency);
     	final List<CategoryResource> collection = categoryService.findAllProductCategories(locale, currency).stream().map(c -> categoryResourceAssember.toResource(c)).collect(Collectors.toList());
         final Resources <CategoryResource> resources = new Resources <> (collection);
         final String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
@@ -56,7 +56,7 @@ public class CategoryController {
     
     @GetMapping("/BrandCategory/{locale}/{currency}")
     public ResponseEntity<Resources<CategoryResource>> getBrandCategories(@PathVariable String locale, @PathVariable String currency) {
-    	LOGGER.debug("Fetching categories for parameters : {}, {}", locale, currency);
+    	LOGGER.debug("Fetching brand categories for parameters : {}, {}", locale, currency);
     	final List<CategoryResource> collection = categoryService.findAllBrandCategories(locale, currency).stream().map(c -> categoryResourceAssember.toResource(c)).collect(Collectors.toList());
         final Resources <CategoryResource> resources = new Resources <> (collection);
         final String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
@@ -66,7 +66,7 @@ public class CategoryController {
     
     @GetMapping("/LayoutCategory/{locale}/{currency}")
     public ResponseEntity<Resources<CategoryResource>> getLayoutCategories(@PathVariable String locale, @PathVariable String currency) {
-    	LOGGER.debug("Fetching categories for parameters : {}, {}", locale, currency);
+    	LOGGER.debug("Fetching layout categories for parameters : {}, {}", locale, currency);
     	final List<CategoryResource> collection = categoryService.findAllLayoutCategories(locale, currency).stream().map(c -> categoryResourceAssember.toResource(c)).collect(Collectors.toList());
         final Resources <CategoryResource> resources = new Resources <> (collection);
         final String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
