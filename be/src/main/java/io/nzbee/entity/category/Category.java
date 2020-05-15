@@ -101,7 +101,7 @@ import io.nzbee.search.ISearchDimension;
 	                    @FieldResult(name = "categoryId", 					column = "cat_prnt_id"),
 	                    @FieldResult(name = "categoryCode", 				column = "cat_prnt_cd"),
                         @FieldResult(name = "categoryLevel", 				column = "cat_prnt_lvl"),
-                        @FieldResult(name = "categoryOrder", 				column = "cat_prnt_ord_num"),
+                        @FieldResult(name = "orderNumber", 					column = "cat_prnt_ord_num"),
                         @FieldResult(name = "categoryType", 				column = "cat_prnt_typ_id"),
                         @FieldResult(name = "parent", 						column = "cat_prnt_prnt_id"),
                         @FieldResult(name = "categoryAttribute", 			column = "cat_prnt_lcl_id"),
@@ -167,7 +167,8 @@ public abstract class Category implements ISearchDimension {
 				orphanRemoval = true)
 	private Set<CategoryAttribute> attributes = new HashSet<CategoryAttribute>();
 	
-	@Transient 
+	@Field(analyze = Analyze.NO, store=Store.YES)
+	@Column(name="cat_ord_num")
 	private Long orderNumber;
 
 	@Transient 

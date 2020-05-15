@@ -13,6 +13,7 @@ public abstract class Category_ {
 
 	public static volatile SingularAttribute<Category, CategoryType> categoryType;
 	public static volatile SingularAttribute<Category, Category> parent;
+	public static volatile SingularAttribute<Category, Long> orderNumber;
 	public static volatile SingularAttribute<Category, Long> categoryLevel;
 	public static volatile SetAttribute<Category, CategoryAttribute> attributes;
 	public static volatile SingularAttribute<Category, String> categoryCode;
