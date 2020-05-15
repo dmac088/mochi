@@ -14,6 +14,7 @@ public class CategoryProductMapperImpl implements ICategoryProductMapper {
 				e.getCategoryAttribute().getCategoryDesc(),
 				true,
 				e.getCategoryLevel(),
+				e.getOrderNumber(),
 				e.getObjectCount(),
 				e.getParent().isPresent()
 				? e.getParent().get().getCategoryCode()
