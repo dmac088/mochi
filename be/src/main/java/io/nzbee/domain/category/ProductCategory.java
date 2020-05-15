@@ -27,10 +27,10 @@ public class ProductCategory extends Category {
 			  categoryOrder,
 			  locale, 
 			  currency,
-			  parentCode,
 			  objectCount
 			  );
 		
+		this.parentCode = parentCode;
 		this.categoryType = this.getClass().getSimpleName().toString().toLowerCase();
 		this.products = new ArrayList<Product>();
 	}
