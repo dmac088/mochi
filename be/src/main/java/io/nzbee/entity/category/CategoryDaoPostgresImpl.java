@@ -402,6 +402,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"			t.cat_lvl, " +
 				"			t.cat_prnt_id,  " +
 				"			t.cat_typ_id, " +
+				"			t.cat_ord_num, " +	
 				"			cast('/' || cast(t.cat_id as text) || '/' as text) node " +
 				"  FROM mochi.category AS t " +
 				
@@ -419,6 +420,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"			t.cat_lvl, " +
 				"			t.cat_prnt_id,  " +
 				"			t.cat_typ_id, " +
+				"			t.cat_ord_num, " +		
 				"			cast(d.node || CAST(t.cat_id as text) || '/' as text) node " +
 				"  FROM mochi.category AS t  " +
 				"  JOIN descendants AS d  " +
@@ -431,6 +433,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"			descendants.cat_lvl des_cat_lvl, " +
 				"			descendants.cat_prnt_id des_cat_prnt_id, " +
 				"			descendants.cat_typ_id des_cat_type_id, " +
+				"			descendants.cat_ord_num des_cat_ord_num, " +
 				"			descendants.node " +
 				"FROM descendants " +
 				"), summaries_pta " +
@@ -442,6 +445,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"    cc.des_cat_lvl 				AS cat_lvl, " +
 				"    cc.des_cat_prnt_id 			AS prnt_id, " +
 				"    cc.des_cat_type_id 			AS cat_type_id, " +
+				"    cc.des_cat_ord_num 			AS cat_ord_num, " +
 				"    cc.node, " +
 				"    COUNT(DISTINCT prd.upc_cd) 	AS object_count, " +
 				"    MAX(markdown_price.prc_val) 	AS max_markdown_price,  " +
@@ -514,6 +518,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"	 cc.des_cat_lvl, " +
 				"	 cc.des_cat_prnt_id, " +
 				"	 cc.des_cat_type_id, " +
+				"	 cc.des_cat_ord_num, " +
 				"	 cc.node " +
 				"UNION ALL " +
 				"SELECT  " +
@@ -522,6 +527,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"    cc.des_cat_lvl 				AS cat_lvl, " +
 				"    cc.des_cat_prnt_id 			AS prnt_id, " +
 				"    cc.des_cat_type_id 			AS cat_type_id, " +
+				"	 cc.des_cat_ord_num				AS cat_ord_num, " +
 				"    cc.node 						AS node, " +
 				"    count(DISTINCT prd.bnd_cd) 	AS object_count, " +
 				"    max(markdown_price.prc_val) 	AS max_markdown_price,  " +
@@ -606,6 +612,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"	cc.des_cat_lvl, " +
 				"	cc.des_cat_prnt_id, " +
 				"	cc.des_cat_type_id, " +
+				"	cc.des_cat_ord_num, " +
 				"	cc.node " +
 				"), summaries_ptb AS " +
 				"( " +
@@ -613,6 +620,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"	s1.cat_id, " +
 				"	s1.cat_cd, " +
 				"	s1.cat_lvl, " +
+				"	s1.cat_ord_num, " +
 				"	s1.prnt_id, " +
 				"	s1.cat_type_id, " +
 				"	coalesce(s1.object_count, 0) + " +
@@ -627,6 +635,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"	s1.cat_id, " +
 				"	s1.cat_cd, " +
 				"	s1.cat_lvl, " +
+				"	s1.cat_ord_num, " +
 				"	s1.prnt_id, " +
 				"	s1.cat_type_id, " +
 				"	s1.object_count, " +
@@ -636,6 +645,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"SELECT s.cat_id 				AS cat_id, " +
 				"       s.cat_cd 				AS cat_cd, " +
 				"       s.cat_lvl 				AS cat_lvl, " +	
+				"       s.cat_ord_num 			AS cat_ord_num, " +
 				"		a.cat_lcl_id 			AS cat_lcl_id, "	+	
 				"		s.cat_type_id 			AS cat_typ_id, 	" +
 				"       ct.cat_typ_cd			AS cat_typ_cd, " +
@@ -646,6 +656,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"		s.prnt_id   			AS cat_prnt_id, " +
 				"		pc.cat_cd   			AS cat_prnt_cd, " +
 				"		pc.cat_lvl   			AS cat_prnt_lvl, " +
+				"		pc.cat_ord_num   		AS cat_prnt_ord_num, " +
 				"		pc.cat_typ_id 			AS cat_prnt_typ_id, " +
 				"		pct.cat_typ_cd			AS cat_prnt_typ_cd, " +
 				"		pct.cat_typ_desc		AS cat_prnt_typ_desc, " +
