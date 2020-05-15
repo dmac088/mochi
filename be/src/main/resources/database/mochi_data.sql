@@ -301,6 +301,16 @@ SELECT pg_catalog.setval('brand_bnd_id_seq', 41, true);
 
 
 --
+-- Data for Name: category_type; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+INSERT INTO category_type VALUES (1, 'PRD01', 'product');
+INSERT INTO category_type VALUES (2, 'BND01', 'brand');
+INSERT INTO category_type VALUES (3, 'PRM01', 'promotion');
+INSERT INTO category_type VALUES (4, 'LAY01', 'layiout');
+
+
+--
 -- Data for Name: category; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -490,7 +500,7 @@ SELECT pg_catalog.setval('category_cat_id_seq', 8, true);
 -- Data for Name: category_layout; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-INSERT INTO category_layout VALUES (46, NULL);
+INSERT INTO category_layout VALUES (46, 0);
 
 
 --
@@ -545,15 +555,6 @@ INSERT INTO category_product VALUES (44);
 -- Data for Name: category_promotion; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-
-
---
--- Data for Name: category_type; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-INSERT INTO category_type VALUES (1, 'PRD01', 'product');
-INSERT INTO category_type VALUES (2, 'BND01', 'brand');
-INSERT INTO category_type VALUES (3, 'PRM01', 'promotion');
 
 
 --

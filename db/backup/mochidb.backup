@@ -3139,7 +3139,7 @@ SELECT pg_catalog.setval('category_cat_id_seq', 8, true);
 --
 
 COPY category_layout (cat_id, cat_ord_num) FROM stdin;
-46	\N
+46	0
 \.
 
 
@@ -3209,6 +3209,7 @@ COPY category_type (cat_typ_id, cat_typ_cd, cat_typ_desc) FROM stdin;
 1	PRD01	product
 2	BND01	brand
 3	PRM01	promotion
+4	LAY01	layiout
 \.
 
 
@@ -5732,6 +5733,14 @@ ALTER TABLE ONLY category_attr_lcl
 
 ALTER TABLE ONLY category_brand
     ADD CONSTRAINT category_brand_cat_id_category_cat_id_fkey FOREIGN KEY (cat_id) REFERENCES category(cat_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: category category_cat_typ_id_category_type_cat_typ_id; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY category
+    ADD CONSTRAINT category_cat_typ_id_category_type_cat_typ_id FOREIGN KEY (cat_typ_id) REFERENCES category_type(cat_typ_id);
 
 
 --
