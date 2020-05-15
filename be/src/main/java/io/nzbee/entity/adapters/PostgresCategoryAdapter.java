@@ -20,6 +20,7 @@ import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.category.product.ICategoryProductMapper;
 import io.nzbee.entity.category.product.ICategoryProductService;
 import io.nzbee.exceptions.category.CategoryNotFoundException;
+import io.nzbee.resources.category.CategoryResource;
 
 
 @Component
@@ -73,6 +74,12 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	public Set<ProductCategory> findAllByProductCode(String locale, String currency, String productCode) {
 		return categoryProductService.findAllByProductCode(locale, currency, productCode)
 				.stream().map(c -> (ProductCategory) categoryMapper.entityToDo(c)).collect(Collectors.toSet());
+	}
+	
+	@Override
+	public Set<LayoutCategory> findAllLayoutCategories(String locale, String currency) {
+		return categoryService.findAll(locale, currency, CategoryLayout.class)
+				.stream().map(c -> (LayoutCategory) categoryMapper.entityToDo(c)).collect(Collectors.toSet());
 	}
 	
 	@Override
@@ -133,5 +140,7 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 		// TODO Auto-generated method stub
 		
 	}
+
+	
 
 }
