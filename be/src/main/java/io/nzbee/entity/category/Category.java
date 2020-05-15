@@ -69,6 +69,7 @@ import io.nzbee.search.ISearchDimension;
                         @FieldResult(name = "categoryType", 				column = "cat_typ_id"),
                         @FieldResult(name = "parent", 						column = "cat_prnt_id"),
                         @FieldResult(name = "categoryAttribute", 			column = "cat_lcl_id"),
+                        @FieldResult(name = "orderNumber", 					column = "ord_num"),
                         @FieldResult(name = "hierarchy", 					column = "hir_id"),
                         @FieldResult(name = "productCount", 				column = "object_count"),
                         @FieldResult(name = "brandCount", 					column = "object_count"),
@@ -166,6 +167,9 @@ public abstract class Category implements ISearchDimension {
 	private Set<CategoryAttribute> attributes = new HashSet<CategoryAttribute>();
 	
 	@Transient 
+	private Long orderNumber;
+
+	@Transient 
 	private CategoryAttribute categoryAttribute;
 	
 	@Transient
@@ -191,6 +195,14 @@ public abstract class Category implements ISearchDimension {
 	@Transient
 	@JsonIgnore
 	private String currency;
+
+	public Long getOrderNumber() {
+		return orderNumber;
+	}
+
+	public void setOrderNumber(Long orderNumber) {
+		this.orderNumber = orderNumber;
+	}
 	
 	public abstract String getType();
 	

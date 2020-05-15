@@ -1571,7 +1571,7 @@ CREATE TABLE category (
     cat_prnt_id bigint,
     cat_lvl bigint,
     cat_typ_id bigint,
-    ord_num bigint
+    cat_ord_num bigint
 );
 
 
@@ -2969,7 +2969,7 @@ COPY brand_promotion (bnd_id, prm_id) FROM stdin;
 -- Data for Name: category; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY category (cat_id, cat_cd, cat_prnt_id, cat_lvl, cat_typ_id, ord_num) FROM stdin;
+COPY category (cat_id, cat_cd, cat_prnt_id, cat_lvl, cat_typ_id, cat_ord_num) FROM stdin;
 43	BSP01	39	1	1	\N
 39	PRM02	\N	0	1	\N
 38	FET01	39	1	1	\N
