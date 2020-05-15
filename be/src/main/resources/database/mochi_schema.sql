@@ -1666,7 +1666,7 @@ ALTER TABLE category_cat_id_seq OWNER TO mochidb_owner;
 
 CREATE TABLE category (
     cat_id bigint DEFAULT nextval('category_cat_id_seq'::regclass) NOT NULL,
-    cat_cd character varying(5) NOT NULL,
+    cat_cd character(5) NOT NULL,
     cat_prnt_id bigint,
     cat_lvl bigint,
     cat_typ_id bigint,
