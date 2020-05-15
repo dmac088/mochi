@@ -51,6 +51,7 @@ ALTER TABLE ONLY mochi.department_attr_lcl DROP CONSTRAINT department_attr_lcl_d
 ALTER TABLE ONLY mochi.customer DROP CONSTRAINT customer_role_id_fkey;
 ALTER TABLE ONLY mochi.category_product DROP CONSTRAINT category_product_cat_id_category_cat_id_fkey;
 ALTER TABLE ONLY mochi.category_layout DROP CONSTRAINT category_layout_cat_id_category_cat_id_fkey;
+ALTER TABLE ONLY mochi.category DROP CONSTRAINT category_cat_typ_id_category_type_cat_typ_id;
 ALTER TABLE ONLY mochi.category_brand DROP CONSTRAINT category_brand_cat_id_category_cat_id_fkey;
 ALTER TABLE ONLY mochi.category_attr_lcl DROP CONSTRAINT category_attr_lcl_lcl_cd_fkey;
 ALTER TABLE ONLY mochi.category_attr_lcl DROP CONSTRAINT category_attr_lcl_cat_id_fkey;
@@ -3362,6 +3363,14 @@ ALTER TABLE ONLY category_attr_lcl
 
 ALTER TABLE ONLY category_brand
     ADD CONSTRAINT category_brand_cat_id_category_cat_id_fkey FOREIGN KEY (cat_id) REFERENCES category(cat_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: category category_cat_typ_id_category_type_cat_typ_id; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY category
+    ADD CONSTRAINT category_cat_typ_id_category_type_cat_typ_id FOREIGN KEY (cat_typ_id) REFERENCES category_type(cat_typ_id);
 
 
 --
