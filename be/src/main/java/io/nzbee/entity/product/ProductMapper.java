@@ -40,4 +40,16 @@ public class ProductMapper implements IProductMapper {
 		}
 		return null;
 	}
+
+	@Override
+	public io.nzbee.domain.product.Product entityToDo(Product e) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Product doToEntity(io.nzbee.domain.product.Product d) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
