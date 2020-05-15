@@ -1,12 +1,13 @@
 package io.nzbee.entity.category.product;
 
 import org.springframework.stereotype.Component;
-
 import io.nzbee.domain.category.ProductCategory;
+import io.nzbee.entity.category.attribute.CategoryAttribute;
 
 @Component
 public class CategoryProductMapperImpl implements ICategoryProductMapper {
 
+	
 	@Override
 	public ProductCategory entityToDo(CategoryProduct e) {
 		return new ProductCategory(
@@ -25,8 +26,23 @@ public class CategoryProductMapperImpl implements ICategoryProductMapper {
 
 	@Override
 	public CategoryProduct doToEntity(ProductCategory d) {
-		// TODO Auto-generated method stub
-		return null;
+		ProductCategory pc = (ProductCategory) d;
+		
+		CategoryProduct cp = new CategoryProduct();
+		cp.setCategoryCode(pc.getCategoryCode());
+		cp.setLocale(pc.getLocale());
+		cp.setCurrency(pc.getCurrency());
+		cp.setCategoryLevel(pc.getCategoryLevel());
+		cp.setObjectCount(pc.getCount());
+		
+		CategoryAttribute ca = new CategoryAttribute();
+		ca.setCategoryDesc(pc.getCategoryDesc());
+		ca.setLclCd(pc.getLocale());
+		
+		ca.setCategory(cp);
+		cp.addAttribute(ca);
+		
+		return cp;
 	}
 
 }

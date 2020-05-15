@@ -11,11 +11,13 @@ import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.ports.ICategoryPortService;
 import io.nzbee.entity.category.ICategoryMapper;
 import io.nzbee.entity.category.ICategoryService;
-import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.brand.CategoryBrand;
+import io.nzbee.entity.category.brand.ICategoryBrandMapper;
 import io.nzbee.entity.category.brand.ICategoryBrandService;
-import io.nzbee.entity.category.layout.CategoryLayout;
+import io.nzbee.entity.category.layout.ICategoryLayoutMapper;
+import io.nzbee.entity.category.layout.ICategoryLayoutService;
 import io.nzbee.entity.category.product.CategoryProduct;
+import io.nzbee.entity.category.product.ICategoryProductMapper;
 import io.nzbee.entity.category.product.ICategoryProductService;
 import io.nzbee.exceptions.category.CategoryNotFoundException;
 
@@ -31,6 +33,18 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	
 	@Autowired 
 	private ICategoryBrandService categoryBrandService;
+	
+	@Autowired 
+	private ICategoryLayoutService categoryLayoutService;
+	
+	@Autowired 
+	private ICategoryProductMapper categoryProductMapper;
+	
+	@Autowired 
+	private ICategoryBrandMapper categoryBrandMapper;
+	
+	@Autowired 
+	private ICategoryLayoutMapper categoryLayoutMapper;
 	
 	@Autowired
 	private ICategoryMapper categoryMapper;
@@ -102,62 +116,14 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	public void save(Category domainObject) {
 		
 		if (domainObject instanceof ProductCategory) {
-			ProductCategory pc = (ProductCategory) domainObject;
-			
-			CategoryProduct cp = new CategoryProduct();
-			cp.setCategoryCode(pc.getCategoryCode());
-			cp.setLocale(pc.getLocale());
-			cp.setCurrency(pc.getCurrency());
-			cp.setCategoryLevel(pc.getCategoryLevel());
-			cp.setObjectCount(pc.getCount());
-			
-			CategoryAttribute ca = new CategoryAttribute();
-			ca.setCategoryDesc(pc.getCategoryDesc());
-			ca.setLclCd(pc.getLocale());
-			
-			ca.setCategory(cp);
-			cp.addAttribute(ca);
-			
-			categoryProductService.save(cp);
+			categoryProductService.save(categoryProductMapper.doToEntity((ProductCategory) domainObject));
 		}
 		
-		if(domainObject instanceof BrandCategory) {
-			BrandCategory bc = (BrandCategory) domainObject;
-			
-			CategoryBrand cb = new CategoryBrand();
-			cb.setCategoryCode(bc.getCategoryCode());
-			cb.setLocale(bc.getLocale());
-			cb.setCurrency(bc.getCurrency());
-			cb.setCategoryLevel(bc.getCategoryLevel());
-			cb.setObjectCount(bc.getCount());
-			
-			CategoryAttribute ca = new CategoryAttribute();
-			ca.setCategoryDesc(bc.getCategoryDesc());
-			ca.setLclCd(bc.getLocale());
-			
-			ca.setCategory(cb);
-			cb.addAttribute(ca);
-			
-			categoryBrandService.save(cb);
+		if(domainObject instanceof BrandCategory) {			
+			categoryBrandService.save(categoryBrandMapper.doToEntity((BrandCategory) domainObject));
 		}
 		if(domainObject instanceof LayoutCategory) {
-			LayoutCategory lc = (LayoutCategory) domainObject;
-			
-			CategoryLayout cl = new CategoryLayout();
-			cl.setCategoryCode(lc.getCategoryCode());
-			cl.setLocale(lc.getLocale());
-			cl.setCurrency(lc.getCurrency());
-			cl.setCategoryLevel(lc.getCategoryLevel());
-			cl.setObjectCount(lc.getCount());
-			cl.setOrderNumber(lc.getOrderNumber());
-			
-			CategoryAttribute ca = new CategoryAttribute();
-			ca.setCategoryDesc(lc.getCategoryDesc());
-			ca.setLclCd(lc.getLocale());
-			
-			ca.setCategory(cl);
-			cl.addAttribute(ca);
-			
+			categoryLayoutService.save(categoryLayoutMapper.doToEntity((LayoutCategory) domainObject));
 		}
 	
 	}
