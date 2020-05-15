@@ -36,6 +36,14 @@ public class ProductDoBeanFactory {
 												  "Food",
 												  "en-GB",
 												  "HKD"),
-								   new ProductCategory("FRT01", "test category", true, new Long(1), 0, "PNT01", "en-GB", "HKD"));
+								   new ProductCategory("FRT01", 
+										   			   "test category", 
+										   			   true, 
+										   			   new Long(1), 
+										   			   new Long(0), 
+										   			   0, 
+										   			   "PNT01", 
+										   			   "en-GB", 
+										   			   "HKD"));
 	}
 }

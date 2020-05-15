@@ -13,6 +13,7 @@ public class CategoryBrandMapperImpl implements ICategoryBrandMapper {
 				e.getCategoryAttribute().getCategoryDesc(),
 				true,
 				e.getCategoryLevel(),
+				e.getOrderNumber(),
 				e.getObjectCount(),
 				e.getParent().isPresent()
 				? e.getParent().get().getCategoryCode()
