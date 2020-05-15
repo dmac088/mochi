@@ -18,4 +18,16 @@ public class DepartmentMapper implements IDepartmentMapper {
 		return dO;
 	}
 
+	@Override
+	public Department entityToDo(Department e) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Department doToEntity(Department d) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

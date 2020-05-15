@@ -20,5 +20,11 @@ public class PersonMapper implements IPersonMapper {
 		);		
 		return co;	
 	}
+
+	@Override
+	public Person doToEntity(Customer d) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }
