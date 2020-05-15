@@ -21,8 +21,6 @@ import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.category.product.ICategoryProductMapper;
 import io.nzbee.entity.category.product.ICategoryProductService;
 import io.nzbee.exceptions.category.CategoryNotFoundException;
-import io.nzbee.resources.category.CategoryResource;
-
 
 @Component
 public class PostgresCategoryAdapter implements ICategoryPortService {
