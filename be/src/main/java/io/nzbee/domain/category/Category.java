@@ -29,7 +29,6 @@ public abstract class Category implements ILocalizedDomainObject {
 					Long categoryOrder,
 					String lclCd, 
 					String currency,
-					String parentCode,
 					int objectCount 
 					) {
 		super();

@@ -15,7 +15,6 @@ public class BrandCategory extends Category {
 							Long level,
 							Long categoryOrder,
 							int objectCount,
-							String parentCode,
 							String locale, 
 							String currency) {
 		super(categoryCode, 
@@ -24,7 +23,6 @@ public class BrandCategory extends Category {
 			  categoryOrder,
 			  locale, 
 			  currency,
-			  parentCode,
 			  objectCount);
 		this.categoryType = this.getClass().getSimpleName().toString().toLowerCase();
 		this.brands = new ArrayList<Brand>();
