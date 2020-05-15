@@ -1669,8 +1669,7 @@ CREATE TABLE category (
     cat_cd character(5) NOT NULL,
     cat_prnt_id bigint,
     cat_lvl bigint,
-    cat_typ_id bigint,
-    cat_ord_num bigint
+    cat_typ_id bigint
 );
 
 
@@ -1721,7 +1720,8 @@ ALTER TABLE category_brand OWNER TO mochidb_owner;
 --
 
 CREATE TABLE category_layout (
-    cat_id bigint DEFAULT nextval('category_cat_id_seq'::regclass) NOT NULL
+    cat_id bigint DEFAULT nextval('category_cat_id_seq'::regclass) NOT NULL,
+    cat_ord_num bigint
 );
 
 
