@@ -38,6 +38,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.google.common.collect.Lists;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.brand.CategoryBrand;
+import io.nzbee.entity.category.layout.CategoryLayout;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.search.ISearchDimension;
@@ -51,7 +52,8 @@ import io.nzbee.search.ISearchDimension;
 	    include = JsonTypeInfo.As.PROPERTY,
 	    property="type")
 @JsonSubTypes( {@JsonSubTypes.Type(value = CategoryProduct.class, 	name = "categoryproduct"),
-			    @JsonSubTypes.Type(value = CategoryBrand.class, 	name = "categorybrand")})
+			    @JsonSubTypes.Type(value = CategoryBrand.class, 	name = "categorybrand"),
+				@JsonSubTypes.Type(value = CategoryLayout.class, 	name = "categorylayout")})
 @SqlResultSetMapping(
     name = "CategoryMapping",
     columns = {
@@ -166,10 +168,6 @@ public abstract class Category implements ISearchDimension {
 				cascade = CascadeType.ALL,
 				orphanRemoval = true)
 	private Set<CategoryAttribute> attributes = new HashSet<CategoryAttribute>();
-	
-	@Field(analyze = Analyze.NO, store=Store.YES)
-	@Column(name="cat_ord_num")
-	private Long orderNumber;
 
 	@Transient 
 	private CategoryAttribute categoryAttribute;
@@ -198,16 +196,6 @@ public abstract class Category implements ISearchDimension {
 	
 	public abstract void setType(String type);
 
-
-	public Long getOrderNumber() {
-		return orderNumber;
-	}
-
-	public void setOrderNumber(Long orderNumber) {
-		this.orderNumber = orderNumber;
-	}
-	
-	
 	@Transient
 	@JsonIgnore
 	@Field(analyze = Analyze.NO, store=Store.YES)

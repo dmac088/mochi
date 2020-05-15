@@ -40,7 +40,6 @@ public class ProductDoBeanFactory {
 										   			   "test category", 
 										   			   true, 
 										   			   new Long(1), 
-										   			   new Long(0), 
 										   			   0, 
 										   			   "PNT01", 
 										   			   "en-GB", 

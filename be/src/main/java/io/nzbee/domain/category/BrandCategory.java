@@ -13,14 +13,12 @@ public class BrandCategory extends Category {
 							String categoryDesc,
 							boolean isHierarchical,
 							Long level,
-							Long categoryOrder,
 							int objectCount,
 							String locale, 
 							String currency) {
 		super(categoryCode, 
 			  categoryDesc, 
 			  level, 
-			  categoryOrder,
 			  locale, 
 			  currency,
 			  objectCount);

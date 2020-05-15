@@ -15,7 +15,6 @@ public class ProductCategory extends Category {
 							String categoryDesc,
 							boolean isHierarchical,
 							Long level,
-							Long categoryOrder,
 							int objectCount,
 							String parentCode,
 							String locale, 
@@ -24,7 +23,6 @@ public class ProductCategory extends Category {
 		super(categoryCode, 
 			  categoryDesc,
 			  level, 
-			  categoryOrder,
 			  locale, 
 			  currency,
 			  objectCount

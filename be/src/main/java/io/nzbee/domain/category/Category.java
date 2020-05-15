@@ -10,8 +10,6 @@ public abstract class Category implements ILocalizedDomainObject {
 	private String categoryDesc;
 	
 	private Long categoryLevel;
-	
-	private Long categoryOrder;
 
 	protected String categoryType;
 
@@ -26,7 +24,6 @@ public abstract class Category implements ILocalizedDomainObject {
 	public Category(String categoryCode, 
 					String categoryDesc,
 					Long categoryLevel,
-					Long categoryOrder,
 					String lclCd, 
 					String currency,
 					int objectCount 
@@ -38,7 +35,6 @@ public abstract class Category implements ILocalizedDomainObject {
 		this.objectCount	= objectCount;
 		this.locale 		= lclCd;
 		this.currency		= currency;
-		this.categoryOrder  = categoryOrder;
 	}
 
 	public String getCategoryCode() {
@@ -51,10 +47,6 @@ public abstract class Category implements ILocalizedDomainObject {
 
 	public Long getCategoryLevel() {
 		return this.categoryLevel;
-	}
-	
-	public Long getCategoryOrder() {
-		return categoryOrder;
 	}
 
 	public Long getChildCount() {
