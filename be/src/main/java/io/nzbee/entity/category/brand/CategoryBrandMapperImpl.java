@@ -19,4 +19,10 @@ public class CategoryBrandMapperImpl implements ICategoryBrandMapper {
 				);
 	}
 
+	@Override
+	public CategoryBrand doToEntity(BrandCategory d) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

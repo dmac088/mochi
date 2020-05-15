@@ -25,6 +25,13 @@ public class CategoryMapperImpl implements ICategoryMapper {
 			return categoryBrandMapper.entityToDo((CategoryBrand) e);
 		}
 		return null;
+		
+	}
+
+	@Override
+	public Category doToEntity(io.nzbee.domain.category.Category d) {
+		
+		return null;
 	}
 	
 }

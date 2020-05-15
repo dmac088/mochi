@@ -18,4 +18,10 @@ public class CategoryLayoutMapperImpl implements ICategoryLayoutMapper {
 		
 	}
 
+	@Override
+	public CategoryLayout doToEntity(LayoutCategory d) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

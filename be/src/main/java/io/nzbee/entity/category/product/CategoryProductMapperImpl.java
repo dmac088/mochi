@@ -23,4 +23,10 @@ public class CategoryProductMapperImpl implements ICategoryProductMapper {
 			 );
 	}
 
+	@Override
+	public CategoryProduct doToEntity(ProductCategory d) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
