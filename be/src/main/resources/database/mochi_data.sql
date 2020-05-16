@@ -357,7 +357,6 @@ INSERT INTO category VALUES (2, 'PRM01', NULL, 0, 1);
 INSERT INTO category VALUES (7, 'BAP01', 4, 2, 1);
 INSERT INTO category VALUES (44, 'UNK01', 39, 1, 1);
 INSERT INTO category VALUES (45, 'FBR01', 40, 0, 2);
-INSERT INTO category VALUES (46, 'LAY00', NULL, 0, 4);
 
 
 --
@@ -473,8 +472,6 @@ INSERT INTO category_attr_lcl VALUES (103, 44, '未知', NULL, 'zh-HK');
 INSERT INTO category_attr_lcl VALUES (13, 2, 'ALL', '', 'zh-HK');
 INSERT INTO category_attr_lcl VALUES (104, 45, 'Featured Brands', NULL, 'en-GB');
 INSERT INTO category_attr_lcl VALUES (105, 45, '推薦品牌', NULL, 'zh-HK');
-INSERT INTO category_attr_lcl VALUES (106, 46, 'test english', 'test_image.jpg', 'en-GB');
-INSERT INTO category_attr_lcl VALUES (107, 46, 'test chinese', 'test_image.jpg', 'zh-HK');
 
 
 --
@@ -674,7 +671,7 @@ INSERT INTO customer VALUES (232313, '1000000074');
 -- Name: customer_cst_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('customer_cst_id_seq', 1000000262, true);
+SELECT pg_catalog.setval('customer_cst_id_seq', 1000000263, true);
 
 
 --
@@ -860,7 +857,7 @@ INSERT INTO food_attr_lcl VALUES (58, 18, '不適用', 'zh-HK');
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 233000, true);
+SELECT pg_catalog.setval('hibernate_sequence', 233014, true);
 
 
 --
@@ -1263,7 +1260,7 @@ INSERT INTO product_category VALUES (90, 5, 43);
 -- Name: product_category_prd_cat_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('product_category_prd_cat_id_seq', 120, true);
+SELECT pg_catalog.setval('product_category_prd_cat_id_seq', 122, true);
 
 
 --
