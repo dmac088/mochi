@@ -499,13 +499,6 @@ SELECT pg_catalog.setval('category_cat_id_seq', 8, true);
 
 
 --
--- Data for Name: category_layout; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-INSERT INTO category_layout VALUES (46, 0);
-
-
---
 -- Data for Name: category_product; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -681,7 +674,7 @@ INSERT INTO customer VALUES (232313, '1000000074');
 -- Name: customer_cst_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('customer_cst_id_seq', 1000000261, true);
+SELECT pg_catalog.setval('customer_cst_id_seq', 1000000262, true);
 
 
 --
@@ -867,7 +860,7 @@ INSERT INTO food_attr_lcl VALUES (58, 18, '不適用', 'zh-HK');
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 232994, true);
+SELECT pg_catalog.setval('hibernate_sequence', 233000, true);
 
 
 --
