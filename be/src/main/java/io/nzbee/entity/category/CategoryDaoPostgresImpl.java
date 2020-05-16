@@ -405,6 +405,10 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"			cast('/' || cast(t.cat_id as text) || '/' as text) node " +
 				"  FROM mochi.category AS t " +
 				
+				"  LEFT JOIN mochi.category_attr_lcl a " +
+				"  ON t.cat_id = a.cat_id " +
+				"  AND a.lcl_cd = :locale " +
+				
 				"  WHERE 0=0 " +
 				((hasCategoryDesc 	&& !hasCategories 	&& !hasCategoryId)  	? " AND a.cat_desc = :categoryDesc " : "") + 
 				((hasCategories 	&& !hasCategoryDesc && !hasCategoryId)  	? " AND t.cat_cd in :categoryCodes" : "") +
@@ -636,7 +640,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"		s.cat_type_id 			AS cat_typ_id, 	" +
 				"       ct.cat_typ_cd			AS cat_typ_cd, " +
 				"       ct.cat_typ_desc 		AS cat_typ_desc, " +
-				"		a.cat_id 				AS cat_id, " +	
 				"       a.cat_desc 				AS cat_desc, " +
 				"       a.lcl_cd 				AS lcl_cd, " +
 				"		s.prnt_id   			AS cat_prnt_id, " +
