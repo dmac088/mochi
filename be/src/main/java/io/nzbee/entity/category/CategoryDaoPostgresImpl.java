@@ -632,7 +632,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"SELECT s.cat_id 				AS cat_id, " +
 				"       s.cat_cd 				AS cat_cd, " +
 				"       s.cat_lvl 				AS cat_lvl, " +	
-				"		cl.cat_ord_num 			AS cat_ord_num, " + 
 				"		a.cat_lcl_id 			AS cat_lcl_id, "	+	
 				"		s.cat_type_id 			AS cat_typ_id, 	" +
 				"       ct.cat_typ_cd			AS cat_typ_cd, " +
@@ -643,7 +642,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"		s.prnt_id   			AS cat_prnt_id, " +
 				"		pc.cat_cd   			AS cat_prnt_cd, " +
 				"		pc.cat_lvl   			AS cat_prnt_lvl, " +
-				"		pcl.cat_ord_num   		AS cat_prnt_ord_num, " +
 				"		pc.cat_typ_id 			AS cat_prnt_typ_id, " +
 				"		pct.cat_typ_cd			AS cat_prnt_typ_cd, " +
 				"		pct.cat_typ_desc		AS cat_prnt_typ_desc, " +
@@ -662,9 +660,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"		coalesce(cs.child_cat_count,0)		AS child_cat_count " +
 
 				"FROM summaries_ptb s " +
-				
-				"LEFT JOIN mochi.category_layout cl " +
-				"ON s.cat_id = cl.cat_id " +
 
 				"LEFT JOIN summaries_ptb ps " +
 				"ON ps.cat_id = s.prnt_id " +
@@ -683,9 +678,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				
 				"LEFT JOIN mochi.category parent " +
 				"ON s.prnt_id = parent.cat_id  " +
-				
-				"LEFT JOIN mochi.category_layout pcl " +
-				"ON s.prnt_id = pcl.cat_id " +
 				
 				"INNER JOIN mochi.category_type ct " +
 				"ON ct.cat_typ_id = s.cat_type_id  " +
