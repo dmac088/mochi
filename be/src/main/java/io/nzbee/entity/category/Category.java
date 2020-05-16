@@ -38,7 +38,6 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.google.common.collect.Lists;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.brand.CategoryBrand;
-import io.nzbee.entity.category.layout.CategoryLayout;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.search.ISearchDimension;
@@ -52,8 +51,7 @@ import io.nzbee.search.ISearchDimension;
 	    include = JsonTypeInfo.As.PROPERTY,
 	    property="type")
 @JsonSubTypes( {@JsonSubTypes.Type(value = CategoryProduct.class, 	name = "categoryproduct"),
-			    @JsonSubTypes.Type(value = CategoryBrand.class, 	name = "categorybrand"),
-				@JsonSubTypes.Type(value = CategoryLayout.class, 	name = "categorylayout")})
+			    @JsonSubTypes.Type(value = CategoryBrand.class, 	name = "categorybrand")})
 @SqlResultSetMapping(
     name = "CategoryMapping",
     columns = {
