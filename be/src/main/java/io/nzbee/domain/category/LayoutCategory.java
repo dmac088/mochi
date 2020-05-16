@@ -12,7 +12,21 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
  * no order will be imposed on the menus since that is front-end concern, the back-end is simply providing a mechanism 
  * to group our categories, since it's so generic we may be better off calling it something like genericCategory.
  * also remember that productcategory is hierarchical while brandcategory is not, therefor the productcategory payload 
- * will be more verbose (we get the children too) 
+ * will be more verbose (we get the children too).
+ * 
+ * <mainMenu>
+ * 	fetchCategoriesByLayoutCategoryCode('FMM001').map(c) => {
+ * 		//e.g. Hot Categories (all the categories that are hot)
+ * 		if (c.categoryType === 'productcategory') { 
+ * 			<ProductCategoryMenu c />
+ * 		}
+ * 		//e.g. Top Brand
+ * 		if (c.categoryType === 'brandcategory') {
+ * 			<BrandCategoryMenu c />
+ * 		}
+ * 		
+ * </mainMenu>
+ * 
  */
 @JsonTypeName("layoutcategory")
 public class LayoutCategory extends Category {
