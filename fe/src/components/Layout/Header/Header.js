@@ -1,5 +1,6 @@
 import React from "react"; 
 import MainMenu from './MainMenu/MainMenu';
+import Search from './Search/Search';
 
 function Header() {
     return (
@@ -68,14 +69,7 @@ function Header() {
                         </div>
                       </div>
                       {/*<!-- end of header phone number -->*/}
-                      {/*<!-- search bar -->*/}
-                      <div className="header-advance-search">
-                        <form action="#">
-                          <input type="text" placeholder="Search your product" />
-                          <button><span className="icon_search"></span></button>
-                        </form>
-                      </div>
-                      {/*<!-- end of search bar -->*/}
+                      <Search />
                       {/*<!-- shopping cart -->*/}
                       <div className="shopping-cart" id="shopping-cart">
                         <a href="cart.html">
