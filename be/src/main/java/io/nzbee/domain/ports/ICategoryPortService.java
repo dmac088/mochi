@@ -3,7 +3,6 @@ package io.nzbee.domain.ports;
 import java.util.Set;
 import io.nzbee.domain.category.BrandCategory;
 import io.nzbee.domain.category.Category;
-import io.nzbee.domain.category.LayoutCategory;
 import io.nzbee.domain.category.ProductCategory;
 
 public interface ICategoryPortService  extends IProductDimensionService<Category> {
@@ -21,7 +20,5 @@ public interface ICategoryPortService  extends IProductDimensionService<Category
 	Set<ProductCategory> findAllProductCategories(String locale, String currency);
 
 	Set<BrandCategory> findAllBrandCategories(String locale, String currency);
-
-	Set<LayoutCategory> findAllLayoutCategories(String locale, String currency);
 
 }

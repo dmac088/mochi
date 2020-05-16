@@ -64,17 +64,6 @@ public class CategoryController {
         return ResponseEntity.ok(resources);
     }
     
-    @GetMapping("/LayoutCategory/{locale}/{currency}")
-    public ResponseEntity<Resources<CategoryResource>> getLayoutCategories(@PathVariable String locale, @PathVariable String currency) {
-    	LOGGER.debug("Fetching layout categories for parameters : {}, {}", locale, currency);
-    	final List<CategoryResource> collection = categoryService.findAllLayoutCategories(locale, currency)
-    			.stream().map(c -> categoryResourceAssember.toResource(c)).collect(Collectors.toList());
-        final Resources <CategoryResource> resources = new Resources <> (collection);
-        final String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
-        resources.add(new Link(uriString, "self"));
-        return ResponseEntity.ok(resources);
-    }
-    
     @GetMapping("/Category/{locale}/{currency}/product/{productCode}")
     public ResponseEntity<Resources<CategoryResource>> getCategories(@PathVariable String locale, @PathVariable String currency, @PathVariable String productCode) {
     	LOGGER.debug("Fetching categories for parameters : {}, {}, {}", locale, currency, productCode);

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import io.nzbee.domain.category.BrandCategory;
 import io.nzbee.domain.category.Category;
-import io.nzbee.domain.category.LayoutCategory;
 import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.ports.ICategoryPortService;
 import io.nzbee.entity.category.ICategoryMapper;
@@ -14,9 +13,6 @@ import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.brand.CategoryBrand;
 import io.nzbee.entity.category.brand.ICategoryBrandMapper;
 import io.nzbee.entity.category.brand.ICategoryBrandService;
-import io.nzbee.entity.category.layout.CategoryLayout;
-import io.nzbee.entity.category.layout.ICategoryLayoutMapper;
-import io.nzbee.entity.category.layout.ICategoryLayoutService;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.category.product.ICategoryProductMapper;
 import io.nzbee.entity.category.product.ICategoryProductService;
@@ -35,16 +31,10 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	private ICategoryBrandService categoryBrandService;
 	
 	@Autowired 
-	private ICategoryLayoutService categoryLayoutService;
-	
-	@Autowired 
 	private ICategoryProductMapper categoryProductMapper;
 	
 	@Autowired 
 	private ICategoryBrandMapper categoryBrandMapper;
-	
-	@Autowired 
-	private ICategoryLayoutMapper categoryLayoutMapper;
 	
 	@Autowired
 	private ICategoryMapper categoryMapper;
@@ -73,12 +63,6 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	public Set<ProductCategory> findAllByProductCode(String locale, String currency, String productCode) {
 		return categoryProductService.findAllByProductCode(locale, currency, productCode)
 				.stream().map(c -> (ProductCategory) categoryMapper.entityToDo(c)).collect(Collectors.toSet());
-	}
-	
-	@Override
-	public Set<LayoutCategory> findAllLayoutCategories(String locale, String currency) {
-		return categoryService.findAll(locale, currency, CategoryLayout.class)
-				.stream().map(c -> (LayoutCategory) categoryMapper.entityToDo(c)).collect(Collectors.toSet());
 	}
 	
 	@Override
@@ -127,9 +111,6 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 		
 		if(domainObject instanceof BrandCategory) {			
 			categoryBrandService.save(categoryBrandMapper.doToEntity((BrandCategory) domainObject));
-		}
-		if(domainObject instanceof LayoutCategory) {
-			categoryLayoutService.save(categoryLayoutMapper.doToEntity((LayoutCategory) domainObject));
 		}
 	
 	}
