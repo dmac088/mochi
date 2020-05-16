@@ -15,8 +15,7 @@ public class CategoryLayoutMapperImpl implements ICategoryLayoutMapper {
 				e.getCategoryLevel(),
 				e.getLocale(), 
 				e.getCurrency(),
-				e.getObjectCount(),
-				e.getOrderNumber()
+				e.getObjectCount()
 				);
 		
 	}
