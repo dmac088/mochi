@@ -1,21 +1,19 @@
-import React from "react";
-import { withRouter } from "react-router-dom";
+import React from 'react';
+import { withRouter } from 'react-router-dom';
 
-const routeContact = (e, params, history) => {
+export const route = (e, props) => {
     e.preventDefault();
-    history.push('/' + params.lang + '/' + params.curr + '/contact');
-  }
+    const { lang, curr } = props.match.params;
+    console.log('/' + lang + '/' + curr + '/contact');
+    props.history.push('/' + lang + '/' + curr + '/contact');
+}
 
-export const ContactMenu = withRouter(({history, ...props}) => {
-    console.log(props);
-    const { params } = props.match;
-    if(!params) { return null; }
+export const ContactMenu = withRouter(({...props}) => {
+   console.log(props);
     return (
-        <li className="active">
-            <a href="#" onClick={(e) => routeContact(e, params, history)} >
-                Contact
-            </a>
-        </li>
+      <li>
+        <a onClick={(e) => route(e, props)} href="#">CONTACT</a>
+      </li>
     );
 });
 

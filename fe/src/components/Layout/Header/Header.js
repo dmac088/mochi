@@ -4,7 +4,7 @@ import Search from './Search/Search';
 import Language from './Language/Language';
 import MyAccount from './MyAccount';
 
-function Header(props) {
+function Header() {
     return (
       <header>
             {/*<!--=======  header top  =======-->*/}
@@ -122,7 +122,7 @@ function Header(props) {
                     </div>
 
                     {/*<!-- navigation section -->*/}
-                    <MainMenu {...props}/>                   
+                    <MainMenu />                   
                     {/*<!-- end of navigation section -->*/}
                   </div>
                   <div className="col-12">

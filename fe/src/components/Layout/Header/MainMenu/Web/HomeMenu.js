@@ -1,14 +1,20 @@
-import React from "react";
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { withRouter } from 'react-router-dom';
 
-export const HomeMenu = () => {
+export const route = (e, props) => {
+    e.preventDefault();
+    console.log(props);
+    const { lang, curr } = props.match.params;
+    props.history.push('/' + lang + '/' + curr );
+}
+
+export const HomeMenu = withRouter(({ ...props }) => {
+    
     return (
-        <li className="active">
-            <Link to="/">
-                HOME
-        </Link>
+        <li>
+            <a onClick={(e) => route(e, props)} href="#">HOME</a>
         </li>
     );
-}
+});
 
 export default HomeMenu;
