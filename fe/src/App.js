@@ -4,6 +4,7 @@ import "./assets/scss/main.scss";
 import "./assets/css/font-awesome.min.css";
 import "./assets/css/elegent.min.css";
 import Header from "./components/Layout/Header/Header";
+import Footer from "./components/Layout/Footer/Footer";
 import Landing from "./components/Layout/Landing";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NotFound from "./components/Layout/NotFound";
@@ -42,6 +43,7 @@ function App() {
                 <Route component={NotFound} />
               </Switch>
             </div>
+            <Footer />
           </div>
         </Router>
       </Provider>
