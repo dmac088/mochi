@@ -131,7 +131,6 @@ filters = {
 //care about casing when searching for matches
 @TokenFilterDef(factory = CJKWidthFilterFactory.class),
 @TokenFilterDef(factory = CJKBigramFilterFactory.class),
-@TokenFilterDef(factory = LowerCaseFilterFactory.class),
 @TokenFilterDef(factory = StopFilterFactory.class),
 //Index partial words starting at the front, so we can provide
 //Autocomplete functionality
@@ -146,8 +145,8 @@ tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
 filters = {
 //Normalize token text to lowercase, as the user is unlikely to
 //care about casing when searching for matches
-@TokenFilterDef(factory = WordDelimiterFilterFactory.class),
-@TokenFilterDef(factory = LowerCaseFilterFactory.class),
+@TokenFilterDef(factory = CJKWidthFilterFactory.class),
+@TokenFilterDef(factory = CJKBigramFilterFactory.class),
 @TokenFilterDef(factory = NGramFilterFactory.class, params = {
 @Parameter(name = "minGramSize", value = "1"),
 @Parameter(name = "maxGramSize", value = "5") })})
