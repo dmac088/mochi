@@ -61,7 +61,7 @@ function Landing() {
               <br />
               <Link className="btn btn-lg btn-primary mr-2" to="/dashboard">
                 Load Dashboard
-                </Link>
+              </Link>
               <br />
               {tokens.access_token}
             </div>
