@@ -22,6 +22,7 @@ function App() {
       <Provider store={store}>
         <Router>
           <div className="App">
+            {/*we must wrap the header in a Route in order to access the props of router, alternatively we can use withRouter HOC*/}
           <Route path="/" 
                  component={Header}>
           </Route>
