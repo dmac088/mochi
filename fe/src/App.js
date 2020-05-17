@@ -7,7 +7,7 @@ import Header from "./components/Layout/Header/Header";
 import Footer from "./components/Layout/Footer/Footer";
 import Account from "./components/Layout/Account/Account";
 import Landing from "./components/Layout/Landing";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import NotFound from "./components/Layout/NotFound";
 import Dashboard from "./components/CategoryTool/Dashboard";
 import Contact from "./components/Layout/Contact/Contact";
@@ -22,7 +22,9 @@ function App() {
       <Provider store={store}>
         <Router>
           <div className="App">
-            <Header />
+          <Route path="/" 
+                 component={Header}>
+          </Route>
             <div className="container">
               {
                 //The <Switch> will iterate over its children elements (the routes) and only render the first one that matches the current pathname.
@@ -31,27 +33,30 @@ function App() {
               */
               }
               <Switch>
-                <Route exact path="/" component={Landing} />
+                <Route exact path="/" 
+                  render={(props) => <Landing {...props}/>}
+                />
                 <Route
-                  exact path="/dashboard"
+                  exact path="/:lang/:curr/dashboard"
                   component={Dashboard}
                 />
                 <Route 
-                  exact path="/addCapability" 
+                  exact path="/:lang/:curr/addCapability" 
                   component={AddCapability} />
                 <Route
-                  exact path="/updateCapability"
+                  exact path="/:lang/:curr/updateCapability"
                   component={UpdateCapability}
                 />
                 <Route
-                  exact path="/contact"
+                  exact path="/:lang/:curr/contact"
                   component={Contact}
                 />
                 <Route
-                  exact path="/myaccount"
+                  exact path="/:lang/:curr/myaccount"
                   component={Account}
                 />
                 <Route component={NotFound} />
+                <Redirect from="/" to="/en-GB/HKD" />
               </Switch>
             </div>
             <Footer />

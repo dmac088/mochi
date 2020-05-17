@@ -1,12 +1,17 @@
 import React from "react";
-import { Link } from 'react-router-dom';
 
-export const Language = () => {
+const changeLang = (e, props) => {
+    e.preventDefault();
+    console.log(props);
+    props.history.push('/' + e.currentTarget.id + '/HKD');
+}
+
+export const Language = (props) => {
     return (
         <li> <a href="#">English <i className="fa fa-chevron-down"></i></a>
             <ul>
-                <li><a>French</a></li>
-                <li><a>Japanease</a></li>
+                <li><a id="en-GB" onClick={(e) => changeLang(e, props)}>English</a></li>
+                <li><a id="zh-HK" onClick={(e) => changeLang(e, props)}>Chinese</a></li>
             </ul>
         </li>
     );

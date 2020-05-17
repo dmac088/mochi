@@ -4,7 +4,7 @@ import Search from './Search/Search';
 import Language from './Language/Language';
 import MyAccount from './MyAccount';
 
-function Header() {
+function Header(props) {
     return (
       <header>
             {/*<!--=======  header top  =======-->*/}
@@ -15,7 +15,7 @@ function Header() {
                     {/*<!-- currncy language dropdown -->*/}
                     <div className="lang-currency-dropdown">
                       <ul>
-                       <Language />
+                       <Language {...props}/>
                         <li><a href="#">Dollar <i className="fa fa-chevron-down"></i></a>
                           <ul>
                             <li><a href="#">Euro</a></li>
