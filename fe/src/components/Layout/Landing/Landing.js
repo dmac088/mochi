@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
-import { authenticate, logout } from "../../actions/SessionActions";
-import Header from "../Layout/Header/Header";
+import { authenticate, logout } from "../../../actions/SessionActions";
+import Header from "../Header/Header";
 
 function Landing() {
 
