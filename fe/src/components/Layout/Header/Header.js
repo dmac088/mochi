@@ -1,6 +1,7 @@
 import React from "react"; 
 import MainMenu from './MainMenu/Web/MainMenu';
 import Search from './Search/Search';
+import Language from './Language/Language';
 import MyAccount from './MyAccount';
 
 function Header() {
@@ -14,12 +15,7 @@ function Header() {
                     {/*<!-- currncy language dropdown -->*/}
                     <div className="lang-currency-dropdown">
                       <ul>
-                        <li> <a href="#">English <i className="fa fa-chevron-down"></i></a>
-                          <ul>
-                            <li><a href="#">French</a></li>
-                            <li><a href="#">Japanease</a></li>
-                          </ul>
-                        </li>
+                       <Language />
                         <li><a href="#">Dollar <i className="fa fa-chevron-down"></i></a>
                           <ul>
                             <li><a href="#">Euro</a></li>
