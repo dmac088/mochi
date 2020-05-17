@@ -5,6 +5,7 @@ import "./assets/css/font-awesome.min.css";
 import "./assets/css/elegent.min.css";
 import Header from "./components/Layout/Header/Header";
 import Footer from "./components/Layout/Footer/Footer";
+import Account from "./components/Layout/Account/Account";
 import Landing from "./components/Layout/Landing";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NotFound from "./components/Layout/NotFound";
@@ -34,11 +35,16 @@ function App() {
                   exact path="/dashboard"
                   component={Dashboard}
                 />
-                <Route exact path="/addCapability" component={AddCapability} />
+                <Route 
+                  exact path="/addCapability" 
+                  component={AddCapability} />
                 <Route
-                  exact
-                  path="/updateCapability"
+                  exact path="/updateCapability"
                   component={UpdateCapability}
+                />
+                <Route
+                  exact path="/myaccount"
+                  component={Account}
                 />
                 <Route component={NotFound} />
               </Switch>

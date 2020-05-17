@@ -1,6 +1,7 @@
 import React from "react";
 import HomeMenu from './HomeMenu';
 import ContactMenu from './ContactMenu';
+import MyAccount from '../../MyAccount';
 import { menuCategories } from '../LayoutHelper';
 
 function MainMenu() {
@@ -56,7 +57,6 @@ function MainMenu() {
                             </li>
                             <li><a href="#">Column Two</a>
                                 <ul>
-                                    <li><a href="my-account.html">My Account</a></li>
                                     <li><a href="login-register.html">Login Register</a></li>
                                     <li><a href="faq.html">FAQ</a></li>
                                 </ul>
