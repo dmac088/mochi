@@ -88,7 +88,7 @@ filters = {
   @TokenFilterDef(factory = StopFilterFactory.class)
 })
 
-@AnalyzerDef(name = "autocompleteEdgeAnalyzer",
+@AnalyzerDef(name = "autocompleteEdgeAnalyzerENGB",
 //Split input into tokens according to tokenizer
 tokenizer = @TokenizerDef(factory = KeywordTokenizerFactory.class),
 filters = {
@@ -107,7 +107,7 @@ filters = {
 @Parameter(name = "maxGramSize", value = "50") }) })
 
 
-@AnalyzerDef(name = "autocompleteNGramAnalyzer",
+@AnalyzerDef(name = "autocompleteNGramAnalyzerENGB",
 //Split input into tokens according to tokenizer
 tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
 filters = {
@@ -422,9 +422,9 @@ public abstract class Product {
 	@Fields({
 			  @Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "en-GB")),
 			  @Field(name = "edgeNGramTitleENGB", index = Index.YES, store = Store.NO,
-			  			analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteEdgeAnalyzer")),
+			  			analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteEdgeAnalyzerENGB")),
 			  @Field(name = "nGramTitleENGB", index = Index.YES, store = Store.NO,
-			  			analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteNGramAnalyzer"))
+			  			analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteNGramAnalyzerENGB"))
 	})
 	public String getProductDescENGB() {
 		Optional<ProductAttribute> pa = this.getAttributes().stream().filter(a -> a.getLclCd().equals("en-GB")).findFirst();
