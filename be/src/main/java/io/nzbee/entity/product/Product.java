@@ -121,8 +121,38 @@ filters = {
 @TokenFilterDef(factory = PatternReplaceFilterFactory.class, params = {
 @Parameter(name = "pattern",value = "([^a-zA-Z0-9\\.])"),
 @Parameter(name = "replacement", value = " "),
-@Parameter(name = "replace", value = "all") })
-})
+@Parameter(name = "replace", value = "all") })})
+
+@AnalyzerDef(name = "autocompleteEdgeAnalyzerZHHK",
+//Split input into tokens according to tokenizer
+tokenizer = @TokenizerDef(factory = KeywordTokenizerFactory.class),
+filters = {
+//Normalize token text to lowercase, as the user is unlikely to
+//care about casing when searching for matches
+@TokenFilterDef(factory = CJKWidthFilterFactory.class),
+@TokenFilterDef(factory = CJKBigramFilterFactory.class),
+@TokenFilterDef(factory = LowerCaseFilterFactory.class),
+@TokenFilterDef(factory = StopFilterFactory.class),
+//Index partial words starting at the front, so we can provide
+//Autocomplete functionality
+@TokenFilterDef(factory = EdgeNGramFilterFactory.class, params = {
+@Parameter(name = "minGramSize", value = "1"),
+@Parameter(name = "maxGramSize", value = "50") }) })
+
+
+@AnalyzerDef(name = "autocompleteNGramAnalyzerZHHK",
+//Split input into tokens according to tokenizer
+tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
+filters = {
+//Normalize token text to lowercase, as the user is unlikely to
+//care about casing when searching for matches
+@TokenFilterDef(factory = WordDelimiterFilterFactory.class),
+@TokenFilterDef(factory = LowerCaseFilterFactory.class),
+@TokenFilterDef(factory = NGramFilterFactory.class, params = {
+@Parameter(name = "minGramSize", value = "1"),
+@Parameter(name = "maxGramSize", value = "5") })})
+
+
 @SqlResultSetMappings({
 		@SqlResultSetMapping(
 	    name = "ProductMapping",
@@ -438,9 +468,9 @@ public abstract class Product {
 	@Fields({
 		@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "zh-HK")),
 		@Field(name = "edgeNGramTitleZHHK", index = Index.YES, store = Store.NO,
-			analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteEdgeAnalyzerENGB")),
+			analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteEdgeAnalyzerZHHK")),
 		@Field(name = "nGramTitleZHHK", index = Index.YES, store = Store.NO,
-			analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteNGramAnalyzerENGB"))
+			analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteNGramAnalyzerZHHK"))
 	})
 	public String getProductDescZHHK() {
 		Optional<ProductAttribute> pa = this.getAttributes().stream().filter(a -> a.getLclCd().equals("zh-HK")).findFirst();
