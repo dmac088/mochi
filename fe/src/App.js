@@ -10,6 +10,7 @@ import Landing from "./components/Layout/Landing";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NotFound from "./components/Layout/NotFound";
 import Dashboard from "./components/CategoryTool/Dashboard";
+import Contact from "./components/Layout/Contact/Contact";
 import AddCapability from "./components/CategoryTool/AddCapability";
 import UpdateCapability from "./components/CategoryTool/UpdateCapability";
 import { Provider } from "react-redux";
@@ -41,6 +42,10 @@ function App() {
                 <Route
                   exact path="/updateCapability"
                   component={UpdateCapability}
+                />
+                <Route
+                  exact path="/contact"
+                  component={Contact}
                 />
                 <Route
                   exact path="/myaccount"
