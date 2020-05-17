@@ -496,7 +496,8 @@ public class SearchServiceImpl implements ISearchService {
 		    query, Product.class);
 		 fullTextQuery.setMaxResults(20);
 
-		 List<Product> lp = fullTextQuery.getResultList();
+		 @SuppressWarnings("unchecked")
+		List<Product> lp = fullTextQuery.getResultList();
 		 return (locale.equals(globalVars.getLocaleENGB())
 				 ? lp.stream().map(p -> p.getProductDescENGB())
 				 : lp.stream().map(p -> p.getProductDescZHHK())).toArray(String[]::new);
