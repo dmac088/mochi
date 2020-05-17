@@ -1,8 +1,7 @@
 import React from "react";
-import { withRouter } from 'react-router'
 import { Link } from 'react-router-dom';
 
-export const ContactMenu = withRouter((props) => {
+export const ContactMenu = (props) => {
     const { history } = props;
     return (
         <li className="active">
@@ -11,6 +10,6 @@ export const ContactMenu = withRouter((props) => {
             </Link>
         </li>
     );
-});
+}
 
 export default ContactMenu;

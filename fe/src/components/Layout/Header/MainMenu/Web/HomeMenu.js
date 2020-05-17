@@ -9,6 +9,6 @@ export const HomeMenu = () => {
         </Link>
         </li>
     );
-};
+}
 
 export default HomeMenu;
