@@ -438,9 +438,9 @@ public abstract class Product {
 	@Fields({
 		@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "zh-HK")),
 		@Field(name = "edgeNGramTitleZHHK", index = Index.YES, store = Store.NO,
-			analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteEdgeAnalyzer")),
+			analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteEdgeAnalyzerENGB")),
 		@Field(name = "nGramTitleZHHK", index = Index.YES, store = Store.NO,
-			analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteNGramAnalyzer"))
+			analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteNGramAnalyzerENGB"))
 	})
 	public String getProductDescZHHK() {
 		Optional<ProductAttribute> pa = this.getAttributes().stream().filter(a -> a.getLclCd().equals("zh-HK")).findFirst();
