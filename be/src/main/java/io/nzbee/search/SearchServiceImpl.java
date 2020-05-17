@@ -255,8 +255,10 @@ public class SearchServiceImpl implements ISearchService {
 
 		String transLcl = cleanLocale(lcl);
 		
-		QueryBuilder queryBuilder = fullTextEntityManager.getSearchFactory().buildQueryBuilder()
-				.forEntity(io.nzbee.entity.product.Product.class)
+		QueryBuilder queryBuilder = fullTextEntityManager
+				.getSearchFactory()
+				.buildQueryBuilder()
+				.forEntity(Product.class)
 				.overridesForField("productDesc", lcl)
 				.overridesForField("product.brand.brandDesc", lcl)
 				.overridesForField("product.categories.categoryDesc", lcl)
@@ -266,7 +268,9 @@ public class SearchServiceImpl implements ISearchService {
 				.get();
 
 		// this is a Lucene query using the Lucene api
-		org.apache.lucene.search.Query searchQuery = queryBuilder.bool().must(queryBuilder.keyword()
+		Query searchQuery = queryBuilder
+				.bool()
+				.must(queryBuilder.keyword()
 				.onFields(
 						"productDesc" + transLcl,
 						"product.brand.brandDesc" + transLcl,
@@ -278,8 +282,9 @@ public class SearchServiceImpl implements ISearchService {
 				.matching(searchTerm)
 				.createQuery()).createQuery();
 
-		final org.hibernate.search.jpa.FullTextQuery jpaQuery = fullTextEntityManager.createFullTextQuery(searchQuery,
-				io.nzbee.entity.product.Product.class);
+		final org.hibernate.search.jpa.FullTextQuery jpaQuery = 
+				fullTextEntityManager.createFullTextQuery(searchQuery,
+				Product.class);
 		
 		// initialize the facets
 		Set<Facet> facets = new HashSet<Facet>();
@@ -388,13 +393,9 @@ public class SearchServiceImpl implements ISearchService {
 		jpaQuery.setSort(sort);
 		
 		setProductProjection(jpaQuery, lcl, currency);
-
-		// get the results using jpaQuery object
-		List<Object[]> results = jpaQuery.getResultList();
+		List<Object[]> results = jpaQuery.getResultList();		
+		List<Product> lp = results.stream().map(r -> this.mapResultToEntity(r, lcl, currency)).collect(Collectors.toList());
 		
-		// convert the results of jpaQuery to product sub-type Domain Objects			
-		List<Product> lp = this.mapResultsToEntities(results, lcl, currency);
-			
 		return new PageImpl<Product>(lp, pageable, jpaQuery.getResultSize());
 		
 	}
@@ -404,8 +405,10 @@ public class SearchServiceImpl implements ISearchService {
 		
 		FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
 		
-		QueryBuilder titleQB = fullTextEntityManager.getSearchFactory()
-		   .buildQueryBuilder().forEntity(Product.class).get();
+		QueryBuilder titleQB = fullTextEntityManager
+				.getSearchFactory()
+				.buildQueryBuilder()
+				.forEntity(Product.class).get();
 
 		Query query = titleQB.phrase().withSlop(2)
 		   .onField(TITLE_NGRAM_INDEX + cleanLocale(locale))
@@ -418,8 +421,7 @@ public class SearchServiceImpl implements ISearchService {
 		
 		setProductProjection(jpaQuery, locale, currency);
 		List<Object[]> results = jpaQuery.getResultList();
-		
-		List<Product> lp = this.mapResultsToEntities(results, locale, currency);
+		List<Product> lp =  results.stream().map(r -> this.mapResultToEntity(r, locale, currency)).collect(Collectors.toList());
 		
 		return lp.stream().map(p -> p.getProductAttribute().getProductDesc()).toArray(String[]::new);
 		 
@@ -448,13 +450,7 @@ public class SearchServiceImpl implements ISearchService {
 				   "product.primarycategory.categoryDesc" + transLcl);
 	}
 	
-	private List<Product> mapResultsToEntities(List<Object[]> results, String locale, String currency) {
-		return results.stream().map(r ->  {
-			for(int i=0;i<r.length;i++) {
-				if(r[i] != null) {
-					LOGGER.debug(i + " - " + r[i].toString());
-				}
-			}
+	private Product mapResultToEntity(Object[] r, String locale, String currency) {
 			
 			Product p = (r[13].toString().equals(globalVars.getProductTypeCodeFood())
 					? new Food()
@@ -508,7 +504,6 @@ public class SearchServiceImpl implements ISearchService {
 			p.setDepartment(d);
 			
 			return p;
-		}).collect(Collectors.toList());
 	}
 
 	private org.apache.lucene.search.Sort getSortField(String field, String currency, String locale) {
