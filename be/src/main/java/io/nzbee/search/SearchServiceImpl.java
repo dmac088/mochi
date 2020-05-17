@@ -484,19 +484,19 @@ public class SearchServiceImpl implements ISearchService {
 		
 		FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
 		
-		 QueryBuilder titleQB = fullTextEntityManager.getSearchFactory()
+		QueryBuilder titleQB = fullTextEntityManager.getSearchFactory()
 		   .buildQueryBuilder().forEntity(Product.class).get();
 
-		 Query query = titleQB.phrase().withSlop(2)
+		Query query = titleQB.phrase().withSlop(2)
 		   .onField(TITLE_NGRAM_INDEX + cleanLocale(locale))
 		   .andField(TITLE_EDGE_NGRAM_INDEX + cleanLocale(locale)).boostedTo(5)
 		   .sentence(searchTerm.toLowerCase()).createQuery();
 
-		 FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery(
+		FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery(
 		    query, Product.class);
-		 fullTextQuery.setMaxResults(20);
+		fullTextQuery.setMaxResults(20);
 
-		 @SuppressWarnings("unchecked")
+		@SuppressWarnings("unchecked")
 		List<Product> lp = fullTextQuery.getResultList();
 		 return (locale.equals(globalVars.getLocaleENGB())
 				 ? lp.stream().map(p -> p.getProductDescENGB())
