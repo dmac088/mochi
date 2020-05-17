@@ -2,7 +2,6 @@ import React from "react";
 
 const changeLang = (e, props) => {
     e.preventDefault();
-    console.log(props);
     props.history.push('/' + e.currentTarget.id + '/HKD');
 }
 
