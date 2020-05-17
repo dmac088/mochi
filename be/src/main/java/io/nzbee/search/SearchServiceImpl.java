@@ -66,6 +66,10 @@ public class SearchServiceImpl implements ISearchService {
 	@PersistenceContext(unitName = "mochiEntityManagerFactory")
 	private EntityManager em;
 
+	private String cleanLocale(String locale) {
+		return locale.substring(0, 2).toUpperCase() + locale.substring(3, 5).toUpperCase();
+	}
+	
 	private Set<Facet> processFacet( String locale, 
 											String currency,
 											QueryBuilder qb,
@@ -232,6 +236,8 @@ public class SearchServiceImpl implements ISearchService {
 		}
 	}
 	
+	
+	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	// @Cacheable
@@ -247,7 +253,7 @@ public class SearchServiceImpl implements ISearchService {
 		
 		FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
 
-		String transLcl = lcl.substring(0, 2).toUpperCase() + lcl.substring(3, 5).toUpperCase();
+		String transLcl = cleanLocale(lcl);
 		
 		QueryBuilder queryBuilder = fullTextEntityManager.getSearchFactory().buildQueryBuilder()
 				.forEntity(io.nzbee.entity.product.Product.class)
@@ -473,9 +479,8 @@ public class SearchServiceImpl implements ISearchService {
 		
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
-	public String[] getSuggestions(String searchTerm) {
+	public String[] getSuggestions(String searchTerm, String locale) {
 		
 		FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
 		
@@ -483,15 +488,19 @@ public class SearchServiceImpl implements ISearchService {
 		   .buildQueryBuilder().forEntity(Product.class).get();
 
 		 Query query = titleQB.phrase().withSlop(2)
-		   .onField(TITLE_NGRAM_INDEX)
-		   .andField(TITLE_EDGE_NGRAM_INDEX).boostedTo(5)
+		   .onField(TITLE_NGRAM_INDEX + cleanLocale(locale))
+		   .andField(TITLE_EDGE_NGRAM_INDEX + cleanLocale(locale)).boostedTo(5)
 		   .sentence(searchTerm.toLowerCase()).createQuery();
 
 		 FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery(
 		    query, Product.class);
 		 fullTextQuery.setMaxResults(20);
 
-		 return (String[]) fullTextQuery.getResultList().stream().map(p -> ((Product) p).getProductDescENGB()).toArray();
+		 List<Product> lp = fullTextQuery.getResultList();
+		 return (locale.equals(globalVars.getLocaleENGB())
+				 ? lp.stream().map(p -> p.getProductDescENGB())
+				 : lp.stream().map(p -> p.getProductDescZHHK())).toArray(String[]::new);
+		 
 	}
 
 	private org.apache.lucene.search.Sort getSortField(String field, String currency, String locale) {

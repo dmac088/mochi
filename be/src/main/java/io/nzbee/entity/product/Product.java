@@ -421,11 +421,11 @@ public abstract class Product {
 	@Transient
 	@Fields({
 			  @Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "en-GB")),
-			  @Field(name = "edgeNGramTitle", index = Index.YES, store = Store.YES,
+			  @Field(name = "edgeNGramTitleENGB", index = Index.YES, store = Store.YES,
 			  			analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteEdgeAnalyzer")),
-			  @Field(name = "nGramTitle", index = Index.YES, store = Store.YES,
+			  @Field(name = "nGramTitleENGB", index = Index.YES, store = Store.YES,
 			  			analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteNGramAnalyzer"))
-			})
+	})
 	public String getProductDescENGB() {
 		Optional<ProductAttribute> pa = this.getAttributes().stream().filter(a -> a.getLclCd().equals("en-GB")).findFirst();
 		if(pa.isPresent()) {
@@ -435,7 +435,13 @@ public abstract class Product {
 	}
 	
 	@Transient
-	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "zh-HK"))
+	@Fields({
+		@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "zh-HK")),
+		@Field(name = "edgeNGramTitleZHHK", index = Index.YES, store = Store.YES,
+			analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteEdgeAnalyzer")),
+		@Field(name = "nGramTitleZHHK", index = Index.YES, store = Store.YES,
+			analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteNGramAnalyzer"))
+	})
 	public String getProductDescZHHK() {
 		Optional<ProductAttribute> pa = this.getAttributes().stream().filter(a -> a.getLclCd().equals("zh-HK")).findFirst();
 		if(pa.isPresent()) {
