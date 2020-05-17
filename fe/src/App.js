@@ -21,10 +21,12 @@ function App() {
     return (
       <Provider store={store}>
         <Router>
-         <Header />
+         
           <div className="App">
             {/*we must wrap the header in a Route in order to access the props of router, alternatively we can use withRouter HOC*/}
-           
+            <Route 
+                  path="/:lang/:curr" 
+                  component={Header}/>
          
             <div className="container">
               {
@@ -34,30 +36,33 @@ function App() {
               */
               }
               <Switch>
-                <Route exact path="/:lang/:curr" 
-                  render={(props) => <Landing {...props} />}/>
-                />
+              
+                <Route 
+                  exact path="/:lang/:curr" 
+                  component={Landing}/>
                 <Route
+                  exact path="/:lang/:curr/contact"
+                  component={Contact}/>
+                
+                {/* <Route
                   exact path="/:lang/:curr/dashboard"
                   component={Dashboard}
-                />
-                <Route 
+                /> */}
+                {/* <Route 
                   exact path="/:lang/:curr/addCapability" 
                   component={AddCapability} />
                 <Route
                   exact path="/:lang/:curr/updateCapability"
                   component={UpdateCapability}
                 />
-                <Route
-                  exact path="/:lang/:curr/contact"
-                  component={Contact}
-                />
+                
                 <Route
                   exact path="/:lang/:curr/myaccount"
                   component={Account}
-                />
-                <Route component={NotFound} />
-                <Redirect from="/" to="/en-GB/HKD" />
+                /> */}
+
+                {/* <Redirect from="/" to="/en-GB/HKD" /> */}
+                
               </Switch>
             </div>
             <Footer />
