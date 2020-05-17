@@ -421,9 +421,9 @@ public abstract class Product {
 	@Transient
 	@Fields({
 			  @Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "en-GB")),
-			  @Field(name = "edgeNGramTitleENGB", index = Index.YES, store = Store.YES,
+			  @Field(name = "edgeNGramTitleENGB", index = Index.YES, store = Store.NO,
 			  			analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteEdgeAnalyzer")),
-			  @Field(name = "nGramTitleENGB", index = Index.YES, store = Store.YES,
+			  @Field(name = "nGramTitleENGB", index = Index.YES, store = Store.NO,
 			  			analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteNGramAnalyzer"))
 	})
 	public String getProductDescENGB() {
@@ -437,9 +437,9 @@ public abstract class Product {
 	@Transient
 	@Fields({
 		@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "zh-HK")),
-		@Field(name = "edgeNGramTitleZHHK", index = Index.YES, store = Store.YES,
+		@Field(name = "edgeNGramTitleZHHK", index = Index.YES, store = Store.NO,
 			analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteEdgeAnalyzer")),
-		@Field(name = "nGramTitleZHHK", index = Index.YES, store = Store.YES,
+		@Field(name = "nGramTitleZHHK", index = Index.YES, store = Store.NO,
 			analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteNGramAnalyzer"))
 	})
 	public String getProductDescZHHK() {

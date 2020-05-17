@@ -300,8 +300,8 @@ public class PostgresProductAdapter implements IProductPortService {
 		}
 
 		@Override
-		public String[] getSuggestion(String searchTerm, String locale) {
-			return searchService.getSuggestions(searchTerm, locale);
+		public String[] getSuggestion(String searchTerm, String locale, String currency) {
+			return searchService.getSuggestions(searchTerm, locale, currency);
 		}
 	
 }

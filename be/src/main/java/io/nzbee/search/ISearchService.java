@@ -10,5 +10,5 @@ public interface ISearchService {
 	Page<Product> findAll(String lcl, String currency, String categoryDesc, String searchTerm, int page, int size,
 			String sortBy, Set<IFacet> facetPayload, Set<IFacet> returnFacets);
 
-	String[] getSuggestions(String searchTerm, String locale);
+	String[] getSuggestions(String searchTerm, String locale, String currency);
 }

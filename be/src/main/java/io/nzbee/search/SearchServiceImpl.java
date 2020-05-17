@@ -387,100 +387,20 @@ public class SearchServiceImpl implements ISearchService {
 		org.apache.lucene.search.Sort sort = getSortField(sortBy, currency, transLcl);
 		jpaQuery.setSort(sort);
 		
-		jpaQuery.setProjection("Id", 
-							   "productId", 
-							   "productDesc" + transLcl, 
-							   "productImage" + transLcl,
-							   "lclCd",
-							   "productUPC",
-							   "productCreateDt",
-							   "product.brand.brandCode",
-							   "product.brand.brandDesc" + transLcl,
-							   "brandDescForIndex",
-							   "currentRetailPrice" + currency,
-							   "currentMarkdownPrice" + currency,
-							   "displayCategories" + transLcl,
-							   "product.department.departmentCode",
-							   "product.department.departmentDesc" + transLcl,
-							   "countryOfOrigin",
-							   "product.primarycategory.categoryCode",
-							   "product.primarycategory.categoryDesc" + transLcl);
-		
+		setProductProjection(jpaQuery, lcl, currency);
 
 		// get the results using jpaQuery object
 		List<Object[]> results = jpaQuery.getResultList();
 		
 		// convert the results of jpaQuery to product sub-type Domain Objects			
-		List<Product> lp = 
-			results.stream().map(r ->  {
-										for(int i=0;i<r.length;i++) {
-											if(r[i] != null) {
-												LOGGER.debug(i + " - " + r[i].toString());
-											}
-										}
-										
-										Product p = (r[13].toString().equals(globalVars.getProductTypeCodeFood())
-												? new Food()
-												: new Jewellery());
-										
-										if((r[13].toString().equals(globalVars.getProductTypeCodeFood()))) {
-											((Food) p).setCountryOfOrigin(r[15].toString());
-											((Food) p).setExpiryDate(new Date());
-										}
-										
-										ProductAttribute pa = new ProductAttribute();
-										pa.setProductDesc(r[2].toString());
-										pa.setProductImage(r[3].toString());
-										pa.setLclCd(lcl);
-										
-										p.setUPC(r[5].toString());
-										p.setProductCreateDt((Date) r[6]);
-										p.setRetailPrice(Double.parseDouble(r[10].toString()));
-										p.setMarkdownPrice(Double.parseDouble(r[11].toString()));
-										p.setImagePath(r[3].toString());
-										p.setDisplayCategories(r[12].toString());
-										p.setLocale(lcl);
-										p.setCurrency(currency);
-										p.setProductAttribute(pa);
-										
-										CategoryProduct cp = new CategoryProduct();
-										CategoryAttribute ca = new CategoryAttribute();
-										cp.setCategoryCode(r[15].toString());
-										ca.setCategoryDesc(r[16].toString());
-										ca.setLclCd(lcl);
-										cp.setCategoryAttribute(ca);
-										p.setPrimaryCategory(cp);
-										
-										BrandAttribute ba = new BrandAttribute();
-										ba.setBrandDesc(r[8].toString());
-										ba.setLclCd(lcl);
-										
-										Brand b = new Brand();
-										b.setBrandCode(r[7].toString());
-										b.setCurrency(currency);
-										b.setLocale(lcl);
-										b.setBrandAttribute(ba);
-										p.setBrand(b);
-										
-										DepartmentAttribute da = new DepartmentAttribute();
-										da.setLclCd(lcl);
-										da.setDesc(r[14].toString());
-										Department d = new Department();
-										d.setDepartmentCode(r[13].toString());
-										d.setAttribute(da);
-										p.setDepartment(d);
-										
-										return p;
-										
-				}).collect(Collectors.toList());
-	
+		List<Product> lp = this.mapResultsToEntities(results, lcl, currency);
 			
 		return new PageImpl<Product>(lp, pageable, jpaQuery.getResultSize());
 		
 	}
 	
 	@Override
-	public String[] getSuggestions(String searchTerm, String locale) {
+	public String[] getSuggestions(String searchTerm, String locale, String currency) {
 		
 		FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
 		
@@ -492,16 +412,103 @@ public class SearchServiceImpl implements ISearchService {
 		   .andField(TITLE_EDGE_NGRAM_INDEX + cleanLocale(locale)).boostedTo(5)
 		   .sentence(searchTerm.toLowerCase()).createQuery();
 
-		FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery(
+		FullTextQuery jpaQuery = fullTextEntityManager.createFullTextQuery(
 		    query, Product.class);
-		fullTextQuery.setMaxResults(20);
-
-		@SuppressWarnings("unchecked")
-		List<Product> lp = fullTextQuery.getResultList();
-		 return (locale.equals(globalVars.getLocaleENGB())
-				 ? lp.stream().map(p -> p.getProductDescENGB())
-				 : lp.stream().map(p -> p.getProductDescZHHK())).toArray(String[]::new);
+		jpaQuery.setMaxResults(20);
+		
+		setProductProjection(jpaQuery, locale, currency);
+		List<Object[]> results = jpaQuery.getResultList();
+		
+		List<Product> lp = this.mapResultsToEntities(results, locale, currency);
+		
+		return lp.stream().map(p -> p.getProductAttribute().getProductDesc()).toArray(String[]::new);
 		 
+	}
+	
+	private void setProductProjection(FullTextQuery jpaQuery, String locale, String currency) {
+		String transLcl = cleanLocale(locale);
+		jpaQuery.setProjection(
+				   "Id", 
+				   "productId", 
+				   "productDesc" + transLcl, 
+				   "productImage" + transLcl,
+				   "lclCd",
+				   "productUPC",
+				   "productCreateDt",
+				   "product.brand.brandCode",
+				   "product.brand.brandDesc" + transLcl,
+				   "brandDescForIndex",
+				   "currentRetailPrice" + currency,
+				   "currentMarkdownPrice" + currency,
+				   "displayCategories" + transLcl,
+				   "product.department.departmentCode",
+				   "product.department.departmentDesc" + transLcl,
+				   "countryOfOrigin",
+				   "product.primarycategory.categoryCode",
+				   "product.primarycategory.categoryDesc" + transLcl);
+	}
+	
+	private List<Product> mapResultsToEntities(List<Object[]> results, String locale, String currency) {
+		return results.stream().map(r ->  {
+			for(int i=0;i<r.length;i++) {
+				if(r[i] != null) {
+					LOGGER.debug(i + " - " + r[i].toString());
+				}
+			}
+			
+			Product p = (r[13].toString().equals(globalVars.getProductTypeCodeFood())
+					? new Food()
+					: new Jewellery());
+			
+			if((r[13].toString().equals(globalVars.getProductTypeCodeFood()))) {
+				((Food) p).setCountryOfOrigin(r[15].toString());
+				((Food) p).setExpiryDate(new Date());
+			}
+			
+			ProductAttribute pa = new ProductAttribute();
+			pa.setProductDesc(r[2].toString());
+			pa.setProductImage(r[3].toString());
+			pa.setLclCd(locale);
+			
+			p.setUPC(r[5].toString());
+			p.setProductCreateDt((Date) r[6]);
+			p.setRetailPrice(Double.parseDouble(r[10].toString()));
+			p.setMarkdownPrice(Double.parseDouble(r[11].toString()));
+			p.setImagePath(r[3].toString());
+			p.setDisplayCategories(r[12].toString());
+			p.setLocale(locale);
+			p.setCurrency(currency);
+			p.setProductAttribute(pa);
+			
+			CategoryProduct cp = new CategoryProduct();
+			CategoryAttribute ca = new CategoryAttribute();
+			cp.setCategoryCode(r[15].toString());
+			ca.setCategoryDesc(r[16].toString());
+			ca.setLclCd(locale);
+			cp.setCategoryAttribute(ca);
+			p.setPrimaryCategory(cp);
+			
+			BrandAttribute ba = new BrandAttribute();
+			ba.setBrandDesc(r[8].toString());
+			ba.setLclCd(locale);
+			
+			Brand b = new Brand();
+			b.setBrandCode(r[7].toString());
+			b.setCurrency(currency);
+			b.setLocale(locale);
+			b.setBrandAttribute(ba);
+			p.setBrand(b);
+			
+			DepartmentAttribute da = new DepartmentAttribute();
+			da.setLclCd(locale);
+			da.setDesc(r[14].toString());
+			Department d = new Department();
+			d.setDepartmentCode(r[13].toString());
+			d.setAttribute(da);
+			p.setDepartment(d);
+			
+			return p;
+		}).collect(Collectors.toList());
 	}
 
 	private org.apache.lucene.search.Sort getSortField(String field, String currency, String locale) {

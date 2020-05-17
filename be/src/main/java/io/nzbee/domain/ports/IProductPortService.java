@@ -28,6 +28,6 @@ public interface IProductPortService extends IProductDimensionService<Product> {
 	Page<Product> search(String locale, String currency, Pageable pageable, String category, String searchTerm,
 			Set<IFacet> facetPayload, Set<IFacet> returnFacets);
 
-	String[] getSuggestion(String searchTerm, String locale);
+	String[] getSuggestion(String searchTerm, String locale, String currency);
 	
 }
