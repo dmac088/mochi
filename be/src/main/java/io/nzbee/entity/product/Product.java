@@ -35,12 +35,19 @@ import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
 import org.apache.lucene.analysis.core.StopFilterFactory;
 import org.apache.lucene.analysis.snowball.SnowballPorterFilterFactory;
 import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
+import org.apache.lucene.analysis.ngram.EdgeNGramFilterFactory;
+import org.apache.lucene.analysis.core.KeywordTokenizerFactory;
+import org.apache.lucene.analysis.pattern.PatternReplaceFilterFactory;
+import org.apache.lucene.analysis.miscellaneous.WordDelimiterFilterFactory;
+import org.apache.lucene.analysis.ngram.NGramFilterFactory;
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.AnalyzerDef;
 import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Fields;
+import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Parameter;
 import org.hibernate.search.annotations.SortableField;
@@ -79,6 +86,42 @@ filters = {
   @TokenFilterDef(factory = CJKBigramFilterFactory.class),
   @TokenFilterDef(factory = LowerCaseFilterFactory.class),
   @TokenFilterDef(factory = StopFilterFactory.class)
+})
+
+@AnalyzerDef(name = "autocompleteEdgeAnalyzer",
+//Split input into tokens according to tokenizer
+tokenizer = @TokenizerDef(factory = KeywordTokenizerFactory.class),
+filters = {
+// Normalize token text to lowercase, as the user is unlikely to
+// care about casing when searching for matches
+@TokenFilterDef(factory = PatternReplaceFilterFactory.class, params = {
+@Parameter(name = "pattern",value = "([^a-zA-Z0-9\\.])"),
+@Parameter(name = "replacement", value = " "),
+@Parameter(name = "replace", value = "all") }),
+@TokenFilterDef(factory = LowerCaseFilterFactory.class),
+@TokenFilterDef(factory = StopFilterFactory.class),
+// Index partial words starting at the front, so we can provide
+// Autocomplete functionality
+@TokenFilterDef(factory = EdgeNGramFilterFactory.class, params = {
+@Parameter(name = "minGramSize", value = "3"),
+@Parameter(name = "maxGramSize", value = "50") }) })
+
+
+@AnalyzerDef(name = "autocompleteNGramAnalyzer",
+//Split input into tokens according to tokenizer
+tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
+filters = {
+// Normalize token text to lowercase, as the user is unlikely to
+// care about casing when searching for matches
+@TokenFilterDef(factory = WordDelimiterFilterFactory.class),
+@TokenFilterDef(factory = LowerCaseFilterFactory.class),
+@TokenFilterDef(factory = NGramFilterFactory.class, params = {
+@Parameter(name = "minGramSize", value = "3"),
+@Parameter(name = "maxGramSize", value = "5") }),
+@TokenFilterDef(factory = PatternReplaceFilterFactory.class, params = {
+@Parameter(name = "pattern",value = "([^a-zA-Z0-9\\.])"),
+@Parameter(name = "replacement", value = " "),
+@Parameter(name = "replace", value = "all") })
 })
 @SqlResultSetMappings({
 		@SqlResultSetMapping(
@@ -376,7 +419,13 @@ public abstract class Product {
 	}
 	
 	@Transient
-	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "en-GB"))
+	@Fields({
+			  @Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "en-GB")),
+			  @Field(name = "edgeNGramTitle", index = Index.YES, store = Store.YES,
+			  			analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteEdgeAnalyzer")),
+			  @Field(name = "nGramTitle", index = Index.YES, store = Store.YES,
+			  			analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteNGramAnalyzer"))
+			})
 	public String getProductDescENGB() {
 		Optional<ProductAttribute> pa = this.getAttributes().stream().filter(a -> a.getLclCd().equals("en-GB")).findFirst();
 		if(pa.isPresent()) {

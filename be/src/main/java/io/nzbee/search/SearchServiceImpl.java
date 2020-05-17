@@ -10,8 +10,10 @@ import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.lucene.search.Query;
 import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.SortedNumericSortField;
+import org.hibernate.search.jpa.FullTextQuery;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.hibernate.search.query.facet.Facet;
@@ -47,6 +49,10 @@ import io.nzbee.search.dto.facet.SearchFacetWithFieldHelper;
 public class SearchServiceImpl implements ISearchService {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
+	
+	private static final String TITLE_EDGE_NGRAM_INDEX = "edgeNGramTitle";
+	
+	private static final String TITLE_NGRAM_INDEX = "nGramTitle";
 	
 	@Autowired
 	private Globals globalVars;
@@ -466,6 +472,27 @@ public class SearchServiceImpl implements ISearchService {
 		return new PageImpl<Product>(lp, pageable, jpaQuery.getResultSize());
 		
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public String[] getSuggestions(String searchTerm) {
+		
+		FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
+		
+		 QueryBuilder titleQB = fullTextEntityManager.getSearchFactory()
+		   .buildQueryBuilder().forEntity(Product.class).get();
+
+		 Query query = titleQB.phrase().withSlop(2)
+		   .onField(TITLE_NGRAM_INDEX)
+		   .andField(TITLE_EDGE_NGRAM_INDEX).boostedTo(5)
+		   .sentence(searchTerm.toLowerCase()).createQuery();
+
+		 FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery(
+		    query, Product.class);
+		 fullTextQuery.setMaxResults(20);
+
+		 return (String[]) fullTextQuery.getResultList().stream().map(p -> ((Product) p).getProductDescENGB()).toArray();
+	}
 
 	private org.apache.lucene.search.Sort getSortField(String field, String currency, String locale) {
 		switch (field) {
@@ -501,4 +528,6 @@ public class SearchServiceImpl implements ISearchService {
 			return "productDescSort" + locale;
 		}
 	}
+
+	
 }

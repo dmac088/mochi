@@ -26,5 +26,5 @@ public interface IProductService extends ILocalizedService<Product> {
 									List<String> categoryCodes,
 									List<String> brandCodes,
 									List<String> tagCodes);
-
+	
 }
