@@ -1,17 +1,22 @@
 import React from "react";
-import { Link } from 'react-router-dom';
+import { withRouter } from "react-router-dom";
 
-export const ContactMenu = (props) => {
-  
+const routeContact = (e, params, history) => {
+    e.preventDefault();
+    history.push('/' + params.lang + '/' + params.curr + '/contact');
+  }
+
+export const ContactMenu = withRouter(({history, ...props}) => {
+    console.log(props);
     const { params } = props.match;
-    console.log(params);
+    if(!params) { return null; }
     return (
         <li className="active">
-            <Link to="/contact">
+            <a href="#" onClick={(e) => routeContact(e, params, history)} >
                 Contact
-            </Link>
+            </a>
         </li>
     );
-}
+});
 
 export default ContactMenu;
