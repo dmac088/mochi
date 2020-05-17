@@ -1,5 +1,5 @@
 import React from "react"; 
-import MainMenu from './MainMenu/MainMenu';
+import MainMenu from './MainMenu/Web/MainMenu';
 import Search from './Search/Search';
 
 function Header() {

@@ -1,19 +1,14 @@
 import React from "react";
-import { menuCategories } from './LayoutHelper';
+import HomeMenu from './HomeMenu';
+import ContactMenu from './ContactMenu';
+import { menuCategories } from '../LayoutHelper';
 
 function MainMenu() {
     return (
         < div className = "main-menu" >
             <nav>
                 <ul>
-                    <li className="active menu-item-has-children"><a href="#">HOME</a>
-                        <ul className="sub-menu">
-                            <li><a href="index.html">Home Shop 1</a></li>
-                            <li><a href="index-2.html">Home Shop 2</a></li>
-                            <li><a href="index-3.html">Home Shop 3</a></li>
-                            <li><a href="index-4.html">Home Shop 4</a></li>
-                        </ul>
-                    </li>
+                    <HomeMenu />
                     <li className="menu-item-has-children"><a href="shop-left-sidebar.html">Shop</a>
                         <ul className="sub-menu">
                             <li className="menu-item-has-children"><a href="shop-4-column.html">shop grid</a>
@@ -89,7 +84,7 @@ function MainMenu() {
                             <li><a href="blog-post-video-format.html">Blog Post Video Format</a></li>
                         </ul>
                     </li>
-                    <li><a href="contact.html">CONTACT</a></li>
+                    <ContactMenu />
                 </ul>
             </nav>
         </div >
