@@ -4,7 +4,7 @@ import ContactMenu from './ContactMenu';
 import MyAccount from '../../MyAccount';
 import { menuCategories } from '../LayoutHelper';
 
-function MainMenu() {
+function MainMenu(props) {
     return (
         < div className = "main-menu" >
             <nav>
@@ -84,7 +84,7 @@ function MainMenu() {
                             <li><a href="blog-post-video-format.html">Blog Post Video Format</a></li>
                         </ul>
                     </li>
-                    <ContactMenu />
+                    <ContactMenu {...props}/>
                 </ul>
             </nav>
         </div >
