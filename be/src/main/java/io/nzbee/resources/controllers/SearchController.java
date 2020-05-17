@@ -64,10 +64,10 @@ public class SearchController {
     	return new ResponseEntity< >(sr, HttpStatus.OK);
     }
 	
-	@GetMapping(value = "/Search/Suggest/{searchTerm}")
-	public String[] getSuggestions(@PathVariable String searchTerm) {
-		LOGGER.debug("Searching for suggestions with patameters: {}, {}, {}", searchTerm);
-		return productService.getSuggestion(searchTerm);
+	@GetMapping(value = "/Search/{locale}/Suggest/{searchTerm}")
+	public String[] getSuggestions(@PathVariable String locale, @PathVariable String searchTerm) {
+		LOGGER.debug("Searching for suggestions with patameters: {}, {}", locale, searchTerm);
+		return productService.getSuggestion(searchTerm, locale);
 	}
 	
 }
