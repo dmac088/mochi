@@ -1,6 +1,7 @@
 import React from "react"; 
 import MainMenu from './MainMenu/Web/MainMenu';
 import Search from './Search/Search';
+import MyAccount from './MyAccount';
 
 function Header() {
     return (
@@ -32,7 +33,7 @@ function Header() {
                     {/*<!-- header top menu -->*/}
                     <div className="header-top-menu">
                       <ul>
-                        <li><a href="my-account.html">My account</a></li>
+                       <MyAccount />
                         <li><a href="wishlist.html">Wishlist</a></li>
                         <li><a href="checkout.html">Checkout</a></li>
                       </ul>
