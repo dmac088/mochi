@@ -15,7 +15,7 @@ function Header(props) {
                     {/*<!-- currncy language dropdown -->*/}
                     <div className="lang-currency-dropdown">
                       <ul>
-                       <Language {...props}/>
+                       <Language />
                         <li><a href="#">Dollar <i className="fa fa-chevron-down"></i></a>
                           <ul>
                             <li><a href="#">Euro</a></li>
@@ -122,7 +122,7 @@ function Header(props) {
                     </div>
 
                     {/*<!-- navigation section -->*/}
-                    <MainMenu />                   
+                    <MainMenu {...props}/>                   
                     {/*<!-- end of navigation section -->*/}
                   </div>
                   <div className="col-12">

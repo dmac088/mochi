@@ -3,7 +3,6 @@ import "./App.css";
 import "./assets/scss/main.scss";
 import "./assets/css/font-awesome.min.css";
 import "./assets/css/elegent.min.css";
-import Header from "./components/Layout/Header/Header";
 import Footer from "./components/Layout/Footer/Footer";
 import Account from "./components/Layout/Account/Account";
 import Landing from "./components/Layout/Landing";
@@ -15,17 +14,18 @@ import AddCapability from "./components/CategoryTool/AddCapability";
 import UpdateCapability from "./components/CategoryTool/UpdateCapability";
 import { Provider } from "react-redux";
 import store from "./store";
+import Header from "./components/Layout/Header/Header";
 
 function App() {
 
     return (
       <Provider store={store}>
         <Router>
+         <Header />
           <div className="App">
             {/*we must wrap the header in a Route in order to access the props of router, alternatively we can use withRouter HOC*/}
-          <Route path="/" 
-                 component={Header}>
-          </Route>
+           
+         
             <div className="container">
               {
                 //The <Switch> will iterate over its children elements (the routes) and only render the first one that matches the current pathname.
@@ -34,8 +34,8 @@ function App() {
               */
               }
               <Switch>
-                <Route exact path="/" 
-                  render={(props) => <Landing {...props}/>}
+                <Route exact path="/:lang/:curr" 
+                  render={(props) => <Landing {...props} />}/>
                 />
                 <Route
                   exact path="/:lang/:curr/dashboard"

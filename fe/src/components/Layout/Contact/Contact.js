@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-  export const Contact = () => {
+  export const Contact = (props) => {
 			return(
           <div className="page-content mb-50">
 

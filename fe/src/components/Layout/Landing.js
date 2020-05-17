@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {useSelector, useDispatch} from 'react-redux'
 import { authenticate, logout } from "../../actions/SessionActions";
+import Header from "../Layout/Header/Header";
 
-function Landing() {
+function Landing(props) {
+
   const [username, setUsername] = useState({
     username: null,
   });
@@ -20,8 +22,10 @@ function Landing() {
   }
   
   const tokens = useSelector(state => state.session.tokens);
-
+ 
   return (
+    <React.Fragment>
+    <Header {...props}/>
     <div className="landing">
       <div className="light-overlay landing-inner text-dark">
         <div className="container">
@@ -69,6 +73,7 @@ function Landing() {
         </div>
       </div>
     </div>
+    </React.Fragment>
   );
 }
 
