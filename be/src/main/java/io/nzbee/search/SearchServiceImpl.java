@@ -420,6 +420,7 @@ public class SearchServiceImpl implements ISearchService {
 		jpaQuery.setMaxResults(20);
 		
 		setProductProjection(jpaQuery, locale, currency);
+		@SuppressWarnings("unchecked")
 		List<Object[]> results = jpaQuery.getResultList();
 		List<Product> lp =  results.stream().map(r -> this.mapResultToEntity(r, locale, currency)).collect(Collectors.toList());
 		
