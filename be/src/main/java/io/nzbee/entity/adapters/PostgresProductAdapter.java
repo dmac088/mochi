@@ -298,5 +298,10 @@ public class PostgresProductAdapter implements IProductPortService {
 			// TODO Auto-generated method stub
 			
 		}
+
+		@Override
+		public String[] getSuggestion(String searchTerm) {
+			return searchService.getSuggestions(searchTerm);
+		}
 	
 }
