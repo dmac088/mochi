@@ -3,7 +3,8 @@ import { withRouter } from 'react-router-dom';
 
 const changeLang = (e, props) => {
     e.preventDefault();
-    props.history.push('/' + e.currentTarget.id + '/HKD');
+    const { curr } = props.match.params;
+    props.history.push('/' + e.currentTarget.id + '/' + curr);
 }
 
 export const Language = withRouter(({...props}) => {

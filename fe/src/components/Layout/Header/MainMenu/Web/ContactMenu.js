@@ -4,7 +4,6 @@ import { withRouter } from 'react-router-dom';
 export const route = (e, props) => {
     e.preventDefault();
     const { lang, curr } = props.match.params;
-    console.log('/' + lang + '/' + curr + '/contact');
     props.history.push('/' + lang + '/' + curr + '/contact');
 }
 
