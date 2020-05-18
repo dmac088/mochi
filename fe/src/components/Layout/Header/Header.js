@@ -6,6 +6,7 @@ import Currency from './Currency/Currency';
 import MyAccount from './MyAccount';
 import MyBag from './MyBag';
 import MyWishList from './MyWishList';
+import MyCheckout from './MyCheckout';
 
 function Header() {
     return (
@@ -31,7 +32,7 @@ function Header() {
                        <MyAccount />
                        <MyWishList />
                        <MyBag />
-                        <li><a href="checkout.html">Checkout</a></li>
+                       <MyCheckout />
                       </ul>
                     </div>
                     {/*<!-- end of header top menu -->*/}
