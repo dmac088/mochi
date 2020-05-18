@@ -32,5 +32,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.7.0"
+  }
 }
