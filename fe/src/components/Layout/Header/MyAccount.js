@@ -16,6 +16,3 @@ export const MyAccount = withRouter(({...props}) => {
 });
 
 export default MyAccount;
-
-
-

@@ -4,6 +4,8 @@ import Search from './Search/Search';
 import Language from './Language/Language';
 import Currency from './Currency/Currency';
 import MyAccount from './MyAccount';
+import MyBag from './MyBag';
+import MyWishList from './MyWishList';
 
 function Header() {
     return (
@@ -27,7 +29,8 @@ function Header() {
                     <div className="header-top-menu">
                       <ul>
                        <MyAccount />
-                        <li><a href="wishlist.html">Wishlist</a></li>
+                       <MyWishList />
+                       <MyBag />
                         <li><a href="checkout.html">Checkout</a></li>
                       </ul>
                     </div>

@@ -14,6 +14,8 @@ import UpdateCapability from "./components/CategoryTool/UpdateCapability";
 import { Provider } from "react-redux";
 import store from "./store";
 import Container from "./components/Layout/Container";
+import Bag from "./components/Layout/Bag/Bag";
+import WishList from "./components/Layout/WishList/WishList";
 
 function App() {
 
@@ -55,6 +57,14 @@ function App() {
                 <Route
                   exact path="/:lang/:curr/myaccount"
                   render={() => renderContainer(Account)} />
+
+                <Route
+                  exact path="/:lang/:curr/mybag"
+                  render={() => renderContainer(Bag)} />
+
+                <Route
+                  exact path="/:lang/:curr/mywishlist"
+                  render={() => renderContainer(WishList)} />
 
                 <Redirect from="/" to="/en-GB/HKD" />
               </Switch>

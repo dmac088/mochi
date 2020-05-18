@@ -1,6 +1,6 @@
 import React from 'react';
 
-  export const Account = (props) => {
+function Account() {
     return(
       <React.Fragment>
         <div className="my-account-section section position-relative mb-50 fix">
@@ -204,7 +204,7 @@ import React from 'react';
           </div>
         </div>
       </React.Fragment>
-    )
+    );
   }
 
   export default Account;
