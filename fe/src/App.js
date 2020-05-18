@@ -57,7 +57,6 @@ function App() {
                   render={() => renderContainer(Account)} />
 
                 <Redirect from="/" to="/en-GB/HKD" />
-
               </Switch>
           </div>
         </div>
