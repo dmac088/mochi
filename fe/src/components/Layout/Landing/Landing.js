@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
 import { authenticate, logout } from "../../../actions/SessionActions";
-import Header from "../Header/Header";
 
 function Landing() {
 
@@ -25,7 +24,6 @@ function Landing() {
 
   return (
     <React.Fragment>
-      <Header />
       <div className="landing">
         <div className="light-overlay landing-inner text-dark">
           <div className="container">
