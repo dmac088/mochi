@@ -9,10 +9,16 @@ const routeCheckout = (e, props) => {
 
 export const MyCheckout = withRouter(({...props}) => {
     return (
+        <MyCheckoutBase {...props} />
+    );
+});
+
+export const MyCheckoutBase = ({...props}) => {
+    return (
         <li> 
             <a href="#" onClick={(e) => routeCheckout(e, props)}>My Checkout</a>
         </li>
     );
-});
+};
 
 export default MyCheckout;

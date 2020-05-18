@@ -10,10 +10,16 @@ export const route = (e, props) => {
 export const HomeMenu = withRouter(({ ...props }) => {
     
     return (
+        <HomeMenuBase {...props} />
+    );
+});
+
+export const HomeMenuBase = ({ ...props }) => {
+    return (
         <li>
             <a onClick={(e) => route(e, props)} href="#">HOME</a>
         </li>
     );
-});
+};
 
 export default HomeMenu;
