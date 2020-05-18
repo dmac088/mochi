@@ -8,7 +8,6 @@ export const route = (e, props) => {
 }
 
 export const ContactMenu = withRouter(({...props}) => {
-   console.log(props);
     return (
       <li>
         <a onClick={(e) => route(e, props)} href="#">CONTACT</a>
