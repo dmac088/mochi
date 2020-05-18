@@ -49,28 +49,29 @@ function App() {
                   <Route 
                     exact path="/:lang/:curr" 
                     render={() => renderContainer(Landing)}/>
+
                   <Route 
                     exact path="/:lang/:curr/contact" 
                     render={() => renderContainer(Contact)}/>
                   
-                  {/* <Route
-                    exact path="/:lang/:curr/dashboard"
-                    component={Dashboard}
-                  /> */}
-                  {/* <Route 
-                    exact path="/:lang/:curr/addCapability" 
-                    component={AddCapability} />
                   <Route
-                    exact path="/:lang/:curr/updateCapability"
-                    component={UpdateCapability}
-                  />
-                  
+                    exact path="/:lang/:curr/dashboard"
+                    render={() => renderContainer(Dashboard)}/>
+
+                  <Route 
+                    exact path="/:lang/:curr/addCapability" 
+                    component={() => renderContainer(AddCapability)} />
+
+                  <Route 
+                    exact path="/:lang/:curr/updateCapability" 
+                    component={() => renderContainer(UpdateCapability)} />
+
                   <Route
                     exact path="/:lang/:curr/myaccount"
-                    component={Account}
+                    component={() => renderContainer(Account)}
                   /> */}
 
-                  {/* <Redirect from="/" to="/en-GB/HKD" /> */}
+                  <Redirect from="/" to="/en-GB/HKD" />
                   
                 </Switch>
               </Container>
