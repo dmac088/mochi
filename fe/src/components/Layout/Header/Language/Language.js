@@ -1,11 +1,12 @@
 import React from "react";
+import { withRouter } from 'react-router-dom';
 
 const changeLang = (e, props) => {
     e.preventDefault();
     props.history.push('/' + e.currentTarget.id + '/HKD');
 }
 
-export const Language = (props) => {
+export const Language = withRouter(({...props}) => {
     return (
         <li> <a href="#">English <i className="fa fa-chevron-down"></i></a>
             <ul>
@@ -14,7 +15,7 @@ export const Language = (props) => {
             </ul>
         </li>
     );
-}
+});
 
 export default Language;
 
