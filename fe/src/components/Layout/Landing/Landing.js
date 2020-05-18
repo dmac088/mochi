@@ -25,7 +25,8 @@ function Landing() {
 
   return (
     <React.Fragment>
-      <div className="landing">
+          <HeroSlider />
+      {/* <div className="landing">
         <div className="light-overlay landing-inner text-dark">
           <div className="container">
             <div className="row">
@@ -61,17 +62,18 @@ function Landing() {
                   Logout
                 </button>
                 <br />
-                <br />
-                <Link className="btn btn-lg btn-primary mr-2" to="/dashboard">
+                <br /> */}
+            
+                {/* <Link className="btn btn-lg btn-primary mr-2" to="/dashboard">
                   Load Dashboard
-              </Link>
+                </Link>
                 <br />
-                {tokens.access_token}
-              </div>
+                {tokens.access_token} */}
+              {/* </div>
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </React.Fragment>
   );
 }
