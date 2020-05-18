@@ -9,10 +9,16 @@ const routeBag = (e, props) => {
 
 export const MyBag = withRouter(({...props}) => {
     return (
+        <MyBagBase {...props} />
+    );
+});
+
+export const MyBagBase = ({...props}) => {
+    return (
         <li> 
             <a href="#" onClick={(e) => routeBag(e, props)}>My Bag</a>
         </li>
     );
-});
+};
 
 export default MyBag;

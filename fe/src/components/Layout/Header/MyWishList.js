@@ -9,10 +9,16 @@ const routeWish = (e, props) => {
 
 export const MyWishList = withRouter(({...props}) => {
     return (
+        <MyWishListBase {...props} />
+    );
+});
+
+export const MyWishListBase = ({...props}) => {
+    return (
         <li> 
             <a href="#" onClick={(e) => routeWish(e, props)}>My WishList</a>
         </li>
     );
-});
+};
 
 export default MyWishList;

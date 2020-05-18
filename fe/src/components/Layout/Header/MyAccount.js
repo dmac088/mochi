@@ -9,10 +9,16 @@ const routeAccount = (e, props) => {
 
 export const MyAccount = withRouter(({...props}) => {
     return (
+        <MyAccountBase {...props} />
+    );
+});
+
+export const MyAccountBase = ({...props}) => {
+    return (
         <li> 
             <a href="#" onClick={(e) => routeAccount(e, props)}>My Account</a>
         </li>
     );
-});
+};
 
 export default MyAccount;

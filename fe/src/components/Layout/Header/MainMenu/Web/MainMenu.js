@@ -1,8 +1,6 @@
 import React from "react";
 import HomeMenu from './HomeMenu';
 import ContactMenu from './ContactMenu';
-import MyAccount from '../../MyAccount';
-import { menuCategories } from '../LayoutHelper';
 
 function MainMenu() {
     return (

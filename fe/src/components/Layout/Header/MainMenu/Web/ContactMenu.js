@@ -9,10 +9,16 @@ export const route = (e, props) => {
 
 export const ContactMenu = withRouter(({...props}) => {
     return (
-      <li>
-        <a onClick={(e) => route(e, props)} href="#">CONTACT</a>
-      </li>
+      <ContactMenuBase {...props} />
     );
 });
+
+export const ContactMenuBase = ({...props}) => {
+  return (
+    <li>
+      <a onClick={(e) => route(e, props)} href="#">CONTACT</a>
+    </li>
+  );
+};
 
 export default ContactMenu;
