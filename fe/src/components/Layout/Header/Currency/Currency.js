@@ -19,9 +19,3 @@ export const Currency = withRouter(({...props}) => {
 });
 
 export default Currency;
-
-
-
-
-
-
