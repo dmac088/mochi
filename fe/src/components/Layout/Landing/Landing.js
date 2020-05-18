@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
 import { authenticate, logout } from "../../../actions/SessionActions";
+import HeroSlider from "./HeroSlider/HeroSlider";
 
 function Landing() {
 

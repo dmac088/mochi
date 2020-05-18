@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import CategoryMenuContainer from './CategoryMenuContainer';
+//import CategoryMenuContainer from './CategoryMenuContainer';
 import Slider from "react-slick";
-import { HsSlickArrowLeft, HsSlickArrowRight } from '../../services/helpers/uiHelper';
+import { HsSlickArrowLeft, HsSlickArrowRight } from './sliderHelper';
 
 const $ = window.$;
 const hs1_settings = {
@@ -66,9 +66,9 @@ class HeroSlider extends Component {
         <div className="container">
           <div className="row">
             <div className="col-lg-3 col-md-12">
-              <CategoryMenuContainer
+              {/* <CategoryMenuContainer
                 {...this.props}
-              />
+              /> */}
             </div>
             <div className="col-lg-6 col-md-12">
               <div className="slider-container">
