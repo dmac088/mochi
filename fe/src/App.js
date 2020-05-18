@@ -19,21 +19,13 @@ import Container from "./components/Layout/Container";
 function App() {
 
 
-    const renderContact = () => {
-      return(
-        <Container>
-           <Contact />
-        </Container>
-      );
-    }
-
-    const renderLanding = () => {
-      return(
-        <Container>
-           <Landing />
-        </Container>
-      );
-    }
+  function renderContainer(Component) {
+    return(
+      <Container>
+         <Component />
+      </Container>
+    );
+  }
 
     return (
       <Provider store={store}>
@@ -56,10 +48,10 @@ function App() {
                 <Switch>
                   <Route 
                     exact path="/:lang/:curr" 
-                    component={renderLanding}/>
-                  <Route
-                    exact path="/:lang/:curr/contact"
-                    component={renderContact}/>
+                    render={() => renderContainer(Landing)}/>
+                  <Route 
+                    exact path="/:lang/:curr/contact" 
+                    render={() => renderContainer(Contact)}/>
                   
                   {/* <Route
                     exact path="/:lang/:curr/dashboard"
