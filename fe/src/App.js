@@ -20,7 +20,6 @@ import Checkout from "./components/Layout/Checkout/Checkout";
 
 function App() {
 
-
   const renderContainer = (Component) => {
     return (
       <Container>
