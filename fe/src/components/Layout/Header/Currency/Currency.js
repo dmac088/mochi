@@ -8,8 +8,9 @@ const changeCurr = (e, props) => {
 }
 
 export const Currency = withRouter(({...props}) => {
+    const { curr } = props.match.params;
     return (
-        <li> <a href="#">HKD <i className="fa fa-chevron-down"></i></a>
+        <li> <a href="#">{curr} <i className="fa fa-chevron-down"></i></a>
             <ul>
                 <li><a href="#" id="HKD" onClick={(e) => changeCurr(e, props)}>HKD</a></li>
                 <li><a href="#" id="USD" onClick={(e) => changeCurr(e, props)}>USD</a></li>

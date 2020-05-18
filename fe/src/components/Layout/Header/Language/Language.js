@@ -8,8 +8,9 @@ const changeLang = (e, props) => {
 }
 
 export const Language = withRouter(({...props}) => {
+    const { lang } = props.match.params;
     return (
-        <li> <a href="#">English <i className="fa fa-chevron-down"></i></a>
+        <li> <a href="#">{lang} <i className="fa fa-chevron-down"></i></a>
             <ul>
                 <li><a href="#" id="en-GB" onClick={(e) => changeLang(e, props)}>English</a></li>
                 <li><a href="#" id="zh-HK" onClick={(e) => changeLang(e, props)}>Chinese</a></li>
