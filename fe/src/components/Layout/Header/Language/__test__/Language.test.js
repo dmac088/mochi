@@ -29,7 +29,7 @@ describe('Test language menu', () => {
         const link = wrapper.find('a#zh-HK');
         link.simulate('click', {
             preventDefault: () => {},
-            currentTarget: {id: 'zh-HK'}
+            currentTarget: { id: 'zh-HK' }
         });
         const result = wrapper.find('a#language');
         expect(result.text()).toBe('zh-HK');
@@ -41,7 +41,7 @@ describe('Test language menu', () => {
         const link = wrapper.find('a#en-GB');
         link.simulate('click', {
             preventDefault: () => {},
-            currentTarget: {id: 'en-GB'}
+            currentTarget: { id: 'en-GB' }
         });
         const result = wrapper.find('a#language');
         expect(result.text()).toBe('en-GB');
