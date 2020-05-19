@@ -6,6 +6,8 @@ import { createMemoryHistory } from 'history'
 import { render, cleanup } from '@testing-library/react';
 import "@testing-library/jest-dom/extend-expect";
 import renderer from 'react-test-renderer';
+import Enzyme, { shallow } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 
 describe('Test language menu', () => {
 
