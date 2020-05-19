@@ -6,22 +6,40 @@ import { createMemoryHistory } from 'history'
 import { render, cleanup } from '@testing-library/react';
 import "@testing-library/jest-dom/extend-expect";
 import renderer from 'react-test-renderer';
-import Enzyme, { shallow } from 'enzyme';
+import Enzyme, { mount, shallow, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+
+configure({ adapter: new Adapter() });
 
 describe('Test language menu', () => {
 
     afterEach(cleanup);
 
     it("renders without crashing", () => {
-        const div = document.createElement("div");
+        const div = document.createElement("div"); 
         ReactDOM.render(
             <BrowserRouter>
                 <LanguageBase />
             </BrowserRouter >, div);
     });
 
-    it("renders english in language menu correctly", () => {
+    it('renders English menu item correctly', () => {
+        const wrapper = mount(<BrowserRouter>
+                                <LanguageBase />
+                              </BrowserRouter>);
+        const text = wrapper.find('a#en-GB');
+        expect(text.text()).toBe('English');
+    });
+
+    it('renders Chinese menu item correctly', () => {
+        const wrapper = mount(<BrowserRouter>
+                                <LanguageBase />
+                              </BrowserRouter>);
+        const text = wrapper.find('a#zh-HK');
+        expect(text.text()).toBe('Chinese');
+    });
+    
+    it("renders english in language menu header correctly", () => {
         const history = createMemoryHistory('/en-GB/HKD')
         const { getByTestId } = render(
             <BrowserRouter>
@@ -33,7 +51,7 @@ describe('Test language menu', () => {
         expect(getByTestId('language')).toHaveTextContent("English");
     });
 
-    it("renders chinese in language menu correctly", () => {
+    it("renders chinese in language menu header correctly", () => {
         const history = createMemoryHistory('/en-GB/HKD')
         const { getByTestId } = render(
             <BrowserRouter>
@@ -57,18 +75,5 @@ describe('Test language menu', () => {
         ).toJSON();
         expect(tree).toMatchSnapshot();
     }); 
-
-
-    it("matches snapshot 2", () => {
-        const history = createMemoryHistory('/zh-HK/USD') 
-        const tree = renderer.create(
-            <BrowserRouter>
-                <LanguageBase
-                    lang='zh-HK'
-                    curr='USD'
-                    history={history} />
-            </BrowserRouter >
-        ).toJSON();
-        expect(tree).toMatchSnapshot();
-    }); 
+    
 });
