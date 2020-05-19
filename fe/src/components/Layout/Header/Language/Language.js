@@ -8,6 +8,12 @@ const changeLang = (e, props) => {
 }
 
 export const Language = withRouter(({...props}) => {
+    return (
+        <LanguageBase {...props} />
+    );
+});
+
+export const LanguageBase = ({...props}) => {
     const { lang } = props.match.params;
     return (
         <li> <a href="#">{lang} <i className="fa fa-chevron-down"></i></a>
@@ -17,7 +23,7 @@ export const Language = withRouter(({...props}) => {
             </ul>
         </li>
     );
-});
+};
 
 export default Language;
 

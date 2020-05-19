@@ -8,6 +8,12 @@ const changeCurr = (e, props) => {
 }
 
 export const Currency = withRouter(({...props}) => {
+    return (
+        <CurrencyBase {...props}/>
+    );
+});
+
+export const CurrencyBase = ({...props}) => {
     const { curr } = props.match.params;
     return (
         <li> <a href="#">{curr} <i className="fa fa-chevron-down"></i></a>
@@ -17,6 +23,6 @@ export const Currency = withRouter(({...props}) => {
             </ul>
         </li>
     );
-});
+};
 
 export default Currency;

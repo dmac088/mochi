@@ -69,14 +69,11 @@ function App() {
                 <Route
                   exact path="/:lang/:curr/mycheckout"
                   render={() => renderContainer(Checkout)} />
+      
+                <Redirect from="/" to="/en-GB/HKD" />
 
-                <Route
-                  exact path="/"
-                  render={() => renderContainer(Landing)} />
-                  
                 <Route component={NotFound} />
 
-                <Redirect from="/" to="/en-GB/HKD" />
               </Switch>
           </div>
         </div>
