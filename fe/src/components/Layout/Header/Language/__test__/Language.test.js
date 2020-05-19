@@ -15,19 +15,20 @@ describe('Test language menu', () => {
 
     afterEach(cleanup);
 
-    //these are the mock for our props
-    const push = jest.fn();
-    const minProps = {
-                        lang: "zh-HK", 
-                        curr: "USD", 
-                        history: { push }
-                    };
+    it('should change the router params to zh-HK when menu item is clicked', () => {
+        const push = jest.fn();
+        const wrapper = shallow(<LanguageBase {...{ lang: "zh-HK", curr: "USD", history: { push }}} />);
+        const text = wrapper.find('a#language');
+        text.simulate('click');
+        expect(text.text()).toBe('zh-HK');
+    });
 
-    it('should change the router params when menu item is clicked', () => {
-        const wrapper = shallow(<LanguageBase { ...minProps } />);
-        console.log(wrapper.debug());
-        //const text = wrapper.find('a#language');
-        //expect(text.text()).toBe('zh-HK');
+    it('should change the router params to en-GB when menu item is clicked', () => {
+        const push = jest.fn();
+        const wrapper = shallow(<LanguageBase {...{ lang: "en-GB", curr: "USD", history: { push }}} />);
+        const text = wrapper.find('a#language');
+        text.simulate('click');
+        expect(text.text()).toBe('en-GB');
     });
 
     it("renders without crashing", () => {
