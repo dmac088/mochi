@@ -35,39 +35,3 @@ exports[`Test language menu matches snapshot 1 1`] = `
   </ul>
 </li>
 `;
-
-exports[`Test language menu matches snapshot 2 1`] = `
-<li
-  data-testid="language"
->
-   
-  <a
-    href="#"
-  >
-     
-    <i
-      className="fa fa-chevron-down"
-    />
-  </a>
-  <ul>
-    <li>
-      <a
-        href="#"
-        id="en-GB"
-        onClick={[Function]}
-      >
-        English
-      </a>
-    </li>
-    <li>
-      <a
-        href="#"
-        id="zh-HK"
-        onClick={[Function]}
-      >
-        Chinese
-      </a>
-    </li>
-  </ul>
-</li>
-`;

@@ -75,5 +75,5 @@ describe('Test language menu', () => {
         ).toJSON();
         expect(tree).toMatchSnapshot();
     }); 
-    
-});
+
+}); 
