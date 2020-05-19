@@ -9,6 +9,7 @@ exports[`Test language menu matches snapshot 1 1`] = `
     href="#"
     id="language"
   >
+    en-GB
     <i
       className="fa fa-chevron-down"
     />
