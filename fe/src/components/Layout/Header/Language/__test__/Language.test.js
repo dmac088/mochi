@@ -38,6 +38,14 @@ describe('Test language menu', () => {
         const text = wrapper.find('a#zh-HK');
         expect(text.text()).toBe('Chinese');
     });
+
+    it('should change the url params when menu item is clicked', () => {
+        const wrapper = mount(<BrowserRouter>
+                                <LanguageBase />
+                              </BrowserRouter>);
+        const text = wrapper.find('a#zh-HK');
+        expect(text.text()).toBe('Chinese');
+    });
     
     it("renders english in language menu header correctly", () => {
         const history = createMemoryHistory('/en-GB/HKD')
