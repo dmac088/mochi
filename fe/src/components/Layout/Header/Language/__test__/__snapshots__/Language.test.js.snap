@@ -7,8 +7,8 @@ exports[`Test language menu matches snapshot 1 1`] = `
    
   <a
     href="#"
+    id="language"
   >
-     
     <i
       className="fa fa-chevron-down"
     />

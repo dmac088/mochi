@@ -20,7 +20,7 @@ export const Language = withRouter(({...props}) => {
 export const LanguageBase = (props) => {
     const { lang, curr, history } = props;
     return (
-        <li data-testid="language"> <a href="#">{lang} <i className="fa fa-chevron-down"></i></a>
+        <li data-testid="language"> <a id="language" href="#">{lang}<i className="fa fa-chevron-down"></i></a>
             <ul>
                 <li><a href="#" id="en-GB" onClick={(e) => changeLang(e, curr, history)}>English</a></li>
                 <li><a href="#" id="zh-HK" onClick={(e) => changeLang(e, curr, history)}>Chinese</a></li>
