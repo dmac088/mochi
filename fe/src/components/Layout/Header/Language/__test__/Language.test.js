@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import LanguageBase from '../Language';
+import { LanguageBase } from '../Language';
 import { BrowserRouter } from 'react-router-dom';
 import { createMemoryHistory } from 'history'
 import { render, cleanup } from '@testing-library/react';
