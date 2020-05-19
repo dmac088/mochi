@@ -15,6 +15,14 @@ describe('Test language menu', () => {
 
     afterEach(cleanup);
 
+    it("renders without crashing", () => {
+        const div = document.createElement("div"); 
+        ReactDOM.render(
+            <BrowserRouter>
+                <LanguageBase />
+            </BrowserRouter >, div);
+    });
+
     it('should change the router params to zh-HK when menu item is clicked', () => {
         const push = jest.fn();
         const wrapper = shallow(<LanguageBase {...{ lang: "zh-HK", curr: "USD", history: { push }}} />);
@@ -29,14 +37,6 @@ describe('Test language menu', () => {
         const text = wrapper.find('a#language');
         text.simulate('click');
         expect(text.text()).toBe('en-GB');
-    });
-
-    it("renders without crashing", () => {
-        const div = document.createElement("div"); 
-        ReactDOM.render(
-            <BrowserRouter>
-                <LanguageBase />
-            </BrowserRouter >, div);
     });
 
     it('renders English menu item correctly', () => {
