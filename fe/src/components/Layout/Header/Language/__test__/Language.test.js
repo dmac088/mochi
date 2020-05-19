@@ -15,6 +15,21 @@ describe('Test language menu', () => {
 
     afterEach(cleanup);
 
+    //these are the mock for our props
+    const push = jest.fn();
+    const minProps = {
+                        lang: "zh-HK", 
+                        curr: "USD", 
+                        history: { push }
+                    };
+
+    it('should change the router params when menu item is clicked', () => {
+        const wrapper = shallow(<LanguageBase { ...minProps } />);
+        console.log(wrapper.debug());
+        //const text = wrapper.find('a#language');
+        //expect(text.text()).toBe('zh-HK');
+    });
+
     it("renders without crashing", () => {
         const div = document.createElement("div"); 
         ReactDOM.render(
@@ -37,16 +52,6 @@ describe('Test language menu', () => {
                               </BrowserRouter>);
         const text = wrapper.find('a#zh-HK');
         expect(text.text()).toBe('Chinese');
-    });
-
-    it('should change the url params when menu item is clicked', () => {
-        const wrapper = mount(<BrowserRouter>
-                                <LanguageBase />
-                              </BrowserRouter>);
-        const link = wrapper.find('a#zh-HK');
-        link.simulate('click');
-        const text = wrapper.find('a#language');
-        expect(text.text()).toBe('zh-HK');
     });
     
     it("renders english in language menu header correctly", () => {
