@@ -25,18 +25,20 @@ describe('Test language menu', () => {
 
     it('should change the router params to zh-HK when menu item is clicked', () => {
         const push = jest.fn();
-        const wrapper = shallow(<LanguageBase {...{ lang: "zh-HK", curr: "USD", history: { push }}} />);
-        const text = wrapper.find('a#language');
-        text.simulate('click');
-        expect(text.text()).toBe('zh-HK');
+        const wrapper = shallow(<LanguageBase {...{ lang: "en-GB", curr: "USD", history: { push }}} />);
+        const link = wrapper.find('a#zh-HK');
+        link.simulate('click');
+        const result = wrapper.find('a#language');
+        expect(result.text()).toBe('zh-HK');
     });
 
     it('should change the router params to en-GB when menu item is clicked', () => {
         const push = jest.fn();
-        const wrapper = shallow(<LanguageBase {...{ lang: "en-GB", curr: "USD", history: { push }}} />);
-        const text = wrapper.find('a#language');
-        text.simulate('click');
-        expect(text.text()).toBe('en-GB');
+        const wrapper = shallow(<LanguageBase {...{ lang: "zh-HK", curr: "USD", history: { push }}} />);
+        const link = wrapper.find('a#en-GB');
+        link.simulate('click');
+        const result = wrapper.find('a#language');
+        expect(result.text()).toBe('en-GB');
     });
 
     it('renders English menu item correctly', () => {
