@@ -2,7 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import LanguageBase from '../Language';
 import { BrowserRouter } from 'react-router-dom';
+import { createMemoryHistory } from 'history'
 import { render } from '@testing-library/react';
+import "@testing-library/jest-dom/extend-expect";
+
 
 it("renders without crashing", () => {
     const div = document.createElement("div");
@@ -12,10 +15,26 @@ it("renders without crashing", () => {
         </BrowserRouter >, div);
 });
 
-it("renders language menu correctly", () => {
-    render( 
-        <BrowserRouter>
-            <LanguageBase />
-        </BrowserRouter >);
+it("renders english in language menu correctly", () => {
+    const history = createMemoryHistory('/en-GB/HKD')
+    const { getByTestId } = render( 
+                    <BrowserRouter>
+                        <LanguageBase 
+                            lang='en-GB'
+                            curr='HKD'
+                            history={history} />
+                    </BrowserRouter >);
+    expect(getByTestId('language')).toHaveTextContent("English");
 });
-
+ 
+it("renders chinese in language menu correctly", () => {
+    const history = createMemoryHistory('/en-GB/HKD')
+    const { getByTestId } = render( 
+                    <BrowserRouter>
+                        <LanguageBase 
+                            lang='zh-HK'
+                            curr='HKD'
+                            history={history} />
+                    </BrowserRouter >);
+    expect(getByTestId('language')).toHaveTextContent("Chinese");
+});
