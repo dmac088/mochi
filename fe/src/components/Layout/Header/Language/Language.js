@@ -1,25 +1,31 @@
 import React from "react";
 import { withRouter } from 'react-router-dom';
 
-const changeLang = (e, props) => {
+
+
+
+const changeLang = (e, curr, history) => {
     e.preventDefault();
-    const { curr } = props.match.params;
-    props.history.push('/' + e.currentTarget.id + '/' + curr);
+    history.push('/' + e.currentTarget.id + '/' + curr);
 }
 
 export const Language = withRouter(({...props}) => {
+    const { params } = props.match;
+    const { lang, curr } = params;
     return (
-        <LanguageBase {...props} />
+        <LanguageBase lang={lang}
+                      curr={curr}
+                      history={props.history} />
     );
 });
 
-export const LanguageBase = ({...props}) => {
-    const { lang } = props.match.params;
+export const LanguageBase = (props) => {
+    const { lang, curr, history } = props;
     return (
-        <li> <a href="#">{lang} <i className="fa fa-chevron-down"></i></a>
+        <li data-testid="currency"> <a href="#">{lang} <i className="fa fa-chevron-down"></i></a>
             <ul>
-                <li><a href="#" id="en-GB" onClick={(e) => changeLang(e, props)}>English</a></li>
-                <li><a href="#" id="zh-HK" onClick={(e) => changeLang(e, props)}>Chinese</a></li>
+                <li><a href="#" id="en-GB" onClick={(e) => changeLang(e, curr, history)}>English</a></li>
+                <li><a href="#" id="zh-HK" onClick={(e) => changeLang(e, curr, history)}>Chinese</a></li>
             </ul>
         </li>
     );
