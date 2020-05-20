@@ -1,22 +1,29 @@
 import React from "react";
 import { withRouter } from 'react-router-dom';
 
-const routeWish = (e, props) => {
-    e.preventDefault();
-    const { lang, curr } = props.match.params;
-    props.history.push('/' + lang + '/' + curr + '/MyWishList');
-}
-
 export const MyWishList = withRouter(({...props}) => {
+    const { params } = props.match;
+    const { lang, curr } = params;
+    const{ history } = props;
+        
     return (
-        <MyWishListBase {...props} />
+        <MyWishListBase lang={lang}
+                        curr={curr}
+                        history={history} />
     );
 });
 
-export const MyWishListBase = ({...props}) => {
+export const MyWishListBase = (props) => {
+    const { lang, curr, history } = props;
+
+    const routeWish = (e) => {
+        e.preventDefault();
+        props.history.push('/' + lang + '/' + curr + '/MyWishList');
+    }
+
     return (
         <li> 
-            <a href="#" onClick={(e) => routeWish(e, props)}>My WishList</a>
+            <a href="#" onClick={routeWish}>My WishList</a>
         </li>
     );
 };

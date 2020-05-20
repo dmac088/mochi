@@ -5,6 +5,7 @@ export const MyBag = withRouter(({...props}) => {
     const { params } = props.match;
     const { lang, curr } = params;
     const{ history } = props;
+    
     return (
         <MyBagBase  lang={lang}
                     curr={curr}

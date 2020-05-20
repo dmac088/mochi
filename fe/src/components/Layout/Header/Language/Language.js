@@ -1,8 +1,6 @@
 import React from "react";
 import { withRouter } from 'react-router-dom';
 
-
-
 export const Language = withRouter(({...props}) => {
     const { params } = props.match;
     const { lang, curr } = params;
