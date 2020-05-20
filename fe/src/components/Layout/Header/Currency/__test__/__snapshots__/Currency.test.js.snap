@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test language menu matches snapshot 1 1`] = `
+<li>
+   
+  <a
+    href="#"
+    id="currency"
+  >
+    HKD
+    <i
+      className="fa fa-chevron-down"
+    />
+  </a>
+  <ul>
+    <li>
+      <a
+        href="#"
+        id="HKD"
+        onClick={[Function]}
+      >
+        HKD
+      </a>
+    </li>
+    <li>
+      <a
+        href="#"
+        id="USD"
+        onClick={[Function]}
+      >
+        USD
+      </a>
+    </li>
+  </ul>
+</li>
+`;
