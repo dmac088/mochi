@@ -5,6 +5,7 @@ export const Currency = withRouter(({...props}) => {
     const { params } = props.match;
     const { lang, curr } = params;
     const{ history } = props;
+    
     return (
         <CurrencyBase   lang={lang}
                         curr={curr}

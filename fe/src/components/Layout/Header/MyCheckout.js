@@ -1,22 +1,31 @@
 import React from "react";
 import { withRouter } from 'react-router-dom';
 
-const routeCheckout = (e, props) => {
-    e.preventDefault();
-    const { lang, curr } = props.match.params;
-    props.history.push('/' + lang + '/' + curr + '/mycheckout');
-}
+
 
 export const MyCheckout = withRouter(({...props}) => {
+    const { params } = props.match;
+    const { lang, curr } = params;
+    const{ history } = props;
+
     return (
-        <MyCheckoutBase {...props} />
+        <MyCheckoutBase lang={lang}
+                        curr={curr}
+                        history={history} />
     );
 });
 
-export const MyCheckoutBase = ({...props}) => {
+export const MyCheckoutBase = (props) => {
+    const { lang, curr, history } = props;
+
+    const routeCheckout = (e) => {
+        e.preventDefault();
+        history.push('/' + lang + '/' + curr + '/mycheckout');
+    }
+
     return (
         <li> 
-            <a href="#" onClick={(e) => routeCheckout(e, props)}>My Checkout</a>
+            <a href="#" onClick={routeCheckout}>My Checkout</a>
         </li>
     );
 };
