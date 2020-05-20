@@ -93,7 +93,7 @@ describe('Test language menu', () => {
             <BrowserRouter>
                 <CurrencyBase
                     lang='en-GB'
-                    curr='HKD'
+                    curr='HKD' 
                     history={history} />
             </BrowserRouter >
         ).toJSON();
