@@ -4,8 +4,13 @@ import { withRouter } from 'react-router-dom';
 
 
 export const Currency = withRouter(({...props}) => {
+    const { params } = props.match;
+    const { lang, curr } = params;
+    const{ history } = props;
     return (
-        <CurrencyBase {...props}/>
+        <CurrencyBase   lang={lang}
+                        curr={curr}
+                        history={history}/>
     );
 });
 
