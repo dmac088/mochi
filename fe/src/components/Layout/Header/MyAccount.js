@@ -1,11 +1,7 @@
 import React from "react";
 import { withRouter } from 'react-router-dom';
 
-const routeAccount = (e, props) => {
-    e.preventDefault();
-    const { lang, curr } = props.match.params;
-    props.history.push('/' + lang + '/' + curr + '/myaccount');
-}
+
 
 export const MyAccount = withRouter(({...props}) => {
     return (
@@ -13,10 +9,17 @@ export const MyAccount = withRouter(({...props}) => {
     );
 });
 
-export const MyAccountBase = ({...props}) => {
+export const MyAccountBase = (props) => {
+    const { lang, curr, history } = props;
+
+    const routeAccount = (e, props) => {
+        e.preventDefault();
+        history.push('/' + lang + '/' + curr + '/myaccount');
+    }
+
     return (
         <li> 
-            <a href="#" onClick={(e) => routeAccount(e, props)}>My Account</a>
+            <a href="#" onClick={routeAccount}>My Account</a>
         </li>
     );
 };
