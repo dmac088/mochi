@@ -15,14 +15,14 @@ export const MyBag = withRouter(({...props}) => {
 export const MyBagBase = (props) => {
     const { lang, curr, history } = props;
 
-    const routeBag = (e, props) => {
+    const routeBag = (e) => {
         e.preventDefault();
         history.push('/' + lang + '/' + curr + '/MyBag');
     }
 
     return (
         <li> 
-            <a href="#" onClick={(e) => routeBag(e, props)}>My Bag</a>
+            <a href="#" onClick={routeBag}>My Bag</a>
         </li>
     );
 };
