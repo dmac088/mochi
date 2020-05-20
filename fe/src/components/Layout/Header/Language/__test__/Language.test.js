@@ -8,7 +8,7 @@ import "@testing-library/jest-dom/extend-expect";
 import renderer from 'react-test-renderer';
 import Enzyme, { mount, shallow, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-
+ 
 configure({ adapter: new Adapter() });
 
 describe('Test language menu', () => {
@@ -24,27 +24,39 @@ describe('Test language menu', () => {
     });
 
     it('should change the router params to zh-HK when menu item is clicked', () => {
-        const push = jest.fn();
-        const wrapper = shallow(<LanguageBase {...{ lang: "en-GB", curr: "USD", history: { push }}} />);
+        //mock a history object with mock function
+        const historyMock = { history: { push: jest.fn() }}
+        //create a shallow copy of the component we want to render and mock the props
+        const wrapper = shallow(<LanguageBase {...{ lang: "en-GB", curr: "USD", ...historyMock}} />);
+        //find the element we want to click
         const link = wrapper.find('a#zh-HK');
+        //click the element and mock additional function params
         link.simulate('click', {
             preventDefault: () => {},
             currentTarget: { id: 'zh-HK' }
         });
-        const result = wrapper.find('a#language');
-        expect(result.text()).toBe('zh-HK');
+        //get the expected urlString
+        const urlString = "/zh-HK/USD"
+        //assert that the expected result is the expected string
+        expect(historyMock.history.push.mock.calls[0][0]).toEqual(urlString);
     });
 
     it('should change the router params to en-GB when menu item is clicked', () => {
-        const push = jest.fn();;
-        const wrapper = shallow(<LanguageBase {...{ lang: "zh-HK", curr: "USD", history: { push }}} />);
+        //mock a history object with mock function
+        const historyMock = { history: { push: jest.fn() }}
+        //create a shallow copy of the component we want to render and mock the props
+        const wrapper = shallow(<LanguageBase {...{ lang: "zh-HK", curr: "HKD", ...historyMock}} />);
+        //find the element we want to click
         const link = wrapper.find('a#en-GB');
+        //click the element and mock additional function params
         link.simulate('click', {
             preventDefault: () => {},
             currentTarget: { id: 'en-GB' }
         });
-        const result = wrapper.find('a#language');
-        expect(result.text()).toBe('en-GB');
+        //get the expected urlString
+        const urlString = "/en-GB/HKD"
+        //assert that the expected result is the expected string
+        expect(historyMock.history.push.mock.calls[0][0]).toEqual(urlString);
     });
 
     it('renders English menu item correctly', () => {
