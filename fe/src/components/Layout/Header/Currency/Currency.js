@@ -1,11 +1,7 @@
 import React from "react";
 import { withRouter } from 'react-router-dom';
 
-const changeCurr = (e, props) => {
-    e.preventDefault();
-    const { lang } = props.match.params;
-    props.history.push('/' +lang + '/' + e.currentTarget.id);
-}
+
 
 export const Currency = withRouter(({...props}) => {
     return (
@@ -13,13 +9,19 @@ export const Currency = withRouter(({...props}) => {
     );
 });
 
-export const CurrencyBase = ({...props}) => {
-    const { curr } = props.match.params;
+export const CurrencyBase = (props) => {
+    const { lang, curr, history } = props;
+
+    const changeCurr = (e) => {
+        e.preventDefault();
+        props.history.push('/' +lang + '/' + e.currentTarget.id);
+    } 
+
     return (
-        <li> <a href="#">{curr} <i className="fa fa-chevron-down"></i></a>
+        <li> <a id="currency" href="#">{curr}<i className="fa fa-chevron-down"></i></a>
             <ul>
-                <li><a href="#" id="HKD" onClick={(e) => changeCurr(e, props)}>HKD</a></li>
-                <li><a href="#" id="USD" onClick={(e) => changeCurr(e, props)}>USD</a></li>
+                <li><a href="#" id="HKD" onClick={changeCurr}>HKD</a></li>
+                <li><a href="#" id="USD" onClick={changeCurr}>USD</a></li>
             </ul>
         </li>
     );
