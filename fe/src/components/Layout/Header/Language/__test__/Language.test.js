@@ -60,43 +60,31 @@ describe('Test language menu', () => {
     });
 
     it('renders English menu item correctly', () => {
-        const wrapper = mount(<BrowserRouter>
-                                <LanguageBase />
-                              </BrowserRouter>);
+        const historyMock = { history: { push: jest.fn() }}
+        const wrapper = shallow(<LanguageBase {...{ lang: "zh-HK", curr: "HKD", ...historyMock}} />);
         const text = wrapper.find('a#en-GB');
         expect(text.text()).toBe('English');
     });
 
     it('renders Chinese menu item correctly', () => {
-        const wrapper = mount(<BrowserRouter>
-                                <LanguageBase />
-                              </BrowserRouter>);
+        const historyMock = { history: { push: jest.fn() }}
+        const wrapper = shallow(<LanguageBase {...{ lang: "zh-HK", curr: "HKD", ...historyMock}} />);
         const text = wrapper.find('a#zh-HK');
         expect(text.text()).toBe('Chinese');
     });
     
     it("renders english in language menu header correctly", () => {
-        const history = createMemoryHistory('/en-GB/HKD')
-        const { getByTestId } = render(
-            <BrowserRouter>
-                <LanguageBase
-                    lang='en-GB'
-                    curr='HKD'
-                    history={history} />
-            </BrowserRouter >);
-        expect(getByTestId('language')).toHaveTextContent("English");
+        const historyMock = { history: { push: jest.fn() }}
+        const wrapper = shallow(<LanguageBase {...{ lang: "en-GB", curr: "HKD", ...historyMock}} />);
+        const text = wrapper.find('a#language');
+        expect(text.text()).toBe("en-GB");
     });
 
     it("renders chinese in language menu header correctly", () => {
-        const history = createMemoryHistory('/en-GB/HKD')
-        const { getByTestId } = render(
-            <BrowserRouter>
-                <LanguageBase
-                    lang='zh-HK'
-                    curr='HKD'
-                    history={history} /> 
-            </BrowserRouter >);
-        expect(getByTestId('language')).toHaveTextContent("Chinese");
+        const historyMock = { history: { push: jest.fn() }}
+        const wrapper = shallow(<LanguageBase {...{ lang: "zh-HK", curr: "HKD", ...historyMock}} />);
+        const text = wrapper.find('a#language');
+        expect(text.text()).toBe("zh-HK");
     });
 
     it("matches snapshot 1", () => {
