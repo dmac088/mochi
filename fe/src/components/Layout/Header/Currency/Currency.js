@@ -17,7 +17,7 @@ export const CurrencyBase = (props) => {
 
     const changeCurr = (e) => {
         e.preventDefault();
-        props.history.push('/' +lang + '/' + e.currentTarget.id);
+        history.push('/' +lang + '/' + e.currentTarget.id);
     } 
 
     return (
