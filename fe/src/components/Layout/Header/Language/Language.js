@@ -7,6 +7,7 @@ export const Language = withRouter(({...props}) => {
     const { params } = props.match;
     const{ history } = props;
 
+    console.log(history);
     return (
         <LanguageBase   params={params}
                         history={history} />
