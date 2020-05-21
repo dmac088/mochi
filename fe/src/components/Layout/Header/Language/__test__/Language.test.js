@@ -14,8 +14,7 @@ configure({ adapter: new Adapter() });
 describe('Test language menu', () => {
 
     afterEach(cleanup);
-    
- 
+
     it("renders without crashing", () => {
         const div = document.createElement("div"); 
         const historyMock = { history: { push: jest.fn() }}

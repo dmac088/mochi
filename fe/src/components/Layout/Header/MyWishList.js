@@ -17,7 +17,7 @@ export const MyWishListBase = (props) => {
 
     const routeWish = (e) => {
         e.preventDefault();
-        routeToPage(history, params, 'MyWishList');
+        routeToPage(history, params, 'mywishlist');
     }
 
     return (

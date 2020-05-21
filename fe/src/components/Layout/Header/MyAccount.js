@@ -17,7 +17,7 @@ export const MyAccountBase = (props) => {
 
     const routeAccount = (e) => {
         e.preventDefault();
-        routeToPage(history, params, 'myaccout');
+        routeToPage(history, params, 'myaccount');
     }
 
     return (
