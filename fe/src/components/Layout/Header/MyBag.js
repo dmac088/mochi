@@ -1,24 +1,23 @@
 import React from "react";
 import { withRouter } from 'react-router-dom';
+import { routeToPage } from '../../../services/Routing/Helper';
 
 export const MyBag = withRouter(({...props}) => {
     const { params } = props.match;
-    const { lang, curr } = params;
     const{ history } = props;
-    
+
     return (
-        <MyBagBase  lang={lang}
-                    curr={curr}
+        <MyBagBase  params={params}
                     history={history} />
     );
 });
 
 export const MyBagBase = (props) => {
-    const { lang, curr, history } = props;
+    const { params, history } = props;
 
     const routeBag = (e) => {
         e.preventDefault();
-        history.push('/' + lang + '/' + curr + '/MyBag');
+        routeToPage(history, params, 'MyBag');
     }
 
     return (

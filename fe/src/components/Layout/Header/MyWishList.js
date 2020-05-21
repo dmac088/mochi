@@ -1,24 +1,23 @@
 import React from "react";
 import { withRouter } from 'react-router-dom';
+import { routeToPage } from '../../../services/Routing/Helper';
 
 export const MyWishList = withRouter(({...props}) => {
     const { params } = props.match;
-    const { lang, curr } = params;
     const{ history } = props;
-        
+
     return (
-        <MyWishListBase lang={lang}
-                        curr={curr}
+        <MyWishListBase params={params}
                         history={history} />
     );
 });
 
 export const MyWishListBase = (props) => {
-    const { lang, curr, history } = props;
+    const { params, history } = props;
 
     const routeWish = (e) => {
         e.preventDefault();
-        props.history.push('/' + lang + '/' + curr + '/MyWishList');
+        routeToPage(history, params, 'MyWishList');
     }
 
     return (

@@ -1,24 +1,24 @@
 import React from "react";
 import { withRouter } from 'react-router-dom';
+import { routeToPage } from '../../../../services/Routing/Helper';
 
 export const Currency = withRouter(({...props}) => {
     const { params } = props.match;
-    const { lang, curr } = params;
-    const{ history } = props;
-    
+    const { history } = props;
+
     return (
-        <CurrencyBase   lang={lang}
-                        curr={curr}
-                        history={history}/>
+        <CurrencyBase   params={params}
+                        history={history} />
     );
 });
 
 export const CurrencyBase = (props) => {
-    const { lang, curr, history } = props;
+    const { params, history } = props;
+    const { lang, curr } = params;
 
     const changeCurr = (e) => {
         e.preventDefault();
-        history.push('/' +lang + '/' + e.currentTarget.id);
+        routeToPage(history, {curr: e.currentTarget.id, lang: lang}, '');
     } 
 
     return (

@@ -14,20 +14,22 @@ configure({ adapter: new Adapter() });
 describe('Test language menu', () => {
 
     afterEach(cleanup);
-
+    
+ 
     it("renders without crashing", () => {
         const div = document.createElement("div"); 
+        const historyMock = { history: { push: jest.fn() }}
         ReactDOM.render(
             <BrowserRouter>
-                <LanguageBase />
+                <LanguageBase {...{ params: { lang: "zh-HK", curr: "HKD" }, ...historyMock} }/>
             </BrowserRouter >, div);
     });
-
+ 
     it('should change the router params to zh-HK when menu item is clicked', () => {
         //mock a history object with mock function
         const historyMock = { history: { push: jest.fn() }}
         //create a shallow copy of the component we want to render and mock the props
-        const wrapper = shallow(<LanguageBase {...{ lang: "en-GB", curr: "USD", ...historyMock}} />);
+        const wrapper = shallow(<LanguageBase {...{ params: { lang: "zh-HK", curr: "HKD" }, ...historyMock}} />);
         //find the element we want to click
         const link = wrapper.find('a#zh-HK');
         //click the element and mock additional function params
@@ -36,7 +38,7 @@ describe('Test language menu', () => {
             currentTarget: { id: 'zh-HK' }
         });
         //get the expected urlString
-        const urlString = "/zh-HK/USD"
+        const urlString = "/zh-HK/HKD/"
         //assert that the expected result is the expected string
         expect(historyMock.history.push.mock.calls[0][0]).toEqual(urlString);
     });
@@ -45,7 +47,7 @@ describe('Test language menu', () => {
         //mock a history object with mock function
         const historyMock = { history: { push: jest.fn() }}
         //create a shallow copy of the component we want to render and mock the props
-        const wrapper = shallow(<LanguageBase {...{ lang: "zh-HK", curr: "HKD", ...historyMock}} />);
+        const wrapper = shallow(<LanguageBase {...{ params: { lang: "zh-HK", curr: "HKD" }, ...historyMock}} />);
         //find the element we want to click
         const link = wrapper.find('a#en-GB');
         //click the element and mock additional function params
@@ -54,35 +56,35 @@ describe('Test language menu', () => {
             currentTarget: { id: 'en-GB' }
         });
         //get the expected urlString
-        const urlString = "/en-GB/HKD"
+        const urlString = "/en-GB/HKD/"
         //assert that the expected result is the expected string
         expect(historyMock.history.push.mock.calls[0][0]).toEqual(urlString);
     });
 
     it('renders English menu item correctly', () => {
         const historyMock = { history: { push: jest.fn() }}
-        const wrapper = shallow(<LanguageBase {...{ lang: "zh-HK", curr: "HKD", ...historyMock}} />);
+        const wrapper = shallow(<LanguageBase {...{ params: { lang: "zh-HK", curr: "HKD" }, ...historyMock}} />);
         const text = wrapper.find('a#en-GB');
         expect(text.text()).toBe('English');
     });
 
     it('renders Chinese menu item correctly', () => {
         const historyMock = { history: { push: jest.fn() }}
-        const wrapper = shallow(<LanguageBase {...{ lang: "zh-HK", curr: "HKD", ...historyMock}} />);
+        const wrapper = shallow(<LanguageBase {...{ params: { lang: "zh-HK", curr: "HKD" }, ...historyMock}} />);
         const text = wrapper.find('a#zh-HK');
         expect(text.text()).toBe('Chinese');
     });
     
     it("renders english in language menu header correctly", () => {
         const historyMock = { history: { push: jest.fn() }}
-        const wrapper = shallow(<LanguageBase {...{ lang: "en-GB", curr: "HKD", ...historyMock}} />);
+        const wrapper = shallow(<LanguageBase {...{ params: { lang: "en-GB", curr: "HKD" }, ...historyMock}} />);
         const text = wrapper.find('a#language');
         expect(text.text()).toBe("en-GB");
     });
 
     it("renders chinese in language menu header correctly", () => {
         const historyMock = { history: { push: jest.fn() }}
-        const wrapper = shallow(<LanguageBase {...{ lang: "zh-HK", curr: "HKD", ...historyMock}} />);
+        const wrapper = shallow(<LanguageBase {...{ params: { lang: "zh-HK", curr: "HKD" }, ...historyMock}} />);
         const text = wrapper.find('a#language');
         expect(text.text()).toBe("zh-HK");
     });
@@ -92,8 +94,7 @@ describe('Test language menu', () => {
         const tree = renderer.create(
             <BrowserRouter>
                 <LanguageBase
-                    lang='en-GB'
-                    curr='HKD'
+                    { ...{ params: { lang: "en-GB", curr: "HKD" }}}
                     history={history} />
             </BrowserRouter >
         ).toJSON();
