@@ -1,6 +1,7 @@
 import React from "react";
 import { withRouter } from 'react-router-dom';
 import { routeToPage } from '../../../../services/Routing/Helper';
+import  selector  from './lang/selector';
 
 export const Language = withRouter(({...props}) => {
     const { params } = props.match;
@@ -22,7 +23,7 @@ export const LanguageBase = (props) => {
     }
 
     return (
-        <li data-testid="language"> <a id="language" href="#">{lang}<i className="fa fa-chevron-down"></i></a>
+        <li data-testid="language"> <a id="language" href="#">{selector[lang]}<i className="fa fa-chevron-down"></i></a>
             <ul>
                 <li><a href="#" id="en-GB" onClick={changeLang}>English</a></li>
                 <li><a href="#" id="zh-HK" onClick={changeLang}>Chinese</a></li>
