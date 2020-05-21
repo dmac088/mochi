@@ -17,7 +17,7 @@ export const MyBagBase = (props) => {
 
     const routeBag = (e) => {
         e.preventDefault();
-        routeToPage(history, params, 'MyBag');
+        routeToPage(history, params, 'mybag');
     }
 
     return (
