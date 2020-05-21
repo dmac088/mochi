@@ -78,16 +78,16 @@ describe('Test language menu', () => {
         const historyMock = { history: { push: jest.fn() }}
         const wrapper = shallow(<LanguageBase {...{ params: { lang: "en-GB", curr: "HKD" }, ...historyMock}} />);
         const text = wrapper.find('a#language');
-        expect(text.text()).toBe("en-GB");
+        expect(text.text()).toBe("English");
     });
 
     it("renders chinese in language menu header correctly", () => {
         const historyMock = { history: { push: jest.fn() }}
         const wrapper = shallow(<LanguageBase {...{ params: { lang: "zh-HK", curr: "HKD" }, ...historyMock}} />);
         const text = wrapper.find('a#language');
-        expect(text.text()).toBe("zh-HK");
+        expect(text.text()).toBe("Chinese");
     });
-
+ 
     it("matches snapshot 1", () => {
         const history = createMemoryHistory('/en-GB/HKD') 
         const tree = renderer.create(
