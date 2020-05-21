@@ -1,26 +1,23 @@
 import React from "react";
 import { withRouter } from 'react-router-dom';
-
-
+import { routeToPage } from '../../../services/Routing/Helper';
 
 export const MyCheckout = withRouter(({...props}) => {
     const { params } = props.match;
-    const { lang, curr } = params;
     const{ history } = props;
 
     return (
-        <MyCheckoutBase lang={lang}
-                        curr={curr}
-                        history={history} />
+        <MyCheckoutBase  params={params}
+                         history={history} />
     );
 });
 
 export const MyCheckoutBase = (props) => {
-    const { lang, curr, history } = props;
+    const { params, history } = props;
 
     const routeCheckout = (e) => {
         e.preventDefault();
-        history.push('/' + lang + '/' + curr + '/mycheckout');
+        routeToPage(history, params, 'mycheckout');
     }
 
     return (

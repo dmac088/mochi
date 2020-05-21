@@ -1,24 +1,23 @@
 import React from "react";
 import { withRouter } from 'react-router-dom';
+import { routeToPage } from '../../../services/Routing/Helper';
 
 export const MyAccount = withRouter(({...props}) => {
     const { params } = props.match;
-    const { lang, curr } = params;
     const{ history } = props;
 
     return (
-        <MyAccountBase  lang={lang}
-                        curr={curr}
+        <MyAccountBase  params={params}
                         history={history} />
     );
 });
 
 export const MyAccountBase = (props) => {
-    const { lang, curr, history } = props;
+    const { params, history } = props;
 
     const routeAccount = (e) => {
         e.preventDefault();
-        history.push('/' + lang + '/' + curr + '/myaccount');
+        routeToPage(history, params, 'myaccout');
     }
 
     return (
