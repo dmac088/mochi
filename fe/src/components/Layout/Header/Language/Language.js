@@ -1,12 +1,10 @@
 import React from "react";
 import { withRouter } from 'react-router-dom';
-import { routeToPage } from '../../../../services/Routing/Helper';
 import  selector  from './lang/selector';
 import { generatePath } from 'react-router';
 
 export const Language = withRouter(({...props}) => {
-    const { match } = props;
-    const{ history } = props;
+    const { history, match } = props;
 
     console.log(history);
     return (
@@ -16,7 +14,7 @@ export const Language = withRouter(({...props}) => {
 });
 
 export const LanguageBase = (props) => {
-    const { match, history } = props;
+    const { match } = props;
     const { curr, lang } = match.params;
 
     const changeLang = (e) => {
