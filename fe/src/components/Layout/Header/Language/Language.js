@@ -2,25 +2,28 @@ import React from "react";
 import { withRouter } from 'react-router-dom';
 import { routeToPage } from '../../../../services/Routing/Helper';
 import  selector  from './lang/selector';
+import { generatePath } from 'react-router';
 
 export const Language = withRouter(({...props}) => {
-    const { params } = props.match;
+    const { match } = props;
     const{ history } = props;
 
     console.log(history);
     return (
-        <LanguageBase   params={params}
+        <LanguageBase   match={match}
                         history={history} />
     );
 });
 
 export const LanguageBase = (props) => {
-    const { params, history } = props;   
-    const { lang, curr } = params;
+    const { match, history } = props;
+    const { curr, lang } = match.params;
 
     const changeLang = (e) => {
         e.preventDefault();
-        routeToPage(history, {curr: curr, lang: e.currentTarget.id}, '');
+        const lang = e.currentTarget.id;
+        const path = generatePath(match.path, {lang, curr} );
+        props.history.replace(path);
     }
 
     return (
