@@ -12,14 +12,14 @@ export const Currency = withRouter(({...props}) => {
 });
 
 export const CurrencyBase = (props) => {
-    const { match } = props;
+    const { match, history } = props;
     const { lang, curr } = match.params;
 
     const changeCurr = (e) => {
         e.preventDefault();
         const curr = e.currentTarget.id;
         const path = generatePath(match.path, {lang, curr} );
-        props.history.replace(path);
+        history.replace(path);
     } 
 
     return (
