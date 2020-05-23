@@ -19,19 +19,17 @@ describe('Test language menu', () => {
     it("renders without crashing", () => {
         const div = document.createElement("div"); 
         const historyMock = { history: { replace: jest.fn() }}
+        const matchMock = { match: { params: { lang: "en-GB", curr: "USD" }, path: "/en-GB/USD/"}}
         ReactDOM.render(
             <BrowserRouter>
-                <CurrencyBase {...{ match: {
-                                        params: { lang: "zh-HK", curr: "HKD" },
-                                        path: "/en-GB/HKD/",
-                                    }, ...historyMock} }/>
+                <CurrencyBase {...matchMock} {...historyMock} />
             </BrowserRouter >, div);
     });
 
     it('should change the router params to HKD when menu item is clicked', () => {
         //mock a history object with mock function
         const historyMock = { history: { replace: jest.fn() }}
-        const matchMock = { match: { params: { lang: "en-GB", curr: "USD" },path: "/en-GB/USD/"}}
+        const matchMock = { match: { params: { lang: "en-GB", curr: "USD" }, path: "/en-GB/USD/"}}
         //create a shallow copy of the component we want to render and mock the props
         const wrapper = shallow(<CurrencyBase {...matchMock} {...historyMock} />);
         //find the element we want to click
@@ -50,7 +48,7 @@ describe('Test language menu', () => {
     it('should change the router params to USD when menu item is clicked', () => {
         //mock a history object with mock function
         const historyMock = { history: { replace: jest.fn() }}
-        const matchMock = { match: { params: { lang: "en-GB", curr: "USD" },path: "/en-GB/HKD/"}}
+        const matchMock = { match: { params: { lang: "en-GB", curr: "USD" }, path: "/en-GB/HKD/"}}
         //create a shallow copy of the component we want to render and mock the props
         const wrapper = shallow(<CurrencyBase {...matchMock} {...historyMock} />);
         //find the element we want to click 
@@ -61,7 +59,7 @@ describe('Test language menu', () => {
             currentTarget: { id: 'USD' }
         });
         //get the expected urlString
-        const urlString = "/zh-HK/USD/"
+        const urlString = "/en-GB/USD/"
         //assert that the expected result is the expected string
         expect(historyMock.history.replace.mock.calls[0][0]).toEqual(urlString);
     });
