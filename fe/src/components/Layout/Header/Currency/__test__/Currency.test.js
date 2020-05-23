@@ -21,15 +21,19 @@ describe('Test language menu', () => {
         const historyMock = { history: { replace: jest.fn() }}
         ReactDOM.render(
             <BrowserRouter>
-                <CurrencyBase {...{ match: {params: { lang: "zh-HK", curr: "HKD" }}, ...historyMock} }/>
+                <CurrencyBase {...{ match: {
+                                        params: { lang: "zh-HK", curr: "HKD" },
+                                        path: "/en-GB/HKD/",
+                                    }, ...historyMock} }/>
             </BrowserRouter >, div);
     });
 
     it('should change the router params to HKD when menu item is clicked', () => {
         //mock a history object with mock function
         const historyMock = { history: { replace: jest.fn() }}
+        const matchMock = { match: { params: { lang: "en-GB", curr: "USD" },path: "/en-GB/USD/"}}
         //create a shallow copy of the component we want to render and mock the props
-        const wrapper = shallow(<CurrencyBase {...{ match: {params: { lang: "en-GB", curr: "USD" }}, ...historyMock}} />);
+        const wrapper = shallow(<CurrencyBase {...matchMock} {...historyMock} />);
         //find the element we want to click
         const link = wrapper.find('a#HKD');
         //click the element and mock additional function params
@@ -39,7 +43,7 @@ describe('Test language menu', () => {
         });
         //get the expected urlString
         const urlString = "/en-GB/HKD/"
-        //assert that the expected result is the expected string
+        //assert that the expected result is the expected string 
         expect(historyMock.history.replace.mock.calls[0][0]).toEqual(urlString);
     });
 
