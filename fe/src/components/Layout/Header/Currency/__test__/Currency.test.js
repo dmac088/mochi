@@ -50,9 +50,10 @@ describe('Test language menu', () => {
     it('should change the router params to USD when menu item is clicked', () => {
         //mock a history object with mock function
         const historyMock = { history: { replace: jest.fn() }}
+        const matchMock = { match: { params: { lang: "en-GB", curr: "USD" },path: "/en-GB/HKD/"}}
         //create a shallow copy of the component we want to render and mock the props
-        const wrapper = shallow(<CurrencyBase {...{ match: {params: { lang: "zh-HK", curr: "HKD" }}, ...historyMock}} />);
-        //find the element we want to click
+        const wrapper = shallow(<CurrencyBase {...matchMock} {...historyMock} />);
+        //find the element we want to click 
         const link = wrapper.find('a#USD');
         //click the element and mock additional function params
         link.simulate('click', {
