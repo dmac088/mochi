@@ -1,24 +1,25 @@
 import React from "react";
 import { withRouter } from 'react-router-dom';
-import { routeToPage } from '../../../../services/Routing/Helper';
+import { generatePath } from 'react-router';
 
 export const Currency = withRouter(({...props}) => {
-    const { params } = props.match;
-    const { history } = props;
+    const { history, match } = props;
 
     return (
-        <CurrencyBase   params={params}
+        <CurrencyBase   match={match}
                         history={history} />
     );
 });
 
 export const CurrencyBase = (props) => {
-    const { params, history } = props;
-    const { lang, curr } = params;
+    const { match } = props;
+    const { lang, curr } = match.params;
 
     const changeCurr = (e) => {
         e.preventDefault();
-        routeToPage(history, {curr: e.currentTarget.id, lang: lang}, '');
+        const curr = e.currentTarget.id;
+        const path = generatePath(match.path, {lang, curr} );
+        props.history.replace(path);
     } 
 
     return (
@@ -28,7 +29,7 @@ export const CurrencyBase = (props) => {
                 <li><a href="#" id="USD" onClick={changeCurr}>USD</a></li>
             </ul>
         </li>
-    );
+    ); 
 };
 
 export default Currency;
