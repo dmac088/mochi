@@ -6,8 +6,9 @@ import { createMemoryHistory } from 'history'
 import { render, cleanup } from '@testing-library/react';
 import "@testing-library/jest-dom/extend-expect";
 import renderer from 'react-test-renderer';
-import Enzyme, { mount, shallow, configure } from 'enzyme';
+import { shallow, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import { generatePath } from 'react-router';
  
 configure({ adapter: new Adapter() });
 
@@ -17,18 +18,18 @@ describe('Test language menu', () => {
 
     it("renders without crashing", () => {
         const div = document.createElement("div"); 
-        const historyMock = { history: { push: jest.fn() }}
+        const historyMock = { history: { replace: jest.fn() }}
         ReactDOM.render(
             <BrowserRouter>
-                <CurrencyBase {...{ params: { lang: "zh-HK", curr: "HKD" }, ...historyMock} }/>
+                <CurrencyBase {...{ match: {params: { lang: "zh-HK", curr: "HKD" }}, ...historyMock} }/>
             </BrowserRouter >, div);
     });
 
     it('should change the router params to HKD when menu item is clicked', () => {
         //mock a history object with mock function
-        const historyMock = { history: { push: jest.fn() }}
+        const historyMock = { history: { replace: jest.fn() }}
         //create a shallow copy of the component we want to render and mock the props
-        const wrapper = shallow(<CurrencyBase {...{ params: { lang: "en-GB", curr: "USD" }, ...historyMock}} />);
+        const wrapper = shallow(<CurrencyBase {...{ match: {params: { lang: "en-GB", curr: "USD" }}, ...historyMock}} />);
         //find the element we want to click
         const link = wrapper.find('a#HKD');
         //click the element and mock additional function params
@@ -39,14 +40,14 @@ describe('Test language menu', () => {
         //get the expected urlString
         const urlString = "/en-GB/HKD/"
         //assert that the expected result is the expected string
-        expect(historyMock.history.push.mock.calls[0][0]).toEqual(urlString);
+        expect(historyMock.history.replace.mock.calls[0][0]).toEqual(urlString);
     });
 
     it('should change the router params to USD when menu item is clicked', () => {
         //mock a history object with mock function
-        const historyMock = { history: { push: jest.fn() }}
+        const historyMock = { history: { replace: jest.fn() }}
         //create a shallow copy of the component we want to render and mock the props
-        const wrapper = shallow(<CurrencyBase {...{ params: { lang: "zh-HK", curr: "HKD" }, ...historyMock}} />);
+        const wrapper = shallow(<CurrencyBase {...{ match: {params: { lang: "zh-HK", curr: "HKD" }}, ...historyMock}} />);
         //find the element we want to click
         const link = wrapper.find('a#USD');
         //click the element and mock additional function params
@@ -57,33 +58,33 @@ describe('Test language menu', () => {
         //get the expected urlString
         const urlString = "/zh-HK/USD/"
         //assert that the expected result is the expected string
-        expect(historyMock.history.push.mock.calls[0][0]).toEqual(urlString);
+        expect(historyMock.history.replace.mock.calls[0][0]).toEqual(urlString);
     });
 
     it('renders HKD menu item correctly', () => {
-        const historyMock = { history: { push: jest.fn() }}
-        const wrapper = shallow(<CurrencyBase {...{ params: { lang: "zh-HK", curr: "HKD" }, ...historyMock}} />);
+        const historyMock = { history: { replace: jest.fn() }}
+        const wrapper = shallow(<CurrencyBase {...{ match: {params: { lang: "zh-HK", curr: "HKD" }}, ...historyMock}} />);
         const text = wrapper.find('a#HKD');
         expect(text.text()).toBe('HKD');
     });
 
     it('renders USD menu item correctly', () => {
-        const historyMock = { history: { push: jest.fn() }}
-        const wrapper = shallow(<CurrencyBase {...{ params: { lang: "zh-HK", curr: "USD" }, ...historyMock}} />);
+        const historyMock = { history: { replace: jest.fn() }}
+        const wrapper = shallow(<CurrencyBase {...{ match: {params: { lang: "zh-HK", curr: "USD" }}, ...historyMock}} />);
         const text = wrapper.find('a#USD');
         expect(text.text()).toBe('USD');
     });
     
     it("renders USD in currency menu header correctly", () => {
-        const historyMock = { history: { push: jest.fn() }}
-        const wrapper = shallow(<CurrencyBase {...{ params: { lang: "en-GB", curr: "USD" }, ...historyMock}} />);
+        const historyMock = { history: { replace: jest.fn() }}
+        const wrapper = shallow(<CurrencyBase {...{ match: {params: { lang: "en-GB", curr: "USD" }}, ...historyMock}} />);
         const text = wrapper.find('a#currency');
         expect(text.text()).toBe("USD");
     });
 
     it("renders HKD in currency menu header correctly", () => {
-        const historyMock = { history: { push: jest.fn() }}
-        const wrapper = shallow(<CurrencyBase {...{ params: { lang: "zh-HK", curr: "HKD" }, ...historyMock}} />);
+        const historyMock = { history: { replace: jest.fn() }}
+        const wrapper = shallow(<CurrencyBase {...{ match: {params: { lang: "zh-HK", curr: "HKD" }}, ...historyMock}} />);
         const text = wrapper.find('a#currency');
         expect(text.text()).toBe("HKD");
     });
@@ -93,7 +94,7 @@ describe('Test language menu', () => {
         const tree = renderer.create(
             <BrowserRouter>
                 <CurrencyBase
-                    { ...{ params: { lang: "en-GB", curr: "HKD" }}}
+                    { ...{ match: {params: { lang: "en-GB", curr: "HKD" }}}}
                     history={history} />
             </BrowserRouter >
         ).toJSON();
