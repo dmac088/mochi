@@ -19,7 +19,6 @@ const changeLang = (e, match, history) => {
     const newPath = generatePath(path, { lang: lang,
                                          curr: curr } );
     history.replace(newPath);
-    console.log(newPath);
 }
 
 export const LanguageBase = (props) => {
