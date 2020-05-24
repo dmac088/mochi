@@ -34,7 +34,7 @@ describe('Test language menu', () => {
         const wrapper = shallow(<CurrencyBase {...matchMock} {...historyMock} />);
         //find the element we want to click 
         const link = wrapper.find('a#HKD');
-        //click the element and mock additional function params
+        //click the element and mock additional function params 
         link.simulate('click', {
             preventDefault: () => {},
             ...{currentTarget: { id: 'HKD' }},
@@ -93,12 +93,13 @@ describe('Test language menu', () => {
     });
 
     it("matches snapshot 1", () => {
-        const history = createMemoryHistory('/en-GB/HKD') 
+        const history = createMemoryHistory('/en-GB/HKD');
+        const matchMock = { match: { params: { lang: "en-GB", curr: "USD" }, path: "/:lang/:curr/"}}
         const tree = renderer.create(
             <BrowserRouter>
                 <CurrencyBase
-                    { ...{ match: {params: { lang: "en-GB", curr: "HKD" }}}}
-                    history={history} />
+                    {...matchMock}
+                    {...history} />
             </BrowserRouter >
         ).toJSON();
         expect(tree).toMatchSnapshot();
