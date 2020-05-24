@@ -97,16 +97,17 @@ describe('Test language menu', () => {
         expect(text.text()).toBe("Chinese");
     });
  
-    // it("matches snapshot 1", () => {
-    //     const history = createMemoryHistory('/en-GB/HKD') 
-    //     const tree = renderer.create(
-    //         <BrowserRouter>
-    //             <LanguageBase
-    //                 { ...{ params: { lang: "en-GB", curr: "HKD" }}}
-    //                 history={history} />
-    //         </BrowserRouter >
-    //     ).toJSON();
-    //     expect(tree).toMatchSnapshot();
-    // }); 
+    it("matches snapshot 1", () => {
+        const history = createMemoryHistory('/en-GB/HKD');
+        const matchMock = { match: { params: { lang: "zh-HK", curr: "USD" }, path: "/:lang/:curr/"}};
+        const tree = renderer.create(
+            <BrowserRouter>
+                <LanguageBase
+                    {...matchMock}
+                    {...history} />
+            </BrowserRouter >
+        ).toJSON();
+        expect(tree).toMatchSnapshot();
+    }); 
 
  }); 

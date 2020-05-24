@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test language menu matches snapshot 1 1`] = `
+<li
+  data-testid="language"
+>
+   
+  <a
+    href="#"
+    id="language"
+  >
+    Chinese
+    <i
+      className="fa fa-chevron-down"
+    />
+  </a>
+  <ul>
+    <li>
+      <a
+        href="#"
+        id="en-GB"
+        onClick={[Function]}
+      >
+        English
+      </a>
+    </li>
+    <li>
+      <a
+        href="#"
+        id="zh-HK"
+        onClick={[Function]}
+      >
+        Chinese
+      </a>
+    </li>
+  </ul>
+</li>
+`;
