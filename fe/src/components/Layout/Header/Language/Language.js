@@ -5,8 +5,6 @@ import { generatePath } from 'react-router';
 
 export const Language = withRouter(({...props}) => {
     const { history, match } = props;
-
-    console.log(history);
     return (
         <LanguageBase   match={match}
                         history={history} />

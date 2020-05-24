@@ -11,22 +11,26 @@ export const Currency = withRouter(({...props}) => {
     );
 });
 
-export const CurrencyBase = (props) => {
-    const { match, history } = props;
-    const { lang, curr } = match.params;
+const changeCurr = (e, match, history) => {
+    e.preventDefault();
+    const curr = e.currentTarget.id;
+    const { lang } = match.params; 
+    const { path } = match;
+    const newPath = generatePath(path, { lang: lang,
+                                         curr: curr } );
+    history.replace(newPath);
+    console.log(newPath);
+} 
 
-    const changeCurr = (e) => {
-        e.preventDefault();
-        const curr = e.currentTarget.id;
-        const path = generatePath(match.path, {lang, curr} );
-        history.replace(path);
-    } 
+export const CurrencyBase = (props) => {
+    const { match, history } = props; 
+    const { curr } = match.params;
 
     return (
         <li> <a id="currency" href="#">{curr}<i className="fa fa-chevron-down"></i></a>
             <ul>
-                <li><a href="#" id="HKD" onClick={changeCurr}>HKD</a></li>
-                <li><a href="#" id="USD" onClick={changeCurr}>USD</a></li>
+                <li><a href="#" id="HKD" onClick={(e) => changeCurr(e, match, history)}>HKD</a></li>
+                <li><a href="#" id="USD" onClick={(e) => changeCurr(e, match, history)}>USD</a></li>
             </ul>
         </li>
     ); 
