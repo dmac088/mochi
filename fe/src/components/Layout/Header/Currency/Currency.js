@@ -19,11 +19,10 @@ const changeCurr = (e, match, history) => {
     const newPath = generatePath(path, { lang: lang,
                                          curr: curr } );
     history.replace(newPath);
-    console.log(newPath);
 } 
 
 export const CurrencyBase = (props) => {
-    const { match, history } = props; 
+    const { match, history } = props;
     const { curr } = match.params;
 
     return (
