@@ -11,22 +11,26 @@ export const Language = withRouter(({...props}) => {
     );
 });
 
-export const LanguageBase = (props) => {
-    const { match } = props;
-    const { curr, lang } = match.params;
+const changeLang = (e, match, history) => {
+    e.preventDefault();
+    const lang = e.currentTarget.id;
+    const { curr } = match.params; 
+    const { path } = match;
+    const newPath = generatePath(path, { lang: lang,
+                                         curr: curr } );
+    history.replace(newPath);
+    console.log(newPath);
+}
 
-    const changeLang = (e) => {
-        e.preventDefault();
-        const lang = e.currentTarget.id;
-        const path = generatePath(match.path, {lang, curr} );
-        props.history.replace(path);
-    }
+export const LanguageBase = (props) => {
+    const { match, history } = props; 
+    const { lang } = match.params;
 
     return (
         <li data-testid="language"> <a id="language" href="#">{selector[lang]}<i className="fa fa-chevron-down"></i></a>
             <ul>
-                <li><a href="#" id="en-GB" onClick={changeLang}>English</a></li>
-                <li><a href="#" id="zh-HK" onClick={changeLang}>Chinese</a></li>
+                <li><a href="#" id="en-GB" onClick={(e) => changeLang(e, match, history)}>English</a></li>
+                <li><a href="#" id="zh-HK" onClick={(e) => changeLang(e, match, history)}>Chinese</a></li>
             </ul>
         </li>
     );

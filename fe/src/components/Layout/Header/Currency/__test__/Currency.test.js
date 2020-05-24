@@ -18,7 +18,7 @@ describe('Test language menu', () => {
     it("renders without crashing", () => {
         const div = document.createElement("div"); 
         const historyMock = { history: { replace: jest.fn() }}
-        const matchMock = { match: { params: { lang: "en-GB", curr: "USD" }, path: "/en-GB/USD/"}}
+        const matchMock = { match: { params: { lang: "en-GB", curr: "USD" }, path: "/:lang/:curr/"}}
         ReactDOM.render(
             <BrowserRouter>
                 <CurrencyBase {...matchMock} {...historyMock} />
