@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
 import { authenticate, logout } from "../../../actions/SessionActions";
-//import HeroSlider from "./HeroSlider/HeroSlider";
+import HeroSlider from "./HeroSlider/HeroSlider";
 
-function Landing() {
+function Landing() { 
 
   const [username, setUsername] = useState({
     username: null,
@@ -25,8 +25,8 @@ function Landing() {
 
   return (
     <React.Fragment>
-          {/* <HeroSlider /> */}
-      {/* <div className="landing">
+      {/* <HeroSlider /> */}
+       <div className="landing">
         <div className="light-overlay landing-inner text-dark">
           <div className="container">
             <div className="row">
@@ -62,18 +62,18 @@ function Landing() {
                   Logout
                 </button>
                 <br />
-                <br /> */}
+                <br /> 
             
-                {/* <Link className="btn btn-lg btn-primary mr-2" to="/dashboard">
+                <Link className="btn btn-lg btn-primary mr-2" to="/dashboard">
                   Load Dashboard
                 </Link>
                 <br />
-                {tokens.access_token} */}
-              {/* </div>
+                {tokens.access_token}
+              </div>
             </div>
           </div>
         </div>
-      </div> */}
+      </div>
     </React.Fragment>
   );
 }

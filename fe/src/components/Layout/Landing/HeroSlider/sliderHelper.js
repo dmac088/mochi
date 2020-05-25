@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Velocity from 'velocity-animate';
-import qs from 'query-string';
 
 export const isMobile = () => {
   return  ((window.innerWidth

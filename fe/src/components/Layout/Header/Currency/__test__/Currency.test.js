@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { CurrencyBase } from '../Currency';
 import { BrowserRouter } from 'react-router-dom';
 import { createMemoryHistory } from 'history'
-import { render, cleanup } from '@testing-library/react';
+import { cleanup } from '@testing-library/react';
 import "@testing-library/jest-dom/extend-expect";
 import renderer from 'react-test-renderer';
 import { shallow, configure } from 'enzyme';
