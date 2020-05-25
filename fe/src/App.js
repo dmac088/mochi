@@ -17,6 +17,7 @@ import Container from "./components/Layout/Container";
 import Bag from "./components/Layout/Bag/Bag";
 import WishList from "./components/Layout/WishList/WishList";
 import Checkout from "./components/Layout/Checkout/Checkout";
+import Auth from "./components/Layout/Login/Auth";
 
 function App() {
 
@@ -69,6 +70,10 @@ function App() {
                 <Route
                   exact path="/:lang/:curr/mycheckout"
                   render={() => renderContainer(Checkout)} />
+
+                <Route
+                  exact path="/:lang/:curr/auth"
+                  render={() => renderContainer(Auth)} />
       
                 <Redirect from="/" to="/en-GB/HKD" />
 

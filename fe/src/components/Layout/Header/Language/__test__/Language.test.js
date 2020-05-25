@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import { LanguageBase } from '../Language';
 import { BrowserRouter } from 'react-router-dom';
 import { createMemoryHistory } from 'history'
-import { render, cleanup } from '@testing-library/react';
+import { cleanup } from '@testing-library/react';
 import "@testing-library/jest-dom/extend-expect";
 import renderer from 'react-test-renderer';
-import Enzyme, { mount, shallow, configure } from 'enzyme';
+import { shallow, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
  
 configure({ adapter: new Adapter() });
