@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
 import { authenticate, logout } from "../../../actions/SessionActions";
 import HeroSlider from "./HeroSlider/HeroSlider";
+import Policy from "./Policy/Policy";
+import Highlights from "./Highlights/Highlights";
 
 function Landing() { 
 
@@ -26,6 +28,8 @@ function Landing() {
   return (
     <React.Fragment>
       <HeroSlider />
+      <Policy />
+      <Highlights />
        <div className="landing">
         <div className="light-overlay landing-inner text-dark">
           <div className="container">
