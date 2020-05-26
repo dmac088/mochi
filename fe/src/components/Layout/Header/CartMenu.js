@@ -1,4 +1,5 @@
 import React from 'react';
+import Velocity from 'velocity-animate';
 import 'velocity-animate/velocity.ui';
 const $ = window.$;
 
