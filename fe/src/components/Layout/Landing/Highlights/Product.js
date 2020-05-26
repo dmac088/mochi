@@ -4,7 +4,6 @@ import product04 from "../../../../assets/images/products/product04.jpg"
 function Product() {
   return (
     <div className="gf-product tab-slider-sub-product">
-
       <div className="image">
         <a id="#test" href="#">
           <span className="onsale">Sale!</span>
@@ -34,10 +33,8 @@ function Product() {
           <span className="discounted-price">8</span>
         </div>
       </div>
-
     </div>
   );
 }
-
 
 export default Product;

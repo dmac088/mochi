@@ -6,6 +6,7 @@ import HeroSlider from "./HeroSlider/HeroSlider";
 import Policy from "./Policy/Policy";
 import Highlights from "./Highlights/Highlights";
 import Banner from "./Banner/Banner";
+import BestSeller from "./BestSeller/BestSeller";
 
 function Landing() { 
 
@@ -32,6 +33,7 @@ function Landing() {
       <Policy />
       <Highlights />
       <Banner />
+      <BestSeller />
        <div className="landing">
         <div className="light-overlay landing-inner text-dark">
           <div className="container">
