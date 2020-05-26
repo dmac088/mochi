@@ -9,7 +9,9 @@ function BreadCrumb() {
                         <div className="breadcrumb-container">
                             <ul>
                                 <li><i className="fa fa-home"></i> Home</li>
+                                <li> Test</li>
                             </ul>
+
                         </div>
                     </div>
                 </div>
