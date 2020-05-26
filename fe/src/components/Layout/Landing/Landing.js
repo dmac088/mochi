@@ -25,7 +25,7 @@ function Landing() {
 
   return (
     <React.Fragment>
-      {/* <HeroSlider /> */}
+      <HeroSlider />
        <div className="landing">
         <div className="light-overlay landing-inner text-dark">
           <div className="container">
