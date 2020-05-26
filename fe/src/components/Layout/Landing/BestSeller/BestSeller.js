@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import Slider from "react-slick";
 import Product from './Product';
 import { SlickArrowLeft, SlickArrowRight } from '../HeroSlider/sliderHelper';
