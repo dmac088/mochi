@@ -66,6 +66,7 @@ function Category() {
         <Column />
         <Column />
         <Column />
+        <Column />
       </Slider>
     </div>
   );
