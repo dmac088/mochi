@@ -1,6 +1,9 @@
 import React from 'react';
+import Slider from "react-slick";
 import { SlickArrowLeft, SlickArrowRight } from '../../HeroSlider/sliderHelper';
+import Column from '../Column'
 const $ = window.$;
+
 const settings = {
   arrows: true,
   autoplay: false,
@@ -56,29 +59,16 @@ const previous = () => {
   this.slider.slickPrev();
 }
 
-const renderColumns = (columns, category, setCurrentProductId, routeProps) => {
-  //return columns.map(column => {
-    // return (
-    //   <Column
-    //     key={columns.indexOf(column)}
-    //     category={category}
-    //     products={column}
-    //     setCurrentProductId={setCurrentProductId}
-    //   />
-    //)
-  //})
-}
-
-const Category = () => {
-
+function Category() {
   return (
-    <div></div>
-    // <div key={0} className="tab-slider-container">
-    //   <Slider ref={c => (slider = c)} {...settings}>
-    //     {renderColumns(columns, props.category, props.setCurrentProductId, routeProps)}
-    //   </Slider>
-    // </div>
-  )
+    <div key={0} className="tab-slider-container">
+      <Slider  {...settings}>
+        <Column />
+        <Column />
+        <Column />
+      </Slider>
+    </div>
+  );
 }
 
 export default Category;
