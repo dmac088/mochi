@@ -5,6 +5,7 @@ import { authenticate, logout } from "../../../actions/SessionActions";
 import HeroSlider from "./HeroSlider/HeroSlider";
 import Policy from "./Policy/Policy";
 import Highlights from "./Highlights/Highlights";
+import Banner from "./Banner/Banner";
 
 function Landing() { 
 
@@ -30,6 +31,7 @@ function Landing() {
       <HeroSlider />
       <Policy />
       <Highlights />
+      <Banner />
        <div className="landing">
         <div className="light-overlay landing-inner text-dark">
           <div className="container">
