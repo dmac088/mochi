@@ -60,9 +60,13 @@ const previous = () => {
 }
 
 function Category() {
+  let slider;
   return (
     <div key={0} className="tab-slider-container">
-      <Slider  {...settings}>
+      <Slider ref={c => (slider = c)} {...settings}>
+        <Column />
+        <Column />
+        <Column />
         <Column />
         <Column />
         <Column />
