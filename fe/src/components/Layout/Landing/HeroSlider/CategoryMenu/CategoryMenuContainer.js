@@ -32,7 +32,6 @@ function CategoryMenuContainer() {
     }
 
     const toggleVisible = () => {
-        console.log(stateObject.menuVisible);
         setObjectState((prevState) => ({
             ...prevState,
             menuVisible: !prevState.menuVisible,
