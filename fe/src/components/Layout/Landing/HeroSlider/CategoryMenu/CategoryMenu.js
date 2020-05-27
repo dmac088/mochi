@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
 import { Transition } from 'react-transition-group'
 import ReactDOM from 'react-dom';
 import Velocity from 'velocity-animate';
@@ -17,12 +17,6 @@ function CategoryMenu(props) {
         Velocity(element, direction, params).then(callback);
     }
 
-    const key = 1;
-
-    setContainer = (c) => {
-        this.container = c;
-    }
-
     const callback = () => {
         console.log('callback');
     }
@@ -30,12 +24,12 @@ function CategoryMenu(props) {
     return (
         <Transition in={props.in} 
                     timeout={2000}
-                    onEnter={() => { console.log(key + ' enter') }}
-                    onEntering={() => { slide(myRef, 'slideDown', null, callback); }}
-                    onEntered={() => { console.log(key + ' entered') }}
-                    onExit={() => { console.log(key + ' exit') }}
-                    onExiting={() => { slide(myRef, 'slideUp', null, callback); }}
-                    onExited={() => { console.log(key + ' exited') }}>
+                    onEnter={() => { console.log(' enter') }}
+                    onEntering={() => { slide(container, 'slideDown', null, callback); }}
+                    onEntered={() => { console.log(' entered') }}
+                    onExit={() => { console.log(' exit') }}
+                    onExiting={() => { slide(container, 'slideUp', null, callback); }}
+                    onExited={() => { console.log(' exited') }}>
         <ul ref={setScope}>
             <li><a href="#">Vegatables</a></li>
             <li className="menu-item-has-children"><a href="#">Salad</a>
