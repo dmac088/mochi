@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Transition } from 'react-transition-group'
 import ReactDOM from 'react-dom';
 import Velocity from 'velocity-animate';
+import CategoryMenuItem from './CategoryMenuItem/CategoryMenuItem';
 
 function CategoryMenu(props) {
  
@@ -36,28 +37,28 @@ function CategoryMenu(props) {
                     <li className="menu-item-has-children">
                         <a className="megamenu-head" href="#">Vegetables</a>
                         <ul>
-                            <li><a href="#">Salad</a></li>
-                            <li><a href="#">Fast Food</a></li>
-                            <li><a href="#">Fruits</a></li>
-                            <li><a href="#">Peanuts</a></li>
+                            <CategoryMenuItem categoryDesc={"Salad"} />
+                            <CategoryMenuItem categoryDesc={"Fast Food"} />
+                            <CategoryMenuItem categoryDesc={"Fruits"} />
+                            <CategoryMenuItem categoryDesc={"Peanuts"} />
                         </ul>
                     </li>
                     <li className="menu-item-has-children">
                         <a className="megamenu-head" href="#">Fast Foods</a>
                         <ul>
-                            <li><a href="#">Vegetables</a></li>
-                            <li><a href="#">Fast Food</a></li>
-                            <li><a href="#">Fruit</a></li>
-                            <li><a href="#">Butter</a></li>
+                            <CategoryMenuItem categoryDesc={"Salad"} />
+                            <CategoryMenuItem categoryDesc={"Fast Food"} />
+                            <CategoryMenuItem categoryDesc={"Fruits"} />
+                            <CategoryMenuItem categoryDesc={"Peanuts"} />
                         </ul>
                     </li>
                     <li className="menu-item-has-children">
                         <a className="megamenu-head" href="#">Salad</a>
                         <ul>
-                            <li><a href="#">Vegetables</a></li>
-                            <li><a href="#">Fast Food</a></li>
-                            <li><a href="#">Salad</a></li>
-                            <li><a href="#">Peanuts</a></li>
+                            <CategoryMenuItem categoryDesc={"Salad"} />
+                            <CategoryMenuItem categoryDesc={"Fast Food"} />
+                            <CategoryMenuItem categoryDesc={"Fruits"} />
+                            <CategoryMenuItem categoryDesc={"Peanuts"} />
                         </ul>
                     </li>
                 </ul>
@@ -70,28 +71,28 @@ function CategoryMenu(props) {
                     <li className="menu-item-has-children">
                         <a className="megamenu-head" href="#">Vegetables</a>
                         <ul>
-                            <li><a href="#">Salad</a></li>
-                            <li><a href="#">Fast Food</a></li>
-                            <li><a href="#">Fruits</a></li>
-                            <li><a href="#">Peanuts</a></li>
+                            <CategoryMenuItem categoryDesc={"Salad"} />
+                            <CategoryMenuItem categoryDesc={"Fast Food"} />
+                            <CategoryMenuItem categoryDesc={"Fruits"} />
+                            <CategoryMenuItem categoryDesc={"Peanuts"} />
                         </ul>
                     </li>
                     <li className="menu-item-has-children">
                         <a className="megamenu-head" href="#">Fast Foods</a>
                         <ul>
-                            <li><a href="#">Vegetables</a></li>
-                            <li><a href="#">Fast Food</a></li>
-                            <li><a href="#">Fruit</a></li>
-                            <li><a href="#">Butter</a></li>
+                            <CategoryMenuItem categoryDesc={"Salad"} />
+                            <CategoryMenuItem categoryDesc={"Fast Food"} />
+                            <CategoryMenuItem categoryDesc={"Fruit"} />
+                            <CategoryMenuItem categoryDesc={"Butter"} />
                         </ul>
                     </li>
                     <li className="menu-item-has-children">
                         <a className="megamenu-head" href="#">Salad</a>
                         <ul>
-                            <li><a href="#">Vegetables</a></li>
-                            <li><a href="#">Fast Food</a></li>
-                            <li><a href="#">Salad</a></li>
-                            <li><a href="#">Peanuts</a></li>
+                            <CategoryMenuItem categoryDesc={"Salad"} />
+                            <CategoryMenuItem categoryDesc={"Fast Food"} />
+                            <CategoryMenuItem categoryDesc={"Fruits"} />
+                            <CategoryMenuItem categoryDesc={"Peanuts"} />
                         </ul>
                     </li>
                 </ul>
