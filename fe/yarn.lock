@@ -5925,7 +5925,7 @@ jest@24.9.0:
     import-local "^2.0.0"
     jest-cli "^24.9.0"
 
-jquery@^3.5.1:
+"jquery@>= 1.4.3", jquery@^3.5.1:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.5.1.tgz#d7b4d08e1bfdb86ad2f1a3d039ea17304717abb5"
 
@@ -10071,6 +10071,12 @@ vary@~1.1.2:
 velocity-animate@^1.5.2:
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/velocity-animate/-/velocity-animate-1.5.2.tgz#5a351d75fca2a92756f5c3867548b873f6c32105"
+
+velocity-ui-pack@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/velocity-ui-pack/-/velocity-ui-pack-1.2.2.tgz#5266679920d54eb666431d86427f62ab2d756730"
+  dependencies:
+    jquery ">= 1.4.3"
 
 vendors@^1.0.0:
   version "1.0.4"
