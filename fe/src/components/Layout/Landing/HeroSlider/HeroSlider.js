@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-//import CategoryMenuContainer from './CategoryMenuContainer';
-import CategoryMenu from "./CategoryMenu/CategoryMenu";
+import CategoryMenuContainer from "./CategoryMenu/CategoryMenuContainer";
 import Slider from "react-slick";
 import { HsSlickArrowLeft, HsSlickArrowRight } from './sliderHelper';
 
@@ -67,7 +66,7 @@ function HeroSlider() {
       <div className="container">
         <div className="row">
           <div className="col-lg-3 col-md-12">
-            <CategoryMenu />
+            <CategoryMenuContainer />
           </div>
           <div className="col-lg-6 col-md-12">
             <div className="slider-container">
