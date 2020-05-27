@@ -11,24 +11,23 @@ function CategoryMenu(props) {
          container = c;
     }
 
-    const slide = (container, direction, params = { duration: 500}, callback) => {
+    const slide = (container, direction, params = { duration: 500}) => {
         const element = ReactDOM.findDOMNode(container);
         if(element === undefined) { return; }
-        Velocity(element, direction, params).then(callback);
-    }
-
-    const callback = () => {
-        console.log('callback');
+        Velocity(element, direction, params);
     }
 
     return (
         <Transition in={props.in} 
                     timeout={2000}
-                    onEnter={() => { console.log(' enter') }}
-                    onEntering={() => { slide(container, 'slideDown', null, callback); }}
+                    onEnter={() => { console.log('enter') }}
+                    onEntering={() => { console.log('entering');
+                                        slide(container, 'slideDown', null); }}
                     onEntered={() => { console.log(' entered') }}
                     onExit={() => { console.log(' exit') }}
-                    onExiting={() => { slide(container, 'slideUp', null, callback); }}
+                    onExiting={() => {  console.log('exiting');
+                                        slide(container, 'slideUp', null); 
+                                        }}
                     onExited={() => { console.log(' exited') }}>
         <ul ref={setScope}>
             <li><a href="#">Vegatables</a></li>
