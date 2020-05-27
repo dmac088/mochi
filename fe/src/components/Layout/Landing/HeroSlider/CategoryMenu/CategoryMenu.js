@@ -1,10 +1,15 @@
 import React, { useRef } from 'react';
+import { Transition } from 'react-transition-group'
 import ReactDOM from 'react-dom';
 import Velocity from 'velocity-animate';
 
-function CategoryMenu() {
+function CategoryMenu(props) {
  
-    const myRef = useRef();
+    const [container, setContainer] = useState({container: null});
+
+    const setScope = (c) => {
+            setContainer(c);
+    }
 
     const slide = (container, direction, params = { duration: 500}, callback) => {
         const element = ReactDOM.findDOMNode(container);
@@ -12,8 +17,26 @@ function CategoryMenu() {
         Velocity(element, direction, params).then(callback);
     }
 
+    const key = 1;
+
+    setContainer = (c) => {
+        this.container = c;
+    }
+
+    const callback = () => {
+        console.log('callback');
+    }
+
     return (
-        <ul ref={myRef}>
+        <Transition in={props.in} 
+                    timeout={2000}
+                    onEnter={() => { console.log(key + ' enter') }}
+                    onEntering={() => { slide(myRef, 'slideDown', null, callback); }}
+                    onEntered={() => { console.log(key + ' entered') }}
+                    onExit={() => { console.log(key + ' exit') }}
+                    onExiting={() => { slide(myRef, 'slideUp', null, callback); }}
+                    onExited={() => { console.log(key + ' exited') }}>
+        <ul ref={setScope}>
             <li><a href="#">Vegatables</a></li>
             <li className="menu-item-has-children"><a href="#">Salad</a>
                 <ul className="category-mega-menu">
@@ -90,6 +113,7 @@ function CategoryMenu() {
             <li className="hidden" ><a href="#">Fruits</a></li>
             <li><a href="#" id="more-btn"><span className="icon_plus_alt2"></span> More Categories</a></li>
         </ul>
+        </Transition>
     );
 }
 

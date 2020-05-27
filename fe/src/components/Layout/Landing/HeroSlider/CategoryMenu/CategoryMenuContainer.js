@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { TransitionGroup, Transition } from 'react-transition-group'
 import CategoryMenu from "./CategoryMenu";
 import 'velocity-animate/velocity.ui';
 
@@ -43,22 +42,17 @@ function CategoryMenuContainer() {
         window.addEventListener('resize',  renderMenu , { passive: true });
     });
 
+    const key = 1;
+
     return (
+        
         <div className="hero-side-category">
             <div className="category-toggle-wrap">
                 <button onClick={toggleVisible} className="category-toggle">
                     <span className="arrow_carrot-right_alt2 mr-2"></span> All Categories</button>
             </div>
             <nav className="category-menu" >
-                <TransitionGroup
-                    component="nav"
-                    className="category-menu">
-                        <Transition>
-                            {((stateObject.menuVisible)
-                            ? <CategoryMenu />
-                            : <div></div>)}
-                        </Transition>
-                </TransitionGroup>
+                <CategoryMenu in={stateObject.menuVisible}/>      
             </nav>
         </div>
     );
