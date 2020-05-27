@@ -1,19 +1,49 @@
 import React from 'react';
+import { TransitionGroup, Transition } from 'react-transition-group'
 
 function CategoryMenu() {
+
+    const [stateObject, setObjectState] = useState({
+                                                    menuVisible: true,
+                                                    isMobile: false
+                                                   });      
+
+    const isMobile = () => {
+        return  ((window.innerWidth
+                  || document.documentElement.clientWidth
+                  || document.body.clientWidth) <= 991);
+    }
+
+    const renderMenu = (isMounting = false) => {
+        if(isMobile() && !isMobile) { 
+            setObjectState({
+                isMobile: true, 
+                menuVisible: (!isMounting),
+            });
+        }
+        if(!isMobile() && isMobile) { 
+            setObjectState({
+                isMobile: false,
+                menuVisible: true,
+            });
+         }
+    }  
+
+    toggleVisible = () => {
+        this.setState(prevState => ({
+          menuVisible: !prevState.menuVisible
+        }));
+      }
+
     return (
         <div className="hero-side-category">
-
             <div className="category-toggle-wrap">
-
                 <button className="category-toggle"> <span className="arrow_carrot-right_alt2 mr-2"></span> All Categories</button>
             </div>
             <nav className="category-menu" >
                 <ul>
-                    <li><a href="#">Vagatables</a></li>
+                    <li><a href="#">Vegatables</a></li>
                     <li className="menu-item-has-children"><a href="#">Salad</a>
-
-
                         <ul className="category-mega-menu">
                             <li className="menu-item-has-children">
                                 <a className="megamenu-head" href="#">Vegetables</a>
