@@ -29,11 +29,12 @@ function CategoryMenu() {
          }
     }  
 
-    toggleVisible = () => {
-        this.setState(prevState => ({
-          menuVisible: !prevState.menuVisible
+    const toggleVisible = () => {
+        setObjectState((prevState) => ({
+            ...prevState,
+            menuVisible: !prevState.menuVisible,
         }));
-      }
+    }
 
     return (
         <div className="hero-side-category">
