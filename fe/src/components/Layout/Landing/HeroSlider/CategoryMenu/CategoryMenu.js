@@ -1,8 +1,19 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import ReactDOM from 'react-dom';
+import Velocity from 'velocity-animate';
 
 function CategoryMenu() {
+ 
+    const myRef = useRef();
+
+    const slide = (container, direction, params = { duration: 500}, callback) => {
+        const element = ReactDOM.findDOMNode(container);
+        if(element === undefined) { return; }
+        Velocity(element, direction, params).then(callback);
+    }
+
     return (
-        <ul>
+        <ul ref={myRef}>
             <li><a href="#">Vegatables</a></li>
             <li className="menu-item-has-children"><a href="#">Salad</a>
                 <ul className="category-mega-menu">

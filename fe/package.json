@@ -16,7 +16,8 @@
     "react-transition-group": "^4.4.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "velocity-animate": "^1.5.2"
+    "velocity-animate": "^1.5.2",
+    "velocity-ui-pack": "^1.2.2"
   },
   "scripts": {
     "start": "react-scripts start",

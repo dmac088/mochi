@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { TransitionGroup, Transition } from 'react-transition-group'
 import CategoryMenu from "./CategoryMenu";
+import 'velocity-animate/velocity.ui';
 
 function CategoryMenuContainer() {
 
@@ -31,6 +32,7 @@ function CategoryMenuContainer() {
     }
 
     const toggleVisible = () => {
+        console.log(stateObject.menuVisible);
         setObjectState((prevState) => ({
             ...prevState,
             menuVisible: !prevState.menuVisible,
