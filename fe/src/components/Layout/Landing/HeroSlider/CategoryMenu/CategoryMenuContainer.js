@@ -42,8 +42,6 @@ function CategoryMenuContainer() {
         window.addEventListener('resize',  renderMenu , { passive: true });
     });
 
-    const key = 1;
-
     return (
         
         <div className="hero-side-category">
