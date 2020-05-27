@@ -1,4 +1,5 @@
 import React from 'react';
+import product01 from "../../../../assets/images/products/product01.jpg"
 const $ = window.$;
 
 function Product() {
@@ -8,7 +9,7 @@ function Product() {
         <div className="col-lg-4 pl-0 pr-0">
           <div className="image">
             <a href="single-product.html">
-              <img src="assets/images/products/product01.jpg" className="img-fluid" alt="" />
+              <img src={product01} className="img-fluid" alt="" />
             </a>
           </div>
         </div>
