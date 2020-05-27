@@ -5,10 +5,10 @@ import Velocity from 'velocity-animate';
 
 function CategoryMenu(props) {
  
-    const [container, setContainer] = useState({container: null});
+    let container = null;
 
     const setScope = (c) => {
-            setContainer(c);
+         container = c;
     }
 
     const slide = (container, direction, params = { duration: 500}, callback) => {
