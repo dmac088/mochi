@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 //import CategoryMenuContainer from './CategoryMenuContainer';
-import CategoryMenu from "./CategoryMenu";
+import CategoryMenu from "./CategoryMenu/CategoryMenu";
 import Slider from "react-slick";
 import { HsSlickArrowLeft, HsSlickArrowRight } from './sliderHelper';
 
