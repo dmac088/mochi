@@ -98,13 +98,13 @@ function CategoryMenu(props) {
                 </ul>
 
             </li>
-            <li><a href="#">Beans</a></li>
-            <li><a href="#">Bread</a></li>
-            <li><a href="#">Fish &amp; Meats</a></li>
-            <li><a href="#">Peanuts</a></li>
-            <li><a href="#">Birds</a></li>
-            <li className="hidden" ><a href="#">Eggs</a></li>
-            <li className="hidden" ><a href="#">Fruits</a></li>
+            <CategoryMenuItem categoryDesc={"Beans"} />
+            <CategoryMenuItem categoryDesc={"Bread"} />
+            <CategoryMenuItem categoryDesc={"Fish & Meats"} />
+            <CategoryMenuItem categoryDesc={"Peanuts"} />
+            <CategoryMenuItem categoryDesc={"Birds"} />
+            {/* <li className="hidden" ><a href="#">Eggs</a></li>
+            <li className="hidden" ><a href="#">Fruits</a></li> */}
             <li><a href="#" id="more-btn"><span className="icon_plus_alt2"></span> More Categories</a></li>
         </ul>
         </Transition>
