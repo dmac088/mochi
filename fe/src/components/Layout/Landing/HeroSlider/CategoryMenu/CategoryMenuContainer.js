@@ -54,9 +54,11 @@ function CategoryMenuContainer() {
                 <TransitionGroup
                     component="nav"
                     className="category-menu">
-                    {((stateObject.menuVisible)
-                        ? <CategoryMenu />
-                        : null)}
+                        <Transition>
+                            {((stateObject.menuVisible)
+                            ? <CategoryMenu />
+                            : <div></div>)}
+                        </Transition>
                 </TransitionGroup>
             </nav>
         </div>
