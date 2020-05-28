@@ -9,21 +9,21 @@ function CategoryMenu(props) {
     const { isMobile } = props;
 
     const renderCategoryList = (//tells us if we are in mobile mode
-                                isMobile, 
-                                //display categories and sort order defined here, list of codes
-                                renderList, 
-                                //the actual list of objects to be displayed
-                                fullList, 
-                                //is it the root list (level = 0)
-                                isRoot, 
-                                //counting items in the list
-                                itemCounter) => {
+        isMobile,
+        //display categories and sort order defined here, list of codes
+        renderList,
+        //the actual list of objects to be displayed
+        fullList,
+        //is it the root list (level = 0)
+        isRoot,
+        //counting items in the list
+        itemCounter) => {
 
         if (!renderList) { return; }
 
-        
+
         return renderList.map(category => {
-            
+
             if (isRoot) { itemCounter += 1 };
 
             return (
@@ -55,20 +55,12 @@ function CategoryMenu(props) {
     }
 
     return (
-        <Transition 
+        <Transition
             in={props.in}
             timeout={2000}
-            onEnter={() => { console.log('enter') }}
-            onEntering={() => {
-                console.log('entering');
-                slide(container, 'slideDown', null);
-            }}
+            onEntering={() => { slide(container, 'slideDown', null); }}
             onEntered={() => { console.log(' entered') }}
-            onExit={() => { console.log(' exit') }}
-            onExiting={() => {
-                console.log('exiting');
-                slide(container, 'slideUp', null);
-            }}
+            onExiting={() => { slide(container, 'slideUp', null); }}
             onExited={() => { console.log(' exited') }}>
             <ul ref={setScope}>
 
