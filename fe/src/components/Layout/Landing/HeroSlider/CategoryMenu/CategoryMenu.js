@@ -6,6 +6,7 @@ import CategoryMenuItem from './CategoryMenuItem/CategoryMenuItem';
 import { mockCategory, mockCategoryList } from './mockData';
 
 function CategoryMenu(props) {
+    const { isMobile } = props;
 
     const renderCategoryList = (//tells us if we are in mobile mode
                                 isMobile, 
@@ -54,7 +55,8 @@ function CategoryMenu(props) {
     }
 
     return (
-        <Transition in={props.in}
+        <Transition 
+            in={props.in}
             timeout={2000}
             onEnter={() => { console.log('enter') }}
             onEntering={() => {
@@ -71,7 +73,7 @@ function CategoryMenu(props) {
             <ul ref={setScope}>
 
                 <CategoryMenuItem
-                    isMobile={false}
+                    isMobile={isMobile}
                     isRoot={true}
                     renderList={null}
                     fullList={mockCategoryList}

@@ -279,6 +279,7 @@ class CategoryMenuItemSubList extends Component {
       <ul ref={this.setContainer}
           className="category-mega-menu">
             {renderCategoryList(locale, isMobile, children, categoryList, false, itemCounter, routeProps)}
+
       </ul>
     )
   }
