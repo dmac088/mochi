@@ -94,12 +94,8 @@ function CategoryMenuItem(props) {
             <Transition
                 in={(hasChildren && (expand || !isMobile))}
                 timeout={2000}
-                onEnter={() => { console.log('enter') }}
                 onEntering={() => { slide(container, 'slideDown', null); }}
-                onEntered={() => { console.log(' entered') }}
-                onExit={() => { console.log(' exit') }}
-                onExiting={() => { slide(container, 'slideUp', null); }}
-                onExited={() => { console.log(' exited') }}>
+                onExiting={() => { slide(container, 'slideUp', null); }}>
                 <ul ref={setScope} className="category-mega-menu">
                     <CategoryMenuItemSubList
                         isMobile={isMobile}
