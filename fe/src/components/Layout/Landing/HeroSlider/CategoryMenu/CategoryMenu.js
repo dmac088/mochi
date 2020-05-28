@@ -10,17 +10,18 @@ function CategoryMenu(props) {
     const renderCategoryList = (//tells us if we are in mobile mode
                                 isMobile, 
                                 //display categories and sort order defined here, list of codes
-                                displayList, 
+                                renderList, 
                                 //the actual list of objects to be displayed
-                                dataList, 
+                                fullList, 
                                 //is it the root list (level = 0)
                                 isRoot, 
                                 //counting items in the list
                                 itemCounter) => {
 
-        if (!displayList) { return; }
+        if (!renderList) { return; }
+
         
-        return displayList.map(category => {
+        return renderList.map(category => {
             
             if (isRoot) { itemCounter += 1 };
 
@@ -32,8 +33,8 @@ function CategoryMenu(props) {
                     category={category}
                     isRoot={isRoot}
                     itemCounter={itemCounter}
-                    displayList={displayList}
-                    dataList={dataList}
+                    renderList={renderList}
+                    fullList={fullList}
                     renderCategoryList={renderCategoryList}>
                 </TransitionGroup>
             )
@@ -72,8 +73,8 @@ function CategoryMenu(props) {
                 <CategoryMenuItem
                     isMobile={false}
                     isRoot={true}
-                    displayList={mockDisplayList}
-                    dataList={mockCategoryList}
+                    renderList={null}
+                    fullList={mockCategoryList}
                     category={mockCategory}
                     renderCategoryList={renderCategoryList}
                     itemCounter={0}

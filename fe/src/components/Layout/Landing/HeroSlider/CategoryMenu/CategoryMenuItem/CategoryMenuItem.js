@@ -3,7 +3,7 @@ import { Transition } from 'react-transition-group'
 import CategoryMenuItemSubList from './CategoryMenuItemSublist';
 
 function CategoryMenuItem(props) {
-    const { isMobile, isRoot, displayList, dataList, category, renderCategoryList, itemCounter } = props;
+    const { isMobile, isRoot, renderList, fullList, category, renderCategoryList, itemCounter } = props;
     const { childCount } = category.data;
 
 
@@ -90,9 +90,9 @@ function CategoryMenuItem(props) {
                 {((hasChildren && (expand || !isMobile))
                     ? <CategoryMenuItemSubList
                         isMobile={isMobile}
-                        displayList={displayList}
-                        dataList={dataList}
-                        children={getChildren(category, dataList, children)}
+                        renderList={renderList}
+                        fullList={fullList}
+                        children={getChildren(category, fullList, children)}
                         categoryLevel={category.data.categoryLevel}
                         itemCounter={itemCounter}
                         renderCategoryList={renderCategoryList}
