@@ -112,7 +112,6 @@ function CategoryMenuItem(props) {
                 onExit={() => { console.log(' exit') }}
                 onExiting={() => { slide(container, 'slideUp', null); }}
                 onExited={() => { console.log(' exited') }}>
-                {/* <div ref={setScope}> */}
                 <ul ref={setScope} className="category-mega-menu">
                     <CategoryMenuItemSubList
                         isMobile={isMobile}
@@ -123,7 +122,6 @@ function CategoryMenuItem(props) {
                         itemCounter={itemCounter}
                         renderCategoryList={renderCategoryList} />
                 </ul>
-                {/* </div> */}
             </Transition>
         </li>
     )
