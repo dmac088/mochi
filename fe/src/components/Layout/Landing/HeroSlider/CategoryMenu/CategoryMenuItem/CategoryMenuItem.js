@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Transition } from 'react-transition-group';
 import ReactDOM from 'react-dom';
 import Velocity from 'velocity-animate';

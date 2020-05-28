@@ -1,9 +1,7 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import { slide } from '../../services/helpers/uiHelper';
+import React from 'react';
 import ReactTransitionGroup from 'react-addons-transition-group';
 
-class MobileMenu extends Component {
+function MobileMenu() {
 
   constructor(props) {
     super(props);
@@ -35,8 +33,7 @@ class MobileMenu extends Component {
     })
   }
 
-  render() {
-    return (
+  return (
       <div className="mobile-menu d-block d-lg-none mean-container">
         <div className="mean-bar">
           <a  onClick={this.toggleMobileMenu}
@@ -86,81 +83,6 @@ class MobileMenu extends Component {
         </div>
       </div>
     )
-  }
 }
 
-
-class BrandMenu extends Component {
-
-  constructor(props) {
-    super(props);
-  }
-
-  componentWillEnter (callback) {
-    if(!this.container) { return }
-    slide(this.container, 'slideDown', null, callback);
-  }
-
-  componentWillLeave (callback) {
-    if(!this.container) { return }
-    slide(this.container, 'slideUp', null, callback);
-  }
-
-  setContainer = (c) => {
-    this.container = c;
-  }
-
-  render() {
-    return (
-      <ul ref={this.setContainer} className="sub-menu mega-menu three-column" style={{display: 'block'}}>
-        <li><a href="#">Comvita</a></li>
-        <li><a href="#">Airborne</a></li>
-        <li><a href="#">Happy Bee</a></li>
-        <li><a href="#">Antipodes</a></li>
-        <li><a href="#">Wild Ferns</a></li>
-        <li><a href="#">Trilogy</a></li>
-        <li><a href="#">Anchor</a></li>
-      </ul>
-    )
-  }
-}
-
-class BlogMenu extends Component {
-
-  constructor(props) {
-    super(props);
-  }
-
-  componentWillEnter (callback) {
-    slide(this.container, 'slideDown', null, callback);
-  }
-
-  componentWillLeave (callback) {
-    slide(this.container, 'slideUp', null, callback);
-  }
-
-  setContainer = (c) => {
-    this.container = c;
-  }
-
-  render() {
-    return (
-      <ul ref={this.setContainer} className="sub-menu"
-          style={{display: 'block'}}>
-        <li><a href="blog-3-column.html">Blog 3 column</a></li>
-        <li><a href="blog-grid-left-sidebar.html">Blog Grid Left Sidebar</a></li>
-        <li><a href="blog-grid-right-sidebar.html">Blog Grid Right Sidebar</a></li>
-        <li><a href="blog-list-left-sidebar.html">Blog List Left Sidebar</a></li>
-        <li><a href="blog-list-right-sidebar.html">Blog List Right Sidebar</a></li>
-        <li><a href="blog-post-left-sidebar.html">Blog Post Left Sidebar</a></li>
-        <li><a href="blog-post-right-sidebar.html">Blog Post Right Sidebar</a></li>
-        <li><a href="blog-post-image-format.html">Blog Post Image Format</a></li>
-        <li><a href="blog-post-image-gallery.html">Blog Post Image Gallery Format</a></li>
-        <li><a href="blog-post-audio-format.html">Blog Post Audio Format</a></li>
-        <li><a href="blog-post-video-format.html">Blog Post Video Format</a></li>
-      </ul>
-    )
-  }
-}
-
-export default withRouter(MobileMenu);
+export default MobileMenu;
