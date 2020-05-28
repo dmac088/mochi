@@ -1,7 +1,6 @@
 import React from 'react';
 import { TransitionGroup, Transition } from 'react-transition-group'
-import ReactDOM from 'react-dom';
-import Velocity from 'velocity-animate';
+import { slide } from "./Helpers/Slide";
 import CategoryMenuItem from './CategoryMenuItem/CategoryMenuItem';
 import { mockCategory, mockCategoryList } from './mockData';
 
@@ -46,12 +45,6 @@ function CategoryMenu(props) {
 
     const setScope = (c) => {
         container = c;
-    }
-
-    const slide = (container, direction, params = { duration: 500 }) => {
-        const element = ReactDOM.findDOMNode(container);
-        if (element === undefined) { return; }
-        Velocity(element, direction, params);
     }
 
     return (

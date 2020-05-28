@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Transition } from 'react-transition-group';
-import ReactDOM from 'react-dom';
-import Velocity from 'velocity-animate';
+import { slide } from '../Helpers/Slide';
 import CategoryMenuItemSubList from './CategoryMenuItemSublist';
 
 function CategoryMenuItem(props) {
@@ -45,12 +44,6 @@ function CategoryMenuItem(props) {
 
     const setScope = (c) => {
         container = c;
-    }
-
-    const slide = (container, direction, params = { duration: 500 }) => {
-        const element = ReactDOM.findDOMNode(container);
-        if (element === undefined) { return; }
-        Velocity(element, direction, params);
     }
 
     return (

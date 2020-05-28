@@ -2,7 +2,6 @@ import React from 'react';
 
 function CategoryMenuItemSubList(props) {
 
-
     const { isMobile, fullList, renderCategoryList, itemCounter, children } = props;
     
     return (
