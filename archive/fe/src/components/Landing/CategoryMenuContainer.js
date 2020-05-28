@@ -243,7 +243,7 @@ class CategoryMenuItem extends Component {
                   isMobile={isMobile}
                   displayCategoryList={displayCategoryList}
                   categoryList={categoryList}
-                  children={getChildren(category, categoryList, children)}
+                  children={this.getChildren(category, categoryList, children)}
                   categoryLevel={category.facetLevel}
                   itemCounter={itemCounter}
                   routeProps={routeProps}

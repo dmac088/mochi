@@ -3,14 +3,12 @@ import { Transition } from 'react-transition-group'
 import CategoryMenuItemSubList from './CategoryMenuItemSublist';
 
 function CategoryMenuItem(props) {
-
     const { isMobile, isRoot, displayList, dataList, category, renderCategoryList, itemCounter } = props;
-    const { count } = category.data;
+    const { childCount } = category.data;
 
-    console.log(dataList);
 
     const [stateObject, setObjectState] = useState({
-        hasChildren: count > 0,
+        hasChildren: childCount > 0,
         expand: ((isMobile) ? false : true)
     });
 
@@ -36,20 +34,19 @@ function CategoryMenuItem(props) {
 
     const getChildren = (parent, categories, children) => {
         const c = categories._embedded.categoryResources.filter(o => o.data.parentCode === parent.data.categoryCode);
-        if (!c) { return children; }
+        if (c.length === 0) { 
+            return children; 
+        }
         c.map((child) => {
             children.push(child);
             getChildren(child, categories, children);
         });
-
         return c;
     }
 
 
     const { hasChildren, expand } = stateObject;
     const children = [];
-
-    console.log(hasChildren);
 
     return (
         <li
@@ -100,7 +97,7 @@ function CategoryMenuItem(props) {
                         itemCounter={itemCounter}
                         renderCategoryList={renderCategoryList}
                     />
-                    : null)}    
+                    : <div></div>)}    
             </Transition>
         </li>
     )
