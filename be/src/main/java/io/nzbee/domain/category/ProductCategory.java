@@ -58,7 +58,7 @@ public class ProductCategory extends Category {
 		return parentCode;
 	}
 	
-	public Long getChildCode() {
+	public Long getChildCount() {
 		return childCount;
 	}
 	

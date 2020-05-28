@@ -7,6 +7,8 @@ function CategoryMenuItem(props) {
     const { isMobile, isRoot, displayList, dataList, category, renderCategoryList, itemCounter } = props;
     const { count } = category.data;
 
+    console.log(dataList);
+
     const [stateObject, setObjectState] = useState({
         hasChildren: count > 0,
         expand: ((isMobile) ? false : true)
@@ -33,7 +35,7 @@ function CategoryMenuItem(props) {
     }
 
     const getChildren = (parent, categories, children) => {
-        const c = categories.filter(o => o.data.parentCode === parent.data.categoryCode);
+        const c = categories._embedded.categoryResources.filter(o => o.data.parentCode === parent.data.categoryCode);
         if (!c) { return children; }
         c.map((child) => {
             children.push(child);
@@ -61,11 +63,12 @@ function CategoryMenuItem(props) {
                     : "")
             }
             style={
-                (isRoot && itemCounter > 8 && !showMore)
+                (isRoot && itemCounter > 8 
+                    // && !showMore
+                )
                     ? { "display": "none" }
                     : { "--my-left-indent": getIndent(category.data.categoryLevel, 10) }
-            }
-        >
+            }>
             <a id={category.data.categoryDesc}
                 onClick={(e) => {
                     if ((e.target.tagName.toLowerCase() === "i")) { return }
@@ -89,14 +92,12 @@ function CategoryMenuItem(props) {
             <Transition in={stateObject.hasChildren} timeout={0}>
                 {((hasChildren && (expand || !isMobile))
                     ? <CategoryMenuItemSubList
-                        locale={locale}
                         isMobile={isMobile}
                         displayList={displayList}
                         dataList={dataList}
                         children={getChildren(category, dataList, children)}
                         categoryLevel={category.data.categoryLevel}
                         itemCounter={itemCounter}
-                        routeProps={routeProps}
                         renderCategoryList={renderCategoryList}
                     />
                     : null)}    
@@ -106,15 +107,3 @@ function CategoryMenuItem(props) {
 }
 
 export default CategoryMenuItem;
-
-// import React from 'react';
-
-// function CategoryMenuItem(props) {
-//     const { categoryDesc } = props;
-
-//     return (
-//         <li><a href="#">{categoryDesc}</a></li>
-//     );
-// }
-
-// export default CategoryMenuItem;

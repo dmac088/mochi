@@ -17,9 +17,9 @@ function CategoryMenu(props) {
                                 isRoot, 
                                 //counting items in the list
                                 itemCounter) => {
-        if (!displayCategoryList) { return; }
-        return displayCategoryList.map(category => {
-            if (isRootList) { itemCounter += 1 };
+        if (!displayList) { return; }
+        return displayList.map(category => {
+            if (isRoot) { itemCounter += 1 };
             //const { showMore } = this.state;
             return (
                 <TransitionGroup
@@ -67,8 +67,13 @@ function CategoryMenu(props) {
             <ul ref={setScope}>
 
                 <CategoryMenuItem
+                    isMobile={false}
+                    isRoot={true}
+                    displayList={['FRT01']}
+                    dataList={mockCategoryList}
                     category={mockCategory}
-                    categoryList={mockCategoryList._embedded.categoryResources}
+                    renderCategoryList={renderCategoryList}
+                    itemCounter={0}
                 />
 
             </ul>
