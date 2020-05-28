@@ -22,8 +22,9 @@ public class CategoryDoBeanFactory {
 									"test product category",
 									true,
 									new Long(2),
-									0,
+									0,									
 									"FRT01",
+									new Long(10),
 									"en-GB", 
 									"HKD");
 		

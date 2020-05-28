@@ -42,6 +42,7 @@ public class ProductDoBeanFactory {
 										   			   new Long(1), 
 										   			   0, 
 										   			   "PNT01", 
+										   			   new Long(10),
 										   			   "en-GB", 
 										   			   "HKD"));
 	}
