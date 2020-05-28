@@ -1,6 +1,6 @@
 import React from 'react';
 import { TransitionGroup, Transition } from 'react-transition-group'
-import { slide } from "./Helpers/Slide";
+import { slide } from "../../../Helpers/Animation/Slide";
 import CategoryMenuItem from './CategoryMenuItem/CategoryMenuItem';
 import { mockCategory, mockCategoryList } from './mockData';
 

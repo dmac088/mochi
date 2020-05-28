@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Transition } from 'react-transition-group';
-import { slide } from '../Helpers/Slide';
+import { slide } from '../../../../Helpers/Animation/Slide';
 import CategoryMenuItemSubList from './CategoryMenuItemSublist';
 
 function CategoryMenuItem(props) {
