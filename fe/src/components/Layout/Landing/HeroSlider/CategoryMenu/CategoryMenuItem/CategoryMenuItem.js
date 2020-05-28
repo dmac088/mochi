@@ -4,7 +4,7 @@ import CategoryMenuItemSubList from './CategoryMenuItemSublist';
 
 function CategoryMenuItem(props) {
 
-    const { locale, itemCounter, isRootList, isMobile, showMore, displayCategoryList, category, routeProps, categoryList, renderCategoryList } = props;
+    const { isMobile, isRoot, displayList, dataList, category, renderCategoryList, itemCounter } = props;
     const { count } = category.data;
 
     const [stateObject, setObjectState] = useState({
@@ -61,7 +61,7 @@ function CategoryMenuItem(props) {
                     : "")
             }
             style={
-                (isRootList && itemCounter > 8 && !showMore)
+                (isRoot && itemCounter > 8 && !showMore)
                     ? { "display": "none" }
                     : { "--my-left-indent": getIndent(category.data.categoryLevel, 10) }
             }
@@ -91,10 +91,10 @@ function CategoryMenuItem(props) {
                     ? <CategoryMenuItemSubList
                         locale={locale}
                         isMobile={isMobile}
-                        displayCategoryList={displayCategoryList}
-                        categoryList={categoryList}
-                        children={getChildren(category, categoryList, children)}
-                        categoryLevel={category.facetLevel}
+                        displayList={displayList}
+                        dataList={dataList}
+                        children={getChildren(category, dataList, children)}
+                        categoryLevel={category.data.categoryLevel}
                         itemCounter={itemCounter}
                         routeProps={routeProps}
                         renderCategoryList={renderCategoryList}

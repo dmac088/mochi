@@ -17,6 +17,7 @@ public class ProductCategory extends Category {
 							Long level,
 							int objectCount,
 							String parentCode,
+							Long childCount,
 							String locale, 
 							String currency) {
 		
@@ -28,6 +29,7 @@ public class ProductCategory extends Category {
 			  objectCount
 			  );
 		
+		this.childCount = childCount;
 		this.parentCode = parentCode;
 		this.categoryType = this.getClass().getSimpleName().toString().toLowerCase();
 		this.products = new ArrayList<Product>();
@@ -37,6 +39,8 @@ public class ProductCategory extends Category {
 	private List<Product> products;
 	
 	private String parentCode;
+	
+	private Long childCount;
 	
 	public void addProduct(Product product) {
 		this.getProducts().add(product);
@@ -52,6 +56,10 @@ public class ProductCategory extends Category {
 
 	public String getParentCode() {
 		return parentCode;
+	}
+	
+	public Long getChildCode() {
+		return childCount;
 	}
 	
 }

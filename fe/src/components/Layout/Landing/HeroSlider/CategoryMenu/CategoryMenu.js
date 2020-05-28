@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Transition } from 'react-transition-group'
+import { TransitionGroup, Transition } from 'react-transition-group'
 import ReactDOM from 'react-dom';
 import Velocity from 'velocity-animate';
 import CategoryMenuItem from './CategoryMenuItem/CategoryMenuItem';
@@ -7,31 +7,35 @@ import { mockCategory, mockCategoryList } from './mockData';
 
 function CategoryMenu(props) {
 
-    // const renderCategoryList = (locale, isMobile, displayCategoryList, categoryList, isRootList, itemCounter, routeProps) => {
-    //     if (!displayCategoryList) { return; }
-    //     return displayCategoryList.map(category => {
-    //         if (isRootList) { itemCounter += 1 };
-    //         const { showMore } = this.state
-    //         const categoryId = category.facetId;
-
-    //         return (
-    //             <ReactTransitionGroup
-    //                 key={categoryId}
-    //                 component={CategoryMenuItem}
-    //                 locale={locale}
-    //                 isMobile={isMobile}
-    //                 category={category}
-    //                 isRootList={isRootList}
-    //                 itemCounter={itemCounter}
-    //                 routeProps={routeProps}
-    //                 showMore={showMore}
-    //                 displayCategoryList={displayCategoryList}
-    //                 categoryList={categoryList}
-    //                 renderCategoryList={this.renderCategoryList}>
-    //             </ReactTransitionGroup>
-    //         )
-    //     });
-    // }
+    const renderCategoryList = (//tells us if we are in mobile mode
+                                isMobile, 
+                                //display categories and sort order defined here, list of codes
+                                displayList, 
+                                //the actual list of objects to be displayed
+                                dataList, 
+                                //is it the root list (level = 0)
+                                isRoot, 
+                                //counting items in the list
+                                itemCounter) => {
+        if (!displayCategoryList) { return; }
+        return displayCategoryList.map(category => {
+            if (isRootList) { itemCounter += 1 };
+            //const { showMore } = this.state;
+            return (
+                <TransitionGroup
+                    key={category.data.categoryCode}
+                    component={CategoryMenuItem}
+                    isMobile={isMobile}
+                    category={category}
+                    isRoot={isRoot}
+                    itemCounter={itemCounter}
+                    displayList={displayList}
+                    dataList={dataList}
+                    renderCategoryList={renderCategoryList}>
+                </TransitionGroup>
+            )
+        });
+    }
 
     let container = null;
 
