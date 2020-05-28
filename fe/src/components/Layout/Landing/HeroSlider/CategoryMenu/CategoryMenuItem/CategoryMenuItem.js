@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Transition } from 'react-transition-group';
 import ReactDOM from 'react-dom';
 import Velocity from 'velocity-animate';
@@ -9,11 +9,11 @@ function CategoryMenuItem(props) {
     const { isMobile, isRoot, renderList, fullList, category, renderCategoryList, itemCounter } = props;
     const { childCount } = category.data;
 
-
     const [stateObject, setObjectState] = useState({
         hasChildren: childCount > 0,
         expand: !isMobile,
     });
+
 
     // const changeCategory = (e, routeProps) => {
     //     e.preventDefault();
@@ -46,7 +46,6 @@ function CategoryMenuItem(props) {
         });
         return c;
     }
-
 
     const { hasChildren, expand } = stateObject;
     const children = [];
@@ -113,7 +112,8 @@ function CategoryMenuItem(props) {
                 onExit={() => { console.log(' exit') }}
                 onExiting={() => { slide(container, 'slideUp', null); }}
                 onExited={() => { console.log(' exited') }}>
-                <div ref={setScope}>
+                {/* <div ref={setScope}> */}
+                <ul ref={setScope} className="category-mega-menu">
                     <CategoryMenuItemSubList
                         isMobile={isMobile}
                         renderList={renderList}
@@ -122,7 +122,8 @@ function CategoryMenuItem(props) {
                         categoryLevel={category.data.categoryLevel}
                         itemCounter={itemCounter}
                         renderCategoryList={renderCategoryList} />
-                </div>
+                </ul>
+                {/* </div> */}
             </Transition>
         </li>
     )

@@ -6,9 +6,9 @@ function CategoryMenuItemSubList(props) {
     const { isMobile, fullList, renderCategoryList, itemCounter, children } = props;
     
     return (
-        <ul className="category-mega-menu">
+        <React.Fragment>
              {renderCategoryList(isMobile, children, fullList, false, itemCounter)} 
-        </ul>
+        </React.Fragment>
     )
 }
 
