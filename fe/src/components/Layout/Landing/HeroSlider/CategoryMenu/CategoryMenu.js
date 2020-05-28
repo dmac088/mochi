@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { TransitionGroup, Transition } from 'react-transition-group'
 import ReactDOM from 'react-dom';
 import Velocity from 'velocity-animate';
 import CategoryMenuItem from './CategoryMenuItem/CategoryMenuItem';
-import { mockCategory, mockCategoryList, mockDisplayList } from './mockData';
+import { mockCategory, mockCategoryList } from './mockData';
 
 function CategoryMenu(props) {
 
