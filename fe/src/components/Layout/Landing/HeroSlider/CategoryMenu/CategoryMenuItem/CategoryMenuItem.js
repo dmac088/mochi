@@ -5,21 +5,13 @@ import Velocity from 'velocity-animate';
 import CategoryMenuItemSubList from './CategoryMenuItemSublist';
 
 function CategoryMenuItem(props) {
-    console.log(props);
     const { isMobile, isRoot, renderList, fullList, category, renderCategoryList, itemCounter } = props;
     const { childCount } = category.data;
 
     const [stateObject, setObjectState] = useState({
         hasChildren: childCount > 0,
-        expand: !isMobile,
+        expand: false,
     });
-
-
-    // const changeCategory = (e, routeProps) => {
-    //     e.preventDefault();
-    //     const { search } = location;
-    //     routeProps.history.push(homeRouteString(routeProps.match) + '/category/' + e.currentTarget.id + search);
-    // }
 
     const expandCat = (e) => {
         e.preventDefault();
@@ -60,10 +52,6 @@ function CategoryMenuItem(props) {
         if (element === undefined) { return; }
         Velocity(element, direction, params);
     }
-
-    console.log("hasChildren = " + hasChildren);
-    console.log("isMobile = " + isMobile);
-    console.log("expand = " + expand);
 
     return (
         <li
