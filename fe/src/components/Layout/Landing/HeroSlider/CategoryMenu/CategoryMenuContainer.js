@@ -50,7 +50,9 @@ function CategoryMenuContainer() {
                     <span className="arrow_carrot-right_alt2 mr-2"></span> All Categories</button>
             </div>
             <nav className="category-menu" >
-                <CategoryMenu in={stateObject.menuVisible}/>      
+                <CategoryMenu 
+                    in={stateObject.menuVisible}
+                    isMobile={stateObject.isMobile} />      
             </nav>
         </div>
     );
