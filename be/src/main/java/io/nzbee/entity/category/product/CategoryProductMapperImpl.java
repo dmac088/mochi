@@ -19,6 +19,7 @@ public class CategoryProductMapperImpl implements ICategoryProductMapper {
 				e.getParent().isPresent()
 				? e.getParent().get().getCategoryCode()
 				: null,
+				e.getChildCount(),
 				e.getLocale(), 
 				e.getCurrency()
 			 );
