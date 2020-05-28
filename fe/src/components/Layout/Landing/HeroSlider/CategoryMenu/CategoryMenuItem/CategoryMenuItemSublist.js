@@ -18,11 +18,12 @@ function CategoryMenuItemSubList(props) {
         container = c;
     }
 
-    const { locale, itemCounter, children, isMobile, routeProps, categoryList, renderCategoryList } = props;
+    const { isMobile, displayList, dataList, renderCategoryList, itemCounter, children } = props;
+    
     return (
         <ul ref={setContainer}
             className="category-mega-menu">
-            {/* {renderCategoryList(locale, isMobile, children, categoryList, false, itemCounter, routeProps)} */}
+             {renderCategoryList(isMobile, children, dataList, false, itemCounter)} 
         </ul>
     )
 }

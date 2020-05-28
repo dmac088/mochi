@@ -3,7 +3,7 @@ import { TransitionGroup, Transition } from 'react-transition-group'
 import ReactDOM from 'react-dom';
 import Velocity from 'velocity-animate';
 import CategoryMenuItem from './CategoryMenuItem/CategoryMenuItem';
-import { mockCategory, mockCategoryList } from './mockData';
+import { mockCategory, mockCategoryList, mockDisplayList } from './mockData';
 
 function CategoryMenu(props) {
 
@@ -17,10 +17,13 @@ function CategoryMenu(props) {
                                 isRoot, 
                                 //counting items in the list
                                 itemCounter) => {
+
         if (!displayList) { return; }
+        
         return displayList.map(category => {
+            
             if (isRoot) { itemCounter += 1 };
-            //const { showMore } = this.state;
+
             return (
                 <TransitionGroup
                     key={category.data.categoryCode}
@@ -69,7 +72,7 @@ function CategoryMenu(props) {
                 <CategoryMenuItem
                     isMobile={false}
                     isRoot={true}
-                    displayList={['FRT01']}
+                    displayList={mockDisplayList}
                     dataList={mockCategoryList}
                     category={mockCategory}
                     renderCategoryList={renderCategoryList}
@@ -77,7 +80,6 @@ function CategoryMenu(props) {
                 />
 
             </ul>
-
 
         </Transition>
     );

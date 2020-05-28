@@ -1,4 +1,6 @@
 
+export const mockDisplayList = ['FRT01'];
+
 export const mockCategory = {
     "data": {
       "categoryCode": "FRT01",
