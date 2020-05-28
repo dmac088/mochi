@@ -86,7 +86,15 @@ function CategoryMenuItem(props) {
                     : null
                 }
             </a>
-            <Transition in={stateObject.hasChildren} timeout={0}>
+            <Transition 
+                in={stateObject.hasChildren} 
+                timeout={0}
+                onEnter={() => { console.log('enter') }}
+                onEntering={() => {console.log('entering') }}
+                onEntered={() => { console.log(' entered') }}
+                onExit={() => { console.log(' exit') }}
+                onExiting={() => { console.log('exiting') }}
+                onExited={() => { console.log(' exited') }}>
                 {((hasChildren && (expand || !isMobile))
                     ? <CategoryMenuItemSubList
                         isMobile={isMobile}
