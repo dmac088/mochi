@@ -14,7 +14,7 @@ import { isMobile } from '../Helpers/Mobile/Mobile';
 function Header() {
 
   const [stateObject, setObjectState] = useState({
-    isMobile: false
+    isMobile: isMobile()
   });
 
   window.addEventListener('resize', () => {
