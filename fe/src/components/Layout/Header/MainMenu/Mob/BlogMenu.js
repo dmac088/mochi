@@ -1,26 +1,23 @@
 import React from 'react';
-import { slide } from '../../services/helpers/uiHelper';
 
 function BlogMenu() {
+  
+    // componentWillEnter (callback) {
+    //   slide(this.container, 'slideDown', null, callback);
+    // }
+  
+    // componentWillLeave (callback) {
+    //   slide(this.container, 'slideUp', null, callback);
+    // }
+  
+    let container = null;
 
-    constructor(props) {
-      super(props);
-    }
-  
-    componentWillEnter (callback) {
-      slide(this.container, 'slideDown', null, callback);
-    }
-  
-    componentWillLeave (callback) {
-      slide(this.container, 'slideUp', null, callback);
-    }
-  
     const setContainer = (c) => {
-      this.container = c;
+      container = c;
     }
       
     return (
-        <ul ref={this.setContainer} className="sub-menu"
+        <ul ref={setContainer} className="sub-menu"
             style={{display: 'block'}}>
           <li><a href="blog-3-column.html">Blog 3 column</a></li>
           <li><a href="blog-grid-left-sidebar.html">Blog Grid Left Sidebar</a></li>
