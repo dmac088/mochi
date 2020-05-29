@@ -11,10 +11,10 @@ function BagMenu() {
   });
 
   const setinContainer = () => {
-    setObjectState((prevState) => ({
+    setObjectState({
       inContainer: true,
       visible: true,
-    }));
+    });
   }
 
   const setNotinContainer = () => {
