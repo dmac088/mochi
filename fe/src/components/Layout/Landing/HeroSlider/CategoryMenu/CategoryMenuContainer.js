@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import CategoryMenu from "./CategoryMenu";
 import 'velocity-animate/velocity.ui';
+import { isMobile } from '../../../Helpers/Mobile/Mobile';
 
 function CategoryMenuContainer() {
 
@@ -8,12 +9,6 @@ function CategoryMenuContainer() {
         menuVisible: true,
         isMobile: false
     });
-
-    const isMobile = () => {
-        return ((window.innerWidth
-            || document.documentElement.clientWidth
-            || document.body.clientWidth) <= 991);
-    }
 
     const renderMenu = (isMounting = false) => {
         if (isMobile() && !stateObject.isMobile) {
@@ -37,10 +32,8 @@ function CategoryMenuContainer() {
         }));
     }
 
-    useEffect(() => {
-        renderMenu(true);
-        window.addEventListener('resize',  renderMenu , { passive: true });
-    });
+    renderMenu(true);
+    window.addEventListener('resize',  renderMenu , { passive: true });
 
     return (
         

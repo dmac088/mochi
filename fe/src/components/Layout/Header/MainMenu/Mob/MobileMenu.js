@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import BrandMenu from './BrandMenu';
+import BlogMenu from './BlogMenu';
 import { Transition } from 'react-transition-group';
 
 function MobileMenu() {
@@ -51,8 +53,9 @@ function MobileMenu() {
               <li className="menu-item-has-children">
                 <a href="#">Brands</a>
                   <Transition
-                        component={React.Fragment}>
-                      {(stateObject.revealBrandMenu) ? <BrandMenu /> : null}
+                    in={stateObject.revealBrandMenu}
+                    timeout={0}>
+                      <BrandMenu />
                   </Transition>
                 <a  onClick={toggleBrandMenu}
                     className="mean-expand"
@@ -64,8 +67,9 @@ function MobileMenu() {
               <li className="menu-item-has-children">
                 <a href="#">BLOG</a>
                   <Transition
-                        component={React.Fragment}>
-                      {(stateObject.revealBlogMenu) ? <BlogMenu /> : null}
+                    in={stateObject.revealBlogMenu}
+                    timeout={0}>
+                      <BlogMenu />
                   </Transition>
                 <a  onClick={toggleBlogMenu}
                     className="mean-expand"

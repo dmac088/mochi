@@ -1,5 +1,6 @@
 import React from "react"; 
-import MainMenu from './MainMenu/Web/MainMenu';
+import WebMenu from './MainMenu/Web/WebMenu';
+import MobileMenu from './MainMenu/Mob/MobileMenu';
 import Search from './Search/Search';
 import Language from './Language/Language';
 import Currency from './Currency/Currency';
@@ -8,8 +9,10 @@ import MyBag from './MyBag';
 import MyWishList from './MyWishList';
 import MyCheckout from './MyCheckout';
 import BagMenu from './Bag/BagMenu';
+import { isMobile } from '../Helpers/Mobile/Mobile';
 
 function Header() {
+
     return (
       <header>
             {/*<!--=======  header top  =======-->*/}
@@ -74,7 +77,8 @@ function Header() {
                     </div>
 
                     {/*<!-- navigation section -->*/}
-                    <MainMenu />                   
+                    {(isMobile()) ? <MobileMenu /> : <WebMenu />}
+                                       
                     {/*<!-- end of navigation section -->*/}
                   </div>
                   <div className="col-12">
