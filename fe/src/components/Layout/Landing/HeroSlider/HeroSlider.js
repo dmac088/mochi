@@ -45,7 +45,6 @@ const hs3_settings = {
 
 const styleSlider = (index) => {
   let element = document.querySelector("div.hero-slider-three > div.slick-slider > div.slick-list > div.slick-track > div.slick-slide[data-index='" + index + "']");
-  console.log(element)
   let newElement = element.cloneNode(true);
   newElement.classList.add("hero-slider-item");
   element.parentNode.replaceChild(newElement, element);
