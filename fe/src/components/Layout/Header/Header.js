@@ -10,6 +10,8 @@ import MyWishList from './MyWishList';
 import MyCheckout from './MyCheckout';
 import BagMenu from './Bag/BagMenu';
 import { isMobile } from '../Helpers/Mobile/Mobile';
+import logo from '../../../assets/images/logo.png'
+import iconPhone from '../../../assets/images/icon-phone.png';
 
 function Header() {
 
@@ -64,7 +66,7 @@ function Header() {
               {/*<!-- logo -->*/}
               <div className="logo mt-15 mb-15">
                 <a href="index.html">
-                  <img src="assets/images/logo.png" className="img-fluid" alt="" />
+                  <img src={logo} className="img-fluid" alt="" />
                 </a>
               </div>
               {/*<!-- end of logo -->*/}
@@ -74,7 +76,7 @@ function Header() {
                 {/*<!-- header phone number -->*/}
                 <div className="header-contact d-flex">
                   <div className="phone-icon">
-                    <img src="assets/images/icon-phone.png" className="img-fluid" alt="" />
+                    <img src={iconPhone} className="img-fluid" alt="" />
                   </div>
                   <div className="phone-number">
                     Phone: <span className="number">1-888-123-456-89</span>
