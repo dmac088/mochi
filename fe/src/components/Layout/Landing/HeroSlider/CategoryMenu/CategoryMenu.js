@@ -43,7 +43,7 @@ function CategoryMenu(props) {
 
     let container = null;
 
-    const setScope = (c) => {
+    const setContainer = (c) => {
         container = c;
     }
 
@@ -55,7 +55,7 @@ function CategoryMenu(props) {
             onEntered={() => { console.log(' entered') }}
             onExiting={() => { slide(container, 'slideUp', null); }}
             onExited={() => { console.log(' exited') }}>
-            <ul ref={setScope}>
+            <ul ref={setContainer}>
 
                 <CategoryMenuItem
                     isMobile={isMobile}

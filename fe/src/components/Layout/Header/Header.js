@@ -7,7 +7,7 @@ import MyAccount from './MyAccount';
 import MyBag from './MyBag';
 import MyWishList from './MyWishList';
 import MyCheckout from './MyCheckout';
-import CartMenu from './CartMenu';
+import BagMenu from './Bag/BagMenu';
 
 function Header() {
     return (
@@ -70,7 +70,7 @@ function Header() {
                       {/*<!-- end of header phone number -->*/}
                       <Search />
                       {/*<!-- shopping cart -->*/}
-                      <CartMenu />
+                      <BagMenu />
                     </div>
 
                     {/*<!-- navigation section -->*/}
@@ -84,7 +84,6 @@ function Header() {
                 </div>
               </div>
             </div>
-
             {/*<!--=======  End of header bottom  =======-->*/}
           </header>
     );

@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from "react";
+import Accordion from "./Accordian";
 import { Transition } from 'react-transition-group';
+import { slide } from '../../Helpers/Animation/Slide';
 
 function BagMenu() {
 
@@ -25,10 +27,16 @@ function BagMenu() {
       }
     }, 500);
   }
+  
+  let container = null;
+
+  const setContainer = (c) => {
+      container = c;
+  }
 
   return (
     <div onMouseEnter={setinContainer}
-      onMouseLeave={setNotinContainer}
+         onMouseLeave={setNotinContainer}
       className="shopping-cart"
       id="shopping-cart">
       <a href="#">
@@ -43,9 +51,14 @@ function BagMenu() {
           </p>
         </div>
       </a>
-      <Transition in={stateObject.visible}>
-        <Accordion
-          {...props} />
+      <Transition 
+        in={stateObject.visible}
+        timeout={2000}
+        onEntering={() => { slide(container, 'slideDown', 1000); }}
+        onExiting={() => { slide(container, 'slideUp', 1000); }}>
+          <div className="cart-floating-box" id="cart-floating-box" ref={setContainer}>
+            <Accordion />
+          </div>
       </Transition>
     </div>
   );
