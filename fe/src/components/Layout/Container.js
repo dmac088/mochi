@@ -18,7 +18,7 @@ function ContainerBase(props) {
         <React.Fragment>
             <Header />
             {isHomePath(path)
-            ? null
+            ? <React.Fragment></React.Fragment>
             : <BreadCrumb />}
                 {props.children}
             <Footer />
