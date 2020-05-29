@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import WebMenu from './MainMenu/Web/WebMenu';
 import MobileMenu from './MainMenu/Mob/MobileMenu';
 import Search from './Search/Search';
@@ -16,14 +16,31 @@ import iconPhone from '../../../assets/images/icon-phone.png';
 function Header() {
 
   const [stateObject, setObjectState] = useState({
-    isMobile: isMobile()
+    scrollPosition: 0,
+    isMobile: false,
   });
 
-  window.addEventListener('resize', () => {
+  const renderMenu = () => {
+    if (stateObject.isMobile === isMobile()) {return null;}
     setObjectState({
-      isMobile: isMobile()
+      isMobile: isMobile(),
     });
-  }, { passive: true });
+  }
+
+  const listenToScroll = () => {
+    let scroll = document.documentElement.scrollTop;
+    console.log(scroll + " - " + stateObject.scrollPosition);
+    if (scroll === stateObject.scrollPosition) {return null; }
+    setObjectState({
+      scrollPosition: scroll,
+    });
+  }
+
+  useEffect(() => {
+    window.addEventListener('scroll', listenToScroll, { passive: true });
+    window.addEventListener('resize', renderMenu , { passive: true });
+    renderMenu();
+  });
 
   return (
     <header>
@@ -59,7 +76,8 @@ function Header() {
       {/*<!--=======  End of header top  =======-->*/}
 
       {/*<!--=======  header bottom  =======-->*/}
-      <div className="header-bottom header-bottom-one header-sticky">
+      <div className={"header-bottom header-bottom-one header-sticky"
+                      + ((stateObject.theposition >= 300) ? "is-sticky" : "")}>
         <div className="container">
           <div className="row">
             <div className="col-md-3 col-sm-12 col-xs-12 text-lg-left text-md-center text-sm-center">
@@ -72,7 +90,8 @@ function Header() {
               {/*<!-- end of logo -->*/}
             </div>
             <div className="col-md-9 col-sm-12 col-xs-12">
-              <div className="menubar-top d-flex justify-content-between align-items-center flex-sm-wrap flex-md-wrap flex-lg-nowrap mt-sm-15">
+              <div className={"menubar-top d-flex justify-content-between align-items-center flex-sm-wrap flex-md-wrap flex-lg-nowrap mt-sm-15"
+                              + ((stateObject.scrollPosition >= 300) ? " d-none" : " d-flex")}>
                 {/*<!-- header phone number -->*/}
                 <div className="header-contact d-flex">
                   <div className="phone-icon">
