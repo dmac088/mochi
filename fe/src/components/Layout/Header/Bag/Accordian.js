@@ -5,17 +5,6 @@ const $ = window.$;
 
 function Accordion() {
 
-    const removeItem = (e) => {
-        e.preventDefault();
-       // cartService.removeFromCart(cartSelector.get(), e.currentTarget.id);
-    }
-
-    const renderCartItems = (cart) => {
-        return (
-            <div></div>
-        );
-    }
-
     return (
         <React.Fragment>
             <div className="cart-items">
