@@ -72,7 +72,7 @@ function Header() {
                 <ul>
                   <MyAccount />
                   <MyWishList />
-                  <MyBag />
+                  {/* <MyBag /> */}
                   <MyCheckout />
                 </ul>
               </div>
@@ -117,15 +117,16 @@ function Header() {
               </div>
 
               {/*<!-- navigation section -->*/}
+              
               < div className = "main-menu" >
-                {(stateObject.isMobile) ? <MobileMenu /> : <WebMenu />}
+              {(!stateObject.isMobile) ? <WebMenu /> : null}
               </div>
 
               {/*<!-- end of navigation section -->*/}
             </div>
             <div className="col-12">
               {/*<!-- Mobile Menu -->*/}
-              <div className="mobile-menu d-block d-lg-none"></div>
+              {(stateObject.isMobile) ? <MobileMenu /> : null}
             </div>
           </div>
         </div>
@@ -137,3 +138,5 @@ function Header() {
 
 
 export default Header;
+
+
