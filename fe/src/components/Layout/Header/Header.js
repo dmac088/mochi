@@ -29,11 +29,10 @@ function Header() {
 
   const listenToScroll = () => {
     let scroll = document.documentElement.scrollTop;
-    if((stateObject.scrollPosition) === scroll) { return; }
     setObjectState((prevState) => ({
       ...prevState,
       scrollPosition: scroll,
-    }));
+    }), []);
   }
 
   useEffect(() => {
