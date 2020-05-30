@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Transition } from 'react-transition-group';
 import { slide } from '../../../../Helpers/Animation/Slide';
 import CategoryMenuItemSubList from './CategoryMenuItemSublist';
@@ -8,7 +8,7 @@ function CategoryMenuItem(props) {
     const { childCount } = category.data;
 
     const [stateObject, setObjectState] = useState({
-        hasChildren: childCount > 0,
+        hasChildren: false,
         expand: false,
     });
 
@@ -38,18 +38,25 @@ function CategoryMenuItem(props) {
         return c;
     }
 
-    const { hasChildren, expand } = stateObject;
     const children = [];
-    let container = null;
 
+    let container = null;
     const setScope = (c) => {
         container = c;
     }
 
+    useEffect(() => {
+        if(stateObject.hasChildren === childCount > 0) { return; }
+        setObjectState((prevState) => ({
+            ...prevState,
+            hasChildren: childCount > 0,
+        }));
+    });
+
     return (
         <li
             className={
-                ((hasChildren)
+                ((stateObject.hasChildren)
                     ? "menu-item-has-children"
                     : "")
                 +
@@ -75,17 +82,17 @@ function CategoryMenuItem(props) {
                     : { "": "" }}
                 href="shop-left-sidebar.html">
                 {category.data.categoryDesc}
-                {(hasChildren && isMobile)
+                {(stateObject.hasChildren && isMobile)
                     ? <span>
                         <i onClick={expandCat}
-                            className={((!expand) ? "expand" : "") + " menu-expand"}>
+                           className={((!stateObject.expand) ? "expand" : "") + " menu-expand"}>
                         </i>
                     </span>
                     : null
                 }
             </a>
             <Transition
-                in={(hasChildren && (expand || !isMobile))}
+                in={(stateObject.expand || !isMobile)}
                 timeout={2000}
                 onEntering={() => { slide(container, 'slideDown', { duration: 500, display:"" }); }}
                 onExiting={() => { slide(container, 'slideUp', { duration: 500, display:"none" }); }}>
