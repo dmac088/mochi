@@ -72,7 +72,7 @@ function Header() {
                 <ul>
                   <MyAccount />
                   <MyWishList />
-                  {/* <MyBag /> */}
+                  <MyBag />
                   <MyCheckout />
                 </ul>
               </div>
