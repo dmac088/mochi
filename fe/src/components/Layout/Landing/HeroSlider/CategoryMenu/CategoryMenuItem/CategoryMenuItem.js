@@ -46,12 +46,11 @@ function CategoryMenuItem(props) {
     }
 
     useEffect(() => {
-        if(stateObject.hasChildren === childCount > 0) { return; }
         setObjectState((prevState) => ({
             ...prevState,
             hasChildren: childCount > 0,
         }));
-    });
+    }, []);
 
     return (
         <li
