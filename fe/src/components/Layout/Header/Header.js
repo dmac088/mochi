@@ -21,7 +21,7 @@ function Header() {
   });
 
   const renderMenu = () => {
-    if (stateObject.isMobile === isMobile()) {return null;}
+    if (stateObject.isMobile === isMobile()) { return; }
     setObjectState({
       isMobile: isMobile(),
     });
@@ -29,17 +29,23 @@ function Header() {
 
   const listenToScroll = () => {
     let scroll = document.documentElement.scrollTop;
-    console.log(scroll + " - " + stateObject.scrollPosition);
-    if (scroll === stateObject.scrollPosition) {return null; }
+    if(stateObject.scrollPosition === scroll) { return; }
     setObjectState({
       scrollPosition: scroll,
     });
   }
 
   useEffect(() => {
+    // initiate the event handler
     window.addEventListener('scroll', listenToScroll, { passive: true });
     window.addEventListener('resize', renderMenu , { passive: true });
     renderMenu();
+
+    // this will clean up the event every time the component is re-rendered
+    return function cleanup() {
+        window.removeEventListener('scroll', listenToScroll, { passive: true });
+        window.removeEventListener('resize', renderMenu, { passive: true });
+    };
   });
 
   return (
