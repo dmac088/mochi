@@ -4,7 +4,7 @@ import ContactMenu from './ContactMenu';
 
 function MainMenu() {
     return (
-        < div className = "main-menu" >
+        
             <nav>
                 <ul>
                     <HomeMenu />
@@ -84,8 +84,7 @@ function MainMenu() {
                     </li>
                     <ContactMenu />
                 </ul>
-            </nav>
-        </div >
+            </nav> 
     );
 }
 
