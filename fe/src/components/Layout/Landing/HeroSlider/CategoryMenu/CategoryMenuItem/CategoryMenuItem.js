@@ -87,8 +87,8 @@ function CategoryMenuItem(props) {
             <Transition
                 in={(hasChildren && (expand || !isMobile))}
                 timeout={2000}
-                onEntering={() => { slide(container, 'slideDown', null); }}
-                onExiting={() => { slide(container, 'slideUp', null); }}>
+                onEntering={() => { slide(container, 'slideDown', { duration: 500, display:"" }); }}
+                onExiting={() => { slide(container, 'slideUp', { duration: 500, display:"none" }); }}>
                 <ul ref={setScope} className="category-mega-menu">
                     <CategoryMenuItemSubList
                         isMobile={isMobile}
