@@ -27,9 +27,7 @@ function Scroller() {
     useEffect(() => {
         // initiate the event handler
         window.addEventListener('scroll', listenToScroll, { passive: true });
-        // setObjectState({
-        //     body: document.querySelector('html,body'),
-        // });
+        
         // this will clean up the event every time the component is re-rendered
         return function cleanup() {
             window.removeEventListener('scroll', listenToScroll, { passive: true });
