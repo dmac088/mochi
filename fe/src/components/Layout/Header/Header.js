@@ -36,11 +36,12 @@ function Header() {
   }
 
   useEffect(() => {
+    renderMenu();
+
     // initiate the event handler
     window.addEventListener('scroll', listenToScroll, { passive: true });
     window.addEventListener('resize', renderMenu , { passive: true });
-    renderMenu();
-
+    
     // this will clean up the event every time the component is re-rendered
     return function cleanup() {
         window.removeEventListener('scroll', listenToScroll, { passive: true });
