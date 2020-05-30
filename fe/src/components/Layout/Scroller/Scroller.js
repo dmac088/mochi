@@ -8,13 +8,6 @@ function Scroller() {
         body: null,
     });
 
-    useEffect(() => {
-        window.addEventListener('scroll', listenToScroll, { passive: true });
-        setObjectState({
-            body: document.querySelector('html,body'),
-        });
-    });
-
     const listenToScroll = () => {
         const scroll = document.documentElement.scrollTop;
         const { showScroller } = stateObject;
@@ -30,6 +23,17 @@ function Scroller() {
         Velocity(body, 'scroll', { duration: 1000 });
     }
 
+    useEffect(() => {
+        // initiate the event handler
+        window.addEventListener('scroll', listenToScroll, { passive: true });
+        setObjectState({
+            body: document.querySelector('html,body'),
+        });
+        // this will clean up the event every time the component is re-rendered
+        return function cleanup() {
+            window.removeEventListener('scroll', listenToScroll, { passive: true });
+        };
+      });
 
     return (
         <React.Fragment>
