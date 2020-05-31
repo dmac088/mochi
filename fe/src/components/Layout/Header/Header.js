@@ -10,6 +10,8 @@ import MyWishList from './MyWishList';
 import MyCheckout from './MyCheckout';
 import BagMenu from './Bag/BagMenu';
 import { isMobile } from '../Helpers/Mobile/Mobile';
+import { Transition } from 'react-transition-group';
+import { slide } from "../Helpers/Animation/Slide";
 import logo from '../../../assets/images/logo.png'
 import iconPhone from '../../../assets/images/icon-phone.png';
 
@@ -18,13 +20,23 @@ function Header() {
   const [stateObject, setObjectState] = useState({
     scrollPosition: 0,
     isMobile: false,
+    revealMenu: false,
   });
 
   const renderMenu = () => {
     if (stateObject.isMobile === isMobile()) { return; }
-    setObjectState({
+    setObjectState((prevState) => ({
+      ...prevState,
       isMobile: isMobile(),
-    });
+    }));
+  }
+
+  const toggleMobileMenu = (e) => {
+    e.preventDefault();
+    setObjectState((prevState) => ({
+      ...prevState,
+      revealMenu: !prevState.revealMenu,
+    }));
   }
 
   const listenToScroll = () => {
@@ -32,22 +44,29 @@ function Header() {
     setObjectState((prevState) => ({
       ...prevState,
       scrollPosition: scroll,
-    }), []);
+    }));
   }
 
   useEffect(() => {
     renderMenu();
-
     // initiate the event handler
+    if(isMobile) { slide(container, 'slideUp', {duration: 500 } ); }
     window.addEventListener('scroll', listenToScroll, { passive: true });
-    window.addEventListener('resize', renderMenu , { passive: true });
-    
+    window.addEventListener('resize', renderMenu, { passive: true });
+
     // this will clean up the event every time the component is re-rendered
     return function cleanup() {
-        window.removeEventListener('scroll', listenToScroll, { passive: true });
-        window.removeEventListener('resize', renderMenu, { passive: true });
+      window.removeEventListener('scroll', listenToScroll, { passive: true });
+      window.removeEventListener('resize', renderMenu, { passive: true });
     };
-  });
+  }, []);
+
+
+  let container = null;
+
+  const setContainer = (c) => {
+    container = c;
+  }
 
   return (
     <header>
@@ -84,7 +103,7 @@ function Header() {
 
       {/*<!--=======  header bottom  =======-->*/}
       <div className={"header-bottom header-bottom-one header-sticky"
-                      + ((stateObject.scrollPosition  >= 300) ? " is-sticky" : "")}>
+        + ((stateObject.scrollPosition >= 300) ? " is-sticky" : "")}>
         <div className="container">
           <div className="row">
             <div className="col-md-3 col-sm-12 col-xs-12 text-lg-left text-md-center text-sm-center">
@@ -98,8 +117,8 @@ function Header() {
             </div>
             <div className="col-md-9 col-sm-12 col-xs-12">
               <div className={"menubar-top "
-                              + " justify-content-between align-items-center flex-sm-wrap flex-md-wrap flex-lg-nowrap mt-sm-15"
-                              + ((stateObject.scrollPosition >= 300) ? " d-none" : " d-flex")}>
+                + " justify-content-between align-items-center flex-sm-wrap flex-md-wrap flex-lg-nowrap mt-sm-15"
+                + ((stateObject.scrollPosition >= 300) ? " d-none" : " d-flex")}>
                 {/*<!-- header phone number -->*/}
                 <div className="header-contact d-flex">
                   <div className="phone-icon">
@@ -116,16 +135,43 @@ function Header() {
               </div>
 
               {/*<!-- navigation section -->*/}
-              
-              < div className = "main-menu" >
-              {(!stateObject.isMobile) ? <WebMenu /> : null}
-              </div>
-
+                <div className="main-menu" >
+                  <WebMenu 
+                    isMobile={stateObject.isMobile}
+                  /> 
+                </div>
               {/*<!-- end of navigation section -->*/}
             </div>
             <div className="col-12">
               {/*<!-- Mobile Menu -->*/}
-              {(stateObject.isMobile) ? <MobileMenu /> : null}
+              <div  className="mobile-menu d-block d-lg-none mean-container">
+                <div className="mean-bar">
+                  <a onClick={toggleMobileMenu}
+                    href="#nav"
+                    className={"meanmenu-reveal " + ((stateObject.revealMenu) ? "meanclose" : "")}
+                    style={{
+                      background: '',
+                      color: '',
+                      right: 0,
+                      left: 'auto'
+                    }}>
+                    <span className={(stateObject.revealMenu) ? "menu-close" : "menu-bar"} />
+                  </a>
+                  <nav className="mean-nav">
+                  <ul ref={setContainer}>
+                  
+                  <Transition
+                    in={stateObject.revealMenu}
+                    onEntering={() => { slide(container, 'slideDown', {duration: 500 }); }}
+                    onEntered={() => { console.log(' entered') }}
+                    onExiting={() => { slide(container, 'slideUp', {duration: 500 }); }}
+                    onExited={() => { console.log(' exited') }}>
+                      <MobileMenu />
+                  </Transition>
+                  </ul>
+                  </nav>
+                </div>
+              </div>
             </div>
           </div>
         </div>
