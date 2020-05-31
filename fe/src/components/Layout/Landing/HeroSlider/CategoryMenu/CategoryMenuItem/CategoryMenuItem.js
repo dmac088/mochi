@@ -8,7 +8,7 @@ function CategoryMenuItem(props) {
     const { childCount } = category.data;
 
     const [stateObject, setObjectState] = useState({
-        hasChildren: false,
+        hasChildren: childCount > 0,
         expand: false,
     });
 
@@ -46,10 +46,7 @@ function CategoryMenuItem(props) {
     }
 
     useEffect(() => {
-        setObjectState((prevState) => ({
-            ...prevState,
-            hasChildren: childCount > 0,
-        }));
+        slide(container, 'slideUp', { duration: 500, display:"none" });
     }, []);
 
     return (
@@ -91,7 +88,7 @@ function CategoryMenuItem(props) {
                 }
             </a>
             <Transition
-                in={(stateObject.expand || !isMobile)}
+                in={(stateObject.expand)}
                 timeout={2000}
                 onEntering={() => { slide(container, 'slideDown', { duration: 500, display:"" }); }}
                 onExiting={() => { slide(container, 'slideUp', { duration: 500, display:"none" }); }}>
