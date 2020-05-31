@@ -4,7 +4,6 @@ import ContactMenu from './ContactMenu';
 
 function MainMenu(props) {
     const {isMobile} = props;
-    console.log(isMobile);
     return (
         <nav style={{"display" : ((isMobile) ? "none" : "block")}}>
             <ul>

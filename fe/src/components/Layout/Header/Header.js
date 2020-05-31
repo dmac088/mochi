@@ -24,7 +24,6 @@ function Header() {
   });
 
   const renderMenu = () => {
-    if (stateObject.isMobile === isMobile()) { return; }
     setObjectState((prevState) => ({
       ...prevState,
       isMobile: isMobile(),
