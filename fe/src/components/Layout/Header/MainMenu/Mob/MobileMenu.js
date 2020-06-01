@@ -30,18 +30,13 @@ function MobileMenu(props) {
         <a href="#">HOME</a>
       </li>
       <li className="menu-item-has-children">
-        <a href="#">Brands</a>
+        
         <Transition
           in={stateObject.revealBrandMenu}
           timeout={0}>
           <BrandMenu />
         </Transition>
-        <a onClick={toggleBrandMenu}
-          className="mean-expand"
-          href="#"
-          style={{ fontSize: 0 }}>
-          {(stateObject.revealBrandMenu) ? "-" : "+"}
-        </a>
+        
       </li>
       <li className="menu-item-has-children">
         <a href="#">BLOG</a>
