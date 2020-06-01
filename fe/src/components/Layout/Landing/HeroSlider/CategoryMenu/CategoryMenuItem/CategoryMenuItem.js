@@ -38,17 +38,15 @@ function CategoryMenuItem(props) {
 
     const children = [];
 
+
     return (
         <li
-            className={
-                ((stateObject.hasChildren)
-                    ? "menu-item-has-children"
-                    : "")
-                +
+            className={((stateObject.hasChildren)
+                ? "menu-item-has-children"
+                : "") +
                 ((itemCounter > 8)
                     ? " hidden"
-                    : "")
-            }
+                    : "")}
             style={
                 (isRoot && itemCounter > 8
                     // && !showMore
@@ -61,13 +59,13 @@ function CategoryMenuItem(props) {
                     if ((e.target.tagName.toLowerCase() === "i")) { return }
                     //changeCategory(e, routeProps)
                 }}
-                className={"megamenu-head"}
+                className={(stateObject.hasChildren) ? "megamenu-head" : ""}
                 style={(isMobile)
                     ? { "--my-cat-indent": getIndent(category.data.categoryLevel) }
                     : { "": "" }}
                 href="shop-left-sidebar.html">
                 {category.data.categoryDesc} ({category.data.count})
-                {(stateObject.hasChildren && isMobile)
+                    {(stateObject.hasChildren && isMobile)
                     ? <span>
                         <i onClick={expandCat}
                             className={((!stateObject.expand) ? "expand" : "") + " menu-expand"}>
@@ -83,8 +81,9 @@ function CategoryMenuItem(props) {
                 children={getChildren(category, fullList, children)}
                 categoryLevel={category.data.categoryLevel}
                 itemCounter={itemCounter}
-                renderCategoryList={renderCategoryList} 
-                expand={stateObject.expand}/>
+                renderCategoryList={renderCategoryList}
+                expand={stateObject.expand}
+                hasChildren={stateObject.hasChildren} />
         </li>
     )
 }
