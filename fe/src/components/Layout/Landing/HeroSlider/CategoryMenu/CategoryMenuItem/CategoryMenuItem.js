@@ -45,9 +45,9 @@ function CategoryMenuItem(props) {
         container = c;
     }
 
-    useEffect(() => {
-        slide(container, 'slideUp', { duration: 500, display:"none" });
-    }, []);
+     useEffect(() => {
+        slide(container, 'slideUp', {display:"none"}); 
+     }, []);
 
     return (
         <li
@@ -87,22 +87,24 @@ function CategoryMenuItem(props) {
                     : null
                 }
             </a>
-            <Transition
-                in={(stateObject.expand)}
-                timeout={2000}
-                onEntering={() => { slide(container, 'slideDown', { duration: 500, display:"" }); }}
-                onExiting={() => { slide(container, 'slideUp', { duration: 500, display:"none" }); }}>
-                <ul ref={setScope} className="category-mega-menu">
-                    <CategoryMenuItemSubList
-                        isMobile={isMobile}
-                        renderList={renderList}
-                        fullList={fullList}
-                        children={getChildren(category, fullList, children)}
-                        categoryLevel={category.data.categoryLevel}
-                        itemCounter={itemCounter}
-                        renderCategoryList={renderCategoryList} />
-                </ul>
-            </Transition>
+            <ul ref={setScope} className="category-mega-menu">
+                <Transition
+                    in={(stateObject.expand)}
+                    timeout={2000}
+                    onEntering={() => { slide(container, 'slideDown', {display:""}); }}
+                    onExiting={() => { slide(container, 'slideUp', {display:"none"}); }}>
+                    
+                        <CategoryMenuItemSubList
+                            isMobile={isMobile}
+                            renderList={renderList}
+                            fullList={fullList}
+                            children={getChildren(category, fullList, children)}
+                            categoryLevel={category.data.categoryLevel}
+                            itemCounter={itemCounter}
+                            renderCategoryList={renderCategoryList} />
+                    
+                </Transition>
+            </ul>
         </li>
     )
 }

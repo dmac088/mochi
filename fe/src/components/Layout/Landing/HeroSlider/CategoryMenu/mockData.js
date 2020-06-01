@@ -2,26 +2,26 @@
 export const mockDisplayList = ['FRT01'];
 
 export const mockCategory = {
-    "data": {
-      "categoryCode": "FRT01",
-      "categoryDesc": "Fruit",
-      "categoryLevel": 1,
-      "categoryType": "productcategory",
-      "locale": "en-GB",
-      "currency": "HKD",
-      "parentCode": "PRM01",
-      "childCount": 7,
-      "count": 12
+  "data": {
+    "categoryCode": "PRM01",
+    "categoryDesc": "ALL",
+    "categoryLevel": 0,
+    "categoryType": "productcategory",
+    "locale": "en-GB",
+    "currency": "HKD",
+    "parentCode": null,
+    "childCount": 11,
+    "count": 29
+  },
+  "_links": {
+    "self": {
+      "href": "https://localhost:8090/api/Category/en-GB/HKD/code/PRM01"
     },
-    "_links": {
-      "self": {
-        "href": "https://localhost:8090/api/Category/en-GB/HKD/code/FRT01"
-      },
-      "products": {
-        "href": "https://localhost:8090/api/Product/en-GB/HKD/category/FRT01?page=0&size=10"
-      }
+    "products": {
+      "href": "https://localhost:8090/api/Product/en-GB/HKD/category/PRM01?page=0&size=10"
     }
   }
+}
 
 export const mockCategoryList = {
         "_embedded": {
