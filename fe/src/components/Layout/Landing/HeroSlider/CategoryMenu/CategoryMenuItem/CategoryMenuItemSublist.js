@@ -12,7 +12,7 @@ function CategoryMenuItemSubList(props) {
     }
 
     useEffect(() => {
-        if(isMobile) {slide(container, 'slideUp', { duration: 0 });}
+        slide(container, 'slideUp', { duration: 0 });
     }, []);
 
     const initStyle = {overflow: "hidden",
@@ -28,7 +28,7 @@ function CategoryMenuItemSubList(props) {
                         ? "category-mega-menu"
                         : ""}
             ref={setScope}
-            style={ (isMobile) ? initStyle : null }>  
+            style={ initStyle }>  
             <Transition
                 in={expand}
                 timeout={0}
