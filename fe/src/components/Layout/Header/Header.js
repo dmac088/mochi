@@ -49,7 +49,7 @@ function Header() {
   useEffect(() => {
     renderMenu();
     // initiate the event handler
-    if(isMobile) { slide(container, 'slideUp', {duration: 500 } ); }
+    if(isMobile) { slide(container, 'slideUp', {duration: 0 } ); }
     window.addEventListener('scroll', listenToScroll, { passive: true });
     window.addEventListener('resize', renderMenu, { passive: true });
 
