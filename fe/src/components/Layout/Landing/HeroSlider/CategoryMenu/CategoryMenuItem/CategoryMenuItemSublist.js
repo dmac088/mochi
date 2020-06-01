@@ -11,20 +11,33 @@ function CategoryMenuItemSubList(props) {
         container = c;
     }
 
+    useEffect(() => {
+        if(isMobile) {slide(container, 'slideUp', { duration: 0 });}
+    }, []);
+
+    const initStyle = {overflow: "hidden",
+                   // height: "0px",
+                    "marginTop": "0px",
+                    "marginBottom": "0px",
+                    "paddingTop": "0px", 
+                    "paddingBottom": "0px"};
+
+
     return (
         <ul className= {(hasChildren) 
                         ? "category-mega-menu"
                         : ""}
-            style={{display:"none"}}
-            ref={setScope}>  
+            ref={setScope}
+            style={ (isMobile) ? initStyle : null }>  
             <Transition
                 in={expand}
                 timeout={0}
                 onEntering={() => { console.log("Entering");
-                                    slide(container, 'slideDown', { duration: 500 , display:""}); 
+                                    slide(container, 'slideDown', { duration: 500 }); 
                 }}
                 onExiting={() => {  console.log("Exiting");
-                                    slide(container, 'slideUp', { duration: 500 , display:"none"}); 
+                                    slide(container, 'slideUp', { duration: 500 });
+                                    
                 }}>
                     <React.Fragment>
                         {renderCategoryList(isMobile, children, fullList, false, itemCounter)}
