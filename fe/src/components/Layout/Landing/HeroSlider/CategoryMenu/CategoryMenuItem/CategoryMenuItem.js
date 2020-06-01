@@ -66,7 +66,7 @@ function CategoryMenuItem(props) {
                     ? { "--my-cat-indent": getIndent(category.data.categoryLevel) }
                     : { "": "" }}
                 href="shop-left-sidebar.html">
-                {category.data.categoryDesc}
+                {category.data.categoryDesc} ({category.data.count})
                 {(stateObject.hasChildren && isMobile)
                     ? <span>
                         <i onClick={expandCat}
