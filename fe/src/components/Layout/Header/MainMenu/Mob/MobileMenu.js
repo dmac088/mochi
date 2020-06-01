@@ -10,13 +10,6 @@ function MobileMenu(props) {
     revealBlogMenu: false,
   });
 
-  const toggleBrandMenu = (e) => {
-    e.preventDefault();
-    setObjectState({
-      revealBrandMenu: !stateObject.revealBrandMenu,
-    });
-  }
-
   const toggleBlogMenu = (e) => {
     e.preventDefault();
     setObjectState({
