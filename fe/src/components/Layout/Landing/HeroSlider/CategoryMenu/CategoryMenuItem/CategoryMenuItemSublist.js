@@ -17,7 +17,7 @@ function CategoryMenuItemSubList(props) {
                 timeout={2000}
                 onEntering={() => { slide(container, 'slideDown', {display:""}); }}
                 onExiting={() => { slide(container, 'slideUp', {display:"none"}); }}>
-            <ul ref={setScope} className="category-mega-menu" style={{display:"none"}}>
+            <ul ref={setScope} className="category-mega-menu" style={(isMobile) ? {display:"none"} : {display:""}}>
                 {renderCategoryList(isMobile, children, fullList, false, itemCounter)} 
             </ul>                        
         </Transition>
