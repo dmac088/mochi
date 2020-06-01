@@ -15,20 +15,21 @@ function CategoryMenuItemSubList(props) {
         slide(container, 'slideUp', { duration: 0 });
     }, []);
 
-    const initStyle = {overflow: "hidden",
+    const initMobStyle = {overflow: "hidden",
                    // height: "0px",
                     "marginTop": "0px",
                     "marginBottom": "0px",
                     "paddingTop": "0px", 
                     "paddingBottom": "0px"};
-
+    
+    const initWebStyle = {};
 
     return (
         <ul className= {(hasChildren) 
                         ? "category-mega-menu"
                         : ""}
             ref={setScope}
-            style={ initStyle }>  
+            style={ initMobStyle }>  
             <Transition
                 in={expand}
                 timeout={0}
