@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Transition } from 'react-transition-group';
-import { slide } from '../../../../Helpers/Animation/Slide';
 import CategoryMenuItemSubList from './CategoryMenuItemSublist';
 
 function CategoryMenuItem(props) {
@@ -40,15 +38,6 @@ function CategoryMenuItem(props) {
 
     const children = [];
 
-    let container = null;
-    const setScope = (c) => {
-        container = c;
-    }
-
-     useEffect(() => {
-        slide(container, 'slideUp', {display:"none"}); 
-     }, []);
-
     return (
         <li
             className={
@@ -81,30 +70,21 @@ function CategoryMenuItem(props) {
                 {(stateObject.hasChildren && isMobile)
                     ? <span>
                         <i onClick={expandCat}
-                           className={((!stateObject.expand) ? "expand" : "") + " menu-expand"}>
+                            className={((!stateObject.expand) ? "expand" : "") + " menu-expand"}>
                         </i>
                     </span>
                     : null
                 }
             </a>
-            <ul ref={setScope} className="category-mega-menu">
-                <Transition
-                    in={(stateObject.expand)}
-                    timeout={2000}
-                    onEntering={() => { slide(container, 'slideDown', {display:""}); }}
-                    onExiting={() => { slide(container, 'slideUp', {display:"none"}); }}>
-                    
-                        <CategoryMenuItemSubList
-                            isMobile={isMobile}
-                            renderList={renderList}
-                            fullList={fullList}
-                            children={getChildren(category, fullList, children)}
-                            categoryLevel={category.data.categoryLevel}
-                            itemCounter={itemCounter}
-                            renderCategoryList={renderCategoryList} />
-                    
-                </Transition>
-            </ul>
+            <CategoryMenuItemSubList
+                isMobile={isMobile}
+                renderList={renderList}
+                fullList={fullList}
+                children={getChildren(category, fullList, children)}
+                categoryLevel={category.data.categoryLevel}
+                itemCounter={itemCounter}
+                renderCategoryList={renderCategoryList} 
+                expand={stateObject.expand}/>
         </li>
     )
 }
