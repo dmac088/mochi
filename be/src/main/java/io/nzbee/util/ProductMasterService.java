@@ -126,7 +126,6 @@ public class ProductMasterService {
 							   	p.get_PRODUCT_RETAIL_PRICE_HKD(),
 							   	p.get_PRODUCT_MARKDOWN_PRICE_HKD(),
 							   	p.get_PRODUCT_IMAGE_EN(),
-							   	"",
 							   	globalVars.getLocaleENGB(),
 							   	globalVars.getCurrencyHKD(),
 							   	bDo,
