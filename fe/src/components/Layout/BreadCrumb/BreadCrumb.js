@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 
 function BreadCrumb() {
     return (
@@ -8,10 +9,9 @@ function BreadCrumb() {
                     <div className="col">
                         <div className="breadcrumb-container">
                             <ul>
-                                <li><i className="fa fa-home"></i> Home</li>
+                                <Link to={}><i className="fa fa-home"> Home</i></Link>
                                 <li> Test</li>
                             </ul>
-
                         </div>
                     </div>
                 </div>
