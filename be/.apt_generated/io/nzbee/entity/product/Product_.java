@@ -20,13 +20,13 @@ public abstract class Product_ {
 
 	public static volatile SingularAttribute<Product, Long> productId;
 	public static volatile SingularAttribute<Product, String> productUPC;
-	public static volatile SingularAttribute<Product, CategoryProduct> primaryCategory;
 	public static volatile SingularAttribute<Product, ProductStatus> productStatus;
 	public static volatile SingularAttribute<Product, Date> productCreateDt;
 	public static volatile ListAttribute<Product, ProductAttribute> attributes;
 	public static volatile SetAttribute<Product, CategoryProduct> categories;
 	public static volatile SingularAttribute<Product, Department> department;
 	public static volatile ListAttribute<Product, ProductPrice> prices;
+	public static volatile SingularAttribute<Product, CategoryProduct> primaryCategoryIndex;
 	public static volatile SingularAttribute<Product, Brand> brand;
 	public static volatile SetAttribute<Product, Tag> tags;
 

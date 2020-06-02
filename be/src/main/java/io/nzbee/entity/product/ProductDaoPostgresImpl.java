@@ -394,7 +394,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		
 		product.setLocale(locale);
 		product.setCurrency(currency);
-		product.setDisplayCategories(o[13].toString());
 		product.setImagePath(o[14].toString());
 		
 		return product;

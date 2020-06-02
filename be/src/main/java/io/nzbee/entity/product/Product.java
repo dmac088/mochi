@@ -158,7 +158,6 @@ filters = {
 	    columns = {
 	    		@ColumnResult(name = "retail_price"),
 	    		@ColumnResult(name = "markdown_price"),
-	    		@ColumnResult(name = "display_categories"),
 	    		@ColumnResult(name = "prd_img_pth"),
 	    		@ColumnResult(name = "cat_prnt_cd"),
 	    },		
@@ -177,7 +176,8 @@ filters = {
 	                        @FieldResult(name = "expiryDate",  			column = "exp_dt"),
 	                        @FieldResult(name = "locale",  				column = "lcl_cd"),
 	                        @FieldResult(name = "currency",  			column = "ccy_cd"),
-	                        @FieldResult(name = "primaryCategory", 		column = "prm_cat_id")
+	                        @FieldResult(name = "primaryCategory", 		column = "prm_cat_id"),
+	                        @FieldResult(name = "primaryCategoryIndex", column = "prm_cat_id")
 	                    }),
 	            @EntityResult(
 		                entityClass = ProductStatus.class,
@@ -232,7 +232,7 @@ filters = {
 	            @EntityResult(
 	            		entityClass = CategoryProduct.class,
 		                fields = {
-		                    @FieldResult(name = "categoryId", 					column = "cat_id"),
+		                    @FieldResult(name = "categoryId", 					column = "prm_cat_id"),
 		                    @FieldResult(name = "categoryCode", 				column = "cat_cd"),
 		                    @FieldResult(name = "categoryLevel", 				column = "cat_lvl"),	
 		                    @FieldResult(name = "categoryType", 				column = "cat_typ_id"),
@@ -242,10 +242,10 @@ filters = {
 	                    entityClass = CategoryAttribute.class,
 	                    fields = {
 	                        @FieldResult(name = "categoryAttributeId", 			column = "cat_lcl_id"),
-	                        @FieldResult(name = "categoryId", 					column = "cat_id"),
+	                        @FieldResult(name = "categoryId", 					column = "prm_cat_id"),
 	                        @FieldResult(name = "lclCd", 						column = "lcl_cd"),
 	                        @FieldResult(name = "categoryDesc", 				column = "cat_desc"),
-	                        @FieldResult(name = "category", 					column = "cat_id")
+	                        @FieldResult(name = "category", 					column = "prm_cat_id")
 	                    }),
 	            @EntityResult(
 	                    entityClass = CategoryType.class,
@@ -311,10 +311,6 @@ public abstract class Product {
 
 	@Transient
 	@Field(store=Store.YES,analyze=Analyze.NO)
-	private String displayCategories;
-	
-	@Transient
-	@Field(store=Store.YES,analyze=Analyze.NO)
 	private Double retailPrice;
 	
 	@Transient
@@ -352,21 +348,31 @@ public abstract class Product {
 				orphanRemoval = true)
 	List<ProductPrice> prices = new ArrayList<ProductPrice>();
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="prm_cat_id")
 	@IndexedEmbedded(prefix="product.primarycategory.")
-	private CategoryProduct primaryCategory; 
+	private CategoryProduct primaryCategoryIndex; 
 
+	@Transient
+	private CategoryProduct primaryCategory;
+	
 	public Product() {
 	}
 
 	public CategoryProduct getPrimaryCategory() {
 		return primaryCategory;
 	}
+	
+	public CategoryProduct getPrimaryCategoryIndex() {
+		return primaryCategoryIndex;
+	}
+
+	public void setPrimaryCategoryIndex(CategoryProduct primaryCategoryIndex) {
+		this.primaryCategoryIndex = primaryCategoryIndex;
+	}
 
 	public void setPrimaryCategory(CategoryProduct primaryCategory) {
 		this.primaryCategory = primaryCategory;
-		this.categories.add(primaryCategory);
 	}
 	
 	@Field(store=Store.YES)
@@ -641,14 +647,6 @@ public abstract class Product {
 		this.markdownPrice = markdownPrice;
 	}
 	
-	public String getDisplayCategories() {
-		return displayCategories;
-	}
-
-	public void setDisplayCategories(String displayCategories) {
-		this.displayCategories = displayCategories;
-	}
-
 	public void addProductCategory(CategoryProduct categoryProduct) {
 		this.getCategories().add(categoryProduct);
 		categoryProduct.getProducts().add(this);
