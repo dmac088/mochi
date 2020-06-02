@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import MobileCategoryMenuItemSubList from './MobileCategoryMenuItemSublist';
 import WebCategoryMenuItemSubList from './WebCategoryMenuItemSublist';
+import { Link } from "react-router-dom";
+import { withRouter } from 'react-router-dom';
+import { getCategoryPath } from "../../../../Helpers/Route/Route";
 
-
-function CategoryMenuItem(props) {
-    const { isMobile, isRoot, renderList, fullList, category, renderCategoryList, itemCounter } = props;
+function CategoryMenuItemBase(props) {
+    
+    const { isMobile, isRoot, renderList, fullList, category, renderCategoryList, itemCounter, match } = props;
     const { childCount } = category.data;
 
     const [stateObject, setObjectState] = useState({
@@ -56,26 +59,22 @@ function CategoryMenuItem(props) {
                     ? { "display": "none" }
                     : { "--my-left-indent": getIndent(category.data.categoryLevel, 10) }
             }>
-            <a id={category.data.categoryDesc}
-                onClick={(e) => {
-                    if ((e.target.tagName.toLowerCase() === "i")) { return }
-                    //changeCategory(e, routeProps)
-                }}
-                className={(stateObject.hasChildren) ? "megamenu-head" : ""}
+
+            <Link 
+                to={getCategoryPath(category.data.categoryDesc, match)}
                 style={(isMobile)
                     ? { "--my-cat-indent": getIndent(category.data.categoryLevel) }
-                    : { "": "" }}
-                href="shop-left-sidebar.html">
-                {category.data.categoryDesc} ({category.data.count})
+                    : { "": "" }}>
+                    {category.data.categoryDesc} ({category.data.count})
                     {(stateObject.hasChildren && isMobile)
                     ? <span>
                         <i onClick={expandCat}
-                            className={((!stateObject.expand) ? "expand" : "") + " menu-expand"}>
+                            className={((!stateObject.expand) ? " expand" : "") + " menu-expand"}>
                         </i>
-                    </span>
-                    : null
-                }
-            </a>
+                      </span>
+                    : null}
+            </Link>
+            
             {(isMobile) 
             ?   <MobileCategoryMenuItemSubList
                     renderList={renderList}
@@ -98,5 +97,11 @@ function CategoryMenuItem(props) {
         </li>
     )
 }
+
+const CategoryMenuItem = withRouter(function({...props}) {
+    
+    return <CategoryMenuItemBase 
+                {...props}/>
+});
 
 export default CategoryMenuItem;
