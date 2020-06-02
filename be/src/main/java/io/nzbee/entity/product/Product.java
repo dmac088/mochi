@@ -367,13 +367,10 @@ public abstract class Product {
 		return primaryCategoryIndex;
 	}
 
-	public void setPrimaryCategoryIndex(CategoryProduct primaryCategoryIndex) {
+	public void setPrimaryCategory(CategoryProduct primaryCategoryIndex) {
 		this.primaryCategoryIndex = primaryCategoryIndex;
 	}
 
-	public void setPrimaryCategory(CategoryProduct primaryCategory) {
-		this.primaryCategory = primaryCategory;
-	}
 	
 	@Field(store=Store.YES)
 	@SortableField
