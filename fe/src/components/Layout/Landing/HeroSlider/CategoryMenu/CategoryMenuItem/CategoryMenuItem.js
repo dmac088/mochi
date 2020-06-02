@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import CategoryMenuItemSubList from './CategoryMenuItemSublist';
+import MobileCategoryMenuItemSubList from './MobileCategoryMenuItemSublist';
+import WebCategoryMenuItemSubList from './WebCategoryMenuItemSublist';
 
 
 function CategoryMenuItem(props) {
@@ -75,16 +76,25 @@ function CategoryMenuItem(props) {
                     : null
                 }
             </a>
-            <CategoryMenuItemSubList
-                isMobile={isMobile}
-                renderList={renderList}
-                fullList={fullList}
-                children={getChildren(category, fullList, children)}
-                categoryLevel={category.data.categoryLevel}
-                itemCounter={itemCounter}
-                renderCategoryList={renderCategoryList}
-                expand={stateObject.expand}
-                hasChildren={stateObject.hasChildren} />
+            {(isMobile) 
+            ?   <MobileCategoryMenuItemSubList
+                    renderList={renderList}
+                    fullList={fullList}
+                    children={getChildren(category, fullList, children)}
+                    categoryLevel={category.data.categoryLevel}
+                    itemCounter={itemCounter}
+                    renderCategoryList={renderCategoryList}
+                    expand={stateObject.expand}
+                    hasChildren={stateObject.hasChildren} />
+            :   <WebCategoryMenuItemSubList
+                    renderList={renderList}
+                    fullList={fullList}
+                    children={getChildren(category, fullList, children)}
+                    categoryLevel={category.data.categoryLevel}
+                    itemCounter={itemCounter}
+                    renderCategoryList={renderCategoryList}
+                    expand={stateObject.expand}
+                    hasChildren={stateObject.hasChildren} />}
         </li>
     )
 }

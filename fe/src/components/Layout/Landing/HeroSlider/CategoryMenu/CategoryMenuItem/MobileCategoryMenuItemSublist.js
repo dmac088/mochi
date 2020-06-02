@@ -4,7 +4,7 @@ import { slide } from '../../../../Helpers/Animation/Slide';
 
 function CategoryMenuItemSubList(props) {
 
-    const { isMobile, fullList, renderCategoryList, itemCounter, children, expand, hasChildren } = props;
+    const { fullList, renderCategoryList, itemCounter, children, expand, hasChildren } = props;
     
     let container = null;
     const setScope = (c) => {
@@ -12,11 +12,7 @@ function CategoryMenuItemSubList(props) {
     }
 
     useEffect(() => {
-        console.log("updating!");
-        if(isMobile) { 
-            slide(container, 'slideUp', { duration: 0 }); 
-            return; 
-        }
+        slide(container, 'slideUp', { duration: 0 }); 
     }, []);
 
     const initMobStyle = {  "overflow": "hidden",
@@ -24,26 +20,25 @@ function CategoryMenuItemSubList(props) {
                             "marginBottom": "0px",
                             "paddingTop": "0px", 
                             "paddingBottom": "0px"};
-                            
+
     return (
         <ul className= {(hasChildren) 
                         ? "category-mega-menu"
                         : ""}
             ref={setScope}
-            style={ (isMobile) ? initMobStyle : {} }>  
+            style={ initMobStyle }>  
             <Transition
                 in={expand}
                 timeout={0}
                 onEntering={() => { console.log("Entering");
-                                    slide(container, 'slideDown', { duration: 500 }); 
+                                    slide(container, 'slideDown', { duration: 500 });
                 }}
                 onExiting={() => {  console.log("Exiting");
-                                    slide(container, 'slideUp', { duration: 500 });
-                                    
+                                    slide(container, 'slideUp', { duration: 500 });        
                 }}>
-                    <React.Fragment>
-                        {renderCategoryList(isMobile, children, fullList, false, itemCounter)}
-                    </React.Fragment>
+                <React.Fragment>
+                    {renderCategoryList(true, children, fullList, false, itemCounter)}
+                </React.Fragment>
             </Transition>
         </ul>
     )
