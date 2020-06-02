@@ -81,9 +81,7 @@ public class IT_ProductDoServiceImplIntegrationTest {
     	
     	assertThat(((Food) found).getCountryOfOrigin())
     	.isEqualTo("NZL");
-    	
-    	assertThat(((Food) found).getDisplayCategories())
-    	.isEqualTo("Fruit");
+
 	    
 	    assertThat(found.getProductDesc())
 	    .isEqualTo("Test Product Description");

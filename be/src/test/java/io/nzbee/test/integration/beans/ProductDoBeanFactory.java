@@ -22,7 +22,6 @@ public class ProductDoBeanFactory {
 								   new Double(78),
 								   new Double(71),
 								   "test_image.jpg",
-								   "test1, test2",
 								   "NZL",
 								   new Date(),
 								   "en-GB",
