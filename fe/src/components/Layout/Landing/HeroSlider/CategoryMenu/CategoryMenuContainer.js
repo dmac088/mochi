@@ -12,10 +12,10 @@ function CategoryMenuContainer() {
 
     const renderMenu = (displayMenu = true) => {
         const newState = {
-                        menuVisible: displayMenu,
-                        isMobile: isMobile(),
-                   };
-        if( stateObject.isMobile === newState.isMobile
+            menuVisible: displayMenu,
+            isMobile: isMobile(),
+        };
+        if (stateObject.isMobile === newState.isMobile
             && stateObject.menuVisible === displayMenu) { return; }
         setObjectState(newState);
     }

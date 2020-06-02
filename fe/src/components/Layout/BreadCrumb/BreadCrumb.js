@@ -4,12 +4,12 @@ import { withRouter } from 'react-router-dom';
 import { getHomePath } from "../Helpers/Route/Route";
 
 
-export const BreadCrumb = withRouter(({...props}) => {
+export const BreadCrumb = withRouter(({ ...props }) => {
     const { history, match } = props;
 
     return (
-        <BreadCrumbBase     
-            match={match}    />
+        <BreadCrumbBase
+            match={match} />
     );
 });
 
@@ -23,10 +23,9 @@ const BreadCrumbBase = (props) => {
                     <div className="col">
                         <div className="breadcrumb-container">
                             <ul>
-                            <li><Link to={getHomePath(match)}><i className="fa fa-home"></i> Home</Link></li>
+                                <li><Link to={getHomePath(match)}><i className="fa fa-home"></i> Home</Link></li>
                                 <li> Test</li>
                             </ul>
-
                         </div>
                     </div>
                 </div>

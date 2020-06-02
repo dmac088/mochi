@@ -21,6 +21,7 @@ import Bag from "./components/Layout/Bag/Bag";
 import WishList from "./components/Layout/WishList/WishList";
 import Checkout from "./components/Layout/Checkout/Checkout";
 import Auth from "./components/Layout/Login/Auth";
+import Products from "./components/Layout/Products/Products"
 
 function App() {
 
@@ -75,6 +76,10 @@ function App() {
           <Route
             exact path="/:lang/:curr/auth"
             render={() => renderContainer(Auth)} />
+
+          <Route
+            exact path="/:lang/:curr/category/:categoryDesc"
+            render={() => renderContainer(Products)} /> 
 
           <Redirect from="/" to="/en-GB/HKD" />
 
