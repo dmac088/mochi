@@ -1,7 +1,21 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+import { withRouter } from 'react-router-dom';
+import { getHomePath } from "../Helpers/Route/Route";
 
-function BreadCrumb() {
+
+export const BreadCrumb = withRouter(({...props}) => {
+    const { history, match } = props;
+
+    return (
+        <BreadCrumbBase     
+            match={match}    />
+    );
+});
+
+
+const BreadCrumbBase = (props) => {
+    const { match } = props;
     return (
         <div className="breadcrumb-area mb-50">
             <div className="container">
@@ -9,9 +23,10 @@ function BreadCrumb() {
                     <div className="col">
                         <div className="breadcrumb-container">
                             <ul>
-                                <Link to={}><i className="fa fa-home"> Home</i></Link>
+                            <li><Link to={getHomePath(match)}><i className="fa fa-home"></i> Home</Link></li>
                                 <li> Test</li>
                             </ul>
+
                         </div>
                     </div>
                 </div>
