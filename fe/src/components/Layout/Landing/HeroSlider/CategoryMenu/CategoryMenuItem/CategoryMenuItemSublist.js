@@ -12,24 +12,25 @@ function CategoryMenuItemSubList(props) {
     }
 
     useEffect(() => {
-        slide(container, 'slideUp', { duration: 0 });
+        console.log("updating!");
+        if(isMobile) { 
+            slide(container, 'slideUp', { duration: 0 }); 
+            return; 
+        }
     }, []);
 
-    const initMobStyle = {overflow: "hidden",
-                   // height: "0px",
-                    "marginTop": "0px",
-                    "marginBottom": "0px",
-                    "paddingTop": "0px", 
-                    "paddingBottom": "0px"};
-    
-    const initWebStyle = {};
-
+    const initMobStyle = {  "overflow": "hidden",
+                            "marginTop": "0px",
+                            "marginBottom": "0px",
+                            "paddingTop": "0px", 
+                            "paddingBottom": "0px"};
+                            
     return (
         <ul className= {(hasChildren) 
                         ? "category-mega-menu"
                         : ""}
             ref={setScope}
-            style={ initMobStyle }>  
+            style={ (isMobile) ? initMobStyle : {} }>  
             <Transition
                 in={expand}
                 timeout={0}

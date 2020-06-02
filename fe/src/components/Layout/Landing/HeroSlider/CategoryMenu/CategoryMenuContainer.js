@@ -6,15 +6,18 @@ import { isMobile } from '../../../Helpers/Mobile/Mobile';
 function CategoryMenuContainer() {
 
     const [stateObject, setObjectState] = useState({
-        menuVisible: true,
-        isMobile: false
+        menuVisible: false,
+        isMobile: isMobile(),
     });
 
     const renderMenu = (displayMenu = true) => {
-        setObjectState({
-            isMobile: isMobile(),
-            menuVisible: displayMenu,
-        });
+        const newState = {
+                        menuVisible: displayMenu,
+                        isMobile: isMobile(),
+                   };
+        if( stateObject.isMobile === newState.isMobile
+            && stateObject.menuVisible === displayMenu) { return; }
+        setObjectState(newState);
     }
 
     const toggleVisible = () => {
@@ -25,8 +28,9 @@ function CategoryMenuContainer() {
     }
 
     useEffect(() => {
-        // initiate the event handler
         renderMenu(!isMobile());
+
+        // initiate the event handler
         window.addEventListener('resize', renderMenu, { passive: true });
 
         // this will clean up the event every time the component is re-rendered

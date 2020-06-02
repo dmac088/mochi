@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CategoryMenuItemSubList from './CategoryMenuItemSublist';
 
+
 function CategoryMenuItem(props) {
     const { isMobile, isRoot, renderList, fullList, category, renderCategoryList, itemCounter } = props;
     const { childCount } = category.data;
