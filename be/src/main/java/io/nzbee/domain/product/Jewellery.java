@@ -1,6 +1,7 @@
 package io.nzbee.domain.product;
 
 import java.util.Date;
+
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.department.Department;

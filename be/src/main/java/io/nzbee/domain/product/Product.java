@@ -5,15 +5,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.department.Department;
 import io.nzbee.domain.tag.Tag;
 
-@JsonTypeName("productcategory")
-public class Product {
 
+public class Product {
+	
 	private String productUPC;
 	
 	private Date productCreateDt;
@@ -72,7 +71,7 @@ public class Product {
 					this.primaryCategory = category;
 					this.categories.add(category);
 	}
-
+	
 	public List<ProductCategory> getCategories() {
 		return categories;
 	}
