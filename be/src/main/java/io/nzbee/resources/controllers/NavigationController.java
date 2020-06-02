@@ -64,14 +64,15 @@ public class NavigationController {
 	@SuppressWarnings("unchecked")
 	@PostMapping(value = "/Product/{locale}/{currency}/category/{category}/sortBy/{sortBy}",
 			 	 params = { "page", "size" })
-	public ResponseEntity<PagedResources<ProductResource>> getProducts(	@PathVariable String 	locale, 
-										@PathVariable String 	currency, 
-										@PathVariable String 	category,
-										@RequestParam("page") int page,
-								    	@RequestParam("size") int size, 
-										@PathVariable String 	sortBy,
-										@RequestBody final FacetContainer selectedFacets,
-			    						@SuppressWarnings("rawtypes") PagedResourcesAssembler assembler) {
+	public ResponseEntity<PagedResources<ProductResource>> getProducts(	
+										@PathVariable String 			locale, 
+										@PathVariable String 			currency, 
+										@PathVariable 					String 	category,
+										@RequestParam("page")			int page,
+								    	@RequestParam("size") 			int size, 
+										@PathVariable 					String 	sortBy,
+										@RequestBody final 				FacetContainer selectedFacets,
+			    						@SuppressWarnings("rawtypes") 	PagedResourcesAssembler assembler) {
 		
 		final Page<Product> pages = navigationService.findAll(	locale, 
 																currency, 

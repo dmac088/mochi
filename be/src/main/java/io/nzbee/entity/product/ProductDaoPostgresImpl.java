@@ -510,7 +510,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 						"	   coalesce(mprc.prc_val,0) as markdown_price,  " + 
 						"	   food.exp_dt, " +
 						"	   food.ctry_of_orig, " + 
-						"	   STRING_AGG(coalesce(ca.cat_desc, ''), ',') as display_categories, " +
 						"      :currency as ccy_cd, " +
 						"	   :locale as lcl_cd ") + 
 		
@@ -616,54 +615,11 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		((hasProductDesc) 	? 	" 	AND attr.prd_desc 	= :productDesc " 	: "") +
 		((hasProductId) 	? 	" 	AND prd.prd_id 		= :productId " 		: "") +
 			
-		((countOnly)
-			? 		""
-			: 		"	GROUP BY   " +
-					"	   cp.cat_id, " + 
-					"	   cp.cat_cd, " +	
-					"	   cp.cat_lvl, " +
-					"	   cp.cat_prnt_id, " +		
-					"	   ca.cat_lcl_id, " +
-					"	   ca.cat_id, " +
-					"	   ca.cat_desc, " +
-					"	   ca.cat_img_pth, " +
-					"	   ct.cat_typ_id, " + 
-					"	   ct.cat_typ_cd, " +
-					"	   ct.cat_typ_desc, " +
-					"	   parent.cat_cd, " + 
-					"	   parent.cat_lvl, " + 
-					"	   parent.cat_prnt_id, " + 
-					"	   prd.prd_id,  " + 
-					"	   prd.upc_cd,  " + 
-					"	   prd.prd_crtd_dt,  " +
-					"	   attr.prd_lcl_id, " +
-					"	   attr.prd_desc, " +	
-					"	   attr.prd_img_pth, " +	
-					"	   attr.lcl_cd, " +
-					"	   dept.dept_id,   " + 
-					"	   dept.dept_cd,   " + 
-					"	   dept.dept_class,   " + 
-					"	   dattr.dept_lcl_id, " +	
-					"	   dattr.dept_desc,   " +
-					"	   bnd.bnd_id,   " + 
-					"	   bnd.bnd_cd,   " + 
-					"	   bal.bnd_lcl_id,		  " + 
-					"	   bal.bnd_desc,   " + 
-					"	   ps.prd_sts_id,   " + 
-					"	   ps.prd_sts_cd,   " + 
-					"	   ps.prd_sts_desc,  " + 
-					"	   rprc.prc_val,  " + 
-					"	   mprc.prc_val,  " + 
-					"	   food.exp_dt, " +
-					"	   food.ctry_of_orig ") +
-			
-			
-			((countOnly || !offset) 
-					? 	""
-					: 	//" ORDER BY 	:orderby " + 
+		((countOnly || !offset) 
+		? 	""
+		: 	//" ORDER BY 	:orderby " + 
 						" LIMIT 	:limit " +
-						" OFFSET 	:offset "
-			);
+						" OFFSET 	:offset ");
 	}
 
 	@Override
