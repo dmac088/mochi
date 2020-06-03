@@ -8,7 +8,7 @@ function MainMenu(props) {
     return (
         <nav style={{"display" : ((isMobile) ? "none" : "block")}}>
             <ul>
-                <li className="menu-item-has-children">
+                <li>
                     <HomeMenu />
                 </li>
                 <li className="menu-item-has-children">
