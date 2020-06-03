@@ -88,8 +88,7 @@ function Header() {
               <div className="header-top-menu">
                 <ul>
                   <MyAccount />
-                  {/* <MyWishList /> */}
-                  <MyBag />
+                  <MyWishList />
                   <MyCheckout />
                 </ul>
               </div>
