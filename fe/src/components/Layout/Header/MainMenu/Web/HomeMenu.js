@@ -1,11 +1,6 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
-
-export const route = (e, props) => {
-    e.preventDefault();
-    const { lang, curr } = props.match.params;
-    props.history.push('/' + lang + '/' + curr);
-}
+import { withRouter, Link } from 'react-router-dom';
+import { getHomePath } from '../../../Helpers/Route/Route';   
 
 export const HomeMenu = withRouter(({ ...props }) => {
     return (
@@ -14,8 +9,11 @@ export const HomeMenu = withRouter(({ ...props }) => {
 });
 
 export const HomeMenuBase = ({ ...props }) => {
+    const { match } = props;
     return (
-        <a onClick={(e) => route(e, props)} href="#">HOME</a>
+        <Link to={getHomePath(match)}>
+            HOME
+        </Link> 
     );
 };
 
