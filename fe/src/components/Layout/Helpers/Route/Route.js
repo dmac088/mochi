@@ -16,3 +16,7 @@ export const getCategoryPath = (categoryDesc, match) => {
 export const getContactPath = (match) => {
     return getHomePath(match) + '/contact/';
 }
+
+export const getBagPath = (match) => {
+    return getHomePath(match) + '/mybag/';
+}

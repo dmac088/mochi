@@ -1,9 +1,14 @@
 import React, { useState, useRef } from "react";
 import Accordion from "./Accordian";
 import { Transition } from 'react-transition-group';
+import { Link } from "react-router-dom";
 import { slide } from '../../Helpers/Animation/Slide';
+import { getBagPath } from '../../Helpers/Route/Route';
+import { withRouter } from 'react-router-dom';
 
-function BagMenu() {
+function BagMenuBase(props) {
+
+  const { match } = props;
 
   const [stateInContainer, setInContainer] = useState(false);
 
@@ -40,7 +45,7 @@ function BagMenu() {
         onMouseLeave={setNotIn}
         className="shopping-cart"
         id="shopping-cart">
-      <a href="#">
+      <Link to={getBagPath(match)}>
         <div className="cart-icon d-inline-block">
           <span className="icon_bag_alt" />
         </div>
@@ -49,7 +54,7 @@ function BagMenu() {
 						<span>0 items - $0.00</span>
           </p>
         </div>
-      </a>
+        </Link>
       <Transition 
         in={visible}
         timeout={0}
@@ -62,5 +67,10 @@ function BagMenu() {
     </div>
   );
 }
+
+const BagMenu = withRouter(function({...props}) {
+  return <BagMenuBase 
+              {...props}/>
+});
 
 export default BagMenu;

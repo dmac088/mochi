@@ -25,8 +25,6 @@ const BreadCrumbBase = (props) => {
                         <div className="breadcrumb-container">
                             <ul>
                                 <Route path='/:lang/:curr/*/:path' component={BreadcrumbsItem} />
-                                {/* <li><Link to={getHomePath(match)}><i className="fa fa-home"></i> Home</Link></li>
-                                <li> Test</li> */}
                             </ul>
                         </div>
                     </div>
