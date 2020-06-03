@@ -99,7 +99,6 @@ function CategoryMenuItemBase(props) {
 }
 
 const CategoryMenuItem = withRouter(function({...props}) {
-    
     return <CategoryMenuItemBase 
                 {...props}/>
 });

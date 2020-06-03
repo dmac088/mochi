@@ -10,6 +10,9 @@ export const getHomePath = (match) => {
 }
 
 export const getCategoryPath = (categoryDesc, match) => {
-    const {curr, lang} = match.params;
     return getHomePath(match) + '/category/' + categoryDesc;
+}
+
+export const getContactPath = (match) => {
+    return getHomePath(match) + '/contact/';
 }
