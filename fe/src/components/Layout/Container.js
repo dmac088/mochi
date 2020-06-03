@@ -14,7 +14,6 @@ const Container = withRouter(({...props}) => {
 
 function ContainerBase(props) {
     const { path } = props.match;
-    console.log(path);
     return (
         <React.Fragment>
             <Header />
