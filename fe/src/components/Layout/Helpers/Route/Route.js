@@ -14,13 +14,13 @@ export const getCategoryPath = (categoryDesc, match) => {
 }
 
 export const getContactPath = (match) => {
-    return getHomePath(match) + '/contact/';
+    return getHomePath(match) + '/contact';
 }
 
 export const getBagPath = (match) => {
-    return getHomePath(match) + '/mybag/';
+    return getHomePath(match) + '/mybag';
 }
 
 export const getCheckoutPath = (match) => {
-    return getHomePath(match) + '/mycheckout/';
+    return getHomePath(match) + '/mycheckout';
 }

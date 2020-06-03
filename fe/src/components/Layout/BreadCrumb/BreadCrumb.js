@@ -24,7 +24,8 @@ const BreadCrumbBase = (props) => {
                     <div className="col">
                         <div className="breadcrumb-container">
                             <ul>
-                                <Route path='/:lang/:curr/*/:path' component={BreadcrumbsItem} />
+                                <Route exact path='/:lang/:curr/category/:path' component={BreadcrumbsItem} />
+                                <Route exact path='/:lang/:curr/:path' component={BreadcrumbsItem} />
                             </ul>
                         </div>
                     </div>
