@@ -1,9 +1,13 @@
 import React from 'react';
 import product01 from '../../../../assets/images/products/product01.jpg';
 import product02 from '../../../../assets/images/products/product02.jpg';
+import { Link } from "react-router-dom";
+import { withRouter } from 'react-router-dom';
+import { getCheckoutPath, getBagPath } from '../../Helpers/Route/Route'
 const $ = window.$;
 
-function Accordion() {
+function AccordionBase(props) {
+    const { match } = props;
 
     return (
         <React.Fragment>
@@ -34,12 +38,21 @@ function Accordion() {
                     <p className="total">Subtotal <span>0</span></p>
                 </div>
                 <div className="floating-cart-btn text-center">
-                    <a href="#">Checkout</a>
-                    <a href="#">View Bag</a>
+                    <Link to={getCheckoutPath(match)}>
+                      Checkout
+                    </Link>
+                    <Link to={getBagPath(match)}>
+                      View Bag
+                    </Link>
                 </div>
             </div>
         </React.Fragment>
     )
 }
+
+const Accordion = withRouter(function({...props}) {
+  return <AccordionBase 
+              {...props}/>
+});
 
 export default Accordion;

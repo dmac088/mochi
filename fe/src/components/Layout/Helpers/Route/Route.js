@@ -20,3 +20,7 @@ export const getContactPath = (match) => {
 export const getBagPath = (match) => {
     return getHomePath(match) + '/mybag/';
 }
+
+export const getCheckoutPath = (match) => {
+    return getHomePath(match) + '/mycheckout/';
+}
