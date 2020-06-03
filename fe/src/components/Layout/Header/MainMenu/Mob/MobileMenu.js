@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import BrandMenu from './BrandMenu';
-import BlogMenu from './BlogMenu';
+// import BlogMenu from './BlogMenu';
 import { Transition } from 'react-transition-group';
+import { Link } from "react-router-dom";
+import { withRouter } from 'react-router-dom';
+import { getContactPath } from "../../../Helpers/Route/Route";
 
-function MobileMenu(props) {
+function MobileMenuBase(props) {
+
+  const { match } = props;
 
   const [stateObject, setObjectState] = useState({
     revealBrandMenu: false,
@@ -36,7 +41,8 @@ function MobileMenu(props) {
         <Transition
           in={stateObject.revealBlogMenu}
           timeout={0}>
-          <BlogMenu />
+            <React.Fragment />  
+          {/* <BlogMenu /> */}
         </Transition>
         <a onClick={toggleBlogMenu}
           className="mean-expand"
@@ -45,9 +51,18 @@ function MobileMenu(props) {
           {(stateObject.revealBlogMenu) ? "-" : "+"}
         </a>
       </li>
-      <li className="mean-last"><a href="#">CONTACT</a></li>
+      <li className="mean-last">
+        <Link to={getContactPath(match)}>
+        CONTACT
+        </Link>
+      </li>
     </React.Fragment>
   )
 }
+
+const MobileMenu = withRouter(function({...props}) {
+  return <MobileMenuBase 
+              {...props}/>
+});
 
 export default MobileMenu;
