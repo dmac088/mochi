@@ -34,12 +34,6 @@ function BrandMenu() {
                     <li><a href="#">Anchor</a></li>
                 </ul>
             </Transition>
-            <a onClick={toggleMenu}
-               className="mean-expand"
-               href="#"
-               style={{ fontSize: 0 }}>
-                {(revealMenu) ? "-" : "+"}
-            </a>
         </React.Fragment>
     )
 }

@@ -14,8 +14,7 @@ export const Layout = withRouter(({history, match, location, ...props}) => {
     return (
       <React.Fragment>
         <Header
-          {...props}
-        />
+          {...props}/>
           {children}
         <Scroller />
         <Footer />

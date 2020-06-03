@@ -1,5 +1,6 @@
 import React from "react";
 import HomeMenu from './HomeMenu';
+import BrandMenu from './BrandMenu';
 import ContactMenu from './ContactMenu';
 
 function MainMenu(props) {
@@ -7,42 +8,15 @@ function MainMenu(props) {
     return (
         <nav style={{"display" : ((isMobile) ? "none" : "block")}}>
             <ul>
-                <HomeMenu />
-                <li className="menu-item-has-children"><a href="shop-left-sidebar.html">Shop</a>
-                    <ul className="sub-menu">
-                        <li className="menu-item-has-children"><a href="shop-4-column.html">shop grid</a>
-                            <ul className="sub-menu">
-                                <li><a href="shop-3-column.html">shop 3 column</a></li>
-                                <li><a href="shop-4-column.html">shop 4 column</a></li>
-                                <li><a href="shop-left-sidebar.html">shop left sidebar</a></li>
-                                <li><a href="shop-right-sidebar.html">shop right sidebar</a></li>
-                            </ul>
-                        </li>
-                        <li className="menu-item-has-children"><a href="shop-list.html">shop List</a>
-                            <ul className="sub-menu">
-                                <li><a href="shop-list.html">shop List</a></li>
-                                <li><a href="shop-list-left-sidebar.html">shop List Left Sidebar</a></li>
-                                <li><a href="shop-list-right-sidebar.html">shop List Right Sidebar</a></li>
-                            </ul>
-                        </li>
-                        <li className="menu-item-has-children"><a href="single-product.html">Single Product</a>
-                            <ul className="sub-menu">
-                                <li><a href="single-product.html">Single Product</a></li>
-                                <li><a href="single-product-variable.html">Single Product variable</a></li>
-                                <li><a href="single-product-affiliate.html">Single Product affiliate</a></li>
-                                <li><a href="single-product-group.html">Single Product group</a></li>
-                                <li><a href="single-product-tabstyle-2.html">Tab Style 2</a></li>
-                                <li><a href="single-product-tabstyle-3.html">Tab Style 3</a></li>
-                                <li><a href="single-product-gallery-left.html">Gallery Left</a></li>
-                                <li><a href="single-product-gallery-right.html">Gallery Right</a></li>
-                                <li><a href="single-product-sticky-left.html">Sticky Left</a></li>
-                                <li><a href="single-product-sticky-right.html">Sticky Right</a></li>
-                                <li><a href="single-product-slider-box.html">Slider Box</a></li>
-
-                            </ul>
-                        </li>
-                    </ul>
+                <li className="menu-item-has-children">
+                    <HomeMenu />
                 </li>
+                <li className="menu-item-has-children">
+                    <BrandMenu />
+                </li>
+                    {/* <li className="menu-item-has-children"> */}
+                        
+                    {/* </li> */}
                 <li className="menu-item-has-children"><a href="#">PAGES</a>
                     <ul className="mega-menu three-column">
                         <li><a href="#">Column One</a>
