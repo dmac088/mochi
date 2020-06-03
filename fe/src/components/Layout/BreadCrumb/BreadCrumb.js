@@ -1,11 +1,9 @@
 import React from 'react';
-import { Link } from "react-router-dom";
-import { withRouter } from 'react-router-dom';
-import { getHomePath } from "../Helpers/Route/Route";
-
+import { withRouter, Route, Link } from 'react-router-dom';
+import { getHomePath } from '../Helpers/Route/Route';
 
 export const BreadCrumb = withRouter(({ ...props }) => {
-    const { history, match } = props;
+    const { match } = props;
 
     return (
         <BreadCrumbBase
@@ -13,9 +11,12 @@ export const BreadCrumb = withRouter(({ ...props }) => {
     );
 });
 
+const stripLocale = (match) => {
+    const { lang, curr } = match.params;
+    return match.url.replace(`/${lang}/${curr}/`,'');
+}
 
 const BreadCrumbBase = (props) => {
-    const { match } = props;
     return (
         <div className="breadcrumb-area mb-50">
             <div className="container">
@@ -23,8 +24,9 @@ const BreadCrumbBase = (props) => {
                     <div className="col">
                         <div className="breadcrumb-container">
                             <ul>
-                                <li><Link to={getHomePath(match)}><i className="fa fa-home"></i> Home</Link></li>
-                                <li> Test</li>
+                                <Route path='/:lang/:curr/*/:path' component={BreadcrumbsItem} />
+                                {/* <li><Link to={getHomePath(match)}><i className="fa fa-home"></i> Home</Link></li>
+                                <li> Test</li> */}
                             </ul>
                         </div>
                     </div>
@@ -33,5 +35,31 @@ const BreadCrumbBase = (props) => {
         </div>
     );
 };
+
+const BreadcrumbsItem = ({ match, ...rest }) => (
+    <React.Fragment>
+        <li>
+            <Link to={getHomePath(match)}>
+                    {"Home"} 
+            </Link>
+        </li>
+        {renderBreadCrumb(stripLocale(match).split('/'), match)}
+        <Route path={`${match.url}/:path`} component={BreadcrumbsItem} />
+    </React.Fragment>
+)
+
+const renderBreadCrumb = (array, match) => {
+    return(
+        array.map(s => {
+            return (
+                <li className={match.isExact ? 'breadcrumb-active' : undefined}>
+                    <Link to={match.url || ''}>
+                        {s}
+                    </Link>
+                </li>    
+            );     
+        })
+    );
+}
 
 export default BreadCrumb;
