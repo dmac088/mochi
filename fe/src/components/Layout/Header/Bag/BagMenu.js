@@ -50,7 +50,7 @@ function BagMenuBase(props) {
           <span className="icon_bag_alt" />
         </div>
         <div className="cart-info d-inline-block">
-          <p>Shopping Cart
+          <p>My Bag
 						<span>0 items - $0.00</span>
           </p>
         </div>
