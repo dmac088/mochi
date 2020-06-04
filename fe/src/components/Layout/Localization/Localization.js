@@ -13,6 +13,7 @@ export const localization = {
         "viewbag": "View Bag",
         "phone": "Phone",
         "items": "Items",
+        "searchyourproduct": "Search your product",
     },
     "zh-HK": {
         "home": "家",
@@ -27,5 +28,6 @@ export const localization = {
         "viewbag": "查看包",
         "phone": "電話",
         "items": "項目",
+        "searchyourproduct": "搜索你的產品",
     }
 }
