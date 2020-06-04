@@ -12,6 +12,7 @@ export const localization = {
         "checkout": "Checkout",
         "viewbag": "View Bag",
         "phone": "Phone",
+        "items": "Items",
     },
     "zh-HK": {
         "home": "家",
@@ -25,5 +26,6 @@ export const localization = {
         "checkout": "查看",
         "viewbag": "查看包",
         "phone": "電話",
+        "items": "項目",
     }
 }
