@@ -5,11 +5,13 @@ import { Link } from "react-router-dom";
 import { slide } from '../../Helpers/Animation/Slide';
 import { getBagPath } from '../../Helpers/Route/Route';
 import { withRouter } from 'react-router-dom';
+import { localization } from '../../Localization/Localization';
 
 
 function BagMenuBase(props) {
 
   const { match } = props;
+  const { lang } = match.params;
 
   const [stateInContainer, setInContainer] = useState(false);
 
@@ -51,8 +53,8 @@ function BagMenuBase(props) {
           <span className="icon_bag_alt" />
         </div>
         <div className="cart-info d-inline-block">
-          <p>My Bag
-						<span>0 items - $0.00</span>
+          <p>{localization[lang]['mybag']}
+						<span>0 {localization[lang]['items']} - $0.00</span>
           </p>
         </div>
         </Link>
