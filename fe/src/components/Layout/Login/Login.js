@@ -1,18 +1,54 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { connect, useDispatch } from 'react-redux'
+import { authenticate } from '../../../actions/SessionActions';
 
-function Login() {
+function Login(props) {
+
+  console.log(props);
+
+  const [stateObject, setObjectState] = useState({
+    username: null,
+    password: null,
+  });
+
+  const setUsername = (e) => {
+    e.preventDefault();
+    const value = e.target.value;
+    setObjectState((prevState) => ({ 
+      ...prevState, 
+      username: value,
+    }));
+  }
+
+  const setPassword = (e) => {
+    e.preventDefault();
+    const value = e.target.value;
+    setObjectState((prevState) => ({ 
+      ...prevState, 
+      password: value,
+    }));
+  }
+
+  const login = (e) => {
+    e.preventDefault();
+    console.log("login");
+    dispatch(authenticate(stateObject.username, stateObject.password));
+  }
+
+  const dispatch = useDispatch();
+
   return (
-    <form action="#" >
+     <form action={() => {}} >
       <div className="login-form">
         <h4 className="login-title">Login</h4>
         <div className="row">
           <div className="col-md-12 col-12 mb-20">
             <label>Email Address*</label>
-            <input onChange={() => {}} className="mb-0" type="email" placeholder="Email Address" />
+            <input onChange={setUsername} className="mb-0" type="email" placeholder="Email Address" />
           </div>
           <div className="col-12 mb-20">
             <label>Password</label>
-            <input onChange={() => {}} className="mb-0" type="password" placeholder="Password" />
+            <input onChange={setPassword} className="mb-0" type="password" placeholder="Password" />
           </div>
           <div className="col-md-8">
             <div className="check-box d-inline-block ml-0 ml-md-2 mt-10">
@@ -21,10 +57,10 @@ function Login() {
             </div>
           </div>
           <div className="col-md-4 mt-10 mb-20 text-left text-md-right">
-            <a href="#"> Forgotten pasward?</a>
+            <a href="#"> Forgotten password?</a>
           </div>
           <div className="col-md-12">
-            <button onClick={() => {}} className="register-button mt-0">Login</button>
+            <button onClick={login} className="register-button mt-0">Login</button>
           </div>
         </div>
       </div>
@@ -32,4 +68,11 @@ function Login() {
   )
 }
 
-export default Login;
+const mapStateToProps = state => ({
+  session: state.session,
+})
+
+export default connect(mapStateToProps,
+  {authenticate})
+  (Login);
+
