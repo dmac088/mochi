@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
-import {localization} from '../../../Localization/Localization'
+import {localization} from '../../Localization/Localization'
 
 export const BasicMenuItem = withRouter(({...props}) => {
     return (
