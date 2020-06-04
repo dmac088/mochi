@@ -1,6 +1,6 @@
 import React from "react";
 import BrandMenu from './BrandMenu';
-import BasicMenuItem from './BasicMenuItem';
+import BasicMenuItem from '../BasicMenuItem';
 import { getContactPath, getHomePath } from '../../../Helpers/Route/Route';
 
 function MainMenu(props) {
