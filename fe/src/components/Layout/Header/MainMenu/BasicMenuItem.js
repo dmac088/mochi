@@ -12,11 +12,9 @@ export const BasicMenuItemBase = ({...props}) => {
   const { match, routePath, descKey } = props;
   const { lang } = match.params;
   return (
-    //<li>
       <Link to={routePath}>
         {localization[lang][descKey]}
       </Link>
-    //</li>
   );
 };
 
