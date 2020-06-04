@@ -129,7 +129,8 @@ function Header(props) {
                   </div>
                 </div>
                 {/*<!-- end of header phone number -->*/}
-                <Search />
+                <Search 
+                  {...props}/>
                 {/*<!-- shopping cart -->*/}
                 <BagMenu />
               </div>
