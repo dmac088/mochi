@@ -4,10 +4,7 @@ import MobileMenu from './MainMenu/Mob/MobileMenu';
 import Search from './Search/Search';
 import Language from './Language/Language';
 import Currency from './Currency/Currency';
-import MyAccount from './MyAccount';
-import MyBag from './MyBag';
-import MyWishList from './MyWishList';
-import MyCheckout from './MyCheckout';
+import HeaderItem from './HeaderItem';
 import BagMenu from './Bag/BagMenu';
 import { isMobile } from '../Helpers/Mobile/Mobile';
 import { Transition } from 'react-transition-group';
@@ -87,9 +84,12 @@ function Header() {
               {/*<!-- header top menu -->*/}
               <div className="header-top-menu">
                 <ul>
-                  <MyAccount />
-                  <MyWishList />
-                  <MyCheckout />
+                  <HeaderItem
+                    routePage={'myaccount'} />
+                  <HeaderItem
+                    routePage={'mywishlist'} />
+                  <HeaderItem
+                    routePage={'mycheckout'} />
                 </ul>
               </div>
               {/*<!-- end of header top menu -->*/}
