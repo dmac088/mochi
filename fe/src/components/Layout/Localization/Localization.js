@@ -11,6 +11,7 @@ export const localization = {
         "subtotal": "Subtotal",
         "checkout": "Checkout",
         "viewbag": "View Bag",
+        "phone": "Phone",
     },
     "zh-HK": {
         "home": "家",
@@ -23,6 +24,6 @@ export const localization = {
         "subtotal": "小計",
         "checkout": "查看",
         "viewbag": "查看包",
-
+        "phone": "電話",
     }
 }

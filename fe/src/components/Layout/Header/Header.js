@@ -11,8 +11,10 @@ import { Transition } from 'react-transition-group';
 import { slide } from "../Helpers/Animation/Slide";
 import logo from '../../../assets/images/logo.png'
 import iconPhone from '../../../assets/images/icon-phone.png';
+import { localization } from '../Localization/Localization';
 
-function Header() {
+function Header(props) {
+  const { lang } = props.match.params;
 
   const [stateObject, setObjectState] = useState({
     scrollPosition: 0,
@@ -123,7 +125,7 @@ function Header() {
                     <img src={iconPhone} className="img-fluid" alt="" />
                   </div>
                   <div className="phone-number">
-                    Phone: <span className="number">1-888-123-456-89</span>
+                    {localization[lang]['phone']}: <span className="number">1-888-123-456-89</span>
                   </div>
                 </div>
                 {/*<!-- end of header phone number -->*/}

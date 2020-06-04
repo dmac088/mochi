@@ -16,7 +16,8 @@ function ContainerBase(props) {
     const { path } = props.match;
     return (
         <React.Fragment>
-            <Header />
+            <Header 
+            {...props}/>
             {isHomePath(path)
             ? <React.Fragment></React.Fragment>
             : <BreadCrumb />}
