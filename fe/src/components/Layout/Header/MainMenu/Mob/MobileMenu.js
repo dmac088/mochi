@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import BrandMenu from './BrandMenu';
-// import BlogMenu from './BlogMenu';
+import BasicMenuItem from '../Web/BasicMenuItem';
 import { Transition } from 'react-transition-group';
 import { Link } from "react-router-dom";
 import { withRouter } from 'react-router-dom';
-import { getContactPath } from "../../../Helpers/Route/Route";
+import { getContactPath, getHomePath } from '../../../Helpers/Route/Route';
 
 function MobileMenuBase(props) {
 
@@ -25,7 +25,9 @@ function MobileMenuBase(props) {
   return (
     <React.Fragment>
       <li className="active">
-        <a href="#">HOME</a>
+        <BasicMenuItem 
+          routePath={getHomePath(match)}
+          descKey={'home'} />
       </li>
       <li className="menu-item-has-children">
         
@@ -42,7 +44,6 @@ function MobileMenuBase(props) {
           in={stateObject.revealBlogMenu}
           timeout={0}>
             <React.Fragment />  
-          {/* <BlogMenu /> */}
         </Transition>
         <a onClick={toggleBlogMenu}
           className="mean-expand"
