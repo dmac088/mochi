@@ -6,7 +6,7 @@ import { GET_SESSION, RESET_SESSION } from "./ActionTypes";
 export const authenticate = (username, password) => dispatch => {  
   discoveryService.discoverAll()
     .then((response) => {
-
+      console.log(response);
       const form = new FormData();
       Object.keys(apiConfig.formData).forEach((key) => {
         form.append(key, apiConfig.formData[key])
