@@ -1,15 +1,19 @@
 import React from "react";
-import HomeMenu from './HomeMenu';
 import BrandMenu from './BrandMenu';
-import ContactMenu from './ContactMenu';
+import BasicMenuItem from './BasicMenuItem';
+import { getContactPath, getHomePath } from '../../../Helpers/Route/Route';
 
 function MainMenu(props) {
-    const {isMobile} = props;
+    const {isMobile, match} = props;
+
     return (
         <nav style={{"display" : ((isMobile) ? "none" : "block")}}>
             <ul>
                 <li>
-                    <HomeMenu />
+                    <BasicMenuItem 
+                        routePath={getHomePath(match)}
+                        descKey={'home'}
+                    />
                 </li>
                 <li className="menu-item-has-children">
                     <BrandMenu />
@@ -56,7 +60,11 @@ function MainMenu(props) {
                         <li><a href="blog-post-video-format.html">Blog Post Video Format</a></li>
                     </ul>
                 </li>
-                <ContactMenu />
+                <li>
+                <BasicMenuItem
+                    descKey={'contact'}
+                    routePath={getContactPath(props.match)} />
+                </li>
             </ul>
         </nav>
     );

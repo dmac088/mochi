@@ -139,6 +139,7 @@ function Header(props) {
                 <div className="main-menu" >
                   <WebMenu 
                     isMobile={stateObject.isMobile}
+                    {...props}
                   /> 
                 </div>
               {/*<!-- end of navigation section -->*/}
