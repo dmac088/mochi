@@ -18,9 +18,6 @@ function MainMenu(props) {
                 <li className="menu-item-has-children">
                     <BrandMenu />
                 </li>
-                    {/* <li className="menu-item-has-children"> */}
-                        
-                    {/* </li> */}
                 <li className="menu-item-has-children"><a href="#">PAGES</a>
                     <ul className="mega-menu three-column">
                         <li><a href="#">Column One</a>
