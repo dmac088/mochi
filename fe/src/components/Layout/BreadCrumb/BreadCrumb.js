@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter, Route, Link } from 'react-router-dom';
 import { getHomePath } from '../Helpers/Route/Route';
-import { localization } from './Localization/Localization';
+import { localization } from '../Localization/Localization';
 
 export const BreadCrumb = withRouter(({ ...props }) => {
     const { match } = props;
