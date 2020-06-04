@@ -53,9 +53,9 @@ function MobileMenuBase(props) {
         </a>
       </li>
       <li className="mean-last">
-        <Link to={getContactPath(match)}>
-        CONTACT
-        </Link>
+        <BasicMenuItem
+          descKey={'contact'}
+          routePath={getContactPath(props.match)} />
       </li>
     </React.Fragment>
   )
