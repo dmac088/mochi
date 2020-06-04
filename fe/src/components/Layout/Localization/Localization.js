@@ -7,7 +7,10 @@ export const localization = {
         "contact": "Contact Us",
         "mycheckout": "Checkout",
         "myaccount": "My Account",
-        "mywishlist": "My Wishlist"
+        "mywishlist": "My Wishlist",
+        "subtotal": "Subtotal",
+        "checkout": "Checkout",
+        "viewbag": "View Bag",
     },
     "zh-HK": {
         "home": "家",
@@ -16,6 +19,10 @@ export const localization = {
         "contact": "聯繫我們",
         "mycheckout": "查看",
         "myaccount": "我的帳戶",
-        "mywishlist": "我的收藏"
+        "mywishlist": "我的收藏",
+        "subtotal": "小計",
+        "checkout": "查看",
+        "viewbag": "查看包",
+
     }
 }

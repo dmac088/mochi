@@ -6,6 +6,7 @@ import { slide } from '../../Helpers/Animation/Slide';
 import { getBagPath } from '../../Helpers/Route/Route';
 import { withRouter } from 'react-router-dom';
 
+
 function BagMenuBase(props) {
 
   const { match } = props;
