@@ -1,5 +1,5 @@
 
-export const language = {
+export const localization = {
     "en-GB": {
         "home": "Home",
         "category": "Category",

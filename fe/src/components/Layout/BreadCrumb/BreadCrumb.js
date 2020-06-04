@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter, Route, Link } from 'react-router-dom';
 import { getHomePath } from '../Helpers/Route/Route';
-import { language } from './lang/lang';
+import { localization } from './Localization/Localization';
 
 export const BreadCrumb = withRouter(({ ...props }) => {
     const { match } = props;
@@ -40,7 +40,7 @@ const BreadcrumbsItem = ({ match, ...rest }) => (
     <React.Fragment>
         <li>
             <Link to={getHomePath(match)}>
-                    {language[match.params.lang]["home"]} 
+                    {localization[match.params.lang]["home"]} 
             </Link>
         </li>
         {renderBreadCrumb(stripLocale(match).split('/'), match)}
@@ -56,7 +56,7 @@ const renderBreadCrumb = (array, match) => {
             return (
                 <li key={index} className={match.isExact ? 'breadcrumb-active' : undefined}>
                     <Link to={match.url || ''}>
-                        {(!language[lang][s]) ? s : (language[lang][s])}
+                        {(!localization[lang][s]) ? s : (localization[lang][s])}
                     </Link>
                 </li>    
             );     
