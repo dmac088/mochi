@@ -4,16 +4,15 @@ import BasicMenuItem from './BasicMenuItem';
 import { getContactPath, getHomePath } from '../../../Helpers/Route/Route';
 
 function MainMenu(props) {
-    const {isMobile, match} = props;
+    const {match} = props;
 
     return (
-        <nav style={{"display" : ((isMobile) ? "none" : "block")}}>
+        <nav style={{"display" : "block"}}>
             <ul>
                 <li>
                     <BasicMenuItem 
                         routePath={getHomePath(match)}
-                        descKey={'home'}
-                    />
+                        descKey={'home'} />
                 </li>
                 <li className="menu-item-has-children">
                     <BrandMenu />
