@@ -52,9 +52,9 @@ const renderBreadCrumb = (array, match) => {
     const { lang } = match.params;
     
     return(
-        array.map(s => {
+        array.map(function(s, index) {
             return (
-                <li className={match.isExact ? 'breadcrumb-active' : undefined}>
+                <li key={index} className={match.isExact ? 'breadcrumb-active' : undefined}>
                     <Link to={match.url || ''}>
                         {(!language[lang][s]) ? s : (language[lang][s])}
                     </Link>

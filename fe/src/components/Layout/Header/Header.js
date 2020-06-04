@@ -160,6 +160,7 @@ function Header() {
                   
                   <Transition
                     in={stateObject.revealMenu}
+                    timeout={0}
                     onEntering={() => { slide(container, 'slideDown', {duration: 500 }); }}
                     onEntered={() => { console.log(' entered') }}
                     onExiting={() => { slide(container, 'slideUp', {duration: 500 }); }}
