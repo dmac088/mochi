@@ -4,10 +4,12 @@ import product02 from '../../../../assets/images/products/product02.jpg';
 import { Link } from "react-router-dom";
 import { withRouter } from 'react-router-dom';
 import { getCheckoutPath, getBagPath } from '../../Helpers/Route/Route'
+import { localization } from '../../Localization/Localization';
 const $ = window.$;
 
 function AccordionBase(props) {
     const { match } = props;
+    const { lang } = match.params;
 
     return (
         <React.Fragment>
@@ -35,14 +37,14 @@ function AccordionBase(props) {
          </div>
             <div className="cart-calculation">
                 <div className="calculation-details">
-                    <p className="total">Subtotal <span>0</span></p>
+                    <p className="total">{ localization[lang]['subtotal'] }<span>0</span></p>
                 </div>
                 <div className="floating-cart-btn text-center">
                     <Link to={getCheckoutPath(match)}>
-                      Checkout
+                      { localization[lang]['checkout'] }
                     </Link>
                     <Link to={getBagPath(match)}>
-                      View Bag
+                    { localization[lang]['viewbag'] }
                     </Link>
                 </div>
             </div>
