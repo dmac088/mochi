@@ -2,7 +2,6 @@ import React from "react";
 import { localization } from '../../Localization/Localization';
 
 function Search(props) {
-    console.log(props);
     const { match } = props;
     const {lang} = match.params;
     return (
