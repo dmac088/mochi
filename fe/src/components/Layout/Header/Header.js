@@ -137,10 +137,10 @@ function Header(props) {
 
               {/*<!-- navigation section -->*/}
                 <div className="main-menu" >
-                  <WebMenu 
-                    isMobile={stateObject.isMobile}
-                    {...props}
-                  /> 
+                  {(!stateObject.isMobile) 
+                  ? <WebMenu 
+                    {...props}/> 
+                  : <React.Fragment />}
                 </div>
               {/*<!-- end of navigation section -->*/}
             </div>
