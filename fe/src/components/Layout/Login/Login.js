@@ -4,8 +4,6 @@ import { authenticate } from '../../../actions/SessionActions';
 
 function Login(props) {
 
-  console.log(props);
-
   const [stateObject, setObjectState] = useState({
     username: null,
     password: null,
@@ -31,12 +29,17 @@ function Login(props) {
 
   const login = (e) => {
     e.preventDefault();
-    console.log("login");
     dispatch(authenticate(stateObject.username, stateObject.password));
   }
 
   const dispatch = useDispatch();
-
+  
+  const { status } = (props.error) ? props.error : {};
+  const { data } = (props.error) ? props.error : {};
+  
+  console.log((status) ? status : "");  
+  console.log((data) ? data.error_description : "");  
+  
   return (
      <form action={() => {}} >
       <div className="login-form">
@@ -62,6 +65,9 @@ function Login(props) {
           <div className="col-md-12">
             <button onClick={login} className="register-button mt-0">Login</button>
           </div>
+          <div className="col-md-12">
+            {status}
+          </div>
         </div>
       </div>
     </form>
@@ -70,6 +76,7 @@ function Login(props) {
 
 const mapStateToProps = state => ({
   session: state.session,
+  error: state.error.error.response,
 })
 
 export default connect(mapStateToProps,

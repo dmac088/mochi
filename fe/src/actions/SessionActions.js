@@ -1,12 +1,11 @@
 import axios from "axios";
 import * as discoveryService from '../services/Discovery';
 import * as apiConfig from '../services/api'
-import { GET_SESSION, RESET_SESSION } from "./ActionTypes";
+import { GET_SESSION, RESET_SESSION, GET_ERROR } from "./ActionTypes";
 
 export const authenticate = (username, password) => dispatch => {  
-  discoveryService.discoverAll()
+  return discoveryService.discoverAll()
     .then((response) => {
-      console.log(response);
       const form = new FormData();
       Object.keys(apiConfig.formData).forEach((key) => {
         form.append(key, apiConfig.formData[key])
@@ -27,7 +26,11 @@ export const authenticate = (username, password) => dispatch => {
             payload: tokens,
           });
         }).catch((error)=> {
-            console.log(error.response);
+          console.log(error);
+          dispatch({
+            type: GET_ERROR,
+            payload: error,
+          });
       });
     });
 }
