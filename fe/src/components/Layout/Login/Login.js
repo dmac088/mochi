@@ -33,11 +33,9 @@ function Login(props) {
   }
 
   const dispatch = useDispatch();
-
-  console.log(props);
   
   const { status } = (props.error) ? props.error : {};
-  const { data } = (props.error) ? props.error : {}; 
+  const { data } = (props.error) ? props.error : {};   
   
   return (
      <form action={() => {}} >
