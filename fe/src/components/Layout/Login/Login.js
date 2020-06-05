@@ -37,10 +37,7 @@ function Login(props) {
   console.log(props);
   
   const { status } = (props.error) ? props.error : {};
-  const { data } = (props.error) ? props.error : {};
-  
-  console.log((status) ? status : "");  
-  console.log((data) ? data.error_description : "");  
+  const { data } = (props.error) ? props.error : {}; 
   
   return (
      <form action={() => {}} >
