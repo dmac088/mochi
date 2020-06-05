@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import BrandMenu from './BrandMenu';
 import BasicMenuItem from '../BasicMenuItem';
 import { Transition } from 'react-transition-group';
-import { withRouter } from 'react-router-dom';
 import { getContactPath, getHomePath } from '../../../Helpers/Route/Route';
 
-function MobileMenuBase(props) {
+function MobileMenu(props) {
 
   const { match } = props;
 
@@ -25,6 +24,7 @@ function MobileMenuBase(props) {
     <React.Fragment>
       <li className="active">
         <BasicMenuItem 
+          {...props}
           routePath={getHomePath(match)}
           descKey={'home'} />
       </li>
@@ -53,16 +53,12 @@ function MobileMenuBase(props) {
       </li>
       <li className="mean-last">
         <BasicMenuItem
+          {...props}
           descKey={'contact'}
           routePath={getContactPath(props.match)} />
       </li>
     </React.Fragment>
   )
 }
-
-const MobileMenu = withRouter(function({...props}) {
-  return <MobileMenuBase 
-              {...props}/>
-});
 
 export default MobileMenu;

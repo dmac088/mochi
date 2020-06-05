@@ -5,7 +5,6 @@ import Auth from '../Login/Auth';
 
 function Account(props) {
 
-    console.log(props);
     const { session } = props;
 
     return(

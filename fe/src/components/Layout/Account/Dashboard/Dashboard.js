@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { getAuthPath } from "../../Helpers/Route/Route";
  
 function Dashboard(props) {
-  console.log(props);
   const { match } = props;
 
     return(

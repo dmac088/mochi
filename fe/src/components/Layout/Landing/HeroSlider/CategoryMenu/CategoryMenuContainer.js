@@ -3,7 +3,7 @@ import CategoryMenu from "./CategoryMenu";
 import 'velocity-animate/velocity.ui';
 import { isMobile } from '../../../Helpers/Mobile/Mobile';
 
-function CategoryMenuContainer() {
+function CategoryMenuContainer(props) {
 
     const [stateObject, setObjectState] = useState({
         menuVisible: false,
@@ -48,6 +48,7 @@ function CategoryMenuContainer() {
             </div>
             <nav className="category-menu" >
                 <CategoryMenu
+                    {...props}
                     in={stateObject.menuVisible}
                     isMobile={stateObject.isMobile} />
             </nav>

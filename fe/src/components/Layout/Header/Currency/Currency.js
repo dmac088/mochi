@@ -1,15 +1,5 @@
 import React from "react";
-import { withRouter } from 'react-router-dom';
 import { generatePath } from 'react-router';
-
-export const Currency = withRouter(({...props}) => {
-    const { history, match } = props;
-
-    return (
-        <CurrencyBase   match={match}
-                        history={history} />
-    );
-});
 
 const changeCurr = (e, match, history) => {
     e.preventDefault();
@@ -21,7 +11,7 @@ const changeCurr = (e, match, history) => {
     history.replace(newPath);
 } 
 
-export const CurrencyBase = (props) => {
+export const Currency = (props) => {
     const { match, history } = props;
     const { curr } = match.params;
 

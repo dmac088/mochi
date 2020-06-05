@@ -27,6 +27,7 @@ function CategoryMenu(props) {
 
             return (
                 <TransitionGroup
+                    {...props}
                     key={category.data.categoryCode}
                     component={CategoryMenuItem}
                     isMobile={isMobile}
@@ -58,6 +59,7 @@ function CategoryMenu(props) {
             <ul ref={setContainer}>
 
                 <CategoryMenuItem
+                    {...props}
                     isMobile={isMobile}
                     isRoot={true}
                     renderList={null}

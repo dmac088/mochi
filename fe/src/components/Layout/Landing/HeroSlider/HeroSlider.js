@@ -54,7 +54,7 @@ const styleSlider = (index) => {
   element2.parentNode.replaceChild(newElement2, element2);
 }
 
-function HeroSlider() {
+function HeroSlider(props) {
 
   useEffect(() => {
     styleSlider(0);
@@ -65,7 +65,8 @@ function HeroSlider() {
       <div className="container">
         <div className="row">
           <div className="col-lg-3 col-md-12">
-            <CategoryMenuContainer />
+            <CategoryMenuContainer 
+              {...props}/>
           </div>
           <div className="col-lg-6 col-md-12">
             <div className="slider-container">

@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import MobileCategoryMenuItemSubList from './MobileCategoryMenuItemSublist';
 import WebCategoryMenuItemSubList from './WebCategoryMenuItemSublist';
 import { Link } from "react-router-dom";
-import { withRouter } from 'react-router-dom';
 import { getCategoryPath } from "../../../../Helpers/Route/Route";
 
-function CategoryMenuItemBase(props) {
+function CategoryMenuItem(props) {
     
     const { isMobile, isRoot, renderList, fullList, category, renderCategoryList, itemCounter, match } = props;
     const { childCount } = category.data;
@@ -97,10 +96,5 @@ function CategoryMenuItemBase(props) {
         </li>
     )
 }
-
-const CategoryMenuItem = withRouter(function({...props}) {
-    return <CategoryMenuItemBase 
-                {...props}/>
-});
 
 export default CategoryMenuItem;
