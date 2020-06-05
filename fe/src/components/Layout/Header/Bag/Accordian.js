@@ -2,7 +2,6 @@ import React from 'react';
 import product01 from '../../../../assets/images/products/product01.jpg';
 import product02 from '../../../../assets/images/products/product02.jpg';
 import { Link } from "react-router-dom";
-import { withRouter } from 'react-router-dom';
 import { getCheckoutPath, getBagPath } from '../../Helpers/Route/Route'
 import { localization } from '../../Localization/Localization';
 const $ = window.$;

@@ -9,7 +9,7 @@ import Banner from "./Banner/Banner";
 import BestSeller from "./BestSeller/BestSeller";
 import BrandSlider from "./BrandSlider/BrandSlider";
 
-function Landing() { 
+function Landing(props) { 
 
   const [username, setUsername] = useState({
     username: null,
@@ -30,7 +30,8 @@ function Landing() {
 
   return (
     <React.Fragment>
-      <HeroSlider />
+      <HeroSlider 
+        {...props}/>
       <Policy />
       <Highlights />
       <Banner />

@@ -76,8 +76,10 @@ function Header(props) {
               {/*<!-- currncy language dropdown -->*/}
               <div className="lang-currency-dropdown">
                 <ul>
-                  <Language />
-                  <Currency />
+                  <Language 
+                    {...props} />
+                  <Currency
+                    {...props} />
                 </ul>
               </div>
               {/*<!-- end of currncy language dropdown -->*/}
@@ -93,7 +95,7 @@ function Header(props) {
                     {...props}
                     routePage={'mywishlist'} />
                   <HeaderItem
-                      {...props}
+                    {...props}
                     routePage={'mycheckout'} />
                 </ul>
               </div>
@@ -173,7 +175,8 @@ function Header(props) {
                     onEntered={() => { console.log(' entered') }}
                     onExiting={() => { slide(container, 'slideUp', {duration: 500 }); }}
                     onExited={() => { console.log(' exited') }}>
-                      <MobileMenu />
+                      <MobileMenu 
+                        {...props}/>
                   </Transition>
                   </ul>
                   </nav>

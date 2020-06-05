@@ -11,6 +11,7 @@ function MainMenu(props) {
             <ul>
                 <li>
                     <BasicMenuItem 
+                        {...props}
                         routePath={getHomePath(match)}
                         descKey={'home'} />
                 </li>
@@ -58,6 +59,7 @@ function MainMenu(props) {
                 </li>
                 <li>
                 <BasicMenuItem
+                    {...props}
                     descKey={'contact'}
                     routePath={getContactPath(props.match)} />
                 </li>

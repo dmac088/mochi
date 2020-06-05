@@ -1,15 +1,6 @@
 import React from "react";
-import { withRouter } from 'react-router-dom';
 import  selector  from './lang/selector';
 import { generatePath } from 'react-router';
-
-export const Language = withRouter(({...props}) => {
-    const { history, match } = props;
-    return (
-        <LanguageBase   match={match}
-                        history={history} />
-    );
-});
 
 const changeLang = (e, match, history) => {
     e.preventDefault();
@@ -21,7 +12,7 @@ const changeLang = (e, match, history) => {
     history.replace(newPath);
 }
 
-export const LanguageBase = (props) => {
+export const Language = (props) => {
     const { match, history } = props; 
     const { lang } = match.params;
 
