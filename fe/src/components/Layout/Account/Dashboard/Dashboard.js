@@ -1,6 +1,11 @@
 import React from 'react';
+import { Link } from "react-router-dom";
+import { getAuthPath } from "../../Helpers/Route/Route";
+ 
+function Dashboard(props) {
+  console.log(props);
+  const { match } = props;
 
-function Dashboard() {
     return(
       <React.Fragment>
         <div className="my-account-section section position-relative mb-50 fix">
@@ -26,7 +31,7 @@ function Dashboard() {
 
                       <a href="#account-info" data-toggle="tab"><i className="fa fa-user"></i> Account Details</a>
 
-                      <a href="#"><i className="fa fa-sign-out"></i> Logout</a>
+                      <Link to={getAuthPath(match)}><i className="fa fa-sign-out"></i> Logout</Link>
                     </div>
                   </div>
 

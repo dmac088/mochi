@@ -6,20 +6,15 @@ import Scroller from "../Layout/Scroller/Scroller";
 import { withRouter } from 'react-router-dom';
 import { isHomePath } from './Helpers/Route/Route';
 
-const Container = withRouter(({...props}) => {
-    return (
-        <ContainerBase {...props} />
-    );
-});
 
-function ContainerBase(props) {
+function Container(props) {
     const { path } = props.match;
     return (
         <React.Fragment>
             <Header 
-            {...props}/>
+                {...props}/>
             {isHomePath(path)
-            ? <React.Fragment></React.Fragment>
+            ? <React.Fragment />
             : <BreadCrumb />}
                 {props.children}
             <Scroller />
