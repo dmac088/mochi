@@ -7,7 +7,7 @@ import { getCheckoutPath, getBagPath } from '../../Helpers/Route/Route'
 import { localization } from '../../Localization/Localization';
 const $ = window.$;
 
-function AccordionBase(props) {
+function Accordion(props) {
     const { match } = props;
     const { lang } = match.params;
 
@@ -51,10 +51,5 @@ function AccordionBase(props) {
         </React.Fragment>
     )
 }
-
-const Accordion = withRouter(function({...props}) {
-  return <AccordionBase 
-              {...props}/>
-});
 
 export default Accordion;

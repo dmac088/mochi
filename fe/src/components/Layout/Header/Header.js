@@ -87,10 +87,13 @@ function Header(props) {
               <div className="header-top-menu">
                 <ul>
                   <HeaderItem
+                    {...props}
                     routePage={'myaccount'} />
                   <HeaderItem
+                    {...props}
                     routePage={'mywishlist'} />
                   <HeaderItem
+                      {...props}
                     routePage={'mycheckout'} />
                 </ul>
               </div>
@@ -132,7 +135,8 @@ function Header(props) {
                 <Search 
                   {...props}/>
                 {/*<!-- shopping cart -->*/}
-                <BagMenu />
+                <BagMenu 
+                  {...props}/>
               </div>
 
               {/*<!-- navigation section -->*/}

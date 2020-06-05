@@ -4,11 +4,10 @@ import { Transition } from 'react-transition-group';
 import { Link } from "react-router-dom";
 import { slide } from '../../Helpers/Animation/Slide';
 import { getBagPath } from '../../Helpers/Route/Route';
-import { withRouter } from 'react-router-dom';
 import { localization } from '../../Localization/Localization';
 
 
-function BagMenuBase(props) {
+function BagMenu(props) {
 
   const { match } = props;
   const { lang } = match.params;
@@ -64,16 +63,12 @@ function BagMenuBase(props) {
         onEntering={() => { slide(container, 'slideDown', { duration: 500 }); }}
         onExiting={() => { slide(container, 'slideUp', { duration: 500 }); }}>
           <div className="cart-floating-box" id="cart-floating-box" ref={setContainer}>
-            <Accordion />
+            <Accordion 
+              {...props}/>
           </div>
       </Transition>
     </div>
   );
 }
-
-const BagMenu = withRouter(function({...props}) {
-  return <BagMenuBase 
-              {...props}/>
-});
 
 export default BagMenu;
