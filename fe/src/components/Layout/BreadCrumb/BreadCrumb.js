@@ -1,23 +1,14 @@
 import React from 'react';
-import { withRouter, Route, Link } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 import { getHomePath } from '../Helpers/Route/Route';
 import { localization } from '../Localization/Localization';
-
-export const BreadCrumb = withRouter(({ ...props }) => {
-    const { match } = props;
-
-    return (
-        <BreadCrumbBase
-            match={match} />
-    );
-});
 
 const stripLocale = (match) => {
     const { lang, curr } = match.params;
     return match.url.replace(`/${lang}/${curr}/`,'');
 }
 
-const BreadCrumbBase = (props) => {
+const BreadCrumb = (props) => {
     return (
         <div className="breadcrumb-area mb-50">
             <div className="container">
