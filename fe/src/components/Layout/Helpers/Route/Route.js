@@ -24,3 +24,7 @@ export const getBagPath = (match) => {
 export const getCheckoutPath = (match) => {
     return getHomePath(match) + '/mycheckout';
 }
+
+export const getAuthPath = (match) => {
+    return getHomePath(match) + '/auth';
+}

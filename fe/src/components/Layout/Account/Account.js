@@ -6,13 +6,14 @@ import Auth from '../Login/Auth';
 function Account(props) {
 
     console.log(props);
-
     const { session } = props;
 
     return(
       <React.Fragment>
         {(session.tokens.authenticated)
-        ? <Dashboard />
+        ? <Dashboard 
+            {...props}
+            />
         : <Auth />}
       </React.Fragment>
     );

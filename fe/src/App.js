@@ -25,10 +25,12 @@ import Products from "./components/Layout/Products/Products"
 
 function App() {
 
-  const renderContainer = (Component) => {
+  const renderContainer = (Component, props) => {
     return (
-      <Container>
-        <Component />
+      <Container
+        {...props}>
+        <Component 
+          {...props}/>
       </Container>
     );
   }
@@ -39,47 +41,47 @@ function App() {
         <Switch>
           <Route
             exact path="/:lang/:curr"
-            render={() => renderContainer(Landing)} />
+            render={(props) => renderContainer(Landing, props)} />
 
           <Route
             exact path="/:lang/:curr/contact"
-            render={() => renderContainer(Contact)} />
+            render={(props) => renderContainer(Contact, props)} />
 
           <Route
             exact path="/:lang/:curr/dashboard"
-            render={() => renderContainer(Dashboard)} />
+            render={(props) => renderContainer(Dashboard, props)} />
 
           <Route
             exact path="/:lang/:curr/addCapability"
-            render={() => renderContainer(AddCapability)} />
+            render={(props) => renderContainer(AddCapability, props)} />
 
           <Route
             exact path="/:lang/:curr/updateCapability"
-            render={() => renderContainer(UpdateCapability)} />
+            render={(props) => renderContainer(UpdateCapability, props)} />
 
           <Route
             exact path="/:lang/:curr/myaccount"
-            render={() => renderContainer(Account)} />
+            render={(props) => renderContainer(Account, props)} />
 
           <Route
             exact path="/:lang/:curr/mybag"
-            render={() => renderContainer(Bag)} />
+            render={(props) => renderContainer(Bag, props)} />
 
           <Route
             exact path="/:lang/:curr/mywishlist"
-            render={() => renderContainer(WishList)} />
+            render={(props) => renderContainer(WishList, props)} />
 
           <Route
             exact path="/:lang/:curr/mycheckout"
-            render={() => renderContainer(Checkout)} />
+            render={(props) => renderContainer(Checkout, props)} />
 
           <Route
             exact path="/:lang/:curr/auth"
-            render={() => renderContainer(Auth)} />
+            render={(props) => renderContainer(Auth, props)} />
 
           <Route
             exact path="/:lang/:curr/category/:categoryDesc"
-            render={() => renderContainer(Products)} /> 
+            render={(props) => renderContainer(Products, props)} /> 
 
           <Redirect from="/" to="/en-GB/HKD" />
 
