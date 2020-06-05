@@ -33,6 +33,8 @@ function Login(props) {
   }
 
   const dispatch = useDispatch();
+
+  console.log(props);
   
   const { status } = (props.error) ? props.error : {};
   const { data } = (props.error) ? props.error : {};
@@ -76,7 +78,7 @@ function Login(props) {
 
 const mapStateToProps = state => ({
   session: state.session,
-  error: state.error.error.response,
+  error: state.error,
 })
 
 export default connect(mapStateToProps,
