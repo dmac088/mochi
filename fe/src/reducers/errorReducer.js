@@ -1,7 +1,7 @@
 import { GET_ERROR } from "../actions/ActionTypes";
 
 const initialState = { 
-    error: {}   
+   
 };
   
   export default function(state = initialState, action) {
@@ -9,7 +9,7 @@ const initialState = {
       case GET_ERROR:
         return {
           ...state,
-          error: action.payload,
+          ...action.payload,
         }; 
       default:
         return state;
