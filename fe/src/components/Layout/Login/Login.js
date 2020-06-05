@@ -66,7 +66,7 @@ function Login(props) {
             <button onClick={login} className="register-button mt-0">Login</button>
           </div>
           <div className="col-md-12">
-            {status}
+            {status} - {((data) ? data.error_description : "")}
           </div>
         </div>
       </div>
