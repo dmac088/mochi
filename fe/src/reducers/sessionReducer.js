@@ -1,15 +1,7 @@
 import { GET_SESSION, RESET_SESSION } from "../actions/ActionTypes";
 
 const initialState = {  
-    tokens: {
-      access_token: null,
-      accessTokenExpiryDate: null,
-      token_type: null,
-      refresh_token: null,
-      expires_in: null,
-      scope: null,
-      authenticated: false
-    }
+    tokens: {}
   };
   
   export default function(state = initialState, action) {
