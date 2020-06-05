@@ -1,12 +1,26 @@
 import React from 'react';
+import { connect } from 'react-redux'
 import Dashboard from './Dashboard/Dashboard'
 import Auth from '../Login/Auth';
 
-function Account() {
+function Account(props) {
+
+    console.log(props);
+
+    const { session } = props;
+
     return(
-      <Auth />
-      // <Dashboard />
+      <React.Fragment>
+        {(session.tokens.authenticated)
+        ? <Dashboard />
+        : <Auth />}
+      </React.Fragment>
     );
   }
 
-  export default Account;
+  const mapStateToProps = state => ({
+    session: state.session,
+  })  
+
+
+export default connect(mapStateToProps)(Account);
