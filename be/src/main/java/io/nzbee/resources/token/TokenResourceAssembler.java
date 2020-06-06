@@ -8,7 +8,6 @@ public class TokenResourceAssembler extends ResourceAssemblerSupport<CustomToken
 
 	public TokenResourceAssembler() {
 		super(TokenController.class, TokenResource.class);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
