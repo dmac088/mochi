@@ -1,11 +1,14 @@
-
 import axios from "axios";
+import store from '../store';
 import { GET_CUSTOMER, GET_ERROR } from "./ActionTypes";
 
-export const findByUserName = (access_token, url, userName) => dispatch => {  
+export const findByUserName = () => dispatch => {  
+  const state = store.getState();
+  const { userName, access_token } = state.session.tokens;
+  const { href } = state.discovery.links.customer;
   axios({
     method: 'get',
-    url: url.replace('{username}', userName),
+    url: href.replace('{username}', userName),
     headers: {'Authorization': 'Bearer ' + access_token}
   }).then((payload) => {
     return payload.data;
