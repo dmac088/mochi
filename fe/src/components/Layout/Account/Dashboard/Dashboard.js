@@ -1,6 +1,7 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React, {useEffect} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { clearSession } from '../../../../actions/SessionActions';
+import { findByUserName } from '../../../../actions/CustomerActions';
 import { getAuthPath } from "../../Helpers/Route/Route";
 
 function Dashboard(props) {
@@ -13,6 +14,21 @@ function Dashboard(props) {
     dispatch(clearSession());
     history.push(getAuthPath(match));
   }
+
+  const access_token = useSelector(state => state.session.tokens.access_token);
+  const url = useSelector(state => state.discovery.links.customer.href);
+  const userName = useSelector(state => state.session.tokens.userName);
+
+  console.log(access_token);
+  console.log(url);
+  console.log(userName);
+
+  useEffect(() => {
+    dispatch(findByUserName(access_token, url, userName));
+  }, []);
+
+  const customer = useSelector(state => state.customer);
+  console.log(customer);
 
   return (
     <React.Fragment>
@@ -49,8 +65,7 @@ function Dashboard(props) {
                       <div className="myaccount-content">
                         <h3>Dashboard</h3>
 
-                        <div className="welcome">
-                          <p>Hello, <strong></strong> (If Not <strong>Tuntuni !</strong><a href="login-register.html" className="logout"> Logout</a>)</p>
+                        <div className="welcome"><p>Hello, <strong></strong> (If Not <strong>{customer.givenName} </strong><a href="login-register.html" className="logout"> Logout</a>)</p>
                         </div>
 
                         <p className="mb-0">From your account dashboard. you can easily check &amp; view your
