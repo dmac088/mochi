@@ -16,6 +16,7 @@ public class DiscoveryResource extends ResourceSupport {
 		this.add(linkTo(methodOn(CategoryController.class).getProductCategories(locale, currency)).withRel("productCategories"));
 		this.add(linkTo(methodOn(CategoryController.class).getBrandCategories(locale, currency)).withRel("brandCategories"));
 		this.add(linkTo(methodOn(CustomerController.class).getCustomer(null)).withRel("customer"));
+		this.add(linkTo(methodOn(CustomerController.class).registerNewCustomer(null)).withRel("registerCustomer"));
 		this.add(new Link(rootURL + "/oauth/token").withRel("accessTokens"));
 	}
 	
