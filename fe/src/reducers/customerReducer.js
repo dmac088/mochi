@@ -11,7 +11,7 @@ export default function(state = initialState, action) {
     case GET_CUSTOMER:
       return {
         ...state,
-        customer: action.payload,
+        ...action.payload,
       };
 
     default:
