@@ -24,7 +24,6 @@ function Dashboard(props) {
   }, []);
 
   const customer = useSelector(state => state.customer);
-  console.log(customer);
 
   return (
     <React.Fragment>
