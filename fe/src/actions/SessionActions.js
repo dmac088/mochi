@@ -11,9 +11,6 @@ export const authenticate = (username, password, url) => dispatch => {
   form.append('username', username);
   form.append('password', password);
 
-  console.log(username);
-  console.log(url);
-
   axios.post(
     url,
     form,
