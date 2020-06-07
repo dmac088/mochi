@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { authenticate } from '../../../actions/SessionActions';
 
-function Login(props) {
+function Login() {
 
   const [stateObject, setObjectState] = useState({
     username: null,
