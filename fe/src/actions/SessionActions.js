@@ -34,8 +34,8 @@ export const authenticate = (username, password, url) => dispatch => {
   });
 }
 
-export const logout = () => dispatch => {
-  dispatch({
-    type: RESET_SESSION,
-  });
+
+export const clearSession = () => dispatch => {
+  dispatch({type: RESET_SESSION});
 }
+
