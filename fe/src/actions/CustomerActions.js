@@ -3,10 +3,6 @@ import axios from "axios";
 import { GET_CUSTOMER, GET_ERROR } from "./ActionTypes";
 
 export const findByUserName = (access_token, url, userName) => dispatch => {  
-  const form = new FormData();
-  form.append('authorization', 'Bearer ' + access_token);
-  form.append('Content-Type', 'application/json');
-
   axios({
     method: 'get',
     url: url.replace('{username}', userName),
@@ -19,7 +15,6 @@ export const findByUserName = (access_token, url, userName) => dispatch => {
       payload: customer,
     });
   }).catch((error) => {
-    console.log(error);
     dispatch({
       type: GET_ERROR,
       payload: error.response,

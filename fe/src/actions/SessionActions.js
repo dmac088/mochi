@@ -26,7 +26,6 @@ export const authenticate = (username, password, url) => dispatch => {
       payload: tokens,
     });
   }).catch((error) => {
-    console.log(error);
     dispatch({
       type: GET_ERROR,
       payload: error.response,
