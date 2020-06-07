@@ -68,7 +68,6 @@ function Login(props) {
           </div>
           <div className="col-md-12">
             {status} - {((data) ? data.error_description : "")}
-            {session.tokens.access_token}
           </div>
         </div>
       </div>
