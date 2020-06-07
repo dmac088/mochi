@@ -31,7 +31,6 @@ function Login() {
 
   const links = useSelector(state => state.discovery.links);
   const error = useSelector(state => state.error);
-  const session = useSelector(state => state.session);
 
   const login = (e) => {
     e.preventDefault();  
