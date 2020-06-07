@@ -14,13 +14,9 @@ function Dashboard(props) {
     dispatch(clearSession());
     history.push(getAuthPath(match));
   }
-
-  const access_token = useSelector(state => state.session.tokens.access_token);
-  const url = useSelector(state => state.discovery.links.customer.href);
-  const userName = useSelector(state => state.session.tokens.userName);
-
+  
   useEffect(() => {
-    dispatch(findByUserName(access_token, url, userName));
+    dispatch(findByUserName());
   }, []);
 
   const customer = useSelector(state => state.customer);
