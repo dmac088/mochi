@@ -14,7 +14,7 @@ function Container(props) {
 
     useEffect(() => {
         dispatch(discover(params.lang, params.curr));
-    }, []);
+    });
 
     return (
         <React.Fragment>
