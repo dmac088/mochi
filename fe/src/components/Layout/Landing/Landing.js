@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux';
 import { authenticate, logout } from "../../../actions/SessionActions";
 import HeroSlider from "./HeroSlider/HeroSlider";
 import Policy from "./Policy/Policy";
@@ -10,24 +10,6 @@ import BestSeller from "./BestSeller/BestSeller";
 import BrandSlider from "./BrandSlider/BrandSlider";
 
 function Landing(props) { 
-
-  const [username, setUsername] = useState({
-    username: null,
-  });
-
-  const [password, setPassword] = useState({
-    password: null,
-  });
-
-  const dispatch = useDispatch();
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(authenticate(username, password));
-  }
-
-  const tokens = useSelector(state => state.session.tokens);
-
   return (
     <React.Fragment>
       <HeroSlider 
@@ -43,7 +25,7 @@ function Landing(props) {
             <div className="row">
               <div className="col-md-12 text-center">
                 <h1 className="display-3 mb-4">Introduction To HATEOAS</h1>
-                <form onSubmit={(e) => handleSubmit(e)}>
+                {/* <form onSubmit={(e) => handleSubmit(e)}>
                   <input
                     className="form-control mr-sm-2"
                     type="input"
@@ -64,22 +46,22 @@ function Landing(props) {
                     type="submit">
                     Login
                   </button>
-                </form>
-                <hr />
-                <button
+                </form> */}
+                {/* <hr /> */}
+                {/* <button
                   onClick={logout}
                   className="btn btn-outline-success mr-sm-2 my-2 my-sm-0"
                   type="submit">
                   Logout
                 </button>
                 <br />
-                <br /> 
+                <br />  */}
             
-                <Link className="btn btn-lg btn-primary mr-2" to="/dashboard">
+                {/* <Link className="btn btn-lg btn-primary mr-2" to="/dashboard">
                   Load Dashboard
                 </Link>
-                <br />
-                {tokens.access_token}
+                <br /> */}
+                {/* {tokens.access_token} */}
               </div>
             </div>
           </div>

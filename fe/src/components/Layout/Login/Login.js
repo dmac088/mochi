@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { connect, useDispatch } from 'react-redux'
+import { connect, useDispatch, useSelector } from 'react-redux'
 import { authenticate } from '../../../actions/SessionActions';
 
 function Login(props) {
@@ -27,16 +27,19 @@ function Login(props) {
     }));
   }
 
+  const dispatch = useDispatch();
+
+  const links = useSelector(state => state.discovery.links);
+  const error = useSelector(state => state.error);
+  const session = useSelector(state => state.session);
+
   const login = (e) => {
-    e.preventDefault();
-    dispatch(authenticate(stateObject.username, stateObject.password));
+    e.preventDefault();  
+    dispatch(authenticate(stateObject.username, stateObject.password, links.accessTokens.href));
   }
 
-  const dispatch = useDispatch();
-  
-  const { status } = props.error;
-  const { data } = props.error;
-  const { session } = props;
+  const { status } = error;
+  const { data } = error;
    
   return (
      <form action={() => {}} >
@@ -78,7 +81,5 @@ const mapStateToProps = state => ({
   error: state.error,
 })
 
-export default connect(mapStateToProps,
-  {authenticate})
-  (Login);
+export default Login;
 
