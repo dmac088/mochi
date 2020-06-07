@@ -19,10 +19,6 @@ function Dashboard(props) {
   const url = useSelector(state => state.discovery.links.customer.href);
   const userName = useSelector(state => state.session.tokens.userName);
 
-  console.log(access_token);
-  console.log(url);
-  console.log(userName);
-
   useEffect(() => {
     dispatch(findByUserName(access_token, url, userName));
   }, []);
