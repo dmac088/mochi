@@ -49,6 +49,7 @@ function CategoryMenu(props) {
     }
 
     return (
+
         <Transition
             in={props.in}
             timeout={2000}
