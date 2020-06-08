@@ -10,7 +10,7 @@ export const authenticate = (username, password) => {
   return (dispatch, getState) => {
     const state = getState();
 
-    const { href } = state.discovery.links.session;
+    const { href } = state.discovery.links.accessTokens;
 
     const form = new FormData();
     Object.keys(apiConfig.formData).forEach((key) => {

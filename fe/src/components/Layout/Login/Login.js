@@ -29,12 +29,11 @@ function Login() {
 
   const dispatch = useDispatch();
 
-  const links = useSelector(state => state.discovery.links);
   const error = useSelector(state => state.error);
 
   const login = (e) => {
     e.preventDefault();  
-    dispatch(authenticate(stateObject.username, stateObject.password, links.accessTokens.href));
+    dispatch(authenticate(stateObject.username, stateObject.password));
   }
 
   const { status } = error;
