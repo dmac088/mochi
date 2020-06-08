@@ -9,7 +9,7 @@ function Account(props) {
 
     return(
       <React.Fragment>
-        {(session.tokens.authenticated)
+        {(session.authenticated)
         ? <Dashboard 
             {...props}
             />
