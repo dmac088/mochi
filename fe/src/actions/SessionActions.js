@@ -1,37 +1,64 @@
 import axios from "axios";
 import * as apiConfig from '../services/api'
-import { GET_SESSION, RESET_SESSION, GET_ERROR } from "./ActionTypes";
+import { GET_SESSION_STARTED, 
+         GET_SESSION_SUCCESS,
+         GET_SESSION_FAILURE,
+         RESET_SESSION
+        } from "./ActionTypes"; 
 
-export const authenticate = (username, password, url) => dispatch => {
-  const form = new FormData();
-  Object.keys(apiConfig.formData).forEach((key) => {
-    form.append(key, apiConfig.formData[key])
-  });
+export const authenticate = (username, password) => {
+  return (dispatch, getState) => {
+    const state = getState();
 
-  form.append('username', username);
-  form.append('password', password);
+    const { href } = state.discovery.links.session;
 
-  axios.post(
-    url,
-    form,
-    apiConfig.config,
-  ).then((payload) => {
-    return payload.data;
-  }).then((tokens) => {
-    dispatch({
-      type: GET_SESSION,
-      payload: tokens,
+    const form = new FormData();
+    Object.keys(apiConfig.formData).forEach((key) => {
+      form.append(key, apiConfig.formData[key])
     });
-  }).catch((error) => {
-    dispatch({
-      type: GET_ERROR,
-      payload: error.response,
+
+    form.append('username', username);
+    form.append('password', password);
+
+    dispatch(getSessionStarted());
+
+    axios.post(
+      href,
+      form,
+      apiConfig.config,
+    ).then((response) => {
+      dispatch(getSessionSuccess(response.data));
+    }).catch((error) => {
+      dispatch(getSessionFailure(error.response));
     });
-  });
+  }
 }
 
-
-export const clearSession = () => dispatch => {
-  dispatch({type: RESET_SESSION});
+export const logoutSession = () => {
+  return (dispatch) => {
+    dispatch(clearSession());
+  }
 }
 
+const clearSession = () => ({
+  type: RESET_SESSION
+});
+
+const getSessionStarted = () => ({
+  type: GET_SESSION_STARTED
+});
+
+const getSessionSuccess = session => ({
+  type: GET_SESSION_SUCCESS,
+  payload: {
+      ...session,
+      loading: false,
+    }
+});
+
+const getSessionFailure = error => ({
+  type: GET_SESSION_FAILURE,
+  payload: {
+      error,
+  }
+});

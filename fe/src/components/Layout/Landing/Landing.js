@@ -1,7 +1,4 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from 'react-redux';
-import { authenticate, logout } from "../../../actions/SessionActions";
+import React from "react";
 import HeroSlider from "./HeroSlider/HeroSlider";
 import Policy from "./Policy/Policy";
 import Highlights from "./Highlights/Highlights";
