@@ -25,6 +25,7 @@ export const findByUserName = dispatch => {
       // });
     });
   }
+}
 
 const getCustomerStarted = () => ({
   type: GET_CUSTOMER_STARTED
