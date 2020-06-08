@@ -7,7 +7,7 @@ export const findByUserName = dispatch => {
   return (dispatch, getState) => {
 
     const state = getState();
-    const { userName, access_token } = state.session.tokens;
+    const { userName, access_token } = state.session;
     const { href } = state.discovery.links.customer;
 
     dispatch(getCustomerStarted());
