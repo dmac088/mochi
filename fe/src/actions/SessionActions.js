@@ -7,9 +7,10 @@ import { GET_SESSION_STARTED,
         } from "./ActionTypes"; 
 
 export const authenticate = (username, password) => {
+  
   return (dispatch, getState) => {
     const state = getState();
-
+    
     const { href } = state.discovery.links.accessTokens;
 
     const form = new FormData();
@@ -19,7 +20,7 @@ export const authenticate = (username, password) => {
 
     form.append('username', username);
     form.append('password', password);
-
+    
     dispatch(getSessionStarted());
 
     axios.post(
