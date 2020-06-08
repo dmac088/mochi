@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearSession } from '../../../../actions/SessionActions';
+import { logoutSession } from '../../../../actions/SessionActions';
 import { findByUserName } from '../../../../actions/CustomerActions';
 import { getAuthPath } from "../../Helpers/Route/Route";
 
@@ -11,7 +11,7 @@ function Dashboard(props) {
 
   const logout = (e) => {
     e.preventDefault();
-    dispatch(clearSession());
+    dispatch(logoutSession());
     history.push(getAuthPath(match));
   }
   

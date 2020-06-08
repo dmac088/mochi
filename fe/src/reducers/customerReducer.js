@@ -31,7 +31,7 @@ export default function (state = initialState, action) {
         ...state,
         loading: false,
         error: action.payload.error
-      };
+    }
 
     default:
       return state;
