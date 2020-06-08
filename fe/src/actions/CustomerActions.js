@@ -1,9 +1,13 @@
 import axios from "axios";
-import store from '../store';
-import { GET_CUSTOMER, GET_ERROR } from "./ActionTypes";
+import { GET_CUSTOMER_STARTED, 
+         GET_CUSTOMER_SUCCESS,
+         GET_CUSTOMER_FAILURE } from "./ActionTypes";
 
 export const findByUserName = () => dispatch => {  
-  return dispatch => {
+  return (dispatch, getState) => {
+
+    const state = getState();
+
 
   }
 
