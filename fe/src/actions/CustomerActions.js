@@ -19,10 +19,7 @@ export const findByUserName = dispatch => {
     }).then((response) => {
       dispatch(getCustomerSuccess(response.data));
     }).catch((error) => {
-      // dispatch({
-      //   type: GET_ERROR,
-      //   payload: error.response,
-      // });
+       dispatch(getCustomerFailure(error.response));
     });
   }
 }
