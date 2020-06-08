@@ -13,25 +13,22 @@ const initialState = {
 
 
 export default function (state = initialState, action) {
+  console.log(state);
+  console.log(action);
   switch (action.type) {
-    //GET CAPABILITIES
-    //OTHER REDUCER ACTIONS.
+    
     case GET_CUSTOMER_STARTED:
       return {
         ...state,
-        customer: {
-          ...state.customer,
-          loading: true,
-        }
-      }
+        loading: true,
+    }
+
     case GET_CUSTOMER_SUCCESS:
       return {
         ...state,
-        customer: {
-          ...state.customer,
-          loading: false,
-        }
-      }
+        ...action.payload,
+        loading: false,
+    }
 
     default:
       return state;
