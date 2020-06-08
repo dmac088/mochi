@@ -6,7 +6,7 @@ import Auth from '../Login/Auth';
 function Account(props) {
 
     const { session } = props;
-
+    
     return(
       <React.Fragment>
         {(session.authenticated)

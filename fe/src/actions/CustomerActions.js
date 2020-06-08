@@ -15,8 +15,9 @@ export const findByUserName = dispatch => {
     axios({
       method: 'get',
       url: href.replace('{username}', userName),
-      headers: {'Authorization': 'Bearer ' + access_token}
+     // headers: {'Authorization': 'Bearer ' + access_token}
     }).then((response) => {
+      console.log(response);
       dispatch(getCustomerSuccess(response.data));
     }).catch((error) => {
        dispatch(getCustomerFailure(error.response));

@@ -3,6 +3,7 @@ import Register from './Register';
 import Login from './Login';
 
 function Auth() {
+  
     return(
         <div className="page-content mb-50">
           <div className="container">
