@@ -1,7 +1,7 @@
 import {
   GET_CUSTOMER,
   GET_CUSTOMER_STARTED,
-  GET_CUSTOMER_FINISHED
+  GET_CUSTOMER_SUCCESS
 } from "../actions/ActionTypes";
 
 const initialState = {
@@ -9,6 +9,8 @@ const initialState = {
     loading: false,
   },
 };
+
+
 
 export default function (state = initialState, action) {
   switch (action.type) {
@@ -22,20 +24,12 @@ export default function (state = initialState, action) {
           loading: true,
         }
       }
-    case GET_CUSTOMER:
+    case GET_CUSTOMER_SUCCESS:
       return {
         ...state,
         customer: {
           ...state.customer,
-          ...action.payload.customer
-        }
-      };
-    case GET_CUSTOMER_FINISHED:
-      return {
-        ...state,
-        customer: {
-          ...state.customer,
-          loading: true,
+          loading: false,
         }
       }
 
