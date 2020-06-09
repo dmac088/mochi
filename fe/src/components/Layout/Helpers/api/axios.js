@@ -1,6 +1,6 @@
 import axios from "axios";
 // import store from '../../../../store';
-// import LocalStorageService from "../Storage/LocalStorageService";
+import LocalStorageService from "../Storage/LocalStorageService";
 // import { getAuthPath } from '../../Helpers/Route/Route';
 // import { useHistory, useParams } from "react-router-dom";
 
@@ -12,34 +12,34 @@ export const instance = axios.create({
     responseType: "json"
   });
 
-axios.interceptors.request.use(request => {
-    console.log('Starting Request', request)
-    return request
-  })
+// axios.interceptors.request.use(request => {
+//     console.log('Starting Request', request)
+//     return request
+//   })
   
-axios.interceptors.response.use(response => {
-    console.log('Response:', response)
-    return response
-  })
+// axios.interceptors.response.use(response => {
+//     console.log('Response:', response)
+//     return response
+//   })
 
 
 // LocalstorageService
-//const localStorageService = LocalStorageService.getService();
+const localStorageService = LocalStorageService.getService();
 
-// Add a request interceptor
-// axios.interceptors.request.use(
-//     config => {
-//         const token = localStorageService.getAccessToken();
-//         console.log(token);
-//         if (token) {
-//             config.headers['Authorization'] = 'Bearer ' + token;
-//         }
-//         // config.headers['Content-Type'] = 'application/json';
-//         return config;
-//     },
-//     error => {
-//         Promise.reject(error)
-//     });
+//Add a request interceptor
+axios.interceptors.request.use(
+    config => {
+        const token = localStorageService.getAccessToken();
+        console.log(token);
+        if (token) {
+            config.headers['Authorization'] = 'Bearer ' + token;
+        }
+        // config.headers['Content-Type'] = 'application/json';
+        return config;
+    },
+    error => {
+        Promise.reject(error)
+    });
 
 
 
