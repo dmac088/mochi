@@ -31,9 +31,6 @@ export const authenticate = (username, password) => {
       apiConfig.config,
     ).then((response) => {
       dispatch(getSessionSuccess(response.data));
-    }).then(() => {
-      const match = { params: {...params} };
-      history.push(getAccountPath(match));
     }).catch((error) => {
       dispatch(getSessionFailure(error.response));
     });
