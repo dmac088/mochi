@@ -1,4 +1,5 @@
 import React from "react";
+import { history } from './components/Layout/Helpers/Route/History';
 import "./App.css";
 import "./assets/css/bootstrap.min.css"
 import "./assets/scss/main.scss";
@@ -37,7 +38,7 @@ function App() {
 
   return (
     <Provider store={store}>
-      <Router>
+      <Router history={history}>
         <Switch>
           <Route
             exact path="/:lang/:curr"
