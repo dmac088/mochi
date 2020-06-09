@@ -1,6 +1,6 @@
 import { instance as axios } from "../components/Layout/Helpers/api/axios";
 import * as apiConfig from '../services/api'; 
-import LocalStorageService from "../components/Layout/Helpers/Storage/LocalStorageService";
+
 import { GET_SESSION_STARTED, 
          GET_SESSION_SUCCESS,
          GET_SESSION_FAILURE,
