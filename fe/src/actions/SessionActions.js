@@ -1,7 +1,5 @@
 import { instance as axios } from "../components/Layout/Helpers/api/axios";
 import * as apiConfig from '../services/api';
-import { history, params } from '../components/Layout/Helpers/Route/History';
-import { getAccountPath } from '../components/Layout/Helpers/Route/Route';
 import { GET_SESSION_STARTED, 
          GET_SESSION_SUCCESS,
          GET_SESSION_FAILURE,

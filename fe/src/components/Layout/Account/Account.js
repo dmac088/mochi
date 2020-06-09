@@ -4,6 +4,7 @@ import Dashboard from './Dashboard/Dashboard'
 import Auth from '../Login/Auth';
 
 function Account(props) {
+    console.log("rendering account");
 
     const session = useSelector(state => state.session);
 
