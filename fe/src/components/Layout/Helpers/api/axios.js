@@ -1,19 +1,27 @@
 import axios from "axios";
-import store from '../../../../store';
-import LocalStorageService from "../Storage/LocalStorageService";
-import { getAuthPath } from '../../Helpers/Route/Route';
-import { useHistory, useParams } from "react-router-dom";
+// import store from '../../../../store';
+// import LocalStorageService from "../Storage/LocalStorageService";
+// import { getAuthPath } from '../../Helpers/Route/Route';
+// import { useHistory, useParams } from "react-router-dom";
 
+export const instance = axios.create({
+    baseURL: '',
+    headers: {
+      "content-type": "application/json"
+    },
+    responseType: "json"
+  });
 
 axios.interceptors.request.use(request => {
     console.log('Starting Request', request)
     return request
   })
   
-  axios.interceptors.response.use(response => {
+axios.interceptors.response.use(response => {
     console.log('Response:', response)
     return response
   })
+
 
 // LocalstorageService
 //const localStorageService = LocalStorageService.getService();

@@ -1,4 +1,4 @@
-import axios from "axios";
+import { instance as axios } from "../components/Layout/Helpers/api/axios";
 import * as apiConfig from '../services/api'
 import { GET_SESSION_STARTED, 
          GET_SESSION_SUCCESS,
@@ -10,7 +10,7 @@ export const authenticate = (username, password) => {
   
   return (dispatch, getState) => {
     const state = getState();
-    
+
     const { href } = state.discovery.links.accessTokens;
 
     const form = new FormData();
