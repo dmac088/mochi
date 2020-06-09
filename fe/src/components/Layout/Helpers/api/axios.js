@@ -21,7 +21,7 @@ instance.interceptors.request.use(
 
         const state = store.getState();
 
-        //firstly try to retrieve the token from redux
+        //firstly try to retrieve the token from the file system, then try redux
         const token = (!state.session) 
         ? localStorageService.getAccessToken()
         : state.session.access_token
@@ -41,8 +41,6 @@ instance.interceptors.request.use(
 instance.interceptors.response.use((response) => {
     return response
 }, function (error) {
-
-    
 
     const originalRequest = error.config;
     if(!error.response) { return originalRequest; }
@@ -66,7 +64,12 @@ instance.interceptors.response.use((response) => {
     if (error.response.status === 401 && !originalRequest._retry) {
 
         originalRequest._retry = true;
-        const refreshToken = localStorageService.getRefreshToken();
+        const refreshToken = (!state.session) 
+                            ? localStorageService.getRefreshToken()
+                            : state.session.refresh_token
+
+        
+        localStorageService.getRefreshToken();
         return axios.post(tokenLink,
             {
                 "refresh_token": refreshToken

@@ -1,12 +1,12 @@
 import React from 'react';
-import { connect } from 'react-redux'
+import { useSelector } from 'react-redux'
 import Dashboard from './Dashboard/Dashboard'
 import Auth from '../Login/Auth';
 
 function Account(props) {
 
-    const { session } = props;
-    
+    const session = useSelector(state => state.session);
+
     return(
       <React.Fragment>
         {(session.authenticated)
@@ -18,9 +18,4 @@ function Account(props) {
     );
   }
 
-  const mapStateToProps = state => ({
-    session: state.session,
-  })  
-
-
-export default connect(mapStateToProps)(Account);
+export default (Account);
