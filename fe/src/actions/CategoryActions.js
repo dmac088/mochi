@@ -1,4 +1,4 @@
-import axios from "axios";
+import { instance as axios } from "../components/Layout/Helpers/api/axios";
 import * as discoveryService from '../services/Discovery';
 import { GET_CATEGORIES } from "./ActionTypes";
 

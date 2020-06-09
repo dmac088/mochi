@@ -1,4 +1,4 @@
-import axios from "axios";
+import { instance as axios } from "../components/Layout/Helpers/api/axios";
 import { GET_CUSTOMER_STARTED, 
          GET_CUSTOMER_SUCCESS,
          GET_CUSTOMER_FAILURE } from "./ActionTypes";
@@ -7,16 +7,13 @@ export const findByUserName = dispatch => {
   return (dispatch, getState) => {
 
     const state = getState();
-    const { userName, access_token } = state.session;
+    const { userName } = state.session;
     const { href } = state.discovery.links.customer;
 
     dispatch(getCustomerStarted());
 
-    axios({
-      method: 'get',
-      url: href.replace('{username}', userName),
-      headers: {'Authorization': 'Bearer ' + access_token}
-    }).then((response) => {
+    axios.get(href.replace('{username}', userName))
+    .then((response) => {
       dispatch(getCustomerSuccess(response.data));
     }).catch((error) => {
        dispatch(getCustomerFailure(error.response));
