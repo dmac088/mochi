@@ -6,11 +6,12 @@ import Auth from '../Login/Auth';
 function Account(props) {
     console.log("rendering account");
 
-    const session = useSelector(state => state.session);
+    const authenticated = useSelector(state => state.session.authenticated);
+    console.log(authenticated);
 
     return(
       <React.Fragment>
-        {(session.authenticated)
+        {(authenticated)
         ? <Dashboard 
             {...props}
             />

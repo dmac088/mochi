@@ -6,6 +6,7 @@ import { GET_SESSION_STARTED,
 const initialState = { 
   loading: false,
   error: null,
+  authenticated: false,
 };
   
   export default function(state = initialState, action) {
@@ -36,6 +37,7 @@ const initialState = {
         ...initialState.tokens,
         loading: false,
         error: null,
+        authenticated: false,
     }
 
       default:
