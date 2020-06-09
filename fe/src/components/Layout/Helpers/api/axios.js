@@ -31,7 +31,6 @@ instance.interceptors.request.use(
     config => {
 
         const state = store.getState();
-        console.log(state);
 
         //firstly try to retrieve the token from redux
         const token = (!state.session) 
