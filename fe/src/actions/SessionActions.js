@@ -7,8 +7,6 @@ import { GET_SESSION_STARTED,
          RESET_SESSION
         } from "./ActionTypes"; 
 
-const localStorageService = LocalStorageService.getService();        
-
 export const authenticate = (username, password) => {
   
   return (dispatch, getState) => {
@@ -32,10 +30,15 @@ export const authenticate = (username, password) => {
       apiConfig.config,
     ).then((response) => {
       dispatch(getSessionSuccess(response.data));
-      localStorageService.setToken(response.data);
     }).catch((error) => {
       dispatch(getSessionFailure(error.response));
     });
+  }
+}
+
+export const refreshTokens = (data) => {
+  return (dispatch) => {
+    dispatch(getSessionSuccess(data));
   }
 }
 
@@ -49,7 +52,7 @@ const clearSession = () => ({
   type: RESET_SESSION
 });
 
-const getSessionStarted = () => ({
+ const getSessionStarted = () => ({
   type: GET_SESSION_STARTED
 });
 
