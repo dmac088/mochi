@@ -3,7 +3,7 @@ import store from '../../../../store';
 import LocalStorageService from "../Storage/LocalStorageService";
 import { getAccountPath } from '../../Helpers/Route/Route';
 import { history, params } from '.././../Helpers/Route/History';
-import { refreshTokens } from '../../../../actions/SessionActions';
+import { refreshTokens, logoutSession } from '../../../../actions/SessionActions';
 import * as apiConfig from '../../../../services/api'; 
 
 export const instance = axios.create({
@@ -55,8 +55,8 @@ instance.interceptors.response.use((response) => {
     const tokenLink = 'https://localhost:8090/oauth/token';
 
     //if we get a 401 error response from the server then we need to login again
-    console.log(originalRequest.url + ' === ' + tokenLink);
     if (error.response.status === 401 && originalRequest.url === tokenLink) {
+        console.log('rerouting to ' + getAccountPath(match));
         history.push(getAccountPath(match));
         return Promise.reject(error);
     }
@@ -65,10 +65,7 @@ instance.interceptors.response.use((response) => {
 
         originalRequest._retry = true;
         const refreshToken = state.session.refresh_token;
-
-        console.log('using http link: ' + tokenLink);
-        console.log('using refresh token: ' + refreshToken);
-
+        
         const form = new FormData();
         form.append('refresh_token', refreshToken);
         form.append('grant_type', 'refresh_token');
@@ -76,15 +73,13 @@ instance.interceptors.response.use((response) => {
         return axios.post(
             tokenLink,
             form,
-            {'Authorization': 'Basic c3ByaW5nLXNlY3VyaXR5LW9hdXRoMi1yZWFkLXdyaXRlLWNsaWVudDpzcHJpbmctc2VjdXJpdHktb2F1dGgyLXJlYWQtd3JpdGUtY2xpZW50LXBhc3N3b3JkMTIzNA=='}
-            )
+            apiConfig.config,)
             .then(response => {
-                console.log(response);
-                if (response.status === 201) {
+                if (response.status === 200) {
                     store.dispatch(refreshTokens(response.data));
                     console.log('using new access token: ' + response.data.access_token);
-                    axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.access_token;
-                    return axios(originalRequest);
+                    instance.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.access_token;
+                    return instance(originalRequest);
                 }
             })
     }
