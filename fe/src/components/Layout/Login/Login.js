@@ -29,16 +29,16 @@ function Login() {
 
   const dispatch = useDispatch();
 
-  const error = useSelector(state => state.error);
+  const error = useSelector(state => state.session.error);
 
   const login = (e) => {
     e.preventDefault();  
     dispatch(authenticate(stateObject.username, stateObject.password));
   }
 
-  const { status } = error;
-  const { data } = error;
-   
+  const status = (error) ? error.status : null;
+  const data  = (error) ? error.data : null;
+
   return (
      <form action={() => {}} >
       <div className="login-form">
