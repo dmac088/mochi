@@ -12,18 +12,7 @@ export const instance = axios.create({
     responseType: "json"
 });
 
-// instance.interceptors.request.use(request => { 
-//     console.log('Starting Request', request)
-//     return request
-//   })
-  
-//   instance.interceptors.response.use(response => {
-//     console.log('Response:', response)
-//     return response
-//   })
-
-
-// // LocalstorageService
+// LocalstorageService
 const localStorageService = LocalStorageService.getService();
 
 //Add a request interceptor
@@ -48,7 +37,7 @@ instance.interceptors.request.use(
         Promise.reject(error)
     });
 
-// //Add a response interceptor
+//Add a response interceptor
 instance.interceptors.response.use((response) => {
     return response
 }, function (error) {
