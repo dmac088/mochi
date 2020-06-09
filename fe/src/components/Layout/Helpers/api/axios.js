@@ -24,7 +24,6 @@ instance.interceptors.request.use(config => {
     //firstly try to retrieve the token from the file system, then try redux
     const token = state.session.access_token;
 
-    console.log('using access token = ' + token);
     //if an access token exists we should use it
     if (token) {
         config.headers['Authorization'] = 'Bearer ' + token;
@@ -56,7 +55,6 @@ instance.interceptors.response.use((response) => {
 
     //if we get a 401 error response from the server then we need to login again
     if (error.response.status === 401 && originalRequest.url === tokenLink) {
-        console.log('rerouting to ' + getAccountPath(match));
         history.push(getAccountPath(match));
         return Promise.reject(error);
     }
@@ -65,7 +63,7 @@ instance.interceptors.response.use((response) => {
 
         originalRequest._retry = true;
         const refreshToken = state.session.refresh_token;
-        
+
         const form = new FormData();
         form.append('refresh_token', refreshToken);
         form.append('grant_type', 'refresh_token');
@@ -77,7 +75,6 @@ instance.interceptors.response.use((response) => {
             .then(response => {
                 if (response.status === 200) {
                     store.dispatch(refreshTokens(response.data));
-                    console.log('using new access token: ' + response.data.access_token);
                     instance.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.access_token;
                     return instance(originalRequest);
                 }
