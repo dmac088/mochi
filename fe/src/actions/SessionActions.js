@@ -1,10 +1,13 @@
 import { instance as axios } from "../components/Layout/Helpers/api/axios";
-import * as apiConfig from '../services/api';
+import * as apiConfig from '../services/api'; 
+import LocalStorageService from "../components/Layout/Helpers/Storage/LocalStorageService";
 import { GET_SESSION_STARTED, 
          GET_SESSION_SUCCESS,
          GET_SESSION_FAILURE,
          RESET_SESSION
         } from "./ActionTypes"; 
+
+const localStorageService = LocalStorageService.getService();        
 
 export const authenticate = (username, password) => {
   
@@ -29,6 +32,7 @@ export const authenticate = (username, password) => {
       apiConfig.config,
     ).then((response) => {
       dispatch(getSessionSuccess(response.data));
+      localStorageService.setToken(response.data);
     }).catch((error) => {
       dispatch(getSessionFailure(error.response));
     });

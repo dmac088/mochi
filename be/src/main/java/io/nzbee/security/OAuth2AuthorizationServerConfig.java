@@ -53,7 +53,10 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
     
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
-        oauthServer.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()").passwordEncoder(oauthClientPasswordEncoder);
+        oauthServer
+        	.tokenKeyAccess("permitAll()")
+        	.checkTokenAccess("isAuthenticated()")
+        	.passwordEncoder(oauthClientPasswordEncoder);
     }
     
     @Override
@@ -74,7 +77,6 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
    
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
-
         endpoints
         	.tokenStore(tokenStore())
         	.reuseRefreshTokens(false)

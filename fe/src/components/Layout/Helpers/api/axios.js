@@ -26,6 +26,7 @@ instance.interceptors.request.use(
         ? localStorageService.getAccessToken()
         : state.session.access_token
 
+        console.log('using access token = ' + token);
         //if an access token exists we should use it
         if (token) {
             config.headers['Authorization'] = 'Bearer ' + token;
@@ -43,7 +44,6 @@ instance.interceptors.response.use((response) => {
 }, function (error) {
 
     const originalRequest = error.config;
-    if(!error.response) { return originalRequest; }
 
     //get the parameters of locale
     //mock a match object for our params
@@ -55,12 +55,17 @@ instance.interceptors.response.use((response) => {
     const state = store.getState();
     const tokenLink = state.discovery.links.accessTokens.href;
 
+
+    console.log(originalRequest.url );
     //if we get a 401 error response from the server then we need to login again
     if (error.response.status === 401 && originalRequest.url === tokenLink) {
+        console.log('route to login page');
         history.push(getAuthPath(match));   
         return Promise.reject(error);
     }
 
+    console.log('status = ' + error.response.status);
+    console.log('retry = ' + originalRequest._retry);
     if (error.response.status === 401 && !originalRequest._retry) {
 
         originalRequest._retry = true;
@@ -68,11 +73,12 @@ instance.interceptors.response.use((response) => {
                             ? localStorageService.getRefreshToken()
                             : state.session.refresh_token
 
-        
-        localStorageService.getRefreshToken();
+        console.log('using refresh token = ' + refreshToken);
+        console.log('refresh token linke = ' + tokenLink);
         return axios.post(tokenLink,
             {
-                "refresh_token": refreshToken
+                "refresh_token": refreshToken,
+                "grant_type": "refresh_token",
             })
             .then(res => {
                 if (res.status === 201) {
