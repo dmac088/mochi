@@ -13,6 +13,7 @@ import io.nzbee.entity.role.IRoleTypeRepository;
 import io.nzbee.exceptions.customer.CustomerAlreadyExistException;
 import io.nzbee.exceptions.customer.CustomerException;
 import io.nzbee.exceptions.customer.CustomerNotFoundException;
+import io.nzbee.exceptions.customer.CustomerPasswordsDoNotMatchException;
 import io.nzbee.security.user.User;
 
 @Component
@@ -46,6 +47,11 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 									customer.getUserName(),
 									customer.getCustomerId(),
 									customer.isEnabled());
+		
+		if(!customer.getPassword().equals(customer.getConfirmPassword())) {
+			throw new CustomerPasswordsDoNotMatchException("Customer passwords do not match");
+		}
+		
 		c.setPassword(customer.getPassword(), customer.getConfirmPassword());
 		this.save(c);
 	}
