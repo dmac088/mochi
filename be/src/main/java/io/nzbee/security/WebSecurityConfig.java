@@ -32,7 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	 
 	@Autowired
 	@Qualifier("mochiDataSource")
-	DataSource dataSource;
+	private DataSource dataSource;
 	
 	@Autowired
 	private UserDetailsService userDetailsService;

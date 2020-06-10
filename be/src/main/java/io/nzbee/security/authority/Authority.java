@@ -2,11 +2,16 @@ package io.nzbee.security.authority;
 
 import org.hibernate.annotations.NaturalId;
 import org.springframework.security.core.GrantedAuthority;
+import io.nzbee.security.user.role.UserRole;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -21,6 +26,10 @@ public class Authority implements GrantedAuthority {
 
 	private static final long serialVersionUID = 1L;
 
+	@ManyToMany(fetch = FetchType.LAZY,
+			mappedBy = "authorities")
+	private List<UserRole> userRoles = new ArrayList<UserRole>();
+	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
