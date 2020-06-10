@@ -2,7 +2,10 @@ package io.nzbee.security.user.role;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -28,11 +31,11 @@ public class UserRole implements Serializable {
     								joinColumns 		= @JoinColumn(name = "role_id"), 
     								inverseJoinColumns 	= @JoinColumn(name = "permission_id"))
     @JsonIgnore
-    private List<Authority> authorities = new ArrayList<Authority>();
+    private Set<Authority> authorities = new HashSet<Authority>();
 
-	@ManyToMany(fetch = FetchType.LAZY,
+	@ManyToMany(fetch = FetchType.EAGER,
 				mappedBy = "roles")
-    private List<User> Users = new ArrayList<User>();
+    private Set<User> Users = new HashSet<User>();
 
 	@Id
     @Column(name = "id")
@@ -54,11 +57,11 @@ public class UserRole implements Serializable {
 		this.name = name;
 	}
 	
-    public List<Authority> getAuthorities() {
+    public Set<Authority> getAuthorities() {
 		return authorities;
 	}
     
-	public List<User> getUsers() {
+	public Set<User> getUsers() {
 		return Users;
 	}
 	

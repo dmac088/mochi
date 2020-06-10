@@ -64,7 +64,7 @@ public class User implements UserDetails, Serializable {
     @JoinTable(name = "USER_ROLE", schema="security", 
     		   joinColumns 			= @JoinColumn(name = "pty_id"), 
     		   inverseJoinColumns 	= @JoinColumn(name = "role_id"))
-    private List<UserRole> roles = new ArrayList<UserRole>();
+    private Set<UserRole> roles = new HashSet<UserRole>();
     
 	@Override
     public boolean isAccountNonExpired() {
@@ -140,11 +140,11 @@ public class User implements UserDetails, Serializable {
 		ur.getUsers().remove(this);
 	}
 	
-	public List<UserRole> getUserRoles() {
+	public Set<UserRole> getUserRoles() {
 		return roles;
 	}
 
-	public void setUserRoles(List<UserRole> roles) {
+	public void setUserRoles(Set<UserRole> roles) {
 		this.roles = roles;
 	}
 	

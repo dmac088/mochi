@@ -15,6 +15,8 @@ import io.nzbee.exceptions.customer.CustomerException;
 import io.nzbee.exceptions.customer.CustomerNotFoundException;
 import io.nzbee.exceptions.customer.CustomerPasswordsDoNotMatchException;
 import io.nzbee.security.user.User;
+import io.nzbee.security.user.role.IUserRoleService;
+import io.nzbee.security.user.role.UserRole;
 
 @Component
 public class PostgresCustomerAdapter implements ICustomerPortService {
@@ -27,6 +29,9 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	
 	@Autowired
 	private IRoleTypeRepository roleTypeRepository;
+	
+	@Autowired
+	private IUserRoleService userRoleService;
 	
 	@Override
 	public Customer findByUsername(String userName) {
@@ -60,7 +65,10 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	public void save(Customer domainObject) {
 		//in our domain world a customer is a person
 		
+		UserRole ur = userRoleService.findByName("Customer");
 		User u = new User();
+		u.addUserRole(ur);
+		ur.addUser(u);
 		u.setUsername(domainObject.getUserName());
 		u.setPassword(domainObject.getPassword());
 		u.setEnabled(true);

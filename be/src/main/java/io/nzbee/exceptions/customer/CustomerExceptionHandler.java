@@ -26,7 +26,7 @@ public class CustomerExceptionHandler extends ResponseEntityExceptionHandler{
 		          new HttpHeaders(), HttpStatus.CONFLICT, request);
 	}
 	
-	@ResponseBody
+	@ResponseBody	
 	@ExceptionHandler(CustomerPasswordsDoNotMatchException.class)
 	public final ResponseEntity<Object> CustomerPasswordsDoNotMatchResponseEntity(CustomerPasswordsDoNotMatchException ex, WebRequest request) {
 		return handleExceptionInternal(ex, ex.getMessage(), 
