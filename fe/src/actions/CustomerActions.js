@@ -24,18 +24,19 @@ export const findByUserName = dispatch => {
   }
 }
 
-export const register = () => {
+export const register = customer => {
   return (dispatch, getState) => {
 
     const state = getState();
     const { href } = state.discovery.links.registerCustomer;
-    const { customer } = state;
+
+    console.log(customer);
 
     dispatch(regCustomerStarted());
 
     axios.post(href, customer)
     .then((response) => {
-      console.log(response.data);
+      console.log(response);
       dispatch(regCustomerSuccess(customer));
     })
     .catch((error) => {

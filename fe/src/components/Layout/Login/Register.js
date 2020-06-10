@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux'
 import { register } from '../../../actions/CustomerActions';
 
 function Register() {
@@ -6,7 +7,7 @@ function Register() {
   const [stateObject, setObjectState] = useState({
     givenName: null,
     familyName: null, 
-    username: null,
+    userName: null,
     password: null,
     confirmPassword: null,
   });
@@ -36,7 +37,7 @@ function Register() {
     const value = e.target.value;
     setObjectState((prevState) => ({ 
       ...prevState, 
-      username: value,
+      userName: value,
     }));
   }
   
