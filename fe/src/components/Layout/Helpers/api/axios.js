@@ -55,11 +55,13 @@ instance.interceptors.response.use((response) => {
 
     //if we get a 401 error response from the server then we need to login again
     if (error.response.status === 401 && originalRequest.url === tokenLink) {
+        console.log('redirecting to login page.....');
         history.push(getAccountPath(match));
         return Promise.reject(error);
     }
 
     if (error.response.status === 401 && !originalRequest._retry) {
+        console.log('using refresh token to obtain new access token.....');
 
         originalRequest._retry = true;
         const refreshToken = state.session.refresh_token;
@@ -74,6 +76,7 @@ instance.interceptors.response.use((response) => {
             apiConfig.config,)
             .then(response => {
                 if (response.status === 200) {
+                    console.log('assigning new access token to further requests.....');
                     store.dispatch(refreshTokens(response.data));
                     instance.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.access_token;
                     return instance(originalRequest);
