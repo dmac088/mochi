@@ -1,15 +1,36 @@
 import React, { useState } from 'react';
-
-
+import { register } from '../../../actions/CustomerActions';
 
 function Register() {
 
   const [stateObject, setObjectState] = useState({
+    givenName: null,
+    familyName: null, 
     username: null,
     password: null,
     confirmPassword: null,
   });
   
+  const dispatch = useDispatch();
+
+  const setGivenName = (e) => {
+    e.preventDefault();
+    const value = e.target.value;
+    setObjectState((prevState) => ({ 
+      ...prevState, 
+      givenName: value,
+    }));
+  }
+
+  const setFamilyName = (e) => {
+    e.preventDefault();
+    const value = e.target.value;
+    setObjectState((prevState) => ({ 
+      ...prevState, 
+      familyName: value,
+    }));
+  }
+
   const setUsername = (e) => {
     e.preventDefault();
     const value = e.target.value;
@@ -37,6 +58,11 @@ function Register() {
     }));
   }
 
+  const registerCustomer = (e) => {
+    e.preventDefault();
+    dispatch(register(stateObject));
+  }
+
   return (
     <form action="#">
       <div className="login-form">
@@ -44,11 +70,11 @@ function Register() {
         <div className="row">
           <div className="col-md-6 col-12 mb-20">
             <label>First Name</label>
-            <input id="customer.givenName" onChange={() => {}} className="mb-0" type="text" placeholder="Given Name" />
+            <input id="customer.givenName" onChange={setGivenName} className="mb-0" type="text" placeholder="Given Name" />
           </div>
           <div className="col-md-6 col-12 mb-20">
             <label>Last Name</label>
-            <input id="customer.familyName" onChange={() => {}} className="mb-0" type="text" placeholder="Family Name" />
+            <input id="customer.familyName" onChange={setFamilyName} className="mb-0" type="text" placeholder="Family Name" />
           </div>
           <div className="col-md-12 mb-20">
             <label>Email Address*</label>
@@ -63,7 +89,7 @@ function Register() {
             <input  onChange={setConfirmPassword}  className="mb-0" type="password" placeholder="Confirm Password" />
           </div>
           <div className="col-12">
-            <button className="register-button mt-0" onClick={() => {}}>Register</button>
+            <button className="register-button mt-0" onClick={registerCustomer}>Register</button>
           </div>
         </div>
       </div>
