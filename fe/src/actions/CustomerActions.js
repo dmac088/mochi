@@ -35,15 +35,14 @@ export const register = () => {
 
     axios.post(href, customer)
     .then((response) => {
-      console.log(response);
-      dispatch(regCustomerSuccess());
+      console.log(response.data);
+      dispatch(regCustomerSuccess(customer));
     })
     .catch((error) => {
-      dispatch(regCustomerFailure());
+      dispatch(regCustomerFailure(error.response));
     });
   }
 }
-
 
 const regCustomerStarted = () => ({
   type: REGISTER_CUSTOMER_STARTED
@@ -52,8 +51,8 @@ const regCustomerStarted = () => ({
 const regCustomerSuccess = customer => ({
   type: REGISTER_CUSTOMER_SUCCESS,
   payload: {
-      ...customer,
       loading: false,
+      ...customer,
     }
 });
 
