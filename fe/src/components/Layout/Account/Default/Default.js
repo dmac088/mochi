@@ -1,7 +1,10 @@
 
 import React from 'react';
 
-function Default() {
+function Default(props) {
+
+    const {customer} = props;
+
     return (
         <React.Fragment>
             <h3>Dashboard</h3>
@@ -13,5 +16,7 @@ function Default() {
             recent orders, manage your shipping and billing addresses and edit your
     password and account details.</p>
         </React.Fragment>
-    )
+    );
 }
+
+export default Default;

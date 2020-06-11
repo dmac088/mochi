@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logoutSession } from '../../../../actions/SessionActions';
 import { findByUserName } from '../../../../actions/CustomerActions';
 import { getAccountPath } from "../../Helpers/Route/Route";
-import { Address } from "../Address/Address";
-import { Download } from "../Download/Download";
-import { Default } from "../Default/Default";
-import { AccountDetails } from "../AccountDetails/AccountDetails";
+import { Link } from 'react-router-dom';
+import  Address  from "../Address/Address";
+import  Download  from "../Download/Download";
+import  Default from "../Default/Default";
+import  AccountDetails  from "../AccountDetails/AccountDetails";
 
 
 function Dashboard(props) {
@@ -37,19 +38,19 @@ function Dashboard(props) {
 
                 <div className="col-lg-3 col-12">
                   <div className="myaccount-tab-menu nav" role="tablist">
-                    <a href="#dashboad" className="active" data-toggle="tab"><i className="fa fa-dashboard"></i>
-                        Dashboard</a>
+                    <Link to={""} className="active" data-toggle="tab"><i className="fa fa-dashboard"></i>
+                        Dashboard</Link>
 
-                    <a href="#orders" data-toggle="tab"><i className="fa fa-cart-arrow-down"></i> Orders</a>
+                    <Link to={""}  data-toggle="tab"><i className="fa fa-cart-arrow-down"></i> Orders</Link>
 
-                    <a href="#download" data-toggle="tab"><i className="fa fa-cloud-download"></i> Download</a>
+                    <Link to={""}  data-toggle="tab"><i className="fa fa-cloud-download"></i> Download</Link>
 
-                    <a href="#payment-method" data-toggle="tab"><i className="fa fa-credit-card"></i> Payment
-                        Method</a>
+                    <Link to={""}  data-toggle="tab"><i className="fa fa-credit-card"></i> Payment
+                        Method</Link>
 
-                    <a href="#address-edit" data-toggle="tab"><i className="fa fa-map-marker"></i> address</a>
+                    <Link to={""}  data-toggle="tab"><i className="fa fa-map-marker"></i> address</Link>
 
-                    <a href="#account-info" data-toggle="tab"><i className="fa fa-user"></i> Account Details</a>
+                    <Link to={""}  data-toggle="tab"><i className="fa fa-user"></i> Account Details</Link>
 
                     <a href="#" onClick={logout}><i className="fa fa-sign-out"></i> Logout</a>
                   </div>
@@ -59,38 +60,8 @@ function Dashboard(props) {
                   <div className="tab-content" id="myaccountContent">
                     <div className="tab-pane fade show active" id="dashboad" role="tabpanel">
                       <div className="myaccount-content">
-                        <Default />
-                      </div>
-                    </div>
-                    <div className="tab-pane fade" id="orders" role="tabpanel">
-                      <div className="myaccount-content">
-                        <Orders />
-                      </div>
-                    </div>
-
-                    <div className="tab-pane fade" id="download" role="tabpanel">
-                      <div className="myaccount-content">
-                        <Download />
-                      </div>
-                    </div>
-
-                    <div className="tab-pane fade" id="payment-method" role="tabpanel">
-                      <div className="myaccount-content">
-                        <h3>Payment Method</h3>
-
-                        <p className="saved-message">You Can't Saved Your Payment Method yet.</p>
-                      </div>
-                    </div>
-
-                    <div className="tab-pane fade" id="address-edit" role="tabpanel">
-                      <div className="myaccount-content">
-                        <Address />
-                      </div>
-                    </div>
-
-                    <div className="tab-pane fade" id="account-info" role="tabpanel">
-                      <div className="myaccount-content">
-                        <AccountDetails />
+                        <Default 
+                          customer={customer}/>
                       </div>
                     </div>
                   </div>

@@ -14,9 +14,8 @@ function Address() {
 
             <a href="#" className="btn d-inline-block edit-address-btn"><i class="fa fa-edit"></i>Edit Address</a>
         </React.Fragment>
-
     );
 }
 
-export default Account;
+export default Address;
 
