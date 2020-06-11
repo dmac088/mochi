@@ -30,10 +30,6 @@ public class UserRole implements Serializable {
     @JsonIgnore
     private Set<Authority> authorities = new HashSet<Authority>();
 
-	@ManyToMany(fetch = FetchType.LAZY,
-				mappedBy = "roles")
-    private Set<User> Users = new HashSet<User>();
-
 	@Id
     @Column(name = "id")
     private Long Id;
@@ -57,18 +53,13 @@ public class UserRole implements Serializable {
     public Set<Authority> getAuthorities() {
 		return authorities;
 	}
-    
-	public Set<User> getUsers() {
-		return Users;
-	}
+   
 	
 	public void addUser(User user) {
-		this.getUsers().add(user);
 		user.getUserRoles().add(this);
 	}
 	
 	public void removeUser(User user) {
-		this.getUsers().remove(user);
 		user.getUserRoles().remove(this);
 	}
 	
