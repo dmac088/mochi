@@ -1,4 +1,5 @@
 import { instance as axios } from "../components/Layout/Helpers/api/axios";
+import { authenticate } from "./SessionActions";
 import { GET_CUSTOMER_STARTED, 
          GET_CUSTOMER_SUCCESS,
          GET_CUSTOMER_FAILURE,
@@ -30,14 +31,14 @@ export const register = customer => {
     const state = getState();
     const { href } = state.discovery.links.registerCustomer;
 
-    console.log(customer);
-
     dispatch(regCustomerStarted());
 
     axios.post(href, customer)
-    .then((response) => {
-      console.log(response);
+    .then(() => {
       dispatch(regCustomerSuccess(customer));
+    })
+    .then(() => {
+      dispatch(authenticate(customer.userName, customer.password));
     })
     .catch((error) => {
       dispatch(regCustomerFailure(error.response));
