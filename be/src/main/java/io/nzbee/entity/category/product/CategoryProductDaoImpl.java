@@ -87,7 +87,7 @@ public class CategoryProductDaoImpl implements ICategoryProductDao {
 		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
 		
 		Root<Product> root = cq.from(Product.class);
-		Join<Product, CategoryProduct> primaryCategory = root.join(Product_.primaryCategory);
+		Join<Product, CategoryProduct> primaryCategory = root.join(Product_.primaryCategoryIndex);
 		Join<CategoryProduct, CategoryAttribute> attribute = primaryCategory.join(Category_.attributes);
 		Join<CategoryProduct, CategoryType> type = primaryCategory.join(Category_.categoryType);
 		
