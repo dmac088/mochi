@@ -31,6 +31,15 @@ function Dashboard(props) {
 
   const customer = useSelector(state => state.customer);
 
+  const componentChoice = {
+      "orders": Orders,
+      "payment": Payment,
+      "address": Address,
+      "download": Download,
+      "accountdetails": AccountDetails,
+      "dashboard": Default,
+  }
+
   const mockMatch = matchPath(history.location.pathname, {
     path: "/:lang/:curr/myaccount/:component"
   })
@@ -39,9 +48,8 @@ function Dashboard(props) {
   const selectedComponent = () => {   
     if(!mockMatch) { return null; } 
     const { params } = mockMatch;
-    console.log(params.component);
-    const TheComponent = params.component;
-    
+    const TheComponent = componentChoice[params.component];
+    if(!TheComponent) { return null; }
     return (
             <TheComponent 
             {...props}
@@ -58,19 +66,19 @@ function Dashboard(props) {
               <div className="row">
                 <div className="col-lg-3 col-12">
                   <div className="myaccount-tab-menu nav" role="tablist">
-                    <Link to={() => getAccountSubPath(match, '/Dashboard')} className="active" data-toggle="tab"><i className="fa fa-dashboard"></i>
+                    <Link to={() => getAccountSubPath(match, '/dashboard')} className="active" data-toggle="tab"><i className="fa fa-dashboard"></i>
                         Dashboard</Link>
 
-                    <Link to={() => getAccountSubPath(match, '/Orders')}  data-toggle="tab"><i className="fa fa-cart-arrow-down"></i> Orders</Link>
+                    <Link to={() => getAccountSubPath(match, '/orders')}  data-toggle="tab"><i className="fa fa-cart-arrow-down"></i> Orders</Link>
 
-                    <Link to={() => getAccountSubPath(match, '/Download')}  data-toggle="tab"><i className="fa fa-cloud-download"></i> Download</Link>
+                    <Link to={() => getAccountSubPath(match, '/download')}  data-toggle="tab"><i className="fa fa-cloud-download"></i> Download</Link>
 
-                    <Link to={() => getAccountSubPath(match, '/Payment')}  data-toggle="tab"><i className="fa fa-credit-card"></i> Payment
+                    <Link to={() => getAccountSubPath(match, '/payment')}  data-toggle="tab"><i className="fa fa-credit-card"></i> Payment
                         Method</Link>
 
-                    <Link to={() => getAccountSubPath(match, '/Address')}  data-toggle="tab"><i className="fa fa-map-marker"></i> address</Link>
+                    <Link to={() => getAccountSubPath(match, '/address')}  data-toggle="tab"><i className="fa fa-map-marker"></i> address</Link>
 
-                    <Link to={() => getAccountSubPath(match, '/AccountDetails')}  data-toggle="tab"><i className="fa fa-user"></i> Account Details</Link>
+                    <Link to={() => getAccountSubPath(match, '/accountdetails')}  data-toggle="tab"><i className="fa fa-user"></i> Account Details</Link>
 
                     <a href="#" onClick={logout}><i className="fa fa-sign-out"></i> Logout</a>
                   </div>

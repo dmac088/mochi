@@ -12,7 +12,7 @@ function Address() {
                 <p>Mobile: (123) 456-7890</p>
             </address>
 
-            <a href="#" className="btn d-inline-block edit-address-btn"><i class="fa fa-edit"></i>Edit Address</a>
+            <a href="#" className="btn d-inline-block edit-address-btn"><i className="fa fa-edit"></i>Edit Address</a>
         </React.Fragment>
     );
 }
