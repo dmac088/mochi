@@ -1,7 +1,9 @@
 import React from 'react';
 
 
-function AccountDetails() {
+function AccountDetails(props) {
+    //console.log(props);
+    const { customer } = props;
     return (
         <React.Fragment>
             <h3>Account Details</h3>
@@ -10,11 +12,11 @@ function AccountDetails() {
                 <form action="#">
                     <div className="row">
                         <div className="col-lg-6 col-12 mb-30">
-                            <input id="first-name" placeholder="First Name" type="text" />
+                            <input id="first-name" placeholder={customer.givenName} type="text" />
                         </div>
 
                         <div className="col-lg-6 col-12 mb-30">
-                            <input id="last-name" placeholder="Last Name" type="text" />
+                            <input id="last-name" placeholder={customer.familyName} type="text" />
                         </div>
 
                         <div className="col-12 mb-30">
