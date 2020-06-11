@@ -1,8 +1,6 @@
 package io.nzbee.security.authority;
 
-import io.nzbee.security.user.role.UserRole;
 import javax.annotation.Generated;
-import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
@@ -10,7 +8,6 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(Authority.class)
 public abstract class Authority_ {
 
-	public static volatile SetAttribute<Authority, UserRole> userRoles;
 	public static volatile SingularAttribute<Authority, String> name;
 	public static volatile SingularAttribute<Authority, Long> id;
 

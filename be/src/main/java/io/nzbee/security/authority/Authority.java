@@ -11,7 +11,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -25,10 +24,6 @@ import lombok.Setter;
 public class Authority implements GrantedAuthority {
 
 	private static final long serialVersionUID = 1L;
-
-	@ManyToMany(fetch = FetchType.LAZY,
-			mappedBy = "authorities")
-	private Set<UserRole> userRoles = new HashSet<UserRole>();
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
