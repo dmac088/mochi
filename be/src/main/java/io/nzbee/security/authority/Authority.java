@@ -3,8 +3,8 @@ package io.nzbee.security.authority;
 import org.hibernate.annotations.NaturalId;
 import org.springframework.security.core.GrantedAuthority;
 import io.nzbee.security.user.role.UserRole;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -28,7 +28,7 @@ public class Authority implements GrantedAuthority {
 
 	@ManyToMany(fetch = FetchType.LAZY,
 			mappedBy = "authorities")
-	private List<UserRole> userRoles = new ArrayList<UserRole>();
+	private Set<UserRole> userRoles = new HashSet<UserRole>();
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
