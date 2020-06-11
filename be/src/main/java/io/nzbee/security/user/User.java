@@ -130,12 +130,10 @@ public class User implements UserDetails, Serializable {
 	
 	public void addUserRole(UserRole ur) {
 		this.getUserRoles().add(ur);
-		ur.getUsers().add(this);
 	}
 	
 	public void removeUserRole(UserRole ur) {
 		this.getUserRoles().remove(ur);
-		ur.getUsers().remove(this);
 	}
 	
 	public Set<UserRole> getUserRoles() {
