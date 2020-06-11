@@ -61,7 +61,7 @@ function App() {
             render={(props) => renderContainer(UpdateCapability, props)} />
 
           <Route
-            exact path="/:lang/:curr/myaccount"
+            path="/:lang/:curr/myaccount"
             render={(props) => renderContainer(Account, props)} />
 
           <Route
