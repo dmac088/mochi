@@ -84,6 +84,7 @@ function App() {
             exact path="/:lang/:curr/category/:categoryDesc"
             render={(props) => renderContainer(Products, props)} /> 
 
+      
           <Redirect from="/" to="/en-GB/HKD" />
 
           <Route component={NotFound} />
