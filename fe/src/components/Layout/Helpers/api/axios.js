@@ -2,7 +2,7 @@ import axios from "axios";
 import store from '../../../../store';
 import LocalStorageService from "../Storage/LocalStorageService";
 import { getAccountPath } from '../../Helpers/Route/Route';
-import { history, params } from '.././../Helpers/Route/History';
+import { history, params, accountParams } from '.././../Helpers/Route/History';
 import { refreshTokens, logoutSession } from '../../../../actions/SessionActions';
 import * as apiConfig from '../../../../services/api'; 
 
