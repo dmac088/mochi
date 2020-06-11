@@ -2,11 +2,11 @@ import React, {useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutSession } from '../../../../actions/SessionActions';
 import { findByUserName } from '../../../../actions/CustomerActions';
-import { getAccountPath } from "../../Helpers/Route/Route";
+import { getAccountPath, getAccountSubPath } from "../../Helpers/Route/Route";
 import { Link } from 'react-router-dom';
+import  Default from "../Default/Default";
 import  Address  from "../Address/Address";
 import  Download  from "../Download/Download";
-import  Default from "../Default/Default";
 import  AccountDetails  from "../AccountDetails/AccountDetails";
 
 
@@ -27,6 +27,8 @@ function Dashboard(props) {
 
   const customer = useSelector(state => state.customer);
 
+  console.log(match);
+
   return (
     <React.Fragment>
       <div className="my-account-section section position-relative mb-50 fix">
@@ -36,19 +38,19 @@ function Dashboard(props) {
               <div className="row">
                 <div className="col-lg-3 col-12">
                   <div className="myaccount-tab-menu nav" role="tablist">
-                    <Link to={""} className="active" data-toggle="tab"><i className="fa fa-dashboard"></i>
+                    <Link to={() => getAccountSubPath(match, '/dashboard')} className="active" data-toggle="tab"><i className="fa fa-dashboard"></i>
                         Dashboard</Link>
 
-                    <Link to={""}  data-toggle="tab"><i className="fa fa-cart-arrow-down"></i> Orders</Link>
+                    <Link to={() => getAccountSubPath(match, '/orders')}  data-toggle="tab"><i className="fa fa-cart-arrow-down"></i> Orders</Link>
 
-                    <Link to={""}  data-toggle="tab"><i className="fa fa-cloud-download"></i> Download</Link>
+                    <Link to={() => getAccountSubPath(match, '/download')}  data-toggle="tab"><i className="fa fa-cloud-download"></i> Download</Link>
 
-                    <Link to={""}  data-toggle="tab"><i className="fa fa-credit-card"></i> Payment
+                    <Link to={() => getAccountSubPath(match, '/payment')}  data-toggle="tab"><i className="fa fa-credit-card"></i> Payment
                         Method</Link>
 
-                    <Link to={""}  data-toggle="tab"><i className="fa fa-map-marker"></i> address</Link>
+                    <Link to={() => getAccountSubPath(match, '/address')}  data-toggle="tab"><i className="fa fa-map-marker"></i> address</Link>
 
-                    <Link to={""}  data-toggle="tab"><i className="fa fa-user"></i> Account Details</Link>
+                    <Link to={() => getAccountSubPath(match, '/accountdetails')}  data-toggle="tab"><i className="fa fa-user"></i> Account Details</Link>
 
                     <a href="#" onClick={logout}><i className="fa fa-sign-out"></i> Logout</a>
                   </div>
@@ -59,6 +61,7 @@ function Dashboard(props) {
                     <div className="tab-pane fade show active" id="dashboad" role="tabpanel">
                       <div className="myaccount-content">
                         <Default 
+                          {...props}
                           customer={customer}/>
                       </div>
                     </div>
