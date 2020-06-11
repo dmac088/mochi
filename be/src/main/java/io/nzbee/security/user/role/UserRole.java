@@ -30,7 +30,7 @@ public class UserRole implements Serializable {
     @JsonIgnore
     private Set<Authority> authorities = new HashSet<Authority>();
 
-	@ManyToMany(fetch = FetchType.EAGER,
+	@ManyToMany(fetch = FetchType.LAZY,
 				mappedBy = "roles")
     private Set<User> Users = new HashSet<User>();
 
