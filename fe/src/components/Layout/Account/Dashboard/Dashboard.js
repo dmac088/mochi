@@ -49,7 +49,8 @@ function Dashboard(props) {
     if(!mockMatch) { return null; } 
     const { params } = mockMatch;
     const TheComponent = componentChoice[params.component];
-    if(!TheComponent) { return null; }
+    if(!TheComponent) { return <Default {...props}
+                                        customer={customer}/>; }
     return (
             <TheComponent 
             {...props}
