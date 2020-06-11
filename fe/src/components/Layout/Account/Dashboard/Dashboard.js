@@ -33,9 +33,7 @@ function Dashboard(props) {
         <div className="container">
           <div className="row">
             <div className="col-12">
-
               <div className="row">
-
                 <div className="col-lg-3 col-12">
                   <div className="myaccount-tab-menu nav" role="tablist">
                     <Link to={""} className="active" data-toggle="tab"><i className="fa fa-dashboard"></i>
