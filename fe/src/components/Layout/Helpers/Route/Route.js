@@ -34,5 +34,5 @@ export const getAccountPath = (match) => {
 }
 
 export const getAccountSubPath = (match, suffix) => {
-    return getAccountPath(match) + suffix;
+    return getAccountPath(match) + '/' + suffix;
 }

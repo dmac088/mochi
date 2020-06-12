@@ -18,6 +18,7 @@ const BreadCrumb = (props) => {
                             <ul>
                                 <Route exact path='/:lang/:curr/category/:path' component={BreadcrumbsItem} />
                                 <Route exact path='/:lang/:curr/:path' component={BreadcrumbsItem} />
+                                <Route exact path='/:lang/:curr/myaccount/:path' component={BreadcrumbsItem} />
                             </ul>
                         </div>
                     </div>

@@ -46,16 +46,23 @@ function Dashboard(props) {
   
 
   const selectedComponent = () => {   
+    if(mockMatch) {
+      const { params } = mockMatch;
+      const TheComponent = componentChoice[params.component];
+      return (
+        <TheComponent 
+          {...props}
+          customer={customer} />
+      );
+    }
+    return <Default {...props}
+                    customer={customer}/>;
+  }
+
+  const activeClass = (tab) => {
     if(!mockMatch) { return null; } 
     const { params } = mockMatch;
-    const TheComponent = componentChoice[params.component];
-    if(!TheComponent) { return <Default {...props}
-                                        customer={customer}/>; }
-    return (
-            <TheComponent 
-            {...props}
-            customer={customer} />
-    );
+    return (params.component === tab) ? "active" : "";
   }
 
   return ( 
@@ -67,19 +74,17 @@ function Dashboard(props) {
               <div className="row">
                 <div className="col-lg-3 col-12">
                   <div className="myaccount-tab-menu nav" role="tablist">
-                    <Link to={() => getAccountSubPath(match, '/dashboard')} className="active" data-toggle="tab"><i className="fa fa-dashboard"></i>
-                        Dashboard</Link>
+                    <Link to={() => getAccountSubPath(match, 'dashboard')} className={activeClass('dashboard')} data-toggle="tab"><i className="fa fa-dashboard"></i>Dashboard</Link>
 
-                    <Link to={() => getAccountSubPath(match, '/orders')}  data-toggle="tab"><i className="fa fa-cart-arrow-down"></i> Orders</Link>
+                    <Link to={() => getAccountSubPath(match, 'orders')}  className={activeClass('orders')} data-toggle="tab"><i className="fa fa-cart-arrow-down"></i> Orders</Link>
 
-                    <Link to={() => getAccountSubPath(match, '/download')}  data-toggle="tab"><i className="fa fa-cloud-download"></i> Download</Link>
+                    <Link to={() => getAccountSubPath(match, 'download')}  className={activeClass('download')} data-toggle="tab"><i className="fa fa-cloud-download"></i> Download</Link>
 
-                    <Link to={() => getAccountSubPath(match, '/payment')}  data-toggle="tab"><i className="fa fa-credit-card"></i> Payment
-                        Method</Link>
+                    <Link to={() => getAccountSubPath(match, 'payment')}  className={activeClass('payment')} data-toggle="tab"><i className="fa fa-credit-card"></i> Payment Method</Link>
 
-                    <Link to={() => getAccountSubPath(match, '/address')}  data-toggle="tab"><i className="fa fa-map-marker"></i> address</Link>
+                    <Link to={() => getAccountSubPath(match, 'address')}  className={activeClass('address')} data-toggle="tab"><i className="fa fa-map-marker"></i> address</Link>
 
-                    <Link to={() => getAccountSubPath(match, '/accountdetails')}  data-toggle="tab"><i className="fa fa-user"></i> Account Details</Link>
+                    <Link to={() => getAccountSubPath(match, 'accountdetails')} className={activeClass('accountdetails')} data-toggle="tab"><i className="fa fa-user"></i> Account Details</Link>
 
                     <a href="#" onClick={logout}><i className="fa fa-sign-out"></i> Logout</a>
                   </div>

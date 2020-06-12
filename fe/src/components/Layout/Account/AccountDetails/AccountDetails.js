@@ -2,7 +2,6 @@ import React from 'react';
 
 
 function AccountDetails(props) {
-    //console.log(props);
     const { customer } = props;
     return (
         <React.Fragment>
