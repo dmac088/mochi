@@ -93,10 +93,6 @@ public class PostgresProductAdapter implements IProductPortService {
 					(op.isPresent()) 
 					? (io.nzbee.entity.product.food.Food) op.get() 
 					: new io.nzbee.entity.product.food.Food();
-					//first try to find the product in the DB
-					//productService.
-					
-			System.out.println(op.isPresent() + "  product was found");		
 					
 			Food food = (Food) domainObject;
 			

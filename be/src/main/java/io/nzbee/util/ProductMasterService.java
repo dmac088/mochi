@@ -118,10 +118,6 @@ public class ProductMasterService {
 												   globalVars.getCurrencyHKD(), 
 												   p.get_DEPARTMENT_CODE());
 		
-		
-		System.out.println(p.get_DEPARTMENT_CODE());
-		System.out.println(dDo.getDepartmentCode());
-		
 		Date date = null;
 		try {
 			DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
