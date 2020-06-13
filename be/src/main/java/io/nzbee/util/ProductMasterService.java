@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.Globals;
+import io.nzbee.domain.product.Food;
 import io.nzbee.domain.product.Product;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.category.Category;
@@ -87,8 +88,8 @@ public class ProductMasterService {
 	    				.withQuoteChar('"');
 	    	
 	        CsvMapper mapper = new CsvMapper();
-	        MappingIterator<ProductMasterSchema> readValues =
-	        	mapper.readerFor(ProductMasterSchema.class).with(bootstrapSchema).readValues(file);
+	        MappingIterator<FoodMasterSchema> readValues =
+	        	mapper.readerFor(FoodMasterSchema.class).with(bootstrapSchema).readValues(file);
 	        
 	        readValues.readAll().stream().forEach(p -> {
 	        	this.persistProductMaster(p);
@@ -99,7 +100,7 @@ public class ProductMasterService {
 		}
 	}
 	
-	public void persistProductMaster(ProductMasterSchema p) {
+	public void persistProductMaster(FoodMasterSchema p) {
 		logger.debug("called persistProductMaster() ");
 		Brand bDo =
 				brandDomainService.findByCode(globalVars.getLocaleENGB(), 
@@ -127,13 +128,15 @@ public class ProductMasterService {
 			e.printStackTrace();
 		}
 				
-		Product pDo = new Product(
+		Product pDo = new Food(
 								p.get_PRODUCT_UPC_CODE(),
 								date,
 							   	p.get_PRODUCT_DESCRIPTION_EN(),
 							   	p.get_PRODUCT_RETAIL_PRICE_HKD(),
 							   	p.get_PRODUCT_MARKDOWN_PRICE_HKD(),
 							   	p.get_PRODUCT_IMAGE_EN(),
+							   	"NZL",
+							   	new Date("2021-01-01"),
 							   	globalVars.getLocaleENGB(),
 							   	globalVars.getCurrencyHKD(),
 							   	bDo,
@@ -146,20 +149,21 @@ public class ProductMasterService {
 	
 	public void extractProductMaster(Resource resource) {
 		logger.debug("called extractProductMaster() ");
-		List<ProductMasterSchema> lpms = new ArrayList<ProductMasterSchema>();
+		List<FoodMasterSchema> lpms = new ArrayList<FoodMasterSchema>();
 	    try {
 	    
 	    	List<Product> productsList = productDomainService.findAll(	globalVars.getLocaleENGB(),
 	    														  		globalVars.getCurrencyHKD()).stream().collect(Collectors.toList());
 	    	
 	    	//create a map of products (full list)
-	    	Map<String, ProductMasterSchema> map = productsList.stream().collect(Collectors.toMap(p -> ((Product) p).getProductUPC(), p -> new ProductMasterSchema()));
+	    	Map<String, FoodMasterSchema> map = productsList.stream().collect(Collectors.toMap(p -> ((Product) p).getProductUPC(), p -> new FoodMasterSchema()));
+	 
 	    	
 	    	productsList.addAll(productDomainService.findAll(	globalVars.getLocaleZHHK(),
 																globalVars.getCurrencyUSD()));
 	    	
 	    	lpms.addAll(productsList.stream().map(p -> {
-		    	ProductMasterSchema pms = map.get(p.getProductUPC());
+		    	FoodMasterSchema pms = map.get(p.getProductUPC());
 		    	
 		    	pms.set_PRODUCT_UPC_CODE(p.getProductUPC());
 		    	pms.set_PRODUCT_CREATED_DATE(format.format(p.getProductCreateDt()));
@@ -216,10 +220,10 @@ public class ProductMasterService {
 						{ pms.set_DEPARTMENT_DESC_HK(d.getDepartmentDesc()); } 
 		    	
 	    	return pms;
-	    	}).collect(Collectors.toList()));
+	    	}).collect(Collectors.toSet()));
 	    	
 	    	CsvMapper mapper = new CsvMapper(); 
-	        CsvSchema schema = mapper.schemaFor(ProductMasterSchema.class)
+	        CsvSchema schema = mapper.schemaFor(FoodMasterSchema.class)
 	        		.withHeader()
 	        		.withColumnSeparator('\t')
 	        		.withQuoteChar('"');
