@@ -29,6 +29,7 @@ import io.nzbee.entity.product.currency.Currency;
 import io.nzbee.entity.product.currency.ICurrencyService;
 import io.nzbee.entity.product.department.IDepartmentMapper;
 import io.nzbee.entity.product.department.IDepartmentService;
+import io.nzbee.entity.product.price.IProductPriceService;
 import io.nzbee.entity.product.price.IProductPriceTypeService;
 import io.nzbee.entity.product.status.IProductStatusRepository;
 import io.nzbee.search.ISearchService;
@@ -42,6 +43,9 @@ public class PostgresProductAdapter implements IProductPortService {
 	
 	@Autowired
 	private IProductAttributeService productAttributeService;
+	
+	@Autowired
+	private IProductPriceService productPriceService;
 	
 	@Autowired
 	private ISearchService searchService;
@@ -144,12 +148,27 @@ public class PostgresProductAdapter implements IProductPortService {
 			
 			io.nzbee.entity.product.status.ProductStatus ps = productStatusService.findByProductStatusCode("ACT01").get();
 			
-			io.nzbee.entity.product.price.ProductPrice prcr = new io.nzbee.entity.product.price.ProductPrice();
+			
+			Optional<io.nzbee.entity.product.price.ProductPrice> oprcr = 
+					productPriceService.findOne(domainObject.getProductUPC(), ptr.getCode(), domainObject.getCurrency());
+			
+			io.nzbee.entity.product.price.ProductPrice prcr = 
+					(oprcr.isPresent()) 
+					? oprcr.get()
+					: new io.nzbee.entity.product.price.ProductPrice();
+			
 			prcr.setType(ptr);
 			prcr.setCurrency(curr);
 			prcr.setPriceValue(food.getProductRetail());
 			
-			io.nzbee.entity.product.price.ProductPrice prcm = new io.nzbee.entity.product.price.ProductPrice();
+			Optional<io.nzbee.entity.product.price.ProductPrice> oprcm = 
+					productPriceService.findOne(domainObject.getProductUPC(), ptm.getCode(), domainObject.getCurrency()); 
+					
+			io.nzbee.entity.product.price.ProductPrice prcm = 		
+					(oprcm.isPresent())
+					? oprcm.get()
+					: new io.nzbee.entity.product.price.ProductPrice();
+			
 			prcm.setType(ptm);
 			prcm.setCurrency(curr);
 			prcm.setPriceValue(food.getProductMarkdown());

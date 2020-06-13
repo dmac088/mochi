@@ -9,4 +9,8 @@ public interface IProductPriceService extends ILocalizedService<ProductPrice> {
 									String priceTypeCode,
 									String currencyCode);
 	
+	Optional<ProductPrice> findOne(String productCode, 
+			String priceTypeCode,
+			String currencyCode);
+	
 }

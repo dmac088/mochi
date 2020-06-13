@@ -11,7 +11,18 @@ import org.springframework.stereotype.Service;
 public class ProductPriceServiceImpl implements IProductPriceService {
 
 	@Autowired
-	private ProductPriceRepository productPriceRepository; 
+	private IProductPriceRepository productPriceRepository; 
+	
+	@Override
+	public Optional<ProductPrice> findOne(Long productId, String priceTypeCode, String currencyCode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<ProductPrice> findOne(String productCode, String priceTypeCode, String currencyCode) {
+		return productPriceRepository.findByTypeCodeAndProductProductUPCAndCurrencyCode(priceTypeCode, productCode, currencyCode);
+	}
 	
 	@Override
 	public Optional<ProductPrice> findById(String locale, String currency, long id) {
@@ -60,12 +71,6 @@ public class ProductPriceServiceImpl implements IProductPriceService {
 	public void delete(ProductPrice t) {
 		// TODO Auto-generated method stub
 		productPriceRepository.delete(t);
-	}
-
-	@Override
-	public Optional<ProductPrice> findOne(Long productId, String priceTypeCode, String currencyCode) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }
