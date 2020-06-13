@@ -12,5 +12,7 @@ public interface ProductAttributeRepository extends CrudRepository<ProductAttrib
 	List<ProductAttribute> findByLclCd(String lcl);
 
 	Optional<ProductAttribute> findByLclCdAndProductProductId(String lcl, Long id);
+	
+	Optional<ProductAttribute> findByLclCdAndProductProductUPC(String lcl, String code);
 
 }

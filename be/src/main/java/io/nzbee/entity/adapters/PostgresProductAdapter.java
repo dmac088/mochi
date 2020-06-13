@@ -129,7 +129,9 @@ public class PostgresProductAdapter implements IProductPortService {
 										 	 domainObject.getProductUPC());
 					
 			io.nzbee.entity.product.attribute.ProductAttribute pa = 
-					(opa.isPresent()) ? opa.get() : new io.nzbee.entity.product.attribute.ProductAttribute();
+					(opa.isPresent()) 
+					? opa.get() 
+					: (new io.nzbee.entity.product.attribute.ProductAttribute());
 					
 			pa.setProductDesc(domainObject.getProductDesc());
 			pa.setProductImage(domainObject.getProductImage());
