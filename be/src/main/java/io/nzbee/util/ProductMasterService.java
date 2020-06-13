@@ -119,6 +119,9 @@ public class ProductMasterService {
 												   p.get_DEPARTMENT_CODE());
 		
 		
+		System.out.println(p.get_DEPARTMENT_CODE());
+		System.out.println(dDo.getDepartmentCode());
+		
 		Date date = null;
 		try {
 			DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
@@ -136,7 +139,7 @@ public class ProductMasterService {
 							   	p.get_PRODUCT_MARKDOWN_PRICE_HKD(),
 							   	p.get_PRODUCT_IMAGE_EN(),
 							   	"NZL",
-							   	new Date("2021-01-01"),
+							   	new Date(),
 							   	globalVars.getLocaleENGB(),
 							   	globalVars.getCurrencyHKD(),
 							   	bDo,
