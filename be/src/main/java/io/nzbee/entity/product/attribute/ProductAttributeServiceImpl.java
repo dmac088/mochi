@@ -31,8 +31,7 @@ public class ProductAttributeServiceImpl implements IProductAttributeService {
 
 	@Override
 	public Optional<ProductAttribute> findByCode(String locale, String currency, String code) {
-		// TODO Auto-generated method stub
-		return null;
+		return productAttributeRepository.findByLclCdAndProductProductUPC(locale, code);
 	}
 
 	@Override
