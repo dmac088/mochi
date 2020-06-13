@@ -24,6 +24,7 @@ import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.IProductMapper;
 import io.nzbee.entity.product.IProductService;
+import io.nzbee.entity.product.attribute.IProductAttributeService;
 import io.nzbee.entity.product.currency.Currency;
 import io.nzbee.entity.product.currency.ICurrencyService;
 import io.nzbee.entity.product.department.IDepartmentMapper;
@@ -38,6 +39,9 @@ public class PostgresProductAdapter implements IProductPortService {
 	
 	@Autowired
 	private IProductService productService;
+	
+	@Autowired
+	private IProductAttributeService productAttributeService;
 	
 	@Autowired
 	private ISearchService searchService;
@@ -88,6 +92,7 @@ public class PostgresProductAdapter implements IProductPortService {
 					//first try to find the product in the DB
 					//productService.
 					
+			System.out.println(op.isPresent() + "  product was found");		
 					
 			Food food = (Food) domainObject;
 			
@@ -116,7 +121,16 @@ public class PostgresProductAdapter implements IProductPortService {
 										 	 domainObject.getBrand().getBrandCode()).get();
 			
 			
-			io.nzbee.entity.product.attribute.ProductAttribute pa = new io.nzbee.entity.product.attribute.ProductAttribute();
+			
+			Optional<io.nzbee.entity.product.attribute.ProductAttribute> opa = 
+					productAttributeService.findByCode(
+											 domainObject.getLclCd(), 
+										 	 domainObject.getCurrency(), 
+										 	 domainObject.getProductUPC());
+					
+			io.nzbee.entity.product.attribute.ProductAttribute pa = 
+					(opa.isPresent()) ? opa.get() : new io.nzbee.entity.product.attribute.ProductAttribute();
+					
 			pa.setProductDesc(domainObject.getProductDesc());
 			pa.setProductImage(domainObject.getProductImage());
 			pa.setLclCd(domainObject.getLclCd());
