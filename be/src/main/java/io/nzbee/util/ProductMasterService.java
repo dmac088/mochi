@@ -69,7 +69,7 @@ public class ProductMasterService {
 	        CsvMapper mapper = new CsvMapper();
 	        File file = new ClassPathResource("data/member_master_data.dat").getFile();
 	        MappingIterator<ProductMasterSchema> readValues = 
-	          mapper.reader(type).with(bootstrapSchema).readValues(file);
+	          mapper.readerFor(type).with(bootstrapSchema).readValues(file);
 	        return readValues.readAll();
 	    } catch (Exception e) {
 	        //logger.error("Error occurred while loading object list from file " + fileName, e);
