@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -15,6 +16,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Order;
 import org.apache.tomcat.util.buf.StringUtils;
+import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import io.nzbee.Globals;
+import io.nzbee.entity.product.food.Food;
 import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
@@ -50,6 +53,40 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	@Autowired
 	private Globals globalVars;
 
+	
+	@Override
+	public <T> List<Product> findAllByType(String locale, String currency, Class<T> cls) {
+		LOGGER.debug("call CategoryDaoPostgresImpl.findByCodeAndType parameters : {}, {}, {}", locale, currency, cls.getSimpleName());
+		
+		Session session = em.unwrap(Session.class);
+		
+		Query query = session.createNativeQuery(constructSQL(false,
+															 false,
+															 false,
+															 false,
+															 false,
+															 false,
+															 false,
+															 true,
+															 false,
+															 false), "ProductMapping")
+				
+				.setParameter("locale", locale)
+				.setParameter("currency", currency)
+				.setParameter("categoryCode", globalVars.getPrimaryRootCategoryCode())
+				.setParameter("activeProductCode", globalVars.getActiveSKUCode())
+				.setParameter("retailPriceCode", globalVars.getRetailPriceCode())
+				.setParameter("markdownPriceCode", globalVars.getMarkdownPriceCode())
+				.setParameter("typeDiscriminator", Long.parseLong(cls.getAnnotation(DiscriminatorValue.class).value()));
+		
+		
+		@SuppressWarnings("unchecked")
+		List<Object[]> results = query.getResultList();
+		
+		return results.stream().map(p -> this.objectToEntity(p, locale, currency)).collect(Collectors.toList());
+	}
+	
+	
 	@Override
 	public Optional<Product> findById(String locale, String currency, long id) {
 		LOGGER.debug("call ProductDaoPostgresImpl.findById parameters : {}, {}, {}", locale, currency, id);
@@ -57,6 +94,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		Query query = em.createNativeQuery(this.constructSQL(false,
 															 false,
 															 true,
+															 false,
 															 false,
 															 false,
 															 false,
@@ -97,6 +135,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 false,
 															 false,
+															 false,
 															 false), "ProductMapping")
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
@@ -128,6 +167,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 true,
 															 false,
 															 false, 
+															 false,
 															 false,
 															 false,
 															 false,
@@ -165,6 +205,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 false,
 															 false, 
+															 false,
 															 false,
 															 false,
 															 false,
@@ -213,6 +254,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false, 
 															 false,
 															 false,
+															 false,
 															 true,
 															 false), "ProductMapping.count")
 				 .setParameter("locale", 			locale)
@@ -230,6 +272,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 													  false,
 				   									  false,
 													  false, 
+													  false,
 													  false,
 													  false,
 													  false,
@@ -300,6 +343,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 brandCodes.size()>=1,
   				 											 tagCodes.size()>=1,
   				 											 (!(priceStart.equals(new Double(-1)) && (priceEnd.equals(new Double(-1))))),
+  				 											 false,
   				 											 true,
   				 											 false), "ProductMapping.count")
 		.setParameter("locale", locale)
@@ -325,6 +369,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 														brandCodes.size()>=1,
 					   									tagCodes.size()>=1,
 					   									hasPrices,
+					   									false,
 					   									false,
 					   									true), "ProductMapping")
 		.setParameter("locale", locale)
@@ -406,6 +451,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 								boolean hasBrands,
 								boolean hasTags,
 								boolean hasPrices,
+								boolean hasType,
 								boolean countOnly,
 								boolean offset) {
 		
@@ -539,6 +585,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		
 		"	INNER JOIN mochi.department dept   " + 
 		"	ON prd.dept_id = dept.dept_id   " + 
+		((hasType) 
+				? "AND dept.dept_id = :typeDiscriminator "  
+				: " ") +
 		
 		"	INNER JOIN mochi.department_attr_lcl dattr   " + 
 		"	ON dept.dept_id = dattr.dept_id   " + 

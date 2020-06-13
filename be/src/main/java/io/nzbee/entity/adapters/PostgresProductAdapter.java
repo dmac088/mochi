@@ -163,7 +163,17 @@ public class PostgresProductAdapter implements IProductPortService {
 	public Set<Product> findAll(String locale, String currency) {
 		List<io.nzbee.entity.product.Product> lp = productService.findAll(locale, currency);
 		return lp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toSet());
+	}
+	
+	@Override
+	public <T> Set<Product> findAllByType(String locale, String currency, Class<T> cls) {
+		//we need a type mapper here 
+		 Class<?> clazz = cls.equals(Food.class)
+		 ? io.nzbee.entity.product.food.Food.class
+		 : io.nzbee.entity.product.jewellery.Jewellery.class;
 		
+		List<io.nzbee.entity.product.Product> lp = productService.findAllByType(locale, currency, clazz);
+		return lp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toSet());
 	}
 
 	@Override
@@ -222,13 +232,13 @@ public class PostgresProductAdapter implements IProductPortService {
 	//returns a user interface object, rule broken, need to change to return a domain object 
 		@Override
 		public Page<Product> findAll(	 String locale, 
-								 String currency, 
-								 Double price,
-								 int page, 
-								 int size, 
-								 String categoryDesc,
-								 Set<IFacet> selectedFacets,
-								 String sortBy) {
+										 String currency, 
+										 Double price,
+										 int page, 
+										 int size, 
+										 String categoryDesc,
+										 Set<IFacet> selectedFacets,
+										 String sortBy) {
 			
 			@SuppressWarnings("unused")
 			Set<IFacet> returnFacets = new HashSet<IFacet>();
