@@ -26,20 +26,17 @@ public class ProductPriceServiceImpl implements IProductPriceService {
 	
 	@Override
 	public Optional<ProductPrice> findById(String locale, String currency, long id) {
-		// TODO Auto-generated method stub
 		return productPriceRepository.findById(id);
 	}
 
 	@Override
 	public List<ProductPrice> findAll(String locale, String currency) {
-		// TODO Auto-generated method stub
 		return productPriceRepository.findAll();
 	}
 	
 
 	@Override
 	public List<ProductPrice> findAll(String locale, String currency, Set<String> codes) {
-		// TODO Auto-generated method stub
 		return productPriceRepository.findAll();
 	}
 	
@@ -57,19 +54,16 @@ public class ProductPriceServiceImpl implements IProductPriceService {
 
 	@Override
 	public void save(ProductPrice t) {
-		// TODO Auto-generated method stub
 		productPriceRepository.save(t);
 	}
 
 	@Override
 	public void update(ProductPrice t) {
-		// TODO Auto-generated method stub
-		
+		productPriceRepository.save(t);
 	}
 
 	@Override
 	public void delete(ProductPrice t) {
-		// TODO Auto-generated method stub
 		productPriceRepository.delete(t);
 	}
 
