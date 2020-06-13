@@ -2,6 +2,7 @@ package io.nzbee.entity.adapters;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,9 +75,22 @@ public class PostgresProductAdapter implements IProductPortService {
 	@Override
 	public void save(Product domainObject) {
 		if(domainObject instanceof Food) {
-			io.nzbee.entity.product.food.Food product = new io.nzbee.entity.product.food.Food();
+			
+			Optional<io.nzbee.entity.product.Product> op = 
+					productService.findByCode(	domainObject.getLclCd(), 
+												domainObject.getCurrency(), 
+												domainObject.getProductUPC());
+			
+			io.nzbee.entity.product.food.Food product = 
+					(op.isPresent()) 
+					? (io.nzbee.entity.product.food.Food) op.get() 
+					: new io.nzbee.entity.product.food.Food();
+					//first try to find the product in the DB
+					//productService.
+					
+					
 			Food food = (Food) domainObject;
-
+			
 			//find the department
 			io.nzbee.entity.product.department.Department d =
 					departmentService.findByCode(domainObject.getLclCd(), 
