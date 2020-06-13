@@ -1,7 +1,7 @@
 package io.nzbee.util;
 
 
-public class ProductMasterSchema {
+public class FoodMasterSchema {
 
 	private String PRODUCT_UPC_CODE;
 	
@@ -40,13 +40,33 @@ public class ProductMasterSchema {
 	private String DEPARTMENT_DESC_EN;
 	
 	private String DEPARTMENT_DESC_HK;
+	
+	private String EXPIRY_DATE;
+	
+	private String COUNTRY_OF_ORIGIN;
+
+	public String get_EXPIRY_DATE() {
+		return EXPIRY_DATE;
+	}
+
+	public void set_EXPIRY_DATE(String eXPIRY_DATE) {
+		EXPIRY_DATE = eXPIRY_DATE;
+	}
+
+	public String get_COUNTRY_OF_ORIGIN() {
+		return COUNTRY_OF_ORIGIN;
+	}
+
+	public void set_COUNTRY_OF_ORIGIN(String COUNTRY_OF_ORIGIN) {
+		this.COUNTRY_OF_ORIGIN = COUNTRY_OF_ORIGIN;
+	}
 
 	public String get_DEPARTMENT_CODE() {
 		return DEPARTMENT_CODE;
 	}
 
-	public void set_DEPARTMENT_CODE(String dEPARTMENT_CODE) {
-		DEPARTMENT_CODE = dEPARTMENT_CODE;
+	public void set_DEPARTMENT_CODE(String DEPARTMENT_CODE) {
+		this.DEPARTMENT_CODE = DEPARTMENT_CODE;
 	}
 
 	public String get_PRODUCT_UPC_CODE() {
