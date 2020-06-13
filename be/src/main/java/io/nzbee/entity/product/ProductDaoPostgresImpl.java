@@ -27,7 +27,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import io.nzbee.Globals;
-import io.nzbee.entity.product.food.Food;
 import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.category.attribute.CategoryAttribute;

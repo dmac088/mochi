@@ -38,8 +38,7 @@ public class PostgresDepartmentAdapter implements IDepartmentPortService {
 
 	@Override
 	public Department findByCode(String locale, String currency, String code) {
-		// TODO Auto-generated method stub
-		return null;
+		return (Department) departmentMapper.entityToDo(departmentService.findByCode(locale, currency, code).get(), locale, currency);	
 	}
 
 	@Override

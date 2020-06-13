@@ -2,6 +2,8 @@ package io.nzbee.entity.product.department;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -76,15 +78,18 @@ public class Department {
 	@Transient
 	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "en-GB"))
 	public String getDepartmentDescENGB() {
-		return this.getAttributes().stream()
-				.filter(a -> a.getLclCd().equals("en-GB")).findFirst().get().getDesc();
+		Optional<DepartmentAttribute> d = this.getAttributes().stream()
+				.filter(a -> a.getLclCd().equals("en-GB")).findFirst();
+		return ((d.isPresent()) ? d.get().getDesc() : "novalue");
 	}
 	
 	@Transient
 	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "zh-HK"))
 	public String getDepartmentDescZHHK() {
-		return this.getAttributes().stream()
-				.filter(a -> a.getLclCd().equals("zh-HK")).findFirst().get().getDesc();
+		Optional<DepartmentAttribute> d = this.getAttributes().stream()
+				.filter(a -> a.getLclCd().equals("zh-HK")).findFirst();
+		return ((d.isPresent()) ? d.get().getDesc() : "novalue");
+		
 	}
 
 	public String getLocale() {
