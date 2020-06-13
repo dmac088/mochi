@@ -1,5 +1,7 @@
 package io.nzbee.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -16,6 +18,8 @@ import java.nio.file.StandardCopyOption;
 @Service
 public class FileStorageServiceUpload {
 
+	private static final Logger logger = LoggerFactory.getLogger(FileStorageServiceUpload.class);
+	
     private final Path fileStorageLocation;
 
     @Autowired
@@ -31,6 +35,8 @@ public class FileStorageServiceUpload {
     }
     
     public String storeFile(MultipartFile file) {
+    	logger.debug("called storeFile");
+    	
         // Normalize file name
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 
@@ -51,6 +57,7 @@ public class FileStorageServiceUpload {
     }
 
     public Resource loadFileAsResource(String fileName) {
+    	logger.debug("called loadFileAsResource with parameter {} ", fileName);
         try {
             Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
             Resource resource = new UrlResource(filePath.toUri());

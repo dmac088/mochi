@@ -39,6 +39,8 @@ import io.nzbee.domain.ports.IProductPortService;
 @Transactional
 public class ProductMasterService {
 
+	private static final Logger logger = LoggerFactory.getLogger(ProductMasterService.class);
+	
 	@Autowired
 	private Globals globalVars;
 	
@@ -58,10 +60,9 @@ public class ProductMasterService {
     private FileStorageServiceUpload fileStorageServiceUpload;
 
 	private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-	
-	private static final Logger logger = LoggerFactory.getLogger(ProductMasterService.class);
 
 	public <ProductMasterSchema> List<ProductMasterSchema> loadObjectList(Class<ProductMasterSchema> type/*, String fileName*/) {
+		logger.debug("called loadObjectList()");
 	    try {
 	        CsvSchema bootstrapSchema = CsvSchema.emptySchema().withHeader();
 	        CsvMapper mapper = new CsvMapper();
@@ -76,9 +77,15 @@ public class ProductMasterService {
 	}
 	
 	public void writeProductMaster(String fileName) {
+		logger.debug("called writeProductMaster with parameter {} ", fileName);
 		try {
 			File file = fileStorageServiceUpload.loadFileAsResource(fileName).getFile();
-	    	CsvSchema bootstrapSchema = CsvSchema.emptySchema().withHeader();
+	    	CsvSchema bootstrapSchema = 
+	    			CsvSchema.emptySchema()
+	    				.withHeader()
+	    				.withColumnSeparator('\t')
+	    				.withQuoteChar('"');
+	    	
 	        CsvMapper mapper = new CsvMapper();
 	        MappingIterator<ProductMasterSchema> readValues =
 	        	mapper.readerFor(ProductMasterSchema.class).with(bootstrapSchema).readValues(file);
@@ -93,7 +100,7 @@ public class ProductMasterService {
 	}
 	
 	public void persistProductMaster(ProductMasterSchema p) {
-		
+		logger.debug("called persistProductMaster() ");
 		Brand bDo =
 				brandDomainService.findByCode(globalVars.getLocaleENGB(), 
 											  globalVars.getCurrencyHKD(), 
@@ -110,9 +117,10 @@ public class ProductMasterService {
 												   globalVars.getCurrencyHKD(), 
 												   p.get_DEPARTMENT_CODE());
 		
-		DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
+		
 		Date date = null;
 		try {
+			DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 			date = format.parse(p.get_PRODUCT_CREATED_DATE());
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -137,6 +145,7 @@ public class ProductMasterService {
 	}
 	
 	public void extractProductMaster(Resource resource) {
+		logger.debug("called extractProductMaster() ");
 		List<ProductMasterSchema> lpms = new ArrayList<ProductMasterSchema>();
 	    try {
 	    
@@ -210,9 +219,10 @@ public class ProductMasterService {
 	    	}).collect(Collectors.toList()));
 	    	
 	    	CsvMapper mapper = new CsvMapper(); 
-	        CsvSchema schema = mapper.schemaFor(ProductMasterSchema.class);
-	        schema = schema.withHeader();
-	        schema = schema.withColumnSeparator(',');
+	        CsvSchema schema = mapper.schemaFor(ProductMasterSchema.class)
+	        		.withHeader()
+	        		.withColumnSeparator('\t')
+	        		.withQuoteChar('"');
 	        
 	        ObjectWriter myObjectWriter = mapper.writer(schema);
 	        String ow = myObjectWriter.writeValueAsString(lpms);

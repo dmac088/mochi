@@ -35,6 +35,8 @@ public class FileController {
     
     @PostMapping("/Product/Upload/")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile uploadFile) {
+    	
+    	logger.debug("called uploadFile with parameters {} ", uploadFile );
 
         String fileName = fileStorageServiceUpload.storeFile(uploadFile);
 
@@ -59,6 +61,8 @@ public class FileController {
 
     @GetMapping("/Product/Download/{fileName:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request, HttpServletResponse response) {
+    	logger.debug("called downloadFile with parameters {} ", fileName );
+    	
     	//generate the file for downloading
     	File file = new File(fileStorageProperties.getDownloadDir() + fileName);
         
