@@ -29,5 +29,7 @@ public interface IProductPortService extends IProductDimensionService<Product> {
 			Set<IFacet> facetPayload, Set<IFacet> returnFacets);
 
 	String[] getSuggestion(String searchTerm, String locale, String currency);
+
+	<T> Set<Product> findAllByType(String locale, String currency, Class<T> cls);
 	
 }

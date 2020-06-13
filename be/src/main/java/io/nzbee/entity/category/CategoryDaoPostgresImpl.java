@@ -51,7 +51,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	private Globals globalVars;
 
 	@Override
-	public <T> List<Category> findByCodeAndType(String locale, String currency, Class<T> cls) {
+	public <T> List<Category> findAllByType(String locale, String currency, Class<T> cls) {
 		LOGGER.debug("call CategoryDaoPostgresImpl.findByCodeAndType parameters : {}, {}, {}", locale, currency, cls.getSimpleName());
 		
 		Session session = em.unwrap(Session.class);

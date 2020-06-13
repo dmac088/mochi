@@ -48,6 +48,12 @@ public class ProductServiceImpl implements IProductService {
 	}
 	
 	@Override
+	public <T> List<Product> findAllByType(String locale, String currency, Class<T> cls) {
+		return productDAO.findAllByType(locale, currency, cls);
+	}
+
+	
+	@Override
 	public Page<Product> findAll(	
 									String locale, 
 									String currency, 
@@ -108,6 +114,5 @@ public class ProductServiceImpl implements IProductService {
 		// TODO Auto-generated method stub
 		
 	}
-
 	
 }

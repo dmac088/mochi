@@ -35,5 +35,9 @@ public interface IProductDao extends ILocalizedDao<Product> {
 							List<String> tagCodes,
 							String orderby);
 
+	<T> List<Product> findAllByType(String locale, String currency, Class<T> cls);
+
+	
+
 	
 }

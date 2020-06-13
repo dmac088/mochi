@@ -152,21 +152,32 @@ public class ProductMasterService {
 		List<FoodMasterSchema> lpms = new ArrayList<FoodMasterSchema>();
 	    try {
 	    
-	    	List<Product> productsList = productDomainService.findAll(	globalVars.getLocaleENGB(),
-	    														  		globalVars.getCurrencyHKD()).stream().collect(Collectors.toList());
+	    	List<Food> productsList = productDomainService.findAllByType(globalVars.getLocaleENGB(),
+	    														  		 globalVars.getCurrencyHKD(),
+	    														  		 Food.class)
+	    							  .stream()
+	    							  .map(p -> (Food) p)
+	    							  .collect(Collectors.toList());
 	    	
 	    	//create a map of products (full list)
 	    	Map<String, FoodMasterSchema> map = productsList.stream().collect(Collectors.toMap(p -> ((Product) p).getProductUPC(), p -> new FoodMasterSchema()));
 	 
 	    	
-	    	productsList.addAll(productDomainService.findAll(	globalVars.getLocaleZHHK(),
-																globalVars.getCurrencyUSD()));
+	    	productsList.addAll(productDomainService.findAllByType(	globalVars.getLocaleZHHK(),
+																globalVars.getCurrencyUSD(),
+																Food.class)
+	    											.stream()
+									    			.map(p -> (Food) p)
+													.collect(Collectors.toList()));
 	    	
 	    	lpms.addAll(productsList.stream().map(p -> {
+	    		
 		    	FoodMasterSchema pms = map.get(p.getProductUPC());
 		    	
 		    	pms.set_PRODUCT_UPC_CODE(p.getProductUPC());
 		    	pms.set_PRODUCT_CREATED_DATE(format.format(p.getProductCreateDt()));
+		    	
+		    	pms.set_COUNTRY_OF_ORIGIN(p.getCountryOfOrigin());
 		    	
 		        if (p.getLclCd().equals(globalVars.getLocaleENGB())) 
 		        		{ pms.set_PRODUCT_DESCRIPTION_EN(p.getProductDesc()); }
