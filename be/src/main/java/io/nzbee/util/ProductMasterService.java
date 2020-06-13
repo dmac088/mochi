@@ -118,24 +118,36 @@ public class ProductMasterService {
 												   globalVars.getCurrencyHKD(), 
 												   p.get_DEPARTMENT_CODE());
 		
-		Date date = null;
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+		Date createdDate = null;
+		Date expiryDate = null;
 		try {
-			DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-			date = format.parse(p.get_PRODUCT_CREATED_DATE());
+		
+			createdDate = 
+				(p.get_PRODUCT_CREATED_DATE().length() == 0)
+				? format.parse("1900-01-01")
+				: format.parse(p.get_PRODUCT_CREATED_DATE());
+				
+			expiryDate = 
+				(p.get_EXPIRY_DATE().length() == 0)
+				? format.parse("9999-12-31")
+				: format.parse(p.get_PRODUCT_CREATED_DATE());
+
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-				
+			
+		//this is the upload template for food, another will be created for Jewellery and other product types
 		Product pDo = new Food(
 								p.get_PRODUCT_UPC_CODE(),
-								date,
+								createdDate,
 							   	p.get_PRODUCT_DESCRIPTION_EN(),
 							   	p.get_PRODUCT_RETAIL_PRICE_HKD(),
 							   	p.get_PRODUCT_MARKDOWN_PRICE_HKD(),
 							   	p.get_PRODUCT_IMAGE_EN(),
-							   	"NZL",
-							   	new Date(),
+							   	p.get_COUNTRY_OF_ORIGIN(),
+							   	expiryDate,
 							   	globalVars.getLocaleENGB(),
 							   	globalVars.getCurrencyHKD(),
 							   	bDo,
