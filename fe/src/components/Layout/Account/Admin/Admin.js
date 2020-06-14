@@ -5,7 +5,7 @@ function Admin() {
         <React.Fragment>
             <h3>Admin</h3>
 
-            <p>Admin.</p>
+            <p>Upload product master....</p>
 
         </React.Fragment>
     );

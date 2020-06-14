@@ -10,6 +10,7 @@ import  Orders from "../Orders/Orders";
 import  Payment from "../Payment/Payment";
 import  Address  from "../Address/Address";
 import  Download  from "../Download/Download";
+import Admin from "../Admin/Admin";
 import  AccountDetails  from "../AccountDetails/AccountDetails";
 
 
@@ -38,6 +39,7 @@ function Dashboard(props) {
       "download": Download,
       "accountdetails": AccountDetails,
       "dashboard": Default,
+      "admin": Admin,
   }
 
   const mockMatch = matchPath(history.location.pathname, {
@@ -85,6 +87,8 @@ function Dashboard(props) {
                     <Link to={() => getAccountSubPath(match, 'address')}  className={activeClass('address')} data-toggle="tab"><i className="fa fa-map-marker"></i> address</Link>
 
                     <Link to={() => getAccountSubPath(match, 'accountdetails')} className={activeClass('accountdetails')} data-toggle="tab"><i className="fa fa-user"></i> Account Details</Link>
+
+                    <Link to={() => getAccountSubPath(match, 'admin')} className={activeClass('admin')} data-toggle="tab"><i className="fa fa-user"></i> Admin</Link>
 
                     <a href="#" onClick={logout}><i className="fa fa-sign-out"></i> Logout</a>
                   </div>
