@@ -10,6 +10,7 @@ public class Jewellery extends Product {
 
 	public Jewellery(String productUPC,
 				   	 Date   productCreateDt,
+				   	 String productStatus,
 				   	 String productDesc,
 				   	 Double productRetail,
 				   	 Double productMarkdown,
@@ -22,6 +23,7 @@ public class Jewellery extends Product {
 	
 	super(productUPC,
 		  productCreateDt,
+		  productStatus,
 		  productDesc,
 		  productRetail,
 		  productMarkdown,

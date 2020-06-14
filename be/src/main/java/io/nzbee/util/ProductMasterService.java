@@ -7,14 +7,12 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,22 +60,22 @@ public class ProductMasterService {
 
 	private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
-	public <ProductMasterSchema> List<ProductMasterSchema> loadObjectList(Class<ProductMasterSchema> type/*, String fileName*/) {
-		logger.debug("called loadObjectList()");
-	    try {
-	        CsvSchema bootstrapSchema = CsvSchema.emptySchema().withHeader();
-	        CsvMapper mapper = new CsvMapper();
-	        File file = new ClassPathResource("data/member_master_data.dat").getFile();
-	        MappingIterator<ProductMasterSchema> readValues = 
-	          mapper.readerFor(type).with(bootstrapSchema).readValues(file);
-	        return readValues.readAll();
-	    } catch (Exception e) {
-	        //logger.error("Error occurred while loading object list from file " + fileName, e);
-	        return Collections.emptyList();
-	    }
-	}
+//	public <ProductMasterSchema> List<ProductMasterSchema> loadObjectList(Class<ProductMasterSchema> type/*, String fileName*/) {
+//		logger.debug("called loadObjectList()");
+//	    try {
+//	        CsvSchema bootstrapSchema = CsvSchema.emptySchema().withHeader();
+//	        CsvMapper mapper = new CsvMapper();
+//	        File file = new ClassPathResource("data/member_master_data.dat").getFile();
+//	        MappingIterator<ProductMasterSchema> readValues = 
+//	          mapper.readerFor(type).with(bootstrapSchema).readValues(file);
+//	        return readValues.readAll();
+//	    } catch (Exception e) {
+//	        //logger.error("Error occurred while loading object list from file " + fileName, e);
+//	        return Collections.emptyList();
+//	    }
+//	}
 	
-	public void writeProductMaster(String fileName) {
+	public void writeFoodMaster(String fileName) {
 		logger.debug("called writeProductMaster with parameter {} ", fileName);
 		try {
 			File file = fileStorageServiceUpload.loadFileAsResource(fileName).getFile();
@@ -142,6 +140,7 @@ public class ProductMasterService {
 		Product pDo = new Food(
 								p.get_PRODUCT_UPC_CODE(),
 								createdDate,
+								p.get_PRODUCT_STATUS_CODE(),
 							   	p.get_PRODUCT_DESCRIPTION_EN(),
 							   	p.get_PRODUCT_RETAIL_PRICE_HKD(),
 							   	p.get_PRODUCT_MARKDOWN_PRICE_HKD(),
@@ -189,6 +188,7 @@ public class ProductMasterService {
 		    	pms.set_PRODUCT_CREATED_DATE(format.format(p.getProductCreateDt()));
 		    	
 		    	pms.set_COUNTRY_OF_ORIGIN(p.getCountryOfOrigin());
+		    	pms.set_PRODUCT_STATUS_CODE(p.getProductStatus());
 		    	
 		        if (p.getLclCd().equals(globalVars.getLocaleENGB())) 
 		        		{ pms.set_PRODUCT_DESCRIPTION_EN(p.getProductDesc()); }

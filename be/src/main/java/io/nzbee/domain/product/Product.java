@@ -15,6 +15,8 @@ public class Product {
 	
 	private String productUPC;
 	
+	private String productStatus;
+	
 	private Date productCreateDt;
 
 	private String productDesc;
@@ -46,6 +48,7 @@ public class Product {
 	
 	public Product(	String productUPC,
 				   	Date productCreateDt,
+				   	String productStatus,
 				   	String productDesc,
 				   	Double productRetail,
 				   	Double productMarkdown,
@@ -70,6 +73,11 @@ public class Product {
 					this.categories = new ArrayList<ProductCategory>();
 					this.primaryCategory = category;
 					this.categories.add(category);
+					this.productStatus = productStatus;
+	}
+	
+	public String getProductStatus() {
+		return productStatus;
 	}
 	
 	public List<ProductCategory> getCategories() {
