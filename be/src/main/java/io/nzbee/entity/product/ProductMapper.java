@@ -23,6 +23,7 @@ public class ProductMapper implements IProductMapper {
 			io.nzbee.domain.product.Product pO = new io.nzbee.domain.product.Food(
 					e.getProductUPC(),
 				   	e.getProductCreateDt(),
+				   	e.getProductStatus().getCode(),
 				   	e.getProductAttribute().getProductDesc(),
 				   	e.getRetailPrice(),
 				   	e.getMarkdownPrice(),

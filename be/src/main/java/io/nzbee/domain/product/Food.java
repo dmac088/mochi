@@ -15,6 +15,7 @@ public class Food extends Product {
 	
 	public Food(String productUPC,
 			   	Date productCreateDt,
+			   	String productStatus,
 			   	String productDesc,
 			   	Double productRetail,
 			   	Double productMarkdown,
@@ -29,6 +30,7 @@ public class Food extends Product {
 		
 		super(productUPC,
 			  productCreateDt,
+			  productStatus,
 			  productDesc,
 			  productRetail,
 			  productMarkdown,

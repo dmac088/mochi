@@ -40,7 +40,7 @@ public class FileController {
 
         String fileName = fileStorageServiceUpload.storeFile(uploadFile);
 
-        productMasterService.writeProductMaster(fileName);
+        productMasterService.writeFoodMaster(fileName);
       
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(fileStorageProperties.getUploadDir())	

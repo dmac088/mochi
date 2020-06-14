@@ -5,6 +5,8 @@ public class FoodMasterSchema {
 
 	private String PRODUCT_UPC_CODE;
 	
+	private String PRODUCT_STATUS_CODE;
+	
 	private String PRODUCT_CREATED_DATE;
 
 	private String PRODUCT_DESCRIPTION_EN;
@@ -213,6 +215,13 @@ public class FoodMasterSchema {
 		DEPARTMENT_DESC_HK = dEPARTMENT_DESC_HK;
 	}
 
+	public String get_PRODUCT_STATUS_CODE() {
+		return PRODUCT_STATUS_CODE;
+	}
+
+	public void set_PRODUCT_STATUS_CODE(String pRODUCT_STATUS_CODE) {
+		PRODUCT_STATUS_CODE = pRODUCT_STATUS_CODE;
+	}
 
 	@Override
     public String toString() {
@@ -235,5 +244,7 @@ public class FoodMasterSchema {
         return builder.toString();
         
     }
+
+	
 	
 }
