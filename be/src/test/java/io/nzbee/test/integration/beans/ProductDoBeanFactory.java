@@ -18,6 +18,7 @@ public class ProductDoBeanFactory {
 		
 		return new Food(		   "3254354673",
 								   new Date(),
+								   "ACT01",
 								   "Test Product Description",
 								   new Double(78),
 								   new Double(71),
