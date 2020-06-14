@@ -14,7 +14,6 @@ import Admin from "../Admin/Admin";
 import  AccountDetails  from "../AccountDetails/AccountDetails";
 
 
-
 function Dashboard(props) {
   const { match, history } = props;
 
@@ -96,7 +95,7 @@ function Dashboard(props) {
 
                 <div className="col-lg-9 col-12">
                   <div className="tab-content" id="myaccountContent">
-                    <div className="tab-pane fade show active" id="dashboad" role="tabpanel">
+                    <div className="tab-pane fade show active" id="dashboard" role="tabpanel">
                       <div className="myaccount-content">
                         {selectedComponent()}
                       </div>
