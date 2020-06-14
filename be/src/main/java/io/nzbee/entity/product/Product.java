@@ -317,9 +317,6 @@ public abstract class Product {
 	@Field(store=Store.YES,analyze=Analyze.NO)
 	private Double markdownPrice;
 	
-	@Transient
-	private String imagePath;
-	
 	@Transient 
 	private String locale;
 	
@@ -672,14 +669,6 @@ public abstract class Product {
 	public void removeProductPrice(ProductPrice productPrice) {
 		this.getPrices().remove(productPrice);
 		productPrice.setProduct(null);
-	}
-
-	public String getImagePath() {
-		return imagePath;
-	}
-
-	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
 	}
 	
 	public String getLocale() {

@@ -27,7 +27,7 @@ public class ProductMapper implements IProductMapper {
 				   	e.getProductAttribute().getProductDesc(),
 				   	e.getRetailPrice(),
 				   	e.getMarkdownPrice(),
-				   	e.getImagePath(),
+				   	e.getProductAttribute().getProductImage(),
 				   	((Food) e).getCountryOfOrigin(),
 				   	((Food) e).getExpiryDate(),
 				   	e.getLocale(),
