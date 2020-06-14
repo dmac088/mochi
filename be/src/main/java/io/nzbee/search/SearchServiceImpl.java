@@ -471,7 +471,6 @@ public class SearchServiceImpl implements ISearchService {
 			p.setProductCreateDt((Date) r[6]);
 			p.setRetailPrice(Double.parseDouble(r[10].toString()));
 			p.setMarkdownPrice(Double.parseDouble(r[11].toString()));
-			p.setImagePath(r[3].toString());
 			p.setLocale(locale);
 			p.setCurrency(currency);
 			p.setProductAttribute(pa);
