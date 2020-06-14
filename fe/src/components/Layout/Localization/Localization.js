@@ -14,6 +14,14 @@ export const localization = {
         "phone": "Phone",
         "items": "Items",
         "searchyourproduct": "Search your product",
+        "admin": "Admin",
+        "dashboard": "Dashboard",
+        "orders": "Orders",
+        "download": "Download",
+        "payment": "Payment",
+        "address": "Address",
+        "accountdetails": "Account Details",
+
     },
     "zh-HK": {
         "home": "首頁",
