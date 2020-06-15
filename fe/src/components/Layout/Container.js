@@ -15,8 +15,11 @@ function Container(props) {
 
     useEffect(() => {
         dispatch(discover(params.lang, params.curr));
-        dispatch(reauthenticate());
     });
+
+    useEffect(() => {
+        dispatch(reauthenticate());
+    }, []);
 
     return (
         <React.Fragment>

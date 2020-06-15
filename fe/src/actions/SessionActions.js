@@ -45,11 +45,8 @@ export const reauthenticate = () => {
   return (dispatch) => {
 
     const localStorageService = LocalStorageService.getService();
-
     const tokenLink = 'https://localhost:8090/oauth/token';
     const refreshToken = localStorageService.getRefreshToken();
-
-    console.log(refreshToken)
 
     const form = new FormData();
     form.append('refresh_token', refreshToken);
