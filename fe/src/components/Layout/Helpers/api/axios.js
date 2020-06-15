@@ -38,7 +38,7 @@ instance.interceptors.request.use(config => {
 //Add a response interceptor
 instance.interceptors.response.use((response) => {
     return response
-}, function (error) {
+}, function (error, dispatch) {
 
     let state = store.getState();
 
@@ -65,6 +65,7 @@ instance.interceptors.response.use((response) => {
 
         if(!refreshToken) {
             console.log("No refresh token found in session state, redirecting to login...");
+            dispatch(logoutSession());
             history.push(getAccountPath(match));
             return Promise.reject(error);
         }
