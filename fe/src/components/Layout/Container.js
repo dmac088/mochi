@@ -6,6 +6,7 @@ import BreadCrumb from "./BreadCrumb/BreadCrumb";
 import Scroller from "../Layout/Scroller/Scroller";
 import { isHomePath } from './Helpers/Route/Route';
 import { discover } from "../../actions/DiscoveryActions";
+import { reauthenticate } from "../../actions/SessionActions";
 
 function Container(props) {
     const { path, params } = props.match;
@@ -14,6 +15,7 @@ function Container(props) {
 
     useEffect(() => {
         dispatch(discover(params.lang, params.curr));
+        dispatch(reauthenticate());
     });
 
     return (

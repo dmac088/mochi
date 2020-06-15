@@ -51,7 +51,7 @@ function Admin() {
     
     return (
         <React.Fragment>
-            <div style={{"margin-bottom":"100px"}}>
+            <div style={{"marginBottom":"100px"}}>
                 <h3>Food master data download</h3>
                 <button onClick={onFileDownload}> 
                     Download! 
