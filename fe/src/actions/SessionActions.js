@@ -1,16 +1,20 @@
-import { instance as axios } from "../components/Layout/Helpers/api/axios";
-import * as apiConfig from '../services/api'; 
+import { instance } from "../components/Layout/Helpers/api/axios";
+import axios from "axios";
+import LocalStorageService from "../components/Layout/Helpers/Storage/LocalStorageService";
+import * as apiConfig from '../services/api';
 
-import { GET_SESSION_STARTED, 
-         GET_SESSION_SUCCESS,
-         GET_SESSION_FAILURE,
-         RESET_SESSION
-        } from "./ActionTypes"; 
+import {
+  GET_SESSION_STARTED,
+  GET_SESSION_SUCCESS,
+  GET_SESSION_FAILURE,
+  RESET_SESSION
+} from "./ActionTypes";
 
 export const authenticate = (username, password) => {
-  
+
   return (dispatch, getState) => {
     const state = getState();
+    const localStorageService = LocalStorageService.getService();
 
     const { href } = state.discovery.links.accessTokens;
 
@@ -21,18 +25,48 @@ export const authenticate = (username, password) => {
 
     form.append('username', username);
     form.append('password', password);
-    
+
     dispatch(getSessionStarted());
 
-    axios.post(
+    instance.post(
       href,
       form,
       apiConfig.config,
     ).then((response) => {
       dispatch(getSessionSuccess(response.data));
+      localStorageService.setToken(response.data);
     }).catch((error) => {
       dispatch(getSessionFailure(error.response));
     });
+  }
+}
+
+export const reauthenticate = () => {
+  return (dispatch) => {
+
+    const localStorageService = LocalStorageService.getService();
+
+    const tokenLink = 'https://localhost:8090/oauth/token';
+    const refreshToken = localStorageService.getRefreshToken();
+
+    console.log(refreshToken)
+
+    const form = new FormData();
+    form.append('refresh_token', refreshToken);
+    form.append('grant_type', 'refresh_token');
+
+    return axios.post(
+      tokenLink,
+      form,
+      apiConfig.config)
+      .then(response => {
+        if (response.status === 200) {
+          console.log('assigning new access token to further requests.....');
+          dispatch(refreshTokens(response.data));
+          localStorageService.setToken(response.data);
+          instance.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.access_token;
+        }
+      })
   }
 }
 
@@ -44,6 +78,8 @@ export const refreshTokens = (data) => {
 
 export const logoutSession = () => {
   return (dispatch) => {
+    const localStorageService = LocalStorageService.getService();
+    localStorageService.clearToken();
     dispatch(clearSession());
   }
 }
@@ -52,21 +88,21 @@ const clearSession = () => ({
   type: RESET_SESSION
 });
 
- const getSessionStarted = () => ({
+const getSessionStarted = () => ({
   type: GET_SESSION_STARTED
 });
 
 const getSessionSuccess = session => ({
   type: GET_SESSION_SUCCESS,
   payload: {
-      ...session,
-      loading: false,
-    }
+    ...session,
+    loading: false,
+  }
 });
 
 const getSessionFailure = error => ({
   type: GET_SESSION_FAILURE,
   payload: {
-      error,
+    error,
   }
 });
