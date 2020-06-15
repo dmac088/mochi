@@ -44,7 +44,6 @@ instance.interceptors.response.use((response) => {
 
     const originalRequest = error.config;
 
-    //get the parameters of locale
     //mock a match object for our params
     const match = {
         params: { ...params },
@@ -53,13 +52,7 @@ instance.interceptors.response.use((response) => {
     //get the token link
     const tokenLink = 'https://localhost:8090/oauth/token';
 
-    //if we get a 401 error response from the server then we need to login again
-    // if (error.response.status === 401 && originalRequest.url === tokenLink) {
-    //     console.log('redirecting to login page.....');
-    //     history.push(getAccountPath(match));
-    //     return Promise.reject(error);
-    // }
-
+    //when we get 2 or more 401 at the same time, the a duplicate request for the access token is fired, resulting in a 500 error
     if (error.response.status === 401 && !originalRequest._retry) {
         console.log('using refresh token to obtain new access token.....');
 
@@ -69,6 +62,12 @@ instance.interceptors.response.use((response) => {
         const form = new FormData();
         form.append('refresh_token', refreshToken);
         form.append('grant_type', 'refresh_token');
+
+        if(!refreshToken) {
+            console.log("No refresh token found in session state, redirecting to login...");
+            history.push(getAccountPath(match));
+            return Promise.reject(error);
+        }
 
         return axios.post(
             tokenLink,
