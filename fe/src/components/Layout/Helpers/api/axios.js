@@ -52,7 +52,8 @@ instance.interceptors.response.use((response) => {
     //get the token link
     const tokenLink = 'https://localhost:8090/oauth/token';
 
-    //when we get 2 or more 401 at the same time, the a duplicate request for the access token is fired, resulting in a 500 error
+    //when we get 2 or more 401 at the same time, the a duplicate request with the same refresh token is fired
+    //to the token endpoint, resulting in a 500 error
     if (error.response.status === 401 && !originalRequest._retry) {
         console.log('using refresh token to obtain new access token.....');
 
@@ -65,8 +66,10 @@ instance.interceptors.response.use((response) => {
 
         if(!refreshToken) {
             console.log("No refresh token found in session state, redirecting to login...");
-            dispatch(logoutSession());
-            history.push(getAccountPath(match));
+            dispatch(logoutSession())
+            .then(() => {
+                history.push(getAccountPath(match));
+            });
             return Promise.reject(error);
         }
 
