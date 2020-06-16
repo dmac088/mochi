@@ -61,7 +61,9 @@ public class FileController {
 
     @GetMapping("/Product/Download/{fileName:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request, HttpServletResponse response) {
-    	logger.debug("called downloadFile with parameters {} ", fileName );
+    	System.out.println(fileStorageProperties.getDownloadDir());
+    	
+    	logger.debug("called downloadFile with parameters {} ", fileStorageProperties.getDownloadDir() + fileName );
     	
     	//generate the file for downloading
     	File file = new File(fileStorageProperties.getDownloadDir() + fileName);
