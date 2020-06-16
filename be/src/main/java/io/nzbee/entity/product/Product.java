@@ -338,6 +338,7 @@ public abstract class Product {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="prd_sts_id")
+	@IndexedEmbedded(prefix="product.status.")
 	private ProductStatus productStatus;
 
 	@OneToMany(	mappedBy="product",

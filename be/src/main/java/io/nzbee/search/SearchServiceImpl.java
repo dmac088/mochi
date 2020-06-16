@@ -37,6 +37,7 @@ import io.nzbee.entity.product.department.Department;
 import io.nzbee.entity.product.department.attribute.DepartmentAttribute;
 import io.nzbee.entity.product.food.Food;
 import io.nzbee.entity.product.jewellery.Jewellery;
+import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.PageableUtil;
@@ -448,7 +449,9 @@ public class SearchServiceImpl implements ISearchService {
 				   "product.department.departmentDesc" + transLcl,
 				   "countryOfOrigin",
 				   "product.primarycategory.categoryCode",
-				   "product.primarycategory.categoryDesc" + transLcl);
+				   "product.primarycategory.categoryDesc" + transLcl,
+				   "product.status.productStatusCode",
+				   "product.status.productStatusDesc");
 	}
 	
 	private Product mapResultToEntity(Object[] r, String locale, String currency) {
@@ -466,6 +469,11 @@ public class SearchServiceImpl implements ISearchService {
 			pa.setProductDesc(r[2].toString());
 			pa.setProductImage(r[3].toString());
 			pa.setLclCd(locale);
+			
+			ProductStatus ps = new ProductStatus();
+			ps.setCode(r[18].toString());
+			ps.setDesc(r[19].toString());
+			p.setProductStatus(ps);
 			
 			p.setUPC(r[5].toString());
 			p.setProductCreateDt((Date) r[6]);
