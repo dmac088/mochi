@@ -29,12 +29,14 @@ logging:
         
     io:
       nzbee: DEBUG
-      
-      
+     
+
 file:
   upload-dir: data/uploads/
   download-dir: data/downloads/
-  product-master-file: product_master.csv
+  product-master-file: food_master.csv
+  
+
 
 server:
   port: 8090

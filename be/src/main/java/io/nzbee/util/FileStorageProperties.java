@@ -1,9 +1,7 @@
 package io.nzbee.util;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Service;
 
-@Service
 @ConfigurationProperties(prefix = "file")
 public class FileStorageProperties {
     private String uploadDir;

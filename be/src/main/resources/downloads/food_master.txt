@@ -1,0 +1,30 @@
+_BRAND_CODE	_BRAND_DESCRIPTION_EN	_BRAND_DESCRIPTION_HK	_COUNTRY_OF_ORIGIN	_DEPARTMENT_CODE	_DEPARTMENT_DESC_EN	_DEPARTMENT_DESC_HK	_EXPIRY_DATE	_PRIMARY_CATEGORY_CODE	"_PRIMARY_CATEGORY_DESC_EN"	"_PRIMARY_CATEGORY_DESC_HK"	_PRODUCT_CREATED_DATE	_PRODUCT_DESCRIPTION_EN	_PRODUCT_DESCRIPTION_HK	_PRODUCT_IMAGE_EN	_PRODUCT_IMAGE_HK	"_PRODUCT_MARKDOWN_PRICE_HKD"	"_PRODUCT_MARKDOWN_PRICE_USD"	"_PRODUCT_RETAIL_PRICE_HKD"	"_PRODUCT_RETAIL_PRICE_USD"	_PRODUCT_STATUS_CODE	_PRODUCT_UPC_CODE
+PLA01	Planters	Planters	CHN	FOO01	Food	餐飲		DGV01	"Dark Green"	深綠色蔬菜	2019-01-04	brocolli	西兰花	broccoli.jpg	broccoli.jpg	108.0	13.86	120.0	15.4	ACT01	19633678
+GLO01	Glorys	Glorys	CHN	FOO01	Food	餐飲		POM01	Pomes	梨果	2019-02-05	Pears	梨	pears.jpg	pears.jpg	62.1	7.92	69.0	8.8	ACT01	18170258
+DRI01	Driscolls	Driscolls	CHN	FOO01	Food	餐飲		MEL01	Melons	瓜	2019-02-05	"Water Melon"	西瓜	water-melon.jpg	water-melon.jpg	25.2	3.24	28.0	3.6	ACT01	15483827
+ENZ01	Enza	Enza	CHN	FOO01	Food	餐飲		CAS01	Cashews	腰果	2019-02-05	Cashews	腰果	cashews.jpg	cashews.jpg	585.0	74.97	650.0	83.3	ACT01	17152401
+GLO01	Glorys	Glorys	CHN	FOO01	Food	餐飲		OTH01	Other	其他蔬菜	2019-02-05	Corn	玉米	corn.jpg	corn.jpg	67.5	8.64	75.0	9.6	ACT01	15410595
+SHI01	Shine	Shine	CHN	FOO01	Food	餐飲		OTH01	Other	其他蔬菜	2019-02-05	Onion	洋蔥	onion.jpg	onion.jpg	14.4	1.89	16.0	2.1	ACT01	18188784
+DIV01	Diva	Diva	CHN	FOO01	Food	餐飲		OTH01	Other	其他蔬菜	2019-01-04	mushroom	蘑菇	button-mushroom.jpg	button-mushroom.jpg	54.0	6.93	60.0	7.7	ACT01	64377789
+GLO01	Glorys	Glorys	CHN	FOO01	Food	餐飲		ROV01	"Red and Orange"	紅色和橙色蔬菜	2019-01-04	beetroot	红菜头	beetroot.jpg	beetroot.jpg	28.8	3.69	32.0	4.1	ACT01	23739283
+ENZ01	Enza	Enza	CHN	FOO01	Food	餐飲		ONT01	"Other Nuts"	其他堅果	2019-02-05	Walnuts	核桃	walnuts.jpg	walnuts.jpg	153.0	19.62	170.0	21.8	ACT01	16067775
+ENZ01	Enza	Enza	CHN	FOO01	Food	餐飲		CIT01	Citrus	柑橘	2019-02-05	Grapes	葡萄	grapes.jpg	grapes.jpg	54.0	6.93	60.0	7.7	ACT01	10760430
+DIV01	Diva	Diva	CHN	FOO01	Food	餐飲		DGV01	"Dark Green"	深綠色蔬菜	2019-01-04	cucumber	黄瓜	cucumber.jpg	cucumber.jpg	43.2	5.58	48.0	6.2	ACT01	12383658
+DLE01	Dole	Dole	CHN	FOO01	Food	餐飲		BAP01	"Beans and Peas"	豆類和豌豆	2019-01-04	beans	豆子	beans.jpg	beans.jpg	73.8	9.45	82.0	10.5	ACT01	12366678
+DRI01	Driscolls	Driscolls	CHN	FOO01	Food	餐飲		ALM01	Almonds	杏仁	2019-02-05	Almonds	杏仁	almonds.jpg	almonds.jpg	180.0	23.04	200.0	25.6	ACT01	13627671
+GLO01	Glorys	Glorys	CHN	FOO01	Food	餐飲		TRO01	Tropical	熱帶	2019-01-04	mango	芒果	mango.jpg	mango.jpg	67.5	8.64	75.0	9.6	ACT01	12345678
+DRI01	Driscolls	Driscolls	CHN	FOO01	Food	餐飲		OTH01	Other	其他蔬菜	2019-01-04	brinjal	茄子	brinjal.jpg	brinjal.jpg	31.5	4.05	35.0	4.5	ACT01	23477789
+SHI01	Shine	Shine	CHN	FOO01	Food	餐飲		CIT01	Citrus	柑橘	2019-01-04	tomato	番茄	tomato.jpg	tomato.jpg	14.4	1.89	16.0	2.1	ACT01	25556789
+DLE01	Dole	Dole	CHN	FOO01	Food	餐飲		SVG01	Starchy	澱粉蔬菜	2019-02-05	Pumpkin	南瓜	pumpkin.jpg	pumpkin.jpg	43.2	5.58	48.0	6.2	ACT01	13159658
+PLA01	Planters	Planters	CHN	FOO01	Food	餐飲		SVG01	Starchy	澱粉蔬菜	2019-01-04	carrot	胡萝卜	carrots.jpg	carrots.jpg	50.4	6.48	56.0	7.2	ACT01	14445678
+SHI01	Shine	Shine	CHN	FOO01	Food	餐飲		SVG01	Starchy	澱粉蔬菜	2019-01-04	cauliflower	菜花	cauliflower.jpg	cauliflower.jpg	54.0	6.93	60.0	7.7	ACT01	23456645
+GOL01	Gold	Gold	CHN	FOO01	Food	餐飲		CIT01	Citrus	柑橘	2019-01-04	orange	橙子	orange.jpg	orange.jpg	67.5	8.64	75.0	9.6	ACT01	23464789
+ADO01	Adora	Adora	CHN	FOO01	Food	餐飲		TRO01	Tropical	熱帶	2019-02-05	Banana	香蕉	banana.jpg	banana.jpg	40.5	5.22	45.0	5.8	ACT01	17366878
+ENZ01	Enza	Enza	CHN	FOO01	Food	餐飲		SVG01	Starchy	澱粉蔬菜	2019-01-04	potato	土豆	potato.jpg	potato.jpg	19.8	2.52	22.0	2.8	ACT01	76477789
+ADO01	Adora	Adora	CHN	FOO01	Food	餐飲		POM01	Pomes	梨果	2019-02-05	Pomegranate	石榴	pomegranate.jpg	pomegranate.jpg	85.5	10.98	95.0	12.2	ACT01	17235347
+PLA01	Planters	Planters	CHN	FOO01	Food	餐飲		MEL01	Melons	瓜	2019-02-05	"Musk Melon"	麝香甜瓜	musk-melon.jpg	musk-melon.jpg	32.4	4.14	36.0	4.6	ACT01	10688155
+DRI01	Driscolls	Driscolls	CHN	FOO01	Food	餐飲		BER01	Berries	漿果	2019-02-05	RaspberryDan	覆盆子	raspberry.jpg	raspberry.jpg	144.0	18.45	160.0	20.5	ACT01	17236024
+DIV01	Diva	Diva	CHN	FOO01	Food	餐飲		ONT01	"Other Nuts"	其他堅果	2019-02-05	"Nuts Mixture"	堅果混合物	nuts-mixture.jpg	nuts-mixture.jpg	855.0	109.62	950.0	121.8	ACT01	16153782
+SHI01	Shine	Shine	CHN	FOO01	Food	餐飲		BER01	Berries	漿果	2019-02-05	Strawberry	草莓	strawberry.jpg	strawberry.jpg	162.0	20.79	180.0	23.1	ACT01	19037164
+PLA01	Planters	Planters	CHN	FOO01	Food	餐飲		POM01	Pomes	梨果	2019-02-05	Apple	蘋果	apple.jpg	apple.jpg	64.8	8.28	72.0	9.2	ACT01	18911676
+ADO01	Adora	Adora	CHN	FOO01	Food	餐飲		PIS01	Pistachios	開心果	2019-02-05	Pistachio	開心果	pistachio.jpg	pistachio.jpg	171.0	21.96	190.0	24.4	ACT01	15946292
