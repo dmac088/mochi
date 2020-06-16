@@ -599,6 +599,11 @@ INSERT INTO party VALUES (232262, 1);
 INSERT INTO party VALUES (232304, 1);
 INSERT INTO party VALUES (232310, 1);
 INSERT INTO party VALUES (232312, 1);
+INSERT INTO party VALUES (233016, 1);
+INSERT INTO party VALUES (233018, 1);
+INSERT INTO party VALUES (233020, 1);
+INSERT INTO party VALUES (233022, 1);
+INSERT INTO party VALUES (233024, 1);
 
 
 --
@@ -636,6 +641,11 @@ INSERT INTO role VALUES (232263, 1, '2019-07-10', 232262);
 INSERT INTO role VALUES (232305, 1, '2019-07-11', 232304);
 INSERT INTO role VALUES (232311, 1, '2019-07-11', 232310);
 INSERT INTO role VALUES (232313, 1, '2019-07-11', 232312);
+INSERT INTO role VALUES (233017, 1, '2020-06-11', 233016);
+INSERT INTO role VALUES (233019, 1, '2020-06-11', 233018);
+INSERT INTO role VALUES (233021, 1, '2020-06-11', 233020);
+INSERT INTO role VALUES (233023, 1, '2020-06-11', 233022);
+INSERT INTO role VALUES (233025, 1, '2020-06-11', 233024);
 
 
 --
@@ -665,13 +675,18 @@ INSERT INTO customer VALUES (232263, '1000000049');
 INSERT INTO customer VALUES (232305, '1000000070');
 INSERT INTO customer VALUES (232311, '1000000073');
 INSERT INTO customer VALUES (232313, '1000000074');
+INSERT INTO customer VALUES (233017, '1000000264');
+INSERT INTO customer VALUES (233019, '1000000265');
+INSERT INTO customer VALUES (233021, '1000000266');
+INSERT INTO customer VALUES (233023, '1000000267');
+INSERT INTO customer VALUES (233025, '1000000268');
 
 
 --
 -- Name: customer_cst_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('customer_cst_id_seq', 1000000263, true);
+SELECT pg_catalog.setval('customer_cst_id_seq', 1000000268, true);
 
 
 --
@@ -857,7 +872,7 @@ INSERT INTO food_attr_lcl VALUES (58, 18, '不適用', 'zh-HK');
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 233014, true);
+SELECT pg_catalog.setval('hibernate_sequence', 233025, true);
 
 
 --
@@ -977,6 +992,11 @@ INSERT INTO person VALUES (232310, 'Daniel', 'Mackie', true);
 INSERT INTO person VALUES (232312, 'Daniel', 'Mackie', true);
 INSERT INTO person VALUES (232216, 'billy', 'wong', true);
 INSERT INTO person VALUES (232220, 'purple', 'wong', true);
+INSERT INTO person VALUES (233016, 'adam', 'apple', false);
+INSERT INTO person VALUES (233018, 'barry', 'white', false);
+INSERT INTO person VALUES (233020, 'will', 'parkhouse', false);
+INSERT INTO person VALUES (233022, 'john', 'wayne', false);
+INSERT INTO person VALUES (233024, 'bob', 'bob', false);
 
 
 --
