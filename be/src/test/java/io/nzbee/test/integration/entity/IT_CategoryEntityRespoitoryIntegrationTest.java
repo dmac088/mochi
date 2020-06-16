@@ -111,6 +111,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
     }
     
     private void assertAllProductCategoriesFound(final List<Category> found) {
+    	
     	assertThat(found).isNotNull();
     	assertThat(found).size().isEqualTo(42);
     }
