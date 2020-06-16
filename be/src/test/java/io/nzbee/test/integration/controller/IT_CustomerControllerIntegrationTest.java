@@ -54,8 +54,8 @@ public class IT_CustomerControllerIntegrationTest {
     private String TOKEN_ENDPOINT 					= "https://localhost:8090/oauth/token";
     private String OAUTH_AUTHORIZATION 				= "Basic c3ByaW5nLXNlY3VyaXR5LW9hdXRoMi1yZWFkLXdyaXRlLWNsaWVudDpzcHJpbmctc2VjdXJpdHktb2F1dGgyLXJlYWQtd3JpdGUtY2xpZW50LXBhc3N3b3JkMTIzNA==";
     private String OAUTH_CACHE_CONTROL 				= "no-cache";
-    private String OAUTH_TOKEN_USERNAME 			= "admin";
-    private String OAUTH_TOKEN_PASSWORD 			= "admin1234";
+    private String OAUTH_TOKEN_USERNAME 			= "bob@bob";
+    private String OAUTH_TOKEN_PASSWORD 			= "bob";
     private String OAUTH_TOKEN_CLIENTID 			= "spring-security-oauth2-read-write-client";
     private String OAUTH_TOKEN_GRANT_TYPE 			= "password";
     
@@ -75,7 +75,7 @@ public class IT_CustomerControllerIntegrationTest {
     //private Date   CUSTOMER_START_DATE 				= new Date();
     private String CUSTOMER_NUMER 					= "0123498765";
     
-    private String CUSTOMER_USERNAME 				= "dmac1113";
+    private String CUSTOMER_USERNAME 				= "dmac1119";
     private String CUSTOMER_PASSWORD 				= "password";
 
     private HttpHeaders getTokenHeaders() {
