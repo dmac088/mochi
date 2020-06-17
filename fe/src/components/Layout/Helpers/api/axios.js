@@ -54,7 +54,7 @@ instance.interceptors.response.use((response) => {
 
     //when we get 2 or more 401 at the same time, the a duplicate request with the same refresh token is fired
     //to the token endpoint, resulting in a 500 error
-    if (error.response.status === 401 && !originalRequest._retry) {
+    if (error.response && error.response.status === 401 && !originalRequest._retry) {
         console.log('using refresh token to obtain new access token.....');
 
         originalRequest._retry = true;
