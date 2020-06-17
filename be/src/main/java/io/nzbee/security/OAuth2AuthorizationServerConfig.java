@@ -79,7 +79,7 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints
         	.tokenStore(tokenStore())
-        	.reuseRefreshTokens(true)
+        	.reuseRefreshTokens(false)
         	.tokenEnhancer(tokenEnhancer())
         	.accessTokenConverter(accessTokenConverter())
         	.authenticationManager(authenticationManager)
