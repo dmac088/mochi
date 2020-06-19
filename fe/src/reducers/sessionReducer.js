@@ -12,35 +12,35 @@ const initialState = {
   export default function(state = initialState, action) {
     switch (action.type) {
 
-      case GET_SESSION_STARTED:
+    case GET_SESSION_STARTED:
       return {
         ...state,
         loading: true,
-    }
+      }
 
     case GET_SESSION_SUCCESS:
       return {
         ...state,
         ...action.payload,
         loading: false,
-    }
+      }
 
     case GET_SESSION_FAILURE:
       return {
         ...state,
         loading: false,
         error: action.payload.error
-    }
+      }
 
     case RESET_SESSION:
-    return {
+      return {
         ...initialState.tokens,
         loading: false,
         error: null,
         authenticated: false,
-    }
+      }
 
       default:
         return state;
-    }
+      }
   }
