@@ -1,22 +1,35 @@
-import { GET_CATEGORIES_SUCCESS } from "../actions/ActionTypes";
+import { GET_CATEGORIES_STARTED,
+         GET_CATEGORIES_SUCCESS,
+         GET_CATEGORIES_FAILURE } from "../actions/ActionTypes";
 
-const initialState = {
-  categories: [],
-  category: {},
-  links: {}
-};
+  const initialState = {
+    loading: false,
+    error: null,
+  };
 
-export default function(state = initialState, action) {
-  switch (action.type) {
-    //GET CAPABILITIES
-    //OTHER REDUCER ACTIONS.
-    case GET_CATEGORIES_SUCCESS:
-      return {
-        ...state,
-        categories: action.payload,
-      };
+  export default function(state = initialState, action) {
+    switch (action.type) {
 
-    default:
-      return state;
+      case GET_CATEGORIES_STARTED:
+        return {
+          ...state,
+          loading: true,
+        }
+
+      case GET_CATEGORIES_SUCCESS:
+        return {
+          ...state,
+          ...action.payload,
+        };
+
+      case GET_CATEGORIES_FAILURE:
+        return {
+          ...state,
+          loading: false,
+          error: action.payload.error
+        }
+
+      default:
+        return state;
+    }
   }
-}

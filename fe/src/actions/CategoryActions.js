@@ -4,20 +4,23 @@ import {  GET_CATEGORIES_STARTED,
           GET_CATEGORIES_SUCCESS,
           GET_CATEGORIES_FAILURE } from "./ActionTypes";
 
-export const getAllCategories = () => dispatch => {
-  discoveryService.discoverAll()
+export const getAllCategories = () => {
+  return (dispatch, getState) => {
+
+    dispatch(getCategoriesStarted());
+
+    discoveryService.discoverAll('en-GB', 'HKD')
     .then((response) => {
-      
       axios.get(response.data._links.allCategories.href)
-        .then((payload) => {
-          return payload.data._embedded.categoryResources;
-        }).then((categories) => {
-          dispatch({
-            type: GET_CATEGORIES_SUCCESS,
-            payload: categories,
-          });
-        });
+      .then((payload) => {
+        return payload.data._embedded.categoryResources;
+      }).then((categories) => {
+        dispatch(getCategoriesSuccess(categories));
+      }).catch((error) => {
+        dispatch(getCategoriesFailure(error.response));
+      });
     });
+  }
 }
 
 const getCategoriesStarted = () => ({
