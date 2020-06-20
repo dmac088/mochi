@@ -5,7 +5,7 @@ import sessionReducer from "./sessionReducer";
 import customerReducer from "./customerReducer";
 
 export default combineReducers({
-  category: categoryReducer,
+  categories: categoryReducer,
   discovery: discoveryReducer,
   session: sessionReducer,
   customer: customerReducer,

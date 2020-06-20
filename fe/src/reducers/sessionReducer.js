@@ -3,11 +3,11 @@ import { GET_SESSION_STARTED,
          GET_SESSION_FAILURE,
          RESET_SESSION} from "../actions/ActionTypes";
 
-const initialState = { 
-  loading: false,
-  error: null,
-  authenticated: false,
-};
+  const initialState = { 
+    loading: false,
+    error: null,
+    authenticated: false,
+  };
   
   export default function(state = initialState, action) {
     switch (action.type) {
@@ -40,7 +40,7 @@ const initialState = {
         authenticated: false,
       }
 
-      default:
-        return state;
-      }
+    default:
+      return state;
+    }
   }

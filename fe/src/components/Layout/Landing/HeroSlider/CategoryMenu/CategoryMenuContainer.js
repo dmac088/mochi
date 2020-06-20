@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import CategoryMenu from "./CategoryMenu";
+import { useDispatch, useSelector } from 'react-redux'
 import 'velocity-animate/velocity.ui';
 import { isMobile } from '../../../Helpers/Mobile/Mobile';
+import { getAllCategories } from '../../../../../actions/CategoryActions';
 
 function CategoryMenuContainer(props) {
 
@@ -30,6 +32,8 @@ function CategoryMenuContainer(props) {
     useEffect(() => {
         renderMenu(!isMobile());
 
+        dispatch(getAllCategories());
+
         // initiate the event handler
         window.addEventListener('resize', renderMenu, { passive: true });
 
@@ -38,6 +42,11 @@ function CategoryMenuContainer(props) {
             window.removeEventListener('resize', renderMenu, { passive: true });
         };
     }, []);
+
+    const dispatch = useDispatch();
+
+    const state = useSelector(state => state);
+    console.log(state);
 
     return (
 
