@@ -52,9 +52,9 @@ export const reauthenticate = () => {
     form.append('refresh_token', refreshToken);
     form.append('grant_type', 'refresh_token');
 
-    if(!refreshToken) { 
+    if (!refreshToken) {
       console.log("No refresh token found in localstorage");
-      return; 
+      return;
     }
 
     return axios.post(

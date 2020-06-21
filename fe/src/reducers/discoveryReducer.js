@@ -1,4 +1,6 @@
-import { GET_DISCOVERY } from "../actions/ActionTypes";
+import { GET_DISCOVERY_STARTED,
+         GET_DISCOVERY_SUCCESS,
+         GET_DISCOVERY_FAILURE } from "../actions/ActionTypes";
 
 const initialState = {
   links: {}
@@ -6,13 +8,25 @@ const initialState = {
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    //GET CAPABILITIES
-    //OTHER REDUCER ACTIONS.
-    case GET_DISCOVERY:
+
+    case GET_DISCOVERY_STARTED:
       return {
         ...state,
-        links: action.payload,
+        loading: true,
+      }
+
+    case GET_DISCOVERY_SUCCESS:
+      return {
+        ...state,
+        ...action.payload,
       };
+
+    case GET_DISCOVERY_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error
+      }
 
     default:
       return state;
