@@ -5,7 +5,7 @@ import  { GET_DISCOVERY_STARTED,
         } from "./ActionTypes";
 
 export const discover = (lang, curr) => { 
-    return (dispatch, getState) => {
+    return (dispatch) => {
      
         dispatch(getDiscoveryStarted());
 
