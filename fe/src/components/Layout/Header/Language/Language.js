@@ -2,19 +2,21 @@ import React from "react";
 import  selector  from './lang/selector';
 import { generatePath } from 'react-router';
 
-const changeLang = (e, match, history) => {
-    e.preventDefault();
-    const lang = e.currentTarget.id;
-    const { curr } = match.params; 
-    const { path } = match;
-    const newPath = generatePath(path, { lang: lang,
-                                         curr: curr } );
-    history.replace(newPath);
-}
-
-export const Language = (props) => {
+function Language(props) {
     const { match, history } = props; 
     const { lang } = match.params;
+
+    const changeLang = (e, match, history) => {
+        e.preventDefault();
+        
+        const lang = e.currentTarget.id;
+        const { curr } = match.params; 
+        const { path } = match;
+        const newPath = generatePath(path, { lang: lang,
+                                             curr: curr } );
+           
+        history.replace(newPath);
+    }
 
     return (
         <li data-testid="language"> <a id="language" href="#">{selector[lang]}<i className="fa fa-chevron-down"></i></a>
@@ -23,7 +25,7 @@ export const Language = (props) => {
                 <li><a href="#" id="zh-HK" onClick={(e) => changeLang(e, match, history)}>Chinese</a></li>
             </ul>
         </li>
-    );
+    )
 };
 
 export default Language;

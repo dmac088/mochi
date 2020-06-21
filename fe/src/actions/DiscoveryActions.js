@@ -27,6 +27,7 @@ export const discover = () => {
     payload: {
       ...links,
       loading: false,
+      loaded: true,
     }
   });
   
@@ -34,5 +35,6 @@ export const discover = () => {
     type: GET_DISCOVERY_FAILURE,
     payload: {
       error,
+      loaded: false,
     }
   });

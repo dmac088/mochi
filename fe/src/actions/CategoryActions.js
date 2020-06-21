@@ -1,5 +1,4 @@
 import { instance as axios } from "../components/Layout/Helpers/api/axios";
-import * as discoveryService from '../services/Discovery';
 import {  GET_CATEGORIES_STARTED,
           GET_CATEGORIES_SUCCESS,
           GET_CATEGORIES_FAILURE } from "./ActionTypes";
@@ -10,19 +9,15 @@ export const getAllCategories = () => {
     dispatch(getCategoriesStarted());
 
     const state = getState();
-    console.log(state);
-    //const { href } = state.discovery.customer;
-
-    discoveryService.discoverAll('en-GB', 'HKD')
-    .then((response) => {
-      axios.get(response.data._links.allCategories.href)
-      .then((payload) => {
-        return payload.data._embedded.categoryResources;
-      }).then((categories) => {
-        dispatch(getCategoriesSuccess(categories));
-      }).catch((error) => {
-        dispatch(getCategoriesFailure(error.response));
-      });
+    const { href } = state.discovery.allCategories;
+    
+    axios.get(href)
+    .then((payload) => {
+      return payload.data._embedded.categoryResources;
+    }).then((categories) => {
+      dispatch(getCategoriesSuccess(categories));
+    }).catch((error) => {
+      dispatch(getCategoriesFailure(error.response));
     });
   }
 }
