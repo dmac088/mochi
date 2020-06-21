@@ -7,12 +7,12 @@ import { GET_CUSTOMER_STARTED,
          REGISTER_CUSTOMER_SUCCESS,
          REGISTER_CUSTOMER_FAILURE } from "./ActionTypes";
 
-export const findByUserName = dispatch => {  
+export const findByUserName = () => {  
   return (dispatch, getState) => {
 
     const state = getState();
     const { userName } = state.session;
-    const { href } = state.discovery.links.customer;
+    const { href } = state.discovery.customer;
 
     dispatch(getCustomerStarted());
 
