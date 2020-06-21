@@ -334,9 +334,7 @@ export class App extends Component {
   getHello = () => {
     return "Hello World!";
   }
-
-
-  render() {
+render() {
     return (
         <Switch>
           <Route path={"/:locale/:currency"}          exact={true}                                    render={()   => this.renderLayout(this.renderLanding)}        />
