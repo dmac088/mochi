@@ -29,6 +29,11 @@ function CategoryMenuContainer(props) {
         }));
     }
 
+    const getCategory = (categories, code) => {
+        if(!categories) { return; }
+        return categories.filter( o => o.data.categoryCode === code )[0];
+    }
+
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -57,6 +62,7 @@ function CategoryMenuContainer(props) {
             <nav className="category-menu" >
                 <CategoryMenu
                     {...props}
+                    category={getCategory(categories, 'FRT01')}
                     categories={categories}
                     in={stateObject.menuVisible}
                     isMobile={stateObject.isMobile} />
