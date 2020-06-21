@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import CategoryMenu from "./CategoryMenu";
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
 import 'velocity-animate/velocity.ui';
 import { isMobile } from '../../../Helpers/Mobile/Mobile';
 import { getAllCategories } from '../../../../../actions/CategoryActions';
