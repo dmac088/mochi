@@ -2,7 +2,6 @@ import React from 'react';
 import { TransitionGroup, Transition } from 'react-transition-group'
 import { slide } from "../../../Helpers/Animation/Slide";
 import CategoryMenuItem from './CategoryMenuItem/CategoryMenuItem';
-import { mockCategory, mockCategoryList } from './mockData';
 
 function CategoryMenu(props) {
     const { isMobile, categories } = props;
@@ -49,8 +48,6 @@ function CategoryMenu(props) {
         container = c;
     }
 
-    //console.log(categories);
-
     return (
 
         <Transition
@@ -68,7 +65,6 @@ function CategoryMenu(props) {
                     isRoot={true}
                     renderList={null}
                     fullList={categories}
-                    category={mockCategory}
                     renderCategoryList={renderCategoryList}
                     itemCounter={0}
                 />
