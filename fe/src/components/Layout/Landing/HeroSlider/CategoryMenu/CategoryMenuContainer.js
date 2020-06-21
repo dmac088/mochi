@@ -29,6 +29,8 @@ function CategoryMenuContainer(props) {
         }));
     }
 
+    const dispatch = useDispatch();
+
     useEffect(() => {
         renderMenu(!isMobile());
 
@@ -43,10 +45,7 @@ function CategoryMenuContainer(props) {
         };
     }, []);
 
-    const dispatch = useDispatch();
-
-    const state = useSelector(state => state);
-    console.log(state);
+    const categories = useSelector(state => state.categories.list);
 
     return (
 
@@ -58,6 +57,7 @@ function CategoryMenuContainer(props) {
             <nav className="category-menu" >
                 <CategoryMenu
                     {...props}
+                    categories={categories}
                     in={stateObject.menuVisible}
                     isMobile={stateObject.isMobile} />
             </nav>

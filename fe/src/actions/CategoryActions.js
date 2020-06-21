@@ -30,7 +30,7 @@ const getCategoriesStarted = () => ({
 const getCategoriesSuccess = categories => ({
   type: GET_CATEGORIES_SUCCESS,
   payload: {
-    ...categories,
+    list: categories,
     loading: false,
   }
 });

@@ -29,7 +29,7 @@ function CategoryMenuItem(props) {
     }
 
     const getChildren = (parent, categories, children) => {
-        const c = categories._embedded.categoryResources.filter(o => o.data.parentCode === parent.data.categoryCode);
+        const c = categories.filter(o => o.data.parentCode === parent.data.categoryCode);
         if (c.length === 0) {
             return children;
         }
