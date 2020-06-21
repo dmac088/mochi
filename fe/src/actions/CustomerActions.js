@@ -12,7 +12,7 @@ export const findByUserName = () => {
 
     const state = getState();
     const { userName } = state.session;
-    const { href } = state.discovery.customer;
+    const { href } = state.discovery.links.customer;
 
     dispatch(getCustomerStarted());
 

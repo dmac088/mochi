@@ -19,10 +19,16 @@ const localStorageService = LocalStorageService.getService();
 
 //Add a request interceptor
 instance.interceptors.request.use(config => {
-    console.log(config.url);
-
+    
     const state = store.getState();
+    let { url } = config;
 
+    const match = {
+        params: { ...params },
+    };
+
+    url = url.replace('{locale}', match.params.lang);
+    url = url.replace('{currency}', match.params.curr);
     //firstly try to retrieve the token from the file system, then try redux
     const token = state.session.access_token;
 
@@ -33,7 +39,7 @@ instance.interceptors.request.use(config => {
     // config.headers['Content-Type'] = 'application/json';
     return {
         ...config,
-        //url: 'http://'
+        url: url,
     };
 },
     error => {
