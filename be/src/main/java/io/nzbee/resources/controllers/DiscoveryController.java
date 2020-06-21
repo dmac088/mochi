@@ -3,7 +3,6 @@ package io.nzbee.resources.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,9 +16,9 @@ public class DiscoveryController {
 	@Autowired
 	private Globals globalVars;
 	
-	@GetMapping("/Discovery/{locale}/{currency}")
-	public ResponseEntity<DiscoveryResource> getCategory(@PathVariable String locale, @PathVariable String currency) {
-		DiscoveryResource dr = new DiscoveryResource(globalVars.getBaseURL(), locale, currency);
+	@GetMapping("/Discovery")
+	public ResponseEntity<DiscoveryResource> getDiscovery() {
+		DiscoveryResource dr = new DiscoveryResource(globalVars.getBaseURL(), null, null);
 		return ResponseEntity.ok(dr);
 	}
 	

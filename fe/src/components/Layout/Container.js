@@ -9,33 +9,13 @@ import { discover } from "../../actions/DiscoveryActions";
 import { reauthenticate } from "../../actions/SessionActions";
 
 function Container(props) {
-    const { path, params } = props.match;
-
-    const { lang, curr } = params;
-    const prevParams = usePrevious({lang, curr});
-
+    const { path } = props.match;
     const dispatch = useDispatch();
-
-    function usePrevious(value) {
-        const ref = useRef();
-        useEffect(() => {
-          ref.current = value;
-        });
-        return ref.current;
-    }
 
     useEffect(() => {
         dispatch(reauthenticate());
-        dispatch(discover(lang, curr));
+        dispatch(discover());
     }, []);
-
-    //if the language or the currency changes be sure to refresh teh urls
-    useEffect(() => {
-        if(!prevParams) { return;}
-        if(prevParams.lang !== lang || prevParams.curr !== curr) {
-            dispatch(discover(lang, curr));
-        }
-    }, [lang, curr])
 
     return (
         <React.Fragment>

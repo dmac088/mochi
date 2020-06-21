@@ -18,7 +18,7 @@ export default function(state = initialState, action) {
     case GET_DISCOVERY_SUCCESS:
       return {
         ...state,
-        ...action.payload,
+        links: action.payload,
       };
 
     case GET_DISCOVERY_FAILURE:
