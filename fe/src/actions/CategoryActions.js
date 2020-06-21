@@ -9,6 +9,10 @@ export const getAllCategories = () => {
 
     dispatch(getCategoriesStarted());
 
+    const state = getState();
+    console.log(state);
+    //const { href } = state.discovery.customer;
+
     discoveryService.discoverAll('en-GB', 'HKD')
     .then((response) => {
       axios.get(response.data._links.allCategories.href)
