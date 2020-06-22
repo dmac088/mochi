@@ -39,8 +39,6 @@ function CategoryMenuContainer(props) {
     useEffect(() => {
         renderMenu(!isMobile());
 
-        dispatch(getAllCategories());
-
         // initiate the event handler
         window.addEventListener('resize', renderMenu, { passive: true });
 
