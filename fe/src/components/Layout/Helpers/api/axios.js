@@ -27,6 +27,7 @@ instance.interceptors.request.use(config => {
         params: { ...params },
     };
 
+    console.log(url);
     url = url.replace('{locale}', match.params.lang);
     url = url.replace('{currency}', match.params.curr);
     //firstly try to retrieve the token from the file system, then try redux

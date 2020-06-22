@@ -5,7 +5,7 @@ import Footer from "./Footer/Footer";
 import BreadCrumb from "./BreadCrumb/BreadCrumb";
 import Scroller from "../Layout/Scroller/Scroller";
 import { isHomePath } from './Helpers/Route/Route';
-import { discover } from "../../actions/DiscoveryActions";
+import { initialize } from "../../actions/DiscoveryActions";
 import { reauthenticate } from "../../actions/SessionActions";
 
 function Container(props) {
@@ -14,7 +14,7 @@ function Container(props) {
 
     useEffect(() => {
         dispatch(reauthenticate());
-        dispatch(discover());
+        dispatch(initialize());
     }, []);
 
     return (

@@ -9,7 +9,6 @@ import { GET_CATEGORIES_STARTED,
 
   export default function(state = initialState, action) {
     switch (action.type) {
-
       case GET_CATEGORIES_STARTED:
         return {
           ...state,
