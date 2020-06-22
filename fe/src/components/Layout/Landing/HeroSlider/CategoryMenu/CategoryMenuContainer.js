@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import CategoryMenu from "./CategoryMenu";
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import 'velocity-animate/velocity.ui';
 import { isMobile } from '../../../Helpers/Mobile/Mobile';
-import { getAllCategories } from '../../../../../actions/CategoryActions';
 
 function CategoryMenuContainer(props) {
 
@@ -33,8 +32,6 @@ function CategoryMenuContainer(props) {
         if(!categories) { return; }
         return categories.filter( o => o.data.categoryCode === code )[0];
     }
-
-    const dispatch = useDispatch();
 
     useEffect(() => {
         renderMenu(!isMobile());
