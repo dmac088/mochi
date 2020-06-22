@@ -9,16 +9,18 @@ export const getAllCategories = () => {
     dispatch(getCategoriesStarted());
 
     const state = getState();
-    const { href } = state.discovery.allCategories;
-    
-    axios.get(href)
-    .then((payload) => {
-      return payload.data._embedded.categoryResources;
-    }).then((categories) => {
-      dispatch(getCategoriesSuccess(categories));
-    }).catch((error) => {
-      dispatch(getCategoriesFailure(error.response));
-    });
+    if (state.discovery.loaded) {
+      axios.get(state.discovery.href)
+      .then((payload) => {
+        return payload.data._embedded.categoryResources;
+      }).then((categories) => {
+        dispatch(getCategoriesSuccess(categories));
+      }).catch((error) => {
+        dispatch(getCategoriesFailure(error.response));
+      });
+    } else {
+      
+    } 
   }
 }
 
