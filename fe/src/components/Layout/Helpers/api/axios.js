@@ -3,6 +3,7 @@ import store from '../../../../store';
 import LocalStorageService from "../Storage/LocalStorageService";
 import { getAccountPath } from '../../Helpers/Route/Route';
 import { history, params } from '.././../Helpers/Route/History';
+import { matchPath } from 'react-router'
 import { refreshTokens, logoutSession } from '../../../../actions/SessionActions';
 import * as apiConfig from '../../../../services/api'; 
 
@@ -23,11 +24,11 @@ instance.interceptors.request.use(config => {
     const state = store.getState();
     let { url } = config;
 
-    const match = {
-        params: { ...params },
-    };
-
-    console.log(history.location.pathname);
+    const match = matchPath(history.location.pathname, {
+        path: "/:lang/:curr",
+        exact: true,
+        strict: true
+    });
 
     url = url.replace('{locale}', match.params.lang);
     url = url.replace('{currency}', match.params.curr);
@@ -59,9 +60,11 @@ instance.interceptors.response.use((response) => {
     const originalRequest = error.config;
 
     //mock a match object for our params
-    const match = {
-        params: { ...params },
-    };
+    const match = matchPath(history.location.pathname, {
+        path: "/:lang/:curr",
+        exact: true,
+        strict: true
+    });
 
     //get the token link
     const tokenLink = 'https://localhost:8090/oauth/token';
