@@ -26,7 +26,7 @@ instance.interceptors.request.use(config => {
 
     const match = matchPath(history.location.pathname, {
         path: "/:lang/:curr",
-        exact: true,
+        exact: false,
         strict: true
     });
 
