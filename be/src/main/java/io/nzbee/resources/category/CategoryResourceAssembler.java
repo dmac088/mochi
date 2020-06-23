@@ -47,8 +47,7 @@ public class CategoryResourceAssembler extends ResourceAssemblerSupport<Category
 																		category.getLocale(), 
 																	 	category.getCurrency(), 
 																	 	category.getCategoryCode(),
-																	 	0,
-																	 	10,
+																	 	null,
 																	 	parAssembler
 																)).withRel("products"));
 		}

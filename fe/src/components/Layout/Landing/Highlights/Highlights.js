@@ -1,7 +1,12 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import Category from './Tabs/Category';
 
 function Highlights() {
+
+  const categories = useSelector(state => state.categories.list);
+
+  console.log(categories);
 
   return (
     <div className="slider tab-slider mb-35">

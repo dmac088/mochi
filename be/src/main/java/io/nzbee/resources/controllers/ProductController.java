@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.PagedResources;
@@ -46,19 +47,18 @@ public class ProductController {
     public ResponseEntity<PagedResources<ProductResource>> getProducts(@PathVariable String locale, 
 															    	   @PathVariable String currency, 
 															    	   @PathVariable String categoryCode,
-															    	   @RequestParam("page") int page,
-															    	   @RequestParam("size") int size,
+															    	   Pageable pageable,
 															    	   @SuppressWarnings("rawtypes") PagedResourcesAssembler assembler) {
     	
-    	LOGGER.debug("Fetching products for parameters : {}, {}, {}, {}, {}", locale, currency, categoryCode, page, size);
+    	LOGGER.debug("Fetching products for parameters : {}, {}, {}, {}, {}", locale, currency, categoryCode, pageable.getPageNumber(), pageable.getPageSize());
     	
     	final Page<Product> pages =
     					productService.findAll(	
     									locale, 
     									currency,
     									categoryCode, 
-    									page, 
-    									size,
+    									pageable.getPageNumber(), 
+    									pageable.getPageSize(),
     									new HashSet<IFacet>(), 
     									"1");
     			
