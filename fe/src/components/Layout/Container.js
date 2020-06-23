@@ -12,7 +12,6 @@ function Container(props) {
     const { path, params } = props.match;
     const { lang, curr } = params;
     const prevParams = usePrevious({lang, curr});
-    console.log(prevParams);    
 
     const dispatch = useDispatch();
 
