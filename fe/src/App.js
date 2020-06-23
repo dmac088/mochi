@@ -9,7 +9,7 @@ import "./assets/css/plugins.css";
 import "./assets/css/helper.css";
 import Account from "./components/Layout/Account/Account";
 import Landing from "./components/Layout/Landing/Landing";
-import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+import { Router, Route, Switch, Redirect } from "react-router-dom";
 import NotFound from "./components/Layout/NotFound";
 import Dashboard from "./components/CategoryTool/Dashboard";
 import Contact from "./components/Layout/Contact/Contact";

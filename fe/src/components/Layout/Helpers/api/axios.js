@@ -2,7 +2,7 @@ import axios from "axios";
 import store from '../../../../store';
 import LocalStorageService from "../Storage/LocalStorageService";
 import { getAccountPath } from '../../Helpers/Route/Route';
-import { history, params, accountParams } from '.././../Helpers/Route/History';
+import { history, params } from '.././../Helpers/Route/History';
 import { refreshTokens, logoutSession } from '../../../../actions/SessionActions';
 import * as apiConfig from '../../../../services/api'; 
 
@@ -27,9 +27,11 @@ instance.interceptors.request.use(config => {
         params: { ...params },
     };
 
-    console.log(url);
+    console.log(history.location.pathname);
+
     url = url.replace('{locale}', match.params.lang);
     url = url.replace('{currency}', match.params.curr);
+    console.log(url);
     //firstly try to retrieve the token from the file system, then try redux
     const token = state.session.access_token;
 
