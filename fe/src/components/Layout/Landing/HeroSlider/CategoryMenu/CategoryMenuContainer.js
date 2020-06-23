@@ -3,8 +3,11 @@ import CategoryMenu from "./CategoryMenu";
 import { useSelector } from 'react-redux';
 import 'velocity-animate/velocity.ui';
 import { isMobile } from '../../../Helpers/Mobile/Mobile';
+import { localization } from '../../../../Layout/Localization/Localization';
 
 function CategoryMenuContainer(props) {
+    const { match } = props;
+    const { lang } = match.params;
 
     const [stateObject, setObjectState] = useState({
         menuVisible: false,
@@ -52,7 +55,7 @@ function CategoryMenuContainer(props) {
         <div className="hero-side-category">
             <div className="category-toggle-wrap">
                 <button onClick={toggleVisible} className="category-toggle">
-                    <span className="arrow_carrot-right_alt2 mr-2"></span> All Categories</button>
+                    <span className="arrow_carrot-right_alt2 mr-2"></span> {localization[lang]['allcategories']}</button>
             </div>
             <nav className="category-menu" >
                 <CategoryMenu
