@@ -16,6 +16,8 @@ function Container(props) {
         dispatch(reauthenticate());
     }, []);
 
+    //we really only want to reinitialize on a change of locale or currency
+    //not on every reload, but worry about this later
     useEffect(() => {
         dispatch(initialize());
     });
