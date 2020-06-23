@@ -21,6 +21,7 @@ export const localization = {
         "payment": "Payment",
         "address": "Address",
         "accountdetails": "Account Details",
+        "allcategories": "All Categories",
 
     },
     "zh-HK": {
@@ -37,5 +38,6 @@ export const localization = {
         "phone": "電話",
         "items": "項目",
         "searchyourproduct": "搜索你的產品",
+        "allcategories": "所有類別",
     }
 }
