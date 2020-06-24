@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.ResourceAssembler;
+import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +33,7 @@ public class SearchController {
     private IProductPortService productService;
 	
 	@Autowired
-    private ResourceAssembler<Product, ProductResource> prodAssembler;
+    private RepresentationModelAssemblerSupport<Product, ProductResource> prodAssembler;
 	
 	@PostMapping(value = "/Search/{locale}/{currency}/Category/{category}/SortBy/{sortBy}",
     					params = { "q", "page", "size" })

@@ -1,9 +1,6 @@
 package io.nzbee.resources.search;
 
-import org.springframework.hateoas.PagedResources;
-import org.springframework.hateoas.Resource;
-import org.springframework.hateoas.ResourceAssembler;
-import org.springframework.hateoas.ResourceSupport;
+import org.springframework.hateoas.RepresentationModel;
 import io.nzbee.domain.ports.IProductPortService;
 import io.nzbee.domain.product.Product;
 import io.nzbee.resources.product.ProductResource;
@@ -17,7 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PagedResourcesAssembler;
 
 
-public class SearchResource extends ResourceSupport {
+public class SearchResource extends RepresentationModel {
 	
     private PagedResources<Resource<ProductResource>> products;
     

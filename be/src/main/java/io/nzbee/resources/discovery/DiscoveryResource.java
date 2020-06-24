@@ -1,14 +1,13 @@
 package io.nzbee.resources.discovery;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import org.springframework.hateoas.Link;
-import org.springframework.hateoas.ResourceSupport;
+import org.springframework.hateoas.RepresentationModel;
 import io.nzbee.resources.controllers.BrandController;
 import io.nzbee.resources.controllers.CategoryController;
 import io.nzbee.resources.controllers.CustomerController;
 
-public class DiscoveryResource extends ResourceSupport {
+public class DiscoveryResource extends RepresentationModel<DiscoveryResource>{
 
 	public DiscoveryResource(String rootURL, String locale, String currency) {
 		this.add(linkTo(methodOn(BrandController.class).getBrands(null, null)).withRel("allBrands"));

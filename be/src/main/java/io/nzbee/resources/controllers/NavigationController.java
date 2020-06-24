@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.web.PagedResourcesAssembler;
-import org.springframework.hateoas.PagedResources;
-import org.springframework.hateoas.ResourceAssembler;
+import org.springframework.hateoas.PagedModel;
+import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,7 +31,7 @@ public class NavigationController {
 	@SuppressWarnings("unchecked")
 	@PostMapping(value = "/Product/{locale}/{currency}/category/{category}/maxPrice/{price}/sortBy/{sortBy}",
 				 params = { "page", "size" })
-	public ResponseEntity<PagedResources<ProductResource>> getProducts(	
+	public ResponseEntity<PagedModel<ProductResource>> getProducts(	
 										@PathVariable String locale, 
 										@PathVariable String currency, 
 										@PathVariable String category,
@@ -41,7 +41,7 @@ public class NavigationController {
 										@PathVariable String sortBy,
 										@RequestBody final FacetContainer selectedFacets,
 			    						@SuppressWarnings("rawtypes") PagedResourcesAssembler assembler,
-			    						ResourceAssembler<Product, ProductResource> prodAssembler) {
+			    						RepresentationModelAssemblerSupport<Product, ProductResource> prodAssembler) {
 		
 		final Page<Product> pages = navigationService.findAll(	locale, 
 																currency, 
@@ -53,18 +53,18 @@ public class NavigationController {
 																sortBy);
 		
 		final Page<ProductResource> prPages = new PageImpl<ProductResource>(pages.stream()
-				.map(p -> prodAssembler.toResource(p))
+				.map(p -> prodAssembler.toModel(p))
 				.collect(Collectors.toList()),
 				pages.getPageable(),
 				pages.getTotalElements());
 	   	
-		return new ResponseEntity< >(assembler.toResource(prPages), HttpStatus.OK); 
+		return new ResponseEntity< >(assembler.toModel(prPages), HttpStatus.OK); 
 	}
 
 	@SuppressWarnings("unchecked")
 	@PostMapping(value = "/Product/{locale}/{currency}/category/{category}/sortBy/{sortBy}",
 			 	 params = { "page", "size" })
-	public ResponseEntity<PagedResources<ProductResource>> getProducts(	
+	public ResponseEntity<PagedModel<ProductResource>> getProducts(	
 										@PathVariable String 			locale, 
 										@PathVariable String 			currency, 
 										@PathVariable 					String 	category,
@@ -88,7 +88,7 @@ public class NavigationController {
 				pages.getPageable(),
 				pages.getTotalElements());
 		
-		return new ResponseEntity< >(assembler.toResource(prPages), HttpStatus.OK); 
+		return new ResponseEntity< >(assembler.toModel(prPages), HttpStatus.OK); 
 	}
 	
 }

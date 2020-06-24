@@ -1,14 +1,18 @@
 package io.nzbee.resources.brand;
 
-import org.springframework.hateoas.ResourceSupport;
+import org.springframework.hateoas.RepresentationModel;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import io.nzbee.domain.brand.Brand;
 
-public class BrandResource extends ResourceSupport {
+public class BrandResource extends RepresentationModel<BrandResource> {
 
 	private final Brand data;
 	
-	
-	public BrandResource(Brand brand) {
+	@JsonCreator
+	public BrandResource(@JsonProperty("brand") Brand brand) {
 		this.data = brand;
 		
 	}
