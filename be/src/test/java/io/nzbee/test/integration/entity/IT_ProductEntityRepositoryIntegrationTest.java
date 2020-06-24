@@ -51,15 +51,15 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	@TestConfiguration
     static class ProductEntityRepositoryIntegrationTest {
         
-        @Bean(value = "productEntityService")
-        public io.nzbee.entity.product.IProductService productService() {
-            return new io.nzbee.entity.product.ProductServiceImpl();
-        }
-        
-        @Bean(value = "productEntityBeanFactory")
-        public ProductEntityBeanFactory productFactoryBean() {
-            return new ProductEntityBeanFactory();
-        }
+//        @Bean(value = "productEntityService")
+//        public io.nzbee.entity.product.IProductService productService() {
+//            return new io.nzbee.entity.product.ProductServiceImpl();
+//        }
+//        
+//        @Bean(value = "productEntityBeanFactory")
+//        public ProductEntityBeanFactory productFactoryBean() {
+//            return new ProductEntityBeanFactory();
+//        }
     }
 	
 	@Autowired

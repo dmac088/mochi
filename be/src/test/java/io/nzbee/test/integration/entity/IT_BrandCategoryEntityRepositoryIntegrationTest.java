@@ -24,6 +24,7 @@ import io.nzbee.Globals;
 import io.nzbee.domain.product.Product;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.ICategoryService;
+import io.nzbee.resources.product.ProductResource;
 import io.nzbee.test.integration.beans.CategoryEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
@@ -44,19 +45,14 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
  
 	@TestConfiguration
     static class BrandCategoryEntityRepositoryIntegrationTest {
-        
-        @Bean(value = "categoryEntityService")
-        public ICategoryService categoryService() {
-            return new io.nzbee.entity.category.CategoryServiceImpl();
+            
+        @Bean(value = "pagedProductResourceAssembler")
+        public PagedResourcesAssembler<ProductResource> pagedProductResourceAssembler() {
+        	return new PagedResourcesAssembler<ProductResource>(null, null);
         }
         
-        @Bean(value = "categoryEntityBeanFactory")
-        public CategoryEntityBeanFactory categoryFactoryBean() {
-            return new CategoryEntityBeanFactory();
-        }
-        
-        @Bean(value = "pagedResourceAssembler")
-        public PagedResourcesAssembler<Product> pagedResourceAssembler() {
+        @Bean(value = "pagedProductAssembler")
+        public PagedResourcesAssembler<Product> pagedProductAssembler() {
         	return new PagedResourcesAssembler<Product>(null, null);
         }
     }
