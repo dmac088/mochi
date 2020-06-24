@@ -1,6 +1,9 @@
 package io.nzbee.resources.search;
 
 import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import io.nzbee.domain.ports.IProductPortService;
 import io.nzbee.domain.product.Product;
 import io.nzbee.resources.product.ProductResource;
@@ -14,9 +17,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PagedResourcesAssembler;
 
 
-public class SearchResource extends RepresentationModel {
+public class SearchResource extends RepresentationModel<SearchResource> {
 	
-    private PagedResources<Resource<ProductResource>> products;
+    private PagedModel<EntityModel<ProductResource>> products;
     
     private Set<IFacet> facets;
     
@@ -29,7 +32,7 @@ public class SearchResource extends RepresentationModel {
 						  String sortBy,
 						  Set<IFacet> searchFacets,
   						  PagedResourcesAssembler<ProductResource> assembler,
-  						  ResourceAssembler<Product, ProductResource> prodAssembler,
+  						  RepresentationModelAssemblerSupport<Product, ProductResource> prodAssembler,
   						  IProductPortService ipps) {
 
 		
@@ -46,17 +49,17 @@ public class SearchResource extends RepresentationModel {
     	
     	//convert the page of products to a page of product resources
     	final Page<ProductResource> prPages = new PageImpl<ProductResource>(pages.stream()
-							    											.map(p -> prodAssembler.toResource(p))
+							    											.map(p -> prodAssembler.toModel(p))
 							    											.collect(Collectors.toList()),
 							    											pages.getPageable(),
 							    											pages.getTotalElements());
     	
-    	this.products = (assembler.toResource(prPages));
+    	this.products = (assembler.toModel(prPages));
     	
 		this.facets = returnFacets;
     }
 
-	public PagedResources<Resource<ProductResource>> getProducts() {
+	public PagedModel<EntityModel<ProductResource>> getProducts() {
 		return products;
 	}
 

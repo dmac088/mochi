@@ -9,8 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.web.PagedResourcesAssembler;
-import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,9 +40,12 @@ public class ProductController {
     @Autowired
     private RepresentationModelAssemblerSupport<Product, ProductResource> prodAssembler;
     
+    @Autowired
+    private PagedResourcesAssembler<ProductResource> prodPagedAssembler;
+    
     @SuppressWarnings("unchecked")
 	@GetMapping(value = "/Product/{locale}/{currency}/category/{categoryCode}")
-    public ResponseEntity<CollectionModel<ProductResource>> getProducts(@PathVariable String locale, 
+    public ResponseEntity<PagedModel<ProductResource>> getProducts(@PathVariable String locale, 
 															    	   @PathVariable String currency, 
 															    	   @PathVariable String categoryCode,
 															    	   @RequestParam(value = "page", defaultValue = "0") String page,
@@ -73,7 +77,7 @@ public class ProductController {
     
 	@GetMapping(value = "/Product/{locale}/{currency}/brand/code/{brandCode}", 
     			params = { "page", "size" })
-    public ResponseEntity<CollectionModel<ProductResource>> getProductsByBrand(	@PathVariable String locale, 
+    public ResponseEntity<PagedModel<ProductResource>> getProductsByBrand(	@PathVariable String locale, 
 															    	   			@PathVariable String currency, 
 															    	   			@PathVariable String brandCode,
 															    	   			@RequestParam("page") int page,
@@ -92,9 +96,9 @@ public class ProductController {
     }
     
     @PostMapping("/Product/{locale}/{currency}")
-    public ResponseEntity<CollectionModel<ProductResource>> getProducts(	@PathVariable String locale, 
-    																		@PathVariable String currency, 
-    																		@RequestBody final Set<String> productCodes) {
+    public ResponseEntity<PagedModel<EntityModel<ProductResource>>> getProducts(	@PathVariable String locale, 
+    																				@PathVariable String currency, 
+    																				@RequestBody final Set<String> productCodes) {
     	
     	LOGGER.debug("Fetching product for parameters : {}, {}, {}}", locale, currency, productCodes);
     	
@@ -103,7 +107,9 @@ public class ProductController {
     			.stream().map(p -> prodAssembler.toModel(p))
     			.collect(Collectors.toList());
     	
-    	final CollectionModel <ProductResource> resources = new CollectionModel <ProductResource> (collection);
+    	Page<ProductResource> pages = new PageImpl<>(collection);
+    	
+    	final PagedModel<EntityModel<ProductResource>> resources = prodPagedAssembler.toModel(pages);
         final String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
         resources.add(new Link(uriString, "self"));
         return ResponseEntity.ok(resources);
