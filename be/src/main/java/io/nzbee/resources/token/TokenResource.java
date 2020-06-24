@@ -1,10 +1,11 @@
 package io.nzbee.resources.token;
 
-import org.springframework.hateoas.ResourceSupport;
+
+import org.springframework.hateoas.RepresentationModel;
 
 import io.nzbee.security.CustomTokenEnhancer;
 
-public class TokenResource  extends ResourceSupport {
+public class TokenResource  extends RepresentationModel<TokenResource> {
 
 	private final CustomTokenEnhancer token;
 	

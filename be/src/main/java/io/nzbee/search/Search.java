@@ -1,21 +1,22 @@
 package io.nzbee.search;
 
 import java.util.Set;
-import org.springframework.hateoas.PagedResources;
+
+import org.springframework.hateoas.PagedModel;
 import io.nzbee.resources.product.ProductResource;
 import io.nzbee.search.dto.facet.IFacet;
 
 public class Search {
 	
-	PagedResources<ProductResource> products;
+	PagedModel<ProductResource> products;
 	
 	Set<IFacet> facets;
 
-	public PagedResources<ProductResource> getProducts() {
+	public PagedModel<ProductResource> getProducts() {
 		return products;
 	}
 
-	public void setProducts(PagedResources<ProductResource> products) {
+	public void setProducts(PagedModel<ProductResource> products) {
 		this.products = products;
 	}
 	

@@ -31,3 +31,5 @@ public class ProductResourceAssembler extends RepresentationModelAssemblerSuppor
     }
     
 }
+
+
