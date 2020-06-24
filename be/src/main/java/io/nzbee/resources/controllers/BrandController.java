@@ -5,8 +5,8 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Link;
-import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,28 +35,28 @@ public class BrandController {
     }
     
     @GetMapping("/Brand/{locale}/{currency}/category/{categoryCode}")
-    public ResponseEntity<Resources<BrandResource>> getBrands(@PathVariable String locale, @PathVariable String currency, @PathVariable String categoryCode) {
+    public ResponseEntity<CollectionModel<BrandResource>> getBrands(@PathVariable String locale, @PathVariable String currency, @PathVariable String categoryCode) {
     	LOGGER.debug("Fetching brands for parameters : {}, {}, {}", locale, currency, categoryCode);
     	
     	final List<BrandResource> collection = 
     			brandService.findAll(locale, currency, categoryCode).stream()
-        		.map(b -> brandResourceAssembler.toResource(b))
+        		.map(b -> brandResourceAssembler.toModel(b))
         		.collect(Collectors.toList());
     	
-    	final Resources <BrandResource> resources = new Resources <> (collection);
+    	final CollectionModel<BrandResource> resources = new CollectionModel<BrandResource> (collection);
         final String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
         resources.add(new Link(uriString, "brands"));
         return ResponseEntity.ok(resources);
     }
     
     @GetMapping("/Brand/{locale}/{currency}")
-    public ResponseEntity<Resources<BrandResource>> getBrands(@PathVariable String locale, @PathVariable String currency) {
+    public ResponseEntity<CollectionModel<BrandResource>> getBrands(@PathVariable String locale, @PathVariable String currency) {
     	LOGGER.debug("Fetching brands for parameters : {}, {}", locale, currency);
     	final List<BrandResource> collection = 
     			 brandService.findAll(locale, currency).stream()
-    			 .map(b -> brandResourceAssembler.toResource(b))
+    			 .map(b -> brandResourceAssembler.toModel(b))
         		.collect(Collectors.toList());
-    	final Resources <BrandResource> resources = new Resources <> (collection);
+    	final CollectionModel<BrandResource> resources = new CollectionModel<BrandResource> (collection);
         final String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
         resources.add(new Link(uriString, "brands"));
         return ResponseEntity.ok(resources);
@@ -66,7 +66,7 @@ public class BrandController {
     public ResponseEntity<BrandResource> get(@PathVariable String locale, @PathVariable String currency, @PathVariable String brandCode) {
     	LOGGER.debug("Fetching brand for parameters : {}, {}, {}", locale, currency, brandCode);
     	Brand b = brandService.findByCode(locale, currency, brandCode);
-    	BrandResource br = brandResourceAssembler.toResource(b);
+    	BrandResource br = brandResourceAssembler.toModel(b);
     	return ResponseEntity.ok(br);
     }
 }

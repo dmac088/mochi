@@ -1,10 +1,9 @@
 package io.nzbee.resources.category;
 
-import org.springframework.hateoas.ResourceSupport;
-
+import org.springframework.hateoas.RepresentationModel;
 import io.nzbee.domain.category.Category;
 
-public class CategoryResource  extends ResourceSupport  {
+public class CategoryResource extends RepresentationModel<CategoryResource>  {
 	
 	private final Category data;
 	

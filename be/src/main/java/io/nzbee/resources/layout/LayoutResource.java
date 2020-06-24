@@ -1,7 +1,8 @@
 package io.nzbee.resources.layout;
 
-import org.springframework.hateoas.ResourceSupport;
+import org.springframework.hateoas.RepresentationModel;
 
-public class LayoutResource extends ResourceSupport  {
+public class LayoutResource extends RepresentationModel<LayoutResource>  {
+
 
 }
