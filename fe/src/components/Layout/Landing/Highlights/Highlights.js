@@ -51,7 +51,8 @@ function Highlights() {
               </nav>
               <div className="tab-content" id="nav-tabContent">
                 <div className="tab-pane fade show active" role="tabpanel" aria-labelledby="featured-tab">
-                  <Category />
+                  <Category 
+                    category={stateObject.selectedCategory}/>
                 </div>
               </div>
             </div>
