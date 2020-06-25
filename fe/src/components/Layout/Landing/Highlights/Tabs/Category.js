@@ -57,8 +57,6 @@ function Category(props) {
   const { category } = props;
   const {lang, curr} = props.match.params;
   const prevParams = usePrevious({lang, curr});
-  console.log(lang);
-  console.log(curr);
 
   //we need local state to store products 
   const [stateObject, setObjectState] = useState({

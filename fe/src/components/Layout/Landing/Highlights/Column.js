@@ -5,10 +5,10 @@ const $ = window.$;
 const renderProducts = (props) => {
   const { products } = props;
   if (!products) { return; }
-  return products.map(product => {
+  return products.map((product, index) => {
     return (
         <Product
-          key={product.productUPC}
+          key={index}
           product={product}
         />
       )
