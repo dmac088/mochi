@@ -53,9 +53,7 @@ const settings = {
 };
 
 function Category(props) {
-  
   const { category } = props;
-  console.log(category._links.products.href);
 
   //we need local state to store products 
   const [stateObject, setObjectState] = useState({
