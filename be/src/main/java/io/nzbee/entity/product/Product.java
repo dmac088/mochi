@@ -367,6 +367,7 @@ public abstract class Product {
 
 	public void setPrimaryCategory(CategoryProduct primaryCategoryIndex) {
 		this.primaryCategoryIndex = primaryCategoryIndex; 
+		this.primaryCategory = primaryCategoryIndex;
 	}
 
 	
