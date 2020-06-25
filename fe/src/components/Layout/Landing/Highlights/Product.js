@@ -2,7 +2,6 @@ import React from 'react';
 import product04 from "../../../../assets/images/products/product04.jpg"
 
 function Product(props) {
-  console.log(props);
   const { product } = props.product;
   return (
     <div className="gf-product tab-slider-sub-product">

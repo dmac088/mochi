@@ -44,8 +44,8 @@ public class CategoryResourceAssembler extends RepresentationModelAssemblerSuppo
 		
 		if(category.getCategoryType().equals("productcategory")) {
 			cr.add(linkTo(methodOn(ProductController.class).getProducts(	
-																		category.getLocale(), 
-																	 	category.getCurrency(), 
+																		null, 
+																	 	null, 
 																	 	category.getCategoryCode(),
 																	 	"0",
 																	 	"10",

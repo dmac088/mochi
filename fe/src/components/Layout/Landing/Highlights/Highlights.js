@@ -3,11 +3,12 @@ import { useSelector } from 'react-redux';
 import Category from './Tabs/Category';
 import { categoryMaster } from './Categories';
 
-function Highlights() {
+function Highlights(props) {
 
   const [stateObject, setObjectState] = useState({
     selectedCategoryCode: categoryMaster[0],
   });
+
 
   const showTab = (e) => {
     e.preventDefault();
@@ -46,7 +47,7 @@ function Highlights() {
     }) 
   }
 
-  const renderCategoryTabs = (categories) => {
+  const renderCategoryTabs = (categories, props) => {
     if(!categories) { return null; }
     return categories.filter(c => categoryMaster.includes(c.data.categoryCode)).map(c => {
       const isActive = (c.data.categoryCode === stateObject.selectedCategoryCode);
@@ -57,6 +58,7 @@ function Highlights() {
              role="tabpanel"
              aria-labelledby="featured-tab">
           <Category
+            {...props}
             category={c}
           />
         </div>
@@ -77,7 +79,7 @@ function Highlights() {
               </nav>
               <div className="tab-content" id="nav-tabContent">
                 <div className="tab-pane fade show active" role="tabpanel" aria-labelledby="featured-tab">
-                  {renderCategoryTabs(categories)}
+                  {renderCategoryTabs(categories, props)}
                 </div>
               </div>
             </div>
