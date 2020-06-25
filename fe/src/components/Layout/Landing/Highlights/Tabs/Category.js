@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Slider from "react-slick";
 import { SlickArrowLeft, SlickArrowRight } from '../../HeroSlider/sliderHelper';
 import Column from '../Column'
@@ -51,16 +51,26 @@ const settings = {
   ]
 };
 
-const next = () => {
-  this.slider.slickNext();
-}
-
-const previous = () => {
-  this.slider.slickPrev();
-}
-
 function Category(props) {
+
+
   const { category } = props;
+  console.log(category);
+
+
+  useEffect(() => {
+  
+  }, []);
+  
+  const next = () => {
+    this.slider.slickNext();
+  }
+  
+  const previous = () => {
+    this.slider.slickPrev();
+  }
+
+
   let slider;
   return (
     <div key={0} className="tab-slider-container">
