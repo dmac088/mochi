@@ -22,7 +22,7 @@ function Product(props) {
       </div>
       <div className="product-content">
         <div className="product-categories">
-          <a id="#test" href="#">{product.brand.primaryCategory}</a>,<span> </span>
+          <a id="#test" href="#">{product.primaryCategory.categoryDesc}</a>,<span> </span>
           <a id="#test" href="#">{product.brand.brandDesc}</a>
         </div>
         <h3 className="product-title">
