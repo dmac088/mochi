@@ -1,6 +1,7 @@
 package io.nzbee.test.integration.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
@@ -152,6 +153,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     	.isEqualTo("ACT01");
     	assertThat(found.getBrand().getBrandCode())
     	.isEqualTo("PLA01");
+    	assertNotNull(found.getPrimaryCategory());
     	if(found instanceof Food) {
     		assertThat(((Food) found).getCountryOfOrigin())
     		.isEqualTo("NZL");
